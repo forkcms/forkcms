@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Fork
  *
  * This source file is part of Fork CMS.
  *
- * @package			Frontend
- * @subpackage		Core
+ * @package			frontend
+ * @subpackage		core
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
  * @since			2.0
@@ -33,6 +34,8 @@ class CoreModel
 		return Spoon::getObjectReference('database');
 	}
 
+
+	// @todo documenteren
 	public static function getPageRecordByMenuId($menuId)
 	{
 		// redefine
@@ -68,4 +71,5 @@ class CoreModel
 		return (array) $record;
 	}
 }
+
 ?>

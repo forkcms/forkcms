@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Fork
  *
  * This source file is part of Fork CMS.
  *
- * @package		Frontend
- * @subpackage	Core
+ * @package		frontend
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -82,4 +83,5 @@ class FrontendPage
 
 	}
 }
+
 ?>

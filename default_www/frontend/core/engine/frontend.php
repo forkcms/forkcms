@@ -1,4 +1,5 @@
 <?php
+
 /** Require Model */
 require_once FRONTEND_CORE_PATH .'/engine/model.php';
 

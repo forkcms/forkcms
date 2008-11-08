@@ -5,7 +5,7 @@
  *
  * This source file is part of Fork CMS.
  *
- * @package			Frontend
+ * @package			frontend
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
  * @since			2.0
@@ -110,7 +110,7 @@ class Init
 		}
 	}
 
-
+	// @todo documenteren
 	private function requireFrontendClasses()
 	{
 		// general classes
@@ -196,6 +196,5 @@ class Init
 		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }
-
 
 ?>

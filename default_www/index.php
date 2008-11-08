@@ -1,4 +1,5 @@
 <?php
+
 // create new instance
 $app = new ApplicationRouting();
 

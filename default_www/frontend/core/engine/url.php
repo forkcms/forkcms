@@ -1,11 +1,12 @@
 <?php
+
 /**
  * Fork
  *
  * This source file is part of Fork CMS.
  *
- * @package			Frontend
- * @subpackage		Url
+ * @package			frontend
+ * @subpackage		url
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
  * @since			2.0
@@ -371,4 +372,5 @@ class FrontendUrl
 		$this->queryString = trim((string) $queryString, '/');
 	}
 }
+
 ?>

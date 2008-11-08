@@ -1,13 +1,14 @@
 <?php
+
 /**
  * This exception is used to handle frontend related exceptions.
  *
- * @package		Frontend
- * @subpackage	Core
+ * @package		frontend
+ * @subpackage	core
  *
  *
- * @author			Tijs Verkoyen <tijs@spoon-library.be>
- * @since			2.0
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		2.0
  */
 class FrontendException extends Exception
 {
