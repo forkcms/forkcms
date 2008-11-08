@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Db flnm="schema" nm="forkng" ver="1.3.4">
+<VerLbl></VerLbl>
+<VerNotes></VerNotes>
+<DefTblOpts></DefTblOpts>
+<DocFolder>/Users/tijs/Projects/Netlash/fork_next.local</DocFolder>
+<Sch Cm="" nm="schemaA">
+<Tbl UsSo="1" nm="meta">
+<Cm>Meta-information</Cm>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="meta"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="keywords" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="keywords_overwrite" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="description" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="description_overwrite" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="pagetitle" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="pagetitle_overwrite" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="url" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="url_overwrite" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="custom" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>Used for custom meta-information</Cm>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="pages">
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pages"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="menu_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>The real menu_id</Cm>
+</Cl>
+<Cl au="0" df="0" nm="parent_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>The parent_id for the page </Cm>
+</Cl>
+<Cl au="0" df="0" nm="template_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>The template to use</Cm>
+</Cl>
+<Cl au="0" df="" nm="meta_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>Meta-information</Cm>
+</Cl>
+<Cl au="0" df="" nm="extra_id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>Possible extra</Cm>
+</Cl>
+<Cl au="0" df="" nm="language" nu="0">
+<DT ds="VarChar" en="" id="12" ln="5" sc="null" sg="1"/>
+<Cm>Language of the content</Cm>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content" nu="0">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="navigation_title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>Title that will be used in the navigation</Cm>
+</Cl>
+<Cl au="0" df="N" nm="navigation_title_overwrite" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>Should we override the navigation title</Cm>
+</Cl>
+<Cl au="0" df="" nm="sequence" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="hidden" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>Is the page hidden?</Cm>
+</Cl>
+<Cl au="0" df="Y" nm="active" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>Is this the active version?</Cm>
+</Cl>
+<Cl au="0" df="" nm="created_by_user" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>Which user has created this page?</Cm>
+</Cl>
+<Cl au="0" df="" nm="created_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="edited_at" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="Y" nm="allow_move" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="Y" nm="allow_childs" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="Y" nm="allow_content" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="Y" nm="allow_edit" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="Y" nm="allow_delete" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_pages_meta" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="meta" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="0" nm="pages" oe="1" sch="schemaA" zr="0"/>
+<ClPr cdCl="meta_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_pages_extra" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_extra" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="pages" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="extra_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_pages_templates" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_templates" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="pages" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="template_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_users" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="0"/>
+<CdTb mn="1" nm="pages" oe="1" sch="schemaA" zr="1"/>
+<ClPr cdCl="created_by_user" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_pages_meta" unq="0">
+<ClNs>meta_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_pages_pages_extra" unq="0">
+<ClNs>extra_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_pages_pages_templates" unq="0">
+<ClNs>template_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_pages_users" unq="0">
+<ClNs>created_by_user</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="pages_extra">
+<Cm>The possible extras</Cm>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pages_extra"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="module_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>The module the extra belongs to</Cm>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>A label that will be used in the backend</Cm>
+</Cl>
+<Cl au="0" df="" nm="location" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>The location of the extra</Cm>
+</Cl>
+<Cl au="0" df="" nm="parameters" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>A serialized value with the optional parameters</Cm>
+</Cl>
+<Cl au="0" df="" nm="sequence" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>The sequcnce in the backend (default is the module_id)</Cm>
+</Cl>
+<Cl au="0" df="N" nm="hidden" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>Should the extra be shown in the backend?</Cm>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="pages_templates">
+<Cm>The possible templates</Cm>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pages_templates"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>A label that will be uses in the backend</Cm>
+</Cl>
+<Cl au="0" df="" nm="location" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>The location of the template</Cm>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="users">
+<Cm>The backend users</Cm>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="users"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="username" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>username, will be case-sensitive</Cm>
+</Cl>
+<Cl au="0" df="" nm="password" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>will be case-sensitive</Cm>
+</Cl>
+<Cl au="0" df="" nm="password_raw" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>Used when a user forgot his password</Cm>
+</Cl>
+<Cl au="0" df="Y" nm="active" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>Is this user active?</Cm>
+</Cl>
+<Cl au="0" df="N" nm="deleted" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>Is the user deleted?</Cm>
+</Cl>
+<SchTrHis/>
+</Tbl>
+</Sch>
+<Dgm nm="diagramA">
+<RnCf FtSz="9" lkStgy="KeyToKeyStrategy" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="1"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="1"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages" x="304" y="19"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages_extra" x="621" y="74"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="users" x="19" y="164"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="meta" x="17" y="14"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages_templates" x="629" y="9"/>
+<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_meta"/>
+<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_pages_extra"/>
+<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_pages_templates"/>
+<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_users"/>
+</Dgm>
+<RnmMgr NxRnmId="2">
+<RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+<Rnm id="1" nNm="pages_templates" oNm="menu_templates"/>
+</RnmCh>
+</RnmMgr>
+<DbDocOptionMgr>
+<BasicOptionMgr>
+<Name>db.doc.option.mgr</Name>
+<BoolOpt lbl="Diagrams" nm="doc.diagrams" on="1" spl="0"/>
+<BoolOpt lbl="Foreign Keys" nm="doc.fks" on="1" spl="0"/>
+<BoolOpt lbl="Indexes" nm="doc.indexes" on="1" spl="0"/>
+<BoolOpt lbl="Overwrite CSS File" nm="doc.overwrite.css" on="1" spl="0"/>
+<BoolOpt lbl="Procedures" nm="doc.procs" on="1" spl="0"/>
+<BoolOpt lbl="Schemas" nm="doc.schemas" on="1" spl="0"/>
+<BoolOpt lbl="Sequences" nm="doc.sequences" on="1" spl="0"/>
+<BoolOpt lbl="Tables" nm="doc.tables" on="1" spl="0"/>
+<BoolOpt lbl="Triggers" nm="doc.triggers" on="1" spl="0"/>
+<BoolOpt lbl="Views" nm="doc.views" on="1" spl="0"/>
+</BasicOptionMgr>
+</DbDocOptionMgr>
+</Db>

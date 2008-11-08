@@ -1,0 +1,16 @@
+RewriteEngine On
+Options -Indexes
+Options +FollowSymlinks
+
+# If the project should be disables uncomment the lines below
+#AuthName "Disabled"
+#AuthUserFile {$fullpath}/.htpasswd
+#AuthGroupFile /dev/null
+#AuthType Basic
+#require valid-user
+
+# nice urls (REMARK: don't edit anything below)
+RewriteCond %{REQUEST_URI} !^$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [NC,L]
