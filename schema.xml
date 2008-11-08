@@ -48,9 +48,9 @@
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="" nm="menu_id" nu="0">
+<Cl au="0" df="" nm="page_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>The real menu_id</Cm>
+<Cm>The real page_id</Cm>
 </Cl>
 <Cl au="0" df="0" nm="parent_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -110,7 +110,7 @@
 <Cl au="0" df="Y" nm="allow_move" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="Y" nm="allow_childs" nu="0">
+<Cl au="0" df="Y" nm="allow_children" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="Y" nm="allow_content" nu="0">
@@ -128,7 +128,7 @@
 <ClPr cdCl="meta_id" prCl="id"/>
 </Fk>
 <Fk deAc="3" nm="fk_pages_pages_extra" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="pages_extra" oe="1" sch="schemaA" zr="0"/>
+<PrTb mn="0" nm="pages_extras" oe="1" sch="schemaA" zr="0"/>
 <CdTb mn="1" nm="pages" oe="1" sch="schemaA" zr="1"/>
 <ClPr cdCl="extra_id" prCl="id"/>
 </Fk>
@@ -156,10 +156,10 @@
 </Idx>
 <SchTrHis/>
 </Tbl>
-<Tbl UsSo="1" nm="pages_extra">
+<Tbl UsSo="1" nm="pages_extras">
 <Cm>The possible extras</Cm>
 <TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
-<Pk ClNs="id" nm="pages_extra"/>
+<Pk ClNs="id" nm="pkpages_extras"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
@@ -181,7 +181,7 @@
 </Cl>
 <Cl au="0" df="" nm="sequence" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>The sequcnce in the backend (default is the module_id)</Cm>
+<Cm>The sequence in the backend (default is the module_id)</Cm>
 </Cl>
 <Cl au="0" df="N" nm="hidden" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
@@ -253,7 +253,7 @@
 </VbCfg>
 </RnCf>
 <TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages" x="304" y="19"/>
-<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages_extra" x="621" y="74"/>
+<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages_extras" x="621" y="74"/>
 <TbGl bkCl="ffffffe6" sch="schemaA" tbl="users" x="19" y="164"/>
 <TbGl bkCl="ffffffe6" sch="schemaA" tbl="meta" x="17" y="14"/>
 <TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages_templates" x="629" y="9"/>
@@ -262,9 +262,18 @@
 <FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_pages_templates"/>
 <FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_users"/>
 </Dgm>
-<RnmMgr NxRnmId="2">
+<RnmMgr NxRnmId="5">
 <RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
 <Rnm id="1" nNm="pages_templates" oNm="menu_templates"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="pages" SupCls="Schema" SupNme="schemaA">
+<Rnm id="2" nNm="page_id" oNm="menu_id"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="pages" SupCls="Schema" SupNme="schemaA">
+<Rnm id="3" nNm="allow_children" oNm="allow_childs"/>
+</RnmCh>
+<RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+<Rnm id="4" nNm="pages_extras" oNm="pages_extra"/>
 </RnmCh>
 </RnmMgr>
 <DbDocOptionMgr>
