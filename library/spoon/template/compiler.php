@@ -381,7 +381,7 @@ class SpoonTemplateCompiler
 				if(is_array($scope) && count($scope) == 1) $sScope = '\''. $scope[0] .'\'';
 
 				// search string
-				$search = '{include:file='. $match .'}';
+				$search = '{include:file="'. $match .'"}';
 
 				// replace string
 				$replace = '<?php if($this->getForceCompile()) $this->compile(\''. $template .'\', array('. $sScope .')); ?>' ."\n";
