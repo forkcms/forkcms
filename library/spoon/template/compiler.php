@@ -364,7 +364,6 @@ class SpoonTemplateCompiler
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
 		{
-			Spoon::dump($matches);
 			// loop matches
 			foreach($matches[1] as $match)
 			{
