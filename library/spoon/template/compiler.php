@@ -359,11 +359,12 @@ class SpoonTemplateCompiler
 	private function parseIncludes($content, array $scope = null)
 	{
 		// regex pattern
-		$pattern = "|{include:file=([a-z0-9-_\.\'\"\:\.\{\$\}\/]+)}|is";
+		$pattern = "|{include:file=\"([a-z0-9-_\.\'\"\:\.\{\$\}\/]+)\"}|is";
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
 		{
+			Spoon::dump($matches);
 			// loop matches
 			foreach($matches[1] as $match)
 			{
