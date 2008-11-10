@@ -456,7 +456,7 @@ class SpoonTemplateCompiler
 						$variable = '$'. $scope[(count($scope) -2)] . '[\''. $aIteration['name'] .'\']';
 
 						// replace string
-						$replace = '<?php foreach('. $variable .' as $'. $aIteration['name'] ."): ?>\n";
+						$replace = '<?php foreach((array) '. $variable .' as $'. $aIteration['name'] ."): ?>\n";
 
 						// stop the while
 						break;
@@ -469,7 +469,7 @@ class SpoonTemplateCompiler
 						$variable = '$this->variables' . '['. $aIteration['name'] .']';
 
 						// replace string
-						$replace = '<?php foreach('. $variable .' as $'. $aIteration['name'] ."): ?>\n";
+						$replace = '<?php foreach((array) '. $variable .' as $'. $aIteration['name'] ."): ?>\n";
 
 						// stop the while
 						break;
@@ -482,7 +482,7 @@ class SpoonTemplateCompiler
 			}
 
 			// no scope defined
-			else $replace = '<?php foreach($this->variables[\''. $aIteration['name'] .'\'] as $'. $aIteration['name'] ."): ?>\n";
+			else $replace = '<?php foreach((array) $this->variables[\''. $aIteration['name'] .'\'] as $'. $aIteration['name'] ."): ?>\n";
 
 			// add to the replace string
 			$replace .= $this->parseIncludes($aIteration['content'], $scope) ."\n<?php endforeach; ?>";
