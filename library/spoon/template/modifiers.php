@@ -13,6 +13,7 @@
  * @author			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
+// @todo 1 voor 1 alle modifiers testen
 
 
 /** Spoon class */
@@ -23,6 +24,9 @@ require_once 'spoon/template/exception.php';
 
 /** SpoonTemplate class */
 require_once 'spoon/template/template.php';
+
+/** SpoonDate class */
+require_once 'spoon/date/date.php';
 
 
 /**
@@ -39,7 +43,7 @@ class SpoonTemplateModifiers
 	/**
 	 * List of entities from a to z containing the lowercase & uppercase variant.
 	 *
-	 * @var unknown_type
+	 * @var array
 	 */
 	private static $entities = array(	// a
 										'&aacute;' => '&Aacute;',
@@ -112,7 +116,6 @@ class SpoonTemplateModifiers
 										'&#311;' => '&#310;',
 										'&#7745;' => '&#7744;',
 										// n
-										// @todo Checkt die lijst nog es!
 										'&ntilde;' => '&Ntilde;',
 										'&#241;' => '&#209;',
 										'&#331;' => '&#330;',
@@ -201,10 +204,12 @@ class SpoonTemplateModifiers
 	 *
 	 * @var	array
 	 */
+	// @todo elke modifier testen!
 	private static $modifiers = array(	'addslashes' => 'addslashes',
+										'createhtmllinks' => array('SpoonTemplateModifiers', 'createHTMLLinks'),
 										'date' => array('SpoonTemplateModifiers', 'date'),
 										'htmlentities' => array('SpoonFilter', 'htmlentities'),
-										'lowercase' => 'strtolower',
+										'lowercase' => array('SpoonTemplateModifiers', 'lowercase'),
 										'ltrim' => 'ltrim',
 										'nl2br' => 'nl2br',
 										'repeat' => 'str_repeat',
@@ -215,11 +220,10 @@ class SpoonTemplateModifiers
 										'substring' => 'substr',
 										'trim' => 'trim',
 										'truncate' => array('SpoonTemplateModifiers', 'truncate'),
-										'truncatehtml' => array('SpoonTemplateModifiers', 'truncateHtml'),
+										'truncatehtml' => array('SpoonTemplateModifiers', 'truncateHTML'),
 										'ucfirst' => 'ucfirst',
 										'ucwords' => 'ucwords',
-										'uppercase' => array('SpoonTemplateModifiers', 'uppercase'),
-										'createhtmllinks' => array('SpoonTemplateModifiers', 'createHtmlLinks'));
+										'uppercase' => array('SpoonTemplateModifiers', 'uppercase'));
 
 
 	/**
@@ -239,7 +243,7 @@ class SpoonTemplateModifiers
 	 * @return	string
 	 * @param	string $text
 	 */
-	public static function createHmlLinks($text)
+	public static function createHTMLLinks($text)
 	{
 		// init vars
 		$pattern = '/((http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:\/~\+#]*[\w\-\@?^=%&amp;\/~\+#])?)/i';
@@ -271,6 +275,23 @@ class SpoonTemplateModifiers
 	public static function getModifiers()
 	{
 		return self::$modifiers;
+	}
+
+
+	/**
+	 * Makes the string lowercase and takes entities into account
+	 *
+	 * @return	string
+	 * @param	string $string
+	 */
+	public static function lowercase($string)
+	{
+		// replace the entities
+		$string = str_replace(array_values(self::$entities), array_keys(self::$entities), $string);
+
+		// convert to entities, apply uppercase, reconvert to html
+		$string = SpoonFilter::htmlentities(strtolower(SpoonFilter::htmlentitiesDecode($string)));
+		return $string;
 	}
 
 
@@ -319,6 +340,7 @@ class SpoonTemplateModifiers
 	 * @param	int $length
 	 * @param	string[optional] $cut
 	 */
+	// @todo die cut moet nog een true/false worden!
 	public static function truncate($string, $length, $cut = 'no')
 	{
 		// don't cut
@@ -354,7 +376,8 @@ class SpoonTemplateModifiers
 	 * @param	int $length
 	 * @param	string[optional] $cut
 	 */
-	public static function truncateHtml($string, $length, $cut = 'no')
+	// @todo aanpassen van de cut naar true/false
+	public static function truncateHTML($string, $length, $cut = 'no')
 	{
 		// strip html tags
 		$string = trim(strip_tags($string));

@@ -32,9 +32,9 @@ define('DB_DATABASE', 'forkng');
 // database host
 define('DB_HOSTNAME', 'localhost');
 // database username
-define('DB_USERNAME', 'forkng');
+define('DB_USERNAME', 'root');
 // datebase password
-define('DB_PASSWORD', 'forkng');
+define('DB_PASSWORD', 'zero#123');
 
 
 /**

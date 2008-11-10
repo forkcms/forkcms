@@ -56,7 +56,7 @@ class FrontendNavigation
 	 * @param 	string $url
 	 * @param	string[optional] $language
 	 */
-	public static function getMenuIdByUrl($url, $language = null)
+	public static function getPageIdByUrl($url, $language = null)
 	{
 		// redefine
 		$url = (string) $url;
@@ -117,7 +117,7 @@ class FrontendNavigation
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		$aNavigation = self::getNavigation($language);
-		$menuId = self::getMenuIdByUrl($url, $language);
+		$pageId = self::getPageIdByUrl($url, $language);
 
 		// loop levels
 		foreach ($aNavigation as $depth => $aLevel)
@@ -128,7 +128,7 @@ class FrontendNavigation
 				// loop childs
 				foreach ($aChilds as $itemId => $aItem)
 				{
-					if($menuId == $itemId) return (int) $parentId;
+					if($pageId == $itemId) return (int) $parentId;
 				}
 			}
 		}
@@ -139,16 +139,16 @@ class FrontendNavigation
 
 
 	/**
-	 * Get url for a given menuId
+	 * Get url for a given pageId
 	 *
 	 * @return	string
-	 * @param	int $menuId
+	 * @param	int $pageId
 	 * @param	string[optional] $language
 	 */
-	public static function getUrlByMenuId($menuId, $language = null)
+	public static function getUrlByPageId($pageId, $language = null)
 	{
 		// redefine
-		$menuId = (int) $menuId;
+		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		$url = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
@@ -157,10 +157,10 @@ class FrontendNavigation
 		$aKeys = self::getKeys($language);
 
 		// get the url, if it doens't exist return 404
-		if(!isset($aKeys[$menuId])) return self::getUrlByMenuId(404);
+		if(!isset($aKeys[$pageId])) return self::getUrlByPageId(404);
 
 		// add url
-		else $url .= $aKeys[$menuId];
+		else $url .= $aKeys[$pageId];
 
 		// return
 		return $url;

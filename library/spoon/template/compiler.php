@@ -26,7 +26,7 @@
  *
  * @author			Davy Hellemans <davy@spoon-library.be>
  * @author			Tijs Verkoyen <tijs@spoon-library.be>
- * @since			1.1.0
+ * @since			1.0.0
  */
 class SpoonTemplateCompiler
 {
@@ -176,6 +176,46 @@ class SpoonTemplateCompiler
 
 
 	/**
+	 * Creates a string of the provided value with the variables encapsulated
+	 *
+	 * @return	string
+	 * @param	string $value
+	 * @param	array[optional] $scope
+	 */
+	private function getVariableString($value, array $scope = null)
+	{
+		// init var
+		$aVariables = array();
+
+		// remove ' and "
+		$value = str_replace(array('"', "'"), '', (string) $value);
+
+		// regex pattern
+		$pattern = '/\{\$([a-z0-9\.\[\]\_\-\|\:\'\"\$\s])*\}/i';
+
+		// find variables
+		if(preg_match_all($pattern, $value, $matches))
+		{
+			// loop matches
+			foreach($matches[0] as $match) $aVariables[] = $this->parseVariable($match, $scope);
+		}
+
+		// replace the variables by %s
+		$value = preg_replace($pattern, '%s', $value);
+
+		// encapsulate the vars
+		$value = "'". str_replace('%s', "'. %s .'", $value) ."'";
+
+		// fix errors
+		if(substr($value, 0, 4) == "''. ") $value = substr($value, 4);
+		if(substr($value, -4) == " .''") $value = substr($value, 0, -4);
+
+		// add the variables
+		return vsprintf($value, $aVariables);
+	}
+
+
+	/**
 	 * Obfuscate all the iterations
 	 *
 	 * @return	string
@@ -252,14 +292,17 @@ class SpoonTemplateCompiler
 			// parse options
 			$this->content = $this->parseOptions($this->content, $this->scope);
 
+			// parse cache tags
+			$this->content = $this->parseCache($this->content, $this->scope);
+
 			// parse variables
 			$this->content = $this->parseVariables($this->content, $this->scope);
 
 			// parse iterations
 			$this->content = $this->parseIterations($this->content, $this->iterations);
 
-			// parse cache tags
-			$this->content = $this->parseCache($this->content);
+			// error reporting
+			$this->content = "<?php error_reporting(E_WARNING); ?>\n". $this->content;
 
 			// parsed
 			$this->parsed = true;
@@ -272,12 +315,12 @@ class SpoonTemplateCompiler
 	 *
 	 * @return	string
 	 * @param	string $content
+	 * @param	array[optional] $scope
 	 */
-	// @todo proper schrijven gij se kleine vetzak!
-	private function parseCache($content)
+	private function parseCache($content, array $scope = null)
 	{
 		// regex pattern
-		$pattern = "/{cache:([a-z0-9-_\.]+)}.*?{\/cache:\\1}/is";
+		$pattern = "/{cache:([a-z0-9-_\.\{\$\}]+)}.*?{\/cache:\\1}/is";
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -285,20 +328,19 @@ class SpoonTemplateCompiler
 			// loop matches
 			foreach($matches[1] as $match)
 			{
+				// variable
+				$variable = $this->getVariableString($match, $scope);
+
 				// search for
 				$aSearch[] = '{cache:'. $match .'}';
 				$aSearch[] = '{/cache:'. $match .'}';
 
 				// replace with
-				$aReplace[0] = '<?php if(!$this->isCached(\''. $match .'\')): ?>'. "\n";
-				$aReplace[0] .= '<?php ob_start(); ?>'. "\n";
-				$aReplace[1] = '<?php SpoonFile::setFileContent($this->cacheDirectory';
-				$aReplace[1] .= " .'/". $match ."_cache.tpl', ob_get_clean()); ?>\n";
-				$aReplace[1] .= '<?php endif; ?>' ."\n";
-				$aReplace[1] .= '<?php require $this->cacheDirectory';
-				$aReplace[1] .= " .'/";
-				$aReplace[1] .= $match;
-				$aReplace[1] .= "_cache.tpl'; ?>";
+				$aReplace[0] = "<?php if(!\$this->isCached(". $variable .")): ?>\n<?php ob_start(); ?>";
+				$aReplace[1] = "<?php SpoonFile::setFileContent(\$this->cacheDirectory .'/'. $variable .'_cache.tpl', ob_get_clean()); ?>\n<?php endif; ?>\n";
+				$aReplace[1] .= "<?php require \$this->cacheDirectory .'/'. $variable .'_cache.tpl'; ?>";
+
+				// execute
 				$content = str_replace($aSearch, $aReplace, $content);
 			}
 		}
@@ -325,53 +367,32 @@ class SpoonTemplateCompiler
 			// loop matches
 			foreach($matches[1] as $match)
 			{
-				$file = $match;
+				// file
+				$file = $this->getVariableString($match, $scope);
 
-				$file = str_replace(array('"', "'"), '', $file);
-
-				$array = array();
-
-				$pattern = '/\{\$([a-z0-9\.\[\]\_\-\|\:\'\"\$\s])*\}/i';
-				if(preg_match_all($pattern, $file, $matches2))
-				{
-					foreach($matches2[0] as $smatch)
-					{
-						$array[] = $this->parseVariable($smatch, $scope);
-					}
-				}
-
-
-				$file = preg_replace($pattern, '%s', $file);
-				$file = str_replace('%s', "'. %s .'", $file);
-
-				$file = "'" . $file ."'";
-				if(substr($file, 0, 4) == "''. ") $file = substr($file, 4);
-				if(substr($file, -4) == " .''") $file = substr($file, 0, -4);
-				$file = vsprintf($file, $array);
-
-				// replace den include tag
-				$aSearch[0] = '{include:file='. $match .'}';
-
+				// template name
 				$template = eval('return '. $file .';');
 
-				if(substr($template, 0, 1) != '/')
-				{
-					$template = dirname(realpath($this->template)) .'/'. $template;
-				}
+				// template doesn't start from the root
+				if(substr($template, 0, 1) != '/') $template = dirname(realpath($this->template)) .'/'. $template;
 
-//				Spoon::dump($template);
+				// define the scope as a string
+				$sScope = (is_array($scope)) ? implode("', '", $scope) : '';
+				if(is_array($scope) && count($scope) == 1) $sScope = '\''. $scope[0] .'\'';
 
-				$scopeString = (is_array($scope)) ? implode("', '", $scope) : '';
-				if(is_array($scope) && count($scope) == 1) $scopeString = '\''. $scope[0] .'\'';
-				$aReplace[0] = '<?php if($this->getForceCompile()) $this->compile(\''. $template .'\', array('. $scopeString .')); ?>' ."\n";
-				$aReplace[0] .= '<?php $return = @include $this->getCompileDirectory() .\'/\'. \''. $this->getCompileName($template) .'\'; ?>' ."\n";
-				$aReplace[0] .= '<?php if($return === false): ?>' ."\n";
+				// search string
+				$search = '{include:file='. $match .'}';
 
-				$aReplace[0] .= '<?php $this->compile(\''. $template .'\', array('. $scopeString .')); ?>' ."\n";
-				$aReplace[0] .= '<?php @include $this->getCompileDirectory() .\'/'. $this->getCompileName($template) .'\'; ?>' ."\n";
-				$aReplace[0] .= '<?php endif; ?>' ."\n";
+				// replace string
+				$replace = '<?php if($this->getForceCompile()) $this->compile(\''. $template .'\', array('. $sScope .')); ?>' ."\n";
+				$replace .= '<?php $return = @include $this->getCompileDirectory() .\'/\'. \''. $this->getCompileName($template) .'\'; ?>' ."\n";
+				$replace .= '<?php if($return === false): ?>' ."\n";
+				$replace .= '<?php $this->compile(\''. $template .'\', array('. $sScope .')); ?>' ."\n";
+				$replace .= '<?php @include $this->getCompileDirectory() .\'/'. $this->getCompileName($template) .'\'; ?>' ."\n";
+				$replace .= '<?php endif; ?>' ."\n";
 
-				$content = str_replace($aSearch, $aReplace, $content);
+				// replace it
+				$content = str_replace($search, $replace, $content);
 			}
 		}
 
@@ -387,14 +408,16 @@ class SpoonTemplateCompiler
 	 * @param	array $iterations
 	 * @param	array[optional] $scope
 	 */
-	// @todo proper schrijven
-	// @todo implementeren van includes parsing. Deze includes MOETEN statisch zijn, wie zegt da nu weer?
 	private function parseIterations($content, $iterations, array $scope = null)
 	{
+		// loop iterations
 		foreach($iterations as $aIteration)
 		{
 			// update scope
 			$scope[] = $aIteration['name'];
+
+			// parse cache
+			$aIteration['content'] = $this->parseCache($aIteration['content'], $scope);
 
 			// parse variables
 			$aIteration['content'] = $this->parseVariables($aIteration['content'], $scope);
@@ -405,56 +428,69 @@ class SpoonTemplateCompiler
 			// parse subiterations
 			if($aIteration['children'] !== null) $aIteration['content'] = $this->parseIterations($aIteration['content'], $aIteration['children'], $scope);
 
-			// search & replace shit
+			// search string
 			$search = '[iteration:'. $aIteration['code'] .']';
 
-			// scope shitters
-			if($scope !== null && count($scope) != 1)
+			// has a scope
+			if(is_array($scope) && count($scope) != 1)
 			{
-//				Spoon::dump($scope, false);
+				// loop the scope
 				while(1)
 				{
+					// base variable
 					$variableTemp = '$this->variables';
-//					Spoon::dump($scope);
-					foreach($scope as $scopy) $variableTemp .= '[\''. $scopy .'\'][0]';
-//					$variableTemp .= '['. $aIteration['name'] .']';
+
+					// add the scope to the variable
+					foreach($scope as $item) $variableTemp .= '[\''. $item .'\'][0]';
+
+					// snoop off the last [0]
 					$variableTemp = substr($variableTemp, 0, strlen($variableTemp) - 3);
 
-//					Spoon::dump($variableTemp);
-					$code = 'return (isset('. $variableTemp .'));';
-//					Spoon::dump($code);
-					$exists = eval($code);
+					// check if this var exists
+					$exists = eval('return (isset('. $variableTemp .'));');
 
+					// the variable exists
 					if($exists)
 					{
+						// rework the final variable
 						$variable = '$'. $scope[(count($scope) -2)] . '[\''. $aIteration['name'] .'\']';
+
+						// replace string
 						$replace = '<?php foreach('. $variable .' as $'. $aIteration['name'] ."): ?>\n";
+
+						// stop the while
 						break;
 					}
 
+					// only one item in the scope
 					elseif(count($scope) == 1)
 					{
+						// rework the final variable
 						$variable = '$this->variables' . '['. $aIteration['name'] .']';
+
+						// replace string
 						$replace = '<?php foreach('. $variable .' as $'. $aIteration['name'] ."): ?>\n";
+
+						// stop the while
 						break;
 					}
 
+					// nothing found, remove the last item
 					else array_pop($scope);
-
-					// securitas or elsas fucktas!
-					break;
 				}
 
 			}
 
+			// no scope defined
 			else $replace = '<?php foreach($this->variables[\''. $aIteration['name'] .'\'] as $'. $aIteration['name'] ."): ?>\n";
 
-			/*$replace = '<?php foreach($this->variables[\''. $aIteration['name'] .'\'] as $'. $aIteration['name'] ."): ?>\n";*/
-//			$replace .= $aIteration['content'] ."\n"; // de oude content
-			$replace .= $this->parseIncludes($aIteration['content'], $scope) ."\n";
-			$replace .= "<?php endforeach; ?>\n";
+			// add to the replace string
+			$replace .= $this->parseIncludes($aIteration['content'], $scope) ."\n<?php endforeach; ?>";
+
+			// replace it
 			$content = str_replace($search, $replace, $content);
 
+			// reset the scope
 			$scope = null;
 		}
 
@@ -474,26 +510,33 @@ class SpoonTemplateCompiler
 		// regex pattern
 		$pattern = "/{option:([a-z0-9-_\.]+)}.*?{\/option:\\1}/is";
 
-		// find matches
-		if(preg_match_all($pattern, $content, $matches))
+		// keep finding those options!
+		while(1)
 		{
-			// loop matches
-			foreach($matches[1] as $match)
+			// find matches
+			if(preg_match_all($pattern, $content, $matches))
 			{
-				// fetch variable
-				$variable = $this->parseVariable($match, $scope);
+				// loop matches
+				foreach($matches[1] as $match)
+				{
+					// fetch variable
+					$variable = $this->parseVariable($match, $scope);
 
-				// search for
-				$aSearch[] = '{option:'. $match .'}';
-				$aSearch[] = '{/option:'. $match .'}';
+					// search for
+					$aSearch[] = '{option:'. $match .'}';
+					$aSearch[] = '{/option:'. $match .'}';
 
-				// replace with
-				$aReplace[] = '<?php if(isset('. $variable .') && '. $variable .' !== null && '. $variable .' !== false): ?>';
-				$aReplace[] = '<?php endif; ?>';
+					// replace with
+					$aReplace[] = '<?php if(isset('. $variable .') && '. $variable .' !== null && '. $variable .' !== false): ?>';
+					$aReplace[] = '<?php endif; ?>';
 
-				// go replace
-				$content = str_replace($aSearch, $aReplace, $content);
+					// go replace
+					$content = str_replace($aSearch, $aReplace, $content);
+				}
 			}
+
+			// no matchese
+			else break;
 		}
 
 		return $content;
@@ -511,18 +554,26 @@ class SpoonTemplateCompiler
 	}
 
 
-	// @todo de scope werkt nu nog maar op het diepste niveau, hij moet telkens 1tje omhoog gaan!
+	/**
+	 * Parse a single variable within the provided scope or up
+	 *
+	 * @return	string
+	 * @param	string $variable
+	 * @param	array[optional] $scope
+	 */
 	private function parseVariable($variable, array $scope = null)
 	{
 		// strip '{$' and '}'
 		$variable = ltrim($variable, '{$');
 		$variable = rtrim($variable, '}');
 
+		// replace [ & ]
+		$variable = str_replace(array('[', ']'), '.', $variable);
+
 		// fetch modifiers
 		$aVar = explode('|', $variable);
 
 		// base variable
-		//$variable = '$this->variables';
 		$variable = '';
 
 		// convert multiple dots to a single one
@@ -533,26 +584,50 @@ class SpoonTemplateCompiler
 		$aVarChunks = explode('.', $aVar[0]);
 		foreach($aVarChunks as $chunk) $variable .= "['$chunk']";
 
+		// @todo is da wel nodig hieronder?
+		// temp variable
+		$variableTemp = '$this->variables';
 
-		if($scope !== null && is_array($scope) && count($scope))
+		// scope exists
+		if(is_array($scope) && count($scope) != 0)
 		{
+			// loop until we find each variable
 			while(1)
 			{
+				// temp variable
 				$variableTemp = '$this->variables';
-				foreach($scope as $scopy) $variableTemp .= '[\''. $scopy .'\'][0]';
-				$variableTemp .= $variable;
-				$code = 'return (isset('. $variableTemp .'));';
-				$exists = eval($code);
 
+				// add the scope to the temp variable
+				foreach($scope as $item) $variableTemp .= '[\''. $item .'\'][0]';
+
+				// add the variable to the end
+				$variableTemp .= $variable;
+
+				// does this variable exists in this scope?
+				$exists = eval('return (isset('. $variableTemp .'));');
+
+				// variable exists
 				if($exists)
 				{
+					// define final variable
 					$variable = '$'. $scope[(count($scope) -1)] . $variable;
+
+					// break while
 					break;
 				}
 
+				// variable not found
 				else array_pop($scope);
 
-				if(count($scope) == 0) break;
+				// stop looping if there's no scope left
+				if(count($scope) == 0)
+				{
+					// define final variable
+					$variable = '$this->variables' . $variable;
+
+					// break while
+					break;
+				}
 			}
 		}
 
@@ -648,8 +723,8 @@ class SpoonTemplateCompiler
 		}
 
 		/**
-		 * Every variable needs to be searched & replace one by one,
-		 * since then the nesting process works as intended.
+		 * Every variable needs to be searched & replaced one by one,
+		 * since only then the nesting process works as intended.
 		 */
 		foreach($aVariables as $key => $value)
 		{
@@ -733,7 +808,7 @@ class SpoonTemplateCompiler
 	 */
 	private function stripCode($content)
 	{
-		return $content = preg_replace("/\<\?php(.*)\?\>/siU", '', $content);
+		return $content = preg_replace("/\<\?(php)?(.*)\?\>/siU", '', $content);
 	}
 
 

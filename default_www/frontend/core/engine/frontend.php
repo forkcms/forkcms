@@ -61,7 +61,7 @@ class Frontend
 		Spoon::setObjectReference('page', $this->page);
 
 		// display page
-//		$this->page->display();
+		$this->page->display();
 	}
 }
 ?>

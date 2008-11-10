@@ -49,7 +49,7 @@ INSERT INTO `meta` VALUES(1, 'home', 'N', 'home', 'N', 'home', 'N', 'home', 'N',
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE IF NOT EXISTS `pages` (
   `id` int(11) NOT NULL auto_increment,
-  `menu_id` int(11) NOT NULL COMMENT 'The real menu_id',
+  `page_id` int(11) NOT NULL COMMENT 'The real page_id',
   `parent_id` int(11) NOT NULL default '0' COMMENT 'The parent_id for the page ',
   `template_id` int(11) NOT NULL default '0' COMMENT 'The template to use',
   `meta_id` int(11) NOT NULL COMMENT 'Meta-information',
@@ -66,13 +66,13 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `created_at` datetime NOT NULL,
   `edited_at` datetime NOT NULL,
   `allow_move` enum('Y','N') NOT NULL default 'Y',
-  `allow_childs` enum('Y','N') NOT NULL default 'Y',
+  `allow_children` enum('Y','N') NOT NULL default 'Y',
   `allow_content` enum('Y','N') NOT NULL default 'Y',
   `allow_edit` enum('Y','N') NOT NULL default 'Y',
   `allow_delete` enum('Y','N') NOT NULL default 'Y',
   PRIMARY KEY  (`id`),
   KEY `fk_pages_meta` (`meta_id`),
-  KEY `fk_pages_pages_extra` (`extra_id`),
+  KEY `fk_pages_pages_extras` (`extra_id`),
   KEY `fk_pages_pages_templates` (`template_id`),
   KEY `fk_pages_users` (`created_by_user`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
@@ -86,23 +86,23 @@ INSERT INTO `pages` VALUES(1, 1, 0, 0, 1, NULL, 'nl', 'Home', '<h2>Fork CMS - SE
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pages_extra`
+-- Table structure for table `pages_extras`
 --
 
-DROP TABLE IF EXISTS `pages_extra`;
-CREATE TABLE IF NOT EXISTS `pages_extra` (
+DROP TABLE IF EXISTS `pages_extras`;
+CREATE TABLE IF NOT EXISTS `pages_extras` (
   `id` int(11) NOT NULL auto_increment,
   `module_id` int(11) NOT NULL COMMENT 'The module the extra belongs to',
   `title` varchar(255) NOT NULL COMMENT 'A label that will be used in the backend',
   `location` varchar(255) NOT NULL COMMENT 'The location of the extra',
   `parameters` text COMMENT 'A serialized value with the optional parameters',
-  `sequence` int(11) NOT NULL COMMENT 'The sequcnce in the backend (default is the module_id)',
+  `sequence` int(11) NOT NULL COMMENT 'The sequence in the backend (default is the module_id)',
   `hidden` enum('Y','N') NOT NULL default 'N' COMMENT 'Should the extra be shown in the backend?',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='The possible extras';
 
 --
--- Dumping data for table `pages_extra`
+-- Dumping data for table `pages_extras`
 --
 
 

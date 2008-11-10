@@ -30,9 +30,6 @@ require_once 'spoon/template/compiler.php';
 /** SpoonFile class */
 require_once 'spoon/filesystem/file.php';
 
-/** SpoonDate class */
-require_once 'spoon/date/date.php';
-
 
 /**
  * Spoon Library
@@ -101,12 +98,27 @@ class SpoonTemplate
 	 * Assign values to variables
 	 *
 	 * @return	void
-	 * @param	mixed $name
-	 * @param	mixed $value
+	 * @param	mixed $variable
+	 * @param	mixed[optional] $value
 	 */
-	public function assign($name, $value)
+	public function assign($variable, $value = null)
 	{
-		$this->variables[(string) $name] = $value;
+		// regular function use
+		if($value !== null && $variable != '') $this->variables[(string) $variable] = $value;
+
+		// only 1 argument
+		else
+		{
+			// not an array
+			if(!is_array($variable)) throw new SpoonTemplateException('If you provide one argument it needs to be an array');
+
+			// loop array
+			foreach($variable as $key => $value)
+			{
+				// key is NOT empty
+				if($key !== '') $this->variables[(string) $key] = $value;
+			}
+		}
 	}
 
 
@@ -168,6 +180,29 @@ class SpoonTemplate
 
 
 	/**
+	 * Clear the entire compiled directory or a specific template
+	 *
+	 * @return	void
+	 * @param	string[optional] $template
+	 */
+	public function clearCompiled($template = null)
+	{
+		// specific template
+		if($template !== null) SpoonFile::delete($this->compileDirectory .'/'. $this->getCompileName($template));
+
+		// all compiled templates
+		else
+		{
+			// list of *.tpl.php files from compileDirectory
+			$aFiles = SpoonFile::getList($this->compileDirectory, '|.*\.tpl\.php|');
+
+			// delete
+			foreach($aFiles as $file) SpoonFile::delete($this->compileDirectory .'/'. $file);
+		}
+	}
+
+
+	/**
 	 * Compile a given template
 	 *
 	 * @return	void
@@ -182,7 +217,7 @@ class SpoonTemplate
 		// set some options
 		$compiler->setCacheDirectory($this->cacheDirectory);
 		$compiler->setCompileDirectory($this->compileDirectory);
-		$compiler->setForceCompile($this->foreCompile);
+		$compiler->setForceCompile($this->forceCompile);
 		$compiler->setStrict($this->strict);
 
 		// compile & save
@@ -214,7 +249,7 @@ class SpoonTemplate
 		$compileName = $this->getCompileName((string) $template);
 
 		// compiled if needed
-		if(!SpoonFile::exists($this->compileDirectory .'/'. $compileName, $this->strict) || $this->foreCompile)
+		if(!SpoonFile::exists($this->compileDirectory .'/'. $compileName, $this->strict) || $this->forceCompile)
 		{
 			// create compiler
 			$compiler = new SpoonTemplateCompiler((string) $template, $this->variables);
@@ -222,7 +257,7 @@ class SpoonTemplate
 			// set some options
 			$compiler->setCacheDirectory($this->cacheDirectory);
 			$compiler->setCompileDirectory($this->compileDirectory);
-			$compiler->setForceCompile($this->foreCompile);
+			$compiler->setForceCompile($this->forceCompile);
 			$compiler->setStrict($this->strict);
 
 			// compile & save
@@ -275,7 +310,7 @@ class SpoonTemplate
 	 */
 	public function getForceCompile()
 	{
-		return $this->foreCompile;
+		return $this->forceCompile;
 	}
 
 
@@ -307,11 +342,10 @@ class SpoonTemplate
 	 * @return	bool
 	 * @param	string $name
 	 */
-	// @todo exceptions goe doen
 	public function isCached($name)
 	{
 		// doesnt exist
-		if(!isset($this->cache[(string) $name])) throw new SpoonTemplateException('No cache with the name '. (string) $name .') is cached of azoiets.');
+		if(!isset($this->cache[(string) $name])) throw new SpoonTemplateException('No cache with the name '. (string) $name .' is known.');
 
 		// last modification date
 		$time = @filemtime($this->cacheDirectory .'/'. (string) $name .'_cache.tpl');
@@ -372,7 +406,7 @@ class SpoonTemplate
 	 */
 	public function setForceCompile($on = true)
 	{
-		$this->foreCompile = (bool) $on;
+		$this->forceCompile = (bool) $on;
 	}
 
 

@@ -110,11 +110,17 @@ class Init
 		}
 	}
 
-	// @todo documenteren
+
+	/**
+	 * Require all needed classes
+	 *
+	 * @return	void
+	 */
 	private function requireFrontendClasses()
 	{
 		// general classes
 		require FRONTEND_CORE_PATH .'/engine/exception.php';
+		require FRONTEND_CORE_PATH .'/engine/template.php';
 		require FRONTEND_CORE_PATH .'/engine/language.php';
 		require FRONTEND_CORE_PATH .'/engine/navigation.php';
 
@@ -123,6 +129,10 @@ class Init
 			case 'frontend':
 				require FRONTEND_CORE_PATH .'/engine/url.php';
 				require FRONTEND_CORE_PATH .'/engine/page.php';
+				require FRONTEND_CORE_PATH .'/engine/header.php';
+				require FRONTEND_CORE_PATH .'/engine/body.php';
+				require FRONTEND_CORE_PATH .'/engine/breadcrumb.php';
+				require FRONTEND_CORE_PATH .'/engine/footer.php';
 			break;
 		}
 	}
@@ -152,16 +162,9 @@ class Init
 	 */
 	private function requireSpoonClasses()
 	{
-		// require SpoonSession
 		require_once 'spoon/session/session.php';
-
-		// require SpoonDatabase
 		require_once 'spoon/database/database.php';
-
-		// require SpoonCookie
 		require_once 'spoon/cookie/cookie.php';
-
-		// require SpoonHttp
 		require_once 'spoon/http/http.php';
 	}
 
