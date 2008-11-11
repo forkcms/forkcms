@@ -86,7 +86,7 @@ class ForkTemplate extends SpoonTemplate
 		$aConstants = get_defined_constants(true);
 
 		// if our constants are there assign them
-		if(isset($aConstants['user'])) $this->assignArray($aConstants['user']);
+		if(isset($aConstants['user'])) $this->assign($aConstants['user']);
 
 		// aliases
 		$this->assign('LANGUAGE', FRONTEND_LANGUAGE);

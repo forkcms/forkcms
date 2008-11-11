@@ -93,6 +93,7 @@ class Init
 	private function defineUrls()
 	{
 		define('FRONTEND_CORE_URL', '/'. APPLICATION .'/core');
+		define('FRONTEND_CACHE_URL', '/'. APPLICATION .'/cache');
 	}
 
 

@@ -11,16 +11,16 @@
 	{$metaCustom}
 
 	<link rel="shortcut icon" href="/favicon.ico" />
-	<link rel="stylesheet" type="text/css" media="screen" href="{$FRONTEND_CORE_URL}/layout/css/reset.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="{$FRONTEND_CORE_URL}/layout/css/screen.css" />
-	<link rel="stylesheet" type="text/css" media="print" href="{$FRONTEND_CORE_URL}/layout/css/print.css" />
-	{iteration:iCssFile}<link rel="stylesheet" type="text/css" media="screen" href="{$file}" />{/iteration:iCssFile}
+	<!-- start added css-files -->
+	{iteration:iCssFiles}
+		{option:oHasNoCondition}<link rel="stylesheet" type="text/css" media="{$media}" href="{$file}" />{/option:oHasNoCondition}
+		{option:oHasCondition}<!--[if {$condition}]><link rel="stylesheet" type="text/css" media="{$media}" href="{$file}" /><![endif]-->{/option:oHasCondition}
+	{/iteration:iCssFiles}
+	<!-- end added css-files -->
 
-	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="{$FRONTEND_CORE_URL}/layout/css/ie6.css" /><![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="{$FRONTEND_CORE_URL}/layout/css/ie7.css" /><![endif]-->
-
-	{iteration:iJavascriptFile}<script type="text/javascript" src="{$file}"></script>{/iteration:iJavascriptFile}
-	
+	<!-- start added js-files -->
+	{iteration:iJsFiles}<script type="text/javascript" src="{$file}"></script>{/iteration:iJsFiles}
+	<!-- end added js-files -->
 </head>
 <body class="{$LANGUAGE} onsite">
 	<div id="container">

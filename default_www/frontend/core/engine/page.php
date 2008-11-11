@@ -154,7 +154,7 @@ class FrontendPage
 		$this->storeStatistics();
 
 		// parse navigation
-		$this->navigation->parse();
+//		$this->navigation->parse();
 
 		// parse footer
 		$this->footer->parse();
@@ -169,7 +169,7 @@ class FrontendPage
 //		$this->breadcrumb->parse();
 
 		// parse header
-//		$this->header->parse();
+		$this->header->parse();
 
 		// show the template's parsed content
 		$this->tpl->display(FRONTEND_CORE_PATH .'/layout/templates/index.tpl');
@@ -225,6 +225,17 @@ class FrontendPage
 		$this->header = new FrontendHeader();
 		Spoon::setObjectReference('header', $this->header);
 
+		// add css
+		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/reset.css');
+		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/screen.css');
+		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/print.css', 'print');
+
+		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/ie6.css', 'screen', 'lte IE 6');
+		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/ie7.css', 'screen', 'IE 7');
+
+		// add jQuery (this is default)
+		$this->header->addJsFile(FRONTEND_CORE_URL .'/js/jquery/jquery-1.2.6.min.js', false);
+
 		// set meta information
 		$this->header->setPageTitle($this->aPageRecord['meta_pagetitle'], ($this->aPageRecord['meta_pagetitle_overwrite'] == 'Y') ? true : false);
 		$this->header->setMetaKeywords($this->aPageRecord['meta_keywords'], ($this->aPageRecord['meta_keywords_overwrite'] == 'Y') ? true : false);
@@ -244,10 +255,8 @@ class FrontendPage
 		// create body instance
 		$this->body = new FrontendBody();
 
-		// set content title
+		// set body properties
 		$this->body->setTitle($this->aPageRecord['title']);
-
-		// set content
 		$this->body->setContent($this->aPageRecord['content']);
 
 		// @todo	create PageExtra instance if needed

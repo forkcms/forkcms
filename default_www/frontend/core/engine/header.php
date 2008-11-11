@@ -11,8 +11,24 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendHeader
+class FrontendHeader extends FrontendBaseObject
 {
+	/**
+	 * The added css-files
+	 *
+	 * @var	array
+	 */
+	private $aCssFiles = array();
+
+
+	/**
+	 * The added js-files
+	 *
+	 * @var	array
+	 */
+	private $aJsFiles = array();
+
+
 	/**
 	 * Custom meta
 	 *
@@ -46,6 +62,207 @@ class FrontendHeader
 
 
 	/**
+	 * Adds a css file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file
+	 * @param	string[optional] $media
+	 */
+	public function addCssFile($file, $media = 'screen',  $condition = null, $minify = true)
+	{
+		// redefine
+		$file = (string) $file;
+		$media = (string) $media;
+		$condition = ($condition !== null) ? (string) $condition : null;
+		$minify = (bool) $minify;
+
+		// no minifying when debugging
+//		if(SPOON_DEBUG) $minify = false;
+
+		// try to modify
+		if($minify) $file = $this->minifyCss($file);
+
+		// check if the file already exists in the array
+		$inArray = false;
+		foreach ($this->aCssFiles as $row)
+		{
+			if($row['file'] == $file && $row['media'] == $media) $inArray = true;
+		}
+
+		// add to array
+		if(!$inArray)
+		{
+			$aTemp['file'] = (string) $file;
+			$aTemp['media'] = (string) $media;
+			$aTemp['condition'] = (string) $condition;
+			$aTemp['oHasCondition'] = (bool) ($condition !== null);
+			$aTemp['oHasNoCondition'] = (bool) ($condition === null);
+
+			$this->aCssFiles[] = $aTemp;
+		}
+	}
+
+
+	/**
+	 * Adds a js file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file
+	 * @param	bool[optional] $minify
+	 */
+	public function addJsFile($file, $minify = true)
+	{
+		// redefine
+		$file = (string) $file;
+		$minify = (bool) $minify;
+
+		// no minifying when debugging
+		if(SPOON_DEBUG) $minify = false;
+
+		// try to modify
+		if($minify) $file = $this->minifyJs($file);
+
+		// check if the file already exists in the array
+		$inArray = false;
+		foreach ($this->aJsFiles as $row)
+		{
+			if($row['file'] == $file) $inArray = true;
+		}
+
+		// add to array
+		if(!$inArray)
+		{
+			$aTemp['file'] = $file;
+
+			$this->aJsFiles[] = $aTemp;
+		}
+	}
+
+
+	private function minifyCss($file)
+	{
+		// create unique filename
+		$fileName = md5($file) .'.css';
+		$finalUrl = FRONTEND_CACHE_URL .'/minified_css/'. $fileName;
+		$finalPath = FRONTEND_CACHE_PATH .'/minified_css/'. $fileName;
+
+		// file already exists (if SPOON_DEBUG is true, we should reminify every time
+		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalUrl;
+
+		// grab content
+		$content = SpoonFile::getFileContent(PATH_WWW . $file);
+
+		// remove comments
+		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
+		$content = preg_replace('|\/\/.*|i', '', $content);
+
+		// remove tabs
+		$content = preg_replace('|\t|i', '', $content);
+
+		// remove spaces on end off line
+		$content = preg_replace('| \n|i', "\n", $content);
+
+		// match stuff between brackets
+		$aMatches = array();
+		preg_match_all('| \{(.*)}|iUms', $content, $aMatches);
+
+		// are there any matches
+		if(isset($aMatches[0]))
+		{
+			// loop matches
+			foreach ($aMatches[0] as $key => $match)
+			{
+				// remove faulty newlines
+				$tempContent = preg_replace('|\r|iU', '', $aMatches[1][$key]);
+
+				// removes real newlines
+				$tempContent = preg_replace('|\n|iU', ' ', $tempContent);
+
+				$content = str_replace($aMatches[0][$key], '{'. $tempContent .'}', $content);
+			}
+		}
+
+		// remove faulty newlines
+		$content = preg_replace('|\r|iU', '', $content);
+
+		// remove empty lines
+		$content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $content);
+
+		// remove newlines at start and end
+		$content = trim($content);
+
+		// save content
+		SpoonFile::setFileContent($finalPath, $content);
+
+		// return
+		return $finalUrl;
+	}
+
+
+	/**
+	 * Minify a JS-file
+	 *
+	 * @return	string
+	 * @param	string $file
+	 */
+	private function minifyJs($file)
+	{
+		// create unique filename
+		$fileName = md5($file) .'.js';
+		$finalUrl = FRONTEND_CACHE_URL .'/minified_js/'. $fileName;
+		$finalPath = FRONTEND_CACHE_PATH .'/minified_js/'. $fileName;
+
+		// file already exists (if SPOON_DEBUG is true, we should reminify every time
+		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalUrl;
+
+		// grab content
+		$content = trim(SpoonFile::getFileContent(PATH_WWW . $file));
+
+		// remove comments
+		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
+		$content = preg_replace('|\/\/.*|i', '', $content);
+
+		// remove tabs
+		$content = preg_replace('|\t|i', ' ', $content);
+
+		// remove faulty newlines
+		$content = preg_replace('|\r|iU', '', $content);
+
+		// remove empty lines
+		$content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $content);
+
+		// store
+		SpoonFile::setFileContent($finalPath, $content);
+
+		// return
+		return $finalUrl;
+	}
+
+
+	/**
+	 * Parse the header into the template
+	 *
+	 * @return	void
+	 */
+	public function parse()
+	{
+		// assign page title
+		$this->tpl->assign('pageTitle', $this->pageTitle);
+
+		// assign meta
+		$this->tpl->assign('metaDescription', (string) $this->metaDescription);
+		$this->tpl->assign('metaKeywords', (string) $this->metaKeywords);
+		$this->tpl->assign('metaCustom', (string) $this->metaCustom);
+
+		// css-files
+		$this->tpl->assign('iCssFiles', (array) $this->aCssFiles);
+
+		// js-files
+		$this->tpl->assign('iJsFiles', (array) $this->aJsFiles);
+	}
+
+
+	/**
 	 * Set meta-custom
 	 *
 	 * @return	void
@@ -53,7 +270,7 @@ class FrontendHeader
 	 */
 	public function setMetaCustom($value)
 	{
-		$this->metaDescription = (string) $value;
+		$this->metaCustom = (string) $value;
 	}
 
 
@@ -71,7 +288,7 @@ class FrontendHeader
 		$overwrite = (bool) $overwrite;
 
 		// set var
-		if ($overwrite) $this->metaDescription = $value;
+		if($overwrite) $this->metaDescription = $value;
 		else
 		{
 			if($this->metaDescription == '') $this->metaDescription = $value;
