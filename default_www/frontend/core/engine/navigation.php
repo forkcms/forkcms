@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendNavigation
+class FrontendNavigation extends FrontendBaseObject
 {
 	/**
 	 * The keys
@@ -19,6 +19,34 @@ class FrontendNavigation
 	 * @var	array
 	 */
 	private static $aKeys = array(), $aNavigation = array();
+
+
+	/**
+	 * Get all footerlinks
+	 *
+	 * @return	array
+	 */
+	public static function getFooterLinks()
+	{
+		// get footerlinks
+		$aFooterLinks = array();
+		$aLinks = (isset(self::$aNavigation[FRONTEND_LANGUAGE][-2][-2])) ? self::$aNavigation[FRONTEND_LANGUAGE][-2][-2] : array();
+
+		// loop rows
+		foreach ($aLinks as $pageId => $row)
+		{
+			// redefine data
+			$aTemp['title'] = $row['navigation'];
+			$aTemp['url'] = $row['url'];
+			$aTemp['oIsCurrentPage'] = (bool) ($pageId == FrontendPage::getCurrentPageId());
+
+			// add to footerlinks
+			$aFooterLinks[] = $aTemp;
+		}
+
+		// return
+		return (array) $aFooterLinks;
+	}
 
 
 	/**
@@ -104,6 +132,43 @@ class FrontendNavigation
 
 
 	/**
+	 * Get more info about a page
+	 *
+	 * @return	mixed
+	 * @param	int $pageId
+	 */
+	public static function getPageInfo($pageId)
+	{
+		// get navigation
+		$aNavigation = self::getNavigation();
+
+		// loop levels
+		foreach ($aNavigation as $depth => $aLevel)
+		{
+			// loop parents
+			foreach ($aLevel as $parentId => $aChilds)
+			{
+				// loop childs
+				foreach ($aChilds as $itemId => $aItem)
+				{
+					if($pageId == $itemId)
+					{
+						// set return
+						$aReturn = $aItem;
+						$aReturn['page_id'] = $itemId;
+
+						// return
+						return $aReturn;
+					}
+				}
+			}
+		}
+
+		// return
+		return false;
+	}
+
+	/**
 	 * Get parentId
 	 *
 	 * @return	mixed
@@ -164,6 +229,16 @@ class FrontendNavigation
 
 		// return
 		return $url;
+	}
+
+
+	/**
+	 * @todo	Parse the navigation into the template
+	 *
+	 * @return	void
+	 */
+	public function parse()
+	{
 	}
 }
 

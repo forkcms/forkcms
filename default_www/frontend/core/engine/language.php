@@ -37,6 +37,17 @@ class FrontendLanguage
 
 
 	/**
+	 * Get the actions
+	 *
+	 * @return	array
+	 */
+	public static function getActions()
+	{
+		return (array) self::$act;
+	}
+
+
+	/**
 	 * Get the active languages
 	 *
 	 * @return	array
@@ -85,6 +96,39 @@ class FrontendLanguage
 
 		// fallback
 		return self::DEFAULT_LANGUAGE;
+	}
+
+
+	/**
+	 * Get the errors
+	 *
+	 * @return	array
+	 */
+	public static function getErrors()
+	{
+		return (array) self::$act;
+	}
+
+
+	/**
+	 * Get the labels
+	 *
+	 * @return	array
+	 */
+	public static function getLabels()
+	{
+		return (array) self::$lbl;
+	}
+
+
+	/**
+	 * Get the messages
+	 *
+	 * @return	array
+	 */
+	public static function getMessages()
+	{
+		return (array) self::$msg;
 	}
 
 

@@ -219,7 +219,7 @@ class FrontendUrl
 				$language = (string) $aChunks[0];
 
 				// set cookie
-				SpoonCookie::set('frontend_language', $language, 86400, '/', '.'. $this->getDomain());
+				SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
 
 				// set sessions
 				SpoonSession::set('frontend_language', $language);
@@ -245,7 +245,7 @@ class FrontendUrl
 				$language = FrontendLanguage::getBrowserLanguage();
 
 				// set cookie
-				SpoonCookie::set('frontend_language', $language, 86400, '/', '.'. $this->getDomain());
+				SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
 
 				// redirect is needed
 				$mustRedirect = true;

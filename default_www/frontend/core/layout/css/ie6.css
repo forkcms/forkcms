@@ -1,0 +1,20 @@
+/**
+ * IE6 Conditional comments
+ * Stylesheet for <Fork Private>
+ *
+ * @media	screen, projection
+ * @copyright	Netlash <http://www.netlash.com>
+ * @author	name <johan@netlash.com>
+ */
+
+.clearfix {
+	display: inline-block;
+}
+
+#navigation ul li {
+	display: inline-block;
+}
+
+.pagination ul {
+	float: left;
+}

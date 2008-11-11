@@ -92,6 +92,7 @@ class Init
 	 */
 	private function defineUrls()
 	{
+		define('FRONTEND_CORE_URL', '/'. APPLICATION .'/core');
 	}
 
 
@@ -120,7 +121,9 @@ class Init
 	{
 		// general classes
 		require FRONTEND_CORE_PATH .'/engine/exception.php';
+		require FRONTEND_CORE_PATH .'/engine/base_object.php';
 		require FRONTEND_CORE_PATH .'/engine/template.php';
+		require FRONTEND_CORE_PATH .'/engine/template_custom.php';
 		require FRONTEND_CORE_PATH .'/engine/language.php';
 		require FRONTEND_CORE_PATH .'/engine/navigation.php';
 

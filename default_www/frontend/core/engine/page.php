@@ -30,6 +30,14 @@ class FrontendPage
 
 
 	/**
+	 * Current page id
+	 *
+	 * @var	int
+	 */
+	private static $currentPageId;
+
+
+	/**
 	 * Body instance
 	 *
 	 * @var	FrontendBody
@@ -78,6 +86,14 @@ class FrontendPage
 
 
 	/**
+	 * The pages statuscode
+	 *
+	 * @var	int
+	 */
+	private $statusCode = 200;
+
+
+	/**
 	 * Template instance
 	 *
 	 * @var	SpoonTemplate
@@ -106,15 +122,24 @@ class FrontendPage
 		// get menu id for requested url
 		$this->pageId = FrontendNavigation::getPageIdByUrl(implode('/', $this->url->getPages()));
 
+		// make the pageId accessible through a static method
+		self::$currentPageId = $this->pageId;
+
 		// set headers if this is a 404 page
-		if($this->pageId == 404) SpoonHTTP::setHeadersByCode(404);
+		if($this->pageId == 404)
+		{
+			// let the object we are 404
+			$this->statusCode = 404;
+
+			// set headers
+			SpoonHTTP::setHeadersByCode(404);
+		}
 
 		// get pagecontent
 		$this->getPageContent();
 
 		// process page
 		$this->processPage();
-
 	}
 
 
@@ -125,11 +150,40 @@ class FrontendPage
 	 */
 	public function display()
 	{
+		// store statistics
+		$this->storeStatistics();
+
+		// parse navigation
+		$this->navigation->parse();
+
+		// parse footer
+		$this->footer->parse();
+
+		// parse body if needed
+		if($this->body) $this->body->parse();
+
+		// parse extra if needed
+//		if($this->extra) $this->extra->parse();
+
+		// parse breadcrumb
+//		$this->breadcrumb->parse();
+
+		// parse header
+//		$this->header->parse();
+
+		// show the template's parsed content
 		$this->tpl->display(FRONTEND_CORE_PATH .'/layout/templates/index.tpl');
+	}
 
-		$this->tpl->assign('FRONTEND_CORE_PATH', FRONTEND_CORE_PATH);
 
-		Spoon::dump($this->tpl);
+	/**
+	 * Get the current pageID
+	 *
+	 * @return	int
+	 */
+	public static function getCurrentPageId()
+	{
+		return self::$currentPageId;
 	}
 
 
@@ -204,6 +258,50 @@ class FrontendPage
 			Spoon::setObjectReference('extra', $this->extra);
 		}
 	}
+
+
+	/**
+	 * Store the temporary statistics
+	 *
+	 * @return	void
+	 */
+	private function storeStatistics()
+	{
+		// get cookieId
+		if(SpoonCookie::exists('cookie_id')) $cookieId = SpoonCookie::get('cookie_id');
+		else
+		{
+			$cookieId = md5(SpoonSession::getSessionId());
+			SpoonCookie::set('cookie_id', $cookieId, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
+		}
+
+		// create array
+		$aStatistics['status_code'] = (int) $this->statusCode;
+		$aStatistics['date'] = date('Y-m-d H:i:s');
+		$aStatistics['ip'] =  SpoonHTTP::getIp();
+		$aStatistics['session_id'] = SpoonSession::getSessionId();
+		$aStatistics['cookie_id'] = $cookieId;
+		$aStatistics['browser_name'] = 'unknown';
+		$aStatistics['browser_version'] = 0;
+		$aStatistics['platform'] = 'unknown';
+
+		// override browser info if browscap is available
+		if(ini_get('browscap') !== false)
+		{
+			$aBrowserInfo = get_browser(null, true);
+			$aStatistics['browser_name'] = isset($aBrowserInfo['browser']) ? $aBrowserInfo['browser'] : 'unknown';
+			$aStatistics['browser_version'] = isset($aBrowserInfo['version']) ? $aBrowserInfo['version'] : 0;
+			$aStatistics['platform'] = isset($aBrowserInfo['platform']) ? $aBrowserInfo['platform'] : 'unknown';
+		}
+
+		// url info
+		$aStatistics['referrer_url'] =  (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+		$aStatistics['url'] = trim('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], '/');
+
+		// log to file
+		SpoonFile::setFileContent(FRONTEND_CACHE_PATH .'/statistics/temp.txt', serialize($aStatistics) ."\n", true);
+	}
+
 }
 
 ?>

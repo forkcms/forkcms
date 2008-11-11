@@ -93,6 +93,7 @@ $lbl = array();
 // -- w
 // -- x
 // -- y
+$lbl['YouAreHere'] = 'je bent hier';
 // -- z
 
 
