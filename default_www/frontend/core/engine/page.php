@@ -166,7 +166,7 @@ class FrontendPage
 //		if($this->extra) $this->extra->parse();
 
 		// parse breadcrumb
-//		$this->breadcrumb->parse();
+		$this->breadcrumb->parse();
 
 		// parse header
 		$this->header->parse();
@@ -210,6 +210,8 @@ class FrontendPage
 	}
 
 
+
+
 	/**
 	 * Processes the page
 	 *
@@ -242,14 +244,14 @@ class FrontendPage
 		$this->header->setMetaDescription($this->aPageRecord['meta_description'], ($this->aPageRecord['meta_description_overwrite'] == 'Y') ? true : false);
 		$this->header->setMetaCustom($this->aPageRecord['meta_custom']);
 
-		// @todo	create and set breadcrumb instance
+		// create and set breadcrumb instance
 		$this->breadcrumb = new FrontendBreadcrumb();
 		Spoon::setObjectReference('breadcrumb', $this->breadcrumb);
 
-		// @todo	create navigation instance
+		// create navigation instance
 		$this->navigation = new FrontendNavigation();
 
-		// @todo	create footer instance
+		// create footer instance
 		$this->footer = new FrontendFooter();
 
 		// create body instance
@@ -259,7 +261,7 @@ class FrontendPage
 		$this->body->setTitle($this->aPageRecord['title']);
 		$this->body->setContent($this->aPageRecord['content']);
 
-		// @todo	create PageExtra instance if needed
+		// create PageExtra instance if needed
 		if($this->aPageRecord['extra_location'] != '')
 		{
 			// create extra instance

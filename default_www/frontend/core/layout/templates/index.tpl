@@ -26,7 +26,7 @@
 	<div id="container">
 		<div id="topbar" class="clearfix">
 			{include:file="{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl"}
-			{option:oExtranetInclude}{include:file="{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl"}{/option:oExtranetInclude}
+			{option:oExtranetInclude}{include:file="{$FRONTEND_CORE_PATH}/layout/templates/extranet.tpl"}{/option:oExtranetInclude}
 		</div>
 		<div id="header" class="clearfix">
 			<h1><a href="/" title="{$SITE_TITLE}">{$SITE_TITLE}</a></h1>
@@ -35,7 +35,6 @@
 		<div id="main" class="clearfix">
 			<div id="navigation">
 				{$navigation}
-				{include:file="{$FRONTEND_CORE_PATH}/layout/templates/search.tpl"}
 			</div>
 			<div id="content">
 				<!-- start content -->

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 11, 2008 at 02:32 AM
+-- Generation Time: Nov 11, 2008 at 07:49 PM
 -- Server version: 5.0.41
 -- PHP Version: 5.2.6
 
@@ -38,8 +38,9 @@ CREATE TABLE IF NOT EXISTS `meta` (
 -- Dumping data for table `meta`
 --
 
-INSERT INTO `meta` VALUES(1, 'home', 'N', 'home', 'N', 'home', 'N', 'home', 'N', '');
-INSERT INTO `meta` VALUES(401, 'pagina niet gevonden', 'N', 'pagina niet gevonden', 'N', 'pagina niet gevonden', 'N', '404', 'N', NULL);
+INSERT INTO `meta` (`id`, `keywords`, `keywords_overwrite`, `description`, `description_overwrite`, `pagetitle`, `pagetitle_overwrite`, `url`, `url_overwrite`, `custom`) VALUES(1, 'home', 'N', 'home', 'N', 'home', 'N', 'home', 'N', '');
+INSERT INTO `meta` (`id`, `keywords`, `keywords_overwrite`, `description`, `description_overwrite`, `pagetitle`, `pagetitle_overwrite`, `url`, `url_overwrite`, `custom`) VALUES(401, 'pagina niet gevonden', 'N', 'pagina niet gevonden', 'N', 'pagina niet gevonden', 'N', '404', 'N', NULL);
+INSERT INTO `meta` (`id`, `keywords`, `keywords_overwrite`, `description`, `description_overwrite`, `pagetitle`, `pagetitle_overwrite`, `url`, `url_overwrite`, `custom`) VALUES(2, 'links', 'N', 'links', 'N', 'link', 'N', 'links', 'N', NULL);
 
 -- --------------------------------------------------------
 
@@ -60,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
 -- Dumping data for table `modules`
 --
 
-INSERT INTO `modules` VALUES(0, 'core', '{$lblCore|ucfirst}', 'Y');
+INSERT INTO `modules` (`id`, `name`, `label`, `active`) VALUES(0, 'core', '{$lblCore|ucfirst}', 'Y');
 
 -- --------------------------------------------------------
 
@@ -80,8 +81,8 @@ CREATE TABLE IF NOT EXISTS `modules_settings` (
 -- Dumping data for table `modules_settings`
 --
 
-INSERT INTO `modules_settings` VALUES(0, 'site_title_nl', 's:7:"Fork NG";');
-INSERT INTO `modules_settings` VALUES(0, 'site_wide_html', 'N;');
+INSERT INTO `modules_settings` (`module_id`, `name`, `value`) VALUES(0, 'site_title_nl', 's:7:"Fork NG";');
+INSERT INTO `modules_settings` (`module_id`, `name`, `value`) VALUES(0, 'site_wide_html', 'N;');
 
 -- --------------------------------------------------------
 
@@ -124,8 +125,9 @@ CREATE TABLE IF NOT EXISTS `pages` (
 -- Dumping data for table `pages`
 --
 
-INSERT INTO `pages` VALUES(1, 1, 0, 0, 1, NULL, 'nl', 'Home', '<h2>Fork CMS - SEO inbegrepen</h2>\r\n<p>Fork is het CMS (Content Management System) van het Gentse webbureau <a href="http://www.netlash.com" title="Webdesign Netlash">Netlash</a>.</p>\r\n<p>Netlash'' SEO-kennis (zoekmachine optimalisatie) zit ingebouwd in Fork. Dat wil zeggen dat op <a href="http://www.fork-cms.be" title="Fork CMS">Fork</a> gebaseerde sites automatisch goed scoren in Google. Neem een kijkje in de portfolio om uzelf te overtuigen.</p>\r\n<p>Om het zichzelf en zijn klanten makkelijk te maken, gebruikt Netlash steeds Fork als basis voor een website. Door goed te luisteren naar zowel klanten als (collega-)webdesigners is Fork ge&#235;volutioneerd tot een ideale symbiose tussen de invalshoeken van webmasters en -designers.</p>\r\n<h2>Usability</h2>\r\n<blockquote>\r\n<p>"Make everything as simple as possible, but not simpler." (Albert Einstein)</p>\r\n</blockquote>\r\n<p>Einstein vat daarmee de filosofie achter Fork goed samen. Fork doet niet moeilijk. Het toont een simpele, sobere, intu&#239;tieve interface. Toch biedt het tegelijk ook zeer geavanceerde instellingen. Die geavanceerde instellingen (SEO, versiebeheer, spamfilter, templates) houden zich subtiel op de achtergrond.</p>\r\n<p>Het Netlash team helpt zijn klanten graag met problemen, maar nog liever ontwerpt en bouwt het knappe websites. Dat kon alleen door het CMS van zijn websites zo gebruiksvriendelijk mogelijk te maken. Fork is het antwoord.</p>\r\n<h2>Modulair en to-the-point</h2>\r\n<p>Netlash is een klein en flexibel bedrijf. Die lijn is doorgetrokken naar Fork: geen log, ingewikkeld systeem maar een lichte, flexibele, modulaire oplossing.<br />Fork Core is de motor van Fork. Modules als een multiblog, evenementenkalender, nieuwsbrief, fotoalbum, ... zijn inplugbaar.</p>\r\n<p>Door enkel te tonen wat nodig is, bereikt Fork iets waar designers erg van houden: er is geen <em>clutter.</em></p>', 'Home', 'N', 1, 'N', 'Y', 1, '2008-11-08 15:33:42', '2008-11-08 15:33:42', 'N', 'Y', 'Y', 'Y', 'N');
-INSERT INTO `pages` VALUES(404, 404, 0, 0, 401, NULL, 'nl', 'Pagina niet gevonden', '<p>De pagina is niet gevonden.</p>', '', 'N', 0, 'N', 'Y', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Y', 'N', 'Y', 'Y', 'N');
+INSERT INTO `pages` (`id`, `page_id`, `parent_id`, `template_id`, `meta_id`, `extra_id`, `language`, `title`, `content`, `navigation_title`, `navigation_title_overwrite`, `sequence`, `hidden`, `active`, `created_by_user`, `created_at`, `edited_at`, `allow_move`, `allow_children`, `allow_content`, `allow_edit`, `allow_delete`) VALUES(1, 1, 0, 0, 1, NULL, 'nl', 'Home', '<h2>Fork CMS - SEO inbegrepen</h2>\r\n<p>Fork is het CMS (Content Management System) van het Gentse webbureau <a href="http://www.netlash.com" title="Webdesign Netlash">Netlash</a>.</p>\r\n<p>Netlash'' SEO-kennis (zoekmachine optimalisatie) zit ingebouwd in Fork. Dat wil zeggen dat op <a href="http://www.fork-cms.be" title="Fork CMS">Fork</a> gebaseerde sites automatisch goed scoren in Google. Neem een kijkje in de portfolio om uzelf te overtuigen.</p>\r\n<p>Om het zichzelf en zijn klanten makkelijk te maken, gebruikt Netlash steeds Fork als basis voor een website. Door goed te luisteren naar zowel klanten als (collega-)webdesigners is Fork ge&#235;volutioneerd tot een ideale symbiose tussen de invalshoeken van webmasters en -designers.</p>\r\n<h2>Usability</h2>\r\n<blockquote>\r\n<p>"Make everything as simple as possible, but not simpler." (Albert Einstein)</p>\r\n</blockquote>\r\n<p>Einstein vat daarmee de filosofie achter Fork goed samen. Fork doet niet moeilijk. Het toont een simpele, sobere, intu&#239;tieve interface. Toch biedt het tegelijk ook zeer geavanceerde instellingen. Die geavanceerde instellingen (SEO, versiebeheer, spamfilter, templates) houden zich subtiel op de achtergrond.</p>\r\n<p>Het Netlash team helpt zijn klanten graag met problemen, maar nog liever ontwerpt en bouwt het knappe websites. Dat kon alleen door het CMS van zijn websites zo gebruiksvriendelijk mogelijk te maken. Fork is het antwoord.</p>\r\n<h2>Modulair en to-the-point</h2>\r\n<p>Netlash is een klein en flexibel bedrijf. Die lijn is doorgetrokken naar Fork: geen log, ingewikkeld systeem maar een lichte, flexibele, modulaire oplossing.<br />Fork Core is de motor van Fork. Modules als een multiblog, evenementenkalender, nieuwsbrief, fotoalbum, ... zijn inplugbaar.</p>\r\n<p>Door enkel te tonen wat nodig is, bereikt Fork iets waar designers erg van houden: er is geen <em>clutter.</em></p>', 'Home', 'N', 1, 'N', 'Y', 1, '2008-11-08 15:33:42', '2008-11-08 15:33:42', 'N', 'Y', 'Y', 'Y', 'N');
+INSERT INTO `pages` (`id`, `page_id`, `parent_id`, `template_id`, `meta_id`, `extra_id`, `language`, `title`, `content`, `navigation_title`, `navigation_title_overwrite`, `sequence`, `hidden`, `active`, `created_by_user`, `created_at`, `edited_at`, `allow_move`, `allow_children`, `allow_content`, `allow_edit`, `allow_delete`) VALUES(404, 404, 0, 0, 401, NULL, 'nl', 'Pagina niet gevonden', '<p>De pagina is niet gevonden.</p>', '', 'N', 0, 'N', 'Y', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Y', 'N', 'Y', 'Y', 'N');
+INSERT INTO `pages` (`id`, `page_id`, `parent_id`, `template_id`, `meta_id`, `extra_id`, `language`, `title`, `content`, `navigation_title`, `navigation_title_overwrite`, `sequence`, `hidden`, `active`, `created_by_user`, `created_at`, `edited_at`, `allow_move`, `allow_children`, `allow_content`, `allow_edit`, `allow_delete`) VALUES(405, 409, 0, 0, 2, NULL, 'nl', 'Links', '<p>Links</p>', 'links', 'N', 2, 'N', 'Y', 1, '2008-11-11 19:13:41', '2008-11-11 19:13:41', 'Y', 'Y', 'Y', 'Y', 'Y');
 
 -- --------------------------------------------------------
 
@@ -213,4 +215,4 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` VALUES(1, 'tijs', '1ce08008e914c637cf7659bc6a80720c', 'tijs', 'Y', 'N');
+INSERT INTO `users` (`id`, `username`, `password`, `password_raw`, `active`, `deleted`) VALUES(1, 'tijs', '1ce08008e914c637cf7659bc6a80720c', 'tijs', 'Y', 'N');

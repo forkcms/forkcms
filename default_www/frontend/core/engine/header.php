@@ -77,7 +77,7 @@ class FrontendHeader extends FrontendBaseObject
 		$minify = (bool) $minify;
 
 		// no minifying when debugging
-//		if(SPOON_DEBUG) $minify = false;
+		if(SPOON_DEBUG) $minify = false;
 
 		// try to modify
 		if($minify) $file = $this->minifyCss($file);
@@ -139,6 +139,12 @@ class FrontendHeader extends FrontendBaseObject
 	}
 
 
+	/**
+	 * Minify a CSS-file
+	 *
+	 * @return	string
+	 * @param	string $file
+	 */
 	private function minifyCss($file)
 	{
 		// create unique filename
