@@ -67,11 +67,14 @@ class ForkTemplate extends SpoonTemplate
 
 	private function mapCustomModifiers()
 	{
-		// convert vars into an url, syntax {$var|getUrl:<pageId>}
+		// convert vars into an url, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('ForkTemplateModifiers', 'getUrl'));
 
-		// convert vars into an url, syntax {$var|getTitle:<pageId>}
+		// convert vars into an url, syntax {$var|gettitle:<pageId>}
 		$this->mapModifier('gettitle', array('ForkTemplateModifiers', 'getTitle'));
+
+		// convert vars into an url, syntax {$var|getnavigation[:<start-depth>][:<end-depth>]}
+		$this->mapModifier('getnavigation', array('ForkTemplateModifiers', 'getNavigation'));
 	}
 
 
@@ -82,8 +85,14 @@ class ForkTemplate extends SpoonTemplate
 	 */
 	private function parseConstants()
 	{
+		// constants that should be protected from usage in the template
+		$aNotPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+
 		// get all defined constants
 		$aConstants = get_defined_constants(true);
+
+		// unset protected constants
+		foreach ($aNotPublicConstants as $constant) if(isset($aConstants['user'][$constant])) unset($aConstants['user'][$constant]);
 
 		// if our constants are there assign them
 		if(isset($aConstants['user'])) $this->assign($aConstants['user']);
@@ -124,16 +133,19 @@ class ForkTemplate extends SpoonTemplate
 class ForkTemplateModifiers
 {
 	/**
-	 * Convert a var into a url
-	 * 	syntax: {$var|geturl:<pageId>}
+	 * Get the navigation html
+	 * 	syntax: {$var|getnavigation[:<pageid>][:<startdepth>][:<enddepth>][:<excludeIds>]}
 	 *
-	 * @return	void
+	 * @return	string
 	 * @param	string[optional] $var
-	 * @param	int $pageId
+	 * @param	int[optional] $pageId
+	 * @param	int[optional] $startDepth
+	 * @param	int[optional] $endDepth
+	 * @param	array[optional] $excludeIds
 	 */
-	public static function getUrl($var = null, $pageId)
+	public static function getNavigation($var = null, $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
 	{
-		return (string) FrontendNavigation::getUrlByPageId($pageId);
+		return (string) FrontendNavigation::getNavigationHtml($pageId, $startDepth, $endDepth, $excludeIds);
 	}
 
 
@@ -155,6 +167,20 @@ class ForkTemplateModifiers
 
 		// fallback
 		return $var;
+	}
+
+
+	/**
+	 * Convert a var into a url
+	 * 	syntax: {$var|geturl:<pageId>}
+	 *
+	 * @return	void
+	 * @param	string[optional] $var
+	 * @param	int $pageId
+	 */
+	public static function getUrl($var = null, $pageId)
+	{
+		return (string) FrontendNavigation::getUrlByPageId($pageId);
 	}
 }
 ?>

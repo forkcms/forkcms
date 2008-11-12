@@ -19,11 +19,6 @@ $navigation[-1][-1][413]['access_level'] = '';
 $navigation[-1][-1][413]['url'] = 'nieuwsbrief-inschrijven';
 $navigation[-1][-1][413]['extra_id'] = 11;
 // --
-$navigation[-1][-1][414]['navigation'] = 'Sitemap';
-$navigation[-1][-1][414]['access_level'] = '';
-$navigation[-1][-1][414]['url'] = 'sitemap-2';
-$navigation[-1][-1][414]['extra_id'] = 12;
-// --
 $navigation[-1][-1][416]['navigation'] = 'Nieuwsbrief uitschrijven';
 $navigation[-1][-1][416]['access_level'] = '';
 $navigation[-1][-1][416]['url'] = 'nieuwsbrief-uitschrijven';

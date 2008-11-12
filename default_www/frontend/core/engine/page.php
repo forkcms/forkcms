@@ -153,9 +153,6 @@ class FrontendPage
 		// store statistics
 		$this->storeStatistics();
 
-		// parse navigation
-//		$this->navigation->parse();
-
 		// parse footer
 		$this->footer->parse();
 

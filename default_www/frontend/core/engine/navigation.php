@@ -22,6 +22,90 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
+	 * The pageids for the selected pages
+	 *
+	 * @var	array
+	 */
+	private static $aSelectedPageIds = array();
+
+
+	/**
+	 * Default constructor
+	 *
+	 * @return	void
+	 */
+	public function __construct()
+	{
+		// call the parent
+		parent::__construct();
+
+		// set selected ids
+		$this->setSelectedPageIds();
+	}
+
+
+	/**
+	 * Creates the html for the menu
+	 *
+	 * @return	string
+	 * @param	int[optional] $parentId
+	 * @param	int[optional] $startDepth
+	 * @param	int[optional] $maxDepth
+	 * @param	array[optional] $excludedIds
+	 * @param	string[optional] $html
+	 */
+	private static function createHtml($parentId = 0, $startDepth = 1, $endDepth = null, $excludedIds = array(), $html = '')
+	{
+		// init vars
+		$defaultSelectedClass = 'selected';
+
+		// validation
+		if($endDepth != null && $endDepth < $startDepth) return $html;
+
+		$aNavigation = self::getNavigation();
+
+		// check if item exists
+		if(isset($aNavigation[$startDepth][$parentId]))
+		{
+			// start html
+			$html .= '<ul>' . "\n";
+
+			// loop elements
+			foreach ($aNavigation[$startDepth][$parentId] as $key => $aValue)
+			{
+				// check if elements should be excluded
+				if(!in_array($key, (array) $excludedIds))
+				{
+					// check if this item should be selected
+					$selected = (in_array($key, self::$aSelectedPageIds));
+					$class = ($selected) ? $defaultSelectedClass : '';
+
+					// add html
+					if($class != null) $html .= "\t<li class=\"". $class ."\">" . "\n";
+					else $html .= "\t<li>" . "\n";
+
+					$html .= "\t\t". '<a href="'. self::getUrlByPageId($key) .'" title="'. $aValue['navigation'] .'">'. $aValue['navigation'] .'</a>' . "\n";
+
+					// add html if there are childs
+
+					// insert recursive here!
+					if(isset($aNavigation[$startDepth + 1][$key]) && $selected) $html .= self::createHtml($key, $startDepth + 1, $endDepth, $excludedIds, '');
+
+					// add html
+					$html .= '</li>' . "\n";
+				}
+			}
+
+			// end html
+			$html .= '</ul>' . "\n";
+		}
+
+		// return
+		return $html;
+	}
+
+
+	/**
 	 * Get all footerlinks
 	 *
 	 * @return	array
@@ -78,31 +162,6 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
-	 * Get a menuid for an
-	 *
-	 * @return	int
-	 * @param 	string $url
-	 * @param	string[optional] $language
-	 */
-	public static function getPageIdByUrl($url, $language = null)
-	{
-		// redefine
-		$url = (string) $url;
-		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
-		// get menu items array
-		$aKeys = self::getKeys($language);
-
-		// get key
-		$key = array_search($url, $aKeys);
-
-		// return
-		if($key === false) return 404;
-		return (int) $key;
-	}
-
-
-	/**
 	 * Get the navigation-items
 	 *
 	 * @return	array
@@ -128,6 +187,37 @@ class FrontendNavigation extends FrontendBaseObject
 
 		// return
 		return self::$aNavigation[$language];
+	}
+
+
+	public static function getNavigationHtml($startFromPageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = array())
+	{
+		return (string) self::createHtml($startFromPageId, $startDepth, $endDepth, $excludeIds);
+	}
+
+
+	/**
+	 * Get a menuid for an
+	 *
+	 * @return	int
+	 * @param 	string $url
+	 * @param	string[optional] $language
+	 */
+	public static function getPageIdByUrl($url, $language = null)
+	{
+		// redefine
+		$url = (string) $url;
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// get menu items array
+		$aKeys = self::getKeys($language);
+
+		// get key
+		$key = array_search($url, $aKeys);
+
+		// return
+		if($key === false) return 404;
+		return (int) $key;
 	}
 
 
@@ -167,6 +257,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// return
 		return false;
 	}
+
 
 	/**
 	 * Get parentId
@@ -233,12 +324,27 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
-	 * @todo	Parse the navigation into the template
+	 * Set the selected page ids
 	 *
 	 * @return	void
 	 */
-	public function parse()
+	public function setSelectedPageIds()
 	{
+		// get pages
+		$aPages = (array) $this->url->getPages();
+
+		// loop pages
+		while(!empty($aPages))
+		{
+			// get page id
+			$pageId = self::getPageIdByUrl((string) implode('/', $aPages));
+
+			// add to selected item
+			if($pageId !== false) self::$aSelectedPageIds[] = $pageId;
+
+			// remove last element
+			array_pop($aPages);
+		}
 	}
 }
 

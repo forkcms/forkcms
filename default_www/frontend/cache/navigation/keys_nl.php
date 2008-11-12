@@ -15,7 +15,6 @@ $keys[410] = 'historiek/fotoalbum/nieuws';
 $keys[411] = 'historiek/fotoalbum';
 $keys[412] = 'contact/wegbeschrijvingsdf-sdqfsqd';
 $keys[413] = 'nieuwsbrief-inschrijven';
-$keys[414] = 'sitemap-2';
 $keys[416] = 'nieuwsbrief-uitschrijven';
 $keys[417] = 'a-new-page/over-ons';
 $keys[418] = 'historiek';

@@ -34,7 +34,7 @@
 		</div>
 		<div id="main" class="clearfix">
 			<div id="navigation">
-				{$navigation}
+				{$nav|getnavigation:0:1:null:1}
 			</div>
 			<div id="content">
 				<!-- start content -->
