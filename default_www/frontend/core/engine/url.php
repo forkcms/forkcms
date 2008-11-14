@@ -218,8 +218,15 @@ class FrontendUrl
 			{
 				$language = (string) $aChunks[0];
 
-				// set cookie
-				SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
+				try
+				{
+					// set cookie
+					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
+				}
+				catch (Exception $e)
+				{
+					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e;
+				}
 
 				// set sessions
 				SpoonSession::set('frontend_language', $language);
@@ -244,8 +251,15 @@ class FrontendUrl
 				// set languageId & abbreviation
 				$language = FrontendLanguage::getBrowserLanguage();
 
-				// set cookie
-				SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
+				try
+				{
+					// set cookie
+					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
+				}
+				catch (Exception $e)
+				{
+					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e;
+				}
 
 				// redirect is needed
 				$mustRedirect = true;

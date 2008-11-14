@@ -3,7 +3,7 @@
 /**
  * Fork
  *
- * This source file is part of Fork CMS.
+ * This is the base-object
  *
  * @package		frontend
  *
@@ -35,8 +35,10 @@ class FrontendBaseObject
 	 */
 	public function __construct()
 	{
-		// set properties
+		// get template from reference
 		$this->tpl = Spoon::getObjectReference('template');
+
+		// get url from reference
 		$this->url = Spoon::getObjectReference('url');
 	}
 }

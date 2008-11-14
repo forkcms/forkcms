@@ -123,6 +123,8 @@ class Init
 		// general classes
 		require FRONTEND_CORE_PATH .'/engine/exception.php';
 		require FRONTEND_CORE_PATH .'/engine/base_object.php';
+		require FRONTEND_CORE_PATH .'/engine/base_extra_config.php';
+		require FRONTEND_CORE_PATH .'/engine/base_extra_action.php';
 		require FRONTEND_CORE_PATH .'/engine/template.php';
 		require FRONTEND_CORE_PATH .'/engine/template_custom.php';
 		require FRONTEND_CORE_PATH .'/engine/language.php';
@@ -137,6 +139,7 @@ class Init
 				require FRONTEND_CORE_PATH .'/engine/body.php';
 				require FRONTEND_CORE_PATH .'/engine/breadcrumb.php';
 				require FRONTEND_CORE_PATH .'/engine/footer.php';
+				require FRONTEND_CORE_PATH .'/engine/extra.php';
 			break;
 		}
 	}

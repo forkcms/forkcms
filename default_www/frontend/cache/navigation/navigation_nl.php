@@ -32,7 +32,7 @@ $navigation[-1][-1][423]['extra_id'] = 22;
 $navigation[-2][-2][2]['navigation'] = 'Sitemap';
 $navigation[-2][-2][2]['access_level'] = '';
 $navigation[-2][-2][2]['url'] = 'sitemap';
-$navigation[-2][-2][2]['extra_id'] = 12;
+$navigation[-2][-2][2]['extra_id'] = 1;
 // --
 $navigation[-2][-2][4]['navigation'] = 'Disclaimer en privacy';
 $navigation[-2][-2][4]['access_level'] = '';

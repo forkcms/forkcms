@@ -15,12 +15,12 @@ require_once 'spoon/template/template.php';
  * This source file is part of Fork CMS.
  *
  * @package		frontend
- * @subpackage	core
+ * @subpackage	template
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class ForkTemplate extends SpoonTemplate
+class FrontendTemplate extends SpoonTemplate
 {
 	/**
 	 * Default constructor
@@ -65,6 +65,11 @@ class ForkTemplate extends SpoonTemplate
 	}
 
 
+	/**
+	 * Map the fork-specific modifiers
+	 *
+	 * @return	void
+	 */
 	private function mapCustomModifiers()
 	{
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
@@ -112,12 +117,20 @@ class ForkTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
+		// assign actions
 		$this->assignArray(FrontendLanguage::getActions(), 'act');
+
+		// assign errors
 		$this->assignArray(FrontendLanguage::getErrors(), 'err');
+
+		// assign labels
 		$this->assignArray(FrontendLanguage::getLabels(), 'lbl');
+
+		// assign messages
 		$this->assignArray(FrontendLanguage::getMessages(), 'msg');
 	}
 }
+
 
 /**
  * ForkTemplateMofidiers, contains all Fork-related modifiers
@@ -125,7 +138,7 @@ class ForkTemplate extends SpoonTemplate
  * This source file is part of Fork CMS.
  *
  * @package		frontend
- * @subpackage	core
+ * @subpackage	template
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -145,7 +158,14 @@ class ForkTemplateModifiers
 	 */
 	public static function getNavigation($var = null, $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
 	{
-		return (string) FrontendNavigation::getNavigationHtml($pageId, $startDepth, $endDepth, $excludeIds);
+		// get HTML
+		$return = (string) FrontendNavigation::getNavigationHtml($pageId, $startDepth, $endDepth, $excludeIds);
+
+		// return the var
+		if($return != '') return $return;
+
+		// fallback
+		return $var;
 	}
 
 

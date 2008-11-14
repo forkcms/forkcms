@@ -82,22 +82,25 @@ class FrontendHeader extends FrontendBaseObject
 		// try to modify
 		if($minify) $file = $this->minifyCss($file);
 
-		// check if the file already exists in the array
+		// in array
 		$inArray = false;
-		foreach ($this->aCssFiles as $row)
-		{
-			if($row['file'] == $file && $row['media'] == $media) $inArray = true;
-		}
+
+		// check if the file already exists in the array
+		foreach ($this->aCssFiles as $row) if($row['file'] == $file && $row['media'] == $media) $inArray = true;
 
 		// add to array
 		if(!$inArray)
 		{
+			// build temporary arrat
 			$aTemp['file'] = (string) $file;
 			$aTemp['media'] = (string) $media;
 			$aTemp['condition'] = (string) $condition;
+
+			// options
 			$aTemp['oHasCondition'] = (bool) ($condition !== null);
 			$aTemp['oHasNoCondition'] = (bool) ($condition === null);
 
+			// add to files
 			$this->aCssFiles[] = $aTemp;
 		}
 	}
@@ -122,20 +125,87 @@ class FrontendHeader extends FrontendBaseObject
 		// try to modify
 		if($minify) $file = $this->minifyJs($file);
 
-		// check if the file already exists in the array
+		// init var
 		$inArray = false;
-		foreach ($this->aJsFiles as $row)
-		{
-			if($row['file'] == $file) $inArray = true;
-		}
+
+		// check if the file already exists in the array
+		foreach ($this->aJsFiles as $row) if($row['file'] == $file) $inArray = true;
 
 		// add to array
 		if(!$inArray)
 		{
+			// build temporary array
 			$aTemp['file'] = $file;
 
+			// add to files
 			$this->aJsFiles[] = $aTemp;
 		}
+	}
+
+
+	/**
+	 * Get all added CSS-files
+	 *
+	 * @return	array
+	 */
+	public function getCssFiles()
+	{
+		return (array) $this->aCssFiles;
+	}
+
+
+	/**
+	 * get all added JS-files
+	 *
+	 * @return	array
+	 */
+	public function getJsFiles()
+	{
+		return (array) $this->aJsFiles;
+	}
+
+
+	/**
+	 * Get meta-custom
+	 *
+	 * @return	string
+	 */
+	public function getMetaCustom()
+	{
+		return (string) $this->metaCustom;
+	}
+
+
+	/**
+	 * Get the meta-description
+	 *
+	 * @return	string
+	 */
+	public function getMetaDescription()
+	{
+		return (string) $this->metaDescription;
+	}
+
+
+	/**
+	 * Get the meta-keywords
+	 *
+	 * @return	string
+	 */
+	public function getMetaKeywords()
+	{
+		return (string) $this->metaKeywords;
+	}
+
+
+	/**
+	 * Get the pagetitle
+	 *
+	 * @return	string
+	 */
+	public function getPageTitle()
+	{
+		return (string) $this->pageTitle;
 	}
 
 
@@ -253,18 +323,18 @@ class FrontendHeader extends FrontendBaseObject
 	public function parse()
 	{
 		// assign page title
-		$this->tpl->assign('pageTitle', $this->pageTitle);
+		$this->tpl->assign('pageTitle', $this->getPageTitle());
 
 		// assign meta
-		$this->tpl->assign('metaDescription', (string) $this->metaDescription);
-		$this->tpl->assign('metaKeywords', (string) $this->metaKeywords);
-		$this->tpl->assign('metaCustom', (string) $this->metaCustom);
+		$this->tpl->assign('metaDescription', (string) $this->getMetaDescription());
+		$this->tpl->assign('metaKeywords', (string) $this->getMetaKeywords());
+		$this->tpl->assign('metaCustom', (string) $this->getMetaCustom());
 
 		// css-files
-		$this->tpl->assign('iCssFiles', (array) $this->aCssFiles);
+		$this->tpl->assign('iCssFiles', (array) $this->getCssFiles());
 
 		// js-files
-		$this->tpl->assign('iJsFiles', (array) $this->aJsFiles);
+		$this->tpl->assign('iJsFiles', (array) $this->getJsFiles());
 	}
 
 

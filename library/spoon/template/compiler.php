@@ -370,6 +370,7 @@ class SpoonTemplateCompiler
 				// file
 				$file = $this->getVariableString($match, $scope);
 
+				// @todo surf naar pagina zonder extra en zie het probleem
 				// template name
 				$template = eval('return '. $file .';');
 

@@ -24,7 +24,7 @@ class FrontendFooter extends FrontendBaseObject
 		$aFooterLinks = (array) FrontendNavigation::getFooterLinks();
 
 		// assign footer links
-		$this->tpl->assign('footerLinks', $aFooterLinks);
+		$this->tpl->assign('iFooterLinks', $aFooterLinks);
 
 		// get site wide html
 		$siteWideHtml = (string) CoreModel::getModuleSetting('core', 'site_wide_html');
@@ -33,4 +33,5 @@ class FrontendFooter extends FrontendBaseObject
 		$this->tpl->assign('siteWideHtml', $siteWideHtml);
 	}
 }
+
 ?>

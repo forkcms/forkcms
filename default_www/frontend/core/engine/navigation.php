@@ -18,7 +18,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private static $aKeys = array(), $aNavigation = array();
+	private static	$aKeys = array(),
+					$aNavigation = array();
 
 
 	/**
@@ -86,8 +87,6 @@ class FrontendNavigation extends FrontendBaseObject
 
 					$html .= "\t\t". '<a href="'. self::getUrlByPageId($key) .'" title="'. $aValue['navigation'] .'">'. $aValue['navigation'] .'</a>' . "\n";
 
-					// add html if there are childs
-
 					// insert recursive here!
 					if(isset($aNavigation[$startDepth + 1][$key]) && $selected) $html .= self::createHtml($key, $startDepth + 1, $endDepth, $excludedIds, '');
 
@@ -122,6 +121,8 @@ class FrontendNavigation extends FrontendBaseObject
 			// redefine data
 			$aTemp['title'] = $row['navigation'];
 			$aTemp['url'] = $row['url'];
+
+			// option
 			$aTemp['oIsCurrentPage'] = (bool) ($pageId == FrontendPage::getCurrentPageId());
 
 			// add to footerlinks
@@ -190,6 +191,15 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 
+	/**
+	 * Get navigation html
+	 *
+	 * @return	string
+	 * @param	int[optional] $startFromPageId
+	 * @param	int[optional] $startDepth
+	 * @param	int[optional] $endDepth
+	 * @param	array[optional] $excludeIds
+	 */
 	public static function getNavigationHtml($startFromPageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = array())
 	{
 		return (string) self::createHtml($startFromPageId, $startDepth, $endDepth, $excludeIds);
@@ -197,7 +207,7 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
-	 * Get a menuid for an
+	 * Get a menuid for an specified url
 	 *
 	 * @return	int
 	 * @param 	string $url
@@ -254,7 +264,7 @@ class FrontendNavigation extends FrontendBaseObject
 			}
 		}
 
-		// return
+		// fallback
 		return false;
 	}
 
@@ -272,11 +282,12 @@ class FrontendNavigation extends FrontendBaseObject
 		$url = (string) $url;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
+		// init vars
 		$aNavigation = self::getNavigation($language);
 		$pageId = self::getPageIdByUrl($url, $language);
 
 		// loop levels
-		foreach ($aNavigation as $depth => $aLevel)
+		foreach ($aNavigation as $aLevel)
 		{
 			// loop parents
 			foreach ($aLevel as $parentId => $aChilds)
@@ -307,6 +318,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
+		// init url
 		$url = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
 
 		// get the menuItems

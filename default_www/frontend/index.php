@@ -10,6 +10,6 @@ $init = new Init(APPLICATION);
 require_once FRONTEND_CORE_PATH .'/engine/frontend.php';
 
 // create website
-$website = new Frontend();
+$frontend = new Frontend();
 
 ?>

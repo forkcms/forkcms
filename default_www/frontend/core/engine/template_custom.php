@@ -3,7 +3,7 @@
  * This source file is part of Fork CMS.
  *
  * @package		frontend
- * @subpackage	core
+ * @subpackage	template
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -21,7 +21,7 @@ class FrontendTemplateCustom
 	/**
 	 * Default constructor
 	 *
-	 * @return	voi
+	 * @return	void
 	 * @param	ForkTemplate $tpl
 	 */
 	public function __construct($tpl)

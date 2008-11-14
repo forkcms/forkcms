@@ -8,8 +8,8 @@ require_once FRONTEND_CORE_PATH .'/engine/model.php';
  *
  * This source file is part of Fork CMS.
  *
- * @package		Frontend
- * @subpackage	Core
+ * @package		frontend
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -58,6 +58,8 @@ class Frontend
 
 		// create and set page reference
 		$this->page = new FrontendPage();
+
+		// add to reference
 		Spoon::setObjectReference('page', $this->page);
 
 		// display page

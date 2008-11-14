@@ -14,7 +14,7 @@
 class FrontendBreadcrumb extends FrontendBaseObject
 {
 	/**
-	 * The items
+	 * The items that will be used in the breadcrumb
 	 *
 	 * @var	array
 	 */
@@ -31,16 +31,20 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		// call parent
 		parent::__construct();
 
+		// get more information for the homepage
 		$homeInfo = FrontendNavigation::getPageInfo(1);
+
+		// add homepage as first item (with correct element)
 		$this->addElement($homeInfo['navigation'], (SITE_MULTILANGUAGE) ? '/'. FRONTEND_LANGUAGE : '/');
 
 		// get other pages
 		$aPages = $this->url->getPages();
 
-		// init var
+		// init vars
 		$aItems = array();
 		$errorUrl = FrontendNavigation::getUrlByPageId(404);
 
+		// loop pages
 		while(!empty($aPages))
 		{
 			// init vars
@@ -51,8 +55,13 @@ class FrontendBreadcrumb extends FrontendBaseObject
 			// do we know something about the page
 			if($pageInfo !== false && isset($pageInfo['navigation']))
 			{
+				// get url
 				$pageUrl = FrontendNavigation::getUrlByPageId($menuId);
+
+				// if this is the error-page, so we won't show an url.
 				if($pageUrl == $errorUrl) $pageUrl = null;
+
+				// Add to the items
 				$aItems[] = array('title' => $pageInfo['navigation'], 'url' => $pageUrl);
 			}
 
@@ -60,10 +69,10 @@ class FrontendBreadcrumb extends FrontendBaseObject
 			array_pop($aPages);
 		}
 
-		// reverse
+		// reverse so everything is in place
 		krsort($aItems);
 
-		// add elements
+		// loop and add elements
 		foreach($aItems as $row) $this->addElement($row['title'], $row['url']);
 	}
 
@@ -77,7 +86,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 */
 	public function addElement($title, $url = null)
 	{
-		$this->aItems[] = array('title' => (string) $title, 'url' => (string) $url);
+		$this->aItems[] = array('title' => (string) $title, 'url' => $url);
 	}
 
 

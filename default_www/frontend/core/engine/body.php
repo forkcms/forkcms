@@ -6,7 +6,7 @@
  * This source file is part of Fork CMS.
  *
  * @package		frontend
- * @subpackage	pagebody
+ * @subpackage	body
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -30,6 +30,28 @@ class FrontendBody extends FrontendBaseObject
 
 
 	/**
+	 * Get the content
+	 *
+	 * @return	string
+	 */
+	public function getContent()
+	{
+		return (string) $this->content;
+	}
+
+
+	/**
+	 * Get the title
+	 *
+	 * @return	string
+	 */
+	public function getTitle()
+	{
+		return (string) $this->title;
+	}
+
+
+	/**
 	 * Parse the body into the template
 	 *
 	 * @return	void
@@ -37,20 +59,14 @@ class FrontendBody extends FrontendBaseObject
 	public function parse()
 	{
 		// assign title
-		if($this->title)
-		{
-			$this->tpl->assign('oHasBodyTitle', true);
-			$this->tpl->assign('bodyTitle', $this->title);
-		}
-		else $this->tpl->assign('oHasBodyTitle', false);
+		$title = $this->getTitle();
+		if($title !== null) $this->tpl->assign('bodyTitle', $title);
+		$this->tpl->assign('oHasBodyTitle', (bool) ($title !== null));
 
 		// assign content
-		if($this->content)
-		{
-			$this->tpl->assign('oHasBodyContent', true);
-			$this->tpl->assign('bodyContent', $this->content);
-		}
-		else $this->tpl->assign('oHasBodyContent', false);
+		$content = $this->getContent();
+		if($content !== null) $this->tpl->assign('bodyContent', $content);
+		else $this->tpl->assign('oHasBodyContent', (bool) ($content !== null));
 	}
 
 
@@ -76,6 +92,5 @@ class FrontendBody extends FrontendBaseObject
 	{
 		$this->title = (string) $value;
 	}
-
 }
 ?>

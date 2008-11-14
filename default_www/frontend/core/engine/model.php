@@ -5,11 +5,11 @@
  *
  * This source file is part of Fork CMS.
  *
- * @package			frontend
- * @subpackage		core
+ * @package		frontend
+ * @subpackage	core
  *
- * @author 			Tijs Verkoyen <tijs@netlash.com>
- * @since			2.0
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
  */
 class CoreModel
 {
@@ -100,21 +100,19 @@ class CoreModel
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
-												e.location AS extra_location, e.module_id AS extra_module_id, e.parameters AS extra_parameters,
+												md.name AS extra_module, e.action AS extra_action, e.parameters AS extra_parameters,
 												t.location AS template_location
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
-											LEFT OUTER JOIN pages_extra AS e ON p.extra_id = e.id
+											LEFT OUTER JOIN pages_extras AS e ON p.extra_id = e.id
+											LEFT OUTER JOIN modules AS md ON e.module_id = md.id
 											LEFT OUTER JOIN pages_templates AS t ON p.template_id = t.id
 											WHERE p.page_id = ? AND p.active = ? AND p.hidden = ? AND p.language = ?
 											LIMIT 1;',
 											array((int) $pageId, 'Y', 'N', FRONTEND_LANGUAGE));
 
 		// unserialize parameters
-		if(isset($record['extra_parameters']) && $record['extra_parameters'] != '')
-		{
-			$record['extra_parameters'] = unserialize($record['extra_parameters']);
-		}
+		if(isset($record['extra_parameters']) && $record['extra_parameters'] != '') $record['extra_parameters'] = unserialize($record['extra_parameters']);
 
 		// return
 		return (array) $record;
@@ -133,7 +131,7 @@ class CoreModel
 	{
 		// redefine
 		$moduleName = (string) $moduleName;
-		$settingname = (string) $settingName;
+		$settingName = (string) $settingName;
 		$value = serialize($value);
 
 		// get db

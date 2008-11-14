@@ -10,7 +10,7 @@
  * @author		Tijs Verkoyen <tijs@spoon-library.be>
  * @since		2.0
  */
-class FrontendException extends Exception
+class FrontendException extends SpoonException
 {
 	/**
 	 * Default constructor.

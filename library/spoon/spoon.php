@@ -18,7 +18,7 @@
 define('SPOON_VERSION', '1.0.0');
 
 // default strict setting
-if(!defined('SPOON_STRCIT')) define('SPOON_STRICT', true);
+if(!defined('SPOON_STRICT')) define('SPOON_STRICT', true);
 
 /** SpoonException class */
 require_once 'spoon/errors/exception.php';

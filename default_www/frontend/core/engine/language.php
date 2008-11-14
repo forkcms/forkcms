@@ -9,7 +9,7 @@ require_once FRONTEND_CORE_PATH .'/engine/model.php';
  * This source file is part of Fork CMS.
  *
  * @package		frontend
- * @subpackage	core
+ * @subpackage	language
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -19,12 +19,16 @@ class FrontendLanguage
 	// Default language
 	const DEFAULT_LANGUAGE = 'nl';
 
+
 	/**
 	 * The labels
 	 *
 	 * @var	array
 	 */
-	private static $act = array(), $err = array(), $lbl = array(), $msg = array();
+	private static $act = array(),
+					$err = array(),
+					$lbl = array(),
+					$msg = array();
 
 
 	/**
@@ -62,7 +66,7 @@ class FrontendLanguage
 	 * Get the prefered language by using the browser-language
 	 *
 	 * @return	string
-	 * @param	bool[optional]	$forRedirect
+	 * @param	bool[optional] $forRedirect
 	 */
 	public static function getBrowserLanguage($forRedirect = true)
 	{
@@ -85,10 +89,12 @@ class FrontendLanguage
 				// find possible language
 				if($forRedirect)
 				{
+					// check in the redirect-languages
 					if(in_array($language, $aRedirectLanguages)) return $language;
 				}
 				else
 				{
+					// check in the active-languages
 					if(in_array($language, $aPossibleLanguages)) return $language;
 				}
 			}

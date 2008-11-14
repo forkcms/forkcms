@@ -160,7 +160,11 @@ class FrontendPage
 		if($this->body) $this->body->parse();
 
 		// parse extra if needed
-//		if($this->extra) $this->extra->parse();
+		if($this->extra)
+		{
+			$this->extra->parse();
+			$this->tpl->assign('oHasExtra', true);
+		}
 
 		// parse breadcrumb
 		$this->breadcrumb->parse();
@@ -174,7 +178,7 @@ class FrontendPage
 
 
 	/**
-	 * Get the current pageID
+	 * Get the current pageid
 	 *
 	 * @return	int
 	 */
@@ -200,13 +204,13 @@ class FrontendPage
 		// redirect to first child
 		if(empty($this->aPageRecord['content']) && $this->aPageRecord['extra_id'] == 0)
 		{
+			// get first child
 			$childId = FrontendNavigation::getFirstChildIdByPageId($this->pageId);
+
+			// redirect if possible
 			if($childId != '') SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId($childId));
 		}
-
 	}
-
-
 
 
 	/**
@@ -217,7 +221,7 @@ class FrontendPage
 	private function processPage()
 	{
 		// create template instance
-		$this->tpl = new ForkTemplate();
+		$this->tpl = new FrontendTemplate();
 		Spoon::setObjectReference('template', $this->tpl);
 
 		// create and set header instance
@@ -228,14 +232,13 @@ class FrontendPage
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/reset.css');
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/screen.css');
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/print.css', 'print');
-
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/ie6.css', 'screen', 'lte IE 6');
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/ie7.css', 'screen', 'IE 7');
 
 		// add jQuery (this is default)
 		$this->header->addJsFile(FRONTEND_CORE_URL .'/js/jquery/jquery-1.2.6.min.js', false);
 
-		// set meta information
+		// add meta information
 		$this->header->setPageTitle($this->aPageRecord['meta_pagetitle'], ($this->aPageRecord['meta_pagetitle_overwrite'] == 'Y') ? true : false);
 		$this->header->setMetaKeywords($this->aPageRecord['meta_keywords'], ($this->aPageRecord['meta_keywords_overwrite'] == 'Y') ? true : false);
 		$this->header->setMetaDescription($this->aPageRecord['meta_description'], ($this->aPageRecord['meta_description_overwrite'] == 'Y') ? true : false);
@@ -259,10 +262,10 @@ class FrontendPage
 		$this->body->setContent($this->aPageRecord['content']);
 
 		// create PageExtra instance if needed
-		if($this->aPageRecord['extra_location'] != '')
+		if($this->aPageRecord['extra_module'] != '')
 		{
 			// create extra instance
-			$this->extra = new PageExtra($this->aPageRecord['extra_location'], $this->aPageRecord['extra_module_id'], $this->aPageRecord['extra_parameters']);
+			$this->extra = new FrontendExtra($this->aPageRecord['extra_action'], $this->aPageRecord['extra_module'], $this->aPageRecord['extra_parameters']);
 			Spoon::setObjectReference('extra', $this->extra);
 		}
 	}
@@ -280,7 +283,15 @@ class FrontendPage
 		else
 		{
 			$cookieId = md5(SpoonSession::getSessionId());
-			SpoonCookie::set('cookie_id', $cookieId, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
+
+			try
+			{
+				SpoonCookie::set('cookie_id', $cookieId, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
+			}
+			catch (Exception $e)
+			{
+				if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e;
+			}
 		}
 
 		// create array
@@ -303,13 +314,12 @@ class FrontendPage
 		}
 
 		// url info
-		$aStatistics['referrer_url'] =  (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
+		$aStatistics['referrer_url'] = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
 		$aStatistics['url'] = trim('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], '/');
 
 		// log to file
 		SpoonFile::setFileContent(FRONTEND_CACHE_PATH .'/statistics/temp.txt', serialize($aStatistics) ."\n", true);
 	}
-
 }
 
 ?>

@@ -43,7 +43,7 @@
 				<!-- end content -->
 
 				<!-- start extra -->
-				{option:oHasExtra}{$extra}{/option:oHasExtra}
+				{option:oHasExtra}{include:file="{$extraTemplatePath}"}{/option:oHasExtra}
 				<!-- end extra -->
 			</div>
 		</div>
