@@ -350,6 +350,40 @@ class SpoonTemplateCompiler
 
 
 	/**
+	 * Parses the cycle tags in the given content
+	 *
+	 * @return	string
+	 * @param	string $content
+	 * @param	array $scope
+	 */
+	private function parseCycle($content, array $scope)
+	{
+		// regex pattern
+		$pattern = "|{cycle([a-z0-9-_\.\'\"\:\<\/\>\s]+)+?}|is";
+
+		// find matches
+		if(preg_match_all($pattern, $content, $matches))
+		{
+			// loop matches
+			foreach($matches[1] as $i => $match)
+			{
+				// create list
+				$aCycle = explode(':', trim($match, ':'));
+
+				// search & replace
+				$search = $matches[0][$i];
+				$replace = '<?php echo $this->cycle($'. $scope[count($scope) -1] .'I, array(\''. implode('\',\'', $aCycle) .'\')); ?>';
+
+				// replace it
+				$content = str_replace($search, $replace, $content);
+			}
+		}
+
+		return $content;
+	}
+
+
+	/**
 	 * Parse the include tags
 	 *
 	 * @return	string
@@ -370,9 +404,9 @@ class SpoonTemplateCompiler
 				// file
 				$file = $this->getVariableString($match, $scope);
 
-				// @todo surf naar pagina zonder extra en zie het probleem
 				// template name
-				$template = eval('return '. $file .';');
+//				$template = eval('return '. $file .';');
+				$template = eval('error_reporting(0); return '. $file .';');
 
 				// template doesn't start from the root
 				if(substr($template, 0, 1) != '/') $template = dirname(realpath($this->template)) .'/'. $template;
@@ -426,6 +460,9 @@ class SpoonTemplateCompiler
 			// parse options
 			$aIteration['content'] = $this->parseOptions($aIteration['content'], $scope);
 
+			// parse cycles
+			$aIteration['content'] = $this->parseCycle($aIteration['content'], $scope);
+
 			// parse subiterations
 			if($aIteration['children'] !== null) $aIteration['content'] = $this->parseIterations($aIteration['content'], $aIteration['children'], $scope);
 
@@ -457,7 +494,7 @@ class SpoonTemplateCompiler
 						$variable = '$'. $scope[(count($scope) -2)] . '[\''. $aIteration['name'] .'\']';
 
 						// replace string
-						$replace = '<?php foreach((array) '. $variable .' as $'. $aIteration['name'] ."): ?>\n";
+						$replace = '<?php foreach((array) '. $variable .' as $'. $aIteration['name'] .'I => $'. $aIteration['name'] ."): ?>\n";
 
 						// stop the while
 						break;
@@ -470,7 +507,7 @@ class SpoonTemplateCompiler
 						$variable = '$this->variables' . '['. $aIteration['name'] .']';
 
 						// replace string
-						$replace = '<?php foreach((array) '. $variable .' as $'. $aIteration['name'] ."): ?>\n";
+						$replace = '<?php foreach((array) '. $variable .' as $'. $aIteration['name'] .'I => $'. $aIteration['name'] ."): ?>\n";
 
 						// stop the while
 						break;
@@ -483,7 +520,7 @@ class SpoonTemplateCompiler
 			}
 
 			// no scope defined
-			else $replace = '<?php foreach((array) $this->variables[\''. $aIteration['name'] .'\'] as $'. $aIteration['name'] ."): ?>\n";
+			else $replace = '<?php foreach((array) $this->variables[\''. $aIteration['name'] .'\'] as $'. $aIteration['name'] .'I => $'. $aIteration['name'] ."): ?>\n";
 
 			// add to the replace string
 			$replace .= $this->parseIncludes($aIteration['content'], $scope) ."\n<?php endforeach; ?>";
@@ -509,7 +546,7 @@ class SpoonTemplateCompiler
 	private function parseOptions($content, array $scope = null)
 	{
 		// regex pattern
-		$pattern = "/{option:([a-z0-9-_\.]+)}.*?{\/option:\\1}/is";
+		$pattern = "/{option:([a-z0-9-_\.\[\]]+)}.*?{\/option:\\1}/is";
 
 		// keep finding those options!
 		while(1)
@@ -585,10 +622,6 @@ class SpoonTemplateCompiler
 		$aVarChunks = explode('.', $aVar[0]);
 		foreach($aVarChunks as $chunk) $variable .= "['$chunk']";
 
-		// @todo is da wel nodig hieronder?
-		// temp variable
-		$variableTemp = '$this->variables';
-
 		// scope exists
 		if(is_array($scope) && count($scope) != 0)
 		{
@@ -620,7 +653,7 @@ class SpoonTemplateCompiler
 				// variable not found
 				else array_pop($scope);
 
-				// stop looping if there's no scope left
+				// stop looping until there's no scope left
 				if(count($scope) == 0)
 				{
 					// define final variable

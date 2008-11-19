@@ -5,6 +5,18 @@
  * @author	name <AUTHORNAMEHERE@netlash.com>
  */
 
+/**
+ * Reset
+ */
+body, form, ol, ul, dl, li, dt, dd, td, th ,tr, h1, h2, h3, h4, h5, h6, p, pre, blockquote, address{ margin: 0; padding: 0; }
+html, body { height: 100%; width: 100%; }
+ol, ul { list-style:none; }
+img { border: 0; }
+fieldset { margin: 0; padding: 0; border: 0; }
+input, select, textarea { font-size: 100%; vertical-align: middle; }
+table { border-collapse: collapse; border-spacing: 0; }
+th { text-align: left; }
+
 /* Typography and text styles */
 body {
 	font: 300 13px Arial, sans-serif;

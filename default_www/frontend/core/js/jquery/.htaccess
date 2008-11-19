@@ -1,0 +1,4 @@
+<IfModule mod_expires.c>
+	ExpiresActive on
+	ExpiresDefault A604800
+</IfModule>

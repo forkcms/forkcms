@@ -5,6 +5,7 @@
  * This is the base-object for config-files
  *
  * @package		frontend
+ * @subpackage	extra
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -38,10 +39,10 @@ class FrontendExtraBaseConfig extends FrontendBaseObject
 	 * @param	string $action
 	 * @param	string $className
 	 */
-	public function getActionFileName($action, $className)
+	public function getActionFileName($action)
 	{
 		// no action?
-		if($action === null) $action = constant($className .'::DEFAULT_ACTION');
+		if($action === null) $action = $this->defaultAction;
 
 		// cleanup
 		$action = SpoonFilter::toCamelCase($action);
@@ -64,10 +65,10 @@ class FrontendExtraBaseConfig extends FrontendBaseObject
 	 * @param	string $action
 	 * @param	string $className
 	 */
-	public function getActionName($action, $className)
+	public function getActionName($action)
 	{
 		// no action?
-		if($action === null) $action = constant($className .'::DEFAULT_ACTION');
+		if($action === null) $action = $this->defaultAction;
 
 		// cleanup and return
 		return SpoonFilter::toCamelCase($action);
@@ -81,13 +82,18 @@ class FrontendExtraBaseConfig extends FrontendBaseObject
 	 */
 	public function setPossibleActions()
 	{
-		// @todo	find a way to disable certain actions
-
 		// get filelist
 		$aActionFiles = (array) SpoonFile::getList(FRONTEND_MODULE_PATH .'/actions');
 
 		// loop files
-		foreach ($aActionFiles as $file) $actions[$file] = SpoonFilter::toCamelCase(str_replace('.php', '', $file));
+		foreach ($aActionFiles as $file)
+		{
+			// get action
+			$action = SpoonFilter::toCamelCase(str_replace('.php', '', $file));
+
+			// if not disabled
+			if(!in_array($action, $this->disabledActions)) $actions[$file] = $action;
+		}
 
 		// set actions
 		$this->aPossibleActions = $actions;

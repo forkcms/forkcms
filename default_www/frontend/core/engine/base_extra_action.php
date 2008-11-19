@@ -6,12 +6,21 @@
  * This is the base-object for action-files
  *
  * @package		frontend
+ * @subpackage	extra
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseAction extends FrontendBaseObject
 {
+	/**
+	 * Extra instance
+	 *
+	 * @var	FrontendExtra
+	 */
+	protected $extra;
+
+
 	/**
 	 * The path to the template
 	 *
@@ -30,8 +39,8 @@ class FrontendBaseAction extends FrontendBaseObject
 		// call parent
 		parent::__construct();
 
-		// @todo	set the template
-		$this->setTemplatePath(FRONTEND_MODULE_PATH .'/layout/templates/overview.tpl');
+		// set properties
+		$this->extra = Spoon::getObjectReference('extra');
 	}
 
 
@@ -43,11 +52,11 @@ class FrontendBaseAction extends FrontendBaseObject
 	 */
 	public function display()
 	{
-		// assign a variable so the action's template can be included
-		$this->tpl->assign('extraTemplatePath', $this->getTemplatePath());
-
 		// execute the extra
 		$this->execute();
+
+		// assign a variable so the action's template can be included
+		$this->tpl->assign('extraTemplatePath', $this->getTemplatePath());
 	}
 
 
@@ -63,6 +72,17 @@ class FrontendBaseAction extends FrontendBaseObject
 
 
 	/**
+	 * Load the template
+	 *
+	 * @return	void
+	 */
+	protected function loadTemplate()
+	{
+		$this->setTemplatePath(FRONTEND_MODULE_PATH .'/layout/templates/'. FRONTEND_ACTION .'.tpl');
+	}
+
+
+	/**
 	 * Set the template-path
 	 *
 	 * @return	void
@@ -72,7 +92,5 @@ class FrontendBaseAction extends FrontendBaseObject
 	{
 		$this->templatePath = (string) $path;
 	}
-
-
 }
 ?>

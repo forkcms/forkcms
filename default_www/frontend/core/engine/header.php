@@ -144,12 +144,62 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
+	 * Sort function for CSS-files
+	 *
+	 * @return	void
+	 */
+	public function cssSort()
+	{
+		// init vars
+		$i = 0;
+		$aTemp = array();
+
+		// loop files
+		foreach($this->aCssFiles as $file)
+		{
+			// if condition is not empty, add to lowest key
+			if($file['condition'] != '') $aTemp['z'.$i][] = $file;
+			else
+			{
+				// if media == screen, add to highest key
+				if($file['media'] == 'screen') $aTemp['a'.$i][] = $file;
+
+				// fallback
+				else $aTemp['b'. $file['media'] .$i][] = $file;
+
+				// increase
+				$i++;
+			}
+		}
+
+		// key sort
+		ksort($aTemp);
+
+		// init var
+		$aReturn = array();
+
+		// loop by key
+		foreach ($aTemp as $aFiles)
+		{
+			// loop files
+			foreach ($aFiles as $file) $aReturn[] = $file;
+		}
+
+		// reset property
+		$this->aCssFiles = $aReturn;
+	}
+
+
+	/**
 	 * Get all added CSS-files
 	 *
 	 * @return	array
 	 */
 	public function getCssFiles()
 	{
+		// sort the cssfiles
+		$this->cssSort();
+
 		return (array) $this->aCssFiles;
 	}
 
@@ -262,7 +312,7 @@ class FrontendHeader extends FrontendBaseObject
 		$content = preg_replace('|\r|iU', '', $content);
 
 		// remove empty lines
-		$content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $content);
+		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
 
 		// remove newlines at start and end
 		$content = trim($content);

@@ -6,7 +6,6 @@
  * @package		frontend
  * @subpackage	core
  *
- *
  * @author		Tijs Verkoyen <tijs@spoon-library.be>
  * @since		2.0
  */

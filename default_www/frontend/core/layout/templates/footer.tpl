@@ -6,4 +6,3 @@
 			</ul>
 		</div>
 		<!-- start site-wide html -->{$siteWideHtml}<!-- end site-wide html -->
-		

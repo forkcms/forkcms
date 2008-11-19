@@ -126,14 +126,7 @@ class FrontendPage
 		self::$currentPageId = $this->pageId;
 
 		// set headers if this is a 404 page
-		if($this->pageId == 404)
-		{
-			// let the object we are 404
-			$this->statusCode = 404;
-
-			// set headers
-			SpoonHTTP::setHeadersByCode(404);
-		}
+		if($this->pageId == 404) $this->statusCode = 404;
 
 		// get pagecontent
 		$this->getPageContent();
@@ -150,6 +143,9 @@ class FrontendPage
 	 */
 	public function display()
 	{
+		// set headers
+		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
+
 		// store statistics
 		$this->storeStatistics();
 
@@ -173,7 +169,13 @@ class FrontendPage
 		$this->header->parse();
 
 		// show the template's parsed content
-		$this->tpl->display(FRONTEND_CORE_PATH .'/layout/templates/index.tpl');
+		$templatePath = $this->aPageRecord['template_path'];
+		if($templatePath == '') $templatePath = 'core/layout/templates/index.tpl';
+
+		// @todo	remove after profiling
+//		$this->tpl->assign('queries', stripslashes(var_export(CoreModel::getDB()->getQueries(), true)));
+
+		$this->tpl->display(FRONTEND_PATH .'/'. $templatePath);
 	}
 
 
@@ -229,7 +231,6 @@ class FrontendPage
 		Spoon::setObjectReference('header', $this->header);
 
 		// add css
-		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/reset.css');
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/screen.css');
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/print.css', 'print');
 		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/ie6.css', 'screen', 'lte IE 6');

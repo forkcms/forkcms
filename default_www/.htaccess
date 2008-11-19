@@ -1,4 +1,21 @@
-RewriteEngine On
+# fix ETags
+FileETag MTime Size
+
+# caching
+<IfModule mod_expires.c>
+	ExpiresActive on
+	ExpiresByType text/css A604800
+
+	ExpiresByType image/gif A604800
+	ExpiresByType image/png A604800
+	ExpiresByType image/jpg A604800
+	ExpiresByType image/jpeg A604800
+
+	ExpiresByType text/javascript A604800
+	ExpiresByType text/javascript A604800
+</IfModule>
+
+# options 
 Options -Indexes
 Options +FollowSymlinks
 
@@ -10,6 +27,7 @@ Options +FollowSymlinks
 #require valid-user
 
 # nice urls (REMARK: don't edit anything below)
+RewriteEngine On
 RewriteCond %{REQUEST_URI} !^$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

@@ -1,10 +1,52 @@
 <?php
 
+/**
+ * Spoon Library
+ *
+ * This source file is part of the Spoon Library. More information,
+ * documentation and tutorials can be found @ http://www.spoon-library.be
+ *
+ * @package			html
+ * @subpackage		datagrid
+ *
+ *
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @author			Tijs Verkoyen <tijs@spoon-library.be>
+ * @since			1.0.0
+ */
+
+
+/**
+ * This class is the base class for pagination
+ *
+ * @package			html
+ * @subpackage		datagrid
+ *
+ *
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @since			1.0.0
+ */
 class SpoonDataGridPaging
 {
 	/**
+	 * Next label
+	 *
+	 * @var	string
+	 */
+	private static $next = 'next';
+
+
+	/**
+	 * Previous label
+	 *
+	 * @var	string
+	 */
+	private static $previous = 'previous';
+
+
+	/**
 	 * Builds & returns the pagination
-	 * 
+	 *
 	 * @return	string
 	 * @param	string $url
 	 * @param	int $offset
@@ -12,47 +54,48 @@ class SpoonDataGridPaging
 	 * @param	string $sort
 	 * @param	int $numResults
 	 * @param	int $numPerPage
+	 * @param	bool[optional] $debug
 	 */
-	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage)
+	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage, $debug = true)
 	{
 		// current page
 		$iCurrentPage = ceil($offset / $numPerPage) + 1;
-		
+
 		// number of pages
 		$iPages = ceil($numResults / $numPerPage);
-		
+
 		// load template
-		$path = pathinfo(__FILE__);
-		$tpl = new SpoonTemplate($path['dirname'] .'/paging.tpl');
-		
-		// disable headers
-		$tpl->disableHeaders();
-		
+		$tpl = new SpoonTemplate();
+
+		// compile directory
+		$tpl->setCompileDirectory(dirname(__FILE__));
+
+		// force compiling
+		$tpl->setForceCompile((bool) $debug);
+
 		// previous url
 		if($iCurrentPage > 1)
 		{
-			// show option
-			$tpl->assignOption('oPreviousURL');
-			
-			// parse url
-			$tpl->assign('previous.url', str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $url));
+			// label & url
+			$aPrevious['label'] = self::$previous;
+			$aPrevious['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $url);
+			$tpl->assign('previous', $aPrevious);
 		}
-		
+
 		// next url
 		if($iCurrentPage < $iPages)
 		{
-			// show option
-			$tpl->assignOption('oNextURL');
-			
-			// parse url
-			$tpl->assign('next.url', str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $url));
+			// label & url
+			$aNext['label'] = self::$next;
+			$aNext['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $url);
+			$tpl->assign('next', $aNext);
 		}
 
 		// limit
 		$limit = 7;
 		$breakpoint = 4;
 		$aItems = array();
-		
+
 		/**
 		 * Less than or 7 pages. We know all the keys, and we put them in the array
 		 * that we will use to generate the actual pagination.
@@ -61,9 +104,9 @@ class SpoonDataGridPaging
 		{
 			for($i = 1; $i <= $iPages; $i++) $aItems[$i] = $i;
 		}
-		
+
 		// more than 7 pages
-		else 
+		else
 		{
 			// first page
 			if($iCurrentPage == 1)
@@ -72,8 +115,8 @@ class SpoonDataGridPaging
 				for($i = 1; $i <= $limit; $i++) $aItems[$i] = $i;
 				$aItems[$limit + 1] = '...';
 			}
-			
-			
+
+
 			// last page
 			elseif($iCurrentPage == $iPages)
 			{
@@ -81,78 +124,91 @@ class SpoonDataGridPaging
 				$aItems[$iPages -  $limit - 1] = '...';
 				for($i = ($iPages - $limit); $i <= $iPages; $i++) $aItems[$i] = $i;
 			}
-			
+
 			// other page
-			else 
+			else
 			{
 				// 1 2 3 [4] 5 6 7 8 9 10 11 12 13
-				
+
 				// define min & max
 				$min = $iCurrentPage - $breakpoint + 1;
 				$max = $iCurrentPage + $breakpoint - 1;
-				
+
 				// minimum doesnt exist
 				while($min <= 0)
 				{
 					$min++;
 					$max++;
 				}
-				
+
 				// maximum doesnt exist
 				while($max > $iPages)
 				{
 					$min--;
 					$max--;
 				}
-				
+
 				// create the list
 				if($min != 1) $aItems[$min - 1] = '...';
 				for($i = $min; $i <= $max; $i++) $aItems[$i] = $i;
 				if($max != $iPages) $aItems[$max + 1] = '...';
 			}
 		}
-		
-		// set iteration
-		$tpl->setIteration('iPages');
-		
+
+		// init var
+		$aPages = array();
+
 		// loop pages
 		foreach($aItems as $item)
 		{
+			// counter
+			if(!isset($i)) $i = 0;
+
+			// base details
+			$aPages[$i]['page'] = false;
+			$aPages[$i]['currentPage'] = false;
+			$aPages[$i]['otherPage'] = false;
+			$aPages[$i]['noPage'] = false;
+			$aPages[$i]['url'] = '';
+			$aPages[$i]['pageNumber'] = $item;
+
 			// hellips
-			if($item == '...') $tpl->assignIterationOption('oHellip');
-			
+			if($item == '...') $aPages[$i]['noPage'] = true;
+
 			// regular page
-			else 
+			else
 			{
 				// show page
-				$tpl->assignIterationOption('oPage');
-				
-				// parse page
-				$tpl->assignIteration('iPage', $item);
-				
+				$aPages[$i]['page'] = true;
+
 				// current page ?
-				if($item == $iCurrentPage) $tpl->assignIterationOption('oCurrentPage');
-				
+				if($item == $iCurrentPage) $aPages[$i]['currentPage'] = true;
+
 				// other page
-				else 
+				else
 				{
+					// show the page
+					$aPages[$i]['otherPage'] = true;
+
 					// url to this page
-					$tpl->assignIteration('url', str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $url));
-					
-					// show the page 
-					$tpl->assignIterationOption('oOtherPage');
+					$aPages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $url);
 				}
 			}
-			
-			// refill iteration
-			$tpl->refillIteration();
+
+			// update counter
+			$i++;
 		}
-		
-		// parse iteration
-		$tpl->parseIteration();
-		
+
+		// first key needs to be zero
+		$aPages = SpoonFilter::arraySortKeys($aPages);
+
+		// assign pages
+		$tpl->assign('pages', $aPages);
+
 		// cough it up
-		return $tpl->getContent();
+		ob_start();
+		$tpl->display(dirname(__FILE__) .'/paging.tpl');
+		return ob_get_clean();
 	}
 }
 

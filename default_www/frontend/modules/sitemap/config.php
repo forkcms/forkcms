@@ -1,6 +1,30 @@
 <?php
-class SitemapConfig extends FrontendExtraBaseConfig
+/**
+ * Sitemap
+ *
+ * This is the configuration-object
+ *
+ * @package		frontend
+ * @subpackage	sitemap
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+final class SitemapConfig extends FrontendExtraBaseConfig
 {
-	const DEFAULT_ACTION = 'overview';
+	/**
+	 * The default action
+	 *
+	 * @var	string
+	 */
+	protected $defaultAction = 'overview';
+
+
+	/**
+	 * The disabled actions
+	 *
+	 * @var	array
+	 */
+	protected $disabledActions = array();
 }
 ?>

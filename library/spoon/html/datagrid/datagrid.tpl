@@ -1,36 +1,32 @@
-<table{option:oSummary} summary="{$summary}"{/option:oSummary}{$attributes}>
-	{option:oCaption}<caption>{$caption}</caption>{/option:oCaption}
+<table{option:summary} summary="{$summary}"{/option:summary}{$attributes}>
+	{option:caption}<caption>{$caption}</caption>{/option:caption}
 	<thead>
-		<tr{$header.attributes}>
-			{iteration:iHeader}
+		<tr{$headerAttributes}>
+			{iteration:headers}
 			<th>
-			{option:oSorting}
-				{option:oSorted}<a href="{$sorting.url}" title="{$sorting.label}">{$label} <img src="{$sorting.icon}" /></a>{/option:oSorted}
-				{option:oNotSorted}<a href="{$sorting.url}" title="{$sorting.label}">{$label} <img src="{$sorting.icon}" /></a>{/option:oNotSorted}
-			{/option:oSorting}
-			{option:oNoSorting}
+			{option:sorting}
+				{option:sorted}<a href="{$sorting.url}" title="{$sorting.label}">{$label} <img src="{$sorting.icon}" /></a>{/option:sorted}
+				{option:notSorted}<a href="{$sorting.url}" title="{$sorting.label}">{$label} <img src="{$sorting.icon}" /></a>{/option:notSorted}
+			{/option:sorting}
+			{option:noSorting}
 				{$label}
-			{/option:oNoSorting}
+			{/option:noSorting}
 			</th>
-			{/iteration:iHeader}
+			{/iteration:headers}
 		</tr>
 	</thead>
-	{option:oPaging}
+	<tbody>
+		{iteration:rows}
+		<tr{$attributes}{$oddAttributes}{$evenAttributes}>
+			{iteration:columns}<td{$attributes}>{$value}</td>{/iteration:columns}
+		</tr>
+		{/iteration:rows}
+	</tbody>
+	{option:paging}
 	<tfoot>
-		<tr>
-			<td>
-				{$paging}
-			</td>
+		<tr{$footerAttributes}>
+			<td>{$paging}</td>
 		</tr>
 	</tfoot>
-	{/option:oPaging}
-	<tbody>
-		{iteration:iRows}
-		<tr{$row.attributes}{$row.oddAttributes}{$row.evenAttributes}>
-			{iteration:iColumns}
-				<td{$column.attributes}>{$column.value}</td>
-			{/iteration:iColumns}
-		</tr>
-		{/iteration:iRows}
-	</tbody>
+	{/option:paging}
 </table>

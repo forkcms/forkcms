@@ -14,6 +14,13 @@
 class CoreModel
 {
 	/**
+	 * Cached modules
+	 *
+	 * @var	array
+	 */
+	private static $aModules = array();
+
+	/**
 	 * Cached module-settings
 	 *
 	 * @var	array
@@ -34,12 +41,43 @@ class CoreModel
 			// create instance
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
+			// @todo	remove after profiling
+//			$db->setDebug(true);
+
 			// store
 			Spoon::setObjectReference('database', $db);
 		}
 
 		// return it
 		return Spoon::getObjectReference('database');
+	}
+
+
+	/**
+	 * Get a module-id for a given name
+	 *
+	 * @return	string
+	 * @param	string $moduleName
+	 */
+	public static function getModuleId($moduleName)
+	{
+		// redefine
+		$moduleName = (string) $moduleName;
+
+		// get db
+		$db = self::getDB();
+
+		// get them all
+		if(empty(self::$aModules))
+		{
+			self::$aModules = (array) $db->getPairs('SELECT m.id, m.name
+														FROM modules AS m
+														WHERE m.active = ?;',
+														array('Y'));
+		}
+
+		// return
+		return (int) array_search($moduleName, self::$aModules);
 	}
 
 
@@ -61,7 +99,7 @@ class CoreModel
 		$db = self::getDB();
 
 		// get them all
-		if(!empty(self::$aModuleSettings))
+		if(empty(self::$aModuleSettings))
 		{
 			$aSettings = (array) $db->retrieve('SELECT m.name AS module_name, s.name, s.value
 												FROM modules_settings AS s
@@ -101,7 +139,7 @@ class CoreModel
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
 												md.name AS extra_module, e.action AS extra_action, e.parameters AS extra_parameters,
-												t.location AS template_location
+												t.path AS template_path
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											LEFT OUTER JOIN pages_extras AS e ON p.extra_id = e.id
@@ -138,17 +176,10 @@ class CoreModel
 		$db = self::getDB();
 
 		// get module id
-		$moduleId = $db->getVar('SELECT m.id
-										FROM modules AS m
-										WHERE m.name = ?
-										LIMIT 1;',
-										array($moduleName));
+		$moduleId = self::getModuleId($moduleName);
 
 		// validate module
-		if($moduleId === null) throw new FrontendException('Invalid module ('. $moduleName .').');
-
-		// redefine
-		$moduleId = (int) $moduleId;
+		if($moduleId === false) throw new FrontendException('Invalid module ('. $moduleName .').');
 
 		// store
 		$db->execute('INSERT INTO modules_settings (module_id, name, value)

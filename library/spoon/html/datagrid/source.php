@@ -1,15 +1,35 @@
 <?php
 
 /**
- * Deze file gaat alle mogelijke resources requiren.
- * per source worden de afhaneklijkheden ook gerquired
- * vb database
+ * Spoon Library
+ *
+ * This source file is part of the Spoon Library. More information,
+ * documentation and tutorials can be found @ http://www.spoon-library.be
+ *
+ * @package			html
+ * @subpackage		datagrid
+ *
+ *
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @author			Tijs Verkoyen <tijs@spoon-library.be>
+ * @since			1.0.0
  */
+
 
 /** SpoonDatabase class */
 require_once 'spoon/database/database.php';
 
 
+/**
+ * This class is the base class for sources used with datagrids
+ *
+ * @package			html
+ * @subpackage		datagrid
+ *
+ *
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @since			1.0.0
+ */
 class SpoonDataGridSource
 {
 	/**
@@ -40,7 +60,135 @@ class SpoonDataGridSource
 }
 
 
+/**
+ * This class is used for datagrids based on array sources
+ *
+ * @package			html
+ * @subpackage		datagrid
+ *
+ *
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @since			1.0.0
+ */
+class SpoonDataGridSourceArray extends SpoonDataGridSource
+{
+	/**
+	 * Static ordering (for compare method)
+	 *
+	 * @var	string
+	 */
+	public static $order;
 
+
+	/**
+	 * Class constructor.
+	 *
+	 * @return	void
+	 * @param	array $array
+	 */
+	public function __construct(array $array)
+	{
+		 // set data
+		 $this->data = (array) $array;
+
+		// set number of results
+		$this->setNumResults();
+	}
+
+
+	/**
+	 * Apply the sorting method
+	 *
+	 * @return	int
+	 * @param	array $firstArray
+	 * @param	array $secondArray
+	 */
+	public static function applySorting($firstArray, $secondArray)
+	{
+		if($firstArray[self::$order] < $secondArray[self::$order]) return -1;
+		elseif($firstArray[self::$order] > $secondArray[self::$order]) return 1;
+		else return 0;
+	}
+
+
+	/**
+	 * Retrieve the columns
+	 *
+	 * @return	array
+	 */
+	public function getColumns()
+	{
+		if($this->numResults != 0) return array_keys($this->data[0]);
+	}
+
+
+	/**
+	 * Fetch the data as an array
+	 *
+	 * @return	array
+	 * @param	int[optional] $offset
+	 * @param	int[optional] $limit
+	 * @param	string[optional] $order
+	 * @param	string[optional] $sort
+	 */
+	public function getData($offset = null, $limit = null, $order = null, $sort = null)
+	{
+		// sorting ?
+		if($order !== null)
+		{
+			// static shizzle
+			self::$order = $order;
+
+			// apply sorting
+			uasort($this->data, array('SpoonDataGridSourceArray', 'applySorting'));
+
+			// reverse if needed?
+			if($sort !== null && $sort == 'desc') $this->data = array_reverse($this->data, true);
+		}
+
+		// offset & limit
+		if($offset !== null && $limit !== null)
+		{
+			$this->data = array_slice($this->data, $offset, $limit);
+		}
+
+		return $this->data;
+	}
+
+
+	/**
+	 * Get the number of results
+	 *
+	 * @return	int
+	 */
+	public function getNumResults()
+	{
+		return $this->numResults;
+	}
+
+
+	/**
+	 * Sets the number of results
+	 *
+	 * @return	void
+	 */
+	private function setNumResults()
+	{
+		$this->numResults = (int) count($this->data);
+	}
+}
+
+
+/**
+ * This class is used for datagrids based on database sources
+ *
+ * @package			html
+ * @subpackage		datagrid
+ *
+ *
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @since			1.0.0
+ */
 class SpoonDataGridSourceDB extends SpoonDataGridSource
 {
 	/**
@@ -60,6 +208,14 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 
 
 	/**
+	 * Custom parameters for the numResults query
+	 *
+	 * @var	array
+	 */
+	private $numResultsQueryParameters = array();
+
+
+	/**
 	 * Query to fetch the results
 	 *
 	 * @var	string
@@ -68,14 +224,20 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 
 
 	/**
+	 * Custom parameters for the query
+	 *
+	 * @var	array
+	 */
+	private $queryParameters = array();
+
+
+	/**
 	 * Class construtor.
 	 *
 	 * @return	void
 	 * @param	SpoonDatabase $dbConnection
-	 * @param	string $query
-	 * @param	string[optional] $numResultsQuery
-	 *
-	 * @todo	Davy - Hoe zit het met de parameters ? ? ?
+	 * @param	mixed $query
+	 * @param	mixed[optional] $numResultsQuery
 	 */
 	public function __construct(SpoonDatabase $dbConnection, $query, $numResultsQuery = null)
 	{
@@ -111,16 +273,12 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 			}
 
 			// fetch record
-			$aRecord = $this->db->getRecord($query);
+			$aRecord = $this->db->getRecord($query, $this->queryParameters);
 
 			// fetch columns
-			foreach($aRecord as $label => $value) $this->columns[] = $label;
-
-			// fetch em
-			return $this->columns;
+			return array_keys($aRecord);
 		}
 	}
-
 
 
 	/**
@@ -144,7 +302,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 		if($offset !== null && $limit !== null) $query .= " LIMIT $offset, $limit";
 
 		// fetch data
-		return (array) $this->db->getRecords($query);
+		return (array) $this->db->getRecords($query, $this->queryParameters);
 	}
 
 
@@ -156,10 +314,10 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 	private function setNumResults()
 	{
 		// based on resultsQuery
-		if($this->numResultsQuery != null) $this->numResults = (int) $this->db->getVar($this->numResultsQuery);
+		if($this->numResultsQuery != '') $this->numResults = (int) $this->db->getVar($this->numResultsQuery, $this->numResultsQueryParameters);
 
 		// based on regular query
-		else $this->numResults = (int) $this->db->getNumRows($this->query);
+		else $this->numResults = (int) $this->db->getNumRows($this->query, $this->queryParameters);
 	}
 
 
@@ -172,65 +330,28 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 	 */
 	private function setQuery($query, $numResultsQuery = null)
 	{
-		// set both queries
-		$this->query = rtrim((string) $query, ';');
-		$this->numResultsQuery = rtrim((string) $numResultsQuery, ';');
+		// query with parameters
+		if(is_array($query) && count($query) > 1 && isset($query[0]) && isset($query[1]))
+		{
+			$this->query = str_replace(';', '', (string) $query[0]);
+			$this->queryParameters = (array) $query[1];
+		}
+
+		// no paramters
+		else $this->query = str_replace(';', '', (string) $query);
+
+		// numResults query with parameters
+		if(is_array($numResultsQuery) && count($numResultsQuery) > 1 && isset($numResultsQuery[0]) && isset($numResultsQuery[1]))
+		{
+			$this->numResultsQuery = str_replace(';', '', (string) $numResultsQuery[0]);
+			$this->numResultsQueryParameters = (array) $numResultsQuery[1];
+		}
+
+		// no paramters
+		else $this->numResultsQuery = (string) $numResultsQuery;
 
 		// set num results
 		$this->setNumResults();
-	}
-}
-
-
-
-
-
-
-// @todo: Davy - Eerst zien dat de rest werkt.
-class SpoonDataGridSourceArray
-{
-	private $data = array();
-
-	private $numResults = 0;
-
-	public function __construct($array)
-	{
-		 // set data
-		 $this->data = (array) $array;
-
-		// set number of results
-		$this->setNumResults();
-	}
-
-
-	public function getColumns()
-	{
-		// vb array
-		$aRecord['id'] = 1;
-		$aRecord['name'] = 'Erik Bauffman';
-		$aRecord['email'] = 'info@erikbauffman.be';
-
-		// return values
-		return array('id', 'name', 'email');
-	}
-
-
-	public function getData()
-	{
-		// array_slice is je vriend!
-		return $this->data;
-	}
-
-
-	public function getNumResults()
-	{
-		return $this->numResults;
-	}
-
-
-	private function setNumResults()
-	{
-		$this->numResults = (int) count($this->data);
 	}
 }
 

@@ -6,6 +6,7 @@
  * This is the base-object
  *
  * @package		frontend
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0

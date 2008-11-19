@@ -226,6 +226,44 @@ class SpoonTemplate
 
 
 	/**
+	 * Returns the correct element from the list, based on the counter
+	 *
+	 * @return	string
+	 * @param	int $counter
+	 * @param	array $elements
+	 */
+	public function cycle($counter, array $elements)
+	{
+		// update counter
+		$counter += 1;
+
+		// number of elements
+		$numElements = count($elements);
+
+		$modulus = $counter % $numElements;
+
+
+		if($modulus == 0) return $elements[$numElements - 1];
+		else return $elements[$modulus - 1];
+
+
+		/*
+		 * 1 % 4 = 1 => 0
+		 * 2 $ 4 = 2 => 1
+		 * 3 % 4 = 3 => 2
+		 * 4 % 4 = 0 => 3
+		 * // --
+		 *
+		 * 5 % 4 = 1 => 0
+		 * 6 % 4 = 2 => 1
+		 * 7 % 4 = 3 => 2
+		 * 8 % 4 = 0 => 3
+		 */
+	}
+
+
+
+	/**
 	 * Deassign a variable
 	 *
 	 * @return	void

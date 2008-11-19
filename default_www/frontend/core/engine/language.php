@@ -25,7 +25,7 @@ class FrontendLanguage
 	 *
 	 * @var	array
 	 */
-	private static $act = array(),
+	private static	$act = array(),
 					$err = array(),
 					$lbl = array(),
 					$msg = array();
@@ -167,10 +167,10 @@ class FrontendLanguage
 		require FRONTEND_CACHE_PATH .'/locale/'. $language .'.php';
 
 		// set language specific labels
-		self::$act = $act;
-		self::$err = $err;
-		self::$lbl = $lbl;
-		self::$msg = $msg;
+		self::$act = (array) $act;
+		self::$err = (array) $err;
+		self::$lbl = (array) $lbl;
+		self::$msg = (array) $msg;
 	}
 }
 ?>
