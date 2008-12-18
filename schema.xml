@@ -4,7 +4,7 @@
 <VerNotes></VerNotes>
 <DefTblOpts></DefTblOpts>
 <DocFolder>/Users/tijs/Projects/Netlash/fork_next.local</DocFolder>
-<Sch Cm="" nm="schemaA">
+<Sch Cm="" nm="fork-next-gen">
 <Tbl UsSo="1" nm="meta">
 <Cm>Meta-information</Cm>
 <TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
@@ -24,10 +24,10 @@
 <Cl au="0" df="N" nm="description_overwrite" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="" nm="pagetitle" nu="0">
+<Cl au="0" df="" nm="title" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="N" nm="pagetitle_overwrite" nu="0">
+<Cl au="0" df="N" nm="title_overwrite" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="" nm="url" nu="0">
@@ -38,8 +38,84 @@
 </Cl>
 <Cl au="0" df="" nm="custom" nu="1">
 <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
-<Cm>Used for custom meta-information</Cm>
+<Cm>used for custom meta-information</Cm>
 </Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="modules">
+<TblOpts></TblOpts>
+<Pk ClNs="name" nm="pkmodules"/>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>unique module name</Cm>
+</Cl>
+<Cl au="0" df="" nm="description" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="Y" nm="active" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="modules_settings">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkmodules_settings"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="module" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>name of the module</Cm>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>name of the setting</Cm>
+</Cl>
+<Cl au="0" df="" nm="value" nu="0">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>serialized value</Cm>
+</Cl>
+<Fk deAc="3" nm="fk_modules_settings_modules" prLkCl="name" upAc="3">
+<PrTb mn="0" nm="modules" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="modules_settings" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="module" prCl="name"/>
+</Fk>
+<Idx clu="0" nm="fk_modules_settings_modules" unq="0">
+<ClNs>module</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="modules_tags">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkmodules_tags"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="module" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="tag_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="other_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_modules_tags_modules" prLkCl="name" upAc="3">
+<PrTb mn="0" nm="modules" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="modules_tags" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="module" prCl="name"/>
+</Fk>
+<Fk deAc="3" nm="fk_modules_tags_tags" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="tags" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="modules_tags" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="tag_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_modules_tags_modules" unq="0">
+<ClNs>module</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_modules_tags_tags" unq="0">
+<ClNs>tag_id</ClNs>
+</Idx>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages">
@@ -48,63 +124,68 @@
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>which user has created this page?</Cm>
+</Cl>
 <Cl au="0" df="" nm="page_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>The real page_id</Cm>
+<Cm>the real page_id</Cm>
 </Cl>
 <Cl au="0" df="0" nm="parent_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>The parent_id for the page </Cm>
+<Cm>the parent_id for the page </Cm>
 </Cl>
 <Cl au="0" df="0" nm="template_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>The template to use</Cm>
+<Cm>the template to use</Cm>
 </Cl>
 <Cl au="0" df="" nm="meta_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>Meta-information</Cm>
-</Cl>
-<Cl au="0" df="" nm="extra_id" nu="1">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>Possible extra</Cm>
+<Cm>linked meta information</Cm>
 </Cl>
 <Cl au="0" df="" nm="language" nu="0">
 <DT ds="VarChar" en="" id="12" ln="5" sc="null" sg="1"/>
-<Cm>Language of the content</Cm>
+<Cm>language of the content</Cm>
 </Cl>
 <Cl au="0" df="" nm="title" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="" nm="content" nu="0">
+<Cl au="0" df="" nm="content" nu="1">
 <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="content_b" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>second optional content</Cm>
+</Cl>
+<Cl au="0" df="" nm="content_c" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>third optional content</Cm>
+</Cl>
+<Cl au="0" df="" nm="content_d" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>fourth optional content</Cm>
 </Cl>
 <Cl au="0" df="" nm="navigation_title" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>Title that will be used in the navigation</Cm>
+<Cm>title that will be used in the navigation</Cm>
 </Cl>
 <Cl au="0" df="N" nm="navigation_title_overwrite" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>Should we override the navigation title</Cm>
-</Cl>
-<Cl au="0" df="" nm="sequence" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>should we override the navigation title</Cm>
 </Cl>
 <Cl au="0" df="N" nm="hidden" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>Is the page hidden?</Cm>
+<Cm>is the page hidden?</Cm>
 </Cl>
 <Cl au="0" df="Y" nm="active" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>Is this the active version?</Cm>
+<Cm>is this the active version?</Cm>
 </Cl>
-<Cl au="0" df="" nm="created_by_user" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>Which user has created this page?</Cm>
-</Cl>
-<Cl au="0" df="" nm="created_at" nu="0">
+<Cl au="0" df="" nm="created_on" nu="0">
 <DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="" nm="edited_at" nu="0">
+<Cl au="0" df="" nm="edited_on" nu="0">
 <DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="Y" nm="allow_move" nu="0">
@@ -116,43 +197,32 @@
 <Cl au="0" df="Y" nm="allow_content" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
+<Cl au="0" df="N" nm="allow_content_b" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="allow_content_c" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="allow_content_d" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
 <Cl au="0" df="Y" nm="allow_edit" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="Y" nm="allow_delete" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
-<Fk deAc="3" nm="fk_pages_meta" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="meta" oe="1" sch="schemaA" zr="0"/>
-<CdTb mn="0" nm="pages" oe="1" sch="schemaA" zr="0"/>
-<ClPr cdCl="meta_id" prCl="id"/>
-</Fk>
-<Fk deAc="3" nm="fk_pages_pages_extra" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="pages_extras" oe="1" sch="schemaA" zr="0"/>
-<CdTb mn="1" nm="pages" oe="1" sch="schemaA" zr="1"/>
-<ClPr cdCl="extra_id" prCl="id"/>
-</Fk>
-<Fk deAc="3" nm="fk_pages_pages_templates" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="pages_templates" oe="1" sch="schemaA" zr="0"/>
-<CdTb mn="1" nm="pages" oe="1" sch="schemaA" zr="1"/>
-<ClPr cdCl="template_id" prCl="id"/>
-</Fk>
-<Fk deAc="3" nm="fk_pages_users" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="users" oe="1" sch="schemaA" zr="0"/>
-<CdTb mn="1" nm="pages" oe="1" sch="schemaA" zr="1"/>
-<ClPr cdCl="created_by_user" prCl="id"/>
-</Fk>
+<Cl au="0" df="" nm="sequence" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
 <Idx clu="0" nm="fk_pages_meta" unq="0">
 <ClNs>meta_id</ClNs>
-</Idx>
-<Idx clu="0" nm="fk_pages_pages_extra" unq="0">
-<ClNs>extra_id</ClNs>
 </Idx>
 <Idx clu="0" nm="fk_pages_pages_templates" unq="0">
 <ClNs>template_id</ClNs>
 </Idx>
 <Idx clu="0" nm="fk_pages_users" unq="0">
-<ClNs>created_by_user</ClNs>
+<ClNs>user_id</ClNs>
 </Idx>
 <SchTrHis/>
 </Tbl>
@@ -163,30 +233,105 @@
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="" nm="module_id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>The module the extra belongs to</Cm>
+<Cl au="0" df="" nm="module" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the name of the module this extra belongs to</Cm>
 </Cl>
 <Cl au="0" df="" nm="title" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>A label that will be used in the backend</Cm>
+<Cm>a label that will be used in the backend</Cm>
 </Cl>
 <Cl au="0" df="" nm="location" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>The location of the extra</Cm>
+<Cm>the location of the extra</Cm>
 </Cl>
 <Cl au="0" df="" nm="parameters" nu="1">
 <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
-<Cm>A serialized value with the optional parameters</Cm>
-</Cl>
-<Cl au="0" df="" nm="sequence" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>The sequence in the backend (default is the module_id)</Cm>
+<Cm>a serialized value with the optional parameters</Cm>
 </Cl>
 <Cl au="0" df="N" nm="hidden" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>Should the extra be shown in the backend?</Cm>
+<Cm>should the extra be shown in the backend?</Cm>
 </Cl>
+<Cl au="0" df="" nm="sequence" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>the sequence in the backend</Cm>
+</Cl>
+<Idx clu="0" nm="fk_pages_extras_modules" unq="0">
+<ClNs>module</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="pages_extras_pages">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkpages_extras_pages"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="page_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="extra_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="sequence" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="pages_groups">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkpages_groups"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="pages_groups_pages">
+<TblOpts></TblOpts>
+<Cl au="0" df="" nm="page_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="group_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_pages_groups_pages_pages_groups" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_groups" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_groups_pages" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_pages_groups_pages_pages_groups" unq="0">
+<ClNs>group_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="pages_groups_profiles">
+<TblOpts></TblOpts>
+<Cl au="0" df="" nm="profile_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="group_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_pages_groups_profiles_pages_groups" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_groups" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_groups_profiles" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_groups_profiles_profiles" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="profiles" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_groups_profiles" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="profile_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_pages_groups_profiles_pages_groups" unq="0">
+<ClNs>group_id</ClNs>
+</Idx>
+<Idx clu="0" nm="fk_pages_groups_profiles_profiles" unq="0">
+<ClNs>profile_id</ClNs>
+</Idx>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_templates">
@@ -198,11 +343,113 @@
 </Cl>
 <Cl au="0" df="" nm="title" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>A label that will be uses in the backend</Cm>
+<Cm>a label that will be used in the backend</Cm>
 </Cl>
 <Cl au="0" df="" nm="location" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>The location of the template</Cm>
+<Cm>the location of the template file</Cm>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="profiles">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkprofiles"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="username" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="password" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="password_raw" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="Y" nm="active" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="blocked" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="registered_on" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="url" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="profiles_sessions">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkprofiles_sessions"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="profile_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="session_id" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="secret_key" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="date" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_profiles_sessions_profiles" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="profiles" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="profiles_sessions" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="profile_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_profiles_sessions_profiles" unq="0">
+<ClNs>profile_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="profiles_settings">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkprofiles_settings"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="profile_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="value" nu="0">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_profiles_settings_profiles" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="profiles" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="profiles_settings" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="profile_id" prCl="id"/>
+</Fk>
+<Idx clu="0" nm="fk_profiles_settings_profiles" unq="0">
+<ClNs>profile_id</ClNs>
+</Idx>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="tags">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pktags"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="language" nu="0">
+<DT ds="VarChar" en="" id="12" ln="5" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="tag" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="number" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="url" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 </Cl>
 <SchTrHis/>
 </Tbl>
@@ -223,15 +470,57 @@
 </Cl>
 <Cl au="0" df="" nm="password_raw" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>Used when a user forgot his password</Cm>
+<Cm>used when a user forgot his password</Cm>
 </Cl>
 <Cl au="0" df="Y" nm="active" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>Is this user active?</Cm>
+<Cm>is this user active?</Cm>
 </Cl>
 <Cl au="0" df="N" nm="deleted" nu="0">
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>Is the user deleted?</Cm>
+<Cm>is the user deleted?</Cm>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="users_sessions">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkusers_sessions"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="language" nu="0">
+<DT ds="BigInt" en="" id="-5" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="session_id" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="secret_key" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="date" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="users_settings">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pkusers_settings"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>name of the setting</Cm>
+</Cl>
+<Cl au="0" df="" nm="value" nu="0">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>serialized value</Cm>
 </Cl>
 <SchTrHis/>
 </Tbl>
@@ -252,18 +541,35 @@
 <Fg ky="Signed" vl="0"/>
 </VbCfg>
 </RnCf>
-<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages" x="304" y="19"/>
-<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages_extras" x="621" y="74"/>
-<TbGl bkCl="ffffffe6" sch="schemaA" tbl="users" x="19" y="164"/>
-<TbGl bkCl="ffffffe6" sch="schemaA" tbl="meta" x="17" y="14"/>
-<TbGl bkCl="ffffffe6" sch="schemaA" tbl="pages_templates" x="629" y="9"/>
-<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_meta"/>
-<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_pages_extra"/>
-<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_pages_templates"/>
-<FkGl bkCl="ff000000" nm="schemaA.pages.fk_pages_users"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages" x="259" y="2"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_extras" x="734" y="68"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="23" y="265"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="meta" x="10" y="9"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_templates" x="637" y="1"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_settings" x="214" y="366"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_sessions" x="25" y="362"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles" x="685" y="187"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_settings" x="971" y="241"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_sessions" x="493" y="301"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups" x="850" y="17"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_profiles" x="1014" y="101"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_pages" x="1045" y="21"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules" x="311" y="309"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_settings" x="402" y="401"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_tags" x="961" y="374"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="tags" x="689" y="375"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_extras_pages" x="533" y="85"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_settings.fk_modules_settings_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_tags"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_pages.fk_pages_groups_pages_pages_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_profiles.fk_pages_groups_profiles_pages_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_profiles.fk_pages_groups_profiles_profiles"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.profiles_sessions.fk_profiles_sessions_profiles"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.profiles_settings.fk_profiles_settings_profiles"/>
 </Dgm>
-<RnmMgr NxRnmId="5">
-<RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+<RnmMgr NxRnmId="20">
+<RnmCh ObjCls="Table" ParCls="Schema" ParNme="fork-next-gen" SupCls="" SupNme="">
 <Rnm id="1" nNm="pages_templates" oNm="menu_templates"/>
 </RnmCh>
 <RnmCh ObjCls="Column" ParCls="Table" ParNme="pages" SupCls="Schema" SupNme="schemaA">
@@ -272,8 +578,45 @@
 <RnmCh ObjCls="Column" ParCls="Table" ParNme="pages" SupCls="Schema" SupNme="schemaA">
 <Rnm id="3" nNm="allow_children" oNm="allow_childs"/>
 </RnmCh>
-<RnmCh ObjCls="Table" ParCls="Schema" ParNme="schemaA" SupCls="" SupNme="">
+<RnmCh ObjCls="Table" ParCls="Schema" ParNme="fork-next-gen" SupCls="" SupNme="">
 <Rnm id="4" nNm="pages_extras" oNm="pages_extra"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="pages" SupCls="Schema" SupNme="schemaA">
+<Rnm id="5" nNm="user_id" oNm="created_by_user"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="meta" SupCls="Schema" SupNme="schemaA">
+<Rnm id="6" nNm="title" oNm="pagetitle"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="meta" SupCls="Schema" SupNme="schemaA">
+<Rnm id="7" nNm="title_overwrite" oNm="pagetitle_overwrite"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="pages_extras" SupCls="Schema" SupNme="schemaA">
+<Rnm id="8" nNm="module" oNm="module_id"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="pages_extras" SupCls="Schema" SupNme="schemaA">
+<Rnm id="10" nNm="location" oNm="path"/>
+<Rnm id="9" nNm="path" oNm="location"/>
+</RnmCh>
+<RnmCh ObjCls="Schema" ParCls="Database" ParNme="forkng" SupCls="" SupNme="">
+<Rnm id="11" nNm="fork-next-gen" oNm="schemaA"/>
+</RnmCh>
+<RnmCh ObjCls="Table" ParCls="Schema" ParNme="fork-next-gen" SupCls="" SupNme="">
+<Rnm id="13" nNm="pages_groups" oNm="groups"/>
+<Rnm id="12" nNm="groups" oNm="pages_groups"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="tags" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="14" nNm="id" oNm="i"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="profiles" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="19" nNm="registered_on" oNm="registered_at"/>
+<Rnm id="16" nNm="registered_at" oNm="registration_at"/>
+<Rnm id="15" nNm="registration_at" oNm="registration_date"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="pages" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="17" nNm="created_on" oNm="created_at"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="pages" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="18" nNm="edited_on" oNm="edited_at"/>
 </RnmCh>
 </RnmMgr>
 <DbDocOptionMgr>
