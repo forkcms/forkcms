@@ -1,3 +1,1 @@
-<?php
-echo 'ik ben een API';
-?>
+<?php echo 'ik ben een API'; ?>
