@@ -116,7 +116,7 @@ class SpoonDate
 
 
 	/**
-	 * Retrieves the list of spoon languages
+	 * Retrieves the list of supported languages
 	 *
 	 * @return	array
 	 */

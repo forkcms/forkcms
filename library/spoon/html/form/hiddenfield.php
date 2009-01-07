@@ -30,27 +30,19 @@ require_once 'spoon/html/form/element.php';
  * @author			Davy Hellemans <davy@spoon-library.be>
  * @since			1.0.0
  */
-class SpoonHiddenField extends SpoonFormElement 
+class SpoonHiddenField extends SpoonFormElement
 {
 	/**
-	 * Is the content of this field html?
-	 * 
-	 * @var	bool
-	 */
-	private $isHtml = false;
-	
-	
-	/**
 	 * Value of this hidden field
-	 * 
+	 *
 	 * @var	string
 	 */
 	private $value;
-	
-	
+
+
 	/**
 	 * Class constructor.
-	 * 
+	 *
 	 * @return	void
 	 * @param	string $name
 	 * @param	string[optional] $value
@@ -59,38 +51,33 @@ class SpoonHiddenField extends SpoonFormElement
 	{
 		// obligated fields
 		$this->setName($name);
-		
+
 		// value
 		if($value !== null) $this->setValue($value);
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the initial or submitted value
 	 *
 	 * @return	string
-	 * @param	bool[optional] $html
 	 */
-	public function getValue($allowHtml = false)
+	public function getValue()
 	{
-		// redefine html & default value
-		$allowHtml = (bool) $allowHtml;
-		$value = ($this->isHtml) ? SpoonFilter::htmlentities($this->value) : $this->value;
+		// redefine default value
+		$value = $this->value;
 
 		// added to form
 		if($this->isSubmitted())
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// submitted by post/get (may be empty)
 			if(isset($data[$this->getName()]))
 			{
 				// value
-				$value = $data[$this->getName()];
-
-				// html allowed?
-				if(!$allowHtml) $value = SpoonFilter::htmlentities($value);
+				$value = (string) $data[$this->getName()];
 			}
 		}
 
@@ -107,59 +94,48 @@ class SpoonHiddenField extends SpoonFormElement
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != '')) return false;
 		return true;
-	}
-	
-	
-	/**
-	 * Enter description here...
-	 *
-	 * @param unknown_type $on
-	 */
-	public function isHtml($on = true)
-	{
-		$this->isHtml = (bool) $on;
 	}
 
 
 	/**
 	 * Parses the html for this hidden field
 	 *
-	 * @return	void
+	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
-		{
-			// name is required
-			if($this->name == '') throw new SpoonFormException('A name is required for a hidden field. Please provide a name.');
+		// name is required
+		if($this->name == '') throw new SpoonFormException('A name is required for a hidden field. Please provide a name.');
 
-			// start html generation
-			$this->html = '<input type="hidden" ';
-			
-			// add id?
-			if($this->id !== null) $this->html .= 'id="'. $this->id .'"';
-			
-			// add other elements
-			$this->html .= ' name="'. $this->name .'" value="'. $this->getValue() .'" />';
+		// start html generation
+		$output = '<input type="hidden"';
 
-			// parsed status
-			$this->parsed = true;
-		}
+		// add id?
+		if($this->id !== null) $output .= 'id="'. $this->id .'"';
+
+		// add other elements
+		$output .= ' name="'. $this->name .'" value="'. $this->getValue() .'" />';
+
+		// parse hidden field
+		if($template !== null) $template->assign('hid'. SpoonFilter::toCamelCase($this->name), $output);
+
+		// cough it up
+		return $output;
 	}
-	
-	
+
+
 	/**
 	 * Set the value attribute for this hidden field
 	 *
 	 * @return	void
 	 * @param	string $value
 	 */
-	public function setValue($value)
+	private function setValue($value)
 	{
 		$this->value = (string) $value;
 	}

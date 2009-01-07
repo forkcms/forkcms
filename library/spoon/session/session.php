@@ -110,8 +110,6 @@ class SpoonSession
 	/**
 	 * Returns the sessionID
 	 *
-	 * @example SpoonSession::getSessionId()
-	 *
 	 * @return	string
 	 */
 	public static function getSessionId()
@@ -133,12 +131,8 @@ class SpoonSession
     	// start session if needed
     	if(!session_id()) self::start();
 
-    	// redefine arguments
-    	$key = (string) $key;
-    	$value = (string) $value;
-
     	// set key
-    	$_SESSION[$key] = $value;
+    	$_SESSION[(string) $key] = (string) $value;
     }
 
 

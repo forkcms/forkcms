@@ -61,6 +61,9 @@ require_once 'spoon/html/form/dropdown.php';
 /** SpoonCheckBox class */
 require_once 'spoon/html/form/checkbox.php';
 
+/** SpoonMultiCheckBox class */
+require_once 'spoon/html/form/multi_checkbox.php';
+
 /** SpoonHiddenField class */
 require_once 'spoon/html/form/hiddenfield.php';
 
@@ -84,22 +87,14 @@ class SpoonForm
 	 * @var	string
 	 */
 	private $action;
-	
-	
+
+
 	/**
 	 * Form status
 	 *
 	 * @var	bool
 	 */
 	private $correct = true;
-
-
-	/**
-	 * Holds the error class form faulty fields
-	 *
-	 * @var	string
-	 */
-	private $errorClass = 'form-error';
 
 
 	/**
@@ -151,11 +146,11 @@ class SpoonForm
 
 
 	/**
-	 * Parse status
+	 * Already validated?
 	 *
 	 * @var	bool
 	 */
-	private $parsed = false;
+	private $validated = false;
 
 
 	/**
@@ -178,6 +173,17 @@ class SpoonForm
 
 
 	/**
+	 * Creates a hidden field & adds it to the form
+	 *
+	 * @return	void
+	 */
+	private function createHiddenField()
+	{
+		$this->add(new SpoonHiddenField('form', $this->name));
+	}
+
+
+	/**
 	 * Add one or more objects to the stack
 	 *
 	 * @return	void
@@ -195,15 +201,20 @@ class SpoonForm
 			{
 				// array of objects
 				if(is_array($argument)) foreach($argument as $object) $this->add($object);
-				
+
 				// object
-				else 
+				else
 				{
 					// not an object
 					if(!is_object($argument)) throw new SpoonFormException('The provided argument ('. $argument .') is not an object.');
-					
+
 					// valid object
-					$this->addObject($argument);
+					$this->objects[$argument->getName()] = $argument;
+					$this->objects[$argument->getName()]->setFormName($this->name);
+					$this->objects[$argument->getName()]->setMethod($this->method);
+
+					// automagically add enctype if needed & not added
+					if(is_subclass_of($argument, 'SpoonFileField')  && !isset($this->parameters['enctype'])) $this->setParameter('enctype', 'multipart/form-data');
 				}
 			}
 		}
@@ -219,54 +230,6 @@ class SpoonForm
 	public function addError($error)
 	{
 		$this->errors .= trim((string) $error);
-	}
-
-
-	/**
-	 * Adds an object to the main stack
-	 *
-	 * @return	void
-	 * @param	object $object
-	 */
-	private function addObject($object)
-	{
-		// type of element
-		$elementType = str_replace('spoon', '', strtolower(get_class($object)));
-
-		// not an allowed instance
-		if(!is_subclass_of($object, 'SpoonFormElement')) throw new SpoonFormException('The class "'. get_class($object) .'" is not among the classes that can be added to a form.');
-
-		// iterate objects
-		foreach($this->objects as $presentObject)
-		{
-			// no name has been defined!
-			if(trim($object->getName()) == '') throw new SpoonFormException('A name has not been defined for this object.');
-
-			// object already added
-			if($object->getName() == $presentObject->getName())
-			{
-				// has already been added
-				$alreadyAdded = true;
-
-				// checkbox or radiobutton type
-				if($elementType == 'checkbox' || $elementType == 'radiobutton')
-				{
-					// value of the present & new object differ
-					if($object->getDefaultValue() != $presentObject->getDefaultValue()) $alreadyAdded = false;
-				}
-
-				// alreaddy added!
-				if($alreadyAdded) throw new SpoonFormException('The object with the name "'. $object->getName() .'" has already been added to this form "'. $this->getName() .'"');
-			}
-		}
-
-		// add to stack & define form
-		$this->objects[] = $object;
-		$object->setFormName($this->name);
-		$object->setMethod($this->method);
-		
-		// automagically add enctype if needed & not added
-		if($elementType == 'filefield' && !isset($this->parameters['enctype'])) $this->setParameter('enctype', 'multipart/form-data');
 	}
 
 
@@ -311,16 +274,16 @@ class SpoonForm
 			foreach ($this->fields as $field) if(!isset($_GET[$field])) $_GET[$field] = '';
 		}
 	}
-	
-	
+
+
 	/**
-	 * Creates a hidden field & adds it to the form
-	 * 
-	 * @return	void
+	 * Retrieve the action
+	 *
+	 * @return	string
 	 */
-	private function createHiddenField()
+	public function getAction()
 	{
-		$this->add(new SpoonHiddenField('form', $this->name));
+		return $this->action;
 	}
 
 
@@ -332,7 +295,7 @@ class SpoonForm
 	public function getCorrect()
 	{
 		// not parsed
-		if(!$this->parsed) $this->parse();
+		if(!$this->validated) $this->validate();
 
 		// return current status
 		return $this->correct;
@@ -351,6 +314,33 @@ class SpoonForm
 
 
 	/**
+	 * Fetches a field
+	 *
+	 * @return	SpoonVisualFormElement
+	 * @param	string $name
+	 */
+	public function getField($name)
+	{
+		// doesn't exist?
+		if(!isset($this->objects[(string) $name])) throw new SpoonFormException('The field ('. (string) $name .') does not exist.');
+
+		// all is fine
+		return $this->objects[(string) $name];
+	}
+
+
+	/**
+	 * Retrieve the method post/get
+	 *
+	 * @return	string
+	 */
+	public function getMethod()
+	{
+		return $this->method;
+	}
+
+
+	/**
 	 * Retrieve the name of this form
 	 *
 	 * @return	string
@@ -359,48 +349,48 @@ class SpoonForm
 	{
 		return $this->name;
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the parameters
-	 * 
+	 *
 	 * @return	array
 	 */
 	public function getParameters()
 	{
 		return $this->parameters;
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the parameters in html form
-	 * 
+	 *
 	 * @return	string
 	 */
-	private function getParametersAsHtml()
+	public function getParametersAsHTML()
 	{
 		// start html
 		$html = '';
-		
+
 		// build & return html
 		foreach($this->parameters as $key => $value) $html .= ' '. $key .'="'. $value .'"';
 		return $html;
 	}
-	
-	
+
+
 	/**
 	 * Fetches all the values for this form as key/value pairs
-	 * 
+	 *
 	 * @return	array
 	 */
 	public function getValues()
 	{
 		// values
 		$aValues = array();
-		
+
 		// loop objects
 		foreach($this->objects as $object) $aValues[$object->getName()] = $object->getValue();
-		
+
 		// return data
 		return $aValues;
 	}
@@ -434,164 +424,20 @@ class SpoonForm
 
 
 	/**
-     * Loops all the added objects in the added number and sets the errors
-     *
-     * @return	void
-     */
-    private function parse()
-    {
-        // not parsed
-        if(!$this->parsed)
-        {
-        	// define errors
-        	$errors = '';
-
-            // has objects
-            if(count($this->objects) != 0)
-            {
-                // loop objecjts
-                foreach ($this->objects as $oElement)
-                {
-                	// check, since some objects don't have this method!
-                	if(method_exists($oElement, 'getErrors')) $errors .= $oElement->getErrors();
-                }
-
-                // affect correct status
-                if(trim($errors) != '') $this->correct = false;
-            }
-
-            // main form errors?
-            if(trim($this->getErrors()) != '') $this->correct = false;
-
-            // update parsed status
-            $this->parsed = true;
-        }
-    }
-
-
-	/**
-	 * Automatically parses the added form elements in the given template
+	 * Parse this form in the given template
 	 *
 	 * @return	void
 	 * @param	SpoonTemplate $template
 	 */
-	public function parseElements(SpoonTemplate $template)
+	public function parse(SpoonTemplate $template)
 	{
-		// elements have been added
-		if(count($this->objects) != 0)
-		{
-			// loop objects
-			foreach ($this->objects as $object)
-			{
-				// type of element
-				$class = str_replace('spoon', '', strtolower(get_class($object)));
+		// loop objects
+		foreach($this->objects as $name => $object) $object->parse($template);
 
-				// convert "one_two_three" into "OneTwoThree"
-				$name = SpoonFilter::toCamelCase($object->getName());
-				
-				// custom shizzle
-				switch($class)
-				{
-					// buttons
-					case 'button':
-					case 'resetbutton':
-					case 'submitbutton':
-						// parse field
-						$template->assign('btn'. $name, $object->getHtml());
-					break;
-					
-					// checkbox
-					case 'checkbox':
-						/**
-						 * For this element, errors are parsed before assigning the field
-						 * itself, because a multiple checkbox series only can have one error total.
-						 * eg 5 checkboxes asking about your hobbies will have only 1 error if at least
-						 * one item has to be checked.
-						 */
-						if($object->getErrors() != '') $template->assign('chk'. $name .'Error', '<span class="'. $this->errorClass .'">'. $object->getErrors() .'</span>');
-						else $template->assign('chk'. $name .'Error', '');
-	
-						// add value to the name
-						if(!$object->getSingle()) $name .= SpoonFilter::toCamelCase($object->getDefaultValue());
-	
-						// parse field
-						$template->assign('chk'. $name, $object->getHtml());
-					break;
-					
-					// dropdown
-					case 'dropdown':
-						// parse field
-						$template->assign('ddm'. $name, $object->getHtml());
-	
-						// parse error
-						if($object->getErrors() != '') $template->assign('ddm'. $name .'Error', '<span class="'. $this->errorClass .'">'. $object->getErrors() .'</span>');
-						else $template->assign('ddm'. $name .'Error', '');
-					break;
-					
-					// filefields
-					case 'filefield':
-						// parse field
-						$template->assign('file'. $name, $object->getHtml());
-						
-						// parse error
-						if($object->getErrors() != '') $template->assign('file'. $name .'Error', '<span class="'. $this->errorClass .'">'. $object->getErrors() .'</span>');
-						else $template->assign('file'. $name .'Error', '');
-					break;
-					
-					// hidden fields
-					case 'hiddenfield':
-						$template->assign('hid'. $name, $object->getHtml());
-					break;
-					
-					
-					case 'radiobutton':
-						// update name
-						$name .= SpoonFilter::toCamelCase($object->getDefaultValue());
-	
-						// parse field
-						$template->assign('rbt'. $name, $object->getHtml());
-	
-						// parse error
-						if($object->getErrors() != '') $template->assign('rbt'. $name .'Error', '<span class="'. $this->errorClass .'">'. $object->getErrors() .'</span>');
-						else $template->assign('rbt'. $name .'Error', '');
-					break;
-					
-					// textfields
-					case 'datefield':
-					case 'passwordfield':
-					case 'textarea':
-					case 'textfield':
-					case 'timefield':
-						// parse field
-						$template->assign('txt'. $name, $object->getHtml());
-						
-						// parse error
-						if($object->getErrors() != '') $template->assign('txt'. $name .'Error', '<span class="'. $this->errorClass .'">'. $object->getErrors() .'</span>');
-						else $template->assign('txt'. $name .'Error', '');
-					break;
-				}
-			}
-			
-			// parse form tag
-			$this->parseFormTags($template);
-		}
+		// parse form tag
+		$template->addForm($this);
 	}
-	
-	
-	/**
-	 * Parse the form tags in the given template
-	 * 
-	 * @return	void
-	 * @param	SpoonTemplate $template
-	 */
-	private function parseFormTags(SpoonTemplate $template)
-	{
-		// parse form tag & hidden field
-		$aSearch = array('{form:'. $this->name .'}', '{/form:'. $this->name .'}');
-		$aReplace = array('<form action="'. $this->action .'" method="'. $this->method .'"'. $this->getParametersAsHtml() .">\n<fieldset>". $this->objects[0]->getHtml(), '</fieldset></form>');
-		$template->assignHighlight($aSearch, $aReplace);
-	}
-	
+
 
 	/**
 	 * Set the action
@@ -614,18 +460,6 @@ class SpoonForm
 	private function setCorrect($correct = true)
 	{
 		$this->correct = (bool) $correct;
-	}
-
-
-	/**
-	 * Set the error class for elements that have errors
-	 *
-	 * @return	void
-	 * @param	string $name
-	 */
-	public function setErrorClass($name)
-	{
-		$this->errorClass = (string) $name;
 	}
 
 
@@ -689,7 +523,28 @@ class SpoonForm
 	 */
 	public function validate()
 	{
-		if(!$this->parsed) $this->parse();
+		// not parsed
+        if(!$this->validated)
+        {
+        	// define errors
+        	$errors = '';
+
+			// loop objecjts
+			foreach ($this->objects as $oElement)
+			{
+				// check, since some objects don't have this method!
+				if(method_exists($oElement, 'getErrors')) $errors .= $oElement->getErrors();
+			}
+
+			// affect correct status
+			if(trim($errors) != '') $this->correct = false;
+
+            // main form errors?
+            if(trim($this->getErrors()) != '') $this->correct = false;
+
+            // update parsed status
+            $this->validated = true;
+        }
 	}
 }
 

@@ -323,6 +323,17 @@ class SpoonDatabaseMysqli implements iSpoonDatabaseObject
 
 
 	/**
+	 * Returns the handler, this function is usefull when you 're manually escaping strings
+	 *
+	 * @return	object
+	 */
+	public function getHandler()
+	{
+		return $this->handler;
+	}
+
+
+	/**
 	 * Gets the number of rows in a result
 	 *
 	 * @return	int
@@ -338,7 +349,7 @@ class SpoonDatabaseMysqli implements iSpoonDatabaseObject
 		if(!$this->handler) $status = $this->connect();
 
 		// no connection could be made & strict = disabled (prevent infinite loops!)
-		if($status === false) return false;
+		if(!isset($status) || $status === false) return false;
 
 		// create query
 		$query = $this->prepareQuery($query, $parameters);
@@ -375,7 +386,16 @@ class SpoonDatabaseMysqli implements iSpoonDatabaseObject
 
 		// get keys
 		$keys = array_keys($result[0]);
-        foreach($result as $row) $data[$row[$keys[0]]] = $row[$keys[1]];
+
+		// loop rows
+        foreach($result as $row)
+        {
+        	// check if data is present
+        	if(!isset($row[$keys[0]]) || !isset($row[$keys[1]])) throw new SpoonDatabaseException('Invalid row, are your fieldnames unique?');
+
+        	// add row
+        	$data[$row[$keys[0]]] = $row[$keys[1]];
+        }
 
         // return data
         return $data;

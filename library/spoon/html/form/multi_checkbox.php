@@ -16,12 +16,12 @@
  */
 
 
-/** SpoonVisualElement class */
+/** SpoonFormVisualElement class */
 require_once 'spoon/html/form/visual_element.php';
 
 
 /**
- * Creates a list of html radiobuttons
+ * Generates a checkbox.
  *
  * @package			html
  * @subpackage		form
@@ -30,14 +30,14 @@ require_once 'spoon/html/form/visual_element.php';
  * @author			Davy Hellemans <davy@spoon-library.be>
  * @since			0.1.1
  */
-class SpoonRadioButton extends SpoonVisualFormElement
+class SpoonMultiCheckBox extends SpoonVisualFormElement
 {
 	/**
-	 * Currently checked value
+	 * List of checked values
 	 *
-	 * @var	string
+	 * @var	array
 	 */
-	private $checked;
+	private $checked = array();
 
 
 	/**
@@ -45,7 +45,7 @@ class SpoonRadioButton extends SpoonVisualFormElement
 	 *
 	 * @var	string
 	 */
-	private $classError;
+	protected $classError;
 
 
 	/**
@@ -57,26 +57,27 @@ class SpoonRadioButton extends SpoonVisualFormElement
 
 
 	/**
-	 * List of labels and their values
+	 * Initial values
 	 *
-	 * @var	string
+	 * @var	array
 	 */
-	protected $values;
+	private $values;
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	string $values
-	 * @param	string[optional] $checked
+	 * @param	mixed $values
+	 * @param	mixed[optional] $checked
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string[optional] $classOnError
 	 */
-	public function __construct($name, array $values, $checked = null, $class = 'input-radiobutton', $classError = 'input-radiobutton-error')
+	// @todo ook in deze class mag set en getId niet worden gebruikt
+	public function __construct($name, array $values, $checked = null, $class = 'input-checkbox', $classError = 'input-checkbox-error')
 	{
-		// obligated fields
+		// name & value
 		$this->setName($name);
 		$this->setValues($values);
 
@@ -96,37 +97,6 @@ class SpoonRadioButton extends SpoonVisualFormElement
 	public function addError($error)
 	{
 		$this->errors .= (string) $error;
-	}
-
-
-	/**
-	 * Retrieve the value of the checked item
-	 *
-	 * @return	bool
-	 */
-	public function getChecked()
-	{
-		/**
-		 * If we want to retrieve the checked status, we should first
-		 * ensure that the value we return is correct, therefor we
-		 * check the $_POST/$_GET array for the right value & ajust it if needed.
-		 */
-
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// form submitted
-		if($this->isSubmitted())
-		{
-			// currently field checked
-			if(isset($data[$this->getName()]) && isset($this->values[$data[$this->getName()]]))
-			{
-				// set this field as chceked
-				$this->setChecked($data[$this->getName()]);
-			}
-		}
-
-		return $this->checked;
 	}
 
 
@@ -165,6 +135,21 @@ class SpoonRadioButton extends SpoonVisualFormElement
 
 
 	/**
+	 * Retrieve the list of checked boxes
+	 *
+	 * @return	array
+	 */
+	public function getChecked()
+	{
+		// when submitted
+		if($this->isSubmitted()) return $this->getValue();
+
+		// default values
+		else return $this->checked;
+	}
+
+
+	/**
 	 * Retrieve the class on error
 	 *
 	 * @return	string
@@ -198,31 +183,40 @@ class SpoonRadioButton extends SpoonVisualFormElement
 
 
 	/**
-	 * Retrieves the initial or submitted value
+	 * Retrieve the value(s)
 	 *
-	 * @return	string
+	 * @return	array
 	 */
 	public function getValue()
 	{
-		// default value (may be null)
-		$value = $this->getChecked();
+		// default value
+		$aValues = array();
 
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// form submitted
+		// submitted by post (may be empty)
 		if($this->isSubmitted())
 		{
-			// submitted by post (may be empty)
-			if(isset($data[$this->getName()]) && isset($this->values[$data[$this->getName()]])) $value = $data[$this->getName()];
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// exists
+			if(isset($data[$this->getName()]) && is_array($data[$this->getName()]))
+			{
+				// loop values
+				foreach($data[$this->getName()] as $item)
+				{
+					// value exists
+					if(isset($this->values[(string) $item])) $aValues[] = $item;
+				}
+			}
+
 		}
 
-		return $value;
+		return $aValues;
 	}
 
 
 	/**
-	 * Checks if this field was submitted & filled
+	 * Checks if this field was submitted & contains one more values
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -232,92 +226,109 @@ class SpoonRadioButton extends SpoonVisualFormElement
 		// post/get data
 		$data = $this->getMethod(true);
 
-		// correct
-		if(isset($data[$this->getName()]) && isset($this->values[$data[$this->getName()]])) return true;
+		// value submitted & is an array
+		if(isset($data[$this->getName()]) && is_array($data[$this->getName()]))
+		{
+			// loop the elements until you can find one that is allowed
+			foreach($data[$this->getName()] as $value)
+			{
+				if(isset($this->values[(string) $value])) return true;
+			}
+		}
 
-		// oh-oh
-		if($error !== null) $this->setError($error);
+		// no values found
+		if($error !== null) $this->addError($error);
 		return false;
 	}
 
 
 	/**
-	 * Parse the html for this button
+	 * Parses the html for this dropdown
 	 *
-	 * @return	array
+	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
 		// name required
-		if($this->getName() == '') throw new SpoonFormException('A name is required for a radiobutton. Please provide a valid name.');
+		if($this->getName() == '') throw new SpoonFormException('A name is required for checkbox. Please provide a name.');
 
-		// loop the values
+		// loop values
 		foreach($this->values as $value => $label)
 		{
 			// init vars
 			$aElement['id'] = $this->getName() .'_'. $value;
 			$aElement['label'] = $label;
 			$aElement['value'] = $value;
-			$name = 'rbt'. SpoonFilter::toCamelCase($this->getName());
+			$name = 'chk'. SpoonFilter::toCamelCase($this->getName());
 			$aElement[$name] = '';
 
 			// start html generation
-			$aElement[$name] = '<input type="radio" id="'. $aElement['id'] .'" name="'. $this->getName() .'" value="'. $value .'"';
+			$aElement[$name] = '<input type="checkbox" id="'. $aElement['id'] .'" name="'. $this->getName() .'[]"';
+
+			// value
+			$aElement[$name] .= ' value="'. $value .'"';
 
 			// class / classOnError
-			if($this->getClassAsHtml() != '') $aElement[$name] .= $this->getClassAsHtml();
+			if($this->getClassAsHtml() != '') $aElement[$name] .= ' '. $this->getClassAsHtml();
 
 			// style attribute
 			if($this->style !== null) $aElement[$name] .= ' style="'. $this->getStyle() .'"';
 
-			// tabindex attribute
+			// tabindex
 			if($this->tabindex !== null) $aElement[$name] .= ' tabindex="'. $this->getTabIndex() .'"';
-
-			// add javascript event functions
-			if($this->getJavascriptAsHtml() != '') $aElement[$name] .= $this->getJavascriptAsHtml();
-
-			// disabled attribute
-			if($this->disabled) $aElement[$name] .= ' disabled="disabled"';
 
 			// readonly
 			if($this->readOnly) $aElement[$name] .= ' readonly="readonly"';
 
-			// checked
-			if($this->getChecked() == $value) $aElement[$name] .= ' checked="checked"';
+			// add javascript methods
+			if($this->getJavascriptAsHtml() != '') $aElement[$name] .= $this->getJavascriptAsHtml();
 
-			// close input tag
+			// disabled
+			if($this->disabled) $aElement[$name] .= ' disabled="disabled"';
+
+			// checked or not?
+			if(in_array($aElement['value'], $this->getChecked())) $aElement[$name] .= ' checked="checked"';
+
+			// end input tag
 			$aElement[$name] .= ' />';
 
-			// add radiobutton
-			$aRadioButton[] = $aElement;
+			// add checkbox
+			$aCheckBox[] = $aElement;
 		}
 
 		// template
 		if($template !== null)
 		{
-			$template->assign($this->getName(), $aRadioButton);
-			$template->assign('rbt'. SpoonFilter::toCamelCase($this->getName()) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
+			$template->assign($this->getName(), $aCheckBox);
+			$template->assign('chk'. SpoonFilter::toCamelCase($this->getName()) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
 		}
 
 		// cough
-		return $aRadioButton;
+		return $aCheckBox;
 	}
 
 
 	/**
-	 * Set the checked value
+	 * Sets the checked status
 	 *
 	 * @return	void
-	 * @param	string $checked
+	 * @param	mixed $checked
 	 */
 	public function setChecked($checked)
 	{
-		// doesnt exist
-		if(!isset($this->values[(string) $checked])) throw new SpoonFormException('This value "'. (string) $checked .'" is not among the list of values.');
+		// redefine
+		$checked = (array) $checked;
 
-		// exists
-		$this->checked = (string) $checked;
+		// loop values
+		foreach($checked as $value)
+		{
+			// exists
+			if(isset($this->values[(string) $value])) $aChecked[] = $value;
+		}
+
+		// set values
+		if(isset($aChecked)) $this->checked = $aChecked;
 	}
 
 
@@ -357,10 +368,10 @@ class SpoonRadioButton extends SpoonVisualFormElement
 
 
 	/**
-	 * Set the labels and their values
+	 * Set the initial values
 	 *
 	 * @return	void
-	 * @param	array $values
+	 * @param	mixed $values
 	 */
 	private function setValues(array $values)
 	{

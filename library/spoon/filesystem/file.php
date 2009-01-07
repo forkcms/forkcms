@@ -41,7 +41,7 @@ final class SpoonFile
 	 *
 	 * @return	bool
 	 * @param	string $filename
-	 * @param	int[optional] $mode
+	 * @param	string[optional] $mode
 	 */
 	public static function chmod($filename, $mode = 0777)
 	{
@@ -54,8 +54,7 @@ final class SpoonFile
 
 
 	/**
-	 * Copies a file/folder
-	 *  alias for SpoonDirector::copy
+	 * Copies a file/folder alias for SpoonDirectory::copy
 	 *
 	 * @return	bool
 	 * @param	string $source
@@ -186,7 +185,7 @@ final class SpoonFile
 		$fileInfo['path'] = $pathInfo['dirname'];
 		$fileInfo['permissions'] = @fileperms($filename);
 
-		// clear chack
+		// clear cache
 		@clearstatcache();
 
 		// array
@@ -196,9 +195,6 @@ final class SpoonFile
 
 	/**
 	 * Retrieves a list of files within a directory (optionally excluding some files)
-	 *
-	 * // geef mij de lijst
-	 *
 	 *
 	 * @return	array
 	 * @param	string $path
@@ -313,14 +309,13 @@ final class SpoonFile
 
 
 	/**
-	 * Renames a file
-	 *  alias for SpoonDirectory::move
+	 * Renames a file, alias for SpoonDirectory::move
 	 *
 	 * @return	bool
 	 * @param	string $source
 	 * @param	string $destination
 	 * @param 	bool[optional] $overwrite
-	 * @param	int[optional] $chmod
+	 * @param	string[optional] $chmod
 	 */
 	public static function move($source, $destination, $overwrite = true, $chmod = 0777)
 	{

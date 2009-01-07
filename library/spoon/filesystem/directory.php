@@ -44,6 +44,7 @@ final class SpoonDirectory
 	 *
 	 * @return	bool
 	 * @param	string $folder
+	 * @param	string[optional] $chmod
 	 */
 	public static function create($folder, $chmod = 0777)
 	{
@@ -187,33 +188,7 @@ final class SpoonDirectory
 
 
 	/**
-	 * Attempts to delete all the .svn files from a given directory and below
-	 *
-	 * @return	void
-	 * @param	string $directory
-	 */
-	public static function deleteSVNDirectories($directory)
-	{
-		// redefine directory
-		$directory = (string) $directory;
-
-		// directory doesn't exists
-		if(!self::exists($directory)) return false;
-
-		// loop directories
-		foreach((array) self::getList($directory) as $folder)
-		{
-			// delete directories with the name .svn
-			if($folder == '.svn') self::delete($directory .'/'. $folder);
-
-			// other folder (search it!)
-			else self::deleteSVNDirectories($directory .'/'. $folder);
-		}
-	}
-
-
-	/**
-	 * Returns true if the directory exists
+	 * Checks if this directory exists
 	 *
 	 * @return	bool
 	 * @param	string $directory

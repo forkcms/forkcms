@@ -109,8 +109,9 @@ interface iSpoonDatabaseObject
 	 *
 	 * @return	int
 	 * @param	string $query
+	 * @param	mixed[optional] $parameters
 	 */
-	public function getNumRows($query);
+	public function getNumRows($query, $parameters = array());
 
 
 	/**

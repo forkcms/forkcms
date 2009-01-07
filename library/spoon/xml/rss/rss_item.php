@@ -144,7 +144,7 @@ final class SpoonRSSItem
 		$xml = '<item>'."\n";
 
 		// insert title
-		$xml .= '	<title>'. $this->getTitle() .'</title>'."\n";
+		$xml .= '	<title><![CDATA['. $this->getTitle() .']]></title>'."\n";
 
 		// insert link
 		$xml .= '	<link>'. $this->getLink() .'</link>'."\n";

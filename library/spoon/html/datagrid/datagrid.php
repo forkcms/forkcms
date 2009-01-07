@@ -1104,11 +1104,11 @@ class SpoonDataGrid
 
 			// number of items per page
 			$this->tpl->assign('iPerPage', $this->pagingLimit);
-		}
 
-		// parse paging
-		$content = SpoonDataGridPaging::getContent($this->url, $this->getOffset(), $this->getOrder(), $this->getSort(), $this->source->getNumResults(), $this->pagingLimit, $this->debug);
-		$this->tpl->assign('paging', $content);
+			// parse paging
+			$content = SpoonDataGridPaging::getContent($this->url, $this->getOffset(), $this->getOrder(), $this->getSort(), $this->source->getNumResults(), $this->pagingLimit, $this->debug);
+			$this->tpl->assign('paging', $content);
+		}
 	}
 
 

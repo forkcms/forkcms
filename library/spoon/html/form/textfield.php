@@ -16,7 +16,7 @@
  */
 
 
-/** SpoonFormVisualElement class */
+/** SpoonInputField class */
 require_once 'spoon/html/form/input_field.php';
 
 
@@ -34,12 +34,12 @@ class SpoonTextField extends SpoonInputField
 {
 	/**
 	 * Is the content of this field html?
-	 * 
+	 *
 	 * @var	bool
 	 */
 	private $isHtml = false;
-	
-	
+
+
 	/**
 	 * Class constructor
 	 *
@@ -64,8 +64,8 @@ class SpoonTextField extends SpoonInputField
 		if($classError !== null) $this->setClassOnError($classError);
 		$this->isHtml($html);
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the initial or submitted value
 	 *
@@ -77,13 +77,13 @@ class SpoonTextField extends SpoonInputField
 		// redefine html & default value
 		$allowHtml = ($allowHtml !== null) ? (bool) $allowHtml : $this->isHtml;
 		$value = ($this->isHtml) ? SpoonFilter::htmlentities($this->value) : $this->value;
-		
+
 		// form submitted
 		if($this->isSubmitted())
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// submitted by post (may be empty)
 			if(isset($data[$this->getName()]))
 			{
@@ -109,11 +109,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isAlphabetical($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -131,11 +131,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isAlphaNumeric($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -144,7 +144,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if the field is between a given minimum and maximum
+	 * Checks if the field is between a given minimum and maximum (includes min & max)
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -155,11 +155,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isBetween($minimum, $maximum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -177,11 +177,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isBool($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -199,11 +199,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isDigital($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -221,11 +221,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isEmail($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -243,11 +243,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isFilename($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -265,11 +265,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != ''))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -287,11 +287,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isFloat($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -310,21 +310,21 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isGreaterThan($minimum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Make spoon aware that this field contains html
-	 * 
+	 *
 	 * @return	void
 	 * @param	bool[optional] $on
 	 */
@@ -344,11 +344,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isInteger($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -366,11 +366,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isIp($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -389,11 +389,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isMaximum($maximum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -412,11 +412,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isMaximumCharacters($maximum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -435,11 +435,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isMinimum($minimum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -458,11 +458,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isMinimumCharacters($minimum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -493,11 +493,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isSmallerThan($maximum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -515,11 +515,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isString($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -537,21 +537,21 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isURL($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Checks if the field validates against the regexp
-	 * 
+	 *
 	 * @return	bool
 	 * @param	string[optional] $error
 	 */
@@ -559,11 +559,11 @@ class SpoonTextField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isValidAgainstRegexp((string) $regexp, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -575,45 +575,49 @@ class SpoonTextField extends SpoonInputField
 	 * Parses the html for this textfield
 	 *
 	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
+		// name is required
+		if($this->getName() == '') throw new SpoonFormException('A name is required for a textfield. Please provide a name.');
+
+		// start html generation
+		$output = '<input type="text" id="'. $this->id .'" name="'. $this->name .'" value="'. $this->getValue() .'"';
+
+		// maximum number of characters
+		if($this->maxlength !== null) $output .= ' maxlength="'. $this->maxlength .'"';
+
+		// class / classOnError
+		if($this->getClassAsHtml() != '') $output .= $this->getClassAsHtml();
+
+		// style attribute
+		if($this->style !== null) $output .= ' style="'. $this->style .'"';
+
+		// tabindex
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->tabindex .'"';
+
+		// readonly
+		if($this->readOnly) $output .= ' readonly="readonly"';
+
+		// add javascript methods
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
+
+		// disabled
+		if($this->disabled) $output .= ' disabled="disabled"';
+
+		// end html
+		$output .= ' />';
+
+		// template
+		if($template !== null)
 		{
-			// name is required
-			if($this->getName() == '') throw new SpoonFormException('A name is required for a textfield. Please provide a name.');
-
-			// start html generation
-			$this->html = '<input type="text" id="'. $this->id .'" name="'. $this->name .'" value="'. $this->getValue() .'"';
-
-			// maximum number of characters
-			if($this->maxlength !== null) $this->html .= ' maxlength="'. $this->maxlength .'"';
-
-			// class / classOnError
-			if($this->getClassAsHtml() != '') $this->html .= $this->getClassAsHtml();
-
-			// style attribute
-			if($this->style !== null) $this->html .= ' style="'. $this->style .'"';
-
-			// tabindex
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->tabindex .'"';
-
-			// readonly
-			if($this->readOnly) $this->html .= ' readonly="readonly"';
-
-			// add javascript methods
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
-
-			// disabled
-			if($this->disabled) $this->html .= ' disabled="disabled"';
-
-			// end html
-			$this->html .= ' />';
-
-			// parsed status
-			$this->parsed = true;
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name), $output);
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
 		}
+
+		// cough
+		return $output;
 	}
 
 
@@ -623,7 +627,7 @@ class SpoonTextField extends SpoonInputField
 	 * @return	void
 	 * @param	string $value
 	 */
-	public function setValue($value)
+	private function setValue($value)
 	{
 		$this->value = (string) $value;
 	}

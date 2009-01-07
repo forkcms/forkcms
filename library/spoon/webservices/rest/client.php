@@ -9,8 +9,8 @@
  * @package			webservices
  * @subpackage		rest
  *
- * @author			Davy Hellemans <davy@netlash.com>
- * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @author 			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
 
@@ -34,7 +34,7 @@ require_once 'spoon/webservices/rest/request.php';
  * @package			webservices
  * @subpackage		rest
  *
- * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author 			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
 class SpoonRESTClient
@@ -64,6 +64,23 @@ class SpoonRESTClient
 
 
 	/**
+	 * Authentication info
+	 *
+	 * @var	string
+	 */
+	private $username = null,
+			$password = null;
+
+
+	/**
+	 * Should I authenticate?
+	 *
+	 * @var	bool
+	 */
+	private $authenticate = false;
+
+
+	/**
 	 * Make the REST-call
 	 *
 	 * @return	mixed
@@ -80,6 +97,7 @@ class SpoonRESTClient
 		// set options
 		$request->setTimeOut($this->getTimeOut());
 		$request->setUserAgent($this->getUserAgent());
+		if($this->authenticate) $request->setCredentials($this->username, $this->password);
 
 		// return answer
 		return $request->execute();
@@ -105,6 +123,19 @@ class SpoonRESTClient
 	public function getUserAgent()
 	{
 		return $this->userAgent;
+	}
+
+
+	/**
+	 * Set the credentials to user
+	 *
+	 * @return void
+	 */
+	public function setCredentials($username, $password)
+	{
+		$this->username = (string) $username;
+		$this->password = (string) $password;
+		$this->authenticate = true;
 	}
 
 

@@ -157,17 +157,6 @@ class SpoonDataGridSourceArray extends SpoonDataGridSource
 
 
 	/**
-	 * Get the number of results
-	 *
-	 * @return	int
-	 */
-	public function getNumResults()
-	{
-		return $this->numResults;
-	}
-
-
-	/**
 	 * Sets the number of results
 	 *
 	 * @return	void

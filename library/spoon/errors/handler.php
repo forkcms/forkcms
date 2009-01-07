@@ -33,10 +33,10 @@ function exceptionHandler($exception)
 	// class & function exist and are spoon related
 	if(isset($aTrace[0]['class']) && isset($aTrace[0]['function']) && strtolower(substr($aTrace[0]['class'], 0, 5)) == 'spoon')
 	{
-		$documentationUrl = $aTrace[0]['class'] .'/'. strtolower($aTrace[0]['function']);
+		$documentationUrl = strtolower($aTrace[0]['class']) .'/'. strtolower($aTrace[0]['function']);
 
 		// build documentation url
-		$documentation = '&raquo; <a href="http://docs.spoon-library.be/search/'. $documentationUrl .'">view documentation</a>';
+		$documentation = '&raquo; <a href="http://docs.spoon-library.be/'. $documentationUrl .'">view documentation</a>';
 	}
 
 	// specific name
@@ -69,7 +69,6 @@ function exceptionHandler($exception)
 			#container
 			{
 				margin: 0 auto;
-				/*position: absolute;*/
 				width: 550px;
 			}
 

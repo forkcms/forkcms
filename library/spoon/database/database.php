@@ -223,6 +223,17 @@ class SpoonDatabase
 
 
 	/**
+	 * Returns the handler, this function is usefull when you 're manually escaping strings
+	 *
+	 * @return	object
+	 */
+	public function getHandler()
+	{
+		return $this->databaseObject->getHandler();
+	}
+
+
+	/**
 	 * Get the last executed query
 	 *
 	 * @return	string
@@ -238,7 +249,7 @@ class SpoonDatabase
 	 *
 	 * @return	int
 	 */
-	public function getNumberOfExecutedQueries()
+	public function getNumQueries()
 	{
 		return (int) $this->databaseObject->numQueries;
 	}
@@ -339,7 +350,7 @@ class SpoonDatabase
 	 * @param	string $table
 	 * @param	array $values
 	 */
-	public function insert($table, $values)
+	public function insert($table, array $values)
 	{
 		return (int) $this->databaseObject->insert($table, $values);
 	}
@@ -479,7 +490,7 @@ class SpoonDatabase
 	 * @param	string $where
 	 * @param	mixed[optional] $parameters
 	 */
-	public function update($table, $values, $where, $parameters = array())
+	public function update($table, array $values, $where, $parameters = array())
 	{
 		return (int) $this->databaseObject->update($table, $values, $where, $parameters);
 	}

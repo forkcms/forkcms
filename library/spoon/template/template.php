@@ -79,6 +79,14 @@ class SpoonTemplate
 
 
 	/**
+	 * List of form objects
+	 *
+	 * @var	array
+	 */
+	private $forms = array();
+
+
+	/**
 	 * Strict option
 	 *
 	 * @var	bool
@@ -92,6 +100,18 @@ class SpoonTemplate
 	 * @var	array
 	 */
 	private $variables = array();
+
+
+	/**
+	 * Adds a form to this template
+	 *
+	 * @return	void
+	 * @param	SpoonForm $form
+	 */
+	public function addForm(SpoonForm $form)
+	{
+		$this->forms[$form->getName()] = $form;
+	}
 
 
 	/**
@@ -149,9 +169,9 @@ class SpoonTemplate
 	public function cache($name, $lifetime = 60)
 	{
 		// redefine lifetime
-		$lifetime = (SpoonFilter::isBetween(60, 30758400, $lifetime)) ? (int) $lifetime : 60;
+		$lifetime = (SpoonFilter::isBetween(10, 30758400, $lifetime)) ? (int) $lifetime : 60;
 
-		// set
+		// set lifetime
 		$this->cache[(string) $name] = $lifetime;
 	}
 
@@ -207,18 +227,18 @@ class SpoonTemplate
 	 *
 	 * @return	void
 	 * @param 	string $template
-	 * @param	array[optional] $scope
 	 */
-	public function compile($template, array $scope = null)
+	public function compile($template)
 	{
 		// create object
-		$compiler = new SpoonTemplateCompiler($template, $this->variables, $scope);
+		$compiler = new SpoonTemplateCompiler($template, $this->variables);
 
 		// set some options
 		$compiler->setCacheDirectory($this->cacheDirectory);
 		$compiler->setCompileDirectory($this->compileDirectory);
 		$compiler->setForceCompile($this->forceCompile);
 		$compiler->setStrict($this->strict);
+		$compiler->setForms($this->forms);
 
 		// compile & save
 		$compiler->parseToFile();
@@ -240,27 +260,13 @@ class SpoonTemplate
 		// number of elements
 		$numElements = count($elements);
 
+		// calculate modulus
 		$modulus = $counter % $numElements;
 
-
+		// leftovers?
 		if($modulus == 0) return $elements[$numElements - 1];
 		else return $elements[$modulus - 1];
-
-
-		/*
-		 * 1 % 4 = 1 => 0
-		 * 2 $ 4 = 2 => 1
-		 * 3 % 4 = 3 => 2
-		 * 4 % 4 = 0 => 3
-		 * // --
-		 *
-		 * 5 % 4 = 1 => 0
-		 * 6 % 4 = 2 => 1
-		 * 7 % 4 = 3 => 2
-		 * 8 % 4 = 0 => 3
-		 */
 	}
-
 
 
 	/**
@@ -297,6 +303,7 @@ class SpoonTemplate
 			$compiler->setCompileDirectory($this->compileDirectory);
 			$compiler->setForceCompile($this->forceCompile);
 			$compiler->setStrict($this->strict);
+			$compiler->setForms($this->forms);
 
 			// compile & save
 			$compiler->parseToFile();

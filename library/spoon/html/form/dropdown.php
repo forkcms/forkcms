@@ -38,16 +38,16 @@ class SpoonDropDown extends SpoonVisualFormElement
 	 * @var	string
 	 */
 	protected $classError;
-	
-	
+
+
 	/**
 	 * Default element on top of the dropdown
-	 * 
+	 *
 	 * @var	array
 	 */
 	private $defaultElement = array();
-	
-	
+
+
 	/**
 	 * Errors stack
 	 *
@@ -141,27 +141,27 @@ class SpoonDropDown extends SpoonVisualFormElement
 	{
 		// default value
 		$value = '';
-		
+
 		// has errors
 		if($this->errors != '')
 		{
 			// class & classOnError defined
 			if($this->class != '' && $this->classError != '') $value = ' class="'. $this->class .' '. $this->classError .'"';
-			
+
 			// only class defined
 			elseif($this->class != '') $value = ' class="'. $this->class .'"';
-			
+
 			// only error defined
 			elseif($this->classError != '') $value = ' class="'. $this->classError .'"';
 		}
-		
+
 		// no errors
-		else 
+		else
 		{
 			// class defined
 			if($this->class != '') $value = ' class="'. $this->class .'"';
 		}
-		
+
 		return $value;
 	}
 
@@ -216,7 +216,7 @@ class SpoonDropDown extends SpoonVisualFormElement
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// multiple
 			if(!$this->single)
 			{
@@ -248,13 +248,12 @@ class SpoonDropDown extends SpoonVisualFormElement
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// default values
 		$values = $this->values;
 
 		// submitted field
 		if($this->isSubmitted() && isset($data[$this->getName()])) $values = $data[$this->getName()];
-
 		return $values;
 	}
 
@@ -269,7 +268,7 @@ class SpoonDropDown extends SpoonVisualFormElement
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// default error
 		$hasError = false;
 
@@ -301,146 +300,150 @@ class SpoonDropDown extends SpoonVisualFormElement
 	 * Parses the html for this dropdown
 	 *
 	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
+		// name is required
+		if($this->getName() == '') throw new SpoonFormException('A name is required for a dropdown menu. Please provide a name.');
+
+		// start html generation
+		$output = "\r\n" . '<select id="'. $this->getId() .'" name="'. $this->getName();
+
+		// multiple needs []
+		if(!$this->single) $output .= '[]';
+
+		// end name tag
+		$output .= '"';
+
+		// size (number of elements to be shown)
+		if($this->size > 1) $output .= ' size="'. $this->size .'"';
+
+		// multiple
+		if(!$this->single) $output .= ' multiple="multiple"';
+
+		// class / classOnError
+		if($this->getClassAsHtml() != '') $output .= ' '. $this->getClassAsHtml();
+
+		// style attribute
+		if($this->style !== null) $output .= ' style="'. $this->getStyle() .'"';
+
+		// tabindex
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->getTabIndex() .'"';
+
+		// readonly
+		if($this->readOnly) $output .= ' readonly="readonly"';
+
+		// add javascript methods
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
+
+		// disabled
+		if($this->disabled) $output .= ' disabled="disabled"';
+
+		// end select tag
+		$output .= ">\r\n";
+
+		// default element?
+		if(count($this->defaultElement) != 0)
 		{
-			// name is required
-			if($this->getName() == '') throw new SpoonFormException('A name is required for a dropdown menu. Please provide a name.');
-
-			// start html generation
-			$this->html = "\r\n" . '<select id="'. $this->getId() .'" name="'. $this->getName();
-
-			// multiple needs []
-			if(!$this->single) $this->html .= '[]';
-
-			// end name tag
-			$this->html .= '"';
-
-			// size (number of elements to be shown)
-			if($this->size > 1) $this->html .= ' size="'. $this->size .'"';
+			// create option
+			$output .= "\t". '<option value="'. $this->defaultElement[1] .'"';
 
 			// multiple
-			if(!$this->single) $this->html .= ' multiple="multiple"';
-
-			// class / classOnError
-			if($this->getClassAsHtml() != '') $this->html .= ' '. $this->getClassAsHtml();
-
-			// style attribute
-			if($this->style !== null) $this->html .= ' style="'. $this->getStyle() .'"';
-
-			// tabindex
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->getTabIndex() .'"';
-
-			// readonly
-			if($this->readOnly) $this->html .= ' readonly="readonly"';
-
-			// add javascript methods
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
-
-			// disabled
-			if($this->disabled) $this->html .= ' disabled="disabled"';
-
-			// end select tag
-			$this->html .= ">\r\n";
-			
-			// default element?
-			if(count($this->defaultElement) != 0)
+			if(!$this->single)
 			{
-				// create option
-				$this->html .= "\t". '<option value="'. $this->defaultElement[1] .'"';
-
-				// multiple
-				if(!$this->single)
-				{
-					// if the value is within the selected items array
-					if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($this->defaultElement[1], $this->getSelected())) $this->html .= ' selected="selected"';
-				}
-
-				// single
-				else
-				{
-					// if the current value is equal to the submitted value
-					if($this->defaultElement[1] == $this->getSelected()) $this->html .= ' selected="selected"';
-				}
-
-				// end option
-				$this->html .= ">". $this->defaultElement[0] ."</option>\r\n";
+				// if the value is within the selected items array
+				if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($this->defaultElement[1], $this->getSelected())) $output .= ' selected="selected"';
 			}
-			
-			// has option groups
-			if($this->optionGroups)
-			{
-				foreach ($this->values as $groupName => $group)
-				{
-					// create optgroup
-					$this->html .= "\t" .'<optgroup label="'. $groupName .'">'."\n";
 
-					// loop valuesgoo
-					foreach ($group as $value => $label)
-					{
-						// create option
-						$this->html .= "\t\t" . '<option value="'. $value .'"';
-
-						// multiple
-						if(!$this->single)
-						{
-							// if the value is within the selected items array
-							if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($value, $this->getSelected())) $this->html .= ' selected="selected"';
-						}
-
-						// single
-						else
-						{
-							// if the current value is equal to the submitted value
-							if($value == $this->getSelected()) $this->html .= ' selected="selected"';
-						}
-
-						// end option
-						$this->html .= ">$label</option>\r\n";
-					}
-
-					// end optgroup
-					$this->html .= "\t" .'</optgroup>'."\n";
-				}
-			}
-			
-			// regular dropdown
+			// single
 			else
 			{
-				// loop values
-				foreach ($this->values as $value => $label)
+				// if the current value is equal to the submitted value
+				if($this->defaultElement[1] == $this->getSelected()) $output .= ' selected="selected"';
+			}
+
+			// end option
+			$output .= ">". $this->defaultElement[0] ."</option>\r\n";
+		}
+
+		// has option groups
+		if($this->optionGroups)
+		{
+			foreach ($this->values as $groupName => $group)
+			{
+				// create optgroup
+				$output .= "\t" .'<optgroup label="'. $groupName .'">'."\n";
+
+				// loop valuesgoo
+				foreach ($group as $value => $label)
 				{
 					// create option
-					$this->html .= "\t". '<option value="'. $value .'"';
+					$output .= "\t\t" . '<option value="'. $value .'"';
 
 					// multiple
 					if(!$this->single)
 					{
 						// if the value is within the selected items array
-						if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($value, $this->getSelected())) $this->html .= ' selected="selected"';
+						if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($value, $this->getSelected())) $output .= ' selected="selected"';
 					}
 
 					// single
 					else
 					{
 						// if the current value is equal to the submitted value
-						if($value == $this->getSelected()) $this->html .= ' selected="selected"';
+						if($value == $this->getSelected()) $output .= ' selected="selected"';
 					}
 
 					// end option
-					$this->html .= ">$label</option>\r\n";
+					$output .= ">$label</option>\r\n";
 				}
+
+				// end optgroup
+				$output .= "\t" .'</optgroup>'."\n";
 			}
-
-			// end html
-			$this->html .= "</select>\r\n";
-
-			// update parse status
-			$this->parsed = true;
 		}
+
+		// regular dropdown
+		else
+		{
+			// loop values
+			foreach ($this->values as $value => $label)
+			{
+				// create option
+				$output .= "\t". '<option value="'. $value .'"';
+
+				// multiple
+				if(!$this->single)
+				{
+					// if the value is within the selected items array
+					if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($value, $this->getSelected())) $output .= ' selected="selected"';
+				}
+
+				// single
+				else
+				{
+					// if the current value is equal to the submitted value
+					if($value == $this->getSelected()) $output .= ' selected="selected"';
+				}
+
+				// end option
+				$output .= ">$label</option>\r\n";
+			}
+		}
+
+		// end html
+		$output .= "</select>\r\n";
+
+		// parse to template
+		if($template !== null)
+		{
+			$template->assign('ddm'. SpoonFilter::toCamelCase($this->name), $output);
+			$template->assign('ddm'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
+		}
+
+		// cough it up
+		return $output;
 	}
 
 
@@ -454,11 +457,11 @@ class SpoonDropDown extends SpoonVisualFormElement
 	{
 		$this->classError = (string) $class;
 	}
-	
-	
+
+
 	/**
 	 * Sets the default element (top of the dropdown)
-	 * 
+	 *
 	 * @return	void
 	 * @param	string $name
 	 * @param	string $value
@@ -549,13 +552,13 @@ class SpoonDropDown extends SpoonVisualFormElement
 		// check the first element
 		foreach($values as $value)
 		{
-			// a dropdownfield with optgroups?
+			// dropdownfield with optgroups?
 			$this->optionGroups = (is_array($value)) ? true : false;
 
 			// break the loop
 			break;
 		}
-		
+
 		// has option groups
 		if($this->optionGroups)
 		{
@@ -566,7 +569,7 @@ class SpoonDropDown extends SpoonVisualFormElement
 				foreach($options as $key => $value) $this->values[$groupName][$key] = $value;
 			}
 		}
-		
+
 		// no option groups
 		else
 		{

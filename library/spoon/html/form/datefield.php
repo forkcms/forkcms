@@ -98,12 +98,12 @@ class SpoonDateField extends SpoonInputField
 	{
 		return $this->mask;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Returns a timestamp based on mask & optional fields
-	 * 
+	 *
 	 * @return	int
 	 * @param	int[optional] $year
 	 * @param	int[optional] $month
@@ -119,27 +119,27 @@ class SpoonDateField extends SpoonInputField
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// valid field
 			if($this->isValid())
 			{
 				// define long mask
 				$longMask = str_replace(array('d', 'm', 'y'), array('dd', 'mm', 'yyyy'), $this->mask);
-				
+
 				// year found
-				if(strpos($longMask, 'yyyy') !== false) 
+				if(strpos($longMask, 'yyyy') !== false)
 				{
 					// redefine year
 					$year = substr($data[$this->getName()], strpos($longMask, 'yyyy'), 4);
 				}
-				
+
 				// month found
 				if(strpos($longMask, 'mm') !== false)
 				{
 					// redefine month
 					$month = substr($data[$this->getName()], strpos($longMask, 'mm'), 2);
 				}
-				
+
 				// day found
 				if(strpos($longMask, 'dd') !== false)
 				{
@@ -158,12 +158,10 @@ class SpoonDateField extends SpoonInputField
 	 * Retrieve the initial or submitted value
 	 *
 	 * @return	string
-	 * @param	bool[optional] $html
 	 */
-	public function getValue($allowHtml = false)
+	public function getValue()
 	{
 		// redefine html & value
-		$allowHtml = (bool) $allowHtml;
 		$value = $this->value;
 
 		// added to form
@@ -171,22 +169,19 @@ class SpoonDateField extends SpoonInputField
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// submitted by post (may be empty)
 			if(isset($data[$this->getName()]))
 			{
 				// value
 				$value = $data[$this->getName()];
-
-				// html allowed?
-				if(!$allowHtml) $value = SpoonFilter::htmlentities($value);
 			}
 		}
 
 		return $value;
 	}
-	
-	
+
+
 	/**
 	 * Checks if this field has any content (except spaces)
 	 *
@@ -197,11 +192,11 @@ class SpoonDateField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// check filled status
 		if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != ''))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -222,7 +217,7 @@ class SpoonDateField extends SpoonInputField
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// maxlength checks out (needs to be equal)
 			if(strlen($data[$this->getName()]) == $this->maxlength)
 			{
@@ -234,12 +229,12 @@ class SpoonDateField extends SpoonInputField
 				{
 					// redefine year
 					$year = substr($data[$this->getName()], strpos($longMask, 'yyyy'), 4);
-					
+
 					// not an int
-					if(!SpoonFilter::isInteger($year)) { $this->addError($error); return false; }
+					if(!SpoonFilter::isInteger($year)) { $this->setError($error); return false; }
 
 					// invalid year
-					if(!checkdate(1, 1, $year)) { $this->addError($error); return false; }
+					if(!checkdate(1, 1, $year)) { $this->setError($error); return false; }
 				}
 
 				// validate month (mm)
@@ -247,9 +242,9 @@ class SpoonDateField extends SpoonInputField
 				{
 					// redefine month
 					$month = substr($data[$this->getName()], strpos($longMask, 'mm'), 2);
-					
+
 					// not an int
-					if(!SpoonFilter::isInteger($month)) { $this->addError($error); return false; }
+					if(!SpoonFilter::isInteger($month)) { $this->setError($error); return false; }
 
 					// invalid month
 					if(!checkdate($month, 1, $year)) { $this->setError($error); return false; }
@@ -260,9 +255,9 @@ class SpoonDateField extends SpoonInputField
 				{
 					// redefine day
 					$day = substr($data[$this->getName()], strpos($longMask, 'dd'), 2);
-					
+
 					// not an int
-					if(!SpoonFilter::isInteger($day)) { $this->addError($error); return false; }
+					if(!SpoonFilter::isInteger($day)) { $this->setError($error); return false; }
 
 					// invalid day
 					if(!checkdate($month, $day, $year)) { $this->setError($error); return false; }
@@ -270,15 +265,15 @@ class SpoonDateField extends SpoonInputField
 			}
 
 			// maximum length doesn't check out
-			else { $this->addError($error); return false; }
+			else { $this->setError($error); return false; }
 		}
 
 		// not filled out
-		else { $this->addError($error); return false; }
+		else { $this->setError($error); return false; }
 
 		/**
 		 * When the code reaches the point, it means no errors have occured
-		 * and the true status may be returned.
+		 * and truth will out!
 		 */
 		return true;
 	}
@@ -287,43 +282,47 @@ class SpoonDateField extends SpoonInputField
 	/**
 	 * Parses the html for this date field
 	 *
-	 * @return	void
+	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
+		// name is required
+		if($this->getName() == '') throw new SpoonFormException('A name is required for a date field. Please provide a valid name.');
+
+		// start html generation
+		$output = '<input type="text" id="' . $this->getId() . '" name="' . $this->getName() .'" value="'. $this->getValue() .'" maxlength="'. $this->maxlength .'"';
+
+		// class / classOnError
+		if($this->getClassAsHtml() != '') $output .= $this->getClassAsHtml();
+
+		// style attribute
+		if($this->style !== null) $output .= ' style="'. $this->getStyle() .'"';
+
+		// tabindex
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->getTabIndex() .'"';
+
+		// readonly
+		if($this->readOnly) $output .= ' readonly="readonly"';
+
+		// add javascript methods
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
+
+		// disabled
+		if($this->disabled) $output .= ' disabled="disabled"';
+
+		// end html
+		$output .= ' />';
+
+		// template
+		if($template !== null)
 		{
-			// name is required
-			if($this->getName() == '') throw new SpoonFormException('A name is required for a date field. Please provide a valid name.');
-
-			// start html generation
-			$this->html = '<input type="text" id="' . $this->getId() . '" name="' . $this->getName() .'" value="'. $this->getValue() .'" maxlength="'. $this->maxlength .'"';
-
-			// class / classOnError
-			if($this->getClassAsHtml() != '') $this->html .= $this->getClassAsHtml();
-
-			// style attribute
-			if($this->style !== null) $this->html .= ' style="'. $this->getStyle() .'"';
-
-			// tabindex
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->getTabIndex() .'"';
-
-			// readonly
-			if($this->readOnly) $this->html .= ' readonly="readonly"';
-
-			// add javascript methods
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
-
-			// disabled
-			if($this->disabled) $this->html .= ' disabled="disabled"';
-
-			// end html
-			$this->html .= ' />';
-
-			// parsed status
-			$this->parsed = true;
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name), $output);
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
 		}
+
+		// cough
+		return $output;
 	}
 
 
@@ -369,7 +368,7 @@ class SpoonDateField extends SpoonInputField
 	 */
 	public function setMaxlength()
 	{
-		throw new SpoonFormException('This method is not to be used with the SpoonDateField class. The maxlength is generated automatically based on the mask.');
+		throw new SpoonFormException('This method is not to be used with the SpoonDateField class. The maxlength is generated automatically based on the input mask.');
 	}
 
 
@@ -379,7 +378,7 @@ class SpoonDateField extends SpoonInputField
 	 * @return	void
 	 * @param	int $value
 	 */
-	public function setValue($value)
+	private function setValue($value)
 	{
 		$this->value = date($this->mask, (int) $value);
 	}

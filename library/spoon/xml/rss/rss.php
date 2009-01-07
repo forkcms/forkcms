@@ -21,8 +21,14 @@ require_once 'spoon/spoon.php';
 /** Spoon RSS execption class */
 require_once 'spoon/xml/rss/exception.php';
 
+/** Spoon RSSItem class */
+require_once 'spoon/xml/rss/rss_item.php';
+
 /** Spoon File class */
 require_once 'spoon/filesystem/file.php';
+
+/** Spoon HTTP class */
+require_once 'spoon/http/http.php';
 
 
 /**
@@ -37,7 +43,7 @@ require_once 'spoon/filesystem/file.php';
 class SpoonRSS
 {
 	/**
-	 *Xml header
+	 * Xml header
 	 *
 	 * @var	string
 	 */
@@ -813,20 +819,20 @@ class SpoonRSS
 		{
 			// check if allow_url_fopen is enabled
 			if(ini_get('allow_url_fopen') == 0) throw new SpoonRSSException('allow_url_fopen should be enabled, if you want to get a remote url.');
-			
+
 			// open the url
 			$handle = @fopen($url, 'r');
-			
+
 			// validate the handle
 			if($handle === false) throw new SpoonRSSException('Something went wrong while retrieving the url.');
-			
+
 			// read the string
 			$xmlString = @stream_get_contents($handle);
-			
+
 			// close the hanlde
 			@fclose($handle);
 		}
-		
+
 		// not that url
 		else $xmlString = $url;
 
@@ -835,7 +841,7 @@ class SpoonRSS
 
 		// validate the feed
 		if($xml === false) throw new SpoonRSSException('Invalid rss-string.');
-		
+
 		// validate the feed again
 		if(!$xml->channel || !$xml->channel->title || !$xml->channel->link || !$xml->channel->description) throw new SpoonRSSException('This ('. $url .') isn\'t a valid feed.');
 

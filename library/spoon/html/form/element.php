@@ -44,24 +44,16 @@ class SpoonFormElement
 
 
 	/**
-	 * Final html output
-	 *
-	 * @var	string
-	 */
-	protected $html;
-
-
-	/**
 	 * Html id attribute
 	 *
 	 * @var	string
 	 */
 	protected $id;
-	
-	
+
+
 	/**
 	 * Method inherited from the form (post/get)
-	 * 
+	 *
 	 * @var	string
 	 */
 	protected $method = 'post';
@@ -76,29 +68,6 @@ class SpoonFormElement
 
 
 	/**
-	 * Html parse status
-	 *
-	 * @var	bool
-	 */
-	protected $parsed = false;
-
-
-	/**
-	 * Retrieves the generated html
-	 *
-	 * @return	string
-	 */
-	public function getHtml()
-	{
-		// not parsed
-		if(!$this->parsed) $this->parse();
-
-		// retrieve html output
-		return $this->html;
-	}
-
-
-	/**
 	 * Retrieves the id attribute
 	 *
 	 * @return	string
@@ -107,11 +76,11 @@ class SpoonFormElement
 	{
 		return $this->id;
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the form method or the submitted data
-	 * 
+	 *
 	 * @return	string
 	 * @param	bool[optional] $array
 	 */
@@ -120,8 +89,8 @@ class SpoonFormElement
 		if($array) return ($this->method == 'post') ? $_POST : $_GET;
 		return $this->method;
 	}
-	
-	
+
+
 	/**
 	 * Retrieves the name attribute
 	 *
@@ -142,7 +111,7 @@ class SpoonFormElement
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// name given
 		if($this->formName != null && isset($data['form']) && $data['form'] == $this->formName) return true;
 
@@ -158,8 +127,9 @@ class SpoonFormElement
 	 * Parse the html for the current element
 	 *
 	 * @return	void
+	 * @param	SpoonTemplate $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template)
 	{
 		// filled by subclasses
 	}
@@ -187,11 +157,11 @@ class SpoonFormElement
 	{
 		$this->id = (string) $id;
 	}
-	
-	
+
+
 	/**
 	 * Set the form method
-	 * 
+	 *
 	 * @return	void
 	 * @param	string[optional] $method
 	 */

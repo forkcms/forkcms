@@ -23,7 +23,7 @@ require_once 'spoon/filter/exception.php';
 
 
 /**
- * This base class provides all the methods used to filter input of any kind.
+ * This base class provides methods used to filter input of any kind.
  *
  * @package			filter
  *
@@ -148,27 +148,26 @@ final class SpoonFilter
 	 * Retrieve the desired value from an array of allowed values
 	 *
 	 * @return	mixed
-	 * @param	mixed $variable
+	 * @param	string $variable
 	 * @param	array[optional] $values
 	 * @param	mixed $defaultValue
 	 * @param	string[optional] $returnType
 	 */
-	public static function getValue($variable, $values = null, $defaultValue, $returnType = 'string')
+	public static function getValue($variable, array $values = null, $defaultValue, $returnType = 'string')
 	{
 		// redefine arguments
 		$variable = (string) $variable;
-		$values = (array) $values;
 		$defaultValue = (string) $defaultValue;
 		$returnType = (string) $returnType;
-
-		// redefine values array
-		if(count($values) == 0) $values[0] = '';
 
 		// default value
 		$value = $defaultValue;
 
-		// forced array with default parameter being empty
-		if($values[0] == '' || in_array($variable, $values)) $value = $variable;
+		// provided values
+		if($values !== null && in_array($variable, $values)) $value = $variable;
+
+		// no values
+		elseif($values === null && $variable != '') $value = $variable;
 
 		/**
 		 * We have to define the return type. Too bad we cant force it within
@@ -226,7 +225,6 @@ final class SpoonFilter
 		 * we're using a decent database layer, we don't need this shit and we're replacing
 		 * the double backslashes by it's html entity equivalent.
 		 */
-//	@todo smartquotes and mdashes? see maguza		return str_replace(array('\\', chr(145), chr(146), chr(147), chr(148), chr(151)), array('&#92;', '&#8216;', '&#8217;', '&#8220;', '&#8221;', '&#8212;'), $return);
 		return str_replace(array('\\'), array('&#92;'), $return);
 	}
 
@@ -363,7 +361,7 @@ final class SpoonFilter
 
 
 	/**
-	 * Checks if the value is greather than a give minimum
+	 * Checks if the value is greather than a given minimum
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -393,7 +391,7 @@ final class SpoonFilter
 	 * @return	bool
 	 * @param	array[optional] $domains
 	 */
-	public static function isInternalReferrer($domains = null)
+	public static function isInternalReferrer(array $domains = null)
 	{
 		// no referrer found
 		if(!isset($_SERVER['HTTP_REFERER'])) return true;
@@ -533,7 +531,6 @@ final class SpoonFilter
 	 */
 	public static function isURL($value)
 	{
-		// @todo Nieuwe regex (flipt op tildes, asp shit server shit zo, protocollen checkene, der zijn der meer!)
 		$regexp = '/^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[a-zA-Z]+)((:[0-9]+)?)((\/([0-9a-zA-Z\#%\.\/_-]+)?(\?[0-9a-zA-Z%\/&=_-]+)?)?)$/';
 		return (bool) preg_match($regexp, (string) $value);
 	}
@@ -544,7 +541,7 @@ final class SpoonFilter
 	 *
 	 * @return	bool
 	 * @param	string $regexp
-	 * @param	mixed $value
+	 * @param	string $value
 	 */
 	public static function isValidAgainstRegexp($regexp, $value)
 	{

@@ -16,7 +16,7 @@
  */
 
 
-/** SpoonFormVisualElement class */
+/** SpoonInputField class */
 require_once 'spoon/html/form/input_field.php';
 
 
@@ -38,11 +38,11 @@ class SpoonTextArea extends SpoonInputField
 	 * @var	int
 	 */
 	private $cols = 62;
-	
-	
+
+
 	/**
 	 * Is html allowed?
-	 * 
+	 *
 	 * @var	bool
 	 */
 	private $isHtml = false;
@@ -78,8 +78,8 @@ class SpoonTextArea extends SpoonInputField
 		if($classError !== null) $this->setClassOnError($classError);
 		$this->isHtml($html);
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the number of cols
 	 *
@@ -130,7 +130,7 @@ class SpoonTextArea extends SpoonInputField
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// submitted by post (may be empty)
 			if(isset($data[$this->getName()]))
 			{
@@ -156,11 +156,11 @@ class SpoonTextArea extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isAlphabetical($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -178,11 +178,11 @@ class SpoonTextArea extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isAlphaNumeric($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -200,21 +200,21 @@ class SpoonTextArea extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != ''))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Make spoon aware that this field contains html
-	 * 
+	 *
 	 * @return	void
 	 * @param	bool[optional] $on
 	 */
@@ -235,11 +235,11 @@ class SpoonTextArea extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isMaximumCharacters($maximum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -258,11 +258,11 @@ class SpoonTextArea extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isMinimumCharacters($minimum, $data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -280,11 +280,11 @@ class SpoonTextArea extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!SpoonFilter::isString($data[$this->getName()]))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -296,52 +296,56 @@ class SpoonTextArea extends SpoonInputField
 	 * Parses the html for this textarea
 	 *
 	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
+		// name is required
+		if($this->getName() == '') throw new SpoonFormException('A name is requird for a textarea. Please provide a valid name.');
+
+		// start html generation
+		$output = '<textarea id="'. $this->getId() .'" name="'. $this->getName() .'"';
+
+		// class / classOnError
+		if($this->getClassAsHtml() != '') $output .= $this->getClassAsHtml();
+
+		// style attribute
+		if($this->style != '') $output .= ' style="'. $this->getStyle() .'"';
+
+		// tabindex
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->getTabIndex() .'"';
+
+		// add javascript methods
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
+
+		// disabled
+		if($this->disabled) $output .= ' disabled="disabled"';
+
+		// readonly
+		if($this->readOnly) $output .= ' readonly="readonly"';
+
+		// rows & columns
+		$output .= ' cols="'. $this->getCols() .'"';
+		$output .= ' rows="'. $this->getRows() .'"';
+
+		// close first tag
+		$output .= '>';
+
+		// add value
+		$output .= $this->getValue();
+
+		// end tag
+		$output .= '</textarea>';
+
+		// template
+		if($template !== null)
 		{
-			// name is required
-			if($this->getName() == '') throw new SpoonFormException('A name is requird for a textarea. Please provide a valid name.');
-
-			// start html generation
-			$this->html = '<textarea id="'. $this->getId() .'" name="'. $this->getName() .'"';
-
-			// class / classOnError
-			if($this->getClassAsHtml() != '') $this->html .= $this->getClassAsHtml();
-			
-			// style attribute
-			if($this->style != '') $this->html .= ' style="'. $this->getStyle() .'"';
-
-			// tabindex
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->getTabIndex() .'"';
-
-			// add javascript methods
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
-
-			// disabled
-			if($this->disabled) $this->html .= ' disabled="disabled"';
-
-			// readonly
-			if($this->readOnly) $this->html .= ' readonly="readonly"';
-
-			// rows & columns
-			$this->html .= ' cols="'. $this->getCols() .'"';
-			$this->html .= ' rows="'. $this->getRows() .'"';
-
-			// close first tag
-			$this->html .= '>';
-
-			// add value
-			$this->html .= $this->getValue();
-
-			// end tag
-			$this->html .= '</textarea>';
-
-			// parsed status
-			$this->parsed = true;
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name), $output);
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
 		}
+
+		// cough
+		return $output;
 	}
 
 
@@ -386,7 +390,7 @@ class SpoonTextArea extends SpoonInputField
 	 * @return	void
 	 * @param	string $value
 	 */
-	public function setValue($value)
+	private function setValue($value)
 	{
 		$this->value = (string) $value;
 	}

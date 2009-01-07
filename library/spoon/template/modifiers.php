@@ -13,7 +13,6 @@
  * @author			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
-// @todo 1 voor 1 alle modifiers testen
 
 
 /** Spoon class */
@@ -204,7 +203,6 @@ class SpoonTemplateModifiers
 	 *
 	 * @var	array
 	 */
-	// @todo elke modifier testen!
 	private static $modifiers = array(	'addslashes' => 'addslashes',
 										'createhtmllinks' => array('SpoonTemplateModifiers', 'createHTMLLinks'),
 										'date' => array('SpoonTemplateModifiers', 'date'),
@@ -340,7 +338,6 @@ class SpoonTemplateModifiers
 	 * @param	int $length
 	 * @param	string[optional] $cut
 	 */
-	// @todo die cut moet nog een true/false worden!
 	public static function truncate($string, $length, $cut = 'no')
 	{
 		// don't cut
@@ -376,7 +373,6 @@ class SpoonTemplateModifiers
 	 * @param	int $length
 	 * @param	string[optional] $cut
 	 */
-	// @todo aanpassen van de cut naar true/false
 	public static function truncateHTML($string, $length, $cut = 'no')
 	{
 		// strip html tags

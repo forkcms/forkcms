@@ -64,12 +64,10 @@ class SpoonTimeField extends SpoonInputField
 	 * Retrieve the initial or submitted value
 	 *
 	 * @return	string
-	 * @param	bool[optional] $html
 	 */
-	public function getValue($allowHtml = false)
+	public function getValue()
 	{
-		// redefine html & default value
-		$allowHtml = (bool) $allowHtml;
+		// redefine default value
 		$value = $this->value;
 
 		// added to form
@@ -77,15 +75,12 @@ class SpoonTimeField extends SpoonInputField
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// submitted by post (may be empty)
 			if(isset($data[$this->getName()]))
 			{
 				// value
 				$value = $data[$this->getName()];
-
-				// html allowed?
-				if(!$allowHtml) $value = SpoonFilter::htmlentities($value);
 			}
 		}
 
@@ -103,11 +98,11 @@ class SpoonTimeField extends SpoonInputField
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
+
 		// validate
 		if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != ''))
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -128,7 +123,7 @@ class SpoonTimeField extends SpoonInputField
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// new time
 			$time = '';
 
@@ -160,7 +155,7 @@ class SpoonTimeField extends SpoonInputField
 		 */
 
 		// error defined
-		if($error !== null) $this->addError($error);
+		if($error !== null) $this->setError($error);
 
 		// return status
 		return false;
@@ -170,43 +165,47 @@ class SpoonTimeField extends SpoonInputField
 	/**
 	 * Parses the html for this time field
 	 *
-	 * @return	void
+	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
+		// name is required
+		if($this->getName() == '') throw new SpoonFormException('A name is required for a time field. Please provide a name.');
+
+		// start html generation
+		$output = '<input type="text" id="'. $this->getId() .'" name="'. $this->getName() .'" value="'. $this->getValue() .'" maxlength="5"';
+
+		// class / classOnError
+		if($this->getClassAsHtml() != '') $output .= $this->getClassAsHtml();
+
+		// style attribute
+		if($this->style !== null) $output .= ' style="'. $this->getStyle() .'"';
+
+		// tabindex
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->getTabIndex() .'"';
+
+		// readonly
+		if($this->readOnly) $output .= ' readonly="readonly"';
+
+		// add javascript methods
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
+
+		// disabled
+		if($this->disabled) $output .= ' disabled="disabled"';
+
+		// end html
+		$output .= ' />';
+
+		// template
+		if($template !== null)
 		{
-			// name is required
-			if($this->getName() == '') throw new SpoonFormException('A name is required for a time field. Please provide a name.');
-
-			// start html generation
-			$this->html = '<input type="text" id="'. $this->getId() .'" name="'. $this->getName() .'" value="'. $this->getValue() .'" maxlength="5"';
-
-			// class / classOnError
-			if($this->getClassAsHtml() != '') $this->html .= $this->getClassAsHtml();
-
-			// style attribute
-			if($this->style !== null) $this->html .= ' style="'. $this->getStyle() .'"';
-
-			// tabindex
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->getTabIndex() .'"';
-
-			// readonly
-			if($this->readOnly) $this->html .= ' readonly="readonly"';
-
-			// add javascript methods
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
-
-			// disabled
-			if($this->disabled) $this->html .= ' disabled="disabled"';
-
-			// end html
-			$this->html .= ' />';
-
-			// parsed status
-			$this->parsed = true;
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name), $output);
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
 		}
+
+		// cough
+		return $output;
 	}
 
 

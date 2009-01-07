@@ -9,8 +9,8 @@
  * @package			webservices
  * @subpackage		rest
  *
- * @author			Davy Hellemans <davy@netlash.com>
- * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @author 			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
 
@@ -31,17 +31,33 @@ require_once 'spoon/webservices/rest/response.php';
  * @package			webservices
  * @subpackage		rest
  *
- * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author 			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
 class SpoonRESTRequest
 {
+	/**
+	 * Should we authenticate?
+	 *
+	 * @var	bool
+	 */
+	private $authenticate = false;
+
+
 	/**
 	 * Host
 	 *
 	 * @var	string
 	 */
 	private $host;
+
+
+	/**
+	 * username
+	 *
+	 * @var	string
+	 */
+	private $login;
 
 
 	/**
@@ -58,6 +74,14 @@ class SpoonRESTRequest
 	 * @var	array
 	 */
 	private $parameters = array();
+
+
+	/**
+	 * password
+	 *
+	 * @var	string
+	 */
+	private $password;
 
 
 	/**
@@ -142,34 +166,46 @@ class SpoonRESTRequest
 		foreach ($parameters as $key => $value) $parameterString .= '&'. $key .'='. $value;
 		$parameterString = trim($parameterString, '&');
 
-		if($this->method == 'GET') $queryString .= '?'. $parameterString;
+		if($this->getMethod() == 'GET') $queryString .= '?'. $parameterString;
 		elseif ($this->method == 'POST') $requestBody .= ''. $parameterString;
 		else throw new SpoonRESTException('Invalid method ('. $this->method .').');
 
-		// build headers
-		$requestHeaders = strtoupper($this->getMethod()) .' '. $queryString .' HTTP/1.0'."\r\n";
-		$requestHeaders .= 'User-Agent: '. $this->getUserAgent()  ."\r\n";
-		$requestHeaders .= 'Host: '. $this->host ."\r\n";
+		// create instance
+		$curl = curl_init();
 
-		// add post if needed
-		if($this->method == 'POST') $requestHeaders .= 'Content-Type: application/x-www-form-urlencoded'."\r\n";
+		// set options
+		curl_setopt($curl, CURLOPT_URL, $this->host . $queryString);
+		curl_setopt($curl, CURLOPT_PORT, $this->port);
 
-		// build headers
-		$requestHeaders .= 'Content-length: '. strlen($requestBody) ."\r\n";
-		$requestHeaders .= "\r\n";
+		// data
+		if($this->getMethod() == 'POST')
+		{
+			curl_setopt($curl, CURLOPT_POST, true);
+			curl_setopt($curl, CURLOPT_POSTFIELDS, $parameterString);
+		}
 
-		// create socket
-		$null = null;
-		$socket = @fsockopen($this->host, $this->getPort(), &$null, &$null, $this->timeOut);
-		if($socket === false) throw new SpoonRESTException('The client couldn\'t connect.');
+		// authentication
+		if($this->authenticate)
+		{
+			curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+			curl_setopt($curl, CURLOPT_USERPWD, $this->login .':'. $this->password);
+		}
 
-		// write to socket
-		@fwrite($socket, $requestHeaders.$requestBody);
+		// set useragent
+		curl_setopt($curl, CURLOPT_USERAGENT, $this->getUserAgent());
 
-		// read response
-		while (!feof($socket)) $response .= @fread($socket, 8192);
+		// follow redirect
+		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 
-		@fclose($socket);
+		// return data
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HEADER, true);
+
+		// exec
+		$response = curl_exec($curl);
+
+		$errorNr = curl_errno($curl);
+		$errorMessage = curl_error($curl);
 
 		// create new response
 		return new SpoonRESTResponse($response);
@@ -240,6 +276,21 @@ class SpoonRESTRequest
 	{
 		if($this->userAgent == '') return 'Spoon '. SPOON_VERSION . 'REST client';
 		return $this->userAgent;
+	}
+
+
+	/**
+	 * Set credentials
+	 *
+	 * @return	void
+	 * @param	string $login
+	 * @param	string $password
+	 */
+	public function setCredentials($login, $password)
+	{
+		$this->login = (string) $login;
+		$this->password = (string) $password;
+		$this->authenticate = true;
 	}
 
 

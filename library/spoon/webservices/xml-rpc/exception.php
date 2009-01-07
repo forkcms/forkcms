@@ -6,7 +6,8 @@
  * This source file is part of the Spoon Library. More information,
  * documentation and tutorials can be found @ http://www.spoon-library.be
  *
- * @package			image
+ * @package			webservices
+ * @subpackage		xml-rpc
  *
  *
  * @author			Davy Hellemans <davy@spoon-library.be>
@@ -16,14 +17,15 @@
 
 
 /**
- * This exception is used to handle image related exceptions.
+ * This exception is used to handle XML-RPC related exceptions.
  *
- * @package			image
+ * @package			webservices
+ * @subpackage		xml-rpc
  *
  *
  * @author			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
-class SpoonImageException extends SpoonException {}
+class SpoonXMLRPCException extends SpoonException {}
 
 ?>

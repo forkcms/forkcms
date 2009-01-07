@@ -73,12 +73,12 @@ class SpoonFileField extends SpoonVisualFormElement
 	 * @return	void
 	 * @param	string $namee
 	 */
-	public function __construct($name, $class = 'input-textfield', $classError = 'input-filefield-error')
+	public function __construct($name, $class = 'input-filefield', $classError = 'input-filefield-error')
 	{
 		// set name & id
 		$this->setName($name);
 		$this->setId($name);
-		
+
 		// custom optional fields
 		if($class !== null) $this->setClass($class);
 		if($classError !== null) $this->setClassOnError($classError);
@@ -106,27 +106,27 @@ class SpoonFileField extends SpoonVisualFormElement
 	{
 		// default value
 		$value = '';
-		
+
 		// has errors
 		if($this->errors != '')
 		{
 			// class & classOnError defined
 			if($this->class != '' && $this->classError != '') $value = ' class="'. $this->class .' '. $this->classError .'"';
-			
+
 			// only class defined
 			elseif($this->class != '') $value = ' class="'. $this->class .'"';
-			
+
 			// only error defined
 			elseif($this->classError != '') $value = ' class="'. $this->classError .'"';
 		}
-		
+
 		// no errors
-		else 
+		else
 		{
 			// class defined
 			if($this->class != '') $value = ' class="'. $this->class .'"';
 		}
-		
+
 		return $value;
 	}
 
@@ -227,8 +227,7 @@ class SpoonFileField extends SpoonVisualFormElement
 
 
 	/**
-	 * Checks if the extension is allowed, and add a error
-	 * if the errormessage is specified
+	 * Checks if the extension is allowed
 	 *
 	 * @return	bool
 	 * @param	array $extensions
@@ -243,7 +242,7 @@ class SpoonFileField extends SpoonVisualFormElement
 			$return = in_array(strtolower(SpoonFile::getExtension($_FILES[$this->getName()]['name'])), $extensions);
 
 			// add error if needed
-			if(!$return && $error !== null) $this->addError($error);
+			if(!$return && $error !== null) $this->setError($error);
 
 			// return
 			return $return;
@@ -253,7 +252,7 @@ class SpoonFileField extends SpoonVisualFormElement
 		else
 		{
 			// add error if needed
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 
 			// return
 			return false;
@@ -292,7 +291,7 @@ class SpoonFileField extends SpoonVisualFormElement
 		}
 
 		// has error
-		if($error !== null) $this->addError($error);
+		if($error !== null) $this->setError($error);
 		return false;
 	}
 
@@ -309,7 +308,7 @@ class SpoonFileField extends SpoonVisualFormElement
 		if($this->isFilled() && SpoonFilter::isFilename($this->getFileName())) return true;
 
 		// has error
-		if($error !== null) $this->addError($error);
+		if($error !== null) $this->setError($error);
 		return false;
 	}
 
@@ -335,7 +334,7 @@ class SpoonFileField extends SpoonVisualFormElement
 		// has erorr?
 		if($hasError)
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -367,39 +366,43 @@ class SpoonFileField extends SpoonVisualFormElement
 	 * Parses the html for this filefield
 	 *
 	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
+		// name is required
+		if($this->getName() == '') throw new SpoonFormException('A name is required for a file field. Please provide a name.');
+
+		// start html generation
+		$output = '<input type="file" id="'. $this->getId() .'" name="'. $this->getName() .'"';
+
+		// class / classOnError
+		if($this->getClassAsHtml() != '') $output .= $this->getClassAsHtml();
+
+		// style attribute
+		if($this->style !== null) $output .= ' style="'. $this->getStyle() .'"';
+
+		// tabindex
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->getTabIndex() .'"';
+
+		// add javascript methods
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
+
+		// disabled
+		if($this->disabled) $output .= ' disabled="disabled"';
+
+		// end html
+		$output .= ' />';
+
+		// parse to template
+		if($template !== null)
 		{
-			// name is required
-			if($this->getName() == '') throw new SpoonFormException('A name is required for a file field. Please provide a name.');
-
-			// start html generation
-			$this->html = '<input type="file" id="'. $this->getId() .'" name="'. $this->getName() .'"';
-
-			// class / classOnError
-			if($this->getClassAsHtml() != '') $this->html .= $this->getClassAsHtml();
-
-			// style attribute
-			if($this->style !== null) $this->html .= ' style="'. $this->getStyle() .'"';
-
-			// tabindex
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->getTabIndex() .'"';
-
-			// add javascript methods
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
-
-			// disabled
-			if($this->disabled) $this->html .= ' disabled="disabled"';
-
-			// end html
-			$this->html .= ' />';
-
-			// parsed status
-			$this->parsed = true;
+			$template->assign('file'. SpoonFilter::toCamelCase($this->name), $output);
+			$template->assign('file'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
 		}
+
+		// cough it up
+		return $output;
 	}
 
 
@@ -413,8 +416,8 @@ class SpoonFileField extends SpoonVisualFormElement
 	{
 		$this->classError = (string) $class;
 	}
-	
-	
+
+
 	/**
 	 * Overwrites the error stack
 	 *

@@ -144,7 +144,7 @@ class SpoonCSV
 	 * @param	string[optional] $splitChar
 	 * @param	string[optional] $encapsulationString
 	 */
-	public static function arrayToCSV($array = array(), $keysAreColumnNames = true, $splitChar = ';', $encapsulationString = '', $htmlDecode = false)
+	public static function arrayToCSV(array $array = array(), $keysAreColumnNames = true, $splitChar = ';', $encapsulationString = '', $htmlDecode = false)
 	{
 		// init vars
 		$headerString = '';

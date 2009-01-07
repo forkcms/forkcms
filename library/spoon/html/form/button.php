@@ -106,43 +106,43 @@ class SpoonButton extends SpoonVisualFormElement
 	/**
 	 * Parse the html for this button
 	 *
-	 * @return	void
+	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not parsed
-		if(!$this->parsed)
-		{
-			// name required
-			if($this->getName() == '') throw new SpoonFormException('A name is required for a button. Please provide a valid name.');
+		// name required
+		if($this->getName() == '') throw new SpoonFormException('A name is required for a button. Please provide a valid name.');
 
-			// value required
-			if($this->getValue() == '') throw new SpoonFormException('A value is required for a button. Please provide a value.');
+		// value required
+		if($this->getValue() == '') throw new SpoonFormException('A value is required for a button. Please provide a value.');
 
-			// start html generation
-			$this->html = '<input type="'. $this->getType() .'" id="'. $this->getId() .'" name="'. $this->getName() .'" value="'. $this->getValue() .'"';
+		// start html generation
+		$output = '<input type="'. $this->getType() .'" id="'. $this->getId() .'" name="'. $this->getName() .'" value="'. $this->getValue() .'"';
 
-			// class attribute
-			if($this->class !== null) $this->html .= ' class="'. $this->getClass() .'"';
+		// class attribute
+		if($this->class !== null) $output .= ' class="'. $this->getClass() .'"';
 
-			// style attribute
-			if($this->style !== null) $this->html .= ' style="'. $this->getStyle() .'"';
+		// style attribute
+		if($this->style !== null) $output .= ' style="'. $this->getStyle() .'"';
 
-			// tabindex attribute
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->getTabIndex() .'"';
+		// tabindex attribute
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->getTabIndex() .'"';
 
-			// add javascript event functions
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
+		// add javascript event functions
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
 
-			// disabled attribute
-			if($this->disabled) $this->html .= ' disabled="disabled"';
+		// disabled attribute
+		if($this->disabled) $output .= ' disabled="disabled"';
 
-			// close input tag
-			$this->html .= ' />';
+		// close input tag
+		$output .= ' />';
 
-			// parsed status
-			$this->parsed = true;
-		}
+		// parse
+		if($template !== null) $template->assign('btn'. SpoonFilter::toCamelCase($this->name), $output);
+
+		// cough it up
+		return $output;
 	}
 
 
@@ -164,7 +164,7 @@ class SpoonButton extends SpoonVisualFormElement
 	 * @return	void
 	 * @param	string $value
 	 */
-	public function setValue($value)
+	private function setValue($value)
 	{
 		$this->value = (string) $value;
 	}

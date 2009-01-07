@@ -9,8 +9,8 @@
  * @package			webservices
  * @subpackage		rest
  *
- * @author			Davy Hellemans <davy@netlash.com>
- * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author			Davy Hellemans <davy@spoon-library.be>
+ * @author 			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
 
@@ -21,7 +21,7 @@
  * @package			webservices
  * @subpackage		rest
  *
- * @author			Tijs Verkoyen <tijs@netlas.com>
+ * @author			Tijs Verkoyen <tijs@spoon-library.be>
  * @since			1.0.0
  */
 class SpoonRESTException extends SpoonException {}

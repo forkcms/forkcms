@@ -16,7 +16,7 @@
 
 
 /**
- * This exception is used to handle filter related exceptions.
+ * This exception is used to handle filesystem related exceptions.
  *
  * @package			filesystem
  *

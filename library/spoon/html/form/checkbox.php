@@ -49,14 +49,6 @@ class SpoonCheckBox extends SpoonVisualFormElement
 
 
 	/**
-	 * The default value to return when a single checkbox has not been checked
-	 *
-	 * @var	string
-	 */
-	private $defaultValue;
-
-
-	/**
 	 * Errors stack
 	 *
 	 * @var	string
@@ -65,44 +57,19 @@ class SpoonCheckBox extends SpoonVisualFormElement
 
 
 	/**
-	 * Whether you can select multiple elements
-	 *
-	 * @var	bool
-	 */
-	private $single = true;
-
-
-	/**
-	 * Initial values
-	 *
-	 * @var	array
-	 */
-	private $value;
-
-
-	/**
 	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	mixed $value
-	 * @param	bool[optional] $single
 	 * @param	mixed[optional] $checked
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classOnError
 	 */
-	public function __construct($name, $value, $single = false, $checked = false, $class = 'input-checkbox', $classError = 'input-checkbox-error')
+	public function __construct($name, $checked = false, $class = 'input-checkbox', $classError = 'input-checkbox-error')
 	{
-		// obligated fields
-		$this->setSingle($single);
-
-		// name & value
+		// name & id
 		$this->setName($name);
-		$this->setValue($value);
-
-		// id is based on the type
-		$id = ($this->single) ? $name : $name .'_'. strtolower((string) $value);
-		$this->setId($id);
+		$this->setId($name);
 
 		// custom optional fields
 		$this->setChecked($checked);
@@ -135,15 +102,12 @@ class SpoonCheckBox extends SpoonVisualFormElement
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
+
 			// not checked by default
 			$checked = false;
 
-			// multiple (is checked)
-			if(!$this->single && isset($data[$this->getName()]) && is_array($data[$this->getName()]) && in_array($this->value, $data[$this->getName()])) $checked = true;
-
 			// single (is checked)
-			elseif(isset($data[$this->getName()]) && $data[$this->getName()] == $this->value) $checked = true;
+			if(isset($data[$this->getName()]) && $data[$this->getName()] == 'Y') $checked = true;
 
 			// adjust status
 			$this->setChecked($checked);
@@ -162,27 +126,27 @@ class SpoonCheckBox extends SpoonVisualFormElement
 	{
 		// default value
 		$value = '';
-		
+
 		// has errors
 		if($this->errors != '')
 		{
 			// class & classOnError defined
 			if($this->class != '' && $this->classError != '') $value = ' class="'. $this->class .' '. $this->classError .'"';
-			
+
 			// only class defined
 			elseif($this->class != '') $value = ' class="'. $this->class .'"';
-			
+
 			// only error defined
 			elseif($this->classError != '') $value = ' class="'. $this->classError .'"';
 		}
-		
+
 		// no errors
-		else 
+		else
 		{
 			// class defined
 			if($this->class != '') $value = ' class="'. $this->class .'"';
 		}
-		
+
 		return $value;
 	}
 
@@ -199,17 +163,6 @@ class SpoonCheckBox extends SpoonVisualFormElement
 
 
 	/**
-	 * Retrieves the initial value
-	 *
-	 * @return	string
-	 */
-	public function getDefaultValue()
-	{
-		return $this->value;
-	}
-
-
-	/**
 	 * Retrieve the errors
 	 *
 	 * @return	string
@@ -221,17 +174,6 @@ class SpoonCheckBox extends SpoonVisualFormElement
 
 
 	/**
-	 * Retrieve wheter it's a multiple or single checkbox
-	 *
-	 * @return	bool
-	 */
-	public function getSingle()
-	{
-		return $this->single;
-	}
-
-
-	/**
 	 * Retrieve the value(s)
 	 *
 	 * @return	mixed
@@ -239,28 +181,25 @@ class SpoonCheckBox extends SpoonVisualFormElement
 	public function getValue()
 	{
 		// default value
-		$value = $this->defaultValue;
+		$value = false;
 
 		// submitted by post (may be empty)
 		if($this->isSubmitted())
 		{
 			// post/get data
 			$data = $this->getMethod(true);
-			
-			// multple checkbox
-			if(!$this->single && isset($data[$this->getName()])) $value = $data[$this->getName()];
 
 			// single checkbox
-			elseif(isset($data[$this->getName()]) && $data[$this->getName()] == $this->value) $value = $data[$this->getName()];
+			if(isset($data[$this->getName()]) && $data[$this->getName()] == 'Y') $value = true;
 		}
 
 		return $value;
 	}
-	
-	
+
+
 	/**
 	 * Is this specific field checked
-	 * 
+	 *
 	 * @return	bool
 	 * @param	string[optional] $error
 	 */
@@ -268,9 +207,9 @@ class SpoonCheckBox extends SpoonVisualFormElement
 	{
 		// checked
 		if($this->getChecked()) return true;
-		
+
 		// not checked
-		else 
+		else
 		{
 			if($error !== null) $this->addError($error);
 			return false;
@@ -288,36 +227,13 @@ class SpoonCheckBox extends SpoonVisualFormElement
 	{
 		// post/get data
 		$data = $this->getMethod(true);
-		
-		// default error
-		$hasError = false;
-		
-		// value not submitted
-		if(!isset($data[$this->getName()])) $hasError = true;
 
 		// value submitted
-		else
-		{
-			// multiple
-			if(!$this->single)
-			{
-				// array with at least one result
-				if(is_array($data[$this->getName()]) && count($data[$this->getName()]) != 0) $hasError = false;
-				else $hasError = true;
-			}
+		if(isset($data[$this->getName()]) && $data[$this->getName()] == 'Y') return true;
 
-			// single
-			else if(trim($data[$this->getName()]) == '') $hasError = true;
-		}
-		
-		// has error
-		if($hasError)
-		{
-			if($error !== null) $this->addError($error);
-			return false;
-		}
-
-		return true;
+		// nothing submitted
+		if($error !== null) $this->addError($error);
+		return false;
 	}
 
 
@@ -325,54 +241,49 @@ class SpoonCheckBox extends SpoonVisualFormElement
 	 * Parses the html for this dropdown
 	 *
 	 * @return	string
+	 * @param	SpoonTemplate[optional] $template
 	 */
-	protected function parse()
+	public function parse(SpoonTemplate $template = null)
 	{
-		// not yet parsed
-		if(!$this->parsed)
+		// name required
+		if($this->getName() == '') throw new SpoonFormException('A name is required for checkbox. Please provide a name.');
+
+		// start html generation
+		$output = '<input type="checkbox" id="'. $this->getId() .'" name="'. $this->getName() .'" value="Y"';
+
+		// class / classOnError
+		if($this->getClassAsHtml() != '') $output .= ' '. $this->getClassAsHtml();
+
+		// style attribute
+		if($this->style !== null) $output .= ' style="'. $this->getStyle() .'"';
+
+		// tabindex
+		if($this->tabindex !== null) $output .= ' tabindex="'. $this->getTabIndex() .'"';
+
+		// readonly
+		if($this->readOnly) $output .= ' readonly="readonly"';
+
+		// add javascript methods
+		if($this->getJavascriptAsHtml() != '') $output .= $this->getJavascriptAsHtml();
+
+		// disabled
+		if($this->disabled) $output .= ' disabled="disabled"';
+
+		// checked or not?
+		if($this->getChecked()) $output .= ' checked="checked"';
+
+		// end input tag
+		$output .= ' />';
+
+		// template
+		if($template !== null)
 		{
-			// name required
-			if($this->getName() == '') throw new SpoonFormException('A name is required for checkbox. Please provide a name.');
-
-			// start html generation
-			$this->html = '<input type="checkbox" id="'. $this->getId() .'" name="'. $this->getName();
-
-			// multiple needs []
-			if(!$this->single) $this->html .= '[]';
-
-			// end name tag
-			$this->html .= '"';
-
-			// value
-			$this->html .= ' value="'. $this->value .'"';
-			
-			// class / classOnError
-			if($this->getClassAsHtml() != '') $this->html .= ' '. $this->getClassAsHtml();
-			
-			// style attribute
-			if($this->style !== null) $this->html .= ' style="'. $this->getStyle() .'"';
-
-			// tabindex
-			if($this->tabindex !== null) $this->html .= ' tabindex="'. $this->getTabIndex() .'"';
-
-			// readonly
-			if($this->readOnly) $this->html .= ' readonly="readonly"';
-
-			// add javascript methods
-			if($this->getJavascriptAsHtml() != '') $this->html .= $this->getJavascriptAsHtml();
-
-			// disabled
-			if($this->disabled) $this->html .= ' disabled="disabled"';
-
-			// checked or not?
-			if($this->getChecked()) $this->html .= ' checked="checked"';
-
-			// end input tag
-			$this->html .= ' />';
-
-			// update parse status
-			$this->parsed = true;
+			$template->assign('chk'. SpoonFilter::toCamelCase($this->name), $output);
+			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="form-error">'. $this->errors .'</span>' : '');
 		}
+
+		// cough
+		return $output;
 	}
 
 
@@ -409,59 +320,6 @@ class SpoonCheckBox extends SpoonVisualFormElement
 	public function setError($error)
 	{
 		$this->errors = (string) $error;
-	}
-
-
-	/**
-	 * Whether you can select one or more items
-	 *
-	 * @return	void
-	 * @param	bool[optional] $single
-	 */
-	private function setSingle($single = false)
-	{
-		$this->single = (bool) $single;
-	}
-
-
-	/**
-	 * Set the initial value
-	 *
-	 * @return	void
-	 * @param	mixed $value
-	 */
-	public function setValue($value)
-	{
-		// single checkbox
-		if($this->single)
-		{
-			// array with two items
-			if(is_array($value))
-			{
-				// incorrect number of iteks
-				if(count($value) != 2) throw new SpoonFormException('If you provide an array for a single checkbox, it has to contain exactly 2 elements.');
-
-				// correct items
-				else
-				{
-					// key 0 and 1 exist
-					if(isset($value[0]) && isset($value[1]))
-					{
-						$this->value = (string) $value[0];
-						$this->defaultValue = (string) $value[1];
-					}
-
-					// keys might be named or other numbers, which is not allowed
-					else throw new SpoonFormException('If you provide an array for a single checkbox, it has to contain 2 elements, with indexes 0 and 1.');
-				}
-			}
-
-			// regular string value
-			else $this->value = (string) $value;
-		}
-
-		// multiple checkbox
-		else $this->value = (string) $value;
 	}
 }
 
