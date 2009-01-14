@@ -34,8 +34,6 @@ function exceptionHandler($exception)
 	if(isset($aTrace[0]['class']) && isset($aTrace[0]['function']) && strtolower(substr($aTrace[0]['class'], 0, 5)) == 'spoon')
 	{
 		$documentationUrl = strtolower($aTrace[0]['class']) .'/'. strtolower($aTrace[0]['function']);
-
-		// build documentation url
 		$documentation = '&raquo; <a href="http://docs.spoon-library.be/'. $documentationUrl .'">view documentation</a>';
 	}
 
@@ -46,6 +44,7 @@ function exceptionHandler($exception)
 	if(!defined('SPOON_DEBUG')) define('SPOON_DEBUG', true);
 
 	// request uri?
+	if(!isset($_SERVER['HTTP_HOST'])) $_SERVER['HTTP_HOST'] = '';
 	if(!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = '';
 
 	// generate output
@@ -138,12 +137,12 @@ function exceptionHandler($exception)
 							<dt>Line</dt>
 								<dd>'. $exception->getLine() .'</dd>
 							<dt>Date</dt>
-								<dd>'. date('Y/m/d @ H:i:s') .'</dd>
+								<dd>'. date('r') .'</dd>
 							<dt>URL</dt>
 								<dd>';
 
 								// request url
-								$output .= (isset($_SERVER['REQUEST_URI'])) ? wordwrap($_SERVER['REQUEST_URI'], 70, '<br />', true) : 'Unknown Request URL';
+								$output .= '<a href="http://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] .'">http://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] .'</a>';
 								$output .= '</dd>
 							<dt>Referring URL</dt>
 								<dd>';
@@ -305,7 +304,7 @@ function exceptionHandler($exception)
 		$headers .= "X-Priority: 3\n";
 		$headers .= "X-MSMail-Priority: Normal\n";
 		$headers .= "X-Mailer: SpoonLibrary Webmail\n";
-		$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
+		$headers .= "From: Spoon Library <no-reply@spoon-library.be>\n";
 
 		// send email
 		@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);

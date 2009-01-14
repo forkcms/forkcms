@@ -26,6 +26,7 @@ class ApplicationRouting
 	 */
 	private $aRoutes = array('' => self::DEFAULT_APPLICATION,
 							'private' => 'backend',
+							'backend' => 'backend',
 							'api' => 'api');
 
 
@@ -72,6 +73,7 @@ class ApplicationRouting
 
 		// define APP
 		define('APPLICATION', $application);
+		define('NAMED_APPLICATION', $proposedApplication);
 	}
 }
 

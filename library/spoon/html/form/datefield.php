@@ -366,7 +366,7 @@ class SpoonDateField extends SpoonInputField
 	 *
 	 * @return	void
 	 */
-	public function setMaxlength()
+	public function setMaxlength($characters)
 	{
 		throw new SpoonFormException('This method is not to be used with the SpoonDateField class. The maxlength is generated automatically based on the input mask.');
 	}

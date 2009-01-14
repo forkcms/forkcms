@@ -348,9 +348,6 @@ class SpoonDatabaseMysqli implements iSpoonDatabaseObject
 		// connect if needed
 		if(!$this->handler) $status = $this->connect();
 
-		// no connection could be made & strict = disabled (prevent infinite loops!)
-		if(!isset($status) || $status === false) return false;
-
 		// create query
 		$query = $this->prepareQuery($query, $parameters);
 		$numRows = @mysqli_num_rows(mysqli_query($this->handler, $query));

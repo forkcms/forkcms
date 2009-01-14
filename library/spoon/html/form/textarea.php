@@ -366,7 +366,7 @@ class SpoonTextArea extends SpoonInputField
 	 *
 	 * @return	void
 	 */
-	public function setMaxlength()
+	public function setMaxlength($characters)
 	{
 		throw new SpoonFormException('This method is not to be used with the SpoonTextArea class.');
 	}

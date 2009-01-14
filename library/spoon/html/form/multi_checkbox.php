@@ -361,7 +361,7 @@ class SpoonMultiCheckBox extends SpoonVisualFormElement
 	 *
 	 * @return	void
 	 */
-	public function setId()
+	public function setId($id)
 	{
 		throw new SpoonFormException('This method is not to be used with this class.');
 	}

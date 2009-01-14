@@ -394,21 +394,15 @@ class SpoonTemplateCompiler
 				// file
 				$file = $this->getVariableString($match);
 
-				// template path
-				$template = eval('error_reporting(0); return '. $file .';');
-
-				// template doesn't start from the root
-				if(substr($template, 0, 1) != '/') $template = dirname(realpath($this->template)) .'/'. $template;
-
 				// search string
 				$search = '{include:file="'. $match .'"}';
 
 				// replace string
-				$replace = '<?php if($this->getForceCompile()) $this->compile(\''. $template .'\'); ?>' ."\n";
-				$replace .= '<?php $return = @include $this->getCompileDirectory() .\'/\'. $this->getCompileName(\''. $template .'\'); ?>' ."\n";
+				$replace = '<?php if($this->getForceCompile()) $this->compile(realpath('. $file .')); ?>' ."\n";
+				$replace .= '<?php $return = @include $this->getCompileDirectory() .\'/\'. $this->getCompileName('. $file .'); ?>' ."\n";
 				$replace .= '<?php if($return === false): ?>' ."\n";
-				$replace .= '<?php $this->compile(\''. $template .'\'); ?>' ."\n";
-				$replace .= '<?php @include $this->getCompileDirectory() .\'/\'. $this->getCompileName(\''. $template .'\'); ?>' ."\n";
+				$replace .= '<?php $this->compile(realpath('. $file .')); ?>' ."\n";
+				$replace .= '<?php @include $this->getCompileDirectory() .\'/\'. $this->getCompileName('. $file .'); ?>' ."\n";
 				$replace .= '<?php endif; ?>' ."\n";
 
 				// replace it
@@ -512,9 +506,15 @@ class SpoonTemplateCompiler
 					// search for
 					$aSearch[] = '{option:'. $match .'}';
 					$aSearch[] = '{/option:'. $match .'}';
+					// inverse option
+					$aSearch[] = '{option:!'. $match .'}';
+					$aSearch[] = '{/option:!'. $match .'}';
 
 					// replace with
 					$aReplace[] = '<?php if(isset('. $variable .') && count('. $variable .') != 0 && '. $variable .' != \'\' && '. $variable .' !== false): ?>';
+					$aReplace[] = '<?php endif; ?>';
+					// inverse option
+					$aReplace[] = '<?php if(!isset('. $variable .') || count('. $variable .') == 0 || '. $variable .' == \'\' || '. $variable .' === false): ?>';
 					$aReplace[] = '<?php endif; ?>';
 
 					// go replace

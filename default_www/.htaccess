@@ -10,9 +10,6 @@ FileETag MTime Size
 	ExpiresByType image/png A604800
 	ExpiresByType image/jpg A604800
 	ExpiresByType image/jpeg A604800
-
-	ExpiresByType text/javascript A604800
-	ExpiresByType text/javascript A604800
 </IfModule>
 
 # options 

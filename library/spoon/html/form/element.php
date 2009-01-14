@@ -129,7 +129,7 @@ class SpoonFormElement
 	 * @return	void
 	 * @param	SpoonTemplate $template
 	 */
-	public function parse(SpoonTemplate $template)
+	public function parse(SpoonTemplate $template = null)
 	{
 		// filled by subclasses
 	}

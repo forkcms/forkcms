@@ -214,7 +214,7 @@ class SpoonTimeField extends SpoonInputField
 	 *
 	 * @return	void
 	 */
-	public function setMaxlength()
+	public function setMaxlength($characters)
 	{
 		throw new SpoonException('This method is not to be used with the SpoonTimeField class. The maxlength setting is automatically generated.');
 	}

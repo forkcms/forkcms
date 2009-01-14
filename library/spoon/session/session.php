@@ -132,7 +132,7 @@ class SpoonSession
     	if(!session_id()) self::start();
 
     	// set key
-    	$_SESSION[(string) $key] = (string) $value;
+    	$_SESSION[(string) $key] = $value;
     }
 
 
