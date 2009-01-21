@@ -36,6 +36,7 @@ $err['core'] = array();
 // h
 // i
 $err['core']['InvalidUsernamePasswordCombination'] = 'Username/password combination is invalid';
+$err['authentication']['Invalidddd'] = 'mekker';
 // j
 // k
 // l
@@ -71,6 +72,8 @@ $err['core']['UsernameIsRequired'] = 'Username is required.';
 $lbl = array();
 $lbl['core'] = array();
 // a
+$lbl['core']['Add'] = 'toevoegen';
+$lbl['pages']['Add'] = 'pagina toevoegen';
 // b
 // c
 // d
@@ -87,6 +90,7 @@ $lbl['core'] = array();
 // o
 $lbl['core']['Ok'] = 'OK';
 // p
+$lbl['core']['Pages'] = 'Pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 // q
 // r

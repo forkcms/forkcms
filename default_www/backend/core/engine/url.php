@@ -169,7 +169,7 @@ class BackendURL
 			if(!BackendAuthentication::isAllowedModule($module))
 			{
 				// the user doesn't have access, redirect to error page
-				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-module');
+				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-module&querystring='. urlencode($this->queryString));
 			}
 
 			// we have access
@@ -179,7 +179,7 @@ class BackendURL
 				if(!BackendAuthentication::isAllowedAction($action, $module))
 				{
 					// the user hasn't access, redirect to error page
-					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-action');
+					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-action&querystring='. urlencode($this->queryString));
 				}
 
 				// let's do it

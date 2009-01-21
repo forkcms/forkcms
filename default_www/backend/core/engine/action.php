@@ -84,6 +84,9 @@ class BackendAction
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
 		require_once BACKEND_MODULE_PATH .'/actions/'. $this->getAction() .'.php';
 
+		// validate if class exists (aka has correct name)
+		if(!class_exists($actionClassName)) throw new BackendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
+
 		// create action-object
 		$object = new $actionClassName();
 
@@ -137,6 +140,9 @@ class BackendAction
 
 		// require the config file, we validated before for existence.
 		require_once BACKEND_MODULE_PATH .'/config.php';
+
+		// validate if class exists (aka has correct name)
+		if(!class_exists($configClassName)) throw new BackendException('The configfile is present, but the classname should be: '. $configClassName .'.');
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName;

@@ -53,7 +53,7 @@ class BackendAuthentication
 	public static function isAllowedAction($action, $module)
 	{
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
-		$aAlwaysAllowed = array('error' => array('index'), 'authentication' => array('index'));
+		$aAlwaysAllowed = array('error' => array('index'), 'authentication' => array('index', 'logout'));
 
 		// redefine
 		$action = (string) $action;
@@ -69,12 +69,12 @@ class BackendAuthentication
 			$db = BackendModel::getDB();
 
 			// get allowed actions
-			$aAllowedActions = $db->retrieve('SELECT gra.module, gra.action, gra.level
-												FROM users_sessions AS us
-												INNER JOIN users AS u ON us.user_id = u.id
-												INNER JOIN groups_rights_actions AS gra ON u.group_id = gra.group_id
-												WHERE us.session_id = ? AND us.secret_key = ?;',
-												array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
+			$aAllowedActions = (array) $db->retrieve('SELECT gra.module, gra.action, gra.level
+														FROM users_sessions AS us
+														INNER JOIN users AS u ON us.user_id = u.id
+														INNER JOIN groups_rights_actions AS gra ON u.group_id = gra.group_id
+														WHERE us.session_id = ? AND us.secret_key = ?;',
+														array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all actions and there level
 			foreach($aAllowedActions as $row) self::$aAllowedActions[$row['module']] = array($row['action'] => (int) $row['level']);
@@ -184,6 +184,26 @@ class BackendAuthentication
 			return false;
 		}
 	}
+
+
+	/**
+	 * Logsout the current user
+	 *
+	 * @return	void
+	 */
+	public static function logout()
+	{
+		// init var
+		$db = BackendModel::getDB();
+
+		// remove all rows owned by the current user
+		$db->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
+
+		// reset values. We can't destroy the session because session-data can be used on the site.
+		SpoonSession::set('backend_logged_in', false);
+		SpoonSession::set('backend_secret_key', '');
+	}
+
 
 
 	/**

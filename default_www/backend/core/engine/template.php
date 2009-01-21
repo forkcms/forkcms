@@ -71,7 +71,9 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function mapCustomModifiers()
 	{
-		// @todo	add custom modifiers
+		// convert vars into an url, syntax {$var|geturl:<pageId>}
+		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
+		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
 	}
 
 
@@ -181,5 +183,65 @@ class BackendTemplate extends SpoonTemplate
 		// assign messages
 		$this->assignArray($aRealMessages, 'msg');
 	}
+}
+
+
+/**
+ * BackendTemplateModifiers, this is our class with custom modifiers.
+ *
+ * This source file is part of Fork CMS.
+ *
+ * @package		backend
+ * @subpackage	template
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class BackendTemplateModifiers
+{
+	/**
+	 * Convert a var into a url
+	 * 	syntax: {$var|geturl:<action>[:<module>]}
+	 *
+	 * @return	void
+	 * @param	string[optional] $var
+	 * @param	string $action
+	 * @param	string[optional] $module
+	 */
+	public static function getURL($var = null, $action, $module = null)
+	{
+		// get url
+		$url = Spoon::getObjectReference('url');
+
+		// redefine
+		$var = (string) $var;
+		$action = (string) $action;
+		$module = ($module !== null) ? (string) $module : $url->getModule();
+
+		// build url and return it
+		return '/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $module .'/'. $action;
+	}
+
+
+	/**
+	 * Convert a var into navigation-html
+	 *  syntax: {$var|getnavigation:startdepth[:maximumdepth]}
+	 *
+	 * @return	void
+	 * @param	string[optional] $var
+	 * @param	int $startDepth
+	 * @param	int[optional] $maximumDepth
+	 */
+	public static function getNavigation($var = null, $startDepth, $maximumDepth = null)
+	{
+		// get url
+		$url = Spoon::getObjectReference('url');
+
+		// redefine
+		$var = (string) $var;
+		$startDepth = (int) $startDepth;
+		$maximumDepth = ($maximumDepth !== null) ? (int) $maximumDepth : $startDepth + 1;
+	}
+
 }
 ?>

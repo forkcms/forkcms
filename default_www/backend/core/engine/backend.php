@@ -18,14 +18,6 @@ require_once BACKEND_CORE_PATH .'/engine/model.php';
 class Backend
 {
 	/**
-	 * Url instance
-	 *
-	 * @var	BackendURL
-	 */
-	private $url;
-
-
-	/**
 	 * Default constructor
 	 *
 	 * @return	void
@@ -33,13 +25,22 @@ class Backend
 	public function __construct()
 	{
 		// create url-object to handle the url
-		$this->url = new BackendURL();
+		$url = new BackendURL();
 
 		// create new template so we have a reference that will be available on every module/action
-		$this->tpl = new BackendTemplate();
+		$tpl = new BackendTemplate();
+
+		// create a header-object
+		$header = new BackendHeader();
+
+		// create a navigation object
+		$navigation = new BackendNavigation();
+
+		Spoon::dump($navigation->getNavigation(1));
+
 
 		// create a new action
-		$action = new BackendAction($this->url->getAction(), $this->url->getModule());
+		$action = new BackendAction($url->getAction(), $url->getModule());
 
 		// execute the action
 		$action->execute();

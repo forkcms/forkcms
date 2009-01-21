@@ -1,16 +1,16 @@
 <?php
 /**
- * Login
+ * Pages
  *
- * This is the configuration-object for the authentication module
+ * This is the configuration-object for the pages module
  *
  * @package		backend
- * @subpackage	authentication
+ * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class AuthenticationConfig extends BackendBaseConfig
+final class PagesConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

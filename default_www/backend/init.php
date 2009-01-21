@@ -39,8 +39,6 @@ class Init
 		$this->type = $type;
 
 		// set some ini-options
-		ini_set('pcre.backtrack_limit', 999999999999);
-		ini_set('pcre.recursion_limit', 999999999999);
 		ini_set('memory_limit', '64M');
 
 		// require globals
@@ -126,6 +124,8 @@ class Init
 		require BACKEND_CORE_PATH .'/engine/language.php';
 		require BACKEND_CORE_PATH .'/engine/url.php';
 		require BACKEND_CORE_PATH .'/engine/template.php';
+		require BACKEND_CORE_PATH .'/engine/header.php';
+		require BACKEND_CORE_PATH .'/engine/navigation.php';
 		require BACKEND_CORE_PATH .'/engine/base_config.php';
 		require BACKEND_CORE_PATH .'/engine/base_action.php';
 		require BACKEND_CORE_PATH .'/engine/action.php';

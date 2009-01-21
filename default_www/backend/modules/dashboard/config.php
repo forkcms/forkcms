@@ -1,16 +1,16 @@
 <?php
 /**
- * Login
+ * Dashboard
  *
- * This is the configuration-object for the authentication module
+ * This is the configuration-object for the dashboard module
  *
  * @package		backend
- * @subpackage	authentication
+ * @subpackage	dashboard
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class AuthenticationConfig extends BackendBaseConfig
+final class DashboardConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

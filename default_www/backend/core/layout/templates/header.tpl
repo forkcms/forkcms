@@ -7,10 +7,10 @@
 
 	<link rel="shortcut icon" href="{$BACKEND_URL}/favicon.ico" />
 	<link rel="stylesheet" type="text/css" media="screen" href="{$BACKEND_CORE_URL}/layout/css/screen.css" />
-	{iteration:cssFile}<link rel="stylesheet" type="text/css" media="screen" href="{$file}" />{/iteration:cssFile}
+	{iteration:cssFiles}<link rel="stylesheet" type="text/css" media="screen" href="{$cssFiles.path}" />{/iteration:cssFiles}
 
-	<script type="text/javascript" src="{$BACKEND_CORE_URL}/js/jquery/jquery.js"></script>
-	{iteration:javascriptFile}<script type="text/javascript" src="{$file}"></script>{/iteration:javascriptFile}
+	{iteration:javascriptFiles}<script type="text/javascript" src="{$javascriptFiles.path}"></script>{/iteration:javascriptFiles}
+
 </head>
 
 <body>
@@ -18,4 +18,8 @@
 	<div id="header">
 		<img src="{$BACKEND_CORE_URL}/layout/images/fork.gif" width="110" height="34" alt="Fork">
 		<h1>SITE TITLE {option:oDebugStatus}(Debug mode){/option:oDebugStatus}</h1>
+	</div>
+	
+	<div id="navigation">
+		{$var|getnavigation:1}
 	</div>

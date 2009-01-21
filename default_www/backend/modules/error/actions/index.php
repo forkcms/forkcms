@@ -50,6 +50,25 @@ class ErrorIndex extends BackendBaseActionIndex
 			break;
 		}
 
+		// querystring provided?
+		if($this->getParameter('querystring') !== null)
+		{
+			// split into file and parameters
+			$chunks = explode('?', $this->getParameter('querystring'));
+
+			// get extension
+			$extension = SpoonFile::getExtension($chunks[0]);
+
+			// if the file has an extension it is a non-existing-file
+			if($extension != '')
+			{
+				// set correct headers
+				SpoonHTTP::setHeadersByCode(404);
+
+				// stop the script, but give a nice error, so we can detect which file is missing
+				exit('Requested file ('. implode('?', $chunks) .') not found.');
+			}
+		}
 
 		// build the labelname
 		$labelName = SpoonFilter::toCamelCase($errorType, '-');

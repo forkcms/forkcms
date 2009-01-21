@@ -22,19 +22,27 @@ class BackendBaseAction
 
 
 	/**
-	 * The current module
-	 *
-	 * @var	string
-	 */
-	private $module;
-
-
-	/**
 	 * The parameters (urldecoded)
 	 *
 	 * @var	array
 	 */
 	private $aParameters = array();
+
+
+	/**
+	 * The header object
+	 *
+	 * @var	BackendHeader
+	 */
+	private $header;
+
+
+	/**
+	 * The current module
+	 *
+	 * @var	string
+	 */
+	private $module;
 
 
 	/**
@@ -66,6 +74,7 @@ class BackendBaseAction
 		// get objects from the reference so they are accessable from the action-object
 		$this->tpl = Spoon::getObjectReference('template');
 		$this->url = Spoon::getObjectReference('url');
+		$this->header = Spoon::getObjectReference('header');
 
 		// store the current module and action (we grab them from the url)
 		$this->setModule($this->url->getModule());
@@ -97,8 +106,8 @@ class BackendBaseAction
 	 */
 	public function display($template = null)
 	{
-		// @todo	parse header
-		// @todo	parse footer
+		// parse header
+		$this->header->parse();
 
 		// if no template is specified we have to build the path ourself
 		if($template === null) $template = BACKEND_MODULE_PATH .'/layout/templates/'. $this->url->getAction() .'.tpl';
@@ -115,6 +124,9 @@ class BackendBaseAction
 	 */
 	public function execute()
 	{
+		// add jquery, we will need this in every action, so add it global
+		$this->header->addJS('jquery/jquery.js', 'core');
+
 		// this method will be overwritten by the childs so
 	}
 
