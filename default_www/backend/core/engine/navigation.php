@@ -87,11 +87,12 @@ class BackendNavigation
 			}
 
 			// open li-tag
-			if(in_array($key, $aSelectedKeys)) $html .= '<li class="selected">'."\n";
+			if(in_array($key, $aSelectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction())
+			{
+				array_shift($aSelectedKeys);
+				$html .= '<li class="selected">LUL***'."\n";
+			}
 			else $html .= '<li>'."\n";
-
-			Spoon::dump($key, false);
-			Spoon::dump($level, false);
 
 			// add the link
 			$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. $level['label'] .'</a>'."\n";
@@ -119,6 +120,8 @@ class BackendNavigation
 	{
 		// get selected keys
 		$aSelectedKeys = (array) $this->getSelectedKeys();
+
+//		Spoon::dump($aSelectedKeys);
 
 		// build html
 		$html = $this->createHTML($this->aNavigation, $startDepth, $maximumDepth, $aSelectedKeys);
