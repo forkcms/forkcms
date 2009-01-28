@@ -90,7 +90,7 @@ class BackendLanguage
 	 */
 	public static function getLabels()
 	{
-		return (array) self::$lbl;
+		return self::$lbl;
 	}
 
 
@@ -119,7 +119,7 @@ class BackendLanguage
 	 */
 	public static function getMessages()
 	{
-		return (array) self::$msg;
+		return self::$msg;
 	}
 
 
@@ -194,6 +194,32 @@ class BL extends BackendLanguage
 	public static function err($key, $module = 'core')
 	{
 		return BackendLanguage::getError($key, $module);
+	}
+
+
+	/**
+	 * Get a label from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 * @param	string[optional] $module
+	 */
+	public static function lbl($key, $module = 'core')
+	{
+		return BackendLanguage::getLabel($key, $module);
+	}
+
+
+	/**
+	 * Get a message from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 * @param	string[optional] $module
+	 */
+	public static function msg($key, $module = 'core')
+	{
+		return BackendLanguage::getMessage($key, $module);
 	}
 }
 
