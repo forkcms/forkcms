@@ -5,11 +5,11 @@
  *
  * This class will handle the incomming url.
  *
- * @package			backend
- * @subpackage		url
+ * @package		backend
+ * @subpackage	url
  *
- * @author 			Tijs Verkoyen <tijs@netlash.com>
- * @since			2.0
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
  */
 class BackendURL
 {

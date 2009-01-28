@@ -126,8 +126,7 @@ class BackendNavigation
 		// build html
 		$html = $this->createHTML($this->aNavigation, $startDepth, $maximumDepth, $aSelectedKeys);
 
-		echo $html;
-		exit;
+		return $html;
 	}
 
 

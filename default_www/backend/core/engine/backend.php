@@ -28,16 +28,13 @@ class Backend
 		$url = new BackendURL();
 
 		// create new template so we have a reference that will be available on every module/action
-		$tpl = new BackendTemplate();
+		new BackendTemplate();
 
 		// create a header-object
-		$header = new BackendHeader();
+		new BackendHeader();
 
 		// create a navigation object
-		$navigation = new BackendNavigation();
-
-		Spoon::dump($navigation->getNavigation(1));
-
+		new BackendNavigation();
 
 		// create a new action
 		$action = new BackendAction($url->getAction(), $url->getModule());
@@ -46,4 +43,5 @@ class Backend
 		$action->execute();
 	}
 }
+
 ?>

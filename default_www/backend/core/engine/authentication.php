@@ -18,7 +18,7 @@ class BackendAuthentication
 	 *
 	 * @var	array
 	 */
-	private static $aAllowedActions = array();
+	private static $allowedActions = array();
 
 
 	/**
@@ -26,7 +26,7 @@ class BackendAuthentication
 	 *
 	 * @var	array
 	 */
-	private static $aAllowedModules = array();
+	private static $allowedModules = array();
 
 
 	/**
@@ -63,7 +63,7 @@ class BackendAuthentication
 		if(isset($aAlwaysAllowed[$module]) && in_array($action, $aAlwaysAllowed[$module])) return true;
 
 		// we will cache everything
-		if(empty(self::$aAllowedActions))
+		if(empty(self::$allowedActions))
 		{
 			// init var
 			$db = BackendModel::getDB();
@@ -77,16 +77,16 @@ class BackendAuthentication
 														array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all actions and there level
-			foreach($aAllowedActions as $row) self::$aAllowedActions[$row['module']] = array($row['action'] => (int) $row['level']);
+			foreach($aAllowedActions as $row) self::$allowedActions[$row['module']] = array($row['action'] => (int) $row['level']);
 		}
 
 		// do we know a level for this action
-		if(isset(self::$aAllowedActions[$module][$action]))
+		if(isset(self::$allowedActions[$module][$action]))
 		{
 			// @todo	shouldn't we store those values in a user-object?
 
 			// is the level greather then zero? aka: do we have access?
-			if(self::$aAllowedActions[$module][$action] > 0) return true;
+			if(self::$allowedActions[$module][$action] > 0) return true;
 		}
 
 		// fallback
@@ -112,7 +112,7 @@ class BackendAuthentication
 		if(in_array($module, $aAlwaysAllowed)) return true;
 
 		// do we already know something?
-		if(empty(self::$aAllowedModules))
+		if(empty(self::$allowedModules))
 		{
 			// init var
 			$db = BackendModel::getDB();
@@ -126,13 +126,13 @@ class BackendAuthentication
 												array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all modules
-			foreach($aAllowedModules as $row) self::$aAllowedModules[$row] = true;
+			foreach($aAllowedModules as $row) self::$allowedModules[$row] = true;
 		}
 
 			// @todo	shouldn't we store those values in a user-object?
 
 		// return result
-		return (bool) (!isset(self::$aAllowedModules[$module])) ? false : self::$aAllowedModules[$module];
+		return (bool) (!isset(self::$allowedModules[$module])) ? false : self::$allowedModules[$module];
 	}
 
 
@@ -266,4 +266,5 @@ class BackendAuthentication
 		}
 	}
 }
+
 ?>

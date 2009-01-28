@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendBaseConfig
  *
@@ -17,7 +18,7 @@ class BackendBaseConfig
 	 *
 	 * @var	array
 	 */
-	protected $aPossibleActions = array();
+	protected $possibleActions = array();
 
 
 	/**
@@ -39,7 +40,7 @@ class BackendBaseConfig
 	 */
 	public function getPossibleActions()
 	{
-		return (array) $this->aPossibleActions;
+		return $this->possibleActions;
 	}
 
 
@@ -61,8 +62,9 @@ class BackendBaseConfig
 			$action = strtolower(str_replace('.php', '', $file));
 
 			// if the action isn't disabled add it to the possible actions
-			if(!in_array($action, $this->disabledActions)) $this->aPossibleActions[$file] = $action;
+			if(!in_array($action, $this->disabledActions)) $this->possibleActions[$file] = $action;
 		}
 	}
 }
+
 ?>

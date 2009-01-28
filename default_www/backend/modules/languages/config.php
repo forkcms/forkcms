@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Error
+ * Languages
  *
  * This is the configuration-object
  *
  * @package		backend
- * @subpackage	error
+ * @subpackage	languages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-final class ErrorConfig extends BackendBaseConfig
+final class LanguagesConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

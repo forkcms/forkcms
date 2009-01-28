@@ -26,7 +26,7 @@ class BackendBaseAction
 	 *
 	 * @var	array
 	 */
-	private $aParameters = array();
+	private $parameters = array();
 
 
 	/**
@@ -88,11 +88,11 @@ class BackendBaseAction
 			{
 				// urldecode each element in the array (REMARK: we don't support multidim arrays)
 				// arrays in GET are ugly and stupid
-				$this->aParameters[$key] = (array) array_map('urldecode', $value);
+				$this->parameters[$key] = (array) array_map('urldecode', $value);
 			}
 
 			// it's just a string
-			else $this->aParameters[$key] = urldecode($value);
+			else $this->parameters[$key] = urldecode($value);
 		}
 	}
 
@@ -178,7 +178,7 @@ class BackendBaseAction
 		$type = (string) $type;
 
 		// is this parameter available
-		if(isset($this->aParameters[$key]))
+		if(isset($this->parameters[$key]))
 		{
 			// cast it
 			switch($type)
@@ -186,28 +186,28 @@ class BackendBaseAction
 				// boolean
 				case 'bool':
 				case 'boolean':
-					return (bool) $this->aParameters[$key];
+					return (bool) $this->parameters[$key];
 
 				// integer
 				case 'int':
 				case 'integer':
-					return (int) $this->aParameters[$key];
+					return (int) $this->parameters[$key];
 
 				// float
 				case 'float':
-					return (float) $this->aParameters[$key];
+					return (float) $this->parameters[$key];
 
 				// double
 				case 'double':
-					return (double) $this->aParameters[$key];
+					return (double) $this->parameters[$key];
 
 				// string
 				case 'string':
-					return (string) $this->aParameters[$key];
+					return (string) $this->parameters[$key];
 
 				// array
 				case 'array':
-					return (string) $this->aParameters[$key];
+					return (string) $this->parameters[$key];
 
 				// invalid type
 				default:

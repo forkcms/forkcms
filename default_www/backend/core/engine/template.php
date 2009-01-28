@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendTemplate, this is our extended version of SpoonTemplate
  *
@@ -244,4 +245,5 @@ class BackendTemplateModifiers
 	}
 
 }
+
 ?>

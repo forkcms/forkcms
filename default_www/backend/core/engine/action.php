@@ -142,7 +142,7 @@ class BackendAction
 		require_once BACKEND_MODULE_PATH .'/config.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($configClassName)) throw new BackendException('The configfile is present, but the classname should be: '. $configClassName .'.');
+		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: '. $configClassName .'.');
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName;
@@ -172,4 +172,5 @@ class BackendAction
 		$this->module = (string) $module;
 	}
 }
+
 ?>
