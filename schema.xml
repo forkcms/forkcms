@@ -57,6 +57,29 @@
 </Cl>
 <SchTrHis/>
 </Tbl>
+<Tbl UsSo="1" nm="languages_labels">
+<TblOpts></TblOpts>
+<Pk ClNs="id" nm="pklanguages_labels"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="language" nu="0">
+<DT ds="VarChar" en="" id="12" ln="5" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="application" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="module" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="value" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+</Cl>
+<SchTrHis/>
+</Tbl>
 <Tbl UsSo="1" nm="meta">
 <Cm>Meta-information</Cm>
 <TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
@@ -582,6 +605,7 @@
 <TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups" x="79" y="460"/>
 <TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_modules" x="293" y="472"/>
 <TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_actions" x="571" y="455"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="languages_labels" x="340" y="570"/>
 </Dgm>
 <RnmMgr NxRnmId="29">
 <RnmCh ObjCls="Table" ParCls="Schema" ParNme="fork-next-gen" SupCls="" SupNme="">
