@@ -99,7 +99,7 @@ class SpoonTemplate
 	 *
 	 * @var	array
 	 */
-	private $variables = array();
+	private $variables = array('CRLF' => "\n", 'TAB' => "\t");
 
 
 	/**
@@ -226,10 +226,14 @@ class SpoonTemplate
 	 * Compile a given template
 	 *
 	 * @return	void
+	 * @param	string $path
 	 * @param 	string $template
 	 */
-	public function compile($template)
+	public function compile($path, $template)
 	{
+		// redefine template
+		if(substr($template, 0, 1) != '/') $template = $path .'/'. $template;
+
 		// create object
 		$compiler = new SpoonTemplateCompiler($template, $this->variables);
 
@@ -341,9 +345,14 @@ class SpoonTemplate
 	 *
 	 * @return	string
 	 * @param	string $template
+	 * @param	string[optional] $path
 	 */
-	private function getCompileName($template)
+	private function getCompileName($template, $path = null)
 	{
+		// redefine template
+		if(substr($template, 0, 1) != '/' && $path !== null) $template = $path .'/'. $template;
+
+		// return the correct full path
 		return md5(realpath($template)) .'_'. basename($template) .'.php';
 	}
 

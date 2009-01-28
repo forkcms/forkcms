@@ -695,23 +695,23 @@ class SpoonDataGrid
 		// loop records
 		foreach($records as $i => &$record)
 		{
-			// reset row
-			$aRow = array('attributes' => '', 'oddAttributes' => '', 'evenAttributes' => '', 'columns' => array());
-
-			// row attributes
-			$aRow['attributes'] = $this->getHtmlAttributes($this->attributes['row']);
-
-			// odd row attributes (reversed since the first $i = 0)
-			if(!SpoonFilter::isOdd($i)) $aRow['oddAttributes'] = $this->getHtmlAttributes($this->attributes['row_odd']);
-
-			// even row attributes
-			else $aRow['evenAttributes'] = $this->getHtmlAttributes($this->attributes['row_even']);
-
 			// special record
 			$record = $this->parseRecord($record);
 
 			// parse column functions
 			$record = $this->parseColumnFunctions($record);
+
+			// reset row
+			$aRow = array('attributes' => '', 'oddAttributes' => '', 'evenAttributes' => '', 'columns' => array());
+
+			// row attributes
+			$aRow['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
+
+			// odd row attributes (reversed since the first $i = 0)
+			if(!SpoonFilter::isOdd($i)) $aRow['oddAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_odd']));
+
+			// even row attributes
+			else $aRow['evenAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_even']));
 
 			// define the columns
 			$aColumns = array();
@@ -966,6 +966,7 @@ class SpoonDataGrid
 				if($sorting && in_array($name, $aSortingColumns))
 				{
 					// init var
+					$aColumn['sorting'] = true;
 					$aColumn['noSorting'] = false;
 
 					// sorted on this column?
@@ -1017,9 +1018,9 @@ class SpoonDataGrid
 					else $sortingMethod = 'asc';
 
 					// build actual urls
-					$aColumn['sorting']['url'] = $this->buildURL($this->getOffset(), $name, $sortingMethod);
-					$aColumn['sorting']['urlAsc'] = $this->buildURL($this->getOffset(), $name, 'asc');
-					$aColumn['sorting']['urlDesc'] = $this->buildURL($this->getOffset(), $name, 'desc');
+					$aColumn['sortingURL'] = $this->buildURL($this->getOffset(), $name, $sortingMethod);
+					$aColumn['sortingURLAsc'] = $this->buildURL($this->getOffset(), $name, 'asc');
+					$aColumn['sortingURLDesc'] = $this->buildURL($this->getOffset(), $name, 'desc');
 
 					/**
 					 * There's no point in parsing the icon for this column if there's
@@ -1038,9 +1039,9 @@ class SpoonDataGrid
 					else $sortingIcon = $this->sortingIcons['descSelected'];
 
 					// asc & desc icons
-					$aColumn['sorting']['icon'] = $sortingIcon;
-					$aColumn['sorting']['iconAsc'] = ($this->getSort() == 'asc') ? $this->sortingIcons['ascSelected'] : $this->sortingIcons['asc'];
-					$aColumn['sorting']['iconDesc'] = ($this->getSort() == 'desc') ? $this->sortingIcons['descSelected'] : $this->sortingIcons['desc'];
+					$aColumn['sortingIcon'] = $sortingIcon;
+					$aColumn['sortingIconAsc'] = ($this->getSort() == 'asc') ? $this->sortingIcons['ascSelected'] : $this->sortingIcons['asc'];
+					$aColumn['sortingIconDesc'] = ($this->getSort() == 'desc') ? $this->sortingIcons['descSelected'] : $this->sortingIcons['desc'];
 
 					// not sorted on this column
 					if($this->getOrder() != $name) $sortingLabel = $this->sortingLabels[$this->columns[$name]->getSortingMethod()];
@@ -1049,9 +1050,9 @@ class SpoonDataGrid
 					elseif($this->getSort() == 'asc') $sortingLabel = $this->sortingLabels['ascSelected'];
 					else $sortingLabel = $this->sortingLabels['descSelected'];
 
-					$aColumn['sorting']['label'] = $sortingLabel;
-					$aColumn['sorting']['labelAsc'] = $this->sortingLabels['asc'];
-					$aColumn['sorting']['labelDesc'] = $this->sortingLabels['desc'];
+					$aColumn['sortingLabel'] = $sortingLabel;
+					$aColumn['sortingLabelAsc'] = $this->sortingLabels['asc'];
+					$aColumn['sortingLabelDesc'] = $this->sortingLabels['desc'];
 				}
 
 				// no sorting enabled for this column
@@ -1067,16 +1068,10 @@ class SpoonDataGrid
 				// add to array
 				$aHeader[] = $aColumn;
 			}
-
-			// add to header array
-			$aSpecial[$column->getName()] = $column->getLabel();
 		}
 
 		// default headers
 		$this->tpl->assign('headers', $aHeader);
-
-		// special headers
-		$this->tpl->assign('header', $aSpecial);
 	}
 
 
@@ -1144,7 +1139,6 @@ class SpoonDataGrid
 			$array['values'][] = $this->getSort();
 		}
 
-
 		// loop the record fields
 		foreach($this->columns as $column)
 		{
@@ -1168,7 +1162,7 @@ class SpoonDataGrid
 	 */
 	private function parseSummary()
 	{
-		if($this->caption !== null) $this->tpl->assign('summary', $this->caption);
+		if($this->summary !== null) $this->tpl->assign('summary', $this->summary);
 	}
 
 

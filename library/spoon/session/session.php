@@ -43,6 +43,29 @@ class SpoonSession
 
 
 	/**
+	 * Deletes a key-value-pair from the session
+	 *
+	 * @return	void
+	 * @param	mixed $keys
+	 */
+	public static function delete($keys)
+	{
+		// redefine
+		$keys = (array) $keys;
+
+		// loop the keys
+		foreach($keys as $key)
+		{
+			// validate
+			if(!self::exists($key) && self::$strict) throw new SpoonSessionException('This key doesn\'t exists. Key: '.$key);
+
+			// unset
+			unset($_SESSION[$key]);
+		}
+	}
+
+
+	/**
 	 * Destroys the session
 	 *
 	 * @return	void

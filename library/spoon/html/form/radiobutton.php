@@ -349,6 +349,7 @@ class SpoonRadioButton extends SpoonVisualFormElement
 	 * This method should not be used
 	 *
 	 * @return	void
+	 * @param	string $id
 	 */
 	public function setId($id)
 	{

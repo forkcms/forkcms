@@ -247,7 +247,7 @@ class SpoonTemplateCompiler
 			$this->content = $this->parseForms($this->content);
 
 			// error reporting
-			$this->content = "<?php error_reporting(E_WARNING); ?>\n". $this->content;
+			$this->content = '<?php error_reporting(E_WARNING); ?>'. "\n". $this->content;
 
 			// parsed
 			$this->parsed = true;
@@ -362,7 +362,7 @@ class SpoonTemplateCompiler
 				{
 					// start & close tag
 					$aSearch = array('{form:'. $name .'}', '{/form:'. $name .'}');
-					$aReplace[0] = '<form action="'. $this->forms[$name]->getAction() .'" method="'. $this->forms[$name]->getMethod() .'"'. $this->forms[$name]->getParametersAsHTML() .'>';
+					$aReplace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo \' \'. $this->forms[\''. $name .'\']->getParametersAsHTML(); ?>>';
 					$aReplace[0] .= '<fieldset style="display: none;">'. $this->forms[$name]->getField('form')->parse() .'</fieldset>';
 					$aReplace[1] = '</form>';
 					$content = str_replace($aSearch, $aReplace, $content);
@@ -394,15 +394,18 @@ class SpoonTemplateCompiler
 				// file
 				$file = $this->getVariableString($match);
 
+				// template path
+				$template = eval('error_reporting(0); return '. $file .';');
+
 				// search string
 				$search = '{include:file="'. $match .'"}';
 
 				// replace string
-				$replace = '<?php if($this->getForceCompile()) $this->compile(realpath('. $file .')); ?>' ."\n";
-				$replace .= '<?php $return = @include $this->getCompileDirectory() .\'/\'. $this->getCompileName('. $file .'); ?>' ."\n";
+				$replace = '<?php if($this->getForceCompile()) $this->compile(\''. dirname(realpath($this->template)) .'\', '. $file .'); ?>' ."\n";
+				$replace .= '<?php $return = @include $this->getCompileDirectory() .\'/\'. $this->getCompileName('. $file .',\''. dirname(realpath($this->template)) .'\'); ?>' ."\n";
 				$replace .= '<?php if($return === false): ?>' ."\n";
-				$replace .= '<?php $this->compile(realpath('. $file .')); ?>' ."\n";
-				$replace .= '<?php @include $this->getCompileDirectory() .\'/\'. $this->getCompileName('. $file .'); ?>' ."\n";
+				$replace .= '<?php $this->compile(\''. dirname(realpath($this->template)) .'\', '. $file .'); ?>' ."\n";
+				$replace .= '<?php @include $this->getCompileDirectory() .\'/\'. $this->getCompileName('. $file .',\''. dirname(realpath($this->template)) .'\'); ?>' ."\n";
 				$replace .= '<?php endif; ?>' ."\n";
 
 				// replace it
@@ -519,6 +522,10 @@ class SpoonTemplateCompiler
 
 					// go replace
 					$content = str_replace($aSearch, $aReplace, $content);
+
+					// reset vars
+					unset($aSearch);
+					unset($aReplace);
 				}
 			}
 

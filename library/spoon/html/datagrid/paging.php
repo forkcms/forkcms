@@ -77,18 +77,20 @@ class SpoonDataGridPaging
 		if($iCurrentPage > 1)
 		{
 			// label & url
-			$aPrevious['label'] = self::$previous;
-			$aPrevious['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $url);
-			$tpl->assign('previous', $aPrevious);
+			$previousLabel = self::$previous;
+			$previousURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $url);
+			$tpl->assign('previousLabel', $previousLabel);
+			$tpl->assign('previousURL', $previousURL);
 		}
 
 		// next url
 		if($iCurrentPage < $iPages)
 		{
 			// label & url
-			$aNext['label'] = self::$next;
-			$aNext['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $url);
-			$tpl->assign('next', $aNext);
+			$nextLabel = self::$next;
+			$nextURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $url);
+			$tpl->assign('nextLabel', $nextLabel);
+			$tpl->assign('nextURL', $nextURL);
 		}
 
 		// limit

@@ -1,24 +1,42 @@
+{*
+  Below a list of globally availble options & variables.
+  
+  Variables:
+  - {$summary} / table summary
+  - {$caption} / table caption
+  - {$paging} / output of the paging class
+  
+  Options:
+  - paging / whether pagination is enabled
+*}
+
+
 <table{option:summary} summary="{$summary}"{/option:summary}{$attributes}>
 	{option:caption}<caption>{$caption}</caption>{/option:caption}
 	<thead>
 		<tr{$headerAttributes}>
 			{iteration:headers}
 			<th>
-			{option:sorting}
-				{option:sorted}<a href="{$sorting.url}" title="{$sorting.label}">{$label} <img src="{$sorting.icon}" /></a>{/option:sorted}
-				{option:notSorted}<a href="{$sorting.url}" title="{$sorting.label}">{$label} <img src="{$sorting.icon}" /></a>{/option:notSorted}
-			{/option:sorting}
-			{option:noSorting}
-				{$label}
-			{/option:noSorting}
+				{option:headers.sorting}
+					{option:headers.sorted}
+						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label} <img src="{$headers.sortingIcon}" /></a>
+					{/option:headers.sorted}
+					{option:headers.notSorted}
+						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label} <img src="{$headers.sortingIcon}" /></a>
+					{/option:headers.notSorted}
+				{/option:headers.sorting}
+				
+				{option:headers.noSorting}
+					{$headers.label}
+				{/option:headers.noSorting}
 			</th>
 			{/iteration:headers}
 		</tr>
 	</thead>
 	<tbody>
 		{iteration:rows}
-		<tr{$attributes}{$oddAttributes}{$evenAttributes}>
-			{iteration:columns}<td{$attributes}>{$value}</td>{/iteration:columns}
+		<tr{$rows.attributes}{$rows.oddAttributes}{$rows.evenAttributes}>
+			{iteration:rows.columns}<td{$columns.attributes}>{$columns.value}</td>{/iteration:rows.columns}
 		</tr>
 		{/iteration:rows}
 	</tbody>

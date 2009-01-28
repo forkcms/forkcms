@@ -40,6 +40,32 @@ class SpoonCookie
 
 
 	/**
+	 * Deletes a key-value-pair from the cookie
+	 *
+	 * @return	void
+	 * @param	mixed $keys
+	 */
+	public static function delete($keys = array())
+	{
+		// redefine
+		$keys = (array) $keys;
+
+		// loop the keys
+		foreach($keys as $key)
+		{
+			// validate
+			if(!self::exists($key) && self::$strict) throw new SpoonCookieException('This key doesn\'t exists. Key: '.$key);
+
+			// remove from array
+			unset($_COOKIE[$key]);
+
+			// unset cookie
+			setcookie($key);
+		}
+	}
+
+
+	/**
 	 * Checks if the given key exists
 	 *
 	 * @return	bool
@@ -110,8 +136,16 @@ class SpoonCookie
 	 */
 	public static function set($key, $value, $time = 86400, $path = '/', $domain = null, $secure = false)
 	{
+		// redefine
+		$key = (string) $key;
+		$value = serialize($value);
+		$time = time() + (int) $time;
+		$path = (string) $path;
+		$domain = ($domain !== null) ? (string) $domain : null;
+		$secure = (bool) $secure;
+
 		// set cookie
-		$cookie = setcookie((string) $key, serialize((string) $value), time() + (int) $time, (string) $path, (string) $domain, (bool) $secure);
+		$cookie = setcookie($key, $value, $time, $path, $domain, $secure);
 
 		// problem occured
 		if($cookie === false)

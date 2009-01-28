@@ -74,7 +74,6 @@ class SpoonMultiCheckBox extends SpoonVisualFormElement
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classOnError
 	 */
-	// @todo ook in deze class mag set en getId niet worden gebruikt
 	public function __construct($name, array $values, $checked = null, $class = 'input-checkbox', $classError = 'input-checkbox-error')
 	{
 		// name & value
@@ -360,6 +359,7 @@ class SpoonMultiCheckBox extends SpoonVisualFormElement
 	 * This method should not be used
 	 *
 	 * @return	void
+	 * @param	string $id
 	 */
 	public function setId($id)
 	{

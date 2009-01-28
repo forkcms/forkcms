@@ -213,6 +213,7 @@ class SpoonTimeField extends SpoonInputField
 	 * This method is useless, since the maxlength is limited to 5 charachters
 	 *
 	 * @return	void
+	 * @param	int $characters
 	 */
 	public function setMaxlength($characters)
 	{

@@ -316,7 +316,7 @@ final class SpoonFilter
 	 */
 	public static function isEmail($value)
 	{
-		return (bool) preg_match("/^[a-z0-9_\.-]+@([a-z0-9]+([\-]+[a-z0-9]+)*\.)+[a-z]{2,7}$/i", (string) $value);
+		return (bool) preg_match("/^[a-z0-9!#\$%&'*+-\/=?^_`{|}\.~]+@([a-z0-9]+([\-]+[a-z0-9]+)*\.)+[a-z]{2,7}$/i", (string) $value);
 	}
 
 
@@ -531,7 +531,7 @@ final class SpoonFilter
 	 */
 	public static function isURL($value)
 	{
-		$regexp = '/^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[a-zA-Z]+)((:[0-9]+)?)((\/([0-9a-zA-Z\#%\.\/_-]+)?(\?[0-9a-zA-Z%\/&=_-]+)?)?)$/';
+		$regexp = '/^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[0-9a-zA-Z]+)((:[0-9]+)?)((\/([0-9a-zA-Z\#%\.\/_-]+)?(\?[0-9a-zA-Z%\/&=_-]+)?)?)$/';
 		return (bool) preg_match($regexp, (string) $value);
 	}
 

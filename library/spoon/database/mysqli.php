@@ -216,7 +216,7 @@ class SpoonDatabaseMysqli implements iSpoonDatabaseObject
 	public function drop($tables)
 	{
 		// redefine var
-		$table = (array) $table;
+		$tables = (array) $tables;
 
 		// build query
 		$query = 'DROP TABLE '. implode(', ', $tables) .';';
@@ -329,6 +329,9 @@ class SpoonDatabaseMysqli implements iSpoonDatabaseObject
 	 */
 	public function getHandler()
 	{
+		// connect if needed
+		if(!$this->handler) $this->connect();
+
 		return $this->handler;
 	}
 

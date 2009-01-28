@@ -234,9 +234,6 @@ class SpoonThumbnail
 			return false;
 		}
 
-		// validate
-		$aAllowedExtensions = array('gif', 'jpg', 'jpeg', 'png');
-
 		// invalid extension
 		if(SpoonFilter::getValue($extension, array('gif', 'jpeg', 'jpg', 'png'), '') == '')
 		{

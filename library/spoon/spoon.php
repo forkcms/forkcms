@@ -15,7 +15,7 @@
  */
 
 // current spoon version
-define('SPOON_VERSION', '1.0.0');
+define('SPOON_VERSION', '1.0.3');
 
 // default strict setting
 if(!defined('SPOON_STRICT')) define('SPOON_STRICT', true);
@@ -47,7 +47,7 @@ final class Spoon
 	/**
 	 * Dumps the output of a variable in a more readable manner
 	 *
-	 * @return	string
+	 * @return	void
 	 * @param	mixed $var
 	 * @param	bool[optional] $exit
 	 */

@@ -365,6 +365,7 @@ class SpoonDateField extends SpoonInputField
 	 * This method is overwritten by the setMask, and therefor useless
 	 *
 	 * @return	void
+	 * @param	int $characters
 	 */
 	public function setMaxlength($characters)
 	{

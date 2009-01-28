@@ -1,19 +1,19 @@
 {* previous page *}
-{option:previous.url}<a href="{$previous.url}" title="{$previous.label}">{/option:previous.url}
-	&laquo; {$previous.label} 
-{option:previous.url}</a>{/option:previous.url}
+{option:previousURL}<a href="{$previousURL}" title="{$previousLabel}">{/option:previousURL}
+	&laquo; {$previousLabel} 
+{option:previousURL}</a>{/option:previousURL}
 
 {* list of pages *}
 {iteration:pages}
-	{option:page}
-		{option:currentPage}<strong>{$pageNumber}</strong>{/option:currentPage}
-		{option:otherPage}<a href="{$url}">{$pageNumber}</a>{/option:otherPage}
-	{/option:page}
+	{option:pages.page}
+		{option:pages.currentPage}<strong>{$pages.pageNumber}</strong>{/option:pages.currentPage}
+		{option:pages.otherPage}<a href="{$pages.url}">{$pages.pageNumber}</a>{/option:pages.otherPage}
+	{/option:pages.page}
 	
-	{option:noPage}&hellip;{/option:noPage}
+	{option:pages.noPage}&hellip;{/option:pages.noPage}
 {/iteration:pages}
 
 {* next page *}
-{option:next.url}<a href="{$next.url}" title="{$next.label}">{/option:next.url}
-	 {$next.label} &raquo; 
-{option:next.url}</a>{/option:next.url}
+{option:nextURL}<a href="{$nextURL}" title="{$nextLabel}">{/option:nextURL}
+	 {$nextLabel} &raquo; 
+{option:nextURL}</a>{/option:nextURL}
