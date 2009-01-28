@@ -7,9 +7,13 @@ class BackendDataGrid extends SpoonDataGrid
 		// execute parent constructor
 		parent::__construct($source);
 
+		$this->setDebug(SPOON_DEBUG); // zorgt ervoor dat forceCompile -= true wordt
+
 		// paginering object
+		$this->setAttributes(array('border' => 1));
 
 		// instellen van default template, als die niet meegegeven is
+		$this->setTemplate(BACKEND_CORE_PATH .'/layout/templates/datagrid.tpl');
 
 		// url instellen
 		$this->setURL(BackendModel::createURLForAction());

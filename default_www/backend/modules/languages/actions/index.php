@@ -39,7 +39,7 @@ class LanguagesIndex extends BackendBaseActionIndex
 	public function parse()
 	{
 		// dump de datagrid met de talen!
-		$datagrid = new BackendDataGridDB('SELECT * FROM languages_labels WHERE id = ?', (int) 900);
+		$datagrid = new BackendDataGridDB('SELECT * FROM languages_labels');
 		$this->tpl->assign('datagrid', ($datagrid->getNumResults() > 0) ? $datagrid->getContent() : false);
 	}
 }
