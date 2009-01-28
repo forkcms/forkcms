@@ -487,6 +487,18 @@ class SpoonDataGrid
 
 
 	/**
+	 * Retrieve the number of results for the datagrids' source
+	 *
+	 * @return	int
+	 */
+	public function getNumResults()
+	{
+		return $this->source->getNumResults();
+	}
+
+
+
+	/**
 	 * Retrieves the column that's currently being sorted on
 	 *
 	 * @return	string

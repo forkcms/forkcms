@@ -25,7 +25,7 @@ class BackendModel
 	 * @param	string[optiona] $module
 	 * @param	string[optiona] $language
 	 */
-	public static function createUrlForAction($action = null, $module = null, $language = null)
+	public static function createURLForAction($action = null, $module = null, $language = null)
 	{
 		// grab the url from the reference
 		$url = Spoon::getObjectReference('url');

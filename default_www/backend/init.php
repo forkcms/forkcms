@@ -119,16 +119,17 @@ class Init
 	private function requireBackendClasses()
 	{
 		// general classes
-		require BACKEND_CORE_PATH .'/engine/exception.php';
-		require BACKEND_CORE_PATH .'/engine/authentication.php';
-		require BACKEND_CORE_PATH .'/engine/language.php';
-		require BACKEND_CORE_PATH .'/engine/url.php';
-		require BACKEND_CORE_PATH .'/engine/template.php';
-		require BACKEND_CORE_PATH .'/engine/header.php';
-		require BACKEND_CORE_PATH .'/engine/navigation.php';
-		require BACKEND_CORE_PATH .'/engine/base_config.php';
-		require BACKEND_CORE_PATH .'/engine/base_action.php';
-		require BACKEND_CORE_PATH .'/engine/action.php';
+		require_once BACKEND_CORE_PATH .'/engine/exception.php';
+		require_once BACKEND_CORE_PATH .'/engine/authentication.php';
+		require_once BACKEND_CORE_PATH .'/engine/language.php';
+		require_once BACKEND_CORE_PATH .'/engine/url.php';
+		require_once BACKEND_CORE_PATH .'/engine/template.php';
+		require_once BACKEND_CORE_PATH .'/engine/header.php';
+		require_once BACKEND_CORE_PATH .'/engine/navigation.php';
+		require_once BACKEND_CORE_PATH .'/engine/base_config.php';
+		require_once BACKEND_CORE_PATH .'/engine/base_action.php';
+		require_once BACKEND_CORE_PATH .'/engine/action.php';
+		require_once BACKEND_CORE_PATH .'/engine/datagrid.php';
 
 		// frontend
 		require FRONTEND_CORE_PATH .'/engine/language.php';

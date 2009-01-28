@@ -88,9 +88,9 @@ $lbl['pages']['Add'] = 'pagina toevoegen';
 // m
 // n
 // o
-$lbl['core']['Ok'] = 'OK';
+$lbl['core']['OK'] = 'ok';
 // p
-$lbl['core']['Pages'] = 'Pagina\'s';
+$lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 // q
 // r
@@ -129,12 +129,13 @@ $msg = array();
 // j
 // k
 // l
+$msg['languages']['HeaderIndex'] = 'Talen: overzicht labels';
 // m
-$msg['core']['NotAllowedActionTitle'] = 'Forbidden';
-$msg['core']['NotAllowedActionMessage'] = 'This action is not allowed.';
-$msg['core']['NotAllowedModuleTitle'] = 'Forbidden';
-$msg['core']['NotAllowedModuleMessage'] = 'This module is not allowed.';
 // n
+$msg['core']['NotAllowedActionTitle'] = 'Verboden';
+$msg['core']['NotAllowedActionMessage'] = 'Deze actie is niet toegestaan.';
+$msg['core']['NotAllowedModuleTitle'] = 'Verboden';
+$msg['core']['NotAllowedModuleMessage'] = 'Deze module is niet toegestaan.';
 // o
 // p
 // q
