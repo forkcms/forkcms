@@ -138,6 +138,6 @@ class BackendHeader
 		// assign JS-files
 		$this->tpl->assign('javascriptFiles', $this->JSFiles);
 	}
-
 }
+
 ?>
