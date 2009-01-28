@@ -17,9 +17,9 @@ class BackendHeader
 	/**
 	 * All added CSS-files
 	 *
-	 * @var unknown_type
+	 * @var array
 	 */
-	private $aCSSFiles = array();
+	private $CSSFiles = array();
 
 
 	/**
@@ -27,7 +27,7 @@ class BackendHeader
 	 *
 	 * @var	array
 	 */
-	private $aJSFiles = array();
+	private $JSFiles = array();
 
 
 	/**
@@ -86,7 +86,7 @@ class BackendHeader
 		else $realPath = '/backend/core/layout/css/'. $fileName;
 
 		// add if not already added
-		if(!in_array($realPath, $this->aCSSFiles)) $this->aCSSFiles[] = array('path' => $realPath);
+		if(!in_array($realPath, $this->CSSFiles)) $this->CSSFiles[] = array('path' => $realPath);
 	}
 
 
@@ -116,12 +116,12 @@ class BackendHeader
 		// init var
 		$realPath = '';
 		if($overwritePath) $realPath = $fileName;
-		elseif($parseThroughPHP) $realPath = '/js.php?module='. $module .'&file='. $fileName .'&secretkey='. BackendAction::getUser()->getSecretKey();
+		elseif($parseThroughPHP) $realPath = '/js.php?module='. $module .'&amp;file='. $fileName .'&amp;secretkey='. BackendAction::getUser()->getSecretKey();
 		elseif($module !== 'core') $realPath = '/backend/modules/'. $module .'/js/'. $fileName;
 		else $realPath = '/backend/core/js/'. $fileName;
 
 		// add if not already added
-		if(!in_array($realPath, $this->aJSFiles)) $this->aJSFiles[] = array('path' => $realPath);
+		if(!in_array($realPath, $this->JSFiles)) $this->JSFiles[] = array('path' => $realPath);
 	}
 
 
@@ -133,10 +133,10 @@ class BackendHeader
 	public function parse()
 	{
 		// assign CSS-files
-		$this->tpl->assign('cssFiles', $this->aCSSFiles);
+		$this->tpl->assign('cssFiles', $this->CSSFiles);
 
 		// assign JS-files
-		$this->tpl->assign('javascriptFiles', $this->aJSFiles);
+		$this->tpl->assign('javascriptFiles', $this->JSFiles);
 	}
 
 }
