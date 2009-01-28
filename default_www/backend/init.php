@@ -165,6 +165,7 @@ class Init
 		require_once 'spoon/cookie/cookie.php';
 		require_once 'spoon/http/http.php';
 		require_once 'spoon/template/template.php';
+		require_once 'spoon/html/datagrid/datagrid.php';
 		require_once 'spoon/html/form/form.php';
 	}
 
