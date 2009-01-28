@@ -106,7 +106,7 @@ class BackendURL
 	 */
 	private function getQueryString()
 	{
-		return (string) $this->queryString;
+		return $this->queryString;
 	}
 
 
