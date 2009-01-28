@@ -24,7 +24,7 @@ class ApplicationRouting
 	 *
 	 * @var	array
 	 */
-	private $aRoutes = array('' => self::DEFAULT_APPLICATION,
+	private $routes = array('' => self::DEFAULT_APPLICATION,
 							'private' => 'backend',
 							'backend' => 'backend',
 							'api' => 'api');
@@ -65,7 +65,7 @@ class ApplicationRouting
 			$proposedApplication = (string) $aChunks[0];
 
 			// set real application
-			$application = (isset($this->aRoutes[$proposedApplication])) ? $this->aRoutes[$proposedApplication] : self::DEFAULT_APPLICATION;
+			$application = (isset($this->routes[$proposedApplication])) ? $this->routes[$proposedApplication] : self::DEFAULT_APPLICATION;
 		}
 
 		// no application
