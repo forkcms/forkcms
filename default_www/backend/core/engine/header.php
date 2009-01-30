@@ -81,8 +81,14 @@ class BackendHeader
 
 		// init var
 		$realPath = '';
+
+		// is the given path the real path?
 		if($overwritePath) $realPath = $fileName;
+
+		// we have to build the path, but core is a special one
 		elseif($module !== 'core') $realPath = '/backend/modules/'. $module .'/layout/css/'. $fileName;
+
+		// core is special because it isn't a real module
 		else $realPath = '/backend/core/layout/css/'. $fileName;
 
 		// add if not already added
@@ -115,9 +121,17 @@ class BackendHeader
 
 		// init var
 		$realPath = '';
+
+		// is the given path the real path?
 		if($overwritePath) $realPath = $fileName;
+
+		// should we parse the js-file? as in assign variables
 		elseif($parseThroughPHP) $realPath = '/js.php?module='. $module .'&amp;file='. $fileName .'&amp;secretkey='. BackendAction::getUser()->getSecretKey();
+
+		// we have to build the path, but core is a special one
 		elseif($module !== 'core') $realPath = '/backend/modules/'. $module .'/js/'. $fileName;
+
+		// core is special because it isn't a real module
 		else $realPath = '/backend/core/js/'. $fileName;
 
 		// add if not already added
@@ -132,11 +146,42 @@ class BackendHeader
 	 */
 	public function parse()
 	{
+		// init vars
+		$aCSSFiles = array();
+		$aJSFiles = array();
+
+		// get last modified time for the header template
+		$lastModifiedTime = @filemtime($this->tpl->getCompileDirectory() .'/'. md5(realpath(BACKEND_CORE_PATH .'/layout/templates/header.tpl')) . '_header.tpl.php');
+
+		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
+		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
+
+		// if there aren't any CSS-files added we don't need to do something
+		if(!empty($this->CSSFiles))
+		{
+			// loop the CSS-files and add the modified-time
+			foreach($this->CSSFiles as $file) $aCSSFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
+		}
+
 		// assign CSS-files
-		$this->tpl->assign('cssFiles', $this->CSSFiles);
+		$this->tpl->assign('cssFiles', $aCSSFiles);
+
+		// if there aren't any JS-files added we don't need to do something
+		if(!empty($this->JSFiles))
+		{
+			// loop the JS-files
+			foreach($this->JSFiles as $file)
+			{
+				// if the file is processed by PHP we don't want any caching
+				if(substr($file['path'], 0, 3) == '/js') $aJSFiles[] = array('path' => $file['path'] .'?m='. time());
+
+				// add lastmodified time
+				else $aJSFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
+			}
+		}
 
 		// assign JS-files
-		$this->tpl->assign('javascriptFiles', $this->JSFiles);
+		$this->tpl->assign('javascriptFiles', $aJSFiles);
 	}
 }
 

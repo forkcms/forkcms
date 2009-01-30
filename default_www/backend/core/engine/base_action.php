@@ -126,6 +126,7 @@ class BackendBaseAction
 	{
 		// add jquery, we will need this in every action, so add it global
 		$this->header->addJS('jquery/jquery.js', 'core');
+		$this->header->addCSS('screen.css', 'core');
 
 		// this method will be overwritten by the childs so
 	}

@@ -75,6 +75,7 @@ $lbl['core'] = array();
 $lbl['core']['Add'] = 'toevoegen';
 $lbl['pages']['Add'] = 'pagina toevoegen';
 // b
+$lbl['core']['Blog'] = 'blog';
 // c
 // d
 // e
@@ -132,6 +133,9 @@ $msg = array();
 $msg['languages']['HeaderIndex'] = 'Talen: overzicht labels';
 // m
 // n
+$msg['core']['NoDrafts'] = 'Er zijn geen drafts.';
+$msg['core']['NoItemsPublished'] = 'Er zijn geen items gepubliceerd.';
+$msg['core']['NoItemsScheduled'] = 'Er zijn geen items gepland.';
 $msg['core']['NotAllowedActionTitle'] = 'Verboden';
 $msg['core']['NotAllowedActionMessage'] = 'Deze actie is niet toegestaan.';
 $msg['core']['NotAllowedModuleTitle'] = 'Verboden';

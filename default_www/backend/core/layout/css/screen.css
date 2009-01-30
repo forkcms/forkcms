@@ -1,0 +1,3 @@
+li.selected a { color: red; }
+li.selected li a { color: blue; }
+li.selected li.selected a { color: red; }

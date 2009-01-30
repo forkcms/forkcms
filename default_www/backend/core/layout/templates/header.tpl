@@ -6,7 +6,6 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 
 	<link rel="shortcut icon" href="{$BACKEND_URL}/favicon.ico" />
-	<link rel="stylesheet" type="text/css" media="screen" href="{$BACKEND_CORE_URL}/layout/css/screen.css" />
 	{iteration:cssFiles}<link rel="stylesheet" type="text/css" media="screen" href="{$cssFiles.path}" />{/iteration:cssFiles}
 
 	{iteration:javascriptFiles}<script type="text/javascript" src="{$javascriptFiles.path}"></script>{/iteration:javascriptFiles}
@@ -21,5 +20,9 @@
 	</div>
 	
 	<div id="navigation">
-		{$var|getnavigation:1}
+		{$var|getnavigation:1:1}
 	</div>
+	<div id="subnavigation">
+		{$var|getnavigation:2:3}
+	</div>
+	

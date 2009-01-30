@@ -13,6 +13,11 @@
  */
 class BackendNavigation
 {
+	/**
+	 * The navigation array, will be used to build the navigation
+	 *
+	 * @var	array
+	 */
 	private $aNavigation = array();
 
 
@@ -40,10 +45,23 @@ class BackendNavigation
 		// require navigation-file
 		require_once BACKEND_CACHE_PATH .'/navigation/navigation.php';
 
+		// load it
 		$this->aNavigation = $aNavigation;
 	}
 
 
+	/**
+	 * Create the html for the navigation
+	 *	It will generate valid HTML for the given depth until the maximum depth
+	 *
+	 * @return	string
+	 * @param	array $aNavigation
+	 * @param	int $startDepth
+	 * @param	int $maximumDepth
+	 * @param	array[optional] $aSelectedKeys
+	 * @param	int[optional] $currentDepth
+	 * @param	string[optional] $html
+	 */
 	private function createHTML($aNavigation, $startDepth, $maximumDepth, $aSelectedKeys = array(), $currentDepth = 1, $html = '')
 	{
 		// redefine
@@ -86,73 +104,105 @@ class BackendNavigation
 				else $level['url'] = '#';
 			}
 
-			// open li-tag
-			if(in_array($key, $aSelectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction())
-			{
-				array_shift($aSelectedKeys);
-				$html .= '<li class="selected">LUL***'."\n";
-			}
-			else $html .= '<li>'."\n";
+			// break urls into parts
+			$aChunks = (array) explode('/', $level['url']);
 
-			// add the link
-			$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. $level['label'] .'</a>'."\n";
+			// is the html requested?
+			if($currentDepth >= $startDepth && $currentDepth <= $maximumDepth && BackendAuthentication::isAllowedAction($aChunks[1], $aChunks[0]))
+			{
+				// open li-tag
+				if(in_array($key, $aSelectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction()) $html .= '<li class="selected">'."\n";
+				else $html .= '<li>'."\n";
+
+				// add the link
+				$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. $level['label'] .'</a>'."\n";
+			}
 
 			// has the current element children?
-			if(isset($aNavigation[$key]['children']))
+			if(isset($aNavigation[$key]['children']) && in_array($key, $aSelectedKeys, true) && BackendAuthentication::isAllowedAction($aChunks[1], $aChunks[0]))
 			{
 				// recursive alert, build the childs and reset the html
 				$html = $this->createHTML($aNavigation[$key]['children'], $startDepth, $maximumDepth, $aSelectedKeys, $currentDepth + 1, $html);
 			}
 
-			// end the li-tag
-			$html .= '</li>' ."\n";
+			// is the html requested?
+			if($currentDepth >= $startDepth && $currentDepth <= $maximumDepth && BackendAuthentication::isAllowedAction($aChunks[1], $aChunks[0]))
+			{
+				// end the li-tag
+				$html .= '</li>' ."\n";
+			}
 		}
 
 		// end the ul-tag
 		$html .= '</ul>'."\n";
+
+		if($html == '<ul></ul>') $html = '';
 
 		// return the HTML that was build
 		return $html;
 	}
 
 
+	/**
+	 * Get the HTML for the navigation
+	 *
+	 * @return	string
+	 * @param	int $startDepth
+	 * @param	int[optional] $maximumDepth
+	 */
 	public function getNavigation($startDepth, $maximumDepth = null)
 	{
-		// get selected keys
+		// redefine
+		$startDepth = (int) $startDepth;
+		$maximumDepth = ($maximumDepth !== null) ? (int) $maximumDepth :  $startDepth + 1;
+
+		// get selected keys, we need them for the selected state
 		$aSelectedKeys = (array) $this->getSelectedKeys();
 
-//		Spoon::dump($aSelectedKeys);
-
-		// build html
-		$html = $this->createHTML($this->aNavigation, $startDepth, $maximumDepth, $aSelectedKeys);
-
-		return $html;
+		// build and return the HTML
+		return $this->createHTML($this->aNavigation, $startDepth, $maximumDepth, $aSelectedKeys);
 	}
 
 
+	/**
+	 * Get the selected keys based on the current module/actions
+	 *
+	 * @return	array
+	 */
 	private function getSelectedKeys()
 	{
+		// init var
 		$aKeys = array();
+
+		// build the url to search for
 		$urlToSearch = $this->url->getModule() .'/'. $this->url->getAction();
 
+		// loop the first level
 		foreach($this->aNavigation as $key => $level)
 		{
+			// url already known?
 			if($level['url'] == $urlToSearch) $aKeys[] = $key;
 
+			// has this level any children?
 			if(isset($level['children']))
 			{
+				// loop second level
 				foreach ($level['children'] as $module => $level)
 				{
+					// add all keys if the url is found
 					if($level['url'] == $urlToSearch)
 					{
 						$aKeys[] = $key;
 						$aKeys[] = $module;
 					}
 
+					// has children?
 					if(isset($level['children']))
 					{
-						foreach ($level['children'] as $action => $level)
+						// loop third level
+						foreach ($level['children'] as $level)
 						{
+							// url found?
 							if($level['url'] == $urlToSearch)
 							{
 								$aKeys[] = $key;
@@ -160,12 +210,13 @@ class BackendNavigation
 							}
 						}
 					}
-
 				}
 			}
 		}
 
+		// return the selected keys
 		return $aKeys;
 	}
 }
+
 ?>

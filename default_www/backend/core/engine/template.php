@@ -235,13 +235,15 @@ class BackendTemplateModifiers
 	 */
 	public static function getNavigation($var = null, $startDepth, $maximumDepth = null)
 	{
-		// get url
-		$url = Spoon::getObjectReference('url');
+		// get navigation
+		$navigation = Spoon::getObjectReference('navigation');
 
 		// redefine
 		$var = (string) $var;
 		$startDepth = (int) $startDepth;
-		$maximumDepth = ($maximumDepth !== null) ? (int) $maximumDepth : $startDepth + 1;
+		$maximumDepth = ($maximumDepth !== null) ? (int) $maximumDepth : null;
+
+		return $navigation->getNavigation($startDepth, $maximumDepth);
 	}
 
 }
