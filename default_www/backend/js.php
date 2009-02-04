@@ -4,9 +4,9 @@
 require_once 'init.php';
 
 // initialize components
-$init = new Init(APPLICATION);
+$init = new Init('backend_js');
 
 // create backend
-$backend = new Backend();
+$js = new BackendJavascript();
 
 ?>

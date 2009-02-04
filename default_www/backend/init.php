@@ -29,7 +29,7 @@ class Init
 	public function __construct($type)
 	{
 		// init vars
-		$allowedTypes = array('backend');
+		$allowedTypes = array('backend', 'backend_js');
 		$type = (string) $type;
 
 		// check if this is a valid type
@@ -40,6 +40,9 @@ class Init
 
 		// set some ini-options
 		ini_set('memory_limit', '64M');
+
+		// set a default timezone if no one was set by PHP.ini
+		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
 		// require globals
 		$this->requireGlobals();
@@ -75,6 +78,9 @@ class Init
 	 */
 	private function definePaths()
 	{
+		// fix the Application setting
+		if($this->type == 'backend_js') define('APPLICATION', 'backend');
+
 		// general paths
 		define('BACKEND_PATH', PATH_WWW .'/'. APPLICATION);
 		define('BACKEND_CACHE_PATH', BACKEND_PATH .'/cache');
@@ -120,19 +126,32 @@ class Init
 	{
 		// general classes
 		require_once BACKEND_CORE_PATH .'/engine/exception.php';
-		require_once BACKEND_CORE_PATH .'/engine/authentication.php';
-		require_once BACKEND_CORE_PATH .'/engine/language.php';
-		require_once BACKEND_CORE_PATH .'/engine/url.php';
 		require_once BACKEND_CORE_PATH .'/engine/template.php';
-		require_once BACKEND_CORE_PATH .'/engine/header.php';
-		require_once BACKEND_CORE_PATH .'/engine/navigation.php';
-		require_once BACKEND_CORE_PATH .'/engine/base_config.php';
-		require_once BACKEND_CORE_PATH .'/engine/base_action.php';
-		require_once BACKEND_CORE_PATH .'/engine/action.php';
-		require_once BACKEND_CORE_PATH .'/engine/datagrid.php';
+		require_once BACKEND_CORE_PATH .'/engine/language.php';
+		require_once BACKEND_CORE_PATH .'/engine/authentication.php';
+		require_once BACKEND_CORE_PATH .'/engine/user.php';
+		require_once BACKEND_CORE_PATH .'/engine/model.php';
+		require_once BACKEND_CORE_PATH .'/engine/url.php';
 
 		// frontend
 		require FRONTEND_CORE_PATH .'/engine/language.php';
+
+		switch($this->type)
+		{
+			case 'backend':
+				require_once BACKEND_CORE_PATH .'/engine/backend.php';
+				require_once BACKEND_CORE_PATH .'/engine/header.php';
+				require_once BACKEND_CORE_PATH .'/engine/navigation.php';
+				require_once BACKEND_CORE_PATH .'/engine/base_config.php';
+				require_once BACKEND_CORE_PATH .'/engine/base_action.php';
+				require_once BACKEND_CORE_PATH .'/engine/action.php';
+				require_once BACKEND_CORE_PATH .'/engine/datagrid.php';
+			break;
+
+			case 'backend_js':
+				require_once BACKEND_CORE_PATH .'/engine/javascript.php';
+			break;
+		}
 	}
 
 
@@ -145,6 +164,11 @@ class Init
 	{
 		switch($this->type)
 		{
+			case 'backend_js':
+				require_once '../../library/globals.php';
+				require_once '../../library/globals_backend.php';
+			break;
+
 			// default
 			default:
 				require_once '../library/globals.php';
@@ -166,8 +190,14 @@ class Init
 		require_once 'spoon/cookie/cookie.php';
 		require_once 'spoon/http/http.php';
 		require_once 'spoon/template/template.php';
-		require_once 'spoon/html/datagrid/datagrid.php';
-		require_once 'spoon/html/form/form.php';
+
+		switch($this->type)
+		{
+			case 'backend':
+				require_once 'spoon/html/datagrid/datagrid.php';
+				require_once 'spoon/html/form/form.php';
+			break;
+		}
 	}
 
 
