@@ -18,7 +18,7 @@ class BackendBaseAction
 	 *
 	 * @var	string
 	 */
-	private $action;
+	protected $action;
 
 
 	/**
@@ -26,7 +26,7 @@ class BackendBaseAction
 	 *
 	 * @var	array
 	 */
-	private $parameters = array();
+	protected $parameters = array();
 
 
 	/**
@@ -34,7 +34,7 @@ class BackendBaseAction
 	 *
 	 * @var	BackendHeader
 	 */
-	private $header;
+	protected $header;
 
 
 	/**
@@ -42,7 +42,7 @@ class BackendBaseAction
 	 *
 	 * @var	string
 	 */
-	private $module;
+	protected $module;
 
 
 	/**
@@ -282,6 +282,9 @@ class BackendBaseActionIndex extends BackendBaseAction
 	{
 		// call parent, will add general CSS and JS
 		parent::execute();
+
+		// add default js file (if the file exists)
+		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/index.js')) $this->header->addJS('index.js', null, true);
 	}
 }
 

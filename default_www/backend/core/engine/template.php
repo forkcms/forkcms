@@ -106,6 +106,18 @@ class BackendTemplate extends SpoonTemplate
 		// we use some abbrviations and common terms, these should also be assigned
 		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
+		// get the url object, we need this for some template-constants
+		$url = Spoon::getObjectReference('url');
+
+		// assign the current module
+		$this->assign('MODULE', $url->getModule());
+
+		// assign the current action
+		$this->assign('ACTION', $url->getAction());
+
+		// assign the authenticated users secret key
+		$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
+
 		// @todo	settings
 //		$this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 	}
@@ -211,13 +223,13 @@ class BackendTemplateModifiers
 	 */
 	public static function getURL($var = null, $action, $module = null)
 	{
-		// get url
-		$url = Spoon::getObjectReference('url');
-
 		// redefine
 		$var = (string) $var;
 		$action = (string) $action;
 		$module = ($module !== null) ? (string) $module : $url->getModule();
+
+		// get url
+		$url = Spoon::getObjectReference('url');
 
 		// build url and return it
 		return '/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $module .'/'. $action;

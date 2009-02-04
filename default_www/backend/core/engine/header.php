@@ -126,7 +126,7 @@ class BackendHeader
 		if($overwritePath) $realPath = $fileName;
 
 		// should we parse the js-file? as in assign variables
-		elseif($parseThroughPHP) $realPath = '/js.php?module='. $module .'&amp;file='. $fileName .'&amp;secretkey='. BackendAction::getUser()->getSecretKey();
+		elseif($parseThroughPHP) $realPath = '/backend/js.php?module='. $module .'&amp;file='. $fileName .'&amp;language='. BackendLanguage::getWorkingLanguage();
 
 		// we have to build the path, but core is a special one
 		elseif($module !== 'core') $realPath = '/backend/modules/'. $module .'/js/'. $fileName;
@@ -173,7 +173,7 @@ class BackendHeader
 			foreach($this->JSFiles as $file)
 			{
 				// if the file is processed by PHP we don't want any caching
-				if(substr($file['path'], 0, 3) == '/js') $aJSFiles[] = array('path' => $file['path'] .'?m='. time());
+				if(substr($file['path'], 0, 11) == '/backend/js') $aJSFiles[] = array('path' => $file['path'] .'&m='. time());
 
 				// add lastmodified time
 				else $aJSFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);

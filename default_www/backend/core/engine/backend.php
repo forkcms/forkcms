@@ -1,8 +1,5 @@
 <?php
 
-/** Require Model */
-require_once BACKEND_CORE_PATH .'/engine/model.php';
-
 /**
  * Backend
  *
@@ -30,11 +27,11 @@ class Backend
 		// create new template so we have a reference that will be available on every module/action
 		new BackendTemplate();
 
-		// create a header-object
-		new BackendHeader();
-
 		// create a navigation object
 		new BackendNavigation();
+
+		// create a header-object
+		new BackendHeader();
 
 		// create a new action
 		$action = new BackendAction($url->getAction(), $url->getModule());

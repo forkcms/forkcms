@@ -230,7 +230,7 @@ class BackendURL
 	 * @return	void
 	 * @param	string $module
 	 */
-	private function setModule($module)
+	public function setModule($module)
 	{
 		$this->module = (string) $module;
 	}

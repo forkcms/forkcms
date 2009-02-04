@@ -30,6 +30,14 @@ class BackendAuthentication
 
 
 	/**
+	 * A userobject for the current authenticated user
+	 *
+	 * @var	BackendUser
+	 */
+	private static $user;
+
+
+	/**
 	 * Cleanup sessions for the current user and sessions that are invalid
 	 *
 	 * @return	void
@@ -41,6 +49,21 @@ class BackendAuthentication
 
 		// remove all sessions that are invalid (older then 30min)
 		$db->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+	}
+
+
+	/**
+	 * Returns the current authenticated user
+	 *
+	 * @return	BackenUser
+	 */
+	public static function getUser()
+	{
+		// if the user-object doesn't exists create a new one
+		if(self::$user === null) self::$user = new BackendUser();
+
+		// return the object
+		return self::$user;
 	}
 
 
@@ -162,6 +185,9 @@ class BackendAuthentication
 				// update the session in the table
 				$db->update('users_sessions', array('date' => date('Y-m-d H:i:s')), 'id = ?', (int) $sessionData['id']);
 
+				// create a user object, it will handle stuff related to the current authenticated user
+				self::$user = new BackendUser($sessionData['user_id']);
+
 				// the user is logged on
 				return true;
 			}
@@ -203,7 +229,6 @@ class BackendAuthentication
 		SpoonSession::set('backend_logged_in', false);
 		SpoonSession::set('backend_secret_key', '');
 	}
-
 
 
 	/**
