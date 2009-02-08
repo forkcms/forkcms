@@ -161,6 +161,9 @@ class BackendLanguage
 		// check if file exists
 		if(!SpoonFile::exists(BACKEND_CACHE_PATH .'/locale/'. $language .'.php')) throw new BackendException('Languagefile ('. $language .') can\'t be found.');
 
+		// store in cookie
+		SpoonCookie::set('backend_interface_language', $language);
+
 		// require file
 		require BACKEND_CACHE_PATH .'/locale/'. $language .'.php';
 

@@ -55,7 +55,7 @@ class BackendAuthentication
 	/**
 	 * Returns the current authenticated user
 	 *
-	 * @return	BackenUser
+	 * @return	BackendUser
 	 */
 	public static function getUser()
 	{

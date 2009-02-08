@@ -188,8 +188,25 @@ class BackendURL
 					// set the working language, this is not the interface language
 					BackendLanguage::setWorkingLanguage($language);
 
-					// @todo set user prefered interface language
-					BackendLanguage::setLocale('nl');
+					// is the user authenticated
+					if(BackendAuthentication::getUser()->isAuthenticated())
+					{
+						// set interface language based on the user preferences
+						BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('backend_interface_language', 'nl'));
+					}
+
+					// no authenticated user
+					else
+					{
+						// init var
+						$interfaceLanguage = 'nl';
+
+						// override with cookie value if that exists
+						if(SpoonCookie::exists('backend_interface_language')) $interfaceLanguage = SpoonCookie::get('backend_interface_language');
+
+						// set interface language
+						BackendLanguage::setLocale($interfaceLanguage);
+					}
 
 					// set current module
 					$this->setModule($module);

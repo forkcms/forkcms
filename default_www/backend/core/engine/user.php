@@ -30,6 +30,14 @@ class BackendUser
 
 
 	/**
+	 * Is the user-object a valid one? As in: is the user authenticated
+	 *
+	 * @var	bool
+	 */
+	private $isAuthenticated = false;
+
+
+	/**
 	 * Last timestamp the user logged in
 	 *
 	 * @var	int
@@ -188,6 +196,17 @@ class BackendUser
 
 
 	/**
+	 * Is the current userobject a authenticated user?
+	 *
+	 * @return	bool
+	 */
+	public function isAuthenticated()
+	{
+		return $this->isAuthenticated;
+	}
+
+
+	/**
 	 * Load a user
 	 *
 	 * @return	void
@@ -221,6 +240,8 @@ class BackendUser
 		$this->setSessionId($aUserData['session_id']);
 		$this->setSecretKey($aUserData['secret_key']);
 		$this->setLastloggedInDate($aUserData['date']);
+		$this->isAuthenticated = true;
+
 
 		// get settings
 		$aSettings = (array) $db->getPairs('SELECT us.name, us.value
@@ -229,7 +250,7 @@ class BackendUser
 											array($userId));
 
 		// loop settings and store them in the object
-		foreach($aSettings as $key => $value) $this->setSetting($key, unserialize($value));
+		foreach($aSettings as $key => $value) $this->aSettings[$key] = unserialize($value);
 	}
 
 
@@ -302,6 +323,20 @@ class BackendUser
 	 */
 	private function setSetting($key, $value)
 	{
+		// redefine
+		$key = (string) $key;
+		$valueToStore = serialize($value);
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// store
+		$db->execute('INSERT INTO users_settings(user_id, name, value)
+						VALUES(?, ?, ?)
+						ON DUPLICATE KEY UPDATE value = ?;',
+						array($this->getUserId(), $key, $valueToStore, $valueToStore));
+
+		// cache it
 		$this->aSettings[(string) $key] = $value;
 	}
 

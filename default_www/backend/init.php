@@ -29,7 +29,7 @@ class Init
 	public function __construct($type)
 	{
 		// init vars
-		$allowedTypes = array('backend', 'backend_js');
+		$allowedTypes = array('backend', 'backend_ajax', 'backend_js');
 		$type = (string) $type;
 
 		// check if this is a valid type
@@ -80,6 +80,7 @@ class Init
 	{
 		// fix the Application setting
 		if($this->type == 'backend_js') define('APPLICATION', 'backend');
+		if($this->type == 'backend_ajax') define('APPLICATION', 'backend');
 
 		// general paths
 		define('BACKEND_PATH', PATH_WWW .'/'. APPLICATION);
@@ -132,6 +133,7 @@ class Init
 		require_once BACKEND_CORE_PATH .'/engine/user.php';
 		require_once BACKEND_CORE_PATH .'/engine/model.php';
 		require_once BACKEND_CORE_PATH .'/engine/url.php';
+		require_once BACKEND_CORE_PATH .'/engine/base_config.php';
 
 		// frontend
 		require FRONTEND_CORE_PATH .'/engine/language.php';
@@ -142,7 +144,6 @@ class Init
 				require_once BACKEND_CORE_PATH .'/engine/backend.php';
 				require_once BACKEND_CORE_PATH .'/engine/header.php';
 				require_once BACKEND_CORE_PATH .'/engine/navigation.php';
-				require_once BACKEND_CORE_PATH .'/engine/base_config.php';
 				require_once BACKEND_CORE_PATH .'/engine/base_action.php';
 				require_once BACKEND_CORE_PATH .'/engine/action.php';
 				require_once BACKEND_CORE_PATH .'/engine/datagrid.php';
@@ -150,6 +151,12 @@ class Init
 
 			case 'backend_js':
 				require_once BACKEND_CORE_PATH .'/engine/javascript.php';
+			break;
+
+			case 'backend_ajax':
+				require_once BACKEND_CORE_PATH .'/engine/ajax.php';
+				require_once BACKEND_CORE_PATH .'/engine/base_ajax_action.php';
+				require_once BACKEND_CORE_PATH .'/engine/ajax_action.php';
 			break;
 		}
 	}
@@ -164,6 +171,7 @@ class Init
 	{
 		switch($this->type)
 		{
+			case 'backend_ajax':
 			case 'backend_js':
 				require_once '../../library/globals.php';
 				require_once '../../library/globals_backend.php';

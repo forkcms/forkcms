@@ -115,8 +115,12 @@ class BackendTemplate extends SpoonTemplate
 		// assign the current action
 		$this->assign('ACTION', $url->getAction());
 
-		// assign the authenticated users secret key
-		$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
+		// is the user object filled?
+		if(BackendAuthentication::getUser()->isAuthenticated())
+		{
+			// assign the authenticated users secret key
+			$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
+		}
 
 		// @todo	settings
 //		$this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
