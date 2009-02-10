@@ -163,6 +163,17 @@ class BackendUser
 
 
 	/**
+	 * Get all settings at once
+	 *
+	 * @return	array
+	 */
+	public function getSettings()
+	{
+		return (array) $this->aSettings;
+	}
+
+
+	/**
 	 * Get secretkey
 	 *
 	 * @return	string
@@ -321,7 +332,7 @@ class BackendUser
 	 * @param	string $key
 	 * @param	mixed $value
 	 */
-	private function setSetting($key, $value)
+	public function setSetting($key, $value)
 	{
 		// redefine
 		$key = (string) $key;

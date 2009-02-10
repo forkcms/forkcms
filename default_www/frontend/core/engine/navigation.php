@@ -104,6 +104,32 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 
+	public static function getFirstChildIdByPageId($pageId)
+	{
+		// redefine
+		$pageId = (int) $pageId;
+
+		// init var
+		$aNavigation = self::getNavigation();
+
+		// loop depths
+		foreach($aNavigation as $depth => $aParent)
+		{
+			// first check
+			if(!isset($aParent[$pageId])) continue;
+
+			// get keys
+			$aKeys = array_keys($aParent[$pageId]);
+
+			// get first item
+			if(isset($aKeys[0])) return $aKeys[0];
+		}
+
+		// fallback
+		return false;
+	}
+
+
 	/**
 	 * Get all footerlinks
 	 *

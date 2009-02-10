@@ -63,7 +63,7 @@ class SpoonCheckBox extends SpoonVisualFormElement
 	 * @param	string $name
 	 * @param	mixed[optional] $checked
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classOnError
+	 * @param	string[optional] $classError
 	 */
 	public function __construct($name, $checked = false, $class = 'input-checkbox', $classError = 'input-checkbox-error')
 	{

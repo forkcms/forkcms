@@ -104,7 +104,7 @@ class SpoonDropDown extends SpoonVisualFormElement
 	 * @param	array $values
 	 * @param	mixed[optional] $selected
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classOnError
+	 * @param	string[optional] $classError
 	 */
 	public function __construct($name, array $values, $selected = null, $class = 'input-dropdown', $classError = 'input-dropdown-error')
 	{
@@ -463,8 +463,8 @@ class SpoonDropDown extends SpoonVisualFormElement
 	 * Sets the default element (top of the dropdown)
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string $value
+	 * @param	string $label
+	 * @param	string[optional] $value
 	 */
 	public function setDefaultElement($label, $value = null)
 	{

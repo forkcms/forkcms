@@ -60,7 +60,7 @@ class ErrorIndex extends BackendBaseActionIndex
 			$extension = SpoonFile::getExtension($chunks[0]);
 
 			// if the file has an extension it is a non-existing-file
-			if($extension != '')
+			if($extension != '' && $extension != $chunks[0])
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);

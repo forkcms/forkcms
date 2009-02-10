@@ -126,6 +126,8 @@ class BackendBaseAction
 	{
 		// add jquery, we will need this in every action, so add it global
 		$this->header->addJS('jquery/jquery.js', 'core');
+		$this->header->addJS('jquery/jquery.hilight.js', 'core');
+		$this->header->addJS('backend.js', 'core');
 		$this->header->addCSS('screen.css', 'core');
 
 		// this method will be overwritten by the childs so
@@ -259,7 +261,7 @@ class BackendBaseAction
 
 
 /**
- * BackendBaseActionShow
+ * BackendBaseActionIndex
  *
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the index action
@@ -287,5 +289,143 @@ class BackendBaseActionIndex extends BackendBaseAction
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/index.js')) $this->header->addJS('index.js', null, true);
 	}
 }
+
+
+/**
+ * BackendBaseActionAdd
+ *
+ * This class implements a lot of functionality that can be extended by the real action.
+ * In this case this is the base class for the add action
+ *
+ * @package		Backend
+ * @subpackage	core
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class BackendBaseActionAdd extends BackendBaseAction
+{
+	/**
+	 * The form instance
+	 *
+	 * @var	SpoonForm
+	 */
+	protected $frm;
+
+
+	/**
+	 * Execute the current action
+	 * This method will be overwriten in most of the actions, but still be called to add general stuff
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, will add general CSS and JS
+		parent::execute();
+
+		// add default js file (if the file exists)
+		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/add.js')) $this->header->addJS('add.js', null, true);
+	}
+}
+
+
+
+/**
+ * BackendBaseActionEdit
+ *
+ * This class implements a lot of functionality that can be extended by the real action.
+ * In this case this is the base class for the edit action
+ *
+ * @package		Backend
+ * @subpackage	core
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class BackendBaseActionEdit extends BackendBaseAction
+{
+	/**
+	 * The form instance
+	 *
+	 * @var	SpoonForm
+	 */
+	protected $frm;
+
+
+	/**
+	 * The id of the item to edit
+	 *
+	 * @var	int
+	 */
+	protected $id;
+
+
+	/**
+	 * The data of the item to edite
+	 *
+	 * @var	array
+	 */
+	protected $aRecord;
+
+
+	/**
+	 * Execute the current action
+	 * This method will be overwriten in most of the actions, but still be called to add general stuff
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, will add general CSS and JS
+		parent::execute();
+
+		// add default js file (if the file exists)
+		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/edit.js')) $this->header->addJS('edit.js', null, true);
+	}
+}
+
+
+/**
+ * BackendBaseActionDelete
+ *
+ * This class implements a lot of functionality that can be extended by the real action.
+ * In this case this is the base class for the delete action
+ *
+ * @package		Backend
+ * @subpackage	core
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class BackendBaseActionDelete extends BackendBaseAction
+{
+	/**
+	 * The id of the item to edit
+	 *
+	 * @var	int
+	 */
+	protected $id;
+
+
+	/**
+	 * The data of the item to edite
+	 *
+	 * @var	array
+	 */
+	protected $aRecord;
+
+
+	/**
+	 * Execute the current action
+	 * This method will be overwriten in most of the actions, but still be called to add general stuff
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+	}
+}
+
 
 ?>

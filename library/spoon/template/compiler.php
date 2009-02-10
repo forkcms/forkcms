@@ -362,9 +362,9 @@ class SpoonTemplateCompiler
 				{
 					// start & close tag
 					$aSearch = array('{form:'. $name .'}', '{/form:'. $name .'}');
-					$aReplace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo \' \'. $this->forms[\''. $name .'\']->getParametersAsHTML(); ?>>';
-					$aReplace[0] .= '<fieldset style="display: none;">'. $this->forms[$name]->getField('form')->parse() .'</fieldset>';
-					$aReplace[1] = '</form>';
+					$aReplace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersAsHTML(); ?>>' ."\n<div>\n";
+					$aReplace[0] .= $this->forms[$name]->getField('form')->parse();
+					$aReplace[1] = "\n</div>\n</form>";
 					$content = str_replace($aSearch, $aReplace, $content);
 				}
 			}

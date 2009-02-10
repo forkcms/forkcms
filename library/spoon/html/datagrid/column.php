@@ -159,6 +159,17 @@ class SpoonDataGridColumn
 
 
 	/**
+	 * Clears the list of attributes for this column
+	 *
+	 * @return	void
+	 */
+	public function clearAttributes()
+	{
+		$this->attributes = array();
+	}
+
+
+	/**
 	 * Retrieve the attributes
 	 *
 	 * @return	array
@@ -353,7 +364,7 @@ class SpoonDataGridColumn
 	 */
 	public function setAttributes(array $attributes)
 	{
-		foreach($attributes as $key => $value) $this->attributes[$key] = $value;
+		foreach($attributes as $key => $value) $this->attributes[(string) $key] = (string) $value;
 	}
 
 

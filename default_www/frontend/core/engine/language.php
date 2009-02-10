@@ -1,8 +1,5 @@
 <?php
 
-/** Require Model */
-require_once FRONTEND_CORE_PATH .'/engine/model.php';
-
 /**
  * Fork
  *
@@ -112,7 +109,7 @@ class FrontendLanguage
 	 */
 	public static function getErrors()
 	{
-		return (array) self::$act;
+		return (array) self::$err;
 	}
 
 

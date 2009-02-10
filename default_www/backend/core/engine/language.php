@@ -66,6 +66,17 @@ class BackendLanguage
 
 
 	/**
+	 * Get all the possible interface languages
+	 *
+	 * @return	array
+	 */
+	public static function getInterfaceLanguages()
+	{
+		return array('nl' => BackendLanguage::getLabel('Dutch'));
+	}
+
+
+	/**
 	 * Get a label from the language-file
 	 *
 	 * @return	string

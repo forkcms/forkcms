@@ -214,7 +214,7 @@ class SpoonForm
 					$this->objects[$argument->getName()]->setMethod($this->method);
 
 					// automagically add enctype if needed & not added
-					if(is_subclass_of($argument, 'SpoonFileField')  && !isset($this->parameters['enctype'])) $this->setParameter('enctype', 'multipart/form-data');
+					if($argument instanceof SpoonFileField && !isset($this->parameters['enctype'])) $this->setParameter('enctype', 'multipart/form-data');
 				}
 			}
 		}
@@ -496,10 +496,6 @@ class SpoonForm
 	 */
 	public function setParameter($key, $value)
 	{
-		// already parsed
-		if($this->parsed) throw new SpoonFormException('This form ('. $this->name .') has already been parsed.');
-
-		// not parsed yet
 		$this->parameters[(string) $key] = (string) $value;
 	}
 

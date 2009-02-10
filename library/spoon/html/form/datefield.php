@@ -45,7 +45,7 @@ class SpoonDateField extends SpoonInputField
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	int $value
+	 * @param	int[optional] $value
 	 * @param	string[optional] $mask
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classError

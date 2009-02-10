@@ -9,7 +9,7 @@
 				<dd>{$txtBackendUsername} {$txtBackendUsernameError}</dd>
 				<dt><label for="backend_password">{$lblPassword|ucfirst}</label></dt>
 				<dd>{$txtBackendPassword} {$txtBackendPasswordError}</dd>
-				<dd><input type="submit" value="{$lblOk}" />
+				<dd><input type="submit" value="{$lblLogin}" />
 			</dl>
 		</fieldset>
 	{/form:login}

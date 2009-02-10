@@ -172,9 +172,6 @@ class FrontendPage
 		$templatePath = $this->aPageRecord['template_path'];
 		if($templatePath == '') $templatePath = 'core/layout/templates/index.tpl';
 
-		// @todo	remove after profiling
-//		$this->tpl->assign('queries', stripslashes(var_export(CoreModel::getDB()->getQueries(), true)));
-
 		$this->tpl->display(FRONTEND_PATH .'/'. $templatePath);
 	}
 
@@ -210,7 +207,7 @@ class FrontendPage
 			$childId = FrontendNavigation::getFirstChildIdByPageId($this->pageId);
 
 			// redirect if possible
-			if($childId != '') SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId($childId));
+			if($childId !== false) SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId($childId));
 		}
 	}
 

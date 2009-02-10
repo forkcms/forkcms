@@ -112,7 +112,7 @@ $navigation[1][0][422]['extra_id'] = 26;
 $navigation[1][0][3]['navigation'] = 'Contact';
 $navigation[1][0][3]['access_level'] = '';
 $navigation[1][0][3]['url'] = 'contact';
-$navigation[1][0][3]['extra_id'] = 22;
+$navigation[1][0][3]['extra_id'] = 2;
 // --
 $navigation[2][3][421]['navigation'] = 'Gastenboek';
 $navigation[2][3][421]['access_level'] = '';

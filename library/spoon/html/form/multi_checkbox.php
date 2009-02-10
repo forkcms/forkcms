@@ -72,7 +72,7 @@ class SpoonMultiCheckBox extends SpoonVisualFormElement
 	 * @param	mixed $values
 	 * @param	mixed[optional] $checked
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classOnError
+	 * @param	string[optional] $classError
 	 */
 	public function __construct($name, array $values, $checked = null, $class = 'input-checkbox', $classError = 'input-checkbox-error')
 	{

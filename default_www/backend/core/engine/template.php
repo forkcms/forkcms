@@ -57,6 +57,9 @@ class BackendTemplate extends SpoonTemplate
 		// parse constants
 		$this->parseConstants();
 
+		// parse authenticated user
+		$this->parseAuthenticatedUser();
+
 		// parse the label
 		$this->parseLabels();
 
@@ -75,6 +78,30 @@ class BackendTemplate extends SpoonTemplate
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
 		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
+	}
+
+
+	/**
+	 * Parse the settings for the authenticated user
+	 *
+	 * @return	void
+	 */
+	private function parseAuthenticatedUser()
+	{
+		if(BackendAuthentication::getUser()->isAuthenticated())
+		{
+			// show stuff that only should be visible if authenticated
+			$this->assign('isAuthenticated', true);
+
+			// get authenticated user-settings
+			$aSettings = (array) BackendAuthentication::getUser()->getSettings();
+
+			// loop settings
+			foreach($aSettings as $key => $setting) $this->assign('authenticatedUser'. SpoonFilter::toCamelCase($key), $setting);
+
+			// assign special vars
+			$this->assign('authenticatedUserEditUrl', BackendModel::createURLForAction('edit', 'users') .'?id='. BackendAuthentication::getUser()->getUserId());
+		}
 	}
 
 

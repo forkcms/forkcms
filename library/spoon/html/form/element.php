@@ -127,7 +127,7 @@ class SpoonFormElement
 	 * Parse the html for the current element
 	 *
 	 * @return	void
-	 * @param	SpoonTemplate $template
+	 * @param	SpoonTemplate[optional] $template
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{

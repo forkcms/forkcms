@@ -100,7 +100,7 @@ class BackendAuthentication
 														array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all actions and there level
-			foreach($aAllowedActions as $row) self::$allowedActions[$row['module']] = array($row['action'] => (int) $row['level']);
+			foreach($aAllowedActions as $row) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
 		}
 
 		// do we know a level for this action

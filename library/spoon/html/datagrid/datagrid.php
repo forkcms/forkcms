@@ -205,10 +205,10 @@ class SpoonDataGrid
 	 *
 	 * @var	array
 	 */
-	private $sortingLabels = array(	'asc' => 'Sorteer oplopend',
-									'ascSelected' => 'Oplopend gesorteerd',
-									'desc' => 'Sorteer aflopend',
-									'descSelected' => 'Aflopend gesorteerd');
+	private $sortingLabels = array(	'asc' => 'Sort ascending',
+									'ascSelected' => 'Sorted ascending',
+									'desc' => 'Sort descending',
+									'descSelected' => 'Sorted descending');
 
 
 	/**
@@ -321,6 +321,70 @@ class SpoonDataGrid
 
 
 	/**
+	 * Clears the attributes
+	 *
+	 * @return	void
+	 */
+	public function clearAttributes()
+	{
+		$this->attributes['datagrid'] = array();
+	}
+
+
+	/**
+	 * Clears the attributes for a specific column
+	 *
+	 * @return	void
+	 * @param	string $column
+	 */
+	public function clearColumnAttributes($column)
+	{
+		// has results
+		if($this->source->getNumResults() > 0)
+		{
+			// column doesn't exist
+			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "'. (string) $column .'" doesn\'t exist and therefor no attributes can be removed.');
+
+			// exists
+			$this->columns[(string) $column]->clearAttributes();
+		}
+	}
+
+
+	/**
+	 * Clears the even row attributes
+	 *
+	 * @return	void
+	 */
+	public function clearEvenRowAttributes()
+	{
+		$this->attributes['row_even'] = array();
+	}
+
+
+	/**
+	 * clears the odd row attributes
+	 *
+	 * @return	void
+	 */
+	public function clearOddRowAttributes()
+	{
+		$this->attributes['row_odd'] = array();
+	}
+
+
+	/**
+	 * Clears the row attributes
+	 *
+	 * @return	void
+	 */
+	public function clearRowAttributes()
+	{
+		$this->attributes['row'] = array();
+	}
+
+
+	/**
 	 * Creates the default columns, based on the query
 	 *
 	 * @return	void
@@ -385,6 +449,17 @@ class SpoonDataGrid
 			// no default defined
 			if($this->sortingColumn === null && isset($default)) $this->sortingColumn = $default;
 		}
+	}
+
+
+	/**
+	 * Retrieve all the datagrid attributes
+	 *
+	 * @return	array
+	 */
+	public function getAttributes()
+	{
+		return $this->attributes['datagrid'];
 	}
 
 
@@ -487,18 +562,6 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the number of results for the datagrids' source
-	 *
-	 * @return	int
-	 */
-	public function getNumResults()
-	{
-		return $this->source->getNumResults();
-	}
-
-
-
-	/**
 	 * Retrieves the column that's currently being sorted on
 	 *
 	 * @return	string
@@ -528,6 +591,17 @@ class SpoonDataGrid
 		}
 
 		return $order;
+	}
+
+
+	/**
+	 * Retrieve the number of results for this datagrids' source
+	 *
+	 * @return	int
+	 */
+	public function getNumResults()
+	{
+		return $this->source->getNumResults();
 	}
 
 
@@ -1186,7 +1260,7 @@ class SpoonDataGrid
 	 */
 	public function setAttributes(array $attributes)
 	{
-		$this->attributes['datagrid'] = $attributes;
+		foreach($attributes as $key => $value) $this->attributes['datagrid'][(string) $key] = (string) $value;
 	}
 
 
@@ -1252,7 +1326,7 @@ class SpoonDataGrid
 	 * @param	mixed $function
 	 * @param	mixed[optional] $arguments
 	 * @param	mixed $columns
-	 * @param	bool[opitonal] $overwrite
+	 * @param	bool[optional] $overwrite
 	 */
 	public function setColumnFunction($function, $arguments = null, $columns, $overwrite = false)
 	{
@@ -1436,6 +1510,18 @@ class SpoonDataGrid
 
 
 	/**
+	 * Sets the compile directory
+	 *
+	 * @return	void
+	 * @param	string $path
+	 */
+	public function setCompileDirectory($path)
+	{
+		$this->compileDirectory = (string) $path;
+	}
+
+
+	/**
 	 * Adjust the debug setting
 	 *
 	 * @return	void
@@ -1459,7 +1545,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// add to the list
-			foreach($attributes as $key => $value) $this->attributes['row_even'][$key] = $value;
+			foreach($attributes as $key => $value) $this->attributes['row_even'][(string) $key] = (string) $value;
 		}
 	}
 
@@ -1472,7 +1558,7 @@ class SpoonDataGrid
 	 */
 	public function setHeaderAttributes(array $attributes)
 	{
-		$this->attributes['header'] = $attributes;
+		foreach($attributes as $key => $value) $this->attributes['header'][(string) $key] = (string) $value;
 	}
 
 
@@ -1512,7 +1598,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// add to the list
-			foreach($attributes as $key => $value) $this->attributes['row_odd'][$key] = $value;
+			foreach($attributes as $key => $value) $this->attributes['row_odd'][(string) $key] = (string) $value;
 		}
 	}
 
@@ -1591,7 +1677,7 @@ class SpoonDataGrid
 	 */
 	public function setRowAttributes(array $attributes)
 	{
-		$this->attributes['row'] = $attributes;
+		foreach($attributes as $key => $value) $this->attributes['row'][(string) $key] = (string) $value;
 	}
 
 

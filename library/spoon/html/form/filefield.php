@@ -71,7 +71,9 @@ class SpoonFileField extends SpoonVisualFormElement
 	 * Class constructor
 	 *
 	 * @return	void
-	 * @param	string $namee
+	 * @param	string $name
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
 	 */
 	public function __construct($name, $class = 'input-filefield', $classError = 'input-filefield-error')
 	{

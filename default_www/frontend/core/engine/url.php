@@ -300,7 +300,7 @@ class FrontendUrl
 		}
 
 		// remove language from querystring
-		$queryString = trim(str_replace($language, '', $queryString), '/');
+		$queryString = trim(substr($queryString, strlen($language)), '/');
 
 		// if it's the homepage AND parameters were given (not allowed!)
 		if($url == '' && $queryString != '') SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId(404), 404);
@@ -314,7 +314,7 @@ class FrontendUrl
 		}
 
 		// set parameters
-		$parameters = trim(str_replace($url, '', $startUrl), '/');
+		$parameters = trim(substr($startUrl, strlen($url)), '/');
 		if($parameters != '')
 		{
 			$parameters = explode('/', $parameters);

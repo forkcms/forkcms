@@ -49,7 +49,7 @@ class SpoonPasswordField extends SpoonInputField
 	 * @param	int[optional] $maxlength
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classError
-	 * @param	bool[optional} $html
+	 * @param	bool[optional] $html
 	 */
 	public function __construct($name, $value = null, $maxlength = null, $class = 'input-password', $classError = 'input-password-error', $html = false)
 	{
@@ -70,7 +70,7 @@ class SpoonPasswordField extends SpoonInputField
 	 * Retrieve the initial or submitted value
 	 *
 	 * @return	string
-	 * @param	bool[optional] $html
+	 * @param	bool[optional] $allowHtml
 	 */
 	public function getValue($allowHtml = false)
 	{

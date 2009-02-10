@@ -41,9 +41,6 @@ class CoreModel
 			// create instance
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
-			// @todo	remove after profiling
-//			$db->setDebug(true);
-
 			// store
 			Spoon::setObjectReference('database', $db);
 		}

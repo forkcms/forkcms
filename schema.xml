@@ -5,8 +5,179 @@
 <DefTblOpts></DefTblOpts>
 <DocFolder>/Users/tijs/Projects/Netlash/fork_next.local</DocFolder>
 <Sch Cm="" nm="fork-next-gen">
+<Tbl UsSo="1" nm="blog_categories">
+<Cm>The categories that can/will be used in blogarticles</Cm>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pkblog_categories"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="meta_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>link to meta</Cm>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>name of the category</Cm>
+</Cl>
+<Cl au="0" df="" nm="description" nu="0">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>description of the category</Cm>
+</Cl>
+<Cl au="0" df="" nm="sequence" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>sequence of the category</Cm>
+</Cl>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="blog_comments">
+<Cm>The comments on specific blog-articles</Cm>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pkblog_comments"/>
+<Cl au="1" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="entry_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>the blog-article</Cm>
+</Cl>
+<Cl au="0" df="" nm="name" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the name of the comment-author</Cm>
+</Cl>
+<Cl au="0" df="" nm="email" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the email of the comment-author</Cm>
+</Cl>
+<Cl au="0" df="" nm="website" nu="1">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the optional url of the comment-author</Cm>
+</Cl>
+<Cl au="0" df="" nm="ip" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the real ip of the comment-author</Cm>
+</Cl>
+<Cl au="0" df="" nm="cookie_id" nu="1">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the cookie-id of the comment-author</Cm>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the comment-title</Cm>
+</Cl>
+<Cl au="0" df="" nm="text" nu="0">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>the comment-text</Cm>
+</Cl>
+<Cl au="0" df="unmoderated" nm="status" nu="0">
+<DT ds="Enum" en="'unmoderated','moderated','spam'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>the comment-status</Cm>
+</Cl>
+<Cl au="0" df="comment" nm="type" nu="0">
+<DT ds="Enum" en="'comment','trackback'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>the comment-type</Cm>
+</Cl>
+<Cl au="0" df="" nm="created_on" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+<Cm>the create-date of the comment</Cm>
+</Cl>
+<Cl au="0" df="" nm="edited_on" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+<Cm>the last edit-date of the comment</Cm>
+</Cl>
+<Fk deAc="3" nm="fk_blog_comments_blog_entries" prLkCl="entry_id" upAc="3">
+<PrTb mn="0" nm="blog_entries" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="blog_comments" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="entry_id" prCl="entry_id"/>
+</Fk>
+<SchTrHis/>
+</Tbl>
+<Tbl UsSo="1" nm="blog_entries">
+<Cm>The entries in blog</Cm>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<Pk ClNs="id" nm="pkblog_entries"/>
+<Cl au="1" df="" nm="id" nu="1">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="entry_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>the unique entry id</Cm>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>the user that created the entry</Cm>
+</Cl>
+<Cl au="0" df="" nm="language" nu="0">
+<DT ds="VarChar" en="" id="12" ln="5" sc="null" sg="1"/>
+<Cm>the language of the entry</Cm>
+</Cl>
+<Cl au="0" df="" nm="meta_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>link to meta</Cm>
+</Cl>
+<Cl au="0" df="" nm="category_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>link to category</Cm>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the title of the entry</Cm>
+</Cl>
+<Cl au="0" df="" nm="text" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>the text of the entry</Cm>
+</Cl>
+<Cl au="0" df="" nm="text_short" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>the short text of the entry</Cm>
+</Cl>
+<Cl au="0" df="" nm="author" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+<Cm>the author of the entry</Cm>
+</Cl>
+<Cl au="0" df="" nm="status" nu="0">
+<DT ds="Enum" en="'published','draft','hidden'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>the status of the entry</Cm>
+</Cl>
+<Cl au="0" df="Y" nm="allow_comments" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+<Cm>are comments allowed?</Cm>
+</Cl>
+<Cl au="0" df="0" nm="num_comments" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+<Cm>how many comments were given</Cm>
+</Cl>
+<Cl au="0" df="" nm="created_on" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+<Cm>the date the entry was created</Cm>
+</Cl>
+<Cl au="0" df="" nm="edited_on " nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+<Cm>the last date the entry was edited</Cm>
+</Cl>
+<Cl au="0" df="" nm="published_on" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+<Cm>the date the entry should be published</Cm>
+</Cl>
+<Fk deAc="3" nm="fk_blog_entries_blog_categories" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="blog_categories" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="blog_entries" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="category_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_blog_entries_meta" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="meta" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="blog_entries" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="meta_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_blog_entries_users" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="users" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="blog_entries" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<SchTrHis/>
+</Tbl>
 <Tbl UsSo="1" nm="groups">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkgroups"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -14,13 +185,14 @@
 <Cl au="0" df="" nm="name" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 </Cl>
-<Cl au="0" df="serialized array containing default user module/action rights" nm="parameters" nu="1">
+<Cl au="0" df="" nm="parameters" nu="1">
 <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+<Cm>serialized array containing default user module/action rights</Cm>
 </Cl>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="groups_rights_actions">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkgroups_rights_actions"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -36,14 +208,24 @@
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 <Cm>name of the action</Cm>
 </Cl>
-<Cl au="0" df="1" nm="level" nu="0">
+<Cl au="0" df="5" nm="level" nu="0">
 <DT ds="Double" en="" id="8" ln="null" sc="null" sg="1"/>
 <Cm>unix type levels 1, 3, 5 and 7</Cm>
 </Cl>
+<Fk deAc="3" nm="fk_groups_rights_actions_groups" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="groups" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="groups_rights_actions" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_groups_rights_actions_modules" prLkCl="name" upAc="3">
+<PrTb mn="0" nm="modules" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="groups_rights_actions" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="module" prCl="name"/>
+</Fk>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="groups_rights_modules">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkgroups_rights_modules"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -55,10 +237,20 @@
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 <Cm>name of the module</Cm>
 </Cl>
+<Fk deAc="3" nm="fk_groups_rights_modules_groups" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="groups" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="groups_rights_modules" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_groups_rights_modules_modules" prLkCl="name" upAc="3">
+<PrTb mn="0" nm="modules" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="groups_rights_modules" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="module" prCl="name"/>
+</Fk>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="languages_labels">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pklanguages_labels"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -71,6 +263,9 @@
 </Cl>
 <Cl au="0" df="" nm="module" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="lbl" nm="type" nu="0">
+<DT ds="Enum" en="'act','err','lbl','msg'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="" nm="name" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
@@ -118,7 +313,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="modules">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="name" nm="pkmodules"/>
 <Cl au="0" df="" nm="name" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
@@ -133,7 +328,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="modules_settings">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkmodules_settings"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -150,13 +345,18 @@
 <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
 <Cm>serialized value</Cm>
 </Cl>
+<Fk deAc="3" nm="fk_modules_settings_modules" prLkCl="name" upAc="3">
+<PrTb mn="0" nm="modules" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="modules_settings" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="module" prCl="name"/>
+</Fk>
 <Idx clu="0" nm="fk_modules_settings_modules" unq="0">
 <ClNs>module</ClNs>
 </Idx>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="modules_tags">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkmodules_tags"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -170,6 +370,21 @@
 <Cl au="0" df="" nm="other_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_modules_tags_blog_entries" prLkCl="entry_id" upAc="3">
+<PrTb mn="0" nm="blog_entries" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="modules_tags" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="other_id" prCl="entry_id"/>
+</Fk>
+<Fk deAc="3" nm="fk_modules_tags_modules" prLkCl="name" upAc="3">
+<PrTb mn="0" nm="modules" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="modules_tags" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="module" prCl="name"/>
+</Fk>
+<Fk deAc="3" nm="fk_modules_tags_tags" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="tags" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="modules_tags" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="tag_id" prCl="id"/>
+</Fk>
 <Idx clu="0" nm="fk_modules_tags_modules" unq="0">
 <ClNs>module</ClNs>
 </Idx>
@@ -262,6 +477,16 @@
 <Cl au="0" df="" nm="sequence" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_pages_meta" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="meta" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="meta_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_pages_templates" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_templates" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="template_id" prCl="id"/>
+</Fk>
 <Idx clu="0" nm="fk_pages_meta" unq="0">
 <ClNs>meta_id</ClNs>
 </Idx>
@@ -274,7 +499,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_blocks">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkpages_blocks"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -300,6 +525,16 @@
 <Cl au="0" df="" nm="sequence" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_pages_blocks_pages" prLkCl="page_id" upAc="3">
+<PrTb mn="0" nm="pages" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_blocks" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="page_id" prCl="page_id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_blocks_pages_extras" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_extras" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_blocks" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="extra_id" prCl="id"/>
+</Fk>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_extras">
@@ -313,8 +548,8 @@
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 <Cm>the name of the module this extra belongs to</Cm>
 </Cl>
-<Cl au="0" df="'homepage','block'" nm="type" nu="0">
-<DT ds="Enum" en="" id="706" ln="null" sc="null" sg="1"/>
+<Cl au="0" df="" nm="type" nu="0">
+<DT ds="Enum" en="'homepage','block'" id="706" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="" nm="title" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
@@ -342,7 +577,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_groups">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkpages_groups"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -353,26 +588,46 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_groups_pages">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Cl au="0" df="" nm="page_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="" nm="group_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_pages_groups_pages_pages" prLkCl="page_id" upAc="3">
+<PrTb mn="0" nm="pages" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_groups_pages" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="page_id" prCl="page_id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_groups_pages_pages_groups" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_groups" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_groups_pages" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
 <Idx clu="0" nm="fk_pages_groups_pages_pages_groups" unq="0">
 <ClNs>group_id</ClNs>
 </Idx>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_groups_profiles">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Cl au="0" df="" nm="profile_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
 <Cl au="0" df="" nm="group_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_pages_groups_profiles_pages_groups" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="pages_groups" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_groups_profiles" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_pages_groups_profiles_profiles" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="profiles" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="pages_groups_profiles" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="profile_id" prCl="id"/>
+</Fk>
 <Idx clu="0" nm="fk_pages_groups_profiles_pages_groups" unq="0">
 <ClNs>group_id</ClNs>
 </Idx>
@@ -402,7 +657,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="profiles">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkprofiles"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -431,7 +686,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="profiles_sessions">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkprofiles_sessions"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -448,13 +703,18 @@
 <Cl au="0" df="" nm="date" nu="0">
 <DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_profiles_sessions_profiles" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="profiles" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="profiles_sessions" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="profile_id" prCl="id"/>
+</Fk>
 <Idx clu="0" nm="fk_profiles_sessions_profiles" unq="0">
 <ClNs>profile_id</ClNs>
 </Idx>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="profiles_settings">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkprofiles_settings"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -468,13 +728,18 @@
 <Cl au="0" df="" nm="value" nu="0">
 <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_profiles_settings_profiles" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="profiles" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="profiles_settings" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="profile_id" prCl="id"/>
+</Fk>
 <Idx clu="0" nm="fk_profiles_settings_profiles" unq="0">
 <ClNs>profile_id</ClNs>
 </Idx>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="tags">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pktags"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -523,10 +788,20 @@
 <DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
 <Cm>is the user deleted?</Cm>
 </Cl>
+<Fk deAc="3" nm="fk_users_groups" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="groups" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="users" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="group_id" prCl="id"/>
+</Fk>
+<Fk deAc="3" nm="fk_users_pages" prLkCl="user_id" upAc="3">
+<PrTb mn="0" nm="pages" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="users" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="id" prCl="user_id"/>
+</Fk>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="users_sessions">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkusers_sessions"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -546,10 +821,15 @@
 <Cl au="0" df="" nm="date" nu="0">
 <DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
 </Cl>
+<Fk deAc="3" nm="fk_users_sessions_users" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="users" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="users_sessions" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="users_settings">
-<TblOpts></TblOpts>
+<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
 <Pk ClNs="id" nm="pkusers_settings"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -565,10 +845,15 @@
 <DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
 <Cm>serialized value</Cm>
 </Cl>
+<Fk deAc="3" nm="fk_users_settings_users" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="users" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="users_settings" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
 <SchTrHis/>
 </Tbl>
 </Sch>
-<Dgm nm="diagramA">
+<Dgm nm="All">
 <RnCf FtSz="9" lkStgy="KeyToKeyStrategy" zm="1.0">
 <VbCfg>
 <Fg ky="Auto Number" vl="1"/>
@@ -584,30 +869,189 @@
 <Fg ky="Signed" vl="0"/>
 </VbCfg>
 </RnCf>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages" x="245" y="8"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_extras" x="814" y="51"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="19" y="232"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="meta" x="10" y="9"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_templates" x="575" y="3"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_settings" x="214" y="366"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_sessions" x="25" y="362"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles" x="755" y="239"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_settings" x="971" y="241"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_sessions" x="493" y="301"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups" x="879" y="-6"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_profiles" x="1014" y="101"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_pages" x="1045" y="21"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules" x="311" y="309"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_settings" x="405" y="393"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_tags" x="961" y="374"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="tags" x="689" y="375"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_blocks" x="578" y="139"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups" x="79" y="460"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_modules" x="293" y="472"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_actions" x="571" y="455"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="languages_labels" x="340" y="570"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups" x="948" y="198"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_actions" x="1166" y="259"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_modules" x="1176" y="198"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="meta" x="24" y="107"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules" x="1392" y="259"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_settings" x="1598" y="355"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_tags" x="1608" y="259"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages" x="301" y="36"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_blocks" x="696" y="698"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_extras" x="986" y="698"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups" x="911" y="486"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_pages" x="706" y="486"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_profiles" x="1099" y="486"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_templates" x="24" y="36"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles" x="1312" y="486"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_sessions" x="1554" y="486"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_settings" x="1544" y="567"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="tags" x="1830" y="259"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="696" y="36"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_sessions" x="958" y="36"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_settings" x="948" y="127"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_actions.fk_groups_rights_actions_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_actions.fk_groups_rights_actions_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_modules.fk_groups_rights_modules_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_modules.fk_groups_rights_modules_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_settings.fk_modules_settings_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_tags"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages.fk_pages_meta"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages.fk_pages_pages_templates"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_blocks.fk_pages_blocks_pages"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_blocks.fk_pages_blocks_pages_extras"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_pages.fk_pages_groups_pages_pages"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_pages.fk_pages_groups_pages_pages_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_profiles.fk_pages_groups_profiles_pages_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_profiles.fk_pages_groups_profiles_profiles"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.profiles_sessions.fk_profiles_sessions_profiles"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.profiles_settings.fk_profiles_settings_profiles"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users.fk_users_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users.fk_users_pages"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users_sessions.fk_users_sessions_users"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users_settings.fk_users_settings_users"/>
 </Dgm>
-<RnmMgr NxRnmId="29">
+<Dgm nm="Blog">
+<RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="0"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="1"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="meta" x="28" y="14"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="blog_entries" x="295" y="31"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="blog_comments" x="647" y="29"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="blog_categories" x="68" y="162"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_tags" x="639" y="245"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="351" y="276"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.blog_comments.fk_blog_comments_blog_entries"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.blog_entries.fk_blog_entries_blog_categories"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.blog_entries.fk_blog_entries_meta"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.blog_entries.fk_blog_entries_users"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_blog_entries"/>
+</Dgm>
+<Dgm nm="Modules">
+<RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="0"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="0"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules" x="45" y="32"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_settings" x="251" y="32"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_tags" x="45" y="103"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="tags" x="257" y="147"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_settings.fk_modules_settings_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_tags"/>
+</Dgm>
+<Dgm nm="Pages">
+<RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="0"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="0"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages" x="235" y="30"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_blocks" x="523" y="111"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_extras" x="741" y="111"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups" x="738" y="30"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_pages" x="533" y="30"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_groups_profiles" x="916" y="30"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="pages_templates" x="27" y="30"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="397" y="380"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="meta" x="772" y="344"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages.fk_pages_meta"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages.fk_pages_pages_templates"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_blocks.fk_pages_blocks_pages"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_blocks.fk_pages_blocks_pages_extras"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_pages.fk_pages_groups_pages_pages"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_pages.fk_pages_groups_pages_pages_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.pages_groups_profiles.fk_pages_groups_profiles_pages_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users.fk_users_pages"/>
+</Dgm>
+<Dgm nm="Profiles">
+<RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="0"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="0"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles" x="35" y="33"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_sessions" x="267" y="33"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_settings" x="257" y="114"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.profiles_sessions.fk_profiles_sessions_profiles"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.profiles_settings.fk_profiles_settings_profiles"/>
+</Dgm>
+<Dgm nm="Users">
+<RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="0"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="0"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups" x="29" y="32"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_actions" x="257" y="32"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="groups_rights_modules" x="268" y="133"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules" x="473" y="32"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="192" y="238"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_sessions" x="471" y="174"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users_settings" x="469" y="265"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_actions.fk_groups_rights_actions_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_actions.fk_groups_rights_actions_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_modules.fk_groups_rights_modules_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.groups_rights_modules.fk_groups_rights_modules_modules"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users.fk_users_groups"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users_sessions.fk_users_sessions_users"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.users_settings.fk_users_settings_users"/>
+</Dgm>
+<RnmMgr NxRnmId="44">
 <RnmCh ObjCls="Table" ParCls="Schema" ParNme="fork-next-gen" SupCls="" SupNme="">
 <Rnm id="1" nNm="pages_templates" oNm="menu_templates"/>
 </RnmCh>
@@ -681,6 +1125,47 @@
 <RnmCh ObjCls="Table" ParCls="Schema" ParNme="fork-next-gen" SupCls="" SupNme="">
 <Rnm id="28" nNm="groups" oNm="users_groups"/>
 <Rnm id="27" nNm="users_groups" oNm="groups"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_comments" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="42" nNm="created_on" oNm="date_created"/>
+<Rnm id="29" nNm="date_created" oNm="date"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_comments" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="37" nNm="ip" oNm="author_ip"/>
+<Rnm id="30" nNm="author_ip" oNm="ip"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_entries" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="31" nNm="created_on" oNm="date_created"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_entries" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="32" nNm="edited_on " oNm="date_edited"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_entries" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="33" nNm="published_on" oNm="date_publish"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_comments" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="34" nNm="name" oNm="author_name"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_comments" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="35" nNm="email" oNm="author_email"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_comments" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="36" nNm="website" oNm="author_website"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_comments" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="38" nNm="cookie_id" oNm="author_cookie_id"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_entries" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="39" nNm="author" oNm="author_name"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_entries" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="40" nNm="allow_comments" oNm="comments_allowed"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_entries" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="41" nNm="num_comments" oNm="comments_count"/>
+</RnmCh>
+<RnmCh ObjCls="Column" ParCls="Table" ParNme="blog_comments" SupCls="Schema" SupNme="fork-next-gen">
+<Rnm id="43" nNm="edited_on" oNm="date_edited"/>
 </RnmCh>
 </RnmMgr>
 <DbDocOptionMgr>

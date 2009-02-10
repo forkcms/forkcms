@@ -31,26 +31,29 @@ $err['core'] = array();
 // c
 // d
 // e
+$err['core']['EmailIsInvalid'] = 'Gelieve een geldig emailadres in te geven.';
 // f
 // g
 // h
 // i
-$err['core']['InvalidUsernamePasswordCombination'] = 'Username/password combination is invalid';
-$err['authentication']['Invalidddd'] = 'mekker';
+$err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct.';
 // j
 // k
 // l
 // m
 // n
+$err['core']['NameIsRequired'] = 'Gelieve een naam in te geven.';
 // o
+$err['core']['OnlyJPGAndGifAreAllowed'] = 'Enkel jpg, jpeg en gif zijn toegelaten.';
 // p
-$err['core']['PasswordIsRequired'] = 'Password is required.';
+$err['core']['PasswordIsRequired'] = 'Gelieve een wachtwoord in te geven.';
 // q
 // r
 // s
+$err['core']['SurnameIsRequired'] = 'Gelieve een achternaam in te geven.';
 // t
 // u
-$err['core']['UsernameIsRequired'] = 'Username is required.';
+$err['core']['UsernameIsRequired'] = 'Gelieve een gebruikersnaam in te geven.';
 // v
 // w
 // x
@@ -74,20 +77,30 @@ $lbl['core'] = array();
 // a
 $lbl['core']['Add'] = 'toevoegen';
 $lbl['pages']['Add'] = 'pagina toevoegen';
+$lbl['core']['Avatar'] = 'avatar';
 // b
 $lbl['core']['Blog'] = 'blog';
 // c
 // d
+$lbl['core']['Delete'] = 'verwijderen';
+$lbl['core']['Dutch'] = 'nederlands';
 // e
+$lbl['core']['Edit'] = 'bewerken';
+$lbl['core']['Email'] = 'email';
 // f
 // g
 // h
 // i
+$lbl['core']['InterfaceLanguage'] = 'interface-taal';
 // j
 // k
 // l
+$lbl['core']['Login'] = 'login';
+$lbl['core']['Logout'] = 'afmelden';
 // m
 // n
+$lbl['core']['Name'] = 'naam';
+$lbl['core']['Nickname'] = 'nickname';
 // o
 $lbl['core']['OK'] = 'ok';
 // p
@@ -96,8 +109,10 @@ $lbl['core']['Password'] = 'wachtwoord';
 // q
 // r
 // s
+$lbl['core']['Surname'] = 'achternaam';
 // t
 // u
+$lbl['core']['Update'] = 'wijzig';
 $lbl['core']['Username'] = 'gebruikersnaam';
 // v
 // w
@@ -119,18 +134,23 @@ $lbl['core']['Username'] = 'gebruikersnaam';
  */
 $msg = array();
 // a
+$msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
 // b
 // c
+$msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker %s wil verwijderen?';
 // d
+$msg['users']['Deleted'] = 'De gebruiker <em>%s</em> is verwijderd.';
 // e
 // f
 // g
 // h
+$msg['users']['HeaderEdit'] = 'Gebruiker <em>%s</em> bewerken';
+$msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
 // i
 // j
 // k
 // l
-$msg['languages']['HeaderIndex'] = 'Talen: overzicht labels';
+$msg['core']['LoggedInAs'] = 'aangemeld als';
 // m
 // n
 $msg['core']['NoDrafts'] = 'Er zijn geen drafts.';
@@ -147,6 +167,8 @@ $msg['core']['NotAllowedModuleMessage'] = 'Deze module is niet toegestaan.';
 // s
 // t
 // u
+$msg['core']['Saved'] = 'Wijzigingen opgeslagen.';
+$msg['users']['Saved'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // v
 // w
 // x

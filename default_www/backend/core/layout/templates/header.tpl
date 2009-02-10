@@ -17,6 +17,17 @@
 		<img src="{$BACKEND_CORE_URL}/layout/images/fork.gif" width="110" height="34" alt="Fork">
 		<h1>SITE TITLE {option:oDebugStatus}(Debug mode){/option:oDebugStatus}</h1>
 	</div>
+	{option:isAuthenticated}
+	<div id="user">
+		<p>
+			{$msgLoggedInAs}
+			<a href="{$authenticatedUserEditUrl}" title="{$msgEditYourUserSettings}">
+				<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/32x32/{$authenticatedUserAvatar}" width="32" height="32" alt="{$authenticatedUserNickname}" />
+				{$authenticatedUserNickname}
+			</a>.
+			<a href="{$var|geturl:logout:authentication}" title="{$lblLogout|ucfirst}">{$lblLogout|ucfirst}</a>
+		</p>
+	</div>
 	
 	<div id="navigation">
 		{$var|getnavigation:1:1}
@@ -24,4 +35,5 @@
 	<div id="subnavigation">
 		{$var|getnavigation:2:3}
 	</div>
+	{/option:isAuthenticated}
 	

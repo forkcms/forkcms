@@ -92,6 +92,7 @@ class Init
 		define('FRONTEND_CACHE_PATH', FRONTEND_PATH .'/cache');
 		define('FRONTEND_CORE_PATH', FRONTEND_PATH .'/core');
 		define('FRONTEND_MODULES_PATH', FRONTEND_PATH .'/modules');
+		define('FRONTEND_FILES_PATH', FRONTEND_PATH .'/files');
 	}
 
 
@@ -104,6 +105,8 @@ class Init
 	{
 		define('BACKEND_CORE_URL', '/backend/core');
 		define('BACKEND_CACHE_URL', '/backend/cache');
+
+		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 
 
@@ -204,6 +207,7 @@ class Init
 			case 'backend':
 				require_once 'spoon/html/datagrid/datagrid.php';
 				require_once 'spoon/html/form/form.php';
+				require_once 'spoon/image/thumbnail.php';
 			break;
 		}
 	}

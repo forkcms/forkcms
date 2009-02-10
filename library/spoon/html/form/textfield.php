@@ -70,7 +70,7 @@ class SpoonTextField extends SpoonInputField
 	 * Retrieve the initial or submitted value
 	 *
 	 * @return	string
-	 * @param	bool[optional] $html
+	 * @param	bool[optional] $allowHtml
 	 */
 	public function getValue($allowHtml = false)
 	{
