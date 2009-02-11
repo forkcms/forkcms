@@ -90,6 +90,9 @@ class SpoonPasswordField extends SpoonInputField
 				// value
 				$value = $data[$this->getName()];
 
+				// maximum length?
+				if($this->maxlength != '') substr($value, 0, $this->maxlength);
+
 				// html allowed?
 				if(!$allowHtml) $value = SpoonFilter::htmlentities($value);
 			}
