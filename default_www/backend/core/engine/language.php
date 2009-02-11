@@ -43,14 +43,23 @@ class BackendLanguage
 	 * @param	string $key
 	 * @param	string[optional] $module
 	 */
-	public static function getError($key, $module = 'core')
+	public static function getError($key, $module = null)
 	{
+		// get url
+		$url = Spoon::getObjectReference('url');
+
 		// redefine
 		$key = (string) $key;
-		$module = (string) $module;
+		$module = ($module !== null) ? (string) $module : $url->getModule();
 
-		// if the error exists return it, otherwise return the key in label-format
-		return (isset(self::$err[$module][$key])) ? self::$err[$module][$key] : '{$err'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
+		// if the error exists return it,
+		if(isset(self::$err[$module][$key])) return self::$err[$module][$key];
+
+		// if it exists in the core-errors
+		if(isset(self::$err['core'][$key])) return self::$err['core'][$key];
+
+		// otherwise return the key in label-format
+		return '{$err'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
 	}
 
 
@@ -83,14 +92,23 @@ class BackendLanguage
 	 * @param	string $key
 	 * @param	string[optional] $module
 	 */
-	public static function getLabel($key, $module = 'core')
+	public static function getLabel($key, $module = null)
 	{
+		// get url
+		$url = Spoon::getObjectReference('url');
+
 		// redefine
 		$key = (string) $key;
-		$module = (string) $module;
+		$module = ($module !== null) ? (string) $module : $url->getModule();
 
-		// if the error exists return it, otherwise return the key in label-format
-		return (isset(self::$lbl[$module][$key])) ? self::$lbl[$module][$key] : '{$lbl'. SpoonFilter::toCamelCase($module .'_'. $key) .'}';
+		// if the error exists return it,
+		if(isset(self::$lbl[$module][$key])) return self::$lbl[$module][$key];
+
+		// if it exists in the core-errors
+		if(isset(self::$lbl['core'][$key])) return self::$lbl['core'][$key];
+
+		// otherwise return the key in label-format
+		return '{$lbl'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
 	}
 
 
@@ -112,14 +130,23 @@ class BackendLanguage
 	 * @param	string $key
 	 * @param	string[optional] $module
 	 */
-	public static function getMessage($key, $module = 'core')
+	public static function getMessage($key, $module = null)
 	{
+		// get url
+		$url = Spoon::getObjectReference('url');
+
 		// redefine
 		$key = (string) $key;
-		$module = (string) $module;
+		$module = ($module !== null) ? (string) $module : $url->getModule();
 
-		// if the message exists return it, otherwise return the key in label-format
-		return (isset(self::$msg[$module][$key])) ? self::$msg[$module][$key] : '{$msg'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
+		// if the error exists return it,
+		if(isset(self::$msg[$module][$key])) return self::$msg[$module][$key];
+
+		// if it exists in the core-errors
+		if(isset(self::$msg['core'][$key])) return self::$msg['core'][$key];
+
+		// otherwise return the key in label-format
+		return '{$msg'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
 	}
 
 

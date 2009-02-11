@@ -96,13 +96,14 @@ class BackendBaseAJAXAction
 		$utf8decode = (bool) $utf8decode;
 		$htmlentities = (bool) $htmlentities;
 
-		// @todo	utf8decode and htmlentities...
+		// should the values in the data-array be utf8-decoded?
 		if($utf8decode)
 		{
 			$data = self::recursiveMap('utf8_decode', $data);
 			$message = utf8_decode($message);
 		}
 
+		// should the values in the data-array be htmlentities?
 		if($htmlentities)
 		{
 			$data = self::recursiveMap(array('SpoonFilter', 'htmlentities'), $data);

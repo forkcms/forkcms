@@ -43,6 +43,8 @@ $err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruike
 // m
 // n
 $err['core']['NameIsRequired'] = 'Gelieve een naam in te geven.';
+$err['core']['NonExisting'] = 'Dit item bestaat niet.';
+$err['users']['NonExisting'] = 'De gebruiker bestaat niet.';
 // o
 $err['core']['OnlyJPGAndGifAreAllowed'] = 'Enkel jpg, jpeg en gif zijn toegelaten.';
 // p
@@ -141,6 +143,8 @@ $msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker %s wil verwij
 // d
 $msg['users']['Deleted'] = 'De gebruiker <em>%s</em> is verwijderd.';
 // e
+$msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
+$msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // f
 // g
 // h
@@ -167,8 +171,6 @@ $msg['core']['NotAllowedModuleMessage'] = 'Deze module is niet toegestaan.';
 // s
 // t
 // u
-$msg['core']['Saved'] = 'Wijzigingen opgeslagen.';
-$msg['users']['Saved'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // v
 // w
 // x

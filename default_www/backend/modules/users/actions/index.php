@@ -70,19 +70,6 @@ class UsersIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		// is there a report to show?
-		if($this->getParameter('report') !== null)
-		{
-			// show the report
-			$this->tpl->assign('report'. SpoonFilter::toCamelCase($this->getParameter('report')), true);
-
-			// if we have data to use it will be passed as the var-parameter, if so assign it
-			if($this->getParameter('var') !== null) $this->tpl->assign('var', $this->getParameter('var'));
-
-			// hilight an element with the given id if needed
-			if($this->getParameter('hilight')) $this->tpl->assign('hilight', $this->getParameter('hilight'));
-		}
-
 		$this->tpl->assign('dgUsers', ($this->dgUsers->getNumResults() != 0) ? $this->dgUsers->getContent() : false);
 	}
 

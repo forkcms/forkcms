@@ -15,6 +15,14 @@
 class BackendModel
 {
 	/**
+	 * Cached module settings
+	 *
+	 * @var	array
+	 */
+	private static $aModuleSettings;
+
+
+	/**
 	 * Creates an url for a given action and module
 	 * If you don't specify an action the current action will be used
 	 * If you don't specify a module the current module will be used
@@ -60,6 +68,86 @@ class BackendModel
 
 		// return it
 		return Spoon::getObjectReference('database');
+	}
+
+
+	/**
+	 * Get a certain module-setting
+	 *
+	 * @return	mixed
+	 * @param	string $module
+	 * @param	string $key
+	 * @param	mixed $defaultValue
+	 */
+	public static function getModuleSetting($module, $key, $defaultValue = null)
+	{
+		// are the values available
+		if(empty(self::$aModuleSettings)) self::getModuleSettings();
+
+		// redefine
+		$module = (string) $module;
+		$key = (string) $key;
+
+		// if the value isn't present we should set a defaultvalue
+		if(!isset(self::$aModuleSettings[$module][$key])) self::setSetting($module, $key, $defaultValue);
+
+		// return
+		return self::$aModuleSettings[$module][$key];
+	}
+
+
+	/**
+	 * Get all module settings at once
+	 *
+	 * @return	array
+	 */
+	public static function getModuleSettings()
+	{
+		// are the values available
+		if(empty(self::$aModuleSettings))
+		{
+			// get db
+			$db = self::getDB();
+
+			// get all settings
+			$aModuleSettings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
+														FROM modules_settings AS ms;');
+
+			// loop and store settings in the cache
+			foreach($aModuleSettings as $setting) self::$aModuleSettings[$setting['module']][$setting['name']] = unserialize($setting['value']);
+		}
+
+		// return
+		return self::$aModuleSettings;
+	}
+
+
+	/**
+	 * Saves a module-setting into the DB and the cached array
+	 *
+	 * @return	void
+	 * @param	string $module
+	 * @param	string $key
+	 * @param	string $value
+	 */
+	public static function setSetting($module, $key, $value)
+	{
+		// redefine
+		$module = (string) $module;
+		$key = (string) $key;
+		$valueToStore = serialize($value);
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// store
+		$db->execute('INSERT INTO modules_settings(module, name, value)
+						VALUES(?, ?, ?)
+						ON DUPLICATE KEY UPDATE value = ?;',
+						array($module, $key, $valueToStore, $valueToStore));
+
+		// cache it
+		self::$aModuleSettings[$module][$key] = $value;
 	}
 }
 

@@ -15,7 +15,7 @@
 <div id="container">
 	<div id="header">
 		<img src="{$BACKEND_CORE_URL}/layout/images/fork.gif" width="110" height="34" alt="Fork">
-		<h1>SITE TITLE {option:oDebugStatus}(Debug mode){/option:oDebugStatus}</h1>
+		<h1>{$SITE_TITLE}</h1>
 	</div>
 	{option:isAuthenticated}
 	<div id="user">
@@ -35,5 +35,8 @@
 	<div id="subnavigation">
 		{$var|getnavigation:2:3}
 	</div>
+	
+	{option:errorMessage}<div class="error">{$errorMessage}</div>{/option:errorMessage}
+	
 	{/option:isAuthenticated}
 	

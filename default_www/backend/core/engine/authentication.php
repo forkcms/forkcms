@@ -106,8 +106,6 @@ class BackendAuthentication
 		// do we know a level for this action
 		if(isset(self::$allowedActions[$module][$action]))
 		{
-			// @todo	shouldn't we store those values in a user-object?
-
 			// is the level greather then zero? aka: do we have access?
 			if(self::$allowedActions[$module][$action] > 0) return true;
 		}
@@ -152,11 +150,10 @@ class BackendAuthentication
 			foreach($aAllowedModules as $row) self::$allowedModules[$row] = true;
 		}
 
-			// @todo	shouldn't we store those values in a user-object?
-
 		// return result
 		return (bool) (!isset(self::$allowedModules[$module])) ? false : self::$allowedModules[$module];
 	}
+
 
 
 	/**

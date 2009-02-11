@@ -62,7 +62,7 @@ class UsersEdit extends BackendBaseActionEdit
 			parent::execute();
 
 			// get all data for the user we want to edit
-			$this->aRecord = (array) BackendUsersModel::get($this->id);
+			$this->record = (array) BackendUsersModel::get($this->id);
 
 			// load the form
 			$this->loadForm();
@@ -78,8 +78,7 @@ class UsersEdit extends BackendBaseActionEdit
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our url
-		// @todo	redirect to index with error-message
-		else throw new BackendException('Userid ('. $this->id .') doesn\'t exists.');
+		else $this->redirect(BackendModel::createURLForAction('index') .'?error=non-existing');
 	}
 
 
@@ -94,15 +93,15 @@ class UsersEdit extends BackendBaseActionEdit
 		$this->frm = new SpoonForm('edit');
 
 		// create elements
-		$this->txtUsername = new SpoonTextField('username', $this->aRecord['username'], 255);
-		$this->txtPassword = new SpoonPasswordField('password', $this->aRecord['password_raw'], 255);
+		$this->txtUsername = new SpoonTextField('username', $this->record['username'], 75);
+		$this->txtPassword = new SpoonPasswordField('password', $this->record['password_raw'], 75);
 
-		$this->txtNickname = new SpoonTextField('nickname', $this->aRecord['settings']['nickname'], 255);
-		$this->txtEmail = new SpoonTextField('email', $this->aRecord['settings']['email'], 255);
-		$this->txtName = new SpoonTextField('name', $this->aRecord['settings']['name'], 255);
-		$this->txtSurname = new SpoonTextField('surname', $this->aRecord['settings']['surname'], 255);
+		$this->txtNickname = new SpoonTextField('nickname', $this->record['settings']['nickname'], 75);
+		$this->txtEmail = new SpoonTextField('email', $this->record['settings']['email'], 255);
+		$this->txtName = new SpoonTextField('name', $this->record['settings']['name'], 255);
+		$this->txtSurname = new SpoonTextField('surname', $this->record['settings']['surname'], 255);
 
-		$this->ddmInterfaceLanguages = new SpoonDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->aRecord['settings']['backend_interface_language']);
+		$this->ddmInterfaceLanguages = new SpoonDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['backend_interface_language']);
 
 		$this->fileAvatar = new SpoonFileField('avatar');
 
@@ -122,11 +121,11 @@ class UsersEdit extends BackendBaseActionEdit
 	private function parse()
 	{
 		// show current avatar
-		$this->tpl->assign('avatarImage', FRONTEND_FILES_URL. '/backend_users/avatars/64x64/'. $this->aRecord['settings']['avatar']);
+		$this->tpl->assign('avatarImage', FRONTEND_FILES_URL. '/backend_users/avatars/64x64/'. $this->record['settings']['avatar']);
 
 		// assign user-related data
-		$this->tpl->assign('nickname', $this->aRecord['settings']['nickname']);
-		$this->tpl->assign('id', $this->aRecord['id']);
+		$this->tpl->assign('nickname', $this->record['settings']['nickname']);
+		$this->tpl->assign('id', $this->record['id']);
 
 		// parse the form
 		$this->frm->parse($this->tpl);
@@ -172,10 +171,7 @@ class UsersEdit extends BackendBaseActionEdit
 			$this->ddmInterfaceLanguages->isFilled(BL::getError('InterfaceLanguageIsRequired'));
 
 			// validate fields
-			if($this->fileAvatar->isFilled())
-			{
-				$this->fileAvatar->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
-			}
+			if($this->fileAvatar->isFilled()) $this->fileAvatar->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
 
 			// no errors?
 			if($this->frm->getCorrect())
@@ -193,15 +189,16 @@ class UsersEdit extends BackendBaseActionEdit
 				$aSettings['surname'] = $this->txtSurname->getValue();
 				$aSettings['backend_interface_language'] = $this->ddmInterfaceLanguages->getSelected();
 
+				// is there a file given
 				if($this->fileAvatar->isFilled())
 				{
 					// delete old avatar if it isn't the default-image
-					if($this->aRecord['settings']['avatar'] != 'no-avatar.jpg')
+					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
 					{
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/source/'. $this->aRecord['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/128x128/'. $this->aRecord['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/64x64/'. $this->aRecord['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/32x32/'. $this->aRecord['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/source/'. $this->record['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/128x128/'. $this->record['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/64x64/'. $this->record['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users_avatars/32x32/'. $this->record['settings']['avatar']);
 					}
 
 					// create new filename

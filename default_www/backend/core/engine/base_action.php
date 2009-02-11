@@ -285,6 +285,49 @@ class BackendBaseActionIndex extends BackendBaseAction
 		// call parent, will add general CSS and JS
 		parent::execute();
 
+		// is there a report to show?
+		if($this->getParameter('report') !== null)
+		{
+			// show the report
+			$this->tpl->assign('report', true);
+
+			// init var
+			$messageName = '';
+
+			// alter messageName
+			switch($this->getParameter('report'))
+			{
+				case 'add':
+					$messageName = 'added';
+				break;
+
+				case 'delete':
+					$messageName = 'deleted';
+				break;
+
+				case 'edit':
+					$messageName = 'edited';
+				break;
+			}
+
+			// camelcase the string
+			$messageName = SpoonFilter::toCamelCase($messageName);
+
+			// if we have data to use it will be passed as the var-parameter, if so assign it
+			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
+			else $this->tpl->assign('reporMessage', $messageName);
+
+			// hilight an element with the given id if needed
+			if($this->getParameter('hilight')) $this->tpl->assign('hilight', $this->getParameter('hilight'));
+		}
+
+		// is there an error to show?
+		if($this->getParameter('error') !== null)
+		{
+			// show the error and the errormessage
+			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), '-')));
+		}
+
 		// add default js file (if the file exists)
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/index.js')) $this->header->addJS('index.js', null, true);
 	}
@@ -362,11 +405,11 @@ class BackendBaseActionEdit extends BackendBaseAction
 
 
 	/**
-	 * The data of the item to edite
+	 * The data of the item to edit
 	 *
 	 * @var	array
 	 */
-	protected $aRecord;
+	protected $record;
 
 
 	/**
@@ -413,7 +456,7 @@ class BackendBaseActionDelete extends BackendBaseAction
 	 *
 	 * @var	array
 	 */
-	protected $aRecord;
+	protected $record;
 
 
 	/**

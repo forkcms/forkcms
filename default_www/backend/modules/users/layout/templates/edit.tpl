@@ -32,8 +32,7 @@
 		</fieldset>
 	{/form:edit}
 	<p>
-		<!-- @todo why can't the second parameter be optional? -->
-		<a href="{$var|geturl:delete:users}?id={$id}" class="askConfirmation" rel="{$msgConfirmDelete|sprintf:{$nickname}}" title="{$lblDelete}">{$lblDelete}</a>
+		<a href="{$var|geturl:delete}?id={$id}" class="askConfirmation" rel="{$msgConfirmDelete|sprintf:{$nickname}}" title="{$lblDelete}">{$lblDelete}</a>
 	</p>
 
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}
