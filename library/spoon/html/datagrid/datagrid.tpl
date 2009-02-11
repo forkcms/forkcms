@@ -43,7 +43,7 @@
 	{option:paging}
 	<tfoot>
 		<tr{$footerAttributes}>
-			<td>{$paging}</td>
+			<td colspan="{$numColumns}">{$paging}</td>
 		</tr>
 	</tfoot>
 	{/option:paging}

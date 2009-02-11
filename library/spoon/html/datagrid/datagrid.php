@@ -908,6 +908,9 @@ class SpoonDataGrid
 
 		// assign body
 		$this->tpl->assign('rows', $aRows);
+
+		// assign the number of columns
+		$this->tpl->assign('numColumns', count($aRows[0]['columns']));
 	}
 
 
