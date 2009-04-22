@@ -5,7 +5,7 @@
  *
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>

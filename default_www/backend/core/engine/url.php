@@ -6,7 +6,7 @@
  * This class will handle the incomming url.
  *
  * @package		backend
- * @subpackage	url
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0

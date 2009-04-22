@@ -5,7 +5,7 @@
  *
  * This class is the real code for Fork, it creates an action, loads the configfile, ...
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>

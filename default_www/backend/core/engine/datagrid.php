@@ -1,4 +1,5 @@
 <?php
+
 /**
  * BackendDatagrid, this is our extended version of SpoonDatagrid
  *
@@ -6,9 +7,6 @@
  * 	- it will set debugmode
  *	- it will set the compile-directory
  * 	- ...
- *
- *
- * This source file is part of Fork CMS.
  *
  * @package		backend
  * @subpackage	datagrid

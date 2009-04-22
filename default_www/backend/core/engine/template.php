@@ -13,7 +13,7 @@
  * This source file is part of Fork CMS.
  *
  * @package		backend
- * @subpackage	template
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0

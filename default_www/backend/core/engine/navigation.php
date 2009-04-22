@@ -5,7 +5,7 @@
  *
  * This class will be used to build the navigation
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
