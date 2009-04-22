@@ -111,6 +111,7 @@ $lbl['core']['Password'] = 'wachtwoord';
 // q
 // r
 // s
+$lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
 // t
 // u

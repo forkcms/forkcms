@@ -351,7 +351,7 @@ class BackendBaseActionAdd extends BackendBaseAction
 	/**
 	 * The form instance
 	 *
-	 * @var	SpoonForm
+	 * @var	BackendForm
 	 */
 	protected $frm;
 
@@ -391,7 +391,7 @@ class BackendBaseActionEdit extends BackendBaseAction
 	/**
 	 * The form instance
 	 *
-	 * @var	SpoonForm
+	 * @var	BackendForm
 	 */
 	protected $frm;
 

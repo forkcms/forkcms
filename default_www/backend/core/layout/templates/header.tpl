@@ -37,6 +37,7 @@
 	</div>
 	
 	{option:errorMessage}<div class="error">{$errorMessage}</div>{/option:errorMessage}
+	{option:formError}<div class="error">tetn.</div>{/option:formError}
 	
 	{/option:isAuthenticated}
 	

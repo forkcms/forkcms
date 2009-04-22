@@ -155,7 +155,6 @@ class BackendAuthentication
 	}
 
 
-
 	/**
 	 * Is the current user logged in?
 	 *

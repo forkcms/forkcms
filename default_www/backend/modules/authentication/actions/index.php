@@ -16,17 +16,9 @@ class AuthenticationIndex extends BackendBaseActionIndex
 	/**
 	 * Form instance
 	 *
-	 * @var	SpoonForm
+	 * @var	BackendForm
 	 */
 	private $frm;
-
-
-	/**
-	 * TextFields
-	 *
-	 * @var	SpoonTextField
-	 */
-	private $txtUsername, $txtPassword;
 
 
 	/**
@@ -40,10 +32,10 @@ class AuthenticationIndex extends BackendBaseActionIndex
 		parent::execute();
 
 		// load form
-		$this->loadForm();
+		$this->load();
 
 		// validate the form
-		$this->validateForm();
+		$this->validate();
 
 		// parse the error
 		$this->parse();
@@ -58,17 +50,15 @@ class AuthenticationIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadForm()
+	private function load()
 	{
 		// create the form
-		$this->frm = new SpoonForm('login', BackendModel::createUrlForAction());
+		$this->frm = new BackendForm();
 
-		// create elements
-		$this->txtUsername = new SpoonTextField('backend_username', '', 255);
-		$this->txtPassword = new SpoonPasswordField('backend_password', '', 255);
-
-		// add elements
-		$this->frm->add($this->txtUsername, $this->txtPassword);
+		// create elements and add to the form
+		$this->frm->addTextField('backend_username');
+		$this->frm->addPasswordField('backend_password');
+		$this->frm->addButton('submit', BL::getLabel('Submit'));
 	}
 
 
@@ -77,20 +67,20 @@ class AuthenticationIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function validateForm()
+	private function validate()
 	{
 		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
 			// required fields
-			$this->txtUsername->isFilled(BL::err('UsernameIsRequired'));
-			$this->txtPassword->isFilled(BL::err('PasswordIsRequired'));
+			$this->frm->getField('backend_username')->isFilled(BL::err('UsernameIsRequired'));
+			$this->frm->getField('backend_password')->isFilled(BL::err('PasswordIsRequired'));
 
 			// no errors in the form?
 			if($this->frm->getCorrect())
 			{
 				// login the user, if this can't be done it will return false
-				if(BackendAuthentication::loginUser($this->txtUsername->getValue(), $this->txtPassword->getValue()))
+				if(BackendAuthentication::loginUser($this->frm->getField('backend_username')->getValue(), $this->frm->getField('backend_password')->getValue()))
 				{
 					// get the redirect-url from the url
 					$redirectUrl = $this->getParameter('querystring');
@@ -109,7 +99,6 @@ class AuthenticationIndex extends BackendBaseActionIndex
 	}
 
 
-
 	/**
 	 * Parse the action into the template
 	 *
@@ -121,4 +110,5 @@ class AuthenticationIndex extends BackendBaseActionIndex
 		$this->frm->parse($this->tpl);
 	}
 }
+
 ?>
