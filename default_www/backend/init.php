@@ -105,7 +105,7 @@ class Init
 	{
 		define('BACKEND_CORE_URL', '/backend/core');
 		define('BACKEND_CACHE_URL', '/backend/cache');
-
+		// --
 		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 
@@ -136,6 +136,7 @@ class Init
 		require_once BACKEND_CORE_PATH .'/engine/user.php';
 		require_once BACKEND_CORE_PATH .'/engine/model.php';
 		require_once BACKEND_CORE_PATH .'/engine/url.php';
+		require_once BACKEND_CORE_PATH .'/engine/form.php';
 		require_once BACKEND_CORE_PATH .'/engine/base_config.php';
 
 		// frontend
