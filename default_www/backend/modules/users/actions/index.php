@@ -18,7 +18,7 @@ class UsersIndex extends BackendBaseActionIndex
 	 *
 	 * @var	BackendDataGridDB
 	 */
-	private $dgUsers;
+	private $datagrid;
 
 
 	/**
@@ -50,16 +50,16 @@ class UsersIndex extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid with an overview of all active and undeleted users
-		$this->dgUsers = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('Y', 'N'));
+		$this->datagrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('Y', 'N'));
 
 		// hide id
-		$this->dgUsers->setColumnsHidden('id');
+		$this->datagrid->setColumnsHidden('id');
 
 		// add edit column
-		$this->dgUsers->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'?id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'?id=[id]', BL::getLabel('Edit'));
 
 		// set id on rows, we will need this for the hilighting
-		$this->dgUsers->setRowAttributes(array('id' => 'userid-[id]'));
+		$this->datagrid->setRowAttributes(array('id' => 'userid-[id]'));
 	}
 
 
@@ -70,7 +70,7 @@ class UsersIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('dgUsers', ($this->dgUsers->getNumResults() != 0) ? $this->dgUsers->getContent() : false);
+		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
 
 

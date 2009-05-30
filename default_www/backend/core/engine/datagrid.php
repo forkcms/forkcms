@@ -42,6 +42,66 @@ class BackendDataGrid extends SpoonDataGrid
 		// set default url, you should alter it!
 		$this->setURL(BackendModel::createURLForAction());
 	}
+
+
+	/**
+	 * Enable drag and drop for the current datagrid
+	 *
+	 * @return	void
+	 */
+	public function enableSequenceByDragAndDrop()
+	{
+		// get header object
+		$header = Spoon::getObjectReference('header');
+
+		// add needed JS-file
+		$header->addJS('jquery/jquery.tablednd.js', 'core');
+
+		// add drag and drop-class
+		$this->setAttributes(array('class' => 'datagrid sequenceByDragAndDrop'));
+
+		// disable paging
+		$this->setPaging();
+
+		// hide the sequence column
+		$this->setColumnHidden('sequence');
+
+		// add a column for the handle, so users have something to hold while draging
+		$this->addColumn('dragAndDropHandle');
+
+		// @todo ask davy how we can set the handler as first column, without alteringthe other column-order
+
+		// add a class on the handler column, so JS knows this is just a handler
+		$this->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
+
+		// our JS needs to know an id, so we can send the new order
+		$this->setRowAttributes(array('rel' => '[id]'));
+	}
+}
+
+
+/**
+ * BackendDatagridArray
+ * A datagrid with an array as source
+ *
+ * This source file is part of Fork CMS.
+ *
+ * @package		backend
+ * @subpackage	datagrid
+ *
+ * @author 		Davy Hellemans <davy@netlash.com>
+ * @since		2.0
+ */
+class BackendDataGridArray extends BackendDataGrid
+{
+	public function __construct(array $array)
+	{
+		// create a new source-object
+		$source = new SpoonDataGridSourceArray($array);
+
+		// call the parent, as in create a new datagrid with the created source
+		parent::__construct($source);
+	}
 }
 
 
@@ -78,26 +138,38 @@ class BackendDataGridDB extends BackendDataGrid
 
 
 /**
- * BackendDatagridArray
- * A datagrid with an array as source
+ * BackendDatagridFunctions
+ * A set of common used functions that will be applied on rows or columns
  *
  * This source file is part of Fork CMS.
  *
  * @package		backend
  * @subpackage	datagrid
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendDataGridArray extends BackendDataGrid
+class BackendDataGridFunctions
 {
-	public function __construct(array $array)
+	/**
+	 * Format a date as a long representation according the user his settings
+	 *
+	 * @return	string
+	 * @param	int $timestamp
+	 */
+	public static function getLongDate($timestamp)
 	{
-		// create a new source-object
-		$source = new SpoonDataGridSourceArray($array);
+		// redefine
+		$timestamp = (int) $timestamp;
 
-		// call the parent, as in create a new datagrid with the created source
-		parent::__construct($source);
+		// if invalid timestamp return an empty string
+		if($timestamp <= 0) return '';
+
+		// get user setting for long dates
+		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s');
+
+		// format the date according the user his settings
+		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
 	}
 }
 

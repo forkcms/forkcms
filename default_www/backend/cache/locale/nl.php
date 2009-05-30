@@ -29,13 +29,16 @@ $err['core'] = array();
 // a
 // b
 // c
+$err['core']['ContentIsRequired'] = 'Gelieve inhoud in te geven.';
 // d
 // e
 $err['core']['EmailIsInvalid'] = 'Gelieve een geldig emailadres in te geven.';
 // f
 // g
+$err['core']['GeneralFormError'] = 'Er ging iets mis. Kijk de gemarkeerde velden na.';
 // h
 // i
+$err['core']['InvalidParameters'] = 'Ongeldige parameters.';
 $err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct.';
 // j
 // k
@@ -52,8 +55,10 @@ $err['core']['PasswordIsRequired'] = 'Gelieve een wachtwoord in te geven.';
 // q
 // r
 // s
+$err['core']['SomethingWentWrong'] = 'Er ging iets mis. Probeer later opnieuw.';
 $err['core']['SurnameIsRequired'] = 'Gelieve een achternaam in te geven.';
 // t
+$err['core']['TitleIsRequired'] = 'Gelieve een titel in te geven.';
 // u
 $err['core']['UsernameIsRequired'] = 'Gelieve een gebruikersnaam in te geven.';
 // v
@@ -83,8 +88,10 @@ $lbl['core']['Avatar'] = 'avatar';
 // b
 $lbl['core']['Blog'] = 'blog';
 // c
+$lbl['core']['Content'] = 'inhoud';
 // d
 $lbl['core']['Delete'] = 'verwijderen';
+$lbl['core']['Down'] = 'omlaag';
 $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
@@ -97,6 +104,7 @@ $lbl['core']['InterfaceLanguage'] = 'interface-taal';
 // j
 // k
 // l
+$lbl['core']['LastEditedOn'] = 'laats aangepast op';
 $lbl['core']['Login'] = 'login';
 $lbl['core']['Logout'] = 'afmelden';
 // m
@@ -110,13 +118,17 @@ $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 // q
 // r
+$lbl['core']['Revisions'] = 'versies';
 // s
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
 // t
+$lbl['core']['Title'] = 'titel';
 // u
+$lbl['core']['Up'] = 'omhoog';
 $lbl['core']['Update'] = 'wijzig';
 $lbl['core']['Username'] = 'gebruikersnaam';
+$lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 // v
 // w
 // x
@@ -137,9 +149,11 @@ $lbl['core']['Username'] = 'gebruikersnaam';
  */
 $msg = array();
 // a
+$msg['core']['Added'] = 'item toegevoegd.';
 $msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
 // b
 // c
+$msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item &quot;%s&quot; wil verwijderen?';
 $msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker %s wil verwijderen?';
 // d
 $msg['users']['Deleted'] = 'De gebruiker <em>%s</em> is verwijderd.';
@@ -149,7 +163,9 @@ $msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // f
 // g
 // h
+$msg['core']['HeaderEdit'] = '<em>%s</em> bewerken';
 $msg['users']['HeaderEdit'] = 'Gebruiker <em>%s</em> bewerken';
+$msg['core']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
 // i
 // j
@@ -159,8 +175,10 @@ $msg['core']['LoggedInAs'] = 'aangemeld als';
 // m
 // n
 $msg['core']['NoDrafts'] = 'Er zijn geen drafts.';
+$msg['core']['NoItems'] = 'Er zijn geen items aanwezig.';
 $msg['core']['NoItemsPublished'] = 'Er zijn geen items gepubliceerd.';
 $msg['core']['NoItemsScheduled'] = 'Er zijn geen items gepland.';
+$msg['core']['NoRevisions'] = 'Er zijn nog geen versies.';
 $msg['core']['NotAllowedActionTitle'] = 'Verboden';
 $msg['core']['NotAllowedActionMessage'] = 'Deze actie is niet toegestaan.';
 $msg['core']['NotAllowedModuleTitle'] = 'Verboden';
@@ -169,10 +187,14 @@ $msg['core']['NotAllowedModuleMessage'] = 'Deze module is niet toegestaan.';
 // p
 // q
 // r
+$msg['core']['RevisionsExplanation'] = 'De 5 laatst opgeslagen versies worden bijgehouden. <strong>De huidige versie wordt pas overschreven als je het item opslaat.</strong>';
 // s
+$msg['core']['SequenceChanged'] = 'De volgorde is aangepast.';
 // t
 // u
+$msg['core']['UsingARevision'] = 'Je gebruikt een oudere versie!';
 // v
+$msg['core']['VisibleOnSite'] = 'Zichtbaar op de website?';
 // w
 // x
 // y

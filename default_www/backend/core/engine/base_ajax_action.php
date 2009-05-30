@@ -13,6 +13,10 @@
  */
 class BackendBaseAJAXAction
 {
+	const OK = 200;
+	const ERROR = 400;
+	const FORBIDDEN = 500;
+
 	/**
 	 * The current action
 	 *

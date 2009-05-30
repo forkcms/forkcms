@@ -5,179 +5,8 @@
 <DefTblOpts></DefTblOpts>
 <DocFolder>/Users/tijs/Projects/Netlash/fork_next.local</DocFolder>
 <Sch Cm="" nm="fork-next-gen">
-<Tbl UsSo="1" nm="blog_categories">
-<Cm>The categories that can/will be used in blogarticles</Cm>
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
-<Pk ClNs="id" nm="pkblog_categories"/>
-<Cl au="1" df="" nm="id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-</Cl>
-<Cl au="0" df="" nm="meta_id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>link to meta</Cm>
-</Cl>
-<Cl au="0" df="" nm="name" nu="0">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>name of the category</Cm>
-</Cl>
-<Cl au="0" df="" nm="description" nu="0">
-<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
-<Cm>description of the category</Cm>
-</Cl>
-<Cl au="0" df="" nm="sequence" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>sequence of the category</Cm>
-</Cl>
-<SchTrHis/>
-</Tbl>
-<Tbl UsSo="1" nm="blog_comments">
-<Cm>The comments on specific blog-articles</Cm>
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
-<Pk ClNs="id" nm="pkblog_comments"/>
-<Cl au="1" df="" nm="id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-</Cl>
-<Cl au="0" df="" nm="entry_id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>the blog-article</Cm>
-</Cl>
-<Cl au="0" df="" nm="name" nu="0">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the name of the comment-author</Cm>
-</Cl>
-<Cl au="0" df="" nm="email" nu="0">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the email of the comment-author</Cm>
-</Cl>
-<Cl au="0" df="" nm="website" nu="1">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the optional url of the comment-author</Cm>
-</Cl>
-<Cl au="0" df="" nm="ip" nu="0">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the real ip of the comment-author</Cm>
-</Cl>
-<Cl au="0" df="" nm="cookie_id" nu="1">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the cookie-id of the comment-author</Cm>
-</Cl>
-<Cl au="0" df="" nm="title" nu="0">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the comment-title</Cm>
-</Cl>
-<Cl au="0" df="" nm="text" nu="0">
-<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
-<Cm>the comment-text</Cm>
-</Cl>
-<Cl au="0" df="unmoderated" nm="status" nu="0">
-<DT ds="Enum" en="'unmoderated','moderated','spam'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>the comment-status</Cm>
-</Cl>
-<Cl au="0" df="comment" nm="type" nu="0">
-<DT ds="Enum" en="'comment','trackback'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>the comment-type</Cm>
-</Cl>
-<Cl au="0" df="" nm="created_on" nu="0">
-<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
-<Cm>the create-date of the comment</Cm>
-</Cl>
-<Cl au="0" df="" nm="edited_on" nu="0">
-<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
-<Cm>the last edit-date of the comment</Cm>
-</Cl>
-<Fk deAc="3" nm="fk_blog_comments_blog_entries" prLkCl="entry_id" upAc="3">
-<PrTb mn="0" nm="blog_entries" oe="1" sch="fork-next-gen" zr="0"/>
-<CdTb mn="1" nm="blog_comments" oe="1" sch="fork-next-gen" zr="1"/>
-<ClPr cdCl="entry_id" prCl="entry_id"/>
-</Fk>
-<SchTrHis/>
-</Tbl>
-<Tbl UsSo="1" nm="blog_entries">
-<Cm>The entries in blog</Cm>
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
-<Pk ClNs="id" nm="pkblog_entries"/>
-<Cl au="1" df="" nm="id" nu="1">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-</Cl>
-<Cl au="0" df="" nm="entry_id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>the unique entry id</Cm>
-</Cl>
-<Cl au="0" df="" nm="user_id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>the user that created the entry</Cm>
-</Cl>
-<Cl au="0" df="" nm="language" nu="0">
-<DT ds="VarChar" en="" id="12" ln="5" sc="null" sg="1"/>
-<Cm>the language of the entry</Cm>
-</Cl>
-<Cl au="0" df="" nm="meta_id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>link to meta</Cm>
-</Cl>
-<Cl au="0" df="" nm="category_id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>link to category</Cm>
-</Cl>
-<Cl au="0" df="" nm="title" nu="0">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the title of the entry</Cm>
-</Cl>
-<Cl au="0" df="" nm="text" nu="1">
-<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
-<Cm>the text of the entry</Cm>
-</Cl>
-<Cl au="0" df="" nm="text_short" nu="1">
-<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
-<Cm>the short text of the entry</Cm>
-</Cl>
-<Cl au="0" df="" nm="author" nu="0">
-<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
-<Cm>the author of the entry</Cm>
-</Cl>
-<Cl au="0" df="" nm="status" nu="0">
-<DT ds="Enum" en="'published','draft','hidden'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>the status of the entry</Cm>
-</Cl>
-<Cl au="0" df="Y" nm="allow_comments" nu="0">
-<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
-<Cm>are comments allowed?</Cm>
-</Cl>
-<Cl au="0" df="0" nm="num_comments" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-<Cm>how many comments were given</Cm>
-</Cl>
-<Cl au="0" df="" nm="created_on" nu="0">
-<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
-<Cm>the date the entry was created</Cm>
-</Cl>
-<Cl au="0" df="" nm="edited_on " nu="0">
-<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
-<Cm>the last date the entry was edited</Cm>
-</Cl>
-<Cl au="0" df="" nm="published_on" nu="0">
-<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
-<Cm>the date the entry should be published</Cm>
-</Cl>
-<Fk deAc="3" nm="fk_blog_entries_blog_categories" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="blog_categories" oe="1" sch="fork-next-gen" zr="0"/>
-<CdTb mn="1" nm="blog_entries" oe="1" sch="fork-next-gen" zr="1"/>
-<ClPr cdCl="category_id" prCl="id"/>
-</Fk>
-<Fk deAc="3" nm="fk_blog_entries_meta" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="meta" oe="1" sch="fork-next-gen" zr="0"/>
-<CdTb mn="1" nm="blog_entries" oe="1" sch="fork-next-gen" zr="1"/>
-<ClPr cdCl="meta_id" prCl="id"/>
-</Fk>
-<Fk deAc="3" nm="fk_blog_entries_users" prLkCl="id" upAc="3">
-<PrTb mn="0" nm="users" oe="1" sch="fork-next-gen" zr="0"/>
-<CdTb mn="1" nm="blog_entries" oe="1" sch="fork-next-gen" zr="1"/>
-<ClPr cdCl="user_id" prCl="id"/>
-</Fk>
-<SchTrHis/>
-</Tbl>
 <Tbl UsSo="1" nm="groups">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkgroups"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -192,7 +21,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="groups_rights_actions">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkgroups_rights_actions"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -208,7 +37,7 @@
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 <Cm>name of the action</Cm>
 </Cl>
-<Cl au="0" df="5" nm="level" nu="0">
+<Cl au="0" df="1" nm="level" nu="0">
 <DT ds="Double" en="" id="8" ln="null" sc="null" sg="1"/>
 <Cm>unix type levels 1, 3, 5 and 7</Cm>
 </Cl>
@@ -225,7 +54,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="groups_rights_modules">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkgroups_rights_modules"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -250,7 +79,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="languages_labels">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pklanguages_labels"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -277,7 +106,7 @@
 </Tbl>
 <Tbl UsSo="1" nm="meta">
 <Cm>Meta-information</Cm>
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="meta"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -313,7 +142,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="modules">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="name" nm="pkmodules"/>
 <Cl au="0" df="" nm="name" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
@@ -328,11 +157,8 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="modules_settings">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
-<Pk ClNs="id" nm="pkmodules_settings"/>
-<Cl au="1" df="" nm="id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-</Cl>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="module, name" nm="pkmodules_settings"/>
 <Cl au="0" df="" nm="module" nu="0">
 <DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
 <Cm>name of the module</Cm>
@@ -356,7 +182,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="modules_tags">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkmodules_tags"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -370,11 +196,6 @@
 <Cl au="0" df="" nm="other_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
-<Fk deAc="3" nm="fk_modules_tags_blog_entries" prLkCl="entry_id" upAc="3">
-<PrTb mn="0" nm="blog_entries" oe="1" sch="fork-next-gen" zr="0"/>
-<CdTb mn="1" nm="modules_tags" oe="1" sch="fork-next-gen" zr="1"/>
-<ClPr cdCl="other_id" prCl="entry_id"/>
-</Fk>
 <Fk deAc="3" nm="fk_modules_tags_modules" prLkCl="name" upAc="3">
 <PrTb mn="0" nm="modules" oe="1" sch="fork-next-gen" zr="0"/>
 <CdTb mn="1" nm="modules_tags" oe="1" sch="fork-next-gen" zr="1"/>
@@ -394,7 +215,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pages"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -499,7 +320,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_blocks">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkpages_blocks"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -539,7 +360,7 @@
 </Tbl>
 <Tbl UsSo="1" nm="pages_extras">
 <Cm>The possible extras</Cm>
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkpages_extras"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -577,7 +398,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_groups">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkpages_groups"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -588,7 +409,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_groups_pages">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Cl au="0" df="" nm="page_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
@@ -611,7 +432,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="pages_groups_profiles">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Cl au="0" df="" nm="profile_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
@@ -638,7 +459,7 @@
 </Tbl>
 <Tbl UsSo="1" nm="pages_templates">
 <Cm>The possible templates</Cm>
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pages_templates"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -657,7 +478,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="profiles">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkprofiles"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -686,7 +507,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="profiles_sessions">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkprofiles_sessions"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -714,11 +535,8 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="profiles_settings">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
-<Pk ClNs="id" nm="pkprofiles_settings"/>
-<Cl au="1" df="" nm="id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-</Cl>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="profile_id, name" nm="pkprofiles_settings"/>
 <Cl au="0" df="" nm="profile_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
@@ -738,8 +556,52 @@
 </Idx>
 <SchTrHis/>
 </Tbl>
+<Tbl UsSo="1" nm="spotlight">
+<Cm>Sometimes we need editable parts in the templates, this module will manage them</Cm>
+<TblOpts></TblOpts>
+<Pk ClNs="revision_id" nm="pkspotlight"/>
+<Cl au="0" df="" nm="id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="1" df="" nm="revision_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="user_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="language_id" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="title" nu="0">
+<DT ds="VarChar" en="" id="12" ln="255" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="text" nu="1">
+<DT ds="Text" en="" id="703" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="N" nm="hidden" nu="0">
+<DT ds="Enum" en="'Y','N'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="active" nm="status" nu="0">
+<DT ds="Enum" en="'active','archived'" id="706" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="created_on" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="edited_on" nu="0">
+<DT ds="DateTime" en="" id="700" ln="null" sc="null" sg="1"/>
+</Cl>
+<Cl au="0" df="" nm="sequence" nu="0">
+<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
+</Cl>
+<Fk deAc="3" nm="fk_spotlight_users" prLkCl="id" upAc="3">
+<PrTb mn="0" nm="users" oe="1" sch="fork-next-gen" zr="0"/>
+<CdTb mn="1" nm="spotlight" oe="1" sch="fork-next-gen" zr="1"/>
+<ClPr cdCl="user_id" prCl="id"/>
+</Fk>
+<SchTrHis/>
+</Tbl>
 <Tbl UsSo="1" nm="tags">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pktags"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -760,7 +622,7 @@
 </Tbl>
 <Tbl UsSo="1" nm="users">
 <Cm>The backend users</Cm>
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="users"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -801,7 +663,7 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="users_sessions">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
 <Pk ClNs="id" nm="pkusers_sessions"/>
 <Cl au="1" df="" nm="id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
@@ -829,11 +691,8 @@
 <SchTrHis/>
 </Tbl>
 <Tbl UsSo="1" nm="users_settings">
-<TblOpts>ENGINE=MyISAM DEFAULT CHARSET=latin1</TblOpts>
-<Pk ClNs="id" nm="pkusers_settings"/>
-<Cl au="1" df="" nm="id" nu="0">
-<DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
-</Cl>
+<TblOpts>ENGINE=InnoDB DEFAULT CHARSET=utf8</TblOpts>
+<Pk ClNs="user_id, name" nm="pkusers_settings"/>
 <Cl au="0" df="" nm="user_id" nu="0">
 <DT ds="Integer" en="" id="4" ln="null" sc="null" sg="1"/>
 </Cl>
@@ -929,16 +788,8 @@
 </VbCfg>
 </RnCf>
 <TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="meta" x="28" y="14"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="blog_entries" x="295" y="31"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="blog_comments" x="647" y="29"/>
-<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="blog_categories" x="68" y="162"/>
 <TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="modules_tags" x="639" y="245"/>
 <TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="351" y="276"/>
-<FkGl bkCl="ff000000" nm="fork-next-gen.blog_comments.fk_blog_comments_blog_entries"/>
-<FkGl bkCl="ff000000" nm="fork-next-gen.blog_entries.fk_blog_entries_blog_categories"/>
-<FkGl bkCl="ff000000" nm="fork-next-gen.blog_entries.fk_blog_entries_meta"/>
-<FkGl bkCl="ff000000" nm="fork-next-gen.blog_entries.fk_blog_entries_users"/>
-<FkGl bkCl="ff000000" nm="fork-next-gen.modules_tags.fk_modules_tags_blog_entries"/>
 </Dgm>
 <Dgm nm="Modules">
 <RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">
@@ -1019,6 +870,26 @@
 <TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="profiles_settings" x="257" y="114"/>
 <FkGl bkCl="ff000000" nm="fork-next-gen.profiles_sessions.fk_profiles_sessions_profiles"/>
 <FkGl bkCl="ff000000" nm="fork-next-gen.profiles_settings.fk_profiles_settings_profiles"/>
+</Dgm>
+<Dgm nm="Spotlight">
+<RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">
+<VbCfg>
+<Fg ky="Auto Number" vl="0"/>
+<Fg ky="Check" vl="0"/>
+<Fg ky="Comment" vl="0"/>
+<Fg ky="Data Type" vl="1"/>
+<Fg ky="Default" vl="0"/>
+<Fg ky="ENUM Values" vl="0"/>
+<Fg ky="Length" vl="1"/>
+<Fg ky="Name" vl="1"/>
+<Fg ky="Nullable" vl="0"/>
+<Fg ky="Schema Name" vl="0"/>
+<Fg ky="Signed" vl="0"/>
+</VbCfg>
+</RnCf>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="spotlight" x="175" y="69"/>
+<TbGl bkCl="ffffffe6" sch="fork-next-gen" tbl="users" x="523" y="90"/>
+<FkGl bkCl="ff000000" nm="fork-next-gen.spotlight.fk_spotlight_users"/>
 </Dgm>
 <Dgm nm="Users">
 <RnCf FtSz="9" lkStgy="OffsetDirect" zm="1.0">

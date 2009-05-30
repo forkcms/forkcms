@@ -128,6 +128,8 @@ class BackendBaseAction
 		$this->header->addJS('jquery/jquery.js', 'core');
 		$this->header->addJS('jquery/jquery.hilight.js', 'core');
 		$this->header->addJS('backend.js', 'core');
+
+		// add css
 		$this->header->addCSS('screen.css', 'core');
 
 		// this method will be overwritten by the childs so
@@ -370,6 +372,18 @@ class BackendBaseActionAdd extends BackendBaseAction
 		// add default js file (if the file exists)
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/add.js')) $this->header->addJS('add.js', null, true);
 	}
+
+
+	/**
+	 * Parse the form
+	 *
+	 * @return	void
+	 */
+	protected function parse()
+	{
+		$this->frm->parse($this->tpl);
+	}
+
 }
 
 
@@ -426,6 +440,18 @@ class BackendBaseActionEdit extends BackendBaseAction
 		// add default js file (if the file exists)
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/edit.js')) $this->header->addJS('edit.js', null, true);
 	}
+
+
+	/**
+	 * Parse the form
+	 *
+	 * @return	void
+	 */
+	protected function parse()
+	{
+		$this->frm->parse($this->tpl);
+	}
+
 }
 
 

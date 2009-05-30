@@ -54,28 +54,11 @@ class BackendAJAXAction
 		// load the configfile for the required module
 		$this->loadConfig();
 
-		// get linked modules
-		$aLinkedActions = $this->config->getLinkedAction($this->getAction());
-
-		// if there are no linked action this is invalid by default
-		if($aLinkedActions === false)
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
-
-			// throw an exception, when debug is on we get a descent message
-			throw new BackendException('Not allowed action.');
-		}
-
 		// init var
 		$allowed = false;
 
-		// loop linked actions
-		foreach((array) $aLinkedActions as $action)
-		{
-			//
-			if(BackendAuthentication::isAllowedAction($action, $this->getModule())) $allowed = true;
-		}
+		// is this an allowed action
+		if(BackendAuthentication::isAllowedAction($action, $this->getModule())) $allowed = true;
 
 		// is this an allowed AJAX-action?
 		if(!$allowed)

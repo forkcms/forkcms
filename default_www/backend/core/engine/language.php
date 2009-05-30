@@ -28,12 +28,19 @@ class BackendLanguage
 
 
 	/**
+	 * The current interface-language
+	 *
+	 * @var	string
+	 */
+	protected static $currentInterfaceLanguage;
+
+
+	/**
 	 * The current language that the user is working with
 	 *
 	 * @var	string
 	 */
 	protected static $currentWorkingLanguage;
-
 
 
 	/**
@@ -45,12 +52,17 @@ class BackendLanguage
 	 */
 	public static function getError($key, $module = null)
 	{
-		// get url
-		$url = Spoon::getObjectReference('url');
+		// do we know the module
+		if($module === null)
+		{
+			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
+			else $module = 'core';
+		}
 
 		// redefine
 		$key = (string) $key;
-		$module = ($module !== null) ? (string) $module : $url->getModule();
+		$module = (string) $module;
 
 		// if the error exists return it,
 		if(isset(self::$err[$module][$key])) return self::$err[$module][$key];
@@ -75,6 +87,17 @@ class BackendLanguage
 
 
 	/**
+	 * Get the current interface language
+	 *
+	 * @return string
+	 */
+	public static function getInterfaceLanguage()
+	{
+		return self::$currentInterfaceLanguage;
+	}
+
+
+	/**
 	 * Get all the possible interface languages
 	 *
 	 * @return	array
@@ -94,12 +117,17 @@ class BackendLanguage
 	 */
 	public static function getLabel($key, $module = null)
 	{
-		// get url
-		$url = Spoon::getObjectReference('url');
+		// do we know the module
+		if($module === null)
+		{
+			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
+			else $module = 'core';
+		}
 
 		// redefine
 		$key = (string) $key;
-		$module = ($module !== null) ? (string) $module : $url->getModule();
+		$module = (string) $module;
 
 		// if the error exists return it,
 		if(isset(self::$lbl[$module][$key])) return self::$lbl[$module][$key];
@@ -132,12 +160,17 @@ class BackendLanguage
 	 */
 	public static function getMessage($key, $module = null)
 	{
-		// get url
-		$url = Spoon::getObjectReference('url');
+		// do we know the module
+		if($module === null)
+		{
+			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
+			else $module = 'core';
+		}
 
 		// redefine
 		$key = (string) $key;
-		$module = ($module !== null) ? (string) $module : $url->getModule();
+		$module = (string) $module;
 
 		// if the error exists return it,
 		if(isset(self::$msg[$module][$key])) return self::$msg[$module][$key];
@@ -198,6 +231,9 @@ class BackendLanguage
 
 		// check if file exists
 		if(!SpoonFile::exists(BACKEND_CACHE_PATH .'/locale/'. $language .'.php')) throw new BackendException('Languagefile ('. $language .') can\'t be found.');
+
+		// store
+		self::$currentInterfaceLanguage = $language;
 
 		// store in cookie
 		SpoonCookie::set('backend_interface_language', $language);

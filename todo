@@ -1,8 +1,12 @@
 ONSITE TODO
 -- 
 	template docs
-
+	SpoonForm extenden met FrontendForm
 
 PRIVATE TODO
 --
-	"Hoeks" maar dan anders?
+	tinyMCE deftig configureren
+
+SPOON TODO
+--
+	Spoon upgraden naar nieuwste versie

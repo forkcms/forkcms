@@ -30,4 +30,5 @@ class AuthenticationLogout extends BackendBaseAction
 		$this->redirect(BackendModel::createUrlForAction('index', 'authentication'));
 	}
 }
+
 ?>

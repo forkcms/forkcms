@@ -832,13 +832,17 @@ class SpoonForm
 	 *
 	 * @return	array
 	 */
-	public function getValues()
+	public function getValues($aIgnoreKeys = array())
 	{
 		// values
 		$aValues = array();
+		$aIgnoreKeys = (array) $aIgnoreKeys;
 
 		// loop objects
-		foreach($this->objects as $object) $aValues[$object->getName()] = $object->getValue();
+		foreach($this->objects as $object)
+		{
+			if(method_exists($object, 'getValue') && !in_array($object->getName(), $aIgnoreKeys)) $aValues[$object->getName()] = $object->getValue();
+		}
 
 		// return data
 		return $aValues;

@@ -24,7 +24,7 @@ class UsersDelete extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the user exists
-		if(BackendUsersModel::exists($this->id) || 1==1)
+		if(BackendUsersModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

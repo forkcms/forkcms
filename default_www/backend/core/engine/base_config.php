@@ -74,6 +74,12 @@ class BackendBaseConfig
 	}
 
 
+	/**
+	 * Enter description here...
+	 *
+	 * @param unknown_type $ajaxAction
+	 * @return unknown
+	 */
 	public function getLinkedAction($ajaxAction)
 	{
 		// redefine
@@ -81,6 +87,8 @@ class BackendBaseConfig
 
 		// validate AJAX-action
 		if(!in_array($ajaxAction, $this->getPossibleAJAXActions())) throw new BackendException('Invalid AJAX-action ('. $ajaxAction .').');
+
+		return $ajaxAction;
 
 		// .....
 		if(isset($this->linkedAjaxActions[$ajaxAction])) return $this->linkedAjaxActions[$ajaxAction];

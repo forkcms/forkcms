@@ -147,6 +147,9 @@ class BackendTemplate extends SpoonTemplate
 		{
 			// assign the authenticated users secret key
 			$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
+
+			// assign the authentiated users preferred interface language
+			$this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('backend_interface_language'));
 		}
 
 		// assign some variable constants (such as site-title)
@@ -252,14 +255,14 @@ class BackendTemplateModifiers
 	 * @param	string $action
 	 * @param	string[optional] $module
 	 */
-	public static function getURL($var = null, $action, $module = null)
+	public static function getURL($var = null, $action = null, $module = null)
 	{
 		// get url
 		$url = Spoon::getObjectReference('url');
 
 		// redefine
 		$var = (string) $var;
-		$action = (string) $action;
+		$action = ($action !== null) ? (string) $action : $url->getAction();
 		$module = ($module !== null) ? (string) $module : $url->getModule();
 
 		// build url and return it

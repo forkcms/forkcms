@@ -14,38 +14,6 @@
 class UsersEdit extends BackendBaseActionEdit
 {
 	/**
-	 * Textfields
-	 *
-	 * @var	SpoonTextField
-	 */
-	private $txtUsername, $txtNickname, $txtName, $txtSurname, $txtEmail;
-
-
-	/**
-	 * Passwordfield
-	 *
-	 * @var	SpoonPasswordField
-	 */
-	private $txtPassword;
-
-
-	/**
-	 * Dropdownmenu
-	 *
-	 * @var	SpoonDropDown
-	 */
-	private $ddmInterfaceLanguages;
-
-
-	/**
-	 * Filefield
-	 *
-	 * @var SpoonFileField
-	 */
-	private $fileAvatar;
-
-
-	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -90,26 +58,18 @@ class UsersEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new SpoonForm('edit');
+		$this->frm = new BackendForm('edit');
 
 		// create elements
-		$this->txtUsername = new SpoonTextField('username', $this->record['username'], 75);
-		$this->txtPassword = new SpoonPasswordField('password', $this->record['password_raw'], 75);
-
-		$this->txtNickname = new SpoonTextField('nickname', $this->record['settings']['nickname'], 75);
-		$this->txtEmail = new SpoonTextField('email', $this->record['settings']['email'], 255);
-		$this->txtName = new SpoonTextField('name', $this->record['settings']['name'], 255);
-		$this->txtSurname = new SpoonTextField('surname', $this->record['settings']['surname'], 255);
-
-		$this->ddmInterfaceLanguages = new SpoonDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['backend_interface_language']);
-
-		$this->fileAvatar = new SpoonFileField('avatar');
-
-		// add elements
-		$this->frm->add($this->txtUsername, $this->txtPassword,
-						$this->txtNickname, $this->txtEmail, $this->txtName, $this->txtSurname,
-						$this->fileAvatar,
-						$this->ddmInterfaceLanguages);
+		$this->frm->addTextField('username', $this->record['username'], 75);
+		$this->frm->addPasswordField('password', $this->record['password_raw'], 75);
+		$this->frm->addTextField('nickname', $this->record['settings']['nickname'], 75);
+		$this->frm->addTextField('email', $this->record['settings']['email'], 255);
+		$this->frm->addTextField('name', $this->record['settings']['name'], 255);
+		$this->frm->addTextField('surname', $this->record['settings']['surname'], 255);
+		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['backend_interface_language']);
+		$this->frm->addFileField('avatar');
+		$this->frm->addButton('submit', BL::getLabel('Edit'), 'submit');
 	}
 
 
@@ -118,17 +78,17 @@ class UsersEdit extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function parse()
+	protected function parse()
 	{
+		// call parent
+		parent::parse();
+
 		// show current avatar
 		$this->tpl->assign('avatarImage', FRONTEND_FILES_URL. '/backend_users/avatars/64x64/'. $this->record['settings']['avatar']);
 
 		// assign user-related data
 		$this->tpl->assign('nickname', $this->record['settings']['nickname']);
 		$this->tpl->assign('id', $this->record['id']);
-
-		// parse the form
-		$this->frm->parse($this->tpl);
 	}
 
 
@@ -146,51 +106,47 @@ class UsersEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// username is present
-			if($this->txtUsername->isFilled(BL::getError('UsernameIsRequired')))
+			if($this->frm->getField('username')->isFilled(BL::getError('UsernameIsRequired')))
 			{
 				// only a-z (no spaces) are allowed
-				if($this->txtUsername->isAlphaNumeric('{$errOnlyAlphaNumericChars|ucfirst}'))
+				if($this->frm->getField('username')->isAlphaNumeric('{$errOnlyAlphaNumericChars|ucfirst}'))
 				{
 					// does the username already exists?
-					if(BackendUsersModel::existsUsername($this->txtUsername->getValue(), $this->id)) $this->txtUsername->addError('{$errUsernameAlreadyExists|ucfirst}');
+					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue(), $this->id)) $this->frm->getField('username')->addError('{$errUsernameAlreadyExists|ucfirst}');
 
 					// the username doesn't exists
 					else
 					{
 						// some usernames are blacklisted, so don't allow them
-						if(in_array($this->txtUsername->getValue(), array('root', 'god', 'netlash'))) $this->txtUsername->addError('{$errUsernameNotAllowed|ucfirst}');
+						if(in_array($this->frm->getField('username')->getValue(), array('root', 'god', 'netlash'))) $this->frm->getField('username')->addError('{$errUsernameNotAllowed|ucfirst}');
 					}
 				}
 			}
 
 			// required fields
-			$this->txtPassword->isFilled(BL::getError('PasswordIsRequired'));
-			$this->txtEmail->isEmail(BL::getError('EmailIsInvalid'));
-			$this->txtName->isFilled(BL::getError('NameIsRequired'));
-			$this->txtSurname->isFilled(BL::getError('SurnameIsRequired'));
-			$this->ddmInterfaceLanguages->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			$this->frm->getField('password')->isFilled(BL::getError('PasswordIsRequired'));
+			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
+			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
+			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
 
 			// validate fields
-			if($this->fileAvatar->isFilled()) $this->fileAvatar->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
+			if($this->frm->getField('avatar')->isFilled()) $this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
 
 			// no errors?
 			if($this->frm->getCorrect())
 			{
 				// build user-array
 				$aUser['id'] = $this->id;
-				$aUser['username'] = $this->txtUsername->getValue(true);
-				$aUser['password_raw'] = $this->txtPassword->getValue(true);
+				$aUser['username'] = $this->frm->getField('username')->getValue(true);
+				$aUser['password_raw'] = $this->frm->getField('password')->getValue(true);
 				$aUser['password'] = md5($aUser['password_raw']);
 
 				// build settings-array
-				$aSettings['nickname'] = $this->txtNickname->getValue();
-				$aSettings['email'] = $this->txtEmail->getValue();
-				$aSettings['name'] = $this->txtName->getValue();
-				$aSettings['surname'] = $this->txtSurname->getValue();
-				$aSettings['backend_interface_language'] = $this->ddmInterfaceLanguages->getSelected();
+				$aSettings = $this->frm->getValues(array('username', 'password'));
 
 				// is there a file given
-				if($this->fileAvatar->isFilled())
+				if($this->frm->getField('avatar')->isFilled())
 				{
 					// delete old avatar if it isn't the default-image
 					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
@@ -202,7 +158,7 @@ class UsersEdit extends BackendBaseActionEdit
 					}
 
 					// create new filename
-					$fileName = rand(0,3) .'_'. $aUser['id'] .'.'. $this->fileAvatar->getExtension();
+					$fileName = rand(0,3) .'_'. $aUser['id'] .'.'. $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
 					$aSettings['avatar'] = $fileName;
@@ -232,6 +188,6 @@ class UsersEdit extends BackendBaseActionEdit
 			}
 		}
 	}
-
 }
+
 ?>

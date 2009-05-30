@@ -45,6 +45,9 @@ class BackendAJAX
 		// set the action
 		$this->setAction((string) SpoonFilter::getGetValue('action', null, ''));
 
+		// set the language
+		$this->setLanguage((string) SpoonFilter::getGetValue('language', BackendLanguage::getInterfaceLanguages(), BackendLanguage::DEFAULT_LANGUAGE));
+
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());
 
@@ -85,6 +88,18 @@ class BackendAJAX
 	{
 		// set property
 		$this->action = (string) $value;
+	}
+
+
+	/**
+	 * Set the language
+	 *
+	 * @return	void
+	 * @param	string $value
+	 */
+	public function setLanguage($value)
+	{
+		BackendLanguage::setLocale($value);
 	}
 
 

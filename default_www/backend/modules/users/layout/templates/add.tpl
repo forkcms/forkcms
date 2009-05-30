@@ -4,30 +4,29 @@
 	
 	{form:add}
 		<fieldset>
-		<dl>
-			<dt><label for="username">{$lblUsername|ucfirst}</label></dt>
-			<dd>{$txtUsername} {$txtUsernameError}</dd>
-			<dt><label for="password">{$lblPassword|ucfirst}</label></dt>
-			<dd>{$txtPassword} {$txtPasswordError}</dd>
+			<label for="username">{$lblUsername|ucfirst}</label>
+			<p>{$txtUsername} {$txtUsernameError}</p>
+			<label for="password">{$lblPassword|ucfirst}</label>
+			<p>{$txtPassword} {$txtPasswordError}</p>
 
-			<dt><label for="nickname">{$lblNickname|ucfirst}</label></dt>
-			<dd>{$txtNickname} {$txtNicknameError}</dd>
+			<label for="nickname">{$lblNickname|ucfirst}</label>
+			<p>{$txtNickname} {$txtNicknameError}</p>
 			
-			<dt><label for="avatar">{$lblAvatar|ucfirst}</label></dt>
-			<dd>{$fileAvatar} {$fileAvatarError}</dd>
+			<label for="avatar">{$lblAvatar|ucfirst}</label>
+			<p><img src="{$avatarImage}" width="64" height="64" alt="avatar" /></p>
+			<p>{$fileAvatar} {$fileAvatarError}</p>
 			
-			<dt><label for="email">{$lblEmail|ucfirst}</label></dt>
-			<dd>{$txtEmail} {$txtEmailError}</dd>
-			<dt><label for="name">{$lblName|ucfirst}</label></dt>
-			<dd>{$txtName} {$txtNameError}</dd>
-			<dt><label for="surname">{$lblSurname|ucfirst}</label></dt>
-			<dd>{$txtSurname} {$txtSurnameError}</dd>
+			<label for="email">{$lblEmail|ucfirst}</label>
+			<p>{$txtEmail} {$txtEmailError}</p>
+			<label for="name">{$lblName|ucfirst}</label>
+			<p>{$txtName} {$txtNameError}</p>
+			<label for="surname">{$lblSurname|ucfirst}</label>
+			<p>{$txtSurname} {$txtSurnameError}</p>
 
-			<dt><label for="username">{$lblInterfaceLanguage|ucfirst}</label></dt>
-			<dd>{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}</dd>
+			<label for="username">{$lblInterfaceLanguage|ucfirst}</label>
+			<p>{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}</p>
 			
-			<dd><input type="submit" value="{$lblAdd|ucfirst}" /></dd>
-		</dl>
+			<p>{$btnSubmit}</p>
 		</fieldset>
 	{/form:add}
 

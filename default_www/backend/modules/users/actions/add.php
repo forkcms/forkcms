@@ -14,38 +14,6 @@
 class UsersAdd extends BackendBaseActionAdd
 {
 	/**
-	 * Textfields
-	 *
-	 * @var	SpoonTextField
-	 */
-	private $txtUsername, $txtNickname, $txtName, $txtSurname, $txtEmail;
-
-
-	/**
-	 * Passwordfield
-	 *
-	 * @var	SpoonPasswordField
-	 */
-	private $txtPassword;
-
-
-	/**
-	 * Dropdownmenu
-	 *
-	 * @var	SpoonDropDown
-	 */
-	private $ddmInterfaceLanguages;
-
-
-	/**
-	 * Filefield
-	 *
-	 * @var SpoonFileField
-	 */
-	private $fileAvatar;
-
-
-	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -77,37 +45,18 @@ class UsersAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new SpoonForm('add');
+		$this->frm = new BackendForm('add');
 
 		// create elements
-		$this->txtUsername = new SpoonTextField('username', null, 255);
-		$this->txtPassword = new SpoonPasswordField('password', null, 255);
-
-		$this->txtNickname = new SpoonTextField('nickname', null, 255);
-		$this->txtEmail = new SpoonTextField('email', null, 255);
-		$this->txtName = new SpoonTextField('name', null, 255);
-		$this->txtSurname = new SpoonTextField('surname', null, 255);
-
-		$this->ddmInterfaceLanguages = new SpoonDropDown('interface_language', BackendLanguage::getInterfaceLanguages());
-
-		$this->fileAvatar = new SpoonFileField('avatar');
-
-		// add elements
-		$this->frm->add($this->txtUsername, $this->txtPassword,
-						$this->txtNickname, $this->txtEmail, $this->txtName, $this->txtSurname,
-						$this->fileAvatar,
-						$this->ddmInterfaceLanguages);
-	}
-
-
-	/**
-	 * Parse the form
-	 *
-	 * @return	void
-	 */
-	private function parse()
-	{
-		$this->frm->parse($this->tpl);
+		$this->frm->addTextField('username', null, 75);
+		$this->frm->addPasswordField('password', null, 75);
+		$this->frm->addTextField('nickname', null, 75);
+		$this->frm->addTextField('email', null, 255);
+		$this->frm->addTextField('name', null, 255);
+		$this->frm->addTextField('surname', null, 255);
+		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages());
+		$this->frm->addFileField('avatar');
+		$this->frm->addButton('submit', ucfirst(BL::getLabel('Add')), 'submit');
 	}
 
 
@@ -125,66 +74,58 @@ class UsersAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// username is present
-			if($this->txtUsername->isFilled(BL::getError('UsernameIsRequired')))
+			if($this->frm->getField('username')->isFilled(BL::getError('UsernameIsRequired')))
 			{
 				// only a-z (no spaces) are allowed
-				if($this->txtUsername->isAlphaNumeric('{$errOnlyAlphaNumericChars|ucfirst}'))
+				if($this->frm->getField('username')->isAlphaNumeric('{$errOnlyAlphaNumericChars|ucfirst}'))
 				{
 					// does the username already exists?
-					if(BackendUsersModel::existsUsername($this->txtUsername->getValue())) $this->txtUsername->addError('{$errUsernameAlreadyExists|ucfirst}');
+					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue())) $this->frm->getField('username')->addError('{$errUsernameAlreadyExists|ucfirst}');
 
 					// the username doesn't exists
 					else
 					{
 						// some usernames are blacklisted, so don't allow them
-						if(in_array($this->txtUsername->getValue(), array('root', 'god', 'netlash'))) $this->txtUsername->addError('{$errUsernameNotAllowed|ucfirst}');
+						if(in_array($this->frm->getField('username')->getValue(), array('root', 'god', 'netlash'))) $this->frm->getField('username')->addError('{$errUsernameNotAllowed|ucfirst}');
 					}
 				}
 			}
 
 			// required fields
-			$this->txtPassword->isFilled(BL::getError('PasswordIsRequired'));
-			$this->txtEmail->isEmail(BL::getError('EmailIsInvalid'));
-			$this->txtName->isFilled(BL::getError('NameIsRequired'));
-			$this->txtSurname->isFilled(BL::getError('SurnameIsRequired'));
-			$this->ddmInterfaceLanguages->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			$this->frm->getField('password')->isFilled(BL::getError('PasswordIsRequired'));
+			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
+			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
+			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
 
 			// validate fields
-			if($this->fileAvatar->isFilled())
-			{
-				$this->fileAvatar->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
-			}
+			if($this->frm->getField('avatar')->isFilled()) $this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
 
 			// no errors?
 			if($this->frm->getCorrect())
 			{
 				// build user-array
-				$aUser['username'] = $this->txtUsername->getValue(true);
-				$aUser['password_raw'] = $this->txtPassword->getValue(true);
+				$aUser['username'] = $this->frm->getField('username')->getValue(true);
+				$aUser['password_raw'] = $this->frm->getField('password')->getValue(true);
 				$aUser['password'] = md5($aUser['password_raw']);
 
 				// build settings-array
-				$aSettings['nickname'] = $this->txtNickname->getValue();
-				$aSettings['email'] = $this->txtEmail->getValue();
-				$aSettings['name'] = $this->txtName->getValue();
-				$aSettings['surname'] = $this->txtSurname->getValue();
-				$aSettings['avatar'] = 'no-avatar.jpg';
-				$aSettings['backend_interface_language'] = $this->ddmInterfaceLanguages->getSelected();
+				$aSettings = $this->frm->getValues(array('username', 'password'));
 
 				// save changes
 				$aUser['id'] = (int) BackendUsersModel::insert($aUser, $aSettings);
 
-
-				if($this->fileAvatar->isFilled())
+				// does the user submitted an avatar
+				if($this->frm->getField('avatar')->isFilled())
 				{
 					// create new filename
-					$fileName = rand(0,3) .'_'. $aUser['id'] .'.'. $this->fileAvatar->getExtension();
+					$fileName = rand(0,3) .'_'. $aUser['id'] .'.'. $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
 					$aSettings['avatar'] = $fileName;
 
 					// move to new location
-					$this->fileAvatar->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
+					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
 
 					// resize
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 128, 128);
@@ -208,6 +149,6 @@ class UsersAdd extends BackendBaseActionAdd
 			}
 		}
 	}
-
 }
+
 ?>

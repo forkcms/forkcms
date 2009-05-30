@@ -44,6 +44,9 @@ class BackendJavascript
 	 */
 	public function __construct()
 	{
+		// define the Named appliation
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
+
 		// check if the user is logged in
 		$this->validateLogin();
 
@@ -60,7 +63,8 @@ class BackendJavascript
 		$tpl = new BackendTemplate();
 
 		// output the template
-		$tpl->display(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->getFile());
+		if($this->module == 'core') $tpl->display(BACKEND_CORE_PATH .'/js/'. $this->getFile());
+		else $tpl->display(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->getFile());
 	}
 
 
@@ -108,14 +112,32 @@ class BackendJavascript
 		// set property
 		$this->file = (string) $value;
 
-		// check if the path exists, if not whe should given an error
-		if(!SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->file))
+		// core is a special module
+		if($this->module == 'core')
 		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(404);
+			// check if the path exists, if not whe should given an error
+			if(!SpoonFile::exists(BACKEND_CORE_PATH .'/js/'. $this->file))
+			{
+				// set correct headers
+				SpoonHTTP::setHeadersByCode(404);
 
-			// throw an exception, when debug is on we get a descent message
-			throw new BackendException('File not present.');
+				// throw an exception, when debug is on we get a descent message
+				throw new BackendException('File not present.');
+			}
+		}
+
+		// not core
+		else
+		{
+			// check if the path exists, if not whe should given an error
+			if(!SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->file))
+			{
+				// set correct headers
+				SpoonHTTP::setHeadersByCode(404);
+
+				// throw an exception, when debug is on we get a descent message
+				throw new BackendException('File not present.');
+			}
 		}
 	}
 
@@ -150,16 +172,19 @@ class BackendJavascript
 		// set property
 		$this->module = (string) $value;
 
-		// is this module allowed?
-		if(!BackendAuthentication::isAllowedModule($this->module))
+		// core is a module that contains general stuff, so it has to be allowed
+		if($this->module !== 'core')
 		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
+			// is this module allowed?
+			if(!BackendAuthentication::isAllowedModule($this->module))
+			{
+				// set correct headers
+				SpoonHTTP::setHeadersByCode(403);
 
-			// throw an exception, when debug is on we get a descent message
-			throw new BackendException('Not allowed module.');
+				// throw an exception, when debug is on we get a descent message
+				throw new BackendException('Not allowed module.');
+			}
 		}
-
 
 		// create url instance, the templatemodifiers need this object
 		$url = new BackendURL();

@@ -76,24 +76,31 @@ class AuthenticationIndex extends BackendBaseActionIndex
 			$this->frm->getField('backend_username')->isFilled(BL::err('UsernameIsRequired'));
 			$this->frm->getField('backend_password')->isFilled(BL::err('PasswordIsRequired'));
 
+			// all fields are ok?
+			if($this->frm->getField('backend_username')->isFilled() && $this->frm->getField('backend_password')->isFilled())
+			{
+				// try to login the user
+				if(!BackendAuthentication::loginUser($this->frm->getField('backend_username')->getValue(), $this->frm->getField('backend_password')->getValue()))
+				{
+					// add error
+					$this->frm->addError('invalid login');
+
+					// show error
+					$this->tpl->assign('hasError', true);
+				}
+			}
+
 			// no errors in the form?
 			if($this->frm->getCorrect())
 			{
-				// login the user, if this can't be done it will return false
-				if(BackendAuthentication::loginUser($this->frm->getField('backend_username')->getValue(), $this->frm->getField('backend_password')->getValue()))
-				{
-					// get the redirect-url from the url
-					$redirectUrl = $this->getParameter('querystring');
+				// get the redirect-url from the url
+				$redirectUrl = $this->getParameter('querystring');
 
-					// if there isn't a redirect url we will redirect to the dashboard
-					if($redirectUrl === null) $redirectUrl = BackendModel::createUrlForAction(null, 'dashboard');
+				// if there isn't a redirect url we will redirect to the dashboard
+				if($redirectUrl === null) $redirectUrl = BackendModel::createUrlForAction(null, 'dashboard');
 
-					// redirect to the correct url (url the user was looking for or fallback)
-					$this->redirect($redirectUrl);
-				}
-
-				// we couldn't log in so PISS OFF
-				else $this->tpl->assign('hasError', true);
+				// redirect to the correct url (url the user was looking for or fallback)
+				$this->redirect($redirectUrl);
 			}
 		}
 	}

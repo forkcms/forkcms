@@ -1,5 +1,8 @@
 li.selected a { color: red; }
 li.selected li a { color: blue; }
 li.selected li.selected a { color: red; }
+div.selected { border: 1px solid red; }
 .report { top: 30%; left: 30%; position: fixed; width: 40%; height: 20px; padding: 10px; background-color: #C6E5B2; font-size: 16px; text-align: center; }
 .error { top: 20px left: 30%; position: fixed; width: 40%; height: 20px; padding: 10px; background-color: #F7CFC5; font-size: 16px; text-align: center; }
+
+table td.dragAndDropHandle { width: 40px; cursor: move; }
