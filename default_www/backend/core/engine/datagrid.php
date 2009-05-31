@@ -61,7 +61,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setAttributes(array('class' => 'datagrid sequenceByDragAndDrop'));
 
 		// disable paging
-		$this->setPaging();
+		$this->setPaging(false);
 
 		// hide the sequence column
 		$this->setColumnHidden('sequence');
@@ -69,7 +69,8 @@ class BackendDataGrid extends SpoonDataGrid
 		// add a column for the handle, so users have something to hold while draging
 		$this->addColumn('dragAndDropHandle');
 
-		// @todo ask davy how we can set the handler as first column, without alteringthe other column-order
+		// make sure the column with the handler is the first one
+		$this->setColumnsSequence('dragAndDropHandle');
 
 		// add a class on the handler column, so JS knows this is just a handler
 		$this->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
@@ -94,6 +95,12 @@ class BackendDataGrid extends SpoonDataGrid
  */
 class BackendDataGridArray extends BackendDataGrid
 {
+	/**
+	 * Default constructor
+	 *
+	 * @return	void
+	 * @param	array $array
+	 */
 	public function __construct(array $array)
 	{
 		// create a new source-object

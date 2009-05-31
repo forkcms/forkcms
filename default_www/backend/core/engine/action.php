@@ -95,7 +95,6 @@ class BackendAction
 	}
 
 
-
 	/**
 	 * Get the current action
 	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code

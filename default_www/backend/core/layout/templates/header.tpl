@@ -14,7 +14,7 @@
 <body>
 <div id="container">
 	<div id="header">
-		<img src="{$BACKEND_CORE_URL}/layout/images/fork.gif" width="110" height="34" alt="Fork">
+		<img src="{$BACKEND_CORE_URL}/layout/images/fork.gif" width="110" height="34" alt="Fork" />
 		<h1>{$SITE_TITLE}</h1>
 	</div>
 	{option:isAuthenticated}

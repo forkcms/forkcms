@@ -6,6 +6,16 @@ ONSITE TODO
 PRIVATE TODO
 --
 	tinyMCE deftig configureren
+	
+	News
+	---
+		index:	- datagrid met drafts
+				- datagrid met gepubliceerde items
+				
+		add/edit:	- publicatiedatum
+					- vervaldatum?
+					- auteur overschrijven
+	
 
 SPOON TODO
 --

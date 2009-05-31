@@ -136,8 +136,6 @@ class BackendNavigation
 		// end the ul-tag
 		$html .= '</ul>'."\n";
 
-		if($html == '<ul></ul>') $html = '';
-
 		// return the HTML that was build
 		return $html;
 	}

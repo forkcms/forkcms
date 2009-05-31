@@ -173,7 +173,7 @@ class BackendHeader
 			foreach($this->JSFiles as $file)
 			{
 				// if the file is processed by PHP we don't want any caching
-				if(substr($file['path'], 0, 11) == '/backend/js') $aJSFiles[] = array('path' => $file['path'] .'&m='. time());
+				if(substr($file['path'], 0, 11) == '/backend/js') $aJSFiles[] = array('path' => $file['path'] .'&amp;m='. time());
 
 				// add lastmodified time
 				else $aJSFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
