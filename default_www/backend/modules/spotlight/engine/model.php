@@ -27,6 +27,7 @@ class BackendSpotlightModel
 									ORDER BY s.edited_on DESC;';
 
 
+	// @todo phpdoc
 	public static function delete($id)
 	{
 		// redefine
@@ -125,7 +126,7 @@ class BackendSpotlightModel
 	 * @return	int
 	 * @param	array $aValues
 	 */
-	public static function insert(array $aValues)
+	public static function insert(array $aValues) // @todo geen a prefix voor array
 	{
 		// redefine
 		$aValues = (array) $aValues;
@@ -168,7 +169,7 @@ class BackendSpotlightModel
 	 * @param	int $id
 	 * @param	array $aValues
 	 */
-	public static function update($id, array $aValues)
+	public static function update($id, array $aValues) // @todo geen a prefix voor arrays
 	{
 		// redefine
 		$id = (int) $id;
@@ -221,7 +222,7 @@ class BackendSpotlightModel
 	 * @return	bool
 	 * @param	array $aNewIdsSequence
 	 */
-	public static function updateSequence(array $aNewIdsSequence)
+	public static function updateSequence(array $aNewIdsSequence) // @todo aNewIdsSequence => geen a prefix om arrays aan te duiden
 	{
 		// redefine
 		$aNewIdsSequence = (array) $aNewIdsSequence;

@@ -1,5 +1,6 @@
 <?php
 
+// @todo class phpdoc fixen.
 /**
  * SpotlightAdd
  *

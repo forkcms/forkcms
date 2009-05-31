@@ -78,7 +78,6 @@ class SpotlightIndex extends BackendBaseActionIndex
 	{
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
-
-
 }
+
 ?>

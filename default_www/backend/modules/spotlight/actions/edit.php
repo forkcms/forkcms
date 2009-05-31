@@ -113,7 +113,7 @@ class SpotlightEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
 
 		// disable paging
-		$this->dgRevisions->setPaging();
+		$this->dgRevisions->setPaging(false);
 
 		// set headers
 		$this->dgRevisions->setHeaderLabels(array('title' => BL::getLabel('Title'), 'edited_on' => BL::getLabel('LastEditedOn')));
@@ -142,8 +142,6 @@ class SpotlightEdit extends BackendBaseActionEdit
 
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
-
-
 	}
 
 

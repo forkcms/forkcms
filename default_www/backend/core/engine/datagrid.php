@@ -28,7 +28,7 @@ class BackendDataGrid extends SpoonDataGrid
 		parent::__construct($source);
 
 		// set debugmode, this will force the recompile for the used templates
-		$this->setDebug(SPOON_DEBUG); // zorgt ervoor dat forceCompile -= true wordt
+		$this->setDebug(SPOON_DEBUG);
 
 		// set the compile-directory, so compiled templates will be in a folder that is writable
 		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/templates');

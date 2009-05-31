@@ -43,4 +43,5 @@ class SpotlightDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') .'?error=non-existing');
 	}
 }
+
 ?>
