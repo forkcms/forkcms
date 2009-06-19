@@ -181,8 +181,8 @@ class BackendJavascript
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(403);
 
-				// throw an exception, when debug is on we get a descent message
-				throw new BackendException('Not allowed module.');
+				// stop script
+				exit;
 			}
 		}
 
@@ -196,7 +196,6 @@ class BackendJavascript
 
 	/**
 	 * Do authentication stuff
-	 * This method could end the script by throwing an exception
 	 *
 	 * @return	void
 	 */
@@ -208,8 +207,8 @@ class BackendJavascript
 			// set the correct header
 			SpoonHTTP::setHeadersByCode(403);
 
-			// throw an exception, when debug is on we get a descent message
-			throw new BackendException('Not logged in.');
+			// stop script
+			exit;
 		}
 	}
 }

@@ -19,7 +19,7 @@ class BackendModel
 	 *
 	 * @var	array
 	 */
-	private static $aModuleSettings;
+	private static $moduleSettings;
 
 
 	/**
@@ -82,17 +82,17 @@ class BackendModel
 	public static function getModuleSetting($module, $key, $defaultValue = null)
 	{
 		// are the values available
-		if(empty(self::$aModuleSettings)) self::getModuleSettings();
+		if(empty(self::$moduleSettings)) self::getModuleSettings();
 
 		// redefine
 		$module = (string) $module;
 		$key = (string) $key;
 
 		// if the value isn't present we should set a defaultvalue
-		if(!isset(self::$aModuleSettings[$module][$key])) self::setSetting($module, $key, $defaultValue);
+		if(!isset(self::$moduleSettings[$module][$key])) self::setSetting($module, $key, $defaultValue);
 
 		// return
-		return self::$aModuleSettings[$module][$key];
+		return self::$moduleSettings[$module][$key];
 	}
 
 
@@ -104,21 +104,21 @@ class BackendModel
 	public static function getModuleSettings()
 	{
 		// are the values available
-		if(empty(self::$aModuleSettings))
+		if(empty(self::$moduleSettings))
 		{
 			// get db
 			$db = self::getDB();
 
 			// get all settings
-			$aModuleSettings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
+			$moduleSettings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
 														FROM modules_settings AS ms;');
 
 			// loop and store settings in the cache
-			foreach($aModuleSettings as $setting) self::$aModuleSettings[$setting['module']][$setting['name']] = unserialize($setting['value']);
+			foreach($moduleSettings as $setting) self::$moduleSettings[$setting['module']][$setting['name']] = unserialize($setting['value']);
 		}
 
 		// return
-		return self::$aModuleSettings;
+		return self::$moduleSettings;
 	}
 
 
@@ -147,7 +147,7 @@ class BackendModel
 						array($module, $key, $valueToStore, $valueToStore));
 
 		// cache it
-		self::$aModuleSettings[$module][$key] = $value;
+		self::$moduleSettings[$module][$key] = $value;
 	}
 }
 

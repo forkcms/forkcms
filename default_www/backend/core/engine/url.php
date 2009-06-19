@@ -121,39 +121,39 @@ class BackendURL
 		$queryString = $this->getQueryString();
 
 		// fix GET-parameters
-		$aGetChunks = explode('?', $queryString);
+		$getChunksFromUrl = explode('?', $queryString);
 
 		// are there GET-parameters
-		if(isset($aGetChunks[1]))
+		if(isset($getChunksFromUrl[1]))
 		{
 			// remove from querystring
-			$queryString = str_replace('?'. $aGetChunks[1], '', $this->getQueryString());
+			$queryString = str_replace('?'. $getChunksFromUrl[1], '', $this->getQueryString());
 
 			// get key-value pairs
-			$aGet = explode('&', $aGetChunks[1]);
+			$get = explode('&', $getChunksFromUrl[1]);
 
 			// loop pairs
-			foreach ($aGet as $get)
+			foreach ($get as $getParameter)
 			{
 				// get key and value
-				$aGetChunks = explode('=', $get, 2);
+				$getChunks = explode('=', $getParameter, 2);
 
 				// store in the real GET
-				if(isset($aGetChunks[0])) $_GET[$aGetChunks[0]] =  (isset($aGetChunks[1])) ? (string) $aGetChunks[1] : '';
+				if(isset($getChunks[0])) $_GET[$getChunks[0]] =  (isset($getChunks[1])) ? (string) $getChunks[1] : '';
 			}
 		}
 
 		// split into chunks, a Fork CMS url will always look like /<lang>/<module>/<action>(?GET)
-		$aChunks = (array) explode('/', trim($queryString, '/'));
+		$chunks = (array) explode('/', trim($queryString, '/'));
 
 		// get the language, this will always be in front
-		$language = (isset($aChunks[1]) && $aChunks[1] != '') ? SpoonFilter::getValue($aChunks[1], FrontendLanguage::getActiveLanguages(), FrontendLanguage::DEFAULT_LANGUAGE) : FrontendLanguage::DEFAULT_LANGUAGE;
+		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], FrontendLanguage::getActiveLanguages(), FrontendLanguage::DEFAULT_LANGUAGE) : FrontendLanguage::DEFAULT_LANGUAGE;
 
 		// get the module, null will be the default
-		$module = (isset($aChunks[2]) && $aChunks[2] != '') ? $aChunks[2] : 'dashboard';
+		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
 
 		// get the requested action, index will be our default action
-		$action = (isset($aChunks[3]) && $aChunks[3] != '') ? $aChunks[3] : 'index';
+		$action = (isset($chunks[3]) && $chunks[3] != '') ? $chunks[3] : 'index';
 
 		// the person isn't logged in? or the module doesn't require authentication
 		if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))

@@ -38,13 +38,5 @@ final class SpotlightConfig extends BackendBaseConfig
 	 * @var	array
 	 */
 	protected $disabledAJAXActions = array();
-
-
-	/**
-	 * The linked actions
-	 *
-	 * @var	array
-	 */
-	protected $linkedAjaxActions = array();
 }
 ?>

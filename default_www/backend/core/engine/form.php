@@ -52,6 +52,69 @@ class BackendForm extends SpoonForm
 	}
 
 
+	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = 'inputDatefield', $classError = 'inputDatefieldError')
+	{
+		// redefine
+		$name = (string) $name;
+		$value = ($value !== null) ? (int) $value : null;
+		$type = SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
+		$date = ($date !== null) ? (int) $date : null;
+		$date2 = ($date2 !== null) ? (int) $date2 : null;
+		$class = (string) $class;
+		$classError = (string) $classError;
+
+		// validate
+		if($type == 'from' && ($date == 0 || $date == null)) throw new BackendException('A datefield with type "from" should have a valid date-parameter.');
+		if($type == 'till' && ($date == 0 || $date == null)) throw new BackendException('A datefield with type "till" should have a valid date-parameter.');
+		if($type == 'range' && ($date == 0 || $date2 == 0 || $date == null || $date2 == null)) throw new BackendException('A datefield with type "range" should have 2 valid date-parameters.');
+
+		// @todo	get prefered mask
+		$mask = 'd/m/Y';
+
+		// @todo	get firstday
+		$firstday = 1;
+
+		// rebuild mask
+		$relMask = str_replace(array('d', 'm', 'Y', 'j', 'n'), array('dd', 'mm', 'yy', 'd', 'm'), $mask);
+
+		// build rel
+		$rel = $relMask .':::'. $firstday;
+
+		// add extra classes based on type
+		switch($type)
+		{
+			case 'from':
+				$class .= ' inputDatefieldFrom';
+				$classError .= ' inputDatefieldFrom';
+				$rel .= ':::'. date('Y-m-d', $date);
+			break;
+
+			case 'till':
+				$class .= ' inputDatefieldTill';
+				$classError .= ' inputDatefieldTill';
+				$rel .= ':::'. date('Y-m-d', $date);
+			break;
+
+			case 'range':
+				$class .= ' inputDatefieldRange';
+				$classError .= ' inputDatefieldRange';
+				$rel .= ':::'. date('Y-m-d', $date) .':::'. date('Y-m-d', $date2);
+			break;
+
+			default:
+				$class .= ' inputDatefieldNormal';
+				$classError .= ' inputDatefieldNormal';
+			break;
+		}
+
+		// call parent
+		parent::addDateField($name, $value, $mask, $class, $classError);
+
+		// set attributes
+		parent::getField($name)->setAttributes(array('rel' => $rel));
+	}
+
+
 	/**
 	 * Add an editor field
 	 *
@@ -85,9 +148,9 @@ class BackendForm extends SpoonForm
 	 *
 	 * @return	array
 	 */
-	public function getValues($aIgnoreKeys = array('form', 'submit'))
+	public function getValues($ignoreKeys = array('form', 'submit'))
 	{
-		return parent::getValues($aIgnoreKeys);
+		return parent::getValues($ignoreKeys);
 	}
 
 

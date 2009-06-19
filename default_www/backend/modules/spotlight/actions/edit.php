@@ -61,6 +61,12 @@ class SpotlightEdit extends BackendBaseActionEdit
 	}
 
 
+	/**
+	 * Get the data
+	 * If a revision-id was specified in the url we load the revision and not the actual data
+	 *
+	 * @return	void
+	 */
 	private function getData()
 	{
 		// get the record
@@ -166,13 +172,13 @@ class SpotlightEdit extends BackendBaseActionEdit
 			if($this->frm->getCorrect())
 			{
 				// get values
-				$aValues = (array) $this->frm->getValues();
+				$values = (array) $this->frm->getValues();
 
 				// insert the item
-				$id = (int) BackendSpotlightModel::update($this->id, $aValues);
+				$id = (int) BackendSpotlightModel::update($this->id, $values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=edit&var='. $aValues['title'] .'&hilight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'?report=edited&var='. urlencode($values['title']) .'&hilight=id-'. $id);
 			}
 		}
 	}

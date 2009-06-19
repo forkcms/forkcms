@@ -310,6 +310,9 @@ class SpoonDateField extends SpoonInputField
 		// disabled
 		if($this->disabled) $output .= ' disabled="disabled"';
 
+		// attributes
+		foreach($this->attributes as $key => $value) $output .= ' '. $key .'="'. $value .'"';
+
 		// end html
 		$output .= ' />';
 

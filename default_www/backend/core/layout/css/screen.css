@@ -6,3 +6,4 @@ div.selected { border: 1px solid red; }
 .error { top: 20px left: 30%; position: fixed; width: 40%; height: 20px; padding: 10px; background-color: #F7CFC5; font-size: 16px; text-align: center; }
 
 table td.dragAndDropHandle { width: 40px; cursor: move; }
+table tr.dragAndDropPlaceholder { height: 16px; }

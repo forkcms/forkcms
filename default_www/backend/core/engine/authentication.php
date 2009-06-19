@@ -76,14 +76,14 @@ class BackendAuthentication
 	public static function isAllowedAction($action, $module)
 	{
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
-		$aAlwaysAllowed = array('error' => array('index'), 'authentication' => array('index', 'logout'));
+		$alwaysAllowed = array('error' => array('index'), 'authentication' => array('index', 'logout'));
 
 		// redefine
 		$action = (string) $action;
 		$module = (string) $module;
 
 		// is this action an action that doesn't require authentication?
-		if(isset($aAlwaysAllowed[$module]) && in_array($action, $aAlwaysAllowed[$module])) return true;
+		if(isset($alwaysAllowed[$module]) && in_array($action, $alwaysAllowed[$module])) return true;
 
 		// we will cache everything
 		if(empty(self::$allowedActions))
@@ -92,7 +92,7 @@ class BackendAuthentication
 			$db = BackendModel::getDB();
 
 			// get allowed actions
-			$aAllowedActions = (array) $db->retrieve('SELECT gra.module, gra.action, gra.level
+			$allowedActions = (array) $db->retrieve('SELECT gra.module, gra.action, gra.level
 														FROM users_sessions AS us
 														INNER JOIN users AS u ON us.user_id = u.id
 														INNER JOIN groups_rights_actions AS gra ON u.group_id = gra.group_id
@@ -100,7 +100,7 @@ class BackendAuthentication
 														array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all actions and there level
-			foreach($aAllowedActions as $row) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+			foreach($allowedActions as $row) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
 		}
 
 		// do we know a level for this action
@@ -124,13 +124,13 @@ class BackendAuthentication
 	public static function isAllowedModule($module)
 	{
 		// always allowed modules (yep, hardcoded, because, we don't want other people to fuck up)
-		$aAlwaysAllowed = array('error', 'authentication');
+		$alwaysAllowed = array('error', 'authentication');
 
 		// redefine
 		$module = (string) $module;
 
 		// is this module a module that doesn't require authentication?
-		if(in_array($module, $aAlwaysAllowed)) return true;
+		if(in_array($module, $alwaysAllowed)) return true;
 
 		// do we already know something?
 		if(empty(self::$allowedModules))
@@ -139,7 +139,7 @@ class BackendAuthentication
 			$db = BackendModel::getDB();
 
 			// get allowed modules
-			$aAllowedModules = $db->getColumn('SELECT grm.module
+			$allowedModules = $db->getColumn('SELECT grm.module
 												FROM users_sessions AS us
 												INNER JOIN users AS u ON us.user_id = u.id
 												INNER JOIN groups_rights_modules AS grm ON u.group_id = grm.group_id
@@ -147,7 +147,7 @@ class BackendAuthentication
 												array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all modules
-			foreach($aAllowedModules as $row) self::$allowedModules[$row] = true;
+			foreach($allowedModules as $row) self::$allowedModules[$row] = true;
 		}
 
 		// return result
@@ -258,18 +258,18 @@ class BackendAuthentication
 			BackendAuthentication::cleanupOlderSessions();
 
 			// build the session array (will be stored in the database)
-			$aSession = array();
-			$aSession['user_id'] = $userId;
-			$aSession['secret_key'] = md5(md5($userId) . md5(SpoonSession::getSessionId()));
-			$aSession['session_id'] = SpoonSession::getSessionId();
-			$aSession['date'] = date('Y-m-d H:i:s');
+			$session = array();
+			$session['user_id'] = $userId;
+			$session['secret_key'] = md5(md5($userId) . md5(SpoonSession::getSessionId()));
+			$session['session_id'] = SpoonSession::getSessionId();
+			$session['date'] = date('Y-m-d H:i:s');
 
 			// insert a new row in the session-table
-			$db->insert('users_sessions', $aSession);
+			$db->insert('users_sessions', $session);
 
 			// store some values in the session
 			SpoonSession::set('backend_logged_in', true);
-			SpoonSession::set('backend_secret_key', $aSession['secret_key']);
+			SpoonSession::set('backend_secret_key', $session['secret_key']);
 
 			// return result
 			return true;

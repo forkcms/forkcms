@@ -126,11 +126,12 @@ class BackendBaseAction
 	{
 		// add jquery, we will need this in every action, so add it global
 		$this->header->addJS('jquery/jquery.js', 'core');
-		$this->header->addJS('jquery/jquery.hilight.js', 'core');
-		$this->header->addJS('backend.js', 'core');
+		$this->header->addJS('jquery/jquery.ui.js', 'core');
+		$this->header->addJS('backend.js', 'core', true);
 
 		// add css
 		$this->header->addCSS('screen.css', 'core');
+		$this->header->addCSS('jquery.ui.css', 'core');
 
 		// this method will be overwritten by the childs so
 	}
@@ -172,7 +173,7 @@ class BackendBaseAction
 	public function getParameter($key, $type = 'string')
 	{
 		// init var
-		$aAllowedTypes = array('bool', 'boolean',
+		$allowedTypes = array('bool', 'boolean',
 								'int', 'integer',
 								'float', 'double',
 								'string',
@@ -216,7 +217,7 @@ class BackendBaseAction
 
 				// invalid type
 				default:
-					throw new BackendException('Invalid type ('. $type .'). Possible values are: '. implode(', ', $aAllowedTypes)) .'.';
+					throw new BackendException('Invalid type ('. $type .'). Possible values are: '. implode(', ', $allowedTypes)) .'.';
 			}
 		}
 
@@ -293,31 +294,12 @@ class BackendBaseActionIndex extends BackendBaseAction
 			// show the report
 			$this->tpl->assign('report', true);
 
-			// init var
-			$messageName = '';
-
-			// alter messageName
-			switch($this->getParameter('report'))
-			{
-				case 'add':
-					$messageName = 'added';
-				break;
-
-				case 'delete':
-					$messageName = 'deleted';
-				break;
-
-				case 'edit':
-					$messageName = 'edited';
-				break;
-			}
-
 			// camelcase the string
-			$messageName = SpoonFilter::toCamelCase($messageName);
+			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'));
 
 			// if we have data to use it will be passed as the var-parameter, if so assign it
 			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
-			else $this->tpl->assign('reporMessage', $messageName);
+			else $this->tpl->assign('reportMessage', $messageName);
 
 			// hilight an element with the given id if needed
 			if($this->getParameter('hilight')) $this->tpl->assign('hilight', $this->getParameter('hilight'));

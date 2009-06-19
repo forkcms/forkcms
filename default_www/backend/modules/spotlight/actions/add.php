@@ -76,13 +76,13 @@ class SpotlightAdd extends BackendBaseActionAdd
 			if($this->frm->getCorrect())
 			{
 				// get values
-				$aValues = (array) $this->frm->getValues();
+				$values = (array) $this->frm->getValues();
 
 				// insert the item
-				$id = (int) BackendSpotlightModel::insert($aValues);
+				$id = (int) BackendSpotlightModel::insert($values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=add&var='. $aValues['title'] .'&hilight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'?report=added&var='. urlencode($values['title']) .'&hilight=id-'. $id);
 			}
 		}
 	}

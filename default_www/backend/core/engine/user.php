@@ -18,7 +18,7 @@ class BackendUser
 	 *
 	 * @var	array
 	 */
-	private $aSettings = array();
+	private $settings = array();
 
 
 	/**
@@ -155,10 +155,10 @@ class BackendUser
 		$key = (string) $key;
 
 		// if the value isn't present we should set a defaultvalue
-		if(!isset($this->aSettings[$key])) $this->setSetting($key, $defaultValue);
+		if(!isset($this->settings[$key])) $this->setSetting($key, $defaultValue);
 
 		// return
-		return $this->aSettings[$key];
+		return $this->settings[$key];
 	}
 
 
@@ -169,7 +169,7 @@ class BackendUser
 	 */
 	public function getSettings()
 	{
-		return (array) $this->aSettings;
+		return (array) $this->settings;
 	}
 
 
@@ -232,7 +232,7 @@ class BackendUser
 		$db = BackendModel::getDB();
 
 		// get user-data
-		$aUserData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.password_raw,
+		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.password_raw,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
 											INNER JOIN users_sessions AS us On u.id = us.user_id
@@ -241,27 +241,27 @@ class BackendUser
 											array($userId, 'Y', 'N'));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($aUserData)) unset($this);
+		if(empty($userData)) unset($this);
 
 		// set properties
-		$this->setUserId($aUserData['id']);
-		$this->setGroupId($aUserData['group_id']);
-		$this->setUsername($aUserData['username']);
-		$this->setPassword($aUserData['password_raw']);
-		$this->setSessionId($aUserData['session_id']);
-		$this->setSecretKey($aUserData['secret_key']);
-		$this->setLastloggedInDate($aUserData['date']);
+		$this->setUserId($userData['id']);
+		$this->setGroupId($userData['group_id']);
+		$this->setUsername($userData['username']);
+		$this->setPassword($userData['password_raw']);
+		$this->setSessionId($userData['session_id']);
+		$this->setSecretKey($userData['secret_key']);
+		$this->setLastloggedInDate($userData['date']);
 		$this->isAuthenticated = true;
 
 
 		// get settings
-		$aSettings = (array) $db->getPairs('SELECT us.name, us.value
+		$settings = (array) $db->getPairs('SELECT us.name, us.value
 											FROM users_settings AS us
 											WHERE us.user_id = ?;',
 											array($userId));
 
 		// loop settings and store them in the object
-		foreach($aSettings as $key => $value) $this->aSettings[$key] = unserialize($value);
+		foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
 	}
 
 
@@ -348,7 +348,7 @@ class BackendUser
 						array($this->getUserId(), $key, $valueToStore, $valueToStore));
 
 		// cache it
-		$this->aSettings[(string) $key] = $value;
+		$this->settings[(string) $key] = $value;
 	}
 
 

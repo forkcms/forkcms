@@ -5,7 +5,7 @@
 
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
 
-	<link rel="shortcut icon" href="{$BACKEND_URL}/favicon.ico" />
+	<link rel="shortcut icon" href="/backend/favicon.ico" />
 	{iteration:cssFiles}<link rel="stylesheet" type="text/css" media="screen" href="{$cssFiles.path}" />{$CRLF}{$TAB}{/iteration:cssFiles}
 
 	{iteration:javascriptFiles}<script type="text/javascript" src="{$javascriptFiles.path}"></script>{$CRLF}{$TAB}{/iteration:javascriptFiles}

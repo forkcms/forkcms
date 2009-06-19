@@ -54,9 +54,6 @@ class BackendDataGrid extends SpoonDataGrid
 		// get header object
 		$header = Spoon::getObjectReference('header');
 
-		// add needed JS-file
-		$header->addJS('jquery/jquery.tablednd.js', 'core');
-
 		// add drag and drop-class
 		$this->setAttributes(array('class' => 'datagrid sequenceByDragAndDrop'));
 

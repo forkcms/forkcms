@@ -55,14 +55,6 @@ class BackendBaseConfig
 
 
 	/**
-	 * The linked actions
-	 *
-	 * @var	array
-	 */
-	protected $linkedAjaxActions = array();
-
-
-	/**
 	 * Default constructor
 	 *
 	 * @return	void
@@ -71,30 +63,6 @@ class BackendBaseConfig
 	{
 		// read the possible actions based on the files
 		$this->setPossibleActions();
-	}
-
-
-	/**
-	 * Enter description here...
-	 *
-	 * @param unknown_type $ajaxAction
-	 * @return unknown
-	 */
-	public function getLinkedAction($ajaxAction)
-	{
-		// redefine
-		$ajaxAction = (string) $ajaxAction;
-
-		// validate AJAX-action
-		if(!in_array($ajaxAction, $this->getPossibleAJAXActions())) throw new BackendException('Invalid AJAX-action ('. $ajaxAction .').');
-
-		return $ajaxAction;
-
-		// .....
-		if(isset($this->linkedAjaxActions[$ajaxAction])) return $this->linkedAjaxActions[$ajaxAction];
-
-		// fallback
-		return false;
 	}
 
 
@@ -129,10 +97,10 @@ class BackendBaseConfig
 	protected function setPossibleActions()
 	{
 		// get filelist (only those with .php-extension)
-		$aActionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH .'/actions', '/(.*).php/');
+		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH .'/actions', '/(.*).php/');
 
 		// loop filelist
-		foreach ($aActionFiles as $file)
+		foreach ($actionFiles as $file)
 		{
 			// get action by removing the extension, actions should not contain spaces (use _ instead)
 			$action = strtolower(str_replace('.php', '', $file));
@@ -142,10 +110,10 @@ class BackendBaseConfig
 		}
 
 		// get filelist (only those with .php-extension)
-		$aAJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH .'/ajax', '/(.*).php/');
+		$AJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH .'/ajax', '/(.*).php/');
 
 		// loop filelist
-		foreach ($aAJAXActionFiles as $file)
+		foreach ($AJAXActionFiles as $file)
 		{
 			// get action by removing the extension, actions should not contain spaces (use _ instead)
 			$action = strtolower(str_replace('.php', '', $file));

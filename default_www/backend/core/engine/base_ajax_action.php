@@ -14,8 +14,8 @@
 class BackendBaseAJAXAction
 {
 	const OK = 200;
-	const ERROR = 400;
-	const FORBIDDEN = 500;
+	const ERROR = 500;
+	const FORBIDDEN = 403;
 
 	/**
 	 * The current action
@@ -83,16 +83,16 @@ class BackendBaseAJAXAction
 
 
 	/**
-	 * Output an answer into the browser
+	 * Output an answer to the browser
 	 *
 	 * @return	void
 	 * @param	int $statusCode
 	 * @param	mixed[optional] $data
 	 * @param	string[optional] $message
-	 * @param	bool[optional] $utf8decode
+	 * @param	bool[optional] $utf8decode	@todo	remove when new Spoon is utf-compliant!
 	 * @param	bool[optional] $htmlentities
 	 */
-	protected function output($statusCode, $data = null, $message = null, $utf8decode = true, $htmlentities = false)
+	public function output($statusCode, $data = null, $message = null, $utf8decode = true, $htmlentities = false)
 	{
 		// redefine
 		$statusCode = (int) $statusCode;
@@ -103,14 +103,14 @@ class BackendBaseAJAXAction
 		// should the values in the data-array be utf8-decoded?
 		if($utf8decode)
 		{
-			$data = self::recursiveMap('utf8_decode', $data);
+			if(!empty($data)) $data = self::recursiveMap('utf8_decode', $data);
 			$message = utf8_decode($message);
 		}
 
 		// should the values in the data-array be htmlentities?
 		if($htmlentities)
 		{
-			$data = self::recursiveMap(array('SpoonFilter', 'htmlentities'), $data);
+			if(!empty($data)) $data = self::recursiveMap(array('SpoonFilter', 'htmlentities'), $data);
 			$message = SpoonFilter::htmlentities($message);
 		}
 
@@ -130,10 +130,10 @@ class BackendBaseAJAXAction
 	 * @param	string $function
 	 * @param	array $array
 	 */
-	private static function recursiveMap($function, $array)
+	private static function recursiveMap($function, array $array)
 	{
 		// redefine
-		$array = (array) $array;
+		$function = (string) $function;
 
 		// init var
 		$newArray = array();

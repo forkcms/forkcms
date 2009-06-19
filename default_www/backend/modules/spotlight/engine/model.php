@@ -27,7 +27,12 @@ class BackendSpotlightModel
 									ORDER BY s.edited_on DESC;';
 
 
-	// @todo phpdoc
+	/**
+	 * Delete a spotlight-item
+	 *
+	 * @return	void
+	 * @param	int $id
+	 */
 	public static function delete($id)
 	{
 		// redefine
@@ -119,18 +124,14 @@ class BackendSpotlightModel
 	}
 
 
-
 	/**
 	 * Add a new spotlight-item
 	 *
 	 * @return	int
-	 * @param	array $aValues
+	 * @param	array $values
 	 */
-	public static function insert(array $aValues) // @todo geen a prefix voor array
+	public static function insert(array $values)
 	{
-		// redefine
-		$aValues = (array) $aValues;
-
 		// get db
 		$db = BackendModel::getDB();
 
@@ -145,17 +146,17 @@ class BackendSpotlightModel
 											LIMIT 1;') + 1;
 
 		// build array
-		$aValues['id'] = $newId;
-		$aValues['user_id'] = BackendAuthentication::getUser()->getUserId();
-		$aValues['language'] = BL::getWorkingLanguage();
-		$aValues['hidden'] = ($aValues['hidden']) ? 'N' : 'Y';
-		$aValues['status'] = 'active';
-		$aValues['created_on'] = date('Y-m-d H:i:s');
-		$aValues['edited_on'] = date('Y-m-d H:i:s');
-		$aValues['sequence'] = $newSequence;
+		$values['id'] = $newId;
+		$values['user_id'] = BackendAuthentication::getUser()->getUserId();
+		$values['language'] = BL::getWorkingLanguage();
+		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
+		$values['status'] = 'active';
+		$values['created_on'] = date('Y-m-d H:i:s');
+		$values['edited_on'] = date('Y-m-d H:i:s');
+		$values['sequence'] = $newSequence;
 
 		// insert and return the insertId
-		$db->insert('spotlight', $aValues);
+		$db->insert('spotlight', $values);
 
 		// insert the new id
 		return $newId;
@@ -167,41 +168,40 @@ class BackendSpotlightModel
 	 *
 	 * @return	int
 	 * @param	int $id
-	 * @param	array $aValues
+	 * @param	array $values
 	 */
-	public static function update($id, array $aValues) // @todo geen a prefix voor arrays
+	public static function update($id, array $values)
 	{
 		// redefine
 		$id = (int) $id;
-		$aValues = (array) $aValues;
 
 		// get db
 		$db = BackendModel::getDB();
 
 		// get current version
-		$aVersion = (array) self::get($id);
+		$version = (array) self::get($id);
 
 		// build array
-		$aValues['id'] = $id;
-		$aValues['user_id'] = BackendAuthentication::getUser()->getUserId();
-		$aValues['language'] = BL::getWorkingLanguage();
-		$aValues['hidden'] = ($aValues['hidden']) ? 'N' : 'Y';
-		$aValues['status'] = 'active';
-		$aValues['created_on'] = date('Y-m-d H:i:s', $aVersion['created_on']);
-		$aValues['edited_on'] = date('Y-m-d H:i:s');
-		$aValues['sequence'] = $aVersion['sequence'];
+		$values['id'] = $id;
+		$values['user_id'] = BackendAuthentication::getUser()->getUserId();
+		$values['language'] = BL::getWorkingLanguage();
+		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
+		$values['status'] = 'active';
+		$values['created_on'] = date('Y-m-d H:i:s', $version['created_on']);
+		$values['edited_on'] = date('Y-m-d H:i:s');
+		$values['sequence'] = $version['sequence'];
 
 		// archive all older versions
 		$db->update('spotlight', array('status' => 'archived'), 'id = ?', array($id));
 
 		// insert new version
-		$db->insert('spotlight', $aValues);
+		$db->insert('spotlight', $values);
 
 		// how many revisions should we keep
 		$rowsToKeep = (int) BackendModel::getModuleSetting(null, 'maximum_number_of_revisions', 5);
 
 		// get revision-ids for items to keep
-		$aRevisionIdsToKeep = (array) $db->getColumn('SELECT s.revision_id
+		$revisionIdsToKeep = (array) $db->getColumn('SELECT s.revision_id
 														FROM spotlight AS s
 														WHERE s.id = ? AND s.status = ?
 														ORDER BY s.edited_on DESC
@@ -209,7 +209,7 @@ class BackendSpotlightModel
 														array($id, 'archived', $rowsToKeep));
 
 		// delete other revisions
-		if(!empty($aRevisionIdsToKeep)) $db->delete('spotlight', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $aRevisionIdsToKeep) .')', array($id, 'archived'));
+		if(!empty($revisionIdsToKeep)) $db->delete('spotlight', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
 
 		// return id
 		return $id;
@@ -220,13 +220,10 @@ class BackendSpotlightModel
 	 * Update the sequence
 	 *
 	 * @return	bool
-	 * @param	array $aNewIdsSequence
+	 * @param	array $newIdsSequence
 	 */
-	public static function updateSequence(array $aNewIdsSequence) // @todo aNewIdsSequence => geen a prefix om arrays aan te duiden
+	public static function updateSequence(array $newIdsSequence)
 	{
-		// redefine
-		$aNewIdsSequence = (array) $aNewIdsSequence;
-
 		// get db
 		$db = BackendModel::getDB();
 
@@ -234,7 +231,7 @@ class BackendSpotlightModel
 		$sequence = 1;
 
 		// loop ids in correct order
-		foreach($aNewIdsSequence as $id)
+		foreach($newIdsSequence as $id)
 		{
 			// update
 			$db->update('spotlight', array('sequence' => $sequence), 'id = ?', array($id));

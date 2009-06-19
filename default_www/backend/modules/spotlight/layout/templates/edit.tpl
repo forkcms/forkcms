@@ -12,24 +12,18 @@
 			</ul>
 		</div>
 		
+		{form:edit}
 		<div class="tabsContent">
 			<div id="first" class="tabTab">
-				{form:edit}
-					<fieldset>
-						<label for="title">{$lblTitle|ucfirst}</label>
-						<p>{$txtTitle} {$txtTitleError}</p>
-			
-						<label for="content">{$lblContent|ucfirst}</label>
-						<p>{$txtContent} {$txtContentError}</p>
-						
-						<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
-						
-						<p>{$btnSubmit}</p>
-					</fieldset>
-				{/form:edit}
-				<p>
-					<a href="{$var|geturl:delete}?id={$id}" class="askConfirmation" rel="{$msgConfirmDelete|sprintf:{$title}}" title="{$lblDelete}">{$lblDelete}</a>
-				</p>
+				<fieldset>
+					<label for="title">{$lblTitle|ucfirst}</label>
+					<p>{$txtTitle} {$txtTitleError}</p>
+		
+					<label for="content">{$lblContent|ucfirst}</label>
+					<p>{$txtContent} {$txtContentError}</p>
+					<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
+					
+				</fieldset>
 			</div>
 			
 			<div id="revisions" class="tabTab">
@@ -39,6 +33,15 @@
 				{option:!revisions}{$msgNoRevisions}{/option:!revisions}
 			</div>
 		</div>
+
+		<p>
+			{$btnSubmit}
+			<a href="{$var|geturl:delete}?id={$id}" class="askConfirmation" title="{$lblDelete|ucfirst}">
+				<span style="display: none" class="message" title="{$lblDelete|ucfirst}">{$msgConfirmDelete|sprintf:{$title}}</span>
+				{$lblDelete|ucfirst}
+			</a>
+		</p>
+		{/form:edit}
 	</div>
 
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}

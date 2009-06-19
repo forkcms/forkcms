@@ -56,13 +56,13 @@ class ApplicationRouting
 		$queryString = trim($_SERVER['REQUEST_URI'], '/');
 
 		// split into chunks
-		$aChunks = explode('/', $queryString);
+		$chunks = explode('/', $queryString);
 
 		// is there a application specified
-		if(isset($aChunks[0]))
+		if(isset($chunks[0]))
 		{
 			// cleanup
-			$proposedApplication = (string) $aChunks[0];
+			$proposedApplication = (string) $chunks[0];
 
 			// set real application
 			$application = (isset($this->routes[$proposedApplication])) ? $this->routes[$proposedApplication] : self::DEFAULT_APPLICATION;

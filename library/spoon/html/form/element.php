@@ -36,6 +36,14 @@ require_once 'spoon/filter/filter.php';
 class SpoonFormElement
 {
 	/**
+	 * Optional attributes
+	 *
+	 * @var	array
+	 */
+	protected $attributes = array();
+
+
+	/**
 	 * Name of the form this element is a part of
 	 *
 	 * @var	string
@@ -132,6 +140,31 @@ class SpoonFormElement
 	public function parse(SpoonTemplate $template = null)
 	{
 		// filled by subclasses
+	}
+
+
+	/**
+	 * Set an attribute for an element
+	 *
+	 * @return	vois
+	 * @param	string $key
+	 * @param	string $value
+	 */
+	public function setAttribute($key, $value)
+	{
+		$this->attributes[(string) $key] = (string) $value;
+	}
+
+
+	/**
+	 * Set multiple attributes
+	 *
+	 * @return	void
+	 * @param	array $attributes
+	 */
+	public function setAttributes(array $attributes)
+	{
+		foreach($attributes as $key => $value) $this->setAttribute($key, $value);
 	}
 
 

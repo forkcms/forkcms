@@ -18,7 +18,7 @@
 define('SPOON_DEBUG', true);
 define('SPOON_STRICT', true);
 // mailaddress where the exceptions will be mailed to (<tag>-bugs@fork-cms.be)
-define('SPOON_DEBUG_EMAIL', '');
+define('SPOON_DEBUG_EMAIL', 'tijs@verkoyen.eu');
 // message for the visitors when an exception occur
 define('SPOON_DEBUG_MESSAGE', 'Internal error.');
 

@@ -32,6 +32,8 @@ class BackendAJAX
 	/**
 	 * Default constructor
 	 *
+	 * @todo	write some decent validation
+	 *
 	 * @return	void
 	 */
 	public function __construct()
@@ -120,8 +122,9 @@ class BackendAJAX
 			// set correct headers
 			SpoonHTTP::setHeadersByCode(403);
 
-			// throw an exception, when debug is on we get a descent message
-			throw new BackendException('Not allowed module.');
+			// output
+			$fakeAction = new BackendBaseAJAXAction('', '');
+			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not allowed module.');
 		}
 	}
 
@@ -140,8 +143,9 @@ class BackendAJAX
 			// set the correct header
 			SpoonHTTP::setHeadersByCode(403);
 
-			// throw an exception, when debug is on we get a descent message
-			throw new BackendException('Not logged in.');
+			// output
+			$fakeAction = new BackendBaseAJAXAction('', '');
+			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not logged in.');
 		}
 	}
 }

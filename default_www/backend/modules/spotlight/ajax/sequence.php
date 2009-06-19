@@ -1,10 +1,9 @@
 <?php
 
-// @todo class phpdoc fixen.
 /**
- * SpotlightAdd
+ * SpotlightAJaxSequence
  *
- * This is the add-action, it will display a form to create a new spotlight item
+ * This is an AJAX-action that will alter the sequence of the spotlightitems
  *
  * @package		backend
  * @subpackage	spotlight
@@ -28,10 +27,10 @@ class SpotlightAjaxSequence extends BackendBaseAJAXAction
 		if($newIdSequence == '') $this->output(self::ERROR, null, BL::getError('InvalidParameters'));
 
 		// split the ids
-		$aNewIdSequence = explode(',', $newIdSequence);
+		$newIdsSequence = explode(',', $newIdSequence);
 
 		// update the sequence
-		$success = (bool) BackendSpotlightModel::updateSequence($aNewIdSequence);
+		$success = (bool) BackendSpotlightModel::updateSequence($newIdsSequence);
 
 		// everything went fine
 		if($success) $this->output(self::OK, null, BL::getMessage('SequenceChanged'));

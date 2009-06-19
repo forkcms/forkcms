@@ -87,6 +87,13 @@ class SpoonException extends Exception
 	{
 		return $this->obfuscate;
 	}
+
+
+	public function __toString()
+	{
+		return 'kaboom';
+	}
+
 }
 
 ?>

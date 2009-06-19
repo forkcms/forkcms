@@ -88,10 +88,11 @@ $lbl['core']['Avatar'] = 'avatar';
 // b
 $lbl['core']['Blog'] = 'blog';
 // c
+$lbl['core']['Cancel'] = 'annuleer';
 $lbl['core']['Content'] = 'inhoud';
 // d
+$lbl['core']['Date'] = 'datum';
 $lbl['core']['Delete'] = 'verwijderen';
-$lbl['core']['Down'] = 'omlaag';
 $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
@@ -110,12 +111,14 @@ $lbl['core']['Logout'] = 'afmelden';
 // m
 // n
 $lbl['core']['Name'] = 'naam';
+$lbl['core']['Next'] = 'volgende';
 $lbl['core']['Nickname'] = 'nickname';
 // o
 $lbl['core']['OK'] = 'ok';
 // p
 $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
+$lbl['core']['Previous'] = 'vorige';
 // q
 // r
 $lbl['core']['Revisions'] = 'versies';
@@ -123,9 +126,9 @@ $lbl['core']['Revisions'] = 'versies';
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
 // t
+$lbl['core']['Time'] = 'tijd';
 $lbl['core']['Title'] = 'titel';
 // u
-$lbl['core']['Up'] = 'omhoog';
 $lbl['core']['Update'] = 'wijzig';
 $lbl['core']['Username'] = 'gebruikersnaam';
 $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
@@ -150,15 +153,20 @@ $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 $msg = array();
 // a
 $msg['core']['Added'] = 'item toegevoegd.';
+$msg['spotlight']['Added'] = 'Item <em>%s</em> toegevoegd.';
 $msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
 // b
 // c
-$msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item &quot;%s&quot; wil verwijderen?';
-$msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker %s wil verwijderen?';
+$msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item wil verwijderen?';
+$msg['spotlight']['ConfirmDelete'] = 'Ben je zeker dat je <em>%s</em> wil verwijderen?';
+$msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker <em>%s</em> wil verwijderen?';
 // d
+$msg['core']['Deleted'] = 'Het item is verwijderd.';
+$msg['spotlight']['Deleted'] = 'Het item <em>%s</em> is verwijderd.';
 $msg['users']['Deleted'] = 'De gebruiker <em>%s</em> is verwijderd.';
 // e
 $msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
+$msg['spotlight']['Edited'] = 'Wijzigingen voor <em>%s</em> opgeslagen.';
 $msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // f
 // g
