@@ -31,11 +31,11 @@ define('DB_TYPE', 'mysqli');
 // database name
 define('DB_DATABASE', 'forkng');
 // database host
-define('DB_HOSTNAME', '127.0.0.1');
+define('DB_HOSTNAME', 'mysql.local');
 // database username
-define('DB_USERNAME', 'root');
+define('DB_USERNAME', 'forkng');
 // datebase password
-define('DB_PASSWORD', 'zero#123');
+define('DB_PASSWORD', 'forkng');
 
 
 /**
@@ -57,7 +57,7 @@ define('SITE_MULTILANGUAGE', true);
  * Depends on the serverlayout. Openminds ftw!
  */
 // path to the website itself
-define('PATH_WWW', '/Users/tijs/Sites/forkng.local/default_www');
+define('PATH_WWW', '/Users/bauffman/Sites/forkng.local/default_www');
 // path to the Spoon library
 define('PATH_LIBRARY', dirname(__FILE__));
 
