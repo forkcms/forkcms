@@ -242,12 +242,12 @@ class BackendTemplate extends SpoonTemplate
 		$localeToAssign = array();
 
 		// get months
-		$monthsLong = SpoonDate::getMonthsOfTheYear(false, BackendLanguage::getInterfaceLanguage());
-		$monthsShort = SpoonDate::getMonthsOfTheYear(true, BackendLanguage::getInterfaceLanguage());
+		$monthsLong = SpoonLocale::getMonths(BackendLanguage::getInterfaceLanguage(), false);
+		$monthsShort = SpoonLocale::getMonths(BackendLanguage::getInterfaceLanguage(), true);
 
 		// get days
-		$daysLong = SpoonDate::getDaysOfTheWeek('sunday', false, BackendLanguage::getInterfaceLanguage());
-		$daysShort = SpoonDate::getDaysOfTheWeek('sunday', true, BackendLanguage::getInterfaceLanguage());
+		$daysLong = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), false, 'sunday');
+		$daysShort = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), true, 'sunday');
 
 		// build labels
 		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong'. $key] = $value;

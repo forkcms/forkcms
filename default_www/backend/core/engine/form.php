@@ -147,10 +147,11 @@ class BackendForm extends SpoonForm
 	 * Fetches all the values for this form as key/value pairs
 	 *
 	 * @return	array
+	 * @param	array[optional] $excluded
 	 */
-	public function getValues($ignoreKeys = array('form', 'submit'))
+	public function getValues(array $excluded = array('form', 'submit'))
 	{
-		return parent::getValues($ignoreKeys);
+		return parent::getValues($excluded);
 	}
 
 
@@ -169,7 +170,7 @@ class BackendForm extends SpoonForm
 		$this->validate();
 
 		// if the form is submitted but there was an error, assign a general error
-		if($this->isSubmitted() && !$this->getCorrect()) $tpl->assign('formError', true);
+		if($this->isSubmitted() && !$this->isCorrect()) $tpl->assign('formError', true);
 	}
 }
 

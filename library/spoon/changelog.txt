@@ -1,0 +1,115 @@
+1.1.3
+----
+- Added SpoonImageField, it extends SpoonFileField with some image-specific methods:
+	- getExtension(): returns the extension based on the IMAGETYPE
+	- hasMinimumDimensions(): checks if the image has minimum width and height
+	- isValidMimeType(): a filter based on given MIME-types
+- Added Dave into the main-authors
+- Fixed some PHP-doc
+- Fixed a bug in SpoonTemplateModifiers::createHTMLLinks(), it should handle urls correct from now on
+- Added an extra element in the return of SpoonFile::getInfo(). The element is called human_readable_size and contains the size of the file in a human readable way.
+- $_FILES is now included in the variables-section of Exceptions.
+- Added SpoonTemplate::getAssignedValue to fetch already assigned values.
+
+
+1.1.2 (2009-08-07)
+----
+- Fixed an issue with SpoonTemplateModifiers::getDate not having the right files required
+- Fixed an issue in SpoonTemplateCompiler when using variables within template includes eg. {include:file="{$path}/template.tpl"}
+- Fixed an issue with assigning parameters in queries. (thx to Bert Pattyn)
+- Fixed a bug in SpoonThumbnail concerning extension checking. (thx to Tom Vallaeys)
+- Fixed a bug in SpoonDataGridSourceDB::getColumns concerning SpoonDatabase::getDriver. (thx to Tom Vallaeys)
+
+
+1.1.1 (2009-07-03)
+----
+- SpoonThumbnail: changed the name of checkFileType to isSupportedFileType
+- There are no final classes anymore, everthing should be extendable
+- Filesystem: created an alias for SpoonDirectory::move in SpoonFile
+- Filesystem: SpoonDirectory move hasn't a strict-argument anymore and will trigger exceptions on failure. If 
+  the destinationpath doesn't exist it will be created
+- Added a new Package: SpoonRESTClient, be carefull it is not backwards compatible with the version pre 1.1.x
+- SpoonTemplateModifiers::truncate(HTML) were removed for now, they need to be reworked.
+
+
+1.1.0 (2009-07-02)
+----
+- An additional constant 'SPOON_CHARSET' has been added. This will be used by default.
+- SpoonCookie & SpoonSession no longer use the 'strict' setting. They will return false on failure.
+- SpoonHTTP::isSent no longer throws an Exception.
+- SpoonDatabase is now using PHP's PDO which results in a speed increase.
+- Added a method in SpoonFile to download a file (SpoonFile::download)
+- Fixed a typo in SpoonDirectory::getSize
+- Bugfix: SpoonDirectory::getList won't return files listed in the exclude-array anymore
+- Bugfix: SpoonDirectory::delete doesn't use SpoonFile::getList anymore because this function doesn't exists
+- Bugfix: SpoonDirectory::getSize doesn't use SpoonFile::getList anymore because this function doesn't exists
+- SpoonLocale was added. This package contains some nifty lists in multiple languages (countries, days of the week, ...)
+- SpoonDate has now only 1 method related to dates. The others were moved to SpoonLocale.
+- SpoonRadioButton, SpoonMultiCheckBox & SpoonDropDown now have an extra option that allows the default security measurements
+  to be overruled.
+- SpoonDataGrid now seems to be in check with the changes made to the other parts of the library.
+- SpoonFilter::isURL now allows tildes.
+- Some classes are now united into one file for speed.
+
+
+1.0.4 (2009-05-01)
+----
+- Fixed an issue with the template engine, when trying to parse inverse options (thx to Pieter De Baets)
+- Fixed a bug that caused the URL title with datagrid columns not to be used (thx to Pieter De Baets)
+- Added custom methods to add form elements to a form
+- It's now possible to generate an example template form, based on the elements that were already added
+- Fixed an issue where the compile directory would not be passed to the datagrid
+- Fixed an issue with SpoonDataGridColumn for confirm messages that contain special characters
+
+
+1.0.3 (2009-02-13)
+----
+- Template engine now parses forms with their variable options to the compiled version (thx to Pieter Meyvaert)
+- SpoonDatabase: using tables instead of table as variable name
+- SpoonDatabase: if the handler doesn't exist it should be created when calling getHandler
+- SpoonImage: removed unused code
+- SpoonDataGrid now has a method to retrieve the number of results (getNumResults)
+- You can now set your compile directory for datagrid templates
+- SpoonDataGrid::setAttributes now works as intended
+- Added a number of methods to be able to clear attributes within datagrids.
+- SpoonFilter::isURL allowes @ from now on
+- SpoonRSS::isValid to check for valid feed
+- SpoonRSS::readFromFeed will ignore invalid data
+- SpoonDate updated the values of the keys when asking for days/months of the year.
+- SpoonDatabase fixed minor issue where an exception could not be shown properly with parameter issues
+- Updated package info for SpoonThumbnail
+- Fixed an issue with SpoonForm and the default enctype.
+- Datagrid now has the correct colspan value made available in the template
+- When using maxlength this will be used when retrieving the value with getValue()
+
+
+1.0.2 (2009-01-25)
+---- 
+- Exceptions now include the hostname, if available
+- Session variables via SpoonSession are no longer converted to a string
+- Template includes now work as initially intended (thx to Pieter Meyvaert)
+- Inverse template options using the ! sign are now available
+- Template engine now has 2 default variables (TAB & CRLF)
+- The form package has been tested with E_STRICT
+- SpoonEmail now accepts templates and their needed variables through 2 new methods (setHTMLContent and setPlainContent)
+- Removed method setContent in SpoonEmail
+- SpoonEmail now strips HTML tags from the HTML body when no plain template is chosen
+- Fixed bug in SpoonEmail where returning output would sometimes trigger an error
+- Made SpoonFilter::isEmail somewhat compatibele with RFC 5322 (not fully implemented yet)
+- SpoonFilter::isURL supports ip-addresses. (thx to Pieter Claerhout)
+- SpoonSession has an extra method: SpoonSession::delete($key)
+- SpoonCookie has an extra method: SpoonCookie::delete($key)
+- SpoonCookie::set fixed a bug, with serializing data
+
+
+1.0.1 (2009-01-08)
+----
+- Renamed SpoonDatabase::getNumberOfExecutedQueries to getNumQueries.
+- Fixed problem with SpoonDatabase::getNumRows
+- Reworked the datagrid templates, based on the changes in SpoonTemplateCompiler
+- SpoonRSS now requires SpoonRSSItem
+
+
+1.0.0 (2009-01-05)
+----
+- More than you can imagine!

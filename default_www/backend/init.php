@@ -197,6 +197,8 @@ class Init
 	 */
 	private function requireSpoonClasses()
 	{
+		require_once 'spoon/spoon.php';
+		require_once 'spoon/locale/locale.php';
 		require_once 'spoon/session/session.php';
 		require_once 'spoon/database/database.php';
 		require_once 'spoon/cookie/cookie.php';

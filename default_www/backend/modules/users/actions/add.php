@@ -102,7 +102,7 @@ class UsersAdd extends BackendBaseActionAdd
 			if($this->frm->getField('avatar')->isFilled()) $this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
 
 			// no errors?
-			if($this->frm->getCorrect())
+			if($this->frm->isCorrect())
 			{
 				// build user-array
 				$aUser['username'] = $this->frm->getField('username')->getValue(true);

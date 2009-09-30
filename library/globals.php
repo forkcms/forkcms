@@ -27,7 +27,7 @@ define('SPOON_DEBUG_MESSAGE', 'Internal error.');
  * Database configuration
  */
 // type of connection
-define('DB_TYPE', 'mysqli');
+define('DB_TYPE', 'mysql');
 // database name
 define('DB_DATABASE', 'forkng');
 // database host
