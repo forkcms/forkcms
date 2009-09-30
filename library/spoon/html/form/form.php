@@ -257,6 +257,7 @@ class SpoonForm
 	public function addDropDown($name, array $values, $selected = null, $multipleSelection = false, $class = 'inputDropdown', $classError = 'inputDropdownError')
 	{
 		$this->add(new SpoonDropDown($name, $values, $selected, $multipleSelection, $class, $classError));
+		return $this->getField($name);
 	}
 
 
@@ -283,6 +284,7 @@ class SpoonForm
 	public function addFileField($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
 	{
 		$this->add(new SpoonFileField($name, $class, $classError));
+		return $this->getField($name);
 	}
 
 
@@ -307,6 +309,7 @@ class SpoonForm
 	public function addHiddenField($name, $value = null)
 	{
 		$this->add(new SpoonHiddenField($name, $value));
+		return $this->getField($name);
 	}
 
 
@@ -345,6 +348,7 @@ class SpoonForm
 	public function addMultiCheckBox($name, array $values, $checked = null, $class = 'inputCheckbox', $classError = 'inputCheckboxError')
 	{
 		$this->add(new SpoonMultiCheckBox($name, $values, $checked, $class, $classError));
+		return $this->getField($name);
 	}
 
 
@@ -362,6 +366,7 @@ class SpoonForm
 	public function addPasswordField($name, $value = null, $maxlength = null, $class = 'inputPassword', $classError = 'inputPasswordError', $HTML = false)
 	{
 		$this->add(new SpoonPasswordField($name, $value, $maxlength, $class, $classError, $HTML));
+		return $this->getField($name);
 	}
 
 
@@ -400,6 +405,7 @@ class SpoonForm
 	public function addRadioButton($name, array $values, $checked = null, $class = 'inputRadiobutton', $classError = 'inputRadiobuttonError')
 	{
 		$this->add(new SpoonRadioButton($name, $values, $checked, $class, $classError));
+		return $this->getField($name);
 	}
 
 
@@ -416,6 +422,7 @@ class SpoonForm
 	public function addTextArea($name, $value = null, $class = 'inputTextarea', $classError = 'inputTextareaError', $HTML = false)
 	{
 		$this->add(new SpoonTextArea($name, $value, $class, $classError, $HTML));
+		return $this->getField($name);
 	}
 
 
@@ -455,6 +462,7 @@ class SpoonForm
 	public function addTextField($name, $value = null, $maxlength = null, $class = 'inputTextfield', $classError = 'inputTextfieldError', $HTML = false)
 	{
 		$this->add(new SpoonTextField($name, $value, $maxlength, $class, $classError, $HTML));
+		return $this->getField($name);
 	}
 
 
@@ -492,6 +500,7 @@ class SpoonForm
 	public function addTimeField($name, $value = null, $class = 'inputTimefield', $classError = 'inputTimefieldError')
 	{
 		$this->add(new SpoonTimeField($name, $value, $class, $classError));
+		return $this->getField($name);
 	}
 
 
@@ -2121,8 +2130,9 @@ class SpoonImageField extends SpoonFileField
 	 *
 	 * @return	string
 	 * @param	bool[optional] $lowercase
+	 * 
 	 */
-	public function getExtension($lowercase = true)
+	public function getExtension($lowercase = true) // @todo tys, $lowercase wordt nergens gebruikt.
 	{
 		if($this->isSubmitted())
 		{
@@ -2149,8 +2159,8 @@ class SpoonImageField extends SpoonFileField
 		// fallback
 		return '';
 	}
-
-
+	
+		
 	/**
 	 * Checks if this field was submitted an if it is an image check if the dimensions are ok,
 	 * if the submitted file wasn't an image it will return false.
@@ -2685,7 +2695,7 @@ class SpoonDateField extends SpoonInputField
 		return $this->mask;
 	}
 
-
+	
 	/**
 	 * Returns a timestamp based on mask & optional fields
 	 *
@@ -3037,7 +3047,7 @@ class SpoonTextField extends SpoonInputField
 		$this->isHTML($HTML);
 	}
 
-
+	
 	/**
 	 * Retrieve the initial or submitted value
 	 *
@@ -3992,7 +4002,7 @@ class SpoonTextArea extends SpoonInputField
 		return $this->rows;
 	}
 
-
+	
 	/**
 	 * Retrieve the initial or submitted value
 	 *

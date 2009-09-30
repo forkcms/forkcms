@@ -951,6 +951,34 @@ class SpoonTemplateCompiler
 
 					// replace
 					$aReplace[0] = '<?php foreach((array) '. $variable .' as $'. $aChunks[$numChunks - 1] .'I => $'. $aChunks[$numChunks - 1] .'): ?>';
+					$aReplace[0] .= "<?php 
+					if(isset(\$". $aChunks[$numChunks - 1] ."['formElements']) && is_array(\$". $aChunks[$numChunks - 1] ."['formElements']))
+					{
+						foreach(\$". $aChunks[$numChunks - 1] ."['formElements'] as \$name => \$object)
+						{
+							// @todo if we're dealing with radiobuttons or checkboxes, an alternative way of parsing needs to be used!
+							\$". $aChunks[$numChunks - 1] ."[\$name] = \$object->parse();
+							\$". $aChunks[$numChunks - 1] ."[\$name .'Error'] = (\$object->getErrors() == '') ? '' : '<span class=\"formError\">'. \$object->getErrors() .'</span>';
+						}
+					}
+					?>
+					";
+					
+					/*
+					 * <?php 
+	if(isset($tabs['formElements']) && is_array($tabs['formElements']))
+	{
+		foreach($tabs['formElements'] as $name => $object)
+		{
+			$tabs[$name] = $object->parse();
+			$tabs[$name .'Error'] = ($object->getErrors() == '') ? '' : '<span class="formError">'. $object->getErrors() .'</span>';
+		}
+	}
+	
+	?>
+					 */
+					
+					
 					$aReplace[1] = '<?php endforeach; ?>';
 
 					// replace
