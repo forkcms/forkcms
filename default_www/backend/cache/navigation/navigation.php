@@ -40,10 +40,10 @@ $navigation['statistics']['children']['this_month']['children'][] = array('url' 
 $navigation['statistics']['children']['this_month']['children'][] = array('url' => 'statistics/visitors', 'label' => 'Visitors');
 $navigation['statistics']['children']['archive'] = array('url' => null, 'label' => 'Archive');
 
-$navigation['setting'] = array('url' => null, 'label' => 'Settings');
-$navigation['setting']['children']['general_settings'] = array('url' => 'settings/general', 'label' => 'GeneralSettings');
-$navigation['setting']['children']['module_settings'] = array('url' => 'settings/index', 'label' => 'ModuleSettings');
-$navigation['setting']['children']['users'] = array('url' => 'users/index', 'label' => 'Users');
-$navigation['setting']['children']['labels'] = array('url' => 'admin/labels', 'label' => 'Labels');
+$navigation['settings'] = array('url' => null, 'label' => 'Settings');
+$navigation['settings']['children']['general_settings'] = array('url' => 'settings/general', 'label' => 'GeneralSettings');
+$navigation['settings']['children']['module_settings'] = array('url' => 'settings/index', 'label' => 'ModuleSettings');
+$navigation['settings']['children']['users'] = array('url' => 'users/index', 'label' => 'Users');
+$navigation['settings']['children']['labels'] = array('url' => 'admin/labels', 'label' => 'Labels');
 
 ?>

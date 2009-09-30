@@ -33,7 +33,7 @@ class BackendModel
 	 * @param	string[optiona] $module
 	 * @param	string[optiona] $language
 	 */
-	public static function createURLForAction($action = null, $module = null, $language = null)
+	public static function createURLForAction($action = null, $module = null, $language = null, $parameters = null)
 	{
 		// grab the url from the reference
 		$url = Spoon::getObjectReference('url');
@@ -42,9 +42,18 @@ class BackendModel
 		$action = ($action !== null) ? (string) $action : $url->getAction();
 		$module = ($module !== null) ? (string) $module : $url->getModule();
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+		$querystring = '';
+
+		if(!empty($parameters))
+		{
+			foreach($parameters as $key => $value) $querystring .= $key .'='. urlencode($value);
+
+			$querystring = '?'. $querystring;
+		}
+
 
 		// build the url and return it
-		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action;
+		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;
 	}
 
 

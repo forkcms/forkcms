@@ -6,10 +6,10 @@
 			<th>
 				{option:headers.sorting}
 					{option:headers.sorted}
-						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label} <img src="{$headers.sortingIcon}" /></a>
+						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label} <img src="{$headers.sortingIcon}" alt="{$headers.sortingLabel}" /></a>
 					{/option:headers.sorted}
 					{option:headers.notSorted}
-						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label} <img src="{$headers.sortingIcon}" /></a>
+						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label} <img src="{$headers.sortingIcon}" alt="{$headers.sortingLabel}" /></a>
 					{/option:headers.notSorted}
 				{/option:headers.sorting}
 				

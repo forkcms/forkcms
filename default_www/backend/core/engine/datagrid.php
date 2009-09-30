@@ -38,9 +38,6 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// set default template
 		$this->setTemplate(BACKEND_CORE_PATH .'/layout/templates/datagrid.tpl');
-
-		// set default url, you should alter it!
-		$this->setURL(BackendModel::createURLForAction());
 	}
 
 
@@ -51,9 +48,6 @@ class BackendDataGrid extends SpoonDataGrid
 	 */
 	public function enableSequenceByDragAndDrop()
 	{
-		// get header object
-		$header = Spoon::getObjectReference('header');
-
 		// add drag and drop-class
 		$this->setAttributes(array('class' => 'datagrid sequenceByDragAndDrop'));
 

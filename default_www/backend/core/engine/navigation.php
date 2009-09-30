@@ -46,7 +46,7 @@ class BackendNavigation
 		require_once BACKEND_CACHE_PATH .'/navigation/navigation.php';
 
 		// load it
-		$this->aNavigation = $navigation;
+		$this->navigation = $navigation;
 	}
 
 
@@ -176,7 +176,7 @@ class BackendNavigation
 		$urlToSearch = $this->url->getModule() .'/'. $this->url->getAction();
 
 		// loop the first level
-		foreach($this->aNavigation as $key => $level)
+		foreach($this->navigation as $key => $level)
 		{
 			// url already known?
 			if($level['url'] == $urlToSearch) $keys[] = $key;

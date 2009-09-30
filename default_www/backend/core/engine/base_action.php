@@ -131,7 +131,7 @@ class BackendBaseAction
 
 		// add css
 		$this->header->addCSS('screen.css', 'core');
-		$this->header->addCSS('jquery.ui.css', 'core');
+		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
 
 		// this method will be overwritten by the childs so
 	}
@@ -363,6 +363,7 @@ class BackendBaseActionAdd extends BackendBaseAction
 	 */
 	protected function parse()
 	{
+		// parse form
 		$this->frm->parse($this->tpl);
 	}
 

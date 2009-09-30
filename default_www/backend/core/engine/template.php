@@ -81,6 +81,7 @@ class BackendTemplate extends SpoonTemplate
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
 		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
+		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));
 	}
 
 
@@ -274,6 +275,19 @@ class BackendTemplate extends SpoonTemplate
  */
 class BackendTemplateModifiers
 {
+
+	/**
+	 * @todo	verzin nuttige comment
+	 *
+	 * @param unknown_type $var
+	 * @return unknown
+	 */
+	public static function dump($var)
+	{
+		return Spoon::dump($var, false);
+	}
+
+
 	/**
 	 * Convert a var into a url
 	 * 	syntax: {$var|geturl:<action>[:<module>]}

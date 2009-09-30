@@ -18,7 +18,7 @@
 define('SPOON_DEBUG', true);
 define('SPOON_STRICT', true);
 // mailaddress where the exceptions will be mailed to (<tag>-bugs@fork-cms.be)
-define('SPOON_DEBUG_EMAIL', 'tijs@verkoyen.eu');
+define('SPOON_DEBUG_EMAIL', '');
 // message for the visitors when an exception occur
 define('SPOON_DEBUG_MESSAGE', 'Internal error.');
 
@@ -42,7 +42,7 @@ define('DB_PASSWORD', 'zero#123');
  * Site configuration
  */
 // the domain (without http)
-define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'forknext.local');
+define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'forkng.local');
 // the default title
 define('SITE_DEFAULT_TITLE', 'Fork NG');
 // the url
@@ -57,7 +57,7 @@ define('SITE_MULTILANGUAGE', true);
  * Depends on the serverlayout. Openminds ftw!
  */
 // path to the website itself
-define('PATH_WWW', '/Users/tijs/Projects/Netlash/forkng.local/default_www');
+define('PATH_WWW', '/Users/tijs/Sites/forkng.local/default_www');
 // path to the Spoon library
 define('PATH_LIBRARY', dirname(__FILE__));
 

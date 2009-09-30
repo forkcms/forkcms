@@ -20,11 +20,13 @@ jsBackend = {
 jsBackend.controls = {
 	// init, something like a constructor
 	init: function() { 
-		jsBackend.controls.bindConfirmation(); 
+		jsBackend.controls.bindConfirmation();
+		jsBackend.controls.bindOpenDialog();
 	},
 	
 	// links with a class "askConfirmation" will be ask a confirmation when clicked
-	bindConfirmation: function() { 
+	bindConfirmation: function() {
+		// @todo review me
 		$('a.askConfirmation').bind('click', function(evt) {
 			evt.preventDefault();
 			var clickedElement = $(this);
@@ -41,6 +43,21 @@ jsBackend.controls = {
 			});
 		});
 	},
+	
+	// links with a class "openDialog" will open the dialog referenced in the href-attribute
+	bindOpenDialog: function() {
+		// create dialogs
+		$('.dialogMessage').dialog({ modal: true, autoOpen: false, draggable: false, resizable: false,
+									 buttons: { '{$lblOK|ucfirst}': function() { $(this).dialog('close'); } }	
+									});
+		
+		$('.openDialog').bind('click', function(evt) {
+			evt.preventDefault();
+			$($(this).attr('href')).dialog('open');
+		});
+		
+	},
+	
 	
 	// end
 	_eoo: true
@@ -166,69 +183,9 @@ jsBackend.forms = {
 }
 
 jsBackend.tabs = {
-	// members
-	currentTab: 'first',
-		
 	// init, something like a constructor
-	init: function() { 
-		if($('.tabs').length > 0) {
-			jsBackend.tabs.setCurrentTab();
-			jsBackend.tabs.bindNavigation();
-			jsBackend.tabs.parse();
-		}
-	},
-	
-	// hijack the links in the navigation, when clicked the currenttab should be recalculated
-	bindNavigation: function() {
-		if($('.tabs .tabsNavigation a').length > 0) {
-			$('.tabs .tabsNavigation a').bind('click', function(evt) {
-				evt.preventDefault();
-				var chunks = $(this).attr('href').split('#');
-				jsBackend.tabs.currentTab = (chunks.length > 1) ? chunks[1] : 'first';
-				jsBackend.tabs.parse();
-			});
-		}
-	},
-	
-	// set correct classes for all tabs
-	parse: function() {
-		// hide all tabs and remove classes
-		if($('.tabs .tabsContent .tabTab').length > 0) {
-			$('.tabs .tabsContent .tabTab').each(function() {
-				$(this).hide();
-				$(this).removeClass('selected');
-			});
-		}
-		
-		// set selected state
-		if($('.tabs .tabsNavigation a').length > 0) {
-			var first = true;
-			$('.tabs .tabsNavigation a').each(function() {
-				$(this).parent().removeClass('selected');
-			
-				// first tab
-				if(jsBackend.tabs.currentTab == 'first' && first) {
-					$(this).parent().addClass('selected');
-					$('.tabs .tabsContent #first').show();
-					$('.tabs .tabsContent #first').addClass('selected');
-				}
-				
-				// current tab, but not first
-				if($(this).attr('href').indexOf('#' + jsBackend.tabs.currentTab) != -1) {
-					$(this).parent().addClass('selected');
-					$('.tabs .tabsContent #' + jsBackend.tabs.currentTab).show();
-					$('.tabs .tabsContent #' + jsBackend.tabs.currentTab).addClass('selected');
-				}
-				
-				first = false;
-			});
-		}
-	},
-	
-	// set the current tab (read from url)
-	setCurrentTab: function() {
-		var chunks = document.location.href.split('#');
-		jsBackend.tabs.currentTab = (chunks.length > 1) ? chunks[1] : 'first';
+	init: function() {
+		if($('.tabs').length > 0) $('.tabs').tabs();
 	},
 	
 	// end

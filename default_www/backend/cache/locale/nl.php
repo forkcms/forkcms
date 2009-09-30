@@ -44,6 +44,7 @@ $err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruike
 // k
 // l
 // m
+$err['core']['MinimumDimensions'] = 'Het gekozen bestand moet minimum %s<abbr title="pixels">px</abbr> breed en %s<abbr title="pixels">px</abbr> hoog zijn.';
 // n
 $err['core']['NameIsRequired'] = 'Gelieve een naam in te geven.';
 $err['core']['NonExisting'] = 'Dit item bestaat niet.';
@@ -90,6 +91,7 @@ $lbl['core']['Blog'] = 'blog';
 // c
 $lbl['core']['Cancel'] = 'annuleer';
 $lbl['core']['Content'] = 'inhoud';
+$lbl['core']['CustomURL'] = 'aangepast URL';
 // d
 $lbl['core']['Date'] = 'datum';
 $lbl['core']['Delete'] = 'verwijderen';
@@ -100,6 +102,7 @@ $lbl['core']['Email'] = 'email';
 // f
 // g
 // h
+$lbl['core']['hidden'] = 'verborgen';
 // i
 $lbl['core']['InterfaceLanguage'] = 'interface-taal';
 // j
@@ -109,8 +112,13 @@ $lbl['core']['LastEditedOn'] = 'laats aangepast op';
 $lbl['core']['Login'] = 'login';
 $lbl['core']['Logout'] = 'afmelden';
 // m
+$lbl['core']['MetaCustom'] = 'meta custom';
+$lbl['core']['MetaDescription'] = 'meta-omschrijving';
+$lbl['core']['MetaInformation'] = 'meta-informatie';
+$lbl['core']['MetaKeywords'] = 'meta keywords';
 // n
 $lbl['core']['Name'] = 'naam';
+$lbl['core']['NavigationTitle'] = 'navigatie titel';
 $lbl['core']['Next'] = 'volgende';
 $lbl['core']['Nickname'] = 'nickname';
 // o
@@ -118,11 +126,15 @@ $lbl['core']['OK'] = 'ok';
 // p
 $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
+$lbl['core']['PageTitle'] = 'paginatitel';
 $lbl['core']['Previous'] = 'vorige';
+$lbl['core']['Published'] = 'gepubliceerd';
 // q
 // r
 $lbl['core']['Revisions'] = 'versies';
 // s
+$lbl['core']['SEO'] = 'SEO';
+$lbl['core']['Status'] = 'status';
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
 // t
@@ -130,6 +142,7 @@ $lbl['core']['Time'] = 'tijd';
 $lbl['core']['Title'] = 'titel';
 // u
 $lbl['core']['Update'] = 'wijzig';
+$lbl['core']['URL'] = 'URL';
 $lbl['core']['Username'] = 'gebruikersnaam';
 $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 // v
