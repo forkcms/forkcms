@@ -91,7 +91,7 @@ class AuthenticationIndex extends BackendBaseActionIndex
 			}
 
 			// no errors in the form?
-			if($this->frm->getCorrect())
+			if($this->frm->isCorrect())
 			{
 				// get the redirect-url from the url
 				$redirectUrl = $this->getParameter('querystring');

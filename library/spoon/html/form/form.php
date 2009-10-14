@@ -2130,7 +2130,7 @@ class SpoonImageField extends SpoonFileField
 	 *
 	 * @return	string
 	 * @param	bool[optional] $lowercase
-	 * 
+	 *
 	 */
 	public function getExtension($lowercase = true) // @todo tys, $lowercase wordt nergens gebruikt.
 	{
@@ -2159,8 +2159,8 @@ class SpoonImageField extends SpoonFileField
 		// fallback
 		return '';
 	}
-	
-		
+
+
 	/**
 	 * Checks if this field was submitted an if it is an image check if the dimensions are ok,
 	 * if the submitted file wasn't an image it will return false.
@@ -2695,7 +2695,7 @@ class SpoonDateField extends SpoonInputField
 		return $this->mask;
 	}
 
-	
+
 	/**
 	 * Returns a timestamp based on mask & optional fields
 	 *
@@ -3047,7 +3047,7 @@ class SpoonTextField extends SpoonInputField
 		$this->isHTML($HTML);
 	}
 
-	
+
 	/**
 	 * Retrieve the initial or submitted value
 	 *
@@ -4002,7 +4002,7 @@ class SpoonTextArea extends SpoonInputField
 		return $this->rows;
 	}
 
-	
+
 	/**
 	 * Retrieve the initial or submitted value
 	 *

@@ -341,6 +341,14 @@ class BackendBaseActionAdd extends BackendBaseAction
 
 
 	/**
+	 * The backends meta-object
+	 *
+	 * @var	BackendMeta
+	 */
+	protected $meta;
+
+
+	/**
 	 * Execute the current action
 	 * This method will be overwriten in most of the actions, but still be called to add general stuff
 	 *

@@ -34,6 +34,7 @@ $err['core']['ContentIsRequired'] = 'Gelieve inhoud in te geven.';
 // e
 $err['core']['EmailIsInvalid'] = 'Gelieve een geldig emailadres in te geven.';
 // f
+$err['core']['FieldIsRequired'] = 'Dit veld is verplicht.';
 // g
 $err['core']['GeneralFormError'] = 'Er ging iets mis. Kijk de gemarkeerde velden na.';
 // h
@@ -62,6 +63,7 @@ $err['core']['SurnameIsRequired'] = 'Gelieve een achternaam in te geven.';
 $err['core']['TitleIsRequired'] = 'Gelieve een titel in te geven.';
 // u
 $err['core']['UsernameIsRequired'] = 'Gelieve een gebruikersnaam in te geven.';
+$err['core']['URLAlreadyExist'] = 'Deze URL bestaat al.';
 // v
 // w
 // x
@@ -99,6 +101,7 @@ $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
 $lbl['core']['Email'] = 'email';
+$lbl['core']['Extra'] = 'extra';
 // f
 // g
 // h

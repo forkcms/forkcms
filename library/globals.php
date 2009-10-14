@@ -16,7 +16,6 @@
  */
 // should the debug information be shown
 define('SPOON_DEBUG', true);
-define('SPOON_STRICT', true);
 // mailaddress where the exceptions will be mailed to (<tag>-bugs@fork-cms.be)
 define('SPOON_DEBUG_EMAIL', '');
 // message for the visitors when an exception occur
@@ -33,9 +32,9 @@ define('DB_DATABASE', 'forkng');
 // database host
 define('DB_HOSTNAME', 'mysql.local');
 // database username
-define('DB_USERNAME', 'forkng');
+define('DB_USERNAME', 'root');
 // datebase password
-define('DB_PASSWORD', 'forkng');
+define('DB_PASSWORD', 'zero#123');
 
 
 /**
@@ -57,7 +56,7 @@ define('SITE_MULTILANGUAGE', true);
  * Depends on the serverlayout. Openminds ftw!
  */
 // path to the website itself
-define('PATH_WWW', '/Users/bauffman/Sites/forkng.local/default_www');
+define('PATH_WWW', '/Users/tijs/Sites/forkng.local/default_www');
 // path to the Spoon library
 define('PATH_LIBRARY', dirname(__FILE__));
 

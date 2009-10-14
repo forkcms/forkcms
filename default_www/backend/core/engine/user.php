@@ -38,6 +38,14 @@ class BackendUser
 
 
 	/**
+	 * Is the authenticated user a god?
+	 *
+	 * @var	bool
+	 */
+	private $isGod = false;
+
+
+	/**
 	 * Last timestamp the user logged in
 	 *
 	 * @var	int
@@ -218,6 +226,18 @@ class BackendUser
 
 
 	/**
+	 * Is the current user a God?
+	 *
+	 * @return	bool
+	 */
+	public function isGod()
+	{
+		return $this->isGod;
+	}
+
+
+
+	/**
 	 * Load a user
 	 *
 	 * @return	void
@@ -232,7 +252,7 @@ class BackendUser
 		$db = BackendModel::getDB();
 
 		// get user-data
-		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.password_raw,
+		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.password_raw, u.is_god,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
 											INNER JOIN users_sessions AS us On u.id = us.user_id
@@ -252,7 +272,7 @@ class BackendUser
 		$this->setSecretKey($userData['secret_key']);
 		$this->setLastloggedInDate($userData['date']);
 		$this->isAuthenticated = true;
-
+		$this->isGod = (bool) ($userData['is_god'] == 'Y');
 
 		// get settings
 		$settings = (array) $db->getPairs('SELECT us.name, us.value

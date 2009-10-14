@@ -135,7 +135,7 @@ class BackendHeader
 		else $realPath = '/backend/core/js/'. $fileName;
 
 		// add if not already added
-		if(!in_array($realPath, $this->jsFiles)) $this->jsFiles[] = array('path' => $realPath);
+		if(!in_array($realPath, $this->jsFiles)) $this->jsFiles[] = $realPath;
 	}
 
 
@@ -172,11 +172,19 @@ class BackendHeader
 			// loop the JS-files
 			foreach($this->jsFiles as $file)
 			{
-				// if the file is processed by PHP we don't want any caching
-				if(substr($file['path'], 0, 11) == '/backend/js') $jsFiles[] = array('path' => $file['path'] .'&amp;m='. time());
+				// some files shouldn't be uncachable
+				if($file == '/backend/core/js/jquery/jquery.js') $jsFiles[] = array('path' => $file);
+				elseif($file == '/backend/core/js/jquery/jquery.ui.js') $jsFiles[] = array('path' => $file);
+				elseif($file == '/backend/core/js/tiny_mce/tiny_mce.js') $jsFiles[] = array('path' => $file);
 
-				// add lastmodified time
-				else $jsFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
+				else
+				{
+					// if the file is processed by PHP we don't want any caching
+					if(substr($file, 0, 11) == '/backend/js') $jsFiles[] = array('path' => $file .'&amp;m='. time());
+
+					// add lastmodified time
+					else $jsFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
+				}
 			}
 		}
 

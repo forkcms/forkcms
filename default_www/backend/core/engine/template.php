@@ -277,10 +277,10 @@ class BackendTemplateModifiers
 {
 
 	/**
-	 * @todo	verzin nuttige comment
+	 * Dumps the data
 	 *
-	 * @param unknown_type $var
-	 * @return unknown
+	 * @return	string
+	 * @param	string $var
 	 */
 	public static function dump($var)
 	{
@@ -333,7 +333,6 @@ class BackendTemplateModifiers
 
 		return $navigation->getNavigation($startDepth, $maximumDepth);
 	}
-
 }
 
 ?>

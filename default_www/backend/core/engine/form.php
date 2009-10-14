@@ -139,7 +139,7 @@ class BackendForm extends SpoonForm
 		$this->header->addJS('tiny_mce/config.js', 'core', true);
 
 		// add the field
-		$this->addTextArea($name, $value, $class, $classError, $HTML);
+		return $this->addTextArea($name, $value, $class, $classError, $HTML);
 	}
 
 

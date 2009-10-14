@@ -145,6 +145,7 @@ class Init
 		{
 			case 'backend':
 				require_once BACKEND_CORE_PATH .'/engine/backend.php';
+				require_once BACKEND_CORE_PATH .'/engine/meta.php';
 				require_once BACKEND_CORE_PATH .'/engine/header.php';
 				require_once BACKEND_CORE_PATH .'/engine/navigation.php';
 				require_once BACKEND_CORE_PATH .'/engine/base_action.php';

@@ -21,7 +21,6 @@ jsBackend.controls = {
 	// init, something like a constructor
 	init: function() { 
 		jsBackend.controls.bindConfirmation();
-		jsBackend.controls.bindOpenDialog();
 	},
 	
 	// links with a class "askConfirmation" will be ask a confirmation when clicked
@@ -43,21 +42,6 @@ jsBackend.controls = {
 			});
 		});
 	},
-	
-	// links with a class "openDialog" will open the dialog referenced in the href-attribute
-	bindOpenDialog: function() {
-		// create dialogs
-		$('.dialogMessage').dialog({ modal: true, autoOpen: false, draggable: false, resizable: false,
-									 buttons: { '{$lblOK|ucfirst}': function() { $(this).dialog('close'); } }	
-									});
-		
-		$('.openDialog').bind('click', function(evt) {
-			evt.preventDefault();
-			$($(this).attr('href')).dialog('open');
-		});
-		
-	},
-	
 	
 	// end
 	_eoo: true
