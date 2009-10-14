@@ -105,7 +105,7 @@ $lbl['core']['Extra'] = 'extra';
 // f
 // g
 // h
-$lbl['core']['hidden'] = 'verborgen';
+$lbl['core']['Hidden'] = 'verborgen';
 // i
 $lbl['core']['InterfaceLanguage'] = 'interface-taal';
 // j

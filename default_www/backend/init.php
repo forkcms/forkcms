@@ -226,7 +226,8 @@ class Init
 	{
 		if(SPOON_DEBUG)
 		{
-			error_reporting(E_ALL | E_STRICT);
+			//error_reporting(E_ALL | E_STRICT);
+			error_reporting(E_ALL);
 			ini_set('display_errors', 'On');
 		}
 		else

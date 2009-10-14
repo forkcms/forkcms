@@ -1,13 +1,6 @@
 <?php
 
 /**
- * ARF!
- *
- * If people change the template they have to save before the new/old blocks are shown
- */
-
-
-/**
  * PagesAdd
  *
  * This is the add-action, it will display a form to create a new pages item
@@ -47,13 +40,16 @@ class PagesAdd extends BackendBaseActionAdd
 		parent::execute();
 
 		// get data
-		$this->templates = (array) BackendPagesModel::getTemplates();
+		$this->templates = BackendPagesModel::getTemplates();
 
 		// get maximum number of blocks	@todo	update this setting when adding/updating templates
 		$maximumNumberOfBlocks = BackendModel::getModuleSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maximumNumberOfBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
+		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
+		{
+			$this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
+		}
 
 		// load the form
 		$this->loadForm();
@@ -78,11 +74,14 @@ class PagesAdd extends BackendBaseActionAdd
 	{
 		// get default template id
 		$defaultTemplateId = BackendModel::getModuleSetting('core', 'default_template', 1);
+
+		// init var
 		$templatesForDropdown = array();
 
 		// build values
 		foreach($this->templates as $templateId => $row)
 		{
+			// set value
 			$templatesForDropdown[$templateId] = $row['label'];
 
 			// set checked
@@ -98,7 +97,7 @@ class PagesAdd extends BackendBaseActionAdd
 		// create elements
 		$this->frm->addTextField('title');
 		$this->frm->addDropDown('template_id', $templatesForDropdown, $defaultTemplateId);
-		$this->frm->addRadioButton('hidden', array('Y' => BL::getLabel('hidden'), 'N' => BL::getLabel('published')), 'N');
+		$this->frm->addRadioButton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
 
 		// get maximum number of blocks	@todo	update this setting when adding/updating templates
 		$maximumNumberOfBlocks = BackendModel::getModuleSetting('core', 'template_max_blocks', 5);
@@ -164,13 +163,13 @@ class PagesAdd extends BackendBaseActionAdd
 				// init var
 				$parentId = 0;
 
-				// set callback for generating a unique id
+				// set callback for generating an unique url
 				$this->meta->setUrlCallback('BackendPagesModel', 'getUrl', array($parentId));
 
 				// build page record
 				$page = array();
 				$page['id'] = BackendPagesModel::getMaximumMenuId() + 1;
-				$page['user_id'] = (int) BackendAuthentication::getUser()->getUserId();
+				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $parentId;
 				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
 				$page['meta_id'] = (int) $this->meta->save();
@@ -179,7 +178,7 @@ class PagesAdd extends BackendBaseActionAdd
 				$page['title'] = $this->frm->getField('title')->getValue();
 				$page['navigation_title'] = $this->frm->getField('navigation_title')->getValue();
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
-				$page['hidden'] = SpoonFilter::getPostValue('hidden', array('Y', 'N'), 'Y');
+				$page['hidden'] = $this->frm->getField('hidden')->getValue();
 				$page['status'] = 'active';
 				$page['publish_on'] = date('Y-m-d H:i:s'); // @todo
 				$page['created_on'] = date('Y-m-d H:i:s');
@@ -189,10 +188,10 @@ class PagesAdd extends BackendBaseActionAdd
 				$page['allow_content'] = 'Y';
 				$page['allow_edit'] = 'Y';
 				$page['allow_delete'] = 'Y';
-				$page['sequence'] = BackendPagesModel::getMaximumSequence($page['parent_id']) + 1;
+				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
 
 				// insert page, store the id, we need it when building the blocks
-				$pageId = (int) BackendPagesModel::insert($page);
+				$pageId = BackendPagesModel::insert($page);
 
 				// build blocks
 				$blocks = array();

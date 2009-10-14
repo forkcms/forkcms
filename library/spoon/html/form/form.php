@@ -1033,7 +1033,8 @@ class SpoonFormElement
 	 *
 	 * @return	array
 	 */
-	public function getAttributes()
+	// @todo fixen die shit.
+	public function getAttributes($element = null)
 	{
 		return $this->attributes;
 	}
@@ -2030,8 +2031,9 @@ class SpoonRadioButton extends SpoonFormElement
 	 * Invalid method
 	 *
 	 * @return	void
+	 * @param	string $name
 	 */
-	public function getAttribute()
+	public function getAttribute($name)
 	{
 		throw new SpoonFormException('You are not supposed to use this method. Use the values from the constructor instead.');
 	}
@@ -2043,7 +2045,7 @@ class SpoonRadioButton extends SpoonFormElement
 	 * @return	array
 	 * @param	string $element
 	 */
-	public function getAttributes($element)
+	public function getAttributes($element = null)
 	{
 		// element does not exist
 		if(!isset($this->attributes[(string) $element])) throw new SpoonFormException('No element with the value "'. (string) $element .'" has been added.');

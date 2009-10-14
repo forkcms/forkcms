@@ -44,13 +44,15 @@ class BackendModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 		$querystring = '';
 
+		// parameters specfied?
 		if(!empty($parameters))
 		{
+			// add parameters
 			foreach($parameters as $key => $value) $querystring .= $key .'='. urlencode($value);
 
+			// add querystring
 			$querystring = '?'. $querystring;
 		}
-
 
 		// build the url and return it
 		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;

@@ -31,9 +31,11 @@ class BackendPagesModel
 			// remove last chunk
 			array_pop($chunks);
 
+			// join together
 			$string = implode('-', $chunks ) .'-'. ((int) $last + 1);
 		}
 
+		// not numeric
 		else $string .= '-2';
 
 		// return
@@ -52,9 +54,10 @@ class BackendPagesModel
 	}
 
 
-	public static function getFullUrl($menuId)
+	public static function getFullURL($menuId)
 	{
 		// @todo	this method should use a genious caching-system
+		// @todo fix me, das bugge code ;)
 
 		// redefine
 		$menuId = (int) $menuId;
@@ -172,7 +175,6 @@ class BackendPagesModel
 		// return
 		return (array) $templates;
 	}
-
 
 
 	/**

@@ -58,7 +58,7 @@ class BackendMeta
 	 *
 	 * @var	int
 	 */
-	private $id = null;
+	private $id;
 
 
 	/**
@@ -73,7 +73,7 @@ class BackendMeta
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	SpoonForm $form
+	 * @param	BackendForm $form
 	 * @param	int[optional] $metaId
 	 * @param	string[optional] $baseFieldName
 	 * @param	bool[optional] $custom
@@ -139,12 +139,12 @@ class BackendMeta
 	 * Load a specific meta-record
 	 *
 	 * @return	void
-	 * @param unknown_type $id
+	 * @param	int $id
 	 */
 	private function loadMeta($id)
 	{
 		// redefine
-		$this->id = (int) $metaId;
+		$this->id = (int) $id;
 
 		// get database
 		$db = BackendModel::getDB();
@@ -152,8 +152,7 @@ class BackendMeta
 		// get item
 		$this->data = (array) $db->getRecord('SELECT *
 												FROM meta AS m
-												WHERE m.id = ?
-												LIMIT 1;',
+												WHERE m.id = ?;',
 												array($this->id));
 
 		// validate meta-record
@@ -345,7 +344,7 @@ class BackendMeta
 			$generatedUrl = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 
 			// check if urls are different
-			if($url != $generatedUrl) $this->frm->getField('url')->addError(BL::getError('URLAlreadyExist'));
+			if($url != $generatedUrl) $this->frm->getField('url')->addError(BL::getError('URLAlreadyExists'));
 		}
 	}
 }

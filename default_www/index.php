@@ -1,7 +1,7 @@
 <?php
 
 // create new instance
-$app = new ApplicationRouting();
+$app = new ApplicationRouting(); // tetn zijn de max.
 
 /**
  * Fork
