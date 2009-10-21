@@ -113,8 +113,9 @@ class SpoonCookie
 	 * @param	string[optional] $path
 	 * @param	string[optional] $domain
 	 * @param	bool[optional] $secure
+	 * @param	bool[optional] $httpOnly
 	 */
-	public static function set($key, $value, $time = 86400, $path = '/', $domain = null, $secure = false)
+	public static function set($key, $value, $time = 86400, $path = '/', $domain = null, $secure = false, $httpOnly = false)
 	{
 		// redefine
 		$key = (string) $key;
@@ -123,9 +124,10 @@ class SpoonCookie
 		$path = (string) $path;
 		$domain = ($domain !== null) ? (string) $domain : null;
 		$secure = (bool) $secure;
+		$httpOnly = (bool) $httpOnly;
 
 		// set cookie
-		$cookie = setcookie($key, $value, $time, $path, $domain, $secure);
+		$cookie = setcookie($key, $value, $time, $path, $domain, $secure, $httpOnly);
 
 		// problem occured
 		return ($cookie === false) ? false : true;

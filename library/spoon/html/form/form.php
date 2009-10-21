@@ -973,6 +973,100 @@ class SpoonForm
 
 
 /**
+ * The base class for every form element that wants to implement the standard
+ * way for dealing with attributes
+ *
+ * @package		html
+ * @subpackage	form
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonFormAttributes extends SpoonFormElement
+{
+	/**
+	 * Retrieve the value for a specific attribute
+	 *
+	 * @return	string
+	 * @param	string $name
+	 */
+	public function getAttribute($name)
+	{
+		return (isset($this->attributes[(string) $name])) ? $this->attributes[(string) $name] : null;
+	}
+
+
+	/**
+	 * Retrieves the custom attributes
+	 *
+	 * @return	array
+	 */
+	public function getAttributes()
+	{
+		return $this->attributes;
+	}
+
+
+	/**
+	 * Retrieves the custom attributes as HTML
+	 *
+	 * @return	string
+	 * @param	array $variables
+	 */
+	protected function getAttributesHTML(array $variables)
+	{
+		// init var
+		$html = '';
+
+		// loop attributes
+		foreach($this->attributes as $key => $value)
+		{
+			// class?
+			if($key == 'class' && method_exists($this, 'getClassHTML'))
+			{
+				$html .= $this->getClassHTML();
+			}
+
+			// other elements
+			else $html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+		}
+
+		return $html;
+	}
+
+
+	/**
+	 * Set a custom attribute and its value
+	 *
+	 * @return	void
+	 * @param	string $key
+	 * @param	string $value
+	 */
+	public function setAttribute($key, $value)
+	{
+		// key is NOT allowed
+		if(in_array(strtolower($key), $this->reservedAttributes)) throw new SpoonFormException('The key "'. $key .'" is a reserved attribute an can NOT be overwritten.');
+
+		// set attribute
+		$this->attributes[strtolower((string) $key)] = (string) $value;
+	}
+
+
+	/**
+	 * Set multiple custom attributes at once
+	 *
+	 * @return	void
+	 * @param	array $attributes
+	 */
+	public function setAttributes(array $attributes)
+	{
+		foreach($attributes as $key => $value) $this->setAttribute($key, $value);
+	}
+}
+
+
+/**
  * The base class for every form element
  *
  * @package		html
@@ -1014,58 +1108,6 @@ class SpoonFormElement
 	 * @var	array
 	 */
 	protected $reservedAttributes = array('type', 'name', 'value');
-
-
-	/**
-	 * Retrieve the value for a specific attribute
-	 *
-	 * @return	string
-	 * @param	string $name
-	 */
-	public function getAttribute($name)
-	{
-		return (isset($this->attributes[(string) $name])) ? $this->attributes[(string) $name] : null;
-	}
-
-
-	/**
-	 * Retrieves the custom attributes
-	 *
-	 * @return	array
-	 */
-	// @todo fixen die shit.
-	public function getAttributes($element = null)
-	{
-		return $this->attributes;
-	}
-
-
-	/**
-	 * Retrieves the custom attributes as HTML
-	 *
-	 * @return	string
-	 * @param	array $variables
-	 */
-	public function getAttributesHTML(array $variables)
-	{
-		// init var
-		$html = '';
-
-		// loop attributes
-		foreach($this->attributes as $key => $value)
-		{
-			// class?
-			if($key == 'class' && method_exists($this, 'getClassHTML'))
-			{
-				$html .= $this->getClassHTML();
-			}
-
-			// other elements
-			else $html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
-		}
-
-		return $html;
-	}
 
 
 	/**
@@ -1138,35 +1180,6 @@ class SpoonFormElement
 
 
 	/**
-	 * Set a custom attribute and its value
-	 *
-	 * @return	void
-	 * @param	string $key
-	 * @param	string $value
-	 */
-	public function setAttribute($key, $value)
-	{
-		// key is NOT allowed
-		if(in_array(strtolower($key), $this->reservedAttributes)) throw new SpoonFormException('The key "'. $key .'" is a reserved attribute an can NOT be overwritten.');
-
-		// set attribute
-		$this->attributes[strtolower((string) $key)] = (string) $value;
-	}
-
-
-	/**
-	 * Set multiple custom attributes at once
-	 *
-	 * @return	void
-	 * @param	array $attributes
-	 */
-	public function setAttributes(array $attributes)
-	{
-		foreach($attributes as $key => $value) $this->setAttribute($key, $value);
-	}
-
-
-	/**
 	 * Set the form method
 	 *
 	 * @return	void
@@ -1189,7 +1202,7 @@ class SpoonFormElement
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		0.1.1
  */
-class SpoonInputField extends SpoonFormElement
+class SpoonInputField extends SpoonFormAttributes
 {
 	/**
 	 * Class attribute on error
@@ -1306,7 +1319,7 @@ class SpoonInputField extends SpoonFormElement
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		0.1.1
  */
-class SpoonButton extends SpoonFormElement
+class SpoonButton extends SpoonFormAttributes
 {
 	/**
 	 * Button type (button, reset or submit)
@@ -1424,7 +1437,7 @@ class SpoonButton extends SpoonFormElement
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		0.1.1
  */
-class SpoonFileField extends SpoonFormElement
+class SpoonFileField extends SpoonFormAttributes
 {
 	/**
 	 * Class attribute on error
@@ -2024,34 +2037,6 @@ class SpoonRadioButton extends SpoonFormElement
 	public function addError($error)
 	{
 		$this->errors .= (string) $error;
-	}
-
-
-	/**
-	 * Invalid method
-	 *
-	 * @return	void
-	 * @param	string $name
-	 */
-	public function getAttribute($name)
-	{
-		throw new SpoonFormException('You are not supposed to use this method. Use the values from the constructor instead.');
-	}
-
-
-	/**
-	 * Retrieve the attributes for this specific element
-	 *
-	 * @return	array
-	 * @param	string $element
-	 */
-	public function getAttributes($element = null)
-	{
-		// element does not exist
-		if(!isset($this->attributes[(string) $element])) throw new SpoonFormException('No element with the value "'. (string) $element .'" has been added.');
-
-		// fetch element
-		return $this->attributes[(string) $element];
 	}
 
 
@@ -4003,7 +3988,7 @@ class SpoonTimeField extends SpoonInputField
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		0.1.1
  */
-class SpoonDropDown extends SpoonFormElement
+class SpoonDropDown extends SpoonFormAttributes
 {
 	/**
 	 * Should we allow external data
@@ -4629,7 +4614,7 @@ class SpoonDropDown extends SpoonFormElement
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		0.1.1
  */
-class SpoonCheckBox extends SpoonFormElement
+class SpoonCheckBox extends SpoonFormAttributes
 {
 	/**
 	 * Checked status
@@ -5005,17 +4990,6 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Invalid method
-	 *
-	 * @return	void
-	 */
-	public function getAttribute()
-	{
-		throw new SpoonFormException('You are not supposed to use this method. Use the values from the constructor instead.');
-	}
-
-
-	/**
 	 * Retrieve the attributes for this specific element
 	 *
 	 * @return	array
@@ -5038,7 +5012,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 	 * @param	string $element
 	 * @param	array $variables
 	 */
-	public function getAttributesHTML($element, array $variables)
+	private function getAttributesHTML($element, array $variables)
 	{
 		// init var
 		$html = '';
@@ -5342,7 +5316,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		1.0.0
  */
-class SpoonHiddenField extends SpoonFormElement
+class SpoonHiddenField extends SpoonFormAttributes
 {
 	/**
 	 * Value of this hidden field
