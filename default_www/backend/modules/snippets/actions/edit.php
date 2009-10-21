@@ -57,7 +57,7 @@ class SnippetsEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('index') .'?error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
 
@@ -100,7 +100,7 @@ class SnippetsEdit extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addTextField('title', $this->record['title']);
 		$this->frm->addEditorField('content', $this->record['content']);
-		$this->frm->addCheckBox('hidden', (bool) $this->record['hidden'] == 'Y');
+		$this->frm->addCheckBox('hidden', ($this->record['hidden'] == 'N'));
 		$this->frm->addButton('submit', ucfirst(BL::getLabel('Edit')), 'submit');
 	}
 
@@ -128,7 +128,7 @@ class SnippetsEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 
 		// add use column
-		$this->dgRevisions->addColumn('use', null, BL::getLabel('UseThisVersion'), BackendModel::createURLForAction('edit') .'?id=[id]&revision=[revision_id]', BL::getLabel('Edit'));
+		$this->dgRevisions->addColumn('use', null, BL::getLabel('UseThisVersion'), BackendModel::createURLForAction('edit') .'&id=[id]&revision=[revision_id]', BL::getLabel('Edit'));
 	}
 
 
@@ -169,7 +169,7 @@ class SnippetsEdit extends BackendBaseActionEdit
 			$this->frm->getField('content')->isFilled(BL::getError('ContentIsRequired'));
 
 			// no errors?
-			if($this->frm->getCorrect())
+			if($this->frm->isCorrect())
 			{
 				// get values
 				$values = (array) $this->frm->getValues();
@@ -178,7 +178,7 @@ class SnippetsEdit extends BackendBaseActionEdit
 				$id = (int) BackendSnippetsModel::update($this->id, $values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=edited&var='. urlencode($values['title']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($values['title']) .'&highlight=id-'. $id);
 			}
 		}
 	}

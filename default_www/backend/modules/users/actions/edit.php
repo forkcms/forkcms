@@ -46,7 +46,7 @@ class UsersEdit extends BackendBaseActionEdit
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('index') .'?error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
 
@@ -184,7 +184,7 @@ class UsersEdit extends BackendBaseActionEdit
 				BackendUsersModel::update($aUser, $aSettings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=edit&var='. $aUser['username'] .'&highlight=userid-'. $aUser['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edit&var='. $aUser['username'] .'&highlight=userid-'. $aUser['id']);
 			}
 		}
 	}

@@ -82,7 +82,7 @@ class SnippetsAdd extends BackendBaseActionAdd
 				$id = BackendSnippetsModel::insert($values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=added&var='. urlencode($values['title']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($values['title']) .'&highlight=id-'. $id);
 			}
 		}
 	}

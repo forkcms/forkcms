@@ -36,11 +36,11 @@ class SpotlightDelete extends BackendBaseActionDelete
 			BackendSpotlightModel::delete($this->id);
 
 			// user was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'?report=deleted&var='. urlencode($this->record['title']));
+			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('index') .'?error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 }
 

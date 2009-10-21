@@ -51,15 +51,14 @@ class BackendModel
 		if(isset($_GET['order']) && !isset($parameters['order'])) $parameters['order'] = (string) $_GET['order'];
 		if(isset($_GET['sort']) && !isset($parameters['sort'])) $parameters['sort'] = (string) $_GET['sort'];
 
-		// parameters specfied?
-		if(!empty($parameters))
-		{
-			// add parameters
-			foreach($parameters as $key => $value) $querystring .= '&'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+		// add at least one parameter
+		if(empty($parameters)) $parameters['token'] = 'true';
 
-			// add querystring
-			$querystring = '?'. trim($querystring, '&');
-		}
+		// add parameters
+		foreach($parameters as $key => $value) $querystring .= '&'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+
+		// add querystring
+		$querystring = '?'. trim($querystring, '&');
 
 		// build the url and return it
 		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;

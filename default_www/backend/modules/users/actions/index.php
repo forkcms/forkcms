@@ -56,7 +56,7 @@ class UsersIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnsHidden('id');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'?id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 
 		// set id on rows, we will need this for the highlighting
 		$this->datagrid->setRowAttributes(array('id' => 'userid-[id]'));

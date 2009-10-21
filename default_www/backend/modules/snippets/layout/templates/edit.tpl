@@ -5,8 +5,8 @@
 <div class="tabs">
 	<div class="tabsNavigation">
 		<ul>
-			<li><a href="{$var|geturl}?id={$id}">{$lblContent|ucfirst}</a></li>
-			<li class="notImportant"><a href="{$var|geturl}?id={$id}#revisions">{$lblRevisions|ucfirst}</a></li>
+			<li><a href="{$var|geturl}&amp;id={$id}">{$lblContent|ucfirst}</a></li>
+			<li class="notImportant"><a href="{$var|geturl}&amp;id={$id}#revisions">{$lblRevisions|ucfirst}</a></li>
 		</ul>
 	</div>
 	
@@ -34,7 +34,7 @@
 	
 		<p>
 			{$btnSubmit}
-			<a href="{$var|geturl:delete}?id={$id}" class="askConfirmation" title="{$lblDelete|ucfirst}">
+			<a href="{$var|geturl:delete}&amp;id={$id}" class="askConfirmation" title="{$lblDelete|ucfirst}">
 				<span style="display: none" class="message" title="{$lblDelete|ucfirst}">{$msgConfirmDelete|sprintf:{$title}}</span>
 				{$lblDelete|ucfirst}
 			</a>

@@ -19,11 +19,61 @@ class BackendSnippetsModel
 						FROM snippets AS s
 						WHERE s.status = ?;';
 
+
 	// overview of the revisions for an item
 	const QRY_BROWSE_REVISIONS = 'SELECT s.id, s.revision_id, s.title, UNIX_TIMESTAMP(s.edited_on) AS edited_on
 									FROM snippets AS s
 									WHERE s.status = ? AND s.id = ?
 									ORDER BY s.edited_on DESC;';
+
+
+	/**
+	 * Delete a snippets-item
+	 *
+	 * @return	void
+	 * @param	int $id
+	 */
+	public static function delete($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// delete all records
+		$db->delete('snippets', 'id = ?', $id);
+	}
+
+
+	/**
+	 * Does the snippets-item exists
+	 *
+	 * @return	bool
+	 * @param	int $id
+	 * @param	bool[optional] $active
+	 */
+	public static function exists($id, $active = true)
+	{
+		// redefine
+		$id = (int) $id;
+		$active = (bool) $active;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// if the item should also be active, there should be at least one row to return true
+		if($active) return ($db->getNumRows('SELECT s.id
+												FROM snippets AS s
+												WHERE s.id = ? AND s.status = ?;',
+												array($id, 'active')) >= 1);
+
+		// fallback, this doesn't hold the active status in account
+		return ($db->getNumRows('SELECT s.id
+									FROM snippets AS s
+									WHERE s.revision_id = ?;',
+									array($id)) >= 1);
+	}
 
 
 	/**
@@ -105,73 +155,6 @@ class BackendSnippetsModel
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/**
-	 * Delete a spotlight-item
-	 *
-	 * @return	void
-	 * @param	int $id
-	 */
-	public static function delete($id)
-	{
-		// redefine
-		$id = (int) $id;
-
-		// get db
-		$db = BackendModel::getDB();
-
-		// delete all records
-		$db->delete('snippets', 'id = ?', $id);
-	}
-
-
-	/**
-	 * Does the spotlight-item exists
-	 *
-	 * @return	bool
-	 * @param	int $id
-	 * @param	bool[optional] $active
-	 */
-	public static function exists($id, $active = true)
-	{
-		// redefine
-		$id = (int) $id;
-		$active = (bool) $active;
-
-		// get db
-		$db = BackendModel::getDB();
-
-		// if the item should also be active, there should be at least one row to return true
-		if($active) return ($db->getNumRows('SELECT s.id
-												FROM snippets AS s
-												WHERE s.id = ? AND s.status = ?;',
-												array($id, 'active')) >= 1);
-
-		// fallback, this doesn't hold the active status in account
-		return ($db->getNumRows('SELECT s.id
-									FROM snippets AS s
-									WHERE s.revision_id = ?;',
-									array($id)) >= 1);
-	}
-
-
 	/**
 	 * Update an existing spotlight-item
 	 *
@@ -188,17 +171,16 @@ class BackendSnippetsModel
 		$db = BackendModel::getDB();
 
 		// get current version
-		$version = (array) self::get($id);
+		$version = self::get($id);
 
 		// build array
 		$values['id'] = $id;
 		$values['user_id'] = BackendAuthentication::getUser()->getUserId();
-		$values['language'] = BL::getWorkingLanguage();
+		$values['language'] = BL::getWorkingLanguage(); // @todo moeten we dit niet sowieso overnemen van $version aangezien dat anders kan misbruikt worden
 		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
 		$values['status'] = 'active';
 		$values['created_on'] = date('Y-m-d H:i:s', $version['created_on']);
 		$values['edited_on'] = date('Y-m-d H:i:s');
-		$values['sequence'] = $version['sequence'];
 
 		// archive all older versions
 		$db->update('snippets', array('status' => 'archived'), 'id = ?', array($id));
@@ -222,35 +204,6 @@ class BackendSnippetsModel
 
 		// return id
 		return $id;
-	}
-
-
-	/**
-	 * Update the sequence
-	 *
-	 * @return	bool
-	 * @param	array $newIdsSequence
-	 */
-	public static function updateSequence(array $newIdsSequence)
-	{
-		// get db
-		$db = BackendModel::getDB();
-
-		// init var
-		$sequence = 1;
-
-		// loop ids in correct order
-		foreach($newIdsSequence as $id)
-		{
-			// update
-			$db->update('spotlight', array('sequence' => $sequence), 'id = ?', array($id));
-
-			// increment counter
-			$sequence++;
-		}
-
-		// return
-		return true;
 	}
 }
 

@@ -107,7 +107,7 @@ class BackendTemplate extends SpoonTemplate
 			foreach($settings as $key => $setting) $this->assign('authenticatedUser'. SpoonFilter::toCamelCase($key), $setting);
 
 			// assign special vars
-			$this->assign('authenticatedUserEditUrl', BackendModel::createURLForAction('edit', 'users') .'?id='. BackendAuthentication::getUser()->getUserId());
+			$this->assign('authenticatedUserEditUrl', BackendModel::createURLForAction('edit', 'users') .'&id='. BackendAuthentication::getUser()->getUserId());
 		}
 	}
 
