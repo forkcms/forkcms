@@ -2,11 +2,11 @@
 
 	{option:report}
 		<div class="report fadeOutAfterMouseMove">{$reportMessage}</div>
-		{option:hilight}
+		{option:highlight}
 			<script type="text/javascript">
-				var hilightId = '#{$hilight}';
+				var highlightId = '#{$highlight}';
 			</script>
-		{/option:hilight}
+		{/option:highlight}
 	{/option:report}
 
 	<h2>{$msgHeaderIndex|ucfirst}</h2>

@@ -231,7 +231,7 @@ class PagesAdd extends BackendBaseActionAdd
 				BackendPagesModel::insertBlocks($blocks);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=added&var='. urlencode($page['title']) .'&hilight=id-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'?report=added&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);
 			}
 		}
 	}

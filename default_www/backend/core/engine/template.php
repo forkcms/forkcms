@@ -80,6 +80,9 @@ class BackendTemplate extends SpoonTemplate
 	{
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
+
+
+		// comments
 		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
 		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));
 	}
@@ -284,7 +287,7 @@ class BackendTemplateModifiers
 	 */
 	public static function dump($var)
 	{
-		return Spoon::dump($var, false);
+		Spoon::dump($var, false);
 	}
 
 
@@ -299,16 +302,7 @@ class BackendTemplateModifiers
 	 */
 	public static function getURL($var = null, $action = null, $module = null)
 	{
-		// get url
-		$url = Spoon::getObjectReference('url');
-
-		// redefine
-		$var = (string) $var;
-		$action = ($action !== null) ? (string) $action : $url->getAction();
-		$module = ($module !== null) ? (string) $module : $url->getModule();
-
-		// build url and return it
-		return '/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $module .'/'. $action;
+		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage());
 	}
 
 

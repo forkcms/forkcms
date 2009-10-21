@@ -1,17 +1,17 @@
 <?php
 
 /**
- * SpotlightIndex
+ * SnippetsIndex
  *
- * This is the index-action (default), it will display the spotlight-overview
+ * This is the index-action (default), it will display the snippets-overview
  *
  * @package		backend
- * @subpackage	spotlight
+ * @subpackage	snippets
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class SpotlightIndex extends BackendBaseActionIndex
+class SnippetsIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Datagrid instance
@@ -50,21 +50,21 @@ class SpotlightIndex extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendSpotlightModel::QRY_BROWSE, array('active'));
+		$this->datagrid = new BackendDataGridDB(BackendSnippetsModel::QRY_BROWSE, array('active'));
 
 		// hide columns
 		$this->datagrid->setColumnsHidden(array('id'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels(array('title' => BL::getLabel('Title'), 'sequence' => '&nbsp;'));
+		$this->datagrid->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title'))));
 
-		// enable drag-and-drop
-		$this->datagrid->enableSequenceByDragAndDrop();
+		// sorting columns
+		$this->datagrid->setSortingColumns(array('title'));
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'?id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('id' => '[id]'), false), BL::getLabel('Edit'));
 
-		// set id on rows, we will need this for the hilighting
+		// set id on rows, we will need this for the higlighting
 		$this->datagrid->setRowAttributes(array('id' => 'id-[id]'));
 	}
 

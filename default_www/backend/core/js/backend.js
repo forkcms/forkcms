@@ -59,12 +59,12 @@ jsBackend.effects = {
 		$(document.body).bind('mousemove', function(evt) { $('.fadeOutAfterMouseMove').fadeOut(2500); });		
 	},
 	
-	// if a var hilightId exists it will be hilighted
+	// if a var highlightId exists it will be highlighted
 	bindHighlight: function() {
-		if(typeof hilightId != 'undefined') {
-			var selector = hilightId;
-			// if the element is a table-row we should hilight all cells in that row
-			if($(hilightId)[0].tagName.toLowerCase == 'tr') { selector += ' td'; } 
+		if(typeof highlightId != 'undefined') {
+			var selector = highlightId;
+			// if the element is a table-row we should highlight all cells in that row
+			if($(highlightId)[0].tagName.toLowerCase == 'tr') { selector += ' td'; } 
 			$(selector).effect('highlight', null, 5000);
 		}		
 	},

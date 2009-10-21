@@ -4,6 +4,8 @@ $navigation['dashboard'] = array('url' => 'dashboard/index', 'label' => 'Dashboa
 
 $navigation['pages'] = array('url' => 'pages/index', 'label' => 'Pages');
 
+$navigation['snippets'] = array('url' => 'snippets/index', 'label' => 'Snippets');
+
 $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'label' => 'Posts');
@@ -21,7 +23,7 @@ $navigation['modules']['children']['links']['children'][] = array('url' => 'link
 $navigation['modules']['children']['news'] = array('url' => 'news/index', 'label' => 'News');
 $navigation['modules']['children']['slideshow'] = array('url' => 'slideshow/index', 'label' => 'Slideshow');
 $navigation['modules']['children']['location'] = array('url' => 'location/index', 'label' => 'Location');
-$navigation['modules']['children']['spotlight'] = array('url' => 'spotlight/index', 'label' => 'Spotlight');
+$navigation['modules']['children']['snippets'] = array('url' => 'snippets/index', 'label' => 'Snippets');
 $navigation['modules']['children']['formbuilder'] = array('url' => 'formbuilder/index', 'label' => 'FormBuilder');
 $navigation['modules']['children']['extranet'] = array('url' => null, 'label' => 'Extranet');
 $navigation['modules']['children']['extranet']['children'][] = array('url' => 'extranet/index', 'label' => 'Groups');

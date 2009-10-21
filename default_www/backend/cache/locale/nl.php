@@ -137,6 +137,10 @@ $lbl['core']['Published'] = 'gepubliceerd';
 $lbl['core']['Revisions'] = 'versies';
 // s
 $lbl['core']['SEO'] = 'SEO';
+$lbl['core']['SortAscending'] = 'sorteer oplopend';
+$lbl['core']['SortDescending'] = 'sorteer aflopend';
+$lbl['core']['SortedAscending'] = 'oplopend gesorteerd';
+$lbl['core']['SortedDescending'] = 'aflopend gesorteerd';
 $lbl['core']['Status'] = 'status';
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
@@ -187,9 +191,14 @@ $msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // f
 // g
 // h
+$msg['core']['HeaderAdd'] = 'Toevoegen';
+$msg['snippets']['HeaderAdd'] = 'Snippet toevoegen';
+$msg['users']['HeaderAdd'] = 'Gebruiker toevoegen';
 $msg['core']['HeaderEdit'] = '<em>%s</em> bewerken';
+$msg['snippets']['HeaderEdit'] = 'Snippet <em>%s</em> bewerken';
 $msg['users']['HeaderEdit'] = 'Gebruiker <em>%s</em> bewerken';
 $msg['core']['HeaderIndex'] = 'Overzicht';
+$msg['snippets']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
 // i
 // j

@@ -9,7 +9,7 @@
 	{/option:highlight}
 {/option:report}
 
-<h2>{$msgHeaderIndex|ucfirst}</h2>
+<h2>{$msgHeaderIndex}</h2>
 <a href="{$var|geturl:add}" title="{$lblAdd}">{$lblAdd}</a>
 
 <div>

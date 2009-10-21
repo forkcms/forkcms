@@ -36,6 +36,9 @@ class BackendDataGrid extends SpoonDataGrid
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'datagrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 1));
 
+		// set default sorting options
+		$this->setSortingOptions();
+
 		// set default template
 		$this->setTemplate(BACKEND_CORE_PATH .'/layout/templates/datagrid.tpl');
 	}
@@ -68,6 +71,24 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// our JS needs to know an id, so we can send the new order
 		$this->setRowAttributes(array('rel' => '[id]'));
+	}
+
+
+	/**
+	 * Sets all the default settings needed when attempting to use sorting
+	 *
+	 * @return	void
+	 */
+	private function setSortingOptions()
+	{
+		// default url
+		$this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
+
+		// sorting icons, used to click on
+		$this->setSortingIcons('/backend/core/layout/images/icons/sort_ascending.gif', '/backend/core/layout/images/icons/sorted_ascending.gif', '/backend/core/layout/images/icons/sort_descending.gif', '/backend/core/layout/images/icons/sorted_descending.gif');
+
+		// sorting labels
+		$this->setSortingLabels(BL::getLabel('SortAscending'), BL::getLabel('SortedAscending'), BL::getLabel('SortDescending'), BL::getLabel('SortedDescending'));
 	}
 }
 

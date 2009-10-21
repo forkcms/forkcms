@@ -1,18 +1,16 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
 
-	<h2>{$msgHeaderEdit|sprintf:{$title}}</h2>
+<h2>{$msgHeaderEdit|sprintf:{$title}}</h2>
+{option:usingRevision}<p class="warning">{$msgUsingARevision}</p>{/option:usingRevision}
+<div class="tabs">
+	<div class="tabsNavigation">
+		<ul>
+			<li><a href="{$var|geturl}?id={$id}">{$lblContent|ucfirst}</a></li>
+			<li class="notImportant"><a href="{$var|geturl}?id={$id}#revisions">{$lblRevisions|ucfirst}</a></li>
+		</ul>
+	</div>
 	
-	{option:usingRevision}<p class="warning">{$msgUsingARevision}</p>{/option:usingRevision}
-	
-	<div class="tabs">
-		<div class="tabsNavigation">
-			<ul>
-				<li><a href="{$var|geturl}?id={$id}">{$lblContent|ucfirst}</a></li>
-				<li class="notImportant"><a href="{$var|geturl}?id={$id}#revisions">{$lblRevisions|ucfirst}</a></li>
-			</ul>
-		</div>
-		
-		{form:edit}
+	{form:edit}
 		<div class="tabsContent">
 			<div id="first" class="tabTab">
 				<fieldset>
@@ -33,7 +31,7 @@
 				{option:!revisions}{$msgNoRevisions}{/option:!revisions}
 			</div>
 		</div>
-
+	
 		<p>
 			{$btnSubmit}
 			<a href="{$var|geturl:delete}?id={$id}" class="askConfirmation" title="{$lblDelete|ucfirst}">
@@ -41,7 +39,7 @@
 				{$lblDelete|ucfirst}
 			</a>
 		</p>
-		{/form:edit}
-	</div>
+	{/form:edit}
+</div>
 
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}

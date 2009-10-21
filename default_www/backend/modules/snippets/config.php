@@ -4,17 +4,17 @@
 require_once BACKEND_MODULE_PATH .'/engine/model.php';
 
 /**
- * SpotlightConfig
+ * SnippetsConfig
  *
  * This is the configuration-object for the spotlight module
  *
  * @package		backend
- * @subpackage	spotlight
+ * @subpackage	snippets
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-final class SpotlightConfig extends BackendBaseConfig
+final class SnippetsConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -39,4 +39,5 @@ final class SpotlightConfig extends BackendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 }
+
 ?>

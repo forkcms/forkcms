@@ -1,17 +1,17 @@
 <?php
 
 /**
- * SpotlightEdit
+ * SnippetsEdit
  *
- * This is the edit-action, it will display a form to edit an existing spotlight item
+ * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend
- * @subpackage	spotlight
+ * @subpackage	snippets
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class SpotlightEdit extends BackendBaseActionEdit
+class SnippetsEdit extends BackendBaseActionEdit
 {
 	/**
 	 * Datagrid with the revisions
@@ -32,7 +32,7 @@ class SpotlightEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if(BackendSpotlightModel::exists($this->id))
+		if(BackendSnippetsModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -70,7 +70,7 @@ class SpotlightEdit extends BackendBaseActionEdit
 	private function getData()
 	{
 		// get the record
-		$this->record = (array) BackendSpotlightModel::get($this->id);
+		$this->record = (array) BackendSnippetsModel::get($this->id);
 
 		// is there a revision specified?
 		$revisionToLoad = $this->getParameter('revision', 'int');
@@ -79,7 +79,7 @@ class SpotlightEdit extends BackendBaseActionEdit
 		if($revisionToLoad !== null)
 		{
 			// overwrite the current record
-			$this->record = (array) BackendSpotlightModel::getRevision($this->id, $revisionToLoad);
+			$this->record = (array) BackendSnippetsModel::getRevision($this->id, $revisionToLoad);
 
 			// show warning
 			$this->tpl->assign('usingRevision', true);
@@ -113,7 +113,7 @@ class SpotlightEdit extends BackendBaseActionEdit
 	private function loadRevisions()
 	{
 		// create datagrid
-		$this->dgRevisions = new BackendDataGridDB(BackendSpotlightModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id']));
+		$this->dgRevisions = new BackendDataGridDB(BackendSnippetsModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id']));
 
 		// hide columns
 		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
@@ -175,10 +175,10 @@ class SpotlightEdit extends BackendBaseActionEdit
 				$values = (array) $this->frm->getValues();
 
 				// insert the item
-				$id = (int) BackendSpotlightModel::update($this->id, $values);
+				$id = (int) BackendSnippetsModel::update($this->id, $values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=edited&var='. urlencode($values['title']) .'&hilight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'?report=edited&var='. urlencode($values['title']) .'&highlight=id-'. $id);
 			}
 		}
 	}

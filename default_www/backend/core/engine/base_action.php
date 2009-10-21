@@ -172,56 +172,13 @@ class BackendBaseAction
 	 */
 	public function getParameter($key, $type = 'string')
 	{
-		// init var
-		$allowedTypes = array('bool', 'boolean',
-								'int', 'integer',
-								'float', 'double',
-								'string',
-								'array');
-
-		// redefine
+		// redefine key
 		$key = (string) $key;
-		$type = (string) $type;
 
-		// is this parameter available
-		if(isset($this->parameters[$key]))
-		{
-			// cast it
-			switch($type)
-			{
-				// boolean
-				case 'bool':
-				case 'boolean':
-					return (bool) $this->parameters[$key];
+		// parameter exists
+		if(isset($this->parameters[$key])) return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
 
-				// integer
-				case 'int':
-				case 'integer':
-					return (int) $this->parameters[$key];
-
-				// float
-				case 'float':
-					return (float) $this->parameters[$key];
-
-				// double
-				case 'double':
-					return (double) $this->parameters[$key];
-
-				// string
-				case 'string':
-					return (string) $this->parameters[$key];
-
-				// array
-				case 'array':
-					return (string) $this->parameters[$key];
-
-				// invalid type
-				default:
-					throw new BackendException('Invalid type ('. $type .'). Possible values are: '. implode(', ', $allowedTypes)) .'.';
-			}
-		}
-
-		// fallback
+		// no such parammeter, fallback
 		return null;
 	}
 
@@ -301,8 +258,8 @@ class BackendBaseActionIndex extends BackendBaseAction
 			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
 			else $this->tpl->assign('reportMessage', $messageName);
 
-			// hilight an element with the given id if needed
-			if($this->getParameter('hilight')) $this->tpl->assign('hilight', $this->getParameter('hilight'));
+			// hightlight an element with the given id if needed
+			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
 		}
 
 		// is there an error to show?

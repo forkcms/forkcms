@@ -1,17 +1,17 @@
 <?php
 
 /**
- * SpotlightAdd
+ * SnippetsAdd
  *
- * This is the add-action, it will display a form to create a new spotlight item
+ * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
- * @subpackage	spotlight
+ * @subpackage	snippets
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class SpotlightAdd extends BackendBaseActionAdd
+class SnippetsAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
@@ -73,16 +73,16 @@ class SpotlightAdd extends BackendBaseActionAdd
 			$this->frm->getField('content')->isFilled(BL::getError('ContentIsRequired'));
 
 			// no errors?
-			if($this->frm->getCorrect())
+			if($this->frm->isCorrect())
 			{
 				// get values
-				$values = (array) $this->frm->getValues();
+				$values = $this->frm->getValues();
 
 				// insert the item
-				$id = (int) BackendSpotlightModel::insert($values);
+				$id = BackendSnippetsModel::insert($values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=added&var='. urlencode($values['title']) .'&hilight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'?report=added&var='. urlencode($values['title']) .'&highlight=id-'. $id);
 			}
 		}
 	}

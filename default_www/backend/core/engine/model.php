@@ -32,8 +32,10 @@ class BackendModel
 	 * @param	string[optional] $action
 	 * @param	string[optiona] $module
 	 * @param	string[optiona] $language
+	 * @param	array[optional] $parameters
+	 * @param	bool[optional] $urlencode
 	 */
-	public static function createURLForAction($action = null, $module = null, $language = null, $parameters = null)
+	public static function createURLForAction($action = null, $module = null, $language = null, array $parameters = null, $urlencode = true)
 	{
 		// grab the url from the reference
 		$url = Spoon::getObjectReference('url');
@@ -44,14 +46,19 @@ class BackendModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 		$querystring = '';
 
+		// add offset, order & sort (only if not yet manually added)
+		if(isset($_GET['offset']) && !isset($parameters['offset'])) $parameters['offset'] = (int) $_GET['offset'];
+		if(isset($_GET['order']) && !isset($parameters['order'])) $parameters['order'] = (string) $_GET['order'];
+		if(isset($_GET['sort']) && !isset($parameters['sort'])) $parameters['sort'] = (string) $_GET['sort'];
+
 		// parameters specfied?
 		if(!empty($parameters))
 		{
 			// add parameters
-			foreach($parameters as $key => $value) $querystring .= $key .'='. urlencode($value);
+			foreach($parameters as $key => $value) $querystring .= '&'. $key .'='. (($urlencode) ? urlencode($value) : $value);
 
 			// add querystring
-			$querystring = '?'. $querystring;
+			$querystring = '?'. trim($querystring, '&');
 		}
 
 		// build the url and return it
