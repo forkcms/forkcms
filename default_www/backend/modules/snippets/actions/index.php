@@ -62,7 +62,7 @@ class SnippetsIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('title'));
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('id' => '[id]'), false), BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 
 		// set id on rows, we will need this for the higlighting
 		$this->datagrid->setRowAttributes(array('id' => 'id-[id]'));
