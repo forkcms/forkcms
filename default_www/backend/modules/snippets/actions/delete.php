@@ -1,17 +1,17 @@
 <?php
 
 /**
- * SpotlightDelete
+ * SnippetsDelete
  *
- * This is the delete-action, it will delete an spotlight-item
+ * This is the delete-action, it will delete a snippets-item
  *
  * @package		backend
- * @subpackage	spotlight
+ * @subpackage	snippets
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class SpotlightDelete extends BackendBaseActionDelete
+class SnippetsDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
@@ -24,16 +24,16 @@ class SpotlightDelete extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the user exists
-		if(BackendSpotlightModel::exists($this->id))
+		if(BackendSnippetsModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// get all data for the user we want to edit
-			$this->record = (array) BackendSpotlightModel::get($this->id);
+			$this->record = (array) BackendSnippetsModel::get($this->id);
 
 			// delete user
-			BackendSpotlightModel::delete($this->id);
+			BackendSnippetsModel::delete($this->id);
 
 			// user was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));

@@ -55,6 +55,11 @@ class BackendSnippetsModel
 	 */
 	public static function exists($id, $active = true)
 	{
+		/*
+		 * @todo dit geeft een rare indruk. $active = true. Je zou dan verwachten dat als je false meegeeft, hij
+		 * rekening gaat houden en enkel de in-actieve resultaten zal teruggeven. Status zou true/false/null moetn zijn?
+		 * Spreek mij tegen als ge der anders over denkt. (Davy)
+		 */
 		// redefine
 		$id = (int) $id;
 		$active = (bool) $active;
@@ -68,7 +73,7 @@ class BackendSnippetsModel
 												WHERE s.id = ? AND s.status = ?;',
 												array($id, 'active')) >= 1);
 
-		// fallback, this doesn't hold the active status in account
+		// fallback, this doesn't take the active status in account
 		return ($db->getNumRows('SELECT s.id
 									FROM snippets AS s
 									WHERE s.revision_id = ?;',

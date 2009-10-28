@@ -6,7 +6,7 @@ require_once BACKEND_MODULE_PATH .'/engine/model.php';
 /**
  * SnippetsConfig
  *
- * This is the configuration-object for the spotlight module
+ * This is the configuration-object for the snippets module
  *
  * @package		backend
  * @subpackage	snippets
