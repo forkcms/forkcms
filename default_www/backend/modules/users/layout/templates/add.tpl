@@ -26,7 +26,7 @@
 			<label for="username">{$lblInterfaceLanguage|ucfirst}</label>
 			<p>{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}</p>
 			
-			<p>{$btnSubmit}</p>
+			<p>{$btnAdd}</p>
 		</fieldset>
 	{/form:add}
 

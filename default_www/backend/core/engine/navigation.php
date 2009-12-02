@@ -87,25 +87,32 @@ class BackendNavigation
 					// get the keys (the array is name-based not numeric)
 					$keys = array_keys($navigation[$key]['children']);
 
-					// check if the deepest level is present, if so we use that url
-					if(isset($navigation[$key]['children'][$keys[0]]['children'][0]['url'])) $level['url'] = $navigation[$key]['children'][$keys[0]]['children'][0]['url'];
-
-					// use first level, that should be filled, otherwise someone fucked with our navigation
-					elseif(isset($navigation[$key]['children'][$keys[0]]['url'])) $level['url'] = $navigation[$key]['children'][$keys[0]]['url'];
-
-					// a fallback, no way the script can get here
-					else $level['url'] = '#';
+					// loop keys
+					foreach($keys as $child)
+					{
+						if(isset($navigation[$key]['children'][$child]['children'][0]['url']) && BackendAuthentication::isAllowedModule($child))
+						{
+							$level['url'] = $navigation[$key]['children'][$child]['children'][0]['url'];
+							break;
+						}
+					}
 				}
 
 				// other first-level elements don't have multiple levels
-				elseif(isset($navigation[$key]['children'][0]['url'])) $level['url'] = $navigation[$key]['children'][0]['url'];
+				else
+				{
+//					Spoon::dump($navigation[$key]['children']);
 
-				// a fallback, no way the script can get here
-				else $level['url'] = '#';
+					if(isset($navigation[$key]['children'][0]['url'])) $level['url'] = $navigation[$key]['children'][0]['url'];
+				}
 			}
 
 			// break urls into parts
 			$chunks = (array) explode('/', $level['url']);
+
+			if(!isset($chunks[1])) $chunks[1] = '';
+
+//			Spoon::dump($chunks, false);
 
 			// is the html requested?
 			if($currentDepth >= $startDepth && $currentDepth <= $maximumDepth && BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))

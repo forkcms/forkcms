@@ -60,11 +60,17 @@ class BackendTemplate extends SpoonTemplate
 		// parse authenticated user
 		$this->parseAuthenticatedUser();
 
+		// check debug
+		$this->parseDebug();
+
 		// parse the label
 		$this->parseLabels();
 
 		// parse locale
 		$this->parseLocale();
+
+		// asign a placeholder var
+		$this->assign('var', '');
 
 		// call the parent
 		parent::display($template);
@@ -81,9 +87,13 @@ class BackendTemplate extends SpoonTemplate
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
 
-
-		// comments
+		// convert var into navigation, syntax {$var|getnavigation:<startdepth>:<enddepth>}
 		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
+
+		// string
+		$this->mapModifier('truncate', array('BackendTemplateModifiers', 'truncate'));
+
+		// debug stuff
 		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));
 	}
 
@@ -165,6 +175,18 @@ class BackendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Assigns an option if we are in debug-mode
+	 *
+	 * @return void
+	 */
+	private function parseDebug()
+	{
+		// @todo	for now we only check if SPOON_DEBUG is true
+		if(SPOON_DEBUG) $this->assign('debug', true);
+	}
+
+
+	/**
 	 * Assign the labels
 	 *
 	 * @return	void
@@ -239,6 +261,11 @@ class BackendTemplate extends SpoonTemplate
 	}
 
 
+	/**
+	 * Parse the locale (things like months, days, ...)
+	 *
+	 * @return	void
+	 */
 	private function parseLocale()
 	{
 		// init vars
@@ -253,10 +280,10 @@ class BackendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong'. $key] = $value;
-		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort'. $key] = $value;
-		foreach($daysLong as $key => $value) $localeToAssign['locDayLong'. $key] = $value;
-		foreach($daysShort as $key => $value) $localeToAssign['locDayShort'. $key] = $value;
+		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong'. ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort'. ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $localeToAssign['locDayLong'. ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $localeToAssign['locDayShort'. ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($localeToAssign);
@@ -327,6 +354,21 @@ class BackendTemplateModifiers
 
 		return $navigation->getNavigation($startDepth, $maximumDepth);
 	}
+
+
+	/**
+	 * Truncate a string
+	 *
+	 * @return	string
+	 * @param unknown_type $var
+	 * @param unknown_type $lenth
+	 */
+	public static function truncate($var = null, $lenth)
+	{
+		return $var;
+	}
+
+
 }
 
 ?>

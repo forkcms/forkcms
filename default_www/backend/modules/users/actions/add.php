@@ -56,7 +56,7 @@ class UsersAdd extends BackendBaseActionAdd
 		$this->frm->addTextField('surname', null, 255);
 		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages());
 		$this->frm->addFileField('avatar');
-		$this->frm->addButton('submit', ucfirst(BL::getLabel('Add')), 'submit');
+		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit');
 	}
 
 

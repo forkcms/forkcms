@@ -49,9 +49,39 @@ class BackendForm extends SpoonForm
 
 		// call the real form-class
 		parent::__construct($name, $action, $method);
+
+		// add default classes
+		$this->setParameter('id', $name);
+		$this->setParameter('class', 'forkForms submitWithLink');
+
+
 	}
 
 
+	// @todo	add addButton
+	public function addButton($name, $value, $type = 'submit', $class = 'inputButton')
+	{
+		// do a check
+		if($type == 'submit' && $name == 'submit') throw new BackendException('You can add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
+
+		// call the real form class
+		parent::addButton($name, $value, $type, $class);
+	}
+
+
+
+
+	/**
+	 * @todo Write comment
+	 *
+	 * @param unknown_type $name
+	 * @param unknown_type $value
+	 * @param unknown_type $type
+	 * @param unknown_type $date
+	 * @param unknown_type $date2
+	 * @param unknown_type $class
+	 * @param unknown_type $classError
+	 */
 	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = 'inputDatefield', $classError = 'inputDatefieldError')
 	{
 		// redefine

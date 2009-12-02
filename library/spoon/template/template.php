@@ -299,7 +299,7 @@ class SpoonTemplate
 	{
 		// validate name
 		if(trim($template) == '') throw new SpoonTemplateException('Please provide a template.');
-		
+
 		// compiled name
 		$compileName = $this->getCompileName((string) $template);
 
@@ -727,8 +727,9 @@ class SpoonTemplateCompiler
 			// parse forms
 			$this->content = $this->parseForms($this->content);
 
-			// error reporting
-			$this->content = '<?php error_reporting(E_WARNING); ?>'. "\n". $this->content;
+			// error reporting @todo @davy check me
+			if(SPOON_DEBUG) $this->content = '<?php error_reporting(E_ALL | E_STRICT); ?>'. "\n". $this->content;
+			else $this->content = '<?php error_reporting(E_WARNING); ?>'. "\n". $this->content;
 
 			// parsed
 			$this->parsed = true;
@@ -812,8 +813,21 @@ class SpoonTemplateCompiler
 				$search = $matches[0][$i];
 				$replace = '<?php echo $this->cycle('. $variable .'I, array(\''. implode('\',\'', $aCycle) .'\')); ?>';
 
-				// replace it
-				$content = str_replace($search, $replace, $content);
+				// init var
+				$aIterations = array();
+
+				// match current iteration
+				preg_match_all('|{iteration:'. $iteration .'}.*{/iteration:'. $iteration .'}|ismU', $content, $aIterations);
+
+				// loop mathes
+				foreach($aIterations as $block)
+				{
+					// build new content
+					$newContent = str_replace($search, $replace, $block);
+
+					// replace in original content
+					$content = str_replace($block, $newContent, $content);
+				}
 			}
 		}
 
@@ -951,7 +965,7 @@ class SpoonTemplateCompiler
 
 					// replace
 					$aReplace[0] = '<?php foreach((array) '. $variable .' as $'. $aChunks[$numChunks - 1] .'I => $'. $aChunks[$numChunks - 1] .'): ?>';
-					$aReplace[0] .= "<?php 
+					$aReplace[0] .= "<?php
 					if(isset(\$". $aChunks[$numChunks - 1] ."['formElements']) && is_array(\$". $aChunks[$numChunks - 1] ."['formElements']))
 					{
 						foreach(\$". $aChunks[$numChunks - 1] ."['formElements'] as \$name => \$object)
@@ -963,9 +977,9 @@ class SpoonTemplateCompiler
 					}
 					?>
 					";
-					
+
 					/*
-					 * <?php 
+					 * <?php
 	if(isset($tabs['formElements']) && is_array($tabs['formElements']))
 	{
 		foreach($tabs['formElements'] as $name => $object)
@@ -974,11 +988,11 @@ class SpoonTemplateCompiler
 			$tabs[$name .'Error'] = ($object->getErrors() == '') ? '' : '<span class="formError">'. $object->getErrors() .'</span>';
 		}
 	}
-	
+
 	?>
 					 */
-					
-					
+
+
 					$aReplace[1] = '<?php endforeach; ?>';
 
 					// replace
@@ -1367,12 +1381,7 @@ class SpoonTemplateModifiers
 	 */
 	public static function createHTMLLinks($text)
 	{
-		// init vars
-		$pattern = '/(((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[0-9a-zA-Z]+)((:[0-9]+)?)((\/([~0-9a-zA-Z\#%@\.\/_-]+)?(\?[0-9a-zA-Z%@\/&=_-]+)?)?))/i';
-		$replace = '<a href="$1">$1</a>';
-
-		// replace links
-		return preg_replace($pattern, $replace, (string) $text);
+		return SpoonFilter::replaceURLsWithAnchors($text, false);
 	}
 
 

@@ -14,7 +14,7 @@
 	
 	<div id="pages">
 		<div id="tree">
-			TREE
+			{$tree}
 		</div>
 		<div id="form">
 			

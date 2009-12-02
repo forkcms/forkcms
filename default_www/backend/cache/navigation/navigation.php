@@ -4,8 +4,6 @@ $navigation['dashboard'] = array('url' => 'dashboard/index', 'label' => 'Dashboa
 
 $navigation['pages'] = array('url' => 'pages/index', 'label' => 'Pages');
 
-$navigation['snippets'] = array('url' => 'snippets/index', 'label' => 'Snippets');
-
 $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'label' => 'Posts');

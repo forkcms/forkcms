@@ -115,7 +115,7 @@ class BackendURL
 	 *
 	 * @return	void
 	 */
-	private function processQueryString()
+	private function processQueryString($useGet = false)
 	{
 		// store the querystring local, so we don't alter it.
 		$queryString = $this->getQueryString();
@@ -155,62 +155,82 @@ class BackendURL
 		// get the requested action, index will be our default action
 		$action = (isset($chunks[3]) && $chunks[3] != '') ? $chunks[3] : 'index';
 
-		// the person isn't logged in? or the module doesn't require authentication
-		if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
+		// check if this is a request for a JS-file
+		$isJS = (isset($chunks[1]) && $chunks[1] == 'js.php');
+
+		// if it is an request for a JS-file we only need the module
+		if($isJS)
 		{
-			// redirect to login
-			SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/authentication/?querystring=/'. $this->getQueryString());
+			// set the working language, this is not the interface language
+			BackendLanguage::setWorkingLanguage(SpoonFilter::getGetValue('language', null, FrontendLanguage::DEFAULT_LANGUAGE));
+
+			// set current module
+			$this->setModule(SpoonFilter::getGetValue('module', null, null));
+
+			// set action
+			$this->setAction('index');
 		}
 
-		// the person is logged in
+		// regular request
 		else
 		{
-			// does our user has access to this module?
-			if(!BackendAuthentication::isAllowedModule($module))
+			// the person isn't logged in? or the module doesn't require authentication
+			if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
 			{
-				// the user doesn't have access, redirect to error page
-				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-module&querystring='. urlencode($this->queryString));
+				// redirect to login
+				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/authentication/?querystring=/'. $this->getQueryString());
 			}
 
-			// we have access
+			// the person is logged in
 			else
 			{
-				// can our user execute the requested action?
-				if(!BackendAuthentication::isAllowedAction($action, $module))
+				// does our user has access to this module?
+				if(!BackendAuthentication::isAllowedModule($module))
 				{
-					// the user hasn't access, redirect to error page
-					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-action&querystring='. urlencode($this->queryString));
+					// the user doesn't have access, redirect to error page
+					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-module&querystring='. urlencode($this->queryString));
 				}
 
-				// let's do it
+				// we have access
 				else
 				{
-					// set the working language, this is not the interface language
-					BackendLanguage::setWorkingLanguage($language);
-
-					// is the user authenticated
-					if(BackendAuthentication::getUser()->isAuthenticated())
+					// can our user execute the requested action?
+					if(!BackendAuthentication::isAllowedAction($action, $module))
 					{
-						// set interface language based on the user preferences
-						BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('backend_interface_language', 'nl'));
+						// the user hasn't access, redirect to error page
+						SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-action&querystring='. urlencode($this->queryString));
 					}
 
-					// no authenticated user
+					// let's do it
 					else
 					{
-						// init var
-						$interfaceLanguage = 'nl';
+						// set the working language, this is not the interface language
+						BackendLanguage::setWorkingLanguage($language);
 
-						// override with cookie value if that exists
-						if(SpoonCookie::exists('backend_interface_language')) $interfaceLanguage = SpoonCookie::get('backend_interface_language');
+						// is the user authenticated
+						if(BackendAuthentication::getUser()->isAuthenticated())
+						{
+							// set interface language based on the user preferences
+							BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('backend_interface_language', 'nl'));
+						}
 
-						// set interface language
-						BackendLanguage::setLocale($interfaceLanguage);
+						// no authenticated user
+						else
+						{
+							// init var
+							$interfaceLanguage = 'nl';
+
+							// override with cookie value if that exists
+							if(SpoonCookie::exists('backend_interface_language')) $interfaceLanguage = SpoonCookie::get('backend_interface_language');
+
+							// set interface language
+							BackendLanguage::setLocale($interfaceLanguage);
+						}
+
+						// set current module
+						$this->setModule($module);
+						$this->setAction($action);
 					}
-
-					// set current module
-					$this->setModule($module);
-					$this->setAction($action);
 				}
 			}
 		}

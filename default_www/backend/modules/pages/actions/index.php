@@ -23,41 +23,17 @@ class PagesIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// load the datagrid
-//		$this->loadDatagrid();
+		$this->header->addJS('jquery.tree.min.js');
 
-		// parse the datagrid
-//		$this->parse();
+		// check if the cached files exists
+		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php')) BackendPagesModel::buildCache();
+		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php')) BackendPagesModel::buildCache();
+
+		// parse
+		$this->parse();
 
 		// display the page
 		$this->display();
-	}
-
-
-	/**
-	 * Load the datagrids
-	 *
-	 * @return	void
-	 */
-	private function loadDatagrid()
-	{
-		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE, array('active'));
-
-		// hide columns
-		$this->datagrid->setColumnsHidden(array('id'));
-
-		// set headers
-		$this->datagrid->setHeaderLabels(array('title' => BL::getLabel('Title'), 'sequence' => '&nbsp;'));
-
-		// enable drag-and-drop
-		$this->datagrid->enableSequenceByDragAndDrop();
-
-		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
-
-		// set id on rows, we will need this for the highlighting
-		$this->datagrid->setRowAttributes(array('id' => 'id-[id]'));
 	}
 
 
@@ -68,7 +44,7 @@ class PagesIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 	}
 }
 

@@ -329,7 +329,6 @@ class BackendMeta
 
 			// build parameters for use in the callback
 			$parameters[] = $url;
-			$parameters[] = $this->id;
 
 			// add parameters set by user
 			if(!empty($this->callback['parameters']))

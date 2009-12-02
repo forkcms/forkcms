@@ -68,8 +68,9 @@ class UsersEdit extends BackendBaseActionEdit
 		$this->frm->addTextField('name', $this->record['settings']['name'], 255);
 		$this->frm->addTextField('surname', $this->record['settings']['surname'], 255);
 		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['backend_interface_language']);
+		//@todo	use addImageField
 		$this->frm->addFileField('avatar');
-		$this->frm->addButton('submit', BL::getLabel('Edit'), 'submit');
+		$this->frm->addButton('edit', BL::getLabel('Edit'), 'submit');
 	}
 
 
@@ -131,7 +132,10 @@ class UsersEdit extends BackendBaseActionEdit
 			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
 
 			// validate fields
-			if($this->frm->getField('avatar')->isFilled()) $this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
+			if($this->frm->getField('avatar')->isFilled())
+			{
+				$this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
+			}
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -164,7 +168,7 @@ class UsersEdit extends BackendBaseActionEdit
 					$aSettings['avatar'] = $fileName;
 
 					// move to new location
-					$this->fileAvatar->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
+					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
 
 					// resize
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 128, 128);

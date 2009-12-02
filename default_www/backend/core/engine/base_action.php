@@ -367,6 +367,14 @@ class BackendBaseActionEdit extends BackendBaseAction
 
 
 	/**
+	 * The backends meta-object
+	 *
+	 * @var	BackendMeta
+	 */
+	protected $meta;
+
+
+	/**
 	 * The data of the item to edit
 	 *
 	 * @var	array

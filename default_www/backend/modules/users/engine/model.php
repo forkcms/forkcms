@@ -70,6 +70,29 @@ class BackendUsersModel
 
 
 	/**
+	 * Does the user with a given emailadress exists
+	 *
+	 * @return	bool
+	 * @param	string $email
+	 */
+	public static function existsEmail($email)
+	{
+		// redefine
+		$email = (string) $email;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// check if the user is present in our database
+		return ($db->getNumRows('SELECT u.id
+									FROM users AS u
+									INNER JOIN users_settings AS us
+									WHERE us.name = ? AND us.value = ?;',
+									array('email', serialize($email))) >= 1);
+	}
+
+
+	/**
 	 * Does a username already exists?
 	 * If you specify an userId, the username with the given id will be ignored
 	 *

@@ -174,6 +174,16 @@ class SpoonDatabase
 		// create statement
 		$statement = $this->handler->prepare($query);
 
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
+
 		// has parameters
 		foreach($parameters as $label => $value)
 		{
@@ -230,6 +240,16 @@ class SpoonDatabase
 		// create statement
 		$statement = $this->handler->prepare($query);
 
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
+
 		// has parameters
 		foreach($parameters as $label => $value)
 		{
@@ -270,6 +290,16 @@ class SpoonDatabase
 
 		// create statement
 		$statement = $this->handler->prepare($query);
+
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -378,6 +408,16 @@ class SpoonDatabase
 		// create statement
 		$statement = $this->handler->prepare($query);
 
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
+
 		// has parameters
 		foreach($parameters as $label => $value)
 		{
@@ -421,6 +461,16 @@ class SpoonDatabase
 
 		// create statement
 		$statement = $this->handler->prepare($query);
+
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -477,6 +527,16 @@ class SpoonDatabase
 		// create statement
 		$statement = $this->handler->prepare($query);
 
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
+
 		// has parameters
 		foreach($parameters as $label => $value)
 		{
@@ -524,6 +584,16 @@ class SpoonDatabase
 
 		// create statement
 		$statement = $this->handler->prepare($query);
+
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -610,6 +680,16 @@ class SpoonDatabase
 
 		// create statement
 		$statement = $this->handler->prepare($query);
+
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -732,6 +812,16 @@ class SpoonDatabase
 		// create statement
 		$statement = $this->handler->prepare($query);
 
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
+
 		// execute statement
 		$statement->execute((array) $parameters);
 
@@ -765,7 +855,7 @@ class SpoonDatabase
 		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables) .';');
 	}
 
-	
+
 	/**
 	 * Retrieves an associative array or returns null if there were no results
 	 *
@@ -778,7 +868,7 @@ class SpoonDatabase
 	{
 		return $this->getRecords($query, $parameters, $key);
 	}
-	
+
 
 	/**
 	 * Set database name
@@ -919,6 +1009,16 @@ class SpoonDatabase
 
 		// create statement
 		$statement = $this->handler->prepare($query);
+
+		// validate statement
+        if($statement === false)
+        {
+            // get error
+            $errorInfo = $this->handler->errorInfo();
+
+            // throw exceptions
+            throw new SpoonDatabaseException($errorInfo[2]);
+        }
 
 		// has parameters
 		foreach($parameters as $label => $value)

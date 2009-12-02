@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AUthenticationIndex
+ * AuthenticationIndex
  *
  * This is the index-action (default), it will display the login screen
  *
@@ -18,7 +18,7 @@ class AuthenticationIndex extends BackendBaseActionIndex
 	 *
 	 * @var	BackendForm
 	 */
-	private $frm;
+	private $frm, $frmForgotPassword;
 
 
 	/**
@@ -58,7 +58,14 @@ class AuthenticationIndex extends BackendBaseActionIndex
 		// create elements and add to the form
 		$this->frm->addTextField('backend_username');
 		$this->frm->addPasswordField('backend_password');
-		$this->frm->addButton('submit', BL::getLabel('Submit'));
+		$this->frm->addButton('login', ucfirst(BL::getLabel('SignIn')));
+
+		// create form for forgot password
+		$this->frmForgotPassword = new BackendForm('forgotPassword');
+
+		// create elements and add to the form
+		$this->frmForgotPassword->addTextField('backend_email');
+		$this->frmForgotPassword->addButton('send', ucfirst(BL::getLabel('Send')));
 	}
 
 
@@ -73,8 +80,8 @@ class AuthenticationIndex extends BackendBaseActionIndex
 		if($this->frm->isSubmitted())
 		{
 			// required fields
-			$this->frm->getField('backend_username')->isFilled(BL::err('UsernameIsRequired'));
-			$this->frm->getField('backend_password')->isFilled(BL::err('PasswordIsRequired'));
+			$this->frm->getField('backend_username')->isFilled(BL::getError('UsernameIsRequired'));
+			$this->frm->getField('backend_password')->isFilled(BL::getError('PasswordIsRequired'));
 
 			// all fields are ok?
 			if($this->frm->getField('backend_username')->isFilled() && $this->frm->getField('backend_password')->isFilled())
@@ -103,6 +110,46 @@ class AuthenticationIndex extends BackendBaseActionIndex
 				$this->redirect($redirectUrl);
 			}
 		}
+
+		// is the form submitted
+		if($this->frmForgotPassword->isSubmitted())
+		{
+			// at this point we need the model for users
+			require_once BACKEND_PATH .'/modules/users/engine/model.php';
+
+			// required fields
+			if($this->frmForgotPassword->getField('backend_email')->isEmail(BL::getError('EmailIsInvalid')))
+			{
+				// check if there is a user with the given emailaddress
+				if(!BackendUsersModel::existsEmail($this->frmForgotPassword->getField('backend_email')->getValue())) $this->frmForgotPassword->getField('backend_email')->addError(BL::getError('EmailIsUnknown'));
+			}
+
+			// no errors in the form?
+			if($this->frmForgotPassword->isCorrect())
+			{
+				$to = array($this->frmForgotPassword->getField('backend_email')->getValue(), '');
+
+				// @todo	Send email to user
+				BackendMailer::addEmail(BL::getMessage('ResetYourPassword'), BACKEND_MODULE_PATH .'/layout/templates/reset_password.tpl', array('[resetURL]'), $to, null, false);
+
+				// clear post-values
+				$_POST['backend_email'] = '';
+
+				// show success message
+				$this->tpl->assign('isForgotpasswordSuccess', true);
+
+				// show form
+				$this->tpl->assign('showForm', true);
+			}
+
+			// errors?
+			else
+			{
+				// show form
+				$this->tpl->assign('showForm', true);
+			}
+		}
+
 	}
 
 
@@ -115,6 +162,7 @@ class AuthenticationIndex extends BackendBaseActionIndex
 	{
 		// parse the form
 		$this->frm->parse($this->tpl);
+		$this->frmForgotPassword->parse($this->tpl);
 	}
 }
 

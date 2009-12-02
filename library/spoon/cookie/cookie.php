@@ -58,7 +58,7 @@ class SpoonCookie
 			unset($_COOKIE[$key]);
 
 			// unset cookie
-			setcookie($key);
+			setcookie($key, null, time() - 3600);
 		}
 	}
 

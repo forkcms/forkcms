@@ -1002,7 +1002,7 @@ class SpoonDataGrid
 	private function parseFooter()
 	{
 		// attributes
-		$this->tpl->assign('footer', array('attributes' => $this->getHtmlAttributes($this->attributes['footer'])));
+		$this->tpl->assign('footerAttributes', $this->getHtmlAttributes($this->attributes['footer']));
 
 		// parse paging
 		$this->parsePaging();
@@ -1182,8 +1182,10 @@ class SpoonDataGrid
 			// number of items per page
 			$this->tpl->assign('iPerPage', $this->pagingLimit);
 
-			// parse paging
-			$content = SpoonDataGridPaging::getContent($this->url, $this->getOffset(), $this->getOrder(), $this->getSort(), $this->source->getNumResults(), $this->pagingLimit, $this->debug, $this->compileDirectory);
+			// parse paging @todo @davy: check me plz
+			$content = call_user_func(array($this->pagingClass, 'getContent'), $this->url, $this->getOffset(), $this->getOrder(), $this->getSort(), $this->source->getNumResults(), $this->pagingLimit, $this->debug, $this->compileDirectory);
+
+			// asign content
 			$this->tpl->assign('paging', $content);
 		}
 	}
@@ -1646,7 +1648,8 @@ class SpoonDataGrid
 		if(!class_exists((string) $class)) throw new SpoonDataGridException('The class "'. (string) $class .'" you provided for the alternative paging can not be found.');
 
 		// does not extend SpoonDataGridPaging
-		if(!is_subclass_of($class, 'SpoonDataGridPaging')) throw new SpoonDataGridException('The class "'. (string) $class .'" does not extend SpoonDataGridPaging which is obligated.');
+		// @todo does it implement the interface
+//		if(!is_subclass_of($class, 'SpoonDataGridPaging')) throw new SpoonDataGridException('The class "'. (string) $class .'" does not extend SpoonDataGridPaging which is obligated.');
 
 		// set the class
 		else $this->pagingClass = $class;

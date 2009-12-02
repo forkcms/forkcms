@@ -26,11 +26,11 @@
 			<label for="username">{$lblInterfaceLanguage|ucfirst}</label>
 			<p>{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}</p>
 			
-			<p>{$btnSubmit}</p>
+			<p>{$btnEdit}</p>
 		</fieldset>
 	{/form:edit}
 	<p>
-		<a href="{$var|geturl:delete}?id={$id}" class="askConfirmation" rel="{$msgConfirmDelete|sprintf:{$nickname}}" title="{$lblDelete}">{$lblDelete}</a>
+		<a href="{$var|geturl:'delete'}?id={$id}" class="askConfirmation" rel="{$msgConfirmDelete|sprintf:'{$nickname}'}" title="{$lblDelete}">{$lblDelete}</a>
 	</p>
 
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}

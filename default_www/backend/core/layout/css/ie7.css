@@ -1,0 +1,15 @@
+/*
+	Clearfix
+	@see http://www.positioniseverything.net/easyclearing.html
+*/
+
+.clearfix,
+#content,
+.columns,
+.section,
+.oneLiner,
+.buttonHolder,
+.buttonHolderSingle,
+.buttonHolderRight {
+	zoom: 1;
+}

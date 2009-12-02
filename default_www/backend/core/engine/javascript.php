@@ -47,9 +47,6 @@ class BackendJavascript
 		// define the Named appliation
 		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 
-		// check if the user is logged in
-		$this->validateLogin();
-
 		// set the module
 		$this->setModule((string) SpoonFilter::getGetValue('module', null, ''));
 
@@ -153,8 +150,14 @@ class BackendJavascript
 		// set property
 		$this->language = (string) $value;
 
+		// is this a authenticated user?
+		if(BackendAuthentication::isLoggedIn()) $language = BackendAuthentication::getUser()->getSetting('backend_interface_language');
+
+		// unknown user (fallback to default language)
+		else $language = FrontendLanguage::DEFAULT_LANGUAGE;
+
 		// set the locale (we need this for the labels)
-		BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('backend_interface_language'));
+		BackendLanguage::setLocale($language);
 
 		// set the working language
 		BackendLanguage::setWorkingLanguage($this->language);
@@ -191,25 +194,6 @@ class BackendJavascript
 
 		// set the module
 		$url->setModule($this->module);
-	}
-
-
-	/**
-	 * Do authentication stuff
-	 *
-	 * @return	void
-	 */
-	private function validateLogin()
-	{
-		// check if the user is logged on, if not he shouldn't load any JS-file
-		if(!BackendAuthentication::isLoggedIn())
-		{
-			// set the correct header
-			SpoonHTTP::setHeadersByCode(403);
-
-			// stop script
-			exit;
-		}
 	}
 }
 

@@ -1,42 +1,56 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="nl" lang="nl">
-<head>
-	<title>{$siteTitle} - Fork CMS</title>
-	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-15" />
-	<link rel="shortcut icon" href="/backend/favicon.ico" />
-
-	{iteration:cssFiles}<link rel="stylesheet" type="text/css" media="screen" href="{$cssFiles.path}" />{$CRLF}{$TAB}{/iteration:cssFiles}
-
-	{iteration:javascriptFiles}<script type="text/javascript" src="{$javascriptFiles.path}"></script>{$CRLF}{$TAB}{/iteration:javascriptFiles}
-</head>
-
+{include:file="{$BACKEND_CORE_PATH}/layout/templates/head.tpl"}
 <body>
-<div id="container">
-	<div id="header">
-		<img src="{$BACKEND_CORE_URL}/layout/images/fork.gif" width="110" height="34" alt="Fork" />
-		<h1>{$SITE_TITLE}</h1>
-	</div>
-	{option:isAuthenticated}
-	<div id="user">
-		<p>
-			{$msgLoggedInAs}
-			<a href="{$authenticatedUserEditUrl}" title="{$msgEditYourUserSettings}">
-				<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/32x32/{$authenticatedUserAvatar}" width="32" height="32" alt="{$authenticatedUserNickname}" />
-				{$authenticatedUserNickname}
-			</a>.
-			<a href="{$var|geturl:logout:authentication}" title="{$lblLogout|ucfirst}">{$lblLogout|ucfirst}</a>
-		</p>
-	</div>
-	
-	<div id="navigation">
-		{$var|getnavigation:1:1}
-	</div>
-	<div id="subnavigation">
-		{$var|getnavigation:2:3}
-	</div>
-	
-	{option:errorMessage}<div class="error">{$errorMessage}</div>{/option:errorMessage}
-	{option:formError}<div class="error">{$errGeneralFormError}</div>{/option:formError}
-	
-	{/option:isAuthenticated}
-	
+	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
+	<table border="0" cellspacing="0" cellpadding="0" id="encloser" width="100%" height="100%">
+		<tr>
+			<td>
+				<div id="headerHolder">
+					<table cellspacing="0" cellpadding="0" id="header">
+						<tr>
+							<td id="siteTitle" width="266">
+								<table border="0" cellspacing="0" cellpadding="0">
+									<tr>
+										<td>
+											<h1>
+												<a href="/">{$SITE_TITLE|truncate:20}</a>
+											</h1>
+										</td>
+										<td>
+											<!-- @todo -->
+											<select>
+												<option>Nederlands</option>
+												<option>Frans</option>
+												<option>Engels</option>
+											</select>
+
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td id="navigation">
+								{$var|getnavigation:1:1}
+							</td>
+							<td id="user">
+								<ul>
+									<li class="settings"><a href="{$authenticatedUserEditUrl}">{$lblSettings|ucfirst}</a></li>
+									<li>
+										<table border="0" cellspacing="0" cellpadding="0">
+											<tr>
+												<td><a class="user" href="{$authenticatedUserEditUrl}">{$authenticatedUserNickname}</a></td>
+												<td><a href="{$authenticatedUserEditUrl}"><img src="{$FRONTEND_FILES_URL}/backend_users/avatars/32x32/{$authenticatedUserAvatar}" width="24" height="24" alt="{$authenticatedUserNickname}" class="avatar"></a></td>
+												<td><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a>
+											</tr>
+										</table>
+									</li>
+								</ul>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td id="container">
+				<div id="main">
+					{option:errorMessage}<div class="error">{$errorMessage}</div>{/option:errorMessage}
+					{option:formError}<div class="error">{$errGeneralFormError}</div>{/option:formError}

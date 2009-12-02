@@ -191,7 +191,7 @@ class PagesAdd extends BackendBaseActionAdd
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
 
 				// insert page, store the id, we need it when building the blocks
-				$pageId = BackendPagesModel::insert($page);
+				$revisionId = BackendPagesModel::insert($page);
 
 				// build blocks
 				$blocks = array();
@@ -216,7 +216,7 @@ class PagesAdd extends BackendBaseActionAdd
 					// build block
 					$block = array();
 					$block['id'] = BackendPagesModel::getMaximumBlockId() + 1;
-					$block['page_id'] = $pageId;
+					$block['revision_id'] = $revisionId;
 					$block['extra_id'] = $extraId;
 					$block['HTML'] = $html;
 					$block['status'] = 'active';

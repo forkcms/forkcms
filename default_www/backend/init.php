@@ -137,6 +137,7 @@ class Init
 		require_once BACKEND_CORE_PATH .'/engine/model.php';
 		require_once BACKEND_CORE_PATH .'/engine/url.php';
 		require_once BACKEND_CORE_PATH .'/engine/base_config.php';
+		require_once BACKEND_CORE_PATH .'/engine/mailer.php';
 
 		// frontend
 		require FRONTEND_CORE_PATH .'/engine/language.php';

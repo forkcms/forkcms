@@ -33,6 +33,7 @@ $err['core']['ContentIsRequired'] = 'Gelieve inhoud in te geven.';
 // d
 // e
 $err['core']['EmailIsInvalid'] = 'Gelieve een geldig emailadres in te geven.';
+$err['core']['EmailIsUnknown'] = 'Dit emailadres is niet teruggevonden.';
 // f
 $err['core']['FieldIsRequired'] = 'Dit veld is verplicht.';
 // g
@@ -95,8 +96,10 @@ $lbl['core']['Cancel'] = 'annuleer';
 $lbl['core']['Content'] = 'inhoud';
 $lbl['core']['CustomURL'] = 'aangepast URL';
 // d
+$lbl['core']['Dashboard'] = 'dashboard';
 $lbl['core']['Date'] = 'datum';
 $lbl['core']['Delete'] = 'verwijderen';
+$lbl['core']['Developer'] = 'developer';
 $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
@@ -123,6 +126,7 @@ $lbl['core']['MetaKeywords'] = 'meta keywords';
 $lbl['core']['Name'] = 'naam';
 $lbl['core']['NavigationTitle'] = 'navigatie titel';
 $lbl['core']['Next'] = 'volgende';
+$lbl['core']['NextPage'] = 'volgende pagina';
 $lbl['core']['Nickname'] = 'nickname';
 // o
 $lbl['core']['OK'] = 'ok';
@@ -131,12 +135,17 @@ $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 $lbl['core']['PageTitle'] = 'paginatitel';
 $lbl['core']['Previous'] = 'vorige';
+$lbl['core']['PreviousPage'] = 'vorige pagina';
 $lbl['core']['Published'] = 'gepubliceerd';
 // q
 // r
 $lbl['core']['Revisions'] = 'versies';
 // s
+$lbl['core']['Send'] = 'send';
 $lbl['core']['SEO'] = 'SEO';
+$lbl['core']['Settings'] = 'instellingen';
+$lbl['core']['SignIn'] = 'aanmelden';
+$lbl['core']['SignOut'] = 'afmelden';
 $lbl['core']['SortAscending'] = 'sorteer oplopend';
 $lbl['core']['SortDescending'] = 'sorteer aflopend';
 $lbl['core']['SortedAscending'] = 'oplopend gesorteerd';
@@ -150,6 +159,7 @@ $lbl['core']['Title'] = 'titel';
 // u
 $lbl['core']['Update'] = 'wijzig';
 $lbl['core']['URL'] = 'URL';
+$lbl['core']['Userguide'] = 'userguide';
 $lbl['core']['Username'] = 'gebruikersnaam';
 $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 // v
@@ -189,6 +199,8 @@ $msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
 $msg['spotlight']['Edited'] = 'Wijzigingen voor <em>%s</em> opgeslagen.';
 $msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // f
+$msg['core']['ForgotPassword'] = 'Wachtwoord vergeten?';
+$msg['core']['ForgotPasswordHelp'] = 'Enter your e-mail address below to have your password sent to your e-mail account.';
 // g
 // h
 $msg['core']['HeaderAdd'] = 'Toevoegen';
@@ -204,7 +216,9 @@ $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
 // j
 // k
 // l
+$msg['core']['LoginFormHelp'] = 'Enter your username and password to sign in.';
 $msg['core']['LoggedInAs'] = 'aangemeld als';
+$msg['core']['LoginFormForgotPasswordSuccess'] = '<strong>Mail sent.</strong> Please check your inbox!';
 // m
 // n
 $msg['core']['NoDrafts'] = 'Er zijn geen drafts.';

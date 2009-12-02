@@ -150,7 +150,7 @@ class SpoonDirectory
 				}
 
 				// chmod
-				SpoonFile::chmod($destination, $chmod);
+				@chmod($destination, $chmod);
 			}
 		}
 
