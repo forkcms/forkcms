@@ -128,7 +128,7 @@ class BackendDataGrid extends SpoonDataGrid
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendDatagridPaging
+class BackendDatagridPaging implements iSpoonDataGridPaging
 {
 	/**
 	 * Builds & returns the pagination
