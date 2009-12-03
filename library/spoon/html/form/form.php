@@ -185,6 +185,7 @@ class SpoonForm
 	public function addButton($name, $value, $type = null, $class = 'inputButton')
 	{
 		$this->add(new SpoonButton($name, $value, $type, $class));
+		return $this->getField($name);
 	}
 
 
@@ -200,6 +201,7 @@ class SpoonForm
 	public function addCheckBox($name, $checked = false, $class = 'inputCheckbox', $classError = 'inputCheckboxError')
 	{
 		$this->add(new SpoonCheckBox($name, $checked, $class, $classError));
+		return $this->getField($name);
 	}
 
 
@@ -238,6 +240,7 @@ class SpoonForm
 	public function addDateField($name, $value = null, $mask = null, $class = 'inputDatefield', $classError = 'inputDatefieldError')
 	{
 		$this->add(new SpoonDateField($name, $value, $mask, $class, $classError));
+		return $this->getField($name);
 	}
 
 
