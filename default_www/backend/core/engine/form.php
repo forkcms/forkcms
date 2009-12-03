@@ -58,29 +58,36 @@ class BackendForm extends SpoonForm
 	}
 
 
-	// @todo	add addButton
+	/**
+	 * Adds a button to the form
+	 *
+	 * @return	SpoonButton
+	 * @param	string $name
+	 * @param	string $value
+	 * @param	string[optional] $type
+	 * @param	string[optional] $class
+	 */
 	public function addButton($name, $value, $type = 'submit', $class = 'inputButton')
 	{
 		// do a check
-		if($type == 'submit' && $name == 'submit') throw new BackendException('You can add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
+		if($type == 'submit' && $name == 'submit') throw new BackendException('You can\'t add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
 
 		// call the real form class
-		parent::addButton($name, $value, $type, $class);
+		return parent::addButton($name, $value, $type, $class);
 	}
 
 
-
-
 	/**
-	 * @todo Write comment
+	 * Adds a datefield to the form
 	 *
-	 * @param unknown_type $name
-	 * @param unknown_type $value
-	 * @param unknown_type $type
-	 * @param unknown_type $date
-	 * @param unknown_type $date2
-	 * @param unknown_type $class
-	 * @param unknown_type $classError
+	 * @return	SpoonDateField
+	 * @param	string $name
+	 * @param	int[optional] $value
+	 * @param	string[optional] $type
+	 * @param	int[optional] $date
+	 * @param	int[optional] $date2
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
 	 */
 	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = 'inputDatefield', $classError = 'inputDatefieldError')
 	{
@@ -142,6 +149,9 @@ class BackendForm extends SpoonForm
 
 		// set attributes
 		parent::getField($name)->setAttributes(array('rel' => $rel));
+
+		// fetch field
+		return parent::getField($name);
 	}
 
 
@@ -177,9 +187,9 @@ class BackendForm extends SpoonForm
 	 * Fetches all the values for this form as key/value pairs
 	 *
 	 * @return	array
-	 * @param	array[optional] $excluded
+	 * @param	mixed[optional] $excluded
 	 */
-	public function getValues(array $excluded = array('form', 'submit'))
+	public function getValues($excluded = array('form', 'save'))
 	{
 		return parent::getValues($excluded);
 	}

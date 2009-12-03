@@ -11,7 +11,7 @@
 		
 		<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
 		
-		<p>{$btnSubmit}</p>
+		<p>{$btnSave}</p>
 	</fieldset>
 {/form:add}
 

@@ -10,7 +10,7 @@
 {/option:report}
 
 <h2>{$msgHeaderIndex}</h2>
-<a href="{$var|geturl:add}" title="{$lblAdd}">{$lblAdd}</a>
+<a href="{$var|geturl:'add'}" title="{$lblAdd}">{$lblAdd}</a>
 
 <div>
 	{option:datagrid}{$datagrid}{/option:datagrid}

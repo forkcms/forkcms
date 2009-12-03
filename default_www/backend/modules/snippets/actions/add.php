@@ -51,7 +51,7 @@ class SnippetsAdd extends BackendBaseActionAdd
 		$this->frm->addTextField('title');
 		$this->frm->addEditorField('content');
 		$this->frm->addCheckBox('hidden', true);
-		$this->frm->addButton('submit', ucfirst(BL::getLabel('Add')), 'submit');
+		$this->frm->addButton('save', ucfirst(BL::getLabel('Add')), 'submit');
 	}
 
 

@@ -33,8 +33,8 @@
 		</div>
 	
 		<p>
-			{$btnSubmit}
-			<a href="{$var|geturl:delete}&amp;id={$id}" class="askConfirmation" title="{$lblDelete|ucfirst}">
+			{$btnSave}
+			<a href="{$var|geturl:'delete'}&amp;id={$id}" class="askConfirmation" title="{$lblDelete|ucfirst}">
 				<span style="display: none" class="message" title="{$lblDelete|ucfirst}">{$msgConfirmDelete|sprintf:{$title}}</span>
 				{$lblDelete|ucfirst}
 			</a>
