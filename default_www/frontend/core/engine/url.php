@@ -11,14 +11,14 @@
  * @author 			Tijs Verkoyen <tijs@netlash.com>
  * @since			2.0
  */
-class FrontendUrl
+class FrontendURL
 {
 	/**
 	 * The pages
 	 *
 	 * @var	array
 	 */
-	private $aPages = array();
+	private $pages = array();
 
 
 	/**
@@ -26,7 +26,7 @@ class FrontendUrl
 	 *
 	 * @var	array
 	 */
-	private $aParameters = array();
+	private $parameters = array();
 
 
 	/**
@@ -101,7 +101,7 @@ class FrontendUrl
 		$index = (int) $index;
 
 		// does the index exists
-		if(isset($this->aPages[$index])) return $this->aPages[$index];
+		if(isset($this->pages[$index])) return $this->pages[$index];
 
 		// fallback
 		return null;
@@ -115,7 +115,7 @@ class FrontendUrl
 	 */
 	public function getPages()
 	{
-		return $this->aPages;
+		return $this->pages;
 	}
 
 
@@ -131,7 +131,7 @@ class FrontendUrl
 		$index = (int) $index;
 
 		// does the index exists
-		if(isset($this->aParameters[$index])) return $this->aParameters[$index];
+		if(isset($this->parameters[$index])) return $this->parameters[$index];
 
 		// fallback
 		return null;
@@ -145,7 +145,7 @@ class FrontendUrl
 	 */
 	public function getParameters()
 	{
-		return $this->aParameters;
+		return $this->parameters;
 	}
 
 
@@ -156,7 +156,7 @@ class FrontendUrl
 	 */
 	private function getQueryString()
 	{
-		return (string) $this->queryString;
+		return $this->queryString;
 	}
 
 
@@ -171,30 +171,30 @@ class FrontendUrl
 		$queryString = $this->getQueryString();
 
 		// fix GET-parameters
-		$aGetChunks = explode('?', $queryString);
+		$getChunks = explode('?', $queryString);
 
 		// are there GET-parameters
-		if(isset($aGetChunks[1]))
+		if(isset($getChunks[1]))
 		{
 			// get key-value pairs
-			$aGet = explode('&', $aGetChunks[1]);
+			$get = explode('&', $getChunks[1]);
 
 			// remove from querystring
-			$queryString = str_replace('?'. $aGetChunks[1], '', $this->getQueryString());
+			$queryString = str_replace('?'. $getChunks[1], '', $this->getQueryString());
 
 			// loop pairs
-			foreach ($aGet as $get)
+			foreach($get as $getItem)
 			{
 				// get key and value
-				$aGetChunks = explode('=', $get, 2);
+				$getChunks = explode('=', $getItem, 2);
 
 				// set get
-				if(isset($aGetChunks[0])) $_GET[$aGetChunks[0]] =  (isset($aGetChunks[1])) ? (string) $aGetChunks[1] : '';
+				if(isset($getChunks[0])) $_GET[$getChunks[0]] =  (isset($getChunks[1])) ? (string) $getChunks[1] : '';
 			}
 		}
 
 		// split into chunks
-		$aChunks = (array) explode('/', $queryString);
+		$chunks = (array) explode('/', $queryString);
 
 		// single language
 		if(!SITE_MULTILANGUAGE)
@@ -210,33 +210,37 @@ class FrontendUrl
 			$mustRedirect = false;
 
 			// get possible languages
-			$aPossibleLanguages = (array) FrontendLanguage::getActiveLanguages();
-			$aRedirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
+			$possibleLanguages = (array) FrontendLanguage::getActiveLanguages();
+			$redirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
 
 			// the language is present in the url
-			if(isset($aChunks[0]) && in_array($aChunks[0], $aPossibleLanguages))
+			if(isset($chunks[0]) && in_array($chunks[0], $possibleLanguages))
 			{
-				$language = (string) $aChunks[0];
+				// define language
+				$language = (string) $chunks[0];
 
+				// try to set a cookie with the language
 				try
 				{
 					// set cookie
 					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
 				}
+
+				// fetch failed cookie
 				catch (Exception $e)
 				{
-					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e;
+					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e; // @todo moet aangepast worden naar numerieke exception.
 				}
 
 				// set sessions
 				SpoonSession::set('frontend_language', $language);
 
 				// remove the language part
-				array_shift($aChunks);
+				array_shift($chunks);
 			}
 
 			// language set in the cookie
-			elseif(SpoonCookie::exists('frontend_language') && in_array(SpoonCookie::get('frontend_language'), $aRedirectLanguages))
+			elseif(SpoonCookie::exists('frontend_language') && in_array(SpoonCookie::get('frontend_language'), $redirectLanguages))
 			{
 				// set languageId
 				$language = (string) SpoonCookie::get('frontend_language');
@@ -251,14 +255,17 @@ class FrontendUrl
 				// set languageId & abbreviation
 				$language = FrontendLanguage::getBrowserLanguage();
 
+				// try to set a cookie with the language
 				try
 				{
 					// set cookie
 					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
 				}
+
+				// fetch failed cookie
 				catch (Exception $e)
 				{
-					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e;
+					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e; // @todo moet aangepast worden naar numerieke exception
 				}
 
 				// redirect is needed
@@ -283,20 +290,20 @@ class FrontendUrl
 		FrontendLanguage::setLocale($language);
 
 		// list of pageIds & their full url
-		$aKeys = FrontendNavigation::getKeys();
+		$keys = FrontendNavigation::getKeys();
 
 		// full url
-		$url = implode('/', $aChunks);
-		$startUrl = $url;
+		$url = implode('/', $chunks);
+		$startURL = $url;
 
 		// loop until we find the url in the list of pages
-		while(!in_array($url, $aKeys))
+		while(!in_array($url, $keys))
 		{
 			// remove the last chunk
-			array_pop($aChunks);
+			array_pop($chunks);
 
 			// redefine the url
-			$url = implode('/', $aChunks);
+			$url = implode('/', $chunks);
 		}
 
 		// remove language from querystring
@@ -307,6 +314,8 @@ class FrontendUrl
 
 		// set pages
 		$pages = trim($url, '/');
+
+		// currently not in the homepage
 		if($pages != '')
 		{
 			$pages = explode('/', $url);
@@ -314,20 +323,25 @@ class FrontendUrl
 		}
 
 		// set parameters
-		$parameters = trim(substr($startUrl, strlen($url)), '/');
+		$parameters = trim(substr($startURL, strlen($url)), '/');
+
+		// has at least one parameter
 		if($parameters != '')
 		{
 			$parameters = explode('/', $parameters);
 			$this->setParameters($parameters);
 		}
 
+		return; // @todo hieronder nog controleren.
+
 		// structural array
-		$aNavigation = FrontendNavigation::getNavigation();
+		$navigation = FrontendNavigation::getNavigation();
 
 		// pageId, parentId & depth
 		$pageId = FrontendNavigation::getPageIdByUrl(implode('/', $this->getPages()));
 		$parentId = FrontendNavigation::getParentIdByUrl(implode('/', $this->getPages()));
 		$depth = ($parentId < 0) ? $parentId : count($this->getPages());
+
 		// depth 0 doesn't exists
 		if($depth == 0) $depth = 1;
 
@@ -355,11 +369,11 @@ class FrontendUrl
 	 * Set the pages
 	 *
 	 * @return	void
-	 * @param	array[optional] $aPages
+	 * @param	array[optional] $pages
 	 */
-	private function setPages($aPages = array())
+	private function setPages(array $pages = array())
 	{
-		$this->aPages = (array) $aPages;
+		$this->pages = (array) $pages;
 	}
 
 
@@ -367,11 +381,11 @@ class FrontendUrl
 	 * Set the parameters
 	 *
 	 * @return	void
-	 * @param	array[optional] $aParameters
+	 * @param	array[optional] $parameters
 	 */
-	private function setParameters($aParameters = array())
+	private function setParameters(array $parameters = array())
 	{
-		$this->aParameters = (array) $aParameters;
+		$this->parameters = (array) $parameters;
 	}
 
 

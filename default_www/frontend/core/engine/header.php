@@ -18,7 +18,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private $aCssFiles = array();
+	private $cssFiles = array();
 
 
 	/**
@@ -26,7 +26,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private $aJsFiles = array();
+	private $jsFiles = array();
 
 
 	/**
@@ -68,7 +68,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * @param 	string $file
 	 * @param	string[optional] $media
 	 */
-	public function addCssFile($file, $media = 'screen',  $condition = null, $minify = true)
+	public function addCssFile($file, $media = 'screen',  $condition = null, $minify = true) // @todo ik zou doen $minify = null, en bij defininen spoon_debug laten meespelen als default, zo kunde manueel nog overrulen als ge wilt.
 	{
 		// redefine
 		$file = (string) $file;
@@ -86,7 +86,7 @@ class FrontendHeader extends FrontendBaseObject
 		$inArray = false;
 
 		// check if the file already exists in the array
-		foreach ($this->aCssFiles as $row) if($row['file'] == $file && $row['media'] == $media) $inArray = true;
+		foreach ($this->cssFiles as $row) if($row['file'] == $file && $row['media'] == $media) $inArray = true;
 
 		// add to array
 		if(!$inArray)
@@ -101,7 +101,7 @@ class FrontendHeader extends FrontendBaseObject
 			$aTemp['oHasNoCondition'] = (bool) ($condition === null);
 
 			// add to files
-			$this->aCssFiles[] = $aTemp;
+			$this->cssFiles[] = $aTemp;
 		}
 	}
 
@@ -113,7 +113,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * @param 	string $file
 	 * @param	bool[optional] $minify
 	 */
-	public function addJsFile($file, $minify = true)
+	public function addJsFile($file, $minify = true)// @todo idem met minify hier.
 	{
 		// redefine
 		$file = (string) $file;
@@ -129,7 +129,7 @@ class FrontendHeader extends FrontendBaseObject
 		$inArray = false;
 
 		// check if the file already exists in the array
-		foreach ($this->aJsFiles as $row) if($row['file'] == $file) $inArray = true;
+		foreach ($this->jsFiles as $row) if($row['file'] == $file) $inArray = true;
 
 		// add to array
 		if(!$inArray)
@@ -138,7 +138,7 @@ class FrontendHeader extends FrontendBaseObject
 			$aTemp['file'] = $file;
 
 			// add to files
-			$this->aJsFiles[] = $aTemp;
+			$this->jsFiles[] = $aTemp;
 		}
 	}
 
@@ -155,7 +155,7 @@ class FrontendHeader extends FrontendBaseObject
 		$aTemp = array();
 
 		// loop files
-		foreach($this->aCssFiles as $file)
+		foreach($this->cssFiles as $file)
 		{
 			// if condition is not empty, add to lowest key
 			if($file['condition'] != '') $aTemp['z'.$i][] = $file;
@@ -176,17 +176,17 @@ class FrontendHeader extends FrontendBaseObject
 		ksort($aTemp);
 
 		// init var
-		$aReturn = array();
+		$return = array();
 
 		// loop by key
-		foreach ($aTemp as $aFiles)
+		foreach($aTemp as $aFiles)
 		{
 			// loop files
-			foreach ($aFiles as $file) $aReturn[] = $file;
+			foreach($aFiles as $file) $return[] = $file;
 		}
 
 		// reset property
-		$this->aCssFiles = $aReturn;
+		$this->cssFiles = $return;
 	}
 
 
@@ -200,7 +200,8 @@ class FrontendHeader extends FrontendBaseObject
 		// sort the cssfiles
 		$this->cssSort();
 
-		return (array) $this->aCssFiles;
+		// fetch files
+		return $this->cssFiles;
 	}
 
 
@@ -211,7 +212,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getJsFiles()
 	{
-		return (array) $this->aJsFiles;
+		return $this->aJsFiles;
 	}
 
 
@@ -222,7 +223,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getMetaCustom()
 	{
-		return (string) $this->metaCustom;
+		return $this->metaCustom;
 	}
 
 
@@ -233,7 +234,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getMetaDescription()
 	{
-		return (string) $this->metaDescription;
+		return $this->metaDescription;
 	}
 
 
@@ -244,7 +245,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getMetaKeywords()
 	{
-		return (string) $this->metaKeywords;
+		return $this->metaKeywords;
 	}
 
 
@@ -255,7 +256,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getPageTitle()
 	{
-		return (string) $this->pageTitle;
+		return $this->pageTitle;
 	}
 
 
@@ -304,6 +305,7 @@ class FrontendHeader extends FrontendBaseObject
 				// removes real newlines
 				$tempContent = preg_replace('|\n|iU', ' ', $tempContent);
 
+				// @todo comment ?
 				$content = str_replace($aMatches[0][$key], '{'. $tempContent .'}', $content);
 			}
 		}
@@ -318,7 +320,7 @@ class FrontendHeader extends FrontendBaseObject
 		$content = trim($content);
 
 		// save content
-		SpoonFile::setFileContent($finalPath, $content);
+		SpoonFile::setContent($finalPath, $content);
 
 		// return
 		return $finalUrl;

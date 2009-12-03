@@ -11,21 +11,46 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class CoreModel
+class FrontendModel
 {
 	/**
 	 * Cached modules
 	 *
 	 * @var	array
 	 */
-	private static $aModules = array();
+	private static $modules = array();
+
 
 	/**
 	 * Cached module-settings
 	 *
 	 * @var	array
 	 */
-	private static $aModuleSettings = array();
+	private static $moduleSettings = array();
+
+
+	/**
+	 * Deletes a module setting from the database
+	 *
+	 * @return	void
+	 * @param	string $module
+	 * @param	string $name
+	 */
+	public static function deleteModuleSetting($module, $name)
+	{
+		// redefine
+		$module = (string) $module;
+		$name = (string) $name;
+
+		// get db
+		$db = self::getDB();
+
+		// delete setting
+		$db->delete('modules_settings', 'module = ? AND name = ?;', array($module, $name));
+
+		// remove from cache
+		if(isset(self::$moduleSettings[$module][$name])) unset(self::$moduleSettings[$module][$name]);
+	}
 
 
 	/**
@@ -45,72 +70,42 @@ class CoreModel
 			Spoon::setObjectReference('database', $db);
 		}
 
-		// return it
 		return Spoon::getObjectReference('database');
 	}
 
 
 	/**
-	 * Get a module-id for a given name
-	 *
-	 * @return	string
-	 * @param	string $moduleName
-	 */
-	public static function getModuleId($moduleName)
-	{
-		// redefine
-		$moduleName = (string) $moduleName;
-
-		// get db
-		$db = self::getDB();
-
-		// get them all
-		if(empty(self::$aModules))
-		{
-			self::$aModules = (array) $db->getPairs('SELECT m.id, m.name
-														FROM modules AS m
-														WHERE m.active = ?;',
-														array('Y'));
-		}
-
-		// return
-		return (int) array_search($moduleName, self::$aModules);
-	}
-
-
-	/**
-	 * Get a module settings
+	 * Get a module setting
 	 *
 	 * @return	mixed
-	 * @param	string $moduleName
-	 * @param	string $setting
+	 * @param	string $module
+	 * @param	string $name
 	 * @param	mixed[optional] $defaultValue
 	 */
-	public static function getModuleSetting($moduleName, $settingName, $defaultValue = null)
+	public static function getModuleSetting($module, $name, $defaultValue = null)
 	{
 		// redefine
-		$moduleName = (string) $moduleName;
-		$settingName = (string) $settingName;
+		$module = (string) $module;
+		$name = (string) $name;
 
 		// get db
 		$db = self::getDB();
 
 		// get them all
-		if(empty(self::$aModuleSettings))
+		if(empty(self::$moduleSettings))
 		{
-			$aSettings = (array) $db->retrieve('SELECT m.name AS module_name, s.name, s.value
-												FROM modules_settings AS s
-												INNER JOIN modules AS m ON s.module_id = m.id;');
+			// fetch settings
+			$settings = (array) $db->retrieve('SELECT module, name, value FROM modules_settings;');
 
 			// loop settings and cache them, also unserialize the values
-			foreach($aSettings as $row) self::$aModuleSettings[$row['module_name']][$row['name']] = unserialize($row['value']);
+			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
 		}
 
 		// if the setting doesn't exists, store it
-		if(!isset(self::$aModuleSettings[$moduleName][$settingName])) self::setModuleSetting($moduleName, $settingName, $defaultValue);
+		if(!isset(self::$moduleSettings[$module][$name])) self::setModuleSetting($module, $name, $defaultValue);
 
 		// return
-		return self::$aModuleSettings[$moduleName][$settingName];
+		return self::$moduleSettings[$module][$name];
 	}
 
 
@@ -129,25 +124,26 @@ class CoreModel
 		$db = self::getDB();
 
 		// get data
-		$record = (array) $db->getRecord('SELECT p.page_id, p.extra_id, p.template_id, p.title, p.content, p.navigation_title, p.navigation_title_overwrite,
-												m.pagetitle AS meta_pagetitle, m.pagetitle_overwrite AS meta_pagetitle_overwrite,
+		$record = (array) $db->getRecord('SELECT p.id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite,
+												m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 												m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
-												md.name AS extra_module, e.action AS extra_action, e.parameters AS extra_parameters,
-												t.path AS template_path
+												t.path AS template
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
-											LEFT OUTER JOIN pages_extras AS e ON p.extra_id = e.id
-											LEFT OUTER JOIN modules AS md ON e.module_id = md.id
-											LEFT OUTER JOIN pages_templates AS t ON p.template_id = t.id
-											WHERE p.page_id = ? AND p.active = ? AND p.hidden = ? AND p.language = ?
+											INNER JOIN pages_templates AS t ON p.template_id = t.id
+											WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
 											LIMIT 1;',
-											array((int) $pageId, 'Y', 'N', FRONTEND_LANGUAGE));
+											array((int) $pageId, 'active', 'N', FRONTEND_LANGUAGE));
 
 		// unserialize parameters
-		if(isset($record['extra_parameters']) && $record['extra_parameters'] != '') $record['extra_parameters'] = unserialize($record['extra_parameters']);
+		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
+
+		// add blocks
+		// @todo make this work
+		$record['blocks'] = array();
 
 		// return
 		return (array) $record;
@@ -158,34 +154,28 @@ class CoreModel
 	 * Store a modulesetting
 	 *
 	 * @return	void
-	 * @param	string $moduleName
-	 * @param	string $settingName
+	 * @param	string $module
+	 * @param	string $name
 	 * @param	mixed $value
 	 */
-	public static function setModuleSetting($moduleName, $settingName, $value)
+	public static function setModuleSetting($module, $name, $value)
 	{
 		// redefine
-		$moduleName = (string) $moduleName;
-		$settingName = (string) $settingName;
+		$module = (string) $module;
+		$name = (string) $name;
 		$value = serialize($value);
 
 		// get db
 		$db = self::getDB();
 
-		// get module id
-		$moduleId = self::getModuleId($moduleName);
-
-		// validate module
-		if($moduleId === false) throw new FrontendException('Invalid module ('. $moduleName .').');
-
 		// store
-		$db->execute('INSERT INTO modules_settings (module_id, name, value)
+		$db->execute('INSERT INTO modules_settings (module, name, value)
 						VALUES (?, ?, ?)
 						ON DUPLICATE KEY UPDATE value = ?;',
-						array($moduleId, $settingName, $value, $value));
+						array($module, $name, $value, $value));
 
 		// store in cache
-		self::$aModuleSettings[$moduleName][$settingName] = unserialize($value);
+		self::$moduleSettings[$module][$name] = unserialize($value);
 	}
 }
 

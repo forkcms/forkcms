@@ -1,6 +1,6 @@
 <?php
 
-/** Require Model */
+// require model
 require_once FRONTEND_CORE_PATH .'/engine/model.php';
 
 /**
@@ -48,10 +48,10 @@ class Frontend
 	public function __construct()
 	{
 		// create database-object
-		$this->db = CoreModel::getDB();
+		$this->db = FrontendModel::getDB();
 
 		// create url-object
-		$this->url = new FrontendUrl();
+		$this->url = new FrontendURL();
 
 		// add to reference
 		Spoon::setObjectReference('url', $this->url);

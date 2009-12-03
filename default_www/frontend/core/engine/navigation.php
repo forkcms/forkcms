@@ -18,16 +18,16 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private static	$aKeys = array(),
-					$aNavigation = array();
+	private static	$keys = array(),
+					$navigation = array();
 
 
 	/**
-	 * The pageids for the selected pages
+	 * The page-ids for the selected pages
 	 *
 	 * @var	array
 	 */
-	private static $aSelectedPageIds = array();
+	private static $selectedPageIds = array();
 
 
 	/**
@@ -55,7 +55,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	array[optional] $excludedIds
 	 * @param	string[optional] $html
 	 */
-	private static function createHtml($parentId = 0, $startDepth = 1, $endDepth = null, $excludedIds = array(), $html = '')
+	private static function createHtml($parentId = 0, $startDepth = 1, $endDepth = null, array $excludedIds = array(), $html = '')
 	{
 		// init vars
 		$defaultSelectedClass = 'selected';
@@ -63,32 +63,33 @@ class FrontendNavigation extends FrontendBaseObject
 		// validation
 		if($endDepth != null && $endDepth < $startDepth) return $html;
 
-		$aNavigation = self::getNavigation();
+		// fetch navigation
+		$navigation = self::getNavigation();
 
 		// check if item exists
-		if(isset($aNavigation[$startDepth][$parentId]))
+		if(isset($navigation[$startDepth][$parentId]))
 		{
 			// start html
 			$html .= '<ul>' . "\n";
 
 			// loop elements
-			foreach ($aNavigation[$startDepth][$parentId] as $key => $aValue)
+			foreach ($navigation[$startDepth][$parentId] as $key => $value)
 			{
 				// check if elements should be excluded
 				if(!in_array($key, (array) $excludedIds))
 				{
 					// check if this item should be selected
-					$selected = (in_array($key, self::$aSelectedPageIds));
+					$selected = (in_array($key, self::$selectedPageIds));
 					$class = ($selected) ? $defaultSelectedClass : '';
 
 					// add html
 					if($class != null) $html .= "\t<li class=\"". $class ."\">" . "\n";
 					else $html .= "\t<li>" . "\n";
 
-					$html .= "\t\t". '<a href="'. self::getUrlByPageId($key) .'" title="'. $aValue['navigation'] .'">'. $aValue['navigation'] .'</a>' . "\n";
+					$html .= "\t\t". '<a href="'. self::getUrlByPageId($key) .'" title="'. $value['navigation'] .'">'. $value['navigation'] .'</a>' . "\n";
 
 					// insert recursive here!
-					if(isset($aNavigation[$startDepth + 1][$key]) && $selected) $html .= self::createHtml($key, $startDepth + 1, $endDepth, $excludedIds, '');
+					if(isset($navigation[$startDepth + 1][$key]) && $selected) $html .= self::createHtml($key, $startDepth + 1, $endDepth, $excludedIds, '');
 
 					// add html
 					$html .= '</li>' . "\n";
@@ -104,25 +105,26 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 
+	// @todo phpdoc schrijven.
 	public static function getFirstChildIdByPageId($pageId)
 	{
 		// redefine
 		$pageId = (int) $pageId;
 
 		// init var
-		$aNavigation = self::getNavigation();
+		$navigation = self::getNavigation();
 
 		// loop depths
-		foreach($aNavigation as $depth => $aParent)
+		foreach($navigation as $depth => $parent)
 		{
 			// first check
-			if(!isset($aParent[$pageId])) continue;
+			if(!isset($parent[$pageId])) continue;
 
 			// get keys
-			$aKeys = array_keys($aParent[$pageId]);
+			$keys = array_keys($parent[$pageId]);
 
 			// get first item
-			if(isset($aKeys[0])) return $aKeys[0];
+			if(isset($keys[0])) return $keys[0];
 		}
 
 		// fallback
@@ -137,31 +139,31 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	public static function getFooterLinks()
 	{
+		return;
 		// get footerlinks
-		$aFooterLinks = array();
-		$aLinks = (isset(self::$aNavigation[FRONTEND_LANGUAGE][-2][-2])) ? self::$aNavigation[FRONTEND_LANGUAGE][-2][-2] : array();
+		$footerLinks = array();
+		$links = (isset(self::$navigation[FRONTEND_LANGUAGE][-2][-2])) ? self::$navigation[FRONTEND_LANGUAGE][-2][-2] : array();
 
 		// loop rows
-		foreach ($aLinks as $pageId => $row)
+		foreach($links as $pageId => $row)
 		{
 			// redefine data
-			$aTemp['title'] = $row['navigation'];
-			$aTemp['url'] = $row['url'];
+			$tmp['title'] = $row['navigation'];
+			$tmp['url'] = $row['url'];
 
 			// option
-			$aTemp['oIsCurrentPage'] = (bool) ($pageId == FrontendPage::getCurrentPageId());
+			$tmp['oIsCurrentPage'] = (bool) ($pageId == FrontendPage::getCurrentPageId());
 
 			// add to footerlinks
-			$aFooterLinks[] = $aTemp;
+			$footerLinks[] = $tmp;
 		}
 
-		// return
-		return (array) $aFooterLinks;
+		return $footerLinks;
 	}
 
 
 	/**
-	 * Get the menu-keys
+	 * Get the page-keys
 	 *
 	 * @return	array
 	 */
@@ -171,20 +173,19 @@ class FrontendNavigation extends FrontendBaseObject
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// does the keys exists in the cache?
-		if(!isset(self::$aKeys[$language]) || empty(self::$aKeys[$language]))
+		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php')) throw new FrontendException('No key-file (keys_'. $language .'.php) found.');
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/pages/keys_'. $language .'.php')) throw new FrontendException('No key-file (keys_'. $language .'.php) found.');
 
 			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php';
+			require FRONTEND_CACHE_PATH .'/pages/keys_'. $language .'.php';
 
 			// store
-			self::$aKeys[$language] = $keys;
+			self::$keys[$language] = $keys;
 		}
 
-		// return
-		return self::$aKeys[$language];
+		return self::$keys[$language];
 	}
 
 
@@ -200,20 +201,20 @@ class FrontendNavigation extends FrontendBaseObject
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// does the keys exists in the cache?
-		if(!isset(self::$aNavigation[$language]) || empty(self::$aNavigation[$language]))
+		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php')) throw new FrontendException('No navigation-file (navigation_'. $language .'.php) found.');
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/pages/navigation_'. $language .'.php')) throw new FrontendException('No navigation-file (navigation_'. $language .'.php) found.');
 
 			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
+			require FRONTEND_CACHE_PATH .'/pages/navigation_'. $language .'.php';
 
 			// store
-			self::$aNavigation[$language] = $navigation;
+			self::$navigation[$language] = $navigation;
 		}
 
 		// return
-		return self::$aNavigation[$language];
+		return self::$navigation[$language];
 	}
 
 
@@ -239,17 +240,17 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param 	string $url
 	 * @param	string[optional] $language
 	 */
-	public static function getPageIdByUrl($url, $language = null)
+	public static function getPageIdByURL($url, $language = null)
 	{
 		// redefine
 		$url = (string) $url;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// get menu items array
-		$aKeys = self::getKeys($language);
+		$keys = self::getKeys($language);
 
 		// get key
-		$key = array_search($url, $aKeys);
+		$key = array_search($url, $keys);
 
 		// return
 		if($key === false) return 404;
@@ -266,25 +267,25 @@ class FrontendNavigation extends FrontendBaseObject
 	public static function getPageInfo($pageId)
 	{
 		// get navigation
-		$aNavigation = self::getNavigation();
+		$navigation = self::getNavigation();
 
 		// loop levels
-		foreach ($aNavigation as $depth => $aLevel)
+		foreach($navigation as $depth => $level)
 		{
 			// loop parents
-			foreach ($aLevel as $parentId => $aChilds)
+			foreach($level as $parentId => $children)
 			{
 				// loop childs
-				foreach ($aChilds as $itemId => $aItem)
+				foreach($children as $itemId => $item)
 				{
 					if($pageId == $itemId)
 					{
 						// set return
-						$aReturn = $aItem;
-						$aReturn['page_id'] = $itemId;
+						$return = $item;
+						$return['page_id'] = $itemId;
 
 						// return
-						return $aReturn;
+						return $return;;
 					}
 				}
 			}
@@ -302,24 +303,24 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	string $url
 	 * @param	string[optional] $language
 	 */
-	public static function getParentIdByUrl($url, $language = null)
+	public static function getParentIdByURL($url, $language = null)
 	{
 		// redefine
 		$url = (string) $url;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// init vars
-		$aNavigation = self::getNavigation($language);
-		$pageId = self::getPageIdByUrl($url, $language);
+		$navigation = self::getNavigation($language);
+		$pageId = self::getPageIdByURL($url, $language);
 
 		// loop levels
-		foreach ($aNavigation as $aLevel)
+		foreach($navigation as $level)
 		{
 			// loop parents
-			foreach ($aLevel as $parentId => $aChilds)
+			foreach($level as $parentId => $children)
 			{
 				// loop childs
-				foreach ($aChilds as $itemId => $aItem)
+				foreach($children as $itemId => $item)
 				{
 					if($pageId == $itemId) return (int) $parentId;
 				}
@@ -338,7 +339,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	int $pageId
 	 * @param	string[optional] $language
 	 */
-	public static function getUrlByPageId($pageId, $language = null)
+	public static function getURLByPageId($pageId, $language = null)
 	{
 		// redefine
 		$pageId = (int) $pageId;
@@ -348,13 +349,13 @@ class FrontendNavigation extends FrontendBaseObject
 		$url = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
 
 		// get the menuItems
-		$aKeys = self::getKeys($language);
+		$keys = self::getKeys($language);
 
 		// get the url, if it doens't exist return 404
-		if(!isset($aKeys[$pageId])) return self::getUrlByPageId(404);
+		if(!isset($keys[$pageId])) return self::getURLByPageId(404);
 
 		// add url
-		else $url .= $aKeys[$pageId];
+		else $url .= $keys[$pageId];
 
 		// return
 		return $url;
@@ -369,19 +370,19 @@ class FrontendNavigation extends FrontendBaseObject
 	public function setSelectedPageIds()
 	{
 		// get pages
-		$aPages = (array) $this->url->getPages();
+		$pages = (array) $this->url->getPages();
 
 		// loop pages
-		while(!empty($aPages))
+		while(!empty($pages))
 		{
 			// get page id
-			$pageId = self::getPageIdByUrl((string) implode('/', $aPages));
+			$pageId = self::getPageIdByURL((string) implode('/', $pages));
 
 			// add to selected item
-			if($pageId !== false) self::$aSelectedPageIds[] = $pageId;
+			if($pageId !== false) self::$selectedPageIds[] = $pageId;
 
 			// remove last element
-			array_pop($aPages);
+			array_pop($pages);
 		}
 	}
 }

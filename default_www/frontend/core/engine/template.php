@@ -1,5 +1,6 @@
 <?php
-/** Require SpoonTemplate */
+
+// require SpoonTemplate
 require_once 'spoon/template/template.php';
 
 /**
@@ -30,7 +31,7 @@ class FrontendTemplate extends SpoonTemplate
 	public function __construct()
 	{
 		// set cache directory
-		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
+		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/templates');
 
 		// set compile directory
 		$this->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
@@ -73,7 +74,7 @@ class FrontendTemplate extends SpoonTemplate
 	private function mapCustomModifiers()
 	{
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
-		$this->mapModifier('geturl', array('ForkTemplateModifiers', 'getUrl'));
+		$this->mapModifier('geturl', array('ForkTemplateModifiers', 'getURL'));
 
 		// convert vars into an url, syntax {$var|gettitle:<pageId>}
 		$this->mapModifier('gettitle', array('ForkTemplateModifiers', 'getTitle'));
@@ -91,22 +92,22 @@ class FrontendTemplate extends SpoonTemplate
 	private function parseConstants()
 	{
 		// constants that should be protected from usage in the template
-		$aNotPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+		$secretConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
 
 		// get all defined constants
-		$aConstants = get_defined_constants(true);
+		$constants = get_defined_constants(true);
 
 		// unset protected constants
-		foreach ($aNotPublicConstants as $constant) if(isset($aConstants['user'][$constant])) unset($aConstants['user'][$constant]);
+		foreach($secretConstants as $constant) if(isset($constants['user'][$constant])) unset($constants['user'][$constant]);
 
 		// if our constants are there assign them
-		if(isset($aConstants['user'])) $this->assign($aConstants['user']);
+		if(isset($constants['user'])) $this->assign($constants['user']);
 
 		// aliases
 		$this->assign('LANGUAGE', FRONTEND_LANGUAGE);
 
 		// settings
-		$this->assign('SITE_TITLE', CoreModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+		$this->assign('SITE_TITLE', FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 	}
 
 
@@ -198,9 +199,58 @@ class ForkTemplateModifiers
 	 * @param	string[optional] $var
 	 * @param	int $pageId
 	 */
-	public static function getUrl($var = null, $pageId)
+	public static function getURL($var = null, $pageId)
 	{
 		return (string) FrontendNavigation::getUrlByPageId($pageId);
 	}
 }
+
+
+/**
+ * This source file is part of Fork CMS.
+ *
+ * @package		frontend
+ * @subpackage	template
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class FrontendTemplateCustom
+{
+	/**
+	 * Template instance
+	 *
+	 * @var	ForkTemplate
+	 */
+	private $tpl;
+
+
+	/**
+	 * Default constructor
+	 *
+	 * @return	void
+	 * @param	ForkTemplate $tpl
+	 */
+	public function __construct($tpl)
+	{
+		// set property
+		$this->tpl = $tpl;
+
+		// call parse
+		$this->parse();
+	}
+
+
+	/**
+	 * Parse the custom stuff
+	 *
+	 * @return	void
+	 */
+	private function parse()
+	{
+		// insert your custom stuff here...
+	}
+
+}
+
 ?>

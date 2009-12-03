@@ -8,6 +8,7 @@
  * @package			frontend
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author			Davy Hellemans <davy@netlash.com>
  * @since			2.0
  */
 class Init
@@ -21,22 +22,21 @@ class Init
 
 
 	/**
-	 * Default constructor
+	 * Class constructor
 	 *
 	 * @param	string $type
 	 * @return	void
 	 */
 	public function __construct($type)
 	{
-		// init vars
+		// set type
 		$allowedTypes = array('frontend');
-		$type = (string) $type;
 
 		// check if this is a valid type
 		if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
 
 		// set type
-		$this->type = $type;
+		$this->type = (string) $type;
 
 		// set some ini-options
 		ini_set('memory_limit', '64M');
@@ -87,11 +87,11 @@ class Init
 
 
 	/**
-	 * Define urls
+	 * Define URLs
 	 *
 	 * @return	void
 	 */
-	private function defineUrls()
+	private function defineURLs()
 	{
 		define('FRONTEND_CORE_URL', '/'. APPLICATION .'/core');
 		define('FRONTEND_CACHE_URL', '/'. APPLICATION .'/cache');
@@ -127,10 +127,10 @@ class Init
 		require FRONTEND_CORE_PATH .'/engine/base_extra_config.php';
 		require FRONTEND_CORE_PATH .'/engine/base_extra_action.php';
 		require FRONTEND_CORE_PATH .'/engine/template.php';
-		require FRONTEND_CORE_PATH .'/engine/template_custom.php';
 		require FRONTEND_CORE_PATH .'/engine/language.php';
 		require FRONTEND_CORE_PATH .'/engine/navigation.php';
 
+		// based on the type
 		switch ($this->type)
 		{
 			case 'frontend':
@@ -153,10 +153,12 @@ class Init
 	 */
 	private function requireGlobals()
 	{
+		// based on the type
 		switch($this->type)
 		{
 			// default
 			default:
+				require_once '../library/globals.php';
 				require_once '../library/globals_frontend.php';
 		}
 
@@ -170,6 +172,7 @@ class Init
 	 */
 	private function requireSpoonClasses()
 	{
+		require_once 'spoon/spoon.php';
 		require_once 'spoon/session/session.php';
 		require_once 'spoon/database/database.php';
 		require_once 'spoon/cookie/cookie.php';
@@ -184,11 +187,14 @@ class Init
 	 */
 	private function setDebugging()
 	{
+		// debugging enabled
 		if(SPOON_DEBUG)
 		{
 			error_reporting(E_ALL | E_STRICT);
 			ini_set('display_errors', 'On');
 		}
+
+		// debugging disabled
 		else
 		{
 			error_reporting(0);

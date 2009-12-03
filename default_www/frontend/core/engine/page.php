@@ -18,7 +18,7 @@ class FrontendPage
 	 *
 	 * @var	array
 	 */
-	private $aPageRecord = array();
+	private $record = array();
 
 
 	/**
@@ -38,19 +38,21 @@ class FrontendPage
 
 
 	/**
+	 * Blocks
+	 *
+	 * @var	FrontendBlock
+	 *
+	 * @var unknown_type
+	 */
+	private $blocks;
+
+
+	/**
 	 * Body instance
 	 *
 	 * @var	FrontendBody
 	 */
 	private $body;
-
-
-	/**
-	 * Extra instance
-	 *
-	 * @var	FrontendExtra
-	 */
-	private $extra;
 
 
 	/**
@@ -104,7 +106,7 @@ class FrontendPage
 	/**
 	 * Url instance
 	 *
-	 * @var	FrontendUrl
+	 * @var	FrontendURL
 	 */
 	private $url;
 
@@ -120,7 +122,7 @@ class FrontendPage
 		$this->url = Spoon::getObjectReference('url');
 
 		// get menu id for requested url
-		$this->pageId = FrontendNavigation::getPageIdByUrl(implode('/', $this->url->getPages()));
+		$this->pageId = FrontendNavigation::getPageIdByURL(implode('/', $this->url->getPages()));
 
 		// make the pageId accessible through a static method
 		self::$currentPageId = $this->pageId;
@@ -150,26 +152,27 @@ class FrontendPage
 		$this->storeStatistics();
 
 		// parse footer
-		$this->footer->parse();
+//		$this->footer->parse();
 
 		// parse body if needed
 		if($this->body) $this->body->parse();
 
 		// parse extra if needed
-		if($this->extra)
+		/*if($this->extra)
 		{
 			$this->extra->parse();
 			$this->tpl->assign('oHasExtra', true);
-		}
+		}*/
 
 		// parse breadcrumb
-		$this->breadcrumb->parse();
+//		$this->breadcrumb->parse();
 
 		// parse header
-		$this->header->parse();
+//		$this->header->parse();
 
 		// show the template's parsed content
-		$templatePath = $this->aPageRecord['template_path'];
+//		$templatePath = $this->aPageRecord['template_path'];
+		$templatePath = '';
 		if($templatePath == '') $templatePath = 'core/layout/templates/index.tpl';
 
 		$this->tpl->display(FRONTEND_PATH .'/'. $templatePath);
@@ -195,20 +198,21 @@ class FrontendPage
 	public function getPageContent()
 	{
 		// get page record
-		$this->aPageRecord = (array) CoreModel::getPageRecordByPageId($this->pageId);
+		$this->record = (array) FrontendModel::getPageRecordByPageId($this->pageId);
 
 		// empty record (pageId doesn't exists)
-		if(count($this->aPageRecord) == 0 && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId(404), 404);
+		if(count($this->record) == 0 && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURLByPageId(404), 404);
 
+		// @todo indien er geen inhoud is, doorverwijzen naar eerste child. Wordt wel lastig om te verififeren bij 1ste block.
 		// redirect to first child
-		if(empty($this->aPageRecord['content']) && $this->aPageRecord['extra_id'] == 0)
+		/*if(empty($this->record['content']) && $this->aPageRecord['extra_id'] == 0)
 		{
 			// get first child
 			$childId = FrontendNavigation::getFirstChildIdByPageId($this->pageId);
 
 			// redirect if possible
 			if($childId !== false) SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId($childId));
-		}
+		}*/
 	}
 
 
@@ -278,14 +282,20 @@ class FrontendPage
 	{
 		// get cookieId
 		if(SpoonCookie::exists('cookie_id')) $cookieId = SpoonCookie::get('cookie_id');
+
+		// cookie doesnt exist
 		else
 		{
+			// create cookieId
 			$cookieId = md5(SpoonSession::getSessionId());
 
+			// attempt to set cookie
 			try
 			{
 				SpoonCookie::set('cookie_id', $cookieId, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
 			}
+
+			// failed setting cookie
 			catch (Exception $e)
 			{
 				if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e;
@@ -316,7 +326,7 @@ class FrontendPage
 		$aStatistics['url'] = trim('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], '/');
 
 		// log to file
-		SpoonFile::setFileContent(FRONTEND_CACHE_PATH .'/statistics/temp.txt', serialize($aStatistics) ."\n", true);
+		SpoonFile::setContent(FRONTEND_CACHE_PATH .'/statistics/temp.txt', serialize($aStatistics) ."\n", true);
 	}
 }
 

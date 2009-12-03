@@ -22,9 +22,9 @@ class FrontendBaseObject
 
 
 	/**
-	 * Url instance
+	 * URL instance
 	 *
-	 * @var	FrontendUrl
+	 * @var	FrontendURL
 	 */
 	protected $url;
 
@@ -43,4 +43,5 @@ class FrontendBaseObject
 		$this->url = Spoon::getObjectReference('url');
 	}
 }
+
 ?>
