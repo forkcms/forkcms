@@ -334,6 +334,32 @@ class SpoonForm
 
 
 	/**
+	 * Adds a single image field
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addImageField($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
+	{
+		$this->add(new SpoonImageField($name, $class, $classError));
+		return $this->getField($name);
+	}
+
+
+	/**
+	 * Adds one or more image fields
+	 *
+	 * @return	void
+	 */
+	public function addImageFields()
+	{
+		foreach(func_get_args() as $argument) $this->add(new SpoonImageField((string) $argument));
+	}
+
+
+	/**
 	 * Adds a single multiple checkbox
 	 *
 	 * @return	void
@@ -790,10 +816,24 @@ class SpoonForm
 	 * Fetches all the values for this form as key/value pairs
 	 *
 	 * @return	array
-	 * @param	array[optional] $excluded
+	 * @param	mixed[optional] $excluded
 	 */
-	public function getValues(array $excluded = array())
+	public function getValues($excluded = null)
 	{
+		// redefine var
+		$excluded = array();
+
+		// has arguments
+		if(func_num_args() != 0)
+		{
+			// iterate arguments
+			foreach(func_get_args() as $argument)
+			{
+				if(is_array($argument)) foreach($argument as $value) $excluded[] = (string) $value;
+				else $excluded[] = (string) $argument;
+			}
+		}
+
 		// values
 		$aValues = array();
 
@@ -1245,7 +1285,7 @@ class SpoonInputField extends SpoonFormAttributes
 	 *
 	 * @return	string
 	 */
-	public function getClassHTML()
+	protected function getClassHTML()
 	{
 		// default value
 		$value = '';
@@ -1509,7 +1549,7 @@ class SpoonFileField extends SpoonFormAttributes
 	 *
 	 * @return	string
 	 */
-	public function getClassHTML()
+	protected function getClassHTML()
 	{
 		// default value
 		$value = '';
@@ -1791,18 +1831,6 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Set the class on error
-	 *
-	 * @return	void
-	 * @param	string $class
-	 */
-	public function setClassOnError($class)
-	{
-		$this->classError = (string) $class;
-	}
-
-
-	/**
 	 * Overwrites the error stack
 	 *
 	 * @return	void
@@ -2047,7 +2075,7 @@ class SpoonRadioButton extends SpoonFormElement
 	 * @param	string $element
 	 * @param	array $variables
 	 */
-	public function getAttributesHTML($element, array $variables)
+	private function getAttributesHTML($element, array $variables)
 	{
 		// init var
 		$html = '';
@@ -2191,7 +2219,6 @@ class SpoonRadioButton extends SpoonFormElement
 
 			// checked status
 			if($value == $this->getChecked()) $aElement[$name] .= ' checked="checked"';
-//			if(isset($this->values[$this->getChecked()])) $aElement[$name] .= ' checked="checked"';
 
 			// add attributes
 			$aElement[$name] .= $this->getAttributesHTML($value, array('[id]' => $this->variables[$value]['id'], '[value]' => $value));
@@ -4102,7 +4129,7 @@ class SpoonDropDown extends SpoonFormAttributes
 	 * @return	string
 	 * @param	array $variables
 	 */
-	public function getAttributesHTML(array $variables)
+	protected function getAttributesHTML(array $variables)
 	{
 		// init var
 		$html = '';
@@ -4132,7 +4159,7 @@ class SpoonDropDown extends SpoonFormAttributes
 	 *
 	 * @return	string
 	 */
-	public function getClassHTML()
+	protected function getClassHTML()
 	{
 		// default value
 		$value = '';
@@ -4158,17 +4185,6 @@ class SpoonDropDown extends SpoonFormAttributes
 		}
 
 		return $value;
-	}
-
-
-	/**
-	 * Retrieve the class on error
-	 *
-	 * @return	string
-	 */
-	public function getClassOnError()
-	{
-		return $this->classError;
 	}
 
 
@@ -4484,18 +4500,6 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Set the class on error
-	 *
-	 * @return	void
-	 * @param	string $class
-	 */
-	public function setClassOnError($class)
-	{
-		$this->classError = (string) $class;
-	}
-
-
-	/**
 	 * Sets the default element (top of the dropdown)
 	 *
 	 * @return	void
@@ -4683,7 +4687,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 	 * @return	string
 	 *.@param	array $variables
 	 */
-	public function getAttributesHTML(array $variables)
+	protected function getAttributesHTML(array $variables)
 	{
 		// init var
 		$html = '';
@@ -4737,7 +4741,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 	 *
 	 * @return	string
 	 */
-	public function getClassHTML()
+	protected function getClassHTML()
 	{
 		// default value
 		$value = '';
@@ -4990,22 +4994,6 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Retrieve the attributes for this specific element
-	 *
-	 * @return	array
-	 * @param	string $element
-	 */
-	public function getAttributes($element)
-	{
-		// element does not exist
-		if(!isset($this->attributes[(string) $element])) throw new SpoonFormException('No element with the value "'. (string) $element .'" has been added.');
-
-		// fetch element
-		return $this->attributes[(string) $element];
-	}
-
-
-	/**
 	 * Retrieves the custom attributes as HTML
 	 *
 	 * @return	string
@@ -5189,28 +5177,6 @@ class SpoonMultiCheckBox extends SpoonFormElement
 	public function setAllowExternalData($on = true)
 	{
 		$this->allowExternalData = (bool) $on;
-	}
-
-
-	/**
-	 * Overrule method for setting of attributes
-	 *
-	 * @return	void
-	 */
-	public function setAttribute()
-	{
-		throw new SpoonFormException('This method should not be used for this class.');
-	}
-
-
-	/**
-	 * Overrule method for setting attributes
-	 *
-	 * @return	void
-	 */
-	public function setAttributes()
-	{
-		throw new SpoonFormException('This method should not be used for this class.');
 	}
 
 

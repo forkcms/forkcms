@@ -727,9 +727,11 @@ class SpoonTemplateCompiler
 			// parse forms
 			$this->content = $this->parseForms($this->content);
 
-			// error reporting @todo @davy check me
-			if(SPOON_DEBUG) $this->content = '<?php error_reporting(E_ALL | E_STRICT); ?>'. "\n". $this->content;
-			else $this->content = '<?php error_reporting(E_WARNING); ?>'. "\n". $this->content;
+			// while developing, you might want to know about the undefined indexes
+			$errorReporting = (SPOON_DEBUG) ? 'E_ALL | E_STRICT' : 'E_WARNING';
+
+			// add error_reporting setting
+			$this->content = '<?php error_reporting('. $errorReporting .'); ?>'. "\n". $this->content;
 
 			// parsed
 			$this->parsed = true;

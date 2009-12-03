@@ -1647,12 +1647,15 @@ class SpoonDataGrid
 		// class cant be found
 		if(!class_exists((string) $class)) throw new SpoonDataGridException('The class "'. (string) $class .'" you provided for the alternative paging can not be found.');
 
-		// does not extend SpoonDataGridPaging
-		// @todo does it implement the interface
-//		if(!is_subclass_of($class, 'SpoonDataGridPaging')) throw new SpoonDataGridException('The class "'. (string) $class .'" does not extend SpoonDataGridPaging which is obligated.');
+		// class exists
+		else
+		{
+			// does not impmlement the interface
+			if(!in_array('iSpoonDataGridPaging', class_implements($class))) throw new SpoonDataGridException('The paging class you provided does not implement the "iSpoonDataGridPaging" interface');
 
-		// set the class
-		else $this->pagingClass = $class;
+			// all is fine
+			else $this->pagingClass = $class;
+		}
 	}
 
 
@@ -2658,6 +2661,10 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 }
 
 
+interface iSpoonDataGridPaging
+{
+	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null);
+}
 
 
 /**
@@ -2670,7 +2677,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		1.0.0
  */
-class SpoonDataGridPaging
+class SpoonDataGridPaging implements iSpoonDataGridPaging
 {
 	/**
 	 * Next label
