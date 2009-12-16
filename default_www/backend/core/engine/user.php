@@ -54,14 +54,6 @@ class BackendUser
 
 
 	/**
-	 * The users password
-	 *
-	 * @var	string
-	 */
-	private $passwordRaw;
-
-
-	/**
 	 * The session id for the user
 	 *
 	 * @var	string
@@ -125,17 +117,6 @@ class BackendUser
 	public function getLastloggedInDate()
 	{
 		return $this->lastLoggedInDate;
-	}
-
-
-	/**
-	 * Get password
-	 *
-	 * @return	string
-	 */
-	public function getPassword()
-	{
-		return $this->passwordRaw;
 	}
 
 
@@ -236,7 +217,6 @@ class BackendUser
 	}
 
 
-
 	/**
 	 * Load a user
 	 *
@@ -252,7 +232,7 @@ class BackendUser
 		$db = BackendModel::getDB();
 
 		// get user-data
-		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.password_raw, u.is_god,
+		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.is_god,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
 											INNER JOIN users_sessions AS us On u.id = us.user_id
@@ -267,7 +247,6 @@ class BackendUser
 		$this->setUserId($userData['id']);
 		$this->setGroupId($userData['group_id']);
 		$this->setUsername($userData['username']);
-		$this->setPassword($userData['password_raw']);
 		$this->setSessionId($userData['session_id']);
 		$this->setSecretKey($userData['secret_key']);
 		$this->setLastloggedInDate($userData['date']);
@@ -306,18 +285,6 @@ class BackendUser
 	private function setLastloggedInDate($value)
 	{
 		$this->lastLoggedInDate = (int) $value;
-	}
-
-
-	/**
-	 * Set password
-	 *
-	 * @return	void
-	 * @param	string $value
-	 */
-	private function setPassword($value)
-	{
-		$this->passwordRaw = (string) $value;
 	}
 
 

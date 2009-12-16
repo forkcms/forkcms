@@ -55,7 +55,7 @@ class UsersAdd extends BackendBaseActionAdd
 		$this->frm->addTextField('name', null, 255);
 		$this->frm->addTextField('surname', null, 255);
 		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages());
-		$this->frm->addFileField('avatar');
+		$this->frm->addImageField('avatar');
 		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit');
 	}
 
@@ -82,7 +82,7 @@ class UsersAdd extends BackendBaseActionAdd
 					// does the username already exists?
 					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue())) $this->frm->getField('username')->addError('{$errUsernameAlreadyExists|ucfirst}');
 
-					// the username doesn't exists
+					// username doesn't exists
 					else
 					{
 						// some usernames are blacklisted, so don't allow them
@@ -106,11 +106,13 @@ class UsersAdd extends BackendBaseActionAdd
 			{
 				// build user-array
 				$aUser['username'] = $this->frm->getField('username')->getValue(true);
-				$aUser['password_raw'] = $this->frm->getField('password')->getValue(true);
-				$aUser['password'] = md5($aUser['password_raw']);
+				$aUser['password'] = md5($this->frm->getField('password')->getValue(true));
 
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));
+
+				Spoon::dump($aUser, false);
+				Spoon::dump($aSettings);
 
 				// save changes
 				$aUser['id'] = (int) BackendUsersModel::insert($aUser, $aSettings);
@@ -127,15 +129,17 @@ class UsersAdd extends BackendBaseActionAdd
 					// move to new location
 					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
 
-					// resize
+					// resize (128x128)
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 128, 128);
 					$thumbnail->setForceOriginalAspectRatio(false);
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $fileName);
 
+					// resize (64x64)
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 64, 64);
 					$thumbnail->setForceOriginalAspectRatio(false);
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $fileName);
 
+					// resize (32x32)
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 32, 32);
 					$thumbnail->setForceOriginalAspectRatio(false);
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $fileName);
