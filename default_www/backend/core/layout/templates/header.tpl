@@ -32,7 +32,7 @@
 							</td>
 							<td id="user">
 								<ul>
-									<li class="settings"><a href="{$authenticatedUserEditUrl}">{$lblSettings|ucfirst}</a></li>
+									<li class="settings"><a href="{$var|geturl:'index':'settings'}">{$lblSettings|ucfirst}</a></li>
 									<li>
 										<table border="0" cellspacing="0" cellpadding="0">
 											<tr>

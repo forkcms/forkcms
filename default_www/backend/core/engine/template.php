@@ -171,7 +171,7 @@ class BackendTemplate extends SpoonTemplate
 		}
 
 		// assign some variable constants (such as site-title)
-		$this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+		$this->assign('SITE_TITLE', BackendModel::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
 	}
 
 

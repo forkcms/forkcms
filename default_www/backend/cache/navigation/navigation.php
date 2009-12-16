@@ -41,9 +41,9 @@ $navigation['statistics']['children']['this_month']['children'][] = array('url' 
 $navigation['statistics']['children']['archive'] = array('url' => null, 'label' => 'Archive');
 
 $navigation['settings'] = array('url' => null, 'label' => 'Settings');
-$navigation['settings']['children']['general_settings'] = array('url' => 'settings/general', 'label' => 'GeneralSettings');
-$navigation['settings']['children']['module_settings'] = array('url' => 'settings/index', 'label' => 'ModuleSettings');
+$navigation['settings']['children']['settings'] = array('url' => 'settings/index', 'label' => 'Website');
+$navigation['settings']['children']['labels'] = array('url' => 'settings/labels', 'label' => 'Translations');
+$navigation['settings']['children']['module_settings'] = array('url' => 'settings/index', 'label' => 'Modules');
 $navigation['settings']['children']['users'] = array('url' => 'users/index', 'label' => 'Users');
-$navigation['settings']['children']['labels'] = array('url' => 'admin/labels', 'label' => 'Labels');
 
 ?>

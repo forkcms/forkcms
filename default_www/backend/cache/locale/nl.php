@@ -89,8 +89,12 @@ $lbl['core'] = array();
 // a
 $lbl['core']['Add'] = 'toevoegen';
 $lbl['pages']['Add'] = 'pagina toevoegen';
+$lbl['core']['APIKey'] = 'API key';
+$lbl['core']['APIKeys'] = 'API keys';
+$lbl['core']['APIURL'] = 'API URL';
 $lbl['core']['Avatar'] = 'avatar';
 // b
+$lbl['core']['Back'] = 'terug';
 $lbl['core']['Blog'] = 'blog';
 // c
 $lbl['core']['Cancel'] = 'annuleer';
@@ -101,10 +105,12 @@ $lbl['core']['Dashboard'] = 'dashboard';
 $lbl['core']['Date'] = 'datum';
 $lbl['core']['Delete'] = 'verwijderen';
 $lbl['core']['Developer'] = 'developer';
+$lbl['core']['Domains'] = 'domeinen';
 $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
 $lbl['core']['Email'] = 'email';
+$lbl['core']['EmailWebmaster'] = 'email webmaster';
 $lbl['core']['Extra'] = 'extra';
 // f
 // g
@@ -115,6 +121,7 @@ $lbl['core']['InterfaceLanguage'] = 'interface-taal';
 // j
 // k
 // l
+$lbl['core']['Languages'] = 'talen';
 $lbl['core']['LastEditedOn'] = 'laats aangepast op';
 $lbl['core']['Login'] = 'login';
 $lbl['core']['Logout'] = 'afmelden';
@@ -142,6 +149,8 @@ $lbl['core']['Published'] = 'gepubliceerd';
 // r
 $lbl['core']['Revisions'] = 'versies';
 // s
+$lbl['core']['Save'] = 'opslaan';
+$lbl['core']['Scripts'] = 'scripts';
 $lbl['core']['Send'] = 'send';
 $lbl['core']['SEO'] = 'SEO';
 $lbl['core']['Settings'] = 'instellingen';
@@ -165,6 +174,7 @@ $lbl['core']['Username'] = 'gebruikersnaam';
 $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 // v
 // w
+$lbl['core']['WebsiteTitle'] = 'website titel';
 // x
 // y
 // z
@@ -186,6 +196,7 @@ $msg = array();
 $msg['core']['Added'] = 'item toegevoegd.';
 $msg['spotlight']['Added'] = 'Item <em>%s</em> toegevoegd.';
 $msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
+$msg['settings']['ApiKeysText'] = 'Toegangscodes voor de standaard gebruikte webservices';
 // b
 // c
 $msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item wil verwijderen?';
@@ -195,6 +206,7 @@ $msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker <em>%s</em> w
 $msg['core']['Deleted'] = 'Het item is verwijderd.';
 $msg['spotlight']['Deleted'] = 'Het item <em>%s</em> is verwijderd.';
 $msg['users']['Deleted'] = 'De gebruiker <em>%s</em> is verwijderd.';
+$msg['settings']['DomainsText'] = 'Vul de domeinen in waarop de website te bereiken (1 domein per regel)';
 // e
 $msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
 $msg['spotlight']['Edited'] = 'Wijzigingen voor <em>%s</em> opgeslagen.';
@@ -213,10 +225,12 @@ $msg['users']['HeaderEdit'] = 'Gebruiker <em>%s</em> bewerken';
 $msg['core']['HeaderIndex'] = 'Overzicht';
 $msg['snippets']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
+$msg['settings']['HelpEmailWebmaster'] = 'Stuur notificaties van het CMS naar dit e-mailadres.';
 // i
 // j
 // k
 // l
+$msg['settings']['LanguagesText'] = 'Duid aan welke talen toegankelijk zijn voor bezoekers';
 $msg['core']['LoginFormHelp'] = 'Enter your username and password to sign in.';
 $msg['core']['LoggedInAs'] = 'aangemeld als';
 $msg['core']['LoginFormForgotPasswordSuccess'] = '<strong>Mail sent.</strong> Please check your inbox!';
@@ -237,6 +251,8 @@ $msg['core']['NotAllowedModuleMessage'] = 'Deze module is niet toegestaan.';
 // r
 $msg['core']['RevisionsExplanation'] = 'De 5 laatst opgeslagen versies worden bijgehouden. <strong>De huidige versie wordt pas overschreven als je het item opslaat.</strong>';
 // s
+$msg['core']['Saved'] = 'De wijzigingen zijn opgeslagen.';
+$msg['settings']['ScriptsText'] = 'Plaats HTML-code of javascript die elke pagina geladen moet worden. (bijv. Google Analytics)';
 $msg['core']['SequenceChanged'] = 'De volgorde is aangepast.';
 // t
 // u

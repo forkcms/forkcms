@@ -10,7 +10,7 @@
 	{/option:report}
 
 	<h2>{$msgHeaderIndex|ucfirst}</h2>
-	<a href="{$var|geturl:add}" title="{$lblAdd}">{$lblAdd}</a>
+	<a href="{$var|geturl:"add"}" title="{$lblAdd}">{$lblAdd}</a>
 	
 	<div id="pages">
 		<div id="tree">

@@ -66,9 +66,36 @@ class BackendModel
 
 
 	/**
-	 * Get (or create and get) a database-connection
-	 * If the database wasn't stored in teh reference before we will create it and add it
+	 * Get the modules
 	 *
+	 * @return	array
+	 * @param	bool[optional] $onlyActive
+	 */
+	public static function getModules($onlyActive = true)
+	{
+		// redefine
+		$onlyActive = (bool) $onlyActive;
+
+		// get db
+		$db = self::getDB();
+
+		// only return the active modules
+		if($onlyActive) return $db->getColumn('SELECT name
+												FROM modules
+												WHERE active = ?;',
+												array('Y'));
+
+		// fallback
+		return $db->getColumn('SELECT name
+								FROM modules;');
+	}
+
+
+	/**
+	 * Get (or create and get) a database-connection
+	 * If the database wasn't stored in the reference before we will create it and add it
+	 *
+	 * @todo	extend SpoonDatabase with BackendDatabase
 	 * @return	SpoonDatabase
 	 */
 	public static function getDB()
@@ -96,7 +123,7 @@ class BackendModel
 	 * @param	string $key
 	 * @param	mixed $defaultValue
 	 */
-	public static function getModuleSetting($module, $key, $defaultValue = null)
+	public static function getSetting($module, $key, $defaultValue = null)
 	{
 		// are the values available
 		if(empty(self::$moduleSettings)) self::getModuleSettings();
