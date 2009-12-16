@@ -3,11 +3,11 @@
 /**
  * BackendUserModel
  *
- * In this file we store all generic functions that we will be using in the UserModule
+ * In this file we store all generic functions that we will be using in the UsersModule
  *
  *
  * @package		backend
- * @subpackage	user
+ * @subpackage	users
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -40,7 +40,7 @@ class BackendUsersModel
 
 
 	/**
-	 * Does the user exists
+	 * Does the user exist
 	 *
 	 * @return	bool
 	 * @param	int $id
@@ -59,7 +59,7 @@ class BackendUsersModel
 		if($active) return ($db->getNumRows('SELECT u.id
 												FROM users AS u
 												WHERE u.id = ? AND u.active = ? AND u.deleted = ?;',
-												array($id, 'Y', 'N')) >= 1);
+												array($id, 'Y', 'N')) == 1);
 
 		// fallback, this doesn't hold the active nor deleted status in account
 		return ($db->getNumRows('SELECT u.id
@@ -70,7 +70,7 @@ class BackendUsersModel
 
 
 	/**
-	 * Does the user with a given emailadress exists
+	 * Does the user with a given emailadress exist
 	 *
 	 * @return	bool
 	 * @param	string $email
@@ -93,8 +93,8 @@ class BackendUsersModel
 
 
 	/**
-	 * Does a username already exists?
-	 * If you specify an userId, the username with the given id will be ignored
+	 * Does a username already exist?
+	 * If you specify a userId, the username with the given id will be ignored
 	 *
 	 * @return	bool
 	 * @param	string $username
@@ -138,23 +138,22 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// get general user data
-		$aUser = (array) $db->getRecord('SELECT u.id, u.username
+		$user = (array) $db->getRecord('SELECT u.id, u.username
 										FROM users AS u
-										WHERE u.id = ?
-										LIMIT 1;',
+										WHERE u.id = ?;',
 										array($id));
 
 		// get user-settings
-		$aUser['settings'] = (array) $db->getPairs('SELECT us.name, us.value
+		$user['settings'] = (array) $db->getPairs('SELECT us.name, us.value
 													FROM users_settings AS us
 													WHERE us.user_id = ?;',
 													array($id));
 
 		// loop settings and unserialize them
-		foreach($aUser['settings'] as $key => $value) $aUser['settings'][$key] = unserialize($value);
+		foreach($user['settings'] as $key => $value) $user['settings'][$key] = unserialize($value);
 
 		// return
-		return $aUser;
+		return $user;
 	}
 
 
@@ -162,23 +161,19 @@ class BackendUsersModel
 	 * Add a new user
 	 *
 	 * @return	int
-	 * @param	array $aUser
-	 * @param	array $aSettings
+	 * @param	array $user
+	 * @param	array $settings
 	 */
-	public static function insert(array $aUser, array $aSettings)
+	public static function insert(array $user, array $settings)
 	{
-		// redefine
-		$aUser = (array) $aUser;
-		$aSettings = (array) $aSettings;
-
 		// get db
 		$db = BackendModel::getDB();
 
 		// update user
-		$userId = (int) $db->insert('users', $aUser);
+		$userId = (int) $db->insert('users', $user);
 
 		// loop settings
-		foreach($aSettings as $key => $value)
+		foreach($settings as $key => $value)
 		{
 			// insert or update
 			$db->execute('INSERT INTO users_settings(user_id, name, value)
@@ -187,39 +182,35 @@ class BackendUsersModel
 							array($userId, $key, serialize($value), serialize($value)));
 		}
 
-		// return the new users id
+		// return the new users' id
 		return $userId;
 	}
 
 
 	/**
 	 * Save the changes for a given user
-	 * Remark: $aUser['id'] should be available
+	 * Remark: $user['id'] should be available
 	 *
 	 * @return	void
-	 * @param	array $aUser
-	 * @param	array $aSettings
+	 * @param	array $user
+	 * @param	array $settings
 	 */
-	public static function update(array $aUser, array $aSettings)
+	public static function update(array $user, array $settings)
 	{
-		// redefine
-		$aUser = (array) $aUser;
-		$aSettings = (array) $aSettings;
-
 		// get db
 		$db = BackendModel::getDB();
 
 		// update user
-		$db->update('users', $aUser, 'id = ?', $aUser['id']);
+		$db->update('users', $user, 'id = ?', $user['id']);
 
 		// loop settings
-		foreach($aSettings as $key => $value)
+		foreach($settings as $key => $value)
 		{
 			// insert or update
 			$db->execute('INSERT INTO users_settings(user_id, name, value)
 							VALUES(?, ?, ?)
 							ON DUPLICATE KEY UPDATE value = ?;',
-							array($aUser['id'], $key, serialize($value), serialize($value)));
+							array($user['id'], $key, serialize($value), serialize($value)));
 		}
 	}
 

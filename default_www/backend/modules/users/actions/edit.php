@@ -109,31 +109,35 @@ class UsersEdit extends BackendBaseActionEdit
 			if($this->frm->getField('username')->isFilled(BL::getError('UsernameIsRequired')))
 			{
 				// only a-z (no spaces) are allowed
-				if($this->frm->getField('username')->isAlphaNumeric('{$errOnlyAlphaNumericChars|ucfirst}'))
+				if($this->frm->getField('username')->isAlphaNumeric('{$errOnlyAlphaNumericChars}'))
 				{
-					// does the username already exists?
-					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue(), $this->id)) $this->frm->getField('username')->addError('{$errUsernameAlreadyExists|ucfirst}');
+					// username already exists
+					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue(), $this->id)) $this->frm->getField('username')->addError('{$errUsernameAlreadyExists}');
 
-					// the username doesn't exists
+					// username doesn't exist
 					else
 					{
 						// some usernames are blacklisted, so don't allow them
-						if(in_array($this->frm->getField('username')->getValue(), array('root', 'god', 'netlash'))) $this->frm->getField('username')->addError('{$errUsernameNotAllowed|ucfirst}');
+						if(in_array($this->frm->getField('username')->getValue(), array('root', 'god', 'netlash'))) $this->frm->getField('username')->addError('{$errUsernameNotAllowed}');
 					}
 				}
 			}
 
 			// required fields
-			$this->frm->getField('password')->isFilled(BL::getError('PasswordIsRequired'));
 			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
 			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
 
-			// validate fields
+			// validate avatar
 			if($this->frm->getField('avatar')->isFilled())
 			{
-				$this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed'));
+				// correct extension
+				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed')))
+				{
+					// correct mimetype?
+					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg'), BL::getError('OnlyJPGAndGifAreAllowed'));
+				}
 			}
 
 			// no errors?
@@ -142,8 +146,9 @@ class UsersEdit extends BackendBaseActionEdit
 				// build user-array
 				$aUser['id'] = $this->id;
 				$aUser['username'] = $this->frm->getField('username')->getValue(true);
-				$aUser['password_raw'] = $this->frm->getField('password')->getValue(true);
-				$aUser['password'] = md5($aUser['password_raw']);
+
+				// update password (only if filled in)
+				if($this->frm->getField('password')->isFilled()) $aUser['password'] = md5($this->frm->getField('password')->getValue());
 
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));
@@ -169,17 +174,22 @@ class UsersEdit extends BackendBaseActionEdit
 					// move to new location
 					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
 
-					// resize
+					// resize (128x128)
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 128, 128);
 					$thumbnail->setForceOriginalAspectRatio(false);
+					$thumbnail->setAllowEnlargement(true);
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $fileName);
 
+					// resize (64x64)
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 64, 64);
 					$thumbnail->setForceOriginalAspectRatio(false);
+					$thumbnail->setAllowEnlargement(true);
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $fileName);
 
+					// resize (32x32)
 					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 32, 32);
 					$thumbnail->setForceOriginalAspectRatio(false);
+					$thumbnail->setAllowEnlargement(true);
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $fileName);
 				}
 
