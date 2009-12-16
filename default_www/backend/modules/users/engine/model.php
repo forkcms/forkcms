@@ -138,7 +138,7 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// get general user data
-		$aUser = (array) $db->getRecord('SELECT u.id, u.username, u.password_raw
+		$aUser = (array) $db->getRecord('SELECT u.id, u.username
 										FROM users AS u
 										WHERE u.id = ?
 										LIMIT 1;',

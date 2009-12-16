@@ -62,14 +62,13 @@ class UsersEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addTextField('username', $this->record['username'], 75);
-		$this->frm->addPasswordField('password', $this->record['password_raw'], 75);
+		$this->frm->addPasswordField('password', null, 75);
 		$this->frm->addTextField('nickname', $this->record['settings']['nickname'], 75);
 		$this->frm->addTextField('email', $this->record['settings']['email'], 255);
 		$this->frm->addTextField('name', $this->record['settings']['name'], 255);
 		$this->frm->addTextField('surname', $this->record['settings']['surname'], 255);
-		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['backend_interface_language']);
-		//@todo	use addImageField
-		$this->frm->addFileField('avatar');
+		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
+		$this->frm->addImageField('avatar');
 		$this->frm->addButton('edit', BL::getLabel('Edit'), 'submit');
 	}
 
