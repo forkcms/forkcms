@@ -1,5 +1,7 @@
 <?php
 
+// @todo tijs - passwords moeten een salt gebruiken. Graag hier dan een functie getGeneratedPassword($string)
+
 /**
  * BackendAuthentication
  *
@@ -9,6 +11,7 @@
  * @subpackage	authentication
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendAuthentication
@@ -42,7 +45,7 @@ class BackendAuthentication
 	 *
 	 * @return	void
 	 */
-	public static function cleanupOlderSessions()
+	public static function cleanupOldSessions()
 	{
 		// init var
 		$db = BackendModel::getDB();
@@ -59,7 +62,7 @@ class BackendAuthentication
 	 */
 	public static function getUser()
 	{
-		// if the user-object doesn't exists create a new one
+		// if the user-object doesn't exist create a new one
 		if(self::$user === null) self::$user = new BackendUser();
 
 		// return the object
@@ -71,6 +74,7 @@ class BackendAuthentication
 	 * Is the given action allowed for the current user
 	 *
 	 * @return	bool
+	 * @param	string $action
 	 * @param	string $module
 	 */
 	public static function isAllowedAction($action, $module)
@@ -106,7 +110,7 @@ class BackendAuthentication
 		// do we know a level for this action
 		if(isset(self::$allowedActions[$module][$action]))
 		{
-			// is the level greather then zero? aka: do we have access?
+			// is the level greater than zero? aka: do we have access?
 			if(self::$allowedActions[$module][$action] > 0) return true;
 		}
 
@@ -151,7 +155,7 @@ class BackendAuthentication
 		}
 
 		// return result
-		return (bool) (!isset(self::$allowedModules[$module])) ? false : self::$allowedModules[$module];
+		return (bool) (!isset(self::$allowedModules[$module])) ? false : self::$allowedModules[$module]; // @todo tijs - wat doet die code?
 	}
 
 
@@ -163,6 +167,7 @@ class BackendAuthentication
 	public static function isLoggedIn()
 	{
 		// check if all needed values are set in the session
+		// @todo davy - herschrijven met multiple SpoonSession::exists statements
 		if(SpoonSession::exists('backend_logged_in') && (bool) SpoonSession::get('backend_logged_in') && SpoonSession::exists('backend_secret_key') && (string) SpoonSession::get('backend_secret_key') != '')
 		{
 			// get database instance
@@ -175,7 +180,7 @@ class BackendAuthentication
 											LIMIT 1;',
 											array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
-			// if we found a matching row we know the user is logged in, so we update his session
+			// if we found a matching row, we know the user is logged in, so we update his session
 			if($sessionData !== null)
 			{
 				// update the session in the table
@@ -244,7 +249,7 @@ class BackendAuthentication
 		// init vars
 		$db = BackendModel::getDB();
 
-		// check in database (is the user active and not deleted, is the username and password correct?)
+		// check in database (is the user active and not deleted, are the username and password correct?)
 		$userId = (int) $db->getVar('SELECT u.id
 										FROM users AS u
 										WHERE u.username = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
@@ -255,7 +260,7 @@ class BackendAuthentication
 		if($userId !== 0)
 		{
 			// cleanup old sessions
-			BackendAuthentication::cleanupOlderSessions();
+			self::cleanupOldSessions();
 
 			// build the session array (will be stored in the database)
 			$session = array();

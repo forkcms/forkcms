@@ -109,7 +109,8 @@ class BackendBaseAction
 		// parse header
 		$this->header->parse();
 
-		// if no template is specified we have to build the path ourself
+		// if no template is specified, we have to build the path ourself
+		// the default template is based on the name of the current action
 		if($template === null) $template = BACKEND_MODULE_PATH .'/layout/templates/'. $this->url->getAction() .'.tpl';
 
 		// display
@@ -124,7 +125,7 @@ class BackendBaseAction
 	 */
 	public function execute()
 	{
-		// add jquery, we will need this in every action, so add it global
+		// add jquery, we will need this in every action, so add it globally
 		$this->header->addJS('jquery/jquery.js', 'core');
 		$this->header->addJS('jquery/jquery.ui.js', 'core');
 		$this->header->addJS('backend.js', 'core', true);
@@ -132,8 +133,6 @@ class BackendBaseAction
 		// add css
 		$this->header->addCSS('screen.css', 'core');
 		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
-
-		// this method will be overwritten by the childs so
 	}
 
 
@@ -144,7 +143,7 @@ class BackendBaseAction
 	 */
 	public function getAction()
 	{
-		return (string) $this->action;
+		return $this->action;
 	}
 
 
@@ -155,7 +154,7 @@ class BackendBaseAction
 	 */
 	public function getModule()
 	{
-		return (string) $this->module;
+		return $this->module;
 	}
 
 
@@ -331,9 +330,7 @@ class BackendBaseActionAdd extends BackendBaseAction
 		// parse form
 		$this->frm->parse($this->tpl);
 	}
-
 }
-
 
 
 /**
@@ -407,7 +404,6 @@ class BackendBaseActionEdit extends BackendBaseAction
 	{
 		$this->frm->parse($this->tpl);
 	}
-
 }
 
 
@@ -451,6 +447,5 @@ class BackendBaseActionDelete extends BackendBaseAction
 	{
 	}
 }
-
 
 ?>

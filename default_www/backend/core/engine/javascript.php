@@ -45,16 +45,16 @@ class BackendJavascript
 	public function __construct()
 	{
 		// define the Named appliation
-		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend'); // @todo tijs - ne keer zien om die named applications te laten werken
 
 		// set the module
-		$this->setModule((string) SpoonFilter::getGetValue('module', null, ''));
+		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
 
 		// set the requested file
-		$this->setFile((string) SpoonFilter::getGetValue('file', null, ''));
+		$this->setFile(SpoonFilter::getGetValue('file', null, ''));
 
 		// set the language
-		$this->setLanguage((string) SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), FrontendLanguage::DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), FrontendLanguage::DEFAULT_LANGUAGE));
 
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new BackendTemplate();

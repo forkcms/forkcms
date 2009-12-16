@@ -15,6 +15,7 @@
  * @package		backend
  * @subpackage	core
  *
+ * @author		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
@@ -181,7 +182,7 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseDebug()
 	{
-		// @todo	for now we only check if SPOON_DEBUG is true
+		// @todo for now we only check if SPOON_DEBUG is true
 		if(SPOON_DEBUG) $this->assign('debug', true);
 	}
 
@@ -365,10 +366,8 @@ class BackendTemplateModifiers
 	 */
 	public static function truncate($var = null, $lenth)
 	{
-		return $var;
+		return $var; // @todo fix code + phpdoc
 	}
-
-
 }
 
 ?>

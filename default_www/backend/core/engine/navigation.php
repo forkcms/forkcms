@@ -101,8 +101,6 @@ class BackendNavigation
 				// other first-level elements don't have multiple levels
 				else
 				{
-//					Spoon::dump($navigation[$key]['children']);
-
 					if(isset($navigation[$key]['children'][0]['url'])) $level['url'] = $navigation[$key]['children'][0]['url'];
 				}
 			}
@@ -110,9 +108,8 @@ class BackendNavigation
 			// break urls into parts
 			$chunks = (array) explode('/', $level['url']);
 
+			// set first chunk
 			if(!isset($chunks[1])) $chunks[1] = '';
-
-//			Spoon::dump($chunks, false);
 
 			// is the html requested?
 			if($currentDepth >= $startDepth && $currentDepth <= $maximumDepth && BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))

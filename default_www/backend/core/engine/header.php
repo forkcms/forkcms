@@ -65,7 +65,7 @@ class BackendHeader
 	/**
 	 * Add a CSS-file.
 	 * If you don't specify a module, the current one will be used
-	 * If you set overwritePath to true we expect a full path (It has to start with a /)
+	 * If you set overwritePath to true we expect a full path (It has to start with a slash '/')
 	 *
 	 * @return	void
 	 * @param	string $fileName
@@ -176,7 +176,6 @@ class BackendHeader
 				if($file == '/backend/core/js/jquery/jquery.js') $jsFiles[] = array('path' => $file);
 				elseif($file == '/backend/core/js/jquery/jquery.ui.js') $jsFiles[] = array('path' => $file);
 				elseif($file == '/backend/core/js/tiny_mce/tiny_mce.js') $jsFiles[] = array('path' => $file);
-
 				else
 				{
 					// if the file is processed by PHP we don't want any caching

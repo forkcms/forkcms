@@ -11,6 +11,7 @@ require_once 'spoon/email/email.php';
  * @package		backend
  * @subpackage	mailer
  *
+ * @author		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */

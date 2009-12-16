@@ -60,6 +60,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 */
 	public function addColumn($name, $label = null, $value = null, $url = null, $title = null, $image = null, $sequence = null)
 	{
+		// add the column
 		parent::addColumn($name, $label, $value, $url, $title, $image, $sequence);
 
 		// known actions
@@ -180,9 +181,6 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		$tpl->assign('previousLabel', BL::getLabel('PreviousPage'));
 		$tpl->assign('nextLabel', BL::getLabel('NextPage'));
 
-//		Spoon::dump($tpl);
-
-
 		// limit
 		$limit = 7;
 		$breakpoint = 4;
@@ -207,7 +205,6 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 				for($i = 1; $i <= $limit; $i++) $aItems[$i] = $i;
 				$aItems[$limit + 1] = '...';
 			}
-
 
 			// last page
 			elseif($iCurrentPage == $iPages)
@@ -296,6 +293,8 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 
 		// assign pages
 		$tpl->assign('pages', $aPages);
+
+		// @todo davy - implementeren van $tpl->getContent()
 
 		// cough it up
 		ob_start();
@@ -403,6 +402,5 @@ class BackendDataGridFunctions
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
 	}
 }
-
 
 ?>

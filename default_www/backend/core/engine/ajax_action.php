@@ -9,6 +9,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendAJAXAction
@@ -48,8 +49,8 @@ class BackendAJAXAction
 	public function __construct($action, $module)
 	{
 		// set properties
-		$this->setModule((string) $module);
-		$this->setAction((string) $action);
+		$this->setModule($module);
+		$this->setAction($action);
 
 		// load the configfile for the required module
 		$this->loadConfig();
@@ -84,7 +85,7 @@ class BackendAJAXAction
 		// build action-class-name
 		$actionClassName = SpoonFilter::toCamelCase($this->getModule() .'_ajax_'. $this->getAction());
 
-		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
+		// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
 		require_once BACKEND_MODULE_PATH .'/ajax/'. $this->getAction() .'.php';
 
 		// validate if class exists (aka has correct name)
@@ -107,7 +108,7 @@ class BackendAJAXAction
 	 */
 	public function getAction()
 	{
-		return (string) $this->action;
+		return $this->action;
 	}
 
 
@@ -119,7 +120,7 @@ class BackendAJAXAction
 	 */
 	public function getModule()
 	{
-		return (string) $this->module;
+		return $this->module;
 	}
 
 

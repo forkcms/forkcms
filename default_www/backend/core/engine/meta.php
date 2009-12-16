@@ -176,7 +176,7 @@ class BackendMeta
 		{
 			// build class- & method-name
 			$className = 'Backend'. SpoonFilter::toCamelCase($this->url->getModule()) .'Model';
-			$methodName = 'getUrl';
+			$methodName = 'getURL';
 
 			// set
 			$this->setUrlCallback($className, $methodName);
@@ -267,7 +267,7 @@ class BackendMeta
 	 * @param	string $methodName
 	 * @param	array[optional] $parameters
 	 */
-	public function setUrlCallback($className, $methodName, $parameters = array())
+	public function setURLCallback($className, $methodName, $parameters = array())
 	{
 		// redefine
 		$className = (string) $className;
@@ -322,9 +322,10 @@ class BackendMeta
 		// url overwrite is checked
 		if($this->frm->getField('url_overwrite')->isChecked())
 		{
-			// filed
+			// filled
 			$this->frm->getField('url')->isFilled(BL::getError('FieldIsRequired'));
 
+			// fetch url
 			$url = SpoonFilter::urlise($this->frm->getField('url')->getValue());
 
 			// build parameters for use in the callback

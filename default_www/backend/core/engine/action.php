@@ -9,6 +9,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendAction
@@ -59,8 +60,8 @@ class BackendAction
 		$this->tpl = Spoon::getObjectReference('template');
 
 		// set properties
-		$this->setModule((string) $module);
-		$this->setAction((string) $action);
+		$this->setModule($module);
+		$this->setAction($action);
 
 		// load the configfile for the required module
 		$this->loadConfig();
@@ -103,7 +104,7 @@ class BackendAction
 	 */
 	public function getAction()
 	{
-		return (string) $this->action;
+		return $this->action;
 	}
 
 
@@ -115,7 +116,7 @@ class BackendAction
 	 */
 	public function getModule()
 	{
-		return (string) $this->module;
+		return $this->module;
 	}
 
 

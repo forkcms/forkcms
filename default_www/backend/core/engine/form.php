@@ -53,8 +53,6 @@ class BackendForm extends SpoonForm
 		// add default classes
 		$this->setParameter('id', $name);
 		$this->setParameter('class', 'forkForms submitWithLink');
-
-
 	}
 
 

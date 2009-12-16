@@ -9,6 +9,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendAJAX
@@ -42,13 +43,13 @@ class BackendAJAX
 		$this->validateLogin();
 
 		// set the module
-		$this->setModule((string) SpoonFilter::getGetValue('module', null, ''));
+		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
 
 		// set the action
-		$this->setAction((string) SpoonFilter::getGetValue('action', null, ''));
+		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
 
 		// set the language
-		$this->setLanguage((string) SpoonFilter::getGetValue('language', BackendLanguage::getInterfaceLanguages(), BackendLanguage::DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', BackendLanguage::getInterfaceLanguages(), BackendLanguage::DEFAULT_LANGUAGE));
 
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());
@@ -88,7 +89,6 @@ class BackendAJAX
 	 */
 	public function setAction($value)
 	{
-		// set property
 		$this->action = (string) $value;
 	}
 
@@ -124,7 +124,7 @@ class BackendAJAX
 
 			// output
 			$fakeAction = new BackendBaseAJAXAction('', '');
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not allowed module.');
+			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Module not allowed.');
 		}
 	}
 

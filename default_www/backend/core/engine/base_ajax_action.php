@@ -67,7 +67,7 @@ class BackendBaseAJAXAction
 	 */
 	public function getAction()
 	{
-		return (string) $this->action;
+		return $this->action;
 	}
 
 
@@ -78,7 +78,7 @@ class BackendBaseAJAXAction
 	 */
 	public function getModule()
 	{
-		return (string) $this->module;
+		return $this->module;
 	}
 
 
@@ -89,8 +89,8 @@ class BackendBaseAJAXAction
 	 * @param	int $statusCode
 	 * @param	mixed[optional] $data
 	 * @param	string[optional] $message
-	 * @param	bool[optional] $utf8decode	@todo	remove when new Spoon is utf-compliant!
-	 * @param	bool[optional] $htmlentities
+	 * @param	bool[optional] $utf8decode	@todo tijs - deze parameter mag eigenlijk weg, denk ik (davy)
+	 * @param	bool[optional] $htmlentities @todo tijs - als we met utf8 werken moeten zaken zoals ûû eigenlijk niet omgezet worden.
 	 */
 	public function output($statusCode, $data = null, $message = null, $utf8decode = true, $htmlentities = false)
 	{
@@ -124,7 +124,7 @@ class BackendBaseAJAXAction
 
 
 	/**
-	 * Recursive maps an fucntion to a value of an array
+	 * Recursively maps a function to a value of an array
 	 *
 	 * @return	array
 	 * @param	string $function

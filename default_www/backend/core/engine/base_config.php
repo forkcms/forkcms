@@ -45,7 +45,6 @@ class BackendBaseConfig
 	protected $possibleActions = array();
 
 
-
 	/**
 	 * All the possible AJAX actions
 	 *
@@ -100,7 +99,7 @@ class BackendBaseConfig
 		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH .'/actions', '/(.*).php/');
 
 		// loop filelist
-		foreach ($actionFiles as $file)
+		foreach($actionFiles as $file)
 		{
 			// get action by removing the extension, actions should not contain spaces (use _ instead)
 			$action = strtolower(str_replace('.php', '', $file));

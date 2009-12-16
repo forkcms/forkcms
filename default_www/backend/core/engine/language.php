@@ -104,7 +104,7 @@ class BackendLanguage
 	 */
 	public static function getInterfaceLanguages()
 	{
-		return array('nl' => BackendLanguage::getLabel('Dutch'));
+		return array('nl' => BackendLanguage::getLabel('Dutch')); // @todo gaan we dit hardcoded laten?
 	}
 
 
