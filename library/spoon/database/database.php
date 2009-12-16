@@ -498,7 +498,7 @@ class SpoonDatabase
 		 */
 
 		// constant is defined
-		if(!defined('PDO::FETCH_KEY_PAIR'))
+		if(defined('PDO::FETCH_KEY_PAIR'))
 		{
 			// let pdo handle the generating of the key/value array
 			return (array) $statement->fetchAll(PDO::FETCH_KEY_PAIR);
