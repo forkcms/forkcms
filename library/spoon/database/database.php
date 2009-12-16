@@ -492,8 +492,46 @@ class SpoonDatabase
 		// debug enabled
 		if($this->debug) $this->queries[] = array('query' => $query, 'parameters' => $parameters);
 
-		// fetch the keys
-		return (array) $statement->fetchAll(PDO::FETCH_KEY_PAIR);
+		/*
+		 * PDO::FETCH_KEY_PAIR is not implemented in every version of PDO. Hence a
+		 * nice workaround to fix this undocumented 'problem'.
+		 */
+
+		// constant is defined
+		if(!defined('PDO::FETCH_KEY_PAIR'))
+		{
+			// let pdo handle the generating of the key/value array
+			return (array) $statement->fetchAll(PDO::FETCH_KEY_PAIR);
+		}
+
+		// no constant is defined
+		else
+		{
+			// init var
+			$results = array();
+
+			// fetch results
+			$tmpResults = self::getRecords($query, $parameters);
+
+			// loop results
+			foreach($tmpResults as $result)
+			{
+				// fetch keys
+				if(!isset($keys))
+				{
+					// fetch keys
+					$keys = array_keys($tmpResults[0]);
+
+					// needs to be 2 elements
+					if(count($keys) != 2) throw new SpoonDatabaseException('You have to fetch 2 columns when using getPairs.');
+				}
+
+				// add to list
+				$results[$result[$keys[0]]] = $result[$keys[1]];
+			}
+
+			return $results;
+		}
 	}
 
 
