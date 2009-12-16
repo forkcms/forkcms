@@ -144,10 +144,10 @@ class BackendMailer
 												array($id));
 
 		// get settings
-		$SMTPServer = BackendModel::getModuleSetting('core', 'smtp_server');
-		$SMTPPort = BackendModel::getModuleSetting('core', 'smtp_port', 25);
-		$SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
-		$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
+		$SMTPServer = BackendModel::getSetting('core', 'smtp_server');
+		$SMTPPort = BackendModel::getSetting('core', 'smtp_port', 25);
+		$SMTPUsername = BackendModel::getSetting('core', 'smtp_username');
+		$SMTPPassword = BackendModel::getSetting('core', 'smtp_password');
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();

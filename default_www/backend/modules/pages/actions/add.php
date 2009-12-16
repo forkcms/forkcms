@@ -43,7 +43,7 @@ class PagesAdd extends BackendBaseActionAdd
 		$this->templates = BackendPagesModel::getTemplates();
 
 		// get maximum number of blocks	@todo	update this setting when adding/updating templates
-		$maximumNumberOfBlocks = BackendModel::getModuleSetting('core', 'template_max_blocks', 5);
+		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
@@ -73,7 +73,7 @@ class PagesAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getModuleSetting('core', 'default_template', 1);
+		$defaultTemplateId = BackendModel::getSetting('core', 'default_template', 1);
 
 		// init var
 		$templatesForDropdown = array();
@@ -100,7 +100,7 @@ class PagesAdd extends BackendBaseActionAdd
 		$this->frm->addRadioButton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
 
 		// get maximum number of blocks	@todo	update this setting when adding/updating templates
-		$maximumNumberOfBlocks = BackendModel::getModuleSetting('core', 'template_max_blocks', 5);
+		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maximumNumberOfBlocks; $i++)

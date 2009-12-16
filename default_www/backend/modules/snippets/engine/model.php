@@ -194,7 +194,7 @@ class BackendSnippetsModel
 		$db->insert('snippets', $values);
 
 		// how many revisions should we keep
-		$rowsToKeep = (int) BackendModel::getModuleSetting(null, 'maximum_number_of_revisions', 5);
+		$rowsToKeep = (int) BackendModel::getSetting(null, 'maximum_number_of_revisions', 5);
 
 		// get revision-ids for items to keep
 		$revisionIdsToKeep = (array) $db->getColumn('SELECT s.revision_id
