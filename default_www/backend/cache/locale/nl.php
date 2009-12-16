@@ -64,6 +64,7 @@ $err['core']['SurnameIsRequired'] = 'Gelieve een achternaam in te geven.';
 $err['core']['TitleIsRequired'] = 'Gelieve een titel in te geven.';
 // u
 $err['core']['UsernameIsRequired'] = 'Gelieve een gebruikersnaam in te geven.';
+$err['core']['UsernameNotAllowed'] = 'Deze gebruikersnaam is niet toegestaan.';
 $err['core']['URLAlreadyExist'] = 'Deze URL bestaat al.';
 // v
 // w
