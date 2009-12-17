@@ -88,6 +88,9 @@ class BackendAuthentication
 		$action = (string) $action;
 		$module = (string) $module;
 
+		// GODMILJAAAAAR! @todo facebook suckt. en wtf?
+		//if($module === 'authentication') return true;
+
 		// is this action an action that doesn't require authentication?
 		if(isset($alwaysAllowed[$module][$action])) return true;
 
@@ -122,14 +125,11 @@ class BackendAuthentication
 			}
 		}
 
-		// is this action an action that doesn't require authentication?
-		if(isset($alwaysAllowed[$module][$action])) return true;
-
 		// do we know a level for this action
 		if(isset(self::$allowedActions[$module][$action]))
 		{
 			// is the level greater than zero? aka: do we have access?
-			if(self::$allowedActions[$module][$action] > 0) return true;
+			if((int) self::$allowedActions[$module][$action] > 0) return true;
 		}
 
 		// fallback
