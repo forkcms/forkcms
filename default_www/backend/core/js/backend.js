@@ -8,10 +8,10 @@ jsBackend = {
 	init: function() {
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
-		jsBackend.effects.init();
+		//jsBackend.effects.init();
 		jsBackend.forms.init();
-		jsBackend.tabs.init();
-		jsBackend.tableSequenceByDragAndDrop.init();
+		//jsBackend.tabs.init();
+		//jsBackend.tableSequenceByDragAndDrop.init();
 	},
 	
 	// end
@@ -64,29 +64,17 @@ jsBackend.balloons = {
 jsBackend.controls = {
 	// init, something like a constructor
 	init: function() { 
-		jsBackend.controls.bindConfirmation();
+		jsBackend.controls.bindWorkingLanguageSelection();
 	},
-	
-	// links with a class "askConfirmation" will be ask a confirmation when clicked
-	bindConfirmation: function() {
-		// @todo review me
-		$('a.askConfirmation').bind('click', function(evt) {
+	//
+	bindWorkingLanguageSelection: function() {
+		$('#workingLanguage').bind('change', function(evt) {
+			// preventDefault
 			evt.preventDefault();
-			var clickedElement = $(this);
-			var messageElement = $($(this).find('.message')[0]);
 			
-			messageElement.dialog({
-				// on close we should restore the html, because someone made a wierd discission
-				close: function(event, ui) { clickedElement.html(clickedElement.html() + '<span class="message" style="display: none;">'+ messageElement.html() +'</span>'); },
-				title: clickedElement.attr('title'),
-				draggable: false,
-				modal: true,
-				resizable: false,
-				buttons: {'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }, '{$lblOK|ucfirst}': function() { $(this).dialog('close'); window.location = clickedElement.attr('href'); }}
-			});
+			// @todo	redirect only module not the action
 		});
 	},
-	
 	// end
 	_eoo: true
 }

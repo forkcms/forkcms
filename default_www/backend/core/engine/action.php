@@ -88,6 +88,16 @@ class BackendAction
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new BackendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
+		// get working languages
+		$languages = BackendLanguage::getWorkingLanguages();
+		$workingLanguages = array();
+
+		// loop languages and build an array that we can assign
+		foreach($languages as $abbr => $label) $workingLanguages[] = array('abbr' => $abbr, 'label' => $label, 'selected' => ($abbr == BackendLanguage::getWorkingLanguage()));
+
+		// assign the languages
+		$this->tpl->assign('workingLanguages', $workingLanguages);
+
 		// create action-object
 		$object = new $actionClassName();
 

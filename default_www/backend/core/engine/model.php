@@ -69,18 +69,18 @@ class BackendModel
 	 * Get the modules
 	 *
 	 * @return	array
-	 * @param	bool[optional] $onlyActive
+	 * @param	bool[optional] $activeOnly
 	 */
-	public static function getModules($onlyActive = true)
+	public static function getModules($activeOnly = true)
 	{
 		// redefine
-		$onlyActive = (bool) $onlyActive;
+		$activeOnly = (bool) $activeOnly;
 
 		// get db
 		$db = self::getDB();
 
 		// only return the active modules
-		if($onlyActive) return $db->getColumn('SELECT name
+		if($activeOnly) return $db->getColumn('SELECT name
 												FROM modules
 												WHERE active = ?;',
 												array('Y'));

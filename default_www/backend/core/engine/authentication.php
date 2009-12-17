@@ -80,14 +80,16 @@ class BackendAuthentication
 	public static function isAllowedAction($action, $module)
 	{
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
-		$alwaysAllowed = array('error' => array('index'), 'authentication' => array('index', 'logout'));
+		$alwaysAllowed = array(	'dashboard' => array('index' => 7),
+								'error' => array('index' => 7),
+								'authentication' => array('index' => 7, 'logout' => 7));
 
 		// redefine
 		$action = (string) $action;
 		$module = (string) $module;
 
 		// is this action an action that doesn't require authentication?
-		if(isset($alwaysAllowed[$module]) && in_array($action, $alwaysAllowed[$module])) return true;
+		if(isset($alwaysAllowed[$module][$action])) return true;
 
 		// we will cache everything
 		if(empty(self::$allowedActions))
@@ -95,8 +97,17 @@ class BackendAuthentication
 			// init var
 			$db = BackendModel::getDB();
 
+			// get active modules
+			$activeModules = (array) $db->getColumn('SELECT m.name
+														FROM modules AS m
+														WHERE m.active = ?;',
+														array('Y'));
+
+			// add always allowed
+			foreach($alwaysAllowed as $module => $actions) $activeModules[] = $module;
+
 			// get allowed actions
-			$allowedActions = (array) $db->retrieve('SELECT gra.module, gra.action, gra.level
+			$allowedActionsRows = (array) $db->retrieve('SELECT gra.module, gra.action, gra.level
 														FROM users_sessions AS us
 														INNER JOIN users AS u ON us.user_id = u.id
 														INNER JOIN groups_rights_actions AS gra ON u.group_id = gra.group_id
@@ -104,8 +115,15 @@ class BackendAuthentication
 														array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all actions and there level
-			foreach($allowedActions as $row) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+			foreach($allowedActionsRows as $row)
+			{
+				// add if the module is active
+				if(in_array($row['module'], $activeModules)) self::$allowedActions[$row['module']][$row['action']] = (int) $row['level'];
+			}
 		}
+
+		// is this action an action that doesn't require authentication?
+		if(isset($alwaysAllowed[$module][$action])) return true;
 
 		// do we know a level for this action
 		if(isset(self::$allowedActions[$module][$action]))

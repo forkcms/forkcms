@@ -87,9 +87,15 @@ class BackendTemplate extends SpoonTemplate
 	{
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
+		$this->mapModifier('getURL', array('BackendTemplateModifiers', 'getURL'));
 
 		// convert var into navigation, syntax {$var|getnavigation:<startdepth>:<enddepth>}
 		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
+		$this->mapModifier('getNavigation', array('BackendTemplateModifiers', 'getNavigation'));
+
+		// convert var into navigation, syntax {$var|getmainnavigation}
+		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
+		$this->mapModifier('getMainNavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
 
 		// string
 		$this->mapModifier('truncate', array('BackendTemplateModifiers', 'truncate'));
@@ -338,7 +344,7 @@ class BackendTemplateModifiers
 	 * Convert a var into navigation-html
 	 *  syntax: {$var|getnavigation:startdepth[:maximumdepth]}
 	 *
-	 * @return	void
+	 * @return	string
 	 * @param	string[optional] $var
 	 * @param	int $startDepth
 	 * @param	int[optional] $maximumDepth
@@ -354,6 +360,26 @@ class BackendTemplateModifiers
 		$maximumDepth = ($maximumDepth !== null) ? (int) $maximumDepth : null;
 
 		return $navigation->getNavigation($startDepth, $maximumDepth);
+	}
+
+
+	/**
+	 * Convert a var into main-navigation-html
+	 *  syntax: {$var|getmainnavigation}
+	 *
+	 * @return	string
+	 * @param	string $var
+	 */
+	public static function getMainNavigation($var = null)
+	{
+		// get navigation
+		$navigation = Spoon::getObjectReference('navigation');
+
+		// redefine
+		$var = (string) $var;
+
+		// return
+		return $navigation->getMainNavigation();
 	}
 
 

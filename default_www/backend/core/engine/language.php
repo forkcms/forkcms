@@ -206,6 +206,19 @@ class BackendLanguage
 
 
 	/**
+	 * Get all possible working languages
+	 *
+	 * @return	array
+	 */
+	public static function getWorkingLanguages()
+	{
+		return array('nl' => BackendLanguage::getLabel('Dutch'),
+					 'fr' => BackendLanguage::getLabel('French'),
+					 'en' => BackendLanguage::getLabel('English')); // @todo gaan we dit hardcoded laten?
+	}
+
+
+	/**
 	 * Set the current working language
 	 *
 	 * @return	void

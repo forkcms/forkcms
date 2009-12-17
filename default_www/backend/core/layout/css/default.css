@@ -1484,20 +1484,6 @@ input#subject {
 
 	}
 
-	/* @todo look up facebook link colors */
-	.facebookConnect a:link,
-	.facebookConnect a:visited {
-		color: #285B9B;
-		border-color: #AFC2DA;
-	}
-
-	.facebookConnect a:hover,
-	.facebookConnect a:active,
-	.facebookConnect a:focus {
-		color: #2E76D1;
-		border-color: #96BFF2;
-	}
-
 /* Other */
 label {
 	font-size: 1.1em;

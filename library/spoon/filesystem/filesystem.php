@@ -512,7 +512,8 @@ class SpoonFile
 	 */
 	public static function getExtension($filename, $lowercase = true)
 	{
-		// @todo rewrite using reverse strpos
+		// @todo rewrite using reverse strpos, do mind .tar.gz
+		// if $extension == '.gz' check if .tar is there
 		// init var
 		$filename = ($lowercase) ? strtolower((string) $filename) : (string) $filename;
 

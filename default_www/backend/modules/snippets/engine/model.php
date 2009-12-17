@@ -51,24 +51,19 @@ class BackendSnippetsModel
 	 *
 	 * @return	bool
 	 * @param	int $id
-	 * @param	bool[optional] $active
+	 * @param	bool[optional] $activeOnly
 	 */
-	public static function exists($id, $active = true)
+	public static function exists($id, $activeOnly = true)
 	{
-		/*
-		 * @todo dit geeft een rare indruk. $active = true. Je zou dan verwachten dat als je false meegeeft, hij
-		 * rekening gaat houden en enkel de in-actieve resultaten zal teruggeven. Status zou true/false/null moetn zijn?
-		 * Spreek mij tegen als ge der anders over denkt. (Davy)
-		 */
 		// redefine
 		$id = (int) $id;
-		$active = (bool) $active;
+		$activeOnly = (bool) $activeOnly;
 
 		// get db
 		$db = BackendModel::getDB();
 
 		// if the item should also be active, there should be at least one row to return true
-		if($active) return ($db->getNumRows('SELECT s.id
+		if($activeOnly) return ($db->getNumRows('SELECT s.id
 												FROM snippets AS s
 												WHERE s.id = ? AND s.status = ?;',
 												array($id, 'active')) >= 1);
@@ -181,7 +176,7 @@ class BackendSnippetsModel
 		// build array
 		$values['id'] = $id;
 		$values['user_id'] = BackendAuthentication::getUser()->getUserId();
-		$values['language'] = BL::getWorkingLanguage(); // @todo moeten we dit niet sowieso overnemen van $version aangezien dat anders kan misbruikt worden
+		$values['language'] = $version['language'];
 		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
 		$values['status'] = 'active';
 		$values['created_on'] = date('Y-m-d H:i:s', $version['created_on']);

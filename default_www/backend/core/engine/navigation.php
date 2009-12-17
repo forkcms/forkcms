@@ -158,11 +158,122 @@ class BackendNavigation
 		$startDepth = (int) $startDepth;
 		$maximumDepth = ($maximumDepth !== null) ? (int) $maximumDepth :  $startDepth + 1;
 
+		if($startDepth == 1) throw new BackendException('You can\'t use startDepth 1.');
+
 		// get selected keys, we need them for the selected state
 		$selectedKeys = (array) $this->getSelectedKeys();
 
 		// build and return the HTML
 		return $this->createHTML($this->navigation, $startDepth, $maximumDepth, $selectedKeys);
+	}
+
+
+	/**
+	 * Get the HTML for the navigation
+	 *
+	 * @return	string
+	 * @param	int $startDepth
+	 * @param	int[optional] $maximumDepth
+	 */
+	public function getMainNavigation()
+	{
+		// get selected keys, we need them for the selected state
+		$selectedKeys = (array) $this->getSelectedKeys();
+
+		$html = '<ul>';
+
+		// build and return the HTML
+		foreach($this->navigation as $key => $level)
+		{
+			if($key !== 'modules')
+			{
+				// break urls into parts
+				$chunks = (array) explode('/', $level['url']);
+
+				// set first chunk
+				if(!isset($chunks[1])) $chunks[1] = '';
+				if($level['url'] == 'pages/index') {
+					$var = BackendAuthentication::isAllowedAction('index', 'pages');
+
+//					Spoon::dump($var, false);
+				}
+
+				// is allowed?
+				if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
+				{
+					// open li-tag
+					if(in_array($key, $selectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction()) $html .= '<li class="selected">'."\n";
+					else $html .= '<li>'."\n";
+
+					// add the link
+					$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. $level['label'] .'</a>'."\n";
+
+					// end li
+					$html .'</li>'."\n";
+				}
+			}
+
+			// modules is a special one
+			else
+			{
+				// loop the childs
+				foreach($level['children'] as $child)
+				{
+					// no url provided?
+					if($child['url'] === null)
+					{
+						// loop all childs till we find a valid one
+						foreach($child['children'] as $subChild)
+						{
+							// break urls into parts
+							$chunks = (array) explode('/', $subChild['url']);
+
+							// set first chunk
+							if(!isset($chunks[1])) $chunks[1] = '';
+
+							// is allowed?
+							if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
+							{
+								// reset the child url
+								$child['url'] = $subChild['url'];
+
+								// stop after we found the first one
+								break;
+							}
+						}
+					}
+
+					// break urls into parts
+					$chunks = (array) explode('/', $child['url']);
+
+					// set first chunk
+					if(!isset($chunks[1])) $chunks[1] = '';
+
+					// is allowed?
+					if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
+					{
+						// open li-tag
+						if(in_array($key, $selectedKeys, true) || $child['url'] == $this->url->getModule() .'/'. $this->url->getAction()) $html .= '<li class="selected">'."\n";
+						else $html .= '<li>'."\n";
+
+						// add the link
+						$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. $level['label'] .'</a>'."\n";
+
+						// end li
+						$html .'</li>'."\n";
+
+						// stop
+						break;
+					}
+				}
+			}
+		}
+
+		// end ul
+		$html .= '</ul>';
+
+		// return
+		return $html;
 	}
 
 

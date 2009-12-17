@@ -297,7 +297,7 @@ class BackendPagesModel
 		// get db
 		$db = BackendModel::getDB();
 
-		if($id = 0) return '/';
+		if($id == 0) return '/';
 
 		$url = (string) $db->getVar('SELECT m.url
 										FROM pages AS p

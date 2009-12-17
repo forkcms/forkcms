@@ -16,19 +16,17 @@
 											</h1>
 										</td>
 										<td>
-											<!-- @todo -->
-											<select>
-												<option>Nederlands</option>
-												<option>Frans</option>
-												<option>Engels</option>
+											<select id="workingLanguage">
+												{iteration:workingLanguages}
+												<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label}</option>
+												{/iteration:workingLanguages}
 											</select>
-
 										</td>
 									</tr>
 								</table>
 							</td>
 							<td id="navigation">
-								{$var|getnavigation:1:1}
+								{$var|getmainnavigation}
 							</td>
 							<td id="user">
 								<ul>

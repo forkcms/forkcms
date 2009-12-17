@@ -33,7 +33,7 @@ class BackendAJAX
 	/**
 	 * Default constructor
 	 *
-	 * @todo	write some decent validation
+	 * @todo	@tijs	write some decent validation
 	 *
 	 * @return	void
 	 */
