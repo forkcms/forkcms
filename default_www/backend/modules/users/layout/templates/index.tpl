@@ -1,6 +1,6 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
-	<td id="content">
+	<td id="contentHolder">
 			<div id="statusBar">
 				<p class="breadcrumb">Blog > Overzicht</p>
 				<div class="oneLiner" id="searchModuleHolder">

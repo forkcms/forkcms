@@ -26,7 +26,7 @@
 		<td id="fullwidthSwitch">
 			<a href="#close">&nbsp;</a>
 		</td>
-		<td id="content">
+		<td id="contentHolder">
 			<div class="inner">
 				{form:add}
 					<table border="0" cellspacing="0" cellpadding="0" width="100%">

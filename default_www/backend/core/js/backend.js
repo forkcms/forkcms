@@ -10,7 +10,7 @@ jsBackend = {
 		jsBackend.controls.init();
 		//jsBackend.effects.init();
 		jsBackend.forms.init();
-		//jsBackend.tabs.init();
+		jsBackend.tabs.init();
 		//jsBackend.tableSequenceByDragAndDrop.init();
 	},
 	
