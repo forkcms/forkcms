@@ -65,14 +65,38 @@ jsBackend.controls = {
 	// init, something like a constructor
 	init: function() { 
 		jsBackend.controls.bindWorkingLanguageSelection();
+		jsBackend.controls.bindFullWidthSwitch()
 	},
-	//
+	// toggle between full width and sidebar-layout
+	bindFullWidthSwitch: function() {
+		$('#fullwidthSwitch a').bind('click', function(evt) {
+			// prevent default behaviour
+			evt.preventDefault();
+			
+			// toggle
+			$('#pagesTree, #moduleList').toggle()
+			
+			// add class
+			$(this).parent().addClass('collapsed')
+		});
+	},
+	// toogle between the working languages
 	bindWorkingLanguageSelection: function() {
 		$('#workingLanguage').bind('change', function(evt) {
 			// preventDefault
 			evt.preventDefault();
+
+			// break the url int parts
+			var urlChunks = document.location.pathname.split('/');
 			
-			// @todo	redirect only module not the action
+			// get the querystring, we will append it later
+			var queryString = document.location.search;
+			
+			// replace the third element with the new language
+			urlChunks[2] = $(this).val();
+
+			// rebuild the url and redirect
+			document.location.href = urlChunks.join('/') + queryString;
 		});
 	},
 	// end
