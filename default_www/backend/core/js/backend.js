@@ -10,12 +10,13 @@ jsBackend = {
 		jsBackend.controls.init();
 		//jsBackend.effects.init();
 		jsBackend.forms.init();
+		jsBackend.layout.init();
 		jsBackend.tabs.init();
 		//jsBackend.tableSequenceByDragAndDrop.init();
 	},
 	
 	// end
-	_eoo: true
+	eof: true
 }	
 
 jsBackend.balloons = {
@@ -56,7 +57,7 @@ jsBackend.balloons = {
 		});
 	},
 	// end
-	_eoo: true
+	eof: true
 }
 
 
@@ -100,7 +101,7 @@ jsBackend.controls = {
 		});
 	},
 	// end
-	_eoo: true
+	eof: true
 }
 
 jsBackend.effects = {
@@ -126,7 +127,7 @@ jsBackend.effects = {
 	},
 		
 	// end
-	_eoo: true
+	eof: true
 }
 
 jsBackend.forms = {
@@ -249,7 +250,18 @@ jsBackend.forms = {
 	},
 	
 	// end
-	_eoo: true
+	eof: true
+}
+
+jsBackend.layout = {
+	// init, something like a constructor
+	init: function() {
+		// hovers
+		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
+		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
+	},
+	// end
+	eof: true
 }
 
 jsBackend.tabs = {
@@ -259,7 +271,7 @@ jsBackend.tabs = {
 	},
 	
 	// end
-	_eoo: true
+	eof: true
 }
 
 jsBackend.tableSequenceByDragAndDrop = {
@@ -306,7 +318,7 @@ jsBackend.tableSequenceByDragAndDrop = {
 	},
 
 	// end
-	_eoo: true
+	eof: true
 }
 
 $(document).ready(function() { jsBackend.init(); });

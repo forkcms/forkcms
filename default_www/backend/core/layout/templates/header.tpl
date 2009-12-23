@@ -1,13 +1,14 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/head.tpl"}
 <body>
 	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
-	<table border="0" cellspacing="0" cellpadding="0" id="encloser" width="100%" height="100%">
+	<table border="0" cellspacing="0" cellpadding="0" id="encloser">
 		<tr>
 			<td>
 				<div id="headerHolder">
 					<table cellspacing="0" cellpadding="0" id="header">
 						<tr>
 							<td id="siteTitle" width="266">
+
 								<table border="0" cellspacing="0" cellpadding="0">
 									<tr>
 										<td>
@@ -30,7 +31,11 @@
 							</td>
 							<td id="user">
 								<ul>
-									<li class="settings"><a href="{$var|geturl:'index':'settings'}">{$lblSettings|ucfirst}</a></li>
+									<li class="settings">
+										<a href="{$var|geturl:'index':'settings'}" class="button linkButton icon iconSettings">
+											<span><span><span>{$lblSettings|ucfirst}</span></span></span>
+										</a>
+									</li>
 									<li>
 										<table border="0" cellspacing="0" cellpadding="0">
 											<tr>
@@ -50,5 +55,13 @@
 		<tr>
 			<td id="container">
 				<div id="main">
-					{option:errorMessage}<div class="error">{$errorMessage}</div>{/option:errorMessage}
-					{option:formError}<div class="error">{$errGeneralFormError}</div>{/option:formError}
+					{option:errorMessage}
+						<div class="message error">
+							<p>{$errorMessage}</p>
+						</div>
+					{/option:errorMessage}
+					{option:formError}
+						<div class="message error">
+							<p>{$errGeneralFormError}</p>
+						</div>
+					{/option:formError}

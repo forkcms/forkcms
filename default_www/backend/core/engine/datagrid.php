@@ -60,13 +60,27 @@ class BackendDataGrid extends SpoonDataGrid
 	 */
 	public function addColumn($name, $label = null, $value = null, $url = null, $title = null, $image = null, $sequence = null)
 	{
+		// known actions that should have a button
+		if(in_array($name, array('add', 'edit', 'delete')))
+		{
+			// rebuild value, it should have special markup
+			$value = '<a href="'. $url .'" class="button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton">
+						<span><span><span>'. $value .'</span></span></span>
+					</a>';
+
+			// reset url
+			$url = null;
+		}
+
 		// add the column
 		parent::addColumn($name, $label, $value, $url, $title, $image, $sequence);
 
 		// known actions
 		if(in_array($name, array('add', 'edit', 'delete')))
 		{
-			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name)));
+			// add special attributes for actions we know
+			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),
+													'width' => '10%'));
 		}
 	}
 
@@ -110,9 +124,6 @@ class BackendDataGrid extends SpoonDataGrid
 	{
 		// default url
 		$this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
-
-		// sorting icons, used to click on
-		$this->setSortingIcons('/backend/core/layout/images/icons/sort_ascending.gif', '/backend/core/layout/images/icons/sorted_ascending.gif', '/backend/core/layout/images/icons/sort_descending.gif', '/backend/core/layout/images/icons/sorted_descending.gif');
 
 		// sorting labels
 		$this->setSortingLabels(BL::getLabel('SortAscending'), BL::getLabel('SortedAscending'), BL::getLabel('SortDescending'), BL::getLabel('SortedDescending'));
