@@ -51,59 +51,51 @@ class BackendNavigation
 
 
 	/**
-	 * Create the html for the navigation
-	 *	It will generate valid HTML for the given depth until the maximum depth
+	 * Get the HTML for the navigation
 	 *
 	 * @return	string
-	 * @param	array $navigation
 	 * @param	int $startDepth
-	 * @param	int $maximumDepth
-	 * @param	array[optional] $selectedKeys
-	 * @param	int[optional] $currentDepth
-	 * @param	string[optional] $html
+	 * @param	int[optional] $maximumDepth
 	 */
-	private function createHTML($navigation, $startDepth, $maximumDepth, $selectedKeys = array(), $currentDepth = 1, $html = '')
+	public function getNavigation()
 	{
-		// redefine
-		$navigation = (array) $navigation;
-		$startDepth = (int) $startDepth;
-		$maximumDepth = (int) $maximumDepth;
-		$selectedKeys = (array) $selectedKeys;
-		$currentDepth = (int) $currentDepth;
-		$html = (string) $html;
+		// get selected keys, we need them for the selected state
+		$selectedKeys = (array) $this->getSelectedKeys();
 
-		// add opening ul-tag
-		$html .= '<ul>'."\n";
+		// nothing found: no sidemenu
+		if(!isset($selectedKeys[0]) || !isset($this->navigation[$selectedKeys[0]]['children'])) return;
 
-		// loop the incomming array
-		foreach($navigation as $key => $level)
+		// init html
+		$html = '<ul>'."\n";
+
+		// search parent
+		foreach($this->navigation[$selectedKeys[0]]['children'] as $key => $level)
 		{
-			// if no url is known we have to use the first present url
-			if($level['url'] === null)
+			// undefined url?
+			if($level['url'] === null && isset($level['children']))
 			{
-				// modules is something special, it can contain multiple levels
-				if($key == 'modules')
+				// loop childs till we find a valid url
+				foreach($level['children'] as $child)
 				{
-					// get the keys (the array is name-based not numeric)
-					$keys = array_keys($navigation[$key]['children']);
+					// break urls into parts
+					$chunks = (array) explode('/', $child['url']);
 
-					// loop keys
-					foreach($keys as $child)
+					if(!isset($chunks[1])) Spoon::dump($child);
+
+					// check if the action is allowed
+					if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 					{
-						if(isset($navigation[$key]['children'][$child]['children'][0]['url']) && BackendAuthentication::isAllowedModule($child))
-						{
-							$level['url'] = $navigation[$key]['children'][$child]['children'][0]['url'];
-							break;
-						}
+						// reset link
+						$level['url'] = $child['url'];
+
+						// stop searching for an url
+						break;
 					}
 				}
-
-				// other first-level elements don't have multiple levels
-				else
-				{
-					if(isset($navigation[$key]['children'][0]['url'])) $level['url'] = $navigation[$key]['children'][0]['url'];
-				}
 			}
+
+			// no valid url, piss off
+			if($level['url'] === null) continue;
 
 			// break urls into parts
 			$chunks = (array) explode('/', $level['url']);
@@ -111,60 +103,70 @@ class BackendNavigation
 			// set first chunk
 			if(!isset($chunks[1])) $chunks[1] = '';
 
-			// is the html requested?
-			if($currentDepth >= $startDepth && $currentDepth <= $maximumDepth && BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
+			// is allowed?
+			if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 			{
+				// selected state
+				$selected = (bool) (in_array($key, $selectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction());
+
 				// open li-tag
-				if(in_array($key, $selectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction()) $html .= '<li class="selected">'."\n";
+				if($selected) $html .= '<li class="selected">'."\n";
 				else $html .= '<li>'."\n";
 
 				// add the link
 				$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. $level['label'] .'</a>'."\n";
-			}
 
-			// has the current element children?
-			if(isset($navigation[$key]['children']) && in_array($key, $selectedKeys, true) && BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
-			{
-				// recursive alert, build the childs and reset the html
-				$html = $this->createHTML($navigation[$key]['children'], $startDepth, $maximumDepth, $selectedKeys, $currentDepth + 1, $html);
-			}
+				// should we go deeper?
+				if($selected && isset($level['children']))
+				{
+					// init var
+					$first = true;
 
-			// is the html requested?
-			if($currentDepth >= $startDepth && $currentDepth <= $maximumDepth && BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
-			{
-				// end the li-tag
-				$html .= '</li>' ."\n";
+					foreach($level['children'] as $child)
+					{
+						$subHTML = '<ul>'."\n";
+
+						// break urls into parts
+						$chunks = (array) explode('/', $child['url']);
+
+						// set first chunk
+						if(!isset($chunks[1])) $chunks[1] = '';
+
+						// is allowed?
+						if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
+						{
+							// selected state
+							$childSelected = (bool) ($child['url'] == $this->url->getModule() .'/'. $this->url->getAction());
+
+							if($childSelected) $subHTML .= '<li class="selected">'."\n";
+							else $subHTML .= '<li>'."\n";
+
+							// add the link
+							$subHTML .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. $child['label'] .'</a>'."\n";
+
+							// end li
+							$subHTML .='</li>'."\n";
+						}
+
+						// end html, or replace it by nothing
+						if($subHTML == '<ul>'."\n") $subHTML = '';
+						else $subHTML .= '</ul>'."\n";
+
+						// add html
+						$html .= $subHTML;
+					}
+				}
+
+				// end li
+				$html .'</li>'."\n";
 			}
 		}
 
-		// end the ul-tag
+		// end html
 		$html .= '</ul>'."\n";
 
-		// return the HTML that was build
+		// return the generated html
 		return $html;
-	}
-
-
-	/**
-	 * Get the HTML for the navigation
-	 *
-	 * @return	string
-	 * @param	int $startDepth
-	 * @param	int[optional] $maximumDepth
-	 */
-	public function getNavigation($startDepth, $maximumDepth = null)
-	{
-		// redefine
-		$startDepth = (int) $startDepth;
-		$maximumDepth = ($maximumDepth !== null) ? (int) $maximumDepth :  $startDepth + 1;
-
-		if($startDepth == 1) throw new BackendException('You can\'t use startDepth 1.');
-
-		// get selected keys, we need them for the selected state
-		$selectedKeys = (array) $this->getSelectedKeys();
-
-		// build and return the HTML
-		return $this->createHTML($this->navigation, $startDepth, $maximumDepth, $selectedKeys);
 	}
 
 
@@ -177,26 +179,29 @@ class BackendNavigation
 	 */
 	public function getMainNavigation()
 	{
+		// some modules shouldn't be showed in the main-navigation
+		$modulesToIgnore = array('settings');
+
 		// get selected keys, we need them for the selected state
 		$selectedKeys = (array) $this->getSelectedKeys();
 
+		// init html
 		$html = '<ul>';
 
 		// build and return the HTML
 		foreach($this->navigation as $key => $level)
 		{
-			if($key !== 'modules')
+			// ignore some modules
+			if(in_array($key, $modulesToIgnore)) continue;
+
+
+			if($key == 'dashboard' || $key == 'pages')
 			{
 				// break urls into parts
 				$chunks = (array) explode('/', $level['url']);
 
 				// set first chunk
 				if(!isset($chunks[1])) $chunks[1] = '';
-				if($level['url'] == 'pages/index') {
-					$var = BackendAuthentication::isAllowedAction('index', 'pages');
-
-//					Spoon::dump($var, false);
-				}
 
 				// is allowed?
 				if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
@@ -216,11 +221,13 @@ class BackendNavigation
 			// modules is a special one
 			else
 			{
+				if(!isset($level['children'])) continue;
+
 				// loop the childs
 				foreach($level['children'] as $child)
 				{
 					// no url provided?
-					if($child['url'] === null)
+					if($child['url'] === null && isset($child['children']))
 					{
 						// loop all childs till we find a valid one
 						foreach($child['children'] as $subChild)
@@ -242,6 +249,8 @@ class BackendNavigation
 							}
 						}
 					}
+
+					if($child['url'] == '') continue;
 
 					// break urls into parts
 					$chunks = (array) explode('/', $child['url']);

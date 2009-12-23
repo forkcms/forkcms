@@ -194,6 +194,8 @@ class BackendURL
 				// we have access
 				else
 				{
+//					Spoon::dump(BackendAuthentication::isAllowedAction($action, $module));
+
 					// can our user execute the requested action?
 					if(!BackendAuthentication::isAllowedAction($action, $module))
 					{

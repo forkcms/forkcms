@@ -88,9 +88,6 @@ class BackendAuthentication
 		$action = (string) $action;
 		$module = (string) $module;
 
-		// GODMILJAAAAAR! @todo facebook suckt. en wtf?
-		//if($module === 'authentication') return true;
-
 		// is this action an action that doesn't require authentication?
 		if(isset($alwaysAllowed[$module][$action])) return true;
 
@@ -107,7 +104,7 @@ class BackendAuthentication
 														array('Y'));
 
 			// add always allowed
-			foreach($alwaysAllowed as $module => $actions) $activeModules[] = $module;
+			foreach($alwaysAllowed as $allowedModule => $actions) $activeModules[] = $allowedModule;
 
 			// get allowed actions
 			$allowedActionsRows = (array) $db->retrieve('SELECT gra.module, gra.action, gra.level

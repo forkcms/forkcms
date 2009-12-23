@@ -1,17 +1,17 @@
 <?php
 
 /**
- * DashboardIndex
+ * BlogIndex
  *
  * This is the index-action (default), it will display the login screen
  *
  * @package		backend
- * @subpackage	dashboard
+ * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class DashboardIndex extends BackendBaseActionIndex
+class BlogSettings extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action

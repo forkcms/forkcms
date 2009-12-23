@@ -78,8 +78,8 @@ class ApplicationRouting
 		else $application = self::DEFAULT_APPLICATION;
 
 		// define APP
-		define('APPLICATION', $application);
-		define('NAMED_APPLICATION', $proposedApplication);
+		if(!defined('APPLICATION')) define('APPLICATION', $application);
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', $proposedApplication);
 	}
 }
 
