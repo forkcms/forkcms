@@ -89,7 +89,7 @@ class BackendPagesModel
 				$temp['navigation_title'] = $page['navigation_title'];
 
 				// add it
-				$navigation[$type][$page['parent_id']][$pageID] = $temp;
+				$navigation['page'][$page['parent_id']][$pageID] = $temp;
 			}
 		}
 

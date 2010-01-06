@@ -129,6 +129,7 @@ class BackendBaseAction
 		$this->header->addJS('jquery/jquery.js', 'core');
 		$this->header->addJS('jquery/jquery.ui.js', 'core');
 		$this->header->addJS('backend.js', 'core', true);
+		$this->header->addJS('utils.js', 'core', true);
 
 		// add css
 		$this->header->addCSS('screen.css', 'core');

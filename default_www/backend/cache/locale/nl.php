@@ -110,6 +110,7 @@ $lbl['core']['Domains'] = 'domeinen';
 $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
+$lbl['core']['Editor'] = 'editor';
 $lbl['core']['Email'] = 'email';
 $lbl['core']['EmailWebmaster'] = 'email webmaster';
 $lbl['core']['Extra'] = 'extra';
@@ -125,13 +126,14 @@ $lbl['core']['Keywords'] = 'zoekwoorden';
 // l
 $lbl['core']['Languages'] = 'talen';
 $lbl['core']['LastEditedOn'] = 'laats aangepast op';
+$lbl['core']['LastSave'] = 'laatst bewaard';
 $lbl['core']['Login'] = 'login';
 $lbl['core']['Logout'] = 'afmelden';
 // m
 $lbl['core']['MetaCustom'] = 'meta custom';
 $lbl['core']['MetaDescription'] = 'meta-omschrijving';
 $lbl['core']['MetaInformation'] = 'meta-informatie';
-$lbl['core']['MetaKeywords'] = 'meta keywords';
+$lbl['core']['MetaKeywords'] = 'sleutelwoorden pagina';
 // n
 $lbl['core']['Name'] = 'naam';
 $lbl['core']['NavigationTitle'] = 'navigatie titel';
@@ -144,6 +146,7 @@ $lbl['core']['OK'] = 'ok';
 $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 $lbl['core']['PageTitle'] = 'paginatitel';
+$lbl['core']['Preview'] = 'preview';
 $lbl['core']['Previous'] = 'vorige';
 $lbl['core']['PreviousPage'] = 'vorige pagina';
 $lbl['core']['Published'] = 'gepubliceerd';
@@ -173,6 +176,7 @@ $lbl['core']['Tags'] = 'tags';
 $lbl['core']['Template'] = 'template';
 $lbl['core']['Time'] = 'tijd';
 $lbl['core']['Title'] = 'titel';
+$lbl['core']['Titles'] = 'titels';
 // u
 $lbl['core']['Update'] = 'wijzig';
 $lbl['core']['URL'] = 'URL';
@@ -181,6 +185,7 @@ $lbl['core']['Username'] = 'gebruikersnaam';
 $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 // v
 $lbl['core']['Versions'] = 'versies';
+$lbl['core']['Visible'] = 'zichtbaar';
 // w
 $lbl['core']['Websites'] = 'websites';
 $lbl['core']['WebsiteTitle'] = 'website titel';
@@ -202,6 +207,7 @@ $lbl['core']['WebsiteTitle'] = 'website titel';
  */
 $msg = array();
 // a
+$msg['core']['ActivateNoFollow'] = 'Activeer <code>rel="nofollow"</code>';
 $msg['core']['Added'] = 'item toegevoegd.';
 $msg['spotlight']['Added'] = 'Item <em>%s</em> toegevoegd.';
 $msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
@@ -236,6 +242,14 @@ $msg['snippets']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
 $msg['pages']['HelpAdd'] = '&larr; Click a page name in the tree structure to edit it or';
 $msg['settings']['HelpEmailWebmaster'] = 'Stuur notificaties van het CMS naar dit e-mailadres.';
+
+$msg['pages']['HelpPageTitle'] = 'De titel die in het venster van de browser staat (<code>&lt;title&gt;</code>).';
+$msg['pages']['HelpNavigationTitle'] = 'Als de paginatitel te lang is om in het menu te passen, geef dan een verkorte titel in.';
+$msg['pages']['HelpNoFollow'] = 'Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.';
+$msg['pages']['HelpMetaCustom'] = 'Laat toe om extra, op maat gemaakte metatags toe te voegen.';
+$msg['pages']['HelpMetaDescription'] = 'De pagina-omschrijving die wordt getoond in de resultaten van zoekmachines. Hou het kort en krachtig.';
+$msg['pages']['HelpMetaKeywords'] = 'De sleutelwoorden (keywords) die deze pagina omschrijven.';
+$msg['pages']['HelpMetaURL'] = 'Vervang de automatisch gegenereerde URL door een zelfgekozen URL.';
 // i
 // j
 // k
@@ -251,6 +265,7 @@ $msg['core']['NoItems'] = 'Er zijn geen items aanwezig.';
 $msg['core']['NoItemsPublished'] = 'Er zijn geen items gepubliceerd.';
 $msg['core']['NoItemsScheduled'] = 'Er zijn geen items gepland.';
 $msg['core']['NoRevisions'] = 'Er zijn nog geen versies.';
+$msg['core']['NoTags'] = 'Er zijn nog geen tags.';
 $msg['core']['NotAllowedActionTitle'] = 'Verboden';
 $msg['core']['NotAllowedActionMessage'] = 'Deze actie is niet toegestaan.';
 $msg['core']['NotAllowedModuleTitle'] = 'Verboden';

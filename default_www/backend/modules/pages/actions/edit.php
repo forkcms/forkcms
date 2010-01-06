@@ -58,7 +58,7 @@ class PagesEdit extends BackendBaseActionEdit
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -126,11 +126,14 @@ class PagesEdit extends BackendBaseActionEdit
 		$this->frm->addCheckBox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
 		$this->frm->addTextField('navigation_title', $this->record['navigation_title']);
 
+		// @todo	tags
+		$this->frm->addTextField('tags', null, null, 'inputTextfield tags', 'inputTextfieldError tags');
+
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
 		// edit button
-		$this->frm->addButton('submit', ucfirst(BL::getLabel('Edit')), 'submit');
+		$this->frm->addButton('edit', ucfirst(BL::getLabel('Edit')), 'submit', 'inputButton button mainButton');
 	}
 
 
@@ -169,6 +172,12 @@ class PagesEdit extends BackendBaseActionEdit
 
 		// parse the form
 		$this->frm->parse($this->tpl);
+
+		// @todo	assign full url
+		$this->tpl->assign('pageUrl', '');
+
+		// parse the tree
+		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 	}
 
 

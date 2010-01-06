@@ -27,272 +27,252 @@
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="#">http://www.mysite.be/nl/</a></span>
+								<span><a href="{$SITE_URL}">{$SITE_URL}</a></span>
 							</p>
 						</div>
 					</div>
 					<div id="tabs" class="tabs">
 						<ul>
 							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-							<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
 							<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
-							<li><a href="#tabSecurity">{$lblSecurity|ucfirst}</a></li>
 							<li><a href="#tabTemplate">{$lblTemplate|ucfirst}</a></li>
 							<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
 						</ul>
 
 						<div id="tabContent">
-							{iteration:blocks}
-									<div class="content{$blocks.index} contentBlock" rel="contentA">
-										<div class="contentTitle selected">
-											<table border="0" cellspacing="0" cellpadding="0">
-												<tr>
-													<td class="numbering">
-														{$blocks.index}
-													</td>
-													<td>
-														<div class="oneLiner">
-															<p>
-																<a href="#tabsContent">
-																	<span>{$blocks.name}</span>
-																</a>
-															</p>
-															<p>
-																{$blocks.ddmExtraId} {$blocks.ddmExtraIdError}
-															</p>
-														</div>
-													</td>
-												</tr>
-											</table>
-										</div>
-										<div class="editContent">
-											<fieldset>
-												{$blocks.txtHTML} {$blocks.txtHTMLError}
+							<table border="0" cellpadding="0" cellspacing="0" width="100%">
+								<tbody>
+									<tr>
+										<td>
+											<div id="editContent">
+												{iteration:blocks}
+												<div style="display: block;" class="contentA contentBlock" rel="contentA">
+													<div class="contentTitle selected hover">
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tbody><tr>
+																<td class="numbering">{$blocks.index}</td>
+																<td>
+																	<div class="oneLiner">
+																		<p><a href="#tabsContent"><span>{$blocks.name}</span></a></p>
+																		<p>{$blocks.ddmExtraId}</p>
+																	</div>
+																</td>
+															</tr>
+														</tbody></table>
+													</div>
+													<div class="editContent">
+														<fieldset>
+															{$blocks.txtHTML}
+														</fieldset>
+													</div>
+												</div>
+												{/iteration:blocks}
+											</div>
+										</td>
+										<td id="pagesSide">
+											<div id="publishOptions" class="box">
+												<div class="heading">
+													<h3>Publish</h3>
+												</div>
+												<div class="options">
+													<div class="buttonHolder">
+														<a href="{$previewUrl}" class="button icon iconZoom" target="_blank">
+															<span><span><span>{$lblPreview|ucfirst}</span></span></span>
+														</a>
+													</div>
+												</div>
+												<div class="options">
+													<ul class="inputList">
+														{iteration:hidden}
+														<li>
+															{$hidden.rbtHidden}
+															<label for="{$hidden.id}">{$hidden.label}</label>
+														</li>
+														{/iteration:hidden}
+													</ul>
+												</div>
+												<div class="footer">
+													<table border="0" cellpadding="0" cellspacing="0">
+														<tbody>
+															<tr>
+																<td><p>Last save: 15:43</p></td>
+																<td>
+																	<div class="buttonHolderRight">
+																		{$btnAdd}
+																	</div>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+											</div>
 
-												<div class="contentTypeModule">
-													<p>A module is attached. Go to <a href="#">blog</a> to edit this content.</p>
+											<div class="box" id="template">
+												<div class="heading">
+													<h4>Template: About</h4>
+													<div class="buttonHolderRight">
+														<a href="pages_edit_page.html#tabTemplate" class="button icon iconEdit iconOnly" id="editTemplate"><span><span><span>Edit</span></span></span></a>
+													</div>
+												</div>
+												<div class="options">
+													<!-- [A,B],[C,D,0],[E,E,0] -->
+													<div class="templateVisual current">
+														<table border="0" cellpadding="2" cellspacing="2">
+															<tbody>
+																<tr>
+																	<td class="selected"><a href="#" title="Main content" rel="contentA">A</a></td>
+																	<td class="selected"><a href="#" title="Blog" rel="contentB">B</a></td>
+																</tr>
+															</tbody>
+														</table>
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tbody>
+																<tr>
+																	<td><a href="#" title="ZijImage" rel="contentC">C</a></td>
+																	<td class=""><a href="#" title="Win win win!" rel="contentD">D</a></td>
+																	<td></td>
+																</tr>
+															</tbody>
+														</table>
+														<table border="0" cellpadding="0" cellspacing="0">
+															<tbody>
+																<tr>
+																	<td colspan="2"><a href="#" title="Video" rel="contentE">E</a></td>
+																	<td></td>
+																</tr>
+															</tbody>
+														</table>
+													</div>
 
-												</div>
-											</fieldset>
-										</div>
-									</div>
-									{/iteration:blocks}
-						</div>
-						<div id="tabVersions">
-							<div class="datagridHolder">
-								<div class="tableHeading">
-									<div class="oneLiner">
-										<h3 class="floater">{$lblVersions}</h3>
-										<abbr title="De 20 laatst opgeslagen paginaversies worden hier bijgehouden. 'Gebruik deze versie' opent een vroegere versie. De huidige versie wordt pas overschreven als je de pagina opslaat." class="help floater">(?)</abbr>
-									</div>
-								</div>
-								<table class="datagrid" border="0" cellpadding="0" cellspacing="0">
-									<thead>
-										<tr>
-											<th class="sortable sorted" width="20%">
-												<a href="#">By</a>
-											</th>
-											<th class="sortable" width="40%">
-												<a href="#">Date</a>
-											</th>
-											<th colspan="2" width="40%">
-												&nbsp;<!-- action -->
-											</th>
-										</tr>
-									</thead>
-									<tbody>
-										<tr>
-											<td>
-												<div class="user">
-													<a href="#">
-													<img src="images/avatars/fun/mushimushi.png">
-													Johan Wolfe
-													</a>
-												</div>
-											</td>
-											<td class="date">
-												<abbr title="22-11-08 15:27">1 minute ago</abbr>
-											</td>
-											<td class="action">
-												<div class="buttonHolder">
-													<a href="#" class="button"><span><span><span>Preview</span></span></span></a>
-													<a href="#" class="button"><span><span><span>Revert to this version</span></span></span></a>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="user">
-													<a href="#">
-													<img src="images/avatars/fun/mushimush2.png">
-													どーもくん
-													</a>
-												</div>
-											</td>
-											<td class="date">
-												<abbr title="22-11-08 15:27">3 hours ago</abbr>
-											</td>
-											<td class="action">
-												<div class="buttonHolder">
-													<a href="#" class="button"><span><span><span>Preview</span></span></span></a>
-													<a href="#" class="button"><span><span><span>Revert to this version</span></span></span></a>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="user">
-													<a href="#">
-													<img src="images/avatars/fun/mushimush2.png">
-													どーもくん
-													</a>
-												</div>
-											</td>
-											<td class="date">
-												<abbr title="22-11-08 15:27">3 hours ago</abbr>
-											</td>
-											<td class="action">
-												<div class="buttonHolder">
-													<a href="#" class="button"><span><span><span>Preview</span></span></span></a>
-													<a href="#" class="button"><span><span><span>Revert to this version</span></span></span></a>
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td>
-												<div class="user">
-													<a href="#">
-													<img src="images/avatars/fun/mushimush2.png">
-													どーもくん
-													</a>
-												</div>
-											</td>
-											<td class="date">
-												<abbr title="22-11-08 15:27">1 day ago</abbr>
-											</td>
-											<td class="action">
-												<div class="buttonHolder">
-													<a href="#" class="button"><span><span><span>Preview</span></span></span></a>
-													<a href="#" class="button"><span><span><span>Revert to this version</span></span></span></a>
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
+													<table id="templateDetails" class="infoGrid" border="0" cellpadding="0" cellspacing="0">
+														<tbody>
+														{iteration:blocks}
+															<tr>
+																<th>{$blocks.index}</th>
+																<td>{$blocks.name}</td>
+															</tr>
+														{/iteration:blocks}
+													</tbody>
+												</table>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
 						</div>
 						<div id="tabSEO">
 							<div id="titles" class="box boxLevel2">
 								<div class="heading">
-									<h3>Titels</h3>
+									<h3>{$lblTitles|ucfirst}</h3>
 								</div>
 								<div class="options">
-
 									<p>
-										<label for="meta_pagetitle_overwrite">Paginatitel</label>
-										<span class="helpTxt">De titel die in het venster van de browser staat (<code>&lt;title&gt;</code>).</span>
-
-										</p><ul class="inputList">
-											<input class="inputCheckbox" value="Y" name="seoPagetitleOverwrite" id="seoPagetitleOverwrite" type="checkbox">
-											<input class="inputText inputDisabled" maxlength="255" value="" name="seoPagetitle" id="seoPagetitle" type="text">
-										</ul>
-
-
-									<p>
-										<label for="navigation_title_overwrite">Titel in het navigatiemenu</label>
-										<span class="helpTxt">Als de paginatitel te lang is om in het menu te passen, geef dan een verkorte titel in.</span>
-										<input class="inputCheckbox" value="Y" name="navigation_title_overwrite" id="navigation_title_overwrite" type="checkbox">
-										<input class="inputText inputDisabled" maxlength="255" value="" name="navigation_title" id="navigation_title" type="text">
+										<label for="meta_pagetitle_overwrite">{$lblPageTitle|ucfirst}</label>
+										<span class="helpTxt">{$msgHelpPageTitle}</span>
 									</p>
-
-
+									<ul class="inputList">
+										<li>
+											{$chkPageTitleOverwrite}
+											{$txtPageTitle} {$txtPageTitleError}
+										</li>
+									</ul>
+									<p>
+										<label for="navigation_title_overwrite">{$lblNavigationTitle|ucfirst}</label>
+										<span class="helpTxt">{$msgHelpNavigationTitle}</span>
+									</p>
+									<ul class="inputList">
+										<li>
+											{$chkNavigationTitleOverwrite}
+											{$txtNavigationTitle} {$txtNavigationTitleError}
+										</li>
+									</ul>
 								</div>
 							</div>
 
+							<!--
+								@todo @tijs
 							<div id="seoNofollow" class="box boxLevel2">
 								<div class="heading">
 									<h3>Nofollow</h3>
 								</div>
 								<div class="options">
 									<fieldset>
-										<p class="helpTxt">Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.</p>
+										<p class="helpTxt">{$msgHelpNoFollow}</p>
 										<ul class="inputList">
 											<li>
-												<input class="inputCheckbox" value="Y" name="nofollow" id="nofollow" type="checkbox">
-												<label for="no_follow">Activeer <code>rel="nofollow"</code></label>
+												{$chkNoFollow}
+												<label for="noFollow">{$msgActivateNoFollow|ucfirst}</label>
 											</li>
 										</ul>
 									</fieldset>
 								</div>
 							</div>
+							 -->
 
 							<div id="seoMeta" class="box boxLevel2">
 								<div class="heading">
-									<h3>Meta informatie</h3>
+									<h3>{$lblMetaInformation|ucfirst}</h3>
 								</div>
 								<div class="options">
-
 									<p>
-										<label for="meta_description_overwrite">Omschrijving pagina</label>
-										<span class="helpTxt">De pagina-omschrijving die wordt getoond in de resultaten van zoekmachines. Hou het kort en krachtig.</span>
+										<label for="meta_description_overwrite">{$lblMetaDescription|ucfirst}</label>
+										<span class="helpTxt">{$msgHelpMetaDescription}</span>
 									</p>
 									<ul class="inputList">
 										<li>
-											<input class="inputCheckbox" value="Y" name="meta_description_overwrite" id="meta_description_overwrite" type="checkbox">
-											<input class="inputText inputDisabled" maxlength="255" value="" name="meta_description" id="meta_description" type="text">
+											{$chkMetaDescriptionOverwrite}
+											{$txtMetaDescription} {$txtMetaDescriptionError}
 										</li>
 									</ul>
 
 									<p>
-										<label for="meta_keywords_overwrite">Sleutelwoorden pagina</label>
-										<span class="helpTxt">De sleutelwoorden (<em>keywords</em>) die deze pagina omschrijven.</span>
+										<label for="meta_keywords_overwrite">{$lblMetaKeywords|ucfirst}</label>
+										<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 									</p>
 
 									<ul class="inputList">
 										<li>
-											<input class="inputCheckbox" value="Y" name="meta_keywords_overwrite" id="meta_keywords_overwrite" type="checkbox">
-											<input class="inputText inputDisabled" maxlength="255" value="" name="meta_keywords" id="meta_keywords" type="text">
+											{$chkMetaKeywordsOverwrite}
+											{$txtMetaKeywords} {$txtMetaKeywordsError}
 										</li>
 									</ul>
 
 									<p>
-										<label for="meta_custom">Extra metatags</label>
-										<span class="helpTxt">Laat toe om extra, op maat gemaakte metatags toe te voegen.</span>
-										<textarea rows="8" cols="40"></textarea>
+										<label for="meta_custom">{$lblMetaCustom|ucfirst}</label>
+										<span class="helpTxt">{$msgHelpMetaCustom}</span>
+										{$txtMetaCustom} {$txtMetaCustomError}
 									</p>
 								</div>
 							</div>
 
 							<div id="seoUrl" class="box boxLevel2">
 								<div class="heading">
-									<h3>URL</h3>
+									<h3>{$lblURL}</h3>
 								</div>
 								<div class="options">
 
-									<label for="url_overwrite">Aangepaste URL</label>
-									<span class="helpTxt">Vervang de automatisch gegenereerde URL door een zelfgekozen URL.</span>
+									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>
+									<span class="helpTxt">{$msgHelpMetaURL}</span>
 
 									<ul class="inputList">
 										<li>
-											<input class="inputCheckbox" value="Y" name="url_overwrite" id="url_overwrite" type="checkbox">
-											<span id="urlFirstPart">http://www.abconcerts.be/nl/</span>
-											<input class="inputText inputDisabled" maxlength="255" value="" name="url" id="url" type="text">
+											{$chkUrlOverwrite}
+											<span id="urlFirstPart">{$SITE_URL}</span>{$txtUrl} {$txtUrlError}
 										</li>
 									</ul>
 
 								</div>
 							</div>
 						</div>
-						<div id="tabSecurity">
-						</div>
 						<div id="tabTemplate">
+							{$ddmTemplateId} {$ddmTemplateIdError}
 						</div>
 						<div id="tabTags">
 							<div id="tags" class="box boxLevel2">
 								<div class="heading">
 									<h3>Tags</h3>
 								</div>
-								<div class="options last">
+								<div class="options">
 									<!-- <label for="addTag">Add tags:</label> -->
 									<div class="oneLiner">
 										<p><input class="inputText" id="addTag" type="text"></p>

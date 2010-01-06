@@ -46,10 +46,7 @@ class PagesAdd extends BackendBaseActionAdd
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
-		{
-			$this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
-		}
+		for($i = 0; $i < $maximumNumberOfBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
 
 		// load the form
 		$this->loadForm();
@@ -57,7 +54,7 @@ class PagesAdd extends BackendBaseActionAdd
 		// validate the form
 		$this->validateForm();
 
-		// parse the datagrid
+		// parse
 		$this->parse();
 
 		// display the page
@@ -112,12 +109,15 @@ class PagesAdd extends BackendBaseActionAdd
 		// page info
 		$this->frm->addCheckBox('navigation_title_overwrite');
 		$this->frm->addTextField('navigation_title');
-
+		
+		// tags
+		$this->frm->addTextField('tags', null, null, 'inputTextfield tags', 'inputTextfieldError tags');
+		
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 
 		// add button
-		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit', 'inputButton button');
+		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit', 'inputButton button mainButton');
 	}
 
 
@@ -135,6 +135,9 @@ class PagesAdd extends BackendBaseActionAdd
 
 		// parse the form
 		$this->frm->parse($this->tpl);
+
+		// parse the tree
+		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 	}
 
 
