@@ -368,6 +368,29 @@ class SpoonTemplate
 
 
 	/**
+	 * Fetch the parsed content from this template.
+	 *
+	 * @return	string	 			The actual parsed content after executing this template.
+	 * @param	string $template	The location of the template file, used to display this template.
+	 */
+	public function getContent($template)
+	{
+		// cache tags can not be combined with this method
+		if(!empty($this->cache)) throw new SpoonTemplateException('You can not use this method when the template uses cache tags.');
+
+		// all is fine
+		// turn on output buffering
+		ob_start();
+
+		// show output
+		$this->display($template);
+
+		// return template content
+		return ob_get_clean();
+	}
+
+
+	/**
 	 * Get the force compiling directive
 	 *
 	 * @return	bool	Do we need to recompile this template every time it's loaded.
