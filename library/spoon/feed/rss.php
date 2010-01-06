@@ -235,10 +235,10 @@ class SpoonRSS
 	 * The default constructor
 	 *
 	 * @return	void
-	 * @param	string $title
-	 * @param	string $link
-	 * @param	string $description
-	 * @param	array[optional] $items
+	 * @param	string $title			The title off the feed.
+	 * @param	string $link			The link of the feed.
+	 * @param	string $description		The description of the feed.
+	 * @param	array[optional] $items	An array with SpoonRSSItems.
 	 */
 	public function __construct($title, $link, $description, $items = array())
 	{
@@ -256,8 +256,8 @@ class SpoonRSS
 	 * Adds a category for the feed
 	 *
 	 * @return	void
-	 * @param	string $category
-	 * @param	string[optional] $domain
+	 * @param	string $category			The name of the category.
+	 * @param	string[optional] $domain	A domain that idenitifies a categorization taxonomy
 	 */
 	public function addCategory($category, $domain = null)
 	{
@@ -274,7 +274,7 @@ class SpoonRSS
 	 * Add an item to the feed
 	 *
 	 * @return	void
-	 * @param	SpoonRSSItem $item
+	 * @param	SpoonRSSItem $item	A SpoonRSSItem that represents a single article in the feed.
 	 */
 	public function addItem(SpoonRSSItem $item)
 	{
@@ -286,7 +286,7 @@ class SpoonRSS
 	 * Add a day to skip. the default value is sunday
 	 *
 	 * @return	void
-	 * @param	string $day
+	 * @param	string $day	Add a day where aggregators should skip updating the feed.
 	 */
 	public function addSkipDay($day)
 	{
@@ -307,7 +307,7 @@ class SpoonRSS
 	 * Add a hour to skip, default is 0
 	 *
 	 * @return	void
-	 * @param 	int $hour
+	 * @param 	int $hour	Add a hour where aggregators should skip updating the feed.
 	 */
 	public function addSkipHour($hour)
 	{
@@ -329,7 +329,7 @@ class SpoonRSS
 	/**
 	 * Build the xmlfile
 	 *
-	 * @return	string
+	 * @return	string	A string that represents the fully build XML.
 	 */
 	private function buildXML()
 	{
@@ -454,10 +454,9 @@ class SpoonRSS
 	/**
 	 * Compare Objects for sorting on publication date
 	 *
-	 * @return	int
-	 * @param	SpoonRSSItem $object1
-	 * @param	SpoonRSSItem $object2
-	 * @param	string[optional] $sortingMethod
+	 * @return	int									An integer used for sorting
+	 * @param	SpoonRSSItem $object1				The first element
+	 * @param	SpoonRSSItem $object2				The second element
 	 */
 	private static function compareObjects(SpoonRSSItem $object1, SpoonRSSItem $object2)
 	{
@@ -489,7 +488,7 @@ class SpoonRSS
 	/**
 	 * Retrieves the categories for a feed
 	 *
-	 * @return	void
+	 * @return	array
 	 */
 	public function getCategories()
 	{
@@ -599,8 +598,8 @@ class SpoonRSS
 	/**
 	 * Get the last build date
 	 *
-	 * @return	mixed
-	 * @param	string[optional] $format
+	 * @return	mixed						If no format is specified the date will be returned as a UNIXtimestamp.
+	 * @param	string[optional] $format	The format for the date.
 	 */
 	public function getLastBuildDate($format = null)
 	{
@@ -641,8 +640,8 @@ class SpoonRSS
 	/**
 	 * Get the publication date
 	 *
-	 * @return	mixed
-	 * @param	string[optional] format
+	 * @return	mixed						If no format is specified the date will be returned as a UNIXtimestamp.
+	 * @param	string[optional] $format	The format for the date.
 	 */
 	public function getPublicationDate($format = null)
 	{
@@ -683,7 +682,7 @@ class SpoonRSS
 	/**
 	 * Retrieves the days to skip
 	 *
-	 * @return	array
+	 * @return	array	An array with all the days to skip.
 	 */
 	public function getSkipDays()
 	{
@@ -694,7 +693,7 @@ class SpoonRSS
 	/**
 	 * Retrieves the hours to skip
 	 *
-	 * @return	array
+	 * @return	array	An array with all teh hours to skip.
 	 */
 	public function getSkipHours()
 	{
@@ -727,7 +726,7 @@ class SpoonRSS
 	/**
 	 * Get the title
 	 *
-	 * @return	array
+	 * @return	string
 	 */
 	public function getTitle()
 	{
@@ -738,7 +737,7 @@ class SpoonRSS
 	/**
 	 * Get the time to life
 	 *
-	 * @return	int
+	 * @return	int	The TTL in seconds
 	 */
 	public function getTTL()
 	{
@@ -761,8 +760,8 @@ class SpoonRSS
 	 * Checks if the feed is valid
 	 *
 	 * @return	bool
-	 * @param	string $url
-	 * @param	string[optional] $type
+	 * @param	string $url				A url where the feed is located or the XML of the feed
+	 * @param	string[optional] $type	The type of feed, possible values are: url, string.
 	 */
 	public static function isValid($url, $type = 'url')
 	{
@@ -820,7 +819,7 @@ class SpoonRSS
 	 * Parse the feed and output the feed into the browser
 	 *
 	 * @return	void
-	 * @param	bool[optional] $headers
+	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging)
 	 */
 	public function parse($headers = true)
 	{
@@ -839,7 +838,7 @@ class SpoonRSS
 	 * Write the feed into a file
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path (and filename) where the feed should be written.
 	 */
 	public function parseToFile($path)
 	{
@@ -854,9 +853,9 @@ class SpoonRSS
 	/**
 	 * Reads an feed into a SpoonRSS object
 	 *
-	 * @return	SpoonRSS
-	 * @param	string $url
-	 * @param	string[optional] $type
+	 * @return	SpoonRSS				Returns as an instance of SpoonRSS.
+	 * @param	string $url				A url where the feed is located or the XML of the feed.
+	 * @param	string[optional] $type	The type of feed, possible values are: url, string.
 	 */
 	public static function readFromFeed($url, $type = 'url')
 	{
@@ -1096,7 +1095,7 @@ class SpoonRSS
 	 * Set the charset
 	 *
 	 * @return	void
-	 * @param	string[optional] $charset
+	 * @param	string[optional] $charset	The charset that should be used. Possible charsets can be found in spoon.php
 	 */
 	public function setCharset($charset = 'utf-8')
 	{
@@ -1108,11 +1107,11 @@ class SpoonRSS
 	 * Set the cloud for the feed
 	 *
 	 * @return	void
-	 * @param	string $domain
-	 * @param	int $port
-	 * @param	string $path
-	 * @param	string $registerProcedure
-	 * @param	string $protocol
+	 * @param	string $domain				The domain
+	 * @param	int $port					The port
+	 * @param	string $path				The path
+	 * @param	string $registerProcedure	The procedure
+	 * @param	string $protocol			The protocol to use. Possible values are: xml-rpc, soap, http-post.
 	 */
 	public function setCloud($domain, $port, $path, $registerProcedure, $protocol)
 	{
@@ -1176,12 +1175,12 @@ class SpoonRSS
 	 * Set the image for the feed
 	 *
 	 * @return	void
-	 * @param	string $url
-	 * @param	string $title
-	 * @param	string $link
-	 * @param	int[optional] $width
-	 * @param	int[optional] $height
-	 * @param	string[optional] $description
+	 * @param	string $url						URL of the image.
+	 * @param	string $title					Title of the image.
+	 * @param	string $link					Link of the image.
+	 * @param	int[optional] $width			Width of the image.
+	 * @param	int[optional] $height			Height of the image.
+	 * @param	string[optional] $description	Description of the image.
 	 */
 	public function setImage($url, $title, $link, $width = null, $height = null, $description = null)
 	{
@@ -1219,7 +1218,7 @@ class SpoonRSS
 	 * Set the last build date for the feed
 	 *
 	 * @return	void
-	 * @param	int[optional] $lastBuildDate
+	 * @param	int[optional] $lastBuildDate	A UNIX-timestamp that represents the last build date.
 	 */
 	public function setLastBuildDate($lastBuildDate = null)
 	{
@@ -1263,7 +1262,7 @@ class SpoonRSS
 	 * Sets the publication date for the feed
 	 *
 	 * @return	void
-	 * @param	int[optional] $publicationDate
+	 * @param	int[optional] $publicationDate	A UNIX-timestamp that represents the publication date.
 	 */
 	public function setPublicationDate($publicationDate = null)
 	{
@@ -1288,7 +1287,7 @@ class SpoonRSS
 	 * Set sorting status
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should the post be sorted?
 	 */
 	public function setSorting($on = true)
 	{
@@ -1300,7 +1299,7 @@ class SpoonRSS
 	 * Set the sorting method
 	 *
 	 * @return	void
-	 * @param	string[optional] $sortingMethod
+	 * @param	string[optional] $sortingMethod		Set the sorting method that should be used, possible values are: desc, asc.
 	 */
 	public function setSortingMethod($sortingMethod = 'desc')
 	{
@@ -1327,7 +1326,7 @@ class SpoonRSS
 	 * Set time to live for the feed
 	 *
 	 * @return	void
-	 * @param	int $ttl
+	 * @param	int $ttl	The time to live in seconds.
 	 */
 	public function setTTL($ttl)
 	{
@@ -1462,9 +1461,9 @@ class SpoonRSSItem
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $title
-	 * @param	string $link
-	 * @param	string $description
+	 * @param	string $title			The title for the item
+	 * @param	string $link			The link for the item
+	 * @param	string $description		The content for the item
 	 */
 	public function __construct($title, $link, $description)
 	{
@@ -1478,7 +1477,7 @@ class SpoonRSSItem
 	/**
 	 * Build the XML
 	 *
-	 * @return	void;
+	 * @return	string	The fully build XML for an item.
 	 */
 	public function buildXML()
 	{
@@ -1553,8 +1552,8 @@ class SpoonRSSItem
 	 * Add a category for the item
 	 *
 	 * @return	void
-	 * @param	string $categoryName
-	 * @param	string[optional] $domain
+	 * @param	string $categoryName		The name of the category.
+	 * @param	string[optional] $domain	The domain of the category.
 	 */
 	public function addCategory($categoryName, $domain = null)
 	{
@@ -1583,7 +1582,7 @@ class SpoonRSSItem
 	/**
 	 * Get the categories
 	 *
-	 * @return	array
+	 * @return	array	An array with all categories
 	 */
 	public function getCategories()
 	{
@@ -1693,8 +1692,8 @@ class SpoonRSSItem
 	/**
 	 * Validate if the given XML is valid
 	 *
-	 * @return	bool
-	 * @param	SimpleXMLElement $item
+	 * @return	bool						true if the item is valid, otherwise false.
+	 * @param	SimpleXMLElement $item		An item/article from the whole feed.
 	 */
 	public static function isValid(SimpleXMLElement $item)
 	{
@@ -1707,9 +1706,9 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the parse XML
+	 * Parse the item
 	 *
-	 * @return	string
+	 * @return	string	The XML for the item
 	 */
 	public function parse()
 	{
@@ -1720,8 +1719,8 @@ class SpoonRSSItem
 	/**
 	 * Read an item from a SimpleXMLElement
 	 *
-	 * @return	SpoonRSSItem
-	 * @param	SimpleXMLElement $item
+	 * @return	SpoonRSSItem				An instance of SpoonRSS.
+	 * @param	SimpleXMLElement $item		The XML-element that represents a single item in the feed.
 	 */
 	public static function readFromXML(SimpleXMLElement $item)
 	{
@@ -1853,7 +1852,7 @@ class SpoonRSSItem
 	 * Set the comment link
 	 *
 	 * @return	void
-	 * @param	string $link
+	 * @param	string $link	The link where the comments are available.
 	 */
 	public function setCommentsLink($link)
 	{
@@ -1872,7 +1871,7 @@ class SpoonRSSItem
 	 * Set the description
 	 *
 	 * @return	void
-	 * @param	string $description
+	 * @param	string $description		The content of the item
 	 */
 	public function setDescription($description)
 	{

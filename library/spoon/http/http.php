@@ -47,8 +47,9 @@ class SpoonHTTP
 	 * Redirect the browser with an optional delay (in seconds) and stop script execution
 	 *
 	 * @return	void
-	 * @param	string $url
-	 * @param	int[optional] $delay
+	 * @param	string $url				The URL.
+	 * @param	int[optional] $code		The redirect code.
+	 * @param	int[optional] $delay	A delay in seconds.
 	 */
 	public static function redirect($url, $code = 302, $delay = null)
 	{
@@ -71,6 +72,52 @@ class SpoonHTTP
 
 		// stop execution
 		exit;
+	}
+
+
+	/**
+	 * Get content from url
+	 *
+	 * @return	string			The content.
+	 * @param	string $url		The URL of the webpage that should be retrieved.
+	 */
+	public static function getContent($url)
+	{
+		// redefine
+		$url = (string) $url;
+
+		// check if curl is loaded
+		if(!function_exists('curl_init')) throw new SpoonHTTPException('Curl isn\'t loaded.');
+
+		// set options
+		$options[CURLOPT_URL] = $url;
+		$options[CURLOPT_USERAGENT] = 'Spoon '. SPOON_VERSION;
+		$options[CURLOPT_FOLLOWLOCATION] = true;
+		$options[CURLOPT_RETURNTRANSFER] = true;
+		$options[CURLOPT_TIMEOUT] = 10;
+
+		// init
+		$curl = curl_init();
+
+		// set options
+		curl_setopt_array($curl, $options);
+
+		// execute
+		$response = curl_exec($curl);
+		$headers = curl_getinfo($curl);
+
+		// fetch errors
+		$errorNumber = curl_errno($curl);
+		$errorMessage = curl_error($curl);
+
+		// close
+		curl_close($curl);
+
+		// validate
+		if($errorNumber != '') throw new SpoonHTTPException($errorMessage);
+
+		// return the content
+		return (string) $response;
 	}
 
 
@@ -99,7 +146,7 @@ class SpoonHTTP
 	/**
 	 * Checks if any headers were already sent
 	 *
-	 * @return	bool
+	 * @return	bool	true if the headers were sent, false if not.
 	 */
 	private static function isSent()
 	{
@@ -111,7 +158,7 @@ class SpoonHTTP
 	 * Set one or multiple headers
 	 *
 	 * @return	void
-	 * @param	mixed $headers
+	 * @param	mixed $headers	A string or array with headers to send.
 	 */
 	public static function setHeaders($headers)
 	{
@@ -134,7 +181,7 @@ class SpoonHTTP
 	 * Parse headers for a given status code
 	 *
 	 * @return	void
-	 * @param	int[optional] $code
+	 * @param	int[optional] $code	The code to use, possible values are: 200, 301, 302, 304, 307, 400, 401, 403, 404, 410, 500, 501.
 	 */
 	public static function setHeadersByCode($code = 200)
 	{

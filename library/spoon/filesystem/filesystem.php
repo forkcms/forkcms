@@ -45,26 +45,27 @@ class SpoonFileSystemException extends SpoonException {}
 class SpoonDirectory
 {
 	/**
-	 * Creates a folder with the given chmod settings
+	 * Creates a folder with the given chmod settings.
 	 *
-	 * @return	bool
-	 * @param	string $folder
-	 * @param	string[optional] $chmod
+	 * @return	bool						true if the directory was created, false if not.
+	 * @param	string $directory			The name for the directory.
+	 * @param	string[optional] $chmod		Mode that will be applied on the directory.
 	 */
-	public static function create($folder, $chmod = 0777)
+	public static function create($directory, $chmod = 0777)
 	{
-		return @mkdir((string) $folder, $chmod, true);
+		return @mkdir((string) $directory, $chmod, true);
 	}
 
 
 	/**
-	 * Copies a file/folder
+	 * Copies a file/folder.
 	 *
-	 * @return	bool
-	 * @param	string $source
-	 * @param	string $destination
-	 * @param	bool[optional] $strict
-	 * @param 	int[optional] $chmod
+	 * @return	bool						true if the file/directory was copies, false if not.
+	 * @param	string $source				The full path to the source file/folder.
+	 * @param	bool[optional] $overwrite	If the destination already exists, should we overwrite?
+	 * @param	string $destination			The full path to the destination.
+	 * @param	bool[optional] $strict		If strict is true, exceptions will be thrown when an error occures.
+	 * @param 	int[optional] $chmod		Mode that will be applied on the file/directory.
 	 */
 	public static function copy($source, $destination, $overwrite = true, $strict = true, $chmod = 0777)
 	{
@@ -160,10 +161,10 @@ class SpoonDirectory
 
 
 	/**
-	 * Deletes a directory and all of its subdirectories
+	 * Deletes a directory and all of its subdirectories.
 	 *
-	 * @return	bool
-	 * @param	string $directory
+	 * @return	bool				true if the directory was deleted, false if not.
+	 * @param	string $directory	Full path to the directory.
 	 */
 	public static function delete($directory)
 	{
@@ -182,7 +183,7 @@ class SpoonDirectory
 				// loop directories and execute function
 				foreach((array) $list as $item)
 				{
-					// delete folder recursive
+					// delete directory recursive
 					if(is_dir($directory .'/'. $item)) self::delete($directory .'/'. $item);
 
 					// delete file
@@ -200,10 +201,10 @@ class SpoonDirectory
 
 
 	/**
-	 * Checks if this directory exists
+	 * Checks if this directory exists.
 	 *
-	 * @return	bool
-	 * @param	string $directory
+	 * @return	bool				true if the directory exists, false if not.
+	 * @param	string $directory	Full path of the directory to check.
 	 */
 	public static function exists($directory)
 	{
@@ -219,13 +220,13 @@ class SpoonDirectory
 
 
 	/**
-	 * Returns a list of directorys within a directory
+	 * Returns a list of directories within a directory.
 	 *
-	 * @return	array
-	 * @param	string $path
-	 * @param	bool[optional] $showFiles
-	 * @param	array[optional] $excluded
-	 * @param 	string[optional] $includeRegexp
+	 * @return	array								An array containing all directories (and files if $showFiles is true).
+	 * @param	string $path						Path of the directory.
+	 * @param	bool[optional] $showFiles			Should files be included in the list.
+	 * @param	array[optional] $excluded			An array containing directories/files to exclude.
+	 * @param 	string[optional] $includeRegexp		An regular expression that represents the directories/files to include in the list. Other directories will be excluded.
 	 */
 	public static function getList($path, $showFiles = false, $excluded = array(), $includeRegexp = null)
 	{
@@ -336,11 +337,11 @@ class SpoonDirectory
 
 
 	/**
-	 * Retrieve the size of a directory in megabytes
+	 * Retrieve the size of a directory in megabytes.
 	 *
-	 * @return	int
-	 * @param	string $path
-	 * @param	bool[optional] $subdirectories
+	 * @return	int								The size in MB.
+	 * @param	string $path					The path of the directory.
+	 * @param	bool[optional] $subdirectories	Should the subfolders be included in the calculation.
 	 */
 	public static function getSize($path, $subdirectories = true)
 	{
@@ -376,13 +377,13 @@ class SpoonDirectory
 
 
 	/**
-	 * Renames a folder/file
+	 * Move/rename a directory/file.
 	 *
-	 * @return	bool
-	 * @param	string $source
-	 * @param	string $destination
-	 * @param 	bool[optional] $overwrite
-	 * @param	int[optional] $chmod
+	 * @return	bool						true if the directory was moved or renamed, false if not.
+	 * @param	string $source				Path of the source directory.
+	 * @param	string $destination			Path of the destination.
+	 * @param 	bool[optional] $overwrite	Should an existing directory be overwritten?
+	 * @param	int[optional] $chmod		Mode that should be applied on the directory.
 	 */
 	public static function move($source, $destination, $overwrite = true, $chmod = 0777)
 	{
@@ -425,10 +426,10 @@ class SpoonDirectory
 class SpoonFile
 {
 	/**
-	 * Deletes the filename
+	 * Deletes a file,
 	 *
-	 * @return	bool
-	 * @param	string $filename
+	 * @return	bool				true if the file was deleted, false if not.
+	 * @param	string $filename	Full path (including filename) of the file that should be deleted.
 	 */
 	public static function delete($filename)
 	{
@@ -437,17 +438,17 @@ class SpoonFile
 
 
 	/**
-	 * Download a file from a public url
+	 * Download a file from a public URL.
 	 *
-	 * @return	bool
-	 * @param	string $sourceUrl
-	 * @param	string $destinationPath
-	 * @param	bool[optional] $overwrite
+	 * @return	bool						true if the file was downloaded, false if not.
+	 * @param	string $sourceURL			The url of the file to download.
+	 * @param	string $destinationPath		The path where the file should be downloaded.
+	 * @param	bool[optional] $overwrite	Should the existing file be overwritten?
 	 */
-	public static function download($sourceUrl, $destinationPath, $overwrite = true)
+	public static function download($sourceURL, $destinationPath, $overwrite = true)
 	{
 		// redefine
-		$sourceUrl = (string) $sourceUrl;
+		$sourceURL = (string) $sourceURL;
 		$destinationPath = (string) $destinationPath;
 		$overwrite = (bool) $overwrite;
 
@@ -460,7 +461,7 @@ class SpoonFile
 		// validate filehandle
 		if($fileHandle === false) return false;
 
-		$options = array(CURLOPT_URL => $sourceUrl,
+		$options = array(CURLOPT_URL => $sourceURL,
 						 CURLOPT_FILE => $fileHandle,
 						 CURLOPT_HEADER => false);
 
@@ -484,7 +485,7 @@ class SpoonFile
 
 		// validate the errornumber
 		if($errorNumber != 0) throw new SpoonFileSystemException($errorMessage);
-		if($httpCode != 200) throw new SpoonFileSystemException('The file "'. $sourceUrl .'" isn\'t available for download.');
+		if($httpCode != 200) throw new SpoonFileSystemException('The file "'. $sourceURL .'" isn\'t available for download.');
 
 		// return
 		return true;
@@ -492,10 +493,10 @@ class SpoonFile
 
 
 	/**
-	 * Does this file exist
+	 * Does this file exist.
 	 *
-	 * @return	bool
-	 * @param	string $filename
+	 * @return	bool				true if the file exists, false if not.
+	 * @param	string $filename	The full path of the file to check for existance.
 	 */
 	public static function exists($filename)
 	{
@@ -504,24 +505,27 @@ class SpoonFile
 
 
 	/**
-	 * Fetch the extension for a filename
+	 * Fetch the extension for a filename.
 	 *
-	 * @return	string
-	 * @param	string $filename
-	 * @param	bool[optional] $lowercase
+	 * @todo	rewrite using reverse strpos and think about .tar.gz
+	 *
+	 * @return	string						The extension.
+	 * @param	string $filename			The full path of the file.
+	 * @param	bool[optional] $lowercase	Should the extension be returned in lowercase of in the original form.
 	 */
 	public static function getExtension($filename, $lowercase = true)
 	{
-		// @todo rewrite using reverse strpos, do mind .tar.gz
-		// if $extension == '.gz' check if .tar is there
 		// init var
 		$filename = ($lowercase) ? strtolower((string) $filename) : (string) $filename;
 
 		// fetch extension
 		$aExtension = explode('.', $filename);
 
+		// count the chunks
+		$count = count($aExtension);
+
 		// has an extension
-		if(count($aExtension) != 0) return $aExtension[(count($aExtension) -1)];
+		if($count != 0) return $aExtension[$count - 1];
 
 		// no extension
 		return '';
@@ -531,8 +535,8 @@ class SpoonFile
 	/**
 	 * Fetch the content from a file or URL
 	 *
-	 * @return	string
-	 * @param	string $filename
+	 * @return	string				The content.
+	 * @param	string $filename	The path or url to the file. URLs will only work if fopen-wrappers are enabled.
 	 */
 	public static function getContent($filename)
 	{
@@ -541,10 +545,10 @@ class SpoonFile
 
 
 	/**
-	 * Fetch the information about a file
+	 * Fetch the information about a file.
 	 *
-	 * @return	array
-	 * @param	string $filename
+	 * @return	array				An array that contains a lot of information about the file.
+	 * @param	string $filename	The path of the file.
 	 */
 	public static function getInfo($filename)
 	{
@@ -584,11 +588,11 @@ class SpoonFile
 
 
 	/**
-	 * Retrieves a list of files within a directory (optionally excluding some files)
+	 * Retrieves a list of files within a directory.
 	 *
-	 * @return	array
-	 * @param	string $path
-	 * @param	string[optional] $includeRegexp
+	 * @return	array								An array containing a list of files in the given directory.
+	 * @param	string $path						The path to the directory.
+	 * @param	string[optional] $includeRegexp		A regular expresion that filters the files that should be included in the list.
 	 */
 	public static function getList($path, $includeRegexp = null)
 	{
@@ -611,11 +615,11 @@ class SpoonFile
 		// directory exists
 		if(SpoonDirectory::exists($path))
 		{
-			// attempt to open dire
+			// attempt to open directory
 			if($directory = @opendir($path))
 			{
 				// start reading
-				while ((($file = readdir($directory)) !== false))
+				while((($file = readdir($directory)) !== false))
 				{
 					// no '.' and '..' and it's a file
 					if(($file != '.') && ($file != '..') && is_file($path .'/'. $file))
@@ -646,13 +650,13 @@ class SpoonFile
 
 
 	/**
-	 * Renames a folder/file, this is just an alias for SpoonDirectory::move();
+	 * Move/rename a directory/file.
 	 *
-	 * @return	bool
-	 * @param	string $source
-	 * @param	string $destination
-	 * @param 	bool[optional] $overwrite
-	 * @param	int[optional] $chmod
+	 * @return	bool						true if the file was moved or renamed, false if not.
+	 * @param	string $source				Path of the source file.
+	 * @param	string $destination			Path of the destination.
+	 * @param 	bool[optional] $overwrite	Should an existing file be overwritten?
+	 * @param	int[optional] $chmod		Mode that should be applied on the file.
 	 */
 	public static function move($source, $destination, $overwrite = true, $chmod = 0777)
 	{
@@ -662,14 +666,14 @@ class SpoonFile
 
 
 	/**
-	 * Writes a string to a file
+	 * Writes a string to a file.
 	 *
-	 * @return	bool
-	 * @param	string $filename
-	 * @param	string $content
-	 * @param	bool[optional] $createFile
-	 * @param	bool[optional] $append
-	 * @param	int[optional] $chmod
+	 * @return	bool						true if the content was written, false if not.
+	 * @param	string $filename			The path of the file.
+	 * @param	string $content				The content that should be written.
+	 * @param	bool[optional] $createFile	Should the file be created if it doesn't exists?
+	 * @param	bool[optional] $append		Should the content be appended if the file already exists?
+	 * @param	int[optional] $chmod		Mode that should be applied on the file.
 	 */
 	public static function setContent($filename, $content, $createFile = true, $append = false, $chmod = 0777)
 	{

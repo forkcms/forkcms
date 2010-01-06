@@ -1,5 +1,7 @@
 <?php
 
+// @todo fix the languages. They dont need to be alphabetically and the list needs to be revised.
+
 /**
  * Spoon Library
  *
@@ -65,8 +67,8 @@ class SpoonLocale
 	/**
 	 * Retrieve the list of countries
 	 *
-	 * @return	array
-	 * @param	string[optional] $language
+	 * @return	array						An array with all known countries in the requested language.
+	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
 	 */
 	public static function getCountries($language = 'en')
 	{
@@ -84,8 +86,8 @@ class SpoonLocale
 	/**
 	 * Retrieve the list of languages
 	 *
-	 * @return	array
-	 * @param	string[optional] $language
+	 * @return	array						An array containing all known languages in the requested language.
+	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
 	 */
 	public static function getLanguages($language = 'en')
 	{
@@ -103,9 +105,9 @@ class SpoonLocale
 	/**
 	 * Retrieve the months of the year
 	 *
-	 * @return	array
-	 * @param	string[optional] $language
-	 * @param	bool[optional] $abbreviated
+	 * @return	array							An array with all the months in the requested language.
+	 * @param	string[optional] $language		The language to use (available languages can be found in SpoonLocale).
+	 * @param	bool[optional] $abbreviated		Should the months be abbreviated?
 	 */
 	public static function getMonths($language = 'en', $abbreviated = false)
 	{
@@ -123,10 +125,10 @@ class SpoonLocale
 	/**
 	 * Retrieve the days of the week
 	 *
-	 * @return	array
-	 * @param	string[optional] $language
-	 * @param	bool[optional] $abbreviated
-	 * @param	string[optional] $firstDay
+	 * @return	array							An array with all the days in the requested language.
+	 * @param	string[optional] $language		The language to use (available languages can be found in SpoonLocale).
+	 * @param	bool[optional] $abbreviated		Should the days be abbreviated?
+	 * @param	string[optional] $firstDay		First day of the week (available options: monday, sunday).
 	 */
 	public static function getWeekDays($language = 'en', $abbreviated = false, $firstDay = 'monday')
 	{

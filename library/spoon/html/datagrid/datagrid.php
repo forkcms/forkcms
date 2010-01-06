@@ -292,6 +292,7 @@ class SpoonDataGrid
 	 * @param	string[optional] $label
 	 * @param	string[optional] $value
 	 * @param	string[optional] $url
+	 * @param	string[optional] $title
 	 * @param	string[optional] $image
 	 * @param	int[optional] $sequence
 	 */
@@ -1182,7 +1183,7 @@ class SpoonDataGrid
 			// number of items per page
 			$this->tpl->assign('iPerPage', $this->pagingLimit);
 
-			// parse paging @todo @davy: check me plz
+			// parse paging
 			$content = call_user_func(array($this->pagingClass, 'getContent'), $this->url, $this->getOffset(), $this->getOrder(), $this->getSort(), $this->source->getNumResults(), $this->pagingLimit, $this->debug, $this->compileDirectory);
 
 			// asign content
@@ -1406,6 +1407,7 @@ class SpoonDataGrid
 	 * Sets the columns sequence
 	 *
 	 * @return	void
+	 * @param	array $columns
 	 */
 	public function setColumnsSequence($columns)
 	{
@@ -1641,6 +1643,7 @@ class SpoonDataGrid
 	 * Sets the alternative paging class
 	 *
 	 * @return	void
+	 * @param	string $class
 	 */
 	public function setPagingClass($class)
 	{

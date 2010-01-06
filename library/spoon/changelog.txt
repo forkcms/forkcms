@@ -1,4 +1,4 @@
-1.1.3
+1.1.3 (2010-01-05)
 ----
 - Added SpoonImageField, it extends SpoonFileField with some image-specific methods:
 	- getExtension(): returns the extension based on the IMAGETYPE
@@ -12,7 +12,7 @@
 - Added SpoonTemplate::getAssignedValue to fetch already assigned values.
 - Fixed an issue with required files not being included.
 - Rewrote the way SpoonCheckBox & SpoonRadioButton work. The number of required parameters & options has been increased.
-- SpoonCookie::unset now works as intended
+- SpoonCookie::unset now works as intended (thx to Dieter Vanden Eynde)
 - Fixed an issue when using multiple cycle tags on one page
 - Based on SPOON_DEBUG the error_reporting for a compiled template is set to E_WARNING or E_ALL | E_STRICT
 

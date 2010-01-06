@@ -91,14 +91,6 @@ class SpoonTemplate
 
 
 	/**
-	 * Strict option
-	 *
-	 * @var	bool
-	 */
-	private $strict = true;
-
-
-	/**
 	 * Stack of variables & their replace values
 	 *
 	 * @var	array
@@ -122,8 +114,8 @@ class SpoonTemplate
 	 * Assign values to variables
 	 *
 	 * @return	void
-	 * @param	mixed $variable
-	 * @param	mixed[optional] $value
+	 * @param	mixed $variable			The key to search for or an array with keys & values.
+	 * @param	mixed[optional] $value	The value to replace the key with. If the first element is an array, this argument is not required.
 	 */
 	public function assign($variable, $value = null)
 	{
@@ -150,9 +142,9 @@ class SpoonTemplate
 	 * Assign an entire array with keys & values
 	 *
 	 * @return	void
-	 * @param	array $values
-	 * @param	string[optional] $prefix
-	 * @param	string[optional] $suffix
+	 * @param	array $values				This array with keys and values will be used to search and replace in the template file.
+	 * @param	string[optional] $prefix	An optional prefix eg. 'lbl' that can be used.
+	 * @param	string[optional] $suffix	An optional suffix eg. 'msg' that can be used
 	 */
 	public function assignArray(array $values, $prefix = null, $suffix = null)
 	{
@@ -167,8 +159,8 @@ class SpoonTemplate
 	 * Cache a certain block
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	int[optional] $lifetime
+	 * @param	string $name				The name of the block that you want to cache.
+	 * @param	int[optional] $lifetime		The lifetime in seconds.
 	 */
 	public function cache($name, $lifetime = 60)
 	{
@@ -184,7 +176,7 @@ class SpoonTemplate
 	 * Clear the entire cache or a certain item
 	 *
 	 * @return	void
-	 * @param	string[optional] $name
+	 * @param	string[optional] $name	The name of the cache block that you want to clear from the directory with cached files.
 	 */
 	public function clearCache($name = null)
 	{
@@ -207,7 +199,7 @@ class SpoonTemplate
 	 * Clear the entire compiled directory or a specific template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template
+	 * @param	string[optional] $template	The filename of a specific template to mark for recompiling.
 	 */
 	public function clearCompiled($template = null)
 	{
@@ -230,8 +222,8 @@ class SpoonTemplate
 	 * Compile a given template
 	 *
 	 * @return	void
-	 * @param	string $path
-	 * @param 	string $template
+	 * @param	string $path		The path to the template, excluding the template filename.
+	 * @param 	string $template	The filename of the template within the path.
 	 */
 	public function compile($path, $template)
 	{
@@ -245,7 +237,6 @@ class SpoonTemplate
 		$compiler->setCacheDirectory($this->cacheDirectory);
 		$compiler->setCompileDirectory($this->compileDirectory);
 		$compiler->setForceCompile($this->forceCompile);
-		$compiler->setStrict($this->strict);
 		$compiler->setForms($this->forms);
 
 		// compile & save
@@ -256,9 +247,9 @@ class SpoonTemplate
 	/**
 	 * Returns the correct element from the list, based on the counter
 	 *
-	 * @return	string
-	 * @param	int $counter
-	 * @param	array $elements
+	 * @return	string				The item based on the counter from $elements.
+	 * @param	int $counter		The index of the item to retrieve from the list $elements.
+	 * @param	array $elements		The list of elements to cycle through.
 	 */
 	public function cycle($counter, array $elements)
 	{
@@ -281,7 +272,7 @@ class SpoonTemplate
 	 * Deassign a variable
 	 *
 	 * @return	void
-	 * @param	string $name
+	 * @param	string $name	The name of the key that you want to remove from the list of already assigned variables.
 	 */
 	public function deAssign($name)
 	{
@@ -293,7 +284,7 @@ class SpoonTemplate
 	 * Display the output
 	 *
 	 * @return	void
-	 * @param	string $template
+	 * @param	string $template	The filename of the template that you want to display.
 	 */
 	public function display($template)
 	{
@@ -304,7 +295,7 @@ class SpoonTemplate
 		$compileName = $this->getCompileName((string) $template);
 
 		// compiled if needed
-		if(!SpoonFile::exists($this->compileDirectory .'/'. $compileName, $this->strict) || $this->forceCompile)
+		if(!SpoonFile::exists($this->compileDirectory .'/'. $compileName) || $this->forceCompile)
 		{
 			// create compiler
 			$compiler = new SpoonTemplateCompiler((string) $template, $this->variables);
@@ -313,7 +304,6 @@ class SpoonTemplate
 			$compiler->setCacheDirectory($this->cacheDirectory);
 			$compiler->setCompileDirectory($this->compileDirectory);
 			$compiler->setForceCompile($this->forceCompile);
-			$compiler->setStrict($this->strict);
 			$compiler->setForms($this->forms);
 
 			// compile & save
@@ -328,8 +318,8 @@ class SpoonTemplate
 	/**
 	 * Retrieves the already assigned value
 	 *
-	 * @return	mixed
-	 * @param	string $variable
+	 * @return	mixed				Returns an array, string, int or null
+	 * @param	string $variable	The name of the variable that you want to retrieve the already assigned value from.
 	 */
 	public function getAssignedValue($variable)
 	{
@@ -341,7 +331,7 @@ class SpoonTemplate
 	/**
 	 * Get the cache directory path
 	 *
-	 * @return	string
+	 * @return	string	The location of the cache directory.
 	 */
 	public function getCacheDirectory()
 	{
@@ -352,7 +342,7 @@ class SpoonTemplate
 	/**
 	 * get the compile directory path
 	 *
-	 * @return	string
+	 * @return	string	The location of the compile directory.
 	 */
 	public function getCompileDirectory()
 	{
@@ -363,9 +353,9 @@ class SpoonTemplate
 	/**
 	 * Retrieve the compiled name for this template
 	 *
-	 * @return	string
-	 * @param	string $template
-	 * @param	string[optional] $path
+	 * @return	string					The special unique name, used for storing this file once compiled in the compile directory.
+	 * @param	string $template		The filename of the template.
+	 * @param	string[optional] $path 	The optional path to this template.
 	 */
 	private function getCompileName($template, $path = null)
 	{
@@ -380,7 +370,7 @@ class SpoonTemplate
 	/**
 	 * Get the force compiling directive
 	 *
-	 * @return	bool
+	 * @return	bool	Do we need to recompile this template every time it's loaded.
 	 */
 	public function getForceCompile()
 	{
@@ -391,7 +381,7 @@ class SpoonTemplate
 	/**
 	 * Get the template language
 	 *
-	 * @return	string
+	 * @return	string	The language that's being used as default for this template. (Check SpoonLocale for the list of available languages.)
 	 */
 	public function getLanguage()
 	{
@@ -400,21 +390,10 @@ class SpoonTemplate
 
 
 	/**
-	 * Fetch the strict option
-	 *
-	 * @return	bool
-	 */
-	public function getStrict()
-	{
-		return $this->strict;
-	}
-
-
-	/**
 	 * Is the cache for this item still valid
 	 *
-	 * @return	bool
-	 * @param	string $name
+	 * @return	bool			Is this template block cached?
+	 * @param	string $name	The name of the cached block.
 	 */
 	public function isCached($name)
 	{
@@ -439,8 +418,8 @@ class SpoonTemplate
 	 * Map a modifier to a given function/method
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	mixed $function
+	 * @param	string $name		The name that you wish to use in the templates as a modifier.
+	 * @param	mixed $function		The function or method to map this name to. In case it's a method, provide this as an array containing class and method name.
 	 */
 	public function mapModifier($name, $function)
 	{
@@ -452,7 +431,7 @@ class SpoonTemplate
 	 * Set the cache directory
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The location of the directory where you want to store your cached template blocks.
 	 */
 	public function setCacheDirectory($path)
 	{
@@ -464,7 +443,7 @@ class SpoonTemplate
 	 * Set the compile directory
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The location of the directory where you want to store your compiled templates.
 	 */
 	public function setCompileDirectory($path)
 	{
@@ -476,23 +455,11 @@ class SpoonTemplate
 	 * If enabled, recompiles a template even if it has already been compiled
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Do we need to recompile the template every time it loads.
 	 */
 	public function setForceCompile($on = true)
 	{
 		$this->forceCompile = (bool) $on;
-	}
-
-
-	/**
-	 * Set the strict option
-	 *
-	 * @return	void
-	 * @param	bool[optional] $on
-	 */
-	public function setStrict($on = true)
-	{
-		$this->strict = (bool) $on;
 	}
 }
 
@@ -568,14 +535,6 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Strict setting
-	 *
-	 * @var	bool
-	 */
-	private $strict = true;
-
-
-	/**
 	 * Template file
 	 *
 	 * @var	string
@@ -595,8 +554,8 @@ class SpoonTemplateCompiler
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $template
-	 * @param	array $variables
+	 * @param	string $template	The name of the template to compile.
+	 * @param	array $variables	The list of possible variables.
 	 */
 	public function __construct($template, array $variables)
 	{
@@ -608,8 +567,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Retrieve the compiled name for this template
 	 *
-	 * @return	string
-	 * @param	string $template
+	 * @return	string				The unique filename used to store the compiled template in the compile directory.
+	 * @param	string $template	The name of the template.
 	 */
 	private function getCompileName($template)
 	{
@@ -620,7 +579,7 @@ class SpoonTemplateCompiler
 	/**
 	 * Retrieve the content
 	 *
-	 * @return	string
+	 * @return	string	The php compiled template.
 	 */
 	public function getContent()
 	{
@@ -630,27 +589,10 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Retrieve a unique name for an iteration
-	 *
-	 * @return	string
-	 * @param	string $name
-	 * @param	array $iterations
-	 */
-	private function getUniqueIteration($name, &$iterations)
-	{
-		// redefine name
-		$name = md5((string) $name);
-
-		// fetch unique name
-		return (isset($iterations[$name])) ? $this->getUniqueIteration($name, $iterations) : $name;
-	}
-
-
-	/**
 	 * Creates a string of the provided value with the variables encapsulated
 	 *
-	 * @return	string
-	 * @param	string $value
+	 * @return	string			The variable value as php code.
+	 * @param	string $value	The value that needs to be compiled to php code.
 	 */
 	private function getVariableString($value)
 	{
@@ -742,8 +684,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Parse the cache tags
 	 *
-	 * @return	string
-	 * @param	string $content
+	 * @return	string				The updated content, containing the parsed cache tags.
+	 * @param	string $content		The content that may contain the parse tags.
 	 */
 	private function parseCache($content)
 	{
@@ -780,8 +722,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Parses the cycle tags in the given content
 	 *
-	 * @return	string
-	 * @param	string $content
+	 * @return	string				The updated content, containing the parsed cycle tags.
+	 * @param	string $content		The content that may contain the cycle tags.
 	 */
 	private function parseCycle($content, $iteration)
 	{
@@ -840,8 +782,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Parse the forms
 	 *
-	 * @return	string
-	 * @param	string $content
+	 * @return	string				The updated content, containing the parsed form tags.
+	 * @param	string $content		The content that may contain the form tags.
 	 */
 	private function parseForms($content)
 	{
@@ -874,8 +816,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Parse the include tags
 	 *
-	 * @return	string
-	 * @param	string $content
+	 * @return	string				The updated content, containing the parsed include tags.
+	 * @param	string $content		The content that may contain the include tags.
 	 */
 	private function parseIncludes($content)
 	{
@@ -917,9 +859,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Parse the iterations (recursively)
 	 *
-	 * @return	string
-	 * @param	string $content
-	 * @param	array $iterations
+	 * @return	string				The updated content, containing the parsed iteration tags.
+	 * @param	string $content		The content that my contain the iteration tags.
 	 */
 	private function parseIterations($content)
 	{
@@ -1010,9 +951,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Parse the options in the given content & scope
 	 *
-	 * @return	string
-	 * @param	string $content
-	 * @param	array[optional] $scope
+	 * @return	string				The updated content, containing the parsed option tags.
+	 * @param	string $content		The content that may contain the option tags.
 	 */
 	private function parseOptions($content)
 	{
@@ -1088,9 +1028,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Parse a single variable within the provided scope or up
 	 *
-	 * @return	string
-	 * @param	string $variable
-	 * @param	array[optional] $scope
+	 * @return	string				The variable as php code.
+	 * @param	string $variable	The variable that needs to be converted to php code.
 	 */
 	private function parseVariable($variable)
 	{
@@ -1174,11 +1113,10 @@ class SpoonTemplateCompiler
 	/**
 	 * Parse all the variables in this string
 	 *
-	 * @return	string
-	 * @param	string $content
-	 * @param	array[optional] $scope
+	 * @return	string				The updated content, containing the parsed variables.
+	 * @param	string $content		The content that may contain variables.
 	 */
-	private function parseVariables($content, array $scope = null)
+	private function parseVariables($content)
 	{
 		// regex pattern
 		$pattern = '/\{\$([a-z0-9\.\[\]\_\-\|\:\'\"\$\s])*\}/i';
@@ -1202,7 +1140,7 @@ class SpoonTemplateCompiler
 						$key = md5($match);
 
 						// add parsed variable
-						$aVariables[$key] = $this->parseVariable($match, $scope);
+						$aVariables[$key] = $this->parseVariable($match);
 
 						// replace in content
 						$content = str_replace($match, '[$'. $key .']', $content);
@@ -1248,7 +1186,7 @@ class SpoonTemplateCompiler
 	 * Set the cache directory
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The location of the cache directory to store cached template blocks.
 	 */
 	public function setCacheDirectory($path)
 	{
@@ -1260,7 +1198,7 @@ class SpoonTemplateCompiler
 	 * Set the compile directory
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The location of the compile directory to store compiled templates in.
 	 */
 	public function setCompileDirectory($path)
 	{
@@ -1272,7 +1210,7 @@ class SpoonTemplateCompiler
 	 * If enabled, recompiles a template even if it has already been compiled
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should this template be recompiled every time it's loaded.
 	 */
 	public function setForceCompile($on = true)
 	{
@@ -1284,7 +1222,7 @@ class SpoonTemplateCompiler
 	 * Sets the forms
 	 *
 	 * @return	void
-	 * @param	array $forms
+	 * @param	array $forms	An array of forms that need to be included in this template.
 	 */
 	public function setForms(array $forms)
 	{
@@ -1293,22 +1231,10 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Set the strict option
-	 *
-	 * @return	void
-	 * @param	bool[optional] $on
-	 */
-	public function setStrict($on = true)
-	{
-		$this->strict = (bool) $on;
-	}
-
-
-	/**
 	 * Strips php code from the content
 	 *
-	 * @return	string
-	 * @param	string $content
+	 * @return	string				The updated content, no longer containing php code.
+	 * @param	string $content		The content that may contain php code.
 	 */
 	private function stripCode($content)
 	{
@@ -1319,8 +1245,8 @@ class SpoonTemplateCompiler
 	/**
 	 * Strip comments from the output
 	 *
-	 * @return	void
-	 * @param	string $content
+	 * @return	string				The updated content, no longer containing template comments.
+	 * @param	string $content		The content that may contain template comments.
 	 */
 	private function stripComments($content)
 	{
@@ -1378,8 +1304,8 @@ class SpoonTemplateModifiers
 	/**
 	 * Converts links to HTML links (only to be used with cleartext)
 	 *
-	 * @return	string
-	 * @param	string $text
+	 * @return	string			The text containing the parsed html links.
+	 * @param	string $text	The cleartext that may contain urls that need to be transformed to html links.
 	 */
 	public static function createHTMLLinks($text)
 	{
@@ -1390,11 +1316,12 @@ class SpoonTemplateModifiers
 	/**
 	 * Formats a language specific date
 	 *
-	 * @return	string
-	 * @param	int $timestamp
-	 * @param	string[optional] $format
+	 * @return	string						The formatted date according to the timestamp, format and provided language.
+	 * @param	int $timestamp				The timestamp that you want to apply the format to.
+	 * @param	string[optional] $format	The optional format that you want to apply on the provided timestamp.
+	 * @param	string[optional] $language	The optional language that you want this format in. (Check SpoonLocale for the possible languages)
 	 */
-	public function date($timestamp, $format = 'Y-m-d H:i:s', $language = 'en')
+	public static function date($timestamp, $format = 'Y-m-d H:i:s', $language = 'en')
 	{
 		return SpoonDate::getDate($format, $timestamp, $language);
 	}
@@ -1403,7 +1330,7 @@ class SpoonTemplateModifiers
 	/**
 	 * Retrieves the modifiers
 	 *
-	 * @return	array
+	 * @return	array	The list of modifiers and the function/method that they're mapped to.
 	 */
 	public static function getModifiers()
 	{
@@ -1412,10 +1339,10 @@ class SpoonTemplateModifiers
 
 
 	/**
-	 * Makes the string lowercase and takes entities into account
+	 * Makes this string lowercase.
 	 *
-	 * @return	string
-	 * @param	string $string
+	 * @return	string			The string, completely lowercased.
+	 * @param	string $string	The string that you want to apply this method on.
 	 */
 	public static function lowercase($string)
 	{
@@ -1427,8 +1354,8 @@ class SpoonTemplateModifiers
 	 * Maps a specific modifier to a function/method
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	mixed $function
+	 * @param	string $name		The name of the modifier that you want to map.
+	 * @param	mixed $function		The function or method that you want to map to the provided name. To map a method provided this argument as an array containing class and method.
 	 */
 	public static function mapModifier($name, $function)
 	{
@@ -1463,8 +1390,8 @@ class SpoonTemplateModifiers
 	/**
 	 * Makes the string uppercase and takes entities into account
 	 *
-	 * @return	string
-	 * @param	string $string
+	 * @return	string			The string, completly uppercased.
+	 * @param	string $string	The string that you want to apply this method on.
 	 */
 	public static function uppercase($string)
 	{

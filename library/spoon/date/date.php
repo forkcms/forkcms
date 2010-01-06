@@ -44,12 +44,12 @@ class SpoonDateException extends SpoonException {}
 class SpoonDate
 {
 	/**
-	 * An alias for php's date function that makes weekdays and months language dependant
+	 * An alias for php's date function that makes weekdays and months language dependant.
 	 *
-	 * @return	string
-	 * @param	string $format
-	 * @param	int[optional] $timestamp
-	 * @param	string[optional] $language
+	 * @return	string						A formatted date.
+	 * @param	string $format				The wanted format.
+	 * @param	int[optional] $timestamp	A UNIX-timestamp representing the date that should be formatted.
+	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
 	 */
 	public static function getDate($format, $timestamp = null, $language = 'en')
 	{

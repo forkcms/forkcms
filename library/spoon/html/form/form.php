@@ -123,6 +123,7 @@ class SpoonForm
 	 *
 	 * @return	void
 	 * @param	string $name
+	 * @param	string[optional] $action
 	 * @param	string[optional] $method
 	 */
 	public function __construct($name, $action = null, $method = 'post')
@@ -184,7 +185,10 @@ class SpoonForm
 	 */
 	public function addButton($name, $value, $type = null, $class = 'inputButton')
 	{
+		// add element
 		$this->add(new SpoonButton($name, $value, $type, $class));
+
+		// return the element
 		return $this->getField($name);
 	}
 
@@ -200,7 +204,10 @@ class SpoonForm
 	 */
 	public function addCheckBox($name, $checked = false, $class = 'inputCheckbox', $classError = 'inputCheckboxError')
 	{
+		// add element
 		$this->add(new SpoonCheckBox($name, $checked, $class, $classError));
+
+		// return element
 		return $this->getField($name);
 	}
 
@@ -232,14 +239,17 @@ class SpoonForm
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	int[optional] $name
+	 * @param	int[optional] $value
 	 * @param	string[optional] $mask
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classError
 	 */
 	public function addDateField($name, $value = null, $mask = null, $class = 'inputDatefield', $classError = 'inputDatefieldError')
 	{
+		// add element
 		$this->add(new SpoonDateField($name, $value, $mask, $class, $classError));
+
+		// return element
 		return $this->getField($name);
 	}
 
@@ -257,7 +267,10 @@ class SpoonForm
 	 */
 	public function addDropDown($name, array $values, $selected = null, $multipleSelection = false, $class = 'inputDropdown', $classError = 'inputDropdownError')
 	{
+		// add element
 		$this->add(new SpoonDropDown($name, $values, $selected, $multipleSelection, $class, $classError));
+
+		// return element
 		return $this->getField($name);
 	}
 
@@ -337,6 +350,7 @@ class SpoonForm
 
 
 	/**
+
 	 * Adds a single image field
 	 *
 	 * @return	void
@@ -346,7 +360,10 @@ class SpoonForm
 	 */
 	public function addImageField($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
 	{
+		// add element
 		$this->add(new SpoonImageField($name, $class, $classError));
+
+		// return element
 		return $this->getField($name);
 	}
 
@@ -1834,6 +1851,18 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
+	 * Set the class on error
+	 *
+	 * @return	void
+	 * @param	string $class
+	 */
+	public function setClassOnError($class)
+	{
+		$this->classError = (string) $class;
+	}
+
+
+	/**
 	 * Overwrites the error stack
 	 *
 	 * @return	void
@@ -2046,7 +2075,6 @@ class SpoonRadioButton extends SpoonFormElement
 	 * @param	string $values
 	 * @param	string[optional] $checked
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
 	 */
 	public function __construct($name, array $values, $checked = null, $class = 'inputRadiobutton')
 	{
@@ -3231,6 +3259,7 @@ class SpoonTextField extends SpoonInputField
 	 * Checks if the field validates against the regexp
 	 *
 	 * @return	bool
+	 * @param	string $regexp
 	 * @param	string[optional] $error
 	 */
 	public function isValidAgainstRegexp($regexp, $error = null)
@@ -3487,6 +3516,7 @@ class SpoonPasswordField extends SpoonInputField
 	 * Checks if the field validates against the regexp
 	 *
 	 * @return	bool
+	 * @param	string $regexp
 	 * @param	string[optional] $error
 	 */
 	public function isValidAgainstRegexp($regexp, $error = null)
@@ -4403,7 +4433,7 @@ class SpoonDropDown extends SpoonFormAttributes
 			else
 			{
 				// if the current value is equal to the submitted value
-				if($this->defaultElement[1] == $this->getSelected()) $output .= ' selected="selected"';
+				if($this->defaultElement[1] == $this->getSelected() && $this->getSelected() !== null) $output .= ' selected="selected"';
 			}
 
 			// end option
@@ -4967,10 +4997,9 @@ class SpoonMultiCheckBox extends SpoonFormElement
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	mixed $values
+	 * @param	array $values
 	 * @param	mixed[optional] $checked
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
 	 */
 	public function __construct($name, array $values, $checked = null, $class = 'inputCheckbox')
 	{

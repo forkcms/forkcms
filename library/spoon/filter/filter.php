@@ -63,14 +63,14 @@ class SpoonFilter
 									'vn', 'vu', 'wf', 'ws', 'ye', 'yt', 'yu', 'za', 'zm', 'zw', 'arpa');
 
 
-
 	/**
-	 * This method will sort an array by its keys and reindex
+	 * This method will sort an array by its keys and reindex.
 	 *
-	 * @return	array
-	 * @param	array $array
+	 * @return	array					The sorted array.
+	 * @param	array $array			The array that will be sorted.
+	 * @param	int[optional] $start	The index will start from this value.
 	 */
-	public static function arraySortKeys(array $array)
+	public static function arraySortKeys(array $array, $start = 0)
 	{
 		// has no elements
 		if(count($array) == 0) throw new SpoonFilterException('The array needs to contain at least one element.');
@@ -79,7 +79,7 @@ class SpoonFilter
 		ksort($array);
 
 		// init var
-		$i = 0;
+		$i = (int) $start;
 
 		// elements found
 		foreach($array as $value)
@@ -131,13 +131,13 @@ class SpoonFilter
 
 
 	/**
-	 * Retrieve the desired $_GET value from an array of allowed values
+	 * Retrieve the desired $_GET value from an array of allowed values.
 	 *
-	 * @return	mixed
-	 * @param	string $field
-	 * @param	array[optional] $values
-	 * @param	mixed $defaultValue
-	 * @param	string[optional] $returnType
+	 * @return	mixed							The value that was stored in $_GET or the default when the field wasn't found.
+	 * @param	string $field					The field to retrieve.
+	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned.
+	 * @param	mixed $defaultValue				The default-value.
+	 * @param	string[optional] $returnType	The type that should be returned.
 	 */
 	public static function getGetValue($field, array $values = null, $defaultValue, $returnType = 'string')
 	{
@@ -153,13 +153,13 @@ class SpoonFilter
 
 
 	/**
-	 * Retrieve the desired $_POST value from an array of allowed values
+	 * Retrieve the desired $_POST value from an array of allowed values.
 	 *
-	 * @return	mixed
-	 * @param	string $field
-	 * @param	array[optional] $values
-	 * @param	mixed $defaultValue
-	 * @param	string[optional] $returnType
+	 * @return	mixed							The value that was stored in $_POST or the default when the field wasn't found.
+	 * @param	string $field					The field to retrieve.
+	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned
+	 * @param	mixed $defaultValue				The default-value.
+	 * @param	string[optional] $returnType	The type that should be returned.
 	 */
 	public static function getPostValue($field, array $values = null, $defaultValue, $returnType = 'string')
 	{
@@ -175,13 +175,13 @@ class SpoonFilter
 
 
 	/**
-	 * Retrieve the desired value from an array of allowed values
+	 * Retrieve the desired value from an array of allowed values.
 	 *
-	 * @return	mixed
-	 * @param	string $variable
-	 * @param	array[optional] $values
-	 * @param	mixed $defaultValue
-	 * @param	string[optional] $returnType
+	 * @return	mixed							The validated value or the default when the value wasn't found.
+	 * @param	string $variable				The variable that should be validated.
+	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned
+	 * @param	mixed $defaultValue				The default-value.
+	 * @param	string[optional] $returnType	The type that should be returned.
 	 */
 	public static function getValue($variable, array $values = null, $defaultValue, $returnType = 'string')
 	{
@@ -235,11 +235,11 @@ class SpoonFilter
 
 
 	/**
-	 * Apply the htmlentities function with a specific charset
+	 * Apply the htmlentities function with a specific charset.
 	 *
-	 * @return	string
-	 * @param	string $value
-	 * @param	string[optional] $charset
+	 * @return	string						The string with HTML-entities.
+	 * @param	string $value				The value that should HTML-entityfied.
+	 * @param	string[optional] $charset	The charset to use, default wil be based on SPOON_CHARSET.
 	 */
 	public static function htmlentities($value, $charset = null)
 	{
@@ -253,18 +253,18 @@ class SpoonFilter
 		 * PHP doesn't replace a backslash to its html entity since this is something
 		 * that's mostly used to escape characters when inserting in a database. Since
 		 * we're using a decent database layer, we don't need this shit and we're replacing
-		 * the double backslashes by it's html entity equivalent.
+		 * the double backslashes by its' html entity equivalent.
 		 */
 		return str_replace(array('\\'), array('&#92;'), $return);
 	}
 
 
 	/**
-	 * Apply the htmlspecialchars function with a specific charset
+	 * Apply the htmlspecialchars function with a specific charset.
 	 *
-	 * @return	string
-	 * @param	string $value
-	 * @param	string[optional] $charset
+	 * @return	string						The string with HTML-special chars applied to it.
+	 * @param	string $value				The value that should be used.
+	 * @param	string[optional] $charset	The charset to use, default wil be based on SPOON_CHARSET.
 	 */
 	public static function htmlspecialchars($value, $charset = null)
 	{
@@ -277,11 +277,11 @@ class SpoonFilter
 
 
 	/**
-	 * Apply the html_entity_decode function with a specific charset
+	 * Apply the html_entity_decode function with a specific charset.
 	 *
-	 * @return	string
-	 * @param	string $value
-	 * @param	string[optional] $charset
+	 * @return	string						The string with no HTML-entities.
+	 * @param	string $value				The value that should be decoded.
+	 * @param	string[optional] $charset	The charset to use, default will be based on SPOON_CHARSET.
 	 */
 	public static function htmlentitiesDecode($value, $charset = null)
 	{
@@ -294,10 +294,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for a-z & A-Z
+	 * Checks the value for a-z & A-Z.
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the string is alphabetical, false if not.
+	 * @param	string $value	The string to validate.
 	 */
 	public static function isAlphabetical($value)
 	{
@@ -306,10 +306,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for letters & numbers without spaces
+	 * Checks the value for letters & numbers without spaces.
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the string is alphanumeric, false if not.
+	 * @param	string $value	The string to validate.
 	 */
 	public static function isAlphaNumeric($value)
 	{
@@ -318,24 +318,24 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the integer value is between the minimum and maximum (min & max included)
+	 * Checks if the value is between the minimum and maximum (min & max included).
 	 *
-	 * @return	bool
-	 * @param	int $minimum
-	 * @param	int $maximum
-	 * @param	string $value
+	 * @return	bool				true if the integer is between the given values, false if not.
+	 * @param	float $minimum		The minimum.
+	 * @param	float $maximum		The maximum.
+	 * @param	float $value		The value to validate.
 	 */
 	public static function isBetween($minimum, $maximum, $value)
 	{
-		return ((int) $value >= (int) $minimum && (int) $value <= (int) $maximum);
+		return ((float) $value >= (float) $minimum && (float) $value <= (float) $maximum);
 	}
 
 
 	/**
-	 * Checks the string value for a boolean (true/false | 0/1)
+	 * Checks the string value for a boolean (true/false | 0/1).
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is a boolean, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isBool($value)
 	{
@@ -344,10 +344,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for numbers 0-9
+	 * Checks the value for numbers 0-9.
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is digital, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isDigital($value)
 	{
@@ -356,10 +356,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for a valid e-mail address
+	 * Checks the value for a valid e-mail address.
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is a valid e-mail address, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isEmail($value)
 	{
@@ -368,10 +368,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for an even number
+	 * Checks the value for an even number.
 	 *
-	 * @return	bool
-	 * @param	int $value
+	 * @return	bool			true if the value is an even number, false if not.
+	 * @param	int $value		The value to validate.
 	 */
 	public static function isEven($value)
 	{
@@ -384,10 +384,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for a filename (including dots, but not slashes and forbidden characters)
+	 * Checks the value for a filename (including dots, but not slashes and forbidden characters).
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is a valid filename, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isFilename($value)
 	{
@@ -396,10 +396,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for numbers 0-9 with a dot or komma and an optional minus sign (in the beginning only)
+	 * Checks the value for numbers 0-9 with a dot or comma and an optional minus sign (in the beginning only).
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is a valid float, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isFloat($value)
 	{
@@ -408,11 +408,11 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the value is greather than a given minimum
+	 * Checks if the value is greather than a given minimum.
 	 *
-	 * @return	bool
-	 * @param	int $minimum
-	 * @param	int $value
+	 * @return	bool			true if the value is greather then, false if not.
+	 * @param	int $minimum	The minimum as an integer.
+	 * @param	int $value		The value to validate.
 	 */
 	public static function isGreaterThan($minimum, $value)
 	{
@@ -421,10 +421,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for numbers 0-9 and an optional minus sign (in the beginning only)
+	 * Checks the value for numbers 0-9 and an optional minus sign (in the beginning only).
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is an integer, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isInteger($value)
 	{
@@ -433,10 +433,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the user is coming from this site or not
+	 * Checks if the request is coming from this site or not.
 	 *
-	 * @return	bool
-	 * @param	array[optional] $domains
+	 * @return	bool						true if the request is coming from this site, false if not.
+	 * @param	array[optional] $domains	An array containing all known domains.
 	 */
 	public static function isInternalReferrer(array $domains = null)
 	{
@@ -459,10 +459,11 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for a proper ip address
+	 * Checks the value for a proper ip address.
+	 * @todo	IPv6 isn't implemented?
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is a valid IPv4-address, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isIp($value)
 	{
@@ -471,11 +472,11 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the value is not greater than or equal a given maximum
+	 * Checks if the value is not greater than or equal a given maximum.
 	 *
-	 * @return	bool
-	 * @param	int $maximum
-	 * @param	int $value
+	 * @return	bool			true on success, false if not.
+	 * @param	int $maximum	The maximum.
+	 * @param	int $value		The value to validate.
 	 */
 	public static function isMaximum($maximum, $value)
 	{
@@ -484,12 +485,12 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the value's length is not greater than or equal a given maximum of characters
+	 * Checks if the value's length is not greater than or equal a given maximum of characters.
 	 *
-	 * @return	bool
-	 * @param	int $maximum
-	 * @param	string $value
-	 * @param	string[optional] $charset
+	 * @return	bool						true if the length isn't greather then the given maximum, false if not.
+	 * @param	int $maximum				The maximum allowed characters.
+	 * @param	string $value				The value to validate.
+	 * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
 	 */
 	public static function isMaximumCharacters($maximum, $value, $charset = null)
 	{
@@ -502,11 +503,11 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the value is greater than or equal to a given minimum
+	 * Checks if the value is greater than or equal to a given minimum.
 	 *
-	 * @return	bool
-	 * @param	int $minimum
-	 * @param	int $value
+	 * @return	bool			true if the given value is greater then the given minimum.
+	 * @param	int $minimum	The minimum.
+	 * @param	int $value		The value to validate.
 	 */
 	public static function isMinimum($minimum, $value)
 	{
@@ -515,12 +516,12 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the value's length is greater than or equal to a given minimum of characters
+	 * Checks if the value's length is greater than or equal to a given minimum of characters.
 	 *
-	 * @return	bool
-	 * @param	int $minimum
-	 * @param	string $value
-	 * @param	string[optional] $charset
+	 * @return	bool						true if the length is greater then the given minimum.
+	 * @param	int $minimum				The minimum allowed charachters.
+	 * @param	string $value				The value to validate.
+	 * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
 	 */
 	public static function isMinimumCharacters($minimum, $value, $charset = null)
 	{
@@ -535,8 +536,8 @@ class SpoonFilter
 	/**
 	 * Alias for isDigital.
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is numeric, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isNumeric($value)
 	{
@@ -545,10 +546,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for an odd number
+	 * Checks the value for an odd number.
 	 *
-	 * @return	bool
-	 * @param	int $value
+	 * @return	bool			true if the value is odd, false if not.
+	 * @param	int $value		The value to validate.
 	 */
 	public static function isOdd($value)
 	{
@@ -557,11 +558,11 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the value is smaller than a given maximum
+	 * Checks if the value is smaller than a given maximum.
 	 *
-	 * @return	bool
-	 * @param	int $maximum
-	 * @param 	int $value
+	 * @return	bool			true if the value is smaller, false if not.
+	 * @param	int $maximum	The maximum.
+	 * @param 	int $value		The value to validate.
 	 */
 	public static function isSmallerThan($maximum, $value)
 	{
@@ -570,10 +571,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for a string wihout control characters (ASCII 0 - 31), spaces are allowed
+	 * Checks the value for a string wihout control characters (ASCII 0 - 31), spaces are allowed.
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is a string, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isString($value)
 	{
@@ -582,10 +583,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for a valid url
+	 * Checks the value for a valid url.
 	 *
-	 * @return	bool
-	 * @param	string $value
+	 * @return	bool			true if the value is a valid URL, false if not.
+	 * @param	string $value	The value to validate.
 	 */
 	public static function isURL($value)
 	{
@@ -595,11 +596,11 @@ class SpoonFilter
 
 
 	/**
-	 * Validates a value against a regular expression
+	 * Validates a value against a regular expression.
 	 *
-	 * @return	bool
-	 * @param	string $regexp
-	 * @param	string $value
+	 * @return	bool				true if the given string is valid against the regular expression, false if not.
+	 * @param	string $regexp		The regular expression to use.
+	 * @param	string $value		The value to validate.
 	 */
 	public static function isValidAgainstRegexp($regexp, $value)
 	{
@@ -616,10 +617,10 @@ class SpoonFilter
 
 
 	/**
-	 * Checks if the given regex statement is valid
+	 * Checks if the given regex statement is valid.
 	 *
-	 * @return	bool
-	 * @param	string $regexp
+	 * @return	bool				true if the given string is a valid regular expression, false if not.
+	 * @param	string $regexp		The value to validate.
 	 */
 	public static function isValidRegexp($regexp)
 	{
@@ -633,10 +634,10 @@ class SpoonFilter
 
 
 	/**
-	 * Function that will be used by replaceURLsWithAnchors
+	 * Function that will be used by replaceURLsWithAnchors.
 	 *
-	 * @return	string
-	 * @param	array $match
+	 * @return	string			A string with HTML-markup for a link.
+	 * @param	array $match	The link that should be enclosed with HTML-markup for a link.
 	 */
 	private static function replaceURLsCallback($match)
 	{
@@ -653,11 +654,11 @@ class SpoonFilter
 
 
 	/**
-	 * Replace URLs with an anchor
+	 * Replace URLs with an anchor.
 	 *
-	 * @return	string
-	 * @param	string $value
-	 * @param	bool[optional] $noFollow
+	 * @return	string						A string with each link replaced with valid HTML-markup for a link.
+	 * @param	string $value				The string without links.
+	 * @param	bool[optional] $noFollow	Should a rel="nofollow" be added into the link-attribute.
 	 */
 	public static function replaceURLsWithAnchors($value, $noFollow = true)
 	{
@@ -682,13 +683,13 @@ class SpoonFilter
 
 
 	/**
-	 * Convert a string to camelcasing
+	 * Convert a string to camelcasing.
 	 *
-	 * @return	string
-	 * @param	string $value
-	 * @param	string[optional] $separator
-	 * @param	bool[optional] $lcfirst
-	 * @param	string[optional] $charset
+	 * @return	string							The camelcased string.
+	 * @param	string $value					The string that should be camelcased.
+	 * @param	string[optional] $separator		The word-separator.
+	 * @param	bool[optional] $lcfirst			Should the first charachter be lowercase?
+	 * @param	string[optional] $charset		The charset to use, default is based on SPOON_CHARSET.
 	 */
 	public static function toCamelCase($value, $separator = '_', $lcfirst = false, $charset = null)
 	{
@@ -731,11 +732,11 @@ class SpoonFilter
 
 
 	/**
-	 * Prepares a string so that it can be used in urls. Special characters are stripped/replaced
+	 * Prepares a string so that it can be used in urls. Special characters are stripped/replaced.
 	 *
-	 * @return	string
-	 * @param	string $value
-	 * @param	string[optional] $charset
+	 * @return	string						The urlised string.
+	 * @param	string $value				The value that should be urlised.
+	 * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
 	 */
 	public static function urlise($value, $charset = null)
 	{

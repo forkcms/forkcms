@@ -123,10 +123,10 @@ class SpoonThumbnail
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $filename
-	 * @param	int[optional] $width
-	 * @param	int[optional] $height
-	 * @param	bool[optional] $strict
+	 * @param	string $filename		The path to the source-image
+	 * @param	int[optional] $width	The required width, if not provided it will be calculated based on the height.
+	 * @param	int[optional] $height	The required height, if not provided it will be calculated based on the width.
+	 * @param	bool[optional] $strict	Should strict-mode be activated?
 	 */
 	public function __construct($filename, $width = null, $height = null, $strict = true)
 	{
@@ -154,10 +154,10 @@ class SpoonThumbnail
 	/**
 	 * Check if file is supported
 	 *
-	 * @return	bool
-	 * @param	string $filename
+	 * @return	bool				true if the file is supported, false if not.
+	 * @param	string $filename	The path to the file tp check.
 	 */
-	public function isSupportedFileType($filename)
+	public static function isSupportedFileType($filename)
 	{
 		// get watermarkfile properties
 		list($width, $height, $type) = @getimagesize($filename);
@@ -188,7 +188,7 @@ class SpoonThumbnail
 	 * Use the optional param for disabling the header, usefull for debugging purposes
 	 *
 	 * @return	void
-	 * @param	bool[optional] $headers
+	 * @param	bool[optional] $headers		Should the headers be send? This is a usefull when you're debugging.
 	 */
 	public function parse($headers = true)
 	{
@@ -219,10 +219,10 @@ class SpoonThumbnail
 	/**
 	 * Saves the image to a file (quality is only used for jpg images)
 	 *
-	 * @return	mixed
-	 * @param	string $filename
-	 * @param	int[optional] $quality
-	 * @param	int[optional] $chmod
+	 * @return	bool						true if the image was saved, false if not.
+	 * @param	string $filename			The path where the image should be saved
+	 * @param	int[optional] $quality		The quality to use (only applies on jpg-images).
+	 * @param	int[optional] $chmod		Mode that should be applied on the file.
 	 */
 	public function parseToFile($filename, $quality = 100, $chmod = 0777)
 	{
@@ -303,10 +303,10 @@ class SpoonThumbnail
 	 * This internal function will resize/crop the image
 	 *
 	 * @return	void
-	 * @param	int $currentWidth
-	 * @param	int $currentHeight
-	 * @param	int $currentType
-	 * @param	string $currentMime
+	 * @param	int $currentWidth		Original width.
+	 * @param	int $currentHeight		Original height.
+	 * @param	int $currentType		Current type of image
+	 * @param	string $currentMime		Current mime-type
 	 */
 	private function resizeImage($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -321,11 +321,11 @@ class SpoonThumbnail
 	/**
 	 * Resize the image with Force Aspect Ratio
 	 *
-	 * @return 	void
-	 * @param	int $currentWidth
-	 * @param	int $currentHeight
-	 * @param	int $currentType
-	 * @param	string $currentMime
+	 * @return	void
+	 * @param	int $currentWidth		Original width.
+	 * @param	int $currentHeight		Original height.
+	 * @param	int $currentType		Current type of image
+	 * @param	string $currentMime		Current mime-type
 	 */
 	private function resizeImageWithForceAspectRatio($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -475,11 +475,11 @@ class SpoonThumbnail
 	/**
 	 * Resize the image without Force Aspect Ratio
 	 *
-	 * @return 	void
-	 * @param	int $currentWidth
-	 * @param	int $currentHeight
-	 * @param	int $currentType
-	 * @param	string $currentMime
+	 * @return	void
+	 * @param	int $currentWidth		Original width.
+	 * @param	int $currentHeight		Original height.
+	 * @param	int $currentType		Current type of image
+	 * @param	string $currentMime		Current mime-type
 	 */
 	private function resizeImageWithoutForceAspectRatio($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -659,7 +659,7 @@ class SpoonThumbnail
 	 * set the allowEnlargement, default is false
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	May the original image be enlarged.
 	 */
 	public function setAllowEnlargement($on = false)
 	{
@@ -670,9 +670,9 @@ class SpoonThumbnail
 	/**
 	 * Sets the horizontal and vertical cropposition
 	 *
-	 * @return	mixed
-	 * @param	string[optional] $horizontal
-	 * @param	string[optional] $vertical
+	 * @return	mixed							In strict-mode it wil return false on errors.
+	 * @param	string[optional] $horizontal	The horizontal crop position, possible values are: left, center, right.
+	 * @param	string[optional] $vertical		The vertical crop position, possible values are: top, middle, bottom.
 	 */
 	public function setCropPosition($horizontal = 'center', $vertical = 'middle')
 	{
@@ -704,7 +704,7 @@ class SpoonThumbnail
 	 * Enables the Force aspect ratio
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should the original aspect ratio be respected?
 	 */
 	public function setForceOriginalAspectRatio($on = true)
 	{
@@ -716,7 +716,7 @@ class SpoonThumbnail
 	 * Set the strict option
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should strict-mode be active?
 	 */
 	public function setStrict($on = true)
 	{

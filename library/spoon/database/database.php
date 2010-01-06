@@ -1,5 +1,7 @@
 <?php
 
+// @todo rework with subclasses, based on the available PDO drivers.
+
 /**
  * Spoon Library
  *
@@ -35,6 +37,7 @@ class SpoonDatabaseException extends SpoonException {}
  *
  * @package		database
  *
+ * @remark		IMPORTANT: At this point we only support MySQL!
  *
  * @author		Tijs Verkoyen <tijs@spoon-library.be>
  * @author		Davy Hellemans <davy@spoon-library.be>
@@ -107,14 +110,14 @@ class SpoonDatabase
 
 
 	/**
-	 * Class constructor.
+	 * Creates a database connection instance.
 	 *
 	 * @return	void
-	 * @param	string $driver
-	 * @param	string $hostname
-	 * @param	string $username
-	 * @param	string $password
-	 * @param	string $database
+	 * @param	string $driver		The driver to use. Available drivers depend on your server configuration.
+	 * @param	string $hostname	The host or IP of your database-server.
+	 * @param	string $username	The username to authenticate on your database-server.
+	 * @param	string $password	The password to authenticate on your database-server.
+	 * @param	string $database	The name of the database to use.
 	 */
 	public function __construct($driver, $hostname, $username, $password, $database)
 	{
@@ -127,7 +130,7 @@ class SpoonDatabase
 
 
 	/**
-	 * Creates a new database connection if it was not yet made
+	 * Creates a new database connection if it was not yet made.
 	 *
 	 * @return	void
 	 */
@@ -146,16 +149,19 @@ class SpoonDatabase
 				throw new SpoonDatabaseException('A database connection could not be established.', 0, $this->password);
 			}
 		}
+
+		// set nasty option
+		$this->handler->setAttribute(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY, true);
 	}
 
 
 	/**
-	 * Query to delete records, which returns the number of affected rows
+	 * Query to delete records, which returns the number of affected rows.
 	 *
-	 * @return	int
-	 * @param	string $table
-	 * @param	string $where
-	 * @param	mixed[optional] $parameters
+	 * @return	int								The number of affected rows.
+	 * @param	string $table					The table to perform the delete-statement on.
+	 * @param	string $where					The WHERE-clause.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function delete($table, $where, $parameters = array())
 	{
@@ -210,7 +216,7 @@ class SpoonDatabase
 
 
 	/**
-	 * Drops one or more tables
+	 * Drops one or more tables.
 	 *
 	 * @return	void
 	 * @param	mixed $tables
@@ -222,11 +228,11 @@ class SpoonDatabase
 
 
 	/**
-	 * Exectues a query
+	 * Exectues a query.
 	 *
 	 * @return	void
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
+	 * @param	string $query					The query to execute, only use with queries that don't return a result
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function execute($query, $parameters = array())
 	{
@@ -273,11 +279,11 @@ class SpoonDatabase
 
 
 	/**
-	 * Retrieve a single column
+	 * Retrieve a single column.
 	 *
-	 * @return	array
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
+	 * @return	array							An array with the values from a single column
+	 * @param	string $query					The query, specify maximum one field in the SELECT-statement.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function getColumn($query, $parameters = array())
     {
@@ -329,9 +335,9 @@ class SpoonDatabase
 	/**
      * Retrieves the possible ENUM-values
      *
-     * @return	array
-     * @param	string $table
-     * @param	string $field
+     * @return	array			An array with all the possible ENUM-values.
+     * @param	string $table	The table that contains the ENUM-field
+     * @param	string $field	The name of the field.
      */
     public function getEnumValues($table, $field)
     {
@@ -359,7 +365,7 @@ class SpoonDatabase
 	/**
 	 * Retrieve the debug setting
 	 *
-	 * @return	bool
+	 * @return	bool	true if debug is enabled, false if not.
 	 */
 	public function getDebug()
 	{
@@ -370,7 +376,7 @@ class SpoonDatabase
 	/**
 	 * Fetch the name of the database driver
 	 *
-	 * @return	string
+	 * @return	string	The name of the driver that is used.
 	 */
 	public function getDriver()
 	{
@@ -381,7 +387,7 @@ class SpoonDatabase
 	/**
 	 * Retrieve the raw database instance (PDO object)
 	 *
-	 * @return	PDO
+	 * @return	PDO	The PDO-instance.
 	 */
 	public function getHandler()
 	{
@@ -392,9 +398,9 @@ class SpoonDatabase
 	/**
 	 * Retrieve the number of rows in a result set
 	 *
-	 * @return	int
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
+	 * @return	int								The number of rows in teh result-set.
+	 * @param	string $query					Teh query to perform.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function getNumRows($query, $parameters = array())
 	{
@@ -446,9 +452,9 @@ class SpoonDatabase
 	/**
 	 * Retrieve the results of 2 columns as an array key-value pair
 	 *
-	 * @return	array
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
+	 * @return	array							An array with the first column as key, the second column as the values.
+	 * @param	string $query					The query to perform.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function getPairs($query, $parameters = array())
 	{
@@ -509,6 +515,7 @@ class SpoonDatabase
 		{
 			// init var
 			$results = array();
+			$keys = null;
 
 			// fetch results
 			$tmpResults = self::getRecords($query, $parameters);
@@ -538,7 +545,7 @@ class SpoonDatabase
 	/**
 	 * Fetch the executed queries
 	 *
-	 * @return	array
+	 * @return	array	An array with all the executed queries, will only be filled in debug-mode.
 	 */
 	public function getQueries()
 	{
@@ -549,9 +556,9 @@ class SpoonDatabase
 	/**
 	 * Retrieve a single record
 	 *
-	 * @return	mixed
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
+	 * @return	mixed							An array containing one record. Keys are the column-names.
+	 * @param	string $query					The query to perform. If multiple rows are selected only the first row will be returned.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function getRecord($query, $parameters = array())
 	{
@@ -606,10 +613,10 @@ class SpoonDatabase
 	/**
 	 * Retrieves an associative array or returns null if there were no results
 	 *
-	 * @return	mixed
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
-	 * @param	string[optional] $key
+	 * @return	mixed							An array containing arrays which represent a record.
+	 * @param	string $query					The query to perform.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
+	 * @param	string[optional] $key			The field that should be used as key, make sure this is unique for each row.
 	 */
 	public function getRecords($query, $parameters = array(), $key = null)
 	{
@@ -678,7 +685,7 @@ class SpoonDatabase
 	/**
 	 * Retrieve the tables in the current database
 	 *
-	 * @return	array
+	 * @return	array	An array containg a list of all available tables.
 	 */
 	public function getTables()
 	{
@@ -703,9 +710,9 @@ class SpoonDatabase
 	/**
 	 * Fetch a single var
 	 *
-	 * @return	string
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
+	 * @return	string							The value as a string
+	 * @param	string $query					The query to perform.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function getVar($query, $parameters = array())
 	{
@@ -757,9 +764,9 @@ class SpoonDatabase
 	/**
 	 * Inserts one or more records
 	 *
-	 * @return	int
-	 * @param	string $table
-	 * @param	array $values
+	 * @return	int				The last inserted ID.
+	 * @param	string $table	The table wherin the record will be inserted
+	 * @param	array $values	The values for the record to insert, keys of this array should match the column-names.
 	 */
 	public function insert($table, array $values)
 	{
@@ -882,7 +889,7 @@ class SpoonDatabase
 	 * Optimize one or more tables
 	 *
 	 * @return	void
-	 * @param	mixed $tables
+	 * @param	mixed $tables	An array containing the name(s) of the tables to optimize.
 	 */
 	public function optimize($tables)
 	{
@@ -896,11 +903,12 @@ class SpoonDatabase
 
 	/**
 	 * Retrieves an associative array or returns null if there were no results
+	 * This is an alias for getRecords
 	 *
-	 * @return	mixed
-	 * @param	string $query
-	 * @param	mixed[optional] $parameters
-	 * @param	string[optional] $key
+	 * @return	mixed							An array containing arrays which represent a record.
+	 * @param	string $query					The query to perform.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
+	 * @param	string[optional] $key			The field that should be used as key, make sure this is unique for each row.
 	 */
 	public function retrieve($query, $parameters = array(), $key = null)
 	{
@@ -912,7 +920,7 @@ class SpoonDatabase
 	 * Set database name
 	 *
 	 * @return	void
-	 * @param	string $database
+	 * @param	string $database	The name of the database.
 	 */
 	private function setDatabase($database)
 	{
@@ -924,7 +932,7 @@ class SpoonDatabase
 	 * Set the debug status
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should debug-mode be activated. Be carefull, this will use a lot of resources (Memory and CPU).
 	 */
 	public function setDebug($on = true)
 	{
@@ -936,7 +944,7 @@ class SpoonDatabase
 	 * Set driver type
 	 *
 	 * @return	void
-	 * @param	string $driver
+	 * @param	string $driver	The driver to use. Available drivers depend on your server configuration.
 	 */
 	private function setDriver($driver)
 	{
@@ -952,7 +960,7 @@ class SpoonDatabase
 	 * Set hostname
 	 *
 	 * @return	void
-	 * @param	string $hostname
+	 * @param	string $hostname	The host or IP of your database-server.
 	 */
 	private function setHostname($hostname)
 	{
@@ -964,7 +972,7 @@ class SpoonDatabase
 	 * Set password
 	 *
 	 * @return	void
-	 * @param	string $password
+	 * @param	string $password	The password to authenticate on your database-server.
 	 */
 	private function setPassword($password)
 	{
@@ -976,7 +984,7 @@ class SpoonDatabase
 	 * Set username
 	 *
 	 * @return	void
-	 * @param	string $username
+	 * @param	string $username	The username to authenticate on your database-server.
 	 */
 	private function setUsername($username)
 	{
@@ -988,7 +996,7 @@ class SpoonDatabase
 	 * Truncate on or more tables
 	 *
 	 * @return	void
-	 * @param	mixed $tables
+	 * @param	mixed $tables	A string or array containing the list of tables to truncate.
 	 */
 	public function truncate($tables)
 	{
@@ -1003,11 +1011,11 @@ class SpoonDatabase
 	/**
 	 * Builds a query for updating records
 	 *
-	 * @return	int
-	 * @param	string $table
-	 * @param	array $values
-	 * @param	string $where
-	 * @param	mixed[optional] $parameters
+	 * @return	int								The number of affected rows.
+	 * @param	string $table					The table to run the UPDATE-statement on
+	 * @param	array $values					The values to update, use the key(s) as columnnames
+	 * @param	string $where					The WHERE-clause.
+	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function update($table, array $values, $where, $parameters = array())
 	{

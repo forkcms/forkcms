@@ -1,6 +1,10 @@
 <?php
 
+// initialize variable
+$aLocale = array();
+
 // languages
+$aLocale['languages'] = array();
 $aLocale['languages']['ab'] = 'abjasio';
 $aLocale['languages']['akk'] = 'acadio';
 $aLocale['languages']['ace'] = 'acehnés';
@@ -507,6 +511,7 @@ $aLocale['languages']['zu'] = 'zulú';
 $aLocale['languages']['zun'] = 'zuni';
 
 // countries
+$aLocale['countries'] = array();
 $aLocale['countries']['AF'] = 'Afganistán';
 $aLocale['countries']['AL'] = 'Albania';
 $aLocale['countries']['DE'] = 'Alemania';
@@ -758,7 +763,16 @@ $aLocale['countries']['DJ'] = 'Yibuti';
 $aLocale['countries']['ZM'] = 'Zambia';
 $aLocale['countries']['ZW'] = 'Zimbabue';
 
+
+// date
+$aLocale['date'] = array();
+
+// date - months
+$aLocale['date']['months'] = array();
+
 // date - months full
+$aLocale['date']['months']['full'] = array();
+
 $aLocale['date']['months']['full'][1] = 'enero';
 $aLocale['date']['months']['full'][2] = 'febrero';
 $aLocale['date']['months']['full'][3] = 'marzo';
@@ -773,6 +787,7 @@ $aLocale['date']['months']['full'][11] = 'noviembre';
 $aLocale['date']['months']['full'][12] = 'diciembre';
 
 // date - months abbreviated
+$aLocale['date']['months']['abbreviated'] = array();
 $aLocale['date']['months']['abbreviated'][1] = 'ene';
 $aLocale['date']['months']['abbreviated'][2] = 'feb';
 $aLocale['date']['months']['abbreviated'][3] = 'mar';
@@ -786,7 +801,11 @@ $aLocale['date']['months']['abbreviated'][10] = 'oct';
 $aLocale['date']['months']['abbreviated'][11] = 'nov';
 $aLocale['date']['months']['abbreviated'][12] = 'dic';
 
+// date - days
+$aLocale['date']['days'] = array();
+
 // date - days full
+$aLocale['date']['days']['full'] = array();
 $aLocale['date']['days']['full']['sun'] = 'domingo';
 $aLocale['date']['days']['full']['mon'] = 'lunes';
 $aLocale['date']['days']['full']['tue'] = 'martes';
@@ -796,6 +815,7 @@ $aLocale['date']['days']['full']['fri'] = 'viernes';
 $aLocale['date']['days']['full']['sat'] = 'sábado';
 
 // date - days abbreviated
+$aLocale['date']['days']['abbreviated'] = array();
 $aLocale['date']['days']['abbreviated']['sun'] = 'dom';
 $aLocale['date']['days']['abbreviated']['mon'] = 'lun';
 $aLocale['date']['days']['abbreviated']['tue'] = 'mar';

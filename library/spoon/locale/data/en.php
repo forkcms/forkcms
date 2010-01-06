@@ -1,6 +1,10 @@
 <?php
 
+// initialize variable
+$aLocale = array();
+
 // languages
+$aLocale['languages'] = array();
 $aLocale['languages']['ab'] = 'Abkhazian';
 $aLocale['languages']['ace'] = 'Achinese';
 $aLocale['languages']['ach'] = 'Acoli';
@@ -776,7 +780,14 @@ $aLocale['countries']['YE'] = 'Yemen';
 $aLocale['countries']['ZM'] = 'Zambia';
 $aLocale['countries']['ZW'] = 'Zimbabwe';
 
+// date
+$aLocale['date'] = array();
+
+// date - months
+$aLocale['date']['months'] = array();
+
 // date - months full
+$aLocale['date']['months']['full'] = array();
 $aLocale['date']['months']['full'][1] = 'January';
 $aLocale['date']['months']['full'][2] = 'February';
 $aLocale['date']['months']['full'][3] = 'March';
@@ -791,6 +802,7 @@ $aLocale['date']['months']['full'][11] = 'November';
 $aLocale['date']['months']['full'][12] = 'December';
 
 // date - months abbreviated
+$aLocale['date']['months']['abbreviated'] = array();
 $aLocale['date']['months']['abbreviated'][1] = 'Jan';
 $aLocale['date']['months']['abbreviated'][2] = 'Feb';
 $aLocale['date']['months']['abbreviated'][3] = 'Mar';
@@ -804,7 +816,11 @@ $aLocale['date']['months']['abbreviated'][10] = 'Oct';
 $aLocale['date']['months']['abbreviated'][11] = 'Nov';
 $aLocale['date']['months']['abbreviated'][12] = 'Dec';
 
+// date - days
+$aLocale['date']['days'] = array();
+
 // date - days full
+$aLocale['date']['days']['full'] = array();
 $aLocale['date']['days']['full']['sun'] = 'Sunday';
 $aLocale['date']['days']['full']['mon'] = 'Monday';
 $aLocale['date']['days']['full']['tue'] = 'Tuesday';
@@ -814,6 +830,7 @@ $aLocale['date']['days']['full']['fri'] = 'Friday';
 $aLocale['date']['days']['full']['sat'] = 'Saturday';
 
 // date - days abbreviated
+$aLocale['date']['days']['abbreviated'] = array();
 $aLocale['date']['days']['abbreviated']['sun'] = 'Sun';
 $aLocale['date']['days']['abbreviated']['mon'] = 'Mon';
 $aLocale['date']['days']['abbreviated']['tue'] = 'Tue';

@@ -45,7 +45,7 @@ class SpoonSession
 	 * Deletes one or more session variables
 	 *
 	 * @return	void
-	 * @param	mixed $keys
+	 * @param	mixed $keys		The key(s) that should be deleted from the session
 	 */
 	public static function delete($keys)
 	{
@@ -71,8 +71,8 @@ class SpoonSession
 	/**
 	 * Checks if a session variable exists
 	 *
-	 * @return	bool
-	 * @param	string $key
+	 * @return	bool			true if the variable is present, otherwise false.
+	 * @param	string $key		The key that should be checked for presence.
 	 */
 	public static function exists($key)
 	{
@@ -87,8 +87,8 @@ class SpoonSession
 	/**
 	 * Gets a variable that was stored in the session
 	 *
-	 * @return	mixed
-	 * @param	string $key
+	 * @return	mixed			The value that was stored.
+	 * @param	string $key		The key of the variable to get.
 	 */
 	public static function get($key)
 	{
@@ -110,7 +110,7 @@ class SpoonSession
 	/**
 	 * Returns the sessionID
 	 *
-	 * @return	string
+	 * @return	string	The unique session id
 	 */
 	public static function getSessionId()
 	{
@@ -123,8 +123,8 @@ class SpoonSession
 	 * Stores a variable in the session
 	 *
 	 * @return	void
-	 * @param	string $key
-	 * @param	mixed $value
+	 * @param	string $key		The key for the variable.
+	 * @param	mixed $value	The value to store.
 	 */
     public static function set($key, $value)
     {

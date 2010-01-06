@@ -47,9 +47,9 @@ class SpoonException extends Exception
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $message
-	 * @param	int[optional] $code
-	 * @param	mixed[optional] $obfuscate
+	 * @param	string $message				The message that should be used.
+	 * @param	int[optional] $code			A numeric code for the exceptions.
+	 * @param	mixed[optional] $obfuscate	The string(s) that will be obfuscated.
 	 */
 	public function __construct($message, $code = 0, $obfuscate = null)
 	{

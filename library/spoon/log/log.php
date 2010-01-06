@@ -25,7 +25,6 @@ require_once 'spoon/filesystem/filesystem.php';
  *
  * @package		log
  *
- *
  * @author		Tijs Verkoyen <tijs@spoon-library.be>
  * @since		1.0.0
  */
@@ -37,14 +36,13 @@ class SpoonLogException extends SpoonException {}
  *
  * @package		log
  *
- *
  * @author		Tijs Verkoyen <tijs@spoon-library.be>
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @since		1.0.0
  */
 class SpoonLog
 {
-	// expressed in KB
+	// the maximum filesize for a log file, expressed in KB
 	const MAX_FILE_SIZE = 500;
 
 
@@ -59,7 +57,7 @@ class SpoonLog
 	/**
 	 * Get the log path
 	 *
-	 * @return	string
+	 * @return	string	The path where the logfiles will be stored.
 	 */
 	public static function getPath()
 	{
@@ -72,7 +70,7 @@ class SpoonLog
 	 * Set the logpath
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path where the logfiles should be stored.
 	 */
 	public static function setPath($path)
 	{
@@ -84,8 +82,8 @@ class SpoonLog
 	 * Write an error
 	 *
 	 * @return	void
-	 * @param	string $message
-	 * @param	string[optional] $type
+	 * @param	string $message			The messages that should be logged.
+	 * @param	string[optional] $type	The type of message you want to log, possible values are: error, custom.
 	 */
 	public static function write($message, $type = 'error')
 	{
