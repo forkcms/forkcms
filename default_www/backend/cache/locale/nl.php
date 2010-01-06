@@ -89,6 +89,7 @@ $lbl['core'] = array();
 // a
 $lbl['core']['Add'] = 'toevoegen';
 $lbl['pages']['Add'] = 'pagina toevoegen';
+$lbl['core']['All'] = 'alle';
 $lbl['core']['APIKey'] = 'API key';
 $lbl['core']['APIKeys'] = 'API keys';
 $lbl['core']['APIURL'] = 'API URL';
@@ -120,6 +121,7 @@ $lbl['core']['Hidden'] = 'verborgen';
 $lbl['core']['InterfaceLanguage'] = 'interface-taal';
 // j
 // k
+$lbl['core']['Keywords'] = 'zoekwoorden';
 // l
 $lbl['core']['Languages'] = 'talen';
 $lbl['core']['LastEditedOn'] = 'laats aangepast op';
@@ -147,11 +149,14 @@ $lbl['core']['PreviousPage'] = 'vorige pagina';
 $lbl['core']['Published'] = 'gepubliceerd';
 // q
 // r
+$lbl['core']['RecentlyEdited'] = 'recent aangepast';
+$lbl['core']['Referrers'] = 'referrers';
 $lbl['core']['Revisions'] = 'versies';
 // s
 $lbl['core']['Save'] = 'opslaan';
 $lbl['core']['Scripts'] = 'scripts';
 $lbl['core']['Send'] = 'send';
+$lbl['core']['Security'] = 'beveiliging';
 $lbl['core']['SEO'] = 'SEO';
 $lbl['core']['Settings'] = 'instellingen';
 $lbl['core']['SignIn'] = 'aanmelden';
@@ -164,6 +169,8 @@ $lbl['core']['Status'] = 'status';
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
 // t
+$lbl['core']['Tags'] = 'tags';
+$lbl['core']['Template'] = 'template';
 $lbl['core']['Time'] = 'tijd';
 $lbl['core']['Title'] = 'titel';
 // u
@@ -173,7 +180,9 @@ $lbl['core']['Userguide'] = 'userguide';
 $lbl['core']['Username'] = 'gebruikersnaam';
 $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 // v
+$lbl['core']['Versions'] = 'versies';
 // w
+$lbl['core']['Websites'] = 'websites';
 $lbl['core']['WebsiteTitle'] = 'website titel';
 // x
 // y
@@ -225,6 +234,7 @@ $msg['users']['HeaderEdit'] = 'Gebruiker <em>%s</em> bewerken';
 $msg['core']['HeaderIndex'] = 'Overzicht';
 $msg['snippets']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
+$msg['pages']['HelpAdd'] = '&larr; Click a page name in the tree structure to edit it or';
 $msg['settings']['HelpEmailWebmaster'] = 'Stuur notificaties van het CMS naar dit e-mailadres.';
 // i
 // j

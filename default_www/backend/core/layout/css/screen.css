@@ -112,7 +112,7 @@ img { -moz-force-broken-image-icon: 1; }
 */
 
 .clearfix:after,
-#content:after,
+#contentHolder:after,
 .columns:after,
 .section:after,
 .oneLiner:after,
@@ -466,12 +466,12 @@ td {
 
 }
 
-td#content {
+td#contentHolder {
 	height: 100%;
 	border-left: 1px solid #DDD;
 }
 
-#content .inner {
+#contentHolder .inner {
 	padding: 20px;
 }
 

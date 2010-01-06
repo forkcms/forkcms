@@ -70,12 +70,12 @@ jsBackend.controls = {
 	},
 	// toggle between full width and sidebar-layout
 	bindFullWidthSwitch: function() {
-		$('#fullwidthSwitch a').bind('click', function(evt) {
+		$('#fullwidthSwitch').bind('click', function(evt) {
 			// prevent default behaviour
 			evt.preventDefault();
 			
 			// toggle
-			$('#pagesTree, #moduleList').toggle()
+			$('#pagesTree, #contentList').toggle();
 			
 			// add class
 			$(this).parent().addClass('collapsed')

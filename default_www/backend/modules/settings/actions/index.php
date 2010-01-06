@@ -89,7 +89,7 @@ class SettingsIndex extends BackendBaseActionIndex
 		if($this->needsAkismet) $this->frm->addTextField('core_akismet_key', BackendModel::getSetting('core', 'core_akismet_key', null));
 		if($this->needsGoogleMaps) $this->frm->addTextField('core_google_maps_key', BackendModel::getSetting('core', 'core_google_maps_key', null));
 
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')));
+		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
 
