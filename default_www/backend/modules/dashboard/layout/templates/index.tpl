@@ -1,7 +1,7 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
 <div id="dashboardWidgets">
 	<div class="leftColumn">
-		<!-- Widget: referrers -->
+		<!-- @todo @tijs:  -->
 		<div id="widgetReferrers" class="box">
 			<div class="heading">
 				<h3><a href="#">{$lblReferrers|ucfirst}</a></h3>
