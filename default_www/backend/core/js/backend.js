@@ -222,7 +222,7 @@ jsBackend.forms = {
 	
 	submitWithLinks: function() {
 		// the html for the button that will replace the input[submit]
-		var replaceHTML = '<a class="button" href="#">{label}</a>';
+		var replaceHTML = '<a class="{class}" href="#"><span><span><span>{label}</span></span></span></a>';
 		
 		// are there any forms that should be submitted with a link?
 		if($('form.submitWithLink').length > 0) {
@@ -234,7 +234,7 @@ jsBackend.forms = {
 				if(formId != '') {
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function() {
-						$(this).after(replaceHTML.replace('{label}', $(this).val()))
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'button ' + $(this).attr('class')))
 								.css({position:'absolute', top:'-2000px'})
 								.attr('tabindex', -1); 
 					});

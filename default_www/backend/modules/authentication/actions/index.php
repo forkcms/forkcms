@@ -58,14 +58,14 @@ class AuthenticationIndex extends BackendBaseActionIndex
 		// create elements and add to the form
 		$this->frm->addTextField('backend_username');
 		$this->frm->addPasswordField('backend_password');
-		$this->frm->addButton('login', ucfirst(BL::getLabel('SignIn')));
+		$this->frm->addButton('login', ucfirst(BL::getLabel('SignIn')), 'submit', 'inputButton button mainButton');
 
 		// create form for forgot password
 		$this->frmForgotPassword = new BackendForm('forgotPassword');
 
 		// create elements and add to the form
 		$this->frmForgotPassword->addTextField('backend_email');
-		$this->frmForgotPassword->addButton('send', ucfirst(BL::getLabel('Send')));
+		$this->frmForgotPassword->addButton('send', ucfirst(BL::getLabel('Send')), 'submit', 'inputButton button mainButton');
 	}
 
 

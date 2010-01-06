@@ -16,7 +16,7 @@
 						<h2>{$SITE_TITLE}</h2>
 						<p>{$msgLoginFormHelp}</p>
 					</div>
-					
+
 					{form:authenticationIndex}
 						<div class="horizontal">
 							{option:hasError}
@@ -28,11 +28,11 @@
 									<label for="backendUsername">{$lblUsername|ucfirst}</label>
 									{$txtBackendUsername} {$txtBackendUsernameError}
 								</p>
-								
+
 								<p>
 									<label for="backendPassword">{$lblPassword|ucfirst}</label>
 									{$txtBackendPassword} {$txtBackendPasswordError}
-								</p>	
+								</p>
 							</div>
 							<p class="spacing">
 								{$btnLogin}
@@ -47,17 +47,18 @@
 						<p>{$msgForgotPasswordHelp}</p>
 						{form:forgotPassword}
 							<div class="oneLiner">
-								<p><label for="backendEmail">{$lblEmail}</label></p>
+								<p><label for="backendEmail">{$lblEmail|ucfirst}</label></p>
 								<p>{$txtBackendEmail}</p>
 								<p>{$btnSend}{$txtBackendEmailError}</p>
 							</div>
-							
+
 							{option:hasForgotpasswordError}
+							<!-- @todo @johan stijlen errormessage, geef een verkeerd emailadres in -->
 							<div class="errorMessage singleMessage">
 								<p>{$msgLoginFormForgotPasswordError}</p>
 							</div>
 							{/option:hasForgotpasswordError}
-							
+
 							{option:isForgotpasswordSuccess}
 							<div class="successMessage singleMessage">
 								<p>{$msgLoginFormForgotPasswordSuccess}</p>
