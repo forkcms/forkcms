@@ -1852,37 +1852,37 @@ fieldset legend {
 	Add tags
 */
 
-#tags .splitBox {
+.tagsWrapper .splitBox {
 	background: #E7E7FF;
 }
 
-#tags #tagsList {
+.tagsWrapper .tagsList {
 	padding-top: 12px;
 }
 
 #addTag { width: 194px; }
-#pagesSide #tags #addTag { width: 94px; }
+#pagesSide .tagsWrapper #addTag { width: 94px; }
 
-#tags label { font-size: 11px; }
+.tagsWrapper label { font-size: 11px; }
 
-#tags ul {
+.tagsWrapper ul {
 	padding: 4px 0 0;
 }
 
-#tags li {
+.tagsWrapper li {
 	font-size: 11px;
 	float: left;
 	margin: 0 4px 4px 0;
 }
 
-#tags li strong {
+.tagsWrapper li strong {
 	display: block;
 	float: left;
 	font-weight: 400;
 	color: #6464CE;
 }
 
-#tags li a {
+.tagsWrapper li a {
 	background: url(../images/sprites/fork_icons.png) no-repeat -1px -201px;
 	display: block;
 	width: 7px;
@@ -1893,7 +1893,7 @@ fieldset legend {
 	font-weight: 400;
 }
 
-#tags li span {
+.tagsWrapper li span {
 	display: block;
 	float: left;
 	background: #dee7f8;
@@ -1909,8 +1909,8 @@ fieldset legend {
 	-webkit-border-radius: 8px;
 }
 
-#tags ul:after,
-#tags li:after {
+.tagsWrapper ul:after,
+.tagsWrapper li:after {
 	content: ".";
 	display: block;
 	height: 0;
@@ -3087,3 +3087,13 @@ a.mainButton:focus {
 .statusDraft {
 	
 }
+
+/** Autocomplete */
+.ac_results { padding: 0px; border: 1px solid WindowFrame; background-color: Window; overflow: hidden; }
+.ac_results ul { width: 100%; list-style-position: outside; list-style: none; padding: 0; margin: 0; }
+.ac_results iframe { position: absolute; top: 0; left: 0; z-index: -1; filter: mask(); width:3000px; height:3000px; }
+.ac_results li { margin: 0; padding: 2px 5px; cursor: pointer; display: block; font: menu; font-size: 12px; overflow: hidden; }
+.ac_loading {
+	background : Window url('../images/spinner.gif') right center no-repeat;
+}
+.ac_over { background-color: Highlight; color: HighlightText; }

@@ -158,6 +158,56 @@ class BackendPagesModel
 	}
 
 
+	public static function buildTemplateHTML($template)
+	{
+		// validate
+		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
+
+		// init var
+		$html = '';
+
+		// split into rows
+		$rows = explode('],[', $template['data']['format']);
+
+		// loop rows
+		foreach($rows as $row)
+		{
+			// cleanup
+			$row = str_replace(array('[',']'), '', $row);
+
+			// add start html
+			$html .= '<table border="0" cellpadding="2" cellspacing="2">'."\n";
+			$html .= '	<tbody>'."\n";
+
+			// split into cells
+			$cells = explode(',', $row);
+
+			// loop cells
+			foreach($cells as $cell)
+			{
+				// get title & index
+				$title = (isset($template['data']['names'][$cell])) ? $template['data']['names'][$cell] : '';
+				$index = (isset($template['data']['names'][$cell])) ? $cell : '';
+
+				// decide selected state
+				$selected = (isset($template['data']['names'][$cell]));
+
+				// add html
+				if($selected) $html .= '		<td class="selected" ><a href="#block-'. $index .'" class="toggleDiv" title="'. $title .'">'. $index .'</a></td>'."\n";
+				else $html .= '		<td> </td>'."\n";
+			}
+
+			// end html
+			$html .= '	</tbody>'."\n";
+			$html .= '</table>'."\n";
+		}
+
+		// return html
+		return $html;
+	}
+
+
+
 	/**
 	 * Creates the html for the menu
 	 *
@@ -173,7 +223,7 @@ class BackendPagesModel
 		// require
 		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
 
-		Spoon::dump($navigation[$type][$depth]);
+//		Spoon::dump($navigation[$type][$depth]);
 
 		// check if item exists
 		if(isset($navigation[$type][$depth][$parentId]))
@@ -401,6 +451,9 @@ class BackendPagesModel
 
 			// add names into the properties
 			$templates[$key]['namesString'] = '"' . implode('", "', $templates[$key]['data']['names']) .'"';
+
+			// build template HTML
+			$templates[$key]['html'] = self::buildTemplateHTML($templates[$key]);
 		}
 
 		// return

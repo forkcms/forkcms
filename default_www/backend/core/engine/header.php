@@ -169,20 +169,27 @@ class BackendHeader
 		// if there aren't any JS-files added we don't need to do something
 		if(!empty($this->jsFiles))
 		{
+			// some files should be cached, even if we don't want cached (mostly libraries)
+			$ignoreCache = array('/backend/core/js/jquery/jquery.js',
+									'/backend/core/js/jquery/jquery.ui.js',
+									'/backend/core/js/jquery/jquery.autocomplete.js',
+									'/backend/core/js/jquery/jquery.backend.js',
+									'/backend/core/js/tiny_mce/tiny_mce.js');
+
 			// loop the JS-files
 			foreach($this->jsFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if($file == '/backend/core/js/jquery/jquery.js') $jsFiles[] = array('path' => $file);
-				elseif($file == '/backend/core/js/jquery/jquery.ui.js') $jsFiles[] = array('path' => $file);
-				elseif($file == '/backend/core/js/tiny_mce/tiny_mce.js') $jsFiles[] = array('path' => $file);
+				if(in_array($file, $ignoreCache)) $jsFiles[] = array('path' => $file);
+
+				// make the file uncacheble
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
 					if(substr($file, 0, 11) == '/backend/js') $jsFiles[] = array('path' => $file .'&amp;m='. time());
 
 					// add lastmodified time
-					else $jsFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
+					else $jsFiles[] = array('path' => $file .'?m='. $lastModifiedTime);
 				}
 			}
 		}

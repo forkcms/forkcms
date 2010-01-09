@@ -109,10 +109,10 @@ class PagesAdd extends BackendBaseActionAdd
 		// page info
 		$this->frm->addCheckBox('navigation_title_overwrite');
 		$this->frm->addTextField('navigation_title');
-		
+
 		// tags
-		$this->frm->addTextField('tags', null, null, 'inputTextfield tags', 'inputTextfieldError tags');
-		
+		$this->frm->addTextField('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 
@@ -132,6 +132,12 @@ class PagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('templateIconsURL', BACKEND_CORE_URL .'/layout/images/template_icons');
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
+
+		// get default template id
+		$defaultTemplateId = BackendModel::getSetting('core', 'default_template', 1);
+
+		// assign template
+		$this->tpl->assignArray($this->templates[$defaultTemplateId], 'template');
 
 		// parse the form
 		$this->frm->parse($this->tpl);

@@ -128,6 +128,8 @@ class BackendBaseAction
 		// add jquery, we will need this in every action, so add it globally
 		$this->header->addJS('jquery/jquery.js', 'core');
 		$this->header->addJS('jquery/jquery.ui.js', 'core');
+		$this->header->addJS('jquery/jquery.autocomplete.js', 'core');
+		$this->header->addJS('jquery/jquery.backend.js', 'core');
 		$this->header->addJS('backend.js', 'core', true);
 		$this->header->addJS('utils.js', 'core', true);
 

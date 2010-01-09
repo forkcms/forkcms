@@ -46,7 +46,7 @@
 										<td>
 											<div id="editContent">
 												{iteration:blocks}
-												<div style="display: block;" class="contentA contentBlock" rel="contentA">
+												<div id="block-{$blocks.index}" class="contentBlock">
 													<div class="contentTitle selected hover">
 														<table border="0" cellpadding="0" cellspacing="0">
 															<tbody><tr>
@@ -109,39 +109,17 @@
 
 											<div class="box" id="template">
 												<div class="heading">
-													<h4>Template: About</h4>
+													<h4>{$lblTemplate|ucfirst}: {$templatelabel}</h4>
 													<div class="buttonHolderRight">
-														<a href="pages_edit_page.html#tabTemplate" class="button icon iconEdit iconOnly" id="editTemplate"><span><span><span>Edit</span></span></span></a>
+														<a href="#tabTemplate" class="button icon iconEdit iconOnly">
+															<span><span><span>{$lblEdit|ucfirst}</span></span></span>
+														</a>
 													</div>
 												</div>
 												<div class="options">
 													<!-- [A,B],[C,D,0],[E,E,0] -->
 													<div class="templateVisual current">
-														<table border="0" cellpadding="2" cellspacing="2">
-															<tbody>
-																<tr>
-																	<td class="selected"><a href="#" title="Main content" rel="contentA">A</a></td>
-																	<td class="selected"><a href="#" title="Blog" rel="contentB">B</a></td>
-																</tr>
-															</tbody>
-														</table>
-														<table border="0" cellpadding="0" cellspacing="0">
-															<tbody>
-																<tr>
-																	<td><a href="#" title="ZijImage" rel="contentC">C</a></td>
-																	<td class=""><a href="#" title="Win win win!" rel="contentD">D</a></td>
-																	<td></td>
-																</tr>
-															</tbody>
-														</table>
-														<table border="0" cellpadding="0" cellspacing="0">
-															<tbody>
-																<tr>
-																	<td colspan="2"><a href="#" title="Video" rel="contentE">E</a></td>
-																	<td></td>
-																</tr>
-															</tbody>
-														</table>
+														{$templatehtml}
 													</div>
 
 													<table id="templateDetails" class="infoGrid" border="0" cellpadding="0" cellspacing="0">
@@ -161,7 +139,7 @@
 							</table>
 						</div>
 						<div id="tabSEO">
-							<div id="titles" class="box boxLevel2">
+							<div class="box boxLevel2">
 								<div class="heading">
 									<h3>{$lblTitles|ucfirst}</h3>
 								</div>
@@ -245,7 +223,7 @@
 								</div>
 							</div>
 
-							<div id="seoUrl" class="box boxLevel2">
+							<div class="box boxLevel2">
 								<div class="heading">
 									<h3>{$lblURL}</h3>
 								</div>
@@ -268,23 +246,12 @@
 							{$ddmTemplateId} {$ddmTemplateIdError}
 						</div>
 						<div id="tabTags">
-							<div id="tags" class="box boxLevel2">
+							<div class="box boxLevel2">
 								<div class="heading">
 									<h3>Tags</h3>
 								</div>
 								<div class="options">
-									<!-- <label for="addTag">Add tags:</label> -->
-									<div class="oneLiner">
-										<p><input class="inputText" id="addTag" type="text"></p>
-										<div class="buttonHolder">
-											<a href="#" class="button icon iconAdd"><span><span><span>Add</span></span></span></a>
-										</div>
-									</div>
-									<!-- <label>Current tags:</label> -->
-									<ul id="tagsList">
-										<li><span><strong>Music</strong> <a href="#" title="Delete tag">X</a></span></li>
-										<li><span><strong>Concerts</strong> <a href="#" title="Delete tag">X</a></span></li>
-									</ul>
+									{$txtTags} {$txtTagsError}
 								</div>
 							</div>
 						</div>

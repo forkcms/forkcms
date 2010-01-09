@@ -1,8 +1,9 @@
 tinyMCE.init({
-	theme: 'advanced',
+	theme: 'advanced',	// @todo	should be based on user-setting
 	dialog_type: 'modal',
 	language: '{$INTERFACE_LANGUAGE}',
 	mode: 'textareas',
+	entity_encoding: 'raw',
 	plugins: 'inlinepopups,paste,contextmenu,media,fullscreen,table',
 	editor_selector: 'inputEditor',
 	body_class: 'content',
@@ -18,12 +19,14 @@ tinyMCE.init({
 	filemanager_handle: 'media,file',
 	imagemanager_handle: 'image',
 	relative_urls: false,
-	extended_valid_elements: 'embed[src|flashvars|align|quality|width|height|name|allowScriptAccess|wmode|type|pluginspage|pluginspage|style|id|allowFullScreen]'
+	extended_valid_elements: 'embed[src|flashvars|align|quality|width|height|name|allowScriptAccess|wmode|type|pluginspage|pluginspage|style|id|allowFullScreen]',
+	setup: function(ed) { ed.onPaste.add( function(ed, e, o) { ed.execCommand('mcePasteText', true); return tinymce.dom.Event.cancel(e); }); }
 });
+
 /**
  * fork Init function
  * TinyMCE Bugfix - @see http://www.bram.us/2007/02/14/my-tinymce-bugfix/
  */
 function forkInitInstance(inst) { 
-	tinyMCE.triggerSave(false,true);
+	tinyMCE.triggerSave(false, true);
 }

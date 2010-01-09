@@ -66,7 +66,8 @@ jsBackend.controls = {
 	// init, something like a constructor
 	init: function() { 
 		jsBackend.controls.bindWorkingLanguageSelection();
-		jsBackend.controls.bindFullWidthSwitch()
+		jsBackend.controls.bindFullWidthSwitch();
+		jsBackend.controls.bindToggleDiv();
 	},
 	// toggle between full width and sidebar-layout
 	bindFullWidthSwitch: function() {
@@ -81,7 +82,24 @@ jsBackend.controls = {
 			$(this).parent().addClass('collapsed')
 		});
 	},
-	// toogle between the working languages
+	// toggle a div
+	bindToggleDiv: function() {
+		$('.toggleDiv').bind('click', function(evt) {
+			// prevent default
+			evt.preventDefault();
+			
+			// get id
+			var id = $(this).attr('href');
+			
+			// show/hide
+			$(id).toggle();
+			
+			// set selected class on parent
+			if($(id).is(':visible')) $(this).parent().addClass('selected');
+			else $(this).parent().removeClass('selected');
+		});
+	},
+	// togle between the working languages
 	bindWorkingLanguageSelection: function() {
 		$('#workingLanguage').bind('change', function(evt) {
 			// preventDefault
@@ -135,6 +153,7 @@ jsBackend.forms = {
 	init: function() { 
 		jsBackend.forms.datefields();
 		jsBackend.forms.submitWithLinks();
+		jsBackend.forms.tagBoxes();
 	},
 	
 	// 
@@ -246,6 +265,13 @@ jsBackend.forms = {
 					});
 				}
 			});
+		}
+	},
+	
+	tagBoxes: function() {
+		if($('input.tagBox').length > 0) {
+			$('input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAddTag|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', 
+									   autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete' });
 		}
 	},
 	
