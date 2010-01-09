@@ -1,154 +1,154 @@
-tinyMCE.addI18n({en:{
+tinyMCE.addI18n({nl:{
 common:{
-edit_confirm:"Do you want to use the WYSIWYG mode for this textarea?",
-apply:"Apply",
-insert:"Insert",
-update:"Update",
-cancel:"Cancel",
-close:"Close",
-browse:"Browse",
-class_name:"Class",
-not_set:"-- Not set --",
-clipboard_msg:"Copy/Cut/Paste is not available in Mozilla and Firefox.\nDo you want more information about this issue?",
-clipboard_no_support:"Currently not supported by your browser, use keyboard shortcuts instead.",
-popup_blocked:"Sorry, but we have noticed that your popup-blocker has disabled a window that provides application functionality. You will need to disable popup blocking on this site in order to fully utilize this tool.",
-invalid_data:"Error: Invalid values entered, these are marked in red.",
-more_colors:"More colors"
+edit_confirm:"Weet u zeker dat u tekst in WYSIWYG mode wilt bewerken in dit tekstveld?",
+apply:"Toepassen",
+insert:"Invoegen",
+update:"Bijwerken",
+cancel:"Annuleren",
+close:"Sluiten",
+browse:"Bladeren",
+class_name:"Klasse",
+not_set:"- Standaard -",
+clipboard_msg:"Kopi\u00EBren/knippen/plakken is niet beschikbaar in Mozilla en Firefox.\nWilt u meer informatie over deze beperking?",
+clipboard_no_support:"Kopi\u00EBren/knippen/plakken wordt niet ondersteund door uw browser, gebruik hiervoor de sneltoetsen.",
+popup_blocked:"U zult uw popup-blocker tijdelijk moeten uitschakelen voor deze website om gebruik te kunnen maken van alle functies van deze teksteditor.",
+invalid_data:"Fout: Er zijn ongeldige waardes ingevoerd, deze zijn rood gemarkeerd.",
+more_colors:"Meer kleuren"
 },
 contextmenu:{
-align:"Alignment",
-left:"Left",
-center:"Center",
-right:"Right",
-full:"Full"
+align:"Uitlijning",
+left:"Links",
+center:"Centreren",
+right:"Rechts",
+full:"Uitvullen"
 },
 insertdatetime:{
-date_fmt:"%Y-%m-%d",
+date_fmt:"%d-%m-%Y",
 time_fmt:"%H:%M:%S",
-insertdate_desc:"Insert date",
-inserttime_desc:"Insert time",
-months_long:"January,February,March,April,May,June,July,August,September,October,November,December",
-months_short:"Jan,Feb,Mar,Apr,May,Jun,Jul,Aug,Sep,Oct,Nov,Dec",
-day_long:"Sunday,Monday,Tuesday,Wednesday,Thursday,Friday,Saturday,Sunday",
-day_short:"Sun,Mon,Tue,Wed,Thu,Fri,Sat,Sun"
+insertdate_desc:"Datum invoegen",
+inserttime_desc:"Tijd invoegen",
+months_long:"Januari,Februari,Maart,April,Mei,Juni,Juli,Augustus,September,Oktober,November,December",
+months_short:"Jan,Feb,Mar,Apr,Mei,Jun,Jul,Aug,Sep,Okt,Nov,Dec",
+day_long:"Zondag,Maandag,Dinsdag,Woensdag,Donderdag,Vrijdag,Zaterdag,Zondag",
+day_short:"zo,ma,di,wo,do,vr,za,zo"
 },
 print:{
-print_desc:"Print"
+print_desc:"Afdrukken"
 },
 preview:{
-preview_desc:"Preview"
+preview_desc:"Voorbeeld"
 },
 directionality:{
-ltr_desc:"Direction left to right",
-rtl_desc:"Direction right to left"
+ltr_desc:"Van links naar rechts",
+rtl_desc:"Van rechts naar links"
 },
 layer:{
-insertlayer_desc:"Insert new layer",
-forward_desc:"Move forward",
-backward_desc:"Move backward",
-absolute_desc:"Toggle absolute positioning",
-content:"New layer..."
+insertlayer_desc:"Nieuwe laag invoegen",
+forward_desc:"Volgende laag",
+backward_desc:"Vorige laag",
+absolute_desc:"Absoluut positioneren inschakelen",
+content:"Nieuwe laag..."
 },
 save:{
-save_desc:"Save",
-cancel_desc:"Cancel all changes"
+save_desc:"Opslaan",
+cancel_desc:"Alle wijzigingen annuleren"
 },
 nonbreaking:{
-nonbreaking_desc:"Insert non-breaking space character"
+nonbreaking_desc:"Open ruimte invoegen"
 },
 iespell:{
-iespell_desc:"Run spell checking",
-download:"ieSpell not detected. Do you want to install it now?"
+iespell_desc:"Spellingcontrole",
+download:"ieSpell niet gevonden. Wilt u deze nu installeren?"
 },
 advhr:{
-advhr_desc:"Horizontal rule"
+advhr_desc:"Scheidingslijn"
 },
 emotions:{
-emotions_desc:"Emotions"
+emotions_desc:"Emoties"
 },
 searchreplace:{
-search_desc:"Find",
-replace_desc:"Find/Replace"
+search_desc:"Zoeken",
+replace_desc:"Zoeken/Vervangen"
 },
 advimage:{
-image_desc:"Insert/edit image"
+image_desc:"Afbeelding invoegen/bewerken"
 },
 advlink:{
-link_desc:"Insert/edit link"
+link_desc:"Link invoegen/bewerken"
 },
 xhtmlxtras:{
-cite_desc:"Citation",
-abbr_desc:"Abbreviation",
-acronym_desc:"Acronym",
-del_desc:"Deletion",
-ins_desc:"Insertion",
-attribs_desc:"Insert/Edit Attributes"
+cite_desc:"Citaat",
+abbr_desc:"Afkorting",
+acronym_desc:"Synoniem",
+del_desc:"Verwijderd",
+ins_desc:"Ingevoegd",
+attribs_desc:"Attributen invoegen/bewerken"
 },
 style:{
-desc:"Edit CSS Style"
+desc:"CSS Stijl bewerken"
 },
 paste:{
-paste_text_desc:"Paste as Plain Text",
-paste_word_desc:"Paste from Word",
-selectall_desc:"Select All"
+paste_text_desc:"Als platte tekst plakken",
+paste_word_desc:"Vanuit Word plakken",
+selectall_desc:"Alles selecteren"
 },
 paste_dlg:{
-text_title:"Use CTRL+V on your keyboard to paste the text into the window.",
-text_linebreaks:"Keep linebreaks",
-word_title:"Use CTRL+V on your keyboard to paste the text into the window."
+text_title:"Gebruik Ctrl+V om tekst in het venster te plakken.",
+text_linebreaks:"Regelafbreking bewaren",
+word_title:"Gebruik Ctrl+V om tekst in het venster te plakken."
 },
 table:{
-desc:"Inserts a new table",
-row_before_desc:"Insert row before",
-row_after_desc:"Insert row after",
-delete_row_desc:"Delete row",
-col_before_desc:"Insert column before",
-col_after_desc:"Insert column after",
-delete_col_desc:"Remove column",
-split_cells_desc:"Split merged table cells",
-merge_cells_desc:"Merge table cells",
-row_desc:"Table row properties",
-cell_desc:"Table cell properties",
-props_desc:"Table properties",
-paste_row_before_desc:"Paste table row before",
-paste_row_after_desc:"Paste table row after",
-cut_row_desc:"Cut table row",
-copy_row_desc:"Copy table row",
-del:"Delete table",
-row:"Row",
-col:"Column",
-cell:"Cell"
+desc:"Nieuwe tabel invoegen",
+row_before_desc:"Rij boven invoegen",
+row_after_desc:"Rij onder invoegen",
+delete_row_desc:"Rij verwijderen",
+col_before_desc:"Kolom links invoegen",
+col_after_desc:"Kolom rechts invoegen",
+delete_col_desc:"Kolom verwijderen",
+split_cells_desc:"Cellen splitsen",
+merge_cells_desc:"Cellen samenvoegen",
+row_desc:"Rij-eigenschappen",
+cell_desc:"Cel-eigenschappen",
+props_desc:"Tabeleigenschappen",
+paste_row_before_desc:"Rij boven plakken",
+paste_row_after_desc:"Rij onder plakken",
+cut_row_desc:"Rij knippen",
+copy_row_desc:"Rij kopi\u00EBren",
+del:"Tabel verwijderen",
+row:"Rij",
+col:"Kolom",
+cell:"Cel"
 },
 autosave:{
-unload_msg:"The changes you made will be lost if you navigate away from this page."
+unload_msg:"De wijzigingen zullen verloren gaan als u nu deze pagina verlaat."
 },
 fullscreen:{
-desc:"Toggle fullscreen mode"
+desc:"Volledig scherm"
 },
 media:{
-desc:"Insert / edit embedded media",
-edit:"Edit embedded media"
+desc:"Media invoegen/bewerken",
+edit:"Media bewerken"
 },
 fullpage:{
-desc:"Document properties"
+desc:"Documenteigenschappen"
 },
 template:{
-desc:"Insert predefined template content"
+desc:"Voorgedefinieerd sjabloon invoegen"
 },
 visualchars:{
-desc:"Visual control characters on/off."
+desc:"Zichtbare symbolen"
 },
 spellchecker:{
-desc:"Toggle spellchecker",
-menu:"Spellchecker settings",
-ignore_word:"Ignore word",
-ignore_words:"Ignore all",
-langs:"Languages",
-wait:"Please wait...",
-sug:"Suggestions",
-no_sug:"No suggestions",
-no_mpell:"No misspellings found."
+desc:"Spellingcontrole",
+menu:"Instellingen spellingcontrole",
+ignore_word:"Woord negeren",
+ignore_words:"Alles negeren",
+langs:"Talen",
+wait:"Een ogenblik geduld\u2026",
+sug:"Suggesties",
+no_sug:"Geen suggesties",
+no_mpell:"Geen spelfouten gevonden."
 },
 pagebreak:{
-desc:"Insert page break."
+desc:"Pagina-einde invoegen"
 }}});
