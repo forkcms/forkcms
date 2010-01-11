@@ -23,6 +23,37 @@ class BackendModel
 
 
 	/**
+	 * Checks the settings and optionally returns an array with warnings
+	 *
+	 * @return	array
+	 */
+	public static function checkSettings()
+	{
+		// init var
+		$warnings = array();
+		$akismetModules = BackendSettingsModel::getModulesThatRequireAkismet();
+		$googleMapsModules = BackendSettingsModel::getModulesThatRequireGoogleMaps();
+
+		// akismet key
+		if(!empty($akismetModules) && BackendModel::getSetting('core', 'akismet_key', null) == '')
+		{
+			// add warning
+			$warnings[] = array('message' => BL::getError('AkismetKey'));
+		}
+
+		// google maps key
+		if(!empty($googleMapsModules) && BackendModel::getSetting('core', 'google_maps_key', null) == '')
+		{
+			// add warning
+			$warnings[] = array('message' => BL::getError('GoogleMapsKey'));
+		}
+
+		return $warnings;
+	}
+
+
+
+	/**
 	 * Creates an url for a given action and module
 	 * If you don't specify an action the current action will be used
 	 * If you don't specify a module the current module will be used
@@ -67,6 +98,8 @@ class BackendModel
 
 	/**
 	 * Get the modules
+	 *
+	 * @todo deze lijst moet in lokale cache komen, aangezien die redelijk veel wordt opgevraagd.
 	 *
 	 * @return	array
 	 * @param	bool[optional] $activeOnly

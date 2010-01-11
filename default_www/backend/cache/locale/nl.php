@@ -27,7 +27,10 @@
 $err = array();
 $err['core'] = array();
 // a
+$err['core']['AkismetKey'] = 'Akismet API-key werd nog niet geconfigureerd.';
 // b
+$err['core']['BlogRSSDescription'] = 'Blog RSS beschrijving is nog niet geconfigureerd. <a href="%s" class="button"><span><span><span>Configureer</span></span></span></a>';
+$err['core']['BlogRSSTitle'] = 'Blog RSS titel is nog niet geconfigureerd. <a href="%s" class="button"><span><span><span>Configureer</span></span></span></a>';
 // c
 $err['core']['ContentIsRequired'] = 'Gelieve inhoud in te geven.';
 // d
@@ -38,8 +41,11 @@ $err['core']['EmailIsUnknown'] = 'Dit emailadres is niet teruggevonden.';
 $err['core']['FieldIsRequired'] = 'Dit veld is verplicht.';
 // g
 $err['core']['GeneralFormError'] = 'Er ging iets mis. Kijk de gemarkeerde velden na.';
+$err['core']['GoogleMapsKey'] = 'Google maps API-key werd nog niet geconfigureerd.';
 // h
 // i
+$err['core']['InvalidAPIKey'] = 'Ongeldige API key.';
+$err['core']['InvalidDomain'] = 'Gelieve enkel domeinen in te vullen zonder http en www. vb netlash.com';
 $err['core']['InvalidParameters'] = 'Ongeldige parameters.';
 $err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct.';
 // j
@@ -105,6 +111,7 @@ $lbl['core']['CustomURL'] = 'aangepast URL';
 // d
 $lbl['core']['Dashboard'] = 'dashboard';
 $lbl['core']['Date'] = 'datum';
+$lbl['core']['Default'] = 'standaard';
 $lbl['core']['Delete'] = 'verwijderen';
 $lbl['core']['DeleteTag'] = 'verwijder deze tag';
 $lbl['core']['Developer'] = 'developer';
@@ -114,7 +121,7 @@ $lbl['core']['Dutch'] = 'nederlands';
 $lbl['core']['Edit'] = 'bewerken';
 $lbl['core']['Editor'] = 'editor';
 $lbl['core']['Email'] = 'email';
-$lbl['core']['EmailWebmaster'] = 'email webmaster';
+$lbl['core']['EmailWebmaster'] = 'e-mail webmaster';
 $lbl['core']['Extra'] = 'extra';
 // f
 // g
@@ -216,6 +223,7 @@ $msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
 $msg['settings']['ApiKeysText'] = 'Toegangscodes voor de standaard gebruikte webservices';
 // b
 // c
+$msg['core']['ConfigurationError'] = 'Sommige instellingen zijn nog niet geconfigureerd:';
 $msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item wil verwijderen?';
 $msg['spotlight']['ConfirmDelete'] = 'Ben je zeker dat je <em>%s</em> wil verwijderen?';
 $msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker <em>%s</em> wil verwijderen?';
@@ -223,7 +231,7 @@ $msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker <em>%s</em> w
 $msg['core']['Deleted'] = 'Het item is verwijderd.';
 $msg['spotlight']['Deleted'] = 'Het item <em>%s</em> is verwijderd.';
 $msg['users']['Deleted'] = 'De gebruiker <em>%s</em> is verwijderd.';
-$msg['settings']['DomainsText'] = 'Vul de domeinen in waarop de website te bereiken (1 domein per regel)';
+$msg['settings']['DomainsText'] = 'Vul de domeinen in waarop de website te bereiken is (1 domein per regel)';
 // e
 $msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
 $msg['spotlight']['Edited'] = 'Wijzigingen voor <em>%s</em> opgeslagen.';

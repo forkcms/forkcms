@@ -2,9 +2,9 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Blog > {$msgHeaderIndex}</p>
+				<p class="breadcrumb">Blog &gt; {$msgHeaderIndex}</p>
 			</div>
-			
+
 			<div class="inner">
 				{option:report}
 					<div class="report fadeOutAfterMouseMove">{$reportMessage}</div>
@@ -17,7 +17,7 @@
 
 				<h2></h2>
 				<a href="{$var|geturl:'add'}" title="{$lblAdd}">{$lblAdd}</a>
-				
+
 				<div>
 					{option:datagrid}{$datagrid}{/option:datagrid}
 					{option:!datagrid}{$msgNoItems}{/option:!datagrid}

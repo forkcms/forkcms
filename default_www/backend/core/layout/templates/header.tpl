@@ -19,7 +19,7 @@
 										<td>
 											<select id="workingLanguage">
 												{iteration:workingLanguages}
-												<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label}</option>
+													<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label}</option>
 												{/iteration:workingLanguages}
 											</select>
 										</td>
