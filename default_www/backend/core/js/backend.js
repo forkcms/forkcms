@@ -253,13 +253,13 @@ jsBackend.forms = {
 				if(formId != '') {
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function() {
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'button ' + $(this).attr('class')))
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'submitButton button ' + $(this).attr('class')))
 								.css({position:'absolute', top:'-2000px'})
 								.attr('tabindex', -1); 
 					});
 
 					// add onclick event for button (button can't have the name submit)
-					$('form#'+ formId + ' a.button').bind('click', function(evt) {
+					$('form#'+ formId + ' a.submitButton').bind('click', function(evt) {
 						evt.preventDefault();
 						$('form#'+ formId).submit();
 					});
