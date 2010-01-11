@@ -12,9 +12,9 @@
 							<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label}</a>
 						{/option:headers.notSorted}
 					{/option:headers.sorting}
-					
+
 					{option:headers.noSorting}
-						{$headers.label}
+						<span>{$headers.label}</span>
 					{/option:headers.noSorting}
 				</th>
 			{/iteration:headers}
