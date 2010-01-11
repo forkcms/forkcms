@@ -136,6 +136,9 @@ class BackendBaseAction
 		// add css
 		$this->header->addCSS('screen.css', 'core');
 		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
+
+		// debug css
+		if(SPOON_DEBUG) $this->header->addCSS('debug.css', 'core');
 	}
 
 
