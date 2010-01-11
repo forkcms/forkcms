@@ -27,7 +27,8 @@ class TagsAjaxAutocomplete extends BackendBaseAJAXAction
 		$query = SpoonFilter::getGetValue('q', null, '');
 		$limit = SpoonFilter::getGetValue('limit', null, 10);
 
-		if($query == '') $this->output('400', null, 'query is missing.');
+		// validate
+		if($query == '') $this->output(400, null, 'query is missing.');
 
 		// get tags
 		$tags = (array) BackendTagsModel::getStartsWith($query, $limit);

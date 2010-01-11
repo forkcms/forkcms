@@ -1,14 +1,14 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
-<table border="0" cellspacing="0" cellpadding="0" id="pagesHolder">
+<table border="0" cellspacing="0" cellpediting="0" id="pagesHolder">
 	<tr>
 		<td id="pagesTree" width="264">
-			<table border="0" cellspacing="0" cellpadding="0">
+			<table border="0" cellspacing="0" cellpediting="0">
 				<tr>
 					<td id="treeHolder">
 						<div id="treeOptions">
 							<div class="buttonHolder">
 								<a href="{$var|geturl:"index"}" class="button icon iconBack iconOnly"><span><span><span>{$lblBack|ucfirst}</span></span></span></a>
-								<a href="{$var|geturl:"add"}" class="button icon iconAdd"><span><span><span>{$lblAdd}</span></span></span></a>
+								<a href="{$var|geturl:"edit"}" class="button icon iconEdit"><span><span><span>{$lblEdit}</span></span></span></a>
 							</div>
 						</div>
 						<div id="tree">
@@ -27,7 +27,7 @@
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="{$SITE_URL}">{$SITE_URL}{$pageUrl}</a></span>
+								<span><a href="{$SITE_URL}{$pageUrl}">{$SITE_URL}{$pageUrl}</a></span>
 							</p>
 						</div>
 					</div>
@@ -41,20 +41,20 @@
 						</ul>
 
 						<div id="tabContent">
-							<table border="0" cellpadding="0" cellspacing="0" width="100%">
+							<table border="0" cellpediting="0" cellspacing="0" width="100%">
 								<tbody>
 									<tr>
 										<td>
 											<div id="editContent">
 												{iteration:blocks}
-												<div style="display: block;" class="contentA contentBlock" rel="contentA">
+												<div id="block-{$blocks.index}" class="contentBlock">
 													<div class="contentTitle selected hover">
-														<table border="0" cellpadding="0" cellspacing="0">
+														<table border="0" cellpediting="0" cellspacing="0">
 															<tbody><tr>
 																<td class="numbering">{$blocks.index}</td>
 																<td>
 																	<div class="oneLiner">
-																		<p><a href="#tabsContent"><span>{$blocks.name}</span></a></p>
+																		<p><span class="blockName">{$blocks.name}</span></p>
 																		<p>{$blocks.ddmExtraId}</p>
 																	</div>
 																</td>
@@ -93,7 +93,7 @@
 													</ul>
 												</div>
 												<div class="footer">
-													<table border="0" cellpadding="0" cellspacing="0">
+													<table border="0" cellpediting="0" cellspacing="0">
 														<tbody>
 															<tr>
 																<td><p>Last save: 15:43</p></td>
@@ -110,47 +110,25 @@
 
 											<div class="box" id="template">
 												<div class="heading">
-													<h4>Template: About</h4>
+													<h4>{$lblTemplate|ucfirst}: {$templatelabel}</h4>
 													<div class="buttonHolderRight">
-														<a href="pages_edit_page.html#tabTemplate" class="button icon iconEdit iconOnly" id="editTemplate"><span><span><span>Edit</span></span></span></a>
+														<a href="#tabTemplate" class="button icon iconEdit iconOnly">
+															<span><span><span>{$lblEdit|ucfirst}</span></span></span>
+														</a>
 													</div>
 												</div>
 												<div class="options">
 													<!-- [A,B],[C,D,0],[E,E,0] -->
-													<div class="templateVisual current">
-														<table border="0" cellpadding="2" cellspacing="2">
-															<tbody>
-																<tr>
-																	<td class="selected"><a href="#" title="Main content" rel="contentA">A</a></td>
-																	<td class="selected"><a href="#" title="Blog" rel="contentB">B</a></td>
-																</tr>
-															</tbody>
-														</table>
-														<table border="0" cellpadding="0" cellspacing="0">
-															<tbody>
-																<tr>
-																	<td><a href="#" title="ZijImage" rel="contentC">C</a></td>
-																	<td class=""><a href="#" title="Win win win!" rel="contentD">D</a></td>
-																	<td></td>
-																</tr>
-															</tbody>
-														</table>
-														<table border="0" cellpadding="0" cellspacing="0">
-															<tbody>
-																<tr>
-																	<td colspan="2"><a href="#" title="Video" rel="contentE">E</a></td>
-																	<td></td>
-																</tr>
-															</tbody>
-														</table>
+													<div id="templateVisual" class="templateVisual current">
+														{$templatehtml}
 													</div>
 
-													<table id="templateDetails" class="infoGrid" border="0" cellpadding="0" cellspacing="0">
+													<table id="templateDetails" class="infoGrid" border="0" cellpediting="0" cellspacing="0">
 														<tbody>
 														{iteration:blocks}
 															<tr>
-																<th>{$blocks.index}</th>
-																<td>{$blocks.name}</td>
+																<th class="numbering">{$blocks.index}</th>
+																<td class="blockName">{$blocks.name}</td>
 															</tr>
 														{/iteration:blocks}
 													</tbody>
@@ -161,12 +139,11 @@
 								</tbody>
 							</table>
 						</div>
-
 						<div id="tabVersions">
+							Hier komen de versies...
 						</div>
-
 						<div id="tabSEO">
-							<div id="titles" class="box boxLevel2">
+							<div class="box boxLevel2">
 								<div class="heading">
 									<h3>{$lblTitles|ucfirst}</h3>
 								</div>
@@ -250,7 +227,7 @@
 								</div>
 							</div>
 
-							<div id="seoUrl" class="box boxLevel2">
+							<div class="box boxLevel2">
 								<div class="heading">
 									<h3>{$lblURL}</h3>
 								</div>
@@ -262,7 +239,7 @@
 									<ul class="inputList">
 										<li>
 											{$chkUrlOverwrite}
-											<span id="urlFirstPart">{$SITE_URL}{$pageUrl}</span>{$txtUrl} {$txtUrlError}
+											<span id="urlFirstPart">{$SITE_URL}{$seoPageUrl}</span>{$txtUrl} {$txtUrlError}
 										</li>
 									</ul>
 
@@ -270,32 +247,31 @@
 							</div>
 						</div>
 						<div id="tabTemplate">
-							{$ddmTemplateId} {$ddmTemplateIdError}
+							<ul class="inputList" id="templateList">
+							{iteration:templates}
+								<li>
+									<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
+									<label for="template{$templates.id}">{$templates.label}</label>
+									<div class="templateVisual current">
+										{$templates.html}
+									</div>
+								</li>
+							{/iteration:templates}
+							</ul>
 						</div>
 						<div id="tabTags">
-							<div id="tags" class="box boxLevel2">
+							<div class="box boxLevel2">
 								<div class="heading">
 									<h3>Tags</h3>
 								</div>
 								<div class="options">
-									<!-- <label for="addTag">Add tags:</label> -->
-									<div class="oneLiner">
-										<p><input class="inputText" id="addTag" type="text"></p>
-										<div class="buttonHolder">
-											<a href="#" class="button icon iconAdd"><span><span><span>Add</span></span></span></a>
-										</div>
-									</div>
-									<!-- <label>Current tags:</label> -->
-									<ul id="tagsList">
-										<li><span><strong>Music</strong> <a href="#" title="Delete tag">X</a></span></li>
-										<li><span><strong>Concerts</strong> <a href="#" title="Delete tag">X</a></span></li>
-									</ul>
+									{$txtTags} {$txtTagsError}
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="fullwidthOptions">
-						<a href="#" class="button linkButton icon iconDelete"><span><span><span>Delete page</span></span></span></a>
+						{option:recorddelete_allowed}<a href="#" class="button linkButton icon iconDelete"><span><span><span>{$lblDelete|ucfirst}</span></span></span></a>{/option:recorddelete_allowed}
 						<div class="buttonHolderRight">
 							{$btnEdit}
 						</div>
@@ -305,4 +281,11 @@
 		</td>
 	</tr>
 </table>
+
+<script type="text/javascript">
+	var templates = {};
+	{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
+</script>
+
+
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}

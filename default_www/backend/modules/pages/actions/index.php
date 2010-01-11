@@ -23,8 +23,6 @@ class PagesIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		$this->header->addJS('jquery.tree.min.js');
-
 		// check if the cached files exists
 		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php')) BackendPagesModel::buildCache();
 		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php')) BackendPagesModel::buildCache();
@@ -44,6 +42,7 @@ class PagesIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
 	}
 }

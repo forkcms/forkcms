@@ -127,7 +127,7 @@ class PagesEdit extends BackendBaseActionEdit
 		$this->frm->addTextField('navigation_title', $this->record['navigation_title']);
 
 		// @todo	tags
-		$this->frm->addTextField('tags', null, null, 'inputTextfield tags', 'inputTextfieldError tags');
+		$this->frm->addTextField('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -166,15 +166,22 @@ class PagesEdit extends BackendBaseActionEdit
 	protected function parse()
 	{
 		// parse some variables
-		$this->tpl->assign('templateIconsURL', BACKEND_CORE_URL .'/layout/images/template_icons');
+		$this->tpl->assignArray($this->record, 'record');
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
+
+		// assign template
+		$this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
 
 		// parse the form
 		$this->frm->parse($this->tpl);
 
-		// @todo	assign full url
-		$this->tpl->assign('pageUrl', '');
+		// get full url
+		$url = BackendPagesModel::getFullURL($this->record['id']);
+
+		// assign full url
+		$this->tpl->assign('pageUrl', $url);
+		$this->tpl->assign('seoPageUrl', str_replace($this->meta->getURL(), '', $url));
 
 		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
@@ -220,12 +227,11 @@ class PagesEdit extends BackendBaseActionEdit
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
 				$page['hidden'] = $this->frm->getField('hidden')->getValue();
 				$page['status'] = 'active';
-				$page['publish_on'] = date('Y-m-d H:i:s'); // @todo
+				$page['publish_on'] = date('Y-m-d H:i:s', $this->record['publish_on']);
 				$page['created_on'] = date('Y-m-d H:i:s', $this->record['created_on']);
 				$page['edited_on'] = date('Y-m-d H:i:s');
 				$page['allow_move'] = $this->record['allow_move'];
 				$page['allow_children'] = $this->record['allow_children'];
-				$page['allow_content'] = $this->record['allow_content'];
 				$page['allow_edit'] = $this->record['allow_edit'];
 				$page['allow_delete'] = $this->record['allow_delete'];
 				$page['sequence'] = $this->record['sequence'];
@@ -271,7 +277,7 @@ class PagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::updateBlocks($blocks);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'?report=edited&var='. urlencode($page['title']) .'&hilight=id-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($page['title']) .'&hilight=id-'. $page['id']);
 			}
 		}
 	}

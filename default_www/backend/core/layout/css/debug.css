@@ -5,8 +5,9 @@
 	Media:      screen, projection
 	Copyright:  Netlash <http://www.netlash.com>
 
+	@todo	@johan	fix this.
+
 */
 
-div.error {
-	color: #ff0000;
-}
+div.error { color: #ff0000; }
+#pagesTree ul li ul { padding: 2px 4px 2px 24px; }

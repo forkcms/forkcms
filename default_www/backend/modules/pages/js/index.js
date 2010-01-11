@@ -2,7 +2,6 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 jsBackend.pages = {
 	init: function() {
-		$('#tree ul').tree();
 	},
 	
 	// end

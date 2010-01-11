@@ -129,7 +129,6 @@ class PagesAdd extends BackendBaseActionAdd
 	protected function parse()
 	{
 		// parse some variables
-		$this->tpl->assign('templateIconsURL', BACKEND_CORE_URL .'/layout/images/template_icons');
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
 
@@ -183,7 +182,7 @@ class PagesAdd extends BackendBaseActionAdd
 				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
 				$page['meta_id'] = (int) $this->meta->save();
 				$page['language'] = BackendLanguage::getWorkingLanguage();
-				$page['type'] = 'page';
+				$page['type'] = 'root';
 				$page['title'] = $this->frm->getField('title')->getValue();
 				$page['navigation_title'] = $this->frm->getField('navigation_title')->getValue();
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
@@ -194,10 +193,11 @@ class PagesAdd extends BackendBaseActionAdd
 				$page['edited_on'] = date('Y-m-d H:i:s');
 				$page['allow_move'] = 'Y';
 				$page['allow_children'] = 'Y';
-				$page['allow_content'] = 'Y';
 				$page['allow_edit'] = 'Y';
 				$page['allow_delete'] = 'Y';
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
+
+				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
 
 				// insert page, store the id, we need it when building the blocks
 				$revisionId = BackendPagesModel::insert($page);

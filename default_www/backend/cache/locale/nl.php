@@ -124,9 +124,11 @@ $lbl['core']['Email'] = 'email';
 $lbl['core']['EmailWebmaster'] = 'e-mail webmaster';
 $lbl['core']['Extra'] = 'extra';
 // f
+$lbl['core']['Footer'] = 'footer';
 // g
 // h
 $lbl['core']['Hidden'] = 'verborgen';
+$lbl['core']['Home'] = 'home';
 // i
 $lbl['core']['InterfaceLanguage'] = 'interface-taal';
 // j
@@ -139,6 +141,7 @@ $lbl['core']['LastSave'] = 'laatst bewaard';
 $lbl['core']['Login'] = 'login';
 $lbl['core']['Logout'] = 'afmelden';
 // m
+$lbl['pages']['Meta'] = 'meta-navigatie';
 $lbl['core']['MetaCustom'] = 'meta custom';
 $lbl['core']['MetaDescription'] = 'meta-omschrijving';
 $lbl['core']['MetaInformation'] = 'meta-informatie';
@@ -164,6 +167,7 @@ $lbl['core']['Published'] = 'gepubliceerd';
 $lbl['core']['RecentlyEdited'] = 'recent aangepast';
 $lbl['core']['Referrers'] = 'referrers';
 $lbl['core']['Revisions'] = 'versies';
+$lbl['pages']['Root'] = 'losse pagina\'s';
 // s
 $lbl['core']['Save'] = 'opslaan';
 $lbl['core']['Scripts'] = 'scripts';

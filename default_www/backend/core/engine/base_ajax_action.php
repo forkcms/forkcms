@@ -85,6 +85,8 @@ class BackendBaseAJAXAction
 	/**
 	 * Output an answer to the browser
 	 *
+	 * @todo	We use UTF, so utf8_decode isn't needed
+	 *
 	 * @return	void
 	 * @param	int $statusCode
 	 * @param	mixed[optional] $data

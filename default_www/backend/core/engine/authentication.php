@@ -169,8 +169,8 @@ class BackendAuthentication
 			foreach($allowedModules as $row) self::$allowedModules[$row] = true;
 		}
 
-		// return result
-		return (bool) (!isset(self::$allowedModules[$module])) ? false : self::$allowedModules[$module]; // @todo tijs - wat doet die code?
+		// if the module isn't in our list, we return false, otherwise the cached value
+		return (bool) (!isset(self::$allowedModules[$module])) ? false : self::$allowedModules[$module];
 	}
 
 

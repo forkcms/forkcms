@@ -77,6 +77,9 @@ class BackendPagesModel
 				// get url for parent
 				$url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
+				// home is special
+				if($pageID == 1) $page['url'] = '';
+
 				// add it
 				$keys[$pageID] = trim($url .'/'. $page['url'], '/');
 
@@ -89,7 +92,7 @@ class BackendPagesModel
 				$temp['navigation_title'] = $page['navigation_title'];
 
 				// add it
-				$navigation['page'][$page['parent_id']][$pageID] = $temp;
+				$navigation[$page['type']][$page['parent_id']][$pageID] = $temp;
 			}
 		}
 
@@ -158,6 +161,12 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * Build HTML for a template (visual representation)
+	 *
+	 * @return	string
+	 * @param	array $template
+	 */
 	public static function buildTemplateHTML($template)
 	{
 		// validate
@@ -185,16 +194,29 @@ class BackendPagesModel
 			// loop cells
 			foreach($cells as $cell)
 			{
-				// get title & index
-				$title = (isset($template['data']['names'][$cell])) ? $template['data']['names'][$cell] : '';
-				$index = (isset($template['data']['names'][$cell])) ? $cell : '';
+				// selected state
+				$selected = (substr_count($cell, ':selected') > 0);
+
+				// remove selected state
+				if($selected) $cell = str_replace(':selected', '', $cell);
 
 				// decide selected state
-				$selected = (isset($template['data']['names'][$cell]));
+				$exists = (isset($template['data']['names'][$cell]));
 
-				// add html
-				if($selected) $html .= '		<td class="selected" ><a href="#block-'. $index .'" class="toggleDiv" title="'. $title .'">'. $index .'</a></td>'."\n";
-				else $html .= '		<td> </td>'."\n";
+				// get title & index
+				$title = ($exists) ? $template['data']['names'][$cell] : '';
+				$index = ($exists) ? $cell : '';
+
+
+				// does the cell need content
+				if(!$exists) $html .= '		<td> </td>'."\n";
+
+				else
+				{
+					// is the item selected?
+					if($selected) $html .= '		<td class="selected"><a href="#block-'. $index .'" class="toggleDiv" title="'. $title .'">'. $index .'</a></td>'."\n";
+					else $html .= '		<td><a href="#block-'. $index .'" class="toggleDiv" title="'. $title .'">'. $index .'</a></td>'."\n";
+				}
 			}
 
 			// end html
@@ -205,7 +227,6 @@ class BackendPagesModel
 		// return html
 		return $html;
 	}
-
 
 
 	/**
@@ -222,8 +243,6 @@ class BackendPagesModel
 	{
 		// require
 		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
-
-//		Spoon::dump($navigation[$type][$depth]);
 
 		// check if item exists
 		if(isset($navigation[$type][$depth][$parentId]))
@@ -251,7 +270,6 @@ class BackendPagesModel
 		// return
 		return $html;
 	}
-
 
 
 	/**
@@ -293,11 +311,29 @@ class BackendPagesModel
 		$db = BackendModel::getDB();
 
 		// get page (active version)
-		return (array) $db->getRecord('SELECT *, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on
-										FROM pages AS p
-										WHERE p.id = ? AND p.language = ? AND p.status = ?
-										LIMIT 1;',
-										array($id, $language, 'active'));
+		$return = (array) $db->getRecord('SELECT *, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+											FROM pages AS p
+											WHERE p.id = ? AND p.language = ? AND p.status = ?
+											LIMIT 1;',
+											array($id, $language, 'active'));
+
+		// can't be deleted
+		if(in_array($return['id'], array(1, 404))) $return['allow_delete'] = 'N';
+
+		// can't be moved
+		if(in_array($return['id'], array(1, 404))) $return['allow_move'] = 'N';
+
+		// can't have children
+		if(in_array($return['id'], array(404))) $return['allow_move'] = 'N';
+
+		// convert into bools for use in template engine
+		$return['move_allowed'] = (bool) ($return['allow_move'] == 'Y');
+		$return['children_allowed'] = (bool) ($return['allow_children'] == 'Y');
+		$return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
+		$return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
+
+		// return
+		return $return;
 	}
 
 
@@ -313,7 +349,7 @@ class BackendPagesModel
 		// get page (active version)
 		return (array) $db->retrieve('SELECT pb.*, UNIX_TIMESTAMP(pb.created_on) AS created_on, UNIX_TIMESTAMP(pb.edited_on) AS edited_on
 										FROM pages_blocks AS pb
-										INNER JOIN pages AS p ON pb.id = p.id
+										INNER JOIN pages AS p ON pb.revision_id = p.revision_id
 										WHERE p.id = ? AND p.language = ? AND p.status = ?;',
 										array($id, $language, 'active'));
 	}
@@ -338,23 +374,28 @@ class BackendPagesModel
 	 */
 	public static function getFullURL($id)
 	{
-		// @todo	this method should use a genious caching-system
-		// @todo fix me, das bugge code ;)
+		// generate the cache files if needed
+		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache();
 
-		// redefine
-		$id = (int) $id;
+		// require the file
+		require PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php';
 
-		// get db
-		$db = BackendModel::getDB();
+		// available in generated file?
+		if(isset($keys[$id])) $url = $keys[$id];
 
-		if($id == 0) return '/';
+		else
+		{
+			// @todo	this method should use a genious caching-system
+		}
 
-		$url = (string) $db->getVar('SELECT m.url
-										FROM pages AS p
-										INNER JOIN meta AS m ON p.meta_id = m.id
-										WHERE p.id = ? AND p.status = ?
-										LIMIT 1;',
-										array($id, 'active'));
+		// if the is available in multiple languages we should add the current lang
+		if(SITE_MULTILANGUAGE) $url = '/'. BackendLanguage::getWorkingLanguage() .'/'. $url;
+
+		// just prepend with slash
+		else $url = '/'. $url;
+
+		// return
+		return $url;
 	}
 
 
@@ -428,6 +469,52 @@ class BackendPagesModel
 
 
 	/**
+	 * Get the subtree for a root element
+	 *
+	 * @return	string
+	 * @param	array $navigation
+	 * @param 	int $parentId
+	 * @param	string[optional] $html
+	 */
+	public static function getSubtree($navigation, $parentId, $html = '')
+	{
+		// redefine
+		$navigation = (array) $navigation;
+		$parentId = (int) $parentId;
+		$html = '';
+
+		// any elements
+		if(isset($navigation['page'][$parentId]) && !empty($navigation['page'][$parentId]))
+		{
+			// start
+			$html .= '<ul>'."\n";
+
+			// loop pages
+			foreach($navigation['page'][$parentId] as $page)
+			{
+				// start
+				$html .= '<li>'."\n";
+
+				// insert link
+				$html .= '	<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+
+				// get childs
+				$html .= self::getSubtree($navigation, $page['page_id'], $html);
+
+				// end
+				$html .= '</li>'."\n";
+			}
+
+			// end
+			$html .= '</ul>'."\n";
+		}
+
+		// return
+		return $html;
+	}
+
+
+	/**
 	 * Get templates
 	 *
 	 * @return unknown
@@ -449,12 +536,12 @@ class BackendPagesModel
 			// unserialize
 			$templates[$key]['data'] = unserialize($row['data']);
 
-			// add names into the properties
-			$templates[$key]['namesString'] = '"' . implode('", "', $templates[$key]['data']['names']) .'"';
-
 			// build template HTML
 			$templates[$key]['html'] = self::buildTemplateHTML($templates[$key]);
 		}
+
+		// add json
+		foreach($templates as $key => $row)	$templates[$key]['json'] = json_encode($row);
 
 		// return
 		return (array) $templates;
@@ -496,23 +583,127 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * Get the tree
+	 *
+	 * @return	string
+	 */
 	public static function getTreeHTML()
 	{
-		$html = '<ul>'."\n";
+		// check if the cached file exists, if not we generated it
+		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache();
 
+		// require the file
+		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
+
+		// start HTML
+		$html = '<ul>'."\n";
 		$html .= '	<li>';
-		// homepage
-		$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => 1)) .'">'. BL::getLabel('Home') .'</a>'."\n";
-		$html .= '		<ul>'."\n";
-		$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => 1)) .'">pagina 1</a>'."\n";
-		$html .= '		</ul>'."\n";
+
+		// homepage should
+		$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => 1)) .'">'. ucfirst(BL::getLabel('Home')) .'</a>'."\n";
+
+		// add subpages
+		$html .= self::getSubTree($navigation, 1);
+
+		// end
 		$html .= '	</li>'."\n";
 
+		// are there any meta pages
+		if(isset($navigation['meta'][0]) && !empty($navigation['meta'][0]))
+		{
+			// meta pages
+			$html .= '	<li>'. ucfirst(BL::getLabel('Meta'));
 
-		$html .= '	<li>'. BL::getLabel('Footer') .'</li>';
-		$html .= '	<li>'. BL::getLabel('Meta') .'</li>';
+			// start
+			$html .= "\n". '<ul>'."\n";
+
+			// loop the items
+			foreach($navigation['meta'][0] as $page)
+			{
+				// start
+				$html .= '	<li>'."\n";
+
+				// insert link
+				$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+
+				// insert subtree
+				$html .= self::getSubTree($navigation, $page['page_id']);
+
+				// end
+				$html .= '	</li>'."\n";
+			}
+
+			// end
+			$html .= '</ul>'."\n";
+
+			// end
+			$html .= '	</li>';
+		}
+
+		// footer pages
+		$html .= '	<li>'. ucfirst(BL::getLabel('Footer'));
+
+		// are there any footer pages
+		if(isset($navigation['footer'][0]) && !empty($navigation['footer'][0]))
+		{
+			// start
+			$html .= "\n". '<ul>'."\n";
+
+			// loop the items
+			foreach($navigation['footer'][0] as $page)
+			{
+				// start
+				$html .= '	<li>'."\n";
+
+				// insert link
+				$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+
+				// end
+				$html .= '	</li>'."\n";
+			}
+
+			// end
+			$html .= '</ul>'."\n";
+		}
+
+		// end
+		$html .= '	</li>';
+
+		// are there any root pages
+		if(isset($navigation['root'][0]) && !empty($navigation['root'][0]))
+		{
+			// meta pages
+			$html .= '	<li>'. ucfirst(BL::getLabel('Root'));
+
+			// start
+			$html .= "\n". '<ul>'."\n";
+
+			// loop the items
+			foreach($navigation['root'][0] as $page)
+			{
+				// start
+				$html .= '	<li>'."\n";
+
+				// insert link
+				$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+
+				// insert subtree
+				$html .= self::getSubTree($navigation, $page['page_id']);
+
+				// end
+				$html .= '	</li>'."\n";
+			}
+
+			// end
+			$html .= '</ul>'."\n";
+
+			// end
+			$html .= '	</li>';
+		}
 		$html .= '<ul>';
 
+		// return
 		return $html;
 	}
 
@@ -659,6 +850,9 @@ class BackendPagesModel
 		$id = (int) $db->insert('pages', $page);
 
 		// @todo	remove revisions that should be removed...
+
+		// rebuild the cache
+		self::buildCache();
 
 		// return the new revision id
 		return $id;

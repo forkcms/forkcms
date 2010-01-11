@@ -5,6 +5,8 @@
  *
  * This class represents a META-object
  *
+ * @todo	write getters
+ *
  * @package		backend
  * @subpackage	core
  *
@@ -100,6 +102,17 @@ class BackendMeta
 
 		// load the form
 		$this->loadForm();
+	}
+
+
+	/**
+	 * Return the current value for an url
+	 *
+	 * @return	string
+	 */
+	public function getURL()
+	{
+		return $this->data['url'];
 	}
 
 

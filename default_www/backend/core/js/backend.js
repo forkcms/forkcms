@@ -84,7 +84,7 @@ jsBackend.controls = {
 	},
 	// toggle a div
 	bindToggleDiv: function() {
-		$('.toggleDiv').bind('click', function(evt) {
+		$('.toggleDiv').live('click', function(evt) {
 			// prevent default
 			evt.preventDefault();
 			

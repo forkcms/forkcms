@@ -53,7 +53,7 @@
 																<td class="numbering">{$blocks.index}</td>
 																<td>
 																	<div class="oneLiner">
-																		<p><a href="#tabsContent"><span>{$blocks.name}</span></a></p>
+																		<p><span class="blockName">{$blocks.name}</span></p>
 																		<p>{$blocks.ddmExtraId}</p>
 																	</div>
 																</td>
@@ -118,7 +118,7 @@
 												</div>
 												<div class="options">
 													<!-- [A,B],[C,D,0],[E,E,0] -->
-													<div class="templateVisual current">
+													<div id="templateVisual" class="templateVisual current">
 														{$templatehtml}
 													</div>
 
@@ -126,8 +126,8 @@
 														<tbody>
 														{iteration:blocks}
 															<tr>
-																<th>{$blocks.index}</th>
-																<td>{$blocks.name}</td>
+																<th class="numbering">{$blocks.index}</th>
+																<td class="blockName">{$blocks.name}</td>
 															</tr>
 														{/iteration:blocks}
 													</tbody>
@@ -243,7 +243,17 @@
 							</div>
 						</div>
 						<div id="tabTemplate">
-							{$ddmTemplateId} {$ddmTemplateIdError}
+							<ul class="inputList" id="templateList">
+							{iteration:templates}
+								<li>
+									<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
+									<label for="template{$templates.id}">{$templates.label}</label>
+									<div class="templateVisual current">
+										{$templates.html}
+									</div>
+								</li>
+							{/iteration:templates}
+							</ul>
 						</div>
 						<div id="tabTags">
 							<div class="box boxLevel2">
@@ -257,7 +267,6 @@
 						</div>
 					</div>
 					<div class="fullwidthOptions">
-						<a href="#" class="button linkButton icon iconDelete"><span><span><span>Delete page</span></span></span></a>
 						<div class="buttonHolderRight">
 							{$btnAdd}
 						</div>
@@ -267,4 +276,11 @@
 		</td>
 	</tr>
 </table>
+
+<script type="text/javascript">
+	var templates = {};
+	{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
+</script>
+
+
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}
