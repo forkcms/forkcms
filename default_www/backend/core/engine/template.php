@@ -73,6 +73,9 @@ class BackendTemplate extends SpoonTemplate
 		// asign a placeholder var
 		$this->assign('var', '');
 
+		// parse headers
+		SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+
 		// call the parent
 		parent::display($template);
 	}
