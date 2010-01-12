@@ -2571,7 +2571,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 			switch($this->db->getDriver())
 			{
 				case 'mysql':
-					$query = (substr_count($this->query, ' LIMIT') > 0) ? $this->query : $this->query .' LIMIT 1';
+					$query = (substr_count($this->query, 'LIMIT ') > 0) ? $this->query : $this->query .' LIMIT 1';
 				break;
 
 				default:
