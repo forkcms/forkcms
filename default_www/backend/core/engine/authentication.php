@@ -182,8 +182,7 @@ class BackendAuthentication
 	public static function isLoggedIn()
 	{
 		// check if all needed values are set in the session
-		// @todo davy - herschrijven met multiple SpoonSession::exists statements
-		if(SpoonSession::exists('backend_logged_in') && (bool) SpoonSession::get('backend_logged_in') && SpoonSession::exists('backend_secret_key') && (string) SpoonSession::get('backend_secret_key') != '')
+		if(SpoonSession::exists('backend_logged_in', 'backend_secret_key') && (bool) SpoonSession::get('backend_logged_in') && (string) SpoonSession::get('backend_secret_key') != '')
 		{
 			// get database instance
 			$db = BackendModel::getDB();
