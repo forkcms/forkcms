@@ -2571,8 +2571,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 			switch($this->db->getDriver())
 			{
 				case 'mysql':
-				case 'mysqli':
-					$query = $this->query .' LIMIT 1';
+					$query = (substr_count($this->query, ' LIMIT') > 0) ? $this->query : $this->query .' LIMIT 1';
 				break;
 
 				default:
@@ -2645,7 +2644,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 			$this->queryParameters = (array) $query[1];
 		}
 
-		// no paramters
+		// no parameters
 		else $this->query = str_replace(';', '', (string) $query);
 
 		// numResults query with parameters

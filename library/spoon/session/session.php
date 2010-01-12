@@ -69,18 +69,39 @@ class SpoonSession
 
 
 	/**
-	 * Checks if a session variable exists
+	 * Checks if a session variable exists.
 	 *
-	 * @return	bool			true if the variable is present, otherwise false.
-	 * @param	string $key		The key that should be checked for presence.
+	 * @return	bool			If the key(s) exist(s) true, otherwise false.
+	 * @param	string $key		The key or keys that should be checked.
 	 */
 	public static function exists($key)
 	{
 		// start session if needed
 		if(!session_id()) self::start();
 
-		// key exists?
-		return isset($_SESSION[(string) $key]);
+		// loop all arguments
+		foreach(func_get_args() as $argument)
+		{
+			// array element
+			if(is_array($argument))
+			{
+				// loop the keys
+				foreach($argument as $key)
+				{
+					// does NOT exist
+					if(!isset($_SESSION[(string) $key])) return false;
+				}
+			}
+
+			// other type(s)
+			else
+			{
+				// does NOT exist
+				if(!isset($_SESSION[(string) $key])) return false;
+			}
+		}
+
+		return true;
 	}
 
 

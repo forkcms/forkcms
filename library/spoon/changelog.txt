@@ -1,13 +1,20 @@
+1.1.4
+----
+- Added SpoonTemplate::getContent which returns the output of the executed template. Can not be used in combination with
+  cache tags.
+
+
 1.1.3 (2010-01-05)
 ----
 - Added SpoonImageField, it extends SpoonFileField with some image-specific methods:
 	- getExtension(): returns the extension based on the IMAGETYPE
 	- hasMinimumDimensions(): checks if the image has minimum width and height
 	- isValidMimeType(): a filter based on given MIME-types
-- Added Dave into the main-authors (Welcome Dave!)
+- Added Dave to the main-authors (Welcome Dave!)
 - Fixed some PHP-doc
 - Fixed a bug in SpoonTemplateModifiers::createHTMLLinks(), it should handle urls correct from now on
-- Added an extra element in the return of SpoonFile::getInfo(). The element is called human_readable_size and contains the size of the file in a human readable way.
+- Added an extra element in the return of SpoonFile::getInfo(). The element is called human_readable_size and contains the size of 
+  the file in a human readable way.
 - $_FILES is now included in the variables-section of Exceptions.
 - Added SpoonTemplate::getAssignedValue to fetch already assigned values.
 - Fixed an issue with required files not being included.
