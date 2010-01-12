@@ -22,6 +22,47 @@ class BackendModel
 	private static $moduleSettings;
 
 
+	/**
+	 * Add a number to the string
+	 *
+	 * @return	string
+	 * @param	string $string
+	 */
+	public static function addNumber($string)
+	{
+		// split
+		$chunks = explode('-', $string);
+
+		// count the chunks
+		$count = count($chunks);
+
+		// get last chunk
+		$last = $chunks[$count - 1];
+
+		// is nummeric
+		if(SpoonFilter::isNumeric($last))
+		{
+			// remove last chunk
+			array_pop($chunks);
+
+			// join together
+			$string = implode('-', $chunks ) .'-'. ((int) $last + 1);
+		}
+
+		// not numeric
+		else $string .= '-2';
+
+		// return
+		return $string;
+	}
+
+
+	/**
+	 * Calculate the time ago from a given timestamp and returns a decent sentence.
+	 *
+	 * @return	string
+	 * @param	string $timestamp
+	 */
 	public static function calculateTimeAgo($timestamp)
 	{
 		// redefine
@@ -95,7 +136,6 @@ class BackendModel
 
 		return $warnings;
 	}
-
 
 
 	/**

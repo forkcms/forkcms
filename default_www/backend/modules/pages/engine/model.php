@@ -26,41 +26,6 @@ class BackendPagesModel
 
 
 	/**
-	 * Add a number to the string
-	 *
-	 * @return	string
-	 * @param	string $string
-	 */
-	public static function addNumber($string)
-	{
-		// split
-		$chunks = explode('-', $string);
-
-		// count the chunks
-		$count = count($chunks);
-
-		// get last chunk
-		$last = $chunks[$count - 1];
-
-		// is nummeric
-		if(SpoonFilter::isNumeric($last))
-		{
-			// remove last chunk
-			array_pop($chunks);
-
-			// join together
-			$string = implode('-', $chunks ) .'-'. ((int) $last + 1);
-		}
-
-		// not numeric
-		else $string .= '-2';
-
-		// return
-		return $string;
-	}
-
-
-	/**
 	 * Build the cache
 	 *
 	 * @return	void
@@ -795,7 +760,7 @@ class BackendPagesModel
 	 * @param unknown_type $id
 	 * @return unknown
 	 */
-	public static function getUrl($url, $id = null, $parentId = 0)
+	public static function getURL($url, $id = null, $parentId = 0)
 	{
 		// redefine
 		$url = (string) $url;
@@ -821,10 +786,10 @@ class BackendPagesModel
 			else
 			{
 				// add a number
-				$url = self::addNumber($url);
+				$url = BackendModel::addNumber($url);
 
 				// recall this method, but with a new url
-				return self::getUrl($url, $id, $parentId);
+				return self::getURL($url, $id, $parentId);
 			}
 		}
 
@@ -848,7 +813,7 @@ class BackendPagesModel
 				$url = self::addNumber($url);
 
 				// recall this method, but with a new url
-				return self::getUrl($url, $id, $parentId);
+				return self::getURL($url, $id, $parentId);
 			}
 		}
 
@@ -859,20 +824,20 @@ class BackendPagesModel
 		if(SpoonDirectory::exists(PATH_WWW .'/'. $fullUrl))
 		{
 			// add a number
-			$url = self::addNumber($url);
+			$url = BackendModel::addNumber($url);
 
 			// recall this method, but with a new url
-			return self::getUrl($url, $id, $parentId);
+			return self::getURL($url, $id, $parentId);
 		}
 
 		// check if it is an appliation
 		if(in_array(trim($fullUrl, '/'), array_keys(ApplicationRouting::getRoutes())))
 		{
 			// add a number
-			$url = self::addNumber($url);
+			$url = BackendModel::addNumber($url);
 
 			// recall this method, but with a new url
-			return self::getUrl($url, $id, $parentId);
+			return self::getURL($url, $id, $parentId);
 		}
 
 		// return the unique url!

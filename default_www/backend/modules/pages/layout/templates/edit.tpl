@@ -151,7 +151,6 @@
 
 								{option:revisions}{$revisions}{/option:revisions}
 								{option:!revisions}{$msgNoRevisions}{/option:!revisions}
-
 							</div>
 						</div>
 						<div id="tabSEO">

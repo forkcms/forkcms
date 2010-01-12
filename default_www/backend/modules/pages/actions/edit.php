@@ -41,7 +41,7 @@ class PagesEdit extends BackendBaseActionEdit
 		parent::execute();
 
 		// load record
-		$this->loadRecord();
+		$this->loadData();
 
 		// get data
 		$this->templates = BackendPagesModel::getTemplates();
@@ -159,8 +159,8 @@ class PagesEdit extends BackendBaseActionEdit
 		$this->frm->addCheckBox('navigation_title_overwrite', ($this->record['navigation_title_overwrite'] == 'Y'));
 		$this->frm->addTextField('navigation_title', $this->record['navigation_title']);
 
-		// @todo	tags
-		$this->frm->addTextField('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		// tags
+		$this->frm->addTextField('tags', BackendTagsModel::getTags($this->url->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -175,7 +175,7 @@ class PagesEdit extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function loadRecord()
+	private function loadData()
 	{
 		// get record
 		$this->id = $this->getParameter('id', 'int');
@@ -252,7 +252,7 @@ class PagesEdit extends BackendBaseActionEdit
 		if($this->frm->isSubmitted())
 		{
 			// set callback for generating an unique url
-			$this->meta->setUrlCallback('BackendPagesModel', 'getUrl', array($this->record['id'], $this->record['parent_id']));
+			$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id']));
 
 			// cleanup the submitted fields, ignore fields that were edited by hackers
 			$this->frm->cleanupFields();
@@ -328,6 +328,9 @@ class PagesEdit extends BackendBaseActionEdit
 
 				// insert the blocks
 				BackendPagesModel::updateBlocks($blocks);
+
+				// save tags
+				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->url->getModule());
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($page['title']) .'&hilight=id-'. $page['id']);

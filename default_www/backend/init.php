@@ -161,6 +161,7 @@ class Init
 				require_once BACKEND_CORE_PATH .'/engine/action.php';
 				require_once BACKEND_CORE_PATH .'/engine/datagrid.php';
 				require_once BACKEND_CORE_PATH .'/engine/form.php';
+				require_once BACKEND_PATH .'/modules/tags/engine/model.php';
 			break;
 
 			case 'backend_js':

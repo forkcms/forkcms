@@ -308,7 +308,7 @@ class BackendMeta
 		{
 			// build class- & method-name
 			$className = 'Backend'. SpoonFilter::toCamelCase($this->url->getModule()) .'Model';
-			$methodName = 'getUrl';
+			$methodName = 'getURL';
 
 			// set
 			$this->setUrlCallback($className, $methodName);

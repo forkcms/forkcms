@@ -1,5 +1,4 @@
 tinyMCE.init({
-	// @todo	entities! no entities... only special chars
 	theme: 'advanced',	// @todo	should be based on user-setting
 	dialog_type: 'modal',
 	language: '{$INTERFACE_LANGUAGE}',
