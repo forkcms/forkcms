@@ -14,6 +14,14 @@
 class PagesEdit extends BackendBaseActionEdit
 {
 	/**
+	 * Datagrid with the revisions
+	 *
+	 * @var	BackendDataGridDB
+	 */
+	private $dgRevisions;
+
+
+	/**
 	 * The blocks
 	 *
 	 * @var	array
@@ -55,6 +63,9 @@ class PagesEdit extends BackendBaseActionEdit
 		// load the form
 		$this->loadForm();
 
+		// load the datagrid with the versions
+		$this->loadRevisions();
+
 		// validate the form
 		$this->validateForm();
 
@@ -63,6 +74,35 @@ class PagesEdit extends BackendBaseActionEdit
 
 		// display the page
 		$this->display();
+	}
+
+	/**
+	 * Load the datagrid
+	 *
+	 * @return	void
+	 */
+	private function loadRevisions()
+	{
+		// create datagrid
+		$this->dgRevisions = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_REVISIONS, array($this->id, 'archive', BL::getWorkingLanguage()));
+
+		// disable paging
+		$this->dgRevisions->setPaging(false);
+
+		// hide columns
+		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+
+		// set functions
+		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
+		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
+
+		// add edit column
+		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&id=[id]&revision=[revision_id]', BL::getLabel('UseThisVersion'));
+
+		// set headers
+		$this->dgRevisions->setHeaderLabels(array(	'user_id' => ucfirst(BL::getLabel('By')),
+												'edited_on' => ucfirst(BL::getLabel('Date'))));
+
 	}
 
 
@@ -114,7 +154,7 @@ class PagesEdit extends BackendBaseActionEdit
 			if(isset($this->blocksContent[$i]))
 			{
 				$selectedExtra = $this->blocksContent[$i]['extra_id'];
-				$html = $this->blocksContent[$i]['HTML'];
+				$html = $this->blocksContent[$i]['html'];
 			}
 
 			// create elements
@@ -155,6 +195,23 @@ class PagesEdit extends BackendBaseActionEdit
 
 		// load blocks
 		$this->blocksContent = BackendPagesModel::getBlocks($this->id);
+
+		// is there a revision specified?
+		$revisionToLoad = $this->getParameter('revision', 'int');
+
+		// if this is a valid revision
+		if($revisionToLoad !== null)
+		{
+			// overwrite the current record
+			$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
+
+			// load blocks
+			$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
+
+			// show warning
+			if($this->record['status'] == 'archive') $this->tpl->assign('usingRevision', true);
+			elseif($this->record['status'] == 'draft') $this->tpl->assign('usingDraft', true);
+		}
 	}
 
 
@@ -182,6 +239,9 @@ class PagesEdit extends BackendBaseActionEdit
 		// assign full url
 		$this->tpl->assign('pageUrl', $url);
 		$this->tpl->assign('seoPageUrl', str_replace($this->meta->getURL(), '', $url));
+
+		// parse datagrid
+		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
 
 		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
@@ -264,7 +324,7 @@ class PagesEdit extends BackendBaseActionEdit
 					$block['id'] = $this->blocksContent[$i]['id'];
 					$block['revision_id'] = $revisionId;
 					$block['extra_id'] = $extraId;
-					$block['HTML'] = $html;
+					$block['html'] = $html;
 					$block['status'] = 'active';
 					$block['created_on'] = date('Y-m-d H:i:s');
 					$block['edited_on'] = date('Y-m-d H:i:s');

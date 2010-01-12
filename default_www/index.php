@@ -30,6 +30,11 @@ class ApplicationRouting
 									'api' => 'api');
 
 
+	/**
+	 * Get the possible routes
+	 *
+	 * @return	array
+	 */
 	public static function getRoutes()
 	{
 		return self::$routes;

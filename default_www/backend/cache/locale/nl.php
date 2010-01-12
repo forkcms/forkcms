@@ -104,6 +104,7 @@ $lbl['core']['Avatar'] = 'avatar';
 // b
 $lbl['core']['Back'] = 'terug';
 $lbl['core']['Blog'] = 'blog';
+$lbl['core']['By'] = 'door';
 // c
 $lbl['core']['Cancel'] = 'annuleer';
 $lbl['core']['Content'] = 'inhoud';
@@ -141,6 +142,7 @@ $lbl['core']['LastSave'] = 'laatst bewaard';
 $lbl['core']['Login'] = 'login';
 $lbl['core']['Logout'] = 'afmelden';
 // m
+$lbl['pages']['MainNavigation'] = 'hoofdnavigatie';
 $lbl['pages']['Meta'] = 'meta-navigatie';
 $lbl['core']['MetaCustom'] = 'meta custom';
 $lbl['core']['MetaDescription'] = 'meta-omschrijving';
@@ -155,6 +157,7 @@ $lbl['core']['Nickname'] = 'nickname';
 // o
 $lbl['core']['OK'] = 'ok';
 // p
+$lbl['core']['Page'] = 'pagina';
 $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 $lbl['core']['PageTitle'] = 'paginatitel';
@@ -256,7 +259,6 @@ $msg['snippets']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
 $msg['pages']['HelpAdd'] = '&larr; Click a page name in the tree structure to edit it or';
 $msg['settings']['HelpEmailWebmaster'] = 'Stuur notificaties van het CMS naar dit e-mailadres.';
-
 $msg['pages']['HelpPageTitle'] = 'De titel die in het venster van de browser staat (<code>&lt;title&gt;</code>).';
 $msg['pages']['HelpNavigationTitle'] = 'Als de paginatitel te lang is om in het menu te passen, geef dan een verkorte titel in.';
 $msg['pages']['HelpNoFollow'] = 'Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.';
@@ -264,6 +266,7 @@ $msg['pages']['HelpMetaCustom'] = 'Laat toe om extra, op maat gemaakte metatags 
 $msg['pages']['HelpMetaDescription'] = 'De pagina-omschrijving die wordt getoond in de resultaten van zoekmachines. Hou het kort en krachtig.';
 $msg['pages']['HelpMetaKeywords'] = 'De sleutelwoorden (keywords) die deze pagina omschrijven.';
 $msg['pages']['HelpMetaURL'] = 'Vervang de automatisch gegenereerde URL door een zelfgekozen URL.';
+$msg['core']['HelpRevisions'] = 'De 20 laatst opgeslagen versies worden hier bijgehouden. \'Gebruik deze versie\' opent een vroegere versie. De huidige versie wordt pas overschreven als je de pagina opslaat.';
 // i
 // j
 // k
@@ -288,7 +291,6 @@ $msg['core']['NotAllowedModuleMessage'] = 'Deze module is niet toegestaan.';
 // p
 // q
 // r
-$msg['core']['RevisionsExplanation'] = 'De 5 laatst opgeslagen versies worden bijgehouden. <strong>De huidige versie wordt pas overschreven als je het item opslaat.</strong>';
 // s
 $msg['core']['Saved'] = 'De wijzigingen zijn opgeslagen.';
 $msg['settings']['ScriptsText'] = 'Plaats HTML-code of javascript die elke pagina geladen moet worden. (bijv. Google Analytics)';
@@ -302,5 +304,28 @@ $msg['core']['VisibleOnSite'] = 'Zichtbaar op de website?';
 // x
 // y
 // z
+
+
+/**
+ * Messages for time ago
+ *
+ * @todo	Davy, convert to Spoon. Search for calculateTimeAgo in this project and alter.
+ */
+$msg['core']['TimeOneDayAgo'] = '1 dag geleden';
+$msg['core']['TimeOneHourAgo'] = '1 uur geleden';
+$msg['core']['TimeOneMinuteAgo'] = '1 minuut geleden';
+$msg['core']['TimeOneMonthAgo'] = '1 maand geleden';
+$msg['core']['TimeOneSecondAgo'] = '1 second geleden';
+$msg['core']['TimeOneWeekAgo'] = '1 week geleden';
+$msg['core']['TimeOneYearAgo'] = '1 jaar geleden';
+
+$msg['core']['TimeDaysAgo'] = '%s dagen geleden';
+$msg['core']['TimeMinutesAgo'] = '%s minuten geleden';
+$msg['core']['TimeHoursAgo'] = '%s uren geleden';
+$msg['core']['TimeMonthsAgo'] = '%s maanden geleden';
+$msg['core']['TimeSecondAgo'] = '%s seconden geleden';
+$msg['core']['TimeWeeksAgo'] = '%s weken geleden';
+$msg['core']['TimeYearsAgo'] = '%s jaren geleden';
+
 
 ?>

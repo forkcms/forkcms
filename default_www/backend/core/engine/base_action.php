@@ -22,6 +22,14 @@ class BackendBaseAction
 
 
 	/**
+	 * A datagrid instance
+	 *
+	 * @var	BackendDataGridDB
+	 */
+	protected $datagrid;
+
+
+	/**
 	 * The parameters (urldecoded)
 	 *
 	 * @var	array

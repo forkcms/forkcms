@@ -17,11 +17,12 @@
 					</td>
 				</tr>
 			</table>
-
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
 			<div class="inner">
+				{option:usingRevision}<p class="warning">{$msgUsingARevision}</p>{/option:usingRevision}
+
 				{form:edit}
 					{$txtTitle} {$txtTitleError}
 					<div id="pageUrl">
@@ -140,7 +141,18 @@
 							</table>
 						</div>
 						<div id="tabVersions">
-							Hier komen de versies...
+							<div class="datagridHolder">
+								<div class="tableHeading">
+									<div class="oneLiner">
+										<h3 class="floater">{$lblRevisions|ucfirst}</h3>
+										<abbr class="help floater" title="{$msgHelpRevisions}">(?)</abbr>
+									</div>
+								</div>
+
+								{option:revisions}{$revisions}{/option:revisions}
+								{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+
+							</div>
 						</div>
 						<div id="tabSEO">
 							<div class="box boxLevel2">

@@ -227,7 +227,7 @@ class PagesAdd extends BackendBaseActionAdd
 					$block['id'] = BackendPagesModel::getMaximumBlockId() + 1;
 					$block['revision_id'] = $revisionId;
 					$block['extra_id'] = $extraId;
-					$block['HTML'] = $html;
+					$block['html'] = $html;
 					$block['status'] = 'active';
 					$block['created_on'] = date('Y-m-d H:i:s');
 					$block['edited_on'] = date('Y-m-d H:i:s');
@@ -238,6 +238,8 @@ class PagesAdd extends BackendBaseActionAdd
 
 				// insert the blocks
 				BackendPagesModel::insertBlocks($blocks);
+
+				// @todo	tags
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);

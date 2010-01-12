@@ -22,6 +22,51 @@ class BackendModel
 	private static $moduleSettings;
 
 
+	public static function calculateTimeAgo($timestamp)
+	{
+		// redefine
+		$timestamp = (int) $timestamp;
+
+		// get seconds between given timestamp and current timestamp
+		$secondsBetween = time() - $timestamp;
+
+		// calculate years ago
+		$yearsAgo = floor($secondsBetween / (365.242199 * 24 * 60 * 60));
+		if($yearsAgo > 1) return sprintf(BL::getMessage('TimeYearsAgo'), $yearsAgo);
+		if($yearsAgo == 1) return BL::getMessage('TimeOneYearAgo');
+
+		// calculate months ago
+		$monthsAgo = floor($secondsBetween / ((365.242199/12) * 24 * 60 * 60));
+		if($monthsAgo > 1) return sprintf(BL::getMessage('TimeMonthsAgo'), $monthsAgo);
+		if($monthsAgo == 1) return BL::getMessage('TimeOneMonthAgo');
+
+		// calculate weeks ago
+		$weeksAgo = floor($secondsBetween / (7 * 24 * 60 * 60));
+		if($weeksAgo > 1) return sprintf(BL::getMessage('TimeWeeksAgo'), $weeksAgo);
+		if($weeksAgo == 1) return BL::getMessage('TimeOneWeekAgo');
+
+		// calculate days ago
+		$daysAgo = floor($secondsBetween / (24 * 60 * 60));
+		if($daysAgo > 1) return sprintf(BL::getMessage('TimeDaysAgo'), $daysAgo);
+		if($daysAgo == 1) return BL::getMessage('TimeOneDayAgo');
+
+		// calculate hours ago
+		$hoursAgo = floor($secondsBetween / (60 * 60));
+		if($hoursAgo > 1) return sprintf(BL::getMessage('TimeHoursAgo'), $hoursAgo);
+		if($hoursAgo == 1) return BL::getMessage('TimeOneHourAgo');
+
+		// calculate minutes ago
+		$minutesAgo = floor($secondsBetween / 60);
+		if($minutesAgo > 1) return sprintf(BL::getMessage('TimeMinutesAgo'), $minutesAgo);
+		if($minutesAgo == 1) return BL::getMessage('TimeOneMinuteAgo');
+
+		// calculate seconds ago
+		$secondsAgo = floor($secondsBetween);
+		if($secondsAgo > 1) return sprintf(BL::getMessage('TimeSecondAgo'), $secondsAgo);
+		if($secondsAgo <= 1) return BL::getMessage('TimeOneSecondAgo');
+	}
+
+
 	/**
 	 * Checks the settings and optionally returns an array with warnings
 	 *

@@ -46,7 +46,7 @@ class BackendNavigation
 		require_once BACKEND_CACHE_PATH .'/navigation/navigation.php';
 
 		// load it
-		$this->navigation = $navigation;
+		$this->navigation = (array) $navigation;
 	}
 
 

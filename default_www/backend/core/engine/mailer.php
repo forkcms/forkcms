@@ -102,7 +102,7 @@ class BackendMailer
 	 * @param unknown_type $template
 	 * @param array $variabeles
 	 */
-	private static function getTemplateContent($template, array $variabeles = null)
+	private static function getTemplateContent($template, array $variables = null)
 	{
 		// declare template
 		$tpl = new SpoonTemplate();

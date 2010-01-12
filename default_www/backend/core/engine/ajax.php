@@ -33,8 +33,6 @@ class BackendAJAX
 	/**
 	 * Default constructor
 	 *
-	 * @todo	@tijs	write some decent validation
-	 *
 	 * @return	void
 	 */
 	public function __construct()

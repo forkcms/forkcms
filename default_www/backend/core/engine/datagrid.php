@@ -72,11 +72,23 @@ class BackendDataGrid extends SpoonDataGrid
 			$url = null;
 		}
 
+		if(in_array($name, array('use_revision')))
+		{
+			// rebuild value, it should have special markup
+			$value = '<a href="'. $url .'" class="button icon'. SpoonFilter::toCamelCase($name) .'">
+						<span><span><span>'. $value .'</span></span></span>
+					</a>';
+
+			// reset url
+			$url = null;
+
+		}
+
 		// add the column
 		parent::addColumn($name, $label, $value, $url, $title, $image, $sequence);
 
 		// known actions
-		if(in_array($name, array('add', 'edit', 'delete')))
+		if(in_array($name, array('add', 'edit', 'delete', 'use_revision')))
 		{
 			// add special attributes for actions we know
 			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),
@@ -112,6 +124,42 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// our JS needs to know an id, so we can send the new order
 		$this->setRowAttributes(array('rel' => '[id]'));
+	}
+
+
+	/**
+	 * Sets the column function to be executed for every row
+	 *
+	 * @return	void
+	 * @param	mixed $function
+	 * @param	mixed[optional] $arguments
+	 * @param	mixed $columns
+	 * @param	bool[optional] $overwrite
+	 */
+	public function setColumnFunction($function, $arguments = null, $columns, $overwrite = true)
+	{
+		// call the parent
+		parent::setColumnFunction($function, $arguments, $columns, $overwrite);
+
+		// redefine columns
+		$columns = (array) $columns;
+		$attributes = null;
+
+		// based on the function we should prepopulate the attributes array
+		switch($function)
+		{
+			// timeAgo
+			case array('BackendDataGridFunctions', 'getTimeAgo'):
+				$attributes = array('class' => 'date');
+			break;
+		}
+
+		// add attributes if they are given
+		if(!empty($attributes))
+		{
+			// loop and set attributes
+			foreach($columns as $column) $this->setColumnAttributes($column, $attributes);
+		}
 	}
 
 
@@ -411,6 +459,60 @@ class BackendDataGridFunctions
 
 		// format the date according the user his settings
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
+	}
+
+
+	/**
+	 * Get time ago as a string for use in a datagrid
+	 *
+	 * @return	string
+	 * @param	int $timestamp
+	 */
+	public static function getTimeAgo($timestamp)
+	{
+		// redefine
+		$timestamp = (int) $timestamp;
+
+		// get the time ago as a string
+		$timeAgo = BackendModel::calculateTimeAgo($timestamp);
+
+		// get user setting for long dates
+		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s');
+
+		// return
+		return '<abbr title="'. SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage()) .'">'. $timeAgo .'</abbr>';
+	}
+
+
+	/**
+	 * Get the HTML for a user to use in a datagrid
+	 *
+	 * @return	string
+	 * @param	int $id
+	 */
+	public static function getUser($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// create user instance
+		$user = new BackendUser($id);
+
+		// get settings
+		$avatar = $user->getSetting('avatar', 'no-avatar.gif');
+		$nickname = $user->getSetting('nickname');
+
+		// @todo	Johan, why do we need an a-elements wrapped arround?
+		// build html
+		$html = '<div class="user">'."\n";
+		$html .= '	<a href="'. BackendModel::createURLForAction('edit', 'users') . '&id='. $id .'">'."\n";
+		$html .= '		<img src="'. FRONTEND_FILES_URL .'/backend_users/avatars/32x32/'. $avatar .'" width="24" height="24" alt="'. $nickname .'" />'."\n";
+		$html .= '		'. $nickname ."\n";
+		$html .= '	</a>'."\n";
+		$html .= '</div>';
+
+		// return
+		return $html;
 	}
 }
 

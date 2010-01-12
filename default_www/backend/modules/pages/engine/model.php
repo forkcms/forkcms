@@ -14,6 +14,17 @@
  */
 class BackendPagesModel
 {
+	const QRY_BROWSE_RECENT = 'SELECT p.id, p.user_id, UNIX_TIMESTAMP(p.edited_on) AS edited_on, p.title
+								FROM pages AS p
+								WHERE p.status = ? AND p.language = ?
+								ORDER BY p.edited_on DESC
+								LIMIT ?';
+	const QRY_BROWSE_REVISIONS = 'SELECT p.id, p.revision_id, p.user_id, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+									FROM pages AS p
+									WHERE p.id = ? AND p.status = ? AND p.language = ?
+									ORDER BY p.edited_on DESC;';
+
+
 	/**
 	 * Add a number to the string
 	 *
@@ -62,8 +73,6 @@ class BackendPagesModel
 		// init vars
 		$keys = array();
 		$navigation = array();
-
-		// @todo	navigation-array isn't correct!
 
 		// loop levels
 		foreach($levels as $level => $pages)
@@ -337,6 +346,58 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * Get the revisioned data for a record
+	 *
+	 * @return	array
+	 * @param	int $id
+	 * @param	int $revisionId
+	 */
+	public static function getRevision($id, $revisionId)
+	{
+		// redefine
+		$id = (int) $id;
+		$revisionOd = (int) $revisionId;
+		$language = BackendLanguage::getWorkingLanguage();
+
+		// get db
+		$db = BackendModel::getDB();
+
+		$db->setDebug(true);
+
+		// get page (active version)
+		$return = (array) $db->getRecord('SELECT *, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+											FROM pages AS p
+											WHERE p.id = ? AND p.revision_id = ? AND p.language = ?
+											LIMIT 1;',
+											array($id, $revisionId, $language));
+
+		// can't be deleted
+		if(in_array($return['id'], array(1, 404))) $return['allow_delete'] = 'N';
+
+		// can't be moved
+		if(in_array($return['id'], array(1, 404))) $return['allow_move'] = 'N';
+
+		// can't have children
+		if(in_array($return['id'], array(404))) $return['allow_move'] = 'N';
+
+		// convert into bools for use in template engine
+		$return['move_allowed'] = (bool) ($return['allow_move'] == 'Y');
+		$return['children_allowed'] = (bool) ($return['allow_children'] == 'Y');
+		$return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
+		$return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
+
+		// return
+		return $return;
+	}
+
+
+	/**
+	 * Get the blocks in a certain page
+	 *
+	 * @return	array
+	 * @param	int $id
+	 */
 	public static function getBlocks($id)
 	{
 		// redefine
@@ -352,6 +413,32 @@ class BackendPagesModel
 										INNER JOIN pages AS p ON pb.revision_id = p.revision_id
 										WHERE p.id = ? AND p.language = ? AND p.status = ?;',
 										array($id, $language, 'active'));
+	}
+
+
+	/**
+	 * Get revisioned blocks for a certain page
+	 *
+	 * @return	array
+	 * @param 	int $id
+	 * @param	int $revisionId
+	 */
+	public static function getBlocksRevision($id, $revisionId)
+	{
+		// redefine
+		$id = (int) $id;
+		$revisionId = (int) $revisionId;
+		$language = BackendLanguage::getWorkingLanguage();
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get page (active version)
+		return (array) $db->retrieve('SELECT pb.*, UNIX_TIMESTAMP(pb.created_on) AS created_on, UNIX_TIMESTAMP(pb.edited_on) AS edited_on
+										FROM pages_blocks AS pb
+										INNER JOIN pages AS p ON pb.revision_id = p.revision_id
+										WHERE p.id = ? AND p.revision_id = ? AND p.language = ?;',
+										array($id, $revisionId, $language));
 	}
 
 
@@ -597,7 +684,8 @@ class BackendPagesModel
 		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
 
 		// start HTML
-		$html = '<ul>'."\n";
+		$html = '<h4>'. ucfirst(BL::getLabel('MainNavigation')) .'</h4>'."\n";
+		$html .= '<ul>'."\n";
 		$html .= '	<li>';
 
 		// homepage should
@@ -608,12 +696,14 @@ class BackendPagesModel
 
 		// end
 		$html .= '	</li>'."\n";
+		$html .= '</ul>'."\n";
+
 
 		// are there any meta pages
 		if(isset($navigation['meta'][0]) && !empty($navigation['meta'][0]))
 		{
 			// meta pages
-			$html .= '	<li>'. ucfirst(BL::getLabel('Meta'));
+			$html .= '	<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
 
 			// start
 			$html .= "\n". '<ul>'."\n";
@@ -636,13 +726,10 @@ class BackendPagesModel
 
 			// end
 			$html .= '</ul>'."\n";
-
-			// end
-			$html .= '	</li>';
 		}
 
 		// footer pages
-		$html .= '	<li>'. ucfirst(BL::getLabel('Footer'));
+		$html .= '<h4>'. ucfirst(BL::getLabel('Footer')) .'</h4>'."\n";
 
 		// are there any footer pages
 		if(isset($navigation['footer'][0]) && !empty($navigation['footer'][0]))
@@ -667,14 +754,11 @@ class BackendPagesModel
 			$html .= '</ul>'."\n";
 		}
 
-		// end
-		$html .= '	</li>';
-
 		// are there any root pages
 		if(isset($navigation['root'][0]) && !empty($navigation['root'][0]))
 		{
 			// meta pages
-			$html .= '	<li>'. ucfirst(BL::getLabel('Root'));
+			$html .= '<h4>'. ucfirst(BL::getLabel('Root')) .'</h4>'."\n";
 
 			// start
 			$html .= "\n". '<ul>'."\n";
@@ -697,11 +781,7 @@ class BackendPagesModel
 
 			// end
 			$html .= '</ul>'."\n";
-
-			// end
-			$html .= '	</li>';
 		}
-		$html .= '<ul>';
 
 		// return
 		return $html;
@@ -735,7 +815,7 @@ class BackendPagesModel
 												array($parentId, 'active', $url));
 
 			// no items?
-			if($number == 0) $url = $url;
+			if($number != 0) $url = $url;
 
 			// there are items so, call this method again.
 			else
