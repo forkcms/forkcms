@@ -274,7 +274,7 @@ class PagesEdit extends BackendBaseActionEdit
 				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();
 				$page['meta_id'] = (int) $this->meta->save();
 				$page['language'] = BackendLanguage::getWorkingLanguage();
-				$page['type'] = 'page';
+				$page['type'] = $this->record['type'];
 				$page['title'] = $this->frm->getField('title')->getValue();
 				$page['navigation_title'] = $this->frm->getField('navigation_title')->getValue();
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
@@ -314,7 +314,7 @@ class PagesEdit extends BackendBaseActionEdit
 
 					// build block
 					$block = array();
-					$block['id'] = $this->blocksContent[$i]['id'];
+					$block['id'] = (isset($this->blocksContent[$i]['id'])) ? $this->blocksContent[$i]['id'] : BackendPagesModel::getMaximumBlockId() + ($i + 1);
 					$block['revision_id'] = $revisionId;
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;

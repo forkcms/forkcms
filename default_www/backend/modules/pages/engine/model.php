@@ -883,18 +883,50 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * Update a page
+	 *
+	 * @return	int
+	 * @param	array $page
+	 */
 	public static function update(array $page)
 	{
 		// get db
 		$db = BackendModel::getDB();
 
 		// update old revisions
-		$db->update('pages', array('status' => 'archive'), 'id = ?', $page['id']);
+		$db->update('pages', array('status' => 'archive'), 'id = ?', (int) $page['id']);
 
 		// insert
 		$id = (int) $db->insert('pages', $page);
 
-		// @todo	remove revisions that should be removed...
+		// how many revisions should we keep
+		$rowsToKeep = (int) BackendModel::getSetting('pages', 'maximum_number_of_revisions', 20);
+
+		// get revision-ids for items to keep
+		$revisionIdsToKeep = (array) $db->getColumn('SELECT p.revision_id
+														FROM pages AS p
+														WHERE p.id = ? AND p.status = ?
+														ORDER BY p.edited_on DESC
+														LIMIT ?;',
+														array($page['id'], 'archive', $rowsToKeep));
+
+		// delete other revisions
+		if(!empty($revisionIdsToKeep))
+		{
+			// because blocks are linked by revision we should get all revisions we want to delete
+			$revisionsToDelete = (array) $db->getColumn('SELECT p.revision_id
+															FROM pages AS p
+															WHERE p.id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')',
+															array((int) $page['id'], 'archive'));
+
+			// any revisions to delete
+			if(!empty($revisionsToDelete))
+			{
+				$db->delete('pages', 'revision_id IN('. implode(', ', $revisionsToDelete) .')');
+				$db->delete('pages_blocks', 'revision_id IN('. implode(', ', $revisionsToDelete) .')');
+			}
+		}
 
 		// rebuild the cache
 		self::buildCache();
@@ -904,6 +936,12 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * Update the blocks
+	 *
+	 * @return	void
+	 * @param	array $blocks
+	 */
 	public static function updateBlocks(array $blocks)
 	{
 		// get db
@@ -914,8 +952,6 @@ class BackendPagesModel
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
-
-		// @todo	remove revisions that should be removed...
 	}
 
 }

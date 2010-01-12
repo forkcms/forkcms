@@ -224,7 +224,7 @@ class PagesAdd extends BackendBaseActionAdd
 
 					// build block
 					$block = array();
-					$block['id'] = BackendPagesModel::getMaximumBlockId() + 1;
+					$block['id'] = BackendPagesModel::getMaximumBlockId() + ($i + 1);
 					$block['revision_id'] = $revisionId;
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;
