@@ -14,14 +14,6 @@
 class PagesEdit extends BackendBaseActionEdit
 {
 	/**
-	 * Datagrid with the revisions
-	 *
-	 * @var	BackendDataGridDB
-	 */
-	private $dgRevisions;
-
-
-	/**
 	 * The blocks
 	 *
 	 * @var	array
@@ -75,6 +67,7 @@ class PagesEdit extends BackendBaseActionEdit
 		// display the page
 		$this->display();
 	}
+
 
 	/**
 	 * Load the datagrid

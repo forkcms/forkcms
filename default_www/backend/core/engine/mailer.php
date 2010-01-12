@@ -1,4 +1,5 @@
 <?php
+
 // require SpoonEmail
 require_once 'spoon/email/email.php';
 
@@ -19,16 +20,6 @@ class BackendMailer
 {
 	/**
 	 * @todo	doc
-	 * @param unknown_type $html
-	 */
-	private static function convertHTMLToPlainText($html)
-	{
-		return $html;
-	}
-
-
-	/**
-	 * @todo	doc
 	 *
 	 * @param unknown_type $subject
 	 * @param unknown_type $templateFile
@@ -36,8 +27,29 @@ class BackendMailer
 	 * @param unknown_type $to
 	 * @param unknown_type $from
 	 */
-	public static function addEmail($subject, $templateFile, array $variables, $to = null, $from = null, $queue = true)
+
+	/**
+	 * Adds an email to the queue.
+	 *
+	 * @return	void
+	 * @param	string $subject
+	 * @param	string $template
+	 * @param	array[optional] $variables
+	 * @param	string[optional] $toEmail
+	 * @param	string[optional] $toName
+	 * @param	string[optional] $fromEmail
+	 * @param	string[optional] $fromName
+	 * @param	bool[optional] $queue
+	 */
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $queue = true)
 	{
+		// @todo code herwerken (simpelere manier)
+
+
+
+
+
+
 		// redefine
 		if($to === null) $to = array('no-reply@fork-cms.be', 'Fork CMS'); // @todo	Get from settings
 		if($from === null) $from = array('no-reply@fork-cms.be', 'Fork CMS'); // @todo	Get from settings
@@ -97,33 +109,6 @@ class BackendMailer
 
 
 	/**
-	 * @todo	doc
-	 *
-	 * @param unknown_type $template
-	 * @param array $variabeles
-	 */
-	private static function getTemplateContent($template, array $variables = null)
-	{
-		// declare template
-		$tpl = new SpoonTemplate();
-		$tpl->setCompileDirectory(BACKEND_CACHE_PATH .'/templates');
-		$tpl->setForceCompile(true);
-
-		// parse variables in the template if any are found
-		if(!empty($variables)) $tpl->assign($variables);
-
-		// turn on output buffering
-		ob_start();
-
-		// html body
-		$tpl->display($template);
-
-		// return template content
-		return ob_get_clean();
-	}
-
-
-	/**
 	 * Send an email
 	 *
 	 * @return	void
@@ -179,10 +164,19 @@ class BackendMailer
 
 }
 
-class BackendMailerException extends BackendException
-{
 
-}
-
+/**
+ * BackendMailer
+ *
+ * This class is used when an exceptions occures in the BackendMailer class
+ *
+ * @package		backend
+ * @subpackage	mailer
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class BackendMailerException extends BackendException {}
 
 ?>

@@ -59,7 +59,7 @@ class PagesIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// set column url
-		$this->datagrid->setColumnUrl('title', BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->setColumnUrl('title', BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 
 		// add edit column @todo Davy, [id] werkt niet.
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));

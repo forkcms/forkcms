@@ -14,14 +14,6 @@
 class SnippetsEdit extends BackendBaseActionEdit
 {
 	/**
-	 * Datagrid with the revisions
-	 *
-	 * @var	BackendDataGridDB
-	 */
-	private $dgRevisions;
-
-
-	/**
 	 * Execute the action
 	 *
 	 * @return	void

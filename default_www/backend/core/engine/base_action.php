@@ -22,14 +22,6 @@ class BackendBaseAction
 
 
 	/**
-	 * A datagrid instance
-	 *
-	 * @var	BackendDataGridDB
-	 */
-	protected $datagrid;
-
-
-	/**
 	 * The parameters (urldecoded)
 	 *
 	 * @var	array
@@ -248,6 +240,14 @@ class BackendBaseAction
 class BackendBaseActionIndex extends BackendBaseAction
 {
 	/**
+	 * A datagrid instance
+	 *
+	 * @var	BackendDataGridDB
+	 */
+	protected $datagrid;
+
+
+	/**
 	 * Execute the current action
 	 * This method will be overwriten in most of the actions, but still be called to add general stuff
 	 *
@@ -361,6 +361,14 @@ class BackendBaseActionAdd extends BackendBaseAction
  */
 class BackendBaseActionEdit extends BackendBaseAction
 {
+	/**
+	 * Datagrid with the revisions
+	 *
+	 * @var	BackendDataGridDB
+	 */
+	protected $dgRevisions;
+
+
 	/**
 	 * The form instance
 	 *
