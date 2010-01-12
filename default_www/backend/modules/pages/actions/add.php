@@ -188,7 +188,7 @@ class PagesAdd extends BackendBaseActionAdd
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
 				$page['hidden'] = $this->frm->getField('hidden')->getValue();
 				$page['status'] = 'active';
-				$page['publish_on'] = date('Y-m-d H:i:s'); // @todo
+				$page['publish_on'] = date('Y-m-d H:i:s'); // @todo moet door gebruiker ingevuld worden.
 				$page['created_on'] = date('Y-m-d H:i:s');
 				$page['edited_on'] = date('Y-m-d H:i:s');
 				$page['allow_move'] = 'Y';
