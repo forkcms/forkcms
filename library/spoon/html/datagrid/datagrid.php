@@ -309,6 +309,9 @@ class SpoonDataGrid
 
 		// new column
 		$this->columns[$name] = new SpoonDataGridColumn($name, $label, $value, $url, $title, $image, $sequence);
+
+		// add the class as an attribute to this column
+		$this->columns[$name]->setAttributes(array('class' => $name));
 	}
 
 
@@ -405,6 +408,9 @@ class SpoonDataGrid
 			{
 				// add column
 				$this->addColumn($column, $column, '['. $column .']', null, null, null, (count($this->columns) +1));
+
+				// by default the column name will be added as a class
+				$this->columns[$column]->setAttributes(array('class' => $column));
 
 				// may be sorted on
 				$this->allowedSortingColumns[] = $column;
@@ -2571,6 +2577,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 			switch($this->db->getDriver())
 			{
 				case 'mysql':
+					// @todo davy - this might also be LIMIT with a tab before or after instead of a space, use a regular expression to fix this.
 					$query = (substr_count($this->query, 'LIMIT ') > 0) ? $this->query : $this->query .' LIMIT 1';
 				break;
 
