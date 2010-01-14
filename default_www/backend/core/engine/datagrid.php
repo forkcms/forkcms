@@ -39,6 +39,8 @@ class BackendDataGrid extends SpoonDataGrid
 		// hide the id by default
 		if(in_array('id', $this->getColumns())) $this->setColumnsHidden('id');
 
+		Spoon::dump($this->getColumns());
+
 		// set default sorting options
 		$this->setSortingOptions();
 
