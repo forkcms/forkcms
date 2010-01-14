@@ -493,11 +493,14 @@ class SpoonDataGrid
 	 */
 	private function getColumnsSequence()
 	{
+		// init var
+		$columns = array();
+
 		// loop all the columns
-		foreach($this->columns as $column) $aSequence[$column->getSequence()] = $column->getName();
+		foreach($this->columns as $column) $columns[$column->getSequence()] = $column->getName();
 
 		// reindex
-		return SpoonFilter::arraySortKeys($aSequence);
+		return (!empty($columns)) ? SpoonFilter::arraySortKeys($columns) : $columns;
 	}
 
 
