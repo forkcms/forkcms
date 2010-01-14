@@ -4083,6 +4083,14 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
+	 * List of option specific attributes
+	 *
+	 * @var	array
+	 */
+	private $optionAttributes = array();
+
+
+	/**
 	 * Contains optgroups
 	 *
 	 * @var	bool
@@ -4112,14 +4120,6 @@ class SpoonDropDown extends SpoonFormAttributes
 	 * @var	array
 	 */
 	protected $values = array();
-
-
-	/**
- 	 * Optional value attributes
- 	 *
- 	 * @var	array
-	 */
-	private $valueAttributes;
 
 
 	/**
@@ -4252,6 +4252,18 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
+	 * Retrieve the list of option specific attributes by its' value
+	 *
+	 * @return	array
+	 * @param	string $value
+	 */
+	public function getOptionAttributes($value)
+	{
+		return (isset($this->optionAttributes[(string) $value])) ? $this->optionAttributes[(string) $value] : array();
+	}
+
+
+	/**
 	 * Retrieves the selected item(s)
 	 *
 	 * @return	mixed
@@ -4352,17 +4364,6 @@ class SpoonDropDown extends SpoonFormAttributes
 		}
 
 		return $values;
-	}
-
-	/**
-	 * Retrieve the custom attributes for a value
-	 *
-	 * @return	array
-	 * @param	string $value
-	 */
-	public function getValuesAttributes($value)
-	{
-		return (isset($this->valuesAttributes[(string) $value])) ? $this->valuesAttributes[(string) $value] : null;
 	}
 
 
@@ -4487,6 +4488,17 @@ class SpoonDropDown extends SpoonFormAttributes
 						if($value == $this->getSelected()) $output .= ' selected="selected"';
 					}
 
+					// add custom attributes
+					if(isset($this->optionAttributes[(string) $value]))
+					{
+						// loop each attribute
+						foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
+						{
+							// add to the output
+							$output .= ' '. $attrKey .'="'. $attrValue .'"';
+						}
+					}
+
 					// end option
 					$output .= ">$label</option>\r\n";
 				}
@@ -4519,16 +4531,16 @@ class SpoonDropDown extends SpoonFormAttributes
 					if($this->getSelected() !== null && $value == $this->getSelected()) $output .= ' selected="selected"';
 				}
 
-				// add possible extra attributes
-				if(isset($this->valueAttributes[$value]))
+				// add custom attributes
+				if(isset($this->optionAttributes[(string) $value]))
 				{
-					// @todo nog opkuisen
-					foreach($this->valueAttributes[$value] as $keyAttribute => $valueAttribute)
+					// loop each attribute
+					foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
 					{
-						$output .= ' '. $keyAttribute .'="'. $valueAttribute .'"';
+						// add to the output
+						$output .= ' '. $attrKey .'="'. $attrValue .'"';
 					}
 				}
-
 
 				// end option
 				$output .= ">$label</option>\r\n";
@@ -4588,6 +4600,23 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
+	 * Sets custom option attributes for a specific value
+	 *
+	 * @return	void
+	 * @param	string $value
+	 * @param	array $attributes
+	 */
+	public function setOptionAttributes($value, array $attributes)
+	{
+		// set each attribute
+		foreach($attributes as $attrKey => $attrValue)
+		{
+			$this->optionAttributes[(string) $value][(string) $attrKey] = (string) $attrValue;
+		}
+	}
+
+
+	/**
 	 * Whether you can select one or more items
 	 *
 	 * @return	void
@@ -4626,19 +4655,6 @@ class SpoonDropDown extends SpoonFormAttributes
 			// multiple selections
 			else $this->selected[] = (string) $selected;
 		}
-	}
-
-
-	/**
-	 * Sets custom attributes for a specific value
-	 *
-	 * @return	void
-	 * @param	string $value
-	 * @param	array $attributes
-	 */
-	public function setValueAttributes($value, array $attributes)
-	{
-		foreach($attributes as $kaka => $pipi) $this->valueAttributes[(string) $value][(string) $kaka] = (string) $pipi;
 	}
 
 
