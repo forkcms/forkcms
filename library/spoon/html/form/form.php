@@ -4115,6 +4115,14 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
+ 	 * Optional value attributes
+ 	 *
+ 	 * @var	array
+	 */
+	private $valueAttributes;
+
+
+	/**
 	 * Class constructor.
 	 *
 	 * @return	void
@@ -4346,6 +4354,17 @@ class SpoonDropDown extends SpoonFormAttributes
 		return $values;
 	}
 
+	/**
+	 * Retrieve the custom attributes for a value
+	 *
+	 * @return	array
+	 * @param	string $value
+	 */
+	public function getValuesAttributes($value)
+	{
+		return (isset($this->valuesAttributes[(string) $value])) ? $this->valuesAttributes[(string) $value] : null;
+	}
+
 
 	/**
 	 * Checks if this field was submitted & contains one more values
@@ -4500,6 +4519,17 @@ class SpoonDropDown extends SpoonFormAttributes
 					if($this->getSelected() !== null && $value == $this->getSelected()) $output .= ' selected="selected"';
 				}
 
+				// add possible extra attributes
+				if(isset($this->valueAttributes[$value]))
+				{
+					// @todo nog opkuisen
+					foreach($this->valueAttributes[$value] as $keyAttribute => $valueAttribute)
+					{
+						$output .= ' '. $keyAttribute .'="'. $valueAttribute .'"';
+					}
+				}
+
+
 				// end option
 				$output .= ">$label</option>\r\n";
 			}
@@ -4596,6 +4626,19 @@ class SpoonDropDown extends SpoonFormAttributes
 			// multiple selections
 			else $this->selected[] = (string) $selected;
 		}
+	}
+
+
+	/**
+	 * Sets custom attributes for a specific value
+	 *
+	 * @return	void
+	 * @param	string $value
+	 * @param	array $attributes
+	 */
+	public function setValueAttributes($value, array $attributes)
+	{
+		foreach($attributes as $kaka => $pipi) $this->valueAttributes[(string) $value][(string) $kaka] = (string) $pipi;
 	}
 
 
