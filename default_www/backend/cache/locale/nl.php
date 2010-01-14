@@ -141,6 +141,7 @@ $lbl['core']['Keywords'] = 'zoekwoorden';
 $lbl['core']['Languages'] = 'talen';
 $lbl['core']['LastEditedOn'] = 'laats aangepast op';
 $lbl['core']['LastSave'] = 'laatst bewaard';
+$lbl['core']['Loading'] = 'laden';
 $lbl['core']['Login'] = 'login';
 $lbl['core']['Logout'] = 'afmelden';
 // m
@@ -170,6 +171,7 @@ $lbl['core']['Published'] = 'gepubliceerd';
 $lbl['core']['PublishedComments'] = 'gepubliceerde reacties';
 // q
 // r
+$lbl['core']['RecentComments'] = 'recente reacties';
 $lbl['core']['RecentlyEdited'] = 'recent aangepast';
 $lbl['core']['Referrers'] = 'referrers';
 $lbl['core']['Revisions'] = 'versies';
@@ -187,6 +189,7 @@ $lbl['core']['SortAscending'] = 'sorteer oplopend';
 $lbl['core']['SortDescending'] = 'sorteer aflopend';
 $lbl['core']['SortedAscending'] = 'oplopend gesorteerd';
 $lbl['core']['SortedDescending'] = 'aflopend gesorteerd';
+$lbl['core']['Snippets'] = 'snippets';
 $lbl['core']['Spam'] = 'spam';
 $lbl['core']['Status'] = 'status';
 $lbl['core']['Submit'] = 'verzenden';

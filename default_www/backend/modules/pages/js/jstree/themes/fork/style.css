@@ -1,0 +1,32 @@
+/* LOCKED */
+/*
+.tree-fork .locked li a { color: gray; }
+*/
+
+/* DOTS */
+.tree-fork li { background: transparent url('icons.gif') repeat-y -16px 0; display: block !important; }
+
+/* OPEN or CLOSED */
+
+.tree-fork li.last { background-position: 0 -56px; }
+.tree-fork li.open { background: url('icons.gif') 0 -37px no-repeat; }
+.tree-fork li.dragged { border: 1px dotted #000; }
+.tree-fork li.closed, #jstree-dragged.tree-fork li li.open { background-position: 0 -17px !important; }
+#jstree-marker { border-bottom: 1px dashed #000; }
+
+/* DEFAULT, HOVER, CLICKED, LOADING STATES */
+.tree-fork li a, .tree-fork li span { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+.tree-fork li a: hover, .tree-fork li a.hover, .tree-fork li span { background: #e7f4f9; border: 1px solid #d8f0fa; padding: 0px 3px 0px 3px; }
+.tree-fork li a.clicked, .tree-fork li a.clicked: hover, .tree-fork li span.clicked { background: #beebff; border: 1px solid #99defd; padding: 0px 3px 0px 3px; }
+
+/* ICONS */
+.tree-fork ins { background: transparent url('icons.gif') no-repeat 0 -171px; }
+.tree-fork ul li a.loading ins { background-image: url("throbber.gif") !important; background-position: 0 0 !important; }
+.tree-fork li a ins.forbidden { background-position: -16px -16px; }
+.tree-fork .locked li a ins { background-position: 0 -48px; }
+.tree-fork li span ins { background-position: -16px 0; }
+
+/* dragged item */
+#jstree-dragged { border: 1px dotted #000; background-color: #CCC; opacity: 0.7; }
+#jstree-dragged.tree-fork ins { background: url('icons.png') -16px -32px no-repeat; }
+#jstree-dragged.tree-fork ins.forbidden { background: url('icons.png') -16px -16px no-repeat; }

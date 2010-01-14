@@ -23,6 +23,14 @@ class PagesIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		// add js
+		$this->header->addJS('jstree/jquery.tree.js');
+		$this->header->addJS('jstree/lib/jquery.cookie.js');
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+
+		// add css
+		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
+
 		// check if the cached files exists
 		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php')) BackendPagesModel::buildCache();
 		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php')) BackendPagesModel::buildCache();
@@ -61,7 +69,7 @@ class PagesIndex extends BackendBaseActionIndex
 		// set column url
 		$this->datagrid->setColumnUrl('title', BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 
-		// add edit column @todo Davy, [id] werkt niet.
+		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 
 		// set headers

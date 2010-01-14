@@ -65,6 +65,15 @@ class BackendPagesModel
 				$temp['title'] = $page['title'];
 				$temp['navigation_title'] = $page['navigation_title'];
 
+				// calculate tree-type
+				$treeType = 'page';
+				if($pageID == 1) $treeType = 'home';
+				if($pageID == 2) $treeType = 'sitemap';
+				if($pageID == 404) $treeType = 'error';
+
+				// add type
+				$temp['tree_type'] = $treeType;
+
 				// add it
 				$navigation[$page['type']][$page['parent_id']][$pageID] = $temp;
 			}
@@ -275,11 +284,11 @@ class BackendPagesModel
 	 * @return	array
 	 * @param	int $id
 	 */
-	public static function get($id)
+	public static function get($id, $language = null)
 	{
 		// redefine
 		$id = (int) $id;
-		$language = BackendLanguage::getWorkingLanguage();
+		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get db
 		$db = BackendModel::getDB();
@@ -408,13 +417,45 @@ class BackendPagesModel
 
 
 	/**
-	 * @todo	Get all the available extra's
+	 * Get all the available extra's
 	 *
 	 * @return	array
 	 */
 	public static function getExtras()
 	{
-		return array('html' => BL::getLabel('Editor'));
+		// get db
+		$db = BackendModel::getDB();
+
+		// get all extras
+		$extras = (array) $db->retrieve('SELECT pe.id, pe.module, pe.type, pe.label, pe.data
+											FROM pages_extras AS pe
+											INNER JOIN modules AS m ON pe.module = m.name
+											WHERE m.active = ?
+											ORDER BY pe.module, pe.sequence;',
+											array('Y'));
+
+		// build array
+		$values = array('' => array('html' => BL::getLabel('Editor')));
+
+		// loop extras
+		foreach($extras as $row)
+		{
+			// unserialize data
+			$row['data'] = @unserialize($row['data']);
+
+			// build name
+			$name = ucfirst(BL::getLabel($row['label']));
+			if(isset($row['data']['extra_label'])) $name .= ' '. $row['data']['extra_label'];
+
+			$moduleName = ucfirst(BL::getLabel($row['module']));
+
+			// add
+			$values[$moduleName][$row['id']] = $name;
+		}
+
+//		Spoon::dump($values);
+
+		return $values;
 	}
 
 
@@ -545,10 +586,10 @@ class BackendPagesModel
 			foreach($navigation['page'][$parentId] as $page)
 			{
 				// start
-				$html .= '<li>'."\n";
+				$html .= '<li id="page-'. $page['page_id'] .'" rel="'. $page['tree_type'] .'">'."\n";
 
 				// insert link
-				$html .= '	<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+				$html .= '	<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'"><ins>&#160;</ins>'. $page['navigation_title'] .'</a>'."\n";
 
 				// get childs
 				$html .= self::getSubtree($navigation, $page['page_id'], $html);
@@ -650,47 +691,50 @@ class BackendPagesModel
 
 		// start HTML
 		$html = '<h4>'. ucfirst(BL::getLabel('MainNavigation')) .'</h4>'."\n";
-		$html .= '<ul>'."\n";
-		$html .= '	<li>';
+		$html .= '<div class="clearfix">'."\n";
+		$html .= '	<ul>'."\n";
+		$html .= '		<li id="page-1" rel="home">';
 
 		// homepage should
-		$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => 1)) .'">'. ucfirst(BL::getLabel('Home')) .'</a>'."\n";
+		$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => 1)) .'"><ins>&#160;</ins>'. ucfirst(BL::getLabel('Home')) .'</a>'."\n";
 
 		// add subpages
 		$html .= self::getSubTree($navigation, 1);
 
 		// end
-		$html .= '	</li>'."\n";
-		$html .= '</ul>'."\n";
+		$html .= '		</li>'."\n";
+		$html .= '	</ul>'."\n";
+		$html .= '</div>'."\n";
 
 
 		// are there any meta pages
 		if(isset($navigation['meta'][0]) && !empty($navigation['meta'][0]))
 		{
 			// meta pages
-			$html .= '	<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
+			$html .= '<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
 
-			// start
-			$html .= "\n". '<ul>'."\n";
+			$html .= '<div class="clearfix">'."\n";
+			$html .= '	<ul>'."\n";
 
 			// loop the items
 			foreach($navigation['meta'][0] as $page)
 			{
 				// start
-				$html .= '	<li>'."\n";
+				$html .= '		<li id="page-'. $page['page_id'] .'" rel="'. $page['tree_type'] .'">'."\n";
 
 				// insert link
-				$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+				$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'"><ins>&#160;</ins>'. $page['navigation_title'] .'</a>'."\n";
 
 				// insert subtree
 				$html .= self::getSubTree($navigation, $page['page_id']);
 
 				// end
-				$html .= '	</li>'."\n";
+				$html .= '		</li>'."\n";
 			}
 
 			// end
-			$html .= '</ul>'."\n";
+			$html .= '	</ul>'."\n";
+			$html .= '</div>'."\n";
 		}
 
 		// footer pages
@@ -700,23 +744,26 @@ class BackendPagesModel
 		if(isset($navigation['footer'][0]) && !empty($navigation['footer'][0]))
 		{
 			// start
-			$html .= "\n". '<ul>'."\n";
+			$html .= '<div class="clearfix">'."\n";
+			$html .= '	<ul>'."\n";
 
 			// loop the items
 			foreach($navigation['footer'][0] as $page)
 			{
 				// start
-				$html .= '	<li>'."\n";
+				$html .= '		<li id="page-'. $page['page_id'] .'" rel="'. $page['tree_type'] .'">'."\n";
 
 				// insert link
-				$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+				$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'"><ins>&#160;</ins>'. $page['navigation_title'] .'</a>'."\n";
 
 				// end
-				$html .= '	</li>'."\n";
+				$html .= '		</li>'."\n";
 			}
 
 			// end
-			$html .= '</ul>'."\n";
+			// end
+			$html .= '	</ul>'."\n";
+			$html .= '</div>'."\n";
 		}
 
 		// are there any root pages
@@ -726,26 +773,28 @@ class BackendPagesModel
 			$html .= '<h4>'. ucfirst(BL::getLabel('Root')) .'</h4>'."\n";
 
 			// start
-			$html .= "\n". '<ul>'."\n";
+			$html .= '<div class="clearfix">'."\n";
+			$html .= '	<ul>'."\n";
 
 			// loop the items
 			foreach($navigation['root'][0] as $page)
 			{
 				// start
-				$html .= '	<li>'."\n";
+				$html .= '		<li id="page-'. $page['page_id'] .'" rel="'. $page['tree_type'] .'">'."\n";
 
 				// insert link
-				$html .= '		<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'">'. $page['navigation_title'] .'</a>'."\n";
+				$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'"><ins>&#160;</ins>'. $page['navigation_title'] .'</a>'."\n";
 
 				// insert subtree
 				$html .= self::getSubTree($navigation, $page['page_id']);
 
 				// end
-				$html .= '	</li>'."\n";
+				$html .= '		</li>'."\n";
 			}
 
 			// end
-			$html .= '</ul>'."\n";
+			$html .= '	</ul>'."\n";
+			$html .= '</div>'."\n";
 		}
 
 		// return
@@ -880,6 +929,121 @@ class BackendPagesModel
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
+	}
+
+
+	/**
+	 * Move a page
+	 *
+	 * @return	bool
+	 * @param	int $id
+	 * @param	int $droppedOn
+	 * @param	string $typeOfDrop
+	 * @param	string[optional] $language
+	 */
+	public static function move($id, $droppedOn, $typeOfDrop, $language = null)
+	{
+		// redefine
+		$id = (int) $id;
+		$droppedOn = (int) $droppedOn;
+		$typeOfDrop = SpoonFilter::getValue($typeOfDrop, array('before', 'after', 'inside'), 'inside');
+		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// reset type of drop for special pages
+		if($droppedOn == 1) $typeOfDrop = 'inside';
+
+		// get data for pages
+		$page = self::get($id, $language);
+		$droppedOnPage = self::get($droppedOn, $language);
+
+		// validate
+		if(empty($page) || empty($droppedOn)) return false;
+
+		// calculate new parent for items that should be moved inside
+		if($typeOfDrop == 'inside')
+		{
+			// check if item allows children
+			if($page['allow_children'] != 'Y') return false;
+
+			// set new parent to the dropped on page.
+			$newParent = $droppedOnPage['id'];
+		}
+
+		// if the item has to be moved before or after
+		else $newParent = $droppedOnPage['parent_id'];
+
+		// decide new type
+		$newType = 'page';
+		if($droppedOnPage['type'] == 'meta') $newType = 'meta';
+		if($droppedOnPage['type'] == 'footer') $newType = 'footer';
+		if($droppedOnPage['type'] == 'root') $newType = 'root';
+
+		// calculate new sequence for items that should be moved inside
+		if($typeOfDrop == 'inside')
+		{
+			// get highest sequence
+			$newSequence = (int) $db->getVar('SELECT p.sequence
+												FROM pages AS p
+												WHERE p.id = ? AND p.language = ? AND p.status = ?
+												ORDER BY p.sequence DESC
+												LIMIT 1;',
+												array($newParent, $language, 'active')) + 1;
+
+			// update
+			$db->update('pages', array('parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType), 'id = ? AND language = ? AND status = ?', array($id, $language, 'active'));
+		}
+
+		// calculate new sequence for items that should be moved before
+		elseif($typeOfDrop == 'before')
+		{
+			// get new sequence
+			$newSequence = (int) $db->getVar('SELECT p.sequence
+												FROM pages AS p
+												WHERE p.id = ? AND p.language = ? AND p.status = ?
+												LIMIT 1;',
+												array($droppedOnPage['id'], $language, 'active')) - 1;
+
+			// increment all pages with a sequence that is higher or equal to the current sequence;
+			$db->execute('UPDATE pages
+							SET sequence = sequence + 1
+							WHERE parent_id = ? AND language = ? AND sequence >= ?;',
+							array($newParent, $language, $newSequence + 1));
+
+			// update
+			$db->update('pages', array('parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType), 'id = ? AND language = ? AND status = ?', array($id, $language, 'active'));
+		}
+
+		// calculate new sequence for items that should be moved after
+		elseif($typeOfDrop == 'after')
+		{
+			// get new sequence
+			$newSequence = (int) $db->getVar('SELECT p.sequence
+												FROM pages AS p
+												WHERE p.id = ? AND p.language = ? AND p.status = ?
+												LIMIT 1;',
+												array($droppedOnPage['id'], $language, 'active')) + 1;
+
+			// increment all pages with a sequence that is higher then the current sequence;
+			$db->execute('UPDATE pages
+							SET sequence = sequence + 1
+							WHERE parent_id = ? AND language = ? AND sequence > ?;',
+							array($newParent, $language, $newSequence));
+
+			// update
+			$db->update('pages', array('parent_id' => $newParent, 'sequence' => $newSequence, 'type' => $newType), 'id = ? AND language = ? AND status = ?', array($id, $language, 'active'));
+		}
+
+		// fallback
+		else return false;
+
+		// rebuild cache
+		self::buildCache();
+
+		// return
+		return true;
 	}
 
 

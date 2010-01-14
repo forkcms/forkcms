@@ -40,6 +40,14 @@ class PagesEdit extends BackendBaseActionEdit
 		// call parent, this will probably edit some general CSS/JS or other required files
 		parent::execute();
 
+		// add js
+		$this->header->addJS('jstree/jquery.tree.js');
+		$this->header->addJS('jstree/lib/jquery.cookie.js');
+		$this->header->addJS('jstree/plugins/jquery.tree.cookie.js');
+
+		// add css
+		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
+
 		// load record
 		$this->loadData();
 

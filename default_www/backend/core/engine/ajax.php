@@ -47,13 +47,30 @@ class BackendAJAX
 		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', BackendLanguage::getInterfaceLanguages(), BackendLanguage::DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', null, ''));
 
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());
 
-		// execute the action
-		$action->execute();
+		try
+		{
+			// execute the action
+			$action->execute();
+		}
+
+		// we should catch exceptions
+		catch(Exception $e)
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(403);
+
+			// if we are debugging we should see the exceptions
+			if(SPOON_DEBUG) throw $e;
+
+			// output
+			$fakeAction = new BackendBaseAJAXAction('', '');
+			$fakeAction->output(BackendBaseAJAXAction::ERROR, null, $e->getMessage());
+		}
 	}
 
 
@@ -99,7 +116,22 @@ class BackendAJAX
 	 */
 	public function setLanguage($value)
 	{
-		BackendLanguage::setLocale($value);
+		// get the possible languages
+		$possibleLanguages = BackendLanguage::getWorkingLanguages();
+
+		// validate
+		if(!in_array($value, array_keys($possibleLanguages)))
+		{
+			// set correct headers
+			SpoonHTTP::setHeadersByCode(403);
+
+			// output
+			$fakeAction = new BackendBaseAJAXAction('', '');
+			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Languages not provided.');
+		}
+
+		// set working language
+		BackendLanguage::setWorkingLanguage($value);
 	}
 
 
@@ -145,6 +177,9 @@ class BackendAJAX
 			$fakeAction = new BackendBaseAJAXAction('', '');
 			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not logged in.');
 		}
+
+		// set interface language
+		BackendLanguage::setLocale(BackendAuthentication::getUser()->getSetting('interface_language'));
 	}
 }
 

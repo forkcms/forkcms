@@ -280,7 +280,17 @@ class BackendModel
 														FROM modules_settings AS ms;');
 
 			// loop and store settings in the cache
-			foreach($moduleSettings as $setting) self::$moduleSettings[$setting['module']][$setting['name']] = unserialize($setting['value']);
+			foreach($moduleSettings as $setting)
+			{
+				// unserialize value
+				$value = @unserialize($setting['value']);
+
+				// validate
+				if($value === false && serialize(false) != $setting['value']) throw new BackendException('The modulesetting ('. $setting['module'] .': '. $setting['name'] .') wasn\'t saved properly.');
+
+				// cache the setting
+				self::$moduleSettings[$setting['module']][$setting['name']] = $value;
+			}
 		}
 
 		// return

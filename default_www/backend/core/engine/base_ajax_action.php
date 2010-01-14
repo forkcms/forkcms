@@ -14,8 +14,9 @@
 class BackendBaseAJAXAction
 {
 	const OK = 200;
-	const ERROR = 500;
+	const BAD_REQUEST = 400;
 	const FORBIDDEN = 403;
+	const ERROR = 500;
 
 	/**
 	 * The current action

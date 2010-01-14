@@ -1,17 +1,17 @@
 <?php
 
 /**
- * TagsAdd
+ * PagesAdd
  *
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
- * @subpackage	tags
+ * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class TagsAjaxAutocomplete extends BackendBaseAJAXAction
+class PagesAjaxGetInfo extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
@@ -24,17 +24,16 @@ class TagsAjaxAutocomplete extends BackendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$query = SpoonFilter::getGetValue('q', null, '');
-		$limit = SpoonFilter::getGetValue('limit', null, 10);
+		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
 
 		// validate
-		if($query == '') $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'query is missing.');
+		if($id == 0) $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'no id provided');
 
-		// get tags
-		$tags = (array) BackendTagsModel::getStartsWith($query, $limit);
+		// get page
+		$page = BackendPagesModel::get($id);
 
 		// output
-		$this->output(BackendBaseAJAXAction::OK, $tags);
+		$this->output(BackendBaseAJAXAction::OK, $page);
 	}
 }
 

@@ -8,7 +8,7 @@
 						<div id="treeOptions">
 							<div class="buttonHolder">
 								<a href="{$var|geturl:"index"}" class="button icon iconBack iconOnly"><span><span><span>{$lblBack|ucfirst}</span></span></span></a>
-								<a href="{$var|geturl:"edit"}" class="button icon iconEdit"><span><span><span>{$lblEdit}</span></span></span></a>
+								<a href="{$var|geturl:"add"}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 							</div>
 						</div>
 						<div id="tree">
