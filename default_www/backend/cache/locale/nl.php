@@ -101,12 +101,14 @@ $lbl['core']['APIKey'] = 'API key';
 $lbl['core']['APIKeys'] = 'API keys';
 $lbl['core']['APIURL'] = 'API URL';
 $lbl['core']['Avatar'] = 'avatar';
+$lbl['core']['Author'] = 'auteur';
 // b
 $lbl['core']['Back'] = 'terug';
 $lbl['core']['Blog'] = 'blog';
 $lbl['core']['By'] = 'door';
 // c
 $lbl['core']['Cancel'] = 'annuleer';
+$lbl['core']['Comment'] = 'reactie';
 $lbl['core']['Content'] = 'inhoud';
 $lbl['core']['CustomURL'] = 'aangepast URL';
 // d
@@ -165,6 +167,7 @@ $lbl['core']['Preview'] = 'preview';
 $lbl['core']['Previous'] = 'vorige';
 $lbl['core']['PreviousPage'] = 'vorige pagina';
 $lbl['core']['Published'] = 'gepubliceerd';
+$lbl['core']['PublishedComments'] = 'gepubliceerde reacties';
 // q
 // r
 $lbl['core']['RecentlyEdited'] = 'recent aangepast';
@@ -184,6 +187,7 @@ $lbl['core']['SortAscending'] = 'sorteer oplopend';
 $lbl['core']['SortDescending'] = 'sorteer aflopend';
 $lbl['core']['SortedAscending'] = 'oplopend gesorteerd';
 $lbl['core']['SortedDescending'] = 'aflopend gesorteerd';
+$lbl['core']['Spam'] = 'spam';
 $lbl['core']['Status'] = 'status';
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
@@ -203,6 +207,7 @@ $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 $lbl['core']['Versions'] = 'versies';
 $lbl['core']['Visible'] = 'zichtbaar';
 // w
+$lbl['core']['WaitingForModeration'] = 'wachten op moderatie';
 $lbl['core']['Websites'] = 'websites';
 $lbl['core']['WebsiteTitle'] = 'website titel';
 // x
@@ -251,9 +256,11 @@ $msg['core']['ForgotPasswordHelp'] = 'Enter your e-mail address below to have yo
 $msg['core']['HeaderAdd'] = 'Toevoegen';
 $msg['snippets']['HeaderAdd'] = 'Snippet toevoegen';
 $msg['users']['HeaderAdd'] = 'Gebruiker toevoegen';
+$msg['blog']['HeaderComments'] = 'Reacties';
 $msg['core']['HeaderEdit'] = '<em>%s</em> bewerken';
 $msg['snippets']['HeaderEdit'] = 'Snippet <em>%s</em> bewerken';
 $msg['users']['HeaderEdit'] = 'Gebruiker <em>%s</em> bewerken';
+$msg['blog']['HeaderIndex'] = 'Overzicht';
 $msg['core']['HeaderIndex'] = 'Overzicht';
 $msg['snippets']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';

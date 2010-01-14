@@ -1,4 +1,8 @@
 <?php
+
+// require the Model-class
+require_once BACKEND_MODULE_PATH .'/engine/model.php';
+
 /**
  * Blog
  *
@@ -27,4 +31,5 @@ final class BlogConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
+
 ?>

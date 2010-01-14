@@ -8,7 +8,7 @@ $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'label' => 'Posts');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/categories', 'label' => 'Categories');
-$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/comments', 'label' => 'Comments');
+$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/comments', 'label' => 'Reacties');
 $navigation['modules']['children']['events'] = array('url' => 'events/index', 'label' => 'Events');
 $navigation['modules']['children']['faq'] = array('url' => null, 'label' => 'FAQ');
 $navigation['modules']['children']['faq']['children'][] = array('url' => 'faq/index', 'label' => 'Questions');

@@ -36,6 +36,9 @@ class BackendDataGrid extends SpoonDataGrid
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'datagrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
+		// hide the id by default
+		if(in_array('id', $this->getColumns())) $this->setColumnsHidden('id');
+
 		// set default sorting options
 		$this->setSortingOptions();
 
@@ -128,6 +131,18 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
+ 	 * Sets the active tab for this datagrid
+ 	 *
+ 	 * @return	void
+ 	 * @param	string $tab
+	 */
+	public function setActiveTab($tab)
+	{
+		$this->setURL('#'. $tab, true);
+	}
+
+
+	/**
 	 * Sets the column function to be executed for every row
 	 *
 	 * @return	void
@@ -175,6 +190,20 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// sorting labels
 		$this->setSortingLabels(BL::getLabel('SortAscending'), BL::getLabel('SortedAscending'), BL::getLabel('SortDescending'), BL::getLabel('SortedDescending'));
+	}
+
+
+	/**
+	 * Sets an URL, optionally only appending the provided piece
+	 *
+	 * @return	void
+	 * @param	string $URL
+	 * @param	bool[optional] $append
+	 */
+	public function setURL($URL, $append = false)
+	{
+		if($append) parent::setURL(parent::getURL() . $URL);
+		else parent::setURL($URL);
 	}
 }
 
@@ -441,7 +470,7 @@ class BackendDataGridDB extends BackendDataGrid
 class BackendDataGridFunctions
 {
 	/**
-	 * Format a date as a long representation according the user his settings
+	 * Format a date as a long representation according the users' settings
 	 *
 	 * @return	string
 	 * @param	int $timestamp

@@ -476,6 +476,17 @@ class SpoonDataGrid
 
 
 	/**
+ 	 * Fetch the list of columns in this datagrid
+ 	 *
+ 	 * @return	array
+	 */
+	public function getColumns()
+	{
+		return $this->getColumnsSequence();
+	}
+
+
+	/**
 	 * Retrieve the columns sequence
 	 *
 	 * @return	array
@@ -693,6 +704,17 @@ class SpoonDataGrid
 	private function getTemplatePath()
 	{
 		return ($this->template != null) ? $this->template : dirname(__FILE__) .'/datagrid.tpl';
+	}
+
+
+	/**
+	 * Retrieve the URL
+	 *
+	 * @return	string
+	 */
+	public function getURL()
+	{
+		return $this->url;
 	}
 
 
@@ -2719,6 +2741,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 	 */
 	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{
+		// @todo davy - make sure that all the default values are set.
 		// current page
 		$iCurrentPage = ceil($offset / $numPerPage) + 1;
 

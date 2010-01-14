@@ -14,6 +14,9 @@
  */
 class BackendBlogModel
 {
+	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT id, UNIX_TIMESTAMP(created_on) AS created_on, author, text FROM blog_comments WHERE status = ?;';
+
+
 	/**
 	 * Checks the settings and optionally returns an array with warnings
 	 *

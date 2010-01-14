@@ -24,7 +24,7 @@
 			{/iteration:pages}
 
 				<li class="nextPage">
-					{option:nextURL}<a href="{$previousURL}" title="{$previousLabel}">{/option:nextURL}
+					{option:nextURL}<a href="{$nextURL}" title="{$nextLabel}">{/option:nextURL}
 					{option:!nextURL}<span>{/option:!nextURL}
 						{$nextLabel}
 					{option:nextURL}</a>{/option:nextURL}
