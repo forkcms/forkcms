@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SnippetsIndex
+ * BackendSnippetsIndex
  *
  * This is the index-action (default), it will display the snippets-overview
  *
@@ -11,16 +11,8 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class SnippetsIndex extends BackendBaseActionIndex
+class BackendSnippetsIndex extends BackendBaseActionIndex
 {
-	/**
-	 * Datagrid instance
-	 *
-	 * @var	BackendDataGridDB
-	 */
-	private $datagrid;
-
-
 	/**
 	 * Execute the action
 	 *

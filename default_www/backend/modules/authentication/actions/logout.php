@@ -1,7 +1,7 @@
 <?php
 
 /**
- * AuthenticationLogout
+ * BackendAuthenticationLogout
  *
  * This is the logout-action, it will logout the current user
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class AuthenticationLogout extends BackendBaseAction
+class BackendAuthenticationLogout extends BackendBaseAction
 {
 	/**
 	 * Execute the action

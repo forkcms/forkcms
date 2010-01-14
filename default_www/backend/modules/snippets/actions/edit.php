@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SnippetsEdit
+ * BackendSnippetsEdit
  *
  * This is the edit-action, it will display a form to edit an existing item
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class SnippetsEdit extends BackendBaseActionEdit
+class BackendSnippetsEdit extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action

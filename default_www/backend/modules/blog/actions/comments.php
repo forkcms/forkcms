@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BlogComments
+ * BackendBlogComments
  *
  * This is the comments-action , it will display the overview of blog comments
  *
@@ -11,7 +11,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class BlogComments extends BackendBaseActionIndex
+class BackendBlogComments extends BackendBaseActionIndex
 {
 	/**
 	 * Datagrids

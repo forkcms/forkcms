@@ -1,17 +1,18 @@
 <?php
 
 /**
- * UsersIndex
+ * SettingsIndex
  *
- * This is the index-action (default), it will display the users-overview
+ * This is the index-action (default), it will display the setting-overview
  *
  * @package		backend
- * @subpackage	users
+ * @subpackage	settings
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class SettingsIndex extends BackendBaseActionIndex
+class BackendSettingsIndex extends BackendBaseActionIndex
 {
 	/**
 	 * The form instance
@@ -188,7 +189,7 @@ class SettingsIndex extends BackendBaseActionIndex
 			if(method_exists($class, 'checkSettings'))
 			{
 				// add possible warnings
-				$warnings = array_merge($warnings, call_user_method('checkSettings', $class));
+				$warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));
 			}
 		}
 

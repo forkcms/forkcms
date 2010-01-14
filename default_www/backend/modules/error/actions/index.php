@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ErrorIndex
+ * BackendErrorIndex
  *
  * This is the index-action (default), it will display an error depending on a given parameters
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class ErrorIndex extends BackendBaseActionIndex
+class BackendErrorIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action

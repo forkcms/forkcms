@@ -194,7 +194,6 @@ class BackendMeta
 			// set
 			$this->setUrlCallback($className, $methodName);
 		}
-
 		// get meta keywords
 		if($this->frm->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->frm->getField('meta_keywords')->getValue();
 		else $keywords = $this->frm->getField($this->baseFieldName)->getValue();
@@ -218,10 +217,7 @@ class BackendMeta
 		// add parameters set by user
 		if(!empty($this->callback['parameters']))
 		{
-			foreach($this->callback['parameters'] as $parameter)
-			{
-				$parameters[] = $parameter;
-			}
+			foreach($this->callback['parameters'] as $parameter) $parameters[] = $parameter;
 		}
 
 		// get the real url

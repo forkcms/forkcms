@@ -1,7 +1,7 @@
 <?php
 
 /**
- * UsersAdd
+ * BackendUsersAdd
  *
  * This is the add-action, it will display a form to create a new user
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class UsersAdd extends BackendBaseActionAdd
+class BackendUsersAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PagesEdit
+ * BackendPagesEdit
  *
  * This is the edit-action, it will display a form to create a new pages item
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class PagesEdit extends BackendBaseActionEdit
+class BackendPagesEdit extends BackendBaseActionEdit
 {
 	/**
 	 * The blocks

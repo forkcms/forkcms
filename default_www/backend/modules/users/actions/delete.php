@@ -1,7 +1,7 @@
 <?php
 
 /**
- * UsersDelete
+ * BackendUsersDelete
  *
  * This is the delete-action, it will deactivate and set the user as deleted
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class UsersDelete extends BackendBaseActionDelete
+class BackendUsersDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action

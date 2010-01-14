@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PagesIndex
+ * BackendPagesIndex
  *
  * This is the index-action (default), it will display the pages-overview
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class PagesIndex extends BackendBaseActionIndex
+class BackendPagesIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action

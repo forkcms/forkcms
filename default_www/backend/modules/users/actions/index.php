@@ -1,7 +1,7 @@
 <?php
 
 /**
- * UsersIndex
+ * BackendUsersIndex
  *
  * This is the index-action (default), it will display the users-overview
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class UsersIndex extends BackendBaseActionIndex
+class BackendUsersIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Datagrid instance

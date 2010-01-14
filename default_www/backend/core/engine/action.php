@@ -80,7 +80,7 @@ class BackendAction
 	public function execute()
 	{
 		// build action-class-name
-		$actionClassName = SpoonFilter::toCamelCase($this->getModule() .'_'. $this->getAction());
+		$actionClassName = SpoonFilter::toCamelCase('backend_'. $this->getModule() .'_'. $this->getAction());
 
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
 		require_once BACKEND_MODULE_PATH .'/actions/'. $this->getAction() .'.php';

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * UsersEdit
+ * BackendUsersEdit
  *
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class UsersEdit extends BackendBaseActionEdit
+class BackendUsersEdit extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action

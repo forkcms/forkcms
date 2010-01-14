@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SnippetsDelete
+ * BackendSnippetsDelete
  *
  * This is the delete-action, it will delete a snippets-item
  *
@@ -11,7 +11,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class SnippetsDelete extends BackendBaseActionDelete
+class BackendSnippetsDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action

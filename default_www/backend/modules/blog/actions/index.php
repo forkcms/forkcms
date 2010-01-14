@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BlogIndex
+ * BackendBlogIndex
  *
  * This is the index-action (default), it will display the overview of blog posts
  *
@@ -11,7 +11,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class BlogIndex extends BackendBaseActionIndex
+class BackendBlogIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action

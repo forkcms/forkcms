@@ -476,9 +476,16 @@ class BackendPagesModel
 		// available in generated file?
 		if(isset($keys[$id])) $url = $keys[$id];
 
+		// not availble
 		else
 		{
-			// @todo	this method should use a genious caching-system
+			// id 0 doesn't have an url
+			if($id == 0) $url = '';
+			else
+			{
+				// @todo	this method should use a genious caching-system
+				throw new BackendException('You should implement me.');
+			}
 		}
 
 		// if the is available in multiple languages we should add the current lang
@@ -829,16 +836,13 @@ class BackendPagesModel
 												array($parentId, 'active', $url));
 
 			// no items?
-			if($number != 0) $url = $url;
-
-			// there are items so, call this method again.
-			else
+			if($number != 0)
 			{
 				// add a number
 				$url = BackendModel::addNumber($url);
 
 				// recall this method, but with a new url
-				return self::getURL($url, $id, $parentId);
+				return self::getURL($url, null, $parentId);
 			}
 		}
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SnippetsAdd
+ * BackendSnippetsAdd
  *
  * This is the add-action, it will display a form to create a new item
  *
@@ -11,7 +11,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class SnippetsAdd extends BackendBaseActionAdd
+class BackendSnippetsAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action

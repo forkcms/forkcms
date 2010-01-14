@@ -1,7 +1,7 @@
 <?php
 
 /**
- * PagesAdd
+ * BackendPagesAdd
  *
  * This is the add-action, it will display a form to create a new pages item
  *
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class PagesAdd extends BackendBaseActionAdd
+class BackendPagesAdd extends BackendBaseActionAdd
 {
 	/**
 	 * The blocks

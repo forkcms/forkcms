@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BlogSettings extends BackendBaseActionIndex
+class BackendBlogSettings extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
