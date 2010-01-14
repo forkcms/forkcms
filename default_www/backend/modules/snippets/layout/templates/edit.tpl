@@ -38,10 +38,15 @@
 
 					<p>
 						{$btnSave}
-						<a href="{$var|geturl:'delete'}&amp;id={$id}" class="askConfirmation" title="{$lblDelete|ucfirst}">
-							<span style="display: none" class="message" title="{$lblDelete|ucfirst}">{$msgConfirmDelete|sprintf:{$title}}</span>
-							{$lblDelete|ucfirst}
+						<a href="{$var|geturl:'delete'}&id={$recordid}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 						</a>
+						<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+							<p>
+								<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+								{$msgConfirmDelete|sprintf:{$recordtitle}}
+							</p>
+						</div>
 					</p>
 				{/form:edit}
 			</div>

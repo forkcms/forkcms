@@ -167,6 +167,7 @@ $lbl['core']['PageTitle'] = 'paginatitel';
 $lbl['core']['Preview'] = 'preview';
 $lbl['core']['Previous'] = 'vorige';
 $lbl['core']['PreviousPage'] = 'vorige pagina';
+$lbl['core']['Publish'] = 'publiceer';
 $lbl['core']['Published'] = 'gepubliceerd';
 $lbl['core']['PublishedComments'] = 'gepubliceerde reacties';
 // q
@@ -240,6 +241,7 @@ $msg['settings']['ApiKeysText'] = 'Toegangscodes voor de standaard gebruikte web
 // c
 $msg['core']['ConfigurationError'] = 'Sommige instellingen zijn nog niet geconfigureerd:';
 $msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item wil verwijderen?';
+$msg['pages']['ConfirmDelete'] = 'Ben je zeker dat je de paging <em>%s</em> wil verwijderen?';
 $msg['spotlight']['ConfirmDelete'] = 'Ben je zeker dat je <em>%s</em> wil verwijderen?';
 $msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker <em>%s</em> wil verwijderen?';
 // d

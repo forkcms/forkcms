@@ -174,6 +174,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
 		// edit button
+		$this->frm->addButton('preview', ucfirst(BL::getLabel('Preview')), 'submit', 'inputButton button previewButton');
 		$this->frm->addButton('edit', ucfirst(BL::getLabel('Edit')), 'submit', 'inputButton button mainButton');
 	}
 
@@ -246,6 +247,10 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
+
+		// parse timeformat
+		$this->tpl->assign('timeFormatHi', 'H:i');
+
 	}
 
 

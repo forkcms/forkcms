@@ -74,15 +74,17 @@
 										<td id="pagesSide">
 											<div id="publishOptions" class="box">
 												<div class="heading">
-													<h3>Publish</h3>
+													<h3>{$lblPublish|ucfirst}</h3>
 												</div>
+												<!-- @todo
 												<div class="options">
 													<div class="buttonHolder">
-														<a href="{$previewUrl}" class="button icon iconZoom" target="_blank">
+														<a href="#" class="button icon iconZoom previewButton" target="_blank">
 															<span><span><span>{$lblPreview|ucfirst}</span></span></span>
 														</a>
 													</div>
 												</div>
+												 -->
 												<div class="options">
 													<ul class="inputList">
 														{iteration:hidden}
@@ -97,7 +99,7 @@
 													<table border="0" cellpediting="0" cellspacing="0">
 														<tbody>
 															<tr>
-																<td><p>Last save: 15:43</p></td>
+																<td><p>{$lblLastSave|ucfirst}: {$recordedited_on|date:{$timeFormatHi}}</p></td>
 																<td>
 																	<div class="buttonHolderRight">
 																		{$btnEdit}
@@ -282,7 +284,17 @@
 						</div>
 					</div>
 					<div class="fullwidthOptions">
-						{option:recorddelete_allowed}<a href="#" class="button linkButton icon iconDelete"><span><span><span>{$lblDelete|ucfirst}</span></span></span></a>{/option:recorddelete_allowed}
+						{option:recorddelete_allowed}
+						<a href="{$var|geturl:'delete'}&id={$recordid}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
+						</a>
+						<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+							<p>
+								<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+								{$msgConfirmDelete|sprintf:{$recordtitle}}
+							</p>
+						</div>
+						{/option:recorddelete_allowed}
 						<div class="buttonHolderRight">
 							{$btnEdit}
 						</div>

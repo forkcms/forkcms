@@ -68,6 +68,42 @@ jsBackend.controls = {
 		jsBackend.controls.bindWorkingLanguageSelection();
 		jsBackend.controls.bindFullWidthSwitch();
 		jsBackend.controls.bindToggleDiv();
+		jsBackend.controls.bindConfirm();
+	},
+	// bind confirm message
+	bindConfirm: function() {
+		// initialize
+		$('.askConfirmation').each(function() {
+			// get id
+			var id = $(this).attr('rel');
+			var url = $(this).attr('href');
+			
+			// initialize
+			$('#'+ id).dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
+								buttons: { '{$lblOK|ucfirst}': function() {
+																	// close dialog
+																	$(this).dialog('close');
+																	
+																	// goto link
+																	window.location = url;
+																},
+										   '{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
+										 }
+							 });
+
+		});
+
+		// bind clicks
+		$('.askConfirmation').bind('click', function(evt) {
+			// prevent default
+			evt.preventDefault();
+			
+			// get id
+			var id = $(this).attr('rel');
+			
+			// bind
+			$('#'+ id).dialog('open');
+		});
 	},
 	// toggle between full width and sidebar-layout
 	bindFullWidthSwitch: function() {

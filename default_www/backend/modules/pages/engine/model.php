@@ -67,6 +67,9 @@ class BackendPagesModel
 
 				// calculate tree-type
 				$treeType = 'page';
+				if($page['hidden'] == 'Y') $treeType = 'hidden';
+
+				// special items
 				if($pageID == 1) $treeType = 'home';
 				if($pageID == 2) $treeType = 'sitemap';
 				if($pageID == 404) $treeType = 'error';
@@ -252,6 +255,51 @@ class BackendPagesModel
 
 		// return
 		return $html;
+	}
+
+
+	public static function delete($id, $language = null)
+	{
+		// redefine
+		$id = (int) $id;
+		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get record
+		$page = self::get($id, $language);
+
+		// validate
+		if(empty($page)) return false;
+		if($page['allow_delete'] == 'N') return false;
+
+		// get revision ids
+		$revisionIDs = (array) $db->getColumn('SELECT p.revision_id
+												FROM pages AS p
+												WHERE p.id = ? AND p.language = ?;',
+												array($id, $language));
+
+		// get meta ids
+		$metaIDs = (array) $db->getColumn('SELECT p.meta_id
+											FROM pages AS p
+											WHERE p.id = ? AND p.language = ?;',
+											array($id, $language));
+
+		// delete meta records
+		if(!empty($metaIDs)) $db->delete('meta', 'id IN ('. implode(',', $metaIDs) .')');
+
+		// delete blocks and their revisions
+		if(!empty($revisionIDs)) $db->delete('pages_blocks', 'revision_id IN ('. implode(',', $revisionIDs) .')');
+
+		// delete page and the revisions
+		if(!empty($revisionIDs)) $db->delete('pages', 'revision_id IN ('. implode(',', $revisionIDs) .')');
+
+		// rebuild cach
+		self::buildCache();
+
+		// return
+		return true;
 	}
 
 
@@ -447,14 +495,13 @@ class BackendPagesModel
 			$name = ucfirst(BL::getLabel($row['label']));
 			if(isset($row['data']['extra_label'])) $name .= ' '. $row['data']['extra_label'];
 
-			$moduleName = ucfirst(BL::getLabel($row['module']));
+			$moduleName = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module'])));
 
 			// add
 			$values[$moduleName][$row['id']] = $name;
 		}
 
-//		Spoon::dump($values);
-
+		// return
 		return $values;
 	}
 
@@ -661,7 +708,7 @@ class BackendPagesModel
 		// get db
 		$db = BackendModel::getDB();
 
-		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type,
+		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden,
 													m.url
 												FROM pages AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
