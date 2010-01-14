@@ -115,7 +115,7 @@
 												<div class="heading">
 													<h4>{$lblTemplate|ucfirst}: {$templatelabel}</h4>
 													<div class="buttonHolderRight">
-														<a href="#tabTemplate" class="button icon iconEdit iconOnly">
+														<a href="#tabTemplate" class="tabSelect button icon iconEdit iconOnly">
 															<span><span><span>{$lblEdit|ucfirst}</span></span></span>
 														</a>
 													</div>

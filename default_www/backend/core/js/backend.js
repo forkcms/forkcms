@@ -330,6 +330,18 @@ jsBackend.tabs = {
 	// init, something like a constructor
 	init: function() {
 		if($('.tabs').length > 0) $('.tabs').tabs();
+		
+		if($('.tabSelect').length > 0) {
+			$('.tabSelect').live('click', function(evt) {
+				// prevent default
+				evt.preventDefault();
+				
+				console.log($(this));
+				
+				$('.tabs').tabs('select', $(this).attr('href'));
+				
+			});
+		}
 	},
 	
 	// end
