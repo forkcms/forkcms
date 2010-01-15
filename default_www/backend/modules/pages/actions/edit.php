@@ -190,7 +190,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// validate id
-		if($this->id == 0 || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') .'?error=non-existing');
+		if($this->id == 0 || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 
 		// get the record
 		$this->record = BackendPagesModel::get($this->id);

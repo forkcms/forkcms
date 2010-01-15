@@ -23,7 +23,12 @@
 					</ul>
 
 					<div id="tabPublished">
-						{option:dgPublished}{$dgPublished}{/option:dgPublished}
+						{option:dgPublished}
+							<form action="{$var|geturl:'comment_status'}" method="get" class="forkForms submitWithLink" id="commentsPublished">
+								<input type="hidden" name="from" value="published" />
+								{$dgPublished}
+							</form>
+						{/option:dgPublished}
 						{option:!dgPublished}{$msgNoItems}{/option:!dgPublished}
 					</div>
 

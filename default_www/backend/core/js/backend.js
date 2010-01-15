@@ -69,6 +69,7 @@ jsBackend.controls = {
 		jsBackend.controls.bindFullWidthSwitch();
 		jsBackend.controls.bindToggleDiv();
 		jsBackend.controls.bindConfirm();
+		jsBackend.controls.bindMassCheckbox();
 	},
 	// bind confirm message
 	bindConfirm: function() {
@@ -116,6 +117,13 @@ jsBackend.controls = {
 			
 			// add class
 			$(this).parent().addClass('collapsed')
+		});
+	},
+	// jaja dikke lul
+	bindMassCheckbox: function() {
+		$('th .checkboxHolder input:checkbox').bind('change', function(evt) {
+			// check or uncheck all the checkboxes in this datagrid
+			$($(this).closest('table').find('td input:checkbox')).attr('checked', $(this).is(':checked'));
 		});
 	},
 	// toggle a div

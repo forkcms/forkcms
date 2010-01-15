@@ -43,6 +43,23 @@ class BackendBlogModel
 
 		return $warnings;
 	}
+
+
+	/**
+	 * Updates a comments' status
+	 *
+	 * @return	void
+	 * @param	int $id
+	 * @param	string $status
+	 */
+	public static function updateCommentStatus($id, $status)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// update record
+		$db->update('blog_comments', array('status' => $status), 'id = ?', (int) $id);
+	}
 }
 
 ?>

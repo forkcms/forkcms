@@ -55,8 +55,6 @@ class BackendSnippetsIndex extends BackendBaseActionIndex
 
 		// add edit column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
-
-		$this->datagrid->setPagingLimit(5);
 	}
 
 
