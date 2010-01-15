@@ -34,6 +34,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// load datagrids
 		$this->loadDataGrids();
 
+		// parse page
+		$this->parse();
+
 		// display the page
 		$this->display();
 	}
@@ -81,32 +84,116 @@ class BackendBlogComments extends BackendBaseActionIndex
 		return $HTML;
 	}
 
+
+	/**
+	 * Loads the datagrids
+	 *
+	 * @return void
+	 */
 	private function loadDataGrids()
 	{
-		// published comments
+		/*
+		 * Datagrid for the published comments.
+		 */
 		$this->dgPublished = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'published');
-		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
-		$this->dgPublished->setColumnFunction('nl2br', '[text]', 'text', true); // @todo write nl2p
-		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
+
+		// active tab
 		$this->dgPublished->setActiveTab('tabPublished');
+
+		// num items per page
 		$this->dgPublished->setPagingLimit(5);
-		$this->dgPublished->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="boingboing" value="woohoo" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
+
+		// header labels
+		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
+
+		// add the multicheckbox column
+		$this->dgPublished->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->dgPublished->setColumnsSequence('checkbox');
-		$this->dgPublished->setColumnAttributes('checkbox', array('class' => 'checkboxHolder', 'width' => '2%'));
 		$this->dgPublished->addColumn('move');
+
+		// assign column functions
+		$this->dgPublished->setColumnFunction('nl2br', '[text]', 'text', true);
+		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('published', '[id]'), 'move', true);
 		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');
-		$this->dgPublished->setColumnHeaderAttributes('checkbox', array('width' => '2%', 'class' => 'checkboxHolder'));
 
+		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('to', array('moderation' => ucfirst(BL::getLabel('MoveToModeration')), 'spam' => ucfirst(BL::getLabel('MoveToSpam'))), 'spam');
 		$this->dgPublished->setMassAction($ddmMassAction);
 
-		// assign datagrid & num results
+		/*
+		 * Datagrid for the comments that are awaiting moderation
+		 */
+		$this->dgModeration = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'unmoderated');
+
+		// active tab
+		$this->dgModeration->setActiveTab('tabModeration');
+
+		// num items per page
+		$this->dgModeration->setPagingLimit(5);
+
+		// header labels
+		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
+
+		// add the multicheckbox column
+		$this->dgModeration->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
+		$this->dgModeration->setColumnsSequence('checkbox');
+		$this->dgModeration->addColumn('move');
+
+		// assign column functions
+		$this->dgModeration->setColumnFunction('nl2br', '[text]', 'text', true);
+		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
+		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('moderation', '[id]'), 'move', true);
+		$this->dgModeration->setSortingColumns(array('created_on', 'text'), 'text');
+
+		// add mass action dropdown
+		$ddmMassAction = new SpoonDropDown('to', array('published' => ucfirst(BL::getLabel('MoveToPublished')), 'spam' => ucfirst(BL::getLabel('MoveToSpam'))), 'publishedŒ');
+		$this->dgModeration->setMassAction($ddmMassAction);
+
+		/*
+		 * Datagrid for the comments that are marked as spam
+		 */
+		$this->dgSpam = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'spam');
+
+		// active tab
+		$this->dgSpam->setActiveTab('tabSpam');
+
+		// num items per page
+		$this->dgSpam->setPagingLimit(5);
+
+		// header labels
+		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
+
+		// add the multicheckbox column
+		$this->dgSpam->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
+		$this->dgSpam->setColumnsSequence('checkbox');
+		$this->dgSpam->addColumn('move');
+
+		// assign column functions
+		$this->dgSpam->setColumnFunction('nl2br', '[text]', 'text', true);
+		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
+		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('spam', '[id]'), 'move', true);
+		$this->dgSpam->setSortingColumns(array('created_on', 'text'), 'text');
+
+		// add mass action dropdown
+		$ddmMassAction = new SpoonDropDown('to', array('published' => ucfirst(BL::getLabel('MoveToPublished')), 'moderation' => ucfirst(BL::getLabel('MoveToModeration'))), 'published');
+		$this->dgSpam->setMassAction($ddmMassAction);
+	}
+
+
+	private function parse()
+	{
+		// published datagrid and num results
 		$this->tpl->assign('dgPublished', ($this->dgPublished->getNumResults() != 0) ? $this->dgPublished->getContent() : false);
 		$this->tpl->assign('numPublished', $this->dgPublished->getNumResults());
 
-		$this->tpl->assign('numModeration', 0);
-		$this->tpl->assign('numSpam', 0);
+		// moderaton datagrid and num results
+		$this->tpl->assign('dgModeration', ($this->dgModeration->getNumResults() != 0) ? $this->dgModeration->getContent() : false);
+		$this->tpl->assign('numModeration', $this->dgModeration->getNumResults());
+
+		// spam datagrid and num results
+		$this->tpl->assign('dgSpam', ($this->dgSpam->getNumResults() != 0) ? $this->dgSpam->getContent() : false);
+		$this->tpl->assign('numSpam', $this->dgSpam->getNumResults());
 	}
 }
 

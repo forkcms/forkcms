@@ -33,12 +33,22 @@
 					</div>
 
 					<div id="tabModeration">
-						{option:dgModeration}{$dgModeration}{/option:dgModeration}
+						{option:dgModeration}
+							<form action="{$var|geturl:'comment_status'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
+								<input type="hidden" name="from" value="moderation" />
+								{$dgModeration}
+							</form>
+						{/option:dgModeration}
 						{option:!dgModeration}{$msgNoItems}{/option:!dgModeration}
 					</div>
 
 					<div id="tabSpam">
-						{option:dgSpam}{$dgSpam}{/option:dgSpam}
+						{option:dgSpam}
+							<form action="{$var|geturl:'comment_status'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
+								<input type="hidden" name="from" value="spam" />
+								{$dgSpam}
+							</form>
+						{/option:dgSpam}
 						{option:!dgSpam}{$msgNoItems}{/option:!dgSpam}
 					</div>
 				</div>
