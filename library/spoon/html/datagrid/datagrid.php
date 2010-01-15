@@ -957,7 +957,11 @@ class SpoonDataGrid
 	 */
 	private function parseColumnFunctions($record)
 	{
-		// @todo davy - write some decent error reporting based on the current level. Restore when this method ends.
+		// store old error reporting settings
+		$currentErrorReporting = ini_get('error_reporting');
+
+		// ignore warnings and notices
+		error_reporting(E_WARNING | E_NOTICE);
 
 		// loop functions
 		foreach ($this->columnFunctions as $function)
@@ -972,17 +976,11 @@ class SpoonDataGrid
 				$function['arguments'] = str_replace($record['labels'], $record['values'], $function['arguments']);
 
 				// execute function
-				if(SPOON_DEBUG) $value = call_user_func_array($function['function'], $function['arguments']);
-				else $value = call_user_func_array($function['function'], $function['arguments']);
+				$value = call_user_func_array($function['function'], $function['arguments']);
 			}
 
 			// no null/array
-			else
-			{
-				if(SPOON_DEBUG) $value = call_user_func($function['function'], str_replace($record['labels'], $record['values'], $function['arguments']));
-				else $value = call_user_func($function['function'], str_replace($record['labels'], $record['values'], $function['arguments']));
-			}
-
+			else $value = call_user_func($function['function'], str_replace($record['labels'], $record['values'], $function['arguments']));
 
 			/**
 			 * Now that we have the return value of this method, we can
@@ -1028,6 +1026,9 @@ class SpoonDataGrid
 				}
 			}
 		}
+
+		// restore error reporting
+		error_reporting($currentErrorReporting);
 
 		return $record;
 	}
