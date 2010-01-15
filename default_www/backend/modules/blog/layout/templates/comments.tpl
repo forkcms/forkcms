@@ -15,7 +15,6 @@
 					{/option:highlight}
 				{/option:report}
 
-
 				<div id="tabs" class="tabs">
 					<ul>
 						<li><a href="#tabPublished">{$lblPublishedComments|ucfirst} ({$numPublished})</a></li>

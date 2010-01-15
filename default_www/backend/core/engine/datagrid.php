@@ -37,7 +37,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setAttributes(array('class' => 'datagrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
 
 		// hide the id by default
-//		if(in_array('id', $this->getColumns())) $this->setColumnsHidden('id');
+		if(in_array('id', $this->getColumns())) $this->setColumnsHidden('id');
 
 		// set default sorting options
 		$this->setSortingOptions();
@@ -175,6 +175,26 @@ class BackendDataGrid extends SpoonDataGrid
 			// loop and set attributes
 			foreach($columns as $column) $this->setColumnAttributes($column, $attributes);
 		}
+	}
+
+
+	/**
+	 * Sets the dropdown for the mass action
+	 *
+	 * @return	void
+	 * @param	SpoonDropDown $actionDropDown
+	 */
+	public function setMassAction(SpoonDropDown $actionDropDown)
+	{
+		// buid HTML
+		$HTML = '<p><label>'. BL::getLabel('WithSelected') .'</label></p>
+				<p>
+					'. $actionDropDown->parse() .'
+				</p>
+				<p><a href="#" class="button"><span><span><span>'. ucfirst(BL::getLabel('Execute')) .'</span></span></span></a></p>';
+
+		// assign parsed html
+		$this->tpl->assign('massAction', $HTML);
 	}
 
 

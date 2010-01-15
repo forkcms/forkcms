@@ -67,7 +67,6 @@ class SpoonDataGrid
 	 * @var	array
 	 */
 	private $attributes = array('datagrid' => array(),
-								'header' => array(),
 								'row' => array(),
 								'row_even' => array(),
 								'row_odd' => array(),
@@ -253,7 +252,7 @@ class SpoonDataGrid
 	 *
 	 * @var	SpoonTemplate
 	 */
-	private $tpl;
+	protected $tpl;
 
 
 	/**
@@ -278,6 +277,9 @@ class SpoonDataGrid
 
 		// set template
 		if($template !== null) $this->setTemplate($template);
+
+		// load template
+		$this->tpl = new SpoonTemplate();
 
 		// create default columns
 		$this->createColumns();
@@ -737,9 +739,6 @@ class SpoonDataGrid
 			// has results
 			if(count($aRecords) != 0)
 			{
-				// load template
-				$this->tpl = new SpoonTemplate();
-
 				// compile directory
 				$compileDirectory = ($this->compileDirectory !== null) ? $this->compileDirectory : dirname(realpath(__FILE__));
 				$this->tpl->setCompileDirectory($compileDirectory);
@@ -850,13 +849,13 @@ class SpoonDataGrid
 					$columnValue = '';
 
 					// has an url
-					if($column->getUrl() !== null)
+					if($column->getURL() !== null)
 					{
 						// open url tag
-						$columnValue .= '<a href="'. str_replace($record['labels'], $record['values'], $column->getUrl()) .'"';
+						$columnValue .= '<a href="'. str_replace($record['labels'], $record['values'], $column->getURL()) .'"';
 
 						// add title
-						$columnValue .= ' title="'. str_replace($record['labels'], $record['values'], $column->getUrlTitle()) .'"';
+						$columnValue .= ' title="'. str_replace($record['labels'], $record['values'], $column->getURLTitle()) .'"';
 
 						// confirm
 						if($column->getConfirm() && $column->getConfirmMessage() !== null)
@@ -907,7 +906,7 @@ class SpoonDataGrid
 					}
 
 					// has an url (close the tag)
-					if($column->getUrl() !== null) $columnValue .= '</a>';
+					if($column->getURL() !== null) $columnValue .= '</a>';
 				}
 
 				// fetch column attributes
@@ -958,11 +957,13 @@ class SpoonDataGrid
 	 */
 	private function parseColumnFunctions($record)
 	{
+		// @todo davy - write some decent error reporting based on the current level. Restore when this method ends.
+
 		// loop functions
 		foreach ($this->columnFunctions as $function)
 		{
 			// no arguments given
-			if(is_null($function['arguments'])) $value = @call_user_func($function['function']);
+			if(is_null($function['arguments'])) $value = call_user_func($function['function']);
 
 			// array
 			elseif(is_array($function['arguments']))
@@ -971,11 +972,17 @@ class SpoonDataGrid
 				$function['arguments'] = str_replace($record['labels'], $record['values'], $function['arguments']);
 
 				// execute function
-				$value = @call_user_func_array($function['function'], $function['arguments']);
+				if(SPOON_DEBUG) $value = call_user_func_array($function['function'], $function['arguments']);
+				else $value = call_user_func_array($function['function'], $function['arguments']);
 			}
 
 			// no null/array
-			else $value = @call_user_func($function['function'], str_replace($record['labels'], $record['values'], $function['arguments']));
+			else
+			{
+				if(SPOON_DEBUG) $value = call_user_func($function['function'], str_replace($record['labels'], $record['values'], $function['arguments']));
+				else $value = call_user_func($function['function'], str_replace($record['labels'], $record['values'], $function['arguments']));
+			}
+
 
 			/**
 			 * Now that we have the return value of this method, we can
@@ -1050,9 +1057,6 @@ class SpoonDataGrid
 	{
 		// init vars
 		$aHeader = array();
-
-		// attributes
-		$this->tpl->assign('headerAttributes', $this->getHtmlAttributes($this->attributes['header']));
 
 		// sequence
 		$aSequence = $this->getColumnsSequence();
@@ -1178,6 +1182,9 @@ class SpoonDataGrid
 
 				// parse vars
 				$aColumn['label'] = $column->getLabel();
+
+				// add attributes
+				$aColumn['attributes'] = $this->getHTMLAttributes($column->getHeaderAttributes());
 
 				// add to array
 				$aHeader[] = $aColumn;
@@ -1387,6 +1394,27 @@ class SpoonDataGrid
 
 
 	/**
+	 * Set one or more attributes for a columns' header
+	 *
+	 * @return	void
+	 * @param	string $column
+	 * @param	array $attributes
+	 */
+	public function setColumnHeaderAttributes($column, array $attributes)
+	{
+		// has results
+		if($this->source->getNumResults() > 0)
+		{
+			// column doesnt exist
+			if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "'. $column .'" doesn\'t exist, therefor no attributes can be added to its header.');
+
+			// exists
+			else $this->columns[$column]->setHeaderAttributes($attributes);
+		}
+	}
+
+
+	/**
 	 * Sets a single column hidden
 	 *
 	 * @return	void
@@ -1526,7 +1554,7 @@ class SpoonDataGrid
 	 * @param	string $url
 	 * @param	string[optional] $title
 	 */
-	public function setColumnUrl($column, $url, $title = null)
+	public function setColumnURL($column, $url, $title = null)
 	{
 		// has results
 		if($this->source->getNumResults() > 0)
@@ -1535,7 +1563,7 @@ class SpoonDataGrid
 			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "'. (string) $column .'" doesn\'t exist and therefor no url can be applied.');
 
 			// exists
-			$this->columns[(string) $column]->setUrl($url, $title);
+			$this->columns[(string) $column]->setURL($url, $title);
 		}
 	}
 
@@ -1578,18 +1606,6 @@ class SpoonDataGrid
 			// add to the list
 			foreach($attributes as $key => $value) $this->attributes['row_even'][(string) $key] = (string) $value;
 		}
-	}
-
-
-	/**
-	 * Set some custom header attributes
-	 *
-	 * @return	void
-	 * @param	array $attributes
-	 */
-	public function setHeaderAttributes(array $attributes)
-	{
-		foreach($attributes as $key => $value) $this->attributes['header'][(string) $key] = (string) $value;
 	}
 
 
@@ -1880,7 +1896,7 @@ class SpoonDataGridColumn
 	 *
 	 * @var	array
 	 */
-	private $attributes = array();
+	private $attributes = array('general' => array(), 'header' => array());
 
 
 	/**
@@ -2038,7 +2054,7 @@ class SpoonDataGridColumn
 	 */
 	public function clearAttributes()
 	{
-		$this->attributes = array();
+		$this->attributes['general'] = array();
 	}
 
 
@@ -2049,7 +2065,7 @@ class SpoonDataGridColumn
 	 */
 	public function getAttributes()
 	{
-		return $this->attributes;
+		return $this->attributes['general'];
 	}
 
 
@@ -2083,6 +2099,17 @@ class SpoonDataGridColumn
 	public function getConfirmMessage()
 	{
 		return $this->confirmMessage;
+	}
+
+
+	/**
+	 * Retrieve the header attributes
+	 *
+	 * @return	array
+	 */
+	public function getHeaderAttributes()
+	{
+		return $this->attributes['header'];
 	}
 
 
@@ -2127,17 +2154,6 @@ class SpoonDataGridColumn
 	public function getLabel()
 	{
 		return $this->label;
-	}
-
-
-	/**
-	 * Retrieve the label attributes
-	 *
-	 * @return	array
-	 */
-	public function getLabelAttributes()
-	{
-		return $this->labelAttributes;
 	}
 
 
@@ -2237,7 +2253,7 @@ class SpoonDataGridColumn
 	 */
 	public function setAttributes(array $attributes)
 	{
-		foreach($attributes as $key => $value) $this->attributes[(string) $key] = (string) $value;
+		foreach($attributes as $key => $value) $this->attributes['general'][(string) $key] = (string) $value;
 	}
 
 
@@ -2253,6 +2269,18 @@ class SpoonDataGridColumn
 		$this->confirm = true;
 		$this->confirmMessage = SpoonFilter::htmlentities((string) $message);
 		$this->confirmCustom = (string) $custom;
+	}
+
+
+	/**
+	 * Set the header attributes
+	 *
+	 * @return	void
+	 * @param	array $attributes
+	 */
+	public function setHeaderAttributes(array $attributes)
+	{
+		foreach($attributes as $key => $value) $this->attributes['header'][(string) $key] = (string) $value;
 	}
 
 
@@ -2317,6 +2345,7 @@ class SpoonDataGridColumn
 		$this->sequence = (int) $sequence;
 	}
 
+
 	/**
 	 * Sets the sorting
 	 *
@@ -2348,9 +2377,9 @@ class SpoonDataGridColumn
 	 * @param	string $url
 	 * @param	string[optional] $title
 	 */
-	public function setURL($url, $title = null)
+	public function setURL($URL, $title = null)
 	{
-		$this->url = (string) $url;
+		$this->url = (string) $URL;
 		$this->urlTitle = (string) $title;
 	}
 
@@ -2368,6 +2397,8 @@ class SpoonDataGridColumn
 		$this->overwriteValue = (bool) $overwrite;
 	}
 }
+
+
 
 
 /**
@@ -2408,6 +2439,8 @@ class SpoonDataGridSource
 		return $this->numResults;
 	}
 }
+
+
 
 
 /**

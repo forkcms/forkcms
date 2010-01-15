@@ -125,6 +125,7 @@ $lbl['core']['Edit'] = 'bewerken';
 $lbl['core']['Editor'] = 'editor';
 $lbl['core']['Email'] = 'email';
 $lbl['core']['EmailWebmaster'] = 'e-mail webmaster';
+$lbl['core']['Execute'] = 'uitvoeren';
 $lbl['core']['Extra'] = 'extra';
 // f
 $lbl['core']['Footer'] = 'footer';
@@ -151,6 +152,9 @@ $lbl['core']['MetaCustom'] = 'meta custom';
 $lbl['core']['MetaDescription'] = 'meta-omschrijving';
 $lbl['core']['MetaInformation'] = 'meta-informatie';
 $lbl['core']['MetaKeywords'] = 'sleutelwoorden pagina';
+$lbl['core']['MoveToModeration'] = 'verplaats naar moderatie';
+$lbl['core']['MoveToPublished'] = 'verplaats naar gepubliceerd';
+$lbl['core']['MoveToSpam'] = 'verplaats naar spam';
 // n
 $lbl['core']['Name'] = 'naam';
 $lbl['core']['NavigationTitle'] = 'navigatie titel';
@@ -214,6 +218,7 @@ $lbl['core']['Visible'] = 'zichtbaar';
 $lbl['core']['WaitingForModeration'] = 'wachten op moderatie';
 $lbl['core']['Websites'] = 'websites';
 $lbl['core']['WebsiteTitle'] = 'website titel';
+$lbl['core']['WithSelected'] = 'met geselecteerde';
 // x
 // y
 // z

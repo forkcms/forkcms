@@ -2,6 +2,8 @@
 ----
 - Added SpoonTemplate::getContent which returns the output of the executed template. Can not be used in combination with
   cache tags.
+- When you create a datagrid, the column names will be used as the class attribute.
+- SpoonSession::exists now works as intended, pretty similar to SpoonCookie::exists.
 
 
 1.1.3 (2010-01-05)

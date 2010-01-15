@@ -49,7 +49,7 @@ class Init
 		 * value of SPOON_DEBUG, but for now it's required to see possible errors while trying
 		 * to include the globals file(s).
 		 */
-		error_reporting(E_ALL);
+		error_reporting(E_ALL | E_STRICT);
 		ini_set('display_errors', 'On');
 
 		// require globals
@@ -236,8 +236,8 @@ class Init
 	{
 		if(SPOON_DEBUG)
 		{
-			error_reporting(E_ALL | E_STRICT);
-			ini_set('display_errors', 'On');
+//			error_reporting(E_ALL | E_STRICT);
+//			ini_set('display_errors', 'On');
 		}
 		else
 		{
