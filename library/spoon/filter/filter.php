@@ -683,6 +683,78 @@ class SpoonFilter
 
 
 	/**
+	 * Strips HTML from a string
+	 *
+	 * @return	string										A string with all HTML elements stripped.
+	 * @param string $string								The string with HTML in it.
+	 * @param mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'
+	 * @param bool[optional] $replaceAnchorsWithURL			If this is true it will replace all anchor elements with their href value.
+	 * @param bool[optional] $replaceImagesWithAltText		If this is true it will replace all img elements with their alt text.
+	 * @param bool[optional] $preserveParagraphLinebreaks	If this is true it will generate an additional EOL for paragraphs.
+	 * @param bool[optional] $stripTabs						If this is true it will strip all tabs from the string.
+	 */
+	public static function stripHTML($string, $exceptions = null, $replaceAnchorsWithURL = false, $replaceImagesWithAltText = false, $preserveParagraphLinebreaks = false, $stripTabs = true)
+	{
+		// redefine
+		$string = (string) $string;
+
+		// check input
+		if(is_array($exceptions)) $exceptions = implode('', $exceptions);
+
+		// remove fugly and mac endlines
+		$string = preg_replace('/\r\n/', PHP_EOL, $string);
+		$string = preg_replace('/\r/', PHP_EOL, $string);
+
+		// remove tabs
+		if($stripTabs) $string = preg_replace("/\t/", '', $string);
+
+		// remove the style- and head-tags and all their contents
+		$string = preg_replace('|\<style.*\>(.*\n*)\</style\>|is', '', $string);
+		$string = preg_replace('|\<head.*\>(.*\n*)\</head\>|is', '', $string);
+
+		// replace images with their alternative content
+		// eg. <img src="path/to/the/image.jpg" alt="My image" /> => My image
+		if($replaceImagesWithAltText) $string = preg_replace('|\<img[^>]*alt="(.*)".*/\>|isU', '$1', $string);
+
+		// replace links with the inner html of the link with the url between ()
+		// eg.: <a href="http://site.domain.com">My site</a> => My site (http://site.domain.com)
+		if($replaceAnchorsWithURL) $string = preg_replace('|<a.*href="(.*)".*>(.*)</a>|isU', '$2 ($1)', $string);
+
+		// check if we need to preserve paragraphs and/or breaks
+		$exceptions = ($preserveParagraphLinebreaks) ? $exceptions .'<p>' : $exceptions;
+
+		// strip HTML tags and preserve paragraphs
+		$string = strip_tags($string, $exceptions);
+
+		// remove multiple with a single one
+		$string = preg_replace("/\n\s/", PHP_EOL, $string);
+		$string = preg_replace("/\n{2,}/", PHP_EOL, $string);
+
+		// for each linebreak, table row or- paragraph end we want an additional linebreak at the end
+		if($preserveParagraphLinebreaks)
+		{
+			$string = preg_replace('|<p>|', '', $string);
+			$string = preg_replace('|</p>|', PHP_EOL, $string);
+		}
+
+		// trim whitespace and strip HTML tags
+		$string = trim($string);
+
+		// replace html entities that aren't replaced by SpoonFilter::htmlentitiesDecode (should be solved when using a newer Spoon Library)
+		$string = str_replace('&euro;', 'EUR', $string);
+		$string = str_replace('&#8364;', 'EUR', $string);
+		$string = str_replace('&#8211;', '-', $string);
+		$string = str_replace('&#8230;', '...', $string);
+
+		// decode html entities
+		$string = SpoonFilter::htmlentitiesDecode($string);
+
+		// return the plain text
+		return $string;
+	}
+
+
+	/**
 	 * Convert a string to camelcasing.
 	 *
 	 * @return	string							The camelcased string.
