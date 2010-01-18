@@ -235,7 +235,7 @@ class BackendUser
 		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.is_god,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
-											INNER JOIN users_sessions AS us On u.id = us.user_id
+											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id
 											WHERE u.id = ? AND u.active = ? AND u.deleted = ?
 											LIMIT 1;',
 											array($userId, 'Y', 'N'));

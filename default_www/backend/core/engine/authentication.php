@@ -1,6 +1,6 @@
 <?php
 
-// @todo tijs - passwords moeten een salt gebruiken. Graag hier dan een functie getGeneratedPassword($string)
+// @todo tijs - passwords moeten een salt gebruiken. Graag hier dan een functie getGeneratedPassword($string) met salt sha1(md5($salt).md5($pass));
 
 /**
  * BackendAuthentication
@@ -82,7 +82,7 @@ class BackendAuthentication
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
 		$alwaysAllowed = array(	'dashboard' => array('index' => 7),
 								'error' => array('index' => 7),
-								'authentication' => array('index' => 7, 'logout' => 7));
+								'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7));
 
 		// redefine
 		$action = (string) $action;

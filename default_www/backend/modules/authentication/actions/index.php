@@ -117,20 +117,35 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			// at this point we need the model for users
 			require_once BACKEND_PATH .'/modules/users/engine/model.php';
 
+			// backend email
+			$email = $this->frmForgotPassword->getField('backend_email')->getValue();
+
 			// required fields
 			if($this->frmForgotPassword->getField('backend_email')->isEmail(BL::getError('EmailIsInvalid')))
 			{
 				// check if there is a user with the given emailaddress
-				if(!BackendUsersModel::existsEmail($this->frmForgotPassword->getField('backend_email')->getValue())) $this->frmForgotPassword->getField('backend_email')->addError(BL::getError('EmailIsUnknown'));
+				if(!BackendUsersModel::existsEmail($email)) $this->frmForgotPassword->getField('backend_email')->addError(BL::getError('EmailIsUnknown'));
 			}
 
 			// no errors in the form?
 			if($this->frmForgotPassword->isCorrect())
 			{
-				$to = array($this->frmForgotPassword->getField('backend_email')->getValue(), '');
+				// recipient info
+				$to = array($email, '');
 
-				// @todo	Send email to user
-				BackendMailer::addEmail(BL::getMessage('ResetYourPassword'), BACKEND_MODULE_PATH .'/layout/templates/reset_password.tpl', array('[resetURL]'), $to, null, false);
+				// generate the key for the reset link and fetch the user ID for this email
+				$key = sha1(md5(uniqid()).md5($email));
+
+				// insert the key and the timestamp into the user settings
+				$user = new BackendUser(BackendUsersModel::getIdByEmail($email));
+				$user->setSetting('reset_password_key', $key);
+				$user->setSetting('reset_password_timestamp', time());
+
+				// variables to parse in the e-mail
+				$variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('reset_password', null, null, array('email' => $email, 'key' => $key));
+
+				// send e-mail to user
+				BackendMailer::addEmail(BL::getMessage('ResetYourPassword'), BACKEND_MODULE_PATH .'/layout/templates/mails/reset_password.tpl', $variables, $to, null, null, false);
 
 				// clear post-values
 				$_POST['backend_email'] = '';

@@ -61,6 +61,8 @@ $err['users']['NonExisting'] = 'De gebruiker bestaat niet.';
 $err['core']['OnlyJPGAndGifAreAllowed'] = 'Enkel jpg, jpeg en gif zijn toegelaten.';
 // p
 $err['core']['PasswordIsRequired'] = 'Gelieve een wachtwoord in te geven.';
+$err['core']['PasswordRepeatIsRequired'] = 'Gelieve het gewenste wachtwoord te herhalen.';
+$err['core']['PasswordsDoNotMatch'] = 'De wachtwoorden zijn verschillend, probeer het opnieuw.';
 // q
 // r
 // s
@@ -161,6 +163,7 @@ $lbl['core']['MoveToSpam'] = 'verplaats naar spam';
 // n
 $lbl['core']['Name'] = 'naam';
 $lbl['core']['NavigationTitle'] = 'navigatie titel';
+$lbl['core']['NewPassword'] = 'nieuw wachtwoord';
 $lbl['core']['Next'] = 'volgende';
 $lbl['core']['NextPage'] = 'volgende pagina';
 $lbl['core']['Nickname'] = 'nickname';
@@ -183,6 +186,7 @@ $lbl['core']['PublishedComments'] = 'gepubliceerde reacties';
 $lbl['core']['RecentComments'] = 'recente reacties';
 $lbl['core']['RecentlyEdited'] = 'recent aangepast';
 $lbl['core']['Referrers'] = 'referrers';
+$lbl['core']['RepeatPassword'] = 'herhaal wachtwoord';
 $lbl['core']['Revisions'] = 'versies';
 $lbl['pages']['Root'] = 'losse pagina\'s';
 // s
@@ -265,7 +269,7 @@ $msg['spotlight']['Edited'] = 'Wijzigingen voor <em>%s</em> opgeslagen.';
 $msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // f
 $msg['core']['ForgotPassword'] = 'Wachtwoord vergeten?';
-$msg['core']['ForgotPasswordHelp'] = 'Enter your e-mail address below to have your password sent to your e-mail account.';
+$msg['core']['ForgotPasswordHelp'] = 'Vul hieronder je e-mail adres in om je wachtwoord te resetten.';
 // g
 // h
 $msg['core']['HeaderAdd'] = 'Toevoegen';
@@ -317,6 +321,8 @@ $msg['core']['NotAllowedModuleMessage'] = 'Deze module is niet toegestaan.';
 // p
 // q
 // r
+$msg['core']['ResetPasswordAndSignIn'] = 'Resetten en aanmelden';
+$msg['core']['ResetPasswordFormHelp'] = 'Vul je gewenste, nieuwe wachtwoord in.';
 // s
 $msg['core']['Saved'] = 'De wijzigingen zijn opgeslagen.';
 $msg['settings']['ScriptsText'] = 'Plaats HTML-code of javascript die elke pagina geladen moet worden. (bijv. Google Analytics)';

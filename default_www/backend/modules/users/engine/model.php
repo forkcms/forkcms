@@ -158,6 +158,31 @@ class BackendUsersModel
 
 
 	/**
+	 * Get the user ID linked to a given user e-mail address
+	 *
+	 * @return	int
+	 * @param	string $email
+	 */
+	public static function getIdByEmail($email)
+	{
+		// redefine
+		$email = (string) $email;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get user-settings
+		$userId = $db->getVar('SELECT user_id
+													FROM users_settings AS us
+													WHERE us.value = ?;',
+													array(serialize($email)));
+
+		// return
+		return (int) $userId;
+	}
+
+
+	/**
 	 * Add a new user
 	 *
 	 * @return	int
@@ -214,6 +239,25 @@ class BackendUsersModel
 		}
 	}
 
+
+	/**
+	 * Update the user password
+	 *
+	 * @return	void
+	 * @param int $userId
+	 * @param string $password
+	 */
+	public static function updatePassword($userId, $password)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// update user
+		$db->update('users', array('password' => $password), 'id = ?', $userId);
+
+		// remove the user settings linked to the resetting of passwords
+		$db->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $userId);
+	}
 }
 
 ?>
