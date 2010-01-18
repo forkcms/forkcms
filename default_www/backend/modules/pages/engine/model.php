@@ -469,7 +469,7 @@ class BackendPagesModel
 	 *
 	 * @return	array
 	 */
-	public static function getExtras()
+	public static function getExtrasData()
 	{
 		// get db
 		$db = BackendModel::getDB();
@@ -483,13 +483,16 @@ class BackendPagesModel
 											array('Y'));
 
 		// build array
-		$values = array('' => array('html' => BL::getLabel('Editor')));
+		$values = array('dropdown' => array('' => array('html' => BL::getLabel('Editor'))));
 
 		// loop extras
 		foreach($extras as $row)
 		{
 			// unserialize data
 			$row['data'] = @unserialize($row['data']);
+
+			// set url if needed
+			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
 
 			// build name
 			$name = ucfirst(BL::getLabel($row['label']));
@@ -498,7 +501,10 @@ class BackendPagesModel
 			$moduleName = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module'])));
 
 			// add
-			$values[$moduleName][$row['id']] = $name;
+			$values['dropdown'][$moduleName][$row['id']] = $name;
+			$values['types'][$row['id']] = $row['type'];
+			$values['data'][$row['id']] = $row;
+			$values['data'][$row['id']]['json'] = json_encode($row);
 		}
 
 		// return
@@ -857,12 +863,14 @@ class BackendPagesModel
 
 
 	/**
-	 * @todo	fix me...
-	 * @todo 	urlise moet intern worden uitgevoerd en niet erbuiten
+	 * Get an URL for a page
 	 *
-	 * @param unknown_type $url
-	 * @param unknown_type $id
-	 * @return unknown
+	 * @todo	urlise should be user in this function
+	 *
+	 * @return	string
+	 * @param	string $url
+	 * @param	int[optional] $id
+	 * @param	int[optional] $parentId
 	 */
 	public static function getURL($url, $id = null, $parentId = 0)
 	{
@@ -1111,7 +1119,8 @@ class BackendPagesModel
 		$db = BackendModel::getDB();
 
 		// update old revisions
-		$db->update('pages', array('status' => 'archive'), 'id = ?', (int) $page['id']);
+		if($page['status'] != 'draft') $db->update('pages', array('status' => 'archive'), 'id = ?', (int) $page['id']);
+		else $db->delete('pages', 'id = ? AND user_id = ? AND status = ?', array((int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft'));
 
 		// insert
 		$id = (int) $db->insert('pages', $page);

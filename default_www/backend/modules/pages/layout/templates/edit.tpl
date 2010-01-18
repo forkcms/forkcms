@@ -1,8 +1,8 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
-<table border="0" cellspacing="0" cellpediting="0" id="pagesHolder">
+<table border="0" cellspacing="0" cellpadding="0" id="pagesHolder">
 	<tr>
 		<td id="pagesTree" width="264">
-			<table border="0" cellspacing="0" cellpediting="0">
+			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td id="treeHolder">
 						<div id="treeOptions">
@@ -42,7 +42,7 @@
 						</ul>
 
 						<div id="tabContent">
-							<table border="0" cellpediting="0" cellspacing="0" width="100%">
+							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tbody>
 									<tr>
 										<td>
@@ -50,7 +50,7 @@
 												{iteration:blocks}
 												<div id="block-{$blocks.index}" class="contentBlock">
 													<div class="contentTitle selected hover">
-														<table border="0" cellpediting="0" cellspacing="0">
+														<table border="0" cellpadding="0" cellspacing="0">
 															<tbody><tr>
 																<td class="numbering">{$blocks.index}</td>
 																<td>
@@ -63,8 +63,11 @@
 														</tbody></table>
 													</div>
 													<div class="editContent">
-														<fieldset>
+														<fieldset id="blockContentHTML-{$blocks.index}">
 															{$blocks.txtHTML}
+														</fieldset>
+														<fieldset id="blockContentExtra-{$blocks.index}">
+															<p>&nbsp;</p>
 														</fieldset>
 													</div>
 												</div>
@@ -96,7 +99,7 @@
 													</ul>
 												</div>
 												<div class="footer">
-													<table border="0" cellpediting="0" cellspacing="0">
+													<table border="0" cellpadding="0" cellspacing="0">
 														<tbody>
 															<tr>
 																<td><p>{$lblLastSave|ucfirst}: {$recordedited_on|date:{$timeFormatHi}}</p></td>
@@ -126,7 +129,7 @@
 														{$templatehtml}
 													</div>
 
-													<table id="templateDetails" class="infoGrid" border="0" cellpediting="0" cellspacing="0">
+													<table id="templateDetails" class="infoGrid" border="0" cellpadding="0" cellspacing="0">
 														<tbody>
 														{iteration:blocks}
 															<tr>
@@ -306,9 +309,12 @@
 </table>
 
 <script type="text/javascript">
+	var pageID = {$recordid};
 	var templates = {};
 	{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
-</script>
 
+	var extraData = {};
+	{iteration:extras}extraData[{$extras.id}] = {$extras.json}; {/iteration:extras}
+</script>
 
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}

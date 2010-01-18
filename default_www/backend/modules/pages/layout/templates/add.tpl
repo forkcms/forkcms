@@ -8,7 +8,7 @@
 						<div id="treeOptions">
 							<div class="buttonHolder">
 								<a href="{$var|geturl:"index"}" class="button icon iconBack iconOnly"><span><span><span>{$lblBack|ucfirst}</span></span></span></a>
-								<a href="{$var|geturl:"add"}" class="button icon iconAdd"><span><span><span>{$lblAdd}</span></span></span></a>
+								<a href="{$var|geturl:"add"}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 							</div>
 						</div>
 						<div id="tree">
@@ -17,7 +17,6 @@
 					</td>
 				</tr>
 			</table>
-
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
@@ -61,8 +60,11 @@
 														</tbody></table>
 													</div>
 													<div class="editContent">
-														<fieldset>
+														<fieldset id="blockContentHTML-{$blocks.index}">
 															{$blocks.txtHTML}
+														</fieldset>
+														<fieldset id="blockContentExtra-{$blocks.index}">
+															<p>&nbsp;</p>
 														</fieldset>
 													</div>
 												</div>
@@ -72,15 +74,17 @@
 										<td id="pagesSide">
 											<div id="publishOptions" class="box">
 												<div class="heading">
-													<h3>Publish</h3>
+													<h3>{$lblPublish|ucfirst}</h3>
 												</div>
+												<!-- @todo
 												<div class="options">
 													<div class="buttonHolder">
-														<a href="{$previewUrl}" class="button icon iconZoom" target="_blank">
+														<a href="#" class="button icon iconZoom previewButton" target="_blank">
 															<span><span><span>{$lblPreview|ucfirst}</span></span></span>
 														</a>
 													</div>
 												</div>
+												 -->
 												<div class="options">
 													<ul class="inputList">
 														{iteration:hidden}
@@ -95,7 +99,7 @@
 													<table border="0" cellpadding="0" cellspacing="0">
 														<tbody>
 															<tr>
-																<td><p>Last save: 15:43</p></td>
+																<td><p>&nbsp;</p></td>
 																<td>
 																	<div class="buttonHolderRight">
 																		{$btnAdd}
@@ -280,6 +284,9 @@
 <script type="text/javascript">
 	var templates = {};
 	{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
+
+	var extraData = {};
+	{iteration:extras}extraData[{$extras.id}] = {$extras.json}; {/iteration:extras}
 </script>
 
 

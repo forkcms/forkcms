@@ -23,6 +23,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 
 	/**
+	 * The extras
+	 *
+	 * @var	array
+	 */
+	private $extras = array();
+
+
+	/**
 	 * The template data
 	 *
 	 * @var	array
@@ -53,6 +61,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// get data
 		$this->templates = BackendPagesModel::getTemplates();
+
+		// get extras
+		$this->extras = BackendPagesModel::getExtrasData();
 
 		// get maximum number of blocks	@todo	update this setting when editing/updating templates
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
@@ -159,8 +170,11 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			}
 
 			// create elements
-			$this->blocks[$i]['formElements']['ddmExtraId'] = $this->frm->addDropDown('block_extra_id_'. $i, BackendPagesModel::getExtras(), $selectedExtra);
+			$this->blocks[$i]['formElements']['ddmExtraId'] = $this->frm->addDropDown('block_extra_id_'. $i, $this->extras['dropdown'], $selectedExtra);
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditorField('block_html_'. $i, $html);
+
+			// set types
+			foreach($this->extras['types'] as $value => $type) $this->frm->getField('block_extra_id_'. $i)->setOptionAttributes($value, array('rel' => $type));
 		}
 
 		// page info
@@ -228,6 +242,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assignArray($this->record, 'record');
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
+		$this->tpl->assign('extras', $this->extras['data']);
 
 		// assign template
 		$this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
@@ -305,6 +320,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// insert page, store the id, we need it when building the blocks
 				$revisionId = BackendPagesModel::update($page);
 
+				// init var
+				$hasBlock = false;
+
 				// build blocks
 				$blocks = array();
 
@@ -323,6 +341,20 @@ class BackendPagesEdit extends BackendBaseActionEdit
 						// reset vars
 						$extraId = null;
 						$html = $this->frm->getField('block_html_'. $i)->getValue();
+					}
+
+					// not HTML
+					else
+					{
+						// type of block
+						if($this->extras['types'][$extraId] == 'block')
+						{
+							// set error
+							if($hasBlock) $this->frm->getField('block_extra_id_'. $i)->addError('Can\'t add 2 blocks');
+
+							// reset var
+							$hasBlock = true;
+						}
 					}
 
 					// build block

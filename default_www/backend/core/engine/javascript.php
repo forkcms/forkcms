@@ -45,7 +45,7 @@ class BackendJavascript
 	public function __construct()
 	{
 		// define the Named appliation
-		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend'); // @todo tijs - ne keer zien om die named applications te laten werken
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 
 		// set the module
 		$this->setModule(SpoonFilter::getGetValue('module', null, ''));

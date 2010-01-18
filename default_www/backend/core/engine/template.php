@@ -388,12 +388,33 @@ class BackendTemplateModifiers
 	 * Truncate a string
 	 *
 	 * @return	string
-	 * @param unknown_type $var
-	 * @param unknown_type $lenth
+	 * @param	string $var
+	 * @param	int $length
+	 * @param	bool[optional] $useHellip
 	 */
-	public static function truncate($var = null, $lenth)
+	public static function truncate($var = null, $length, $useHellip = true)
 	{
-		return $var; // @todo fix code + phpdoc
+		// remove special chars
+		$var = htmlspecialchars_decode($var);
+
+		// less characters
+		if(mb_strlen($var) <= $length) return SpoonFilter::htmlspecialchars($var);
+
+		// more characters
+		else
+		{
+			// hellip is seen as 1 char, so remove it from length
+			if($useHellip) $length = $length - 1;
+
+			// get the amount of requested characters
+			$var = mb_substr($var, 0, $length);
+
+			// add hellip
+			if($useHellip) $var .= '…';
+
+			// return
+			return SpoonFilter::htmlspecialchars($var);
+		}
 	}
 }
 

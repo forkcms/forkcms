@@ -4,6 +4,89 @@ jsBackend.pages = {
 	init: function() {
 		jsBackend.pages.tree.init();
 		jsBackend.pages.template.init();
+		jsBackend.pages.controls.init();
+		jsBackend.pages.autosave.init();
+	},
+	
+	// end
+	eoo: true
+}
+
+jsBackend.pages.autosave = {
+	init: function() {
+	},
+
+	save: function() {
+		// save all TinyMCE instances
+		if($('.inputEditor').length > 0) tinyMCE.triggerSave();
+
+		// serialize data
+		var data = $('form').serialize();
+
+		// make the call
+		$.ajax({ type: 'POST', dataType: 'json', 
+				 url: '/backend/ajax.php?module=pages&action=save&language={$LANGUAGE}',
+				 data: 'data=' + data +'&type=draft&id='+ pageID,
+				 error: function(XMLHttpRequest, textStatus, errorThrown) {
+					if(jsBackend.debug) alert(textStatus);
+				 },
+				 success: function(json, textStatus) {
+					 console.log(json);
+				 },
+		});
+
+		
+	},
+	
+	// end
+	eoo: true
+}
+
+jsBackend.pages.controls = {
+	init: function() {
+		jsBackend.pages.controls.changeExtra();
+		if($('.contentTitle .inputDropdown').length > 0) { $('.contentTitle .inputDropdown').bind('change', jsBackend.pages.controls.changeExtra); }
+	},
+	
+	changeExtra: function(evt) {
+		// find element with a block selected
+		var element = $('.contentTitle option[rel=block]:selected');
+		
+		// nothing selected, so free all other elements
+		if(element.length == 0) $('.contentTitle option').attr('disabled', '');
+		
+		// disable all other elements
+		else $('.contentTitle option[rel=block]:not(:selected)').attr('disabled', 'disabled');
+		
+		// loop all
+		$('.contentTitle .inputDropdown').each(function() {
+			// get selected value
+			var val = $(this).val();
+			var id = $(this).attr('id');
+			var index = id.replace('blockExtraId', '');
+			var data = (val !== 'html') ? extraData[val] : null;
+
+			// no real data, show editor
+			if(data == null) {
+				$('#blockContentHTML-'+ index).show();
+				$('#blockContentExtra-'+ index).hide();
+				$('#blockContentExtra-'+ index + ' p').html('&nbsp;');
+			} else {
+				if(data.type == 'block') {
+					// build html
+					var html = '{$msgModuleAttached}'.replace('{url}', data.data.url)
+													 .replace('{name}', data.label);
+				} else {
+					// build html
+					var html = '{$msgWidgetAttached}';
+				}
+				
+				$('#blockContentHTML-'+ index).hide();
+				$('#blockContentExtra-'+ index).show();
+				$('#blockContentExtra-'+ index + ' p').html(html);
+			}
+			
+		});
 	},
 	
 	// end

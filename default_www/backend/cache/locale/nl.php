@@ -164,6 +164,7 @@ $lbl['core']['MoveToSpam'] = 'verplaats naar spam';
 $lbl['core']['Name'] = 'naam';
 $lbl['core']['NavigationTitle'] = 'navigatie titel';
 $lbl['core']['NewPassword'] = 'nieuw wachtwoord';
+$lbl['core']['News'] = 'nieuws';
 $lbl['core']['Next'] = 'volgende';
 $lbl['core']['NextPage'] = 'volgende pagina';
 $lbl['core']['Nickname'] = 'nickname';
@@ -306,6 +307,7 @@ $msg['core']['LoginFormHelp'] = 'Enter your username and password to sign in.';
 $msg['core']['LoggedInAs'] = 'aangemeld als';
 $msg['core']['LoginFormForgotPasswordSuccess'] = '<strong>Mail sent.</strong> Please check your inbox!';
 // m
+$msg['pages']['ModuleAttached'] = 'A module is attached. Go to <a href="{url}">{name}</a> to manage.';
 // n
 $msg['core']['NoDrafts'] = 'Er zijn geen drafts.';
 $msg['core']['NoItems'] = 'Er zijn geen items aanwezig.';
@@ -333,6 +335,7 @@ $msg['core']['UsingARevision'] = 'Je gebruikt een oudere versie!';
 // v
 $msg['core']['VisibleOnSite'] = 'Zichtbaar op de website?';
 // w
+$msg['pages']['WidgetAttached'] = 'A widget is attached.';
 // x
 // y
 // z
