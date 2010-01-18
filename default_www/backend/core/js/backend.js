@@ -95,7 +95,7 @@ jsBackend.controls = {
 		});
 
 		// bind clicks
-		$('.askConfirmation').bind('click', function(evt) {
+		$('.askConfirmation').live('click', function(evt) {
 			// prevent default
 			evt.preventDefault();
 			

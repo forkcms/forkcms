@@ -44,9 +44,6 @@ class BackendSnippetsIndex extends BackendBaseActionIndex
 		// create datagrid
 		$this->datagrid = new BackendDataGridDB(BackendSnippetsModel::QRY_BROWSE, array('active'));
 
-		// hide columns
-		$this->datagrid->setColumnsHidden(array('id'));
-
 		// set headers
 		$this->datagrid->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title'))));
 

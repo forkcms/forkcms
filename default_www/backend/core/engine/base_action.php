@@ -137,6 +137,7 @@ class BackendBaseAction
 
 		// add default js file (if the file exists)
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getModule() .'.js')) $this->header->addJS($this->getModule() .'.js', null, true);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJS($this->getAction() .'.js', null, true);
 
 		// add css
 		$this->header->addCSS('screen.css', 'core');
@@ -209,6 +210,7 @@ class BackendBaseAction
 	 * Set the action, for later use
 	 *
 	 * @return	void
+	 * @param	string $action
 	 * @param	string $action
 	 */
 	private function setAction($action)
@@ -286,9 +288,6 @@ class BackendBaseActionIndex extends BackendBaseAction
 			// show the error and the errormessage
 			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), '-')));
 		}
-
-		// add default js file (if the file exists)
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/index.js')) $this->header->addJS('index.js', null, true);
 	}
 }
 
@@ -333,9 +332,6 @@ class BackendBaseActionAdd extends BackendBaseAction
 	{
 		// call parent, will add general CSS and JS
 		parent::execute();
-
-		// add default js file (if the file exists)
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/add.js')) $this->header->addJS('add.js', null, true);
 	}
 
 
@@ -411,14 +407,11 @@ class BackendBaseActionEdit extends BackendBaseAction
 	 * This method will be overwriten in most of the actions, but still be called to add general stuff
 	 *
 	 * @return	void
-	 */
+	 */ // @todo ik mag weg volgens Davy. (anderen ook)
 	public function execute()
 	{
 		// call parent, will add general CSS and JS
 		parent::execute();
-
-		// add default js file (if the file exists)
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/edit.js')) $this->header->addJS('edit.js', null, true);
 	}
 
 

@@ -6,15 +6,6 @@
 			</div>
 
 			<div class="inner">
-				{option:report}
-					<div class="report fadeOutAfterMouseMove">{$reportMessage}</div>
-					{option:highlight}
-						<script type="text/javascript">
-							var highlightId = '#{$highlight}';
-						</script>
-					{/option:highlight}
-				{/option:report}
-
 				<div id="tabs" class="tabs">
 					<ul>
 						<li><a href="#tabPublished">{$lblPublishedComments|ucfirst} ({$numPublished})</a></li>
@@ -24,9 +15,11 @@
 
 					<div id="tabPublished">
 						{option:dgPublished}
-							<form action="{$var|geturl:'comment_status'}" method="get" class="forkForms submitWithLink" id="commentsPublished">
+							<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsPublished">
 								<input type="hidden" name="from" value="published" />
-								{$dgPublished}
+								<div class="datagridHolder">
+									{$dgPublished}
+								</div>
 							</form>
 						{/option:dgPublished}
 						{option:!dgPublished}{$msgNoItems}{/option:!dgPublished}
@@ -34,9 +27,11 @@
 
 					<div id="tabModeration">
 						{option:dgModeration}
-							<form action="{$var|geturl:'comment_status'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
+							<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
 								<input type="hidden" name="from" value="moderation" />
-								{$dgModeration}
+								<div class="datagridHolder">
+									{$dgModeration}
+								</div>
 							</form>
 						{/option:dgModeration}
 						{option:!dgModeration}{$msgNoItems}{/option:!dgModeration}
@@ -44,9 +39,11 @@
 
 					<div id="tabSpam">
 						{option:dgSpam}
-							<form action="{$var|geturl:'comment_status'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
+							<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsSpam">
 								<input type="hidden" name="from" value="spam" />
-								{$dgSpam}
+								<div class="datagridHolder">
+									{$dgSpam}
+								</div>
 							</form>
 						{/option:dgSpam}
 						{option:!dgSpam}{$msgNoItems}{/option:!dgSpam}

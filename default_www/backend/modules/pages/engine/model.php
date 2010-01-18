@@ -858,6 +858,7 @@ class BackendPagesModel
 
 	/**
 	 * @todo	fix me...
+	 * @todo 	urlise moet intern worden uitgevoerd en niet erbuiten
 	 *
 	 * @param unknown_type $url
 	 * @param unknown_type $id

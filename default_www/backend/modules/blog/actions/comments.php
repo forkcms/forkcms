@@ -56,8 +56,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		{
 			// build html
 			$HTML = '<div clas="buttonHolder">
-						<a href="'. BackendModel::createURLForAction('comment_status', null, null, array('from' => $type, 'to' => 'moderation', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToModeration')) .'<span></span></span>
-						<a href="'. BackendModel::createURLForAction('comment_status', null, null, array('from' => $type, 'to' => 'spam', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToSpam')) .'</span></span></span>
+						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'moderation', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToModeration')) .'<span></span></span>
+						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'spam', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToSpam')) .'</span></span></span>
 					</div>';
 		}
 
@@ -66,8 +66,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		{
 			// build html
 			$HTML = '<div clas="buttonHolder">
-						<a href="'. BackendModel::createURLForAction('comment_status', null, null, array('from' => $type, 'to' => 'published', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToPublished')) .'</span></span></span>
-						<a href="'. BackendModel::createURLForAction('comment_status', null, null, array('from' => $type, 'to' => 'spam', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToSpam')) .'</span></span></span>
+						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'published', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToPublished')) .'</span></span></span>
+						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'spam', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToSpam')) .'</span></span></span>
 					</div>';
 		}
 
@@ -76,8 +76,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		{
 			// build html
 			$HTML = '<div clas="buttonHolder">
-						<a href="'. BackendModel::createURLForAction('comment_status', null, null, array('from' => $type, 'to' => 'published', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToPublished')) .'</span></span></span>
-						<a href="'. BackendModel::createURLForAction('comment_status', null, null, array('from' => $type, 'to' => 'moderation', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToModeration')) .'</span></span></span>
+						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'published', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToPublished')) .'</span></span></span>
+						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'moderation', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToModeration')) .'</span></span></span>
 					</div>';
 		}
 
@@ -118,13 +118,13 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('to', array('moderation' => ucfirst(BL::getLabel('MoveToModeration')), 'spam' => ucfirst(BL::getLabel('MoveToSpam'))), 'spam');
+		$ddmMassAction = new SpoonDropDown('action', array('moderation' => BL::getLabel('MoveToModeration'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'spam');
 		$this->dgPublished->setMassAction($ddmMassAction);
 
 		/*
 		 * Datagrid for the comments that are awaiting moderation
 		 */
-		$this->dgModeration = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'unmoderated');
+		$this->dgModeration = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'moderation');
 
 		// active tab
 		$this->dgModeration->setActiveTab('tabModeration');
@@ -147,7 +147,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setSortingColumns(array('created_on', 'text'), 'text');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('to', array('published' => ucfirst(BL::getLabel('MoveToPublished')), 'spam' => ucfirst(BL::getLabel('MoveToSpam'))), 'publishedŒ');
+		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'published');
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		/*
@@ -176,11 +176,16 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setSortingColumns(array('created_on', 'text'), 'text');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('to', array('published' => ucfirst(BL::getLabel('MoveToPublished')), 'moderation' => ucfirst(BL::getLabel('MoveToModeration'))), 'published');
+		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'moderation' => BL::getLabel('MoveToModeration'), 'delete' => BL::getLabel('Delete')), 'published');
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 
 
+	/**
+	 * Parse & display the page
+	 *
+	 * @return	void
+	 */
 	private function parse()
 	{
 		// published datagrid and num results

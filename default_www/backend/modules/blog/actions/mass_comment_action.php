@@ -3,7 +3,7 @@
 /**
  * BackendBlogCommentStatus
  *
- * This action is used to move one or more comments to published, unmoderated or spam status.
+ * This action is used to update one or more comments (status, delete, ...)
  *
  * @package		backend
  * @subpackage	blog
@@ -11,7 +11,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class BackendBlogCommentStatus extends BackendBaseAction
+class BackendBlogMassCommentAction extends BackendBaseAction
 {
 	/**
 	 * Execute the action
@@ -26,8 +26,8 @@ class BackendBlogCommentStatus extends BackendBaseAction
 		// current status
 		$from = SpoonFilter::getGetValue('from', array('published', 'moderation', 'spam'), 'published');
 
-		// new status
-		$to = SpoonFilter::getGetValue('to', array('published', 'moderation', 'spam'), 'spam');
+		// action to execute
+		$action = SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
 
 		// no id's provided
 		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') .'&error=non-existing');
@@ -38,12 +38,15 @@ class BackendBlogCommentStatus extends BackendBaseAction
 			// redefine id's
 			$aIds = (array) $_GET['id'];
 
-			// update the status for every id
-			foreach($aIds as $id) BackendBlogModel::updateCommentStatus($id, $to);
+			// delete comment(s)
+			if($action == 'delete') BackendBlogModel::deleteComments($aIds);
+
+			// other actions (status updates)
+			else BackendBlogModel::updateCommentStatuses($aIds, $action);
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('comments') .'&report='. $to .'#tab'. ucfirst($from));
+		$this->redirect(BackendModel::createURLForAction('comments') .'&report='. $action .'#tab'. ucfirst($from));
 	}
 }
 
