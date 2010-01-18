@@ -2,16 +2,16 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 jsBackend.pages = {
 	init: function() {
+		jsBackend.pages.controls.init();
 		jsBackend.pages.tree.init();
 		jsBackend.pages.template.init();
-		jsBackend.pages.controls.init();
-		jsBackend.pages.autosave.init();
 	},
 	
 	// end
 	eoo: true
 }
 
+// temp
 jsBackend.pages.autosave = {
 	init: function() {
 	},
