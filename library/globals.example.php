@@ -17,6 +17,8 @@ define('SPOON_DEBUG', true);
 define('SPOON_DEBUG_EMAIL', '');
 // message for the visitors when an exception occur
 define('SPOON_DEBUG_MESSAGE', 'Internal error.');
+// default charset used in spoon.
+define('SPOON_CHARSET', 'utf-8');
 
 
 /**
