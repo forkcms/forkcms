@@ -20,18 +20,6 @@ require_once 'spoon/email/email.php';
 class BackendMailer
 {
 	/**
-	 * Adds an e-mail to the mailing queue, or sends it immediately if $queue is false.
-	 *
-	 * @param string $subject
-	 * @param string $template
-	 * @param array[optional] $variables
-	 * @param mixed[optional] $to
-	 * @param mixed[optional] $from
-	 * @param mixed[optional] $replyTo
-	 * @param bool[optional] $queue
-	 */
-
-	/**
 	 * Adds an email to the queue.
 	 *
 	 * @return	void

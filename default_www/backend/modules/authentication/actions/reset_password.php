@@ -13,7 +13,7 @@
  * @author 		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
-class BackendAuthenticationResetPassword extends BackendBaseActionIndex
+class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 {
 	/**
 	 * Form instance
@@ -58,7 +58,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionIndex
 		parent::execute();
 
 		// the user email and key provided match
-		if(!$this->userIsAllowed()) $this->redirect(BackendModel::createURLForAction('index'));
+		if(!$this->isUserAllowed()) $this->redirect(BackendModel::createURLForAction('index'));
 
 		// load form
 		$this->load();
@@ -92,23 +92,11 @@ class BackendAuthenticationResetPassword extends BackendBaseActionIndex
 
 
 	/**
-	 * Parse the action into the template
-	 *
-	 * @return	void
-	 */
-	public function parse()
-	{
-		// parse the form
-		$this->frm->parse($this->tpl);
-	}
-
-
-	/**
 	 * The user is allowed on this page
 	 *
 	 * @return	bool
 	 */
-	private function userIsAllowed()
+	private function isUserAllowed()
 	{
 		// catch the key and e-mail address from GET
 		$this->email = urldecode(SpoonFilter::getGetValue('email', null, ''));
