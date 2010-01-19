@@ -23,6 +23,7 @@ $navigation['modules']['children']['slideshow'] = array('url' => 'slideshow/inde
 $navigation['modules']['children']['location'] = array('url' => 'location/index', 'label' => 'Location');
 $navigation['modules']['children']['snippets'] = array('url' => 'snippets/index', 'label' => 'Snippets');
 $navigation['modules']['children']['formbuilder'] = array('url' => 'formbuilder/index', 'label' => 'FormBuilder');
+$navigation['modules']['children']['tags'] = array('url' => 'tags/index', 'label' => 'Tags');
 $navigation['modules']['children']['extranet'] = array('url' => null, 'label' => 'Extranet');
 $navigation['modules']['children']['extranet']['children'][] = array('url' => 'extranet/index', 'label' => 'Groups');
 $navigation['modules']['children']['extranet']['children'][] = array('url' => 'extranet/users', 'label' => 'Users');

@@ -100,6 +100,8 @@ $lbl['core']['AddCategory'] = 'categorie toevoegen';
 $lbl['core']['AddTag'] = 'toevoegen';
 $lbl['pages']['Add'] = 'pagina toevoegen';
 $lbl['core']['All'] = 'alle';
+$lbl['core']['Amount'] = 'aantal';
+$lbl['tags']['Amount'] = 'aantal keer gebruikt';
 $lbl['core']['APIKey'] = 'API key';
 $lbl['core']['APIKeys'] = 'API keys';
 $lbl['core']['APIURL'] = 'API URL';
@@ -209,6 +211,7 @@ $lbl['core']['Status'] = 'status';
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
 // t
+$lbl['core']['Tag'] = 'tag';
 $lbl['core']['Tags'] = 'tags';
 $lbl['core']['Template'] = 'template';
 $lbl['core']['Time'] = 'tijd';

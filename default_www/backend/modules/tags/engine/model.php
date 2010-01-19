@@ -14,6 +14,32 @@
  */
 class BackendTagsModel
 {
+	const QRY_DATAGRID_BROWSE = 'SELECT
+											t.id,
+											t.tag,
+											t.number AS num_tags
+											FROM tags AS t
+											LEFT OUTER JOIN modules_tags AS mt ON mt.tag_id = t.id
+											WHERE t.language = ?
+											GROUP BY t.id';
+
+
+	/**
+	 * Check if a tag exists
+	 *
+	 * @return	bool
+	 * @param	int $id
+	 */
+	public static function exists($id)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// exists?
+		return $db->getNumRows('SELECT id FROM tags WHERE id = ?;', (int) $id);
+	}
+
+
 	/**
 	 * Get tags that start with the given string
 	 *
@@ -37,6 +63,28 @@ class BackendTagsModel
 										ORDER BY t.tag ASC
 										LIMIT ?;',
 										array($query .'%', $limit));
+	}
+
+
+	/**
+	 * Get tag record
+	 *
+	 * @return	array
+	 * @param	int $id
+	 */
+	public static function get($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// make the call
+		return (array) $db->getRecord('SELECT t.tag AS name
+										FROM tags AS t
+										WHERE t.id = ?;',
+										array($id));
 	}
 
 
@@ -256,6 +304,25 @@ class BackendTagsModel
 
 		// remove all tags that don't have anything linked
 		$db->delete('tags', 'number = ?', array(0));
+	}
+
+
+	/**
+	 * Update a tag
+	 *
+	 * @return	void
+	 * @param array $tag
+	 */
+	public static function updateTag($tag)
+	{
+		// redefine
+		$language = BackendLanguage::getWorkingLanguage();
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// insert
+		$db->update('tags', $tag, 'id = ?', $tag['id']);
 	}
 }
 
