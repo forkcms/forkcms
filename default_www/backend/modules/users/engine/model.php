@@ -40,6 +40,25 @@ class BackendUsersModel
 
 
 	/**
+	 * Deletes the reset_password_key and reset_password_timestamp for a given user ID
+	 *
+	 * @return	void
+	 * @param int $userId
+	 */
+	public static function deleteResetPasswordSettings($userId)
+	{
+		// redefine
+		$userId = (int) $userId;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// delete the settings
+		$db->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $userId);
+	}
+
+
+	/**
 	 * Does the user exist
 	 *
 	 * @return	bool
@@ -183,6 +202,31 @@ class BackendUsersModel
 
 
 	/**
+	 * Get the user ID linked to a given username
+	 *
+	 * @return	int
+	 * @param	string $username
+	 */
+	public static function getIdByUsername($username)
+	{
+		// redefine
+		$username = (string) $username;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get user-settings
+		$userId = $db->getVar('SELECT u.id
+													FROM users AS u
+													WHERE u.username = ?;',
+													array($username));
+
+		// return
+		return (int) $userId;
+	}
+
+
+	/**
 	 * Add a new user
 	 *
 	 * @return	int
@@ -244,19 +288,27 @@ class BackendUsersModel
 	 * Update the user password
 	 *
 	 * @return	void
-	 * @param int $userId
+	 * @param BackendUser $user
 	 * @param string $password
 	 */
-	public static function updatePassword($userId, $password)
+	public static function updatePassword(BackendUser $user, $password)
 	{
+		// redefine
+		$password = (string) $password;
+
+		// fetch user info
+		$userId = $user->getUserId();
+		$username = $user->getUsername();
+		$key = $user->getSetting('password_key');
+
 		// get db
 		$db = BackendModel::getDB();
 
 		// update user
-		$db->update('users', array('password' => $password), 'id = ?', $userId);
+		$db->update('users', array('password' => BackendAuthentication::getEncryptedString($password, $key)), 'id = ?', $userId);
 
 		// remove the user settings linked to the resetting of passwords
-		$db->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $userId);
+		self::deleteResetPasswordSettings($userId);
 	}
 }
 

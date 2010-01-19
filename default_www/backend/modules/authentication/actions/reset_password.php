@@ -128,7 +128,8 @@ class BackendAuthenticationResetPassword extends BackendBaseActionIndex
 			// check if the request was made within 24 hours
 			if((time() - $requestTime) > 86400)
 			{
-				// @todo remove the reset_password_key and reset_password_timestamp usersettings
+				// remove the reset_password_key and reset_password_timestamp usersettings
+				BackendUsersModel::deleteResetPasswordSettings($userId);
 
 				// redirect to the login form, with a timeout error
 				$this->redirect(BackendModel::createURLForAction('index', null, null, array('reset' => 'timeout')));
@@ -179,7 +180,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionIndex
 			if($this->frm->isCorrect())
 			{
 				// change the users password
-				BackendUsersModel::updatePassword($this->user->getUserId(), md5($newPassword->getValue()));
+				BackendUsersModel::updatePassword($this->user, $newPassword->getValue());
 
 				// attempt to login the user
 				if(!BackendAuthentication::loginUser($this->user->getUsername(), $newPassword->getValue()))

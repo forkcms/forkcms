@@ -56,6 +56,53 @@ class BackendAuthentication
 
 
 	/**
+	 * Returns the encrypted password for a user by giving a username/password
+	 *
+	 * @return	string
+	 * @param string $username
+	 * @param string $password
+	 */
+	public static function getEncryptedPassword($username, $password)
+	{
+		// redefine
+		$username = (string) $username;
+		$password = (string) $password;
+
+		// at this point we need the model for users
+		require_once BACKEND_PATH .'/modules/users/engine/model.php';
+
+		// fetch user ID by username
+		$userId = (int) BackendUsersModel::getIdByUsername($username);
+
+		// fetch user record
+		$user = new BackendUser($userId);
+		$key = $user->getSetting('password_key');
+
+		// return the encrypted string
+		return (string) self::getEncryptedString($password, $key);
+	}
+
+
+	/**
+	 * Returns a string encrypted like sha1(md5(uniqid($salt)).md5($string))
+	 * 	The salt is an optional extra string you can put in
+	 *
+	 * @return	string
+	 * @param string $string
+	 * @param string[optional] $salt
+	 */
+	public static function getEncryptedString($string, $salt = null)
+	{
+		// redefine
+		$string = (string) $string;
+		$salt = (string) $salt;
+
+		// return the encrypted string
+		return (string) sha1(md5($salt).md5($string));
+	}
+
+
+	/**
 	 * Returns the current authenticated user
 	 *
 	 * @return	BackendUser
@@ -271,7 +318,7 @@ class BackendAuthentication
 										FROM users AS u
 										WHERE u.username = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
 										LIMIT 1;',
-										array($login, md5($password), 'Y', 'N'));
+										array($login, BackendAuthentication::getEncryptedPassword($login, $password), 'Y', 'N'));
 
 		// not 0, a valid user!
 		if($userId !== 0)
@@ -283,7 +330,7 @@ class BackendAuthentication
 			$session = array();
 			$session['user_id'] = $userId;
 			$session['language'] = BackendLanguage::getWorkingLanguage();
-			$session['secret_key'] = md5(md5($userId) . md5(SpoonSession::getSessionId()));
+			$session['secret_key'] = BackendAuthentication::getEncryptedString(SpoonSession::getSessionId(), $userId);
 			$session['session_id'] = SpoonSession::getSessionId();
 			$session['date'] = date('Y-m-d H:i:s');
 

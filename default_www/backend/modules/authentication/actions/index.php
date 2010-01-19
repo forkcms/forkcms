@@ -79,15 +79,19 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
+			// shorten fields
+			$txtUsername = $this->frm->getField('backend_username');
+			$txtPassword = $this->frm->getField('backend_password');
+
 			// required fields
-			$this->frm->getField('backend_username')->isFilled(BL::getError('UsernameIsRequired'));
-			$this->frm->getField('backend_password')->isFilled(BL::getError('PasswordIsRequired'));
+			$txtUsername->isFilled(BL::getError('UsernameIsRequired'));
+			$txtPassword->isFilled(BL::getError('PasswordIsRequired'));
 
 			// all fields are ok?
-			if($this->frm->getField('backend_username')->isFilled() && $this->frm->getField('backend_password')->isFilled())
+			if($txtUsername->isFilled() && $txtPassword->isFilled())
 			{
 				// try to login the user
-				if(!BackendAuthentication::loginUser($this->frm->getField('backend_username')->getValue(), $this->frm->getField('backend_password')->getValue()))
+				if(!BackendAuthentication::loginUser($txtUsername->getValue(), $txtPassword->getValue()))
 				{
 					// add error
 					$this->frm->addError('invalid login');
@@ -134,10 +138,11 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$to = array($email, '');
 
 				// generate the key for the reset link and fetch the user ID for this email
-				$key = sha1(md5(uniqid()).md5($email));
+				$key = BackendAuthentication::getEncryptedString($email, uniqid());
 
 				// insert the key and the timestamp into the user settings
-				$user = new BackendUser(BackendUsersModel::getIdByEmail($email));
+				$userId = BackendUsersModel::getIdByEmail($email);
+				$user = new BackendUser($userId);
 				$user->setSetting('reset_password_key', $key);
 				$user->setSetting('reset_password_timestamp', time());
 
