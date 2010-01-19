@@ -221,7 +221,7 @@ class BackendTemplate extends SpoonTemplate
 		$labels = BackendLanguage::getLabels();
 
 		// get all messages
-		$messages = (array) BackendLanguage::getMessages();
+		$messages = BackendLanguage::getMessages();
 
 		// set the begin state
 		$realErrors = $errors['core'];
@@ -315,7 +315,6 @@ class BackendTemplate extends SpoonTemplate
  */
 class BackendTemplateModifiers
 {
-
 	/**
 	 * Dumps the data
 	 *
@@ -416,6 +415,7 @@ class BackendTemplateModifiers
 			return SpoonFilter::htmlspecialchars($var);
 		}
 	}
+
 }
 
 ?>

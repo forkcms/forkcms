@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Fork
+ * FrontendURL
  *
- * This source file is part of Fork CMS.
+ * This class will handle the incomming url.
  *
  * @package			frontend
  * @subpackage		url
@@ -52,10 +52,13 @@ class FrontendURL
 	 */
 	public function __construct()
 	{
-		// set query-string
+		// add ourself to the reference so other classes can retrieve us
+		Spoon::setObjectReference('url', $this);
+
+		// set query-string for later use
 		$this->setQueryString($_SERVER['REQUEST_URI']);
 
-		// set host
+		// set host for later use
 		$this->setHost($_SERVER['HTTP_HOST']);
 
 		// process url
@@ -346,10 +349,7 @@ class FrontendURL
 		if($depth == 0) $depth = 1;
 
 		// this page has no extra linked, but parameters were still given => 404!
-		if($aNavigation[$depth][$parentId][$pageId]['extra_id'] == 0 && !empty($this->aParameters))
-		{
-			SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId(404), 404);
-		}
+		if($navigation[$depth][$parentId][$pageId]['extra_id'] == 0 && !empty($this->aParameters)) SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId(404), 404);
 	}
 
 

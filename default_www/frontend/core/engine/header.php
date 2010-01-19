@@ -465,10 +465,10 @@ class FrontendHeader extends FrontendBaseObject
 		if($overwrite) $this->pageTitle = $value;
 		else
 		{
-			if(empty($value)) $this->pageTitle = CoreModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+			if(empty($value)) $this->pageTitle = FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 			else
 			{
-				if($this->pageTitle == '') $this->pageTitle = $value . SITE_TITLE_SEPERATOR . CoreModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+				if($this->pageTitle == '') $this->pageTitle = $value . SITE_TITLE_SEPERATOR . FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 				else $this->pageTitle = $value . SITE_TITLE_SEPERATOR . $this->pageTitle;
 			}
 		}

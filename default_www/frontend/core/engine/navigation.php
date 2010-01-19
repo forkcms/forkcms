@@ -176,10 +176,13 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/pages/keys_'. $language .'.php')) throw new FrontendException('No key-file (keys_'. $language .'.php) found.');
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php')) throw new FrontendException('No key-file (keys_'. $language .'.php) found.');
+
+			// init var
+			$keys = array();
 
 			// require file
-			require FRONTEND_CACHE_PATH .'/pages/keys_'. $language .'.php';
+			require FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php';
 
 			// store
 			self::$keys[$language] = $keys;
@@ -205,6 +208,9 @@ class FrontendNavigation extends FrontendBaseObject
 		{
 			// validate file
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/pages/navigation_'. $language .'.php')) throw new FrontendException('No navigation-file (navigation_'. $language .'.php) found.');
+
+			// init var
+			$navigation = array();
 
 			// require file
 			require FRONTEND_CACHE_PATH .'/pages/navigation_'. $language .'.php';

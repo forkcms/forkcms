@@ -14,14 +14,6 @@
 class BackendUsersIndex extends BackendBaseActionIndex
 {
 	/**
-	 * Datagrid instance
-	 *
-	 * @var	BackendDataGridDB
-	 */
-	private $datagrid;
-
-
-	/**
 	 * Execute the action
 	 *
 	 * @return	void

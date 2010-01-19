@@ -1,5 +1,14 @@
-<div id="language">
-	<ul class="clearfix">
-		{iteration:iLanguages}<li {option:oSelected} class="selected"{/option:oSelected}><a href="/{$abbreviation}">{$abbreviation|uppercase}</a></li>{/iteration:iLanguages}
-	</ul>
-</div>
+			{option:languages}
+			<div id="language">
+				<ul>
+					{iteration:languages}
+					<li{option:languages.current} class="selected"{/option:languages.current}>
+						<a href="{$languages.url}">{$languages.label}</a>
+					</li>
+					{/iteration:languages}
+					<li class="selected"><a href="/nl">NL</a></li>
+					<li><a href="/fr">FR</a></li>
+					<li><a href="/en">EN</a></li>
+				</ul>
+			</div>
+			{/option:languages}

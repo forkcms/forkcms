@@ -42,6 +42,9 @@ class BackendNavigation
 		// grab from the reference
 		$this->url = Spoon::getObjectReference('url');
 
+		// init var
+		$navigation = array();
+
 		// require navigation-file
 		require_once BACKEND_CACHE_PATH .'/navigation/navigation.php';
 

@@ -160,6 +160,12 @@ class FrontendLanguage
 		// validate language
 		if(!in_array($language, self::$aLanguages['active'])) throw new FrontendException('Invalid language ('. $language .').');
 
+		// init vars
+		$act = array();
+		$err = array();
+		$lbl = array();
+		$msg = array();
+
 		// require file
 		require FRONTEND_CACHE_PATH .'/locale/'. $language .'.php';
 

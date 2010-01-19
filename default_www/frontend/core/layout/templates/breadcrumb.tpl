@@ -1,6 +1,9 @@
 			<div id="breadcrumb">
 				<span>{$lblYouAreHere|ucfirst}:</span>
-				{iteration:iBreadcrumb}
-					{option:oSeparator} - {/option:oSeparator}{option:oHasUrl}<a href="{$url}" title="{$title}">{/option:oHasUrl}{$title}{option:oHasUrl}</a>{/option:oHasUrl}
-				{/iteration:iBreadcrumb}
+				{iteration:breadcrumb}
+					{option:!last} • {/option:!last}
+					{option:url}<a href="{$breadcrumb.url}" title="{$breadcrumb.title}">{/option:url}
+						{$breadcrumb.title}
+					{option:url}</a>{/option:url}
+				{/iteration:breadcrumb}
 			</div>

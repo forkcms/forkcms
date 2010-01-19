@@ -115,7 +115,7 @@ class FrontendModel
 	 * @return	array
 	 * @param	int $pageId
 	 */
-	public static function getPageRecordByPageId($pageId)
+	public static function getPage($pageId)
 	{
 		// redefine
 		$pageId = (int) $pageId;
@@ -124,7 +124,7 @@ class FrontendModel
 		$db = self::getDB();
 
 		// get data
-		$record = (array) $db->getRecord('SELECT p.id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite,
+		$record = (array) $db->getRecord('SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
 												m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 												m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -136,14 +136,19 @@ class FrontendModel
 											INNER JOIN pages_templates AS t ON p.template_id = t.id
 											WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
 											LIMIT 1;',
-											array((int) $pageId, 'active', 'N', FRONTEND_LANGUAGE));
+											array($pageId, 'active', 'N', FRONTEND_LANGUAGE));
+
+		// validate
+		if(empty($record)) return array();
 
 		// unserialize parameters
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
 
 		// add blocks
-		// @todo make this work
-		$record['blocks'] = array();
+		$record['blocks'] = (array) $db->retrieve('SELECT pb.*
+													FROM pages_blocks AS pb
+													WHERE pb.revision_id = ? AND pb.status = ?;',
+													array($record['revision_id'], 'active'));
 
 		// return
 		return (array) $record;

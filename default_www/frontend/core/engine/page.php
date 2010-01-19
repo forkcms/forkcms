@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendPage
+class FrontendPage extends FrontendBaseObject
 {
 	/**
 	 * Content of the page
@@ -96,30 +96,14 @@ class FrontendPage
 
 
 	/**
-	 * Template instance
-	 *
-	 * @var	SpoonTemplate
-	 */
-	private $tpl;
-
-
-	/**
-	 * Url instance
-	 *
-	 * @var	FrontendURL
-	 */
-	private $url;
-
-
-	/**
 	 * Default constructor
 	 *
 	 * @return	void
 	 */
 	public function __construct()
 	{
-		// set url instance
-		$this->url = Spoon::getObjectReference('url');
+		// call parent
+		parent::__construct();
 
 		// get menu id for requested url
 		$this->pageId = FrontendNavigation::getPageIdByURL(implode('/', $this->url->getPages()));
@@ -170,12 +154,8 @@ class FrontendPage
 		// parse header
 //		$this->header->parse();
 
-		// show the template's parsed content
-//		$templatePath = $this->aPageRecord['template_path'];
-		$templatePath = '';
-		if($templatePath == '') $templatePath = 'core/layout/templates/index.tpl';
-
-		$this->tpl->display(FRONTEND_PATH .'/'. $templatePath);
+		// aaaaa
+//		$this->tpl->display(FRONTEND_PATH .'/'. $templatePath);
 	}
 
 
@@ -198,7 +178,9 @@ class FrontendPage
 	public function getPageContent()
 	{
 		// get page record
-		$this->record = (array) FrontendModel::getPageRecordByPageId($this->pageId);
+		$this->record = (array) FrontendModel::getPage($this->pageId);
+
+		Spoon::dump($this->record);
 
 		// empty record (pageId doesn't exists)
 		if(count($this->record) == 0 && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURLByPageId(404), 404);
@@ -223,10 +205,6 @@ class FrontendPage
 	 */
 	private function processPage()
 	{
-		// create template instance
-		$this->tpl = new FrontendTemplate();
-		Spoon::setObjectReference('template', $this->tpl);
-
 		// create and set header instance
 		$this->header = new FrontendHeader();
 		Spoon::setObjectReference('header', $this->header);

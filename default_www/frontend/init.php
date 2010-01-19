@@ -22,21 +22,22 @@ class Init
 
 
 	/**
-	 * Class constructor
+	 * Default constructor
 	 *
 	 * @param	string $type
 	 * @return	void
 	 */
 	public function __construct($type)
 	{
-		// set type
-		$allowedTypes = array('frontend');
+		// init vars
+		$allowedTypes = array('frontend', 'frontend_ajax', 'frontend_js');
+		$type = (string) $type;
 
 		// check if this is a valid type
 		if(!in_array($type, $allowedTypes)) exit('Invalid init-type');
 
 		// set type
-		$this->type = (string) $type;
+		$this->type = $type;
 
 		// set some ini-options
 		ini_set('memory_limit', '64M');
@@ -44,12 +45,20 @@ class Init
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
+		/*
+		 * At first we enable the error reporting. Later on it will be disabled based on the
+		 * value of SPOON_DEBUG, but for now it's required to see possible errors while trying
+		 * to include the globals file(s).
+		 */
+		error_reporting(E_ALL | E_STRICT);
+		ini_set('display_errors', 'On');
+
 		// require globals
 		$this->requireGlobals();
 
 		// define constants
 		$this->definePaths();
-		$this->defineUrls();
+		$this->defineURLs();
 
 		// set include path
 		$this->setIncludePath();
@@ -78,11 +87,16 @@ class Init
 	 */
 	private function definePaths()
 	{
+		// fix the Application setting
+		if($this->type == 'frontend_js') define('APPLICATION', 'frontend');
+		if($this->type == 'frontend_ajax') define('APPLICATION', 'frontend');
+
 		// general paths
 		define('FRONTEND_PATH', PATH_WWW .'/'. APPLICATION);
 		define('FRONTEND_CACHE_PATH', FRONTEND_PATH .'/cache');
 		define('FRONTEND_CORE_PATH', FRONTEND_PATH .'/core');
 		define('FRONTEND_MODULES_PATH', FRONTEND_PATH .'/modules');
+		define('FRONTEND_FILES_PATH', FRONTEND_PATH .'/files');
 	}
 
 
@@ -95,6 +109,7 @@ class Init
 	{
 		define('FRONTEND_CORE_URL', '/'. APPLICATION .'/core');
 		define('FRONTEND_CACHE_URL', '/'. APPLICATION .'/cache');
+		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 
 
@@ -105,12 +120,7 @@ class Init
 	 */
 	private function initSession()
 	{
-		switch ($this->type)
-		{
-			case 'frontend':
-				SpoonSession::start();
-			break;
-		}
+		SpoonSession::start();
 	}
 
 
@@ -121,26 +131,43 @@ class Init
 	 */
 	private function requireFrontendClasses()
 	{
+		// @todo check
+		require_once FRONTEND_CORE_PATH .'/engine/base_object.php';
+
 		// general classes
-		require FRONTEND_CORE_PATH .'/engine/exception.php';
-		require FRONTEND_CORE_PATH .'/engine/base_object.php';
-		require FRONTEND_CORE_PATH .'/engine/base_extra_config.php';
-		require FRONTEND_CORE_PATH .'/engine/base_extra_action.php';
-		require FRONTEND_CORE_PATH .'/engine/template.php';
-		require FRONTEND_CORE_PATH .'/engine/language.php';
-		require FRONTEND_CORE_PATH .'/engine/navigation.php';
+		require_once FRONTEND_CORE_PATH .'/engine/exception.php';
+		require_once FRONTEND_CORE_PATH .'/engine/template.php';
+		require_once FRONTEND_CORE_PATH .'/engine/language.php';
+		require_once FRONTEND_CORE_PATH .'/engine/model.php';
+		require_once FRONTEND_CORE_PATH .'/engine/url.php';
+		require_once FRONTEND_CORE_PATH .'/engine/mailer.php';
+		require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
 
 		// based on the type
 		switch ($this->type)
 		{
 			case 'frontend':
-				require FRONTEND_CORE_PATH .'/engine/url.php';
-				require FRONTEND_CORE_PATH .'/engine/page.php';
-				require FRONTEND_CORE_PATH .'/engine/header.php';
-				require FRONTEND_CORE_PATH .'/engine/body.php';
-				require FRONTEND_CORE_PATH .'/engine/breadcrumb.php';
-				require FRONTEND_CORE_PATH .'/engine/footer.php';
-				require FRONTEND_CORE_PATH .'/engine/extra.php';
+				require_once FRONTEND_CORE_PATH .'/engine/frontend.php';
+				require_once FRONTEND_CORE_PATH .'/engine/meta.php';
+				require_once FRONTEND_CORE_PATH .'/engine/page.php';
+				require_once FRONTEND_CORE_PATH .'/engine/header.php';
+				require_once FRONTEND_CORE_PATH .'/engine/breadcrumb.php';
+				require_once FRONTEND_CORE_PATH .'/engine/body.php';
+				require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
+				require_once FRONTEND_CORE_PATH .'/engine/footer.php';
+				require_once FRONTEND_CORE_PATH .'/engine/datagrid.php';
+				require_once FRONTEND_CORE_PATH .'/engine/form.php';
+				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
+			break;
+
+			case 'frontend_ajax':
+				require_once FRONTEND_CORE_PATH .'/engine/ajax.php';
+				require_once FRONTEND_CORE_PATH .'/engine/base_ajax_action.php';
+				require_once FRONTEND_CORE_PATH .'/engine/ajax_action.php';
+			break;
+
+			case 'frontend_js':
+				require_once FRONTEND_CORE_PATH .'/engine/javascript.php';
 			break;
 		}
 	}
@@ -156,6 +183,12 @@ class Init
 		// based on the type
 		switch($this->type)
 		{
+			case 'frontend_ajax':
+			case 'frontend_js':
+				require_once '../../library/globals.php';
+				require_once '../../library/globals_backend.php';
+			break;
+
 			// default
 			default:
 				require_once '../library/globals.php';
@@ -173,10 +206,21 @@ class Init
 	private function requireSpoonClasses()
 	{
 		require_once 'spoon/spoon.php';
+		require_once 'spoon/locale/locale.php';
 		require_once 'spoon/session/session.php';
 		require_once 'spoon/database/database.php';
 		require_once 'spoon/cookie/cookie.php';
 		require_once 'spoon/http/http.php';
+		require_once 'spoon/template/template.php';
+
+		switch($this->type)
+		{
+			case 'frontend':
+				require_once 'spoon/html/datagrid/datagrid.php';
+				require_once 'spoon/html/form/form.php';
+				require_once 'spoon/image/thumbnail.php';
+			break;
+		}
 	}
 
 

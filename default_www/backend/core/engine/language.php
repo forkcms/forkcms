@@ -251,6 +251,11 @@ class BackendLanguage
 		// store in cookie
 		SpoonCookie::set('backend_interface_language', $language);
 
+		// init vars
+		$err = array();
+		$lbl = array();
+		$msg = array();
+
 		// require file
 		require BACKEND_CACHE_PATH .'/locale/'. $language .'.php';
 

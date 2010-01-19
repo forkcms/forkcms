@@ -94,6 +94,8 @@ class BackendPagesModel
 		$keysString .= ' * @author	Backend'."\n";
 		$keysString .= ' * @generated	'. date('Y-m-d H:i:s') ."\n";
 		$keysString .= ' */'."\n\n";
+		$keysString .= '// init var'."\n";
+		$keysString .= '$keys = array();'."\n\n";
 
 		// loop all keys
 		foreach($keys as $pageID => $url) $keysString .= '$keys['. $pageID .'] = \''. $url .'\';'."\n";
@@ -113,6 +115,8 @@ class BackendPagesModel
 		$navigationString .= ' * @author	Backend'."\n";
 		$navigationString .= ' * @generated	'. date('Y-m-d H:i:s') ."\n";
 		$navigationString .= ' */'."\n\n";
+		$navigationString .= '// init var'."\n";
+		$navigationString .= '$navigation = array();'."\n\n";
 
 		// loop all types
 		foreach($navigation as $type => $pages)
@@ -227,6 +231,9 @@ class BackendPagesModel
 	 */
 	public static function createHtml($type = 'page', $depth = 0, $parentId = 1, $html = '')
 	{
+		// init var
+		$navigation = array();
+
 		// require
 		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
 
@@ -523,6 +530,9 @@ class BackendPagesModel
 		// generate the cache files if needed
 		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache();
 
+		// init var
+		$keys = array();
+
 		// require the file
 		require PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php';
 
@@ -746,6 +756,9 @@ class BackendPagesModel
 		// check if the cached file exists, if not we generated it
 		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache();
 
+		// init var
+		$navigation = array();
+
 		// require the file
 		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
 
@@ -912,11 +925,8 @@ class BackendPagesModel
 												WHERE p.parent_id = ? AND  p.status = ? AND m.url = ? AND p.id != ?;',
 												array($parentId, 'active', $url, $id));
 
-			// no items?
-			if($number == 0) $url = $url;
-
 			// there are items so, call this method again.
-			else
+			if($number != 0)
 			{
 				// add a number
 				$url = self::addNumber($url);

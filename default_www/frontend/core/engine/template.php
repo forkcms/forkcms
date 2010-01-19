@@ -1,10 +1,7 @@
 <?php
 
-// require SpoonTemplate
-require_once 'spoon/template/template.php';
-
 /**
- * ForkTemplate, this is our extended version of SpoonTemplate
+ * FrontendTemplate, this is our extended version of SpoonTemplate
  *
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
@@ -25,13 +22,17 @@ class FrontendTemplate extends SpoonTemplate
 {
 	/**
 	 * Default constructor
+	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @return	void
 	 */
 	public function __construct()
 	{
+		// store in reference so we can access it from everywhere
+		Spoon::setObjectReference('template', $this);
+
 		// set cache directory
-		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
 
 		// set compile directory
 		$this->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
@@ -45,24 +46,40 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
-	 * Display the page
+	 * Output the template into the browser
+	 * Will also assign the interfacelabels and all user-defined constants.
 	 *
 	 * @return	void
-	 * @param	string $name
+	 * @param	string $template
 	 */
-	public function display($name)
+	public function display($template)
 	{
-		// parse the label
-		$this->parseLabels();
+		// do custom stuff
+		$custom = new FrontendTemplateCustom($this);
 
 		// parse constants
 		$this->parseConstants();
 
-		// do custom stuff
-		$custom = new FrontendTemplateCustom($this);
+		// parse authenticated user
+		$this->parseAuthenticatedUser();
+
+		// check debug
+		$this->parseDebug();
+
+		// parse the label
+		$this->parseLabels();
+
+		// parse locale
+		$this->parseLocale();
+
+		// asign a placeholder var
+		$this->assign('var', '');
+
+		// parse headers
+		SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
 
 		// call the parent
-		parent::display($name);
+		parent::display($template);
 	}
 
 
@@ -74,13 +91,21 @@ class FrontendTemplate extends SpoonTemplate
 	private function mapCustomModifiers()
 	{
 		// convert vars into an url, syntax {$var|geturl:<pageId>}
-		$this->mapModifier('geturl', array('ForkTemplateModifiers', 'getURL'));
+		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
+		$this->mapModifier('getURL', array('FrontendTemplateModifiers', 'getURL'));
 
-		// convert vars into an url, syntax {$var|gettitle:<pageId>}
-		$this->mapModifier('gettitle', array('ForkTemplateModifiers', 'getTitle'));
+		// convert var into navigation, syntax {$var|getnavigation[:<start-depth>][:<end-depth>]}
+		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
+		$this->mapModifier('getNavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 
-		// convert vars into an url, syntax {$var|getnavigation[:<start-depth>][:<end-depth>]}
-		$this->mapModifier('getnavigation', array('ForkTemplateModifiers', 'getNavigation'));
+		// convert var into a title, syntax {$var|gettitle:<pageId>}
+		$this->mapModifier('gettitle', array('FrontendTemplateModifiers', 'getTitle'));
+
+		// string
+		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
+
+		// debug stuff
+		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));
 	}
 
 
@@ -92,16 +117,22 @@ class FrontendTemplate extends SpoonTemplate
 	private function parseConstants()
 	{
 		// constants that should be protected from usage in the template
-		$secretConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+		$notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
 
 		// get all defined constants
 		$constants = get_defined_constants(true);
 
-		// unset protected constants
-		foreach($secretConstants as $constant) if(isset($constants['user'][$constant])) unset($constants['user'][$constant]);
+		// init var
+		$realConstants = array();
 
-		// if our constants are there assign them
-		if(isset($constants['user'])) $this->assign($constants['user']);
+		// remove protected constants aka constants that should not be used in the template
+		foreach($constants['user'] as $key => $value)
+		{
+			if(!in_array($key, $notPublicConstants)) $realConstants[$key] = $value;
+		}
+
+		// we should only assign constants if there are constants to assign
+		if(!empty($realConstants)) $this->assign($realConstants);
 
 		// aliases
 		$this->assign('LANGUAGE', FRONTEND_LANGUAGE);
@@ -112,29 +143,140 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Assigns an option if we are in debug-mode
+	 *
+	 * @return void
+	 */
+	private function parseDebug()
+	{
+		// @todo for now we only check if SPOON_DEBUG is true
+		if(SPOON_DEBUG) $this->assign('debug', true);
+	}
+
+
+	/**
 	 * Assign the labels
 	 *
 	 * @return	void
 	 */
 	private function parseLabels()
 	{
+		// get the url from the reference, we need to know which module is requested
+		$url = Spoon::getObjectReference('url');
+
+		// grab the current module
+		$currentModule = $url->getModule();
+
+		// init vars
+		$realActions = array();
+		$realErrors = array();
+		$realLabels = array();
+		$realMessages = array();
+
+		// get all actions
+		$actions = FrontendLanguage::getActions();
+
+		// get all errors
+		$errors = FrontendLanguage::getErrors();
+
+		// get all labels
+		$labels = FrontendLanguage::getLabels();
+
+		// get all messages
+		$messages = FrontendLanguage::getMessages();
+
+		// set the begin state
+		$realAction = $actions['core'];
+		$realErrors = $errors['core'];
+		$realLabels = $labels['core'];
+		$realMessages = $messages['core'];
+
+		// loop all errors, label, messages and add them again, but prefixed with Core. So we can decide in the
+		// template to use the core-value instead of the one set by the module
+		foreach($actions['core'] as $key => $value) $realActions['Core'. $key] = $value;
+		foreach($errors['core'] as $key => $value) $realErrors['Core'. $key] = $value;
+		foreach($labels['core'] as $key => $value) $realLabels['Core'. $key] = $value;
+		foreach($messages['core'] as $key => $value) $realMessages['Core'. $key] = $value;
+
+		// are there actions for the current module?
+		if(isset($actions[$currentModule]))
+		{
+			// loop the module-specific actions and reset them in the array with values we will use
+			foreach($actions[$currentModule] as $key => $value) $realActions[$key] = $value;
+		}
+
+		// are there errors for the current module?
+		if(isset($errors[$currentModule]))
+		{
+			// loop the module-specific errors and reset them in the array with values we will use
+			foreach($errors[$currentModule] as $key => $value) $realErrors[$key] = $value;
+		}
+
+		// are there labels for the current module?
+		if(isset($labels[$currentModule]))
+		{
+			// loop the module-specific labels and reset them in the array with values we will use
+			foreach($labels[$currentModule] as $key => $value) $realLabels[$key] = $value;
+		}
+
+		// are there messages for the current module?
+		if(isset($messages[$currentModule]))
+		{
+			// loop the module-specific errors and reset them in the array with values we will use
+			foreach($messages[$currentModule] as $key => $value) $realMessages[$key] = $value;
+		}
+
+		// sort the arrays (just to make it look beautifull)
+		ksort($realErrors);
+		ksort($realLabels);
+		ksort($realMessages);
+
 		// assign actions
-		$this->assignArray(FrontendLanguage::getActions(), 'act');
+		$this->assignActions($realActions, 'act');
 
 		// assign errors
-		$this->assignArray(FrontendLanguage::getErrors(), 'err');
+		$this->assignArray($realErrors, 'err');
 
 		// assign labels
-		$this->assignArray(FrontendLanguage::getLabels(), 'lbl');
+		$this->assignArray($realLabels, 'lbl');
 
 		// assign messages
-		$this->assignArray(FrontendLanguage::getMessages(), 'msg');
+		$this->assignArray($realMessages, 'msg');
+	}
+
+
+	/**
+	 * Parse the locale (things like months, days, ...)
+	 *
+	 * @return	void
+	 */
+	private function parseLocale()
+	{
+		// init vars
+		$localeToAssign = array();
+
+		// get months
+		$monthsLong = SpoonLocale::getMonths(FRONTEND_LANGUAGE, false);
+		$monthsShort = SpoonLocale::getMonths(FRONTEND_LANGUAGE, true);
+
+		// get days
+		$daysLong = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, false, 'sunday');
+		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
+
+		// build labels
+		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong'. ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort'. ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $localeToAssign['locDayLong'. ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $localeToAssign['locDayShort'. ucfirst($key)] = $value;
+
+		// assign
+		$this->assignArray($localeToAssign);
 	}
 }
 
 
 /**
- * ForkTemplateMofidiers, contains all Fork-related modifiers
+ * FrontendTemplateMofidiers, contains all Fork-related modifiers
  *
  * This source file is part of Fork CMS.
  *
@@ -144,8 +286,35 @@ class FrontendTemplate extends SpoonTemplate
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class ForkTemplateModifiers
+class FrontendTemplateModifiers
 {
+	/**
+	 * Dumps the data
+	 *
+	 * @return	string
+	 * @param	string $var
+	 */
+	public static function dump($var)
+	{
+		Spoon::dump($var, false);
+	}
+
+
+	/**
+	 * Convert a var into a url
+	 * 	syntax: {$var|geturl:<action>[:<module>]}
+	 *
+	 * @return	void
+	 * @param	string[optional] $var
+	 * @param	string $action
+	 * @param	string[optional] $module
+	 */
+	public static function getURL($var = null, $action = null, $module = null)
+	{
+		return FrontendModel::createURLForAction($action, $module, FRONTEND_LANGUAGE);
+	}
+
+
 	/**
 	 * Get the navigation html
 	 * 	syntax: {$var|getnavigation[:<pageid>][:<startdepth>][:<enddepth>][:<excludeIds>]}
@@ -192,17 +361,38 @@ class ForkTemplateModifiers
 
 
 	/**
-	 * Convert a var into a url
-	 * 	syntax: {$var|geturl:<pageId>}
+	 * Truncate a string
 	 *
-	 * @return	void
-	 * @param	string[optional] $var
-	 * @param	int $pageId
+	 * @return	string
+	 * @param	string $var
+	 * @param	int $length
+	 * @param	bool[optional] $useHellip
 	 */
-	public static function getURL($var = null, $pageId)
+	public static function truncate($var = null, $length, $useHellip = true)
 	{
-		return (string) FrontendNavigation::getUrlByPageId($pageId);
+		// remove special chars
+		$var = htmlspecialchars_decode($var);
+
+		// less characters
+		if(mb_strlen($var) <= $length) return SpoonFilter::htmlspecialchars($var);
+
+		// more characters
+		else
+		{
+			// hellip is seen as 1 char, so remove it from length
+			if($useHellip) $length = $length - 1;
+
+			// get the amount of requested characters
+			$var = mb_substr($var, 0, $length);
+
+			// add hellip
+			if($useHellip) $var .= '…';
+
+			// return
+			return SpoonFilter::htmlspecialchars($var);
+		}
 	}
+
 }
 
 

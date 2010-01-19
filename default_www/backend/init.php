@@ -57,7 +57,7 @@ class Init
 
 		// define constants
 		$this->definePaths();
-		$this->defineUrls();
+		$this->defineURLs();
 
 		// set include path
 		$this->setIncludePath();
@@ -105,15 +105,15 @@ class Init
 
 
 	/**
-	 * Define urls
+	 * Define URLs
 	 *
 	 * @return	void
 	 */
-	private function defineUrls()
+	private function defineURLs()
 	{
 		define('BACKEND_CORE_URL', '/backend/core');
 		define('BACKEND_CACHE_URL', '/backend/cache');
-		// --
+
 		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 
@@ -164,14 +164,14 @@ class Init
 				require_once BACKEND_PATH .'/modules/tags/engine/model.php';
 			break;
 
-			case 'backend_js':
-				require_once BACKEND_CORE_PATH .'/engine/javascript.php';
-			break;
-
 			case 'backend_ajax':
 				require_once BACKEND_CORE_PATH .'/engine/ajax.php';
 				require_once BACKEND_CORE_PATH .'/engine/base_ajax_action.php';
 				require_once BACKEND_CORE_PATH .'/engine/ajax_action.php';
+			break;
+
+			case 'backend_js':
+				require_once BACKEND_CORE_PATH .'/engine/javascript.php';
 			break;
 		}
 	}
@@ -234,11 +234,14 @@ class Init
 	 */
 	private function setDebugging()
 	{
+		// debugging enabled
 		if(SPOON_DEBUG)
 		{
-//			error_reporting(E_ALL | E_STRICT);
-//			ini_set('display_errors', 'On');
+			error_reporting(E_ALL | E_STRICT);
+			ini_set('display_errors', 'On');
 		}
+
+		// debugging disabled
 		else
 		{
 			error_reporting(0);
