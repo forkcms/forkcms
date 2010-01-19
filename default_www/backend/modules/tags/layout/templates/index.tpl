@@ -10,9 +10,6 @@
 					<div class="datagridHolder">
 						<div class="tableHeading">
 							<h3>Tags</h3>
-							<div class="buttonHolderRight">
-								<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
-							</div>
 						</div>
 						{$datagrid}
 					</div>
