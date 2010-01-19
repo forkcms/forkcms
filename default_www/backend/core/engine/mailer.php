@@ -32,62 +32,29 @@ class BackendMailer
 	 * @param	string[optional] $fromName
 	 * @param	bool[optional] $queue
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $to = null, $from = null, $replyTo = null, $queue = true)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false)
 	{
-		// SpoonEmail checks if to/from/reply-to are arrays or strings, but since this system saves the e-mails because of the queue
-		// system, we have to run those steps in this bit as well. For this reason we also have a getTemplateContent() function here,
-		// in spite of the SpoonTemplate::getContent() function, because we want to store the template with variables parsed in the database.
+		// redefine
+		$subject = (string) $subject;
+		$template = (string) $template;
 
 		// set defaults
-		if($to === null) $to = BackendModel::getSetting('core', 'mailer_to');
-		if($from === null) $from = BackendModel::getSetting('core', 'mailer_from');
-		if($replyTo === null) $replyTo = BackendModel::getSetting('core', 'mailer_reply_to');
+		$to = BackendModel::getSetting('core', 'mailer_to');
+		$from = BackendModel::getSetting('core', 'mailer_from');
+		$replyTo = BackendModel::getSetting('core', 'mailer_reply_to');
 
-		// is the to given in an array format?
-		if(is_array($to) && isset($to[0], $to[1]))
-		{
-			$email['to_email'] = (string) $to[0];
-			$email['to_name'] = (string) $to[1];
-		}
-
-		// only an emailaddress is provided
-		else
-		{
-			$email['to_email'] = (string) $to;
-			$email['to_name'] = null;
-		}
-
-		// is the from given in an array format?
-		if(is_array($from) && isset($from[0], $from[1]))
-		{
-			$email['from_email'] = (string) $from[0];
-			$email['from_name'] = (string) $from[1];
-		}
-
-		// only an emailaddress is provided
-		else
-		{
-			$email['from_email'] = (string) $from;
-			$email['from_name'] = null;
-		}
-
-		// is the from given in an array format?
-		if(is_array($replyTo) && isset($replyTo[0], $replyTo[1]))
-		{
-			$email['reply_to_email'] = (string) $replyTo[0];
-			$email['reply_to_name'] = (string) $replyTo[1];
-		}
-
-		// only an emailaddress is provided
-		else
-		{
-			$email['reply_to_email'] = (string) $replyTo;
-			$email['reply_to_name'] = null;
-		}
+		// set recipient/sender headers
+		$email['to_email'] = (empty($toEmail)) ? (string) $to[0] : $toEmail;
+		$email['to_name'] = (empty($toName)) ? (string) $to[1] : $toName;
+		$email['from_email'] = (empty($fromEmail)) ? (string) $from[0] : $fromEmail;
+		$email['from_name'] = (empty($fromName)) ? (string) $from[1] : $fromName;
+		$email['reply_to_email'] = (empty($replyToEmail)) ? (string) $replyTo[0] : $replyToEmail;
+		$email['reply_to_name'] = (empty($replyToName)) ? (string) $replyTo[1] : $replyToName;
 
 		// validate
-		if(!SpoonFilter::isEmail($email['to_email'])) throw new BackendMailerException('Invalid e-mail address for recipient.');
-		if(!SpoonFilter::isEmail($email['from_email'])) throw new BackendMailerException('Invalid e-mail address for sender.');
+		if(!empty($email['to_email']) && !SpoonFilter::isEmail($email['to_email'])) throw new BackendMailerException('Invalid e-mail address for recipient.');
+		if(!empty($email['from_email']) && !SpoonFilter::isEmail($email['from_email'])) throw new BackendMailerException('Invalid e-mail address for sender.');
+		if(!empty($email['reply_to_email']) && !SpoonFilter::isEmail($email['reply_to_email'])) throw new BackendMailerException('Invalid e-mail address for reply-to address.');
 
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);

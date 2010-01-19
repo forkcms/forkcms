@@ -1,7 +1,5 @@
 <?php
 
-// @todo tijs - passwords moeten een salt gebruiken. Graag hier dan een functie getGeneratedPassword($string) met salt sha1(md5($salt).md5($pass));
-
 /**
  * BackendAuthentication
  *

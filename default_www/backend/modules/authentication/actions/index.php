@@ -134,9 +134,6 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			// no errors in the form?
 			if($this->frmForgotPassword->isCorrect())
 			{
-				// recipient info
-				$to = array($email, '');
-
 				// generate the key for the reset link and fetch the user ID for this email
 				$key = BackendAuthentication::getEncryptedString($email, uniqid());
 
@@ -150,7 +147,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('reset_password', null, null, array('email' => $email, 'key' => $key));
 
 				// send e-mail to user
-				BackendMailer::addEmail(BL::getMessage('ResetYourPassword'), BACKEND_MODULE_PATH .'/layout/templates/mails/reset_password.tpl', $variables, $to, null, null, false);
+				BackendMailer::addEmail(BL::getMessage('ResetYourPassword'), BACKEND_MODULE_PATH .'/layout/templates/mails/reset_password.tpl', $variables, $email);
 
 				// clear post-values
 				$_POST['backend_email'] = '';

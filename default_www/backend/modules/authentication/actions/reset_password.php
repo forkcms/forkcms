@@ -20,7 +20,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 	 *
 	 * @var	BackendForm
 	 */
-	private $frm;
+	protected $frm;
 
 
 	/**
