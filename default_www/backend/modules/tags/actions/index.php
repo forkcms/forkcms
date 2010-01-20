@@ -48,8 +48,8 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setHeaderLabels(array('tag' => ucfirst(BL::getLabel('Name')), 'num_tags' => ucfirst(BL::getLabel('Amount'))));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('tag', 'num_tags'), 'tag');
-		$this->datagrid->setColumnSortingMethod('num_tags', 'desc');
+		$this->datagrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
+		$this->datagrid->setSortParameter('desc');
 
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
