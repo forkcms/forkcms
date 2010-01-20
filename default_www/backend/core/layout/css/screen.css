@@ -956,80 +956,24 @@ table.datagrid a {
 }
 
 	#pagesTree h4 {
-		padding: 10px 10px 4px;
+		padding: 4px 10px;
 		margin: 0;
 		color: #000;
+		background: #C8C8C8;
 	}
 
-	#pagesTree ul li a {
-		padding: 2px 4px 2px 10px;
+	#treeHolder #tree {
+		overflow: hidden;
+		width: 263px;
 	}
 
-	#pagesTree ul li li a {
-		padding: 2px 4px 2px 24px;
+	#pagesTree #tree .tree {
+		margin: 10px 0;
 	}
-	
-	#pagesTree ul {
-		font-size: 11px;
-	}
-	
-	#pagesTree ul a {
-		display: block;
-		color: #333;
-		border: none;
-		padding: 2px 4px;
-		line-height: 18px;
-	}
-	
-	#pagesTree ul a:hover,
-	#pagesTree ul a.selected {
-		background: #1a57ad;
-		background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
-		color: #FFF;
 
-		/* @inc .rc */
-		-webkit-outline-radius: 4px;
-		-moz-outline-radius: 4px;
-	}
-	
-
-#pagesTree .sitemap div[class] {
-	background-image: url(../images/sprites/fork_tree.gif);
-	background-repeat: no-repeat;
-	width: 16px;
-	height: 18px;
-	position: relative;
-	top: 2px;
-	left: 2px;
-	float: left;
-	display: block;
-	padding-right: 5px;
-}
-
-.treeHome {
-	background-position: 0 -190px;
-}
-
-.treePage {
-	background-position: 0 -135px;
-}
-
-#pagesTree .invisible,
-#pagesTree .invisible a {
-	color: #AAA;
-}
-
-#pagesTree .invisible .treePage {
-	opacity: 0.5;
-}
-
-.treeEmpty {
-	background-position: -900px -900px;
-}
-
-.floatleft {
-	float: left;
-}
+/*
+	Sort this sh out
+*/
 
 div.user {
 	height: 24px;

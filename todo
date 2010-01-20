@@ -20,3 +20,8 @@ SPOON TODO
 API TODO
 --
 	- push message to users
+
+BUGS
+---
+
+Als je 2 pagina's aanmaakt die beiden 1930-1940 heten, dan heeft de tweede als URL 1930-1941, da's niet goed, dat zou 1930-1940-2 moeten zijn

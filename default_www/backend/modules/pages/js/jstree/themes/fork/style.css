@@ -1,32 +1,222 @@
-/* LOCKED */
-/*
-.tree-fork .locked li a { color: gray; }
-*/
+/* TREE LAYOUT */
+.tree ul {
+	margin:0 0 0 0;
+	padding:0 0 0 0;
+	list-style-type:none;
+	background: url(data:image/gif;base64,R0lGODlhAgACAIAAAB4dGf///yH5BAEAAAEALAAAAAACAAIAAAICRF4AOw==);
+	background-position: 7px 0;
+	background-repeat:repeat-y;
+}
+.tree li {
+	display:block;
+	min-height:16px;
+	line-height:16px; 
+	padding:0 0 0 16px;
+	margin:0;
+	/* Background fix */
+	clear:both;
+}
+
+.tree li ul {
+	display: none;
+}
+
+.tree li a,
+.tree li span {
+	display:inline-block;
+	line-height:16px;
+	height:16px;
+	color:black;
+	white-space:nowrap;
+	text-decoration:none;
+	padding:0;
+	margin:0;
+	background: #F5F5F5;
+}
+
+.tree li a:focus {
+	outline: none;
+}
+
+.tree li a input,
+.tree li span input {
+	margin:0;
+	padding:0;
+	display:inline-block;
+	height:12px !important;
+	border:1px solid white;
+	background:white;
+	font-size:10px;
+	font-family:Verdana;
+}
+
+.tree li a input:not([class="xxx"]),
+.tree li span input:not([class="xxx"]) {
+	padding:1px 0;
+}
+
+/* FOR DOTS */
+.tree .ltr li.last {
+	float:left;
+}
+
+.tree > ul li.last {
+	overflow:visible;
+} 
+
+/* OPEN OR CLOSE */
+.tree li.open ul {
+	display: block;
+}
+
+.tree li.closed ul {
+	display:none !important;
+}
+
+/* FOR DRAGGING */
+#jstree-dragged {
+	position:absolute;
+	top:-10px;
+	left:-10px;
+	margin:0;
+	padding:0;
+}
+
+#jstree-dragged ul ul ul {
+	display:none;
+}
+
+#jstree-marker {
+	padding:0;
+	margin:0;
+	line-height:5px;
+	font-size:1px;
+	overflow:hidden;
+	height:5px;
+	position:absolute;
+	left:-45px;
+	top:-30px;
+	z-index:1000;
+	background-color:transparent;
+	background-repeat:no-repeat;
+	display:none;
+} 
+
+#jstree-marker.marker {
+	width:45px;
+	background-position:-32px top;
+}
+
+#jstree-marker.marker_plus {
+	width:5px;
+	background-position:right top;
+} 
+
+/* BACKGROUND DOTS */ 
+.tree li li { overflow:hidden; }
+.tree > .ltr > li { display:table; } 
+
+/* ICONS */ 
+.tree ul ins {
+	display:inline-block;
+	text-decoration:none;
+	width:16px;
+	height:16px;
+}
+
+.tree .ltr ins {
+	margin:0;
+} 
 
 /* DOTS */
-.tree-fork li { background: transparent url('icons.gif') repeat-y -16px 0; display: block !important; }
+.tree-fork li {
+	display: block !important;
+	font-size: 11px;
+}
+
+.tree-fork li {
+	background-image: url(tree.gif);
+	background-repeat: no-repeat;
+	background-position: 0 0;
+}
 
 /* OPEN or CLOSED */
 
-.tree-fork li.last { background-position: 0 -56px; }
-.tree-fork li.open { background: url('icons.gif') 0 -37px no-repeat; }
-.tree-fork li.dragged { border: 1px dotted #000; }
-.tree-fork li.closed, #jstree-dragged.tree-fork li li.open { background-position: 0 -17px !important; }
-#jstree-marker { border-bottom: 1px dashed #000; }
+.tree-fork li.leaf { background-position: 0 0; background-repeat: no-repeat; }
+.tree-fork li.closed { background-position: -264px -0; background-repeat: no-repeat;}
+.tree-fork li.open { background-position: -528px 0; background-repeat: no-repeat; }
+.tree-fork li.closed.last { background-position: -792px 0; background-repeat: no-repeat;}
+.tree-fork li.open.last { background-position: -1056px 0; background-repeat: no-repeat;}
+.tree-fork li.last { background-position: -1320px 0; background-repeat: no-repeat;}
+
+.tree-fork li.dragged {
+	outline: 1px dotted #000;
+}
+
+#jstree-dragged.tree-fork li li.open {
+	background-position: 0 -16px;
+}
+#jstree-marker {
+	border-bottom: 1px dashed #000;
+}
+
+.tree-fork li a { width: 1000px; }
 
 /* DEFAULT, HOVER, CLICKED, LOADING STATES */
-.tree-fork li a, .tree-fork li span { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
-.tree-fork li a: hover, .tree-fork li a.hover, .tree-fork li span { background: #e7f4f9; border: 1px solid #d8f0fa; padding: 0px 3px 0px 3px; }
-.tree-fork li a.clicked, .tree-fork li a.clicked: hover, .tree-fork li span.clicked { background: #beebff; border: 1px solid #99defd; padding: 0px 3px 0px 3px; }
+.tree-fork li a:hover,
+.tree-fork li a.hover,
+.tree-fork li span {
+	background: #666;
+	color: #FFF;
+}
+
+.tree-fork li a.clicked,
+.tree-fork li a.clicked:hover,
+.tree-fork li span.clicked {
+	background: #000;
+	color: #FFF;
+}
 
 /* ICONS */
-.tree-fork ins { background: transparent url('icons.gif') no-repeat 0 -171px; }
-.tree-fork ul li a.loading ins { background-image: url("throbber.gif") !important; background-position: 0 0 !important; }
-.tree-fork li a ins.forbidden { background-position: -16px -16px; }
-.tree-fork .locked li a ins { background-position: 0 -48px; }
-.tree-fork li span ins { background-position: -16px 0; }
+
+/* Basic page */
+.tree-fork ins {
+	background: transparent url(icons.gif) no-repeat 0 -80px;
+	padding-right: 2px;
+}
+
+.tree-fork ul li a.loading ins {
+	background-image: url("throbber.gif") !important;
+	background-position: 0 0 !important;
+}
+.tree-fork li a ins.forbidden {
+	background-position: -16px -16px;
+}
+.tree-fork .locked li a ins {
+	background-position: 0 -48px;
+}
+.tree-fork li span ins {
+	background-position: -16px 0;
+}
 
 /* dragged item */
-#jstree-dragged { border: 1px dotted #000; background-color: #CCC; opacity: 0.7; }
-#jstree-dragged.tree-fork ins { background: url('icons.png') -16px -32px no-repeat; }
-#jstree-dragged.tree-fork ins.forbidden { background: url('icons.png') -16px -16px no-repeat; }
+#jstree-dragged {
+	border: 1px dotted #000;
+	background-color: #CCC;
+	opacity: 0.7;
+}
+#jstree-dragged.tree-fork ins {
+	background: url('icons.png') -16px -32px no-repeat;
+}
+#jstree-dragged.tree-fork ins.forbidden {
+	background: url('icons.png') -16px -16px no-repeat;
+}
+
+
+
+/* LOCKED */
+/*
+.tree-fork .locked li a {
+	color: gray;
+}
+*/

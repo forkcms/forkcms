@@ -168,13 +168,13 @@ jsBackend.pages.tree = {
 						},
 						types: {
 							'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/backend/modules/pages/js/jstree/themes/fork/icons.gif' } },
-							'page': { icon: { position: '0 -171px' } },
+							'page': { icon: { position: '0 -80px' } },
 							'folder': { icon: { position: false } },
 							'hidden': { icon: { position: false } },
-							'home': { draggable: false, icon: { position: '0 -189px' } },
+							'home': { draggable: false, icon: { position: '0 -112px' } },
 							'pages': { icon: { position: false } },
-							'error': { draggable: false, max_children: 0, icon: { position: '0 -227px' } },
-							'sitemap': { max_children: 0, icon: { position: '0 -246px' } }
+							'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
+							'sitemap': { max_children: 0, icon: { position: '0 -176px' } }
 						},
 						plugins: { 
 							cookie: { prefix: 'jstree_', types: { selected: false } }
