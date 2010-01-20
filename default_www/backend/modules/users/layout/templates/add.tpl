@@ -1,7 +1,8 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
+{include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 
 	<h2>{$msgHeaderAdd}</h2>
-	
+
 	{form:add}
 		<fieldset>
 			<label for="username">{$lblUsername|ucfirst}</label>
@@ -11,11 +12,11 @@
 
 			<label for="nickname">{$lblNickname|ucfirst}</label>
 			<p>{$txtNickname} {$txtNicknameError}</p>
-			
+
 			<label for="avatar">{$lblAvatar|ucfirst}</label>
 			<p><img src="{$avatarImage}" width="64" height="64" alt="avatar" /></p>
 			<p>{$fileAvatar} {$fileAvatarError}</p>
-			
+
 			<label for="email">{$lblEmail|ucfirst}</label>
 			<p>{$txtEmail} {$txtEmailError}</p>
 			<label for="name">{$lblName|ucfirst}</label>
@@ -25,7 +26,7 @@
 
 			<label for="username">{$lblInterfaceLanguage|ucfirst}</label>
 			<p>{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}</p>
-			
+
 			<p>{$btnAdd}</p>
 		</fieldset>
 	{/form:add}

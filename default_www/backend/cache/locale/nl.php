@@ -47,6 +47,7 @@ $err['core']['GoogleMapsKey'] = 'Google maps API-key werd nog niet geconfigureer
 $err['core']['InvalidAPIKey'] = 'Ongeldige API key.';
 $err['core']['InvalidDomain'] = 'Gelieve enkel domeinen in te vullen zonder http en www. vb netlash.com';
 $err['core']['InvalidParameters'] = 'Ongeldige parameters.';
+$err['core']['InvalidURL'] = 'Ongeldige URL.';
 $err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct.';
 // j
 // k
@@ -95,10 +96,11 @@ $err['core']['URLAlreadyExist'] = 'Deze URL bestaat al.';
 $lbl = array();
 $lbl['core'] = array();
 // a
+$lbl['core']['ActiveUsers'] = 'actieve gebruikers';
 $lbl['core']['Add'] = 'toevoegen';
-$lbl['core']['AddCategory'] = 'categorie toevoegen';
-$lbl['core']['AddTag'] = 'toevoegen';
 $lbl['pages']['Add'] = 'pagina toevoegen';
+$lbl['users']['Add'] = 'gebruiker toevoegen';
+$lbl['core']['AddCategory'] = 'categorie toevoegen';
 $lbl['core']['All'] = 'alle';
 $lbl['core']['Amount'] = 'aantal';
 $lbl['tags']['Amount'] = 'aantal keer gebruikt';
@@ -115,6 +117,7 @@ $lbl['core']['By'] = 'door';
 $lbl['core']['Cancel'] = 'annuleer';
 $lbl['core']['Categories'] = 'categorieën';
 $lbl['core']['Category'] = 'categorie';
+$lbl['core']['CheckCommentsForSpam'] = 'filter reacties op spam';
 $lbl['core']['Comment'] = 'reactie';
 $lbl['core']['Content'] = 'inhoud';
 $lbl['core']['CustomURL'] = 'aangepaste URL';
@@ -124,6 +127,7 @@ $lbl['core']['Date'] = 'datum';
 $lbl['core']['Default'] = 'standaard';
 $lbl['core']['Delete'] = 'verwijderen';
 $lbl['core']['DeleteTag'] = 'verwijder deze tag';
+$lbl['core']['Description'] = 'beschrijving';
 $lbl['core']['Developer'] = 'developer';
 $lbl['core']['Domains'] = 'domeinen';
 $lbl['core']['Dutch'] = 'nederlands';
@@ -136,6 +140,7 @@ $lbl['core']['EmailWebmaster'] = 'e-mail webmaster';
 $lbl['core']['Execute'] = 'uitvoeren';
 $lbl['core']['Extra'] = 'extra';
 // f
+$lbl['core']['FeedburnerURL'] = 'Feedburner URL';
 $lbl['core']['Footer'] = 'footer';
 $lbl['core']['French'] = 'frans';
 // g
@@ -179,6 +184,7 @@ $lbl['core']['Page'] = 'pagina';
 $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 $lbl['core']['PageTitle'] = 'paginatitel';
+$lbl['blog']['PingBlogServices'] = 'Ping blogservices';
 $lbl['core']['PostsInThisCategory'] = 'posts in deze categorie';
 $lbl['core']['Preview'] = 'preview';
 $lbl['core']['Previous'] = 'vorige';
@@ -192,6 +198,7 @@ $lbl['core']['RecentComments'] = 'recente reacties';
 $lbl['core']['RecentlyEdited'] = 'recent aangepast';
 $lbl['core']['Referrers'] = 'referrers';
 $lbl['core']['RepeatPassword'] = 'herhaal wachtwoord';
+$lbl['core']['RequiredField'] = 'verplicht veld';
 $lbl['core']['Revisions'] = 'versies';
 $lbl['pages']['Root'] = 'losse pagina\'s';
 // s
@@ -209,6 +216,7 @@ $lbl['core']['SortedAscending'] = 'oplopend gesorteerd';
 $lbl['core']['SortedDescending'] = 'aflopend gesorteerd';
 $lbl['core']['Snippets'] = 'snippets';
 $lbl['core']['Spam'] = 'spam';
+$lbl['core']['SpamFilter'] = 'spamfilter';
 $lbl['core']['Status'] = 'status';
 $lbl['core']['Submit'] = 'verzenden';
 $lbl['core']['Surname'] = 'achternaam';
@@ -224,6 +232,7 @@ $lbl['core']['Update'] = 'wijzig';
 $lbl['core']['URL'] = 'URL';
 $lbl['core']['Userguide'] = 'userguide';
 $lbl['core']['Username'] = 'gebruikersnaam';
+$lbl['core']['Users'] = 'gebruikers';
 $lbl['core']['UseThisVersion'] = 'gebruik deze versie';
 // v
 $lbl['core']['Versions'] = 'versies';
@@ -295,6 +304,7 @@ $msg['snippets']['HeaderIndex'] = 'Overzicht';
 $msg['users']['HeaderIndex'] = 'Gebruikers overzicht';
 $msg['pages']['HelpAdd'] = '&larr; Click a page name in the tree structure to edit it or';
 $msg['settings']['HelpEmailWebmaster'] = 'Stuur notificaties van het CMS naar dit e-mailadres.';
+$msg['core']['HelpFeedburnerURL'] = 'bijv. http://feeds.feedburner.com/netlash';
 $msg['pages']['HelpPageTitle'] = 'De titel die in het venster van de browser staat (<code>&lt;title&gt;</code>).';
 $msg['pages']['HelpNavigationTitle'] = 'Als de paginatitel te lang is om in het menu te passen, geef dan een verkorte titel in.';
 $msg['pages']['HelpNoFollow'] = 'Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.';
@@ -302,7 +312,11 @@ $msg['pages']['HelpMetaCustom'] = 'Laat toe om extra, op maat gemaakte metatags 
 $msg['pages']['HelpMetaDescription'] = 'De pagina-omschrijving die wordt getoond in de resultaten van zoekmachines. Hou het kort en krachtig.';
 $msg['pages']['HelpMetaKeywords'] = 'De sleutelwoorden (keywords) die deze pagina omschrijven.';
 $msg['pages']['HelpMetaURL'] = 'Vervang de automatisch gegenereerde URL door een zelfgekozen URL.';
+$msg['blog']['HelpPingServices'] = 'Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst';
 $msg['core']['HelpRevisions'] = 'De 20 laatst opgeslagen versies worden hier bijgehouden. \'Gebruik deze versie\' opent een vroegere versie. De huidige versie wordt pas overschreven als je de pagina opslaat.';
+$msg['core']['HelpRSSDescription'] = 'Beschrijf bondig wat voor soort inhoud de RSS-feed zal bevatten';
+$msg['core']['HelpRSSTitle'] = 'Geef een duidelijke titel aan de RSS-feed';
+$msg['blog']['HelpSpamFilter'] = 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden';
 // i
 // j
 // k

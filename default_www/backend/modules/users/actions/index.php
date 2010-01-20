@@ -9,6 +9,7 @@
  * @subpackage	users
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendUsersIndex extends BackendBaseActionIndex
@@ -44,14 +45,11 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		// create datagrid with an overview of all active and undeleted users
 		$this->datagrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('Y', 'N'));
 
-		// hide id
-		$this->datagrid->setColumnsHidden('id');
+		// header labels
+		$this->datagrid->setHeaderLabels(array('username' => ucfirst(BL::getLabel('Username'))));
 
 		// add edit column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]');
-
-		// set id on rows, we will need this for the highlighting
-		$this->datagrid->setRowAttributes(array('id' => 'userid-[id]'));
 	}
 
 

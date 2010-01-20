@@ -9,6 +9,7 @@
  * @subpackage	users
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendUsersAdd extends BackendBaseActionAdd
@@ -118,6 +119,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));
+				$aSettings['password_key'] = uniqid();
 
 				// save changes
 				$aUser['id'] = (int) BackendUsersModel::insert($aUser, $aSettings);

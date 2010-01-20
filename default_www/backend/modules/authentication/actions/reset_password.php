@@ -79,7 +79,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 	 *
 	 * @return	void
 	 */
-	private function load()
+	private function loadForm()
 	{
 		// create the form
 		$this->frm = new BackendForm();
@@ -137,7 +137,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// is the form submitted
 		if($this->frm->isSubmitted())

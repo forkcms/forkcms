@@ -47,4 +47,5 @@ final class UsersConfig extends BackendBaseConfig
 	 */
 	protected $linkedAjaxActions = array();
 }
+
 ?>
