@@ -15,12 +15,15 @@
 					{/option:highlight}
 				{/option:report}
 
-				<h2></h2>
-				<a href="{$var|geturl:'add'}" title="{$lblAdd}">{$lblAdd}</a>
-
 				<div>
 					{option:datagrid}{$datagrid}{/option:datagrid}
-					{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+					{option:!datagrid}
+						<p>{$msgNoItems}</p>
+						
+						<div class="buttonHolder">
+							<a class="button icon iconAdd" href="{$var|geturl:'add'}" title="{$lblAdd}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+						</div>
+					{/option:!datagrid}
 				</div>
 			</div>
 		</td>
