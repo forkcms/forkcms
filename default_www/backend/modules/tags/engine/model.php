@@ -234,7 +234,7 @@ class BackendTagsModel
 												array($module, $otherId, $language));
 
 		// remove old links
-		$db->delete('modules_tags', 'module = ? AND other_id = ?', array($module, $otherId)); // @todo tijs - we moeten hierover spreken,dit kan problemen geven bij modules waarbij er overlap kan zijn van id's over de talen heen voor eenzelfde module.
+		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN ('. implode(array_values(', ', $currentTags)) .')');
 
 		// tags provided
 		if(!empty($tags))
