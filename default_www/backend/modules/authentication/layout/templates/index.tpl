@@ -49,11 +49,14 @@
 							<div class="oneLiner">
 								<p><label for="backendEmail">{$lblEmail|ucfirst}</label></p>
 								<p>{$txtBackendEmail}</p>
-								<p>{$btnSend}{$txtBackendEmailError}</p>
+								<p>{$btnSend}</p>
+							</div>
+
+							<div class="errorMessage singleMessage">
+								<p>{$txtBackendEmailError}</p>
 							</div>
 
 							{option:hasForgotpasswordError}
-							<!-- @todo @johan stijlen errormessage, geef een verkeerd emailadres in -->
 							<div class="errorMessage singleMessage">
 								<p>{$msgLoginFormForgotPasswordError}</p>
 							</div>

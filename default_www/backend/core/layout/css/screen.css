@@ -1525,7 +1525,9 @@ td.comments {
 /* Modify input[type="text"] and textareas */
 
 .inputText,
+.inputPassword,
 input[type="text"],
+input[type="password"],
 textarea {
 	background: #F9F9F9 url(../images/ds.png) repeat-x;
 	border: 1px solid #BBB;
@@ -1541,7 +1543,9 @@ textarea {
 }
 
 .inputText,
-input[type="text"] {
+input[type="text"],
+.inputPassword,
+input[type="password"] {
 	padding: 3px 2px;
 	color: #333;
 }
@@ -1549,13 +1553,17 @@ input[type="text"] {
 	/* Fix alignment in Chrome/Saf */
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.inputText,
-		input[type="text"] {
+		input[type="text"],
+		.inputPassword,
+		input[type="password"] {
 			height: 14px;
 		}
 	}
 
 	.inputText:focus,
 	input[type="text"]:focus,
+	.inputPassword:focus,
+	input[type="password"]:focus,
 	textarea:focus {
 		color: #000;
 		background: #FFF;
@@ -1596,12 +1604,17 @@ input[type="submit"] {
 	*/
 	@-moz-document url-prefix() {
 		
-		.inputText {
+		.inputText,
+		.inputPassword {
 			height: 14px;
 			line-height: 14px;
 		}
 		
-		input[type="text"]:focus, textarea:focus { 
+		.inputText:focus,
+		input[type="text"]:focus,
+		.inputPassword:focus,
+		input[type="password"]:focus,
+		textarea:focus { 
 			outline: 2px solid #C2DEFF;
 			-moz-outline-radius: 5px;
 			border-color: #456b99;
@@ -1726,8 +1739,7 @@ label {
 .forkForms .horizontal p.label{ margin: 0; }
 .forkForms .spacing,
 .forkForms .horizontal span.form-error { padding-left: 115px; }
-#loginform.forkForms .horizontal p label,
-#loginform.forkForms .horizontal p.label { width: 120px; text-align: right; line-height: 24px; }
+
 .forkForms abbr { cursor: help; }
 
 .forkForms .block{ display: block !important; }
@@ -2497,7 +2509,7 @@ abbr.help {
 	padding: 25px 50px;
 
 	background: #FFF;
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F4F4F4));
 	
 	/* @inc .rc */
 	border-radius: 4px;
@@ -2508,11 +2520,10 @@ abbr.help {
 	box-shadow: 0 2px 6px #AAA;
 	-webkit-box-shadow: 0 2px 6px #AAA;
 	-moz-box-shadow: #AAA 0 2px 6px;
-	
 }
 
 	#loginBoxTop {
-		padding: 0 50px;
+		padding: 0 48px;
 		width: 300px;
 	}
 
@@ -2545,21 +2556,20 @@ abbr.help {
 			font-size: 11px;
 			color: #666;
 			display: block;
-			width: 60px;
+			width: 100px;
 		}
 	
 		#loginBox p.spacing {
 			padding-bottom: 0;
+			padding-left: 158px;
 		}
-		
-		/*background: -webkit-gradient(linear, left top, left bottom, from(#00abeb), to(#fff), color-stop(0.5, #fff), color-stop(0.5, #66cc00));*/
 		
 		.balloon {
 			position: relative;
 			width: 248px;
 			padding: 12px 24px 36px;
-			background: #e9f0f7;
-			border: 1px solid #b8bcc9;
+			background: #E9F0F7;
+			border: 1px solid #B8BCC9;
 			
 			background: -webkit-gradient(linear, left top, left bottom, from(#eff5fd), to(#e9f0f7));
 
@@ -2574,13 +2584,18 @@ abbr.help {
 			-moz-box-shadow: #AAA 0 2px 6px;
 			
 		}
+
+			/* @todo @tijs @johan make this work together with forgot password form */
+			.balloonNoMessage {
+				padding: 12px 24px 12px;
+			}
 		
 			#forgotPassword p {
 				font-size: 11px;
 			}
 			
-			#forgotPassword .successMessage {
-				border-top: 1px solid #b8bcc9;
+			#forgotPassword .singleMessage {
+				border-top: 1px solid #B8BCC9;
 				width: 100%;
 				position: absolute;
 				bottom: 0;
@@ -2599,9 +2614,7 @@ abbr.help {
 				-webkit-border-bottom-right-radius: 4px;
 				-moz-border-radius-bottomright: 4px;
 			}
-			
-			
-			
+
 			.balloon .balloonTop {
 				width: 15px;
 				height: 8px;
@@ -2611,10 +2624,6 @@ abbr.help {
 				top: -8px;
 				left: 27%;
 			}
-			
-			
-			
-
 
 /*
 	Avatar

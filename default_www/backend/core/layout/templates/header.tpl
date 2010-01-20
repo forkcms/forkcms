@@ -16,6 +16,7 @@
 												<a href="/">{$SITE_TITLE|truncate:20}</a>
 											</h1>
 										</td>
+										{option:workingLanguages}
 										<td>
 											<select id="workingLanguage">
 												{iteration:workingLanguages}
@@ -23,6 +24,7 @@
 												{/iteration:workingLanguages}
 											</select>
 										</td>
+										{/option:workingLanguages}
 									</tr>
 								</table>
 							</td>

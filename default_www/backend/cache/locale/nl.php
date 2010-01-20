@@ -36,7 +36,7 @@ $err['core']['ContentIsRequired'] = 'Gelieve inhoud in te geven.';
 // d
 // e
 $err['core']['EmailIsInvalid'] = 'Gelieve een geldig emailadres in te geven.';
-$err['core']['EmailIsUnknown'] = 'Dit emailadres is niet teruggevonden.';
+$err['core']['EmailIsUnknown'] = 'Dit emailadres werd niet teruggevonden.';
 // f
 $err['core']['FieldIsRequired'] = 'Dit veld is verplicht.';
 // g
@@ -273,7 +273,7 @@ $msg['spotlight']['Edited'] = 'Wijzigingen voor <em>%s</em> opgeslagen.';
 $msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
 // f
 $msg['core']['ForgotPassword'] = 'Wachtwoord vergeten?';
-$msg['core']['ForgotPasswordHelp'] = 'Vul hieronder je e-mail adres in om je wachtwoord te resetten.';
+$msg['core']['ForgotPasswordHelp'] = 'Vul hieronder je e-mail adres in om een nieuw wachtwoord toegestuurd te krijgen.';
 // g
 // h
 $msg['core']['HeaderAdd'] = 'Toevoegen';
@@ -306,7 +306,7 @@ $msg['core']['HelpRevisions'] = 'De 20 laatst opgeslagen versies worden hier bij
 // k
 // l
 $msg['settings']['LanguagesText'] = 'Duid aan welke talen toegankelijk zijn voor bezoekers';
-$msg['core']['LoginFormHelp'] = 'Enter your username and password to sign in.';
+$msg['core']['LoginFormHelp'] = 'Vul uw gebruikersnaam en wachtwoord in om u aan te melden.';
 $msg['core']['LoggedInAs'] = 'aangemeld als';
 $msg['core']['LoginFormForgotPasswordSuccess'] = '<strong>Mail sent.</strong> Please check your inbox!';
 // m
