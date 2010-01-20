@@ -129,6 +129,7 @@ $lbl['core']['Domains'] = 'domeinen';
 $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
+$lbl['core']['English'] = 'engels';
 $lbl['core']['Editor'] = 'editor';
 $lbl['core']['Email'] = 'email';
 $lbl['core']['EmailWebmaster'] = 'e-mail webmaster';
@@ -136,6 +137,7 @@ $lbl['core']['Execute'] = 'uitvoeren';
 $lbl['core']['Extra'] = 'extra';
 // f
 $lbl['core']['Footer'] = 'footer';
+$lbl['core']['French'] = 'frans';
 // g
 // h
 $lbl['core']['Hidden'] = 'verborgen';
