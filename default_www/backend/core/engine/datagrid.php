@@ -402,12 +402,8 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		// assign pages
 		$tpl->assign('pages', $aPages);
 
-		// @todo davy - implementeren van $tpl->getContent()
-
 		// cough it up
-		ob_start();
-		$tpl->display(BACKEND_CORE_PATH .'/layout/templates/datagrid_paging.tpl');
-		return ob_get_clean();
+		return $tpl->getContent(BACKEND_CORE_PATH .'/layout/templates/datagrid_paging.tpl');
 	}
 }
 
