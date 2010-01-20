@@ -601,11 +601,15 @@ td#contentHolder {
 	font-size: 11px;
 }
 
-.datagrid th.sortable:hover,
-.datagrid th.sortedAsc,
-.datagrid th.sortedDesc {
+.datagrid th a.sortedAsc,
+.datagrid th a.sortedDesc {
 	background: url(../images/th.gif) repeat-x 0 -48px;
 }
+
+.datagrid th a.sortable:hover {
+	color: #000;
+}
+
 
 .datagrid th a,
 .datagrid th span {
@@ -613,15 +617,15 @@ td#contentHolder {
 	display: block;
 }
 
-.datagrid th.sortable a {
+.datagrid th a.sortable {
 	background: url(../images/th.gif) no-repeat right -193px;
 }
 
-.datagrid th.sortedDesc a {
+.datagrid th a.sortedDesc {
 	background: url(../images/th.gif) no-repeat right -215px;
 }
 
-.datagrid th.sortedAsc a {
+.datagrid th a.sortedAsc {
 	background: url(../images/th.gif) no-repeat right -237px;
 }
 
