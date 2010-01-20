@@ -10,18 +10,19 @@
  * @subpackage	tags
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendTagsModel
 {
 	const QRY_DATAGRID_BROWSE = 'SELECT
-											t.id,
-											t.tag,
-											t.number AS num_tags
-											FROM tags AS t
-											LEFT OUTER JOIN modules_tags AS mt ON mt.tag_id = t.id
-											WHERE t.language = ?
-											GROUP BY t.id';
+									t.id,
+									t.tag,
+									t.number AS num_tags
+									FROM tags AS t
+									LEFT OUTER JOIN modules_tags AS mt ON mt.tag_id = t.id
+									WHERE t.language = ?
+									GROUP BY t.id';
 
 
 	/**
@@ -49,10 +50,6 @@ class BackendTagsModel
 	 */
 	public static function getStartsWith($query, $limit = 10)
 	{
-		// redefine
-		$query = (string) $query;
-		$limit = (int) $limit;
-
 		// get db
 		$db = BackendModel::getDB();
 
@@ -62,7 +59,7 @@ class BackendTagsModel
 										WHERE t.tag LIKE ?
 										ORDER BY t.tag ASC
 										LIMIT ?;',
-										array($query .'%', $limit));
+										array((string) $query .'%', (int) $limit));
 	}
 
 
@@ -74,17 +71,13 @@ class BackendTagsModel
 	 */
 	public static function get($id)
 	{
-		// redefine
-		$id = (int) $id;
-
 		// get db
 		$db = BackendModel::getDB();
 
 		// make the call
 		return (array) $db->getRecord('SELECT t.tag AS name
 										FROM tags AS t
-										WHERE t.id = ?;',
-										array($id));
+										WHERE t.id = ?;', (int) $id);
 	}
 
 
@@ -108,17 +101,19 @@ class BackendTagsModel
 		// get db
 		$db = BackendModel::getDB();
 
+		// fetch tags
 		$tags = (array) $db->getColumn('SELECT t.tag
 										FROM tags AS t
 										INNER JOIN modules_tags AS mt ON t.id = mt.tag_id
-										WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?;',
+										WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?
+										ORDER BY tag ASC;',
 										array($module, $otherId, $language));
 
 		// return as an imploded string
 		if($type == 'string') return implode(',', $tags);
 
 		// return as array
-		else return $tags;
+		return $tags;
 	}
 
 
@@ -126,13 +121,14 @@ class BackendTagsModel
 	 * Get a unique URL for a tag
 	 *
 	 * @return	string
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	int[optional] $id
 	 */
-	public static function getURL($url, $id = null)
+	public static function getURL($URL, $id = null)
 	{
 		// redefine
-		$url = (string) $url;
+		$URL = SpoonFilter::urlise((string) $URL);
+		$language = BL::getWorkingLanguage();
 
 		// get db
 		$db = BackendModel::getDB();
@@ -143,43 +139,40 @@ class BackendTagsModel
 			// get number of tags with the specified url
 			$number = (int) $db->getNumRows('SELECT t.id
 												FROM tags AS t
-												WHERE t.url = ?;',
-												array($url));
-
-			// no items?
-			if($number == 0) return $url;
+												WHERE t.url = ? AND t.language = ?;', array($URL, $language));
 
 			// there are items so, call this method again.
-			else
+			if($number != 0)
 			{
 				// add a number
-				$url = BackendModel::addNumber($url);
+				$URL = BackendModel::addNumber($URL);
 
 				// recall this method, but with a new url
-				return self::getURL($url, $id);
+				$URL = self::getURL($URL, $id);
 			}
 		}
+
+		// specific id given
 		else
 		{
 			// get number of tags with the specified url
 			$number = (int) $db->getNumRows('SELECT t.id
 												FROM tags AS t
-												WHERE t.url = ? AND t.id != ?;',
-												array($url, $id));
-
-			// no items?
-			if($number == 0) return $url;
+												WHERE t.url = ? AND t.id != ? AND t.language = ?;',
+												array($URL, $id, $language));
 
 			// there are items so, call this method again.
-			else
+			if($number != 0)
 			{
 				// add a number
-				$url = BackendModel::addNumber($url);
+				$URL = BackendModel::addNumber($URL);
 
 				// recall this method, but with a new url
-				return self::getURL($url, $id);
+				$URL = self::getURL($URL, $id);
 			}
 		}
+
+		return $URL;
 	}
 
 
@@ -201,9 +194,9 @@ class BackendTagsModel
 
 		// build record
 		$record['language'] = $language;
-		$record['tag'] = SpoonFilter::htmlspecialchars($tag);
+		$record['tag'] = $tag;
 		$record['number'] = 0;
-		$record['url'] = self::getURL(SpoonFilter::urlise($tag));
+		$record['url'] = self::getURL($tag);
 
 		// insert
 		return (int) $db->insert('tags', $record);
@@ -227,7 +220,7 @@ class BackendTagsModel
 		$module = (string) $module;
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
-		// redefine the tags into an array
+		// redefine the tags as an array
 		if(!is_array($tags)) $tags = (array) explode(',', $tags);
 
 		// get db
@@ -237,11 +230,11 @@ class BackendTagsModel
 		$currentTags = (array) $db->getPairs('SELECT t.tag, t.id
 												FROM tags AS t
 												INNER JOIN modules_tags AS mt ON t.id = mt.tag_id
-												WHERE mt.module = ? AND mt.other_id = ?;',
-												array($module, $otherId));
+												WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?;',
+												array($module, $otherId, $language));
 
 		// remove old links
-		$db->delete('modules_tags', 'module = ? AND other_id = ?', array($module, $otherId));
+		$db->delete('modules_tags', 'module = ? AND other_id = ?', array($module, $otherId)); // @todo tijs - we moeten hierover spreken,dit kan problemen geven bij modules waarbij er overlap kan zijn van id's over de talen heen voor eenzelfde module.
 
 		// tags provided
 		if(!empty($tags))
@@ -262,15 +255,15 @@ class BackendTagsModel
 			// get tag ids
 			$tagsAndIds = (array) $db->getPairs('SELECT t.tag, t.id
 													FROM tags AS t
-													WHERE t.tag IN("'. implode('", "', $tags) .'") AND t.language = ?;',
-													array($language));
+													WHERE t.tag IN("'. implode('", "', $tags) .'") AND t.language = ?;', $language);
 
 			// loop again and create tags that don't exist already
 			foreach($tags as $tag)
 			{
+				// doesn' exist yet
 				if(!isset($tagsAndIds[$tag]))
 				{
-					// insert a tag
+					// insert tag
 					$tagsAndIds[$tag] = self::insertTag($tag, $language);
 				}
 			}
@@ -285,7 +278,7 @@ class BackendTagsModel
 				$tagId = (int) $tagsAndIds[$tag];
 
 				// not linked before so increment the counter
-				if(!isset($currentTags[$tag])) $db->execute('UPDATE tags SET number = number + 1 WHERE id = ?', array($tagId));
+				if(!isset($currentTags[$tag])) $db->execute('UPDATE tags SET number = number + 1 WHERE id = ?', $tagId);
 
 				// add to insert array
 				$rowsToInsert[] = array('module' => $module, 'tag_id' => $tagId, 'other_id' => $otherId);
@@ -299,11 +292,11 @@ class BackendTagsModel
 		foreach($currentTags as $tag => $tagId)
 		{
 			// if the tag can't be found in the new tags we lower the number of tags by one
-			if(array_search($tag, $tags) === false) $db->execute('UPDATE tags SET number = number - 1 WHERE id = ?', array($tagId));
+			if(array_search($tag, $tags) === false) $db->execute('UPDATE tags SET number = number - 1 WHERE id = ?', $tagId);
 		}
 
 		// remove all tags that don't have anything linked
-		$db->delete('tags', 'number = ?', array(0));
+		$db->delete('tags', 'number = ?', 0);
 	}
 
 
@@ -311,13 +304,10 @@ class BackendTagsModel
 	 * Update a tag
 	 *
 	 * @return	void
-	 * @param array $tag
+	 * @param	array $tag
 	 */
 	public static function updateTag($tag)
 	{
-		// redefine
-		$language = BackendLanguage::getWorkingLanguage();
-
 		// get db
 		$db = BackendModel::getDB();
 

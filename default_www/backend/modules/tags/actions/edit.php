@@ -116,6 +116,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				$tag = array();
 				$tag['id'] = $this->id;
 				$tag['tag'] = $this->frm->getField('name')->getValue();
+				$tag['url'] = BackendTagsModel::getURL($tag['tag'], $this->id);
 
 				// upate the item
 				$id = (int) BackendTagsModel::updateTag($tag);

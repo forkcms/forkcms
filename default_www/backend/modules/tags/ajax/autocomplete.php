@@ -3,12 +3,12 @@
 /**
  * TagsAdd
  *
- * This is the add-action, it will display a form to create a new item
+ * This is the autocomplete-action, it will display a form to create a new item
  *
  * @package		backend
  * @subpackage	tags
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class TagsAjaxAutocomplete extends BackendBaseAJAXAction
@@ -28,10 +28,10 @@ class TagsAjaxAutocomplete extends BackendBaseAJAXAction
 		$limit = SpoonFilter::getGetValue('limit', null, 10);
 
 		// validate
-		if($query == '') $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'query is missing.');
+		if($query == '') $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'Query is missing.');
 
 		// get tags
-		$tags = (array) BackendTagsModel::getStartsWith($query, $limit);
+		$tags = BackendTagsModel::getStartsWith($query, $limit);
 
 		// output
 		$this->output(BackendBaseAJAXAction::OK, $tags);
