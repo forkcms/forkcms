@@ -262,8 +262,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setSetting('core', 'site_wide_html', $this->frm->getField('site_wide_html')->getValue());
 				BackendModel::setSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
 				BackendModel::setSetting('core', 'fork_api_private_key', $this->frm->getField('fork_api_private_key')->getValue());
-				BackendModel::setSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());
-				BackendModel::setSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
+				if($this->needsAkismet) BackendModel::setSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());
+				if($this->needsGoogleMaps) BackendModel::setSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
 
 				/*
 				 * Before we save the languages, we need to ensure that each language actually
