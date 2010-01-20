@@ -5,7 +5,7 @@
 				<p class="breadcrumb">Blog > Overzicht</p>
 				<div class="oneLiner" id="searchModuleHolder">
 					<p><input type="text" class="inputText" id="searchModule"/></p>
-					<p><a href="#" class="button" id="toggleFilter">Search</a></p>
+					<p><a href="#" class="button" id="toggleFilter"><span><span><span>Search</span></span></span></a></p>
 				</div>
 			</div>
 			<div id="filterBar" style="display: none;">
