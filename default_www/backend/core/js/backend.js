@@ -314,8 +314,7 @@ jsBackend.forms = {
 	
 	tagBoxes: function() {
 		if($('input.tagBox').length > 0) {
-			$('input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAddTag|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', 
-									   autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete' });
+			$('input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete' });
 		}
 	},
 	
@@ -337,7 +336,9 @@ jsBackend.layout = {
 jsBackend.tabs = {
 	// init, something like a constructor
 	init: function() {
-		if($('.tabs').length > 0) $('.tabs').tabs();
+		if($('.tabs').length > 0) {
+			$('.tabs').tabs();
+		}
 		
 		if($('.tabSelect').length > 0) {
 			$('.tabSelect').live('click', function(evt) {
