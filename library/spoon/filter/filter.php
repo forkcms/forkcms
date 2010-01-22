@@ -260,23 +260,6 @@ class SpoonFilter
 
 
 	/**
-	 * Apply the htmlspecialchars function with a specific charset.
-	 *
-	 * @return	string						The string with HTML-special chars applied to it.
-	 * @param	string $value				The value that should be used.
-	 * @param	string[optional] $charset	The charset to use, default wil be based on SPOON_CHARSET.
-	 */
-	public static function htmlspecialchars($value, $charset = null)
-	{
-		// define charset
-		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
-
-		// apply method
-		return htmlspecialchars($value, ENT_QUOTES, $charset);
-	}
-
-
-	/**
 	 * Apply the html_entity_decode function with a specific charset.
 	 *
 	 * @return	string						The string with no HTML-entities.
@@ -292,6 +275,24 @@ class SpoonFilter
 		return html_entity_decode($value, ENT_NOQUOTES, $charset);
 	}
 
+
+	/**
+	 * Apply the htmlspecialchars function with a specific charset.
+	 *
+	 * @return	string						The string with HTML-special chars applied to it.
+	 * @param	string $value				The value that should be used.
+	 * @param	string[optional] $charset	The charset to use, default wil be based on SPOON_CHARSET.
+	 */
+	public static function htmlspecialchars($value, $charset = null)
+	{
+		// define charset
+		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+
+		// apply method
+		return htmlspecialchars($value, ENT_QUOTES, $charset);
+	}
+
+	// @todo htmlspecialcharsDecode toevoegen.
 
 	/**
 	 * Checks the value for a-z & A-Z.
@@ -814,7 +815,7 @@ class SpoonFilter
 	{
 		// define charset
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
-		
+
 		// allowed characters
 		$aCharacters = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', ' ');
 

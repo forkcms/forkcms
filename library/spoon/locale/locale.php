@@ -1,7 +1,5 @@
 <?php
 
-// @todo fix the languages. They dont need to be alphabetically and the list needs to be revised.
-
 /**
  * Spoon Library
  *
@@ -72,38 +70,20 @@ class SpoonLocale
 	 */
 	public static function getCountries($language = 'en')
 	{
-		// language
+		// init vars
 		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
 
 		// fetch file
 		require 'data/'. $language .'.php';
 
 		// fetch countries
-		return $aLocale['countries'];
+		return $locale['countries'];
 	}
 
 
 	/**
-	 * Retrieve the list of languages
-	 *
-	 * @return	array						An array containing all known languages in the requested language.
-	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
-	 */
-	public static function getLanguages($language = 'en')
-	{
-		// language
-		$language = SpoonFilter::getValue($language, self::$languages, 'en');
-
-		// fetch file
-		require 'data/'. $language .'.php';
-
-		// fetch languages
-		return $aLocale['languages'];
-	}
-
-
-	/**
-	 * Retrieve the months of the year
+	 * Retrieve the months of the year in a specified language.
 	 *
 	 * @return	array							An array with all the months in the requested language.
 	 * @param	string[optional] $language		The language to use (available languages can be found in SpoonLocale).
@@ -111,19 +91,20 @@ class SpoonLocale
 	 */
 	public static function getMonths($language = 'en', $abbreviated = false)
 	{
-		// language
+		// init vars
 		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
 
 		// fetch file
 		require 'data/'. $language .'.php';
 
 		// abbreviated?
-		return ($abbreviated) ? $aLocale['date']['months']['abbreviated'] : $aLocale['date']['months']['full'];
+		return ($abbreviated) ? $locale['date']['months']['abbreviated'] : $locale['date']['months']['full'];
 	}
 
 
 	/**
-	 * Retrieve the days of the week
+	 * Retrieve the days of the week in a specified language.
 	 *
 	 * @return	array							An array with all the days in the requested language.
 	 * @param	string[optional] $language		The language to use (available languages can be found in SpoonLocale).
@@ -132,25 +113,26 @@ class SpoonLocale
 	 */
 	public static function getWeekDays($language = 'en', $abbreviated = false, $firstDay = 'monday')
 	{
-		// redefine arguments
+		// init vars
 		$language = SpoonFilter::getValue($language, self::$languages, 'en');
 		$firstDay = SpoonFilter::getValue($firstDay, array('monday', 'sunday'), 'monday');
+		$locale = array();
 
 		// fetch file
 		require 'data/'. $language .'.php';
 
 		// data array
-		$aDays = ($abbreviated) ? $aLocale['date']['days']['abbreviated'] : $aLocale['date']['days']['full'];
+		$days = ($abbreviated) ? $locale['date']['days']['abbreviated'] : $locale['date']['days']['full'];
 
 		// in some regions monday is not the first day of the week.
 		if($firstDay == 'monday')
 		{
-			$sunday = $aDays['sun'];
-			unset($aDays['sun']);
-			$aDays['sun'] = $sunday;
+			$sunday = $days['sun'];
+			unset($days['sun']);
+			$days['sun'] = $sunday;
 		}
 
-		return $aDays;
+		return $days;
 	}
 }
 

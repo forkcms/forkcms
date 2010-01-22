@@ -14,6 +14,14 @@
 class BackendBlogIndex extends BackendBaseActionIndex
 {
 	/**
+	 * Datagrids
+	 *
+	 * @var	SpoonDataGrid
+	 */
+	private $dgRecent, $dgPosts;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -23,8 +31,28 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		// load datagrid
+		$this->loadDataGrids();
+
+		// parse page
+		$this->parse();
+
 		// display the page
 		$this->display();
+	}
+
+
+	private function loadDataGrids()
+	{
+		$this->dgRecent = new BackendDataGridDB('SELECT * FROM blog_posts ORDER BY edited_on DESC LIMIT 4;');
+
+		$this->dgPosts = new BackendDataGridDB('SELECT * FROM blog_posts;');
+	}
+
+	private function parse()
+	{
+		$this->tpl->assign('dgRecent', ($this->dgRecent->getNumResults() != 0) ? $this->dgRecent->getContent() : false);
+		$this->tpl->assign('dgPosts', ($this->dgRecent->getNumResults() != 0) ? $this->dgPosts->getContent() : false);
 	}
 }
 
