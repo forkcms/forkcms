@@ -85,10 +85,10 @@ $err['core']['URLAlreadyExist'] = 'Deze URL bestaat al.';
 /**
  * Labels
  *
- * A label is a translation for one to three words. No sentences. A sentence can be placed in the messages-area.
+ * A label is a translation for a couple words. No sentences. A sentence can be placed in the messages-area.
  *
  * REMARK: HTML is *NOT* allowed, everything should be lowercase, use modifiers to alter string
- * Please do use htmlentities for special chars, this will prevent possible bugs in the rendering.
+ * Special characters should not be transformed to entities.
  *
  * An entry will look like: $lbl['<module>']['<key>'] = '<value>';
  * ex: $lbl['core']['Login'] = 'login';

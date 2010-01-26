@@ -4,17 +4,17 @@
 require_once BACKEND_MODULE_PATH .'/engine/model.php';
 
 /**
- * UsersConfig
+ * SettingsConfig
  *
  * This is the configuration-object for the users module
  *
  * @package		backend
- * @subpackage	users
+ * @subpackage	settings
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class SettingsConfig extends BackendBaseConfig
+final class BackendSettingsConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -47,4 +47,5 @@ final class SettingsConfig extends BackendBaseConfig
 	 */
 	protected $linkedAjaxActions = array();
 }
+
 ?>

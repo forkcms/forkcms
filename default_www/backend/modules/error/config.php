@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class ErrorConfig extends BackendBaseConfig
+final class BackendErrorConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

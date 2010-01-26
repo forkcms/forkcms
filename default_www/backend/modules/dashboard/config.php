@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Dashboard
  *
@@ -10,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class DashboardConfig extends BackendBaseConfig
+final class BackendDashboardConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -27,4 +28,5 @@ final class DashboardConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
+
 ?>

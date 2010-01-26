@@ -14,7 +14,7 @@ require_once BACKEND_MODULE_PATH .'/engine/model.php';
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class TagsConfig extends BackendBaseConfig
+final class BackendTagsConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

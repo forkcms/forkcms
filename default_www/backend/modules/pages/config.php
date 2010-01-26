@@ -14,7 +14,7 @@ require_once BACKEND_MODULE_PATH .'/engine/model.php';
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class PagesConfig extends BackendBaseConfig
+final class BackendPagesConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -39,4 +39,5 @@ final class PagesConfig extends BackendBaseConfig
 	 */
 	protected $disabledAJAXActions = array();
 }
+
 ?>

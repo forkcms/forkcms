@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Login
  *
@@ -10,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class AuthenticationConfig extends BackendBaseConfig
+final class BackendAuthenticationConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action
@@ -27,4 +28,5 @@ final class AuthenticationConfig extends BackendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
+
 ?>

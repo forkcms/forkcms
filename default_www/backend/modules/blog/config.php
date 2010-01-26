@@ -11,10 +11,10 @@ require_once BACKEND_MODULE_PATH .'/engine/model.php';
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-final class BlogConfig extends BackendBaseConfig
+final class BackendBlogConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

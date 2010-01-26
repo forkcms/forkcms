@@ -14,7 +14,7 @@ require_once BACKEND_MODULE_PATH .'/engine/model.php';
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-final class SnippetsConfig extends BackendBaseConfig
+final class BackendSnippetsConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

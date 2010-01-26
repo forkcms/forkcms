@@ -146,7 +146,7 @@ class BackendAction
 		if(!SpoonFile::exists(BACKEND_MODULE_PATH .'/config.php')) throw new BackendException('The configfile for the module ('. $this->getModule() .') can\'t be found.');
 
 		// build config-object-name
-		$configClassName = SpoonFilter::toCamelCase($this->getModule() .'_config');
+		$configClassName = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_config');
 
 		// require the config file, we validated before for existence.
 		require_once BACKEND_MODULE_PATH .'/config.php';
