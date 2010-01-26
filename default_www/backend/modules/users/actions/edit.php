@@ -84,7 +84,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		parent::parse();
 
 		// show current avatar
-		$this->tpl->assign('avatarImage', FRONTEND_FILES_URL. '/backend_users/avatars/64x64/'. $this->record['settings']['avatar']);
+		$this->tpl->assign('avatarImage', FRONTEND_FILES_URL. '/backend_users/avatars/64x64/'. $this->record['settings']['avatar'] .'?time='. time());
 
 		// assign user-related data
 		$this->tpl->assign('nickname', $this->record['settings']['nickname']);
