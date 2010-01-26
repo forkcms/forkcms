@@ -14,6 +14,22 @@
 class BackendBlogAdd extends BackendBaseActionAdd
 {
 	/**
+	 * The categories
+	 *
+	 * @var	array
+	 */
+	private $categories = array();
+
+
+	/**
+	 * The users
+	 *
+	 * @var	array
+	 */
+	private $users = array();
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -23,13 +39,19 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		// get categories
+		$this->categories = BackendBlogModel::getCategories();
+
+		// get users
+		$this->users = BackendUsersModel::getUsers();
+
 		// load the form
 		$this->loadForm();
 
 		// validate the form
-//		$this->validateForm();
+		$this->validateForm();
 
-		// parse the page
+		// parse
 		$this->parse();
 
 		// display the page
@@ -44,16 +66,26 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	 */
 	private function loadForm()
 	{
+		// get default category id
+		$defaultCategoryId = BackendModel::getSetting('blog', 'default_category', 1);
+
 		// create form
 		$this->frm = new BackendForm('add');
-
-		$this->meta = new BackendMeta($this->frm, null, 'Title', true);
 
 		// create elements
 		$this->frm->addTextField('title');
 		$this->frm->addEditorField('text');
 		$this->frm->addEditorField('introduction');
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
+		$this->frm->addRadioButton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
+		$this->frm->addDropDown('category_id', $this->categories, $defaultCategoryId);
+		$this->frm->addDropDown('user_id', $this->users);
+		$this->frm->addTextField('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+
+		// add button
+		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit', 'inputButton button mainButton');
 	}
 
 
@@ -71,22 +103,28 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
+
+			// validate meta
+			$this->meta->validate();
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// build item
-				$category = array();
-				$category['name'] = $this->frm->getField('name')->getValue();
-				$category['language'] = BL::getWorkingLanguage();
-				$category['url'] = BackendBlogModel::getURLForCategory($category['name']);
-
-				// insert the item
-				$id = BackendBlogModel::insertCategory($category);
-
-				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=added&var='. urlencode($category['name']) .'&highlight=id-'. $id);
+//				// set callback for generating an unique url
+//				$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($parentId));
+//
+//				// build item
+//				$item = array();
+//				$item['name'] = $this->frm->getField('name')->getValue();
+//				$item['language'] = BL::getWorkingLanguage();
+//				$item['url'] = BackendBlogModel::getURLForCategory($item['name']);
+//
+//				// insert the item
+//				$id = BackendBlogModel::insert($item);
+//
+//				// everything is saved, so redirect to the overview
+//				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['name']) .'&highlight=id-'. $id);
 			}
 		}
 	}

@@ -290,6 +290,7 @@ $msg['core']['ForgotPasswordHelp'] = 'Vul hieronder je e-mail adres in om een ni
 $msg['core']['HeaderAdd'] = 'Toevoegen';
 $msg['snippets']['HeaderAdd'] = 'Snippet toevoegen';
 $msg['users']['HeaderAdd'] = 'Gebruiker toevoegen';
+$msg['blog']['HeaderAdd'] = 'Bericht toevoegen';
 $msg['blog']['HeaderAddCategory'] = 'Categorie toevoegen';
 $msg['blog']['HeaderCategories'] = 'Categorieën';
 $msg['blog']['HeaderComments'] = 'Reacties';

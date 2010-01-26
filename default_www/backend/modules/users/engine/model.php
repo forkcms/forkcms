@@ -227,6 +227,23 @@ class BackendUsersModel
 
 
 	/**
+	 * Get all users
+	 *
+	 * @return	array
+	 */
+	public static function getUsers()
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// get general user data and return
+		return (array) $db->getPairs('SELECT u.id, u.username
+										FROM users AS u;',
+										null, 'id');
+	}
+
+
+	/**
 	 * Add a new user
 	 *
 	 * @return	int

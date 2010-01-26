@@ -102,6 +102,24 @@ class BackendBlogModel
 	
 	
 	/**
+	 * Get all categories
+	 *
+	 * @return	array
+	 * @param	int $id
+	 */
+	public static function getCategories()
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// get records and return them
+		return (array) $db->getPairs('SELECT id, name
+										FROM blog_categories AS c;',
+										null, 'id');
+	}
+	
+	
+	/**
 	 * Get all data for a given id
 	 *
 	 * @return	array
@@ -118,6 +136,64 @@ class BackendBlogModel
 		// get record and return it
 		return (array) $db->getRecord('SELECT * FROM blog_categories 
 										WHERE id = ?;', (int) $id);
+	}
+	
+	
+	/**
+	 * Retrieve the unique url for an item
+	 * 
+	 * @return	string
+	 * @param	int[optional] $itemId
+	 */
+	public static function getURL($URL, $itemId = null)
+	{
+		// redefine URL
+		$URL = SpoonFilter::urlise((string) $URL);
+		
+		// get db
+		$db = BackendModel::getDB();
+		
+		// new item
+		if($itemId === null)
+		{
+			// get number of categories with this URL
+			$number = (int) $db->getNumRows('SELECT p.id 
+												FROM blog_posts AS p 
+												INNER JOIN meta AS m ON p.meta_id = m.id
+												WHERE p.language = ? AND m.url = ?;', array(BL::getWorkingLanguage(), $URL));
+			
+			// already exists
+			if($number != 0)
+			{
+				// add  number
+				$URL = BackendModel::addNumber($URL);
+				
+				// try again
+				return self::getURLForCategory($URL);
+			}
+		}
+		
+		// current category should be excluded
+		else
+		{
+			// get number of items with this url
+			$number = (int) $db->getNumRows('SELECT p.id 
+												FROM blog_posts AS p 
+												INNER JOIN meta AS m ON p.meta_id = m.id
+												WHERE p.language = ? AND m.url = ? AND p.id != ?;', array(BL::getWorkingLanguage(), $URL, $itemId));
+
+			// already exists
+			if($number != 0)
+			{
+				// add  number
+				$URL = BackendModel::addNumber($URL);
+				
+				// try again
+				return self::getURLForCategory($URL, $itemId);
+			}
+		}
+		
+		return $URL;
 	}
 	
 	

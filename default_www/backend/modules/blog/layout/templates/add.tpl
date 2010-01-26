@@ -9,18 +9,19 @@
 				{form:add}
 					{$txtTitle} {$txtTitleError}
 
+					<!-- @todo does this have to be here? -->
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="#">http://www.abconcerts.be/nl/blog/the-state-of-japanoidism</a></span>
+								<span><a href="{$SITE_URL}">{$SITE_URL}</a></span>
 							</p>
 						</div>
 					</div>
-
+					
 					<div class="tabs">
 						<ul>
-							<li><a href="#tabContent">Content</a></li>
-							<li><a href="#tabSEO">SEO</a></li>
+							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+							<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 						</ul>
 
 						<div id="tabContent">
@@ -55,9 +56,10 @@
 									<td id="pagesSide">
 										<div id="publishOptions" class="box">
 											<div class="heading">
-												<h3>Publish</h3>
+												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
+											<!-- @todo
 											<div class="options">
 												<div class="buttonHolder">
 													<a href="#" class="button icon iconZoom"><span><span><span>Preview</span></span></span></a>
@@ -68,74 +70,65 @@
 											<div class="options">
 												<p class="status">Status: <strong>draft</strong></p>
 											</div>
-
-											<div class="options last">
+											-->
+											
+											<div class="options">
 												<ul class="inputList">
+													{iteration:hidden}
 													<li>
-														<input type="checkbox" class="inputCheckbox" value="Y" checked="checked" name="article_visibility" id="article_visibility"/>
-														<label for="article_visibility">Article is visible</label>
+														{$hidden.rbtHidden}
+														<label for="{$hidden.id}">{$hidden.label}</label>
 													</li>
+													{/iteration:hidden}
 												</ul>
 											</div>
-
 											<div class="footer">
-												<table border="0" cellspacing="0" cellpadding="0">
-													<tr>
-														<td>
-															<p>Last save: 15:43</p>
-														</td>
-														<td>
-															<div class="buttonHolderRight">
-																<a href="#" class="button mainButton" id="publish"><span><span><span>Publish</span></span></span></a>
-															</div>
-														</td>
-													</tr>
+												<table border="0" cellpadding="0" cellspacing="0">
+													<tbody>
+														<tr>
+															<td><p>&nbsp;</p></td>
+															<td>
+																<div class="buttonHolderRight">
+																	{$btnAdd}
+																</div>
+															</td>
+														</tr>
+													</tbody>
 												</table>
 											</div>
 										</div>
 
 										<div id="category" class="box">
 											<div class="heading">
-												<h4>Category</h4>
+												<h4>{$lblCategory|ucfirst}</h4>
+												<!--  @todo
 												<div class="buttonHolderRight">
 													<a href="#" class="button icon iconAdd iconOnly"><span><span><span>add</span></span></span></a>
 												</div>
+												 -->
 											</div>
 
 											<div class="options">
-												<select>
-													<optgroup label="Existing categories">
-														<option>Japan</option>
-														<option>Women</option>
-														<option>Motorbikes</option>
-														<option>Katanas</option>
-														<option>Bo</option>
-													</optgroup>
-													<optgroup label="New">
-														<option class="addOption">Add new category</option>
-													</optgroup>
-												</select>
-											</div>
-
-											<div class="options" id="newCategory" style="display: none;">
-												<p>
-													<label for="newCategory">Category name:</label>
-													<input type="text" class="inputText" />
-												</p>
+												{$ddmCategoryId} {$ddmCategoryIdError}
 											</div>
 										</div>
 
 										<div id="authors" class="box">
 											<div class="heading">
 												<h4>Author</h4>
+												<!--  @todo
 												<div class="buttonHolderRight">
 													<a href="#" id="editAuthor" class="button icon iconEdit iconOnly">
 														<span><span><span>Edit</span></span></span>
 													</a>
 												</div>
+												 -->
 											</div>
-
+											
 											<div class="options">
+												{$ddmUserId} {$ddmUserIdError}
+												
+												<!--  @todo ?
 												<ul>
 													<li>
 														<div class="avatarAndNickName">
@@ -146,6 +139,7 @@
 														</div>
 													</li>
 												</ul>
+												 -->
 											</div>
 										</div>
 
@@ -155,17 +149,7 @@
 											</div>
 
 											<div class="options">
-												<div class="oneLiner">
-													<p><input type="text" class="inputText" id="addTag" /></p>
-													<div class="buttonHolder">
-														<a href="#" class="button icon iconAdd"><span><span><span>Add</span></span></span></a>
-													</div>
-												</div>
-
-												<ul id="tagsList">
-													<li><span><strong>Music</strong> <a href="#deleteTag" title="Delete tag">X</a></span></li>
-													<li><span><strong>Concerts</strong> <a href="#deleteTag" title="Delete tag">X</a></span></li>
-												</ul>
+												{$txtTags} {$txtTagsError}
 											</div>
 										</div>
 									</td>
