@@ -61,7 +61,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 				// if this is the error-page, so we won't show an url.
 				if($pageUrl == $errorUrl) $pageUrl = null;
 
-				// Add to the items
+				// add to the items
 				$items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageUrl);
 			}
 
@@ -130,6 +130,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 			// remove url from last element
 			if($i >= $count - 1)
 			{
+				// remove url for last object
 				$row['url'] = null;
 				$row['last'] = true;
 			}

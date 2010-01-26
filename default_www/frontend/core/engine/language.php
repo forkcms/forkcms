@@ -33,7 +33,7 @@ class FrontendLanguage
 	 *
 	 * @var	array
 	 */
-	private static $aLanguages = array('active' => array('nl', 'fr', 'en'),
+	private static $languages = array('active' => array('nl', 'fr', 'en'),
 										'possible_redirect' => array('nl', 'fr', 'en'));
 
 
@@ -55,7 +55,7 @@ class FrontendLanguage
 	 */
 	public static function getActiveLanguages()
 	{
-		return self::$aLanguages['active'];
+		return self::$languages['active'];
 	}
 
 
@@ -142,7 +142,7 @@ class FrontendLanguage
 	 */
 	public static function getRedirectLanguages()
 	{
-		return self::$aLanguages['possible_redirect'];
+		return self::$languages['possible_redirect'];
 	}
 
 
@@ -158,7 +158,7 @@ class FrontendLanguage
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// validate language
-		if(!in_array($language, self::$aLanguages['active'])) throw new FrontendException('Invalid language ('. $language .').');
+		if(!in_array($language, self::$languages['active'])) throw new FrontendException('Invalid language ('. $language .').');
 
 		// init vars
 		$act = array();

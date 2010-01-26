@@ -113,22 +113,22 @@ class FrontendHeader extends FrontendBaseObject
 		$inArray = false;
 
 		// check if the file already exists in the array
-		foreach ($this->cssFiles as $row) if($row['file'] == $file && $row['media'] == $media) $inArray = true;
+		foreach($this->cssFiles as $row) if($row['file'] == $file && $row['media'] == $media) $inArray = true;
 
 		// add to array
 		if(!$inArray)
 		{
 			// build temporary arrat
-			$aTemp['file'] = (string) $file;
-			$aTemp['media'] = (string) $media;
-			$aTemp['condition'] = (string) $condition;
+			$temp['file'] = (string) $file;
+			$temp['media'] = (string) $media;
+			$temp['condition'] = (string) $condition;
 
 			// options
-			$aTemp['oHasCondition'] = (bool) ($condition !== null);
-			$aTemp['oHasNoCondition'] = (bool) ($condition === null);
+			$temp['oHasCondition'] = (bool) ($condition !== null);
+			$temp['oHasNoCondition'] = (bool) ($condition === null);
 
 			// add to files
-			$this->cssFiles[] = $aTemp;
+			$this->cssFiles[] = $temp;
 		}
 	}
 
@@ -162,10 +162,10 @@ class FrontendHeader extends FrontendBaseObject
 		if(!$inArray)
 		{
 			// build temporary array
-			$aTemp['file'] = $file;
+			$temp['file'] = $file;
 
 			// add to files
-			$this->javascriptFiles[] = $aTemp;
+			$this->javascriptFiles[] = $temp;
 		}
 	}
 
@@ -442,14 +442,19 @@ class FrontendHeader extends FrontendBaseObject
 	public function setMetaDescription($value, $overwrite = false)
 	{
 		// redefine vars
-		$value = (string) $value;
+		$value = trim((string) $value);
 		$overwrite = (bool) $overwrite;
 
-		// set var
+		// overwrite? reset the current value
 		if($overwrite) $this->metaDescription = $value;
+
+		// add to current value
 		else
 		{
+			// current value is empty?
 			if($this->metaDescription == '') $this->metaDescription = $value;
+
+			// append to current value
 			else $this->metaDescription .= ', '. $value;
 		}
 	}
@@ -465,14 +470,19 @@ class FrontendHeader extends FrontendBaseObject
 	public function setMetaKeywords($value, $overwrite = false)
 	{
 		// redefine vars
-		$value = (string) $value;
+		$value = trim((string) $value);
 		$overwrite = (bool) $overwrite;
 
-		// set var
+		// overwrite? reset the current value
 		if ($overwrite) $this->metaKeywords = $value;
+
+		// add to current value
 		else
 		{
+			// current value is empty
 			if($this->metaKeywords == '') $this->metaKeywords = $value;
+
+			// append to current value
 			else $this->metaKeywords .= ', '. $value;
 		}
 	}
@@ -488,17 +498,25 @@ class FrontendHeader extends FrontendBaseObject
 	public function setPageTitle($value, $overwrite = false)
 	{
 		// redefine vars
-		$value = (string) $value;
+		$value = trim((string) $value);
 		$overwrite = (bool) $overwrite;
 
-		// set var
+		// overwrite? reset the current value
 		if($overwrite) $this->pageTitle = $value;
+
+		// add to current value
 		else
 		{
+			// empty value given?
 			if(empty($value)) $this->pageTitle = FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+
+			// value isn't empty
 			else
 			{
+				// if the current pagetitle is empty we should add the sitetitle
 				if($this->pageTitle == '') $this->pageTitle = $value . SITE_TITLE_SEPERATOR . FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+
+				// prepend the value to the current pagetitle
 				else $this->pageTitle = $value . SITE_TITLE_SEPERATOR . $this->pageTitle;
 			}
 		}
