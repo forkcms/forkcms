@@ -65,7 +65,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// get extras
 		$this->extras = BackendPagesModel::getExtrasData();
 
-		// get maximum number of blocks	@todo	update this setting when editing/updating templates
+		// get maximum number of blocks	@todo davy - update setting bij het opslaan van een template
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
