@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Fork
+ * FrontendFooter
  *
- * This source file is part of Fork CMS.
+ * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend
  *
  * @package		frontend
- * @subpackage	footer
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0

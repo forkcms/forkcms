@@ -30,30 +30,6 @@ class FrontendModel
 
 
 	/**
-	 * Deletes a module setting from the database
-	 *
-	 * @return	void
-	 * @param	string $module
-	 * @param	string $name
-	 */
-	public static function deleteModuleSetting($module, $name)
-	{
-		// redefine
-		$module = (string) $module;
-		$name = (string) $name;
-
-		// get db
-		$db = self::getDB();
-
-		// delete setting
-		$db->delete('modules_settings', 'module = ? AND name = ?;', array($module, $name));
-
-		// remove from cache
-		if(isset(self::$moduleSettings[$module][$name])) unset(self::$moduleSettings[$module][$name]);
-	}
-
-
-	/**
 	 * Get (or create and get) a database-connection
 	 *
 	 * @return	SpoonDatabase

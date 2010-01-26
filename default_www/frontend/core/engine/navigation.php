@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Fork
+ * FrontendNavigation
  *
- * This source file is part of Fork CMS.
+ * This class will be used to build the navigation
  *
  * @package		frontend
- * @subpackage	navigation
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0

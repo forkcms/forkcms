@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendException extends SpoonException

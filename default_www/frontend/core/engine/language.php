@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Fork
+ * FrontendLanguage
  *
- * This source file is part of Fork CMS.
+ * This class will store the language-dependant content for the frontend.
  *
- * @package		frontend
+ * @package		backend
  * @subpackage	language
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
@@ -176,4 +176,21 @@ class FrontendLanguage
 		self::$msg = (array) $msg;
 	}
 }
+
+
+/**
+ * FL (some kind of alias for FrontendLanguage)
+ *
+ *
+ * @package		frontend
+ * @subpackage	language
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class FL extends FrontendLanguage
+{
+
+}
+
 ?>

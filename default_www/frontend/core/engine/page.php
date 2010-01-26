@@ -1,9 +1,16 @@
 <?php
 
 /**
- * FrontendPage
+ * FrontendTemplate, this is our extended version of SpoonTemplate
  *
- * This class defines a page
+ * This class will handle a lot of stuff for you, for example:
+ * 	- it will assign all labels
+ *	- it will map some modifiers
+ *  - it will assign a lot of constants
+ * 	- ...
+ *
+ *
+ * This source file is part of Fork CMS.
  *
  * @package		frontend
  * @subpackage	core

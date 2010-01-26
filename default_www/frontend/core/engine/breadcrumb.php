@@ -1,12 +1,12 @@
 <?php
 
 /**
- * Fork
+ * FrontendBreadcrumb
  *
- * This source file is part of Fork CMS.
+ * This class will be used to manage the breadcrumb
  *
  * @package		frontend
- * @subpackage	breadcrumb
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0

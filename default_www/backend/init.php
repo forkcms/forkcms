@@ -1,14 +1,15 @@
 <?php
 
 /**
- * Fork
+ * Init
  *
- * This source file is part of Fork CMS.
+ * This class will initiate the backend-application
  *
- * @package			frontend
+ * @package		backend
+ * @subpackage	core
  *
- * @author 			Tijs Verkoyen <tijs@netlash.com>
- * @since			2.0
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
  */
 class Init
 {

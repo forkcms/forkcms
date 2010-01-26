@@ -1,15 +1,15 @@
 <?php
 
 /**
- * Fork
+ * Init
  *
- * This source file is part of Fork CMS.
+ * This class will initiate the frontend-application
  *
- * @package			frontend
+ * @package		frontend
+ * @subpackage	core
  *
- * @author 			Tijs Verkoyen <tijs@netlash.com>
- * @author			Davy Hellemans <davy@netlash.com>
- * @since			2.0
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
  */
 class Init
 {
@@ -140,7 +140,6 @@ class Init
 		require_once FRONTEND_CORE_PATH .'/engine/language.php';
 		require_once FRONTEND_CORE_PATH .'/engine/model.php';
 		require_once FRONTEND_CORE_PATH .'/engine/url.php';
-		require_once FRONTEND_CORE_PATH .'/engine/mailer.php';
 		require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
 
 		// based on the type
@@ -148,15 +147,11 @@ class Init
 		{
 			case 'frontend':
 				require_once FRONTEND_CORE_PATH .'/engine/frontend.php';
-				require_once FRONTEND_CORE_PATH .'/engine/meta.php';
 				require_once FRONTEND_CORE_PATH .'/engine/page.php';
 				require_once FRONTEND_CORE_PATH .'/engine/header.php';
 				require_once FRONTEND_CORE_PATH .'/engine/breadcrumb.php';
-				require_once FRONTEND_CORE_PATH .'/engine/body.php';
 				require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
 				require_once FRONTEND_CORE_PATH .'/engine/footer.php';
-				require_once FRONTEND_CORE_PATH .'/engine/datagrid.php';
-				require_once FRONTEND_CORE_PATH .'/engine/form.php';
 				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
 			break;
 

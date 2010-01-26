@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Fork
+ * FrontendBaseObject
  *
- * This is the base-object
+ * This class will be the base of the objects
  *
  * @package		frontend
  * @subpackage	core
@@ -11,6 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
+
 class FrontendBaseObject
 {
 	/**
