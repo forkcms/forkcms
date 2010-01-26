@@ -1,13 +1,12 @@
-/**
- * IE7 Conditional comments
- * Stylesheet for <project name>
- *
- * @media	screen, projection
- * @copyright	Netlash <http://www.netlash.com>
- * @author	name <johan@netlash.com>
- */
+/*
+	IE7 Conditional comments for <Project name>
+	
+	Media:      screen, projection
+	Copyright:  Netlash <http://www.netlash.com>
+	author:     name <email@netlash.com>
+*/
 
+/* Clearfix */
 .clearfix {
 	zoom: 1;
-	/*height: 1%;*/
 }

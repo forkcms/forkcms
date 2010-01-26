@@ -60,8 +60,8 @@ class FrontendTemplate extends SpoonTemplate
 		// parse constants
 		$this->parseConstants();
 
-		// parse authenticated user
-		$this->parseAuthenticatedUser();
+		// @todo	parse authenticated user
+//		$this->parseAuthenticatedUser();
 
 		// check debug
 		$this->parseDebug();
@@ -72,8 +72,11 @@ class FrontendTemplate extends SpoonTemplate
 		// parse locale
 		$this->parseLocale();
 
-		// asign a placeholder var
+		// assign a placeholder var
 		$this->assign('var', '');
+
+		// assign the current timestamp
+		$this->assign('currentTimestamp', time());
 
 		// parse headers
 		SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
@@ -100,6 +103,7 @@ class FrontendTemplate extends SpoonTemplate
 
 		// convert var into a title, syntax {$var|gettitle:<pageId>}
 		$this->mapModifier('gettitle', array('FrontendTemplateModifiers', 'getTitle'));
+		$this->mapModifier('getTitle', array('FrontendTemplateModifiers', 'getTitle'));
 
 		// string
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
@@ -161,18 +165,6 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
-		// get the url from the reference, we need to know which module is requested
-		$url = Spoon::getObjectReference('url');
-
-		// grab the current module
-		$currentModule = $url->getModule();
-
-		// init vars
-		$realActions = array();
-		$realErrors = array();
-		$realLabels = array();
-		$realMessages = array();
-
 		// get all actions
 		$actions = FrontendLanguage::getActions();
 
@@ -185,63 +177,17 @@ class FrontendTemplate extends SpoonTemplate
 		// get all messages
 		$messages = FrontendLanguage::getMessages();
 
-		// set the begin state
-		$realAction = $actions['core'];
-		$realErrors = $errors['core'];
-		$realLabels = $labels['core'];
-		$realMessages = $messages['core'];
-
-		// loop all errors, label, messages and add them again, but prefixed with Core. So we can decide in the
-		// template to use the core-value instead of the one set by the module
-		foreach($actions['core'] as $key => $value) $realActions['Core'. $key] = $value;
-		foreach($errors['core'] as $key => $value) $realErrors['Core'. $key] = $value;
-		foreach($labels['core'] as $key => $value) $realLabels['Core'. $key] = $value;
-		foreach($messages['core'] as $key => $value) $realMessages['Core'. $key] = $value;
-
-		// are there actions for the current module?
-		if(isset($actions[$currentModule]))
-		{
-			// loop the module-specific actions and reset them in the array with values we will use
-			foreach($actions[$currentModule] as $key => $value) $realActions[$key] = $value;
-		}
-
-		// are there errors for the current module?
-		if(isset($errors[$currentModule]))
-		{
-			// loop the module-specific errors and reset them in the array with values we will use
-			foreach($errors[$currentModule] as $key => $value) $realErrors[$key] = $value;
-		}
-
-		// are there labels for the current module?
-		if(isset($labels[$currentModule]))
-		{
-			// loop the module-specific labels and reset them in the array with values we will use
-			foreach($labels[$currentModule] as $key => $value) $realLabels[$key] = $value;
-		}
-
-		// are there messages for the current module?
-		if(isset($messages[$currentModule]))
-		{
-			// loop the module-specific errors and reset them in the array with values we will use
-			foreach($messages[$currentModule] as $key => $value) $realMessages[$key] = $value;
-		}
-
-		// sort the arrays (just to make it look beautifull)
-		ksort($realErrors);
-		ksort($realLabels);
-		ksort($realMessages);
-
 		// assign actions
-		$this->assignActions($realActions, 'act');
+		$this->assignArray($actions, 'act');
 
 		// assign errors
-		$this->assignArray($realErrors, 'err');
+		$this->assignArray($errors, 'err');
 
 		// assign labels
-		$this->assignArray($realLabels, 'lbl');
+		$this->assignArray($labels, 'lbl');
 
 		// assign messages
-		$this->assignArray($realMessages, 'msg');
+		$this->assignArray($messages, 'msg');
 	}
 
 
@@ -317,19 +263,22 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the navigation html
-	 * 	syntax: {$var|getnavigation[:<pageid>][:<startdepth>][:<enddepth>][:<excludeIds>]}
+	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var
-	 * @param	int[optional] $pageId
+	 * @param	string[optional] $type
 	 * @param	int[optional] $startDepth
 	 * @param	int[optional] $endDepth
-	 * @param	array[optional] $excludeIds
+	 * @param	string[optional] $excludeIds
 	 */
-	public static function getNavigation($var = null, $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
+	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
 	{
+		// build excludeIds
+		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
+
 		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($pageId, $startDepth, $endDepth, $excludeIds);
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds);
 
 		// return the var
 		if($return != '') return $return;

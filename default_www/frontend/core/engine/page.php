@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Fork
+ * FrontendPage
  *
- * This source file is part of Fork CMS.
+ * This class defines a page
  *
  * @package		frontend
  * @subpackage	core
@@ -88,6 +88,14 @@ class FrontendPage extends FrontendBaseObject
 
 
 	/**
+	 * The path of the template to show
+	 *
+	 * @var	string
+	 */
+	private $templatePath;
+
+
+	/**
 	 * The pages statuscode
 	 *
 	 * @var	int
@@ -106,12 +114,12 @@ class FrontendPage extends FrontendBaseObject
 		parent::__construct();
 
 		// get menu id for requested url
-		$this->pageId = FrontendNavigation::getPageIdByURL(implode('/', $this->url->getPages()));
+		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->url->getPages()));
 
 		// make the pageId accessible through a static method
 		self::$currentPageId = $this->pageId;
 
-		// set headers if this is a 404 page
+		// set headers if this is a 404 page @todo	check me
 		if($this->pageId == 404) $this->statusCode = 404;
 
 		// get pagecontent
@@ -119,6 +127,9 @@ class FrontendPage extends FrontendBaseObject
 
 		// process page
 		$this->processPage();
+
+		// display
+		$this->display();
 	}
 
 
@@ -135,27 +146,20 @@ class FrontendPage extends FrontendBaseObject
 		// store statistics
 		$this->storeStatistics();
 
-		// parse footer
-//		$this->footer->parse();
-
-		// parse body if needed
-		if($this->body) $this->body->parse();
-
-		// parse extra if needed
-		/*if($this->extra)
-		{
-			$this->extra->parse();
-			$this->tpl->assign('oHasExtra', true);
-		}*/
+		// parse header
+		$this->header->parse();
 
 		// parse breadcrumb
-//		$this->breadcrumb->parse();
+		$this->breadcrumb->parse();
 
-		// parse header
-//		$this->header->parse();
+		// parse languages
+		$this->parseLanguages();
 
-		// aaaaa
-//		$this->tpl->display(FRONTEND_PATH .'/'. $templatePath);
+		// parse footer
+		$this->footer->parse();
+
+		// output
+		$this->tpl->display(FRONTEND_PATH .'/'. $this->templatePath);
 	}
 
 
@@ -180,21 +184,46 @@ class FrontendPage extends FrontendBaseObject
 		// get page record
 		$this->record = (array) FrontendModel::getPage($this->pageId);
 
-		Spoon::dump($this->record);
-
 		// empty record (pageId doesn't exists)
-		if(count($this->record) == 0 && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURLByPageId(404), 404);
+		if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404); // @todo we don't want a redirect
 
 		// @todo indien er geen inhoud is, doorverwijzen naar eerste child. Wordt wel lastig om te verififeren bij 1ste block.
-		// redirect to first child
-		/*if(empty($this->record['content']) && $this->aPageRecord['extra_id'] == 0)
-		{
-			// get first child
-			$childId = FrontendNavigation::getFirstChildIdByPageId($this->pageId);
+		// redirect als alles leeg is en geen extras
+	}
 
-			// redirect if possible
-			if($childId !== false) SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId($childId));
-		}*/
+
+	/**
+	 * Parse the languages
+	 *
+	 * @return	void
+	 */
+	private function parseLanguages()
+	{
+		// just execute if the site is multi-language
+		if(SITE_MULTILANGUAGE)
+		{
+			// get languages
+			$activeLanguages = FrontendLanguage::getActiveLanguages();
+
+			// init var
+			$languages = array();
+
+			// loop active languages
+			foreach($activeLanguages as $language)
+			{
+				// build temp array
+				$temp = array();
+				$temp['url'] = '/'. $language;
+				$temp['label'] = $language;
+				$temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
+
+				// add
+				$languages[] = $temp;
+			}
+
+			// assign
+			$this->tpl->assign('languages', $languages);
+		}
 	}
 
 
@@ -205,48 +234,56 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private function processPage()
 	{
-		// create and set header instance
-		$this->header = new FrontendHeader();
-		Spoon::setObjectReference('header', $this->header);
-
-		// add css
-		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/screen.css');
-		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/print.css', 'print');
-		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/ie6.css', 'screen', 'lte IE 6');
-		$this->header->addCssFile(FRONTEND_CORE_URL .'/layout/css/ie7.css', 'screen', 'IE 7');
-
-		// add jQuery (this is default)
-		$this->header->addJsFile(FRONTEND_CORE_URL .'/js/jquery/jquery-1.2.6.min.js', false);
-
-		// add meta information
-		$this->header->setPageTitle($this->aPageRecord['meta_pagetitle'], ($this->aPageRecord['meta_pagetitle_overwrite'] == 'Y') ? true : false);
-		$this->header->setMetaKeywords($this->aPageRecord['meta_keywords'], ($this->aPageRecord['meta_keywords_overwrite'] == 'Y') ? true : false);
-		$this->header->setMetaDescription($this->aPageRecord['meta_description'], ($this->aPageRecord['meta_description_overwrite'] == 'Y') ? true : false);
-		$this->header->setMetaCustom($this->aPageRecord['meta_custom']);
-
-		// create and set breadcrumb instance
-		$this->breadcrumb = new FrontendBreadcrumb();
-		Spoon::setObjectReference('breadcrumb', $this->breadcrumb);
-
 		// create navigation instance
 		$this->navigation = new FrontendNavigation();
 
-		// create footer instance
+		// create header instance
+		$this->header = new FrontendHeader();
+
+		// set pageTitle
+		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
+		$this->header->setMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->setMetaKeywords($this->record['meta_keywords'], (bool) ($this->record['meta_keywords_overwrite'] == 'Y'));
+		$this->header->setMetaCustom($this->record['meta_custom']);
+
+		// create breadcrumb instance
+		$this->breadcrumb = new FrontendBreadcrumb();
+
+		// new footer instance
 		$this->footer = new FrontendFooter();
 
-		// create body instance
-		$this->body = new FrontendBody();
+		// set template path
+		$this->templatePath = $this->record['template_path'];
 
-		// set body properties
-		$this->body->setTitle($this->aPageRecord['title']);
-		$this->body->setContent($this->aPageRecord['content']);
-
-		// create PageExtra instance if needed
-		if($this->aPageRecord['extra_module'] != '')
+		// loop blocks
+		foreach($this->record['blocks'] as $index => $block)
 		{
-			// create extra instance
-			$this->extra = new FrontendExtra($this->aPageRecord['extra_action'], $this->aPageRecord['extra_module'], $this->aPageRecord['extra_parameters']);
-			Spoon::setObjectReference('extra', $this->extra);
+			// get blockName
+			$blockName = (isset($this->record['template_data']['names'][$index])) ? $this->record['template_data']['names'][$index] : null;
+
+			// unknown blockname? skip it
+			if($blockName === null) continue;
+
+			// build templateVariable
+			$templateVariable = 'block'. SpoonFilter::toCamelCase($blockName, ' ');
+
+			// an extra
+			if($block['extra_id'] !== null)
+			{
+//				Spoon::dump($block);
+
+				throw new FrontendException('Implement me'); // @todo mekker
+			}
+
+			// the block only contains HTML
+			else
+			{
+				// assign option
+				$this->tpl->assign($templateVariable .'IsHTML', true);
+
+				// assign HTML
+				$this->tpl->assign($templateVariable, $block['html']);
+			}
 		}
 	}
 
@@ -276,7 +313,7 @@ class FrontendPage extends FrontendBaseObject
 			// failed setting cookie
 			catch (Exception $e)
 			{
-				if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e;
+				if(substr_count($e->getMessage(), 'could not be set.') == 0) throw new FrontendException($e->getMessage());
 			}
 		}
 
@@ -304,7 +341,7 @@ class FrontendPage extends FrontendBaseObject
 		$aStatistics['url'] = trim('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], '/');
 
 		// log to file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH .'/statistics/temp.txt', serialize($aStatistics) ."\n", true);
+		SpoonFile::setContent(FRONTEND_CACHE_PATH .'/statistics/temp.txt', serialize($aStatistics) ."\n", true, true);
 	}
 }
 

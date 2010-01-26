@@ -3,29 +3,18 @@ FileETag MTime Size
 
 # caching
 <IfModule mod_expires.c>
-	ExpiresActive on
-	ExpiresByType text/css A604800
-
-	ExpiresByType image/gif A604800
-	ExpiresByType image/png A604800
-	ExpiresByType image/jpg A604800
-	ExpiresByType image/jpeg A604800
+	ExpiresActive On
+	<FilesMatch "\.(ico|gif|jpe?g|png|js|css|swf)$">
+		ExpiresDefault "access plus 1 month" 
+	</FilesMatch>
 </IfModule>
 
 # options 
 Options -Indexes
 Options +FollowSymlinks
 
-# If the project should be disables uncomment the lines below
-#AuthName "Disabled"
-#AuthUserFile {$fullpath}/.htpasswd
-#AuthGroupFile /dev/null
-#AuthType Basic
-#require valid-user
-
-# nice urls (REMARK: don't edit anything below)
+# nice urls
 RewriteEngine On
 RewriteCond %{REQUEST_URI} !^$
 RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . index.php [NC,L]

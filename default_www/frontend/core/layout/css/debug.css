@@ -1,0 +1,18 @@
+/*
+
+	Developent stylesheet for <Project name>
+	
+	Media:      screen, projection
+	Copyright:  Netlash <http://www.netlash.com>
+	author:     name <email@netlash.com>
+
+*/
+
+/* Force broken image icon in Mozilla Firefox */
+img {
+	-moz-force-broken-image-icon: 1;
+}
+
+#navigation ul li ul { margin-left: 10px; }
+ul li.selected { font-weight: bold; }
+ul li.selected ul li a { font-weight: normal; }

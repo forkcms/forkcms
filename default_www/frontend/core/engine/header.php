@@ -1,12 +1,13 @@
 <?php
 
 /**
- * Fork
+ * FrontendHeader
  *
- * This source file is part of Fork CMS.
+ * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
+ * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
  * @package		frontend
- * @subpackage	header
+ * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
@@ -26,7 +27,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private $jsFiles = array();
+	private $javascriptFiles = array();
 
 
 	/**
@@ -62,13 +63,39 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
+	 * Default constructor
+	 *
+	 * @return	void
+	 */
+	public function __construct()
+	{
+		// call the parent
+		parent::__construct();
+
+		// add some css
+		$this->addCssFile('/frontend/core/layout/css/screen.css');
+		$this->addCssFile('/frontend/core/layout/css/print.css', 'print');
+
+		// IE stylesheets
+		$this->addCssFile('/frontend/core/layout/css/ie6.css', 'screen', 'lte IE 6');
+		$this->addCssFile('/frontend/core/layout/css/ie7.css', 'screen', 'IE 7');
+
+		// debug stylesheet
+		if(SPOON_DEBUG) $this->addCssFile('/frontend/core/layout/css/debug.css');
+
+		// add jquery
+		$this->addJavascriptFile('/frontend/core/js/jquery/jqeury.js', false);
+	}
+
+
+	/**
 	 * Adds a css file into the array
 	 *
 	 * @return	void
 	 * @param 	string $file
 	 * @param	string[optional] $media
 	 */
-	public function addCssFile($file, $media = 'screen',  $condition = null, $minify = true) // @todo ik zou doen $minify = null, en bij defininen spoon_debug laten meespelen als default, zo kunde manueel nog overrulen als ge wilt.
+	public function addCssFile($file, $media = 'screen',  $condition = null, $minify = true)
 	{
 		// redefine
 		$file = (string) $file;
@@ -113,7 +140,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * @param 	string $file
 	 * @param	bool[optional] $minify
 	 */
-	public function addJsFile($file, $minify = true)// @todo idem met minify hier.
+	public function addJavascriptFile($file, $minify = true)
 	{
 		// redefine
 		$file = (string) $file;
@@ -129,7 +156,7 @@ class FrontendHeader extends FrontendBaseObject
 		$inArray = false;
 
 		// check if the file already exists in the array
-		foreach ($this->jsFiles as $row) if($row['file'] == $file) $inArray = true;
+		foreach ($this->javascriptFiles as $row) if($row['file'] == $file) $inArray = true;
 
 		// add to array
 		if(!$inArray)
@@ -138,7 +165,7 @@ class FrontendHeader extends FrontendBaseObject
 			$aTemp['file'] = $file;
 
 			// add to files
-			$this->jsFiles[] = $aTemp;
+			$this->javascriptFiles[] = $aTemp;
 		}
 	}
 
@@ -212,7 +239,7 @@ class FrontendHeader extends FrontendBaseObject
 	 */
 	public function getJsFiles()
 	{
-		return $this->aJsFiles;
+		return $this->javascriptFiles;
 	}
 
 
@@ -277,7 +304,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalUrl;
 
 		// grab content
-		$content = SpoonFile::getFileContent(PATH_WWW . $file);
+		$content = SpoonFile::getContent(PATH_WWW . $file);
 
 		// remove comments
 		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
@@ -344,7 +371,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalUrl;
 
 		// grab content
-		$content = trim(SpoonFile::getFileContent(PATH_WWW . $file));
+		$content = SpoonFile::getContent(PATH_WWW . $file);
 
 		// remove comments
 		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
@@ -375,7 +402,7 @@ class FrontendHeader extends FrontendBaseObject
 	public function parse()
 	{
 		// assign page title
-		$this->tpl->assign('pageTitle', $this->getPageTitle());
+		$this->tpl->assign('pageTitle', (string) $this->getPageTitle());
 
 		// assign meta
 		$this->tpl->assign('metaDescription', (string) $this->getMetaDescription());
@@ -383,10 +410,13 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('metaCustom', (string) $this->getMetaCustom());
 
 		// css-files
-		$this->tpl->assign('iCssFiles', (array) $this->getCssFiles());
+		$this->tpl->assign('cssFiles', (array) $this->getCssFiles());
 
 		// js-files
-		$this->tpl->assign('iJsFiles', (array) $this->getJsFiles());
+		$this->tpl->assign('javascriptFiles', (array) $this->getJsFiles());
+
+		// assign site title
+		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 	}
 
 

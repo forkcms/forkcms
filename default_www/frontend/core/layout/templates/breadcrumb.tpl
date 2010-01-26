@@ -1,9 +1,9 @@
 			<div id="breadcrumb">
 				<span>{$lblYouAreHere|ucfirst}:</span>
 				{iteration:breadcrumb}
-					{option:!last} • {/option:!last}
-					{option:url}<a href="{$breadcrumb.url}" title="{$breadcrumb.title}">{/option:url}
+					{option:breadcrumb.url}<a href="{$breadcrumb.url}" title="{$breadcrumb.title}">{/option:breadcrumb.url}
 						{$breadcrumb.title}
-					{option:url}</a>{/option:url}
+					{option:breadcrumb.url}</a>{/option:breadcrumb.url}
+					{option:!breadcrumb.last} • {/option:!breadcrumb.last}
 				{/iteration:breadcrumb}
 			</div>

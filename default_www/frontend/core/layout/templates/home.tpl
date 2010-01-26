@@ -1,20 +1,28 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANGUAGE}" lang="{$LANGUAGE}">
-
 <head>
 	<title>{$pageTitle}</title>
 
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta http-equiv="content-language" content="{$LANGUAGE}" />
+
+	<link rel="shortcut icon" href="/favicon.ico" />
+
 	<meta name="generator" content="Fork CMS" />
 	<meta name="description" content="{$metaDescription}" />
 	<meta name="keywords" content="{$metaKeywords}" />
+	{$metaCustom}
 
-	{iteration:cssFiles}<link rel="stylesheet" type="text/css" media="screen" href="{$cssFiles.path}" />{$CRLF}{$TAB}{/iteration:cssFiles}
-	<!--[if lte IE 6]><link rel="stylesheet" type="text/css" href="css/ie6.css" /><![endif]-->
-	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="css/ie7.css" /><![endif]-->
+	<!-- stylesheets -->
+	{iteration:cssFiles}
+		{option:!cssFiles.condition}<link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" />{/option:!cssFiles.condition}
+		{option:cssFiles.condition}<!--[if {$cssFiles.condition}]><link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" /><![endif]-->{/option:cssFiles.condition}
+	{/iteration:cssFiles}
 
-	{iteration:javascriptFiles}<script type="text/javascript" src="{$javascriptFiles.path}"></script>{$CRLF}{$TAB}{/iteration:javascriptFiles}
+	<!-- javascript files -->
+	{iteration:javascriptFiles}
+	<script type="text/javascript" src="{$javascriptFiles.file}"></script>
+	{/iteration:javascriptFiles}
 </head>
 
 <body class="{$LANGUAGE} frontend">
@@ -37,7 +45,7 @@
 		<div id="main">
 			<!-- navigation -->
 			<div id="navigation">
-				{$navigation}
+				{$var|getNavigation}
 			</div>
 
 			<!-- content -->
@@ -45,13 +53,16 @@
 				<h2>Titel pagina</h2>
 
 				<!-- Block 0 -->
-				{include:file="{$block0}"}
+				{option:blockAIsHTML}{$blockA}{/option:blockAIsHTML}
+				{option:!blockAIsHTML}{include:file="{$blockA}"}{/option:!blockAIsHTML}
 
 				<!-- Block 1 -->
-				{include:file="{$block1}"}
+				{option:blockBIsHTML}{$blockB}{/option:blockBIsHTML}
+				{option:!blockBIsHTML}{include:file="{$blockB}"}{/option:!blockBIsHTML}
 
 				<!-- Block 2 -->
-				{include:file="{$block2}"}
+				{option:blockCIsHTML}{$blockC}{/option:blockCIsHTML}
+				{option:!blockCIsHTML}{include:file="{$blockC}"}{/option:!blockCIsHTML}
 			</div>
 		</div>
 

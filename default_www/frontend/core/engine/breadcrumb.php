@@ -18,7 +18,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private $aItems = array();
+	private $items = array();
 
 
 	/**
@@ -35,45 +35,45 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		$homeInfo = FrontendNavigation::getPageInfo(1);
 
 		// add homepage as first item (with correct element)
-		$this->addElement($homeInfo['navigation'], (SITE_MULTILANGUAGE) ? '/'. FRONTEND_LANGUAGE : '/');
+		$this->addElement($homeInfo['navigation_title'], FrontendNavigation::getURL(1));
 
 		// get other pages
-		$aPages = $this->url->getPages();
+		$pages = $this->url->getPages();
 
 		// init vars
-		$aItems = array();
-		$errorUrl = FrontendNavigation::getUrlByPageId(404);
+		$items = array();
+		$errorUrl = FrontendNavigation::getUrl(404);
 
 		// loop pages
-		while(!empty($aPages))
+		while(!empty($pages))
 		{
 			// init vars
-			$url = implode('/', $aPages);
-			$menuId = FrontendNavigation::getPageIdByUrl($url);
+			$url = implode('/', $pages);
+			$menuId = FrontendNavigation::getPageId($url);
 			$pageInfo = FrontendNavigation::getPageInfo($menuId);
 
 			// do we know something about the page
-			if($pageInfo !== false && isset($pageInfo['navigation']))
+			if($pageInfo !== false && isset($pageInfo['navigation_title']))
 			{
 				// get url
-				$pageUrl = FrontendNavigation::getUrlByPageId($menuId);
+				$pageUrl = FrontendNavigation::getUrl($menuId);
 
 				// if this is the error-page, so we won't show an url.
 				if($pageUrl == $errorUrl) $pageUrl = null;
 
 				// Add to the items
-				$aItems[] = array('title' => $pageInfo['navigation'], 'url' => $pageUrl);
+				$items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageUrl);
 			}
 
 			// remove element
-			array_pop($aPages);
+			array_pop($pages);
 		}
 
 		// reverse so everything is in place
-		krsort($aItems);
+		krsort($items);
 
 		// loop and add elements
-		foreach($aItems as $row) $this->addElement($row['title'], $row['url']);
+		foreach($items as $row) $this->addElement($row['title'], $row['url']);
 	}
 
 
@@ -86,7 +86,29 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 */
 	public function addElement($title, $url = null)
 	{
-		$this->aItems[] = array('title' => (string) $title, 'url' => $url);
+		$this->items[] = array('title' => (string) $title, 'url' => $url);
+	}
+
+
+	/**
+	 * Clear all elements in the breadcrumb
+	 *
+	 * @return	void
+	 */
+	public function clear()
+	{
+		$this->items = array();
+	}
+
+
+	/**
+	 * Get all elements
+	 *
+	 * @return	array
+	 */
+	public function get()
+	{
+		return $this->items;
 	}
 
 
@@ -98,29 +120,32 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	public function parse()
 	{
 		// init vars
-		$aItems = array();
+		$items = array();
 		$first = true;
-		$count = count($this->aItems);
+		$count = count($this->items);
 
 		// loop items and add the seperator
-		foreach($this->aItems as $i => $row)
+		foreach($this->items as $i => $row)
 		{
 			// remove url from last element
-			if($i >= $count - 1) $row['url'] = null;
+			if($i >= $count - 1)
+			{
+				$row['url'] = null;
+				$row['last'] = true;
+			}
 
-			// options
-			$row['oHasUrl'] = ($row['url'] !== null);
-			$row['oSeparator'] = !$first;
+			// not the last element
+			else $row['last'] = false;
 
 			// add
-			$aItems[] = $row;
+			$items[] = $row;
 
 			// no more first
 			$first = false;
 		}
 
 		// assign
-		$this->tpl->assign('iBreadcrumb', $aItems);
+		$this->tpl->assign('breadcrumb', $items);
 	}
 }
 ?>

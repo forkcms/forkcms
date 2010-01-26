@@ -21,16 +21,16 @@ class FrontendFooter extends FrontendBaseObject
 	public function parse()
 	{
 		// get footer links
-		$aFooterLinks = (array) FrontendNavigation::getFooterLinks();
+		$footerLinks = (array) FrontendNavigation::getFooterLinks();
 
 		// assign footer links
-		$this->tpl->assign('iFooterLinks', $aFooterLinks);
+		$this->tpl->assign('footerLinks', $footerLinks);
 
 		// get site wide html
 		$siteWideHtml = (string) FrontendModel::getModuleSetting('core', 'site_wide_html', '');
 
 		// assign site wide html
-		$this->tpl->assign('siteWideHtml', $siteWideHtml);
+		$this->tpl->assign('siteWideHTML', $siteWideHtml);
 	}
 }
 

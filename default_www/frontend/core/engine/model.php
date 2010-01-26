@@ -130,7 +130,7 @@ class FrontendModel
 												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 												m.custom AS meta_custom,
 												m.url, m.url_overwrite,
-												t.path AS template
+												t.path AS template_path, t.data as template_data
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											INNER JOIN pages_templates AS t ON p.template_id = t.id
@@ -143,6 +143,7 @@ class FrontendModel
 
 		// unserialize parameters
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
+		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = unserialize($record['template_data']);
 
 		// add blocks
 		$record['blocks'] = (array) $db->retrieve('SELECT pb.*

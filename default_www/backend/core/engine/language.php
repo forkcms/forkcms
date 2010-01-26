@@ -104,6 +104,9 @@ class BackendLanguage
 	 */
 	public static function getInterfaceLanguages()
 	{
+		/**
+		 * We should get a listing of locale-files and cache this.
+		 */
 		return array('nl' => BackendLanguage::getLabel('Dutch')); // @todo gaan we dit hardcoded laten?
 	}
 
@@ -212,6 +215,9 @@ class BackendLanguage
 	 */
 	public static function getWorkingLanguages()
 	{
+		/**
+		 * Retrieve from settings (core_languages)
+		 */
 		return array('nl' => BackendLanguage::getLabel('Dutch'),
 					 'fr' => BackendLanguage::getLabel('French'),
 					 'en' => BackendLanguage::getLabel('English')); // @todo gaan we dit hardcoded laten?

@@ -1,20 +1,12 @@
-/**
- * IE6 Conditional comments
- * Stylesheet for <Fork Private>
- *
- * @media	screen, projection
- * @copyright	Netlash <http://www.netlash.com>
- * @author	name <johan@netlash.com>
- */
+/*
+	IE6 Conditional comments for <Project name>
+	
+	Media:      screen, projection
+	Copyright:  Netlash <http://www.netlash.com>
+	author:     name <email@netlash.com>
+*/
 
+/* Clearfix */
 .clearfix {
-	display: inline-block;
-}
-
-#navigation ul li {
-	display: inline-block;
-}
-
-.pagination ul {
-	float: left;
+	zoom: 1;
 }

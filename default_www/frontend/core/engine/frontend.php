@@ -1,12 +1,10 @@
 <?php
 
-// require model
-require_once FRONTEND_CORE_PATH .'/engine/model.php';
-
 /**
- * Fork
+ * Frontend
  *
- * This source file is part of Fork CMS.
+ * This class defines the frontend, it is the core. Everything starts here.
+ * We create all needed instances
  *
  * @package		frontend
  * @subpackage	core

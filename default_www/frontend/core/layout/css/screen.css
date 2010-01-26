@@ -1,38 +1,60 @@
-/**
- * Stylesheet for <##PROJECTNAME##>
- * @media	screen, projection
- * @copyright	Netlash <http://www.netlash.com>
- * @author	name <AUTHORNAMEHERE@netlash.com>
- */
+/*
 
-/**
- * Reset
- */
-body, form, ol, ul, dl, li, dt, dd, td, th ,tr, h1, h2, h3, h4, h5, h6, p, pre, blockquote, address{ margin: 0; padding: 0; }
-html, body { height: 100%; width: 100%; }
-ol, ul { list-style:none; }
-img { border: 0; }
+	Stylesheet for <Project name>
+	
+	Media:      screen, projection
+	Copyright:  Netlash <http://www.netlash.com>
+	author:     name <email@netlash.com>
+
+*/
+
+/*
+	Reset
+*/
+
+body, form, ol, ul, dl, li, dt, dd, td, th ,tr, h1, h2, h3, h4, h5, h6, p, pre, blockquote, address { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+img { border:0; }
 fieldset { margin: 0; padding: 0; border: 0; }
 input, select, textarea { font-size: 100%; vertical-align: middle; }
-table { border-collapse: collapse; border-spacing: 0; }
+table { border-collapse: collapse; border-spacing: 0; empty-cells: show; }
 th { text-align: left; }
+a:focus { overflow: hidden; }
 
-/* Typography and text styles */
+/*
+	General purpose classes
+	Quick 'n dirty; but clean up your mess please.
+*/
+
+.hidden { display: none; }
+.block { display: block; }
+.p0 { padding: 0 !important; }
+.noBorder { border: none !important; }
+.floatLeft { float: left; }
+.floatRight { float: right; }
+.inline { display: inline !important; }
+
+/*
+	Clearfix
+*/
+
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+/*
+	Typography and text styles
+*/
+
 body {
+	background: #F0F0F0;
 	font: 300 13px Arial, sans-serif;
-	line-height: 1.48; /* Safari 2.0.4 */
-	padding: 0 0 20px;
+	line-height: 1.5; /* Safari 2.0.4 */
 	color: #333;
-}
-
-#header h1 {
-	font-size: 36px;
-	font-weight: 700;
-	padding: 0;
-}
-
-#header h1 a {
-	text-decoration: none;
 }
 
 /* Headings */
@@ -63,35 +85,36 @@ p {
 	padding: 0 0 14px 0;
 }
 
-ul, ol {
+abbr, acronym {
+	cursor: help;
+}
+
+.content ul,
+.content ol {
 	padding: 0 0 12px 24px;
 }
 
-ul {
+.content ul {
 	list-style: disc;
 }
 
-ol {
+.content ol {
 	list-style-type: decimal;
 	padding: 0 0 12px 24px;
 }
 
-	ul ul, ol ul {
+	.content ul ul,
+	.content ol ul {
 		padding-bottom: 0;
 	}
 	
-	ol ol {
+	.content ol ol {
 		padding-bottom: 0;
 	}
 	
-	ul ol {
+	.content ul ol {
 		padding: 0 0 0 28px;
 	}
-
-small, span.mute {
-	color: #808080;
-	font-size: 11px;
-}
 
 code {
 	font-family: Monaco, "Courier New", monospace;
@@ -124,22 +147,25 @@ cite {
 	/* Dismisses height to correctly align next element */
 }
 
-/* Default styling for data tables */
-table {
+/*
+	Default styling for data tables
+*/
+.content table {
 	font-family: Arial, sans-serif;
 	margin: 0 0 14px;
-	border-top: 1px solid #D6E0EC;
-	border-left: 1px solid #D6E0EC;
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #CCC;
 }
 
-td, th {
+.content td,
+.content th {
 	padding: 7px;
-	border-right: 1px solid #D6E0EC;
-	border-bottom: 1px solid #D6E0EC;
+	border-right: 1px solid #CCC;
+	border-bottom: 1px solid #CCC;
 	font-size: 11px;
 }
 
-th {
+.content th {
 	font-weight: 700;
 	background: #F5F7F9;
 	color: black;
@@ -147,290 +173,67 @@ th {
 	text-align: left;
 }
 
-tr.rowOdd { background: white; }
-tr.rowEven { background: #FCFCFC; }
+.content tr.rowOdd { background: #FFF; }
+.content tr.rowEven { background: #FCFCFC; }
 
-form table {
-	border: none;
+/*
+	Links
+*/
+
+a {
+	text-decoration: none;
 }
 
-form table td {
-	border: none;
-	font-size: 13px;
-	vertical-align: top;
-	padding: 0 5px 10px 0;
-}
-
-abbr, acronym {
-	cursor: help;
-}
-
-/* Links */
 a:link {
 	color: blue;
+	border-bottom: 1px solid lightblue
 }
 
 a:visited {
 	color: purple;
+	border-bottom: 1px solid purple;
 }
 
 a:hover,
 a:active {
 	color: black;
+	border-bottom: 1px solid silver;
 }
 
+/*
+	MODULE: Photo album
+*/
 
-/**
- * = Page structure and layout
- * ----------------------------------------------------------
- */
+/* @todo */
 
-	#container {
-		width: 780px;
-		margin: 0 auto;
-	}
-
-	#topbar {
-		padding-top: 20px;
-		border-bottom: 1px solid #CCC;
-	}
-
-	#header {
-		padding: 20px 0 30px;
-		position: relative;
-	}
-
-	#header h1 {
-		float: left;
-	}
-
-
-	#language {
-		float: right;
-		width: 300px;
-		padding-top: 20px;
-		position: relative;
-	}
-
-	#language ul {
-		float: right;
-	}
-
-	#language li {
-		float: left;
-		list-style: none;
-		font-size: 11px;
-		margin: 0 10px 0 0;
-	}
-
-	#language li a:link,
-	#language li a:visited {
-		padding: 4px 5px;
-		display: block;
-		min-width: 15px;
-		text-align: center;
-	}
-
-	#language li a:hover,
-	#language li a:active {
-		background: #FFF;
-		color: #000;
-	}
-
-	#language li.selected a {
-		font-weight: 700;
-		color: #000;
-		text-decoration: none;
-	}
-
-	/* Main */
-	#main {
-		padding: 0 0 60px 0;
-	}
-
-	/* Navigation */
-	#navigation {
-		width: 190px;
-		float: left;
-	}
-
-	#navigation ul {
-		padding: 0;
-	}
-
-	#navigation ul li {
-		list-style: none;
-	}
-
-	#navigation ul li a {
-		padding: 5px 10px;
-		display: block;
-		text-decoration: none;
-		border-bottom: 1px solid #EDEDED;
-	}
-
-	#navigation ul li.selected a {
-		color: #000;
-		font-weight: 700;
-	}
-
-	#navigation li ul {
-		padding: 0;
-	}
-
-	#navigation ul li.selected ul li {
-		border: none;
-		font-size: 12px;
-	}
-
-	#navigation li a:hover,
-	#navigation li a:active {
-		background: #EEE;
-	}
-
-	#navigation ul li.selected ul li a {
-		padding: 5px 10px 5px 25px;
-		font-weight: 300;
-	}
-	
-	#navigation ul li.selected ul li.selected a {
-		font-weight: 700;
-	}
-
-	#navigation ul li.selected ul li.selected ul li a {
-		padding: 5px 10px 5px 50px;
-		font-weight: 300;
-	}
-
-	#navigation ul li.selected ul li.selected ul li.selected a {
-		font-weight: 700;
-	}
-	
-	#navigation ul li.selected ul li.selected ul li.selected ul li a {
-		background: #e5eaf7;
-		border-bottom: 1px solid #DDD;
-		padding: 5px 10px 5px 75px;
-		font-weight: 300;
-	}
-	
-	#navigation ul li.selected ul li.selected ul li.selected ul li.selected a {
-		font-weight: 700;
-	}
-	
-	#navigation ul li.selected ul li.selected ul li.selected ul li.selected ul li a {
-		background: #e5eaf7;
-		border-bottom: 1px solid #DDD;
-		padding: 5px 10px 5px 75px;
-		font-weight: 300;
-	}
-	
-	#navigation ul li.selected ul li.selected ul li.selected ul li.selected  ul li.selected a {
-		font-weight: 700;
-	}
-
-	/* Content */
-
-	#content {
-		width: 550px;
-		float: left;
-		margin: 0 0 0 40px;
-		min-height: 400px;
-		height: auto !important;
-		height: 400px;
-	}
-
-	/* Footer */
-	#footer ul {
-		float: right;
-		padding: 10px;
-	}
-
-	#footer li {
-		float: left;
-		padding: 0 10px;
-		list-style: none;
-		font-size: 11px;
-	}
-
-	#footer li.last {
-		padding-right: 0;
-		border: none;
-	}
-
-
-/**
- * = MODULE: Guestbook
- * ----------------------------------------------------------
- */
-
-dt.guestbook-comment-author,
-dt.blog-comment-author {
-	font-size: 11px;
-	padding: 0 0 2px 0;
-	height: 40px;
-	color: #6b7982;
-}
-
-dt.guestbook-comment-author p {
-	position: relative;
-	top: 15px;
-	padding: 0;
-}
-
-dd.guestbook-comment-message,
-dd.blog-comment-message {
-	padding: 0 0 2px 0;
-	border-bottom: 1px dotted #EEE;
-	margin: 0 0 10px 0;
-}
-
-p.form-moderation {
-	padding: 5px;
-	border: 1px dotted #808080;
-	font-weight: 700;
-	text-align: center;
-	margin: 0 0 10px 0;
-	background: #fffae2;
-	color: #808080;
-}
-
-.hidden {
-	display: none;
-}
-
-/**
- * = MODULE: Photo album
- * ----------------------------------------------------------
- */
-
-div.galleryalbum {
+.galleryAlbum {
 	padding: 0 0 20px 0;
 }
 
-div.galleryalbum ul {
+.galleryAlbum ul {
 	clear: both;
 	padding-left: 0;
 }
 
-li.photo {
+.photo {
 	float: left;
 	padding: 7px 7px 21px;
-	background: white;
+	background: #FFF;
 	border: 1px solid #CCC;
 	margin: 0 12px 12px 0;
 	text-align: center;
 	list-style: none;
 }
 
-li.photo p {
+.photo p {
 	padding: 0;
 }
 
-li.photo p a {
+.photo p a {
 	text-decoration: none;
 }
 
-#gallery div.galleryalbum {
+#gallery div.galleryAlbum {
 	float: left;
 	overflow: hidden;
 	border: 1px solid #DDD;
@@ -439,276 +242,256 @@ li.photo p a {
 	padding: 10px;
 }
 
-#gallery div.galleryalbum .album-preview {
+#gallery div.galleryAlbum .albumPreview {
 	float: left;
 	width: 120px;
 }
 
-#gallery div.galleryalbum .album-desc {
+#gallery div.galleryAlbum .albumDescription {
 	float: left;
 	width: 200px;
 	padding-left: 10px;
 }
 
-#galleryimage ul {
+#galleryImage ul {
 	position: relative;
 	padding: 0 0 10px 0;
 }
 
-#galleryimage ul li {
+#galleryImage ul li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
 }
 
-#content #galleryimage ul li.previousimage {
+#content #galleryImage ul li.previousImage {
 	position: absolute;
 	left: 0;
 	top: 0;
 }
 
-#galleryimage img {
+#galleryImage img {
 	max-width: 100%;
 }
 
-#galleryimage ul li.nextimage {
+#galleryImage ul li.nextImage {
 	position: absolute;
 	right: 0;
 	top: 0;
 }
 
-#galleryimage ul li.currentimage {
+#galleryImage ul li.currentImage {
 	margin: 0 auto;
 	width: 90px;
 	text-align: center;
 }
 
-#content #galleryimage ul li a {
+#content #galleryImage ul li a {
 	text-decoration: none;
 	padding: 2px 5px;
 	font-size: 11px;
 }
 
-/**
- * = MODULE: Login
- * ----------------------------------------------------------
- */
+/*
+	MODULE: Login
+*/
 
-div.error-report p {
+.errorReport p {
 	padding: 10px;
 	background: red;
-	color: white;
+	color: #FFF;
 	font-weight: bold;
 	margin: 0 0 18px 0;
 }
 
-#login-permanent {
-	width: 960px;
-	margin: 0 auto;
-}
+/*
+	MODULE: Links module
+*/
 
-#login-permanent p {
-	float: right;
-	padding: 8px 20px;
-	background: white;
-	border: 1px solid #D9D9D9;
-	border-top: none;
-	margin: 0 0 20px;
-	font-size: 11px;
-}
+/*
+	General
+*/
 
-/**
- * = MODULE: Links module
- * ----------------------------------------------------------
- */
-
-#linkscategories table, #linksdetail table {
+#links table {
 	margin: 0 0 20px;
 	border: none;
 	width: 100%;
-	border-top: 1px solid #EEE;
+	border-top: 1px solid #CCC;
 }
 
-#linkscategories table td, #linksdetail table td {
+#links table td,
+#links table td {
 	border: none;
-	border-bottom: 1px solid #EEE;
+	border-bottom: 1px solid #CCC;
 	padding: 10px 2px;
 }
 
-#linksdetail h2, #linkscategories table td h2 {
+/*
+	Category
+*/
+
+#links.category h2, 
+#links.category table td h2 {
 	font-size: 12px;
 	padding: 0;
 }
 
-td.linkname {
+#links.category td.name {
 	width: 30%;
 }
 
-td.linkdescription {
+#links.category td.description {
 	width: 60%;
 }
 
-/**
- * = MODULE: News
- * ----------------------------------------------------------
- */
 
-div.newsarticle {
+/*
+	MODULE: News
+*/
+
+/*
+	General
+*/
+
+#news .article {
+	background: #EEE;
+	padding: 12px;
 	margin: 0 0 18px 0;
 	border-bottom: 1px solid #EEE;
 }
 
-#home div.newsarticle h4 {
-	padding: 0;
+#news p.date {
+	font-size: 11px;
+	line-height: 1.5;
+	padding: 0 0 9px 0;
+	color: #666;
 }
 
-#newsdetail h1 {
-	padding: 0;
+/*
+	Home
+*/
+
+#news.home {
+	
 }
 
-#newsdetail div.newscontent {
-	padding: 0 0 10px 0;
+/*
+	Browse
+*/
+
+#news.browse h2 {
+	padding-bottom: 0;
 }
 
+/*
+	Detail
+*/
 
-
-/**
- * = MODULE: Blog
- * ----------------------------------------------------------
- */
-
-#blogdetail h1 {
+#news.detail h1 {
 	font-size: 18px;
 	padding: 0;
 }
 
-#blog h2 {
-	padding-bottom: 0;
-}
+/*
+	MODULE: Blog
+*/
 
-#home #blog {
-	width: 100%;
-	margin: 0;
-}
+/*
+	General
+*/
 
-div.blogpost {
-	margin: 0 0 16px 0;
-}
-
-.blogpost div.text {
-	padding: 0 0 5px 0;
-}
-
-#home div.blogpost h3.blogposttitle {
-	padding: 0;
-}
-
-div#blogarchive-mini {
-	width: 130px;
-	float: right;
-	border: 1px solid #D9D9D9;
-	background: #fff;
-	padding: 10px;
-}
-
-#blogarchive table {
-	float: left;
-	font-family:Arial,sans-serif;
-	margin: 0;
-	margin-right:20px;
-	width: 498px;
-	border: none;
-}
-
-#blogarchive table tfoot {
-	display: none;
-}
-
-#blogarchive table td {
-	border: none;
+#blog .article {
+	background: #EEE;
+	padding: 12px;
+	margin: 0 0 18px 0;
 	border-bottom: 1px solid #EEE;
 }
 
-#blogarchive table th {
-	border: none;
-	font-size: 10px;
-	color: #808080;
-	font-weight: 300;
-	text-transform: uppercase;
-	border-bottom: 1px solid #EEE;
-	background: none;
-}
-
-.blogform h3, .blogcomments h3 {
-	color: #333;
-}
-
-.blogcomments h4.commenttitle {
-	font-size: 11px;
-	font-weight: 300;
-}
-
-.blogcomments p.author {
-	font-size: 11px;
-	font-weight: 700;	
-}
-
-#blog {
-	float: left;
-	width: 450px;
-	margin: 0 20px 0 0;
-	overflow: hidden;
-}
-#blogdetail {
-	overflow: hidden;
-}
-/* Minimum breedte voor blog is 450px */
-
-p.date {
+#blog p.date {
 	font-size: 11px;
 	line-height: 1.5;
 	padding: 0 0 9px 0;
-	color: #808080;
+	color: #666;
 }
 
-div.meta {
+#blog .meta {
 	margin: 0 0 20px 0;
-	border-top: 1px solid #D9D9D9;
-	color: #808080;
+	border-top: 1px solid #CCC;
+	color: #666;
 }
 
-div.meta ul {
+	#blog .meta ul {
+		padding: 0;
+		list-style: none;
+	}
+
+		#blog .meta ul li {
+			font-size: 11px;
+			float: left;
+			line-height: 1.8;
+			padding: 0 8px 0 0;
+		}
+
+/*
+	Home
+*/
+
+#blog.home {
+	
+}
+
+/*
+	Browse
+*/
+
+#blog.browse h2 {
+	padding-bottom: 0;
+}
+
+/*
+	Detail
+*/
+
+#blog.detail h1 {
+	font-size: 18px;
 	padding: 0;
-	list-style: none;
 }
-div.meta ul li {
+
+#blogComments .author {
 	font-size: 11px;
-	float: left;
-	line-height: 1.8;
-	padding: 0 8px 0 0;
+	font-weight: 700;
 }
 
-div.meta ul li.last {
-	padding-right: 0;
-	border: none;
+	.comment {
+		margin: 0 0 18px 0;
+		border-bottom: 1px solid #DDD;
+		position: relative;
+	}
+	
+	.comment .gravatar {
+		position: absolute;
+		top:0; right:0;
+	}
+
+/*
+	Category
+*/
+
+#blogArchiveMini {
+	width: 130px;
+	float: right;
+	border: 1px solid #D9D9D9;
+	background: #FFF;
+	padding: 10px;
 }
 
-div.blogcomment {
-	margin: 0 0 18px 0;
-	border-bottom: 1px solid #DDD;
-	position: relative;
-}
+/*
+	MODULE: Contact
+*/
 
-div.blogcomment img.gravatar {
-	position: absolute;
-	top:0;right:0;
-}
-
-
-/**
- * = MODULE: Contact
- * ----------------------------------------------------------
- */
+/*
+	Form
+*/
 
 input, textarea {
 	font-family: Arial, sans-serif;
@@ -719,13 +502,13 @@ textarea.textarea {
 	padding: 3px 2px;
 }
 
-span.form-error {
+.formError {
 	color: red;
 	display: block;
 	padding: 0 0 2px 0;
 }
 
-span.form-success {
+.formSuccess {
 	color: green;
 	display: block;
 	background: #CFC;
@@ -734,9 +517,9 @@ span.form-success {
 	margin: 0 0 10px;
 }
 
-input.input-text-error,
-input.input-password-error,
-textarea.textarea-error {
+input.inputTextError,
+input.inputPasswordError,
+textarea.textareaError {
 	border: 1px solid red;
 	padding: 3px 2px;
 }
@@ -745,7 +528,10 @@ form dl dd {
 	padding: 0 0 8px 0;
 }
 
-#name, #email, #website, #subject {
+#name,
+#email,
+#website,
+#subject {
 	width: 210px;
 }
 
@@ -754,137 +540,82 @@ form dl dd {
 	height: 10em;
 }
 
-/**
- * = MODULE: FAQ
- * ----------------------------------------------------------
- */
-#faqdetail dt {
+/*
+	MODULE: FAQ
+*/
+
+/*
+	Category
+*/
+
+#faq.category dt {
 	padding: 0;
-	clear: both;
 }
 
-#faqdetail dt p {
+#faq.category dt p {
 	font-weight: 700;
 	padding: 0 0 5px 0;
 }
 
-#faqdetail dd {
-	border-bottom: 1px solid #DEDEDE;
+#faq.category dd {
+	border-bottom: 1px solid #CCC;
 	margin: 0 0 10px 0;
-	clear: both;
 }
 
-/* Module: newsletter subscription */
-#newslettersubscribeform ul {
+/*
+	MODULE: Newsletter
+*/
+
+/*
+	Subscribe
+*/
+
+#newsletterSubscribeForm ul {
 	padding: 0;
 }
 
-#newslettersubscribeform ul li {
+#newsletterSubscribeForm ul li {
 	list-style: none;
 }
 
-/* Module: Guestbook */
-img.gravatar {
+/*
+	MODULE: Guestbook
+*/
+
+/*
+	Browse
+*/
+
+#guestbook.browse .gravatar {
 	float: right;
 }
 
-p.guestbook-comment-author {
-	font-size: 11px;
-	padding: 0 0 2px 0;
-	color: #6b7982;
-}
-
-p.guestbook-comment-message {
-	padding: 0 0 2px 0;
-	margin: 0 0 10px 0;
-	width: 460px;
-}
-
-p.form-moderation {
-	padding: 5px;
-	border: 1px dotted #808080;
-	font-weight: 700;
-	text-align: center;
-	margin: 0 0 10px 0;
-	color: #808080;
-}
-
-div.guestbookcomment {
+#guestbook.browse .guestbookComment {
 	margin: 0 0 26px;
 	min-height: 45px;
 	height: auto !important;
 	height: 45px;
 }
 
-/* Fork defaults: image classes */
-img.alignleft {
+/*
+	Fork defaults: image classes
+*/
+
+img.alignLeft {
 	float: left;
 	padding: 0 10px 10px 0;
 }
 
-img.alignright {
+img.alignRight {
 	float: right;
 	padding: 0 0 10px 10px;
 }
 
-/* Fork defaults: breadcrumb */
-#breadcrumb {
-	font-size: 11px;
-	float: left;
-}
+/*
+ 	Pattern: pagination
+*/
 
-/* Fork defaults: user */
-#user {
-	font-size: 11px;
-	float: right;
-}
-
-#user input {
-	font-size: 11px;
-}
-
-#user input.input-text {
-	width: 110px;
-}
-
-#user input.input-password {
-	width: 70px;
-}
-
-#user p {
-	padding: 0 0 10px;
-}
-
-/* Fork defaults: linkbutton */
-a.linkbutton {
-	border: 1px solid #E5EAF7;
-	background: #FFF;
-	padding: 3px 8px;
-	display: block;
-	float: left;
-	font-weight: 700;
-	margin: 0 10px 0 0;
-}
-
-/* Fork defaults: backlinks*/
-p.backlink {
-	clear: both;
-}
-
-p.backlink a {
-	background: #FFF;
-	padding: 3px 6px;
-	border: 1px solid #AAA;
-	text-decoration: none;
-	font-size: 12px;
-}
-
-p.backlink a:hover {
-	background: #FFD;
-}
-
-/* Fork defaults: pagination */
-.pagination-wrap {
+.paginationWrap {
 	width: 100%;
 	overflow: hidden;
 }
@@ -922,7 +653,7 @@ p.backlink a:hover {
 	min-width: 12px;
 }
 
-.pagination li.currentpage span {
+.pagination li.currentPage span {
 	font-weight: 700;
 	color: black;
 }
@@ -930,7 +661,7 @@ p.backlink a:hover {
 .pagination li.selected span {
 	padding: 4px 5px;
 	font-weight: 700;
-	color: black;
+	color: #000;
 }
 
 .pagination li a:link,
@@ -938,7 +669,7 @@ p.backlink a:hover {
 	float: left;
 	display: block;
 	padding: 3px 4px;
-	border: 1px solid #DDD;
+	border: 1px solid #CCC;
 	text-decoration: none;
 	min-width: 12px;
 }
@@ -954,51 +685,31 @@ li.ellipsis span {
 .pagination li a:hover,
 .pagination li a:active {
 	background: #EEE;
-	border: 1px solid #BBB;
+	border: 1px solid #AAA;
 	color: black;
 }
 
-.nextpage, .previouspage { font-size: 11px !important; }
-.pagination li.nextpage { margin-left: 10px; }
-.pagination li.previouspage { margin-right: 15px; }
+.nextPage, .previousPage { font-size: 11px !important; }
+.pagination li.nextPage { margin-left: 10px; }
+.pagination li.previousPage { margin-right: 15px; }
 
-/* Fork defaults: general purposes classes */
-.hidden { display: none; }
-.block { display: block; }
-.nopadding { padding: 0 !important; }
-.floatleft { float: left; }
-.floatright { float: right; }
 
-/* Fork defaults: simple column system */
-.columns .column { float: left; }
 
-/* Two columns */
-.columns .column-12,
-.columns .column-24 { width: 49.9%; }
 
-/* Three columns*/
-.columns .column-23 { width: 66.5%; }
-.columns .column-13 { width: 33.2%; }
 
-/* Four columns */
-.columns .column-14 { width: 24.9%; }
-.columns .column-34 { width: 74.9%; }
 
-/* Five columns */
-.columns .column-15 { width: 19.9%; }
-.columns .column-25 { width: 39.9%; }
-.columns .column-35 { width: 59.9%; }
-.columns .column-45 { width: 79.9%; }
+/*
+	Delete from here whens starting a new project
+*/
 
-/* Spacing divs to fit inside colunns: gutter width and 1/2 gutter width */
-.columns .spacing-left { margin-left: 20px; }
-.columns .spacing-left-half { margin-left: 10px; }
-.columns .spacing-right { margin-right: 20px; }
-.columns .spacing-right-half { margin-right: 10px; }
-.columns .spacing-both-half { margin-right: 10px; margin-left: 10px; }
+/*
+	Site specific: Fork Cayenne demo
+*/
 
-/* Clearfix */
-.clearfix:after {
+#topbar:after,
+#header:after,
+#main:after,
+#footer:after {
 	content: ".";
 	display: block;
 	height: 0;
@@ -1006,16 +717,250 @@ li.ellipsis span {
 	visibility: hidden;
 }
 
-/* test*/
+/*
+	Header
+*/
 
+#header h1 {
+	font-size: 36px;
+	font-weight: 700;
+	padding: 0;
+}
 
-/**
- * = MODULE: Polls
- * ----------------------------------------------------------
- */
- 
- #homePoll {
-	border: 1px solid #ccc;
-	margin-top: 10px;
-	padding: 4px;
+#header h1 a {
+	text-decoration: none;
+}
+
+/*
+	User
+*/
+
+#user {
+	font-size: 11px;
+	float: right;
+}
+
+#user input {
+	font-size: 11px;
+}
+
+#user input.inputText {
+	width: 110px;
+}
+
+#user input.inputPassword {
+	width: 70px;
+}
+
+#user p {
+	padding: 0 0 10px;
+}
+
+/* 
+	Breadcrumb
+*/
+
+#breadcrumb {
+	font-size: 11px;
+	float: left;
+}
+
+/*
+	Page structure and layout
+*/
+
+/*
+	Wrappers
+*/
+
+#container {
+	width: 920px;
+	padding: 20px;
+	margin: 20px auto;
+	border: 1px solid #CCC;
+	background: #FFF;
+}
+
+/*
+	Topbar
+*/
+
+#topbar {
+	border-bottom: 1px solid #CCC;
+}
+
+/*
+	Header
+*/
+
+#header {
+	padding: 20px 0 30px;
+	position: relative;
+}
+
+#header h1 {
+	float: left;
+}
+
+/*
+	Language
+*/
+
+#language {
+	float: right;
+	width: 300px;
+	padding-top: 20px;
+	position: relative;
+}
+
+#language ul {
+	float: right;
+}
+
+#language li {
+	float: left;
+	list-style: none;
+	font-size: 11px;
+	margin: 0 10px 0 0;
+}
+
+#language li a:link,
+#language li a:visited {
+	padding: 4px 5px;
+	display: block;
+	min-width: 15px;
+	text-align: center;
+	border: none;
+}
+
+#language li a:hover,
+#language li a:active {
+	background: #FFF;
+	color: #000;
+}
+
+#language li.selected a {
+	font-weight: 700;
+	color: #000;
+	text-decoration: none;
+}
+
+/*
+	Main
+*/
+
+#main {
+	padding: 0 0 60px 0;
+}
+
+/*
+	Navigation
+*/
+
+#navigation {
+	width: 190px;
+	float: left;
+}
+
+#navigation ul {
+	padding: 0;
+}
+
+#navigation ul li {
+	list-style: none;
+}
+
+#navigation ul li a {
+	padding: 5px 10px;
+	display: block;
+	text-decoration: none;
+	border-bottom: 1px solid #CCC;
+}
+
+#navigation ul li.selected a {
+	color: #000;
+	font-weight: 700;
+}
+
+#navigation li ul {
+	padding: 0;
+}
+
+#navigation ul li.selected ul li {
+	border: none;
+	font-size: 12px;
+}
+
+#navigation li a:hover,
+#navigation li a:active {
+	background: #EEE;
+}
+
+#navigation ul li.selected ul li a {
+	padding: 5px 10px 5px 25px;
+	font-weight: 300;
+}
+
+#navigation ul li.selected ul li.selected a {
+	font-weight: 700;
+}
+
+#navigation ul li.selected ul li.selected ul li a {
+	padding: 5px 10px 5px 50px;
+	font-weight: 300;
+}
+
+#navigation ul li.selected ul li.selected ul li.selected a {
+	font-weight: 700;
+}
+
+#navigation ul li.selected ul li.selected ul li.selected ul li a {
+	background: #EEE;
+	border-bottom: 1px solid #CCC;
+	padding: 5px 10px 5px 75px;
+	font-weight: 300;
+}
+
+#navigation ul li.selected ul li.selected ul li.selected ul li.selected a {
+	font-weight: 700;
+}
+
+#navigation ul li.selected ul li.selected ul li.selected ul li.selected ul li a {
+	background: #EEE;
+	border-bottom: 1px solid #CCC;
+	padding: 5px 10px 5px 75px;
+	font-weight: 300;
+}
+
+#navigation ul li.selected ul li.selected ul li.selected ul li.selected  ul li.selected a {
+	font-weight: 700;
+}
+
+/* Content */
+
+#content {
+	width: 690px;
+	float: left;
+	margin: 0 0 0 40px;
+	min-height: 400px;
+	height: auto !important;
+	height: 400px;
+}
+
+/* Footer */
+
+#footer {
+	border-top: 1px solid #CCC;
+}
+
+#footer ul {
+	float: right;
+	padding: 10px;
+}
+
+#footer li {
+	float: left;
+	padding: 0 10px;
+	list-style: none;
+	font-size: 11px;
 }

@@ -124,6 +124,7 @@ class FrontendURL
 
 	/**
 	 * Get a parameter specified by the given index
+	 * @todo	sync with backendURL
 	 *
 	 * @return	mixed
 	 * @param	int $index
@@ -232,7 +233,7 @@ class FrontendURL
 				// fetch failed cookie
 				catch (Exception $e)
 				{
-					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e; // @todo moet aangepast worden naar numerieke exception.
+					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw new FrontendException($e->getMessage());
 				}
 
 				// set sessions
@@ -268,7 +269,7 @@ class FrontendURL
 				// fetch failed cookie
 				catch (Exception $e)
 				{
-					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw $e; // @todo moet aangepast worden naar numerieke exception
+					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw new FrontendException($e->getMessage());
 				}
 
 				// redirect is needed
@@ -313,7 +314,7 @@ class FrontendURL
 		$queryString = trim(substr($queryString, strlen($language)), '/');
 
 		// if it's the homepage AND parameters were given (not allowed!)
-		if($url == '' && $queryString != '') SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId(404), 404);
+		if($url == '' && $queryString != '') SpoonHTTP::redirect(FrontendNavigation::getUrl(404), 404); // @todo we don't want redirects...
 
 		// set pages
 		$pages = trim($url, '/');
@@ -341,7 +342,7 @@ class FrontendURL
 		$navigation = FrontendNavigation::getNavigation();
 
 		// pageId, parentId & depth
-		$pageId = FrontendNavigation::getPageIdByUrl(implode('/', $this->getPages()));
+		$pageId = FrontendNavigation::getPageId(implode('/', $this->getPages()));
 		$parentId = FrontendNavigation::getParentIdByUrl(implode('/', $this->getPages()));
 		$depth = ($parentId < 0) ? $parentId : count($this->getPages());
 
@@ -349,7 +350,7 @@ class FrontendURL
 		if($depth == 0) $depth = 1;
 
 		// this page has no extra linked, but parameters were still given => 404!
-		if($navigation[$depth][$parentId][$pageId]['extra_id'] == 0 && !empty($this->aParameters)) SpoonHTTP::redirect(FrontendNavigation::getUrlByPageId(404), 404);
+		if($navigation[$depth][$parentId][$pageId]['extra_id'] == 0 && !empty($this->aParameters)) SpoonHTTP::redirect(FrontendNavigation::getUrl(404), 404);
 	}
 
 

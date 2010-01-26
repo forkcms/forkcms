@@ -1,5 +1,8 @@
 			<div id="user">
 				{option:user.loggedIn}
+					Aangemeld <!-- @todo -->
+				{/option:user.loggedIn}
+				{option:!user.loggedIn}
 				<form action="index_ingelogd.html" method="post">
 					<fieldset>
 						<p>
@@ -11,8 +14,5 @@
 						</p>
 					</fieldset>
 				</form>
-				{/option:user.loggedIn}
-				{option:!user.loggedIn}
-					Aangemeld!
 				{/option:!user.loggedIn}
 			</div>
