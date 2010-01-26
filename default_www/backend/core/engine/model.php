@@ -210,6 +210,28 @@ class BackendModel
 
 
 	/**
+	 * Fetch the list of modules, but for a dropdown
+	 *
+	 * @return	array
+	 * @param	bool[optional] $activeOnly
+	 */
+	public static function getModulesForDropDown($activeOnly = true)
+	{
+		// init var
+		$dropdown = array('core' => 'core');
+
+		// fetch modules
+		$modules = self::getModules($activeOnly);
+
+		// @todo davy - later moeten de modules als language labels geparsed worden
+		foreach($modules as $module) $dropdown[$module] = $module;
+
+		// return data
+		return $dropdown;
+	}
+
+
+	/**
 	 * Get (or create and get) a database-connection
 	 * If the database wasn't stored in the reference before we will create it and add it
 	 *
@@ -225,8 +247,8 @@ class BackendModel
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
 			// utf8 compliance
-			$db->execute('SET CHARACTER SET ?', 'utf8');
-			$db->execute('SET NAMES ?;', 'utf8');
+			$db->execute('SET CHARACTER SET utf8;');
+			$db->execute('SET NAMES utf8;');
 
 			// store
 			Spoon::setObjectReference('database', $db);
