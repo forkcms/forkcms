@@ -268,7 +268,7 @@ $msg['core']['ActivateNoFollow'] = 'Activeer <code>rel="nofollow"</code>';
 $msg['core']['Added'] = 'item toegevoegd.';
 $msg['spotlight']['Added'] = 'Item <em>%s</em> toegevoegd.';
 $msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
-$msg['settings']['ApiKeysText'] = 'Toegangscodes voor de standaard gebruikte webservices';
+$msg['settings']['ApiKeysText'] = 'Toegangscodes voor gebruikte webservices';
 // b
 // c
 $msg['core']['ConfigurationError'] = 'Sommige instellingen zijn nog niet geconfigureerd:';
@@ -351,7 +351,7 @@ $msg['core']['ResetPasswordAndSignIn'] = 'Resetten en aanmelden';
 $msg['core']['ResetPasswordFormHelp'] = 'Vul je gewenste, nieuwe wachtwoord in.';
 // s
 $msg['core']['Saved'] = 'De wijzigingen zijn opgeslagen.';
-$msg['settings']['ScriptsText'] = 'Plaats HTML-code of javascript die elke pagina geladen moet worden. (bijv. Google Analytics)';
+$msg['settings']['ScriptsText'] = 'Plaats hier code die op elke pagina geladen moet worden. (bvb. Google Analytics).';
 $msg['core']['SequenceChanged'] = 'De volgorde is aangepast.';
 // t
 // u
