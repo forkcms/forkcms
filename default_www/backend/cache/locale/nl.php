@@ -48,7 +48,7 @@ $err['core']['InvalidAPIKey'] = 'Ongeldige API key.';
 $err['core']['InvalidDomain'] = 'Gelieve enkel domeinen in te vullen zonder http en www. vb netlash.com';
 $err['core']['InvalidParameters'] = 'Ongeldige parameters.';
 $err['core']['InvalidURL'] = 'Ongeldige URL.';
-$err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct.';
+$err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct. <a href="#">Bent u uw wachtwoord vergeten?</a>';
 // j
 // k
 // l
@@ -204,6 +204,7 @@ $lbl['core']['Referrers'] = 'referrers';
 $lbl['core']['RepeatPassword'] = 'herhaal wachtwoord';
 $lbl['core']['RequiredField'] = 'verplicht veld';
 $lbl['core']['Revisions'] = 'versies';
+$lbl['core']['RSSFeed'] = 'RSS feed';
 $lbl['pages']['Root'] = 'losse pagina\'s';
 // s
 $lbl['core']['Save'] = 'opslaan';
@@ -266,26 +267,26 @@ $msg = array();
 // a
 $msg['core']['ActivateNoFollow'] = 'Activeer <code>rel="nofollow"</code>';
 $msg['core']['Added'] = 'item toegevoegd.';
-$msg['spotlight']['Added'] = 'Item <em>%s</em> toegevoegd.';
-$msg['users']['Added'] = 'Gebruiker <em>%s</em> toegevoegd.';
+$msg['spotlight']['Added'] = 'Item %s toegevoegd.';
+$msg['users']['Added'] = 'Gebruiker %s toegevoegd.';
 $msg['settings']['ApiKeysText'] = 'Toegangscodes voor gebruikte webservices';
 // b
 // c
 $msg['core']['ConfigurationError'] = 'Sommige instellingen zijn nog niet geconfigureerd:';
 $msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item wil verwijderen?';
-$msg['pages']['ConfirmDelete'] = 'Ben je zeker dat je de paging <em>%s</em> wil verwijderen?';
-$msg['spotlight']['ConfirmDelete'] = 'Ben je zeker dat je <em>%s</em> wil verwijderen?';
-$msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker <em>%s</em> wil verwijderen?';
-$msg['blog']['ConfirmDeleteCategory'] = 'Ben je zeker dat je de categorie <em>%s</em> wil verwijderen?';
+$msg['pages']['ConfirmDelete'] = 'Ben je zeker dat je de paging %s wil verwijderen?';
+$msg['spotlight']['ConfirmDelete'] = 'Ben je zeker dat je %s wil verwijderen?';
+$msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker %s wil verwijderen?';
+$msg['blog']['ConfirmDeleteCategory'] = 'Ben je zeker dat je de categorie %s wil verwijderen?';
 // d
 $msg['core']['Deleted'] = 'Het item is verwijderd.';
-$msg['spotlight']['Deleted'] = 'Het item <em>%s</em> is verwijderd.';
-$msg['users']['Deleted'] = 'De gebruiker <em>%s</em> is verwijderd.';
+$msg['spotlight']['Deleted'] = 'Het item %s is verwijderd.';
+$msg['users']['Deleted'] = 'De gebruiker %s is verwijderd.';
 $msg['settings']['DomainsText'] = 'Vul de domeinen in waarop de website te bereiken is (1 domein per regel)';
 // e
 $msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
-$msg['spotlight']['Edited'] = 'Wijzigingen voor <em>%s</em> opgeslagen.';
-$msg['users']['Edited'] = 'Wijzigingen voor gebruiker <em>%s</em> opgeslagen.';
+$msg['spotlight']['Edited'] = 'Wijzigingen voor %s opgeslagen.';
+$msg['users']['Edited'] = 'Wijzigingen voor gebruiker %s opgeslagen.';
 // f
 $msg['core']['ForgotPassword'] = 'Wachtwoord vergeten?';
 $msg['core']['ForgotPasswordHelp'] = 'Vul hieronder je e-mail adres in om een nieuw wachtwoord toegestuurd te krijgen.';
@@ -298,10 +299,10 @@ $msg['blog']['HeaderAdd'] = 'Bericht toevoegen';
 $msg['blog']['HeaderAddCategory'] = 'Categorie toevoegen';
 $msg['blog']['HeaderCategories'] = 'Categorieën';
 $msg['blog']['HeaderComments'] = 'Reacties';
-$msg['core']['HeaderEdit'] = '<em>%s</em> bewerken';
-$msg['blog']['HeaderEditCategory'] = 'Categorie <em>%s</em> bewerken';
-$msg['snippets']['HeaderEdit'] = 'Snippet <em>%s</em> bewerken';
-$msg['users']['HeaderEdit'] = 'Gebruiker <em>%s</em> bewerken';
+$msg['core']['HeaderEdit'] = '%s bewerken';
+$msg['blog']['HeaderEditCategory'] = 'Categorie %s bewerken';
+$msg['snippets']['HeaderEdit'] = 'Snippet %s bewerken';
+$msg['users']['HeaderEdit'] = 'Gebruiker %s bewerken';
 $msg['blog']['HeaderIndex'] = 'Overzicht';
 $msg['core']['HeaderIndex'] = 'Overzicht';
 $msg['settings']['HeaderIndex'] = 'Website';

@@ -881,12 +881,6 @@ optgroup {
 	padding-top: 12px;
 }
 
-a.disabled {
-	color: #808080;
-	opacity: 0.77;
-	cursor: default;
-}
-
 a { text-decoration: none; }
 
 table.datagrid a {
@@ -1241,6 +1235,7 @@ td.comments {
 
 .box .footer {
 	border: 1px solid #D7D7D7;
+	border-top: none;
 	background: #F2F2F2;
 	border-color: #AAA #D7D7D7 #C0C0C0 #D7D7D7;
 	padding: 6px 12px;
@@ -1697,7 +1692,7 @@ label {
 
 .forkForms .horizontal p.label{ margin: 0; }
 .forkForms .spacing,
-.forkForms .horizontal span.form-error { padding-left: 115px; }
+.forkForms .horizontal span.formError { padding-left: 115px; }
 .forkForms abbr { cursor: help; }
 
 .forkForms .block{ display: block !important; }
@@ -1715,11 +1710,15 @@ fieldset legend {
 
 /* Form messages */
 
+/* Inline error */
 .formError {
-	color: #e2001a;
+	color: #E2001A;
 	display: block;
 	font-size: 11px;
-	font-weight: 700;
+}
+
+.singleMessage {
+	border: 1px solid #CCC;
 }
 
 .formMessage { 
@@ -1751,6 +1750,12 @@ fieldset legend {
 
 }
 
+	.errorMessage a {
+		color: #E2001A;
+		font-weight: 700;
+		border-bottom: 1px solid #f5abb4;
+	}
+
 .successMessage { 
 	color: #4f6d2c;
 	background: #d6efb8;
@@ -1762,8 +1767,16 @@ fieldset legend {
 	-moz-border-radius: 4px;
 
 	padding: 12px;
-
 }
+
+	#report .successMessage {
+		border-width: 0 0 1px;
+
+		/* @inc .rc */
+		border-radius: 0;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+	}
 
 	.successMessage a:link,
 	.successMessage a:visited {
@@ -1831,6 +1844,7 @@ fieldset legend {
 }
 
 #addTag { width: 194px; }
+
 #pagesSide .tagsWrapper #addTag { width: 94px; }
 
 .tagsWrapper label { font-size: 11px; }
@@ -2428,6 +2442,19 @@ abbr.help {
 	position: relative;
 }
 
+#loginBox.hasError {
+	padding-top: 68px;
+}
+
+#loginError {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	z-index: 3;
+	border-bottom: 1px solid #C3C3C3;
+}
+
 	#loginNav ul {
 		padding-left: 50px;
 		padding-bottom: 12px;
@@ -2516,7 +2543,7 @@ abbr.help {
 	}
 	
 		#loginFields p {
-			padding: 0 48px 12px;
+			padding: 0 12px 12px 48px;
 		}
 		
 		#loginFields label {
@@ -2524,6 +2551,10 @@ abbr.help {
 			color: #666;
 			display: block;
 			width: 100px;
+		}
+		
+		#loginBox .formError {
+			padding-left: 110px;
 		}
 	
 		#loginBox p.spacing {
@@ -2907,6 +2938,19 @@ a.mainButton:focus {
 			a.linkButton span {
 				background: none;
 			}
+			
+		/*
+			Disabled buttons
+		*/
+		
+		a.disabledButton:link,
+		a.disabledButton:visited,
+		a.disabledButton:hover,
+		a.disabledButton:active,
+		a.disabledButton:focus {
+			opacity: 0.5;
+			cursor: default;
+		}
 
 /* Button positioning */
 
@@ -3081,3 +3125,10 @@ a.mainButton:focus {
 	background : Window url('../images/spinner.gif') right center no-repeat;
 }
 .ac_over { background-color: Highlight; color: HighlightText; }
+
+/*
+	Input widths by ID
+*/
+
+#categoryId { width: 170px; }
+#addValue-tags { width: 120px; }

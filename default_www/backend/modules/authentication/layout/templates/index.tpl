@@ -11,7 +11,16 @@
 						<li><a href="http://docs.fork-cms.be">{$lblDeveloper|ucfirst}</a></li>
 					</ul>
 				</div>
-				<div id="loginBox">
+				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
+					{option:hasError}
+					<div id="loginError">
+						<div class="errorMessage singleMessage">
+							<p>{$errInvalidUsernamePasswordCombination}</p>
+						</div>
+					</div>
+					{/option:hasError}
+					
+					
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>
 						<p>{$msgLoginFormHelp}</p>
@@ -19,10 +28,6 @@
 
 					{form:authenticationIndex}
 						<div class="horizontal">
-							{option:hasError}
-							<div class="errorMessage singleMessage">
-								<p>{$errInvalidUsernamePasswordCombination}</p>
-							</div>{/option:hasError}
 							<div id="loginFields">
 								<p>
 									<label for="backendUsername">{$lblUsername|ucfirst}</label>

@@ -27,7 +27,7 @@
 						'	<div class="oneLiner">'+
 						'		<p><input class="inputText" id="addValue-'+ id +'" type="text" /></p>'+
 						'		<div class="buttonHolder">'+
-						'			<a href="#" id="addButton-'+ id +'" class="button icon iconAdd disabled">'+
+						'			<a href="#" id="addButton-'+ id +'" class="button icon iconAdd iconOnly disabledButton">'+
 						'				<span><span><span>'+ options.addLabel +'</span></span></span>'+
 						'			</a>'+
 						'		</div>'+
@@ -88,8 +88,8 @@
 				}
 
 				// disable or enable button
-				if($(this).val().replace(/^\s+|\s+$/g, '') == '') $('#addButton-'+ id).addClass('disabled');
-				else $('#addButton-'+ id).removeClass('disabled');
+				if($(this).val().replace(/^\s+|\s+$/g, '') == '') $('#addButton-'+ id).addClass('disabledButton');
+				else $('#addButton-'+ id).removeClass('disabledButton');
 			});
 			
 			// bind click on add-button
@@ -120,7 +120,7 @@
 
 				// reset box
 				$('#addValue-'+ id).val('').focus();
-				$('#addButton-'+ id).addClass('disabled');
+				$('#addButton-'+ id).addClass('disabledButton');
 				
 				// only add new element if it isn't empty
 				if(value != '') {

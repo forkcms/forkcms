@@ -4,15 +4,16 @@
 			<div id="statusBar">
 				<p class="breadcrumb">Gebruikers > Overzicht</p>
 			</div>
+			
+			{option:report}
+			<div id="report">
+				<div class="singleMessage successMessage">
+					<p>{$reportMessage}</p>
+				</div>
+			</div>
+			{/option:report}
+			
 			<div class="inner">
-				{option:report}
-					<div class="successMessage fadeOutAfterMouseMove">{$reportMessage}</div>
-					{option:highlight}
-						<script type="text/javascript">
-							var highlightId = '#{$highlight}';
-						</script>
-					{/option:highlight}
-				{/option:report}
 
 				<div class="datagridHolder">
 					<div class="tableHeading">

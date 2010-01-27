@@ -58,12 +58,12 @@
 			<td id="container">
 				<div id="main">
 					{option:errorMessage}
-						<div class="message error">
+						<div class="errorMessage singleMessage">
 							<p>{$errorMessage}</p>
 						</div>
 					{/option:errorMessage}
 					{option:formError}
-						<div class="message error">
+						<div class="errorMessage singleMessage">
 							<p>{$errGeneralFormError}</p>
 						</div>
 					{/option:formError}

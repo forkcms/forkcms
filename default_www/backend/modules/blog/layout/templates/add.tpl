@@ -2,14 +2,14 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Blog &gt; {$msgHeaderAddCategory|ucfirst}</p>
+				<p class="breadcrumb">Blog &gt; {$msgHeaderAdd|ucfirst}</p>
 			</div>
 
 			<div class="inner">
 				{form:add}
 					{$txtTitle} {$txtTitleError}
 
-					<!-- @todo does this have to be here? -->
+					<!-- @todo does this have to be here? Answer: yes -->
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>

@@ -5,7 +5,8 @@
 				<p class="breadcrumb">{$lblSettings|ucfirst} &gt; {$lblBlog|ucfirst}</p>
 			</div>
 
-			<div class="inner">
+			<!-- @todo @johan remove this forkForms class once forkForms is a default on forms -->
+			<div class="inner forkForms">
 				{form:settings}
 					<div class="box">
 						<div class="heading">
@@ -33,26 +34,27 @@
 						</div>
 					</div>
 
-					<div class="box horizontal">
-						<div class="heading">
-							<h3>RSS-feed</h3>
+					<div class="box">
+						<div class="horizontal">
+							<div class="heading">
+								<h3>{$lblRSSFeed}</h3>
+							</div>
+							<div class="options">
+								<label>{$lblTitle|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+								{$txtRssTitle} {$txtRssTitleError}
+								<span class="helpTxt">{$msgHelpRSSTitle}</span>
+							</div>
+							<div class="options">
+								<label>{$lblDescription|ucfirst}</label>
+								{$txtRssDescription} {$txtRssDescriptionError}
+								<span class="helpTxt">{$msgHelpRSSDescription}</span>
+							</div>
+							<div class="options">
+								<label>{$lblFeedburnerURL}</label>
+								{$txtFeedburnerUrl} {$txtFeedburnerUrlError}
+								<span class="helpTxt">{$msgHelpFeedburnerURL}</span>
+							</div>
 						</div>
-						<div class="options">
-							<label>{$lblTitle|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
-							{$txtRssTitle} {$txtRssTitleError}
-							<span class="helpTxt">{$msgHelpRSSTitle}</span>
-						</div>
-						<div class="options">
-							<label>{$lblDescription|ucfirst}</label>
-							{$txtRssDescription} {$txtRssDescriptionError}
-							<span class="helpTxt">{$msgHelpRSSDescription}</span>
-						</div>
-						<div class="options">
-							<label>{$lblFeedburnerURL}</label>
-							{$txtFeedburnerUrl} {$txtFeedburnerUrlError}
-							<span class="helpTxt">{$msgHelpFeedburnerURL}</span>
-						</div>
-
 					</div>
 
 					<div class="fullwidthOptions">
