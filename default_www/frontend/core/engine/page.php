@@ -298,6 +298,8 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Store the temporary statistics
 	 *
+	 * @todo tijs - MOET momenteel uitgeschakeld worden.
+	 *
 	 * @return	void
 	 */
 	private function storeStatistics()
