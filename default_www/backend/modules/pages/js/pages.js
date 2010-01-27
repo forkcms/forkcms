@@ -112,7 +112,7 @@ jsBackend.pages.template = {
 		// hide unneeded blocks
 		$('.contentBlock').each(function() {
 			// hide if needed
-			if(i >= current.number_of_blocks) $(this).hide();
+			if(i >= current.num_blocks) $(this).hide();
 			
 			// process
 			else {
@@ -129,7 +129,7 @@ jsBackend.pages.template = {
 		$('#templateDetails tr').each(function() {
 			
 			// hide if needed
-			if(i >= current.number_of_blocks) $(this).hide();
+			if(i >= current.num_blocks) $(this).hide();
 			
 			// process
 			else {

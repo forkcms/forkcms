@@ -8,9 +8,9 @@
 
 		<label for="content">{$lblContent|ucfirst}</label>
 		<p>{$txtContent} {$txtContentError}</p>
-		
+
 		<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
-		
+
 		<p>{$btnSave}</p>
 	</fieldset>
 {/form:add}

@@ -27,6 +27,7 @@ $navigation['modules']['children']['tags'] = array('url' => 'tags/index', 'label
 $navigation['modules']['children']['extranet'] = array('url' => null, 'label' => 'Extranet');
 $navigation['modules']['children']['extranet']['children'][] = array('url' => 'extranet/index', 'label' => 'Groups');
 $navigation['modules']['children']['extranet']['children'][] = array('url' => 'extranet/users', 'label' => 'Users');
+$navigation['modules']['children']['locale'] = array('url' => 'locale/index', 'label' => 'Locale');
 
 $navigation['mailmotor'] = array('url' => null, 'label' => 'Mailmotor');
 $navigation['mailmotor']['children'][] = array('url' => 'mailmotor/index', 'label' => 'Newsletters');
@@ -48,6 +49,7 @@ $navigation['settings']['children']['modules'] = array('url' => null, 'label' =>
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'blog/settings', 'label' => 'Blog');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'news/settings', 'label' => 'News');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'location/settings', 'label' => 'Location');
+$navigation['settings']['children']['modules']['children'][] = array('url' => 'pages/templates', 'label' => 'Pages');
 $navigation['settings']['children']['users'] = array('url' => 'users/index', 'label' => 'Users');
 
 ?>

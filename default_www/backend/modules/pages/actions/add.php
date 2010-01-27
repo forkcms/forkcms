@@ -232,7 +232,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$blocks = array();
 
 				// loop blocks in template
-				for($i = 0; $i < $this->templates[$page['template_id']]['number_of_blocks']; $i++)
+				for($i = 0; $i < $this->templates[$page['template_id']]['num_blocks']; $i++)
 				{
 					// get the extra id
 					$extraId = $this->frm->getField('block_extra_id_'. $i)->getValue();

@@ -333,6 +333,16 @@ class BackendPagesModel
 	}
 
 
+	public static function existsTemplate($id)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// get data
+		return (bool) $db->getNumRows('SELECT id FROM pages_templates WHERE id = ?;', (int) $id);
+	}
+
+
 	/**
 	 * Get the data for a record
 	 *
@@ -372,6 +382,16 @@ class BackendPagesModel
 
 		// return
 		return $return;
+	}
+
+
+	public static function getTemplate($id)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// fetch data
+		return (array) $db->getRecord('SELECT * FROM pages_templates WHERE id = ?;', (int) $id);
 	}
 
 
@@ -688,7 +708,7 @@ class BackendPagesModel
 		$db = BackendModel::getDB();
 
 		// get templates
-		$templates = (array) $db->retrieve('SELECT t.id, t.label, t.path, t.number_of_blocks, t.is_default, t.data
+		$templates = (array) $db->retrieve('SELECT t.id, t.label, t.path, t.num_blocks, t.is_default, t.data
 											FROM pages_templates AS t
 											WHERE t.active = ?;',
 											array('Y'), 'id');
@@ -1003,6 +1023,25 @@ class BackendPagesModel
 
 
 	/**
+	 * Inserts a new template
+	 *
+	 * @return	int
+	 * @param	array $template
+	 */
+	public static function insertTemplate(array $template)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// default?
+		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'));
+
+		// insert
+		return (int) $db->insert('pages_templates', $template);
+	}
+
+
+	/**
 	 * Move a page
 	 *
 	 * @return	bool
@@ -1189,6 +1228,18 @@ class BackendPagesModel
 		$db->insert('pages_blocks', $blocks);
 	}
 
+
+	public static function updateTemplate($id, array $template)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// update old revisions
+		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'), '');
+
+		// update item
+		$db->update('pages_templates', $template, 'id = ?', (int) $id);
+	}
 }
 
 ?>

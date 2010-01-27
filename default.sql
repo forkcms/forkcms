@@ -498,7 +498,7 @@ CREATE TABLE IF NOT EXISTS `pages_templates` (
   `id` int(11) NOT NULL auto_increment COMMENT 'Unique ID for the template.',
   `label` varchar(255) NOT NULL COMMENT 'The label for the template, will be used for displaying purposes.',
   `path` varchar(255) NOT NULL COMMENT 'Filename for the template.',
-  `number_of_blocks` int(11) NOT NULL default '1' COMMENT 'The number of blocks used in the template.',
+  `num_blocks` int(11) NOT NULL default '1' COMMENT 'The number of blocks used in the template.',
   `active` enum('Y','N') NOT NULL default 'Y' COMMENT 'Is this template active (as in: will it be used).',
   `is_default` enum('Y','N') NOT NULL default 'N' COMMENT 'Is this the default template.',
   `data` text COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',

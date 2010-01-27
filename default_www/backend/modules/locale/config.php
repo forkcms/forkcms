@@ -1,0 +1,35 @@
+<?php
+
+// require the Model-class
+require_once BACKEND_MODULE_PATH .'/engine/model.php';
+
+/**
+ * Locale
+ *
+ * This is the configuration-object for the locale module
+ *
+ * @package		backend
+ * @subpackage	locale
+ *
+ * @author 		Davy Hellemans <davy@netlash.com>
+ * @since		2.0
+ */
+final class BackendLocaleConfig extends BackendBaseConfig
+{
+	/**
+	 * The default action
+	 *
+	 * @var	string
+	 */
+	protected $defaultAction = 'index';
+
+
+	/**
+	 * The disabled actions
+	 *
+	 * @var	array
+	 */
+	protected $disabledActions = array();
+}
+
+?>
