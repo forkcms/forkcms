@@ -275,7 +275,7 @@ td {
 		display: block;
 		background: #F9F9F9;
 		background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
-		background: -moz-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
+		background: -moz-linear-gradient(top, #fff, #f4f4f4);
 		border: 1px solid #BFBFBF;
 
 		float: left;
@@ -303,7 +303,7 @@ td {
 		/* @inc .navButtonSelected */
 		background: #000;
 		background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
-		background: -moz-gradient(linear, left top, left bottom, from(#666), to(#000));
+		background: -moz-linear-gradient(top, #666, #000);
 		border: 1px solid #000;
 		color: #FFF;
 		
@@ -363,6 +363,7 @@ td {
 		.contentType {
 			background: #666;
 			background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999));
+			background: -moz-linear-gradient(top, #666, #999);
 			border-bottom: 1px solid #666;
 			font-weight: 700;
 			padding: 5px 10px 5px 40px;
@@ -401,7 +402,8 @@ td {
 	.contentTitle.selected,
 	.contentTitle:hover {
 		background: #000;
-		background: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#000));
+		background: -webkit-gradient(linear, left top, left bottom, from(#3A3A3A), to(#000));
+		background: -moz-linear-gradient(top, #3A3A3A, #000);
 		border-bottom: 1px solid #000;
 	}
 	
@@ -591,7 +593,7 @@ td#contentHolder {
 .datagrid th {
 	font-size: 11px;
 	background: url(../images/th.gif) repeat-x 0 0;
-	border-bottom: 1px solid #b4b4b4;
+	border-bottom: 1px solid #B4B4B4;
 	border-right: 1px solid #AEAEAE;
 	line-height: 22px;
 	padding: 0;
@@ -922,7 +924,8 @@ table.datagrid a {
 
 #treeOptions {
 	background: #c8c8c8;
-	background: -webkit-gradient(linear, left top, left bottom, from(#e1e1e1), to(#bebebe));
+	background: -webkit-gradient(linear, left top, left bottom, from(#E1E1E1), to(#BEBEBE));
+	background: -moz-linear-gradient(top, #E1E1E1, #BEBEBE);
 	height: 54px;
 	border-bottom: 1px solid #919191;
 	border-left: 1px solid #b0b0b0;
@@ -1030,6 +1033,8 @@ td.comments {
 	padding: 50px 0 50px 50px;
 	background: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fafafa));
+	background: -moz-linear-gradient(top, #fff, #fafafa);
+	
 	margin: 0 0 14px;
 	border: 1px solid #CDCDCD;
 	font-family: Helvetica, Arial, sans-serif;
@@ -1056,6 +1061,7 @@ td.comments {
 
 	background: #EAEAEA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EAEAEA));
+	background: -moz-linear-gradient(top, #DDD, #EAEAEA);
 	border: 1px solid #DDD;
 
 	margin: 0 0 12px;
@@ -1181,6 +1187,7 @@ td.comments {
 	tr.sectionRow th {
 		background: #c8c8c8;
 		background: -webkit-gradient(linear, left top, left bottom, from(#f2f2f2), to(#dadada));
+		background: -moz-linear-gradient(top, #f2f2f2, #dadada);
 	}
 
 .box .options,
@@ -1209,6 +1216,7 @@ td.comments {
 	color: #3A3A3A;
 	background: #FFA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFD), to(#FFA));
+	background: -moz-linear-gradient(top, #FFD, #FFA);
 	
 }
 
@@ -1292,6 +1300,8 @@ td.comments {
 .modalSave {
 	background: #EAEAEA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EAEAEA));
+	background: -moz-linear-gradient(top, #DDD, #EAEAEA);
+
 	padding: 12px;
 }
 
@@ -1442,6 +1452,8 @@ td.comments {
 		font-size: 11px;
 		background: #ecf3ff;
 		background: -webkit-gradient(linear, left top, left bottom, from(#ecf3ff), to(#e1e9f9));
+		background: -moz-linear-gradient(top, #ECF3FF, #E1E9F9);
+
 		overflow: hidden;
 		margin: 0 0 4px;
 	}
@@ -1450,9 +1462,10 @@ td.comments {
 	.avatarAndNickName a:active,
 	.avatarAndNickName a:focus,
 	.avatarAndNickName .selected a {
-		border-color: #a0c0ff;
-		background: #ffffff;
-		background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#ecf3ff));
+		border-color: #A0C0FF;
+		background: #FFF;
+		background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#ecf3ff));
+		background: -moz-linear-gradient(top, #FFF, #ECF3FF);
 	}
 
 .avatarAndNickName img {
@@ -1685,7 +1698,6 @@ label {
 .forkForms .horizontal p.label{ margin: 0; }
 .forkForms .spacing,
 .forkForms .horizontal span.form-error { padding-left: 115px; }
-
 .forkForms abbr { cursor: help; }
 
 .forkForms .block{ display: block !important; }
@@ -1855,7 +1867,8 @@ fieldset legend {
 	display: block;
 	float: left;
 	background: #dee7f8;
-	background: -webkit-gradient(linear, left top, left bottom, from(#c9dcff), to(#dee7f8));
+	background: -webkit-gradient(linear, left top, left bottom, from(#C9DCFF), to(#DEE7F8));
+	background: -moz-linear-gradient(top, #C9DCFF, #DEE7F8);
 
 	line-height: 16px;
 	border: 1px solid #a4bdec;
@@ -1985,7 +1998,9 @@ abbr.help {
 		color: #FFF;
 
 		background: #1a57ad;
-		background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
+		background: -webkit-gradient(linear, left top, left bottom, from(#5C93D5), to(#1A57AD));
+		background: -moz-linear-gradient(top, #5C93D5, #1A57AD);
+
 		color: #FFF;
 
 	}
@@ -2002,7 +2017,9 @@ abbr.help {
 	.templateVisual td.selected.hover {
 		background: #000;
 		border: 1px solid #000;
-		background: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#000));
+		background: -webkit-gradient(linear, left top, left bottom, from(#3A3A3A), to(#000));
+		background: -moz-linear-gradient(top, #3A3A3A, #000);
+
 	}
 	
 .fullwidthOptions {
@@ -2010,6 +2027,7 @@ abbr.help {
 
 	background: #EAEAEA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EAEAEA));
+	background: -moz-linear-gradient(top, #DDD, #EAEAEA);
 
 	border: 1px solid #BFBFBF;
 	padding: 6px;
@@ -2178,7 +2196,9 @@ abbr.help {
 	color: #FFF;
 	font-weight: 700;
 	background: #DE3636;
-	background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#ff2626));
+	background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#FF2626));
+	background: -moz-linear-gradient(top, #DE3636, #FF2626);
+
 	border: 1px solid #a60000;
 	padding: 2px 9px;
 
@@ -2455,7 +2475,8 @@ abbr.help {
 	padding: 25px 50px;
 
 	background: #FFF;
-	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F4F4F4));
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
+	background: -moz-linear-gradient(top, #FFF, #F4F4F4);
 	
 	/* @inc .rc */
 	border-radius: 4px;
@@ -2517,7 +2538,8 @@ abbr.help {
 			background: #E9F0F7;
 			border: 1px solid #B8BCC9;
 			
-			background: -webkit-gradient(linear, left top, left bottom, from(#eff5fd), to(#e9f0f7));
+			background: -webkit-gradient(linear, left top, left bottom, from(#EFF5FD), to(#E9F0F7));
+			background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
 
 			/* @inc .rc */
 			border-radius: 4px;
@@ -2642,6 +2664,7 @@ abbr.help {
 .userHolder li {
 	background: #EEE;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#eee));
+	background: -moz-linear-gradient(top, #FFF, #EEE);
 	float: left;
 	padding: 12px 8px 10px 8px;
 	min-width: 270px;
@@ -2662,6 +2685,7 @@ abbr.help {
 .userHolder .webmaster {
 	background: #5d8c3c;
 	background: -webkit-gradient(linear, left top, left bottom, from(#90b571), to(#5d8c3c));
+	background: -moz-linear-gradient(top, #90b571, #5d8c3c);
 	border: 1px solid #5a7b3b;
 	color: white;
 	padding: 2px 4px;
@@ -2681,6 +2705,8 @@ abbr.help {
 	border: 1px dashed #777;
 	background: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f5f5f5));
+	background: -moz-linear-gradient(top, #FFF, #F5F5F5);
+
 	cursor: pointer;
 }
 
@@ -2971,7 +2997,8 @@ a.mainButton:focus {
 				color: #FFF;
 				
 				background: #5f9919;
-				background: -webkit-gradient(linear, left top, left bottom, from(#5f9919), to(#90d637));
+				background: -webkit-gradient(linear, left top, left bottom, from(#5F9919), to(#90D637));
+				background: -moz-linear-gradient(top, #5F9919, #90D637);
 			}
 			
 
@@ -2989,6 +3016,7 @@ a.mainButton:focus {
 	border: 1px solid #666;
 	background: #777;
 	background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999));
+	background: -moz-linear-gradient(top, #666, #999);
 	
 	margin: 5px 0 2px;
 	
@@ -3010,6 +3038,7 @@ a.mainButton:focus {
 	#alerter.active {
 		background: #ffca29;
 		background: -webkit-gradient(linear, left top, left bottom, from(#ffca29), to(#ffca29));
+		/* @todo add moz gradient */
 		border: 1px solid #c56e11;
 	}
 	
