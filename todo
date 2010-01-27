@@ -13,10 +13,6 @@ PRIVATE TODO
 		- BackendDataGrid::setURL => als er nog niets in de $_GET is meegegeven, dan moet hij order sort offset derbij plakken, just? (hou rekening met ? en &)
 		- BackendURL::createURL => indien $_GET order, sort en offset overnemen
 
-SPOON TODO
---
-	- Spoon upgraden naar nieuwste versie
-	
 API TODO
 --
 	- push message to users

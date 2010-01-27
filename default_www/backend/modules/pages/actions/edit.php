@@ -244,6 +244,16 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assign('blocks', $this->blocks);
 		$this->tpl->assign('extras', $this->extras['data']);
 
+		// init var
+		$showDelete = true;
+
+		// has children?
+		if(BackendPagesModel::getFirstChildId($this->record['id']) !== false) $showDelete = false;
+		if(!$this->record['delete_allowed']) $showDelete = false;
+
+		// show deletebutton
+		$this->tpl->assign('showDelete', $showDelete);
+
 		// assign template
 		$this->tpl->assignArray($this->templates[$this->record['template_id']], 'template');
 
@@ -372,7 +382,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				}
 
 				// insert the blocks
-				BackendPagesModel::updateBlocks($blocks);
+				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->url->getModule());

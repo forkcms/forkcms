@@ -64,6 +64,7 @@ class BackendPagesModel
 				$temp['full_url'] = $keys[$pageID];
 				$temp['title'] = $page['title'];
 				$temp['navigation_title'] = $page['navigation_title'];
+				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
 
 				// calculate tree-type
 				$treeType = 'page';
@@ -132,6 +133,7 @@ class BackendPagesModel
 					{
 						// cast properly
 						if($key == 'page_id') $value = (int) $value;
+						elseif($key == 'has_extra') $value = ($value) ? 'true' : 'false';
 						else $value = '\''. $value .'\'';
 
 						// add line
@@ -540,6 +542,34 @@ class BackendPagesModel
 
 
 	/**
+	 * Get the first child for a given parent
+	 *
+	 * @return	mixed
+	 * @param	int $pageId
+	 */
+	public static function getFirstChildId($pageId)
+	{
+		// redefine
+		$pageId = (int) $pageId;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get child
+		$childId = (int) $db->getVar('SELECT p.id
+										FROM pages AS p
+										WHERE p.parent_id = ? AND p.status = ?
+										ORDER BY p.sequence ASC
+										LIMIT 1;',
+										array($pageId, 'active'));
+
+		if($childId != 0) return (int) $childId;
+
+		// fallback
+		return false;
+	}
+
+	/**
 	 * Get the full-url for a given menuId
 	 *
 	 * @return	string
@@ -744,7 +774,7 @@ class BackendPagesModel
 		// get db
 		$db = BackendModel::getDB();
 
-		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden,
+		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden, p.has_extra,
 													m.url
 												FROM pages AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
@@ -1012,10 +1042,16 @@ class BackendPagesModel
 	 * @return	void
 	 * @param	array $blocks
 	 */
-	public static function insertBlocks(array $blocks)
+	public static function insertBlocks(array $blocks, $hasBlock = false)
 	{
 		// get db
 		$db = BackendModel::getDB();
+
+		// rebuild value for has_extra
+		$hasExtra = ($hasBlock) ? 'Y' : 'N';
+
+		// update page
+		$db->update('pages', array('has_extra' => $hasExtra), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
@@ -1216,10 +1252,16 @@ class BackendPagesModel
 	 * @return	void
 	 * @param	array $blocks
 	 */
-	public static function updateBlocks(array $blocks)
+	public static function updateBlocks(array $blocks, $hasBlock = false)
 	{
 		// get db
 		$db = BackendModel::getDB();
+
+		// rebuild value for has_extra
+		$hasExtra = ($hasBlock) ? 'Y' : 'N';
+
+		// update page
+		$db->update('pages', array('has_extra' => $hasExtra), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// update old revisions
 		$db->update('pages_blocks', array('status' => 'archive'), 'id = ?', $blocks[0]['id']);
@@ -1229,6 +1271,11 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * @todo	PHPDoc
+	 * @param unknown_type $id
+	 * @param array $template
+	 */
 	public static function updateTemplate($id, array $template)
 	{
 		// get db

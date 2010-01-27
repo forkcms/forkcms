@@ -314,7 +314,7 @@ jsBackend.forms = {
 	
 	tagBoxes: function() {
 		if($('input.tagBox').length > 0) {
-			$('input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete' });
+			$('input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' });
 		}
 	},
 	

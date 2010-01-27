@@ -120,6 +120,9 @@ class BackendBaseAJAXAction
 		// create response array
 		$response = array('code' => $statusCode, 'data' => $data, 'message' => $message);
 
+		// set correct headers
+		SpoonHTTP::setHeaders('content-type: application/json');
+
 		// output to the browser
 		echo json_encode($response);
 		exit;

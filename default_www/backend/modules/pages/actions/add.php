@@ -277,7 +277,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				}
 
 				// insert the blocks
-				BackendPagesModel::insertBlocks($blocks);
+				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->url->getModule());

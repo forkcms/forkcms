@@ -166,7 +166,7 @@ class FrontendPage extends FrontendBaseObject
 		$this->footer->parse();
 
 		// output
-		$this->tpl->display(FRONTEND_PATH .'/'. $this->templatePath);
+		$this->tpl->display($this->templatePath);
 	}
 
 
@@ -194,8 +194,35 @@ class FrontendPage extends FrontendBaseObject
 		// empty record (pageId doesn't exists)
 		if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404); // @todo we don't want a redirect
 
-		// @todo indien er geen inhoud is, doorverwijzen naar eerste child. Wordt wel lastig om te verififeren bij 1ste block.
-		// redirect als alles leeg is en geen extras
+		// init var
+		$redirect = true;
+
+		// loop blocks, if all are empty we should redirect to the first child
+		foreach($this->record['blocks'] as $block)
+		{
+			// HTML provided?
+			if($block['html'] != '') $redirect = false;
+
+			// an decent extra provided?
+			if($block['extra_type'] == 'block') $redirect = false;
+		}
+
+		// should we redirect?
+		if($redirect)
+		{
+			// get first child
+			$firstChildId = FrontendNavigation::getFirstChildId($this->record['id']);
+
+			// validate the child
+			if($firstChildId !== false)
+			{
+				// build url
+				$url = FrontendNavigation::getURL($firstChildId);
+
+				// redirect (temporary)
+				SpoonHTTP::redirect($url, 307);
+			}
+		}
 	}
 
 
@@ -260,7 +287,7 @@ class FrontendPage extends FrontendBaseObject
 		$this->footer = new FrontendFooter();
 
 		// set template path
-		$this->templatePath = $this->record['template_path'];
+		$this->templatePath = FRONTEND_PATH .'/'. $this->record['template_path'];
 
 		// loop blocks
 		foreach($this->record['blocks'] as $index => $block)
@@ -277,9 +304,32 @@ class FrontendPage extends FrontendBaseObject
 			// an extra
 			if($block['extra_id'] !== null)
 			{
-//				Spoon::dump($block);
+				if($block['extra_type'] == 'block')
+				{
+					// create new instance
+					$extra = new FrontendBlockExtra($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
-				throw new FrontendException('Implement me'); // @todo mekker
+					// execute
+					$extra->execute();
+
+					// overwrite the template
+					if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
+
+					// assign
+					else $this->tpl->assign($templateVariable, $extra->getTemplatePath());
+				}
+
+				else
+				{
+					// create new instance
+					$widget = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
+
+					// execute
+					$widget->execute();
+
+					// assign
+					$this->tpl->assign($templateVariable, $widget->getTemplatePath());
+				}
 			}
 
 			// the block only contains HTML

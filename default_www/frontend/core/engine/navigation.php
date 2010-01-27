@@ -98,7 +98,7 @@ class FrontendNavigation extends FrontendBaseObject
 				if($page['page_id'] == 1) $depthCounter--;
 
 				// add children
-				return self::createHtml($type, $page['page_id'], $depth, $excludedIds, $html, ++$depthCounter);
+				$html = self::createHtml($type, $page['page_id'], $depth, $excludedIds, $html, ++$depthCounter);
 			}
 
 			// end HTML
@@ -113,31 +113,37 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 
-//	// @todo phpdoc schrijven.
-//	public static function getFirstChildIdByPageId($pageId)
-//	{
-//		// redefine
-//		$pageId = (int) $pageId;
-//
-//		// init var
-//		$navigation = self::getNavigation();
-//
-//		// loop depths
-//		foreach($navigation as $depth => $parent)
-//		{
-//			// first check
-//			if(!isset($parent[$pageId])) continue;
-//
-//			// get keys
-//			$keys = array_keys($parent[$pageId]);
-//
-//			// get first item
-//			if(isset($keys[0])) return $keys[0];
-//		}
-//
-//		// fallback
-//		return false;
-//	}
+	/**
+	 * Get the first child for a given parent
+	 *
+	 * @return	mixed
+	 * @param	int $pageId
+	 */
+	public static function getFirstChildId($pageId)
+	{
+		// redefine
+		$pageId = (int) $pageId;
+
+		// init var
+		$navigation = self::getNavigation();
+
+		// loop depths
+		foreach($navigation as $depth => $parent)
+		{
+			// first check
+			if(!isset($parent[$pageId])) continue;
+
+			// get keys
+			$keys = array_keys($parent[$pageId]);
+
+			// get first item
+			if(isset($keys[0])) return $keys[0];
+		}
+
+		// fallback
+		return false;
+	}
+
 
 	/**
 	 * Get all footerlinks
@@ -297,6 +303,7 @@ class FrontendNavigation extends FrontendBaseObject
 				// loop childs
 				foreach($children as $itemId => $item)
 				{
+					// return if this is the requested item
 					if($pageId == $itemId)
 					{
 						// set return

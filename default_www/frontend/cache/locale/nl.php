@@ -8,6 +8,7 @@ $act = array();
 // -- b
 // -- c
 // -- d
+$act['Detail'] = 'detail';
 // -- e
 // -- f
 // -- g
@@ -71,6 +72,7 @@ $lbl = array();
 // -- a
 // -- b
 // -- c
+$lbl['CommentedOn'] = 'reageerde op';
 // -- d
 // -- e
 // -- f
@@ -86,6 +88,7 @@ $lbl = array();
 // -- p
 // -- q
 // -- r
+$lbl['RecentComments'] = 'recente reacties';
 // -- s
 // -- t
 // -- u

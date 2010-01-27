@@ -6,6 +6,8 @@
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
+ * @todo	append the "last_modified" to css, js, img, ...
+ *
  * @package		frontend
  * @subpackage	core
  *
@@ -71,6 +73,9 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		// call the parent
 		parent::__construct();
+
+		// store in reference
+		Spoon::setObjectReference('header', $this);
 
 		// add some css
 		$this->addCssFile('/frontend/core/layout/css/screen.css');
@@ -483,7 +488,7 @@ class FrontendHeader extends FrontendBaseObject
 			if($this->metaKeywords == '') $this->metaKeywords = $value;
 
 			// append to current value
-			else $this->metaKeywords .= ', '. $value;
+			else $this->metaKeywords .= $value .', ';
 		}
 	}
 

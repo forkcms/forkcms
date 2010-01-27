@@ -287,7 +287,7 @@
 						</div>
 					</div>
 					<div class="fullwidthOptions">
-						{option:recorddelete_allowed}
+						{option:showDelete}
 						<a href="{$var|geturl:'delete'}&id={$recordid}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 						</a>
@@ -297,7 +297,7 @@
 								{$msgConfirmDelete|sprintf:{$recordtitle}}
 							</p>
 						</div>
-						{/option:recorddelete_allowed}
+						{/option:showDelete}
 						<div class="buttonHolderRight">
 							{$btnEdit}
 						</div>

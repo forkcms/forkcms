@@ -133,6 +133,8 @@ class Init
 	{
 		// @todo check
 		require_once FRONTEND_CORE_PATH .'/engine/base_object.php';
+		require_once FRONTEND_CORE_PATH .'/engine/base_config.php';
+		require_once FRONTEND_CORE_PATH .'/engine/base_block.php';
 
 		// general classes
 		require_once FRONTEND_CORE_PATH .'/engine/exception.php';
@@ -152,6 +154,7 @@ class Init
 				require_once FRONTEND_CORE_PATH .'/engine/breadcrumb.php';
 				require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
 				require_once FRONTEND_CORE_PATH .'/engine/footer.php';
+				require_once FRONTEND_CORE_PATH .'/engine/block.php';
 				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
 			break;
 

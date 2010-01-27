@@ -52,8 +52,9 @@ class BackendTemplate extends SpoonTemplate
 	 *
 	 * @return	void
 	 * @param	string $template
+	 * @param	bool[optional] $customHeaders
 	 */
-	public function display($template)
+	public function display($template, $customHeaders = false)
 	{
 		// parse constants
 		$this->parseConstants();
@@ -74,7 +75,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->assign('var', '');
 
 		// parse headers
-		SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
 
 		// call the parent
 		parent::display($template);

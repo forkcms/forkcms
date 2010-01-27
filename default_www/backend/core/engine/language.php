@@ -3,7 +3,7 @@
 /**
  * BackendLanguage
  *
- * This class will store the language-dependant content for the CMS, it will also store the current language for the user.
+ * This class will store the language-dependant content for the Backend, it will also store the current language for the user.
  *
  * @package		backend
  * @subpackage	language

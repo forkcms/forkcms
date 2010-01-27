@@ -38,6 +38,25 @@ class FrontendLanguage
 
 
 	/**
+	 * Get an action from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 */
+	public static function getAction($key)
+	{
+		// redefine
+		$key = (string) $key;
+
+		// if the action exists return it,
+		if(isset(self::$act[$key])) return self::$act[$key];
+
+		// otherwise return the key in label-format
+		return '{$act'. SpoonFilter::toCamelCase($key)  .'}';
+	}
+
+
+	/**
 	 * Get the actions
 	 *
 	 * @return	array
@@ -103,6 +122,25 @@ class FrontendLanguage
 
 
 	/**
+	 * Get an error from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 */
+	public static function getError($key)
+	{
+		// redefine
+		$key = (string) $key;
+
+		// if the error exists return it,
+		if(isset(self::$err[$key])) return self::$err[$key];
+
+		// otherwise return the key in label-format
+		return '{$err'. SpoonFilter::toCamelCase($key)  .'}';
+	}
+
+
+	/**
 	 * Get the errors
 	 *
 	 * @return	array
@@ -114,6 +152,25 @@ class FrontendLanguage
 
 
 	/**
+	 * Get a label from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 */
+	public static function getLabel($key)
+	{
+		// redefine
+		$key = (string) $key;
+
+		// if the error exists return it,
+		if(isset(self::$lbl[$key])) return self::$lbl[$key];
+
+		// otherwise return the key in label-format
+		return '{$lbl'. SpoonFilter::toCamelCase($key)  .'}';
+	}
+
+
+	/**
 	 * Get the labels
 	 *
 	 * @return	array
@@ -121,6 +178,25 @@ class FrontendLanguage
 	public static function getLabels()
 	{
 		return (array) self::$lbl;
+	}
+
+
+	/**
+	 * Get a message from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 */
+	public static function getMessage($key)
+	{
+		// redefine
+		$key = (string) $key;
+
+		// if the error exists return it,
+		if(isset(self::$msg[$key])) return self::$msg[$key];
+
+		// otherwise return the key in label-format
+		return '{$msg'. SpoonFilter::toCamelCase($key)  .'}';
 	}
 
 
@@ -190,7 +266,53 @@ class FrontendLanguage
  */
 class FL extends FrontendLanguage
 {
+	/**
+	 * Get an action from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 */
+	public static function act($key)
+	{
+		return FrontendLanguage::getAction($key);
+	}
 
+
+	/**
+	 * Get an error from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 */
+	public static function err($key)
+	{
+		return FrontendLanguage::getError($key);
+	}
+
+
+	/**
+	 * Get a label from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 */
+	public static function lbl($key)
+	{
+		return FrontendLanguage::getLabel($key);
+	}
+
+
+	/**
+	 * Get a message from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key
+	 * @param	string[optional] $module
+	 */
+	public static function msg($key)
+	{
+		return FrontendLanguage::getMessage($key);
+	}
 }
 
 ?>

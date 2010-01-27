@@ -59,9 +59,12 @@ class BackendJavascript
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new BackendTemplate();
 
+		// set correct headers
+		SpoonHTTP::setHeaders('content-type: application/javascript');
+
 		// output the template
-		if($this->module == 'core') $tpl->display(BACKEND_CORE_PATH .'/js/'. $this->getFile());
-		else $tpl->display(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->getFile());
+		if($this->module == 'core') $tpl->display(BACKEND_CORE_PATH .'/js/'. $this->getFile(), true);
+		else $tpl->display(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->getFile(), true);
 	}
 
 

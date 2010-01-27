@@ -122,10 +122,18 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = unserialize($record['template_data']);
 
 		// add blocks
-		$record['blocks'] = (array) $db->retrieve('SELECT pb.*
+		$record['blocks'] = (array) $db->retrieve('SELECT pb.extra_id, pb.html,
+													pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 													FROM pages_blocks AS pb
+													LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
 													WHERE pb.revision_id = ? AND pb.status = ?;',
 													array($record['revision_id'], 'active'));
+
+		// unserialize data for blocks
+		foreach($record['blocks'] as $index => $row)
+		{
+			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
+		}
 
 		// return
 		return (array) $record;

@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class SitemapOverview extends FrontendBaseAction
+class FrontendBlogDetail extends FrontendBaseBlock
 {
 	/**
 	 * Execute the extra
@@ -21,10 +21,7 @@ class SitemapOverview extends FrontendBaseAction
 	public function execute()
 	{
 		// load template
-		$this->loadTemplate(null, true);
-
-		// @todo	implement real code
-		$this->tpl->assign('sitemap', '&lt;sitemap-goes-here&gt;');
+		$this->loadTemplate();
 	}
 }
 ?>
