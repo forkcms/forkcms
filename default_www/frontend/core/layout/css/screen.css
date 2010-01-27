@@ -862,78 +862,18 @@ li.ellipsis span {
 	float: left;
 }
 
-#navigation ul {
-	padding: 0;
+#navigation li {
+	padding-left: 0;
 }
 
-#navigation ul li {
-	list-style: none;
-}
+	#navigation li li {
+		padding-left: 10px;
+	}
 
-#navigation ul li a {
-	padding: 5px 10px;
+#navigation li a {
+	border-bottom: 1px solid #CCC;
 	display: block;
-	text-decoration: none;
-	border-bottom: 1px solid #CCC;
-}
-
-#navigation ul li.selected a {
-	color: #000;
-	font-weight: 700;
-}
-
-#navigation li ul {
-	padding: 0;
-}
-
-#navigation ul li.selected ul li {
-	border: none;
-	font-size: 12px;
-}
-
-#navigation li a:hover,
-#navigation li a:active {
-	background: #EEE;
-}
-
-#navigation ul li.selected ul li a {
-	padding: 5px 10px 5px 25px;
-	font-weight: 300;
-}
-
-#navigation ul li.selected ul li.selected a {
-	font-weight: 700;
-}
-
-#navigation ul li.selected ul li.selected ul li a {
-	padding: 5px 10px 5px 50px;
-	font-weight: 300;
-}
-
-#navigation ul li.selected ul li.selected ul li.selected a {
-	font-weight: 700;
-}
-
-#navigation ul li.selected ul li.selected ul li.selected ul li a {
-	background: #EEE;
-	border-bottom: 1px solid #CCC;
-	padding: 5px 10px 5px 75px;
-	font-weight: 300;
-}
-
-#navigation ul li.selected ul li.selected ul li.selected ul li.selected a {
-	font-weight: 700;
-}
-
-#navigation ul li.selected ul li.selected ul li.selected ul li.selected ul li a {
-	background: #EEE;
-	border-bottom: 1px solid #CCC;
-	padding: 5px 10px 5px 75px;
-	font-weight: 300;
-}
-
-#navigation ul li.selected ul li.selected ul li.selected ul li.selected  ul li.selected a {
-	font-weight: 700;
+	padding: 4px 0;
 }
 
 /* Content */
