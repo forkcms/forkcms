@@ -20,6 +20,9 @@ class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 	 */
 	public function execute()
 	{
+		// call parent, will add JS
+		parent::execute();
+
 		// load template
 		$this->loadTemplate();
 

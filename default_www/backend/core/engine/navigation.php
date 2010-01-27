@@ -83,6 +83,7 @@ class BackendNavigation
 					// break urls into parts
 					$chunks = (array) explode('/', $child['url']);
 
+					// @todo	check me
 					if(!isset($chunks[1])) Spoon::dump($child);
 
 					// check if the action is allowed
@@ -312,7 +313,7 @@ class BackendNavigation
 			if(isset($level['children']))
 			{
 				// loop second level
-				foreach ($level['children'] as $module => $level)
+				foreach($level['children'] as $module => $level)
 				{
 					// add all keys if the url is found
 					if($level['url'] == $urlToSearch)
@@ -325,7 +326,7 @@ class BackendNavigation
 					if(isset($level['children']))
 					{
 						// loop third level
-						foreach ($level['children'] as $level)
+						foreach($level['children'] as $level)
 						{
 							// url found?
 							if($level['url'] == $urlToSearch)

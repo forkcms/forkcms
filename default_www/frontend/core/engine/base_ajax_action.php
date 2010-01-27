@@ -1,17 +1,17 @@
 <?php
 
 /**
- * BackendBaseAJAXAction
+ * FrontendBaseAJAXAction
  *
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
- * @package		backend
+ * @package		frontend
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendBaseAJAXAction
+class FrontendBaseAJAXAction
 {
 	const OK = 200;
 	const BAD_REQUEST = 400;

@@ -1,18 +1,18 @@
 <?php
 
 /**
- * BackendBaseAction
+ * FrontendBaseAction
  *
  * This class is the real code for Fork, it creates an action, loads the configfile, ...
  *
- * @package		backend
+ * @package		frontend
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class BackendAJAXAction
+class FrontendAJAXAction
 {
 	/**
 	 * The current action
@@ -25,7 +25,7 @@ class BackendAJAXAction
 	/**
 	 * The config file
 	 *
-	 * @var	BackendBaseConfig
+	 * @var	FrontendBaseConfig
 	 */
 	private $config;
 
@@ -54,23 +54,6 @@ class BackendAJAXAction
 
 		// load the configfile for the required module
 		$this->loadConfig();
-
-		// init var
-		$allowed = false;
-
-		// is this an allowed action
-		if(BackendAuthentication::isAllowedAction($action, $this->getModule())) $allowed = true;
-
-		// is this an allowed AJAX-action?
-		if(!$allowed)
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
-
-			// output
-			$fakeAction = new BackendBaseAJAXAction('', '');
-			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Not logged in.');
-		}
 	}
 
 
@@ -83,13 +66,13 @@ class BackendAJAXAction
 	public function execute()
 	{
 		// build action-class-name
-		$actionClassName = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_ajax_'. $this->getAction());
+		$actionClassName = 'Frontend'. SpoonFilter::toCamelCase($this->getModule() .'_ajax_'. $this->getAction());
 
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
-		require_once BACKEND_MODULE_PATH .'/ajax/'. $this->getAction() .'.php';
+		require_once FRONTEND_MODULE_PATH .'/ajax/'. $this->getAction() .'.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($actionClassName)) throw new BackendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
+		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
@@ -133,22 +116,22 @@ class BackendAJAXAction
 	public function loadConfig()
 	{
 		// build path to the module and define it. This is a constant because we can use this in templates.
-		define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH .'/'. $this->getModule());
+		define('FRONTEND_MODULE_PATH', FRONTEND_MODULES_PATH .'/'. $this->getModule());
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-		if(!SpoonFile::exists(BACKEND_MODULE_PATH .'/config.php')) throw new BackendException('The configfile for the module ('. $this->getModule() .') can\'t be found.');
+		if(!SpoonFile::exists(FRONTEND_MODULE_PATH .'/config.php')) throw new FrontendException('The configfile for the module ('. $this->getModule() .') can\'t be found.');
 
 		// build config-object-name
-		$configClassName = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_config');
+		$configClassName = 'Frontend'. SpoonFilter::toCamelCase($this->getModule() .'_config');
 
 		// require the config file, we validated before for existence.
-		require_once BACKEND_MODULE_PATH .'/config.php';
+		require_once FRONTEND_MODULE_PATH .'/config.php';
 
 		// validate if class exists (aka has correct name)
-		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: '. $configClassName .'.');
+		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName;
+		$this->config = new $configClassName($this->getModule());
 	}
 
 

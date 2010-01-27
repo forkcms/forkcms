@@ -51,17 +51,15 @@ class FrontendTemplate extends SpoonTemplate
 	 *
 	 * @return	void
 	 * @param	string $template
+	 * @param	bool[optional] $customHeaders
 	 */
-	public function display($template)
+	public function display($template, $customHeaders = false)
 	{
 		// do custom stuff
 		$custom = new FrontendTemplateCustom($this);
 
 		// parse constants
 		$this->parseConstants();
-
-		// @todo	parse authenticated user
-//		$this->parseAuthenticatedUser();
 
 		// check debug
 		$this->parseDebug();
@@ -79,7 +77,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->assign('currentTimestamp', time());
 
 		// parse headers
-		SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
 
 		// call the parent
 		parent::display($template);

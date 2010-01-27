@@ -1,17 +1,18 @@
 <?php
 
 /**
- * TagsAdd
+ * BackendTagsAjaxAutocomplete
  *
  * This is the autocomplete-action, it will display a form to create a new item
  *
  * @package		backend
  * @subpackage	tags
  *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author 		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
-class TagsAjaxAutocomplete extends BackendBaseAJAXAction
+class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action

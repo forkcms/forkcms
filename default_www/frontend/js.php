@@ -1,12 +1,11 @@
 <?php
-
 /**
- * This is the custom exception-handler for ajax
+ * This is the custom exception-handler for javascript
  *
  * @return	void
  * @param	Exception $exception
  */
-function ajaxExceptionHandler($exception)
+function javascriptExceptionHandler($exception)
 {
 	// fetch trace stack
 	$aTrace = $exception->getTrace();
@@ -278,11 +277,7 @@ function ajaxExceptionHandler($exception)
 		@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);
 	}
 
-	// create response array
-	$response = array('code' => ($exception->getCode() != 0) ? $exception->getCode() : 500, 'message' => $exception->getMessage());
-
 	// output to the browser
-	echo json_encode($response);
 	exit;
 }
 
@@ -290,12 +285,12 @@ function ajaxExceptionHandler($exception)
 require_once 'init.php';
 
 // initialize components
-$init = new Init('backend_ajax');
+$init = new Init('frontend_js');
 
 // set the exception handler
-if(!SPOON_DEBUG) set_exception_handler('ajaxExceptionHandler');
+if(!SPOON_DEBUG) set_exception_handler('javascriptExceptionHandler');
 
-// create backend-ajax-object
-$js = new BackendAJAX();
+// create backend-javascript-object
+$js = new FrontendJavascript();
 
 ?>

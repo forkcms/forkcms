@@ -133,7 +133,7 @@ class BackendURL
 			$get = explode('&', $getChunksFromUrl[1]);
 
 			// loop pairs
-			foreach ($get as $getParameter)
+			foreach($get as $getParameter)
 			{
 				// get key and value
 				$getChunks = explode('=', $getParameter, 2);

@@ -89,7 +89,9 @@ class FrontendHeader extends FrontendBaseObject
 		if(SPOON_DEBUG) $this->addCssFile('/frontend/core/layout/css/debug.css');
 
 		// add jquery
-		$this->addJavascriptFile('/frontend/core/js/jquery/jqeury.js', false);
+		$this->addJavascript('/frontend/core/js/jquery/jquery.js', false);
+		$this->addJavascript('/frontend/core/js/frontend.js', true);
+		$this->addJavascript('/frontend/core/js/utils.js', true);
 	}
 
 
@@ -145,7 +147,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * @param 	string $file
 	 * @param	bool[optional] $minify
 	 */
-	public function addJavascriptFile($file, $minify = true)
+	public function addJavascript($file, $minify = true, $parseThroughPHP = false)
 	{
 		// redefine
 		$file = (string) $file;
@@ -154,23 +156,30 @@ class FrontendHeader extends FrontendBaseObject
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
 
+		// no minifying when parsing through PHP
+		if($parseThroughPHP) $minify = false;
+
+		// if parse through PHP we should alter the path
+		if($parseThroughPHP)
+		{
+			// process the path
+			$chunks = explode('/', str_replace(array('/frontend/modules/', '/frontend/core'), '', $file));
+
+			// validate
+			if(!isset($chunks[2])) throw new FrontendException('Invalid file ('. $file .').');
+
+			// alter the file
+			$file = '/frontend/js.php?module='. $chunks[0] .'&amp;file='. $chunks[2] .'&amp;language='. FRONTEND_LANGUAGE;
+		}
+
 		// try to modify
 		if($minify) $file = $this->minifyJs($file);
 
-		// init var
-		$inArray = false;
-
-		// check if the file already exists in the array
-		foreach ($this->javascriptFiles as $row) if($row['file'] == $file) $inArray = true;
-
 		// add to array
-		if(!$inArray)
+		if(!in_array($file, $this->javascriptFiles))
 		{
-			// build temporary array
-			$temp['file'] = $file;
-
 			// add to files
-			$this->javascriptFiles[] = $temp;
+			$this->javascriptFiles[] = $file;
 		}
 	}
 
@@ -242,7 +251,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @return	array
 	 */
-	public function getJsFiles()
+	public function getJavascriptFiles()
 	{
 		return $this->javascriptFiles;
 	}
@@ -329,7 +338,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(isset($aMatches[0]))
 		{
 			// loop matches
-			foreach ($aMatches[0] as $key => $match)
+			foreach($aMatches[0] as $key => $match)
 			{
 				// remove faulty newlines
 				$tempContent = preg_replace('|\r|iU', '', $aMatches[1][$key]);
@@ -392,7 +401,7 @@ class FrontendHeader extends FrontendBaseObject
 		$content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $content);
 
 		// store
-		SpoonFile::setFileContent($finalPath, $content);
+		SpoonFile::setContent($finalPath, $content);
 
 		// return
 		return $finalUrl;
@@ -414,11 +423,54 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('metaKeywords', (string) $this->getMetaKeywords());
 		$this->tpl->assign('metaCustom', (string) $this->getMetaCustom());
 
+		// init var
+		$cssFiles = null;
+
+		// if there aren't any JS-files added we don't need to do something
+		if(!empty($this->javascriptFiles))
+		{
+			foreach($this->cssFiles as $file)
+			{
+				// add lastmodified time
+				$file['file'] = $file['file'] .'?m='. LAST_MODIFIED_TIME;
+
+				// add
+				$cssFiles[] = $file;
+			}
+		}
+
 		// css-files
-		$this->tpl->assign('cssFiles', (array) $this->getCssFiles());
+		$this->tpl->assign('cssFiles', $cssFiles);
+
+		// init var
+		$javascriptFiles = null;
+
+		// if there aren't any JS-files added we don't need to do something
+		if(!empty($this->javascriptFiles))
+		{
+			// some files should be cached, even if we don't want cached (mostly libraries)
+			$ignoreCache = array('/frontend/core/js/jquery/jquery.js');
+
+			// loop the JS-files
+			foreach($this->javascriptFiles as $file)
+			{
+				// some files shouldn't be uncachable
+				if(in_array($file, $ignoreCache)) $javascriptFiles[] = array('file' => $file);
+
+				// make the file uncacheble
+				else
+				{
+					// if the file is processed by PHP we don't want any caching
+					if(substr($file, 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file .'&amp;m='. time());
+
+					// add lastmodified time
+					else $javascriptFiles[] = array('file' => $file .'?m='. LAST_MODIFIED_TIME);
+				}
+			}
+		}
 
 		// js-files
-		$this->tpl->assign('javascriptFiles', (array) $this->getJsFiles());
+		$this->tpl->assign('javascriptFiles', $javascriptFiles);
 
 		// assign site title
 		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));

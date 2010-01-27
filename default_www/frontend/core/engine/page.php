@@ -289,6 +289,9 @@ class FrontendPage extends FrontendBaseObject
 		// set template path
 		$this->templatePath = FRONTEND_PATH .'/'. $this->record['template_path'];
 
+		// assign content
+		$this->tpl->assignArray($this->record, 'pageData');
+
 		// loop blocks
 		foreach($this->record['blocks'] as $index => $block)
 		{
@@ -347,60 +350,12 @@ class FrontendPage extends FrontendBaseObject
 
 	/**
 	 * Store the temporary statistics
-	 *
-	 * @todo tijs - MOET momenteel uitgeschakeld worden.
+	 * @later: implement me
 	 *
 	 * @return	void
 	 */
 	private function storeStatistics()
 	{
-		// get cookieId
-		if(SpoonCookie::exists('cookie_id')) $cookieId = SpoonCookie::get('cookie_id');
-
-		// cookie doesnt exist
-		else
-		{
-			// create cookieId
-			$cookieId = md5(SpoonSession::getSessionId());
-
-			// attempt to set cookie
-			try
-			{
-				SpoonCookie::set('cookie_id', $cookieId, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
-			}
-
-			// failed setting cookie
-			catch (Exception $e)
-			{
-				if(substr_count($e->getMessage(), 'could not be set.') == 0) throw new FrontendException($e->getMessage());
-			}
-		}
-
-		// create array
-		$aStatistics['status_code'] = (int) $this->statusCode;
-		$aStatistics['date'] = date('Y-m-d H:i:s');
-		$aStatistics['ip'] =  SpoonHTTP::getIp();
-		$aStatistics['session_id'] = SpoonSession::getSessionId();
-		$aStatistics['cookie_id'] = $cookieId;
-		$aStatistics['browser_name'] = 'unknown';
-		$aStatistics['browser_version'] = 0;
-		$aStatistics['platform'] = 'unknown';
-
-		// override browser info if browscap is available
-		if(ini_get('browscap') !== false)
-		{
-			$aBrowserInfo = get_browser(null, true);
-			$aStatistics['browser_name'] = isset($aBrowserInfo['browser']) ? $aBrowserInfo['browser'] : 'unknown';
-			$aStatistics['browser_version'] = isset($aBrowserInfo['version']) ? $aBrowserInfo['version'] : 0;
-			$aStatistics['platform'] = isset($aBrowserInfo['platform']) ? $aBrowserInfo['platform'] : 'unknown';
-		}
-
-		// url info
-		$aStatistics['referrer_url'] = (isset($_SERVER['HTTP_REFERER'])) ? $_SERVER['HTTP_REFERER'] : null;
-		$aStatistics['url'] = trim('http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'], '/');
-
-		// log to file
-		SpoonFile::setContent(FRONTEND_CACHE_PATH .'/statistics/temp.txt', serialize($aStatistics) ."\n", true, true);
 	}
 }
 

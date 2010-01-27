@@ -290,12 +290,12 @@ function ajaxExceptionHandler($exception)
 require_once 'init.php';
 
 // initialize components
-$init = new Init('backend_ajax');
+$init = new Init('frontend_ajax');
 
 // set the exception handler
 if(!SPOON_DEBUG) set_exception_handler('ajaxExceptionHandler');
 
 // create backend-ajax-object
-$js = new BackendAJAX();
+$js = new FrontendAJAX();
 
 ?>

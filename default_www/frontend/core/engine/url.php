@@ -314,16 +314,29 @@ class FrontendURL
 		$queryString = trim(substr($queryString, strlen($language)), '/');
 
 		// if it's the homepage AND parameters were given (not allowed!)
-		if($url == '' && $queryString != '') SpoonHTTP::redirect(FrontendNavigation::getUrl(404), 404); // @todo we don't want redirects...
+		if($url == '' && $queryString != '')
+		{
+			// get 404 url
+			$url = FrontendNavigation::getURL(404);
+		}
 
 		// set pages
-		$pages = trim($url, '/');
+		$url = trim($url, '/');
 
 		// currently not in the homepage
-		if($pages != '')
+		if($url != '')
 		{
+			// explode in pages
 			$pages = explode('/', $url);
+
+			// remove language in case of multilanguage site
+			if(SITE_MULTILANGUAGE) array_shift($pages);
+
+			// reset pages
 			$this->setPages($pages);
+
+			// reset parameters
+			$this->setParameters(array());
 		}
 
 		// set parameters
@@ -343,11 +356,28 @@ class FrontendURL
 		$pageId = FrontendNavigation::getPageId(implode('/', $this->getPages()));
 		$pageInfo = FrontendNavigation::getPageInfo($pageId);
 
-		// redirect
-		if($pageInfo === false) SpoonHTTP::redirect(FrontendNavigation::getUrl(404), 404);
+		// invalid page, or parameters but no extra
+		if($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra']))
+		{
+			// get 404 url
+			$url = trim(FrontendNavigation::getURL(404), '/');
 
-		// parameters but no extra
-		if(!empty($parameters) && !$pageInfo['has_extra']) SpoonHTTP::redirect(FrontendNavigation::getUrl(404), 404);
+			// currently not in the homepage
+			if($url != '')
+			{
+				// explode in pages
+				$pages = explode('/', $url);
+
+				// remove language in case of multilanguage site
+				if(SITE_MULTILANGUAGE) array_shift($pages);
+
+				// reset pages
+				$this->setPages($pages);
+
+				// reset parameters
+				$this->setParameters(array());
+			}
+		}
 	}
 
 

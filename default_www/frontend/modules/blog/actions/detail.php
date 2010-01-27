@@ -20,6 +20,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
+		// call the parent, will add js
+		parent::execute();
+
 		// load template
 		$this->loadTemplate();
 	}

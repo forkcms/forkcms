@@ -126,18 +126,18 @@ class BackendBaseAction
 	public function execute()
 	{
 		// add jquery, we will need this in every action, so add it globally
-		$this->header->addJS('jquery/jquery.js', 'core');
-		$this->header->addJS('jquery/jquery.ui.js', 'core');
-		$this->header->addJS('jquery/jquery.autocomplete.js', 'core');
-		$this->header->addJS('jquery/jquery.backend.js', 'core');
+		$this->header->addJavascript('jquery/jquery.js', 'core');
+		$this->header->addJavascript('jquery/jquery.ui.js', 'core');
+		$this->header->addJavascript('jquery/jquery.autocomplete.js', 'core');
+		$this->header->addJavascript('jquery/jquery.backend.js', 'core');
 
 		// add items that always need to be loaded
-		$this->header->addJS('backend.js', 'core', true);
-		$this->header->addJS('utils.js', 'core', true);
+		$this->header->addJavascript('backend.js', 'core', true);
+		$this->header->addJavascript('utils.js', 'core', true);
 
 		// add default js file (if the file exists)
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getModule() .'.js')) $this->header->addJS($this->getModule() .'.js', null, true);
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJS($this->getAction() .'.js', null, true);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($this->getModule() .'.js', null, true);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($this->getAction() .'.js', null, true);
 
 		// add css
 		$this->header->addCSS('screen.css', 'core');

@@ -48,7 +48,7 @@ $err['core']['InvalidAPIKey'] = 'Ongeldige API key.';
 $err['core']['InvalidDomain'] = 'Gelieve enkel domeinen in te vullen zonder http en www. vb netlash.com';
 $err['core']['InvalidParameters'] = 'Ongeldige parameters.';
 $err['core']['InvalidURL'] = 'Ongeldige URL.';
-$err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct. <a href="#">Bent u uw wachtwoord vergeten?</a>';
+$err['core']['InvalidUsernamePasswordCombination'] = 'De combinatie van gebruikersnaam en wachtwoord is niet correct. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Bent u uw wachtwoord vergeten?</a>';
 // j
 // k
 // l

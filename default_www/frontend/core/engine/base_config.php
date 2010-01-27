@@ -38,6 +38,14 @@ class FrontendBaseConfig
 
 
 	/**
+	 * The current loaded module
+	 *
+	 * @var	string
+	 */
+	protected $module;
+
+
+	/**
 	 * All the possible actions
 	 *
 	 * @var	array
@@ -58,8 +66,11 @@ class FrontendBaseConfig
 	 *
 	 * @return	void
 	 */
-	public function __construct()
+	public function __construct($module)
 	{
+		// set module
+		$this->module = (string) $module;
+
 		// read the possible actions based on the files
 		$this->setPossibleActions();
 	}
@@ -73,6 +84,17 @@ class FrontendBaseConfig
 	public function getDefaultAction()
 	{
 		return $this->defaultAction;
+	}
+
+
+	/**
+	 * Get the current loaded module
+	 *
+	 * @return	string
+	 */
+	public function getModule()
+	{
+		return $this->module;
 	}
 
 
@@ -106,8 +128,11 @@ class FrontendBaseConfig
 	 */
 	protected function setPossibleActions()
 	{
+		// build path to the module
+		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+
 		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList(FRONTEND_MODULE_PATH .'/actions', '/(.*).php/');
+		$actionFiles = (array) SpoonFile::getList($frontendModulePath .'/actions', '/(.*).php/');
 
 		// loop filelist
 		foreach($actionFiles as $file)
@@ -120,10 +145,10 @@ class FrontendBaseConfig
 		}
 
 		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList(FRONTEND_MODULE_PATH .'/ajax', '/(.*).php/');
+		$AJAXActionFiles = (array) SpoonFile::getList($frontendModulePath .'/ajax', '/(.*).php/');
 
 		// loop filelist
-		foreach ($AJAXActionFiles as $file)
+		foreach($AJAXActionFiles as $file)
 		{
 			// get action by removing the extension, actions should not contain spaces (use _ instead)
 			$action = strtolower(str_replace('.php', '', $file));

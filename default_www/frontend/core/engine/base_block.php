@@ -112,9 +112,13 @@ class FrontendBaseBlock
 	 */
 	public function execute()
 	{
+		// build path to the module
+		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+		$frontendModuleUrl = '/frontend/modules/'. $this->getModule() .'/js';
+
 		// add default js file (if the file exists)
-		if(SpoonFile::exists(FRONTEND_MODULE_PATH .'/js/'. $this->getModule() .'.js')) $this->header->addJS($this->getModule() .'.js', null, true);
-		if(SpoonFile::exists(FRONTEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJS($this->getAction() .'.js', null, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($frontendModuleUrl .'/'. $this->getModule() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($frontendModuleUrl .'/'. $this->getAction() .'.js', false, true);
 	}
 
 
@@ -190,8 +194,11 @@ class FrontendBaseBlock
 		// no template given, so we should build the path
 		if($template === null)
 		{
+			// build path to the module
+			$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+
 			// build template path
-			$template = FRONTEND_MODULE_PATH .'/layout/templates/'. $this->getAction() .'.tpl';
+			$template = $frontendModulePath .'/layout/templates/'. $this->getAction() .'.tpl';
 		}
 
 		// redefine
@@ -383,14 +390,10 @@ class FrontendBaseWidget
 	 * @return	void
 	 * @param	string[optional] $template
 	 */
-	public function display($template = null)
+	public function display($template)
 	{
 		// parse header
 		$this->header->parse();
-
-		// if no template is specified, we have to build the path ourself
-		// the default template is based on the name of the current action
-		if($template === null) $template = FRONTEND_MODULE_PATH .'/layout/templates/'. $this->url->getAction() .'.tpl';
 
 		// display
 		$this->tpl->display($template);
@@ -404,9 +407,12 @@ class FrontendBaseWidget
 	 */
 	public function execute()
 	{
+		// build path to the module
+		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+
 		// add default js file (if the file exists)
-		if(SpoonFile::exists(FRONTEND_MODULE_PATH .'/js/'. $this->getModule() .'.js')) $this->header->addJS($this->getModule() .'.js', null, true);
-		if(SpoonFile::exists(FRONTEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJS($this->getAction() .'.js', null, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($this->getModule() .'.js', null, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($this->getAction() .'.js', null, true);
 	}
 
 
@@ -476,8 +482,11 @@ class FrontendBaseWidget
 		// no template given, so we should build the path
 		if($template === null)
 		{
+			// build path to the module
+			$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+
 			// build template path
-			$template = FRONTEND_MODULE_PATH .'/layout/widgets/'. $this->getAction() .'.tpl';
+			$template = $frontendModulePath .'/layout/widgets/'. $this->getAction() .'.tpl';
 		}
 
 		// redefine

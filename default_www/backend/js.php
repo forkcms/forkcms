@@ -217,7 +217,7 @@ function javascriptExceptionHandler($exception)
 								$entireTraceStack = $exception->getTrace();
 
 								// loop elements
-								foreach ($entireTraceStack as $traceStack)
+								foreach($entireTraceStack as $traceStack)
 								{
 									// open defintion list
 									$output .= "<dl>\r\n";
