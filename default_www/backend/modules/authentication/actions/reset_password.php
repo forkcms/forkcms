@@ -61,10 +61,10 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		if(!$this->isUserAllowed()) $this->redirect(BackendModel::createURLForAction('index'));
 
 		// load form
-		$this->load();
+		$this->loadForm();
 
 		// validate the form
-		$this->validate();
+		$this->validateForm();
 
 		// parse the error
 		$this->parse();
