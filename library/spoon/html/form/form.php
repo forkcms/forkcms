@@ -1833,10 +1833,7 @@ class SpoonFileField extends SpoonFormAttributes
 		$output = '<input type="file"';
 
 		// add attributes
-		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name']));
-
-		// end html
-		$output .= ' />';
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) .' />';
 
 		// parse to template
 		if($template !== null)
@@ -3290,10 +3287,7 @@ class SpoonTextField extends SpoonInputField
 		$output = '<input type="text" value="'. $this->getValue() .'"';
 
 		// add attributes
-		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue()));
-
-		// end html
-		$output .= ' />';
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) .' />';
 
 		// template
 		if($template !== null)
