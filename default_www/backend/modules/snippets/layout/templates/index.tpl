@@ -4,22 +4,22 @@
 			<div id="statusBar">
 				<p class="breadcrumb">{$msgHeaderIndex}</p>
 			</div>
+			
+			{option:report}
+			<div id="report">
+				<div class="singleMessage successMessage">
+					<p>{$reportMessage}</p>
+				</div>
+			</div>
+			{/option:report}
 	
 			<div class="inner">
-				{option:report}
-					<div class="report fadeOutAfterMouseMove">{$reportMessage}</div>
-					{option:highlight}
-						<script type="text/javascript">
-							var highlightId = '#{$highlight}';
-						</script>
-					{/option:highlight}
-				{/option:report}
 	
 				<div class="datagridHolder">
 					<div class="tableHeading">
 						<div class="buttonHolderRight">
-							<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd}">
-								<span><span><span>{$lblAdd}</span></span></span>
+							<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
+								<span><span><span>{$lblAdd|ucfirst}</span></span></span>
 							</a>
 						</div>
 					</div>
