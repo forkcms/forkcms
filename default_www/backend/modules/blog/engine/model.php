@@ -25,6 +25,7 @@ class BackendBlogModel
 								FROM blog_posts AS p
 								LEFT OUTER JOIN blog_comments AS bc ON bc.post_id = p.id
 								INNER JOIN users_settings AS us ON us.user_id = p.user_id AND us.name = 'nickname'
+								WHERE p.status = ?
 								GROUP BY p.id
 								";
 	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT
@@ -36,7 +37,10 @@ class BackendBlogModel
 											WHERE c.language = ?
 											GROUP BY c.id';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT id, UNIX_TIMESTAMP(created_on) AS created_on, author, text FROM blog_comments WHERE status = ?;';
-
+	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+									FROM blog_posts AS p
+									WHERE p.status = ? AND p.id = ?
+									ORDER BY p.edited_on DESC;';
 
 	/**
 	 * Checks the settings and optionally returns an array with warnings
@@ -225,7 +229,42 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT * FROM blog_posts WHERE id = ?;', (int) $id);
+		return (array) $db->getRecord('SELECT p.*,
+									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
+									   UNIX_TIMESTAMP(p.created_on) AS created_on,
+									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
+									   m.url
+									   FROM blog_posts AS p
+									   INNER JOIN meta AS m ON m.id = p.meta_id
+									   WHERE p.id = ?;', array($id));
+	}
+
+
+	/**
+	 * Get all data for a given revision
+	 *
+	 * @return	array
+	 * @param	int $id
+	 * @param	int $revisionId
+	 */
+	public static function getRevision($id, $revisionId)
+	{
+		// redefine
+		$id = (int) $id;
+		$revisionId = (int) $revisionId;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get record and return it
+		return (array) $db->getRecord('SELECT p.*,
+									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
+									   UNIX_TIMESTAMP(p.created_on) AS created_on,
+									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
+									   m.url
+									   FROM blog_posts AS p
+									   INNER JOIN meta AS m ON m.id = p.meta_id
+									   WHERE p.id = ? AND p.revision_id = ?;', array($id, $revisionId));
 	}
 
 
@@ -355,6 +394,7 @@ class BackendBlogModel
 
 		// build array
 		$item['id'] = $newId;
+		$item['revision_id'] = $newId;
 
 		// insert and return the insertId
 		$db->insert('blog_posts', $item);
@@ -377,6 +417,51 @@ class BackendBlogModel
 
 		// create category
 		return $db->insert('blog_categories', $item);
+	}
+
+
+	/**
+	 * Update an existing blogpost
+	 *
+	 * @return	int
+	 * @param	int $id
+	 * @param	array $item
+	 */
+	public static function update($id, array $item)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get current version
+		$version = self::get($id);
+
+		// build array
+		$item['id'] = $id;
+		$item['language'] = $version['language'];
+
+		// archive all older versions
+		$db->update('blog_posts', array('status' => 'archived'), 'id = ?', array($id));
+
+		// insert new version
+		$db->insert('blog_posts', $item);
+
+		// how many revisions should we keep
+		$rowsToKeep = (int) BackendModel::getSetting('blog', 'maximum_number_of_revisions', 5);
+
+		// get revision-ids for items to keep
+		$revisionIdsToKeep = (array) $db->getColumn('SELECT p.revision_id
+													 FROM blog_posts AS p
+													 WHERE p.id = ? AND p.status = ?
+													 ORDER BY p.edited_on DESC
+													 LIMIT ?;',
+													 array($id, 'archived', $rowsToKeep));
+
+		// delete other revisions
+		if(!empty($revisionIdsToKeep)) $db->delete('blog_posts', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
+
 	}
 
 

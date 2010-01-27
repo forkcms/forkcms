@@ -96,6 +96,7 @@ $err['core']['URLAlreadyExist'] = 'Deze URL bestaat al.';
 $lbl = array();
 $lbl['core'] = array();
 // a
+$lbl['core']['Active'] = 'actief';
 $lbl['core']['ActiveUsers'] = 'actieve gebruikers';
 $lbl['core']['Add'] = 'toevoegen';
 $lbl['core']['AddImperative'] = 'voeg toe';
@@ -112,6 +113,7 @@ $lbl['tags']['Amount'] = 'aantal keer gebruikt';
 $lbl['core']['APIKey'] = 'API key';
 $lbl['core']['APIKeys'] = 'API keys';
 $lbl['core']['APIURL'] = 'API URL';
+$lbl['core']['Archived'] = 'gearchiveerd';
 $lbl['core']['At'] = 'om';
 $lbl['core']['Avatar'] = 'avatar';
 $lbl['core']['Author'] = 'auteur';
@@ -137,6 +139,7 @@ $lbl['core']['DeleteTag'] = 'verwijder deze tag';
 $lbl['core']['Description'] = 'beschrijving';
 $lbl['core']['Developer'] = 'developer';
 $lbl['core']['Domains'] = 'domeinen';
+$lbl['core']['Draft'] = 'draft';
 $lbl['core']['Dutch'] = 'nederlands';
 // e
 $lbl['core']['Edit'] = 'bewerken';
@@ -275,26 +278,26 @@ $msg = array();
 // a
 $msg['core']['ActivateNoFollow'] = 'Activeer <code>rel="nofollow"</code>';
 $msg['core']['Added'] = 'item toegevoegd.';
-$msg['spotlight']['Added'] = 'Item %s toegevoegd.';
-$msg['users']['Added'] = 'Gebruiker %s toegevoegd.';
+$msg['spotlight']['Added'] = 'Item &ldquo;%s&rdquo; toegevoegd.';
+$msg['users']['Added'] = 'Gebruiker &ldquo;%s&rdquo; toegevoegd.';
 $msg['settings']['ApiKeysText'] = 'Toegangscodes voor gebruikte webservices';
 // b
 // c
 $msg['core']['ConfigurationError'] = 'Sommige instellingen zijn nog niet geconfigureerd:';
 $msg['core']['ConfirmDelete'] = 'Ben je zeker dat je dit item wil verwijderen?';
-$msg['pages']['ConfirmDelete'] = 'Ben je zeker dat je de paging %s wil verwijderen?';
-$msg['spotlight']['ConfirmDelete'] = 'Ben je zeker dat je %s wil verwijderen?';
-$msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker %s wil verwijderen?';
-$msg['blog']['ConfirmDeleteCategory'] = 'Ben je zeker dat je de categorie %s wil verwijderen?';
+$msg['pages']['ConfirmDelete'] = 'Ben je zeker dat je de pagina &ldquo;%s&rdquo; wil verwijderen?';
+$msg['spotlight']['ConfirmDelete'] = 'Ben je zeker dat je &ldquo;%s&rdquo; wil verwijderen?';
+$msg['users']['ConfirmDelete'] = 'Ben je zeker dat je de gebruiker &ldquo;%s&rdquo; wil verwijderen?';
+$msg['blog']['ConfirmDeleteCategory'] = 'Ben je zeker dat je de categorie &ldquo;%s&rdquo; wil verwijderen?';
 // d
 $msg['core']['Deleted'] = 'Het item is verwijderd.';
-$msg['spotlight']['Deleted'] = 'Het item %s is verwijderd.';
-$msg['users']['Deleted'] = 'De gebruiker %s is verwijderd.';
+$msg['spotlight']['Deleted'] = 'Het item &ldquo;%s&rdquo; is verwijderd.';
+$msg['users']['Deleted'] = 'De gebruiker &ldquo;%s&rdquo; is verwijderd.';
 $msg['settings']['DomainsText'] = 'Vul de domeinen in waarop de website te bereiken is (1 domein per regel)';
 // e
 $msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
-$msg['spotlight']['Edited'] = 'Wijzigingen voor %s opgeslagen.';
-$msg['users']['Edited'] = 'Wijzigingen voor gebruiker %s opgeslagen.';
+$msg['spotlight']['Edited'] = 'Wijzigingen voor &ldquo;%s&rdquo; opgeslagen.';
+$msg['users']['Edited'] = 'Wijzigingen voor gebruiker &ldquo;%s&rdquo; opgeslagen.';
 // f
 $msg['core']['ForgotPassword'] = 'Wachtwoord vergeten?';
 $msg['core']['ForgotPasswordHelp'] = 'Vul hieronder je e-mail adres in om een nieuw wachtwoord toegestuurd te krijgen.';
@@ -307,10 +310,10 @@ $msg['blog']['HeaderAdd'] = 'Bericht toevoegen';
 $msg['blog']['HeaderAddCategory'] = 'Categorie toevoegen';
 $msg['blog']['HeaderCategories'] = 'Categorieën';
 $msg['blog']['HeaderComments'] = 'Reacties';
-$msg['core']['HeaderEdit'] = '%s bewerken';
+$msg['core']['HeaderEdit'] = '&ldquo;%s&rdquo; bewerken';
 $msg['blog']['HeaderEditCategory'] = 'Categorie %s bewerken';
-$msg['snippets']['HeaderEdit'] = 'Snippet %s bewerken';
-$msg['users']['HeaderEdit'] = 'Gebruiker %s bewerken';
+$msg['snippets']['HeaderEdit'] = 'Snippet &ldquo;%s&rdquo; bewerken';
+$msg['users']['HeaderEdit'] = 'Gebruiker &ldquo;%s&rdquo; bewerken';
 $msg['blog']['HeaderIndex'] = 'Overzicht';
 $msg['core']['HeaderIndex'] = 'Overzicht';
 $msg['settings']['HeaderIndex'] = 'Website';
@@ -327,7 +330,7 @@ $msg['core']['HelpMetaDescription'] = 'De pagina-omschrijving die wordt getoond 
 $msg['core']['HelpMetaKeywords'] = 'De sleutelwoorden (keywords) die deze pagina omschrijven.';
 $msg['core']['HelpMetaURL'] = 'Vervang de automatisch gegenereerde URL door een zelfgekozen URL.';
 $msg['blog']['HelpPingServices'] = 'Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst';
-$msg['core']['HelpRevisions'] = 'De 20 laatst opgeslagen versies worden hier bijgehouden. \'Gebruik deze versie\' opent een vroegere versie. De huidige versie wordt pas overschreven als je de pagina opslaat.';
+$msg['core']['HelpRevisions'] = 'De 5 laatst opgeslagen versies worden hier bijgehouden. &ldquo;Gebruik deze versie&rdquo; opent een vroegere versie. De huidige versie wordt pas overschreven als je de pagina opslaat.';
 $msg['core']['HelpRSSDescription'] = 'Beschrijf bondig wat voor soort inhoud de RSS-feed zal bevatten';
 $msg['core']['HelpRSSTitle'] = 'Geef een duidelijke titel aan de RSS-feed';
 $msg['blog']['HelpSpamFilter'] = 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden';

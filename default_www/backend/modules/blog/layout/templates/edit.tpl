@@ -2,11 +2,13 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Blog &gt; {$msgHeaderAdd|ucfirst}</p>
+				<p class="breadcrumb">Blog &gt; {$msgHeaderEdit|sprintf:{$title}}</p>
 			</div>
 
 			<div class="inner">
-				{form:add}
+				{option:usingRevision}<p class="warning">{$msgUsingARevision}</p>{/option:usingRevision}
+				
+				{form:edit}
 					{$txtTitle} {$txtTitleError}
 
 					<!-- @todo does this have to be here? Answer: yes -->
@@ -21,6 +23,7 @@
 					<div class="tabs">
 						<ul>
 							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+							<li><a href="#tabRevisions">{$lblRevisions|ucfirst}</a></li>
 							<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 						</ul>
 
@@ -59,18 +62,16 @@
 												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
-											<!-- @todo
 											<div class="options">
 												<div class="buttonHolder">
-													<a href="#" class="button icon iconZoom"><span><span><span>Preview</span></span></span></a>
-													<a href="#" class="button"><span><span><span>Save</span></span></span></a>
+													{$btnPreview}
+													{$btnSave}
 												</div>
 											</div>
 
 											<div class="options">
-												<p class="status">Status: <strong>draft</strong></p>
+												<p class="status">Status: <strong>{$status}</strong></p>
 											</div>
-											-->
 											
 											<div class="options">
 												<ul class="inputList">
@@ -97,7 +98,7 @@
 															<td><p>&nbsp;</p></td>
 															<td>
 																<div class="buttonHolderRight">
-																	{$btnAdd}
+																	{$btnPublish}
 																</div>
 															</td>
 														</tr>
@@ -164,6 +165,13 @@
 								</tr>
 							</table>
 						</div>
+						
+						<div id="tabRevisions">
+							<h3>{$lblRevisions|ucfirst}</h3>
+							<p>{$msgHelpRevisions}</p>
+							{option:revisions}{$revisions}{/option:revisions}
+							{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+						</div>
 
 						<div id="tabSEO">
 							<div id="seoMeta" class="box boxLevel2">
@@ -224,11 +232,12 @@
 					</div>
 
 					<div class="fullwidthOptions">
+						<a href="{$var|geturl:'delete'}&amp;id={$id}" class="button linkButton icon iconDelete"><span><span><span>Delete</span></span></span></a>
 						<div class="buttonHolderRight">
-							{$btnAdd}
+							{$btnEdit}
 						</div>
 					</div>
-				{/form:add}
+				{/form:edit}
 			</div>
 		</td>
 	</tr>

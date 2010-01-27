@@ -132,14 +132,13 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 				// build item
 				$item['meta_id'] = $this->meta->save();
-				$item['revision_id'] = null; // @todo save revision ID
 				$item['category_id'] = $ddmCategoryId->getValue();
 				$item['user_id'] = $ddmUserId->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $txtTitle->getValue();
 				$item['introduction'] = $txtIntroduction->getValue();
 				$item['text'] = $txtText->getValue();
-				$item['status'] = 'active'; // @todo needs value from inputfield
+				$item['status'] = 'active';
 				$item['publish_on'] = $formattedDate.' '.$formattedTime;
 				$item['created_on'] = date('Y-m-d H:i:s');
 				$item['edited_on'] = date('Y-m-d H:i:s');
