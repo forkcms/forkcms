@@ -1,8 +1,11 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
 <div id="dashboardWidgets">
+
+	<p style="text-align: center;">Welcome to Fork NG. What you are seeing is a work in progress. Report any bugs in the <a href="http://projects.netlash.com/public/index.php/projects/369">Fork NG</a> project in ActiveCollab.</p>
+
 	<div class="leftColumn">
 		<!-- @todo @tijs fix widgets -->
-		<div id="widgetReferrers" class="box">
+		<!-- <div id="widgetReferrers" class="box">
 			<div class="heading">
 				<h3><a href="#">{$lblReferrers|ucfirst}</a></h3>
 			</div>
@@ -311,6 +314,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}
