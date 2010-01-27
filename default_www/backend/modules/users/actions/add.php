@@ -113,14 +113,14 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// build user-array
-				$aUser['username'] = $this->frm->getField('username')->getValue(true);
-				$aUser['password'] = md5($this->frm->getField('password')->getValue(true));
-
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));
 				$aSettings['password_key'] = uniqid();
 				$aSettings['avatar'] = null;
+
+				// build user-array
+				$aUser['username'] = $this->frm->getField('username')->getValue(true);
+				$aUser['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $aSettings['password_key']);
 
 				// save changes
 				$aUser['id'] = (int) BackendUsersModel::insert($aUser, $aSettings);

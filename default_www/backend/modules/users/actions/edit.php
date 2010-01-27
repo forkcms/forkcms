@@ -148,7 +148,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$aUser['username'] = $this->frm->getField('username')->getValue(true);
 
 				// update password (only if filled in)
-				if($this->frm->getField('password')->isFilled()) $aUser['password'] = md5($this->frm->getField('password')->getValue());
+				if($this->frm->getField('password')->isFilled()) $aUser['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(), $this->record['settings']['password_key']);
 
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));
