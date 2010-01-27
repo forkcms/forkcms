@@ -2469,7 +2469,7 @@ class SpoonDateField extends SpoonInputField
 			if($this->isValid())
 			{
 				// define long mask
-				$longMask = str_replace(array('d', 'm', 'y'), array('dd', 'mm', 'yyyy'), $this->mask);
+				$longMask = str_replace(array('d', 'm', 'Y'), array('dd', 'mm', 'yyyy'), $this->mask);
 
 				// year found
 				if(strpos($longMask, 'yyyy') !== false)
