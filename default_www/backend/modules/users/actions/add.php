@@ -120,6 +120,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));
 				$aSettings['password_key'] = uniqid();
+				$aSettings['avatar'] = null;
 
 				// save changes
 				$aUser['id'] = (int) BackendUsersModel::insert($aUser, $aSettings);
