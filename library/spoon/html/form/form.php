@@ -2662,9 +2662,6 @@ class SpoonDateField extends SpoonInputField
 		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) .' />';
 
-		// end html
-		$output .= ' />';
-
 		// template
 		if($template !== null)
 		{
