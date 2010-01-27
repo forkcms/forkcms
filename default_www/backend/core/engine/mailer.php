@@ -32,7 +32,7 @@ class BackendMailer
 	 * @param	string[optional] $fromName
 	 * @param	bool[optional] $queue
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false)
 	{
 		// redefine
 		$subject = (string) $subject;
