@@ -16,14 +16,29 @@
 				{/option:report}
 
 				<div>
-					{option:datagrid}{$datagrid}{/option:datagrid}
-					{option:!datagrid}
-						<p>{$msgNoItems}</p>
-						
-						<div class="buttonHolder">
-							<a class="button icon iconAdd" href="{$var|geturl:'add'}" title="{$lblAdd}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+					{option:dgPosts}
+					<form action="{$var|geturl:'mass_post_action'}" method="get" class="forkForms submitWithLink" id="posts">
+						<input type="hidden" name="from" value="posts" />
+						<div class="datagridHolder">
+							<div class="tableHeading">	
+								<h3>{$lblAllPosts|ucfirst}</h3>
+								<div class="buttonHolderRight">
+									<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
+										<span><span><span>{$lblAdd|ucfirst}</span></span></span>
+									</a>
+								</div>
+							</div>
+							{$dgPosts}
 						</div>
-					{/option:!datagrid}
+					</form>
+					{/option:dgPosts}
+					{option:!dgPosts}
+					<p>{$msgNoItems}</p>
+				
+					<div class="buttonHolder">
+						<a class="button icon iconAdd" href="{$var|geturl:'add'}" title="{$lblAdd}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+					</div>
+					{/option:!dgPosts}
 				</div>
 			</div>
 		</td>

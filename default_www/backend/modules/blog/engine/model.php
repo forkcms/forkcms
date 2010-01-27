@@ -10,11 +10,24 @@
  * @subpackage	blog
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendBlogModel
 {
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT 
+	const QRY_DATAGRID_BROWSE = "SELECT
+								p.id,
+								us.value AS author,
+								us.user_id AS author_id,
+								p.title,
+								UNIX_TIMESTAMP(p.publish_on) AS publish_on,
+								COUNT(bc.id) AS comments
+								FROM blog_posts AS p
+								LEFT OUTER JOIN blog_comments AS bc ON bc.post_id = p.id
+								INNER JOIN users_settings AS us ON us.user_id = p.user_id AND us.name = 'nickname'
+								GROUP BY p.id
+								";
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT
 											c.id,
 											c.name,
 											COUNT(p.id) AS num_posts
@@ -51,11 +64,28 @@ class BackendBlogModel
 
 		return $warnings;
 	}
-	
-	
+
+
+	/**
+	 * Deletes one or more blogposts
+	 *
+	 * @return	void
+	 * @param array $ids
+	 */
+	public static function delete(array $ids)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// delete blogpost records
+		$db->execute('DELETE p, m FROM blog_posts AS p INNER JOIN meta AS m WHERE m.id = p.meta_id AND p.id IN('. implode(',', $ids) .');');
+		$db->execute('DELETE FROM blog_comments WHERE post_id IN('. implode(',', $ids) .');');
+	}
+
+
 	/**
 	 * Deletes a category
-	 * 
+	 *
 	 * @return	void
 	 * @param	int $id
 	 */
@@ -63,13 +93,13 @@ class BackendBlogModel
 	{
 		// get db
 		$db = BackendModel::getDB();
-		
+
 		// delete category
 		$db->delete('blog_categories', 'id = ?', (int) $id);
-		
+
 		// default category
 		$defaultCategoryId = BackendModel::getSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null);
-		
+
 		// update category for the posts that might be in this category
 		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', (int) $defaultCategoryId);
 	}
@@ -89,18 +119,59 @@ class BackendBlogModel
 		// update record
 		$db->execute('DELETE FROM blog_comments WHERE id IN('. implode(',', $ids) .');');
 	}
-	
-	
+
+
+	/**
+	 * Checks if a blogpost exists
+	 *
+	 * @return	int
+	 * @param int $id
+	 */
+	public static function exists($id)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// exists?
+		return $db->getNumRows('SELECT id FROM blog_posts WHERE id = ?;', (int) $id);
+	}
+
+
+	/**
+	 * Checks if a category exists
+	 *
+	 * @return	int
+	 * @param int $id
+	 */
 	public static function existsCategory($id)
 	{
 		// get db
 		$db = BackendModel::getDB();
-		
+
 		// exists?
 		return $db->getNumRows('SELECT id FROM blog_categories WHERE id = ?;', (int) $id);
 	}
-	
-	
+
+
+	/**
+	 * Returns the HTML for a user avatar + his name
+	 *
+	 * @return	void
+	 * @param 	string $author
+	 * @param 	string $authorId
+	 */
+	public static function getAuthorHTML($author, $authorId)
+	{
+		// fetch the user for this ID
+		$record = new BackendUser($authorId);
+		$avatar = SITE_URL . FRONTEND_FILES_URL .'/backend_users/avatars/32x32/'. $record->getSetting('avatar');
+		$author = unserialize($author);
+
+		// return the img + avatar
+		return '<div class="user"><a href="#"><img src="'. $avatar .'" alt="'. $author .'" width="24" height="24" /> '. $author .'</a></div>';
+	}
+
+
 	/**
 	 * Get all categories
 	 *
@@ -117,9 +188,9 @@ class BackendBlogModel
 										FROM blog_categories AS c;',
 										null, 'id');
 	}
-	
-	
-	/**
+
+
+/**
 	 * Get all data for a given id
 	 *
 	 * @return	array
@@ -134,14 +205,33 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT * FROM blog_categories 
+		return (array) $db->getRecord('SELECT * FROM blog_categories
 										WHERE id = ?;', (int) $id);
 	}
-	
-	
+
+
+	/**
+	 * Get all data for a given id
+	 *
+	 * @return	array
+	 * @param	int $id
+	 */
+	public static function get($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get record and return it
+		return (array) $db->getRecord('SELECT * FROM blog_posts WHERE id = ?;', (int) $id);
+	}
+
+
 	/**
 	 * Retrieve the unique url for an item
-	 * 
+	 *
 	 * @return	string
 	 * @param	int[optional] $itemId
 	 */
@@ -149,36 +239,36 @@ class BackendBlogModel
 	{
 		// redefine URL
 		$URL = SpoonFilter::urlise((string) $URL);
-		
+
 		// get db
 		$db = BackendModel::getDB();
-		
+
 		// new item
 		if($itemId === null)
 		{
 			// get number of categories with this URL
-			$number = (int) $db->getNumRows('SELECT p.id 
-												FROM blog_posts AS p 
+			$number = (int) $db->getNumRows('SELECT p.id
+												FROM blog_posts AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
 												WHERE p.language = ? AND m.url = ?;', array(BL::getWorkingLanguage(), $URL));
-			
+
 			// already exists
 			if($number != 0)
 			{
 				// add  number
 				$URL = BackendModel::addNumber($URL);
-				
+
 				// try again
 				return self::getURLForCategory($URL);
 			}
 		}
-		
+
 		// current category should be excluded
 		else
 		{
 			// get number of items with this url
-			$number = (int) $db->getNumRows('SELECT p.id 
-												FROM blog_posts AS p 
+			$number = (int) $db->getNumRows('SELECT p.id
+												FROM blog_posts AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
 												WHERE p.language = ? AND m.url = ? AND p.id != ?;', array(BL::getWorkingLanguage(), $URL, $itemId));
 
@@ -187,19 +277,19 @@ class BackendBlogModel
 			{
 				// add  number
 				$URL = BackendModel::addNumber($URL);
-				
+
 				// try again
 				return self::getURLForCategory($URL, $itemId);
 			}
 		}
-		
+
 		return $URL;
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the unique url for a category
-	 * 
+	 *
 	 * @return	string
 	 * @param	int[optional] $categoryId
 	 */
@@ -207,27 +297,27 @@ class BackendBlogModel
 	{
 		// redefine URL
 		$URL = SpoonFilter::urlise((string) $URL);
-		
+
 		// get db
 		$db = BackendModel::getDB();
-		
+
 		// new category
 		if($categoryId === null)
 		{
 			// get number of categories with this URL
 			$number = (int) $db->getNumRows('SELECT c.id FROM blog_categories AS c WHERE c.language = ? AND c.url = ?;', array(BL::getWorkingLanguage(), $URL));
-			
+
 			// already exists
 			if($number != 0)
 			{
 				// add  number
 				$URL = BackendModel::addNumber($URL);
-				
+
 				// try again
 				return self::getURLForCategory($URL);
 			}
 		}
-		
+
 		// current category should be excluded
 		else
 		{
@@ -239,19 +329,44 @@ class BackendBlogModel
 			{
 				// add  number
 				$URL = BackendModel::addNumber($URL);
-				
+
 				// try again
 				return self::getURLForCategory($URL, $categoryId);
 			}
 		}
-		
+
 		return $URL;
 	}
-	
-	
+
+
+	/**
+	 * Inserts a blogpost into the database
+	 *
+	 * @return	int
+	 * @param	array $item
+	 */
+	public static function insert(array $item)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// calculate new id
+		$newId = (int) $db->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1;') + 1;
+
+		// build array
+		$item['id'] = $newId;
+
+		// insert and return the insertId
+		$db->insert('blog_posts', $item);
+
+		// return the new id
+		return $newId;
+	}
+
+
 	/**
 	 * Inserts a new category into the database
-	 * 
+	 *
 	 * @return	int
 	 * @param	array $item
 	 */
@@ -259,12 +374,12 @@ class BackendBlogModel
 	{
 		// get db
 		$db = BackendModel::getDB();
-		
+
 		// create category
 		return $db->insert('blog_categories', $item);
 	}
-	
-	
+
+
 	/**
 	 * Update an existing category
 	 *
@@ -276,11 +391,11 @@ class BackendBlogModel
 	{
 		// get db
 		$db = BackendModel::getDB();
-		
+
 		// update category
 		$db->update('blog_categories', $item, 'id = ?', (int) $id);
 	}
-	
+
 
 	/**
 	 * Updates one or more comments' status

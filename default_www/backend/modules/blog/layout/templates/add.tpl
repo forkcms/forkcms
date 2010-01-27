@@ -82,6 +82,14 @@
 													{/iteration:hidden}
 												</ul>
 											</div>
+											
+											<div class="options">
+												<dl>
+													<dt><label for="publishOnDate">{$lblPublishOn|ucfirst}:</label></dt>
+													<dd>{$txtPublishOnDate} <label for="publishOnTime">{$lblAt}</label> {$txtPublishOnTime}</dd>
+												</dl>
+											</div>
+											
 											<div class="footer">
 												<table border="0" cellpadding="0" cellspacing="0">
 													<tbody>
@@ -216,9 +224,9 @@
 					</div>
 
 					<div class="fullwidthOptions">
-						<a href="#" class="button linkButton icon iconDelete"><span><span><span>Delete</span></span></span></a>
+						{*<a href="#" class="button linkButton icon iconDelete"><span><span><span>Delete</span></span></span></a>*}
 						<div class="buttonHolderRight">
-							<a href="#" class="button mainButton"><span><span><span>Publish</span></span></span></a>
+							{$btnAdd}
 						</div>
 					</div>
 				{/form:add}

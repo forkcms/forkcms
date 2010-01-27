@@ -106,11 +106,13 @@ $lbl['core']['AddCategory'] = 'categorie toevoegen';
 $lbl['core']['AddLabel'] = 'label toevoegen';
 $lbl['pages']['AddTemplate'] = 'template toevoegen';
 $lbl['core']['All'] = 'alle';
+$lbl['blog']['AllPosts'] = 'alle posts';
 $lbl['core']['Amount'] = 'aantal';
 $lbl['tags']['Amount'] = 'aantal keer gebruikt';
 $lbl['core']['APIKey'] = 'API key';
 $lbl['core']['APIKeys'] = 'API keys';
 $lbl['core']['APIURL'] = 'API URL';
+$lbl['core']['At'] = 'om';
 $lbl['core']['Avatar'] = 'avatar';
 $lbl['core']['Author'] = 'auteur';
 // b
@@ -123,6 +125,7 @@ $lbl['core']['Categories'] = 'categorieën';
 $lbl['core']['Category'] = 'categorie';
 $lbl['core']['CheckCommentsForSpam'] = 'filter reacties op spam';
 $lbl['core']['Comment'] = 'reactie';
+$lbl['core']['Comments'] = 'reacties';
 $lbl['core']['Content'] = 'inhoud';
 $lbl['core']['CustomURL'] = 'aangepaste URL';
 // d
@@ -191,12 +194,15 @@ $lbl['core']['Pages'] = 'pagina\'s';
 $lbl['core']['Password'] = 'wachtwoord';
 $lbl['core']['PageTitle'] = 'paginatitel';
 $lbl['blog']['PingBlogServices'] = 'Ping blogservices';
+$lbl['blog']['Posts'] = 'posts';
 $lbl['core']['PostsInThisCategory'] = 'posts in deze categorie';
 $lbl['core']['Preview'] = 'preview';
 $lbl['core']['Previous'] = 'vorige';
 $lbl['core']['PreviousPage'] = 'vorige pagina';
 $lbl['core']['Publish'] = 'publiceer';
+$lbl['core']['PublishOn'] = 'publiceer op';
 $lbl['core']['Published'] = 'gepubliceerd';
+$lbl['core']['PublishedOn'] = 'gepubliceerd op';
 $lbl['core']['PublishedComments'] = 'gepubliceerde reacties';
 // q
 // r
