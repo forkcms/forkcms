@@ -157,7 +157,7 @@ body {
 }
 
 /*
-	
+	Typography
 */
 
 h1 {
@@ -472,7 +472,7 @@ td#contentHolder {
 }
 
 #contentHolder .inner {
-	padding: 20px;
+	padding: 24px;
 }
 
 #pagesSide {
@@ -918,7 +918,6 @@ table.datagrid a {
 		#pagesTree #treeHolder #tree {
 			border-left: 1px solid #BEBEBE;
 			border-bottom: 1px solid #CCC;
-			padding-bottom: 12px;
 		}
 
 #treeOptions {
@@ -956,7 +955,7 @@ table.datagrid a {
 }
 
 	#pagesTree h4 {
-		padding: 4px 10px;
+		padding: 4px 12px;
 		margin: 0;
 		color: #000;
 		background: #C8C8C8;
@@ -968,7 +967,7 @@ table.datagrid a {
 	}
 
 	#pagesTree #tree .tree {
-		margin: 10px 0;
+		margin: 12px;
 	}
 
 /*
@@ -1233,10 +1232,9 @@ td.comments {
 }
 
 .box .footer {
-	border: 1px solid #d7d7d7;
-	background: url(../images/th.gif) repeat-x 0 -144px;
-
-	border-color: #AAA #d7d7d7 #c0c0c0 #d7d7d7;
+	border: 1px solid #D7D7D7;
+	background: #F2F2F2;
+	border-color: #AAA #D7D7D7 #C0C0C0 #D7D7D7;
 	padding: 6px 12px;
 }
 
@@ -1908,7 +1906,7 @@ abbr.help {
 
 #siteTitle h1 {
 	margin: 0;
-	padding: 0;
+	padding: 0 0 0 12px;
 }
 
 	#siteTitle h1 a {
@@ -2107,7 +2105,7 @@ abbr.help {
 			#container #contentList ul li li li a {
 				padding: 4px 12px 4px 36px;
 				background: #FAFAFA;
-				color: #5973cc;
+				color: #5973CC;
 			}
 			
 			#encloser #container #contentList ul li li.selected a,
@@ -2123,7 +2121,7 @@ abbr.help {
 	font-size: 11px;
 	font-weight: 700;
 	height: 29px;
-	padding: 0 20px;
+	padding: 0 24px;
 	
 	background: #666;
 	background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999));
@@ -2137,7 +2135,7 @@ abbr.help {
 	font-size: 11px;
 	font-weight: 700;
 	height: 29px;
-	padding: 0 20px;
+	padding: 0 24px;
 
 	border-bottom: 1px solid #999;
 	position: relative;
@@ -2162,7 +2160,7 @@ abbr.help {
 	#filterBar a {
 		position: absolute;
 		top: 3px;
-		right: 20px;
+		right: 24px;
 	}
 	
 	#statusBar div.oneLiner .inputText {
@@ -2202,7 +2200,7 @@ abbr.help {
 */
 
 #dashboardWidgets {
-	padding: 20px 0;
+	padding: 12px 0;
 }
 
 #dashboardWidgets:after {
@@ -2226,8 +2224,8 @@ abbr.help {
 }
 
 #dashboardWidgets .box {
-	padding: 8px;
-	margin: 2px;
+	padding: 12px;
+	margin: 0;
 	border: none;
 }
 
