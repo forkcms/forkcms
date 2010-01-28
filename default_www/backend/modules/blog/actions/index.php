@@ -1,5 +1,7 @@
 <?php
 
+// @todo fix URL for author column
+
 /**
  * BackendBlogIndex
  *

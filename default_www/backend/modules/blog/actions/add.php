@@ -1,5 +1,11 @@
 <?php
 
+// @todo publish box? does this need anything still?
+// @todo tags don't save yet for some reason
+// @todo fix URL below title and in SEO tab
+// @todo javascript show/hide for summary
+// @todo permissions tab with allow_comments checkbox
+
 /**
  * BackendBlogAddCategory
  *
@@ -9,6 +15,7 @@
  * @subpackage	blog
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendBlogAdd extends BackendBaseActionAdd

@@ -298,7 +298,7 @@ class BackendBlogModel
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
-				return self::getURLForCategory($URL);
+				return self::getURL($URL);
 			}
 		}
 
@@ -318,7 +318,7 @@ class BackendBlogModel
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
-				return self::getURLForCategory($URL, $itemId);
+				return self::getURL($URL, $itemId);
 			}
 		}
 

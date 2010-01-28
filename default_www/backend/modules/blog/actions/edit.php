@@ -1,5 +1,11 @@
 <?php
 
+// @todo 'publish' box
+// @todo tags don't save yet for some reason
+// @todo fix URL below title and in SEO tab
+// @todo javascript show/hide for summary
+// @todo permissions tab with allow_comments checkbox
+
 /**
  * BackendBlogEdit
  *
@@ -208,7 +214,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$formattedTime = SpoonDate::getDate('H:i:s', strtotime($txtPublishTime->getValue())); // @todo switch this to $txtPublishTime->getTimestamp whenever it is available
 
 				// build item
-				$item['meta_id'] = $this->meta->save();
+				$item['meta_id'] = $this->meta->save(true);
 				$item['revision_id'] = null; // @todo save revision ID
 				$item['category_id'] = $ddmCategoryId->getValue();
 				$item['user_id'] = $ddmUserId->getValue();
