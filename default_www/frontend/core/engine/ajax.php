@@ -255,7 +255,7 @@ class FrontendAJAXAction
 	public function loadConfig()
 	{
 		// build path to the module and define it. This is a constant because we can use this in templates.
-		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule());
+		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
 		if(!SpoonFile::exists($frontendModulePath .'/config.php')) throw new FrontendException('The configfile for the module ('. $this->getModule() .') can\'t be found.');
