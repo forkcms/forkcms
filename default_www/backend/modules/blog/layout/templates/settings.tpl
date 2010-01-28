@@ -15,7 +15,7 @@
 
 						<div class="options">
 							<p>{$msgHelpSpamFilter}:</p>
-							<ul class="inputList">
+							<ul class="inputList p0">
 								<li>{$chkSpamfilter} <label for="spamfilter">{$lblCheckCommentsForSpam|ucfirst}</label></li>
 							</ul>
 						</div>
@@ -28,7 +28,7 @@
 
 						<div class="options">
 							<p>{$msgHelpPingServices}:</p>
-							<ul class="inputList">
+							<ul class="inputList p0">
 								<li>{$chkPingServices}<label for="pingServices">{$lblPingBlogServices|ucfirst}</label></li>
 							</ul>
 						</div>

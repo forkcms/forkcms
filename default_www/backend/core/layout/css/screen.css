@@ -2465,11 +2465,17 @@ abbr.help {
 }
 
 #loginError {
+	/* Reset border radius */
+	border-radius: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	
 	position: absolute;
 	left: 0;
 	top: 0;
 	width: 100%;
 	z-index: 3;
+	border: none;
 	border-bottom: 1px solid #C3C3C3;
 }
 
@@ -3206,6 +3212,15 @@ a.mainButton:focus {
 
 	.datagrid tbody .button {
 		margin-bottom: 8px;
+	}
+	
+	/*
+		Settings
+	*/
+	
+	#rssDescription {
+		font-family: "Lucida Grande", Arial, sans-serif;
+		padding: 3px;
 	}
 
 

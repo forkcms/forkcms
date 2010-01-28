@@ -9,30 +9,37 @@
 					{option:usingRevision}<p class="warning">{$msgUsingARevision}</p>{/option:usingRevision}
 
 					{form:edit}
-					<label for="title">{$lblTitle|ucfirst}</label>
-					<p>{$txtTitle} {$txtTitleError}</p>
-
-
-					<div class="tabs">
-						<ul>
-							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-							<li class="notImportant"><a href="#tabRevisions">{$lblRevisions|ucfirst}</a></li>
-						</ul>
-
-						<div id="tabContent">
-							<fieldset>
-								<label for="content">{$lblContent|ucfirst}</label>
-								<p>{$txtContent} {$txtContentError}</p>
-								<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
-
-							</fieldset>
+					<div class="box">
+						<div class="heading">
+							<h3>{$msgHeaderEdit}</h3>
 						</div>
+						<div class="options">
+					
+							<div class="tabs">
+								<ul>
+									<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+									<li class="notImportant"><a href="#tabRevisions">{$lblRevisions|ucfirst}</a></li>
+								</ul>
 
-						<div id="tabRevisions">
-							<h3>{$lblRevisions|ucfirst}</h3>
-							<p>{$msgRevisionsExplanation}</p>
-							{option:revisions}{$revisions}{/option:revisions}
-							{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+								<div id="tabContent">
+									
+									<label for="title">{$lblTitle|ucfirst}</label>
+									<p>{$txtTitle} {$txtTitleError}</p>
+									
+									<fieldset>
+										<label for="content">{$lblContent|ucfirst}</label>
+										<p>{$txtContent} {$txtContentError}</p>
+										<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
+									</fieldset>
+								</div>
+
+								<div id="tabRevisions">
+									<h3>{$lblRevisions|ucfirst}</h3>
+									<p>{$msgRevisionsExplanation}</p>
+									{option:revisions}{$revisions}{/option:revisions}
+									{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+								</div>
+							</div>
 						</div>
 					</div>
 

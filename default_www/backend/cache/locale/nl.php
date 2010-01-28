@@ -29,8 +29,8 @@ $err['core'] = array();
 // a
 $err['core']['AkismetKey'] = 'Akismet API-key werd nog niet geconfigureerd.';
 // b
-$err['core']['BlogRSSDescription'] = 'Blog RSS beschrijving is nog niet geconfigureerd. <a href="%s" class="button"><span><span><span>Configureer</span></span></span></a>';
-$err['core']['BlogRSSTitle'] = 'Blog RSS titel is nog niet geconfigureerd. <a href="%s" class="button"><span><span><span>Configureer</span></span></span></a>';
+$err['core']['BlogRSSDescription'] = 'Blog RSS beschrijving is nog niet geconfigureerd. <a href="%s">Configureer</a>';
+$err['core']['BlogRSSTitle'] = 'Blog RSS titel is nog niet geconfigureerd. <a href="%s"<Configureer</a>';
 // c
 $err['core']['ContentIsRequired'] = 'Gelieve inhoud in te geven.';
 // d
