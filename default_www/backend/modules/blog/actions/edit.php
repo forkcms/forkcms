@@ -1,8 +1,6 @@
 <?php
 
-// @todo 'publish' box
 // @todo fix URL below title and in SEO tab
-// @todo javascript show/hide for summary
 
 /**
  * BackendBlogEdit

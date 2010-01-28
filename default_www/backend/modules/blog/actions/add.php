@@ -1,8 +1,6 @@
 <?php
 
-// @todo publish box? does this need anything still?
 // @todo fix URL below title and in SEO tab
-// @todo javascript show/hide for summary
 
 /**
  * BackendBlogAddCategory

@@ -30,21 +30,19 @@
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
 									<td>
-										{$txtText} {$txtTextError}
-										<br />
 										<table border="0" cellspacing="0" cellpadding="0" id="advancedOptions">
 											<tr>
 												<td>
 													<div class="collapseBox" id="summary">
 														<div class="collapseBoxHeading">
 															<div class="buttonHolderSingle">
-																<a href="#" class="button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
+																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
 															</div>
 
-															<h4><a href="#">Summary</a></h4>
+															<h4><a href="#summary .options" class="toggleDiv">Summary</a></h4>
 														</div>
 
-														<div class="options">
+														<div class="options hide" style="display: none;">
 															<p class="helpTxt">If you enter a summary, the summary will be shown on "list" pages (e.g. the blog overview). If you don't, the full blog post will be shown in the overview.</p>
 															{$txtIntroduction} {$txtIntroductionError}
 														</div>
@@ -52,6 +50,8 @@
 												</td>
 											</tr>
 										</table>
+										<br />
+										{$txtText} {$txtTextError}
 									</td>
 
 									<td id="pagesSide">

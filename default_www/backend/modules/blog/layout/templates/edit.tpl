@@ -33,8 +33,6 @@
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
 									<td>
-										{$txtText} {$txtTextError}
-										<br />
 										<table border="0" cellspacing="0" cellpadding="0" id="advancedOptions">
 											<tr>
 												<td>
@@ -55,6 +53,8 @@
 												</td>
 											</tr>
 										</table>
+										<br />
+										{$txtText} {$txtTextError}
 									</td>
 
 									<td id="pagesSide">
@@ -63,6 +63,7 @@
 												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
+											{* 
 											<div class="options">
 												<div class="buttonHolder">
 													{$btnPreview}
@@ -73,6 +74,7 @@
 											<div class="options">
 												<p class="status">Status: <strong>{$status}</strong></p>
 											</div>
+											*}
 											
 											<div class="options">
 												<ul class="inputList">
@@ -99,7 +101,7 @@
 															<td><p>&nbsp;</p></td>
 															<td>
 																<div class="buttonHolderRight">
-																	{$btnPublish}
+																	{$btnEdit}
 																</div>
 															</td>
 														</tr>
