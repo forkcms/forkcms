@@ -9,8 +9,8 @@
 				<div class="datagridHolder">
 					<div class="tableHeading">
 						<div class="buttonHolderRight">
-							<a href="{$var|geturl:'add_template'}" class="button icon iconAdd" title="{$lblAddTemplate}">
-								<span><span><span>{$lblAddTemplate}</span></span></span>
+							<a href="{$var|geturl:'add_template'}" class="button icon iconAdd" title="{$lblAddTemplate|ucfirst}">
+								<span><span><span>{$lblAddTemplate|ucfirst}</span></span></span>
 							</a>
 						</div>
 					</div>

@@ -57,13 +57,3 @@
 		<tr>
 			<td id="container">
 				<div id="main">
-					{option:errorMessage}
-						<div class="errorMessage singleMessage">
-							<p>{$errorMessage}</p>
-						</div>
-					{/option:errorMessage}
-					{option:formError}
-						<div class="errorMessage singleMessage">
-							<p>{$errGeneralFormError}</p>
-						</div>
-					{/option:formError}

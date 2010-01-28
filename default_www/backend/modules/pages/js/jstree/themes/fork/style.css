@@ -21,17 +21,20 @@
 	display: none;
 }
 
-.tree li a,
+.tree li a:link,
+.tree li a:visited,
 .tree li span {
 	display:inline-block;
 	line-height:16px;
-	height:16px;
+	height: 16px;
 	color:black;
 	white-space:nowrap;
 	text-decoration:none;
-	padding:0;
+	padding: 2px;
 	margin:0;
 	background: #F5F5F5;
+	border: none !important;
+	outline: 0 !important;
 }
 
 .tree li a:focus {
@@ -142,12 +145,12 @@
 
 /* OPEN or CLOSED */
 
-.tree-fork li.leaf { background-position: 0 0; background-repeat: no-repeat; }
-.tree-fork li.closed { background-position: -264px -0; background-repeat: no-repeat;}
-.tree-fork li.open { background-position: -528px 0; background-repeat: no-repeat; }
-.tree-fork li.closed.last { background-position: -792px 0; background-repeat: no-repeat;}
-.tree-fork li.open.last { background-position: -1056px 0; background-repeat: no-repeat;}
-.tree-fork li.last { background-position: -1320px 0; background-repeat: no-repeat;}
+.tree-fork li.leaf { background-position: 0 2px; background-repeat: no-repeat; }
+.tree-fork li.closed { background-position: -264px 2px; background-repeat: no-repeat;}
+.tree-fork li.open { background-position: -528px 2px; background-repeat: no-repeat; }
+.tree-fork li.closed.last { background-position: -792px 2px; background-repeat: no-repeat;}
+.tree-fork li.open.last { background-position: -1056px 2px; background-repeat: no-repeat;}
+.tree-fork li.last { background-position: -1320px 2px; background-repeat: no-repeat;}
 
 .tree-fork li.dragged {
 	outline: 1px dotted #000;
@@ -164,9 +167,19 @@
 
 /* DEFAULT, HOVER, CLICKED, LOADING STATES */
 .tree-fork li a:hover,
-.tree-fork li a.hover,
+.tree-fork li a.active,
+.tree-fork li a.focus,
 .tree-fork li span {
-	background: #666;
+	
+	background: #1A57AD;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
+	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
+
+
+	/* @inc .rc */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
 	color: #FFF;
 }
 

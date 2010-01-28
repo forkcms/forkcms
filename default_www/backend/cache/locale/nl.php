@@ -300,6 +300,8 @@ $msg['settings']['DomainsText'] = 'Vul de domeinen in waarop de website te berei
 $msg['core']['Edited'] = 'Wijzigingen opgeslagen.';
 $msg['spotlight']['Edited'] = 'Wijzigingen voor &ldquo;%s&rdquo; opgeslagen.';
 $msg['users']['Edited'] = 'Wijzigingen voor gebruiker &ldquo;%s&rdquo; opgeslagen.';
+// @todo remove this when edit-edited is the same everywhere
+$msg['users']['Edit'] = 'Wijzigingen voor gebruiker %s opgeslagen.';
 // f
 $msg['core']['ForgotPassword'] = 'Wachtwoord vergeten?';
 $msg['core']['ForgotPasswordHelp'] = 'Vul hieronder je e-mail adres in om een nieuw wachtwoord toegestuurd te krijgen.';

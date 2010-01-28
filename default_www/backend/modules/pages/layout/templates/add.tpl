@@ -20,7 +20,22 @@
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
+			{option:errorMessage}
+				<div id="report">
+					<div class="errorMessage singleMessage">
+						<p>{$errorMessage}</p>
+					</div>
+				</div>
+			{/option:errorMessage}
+			{option:formError}
+				<div id="report">
+					<div class="errorMessage singleMessage">
+						<p>{$errGeneralFormError}</p>
+					</div>
+				</div>
+			{/option:formError}
 			<div class="inner">
+				
 				{form:add}
 					{$txtTitle} {$txtTitleError}
 					<div id="pageUrl">
