@@ -326,7 +326,7 @@ class SpoonDataGrid
 	 */
 	private function buildURL($offset, $order, $sort)
 	{
-		return str_replace(array('[offset]', '[order]', '[sort]'), array($offset, $order, $sort), $this->url);
+		return str_replace(array('[offset]', '[order]', '[sort]'), array($offset, $order, $sort), $this->URL);
 	}
 
 
@@ -1241,7 +1241,7 @@ class SpoonDataGrid
 			$this->tpl->assign('iPerPage', $this->pagingLimit);
 
 			// parse paging
-			$content = call_user_func(array($this->pagingClass, 'getContent'), $this->url, $this->getOffset(), $this->getOrder(), $this->getSort(), $this->source->getNumResults(), $this->pagingLimit, $this->debug, $this->compileDirectory);
+			$content = call_user_func(array($this->pagingClass, 'getContent'), $this->URL, $this->getOffset(), $this->getOrder(), $this->getSort(), $this->source->getNumResults(), $this->pagingLimit, $this->debug, $this->compileDirectory);
 
 			// asign content
 			$this->tpl->assign('paging', $content);
@@ -2393,7 +2393,7 @@ class SpoonDataGridColumn
 	 * Sets the URL.
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	string[optional] $title
 	 */
 	public function setURL($URL, $title = null)
@@ -2745,7 +2745,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 
 interface iSpoonDataGridPaging
 {
-	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null);
+	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null);
 }
 
 
@@ -2781,7 +2781,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 	 * Builds & returns the pagination.
 	 *
 	 * @return	string
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	int $offset
 	 * @param	string $order
 	 * @param	string $sort
@@ -2790,7 +2790,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 	 * @param	bool[optional] $debug
 	 * @param	string[optional] $compileDirectory
 	 */
-	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
+	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{
 		// current page
 		$currentPage = ceil($offset / $numPerPage) + 1;
@@ -2813,7 +2813,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 		{
 			// label & url
 			$previousLabel = self::$previous;
-			$previousURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $url);
+			$previousURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $URL);
 			$tpl->assign('previousLabel', $previousLabel);
 			$tpl->assign('previousURL', $previousURL);
 		}
@@ -2823,7 +2823,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 		{
 			// label & url
 			$nextLabel = self::$next;
-			$nextURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $url);
+			$nextURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $URL);
 			$tpl->assign('nextLabel', $nextLabel);
 			$tpl->assign('nextURL', $nextURL);
 		}
@@ -2928,7 +2928,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 					$pages[$i]['otherPage'] = true;
 
 					// url to this page
-					$pages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $url);
+					$pages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $URL);
 				}
 			}
 
