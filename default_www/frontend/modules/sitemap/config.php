@@ -10,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class SitemapConfig extends FrontendExtraBaseConfig
+class FrontendSitemapConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action
