@@ -1,12 +1,13 @@
 tinyMCE.init({
 	theme: 'advanced',	// @todo	should be based on user-setting
+	body_class: 'content',
+	content_css: '/frontend/core/layout/css/screen.css, /backend/core/layout/css/editor_content.css',
 	dialog_type: 'modal',
 	language: '{$INTERFACE_LANGUAGE}',
 	mode: 'textareas',
 	entity_encoding: 'raw',
 	plugins: 'inlinepopups,paste,contextmenu,media,fullscreen,table',
 	editor_selector: 'inputEditor',
-	body_class: 'content',
 	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code',
 	theme_advanced_buttons2: 'outdent, indent,|,fullscreen,table,|,image,|,formatselect',
 	theme_advanced_buttons3: '',
@@ -15,7 +16,7 @@ tinyMCE.init({
 	theme_advanced_toolbar_location: 'top',
 	theme_advanced_toolbar_align: 'left',
 	theme_advanced_statusbar_location: 'bottom',
-	width: '99.5%',
+	width: '100%',
 	filemanager_handle: 'media,file',
 	imagemanager_handle: 'image',
 	relative_urls: false,
