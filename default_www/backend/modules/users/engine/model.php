@@ -209,20 +209,16 @@ class BackendUsersModel
 	 */
 	public static function getIdByUsername($username)
 	{
-		// redefine
-		$username = (string) $username;
-
 		// get db
 		$db = BackendModel::getDB();
 
 		// get user-settings
 		$userId = $db->getVar('SELECT u.id
-													FROM users AS u
-													WHERE u.username = ?;',
-													array($username));
+								FROM users AS u
+								WHERE u.username = ?;', (string) $username);
 
-		// return
-		return (int) $userId;
+		// userId or false on error
+		return ($userId == 0) ? false : (int) $userId;
 	}
 
 
