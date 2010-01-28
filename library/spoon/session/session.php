@@ -42,10 +42,10 @@ class SpoonSessionException extends SpoonException {}
 class SpoonSession
 {
 	/**
-	 * Deletes one or more session variables
+	 * Deletes one or more session variables.
 	 *
 	 * @return	void
-	 * @param	mixed $keys		The key(s) that should be deleted from the session
+	 * @param	mixed $keys		The key(s) that should be deleted from the session.
 	 */
 	public static function delete($keys)
 	{
@@ -54,11 +54,33 @@ class SpoonSession
 
 		// unset these keys
 		foreach($keys as $key) unset($_SESSION[$key]);
+
+		// loop all arguments
+		foreach(func_get_args() as $argument)
+		{
+			// array element
+			if(is_array($argument))
+			{
+				// loop the keys
+				foreach($argument as $key)
+				{
+					// unset session key
+					unset($_SESSION[(string) $key]);
+				}
+			}
+
+			// other type(s)
+			else
+			{
+				// remove from array
+				unset($_SESSION[(string) $argument]);
+			}
+		}
 	}
 
 
 	/**
-	 * Destroys the session
+	 * Destroys the session.
 	 *
 	 * @return	void
 	 */
@@ -106,7 +128,7 @@ class SpoonSession
 
 
 	/**
-	 * Gets a variable that was stored in the session
+	 * Gets a variable that was stored in the session.
 	 *
 	 * @return	mixed			The value that was stored.
 	 * @param	string $key		The key of the variable to get.
@@ -129,7 +151,7 @@ class SpoonSession
 
 
 	/**
-	 * Returns the sessionID
+	 * Returns the sessionID.
 	 *
 	 * @return	string	The unique session id
 	 */
@@ -141,7 +163,7 @@ class SpoonSession
 
 
 	/**
-	 * Stores a variable in the session
+	 * Stores a variable in the session.
 	 *
 	 * @return	void
 	 * @param	string $key		The key for the variable.
@@ -158,7 +180,7 @@ class SpoonSession
 
 
     /**
-	 * Starts the session
+	 * Starts the session.
 	 *
 	 * @return void
 	 */

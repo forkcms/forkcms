@@ -292,7 +292,18 @@ class SpoonFilter
 		return htmlspecialchars($value, ENT_QUOTES, $charset);
 	}
 
-	// @todo htmlspecialcharsDecode toevoegen.
+
+	/**
+	 * Apply the htmlspecialchars_decode function with ENT_QUOTES by default.
+	 *
+	 * @return	string			The string with HTML-specialchars decoded.
+	 * @param	string $value	The value that should be used.
+	 */
+	public static function htmlspecialcharsDecode($value)
+	{
+		return htmlspecialchars_decode($value, ENT_QUOTES);
+	}
+
 
 	/**
 	 * Checks the value for a-z & A-Z.
@@ -436,7 +447,7 @@ class SpoonFilter
 	/**
 	 * Checks if the request is coming from this site or not.
 	 *
-	 * @return	bool						true if the request is coming from this site, false if not.
+	 * @return	bool						True if the request is coming from this site, false if not.
 	 * @param	array[optional] $domains	An array containing all known domains.
 	 */
 	public static function isInternalReferrer(array $domains = null)
@@ -461,9 +472,9 @@ class SpoonFilter
 
 	/**
 	 * Checks the value for a proper ip address.
-	 * @todo	IPv6 isn't implemented?
+	 * @todo tijs - implement IPv6
 	 *
-	 * @return	bool			true if the value is a valid IPv4-address, false if not.
+	 * @return	bool			True if the value is a valid IPv4-address, false if not.
 	 * @param	string $value	The value to validate.
 	 */
 	public static function isIp($value)
@@ -475,7 +486,7 @@ class SpoonFilter
 	/**
 	 * Checks if the value is not greater than or equal a given maximum.
 	 *
-	 * @return	bool			true on success, false if not.
+	 * @return	bool			True on success, false if not.
 	 * @param	int $maximum	The maximum.
 	 * @param	int $value		The value to validate.
 	 */
@@ -488,7 +499,7 @@ class SpoonFilter
 	/**
 	 * Checks if the value's length is not greater than or equal a given maximum of characters.
 	 *
-	 * @return	bool						true if the length isn't greather then the given maximum, false if not.
+	 * @return	bool						True if the length isn't greather then the given maximum, false if not.
 	 * @param	int $maximum				The maximum allowed characters.
 	 * @param	string $value				The value to validate.
 	 * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
@@ -506,7 +517,7 @@ class SpoonFilter
 	/**
 	 * Checks if the value is greater than or equal to a given minimum.
 	 *
-	 * @return	bool			true if the given value is greater then the given minimum.
+	 * @return	bool			True if the given value is greater then the given minimum.
 	 * @param	int $minimum	The minimum.
 	 * @param	int $value		The value to validate.
 	 */
@@ -519,7 +530,7 @@ class SpoonFilter
 	/**
 	 * Checks if the value's length is greater than or equal to a given minimum of characters.
 	 *
-	 * @return	bool						true if the length is greater then the given minimum.
+	 * @return	bool						True if the length is greater then the given minimum.
 	 * @param	int $minimum				The minimum allowed charachters.
 	 * @param	string $value				The value to validate.
 	 * @param	string[optional] $charset	The charset to use, default is based on SPOON_CHARSET.
@@ -537,7 +548,7 @@ class SpoonFilter
 	/**
 	 * Alias for isDigital.
 	 *
-	 * @return	bool			true if the value is numeric, false if not.
+	 * @return	bool			True if the value is numeric, false if not.
 	 * @param	string $value	The value to validate.
 	 */
 	public static function isNumeric($value)
@@ -549,7 +560,7 @@ class SpoonFilter
 	/**
 	 * Checks the value for an odd number.
 	 *
-	 * @return	bool			true if the value is odd, false if not.
+	 * @return	bool			True if the value is odd, false if not.
 	 * @param	int $value		The value to validate.
 	 */
 	public static function isOdd($value)
@@ -561,7 +572,7 @@ class SpoonFilter
 	/**
 	 * Checks if the value is smaller than a given maximum.
 	 *
-	 * @return	bool			true if the value is smaller, false if not.
+	 * @return	bool			True if the value is smaller, false if not.
 	 * @param	int $maximum	The maximum.
 	 * @param 	int $value		The value to validate.
 	 */
@@ -574,7 +585,7 @@ class SpoonFilter
 	/**
 	 * Checks the value for a string wihout control characters (ASCII 0 - 31), spaces are allowed.
 	 *
-	 * @return	bool			true if the value is a string, false if not.
+	 * @return	bool			True if the value is a string, false if not.
 	 * @param	string $value	The value to validate.
 	 */
 	public static function isString($value)
@@ -584,9 +595,9 @@ class SpoonFilter
 
 
 	/**
-	 * Checks the value for a valid url.
+	 * Checks the value for a valid URL.
 	 *
-	 * @return	bool			true if the value is a valid URL, false if not.
+	 * @return	bool			True if the value is a valid URL, false if not.
 	 * @param	string $value	The value to validate.
 	 */
 	public static function isURL($value)
@@ -599,7 +610,7 @@ class SpoonFilter
 	/**
 	 * Validates a value against a regular expression.
 	 *
-	 * @return	bool				true if the given string is valid against the regular expression, false if not.
+	 * @return	bool				True if the given string is valid against the regular expression, false if not.
 	 * @param	string $regexp		The regular expression to use.
 	 * @param	string $value		The value to validate.
 	 */
@@ -620,7 +631,7 @@ class SpoonFilter
 	/**
 	 * Checks if the given regex statement is valid.
 	 *
-	 * @return	bool				true if the given string is a valid regular expression, false if not.
+	 * @return	bool				True if the given string is a valid regular expression, false if not.
 	 * @param	string $regexp		The value to validate.
 	 */
 	public static function isValidRegexp($regexp)
@@ -686,6 +697,8 @@ class SpoonFilter
 	/**
 	 * Strips HTML from a string
 	 *
+	 * @todo dave - review stripping of linebreaks, add missing entities
+	 *
 	 * @return	string										A string with all HTML elements stripped.
 	 * @param string $string								The string with HTML in it.
 	 * @param mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'
@@ -702,7 +715,7 @@ class SpoonFilter
 		// check input
 		if(is_array($exceptions)) $exceptions = implode('', $exceptions);
 
-		// remove fugly and mac endlines
+		// remove ugly and mac endlines
 		$string = preg_replace('/\r\n/', PHP_EOL, $string);
 		$string = preg_replace('/\r/', PHP_EOL, $string);
 
@@ -817,20 +830,21 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// allowed characters
-		$aCharacters = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', ' ');
+		$characters = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', ' ');
 
 		// redefine value
 		$value = mb_strtolower($value, $charset);
 
 		// replace special characters
-		$aReplace['.'] = ' ';
-		$aReplace['@'] = ' at ';
-		$aReplace['©'] = ' copyright ';
-		$aReplace['€'] = ' euro ';
-		$aReplace['™'] = ' tm ';
+		$replace = array();
+		$replace['.'] = ' ';
+		$replace['@'] = ' at ';
+		$replace['©'] = ' copyright ';
+		$replace['€'] = ' euro ';
+		$replace['™'] = ' tm ';
 
 		// replace special characters
-		$value = str_replace(array_keys($aReplace), array_values($aReplace), $value);
+		$value = str_replace(array_keys($replace), array_values($replace), $value);
 
 		// reform non ascii characters
 		$value = iconv($charset, 'ASCII//TRANSLIT//IGNORE', $value);
@@ -845,7 +859,7 @@ class SpoonFilter
 		for ($i = 0; $i < mb_strlen($value, $charset); $i++)
 		{
 			// valid character (so add to new string)
-			if(in_array(mb_substr($value, $i, 1, $charset), $aCharacters)) $newValue .= mb_substr($value, $i, 1, $charset);
+			if(in_array(mb_substr($value, $i, 1, $charset), $characters)) $newValue .= mb_substr($value, $i, 1, $charset);
 		}
 
 		// replace spaces by dashes

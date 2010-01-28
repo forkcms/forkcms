@@ -17,9 +17,9 @@
 
 /**
  * This is the version number for the current version of the
- * Spoon Library
+ * Spoon Library.
  */
-define('SPOON_VERSION', '1.1.3');
+define('SPOON_VERSION', '1.1.4');
 
 /**
  * This setting will intervene when an exception occures. If enabled the exception will be
@@ -35,13 +35,13 @@ if(!defined('SPOON_DEBUG_MESSAGE')) define('SPOON_DEBUG_MESSAGE', 'There seems t
 
 /**
  * If 'SPOON_DEBUG' is enabled and an exception occures, an email with the contents of this
- * exception will be emailed to 'SPOON_DEBUG_EMAIL' if it contains an email address.
+ * exception will be emailed to 'SPOON_DEBUG_EMAIL' if it contains a valid email address.
  */
 if(!defined('SPOON_DEBUG_EMAIL')) define('SPOON_DEBUG_EMAIL', '');
 
 /**
- * Default charset that will be used when a charset needs to provided to use for
- * certan functions/methods.
+ * Default charset that will be used when a charset needs to be provided to use for
+ * certain functions/methods.
  */
 if(!defined('SPOON_CHARSET')) define('SPOON_CHARSET', 'iso-8859-1');
 
@@ -70,7 +70,7 @@ class Spoon
 
 
 	/**
-	 * Dumps the output of a variable in a more readable manner
+	 * Dumps the output of a variable in a more readable manner.
 	 *
 	 * @return	void
 	 * @param	mixed $var
@@ -95,7 +95,7 @@ class Spoon
 
 
 	/**
-	 * Retrieve the list of available charsets
+	 * Retrieve the list of available charsets.
 	 *
 	 * @return	array
 	 */
@@ -106,7 +106,7 @@ class Spoon
 
 
 	/**
-	 * Retrieve the whole registry or the requested item
+	 * Retrieve the whole registry or the requested item.
 	 *
 	 * @return	mixed
 	 * @param	string[optional] $name
@@ -132,7 +132,7 @@ class Spoon
 
 
 	/**
-	 * Checks if an object with this name has been registered
+	 * Checks if an object with this name has been registered.
 	 *
 	 * @return	bool
 	 * @param	string $name
@@ -144,7 +144,7 @@ class Spoon
 
 
 	/**
-	 * Deletes a given object from the registry
+	 * Deletes a given object from the registry.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -163,7 +163,7 @@ class Spoon
 
 
 	/**
-	 * Registers a given object under a given name
+	 * Registers a given object under a given name.
 	 *
 	 * @return	void
 	 * @param	string $name

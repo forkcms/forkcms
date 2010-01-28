@@ -47,7 +47,7 @@ class SpoonDirectory
 	/**
 	 * Creates a folder with the given chmod settings.
 	 *
-	 * @return	bool						true if the directory was created, false if not.
+	 * @return	bool						True if the directory was created, false if not.
 	 * @param	string $directory			The name for the directory.
 	 * @param	string[optional] $chmod		Mode that will be applied on the directory.
 	 */
@@ -60,7 +60,7 @@ class SpoonDirectory
 	/**
 	 * Copies a file/folder.
 	 *
-	 * @return	bool						true if the file/directory was copies, false if not.
+	 * @return	bool						True if the file/directory was copied, false if not.
 	 * @param	string $source				The full path to the source file/folder.
 	 * @param	bool[optional] $overwrite	If the destination already exists, should we overwrite?
 	 * @param	string $destination			The full path to the destination.
@@ -102,7 +102,7 @@ class SpoonDirectory
 			$contentList = (array) self::getList($source, true);
 
 			// loop content
-			foreach ($contentList as $item)
+			foreach($contentList as $item)
 			{
 				// copy dir (recursive)
 				if(is_dir($source .'/'. $item)) self::copy($source .'/'. $item, $destination .'/'. $item);
@@ -125,7 +125,7 @@ class SpoonDirectory
 						}
 
 						// chmod
-						SpoonFile::chmod($destination .'/'. $item, $chmod);
+						@chmod($destination .'/'. $item, $chmod);
 					}
 				}
 			}
@@ -163,7 +163,7 @@ class SpoonDirectory
 	/**
 	 * Deletes a directory and all of its subdirectories.
 	 *
-	 * @return	bool				true if the directory was deleted, false if not.
+	 * @return	bool				True if the directory was deleted, false if not.
 	 * @param	string $directory	Full path to the directory.
 	 */
 	public static function delete($directory)
@@ -203,7 +203,7 @@ class SpoonDirectory
 	/**
 	 * Checks if this directory exists.
 	 *
-	 * @return	bool				true if the directory exists, false if not.
+	 * @return	bool				True if the directory exists, false if not.
 	 * @param	string $directory	Full path of the directory to check.
 	 */
 	public static function exists($directory)
@@ -246,7 +246,7 @@ class SpoonDirectory
 		}
 
 		// define file list
-		$aDirectories = array();
+		$directories = array();
 
 		// directory exists
 		if(self::exists($path))
@@ -257,7 +257,7 @@ class SpoonDirectory
 			// do your thing if directory-handle isn't false
 			if($directory !== false)
 			{
-							// start reading
+				// start reading
 				while((($file = readdir($directory)) !== false))
 				{
 					// no '.' and '..' and it's a file
@@ -274,14 +274,14 @@ class SpoonDirectory
 									if($includeRegexp !== null)
 									{
 										// init var
-										$aMatches = array();
+										$matches = array();
 
 										// is this a match?
-										if(preg_match($includeRegexp, $file, $aMatches) != 0) $aDirectories[] = $file;
+										if(preg_match($includeRegexp, $file, $matches) != 0) $directories[] = $file;
 									}
 
 									// add to list
-									else $aDirectories[] = $file;
+									else $directories[] = $file;
 								}
 							}
 
@@ -291,14 +291,14 @@ class SpoonDirectory
 								if($includeRegexp !== null)
 								{
 									// init var
-									$aMatches = array();
+									$matches = array();
 
 									// is this a match?
-									if(preg_match($includeRegexp, $file, $aMatches) != 0) $aDirectories[] = $file;
+									if(preg_match($includeRegexp, $file, $matches) != 0) $directories[] = $file;
 								}
 
 								// add to list
-								else $aDirectories[] = $file;
+								else $directories[] = $file;
 							}
 						}
 
@@ -313,12 +313,12 @@ class SpoonDirectory
 								{
 									if(!in_array($file, $excluded))
 									{
-										$aDirectories[] = $file;
+										$directories[] = $file;
 									}
 								}
 
 								// add file
-								else $aDirectories[] = $file;
+								else $directories[] = $file;
 							}
 						}
 					}
@@ -330,18 +330,18 @@ class SpoonDirectory
 		}
 
 		// cough up directory listing
-		natsort($aDirectories);
+		natsort($directories);
 
-		return $aDirectories;
+		return $directories;
 	}
 
 
 	/**
 	 * Retrieve the size of a directory in megabytes.
 	 *
-	 * @return	int								The size in MB.
-	 * @param	string $path					The path of the directory.
-	 * @param	bool[optional] $subdirectories	Should the subfolders be included in the calculation.
+	 * @return	int									The size in MB.
+	 * @param	string $path						The path of the directory.
+	 * @param	bool[optional] $subdirectories		Should the subfolders be included in the calculation.
 	 */
 	public static function getSize($path, $subdirectories = true)
 	{
@@ -358,6 +358,7 @@ class SpoonDirectory
 		// directory exists
 		else
 		{
+			// fetch list
 			$list = (array) self::getList($path, true);
 
 			// loop list
@@ -371,7 +372,6 @@ class SpoonDirectory
 			}
 		}
 
-		// return good size
 		return $size;
 	}
 
@@ -379,7 +379,7 @@ class SpoonDirectory
 	/**
 	 * Move/rename a directory/file.
 	 *
-	 * @return	bool						true if the directory was moved or renamed, false if not.
+	 * @return	bool						True if the directory was moved or renamed, false if not.
 	 * @param	string $source				Path of the source directory.
 	 * @param	string $destination			Path of the destination.
 	 * @param 	bool[optional] $overwrite	Should an existing directory be overwritten?
@@ -393,7 +393,7 @@ class SpoonDirectory
 		$overwrite = (bool) $overwrite;
 
 		// validation
-		if(!file_exists($source)) throw new SpoonFileSystemException('The given path ('. $source .') doesn\'t exists.');
+		if(!file_exists($source)) throw new SpoonFileSystemException('The given path ('. $source .') doesn\'t exist.');
 		if(!$overwrite && file_exists($destination)) throw new SpoonFileSystemException('The given destination ('. $destination .') already exists.');
 
 		// create missing directories
@@ -440,10 +440,10 @@ class SpoonFile
 	/**
 	 * Download a file from a public URL.
 	 *
-	 * @return	bool						true if the file was downloaded, false if not.
-	 * @param	string $sourceURL			The url of the file to download.
-	 * @param	string $destinationPath		The path where the file should be downloaded.
-	 * @param	bool[optional] $overwrite	Should the existing file be overwritten?
+	 * @return	bool						True if the file was downloaded, false if not.
+	 * @param	string $sourceURL			The URL of the file to download.
+	 * @param	string $destinationPath		The path where the file should be downloaded to.
+	 * @param	bool[optional] $overwrite	In case the destinationPath already exists, should we overwrite this file?
 	 */
 	public static function download($sourceURL, $destinationPath, $overwrite = true)
 	{
@@ -495,7 +495,7 @@ class SpoonFile
 	/**
 	 * Does this file exist.
 	 *
-	 * @return	bool				true if the file exists, false if not.
+	 * @return	bool				True if the file exists, false if not.
 	 * @param	string $filename	The full path of the file to check for existance.
 	 */
 	public static function exists($filename)
@@ -507,11 +507,9 @@ class SpoonFile
 	/**
 	 * Fetch the extension for a filename.
 	 *
-	 * @todo	rewrite using reverse strpos and think about .tar.gz
-	 *
 	 * @return	string						The extension.
 	 * @param	string $filename			The full path of the file.
-	 * @param	bool[optional] $lowercase	Should the extension be returned in lowercase of in the original form.
+	 * @param	bool[optional] $lowercase	Should the extension be returned in lowercase or in its original form.
 	 */
 	public static function getExtension($filename, $lowercase = true)
 	{
@@ -533,10 +531,10 @@ class SpoonFile
 
 
 	/**
-	 * Fetch the content from a file or URL
+	 * Fetch the content from a file or URL.
 	 *
 	 * @return	string				The content.
-	 * @param	string $filename	The path or url to the file. URLs will only work if fopen-wrappers are enabled.
+	 * @param	string $filename	The path or URL to the file. URLs will only work if fopen-wrappers are enabled.
 	 */
 	public static function getContent($filename)
 	{
@@ -562,28 +560,29 @@ class SpoonFile
 		$pathInfo = pathinfo($filename);
 
 		// build details array
-		$aFile['basename'] = $pathInfo['basename'];
-		$aFile['extension'] = self::getExtension($filename);
-		$aFile['name'] = substr($aFile['basename'], 0, strlen($aFile['basename']) - strlen($aFile['extension']) -1);
-		$aFile['size'] = @filesize($filename);
-		$aFile['is_executable'] = @is_executable($filename);
-		$aFile['is_readable'] = @is_readable($filename);
-		$aFile['is_writable'] = @is_writable($filename);
-		$aFile['modification_date'] = @filemtime($filename);
-		$aFile['path'] = $pathInfo['dirname'];
-		$aFile['permissions'] = @fileperms($filename);
+		$file = array();
+		$file['basename'] = $pathInfo['basename'];
+		$file['extension'] = self::getExtension($filename);
+		$file['name'] = substr($file['basename'], 0, strlen($file['basename']) - strlen($file['extension']) -1);
+		$file['size'] = @filesize($filename);
+		$file['is_executable'] = @is_executable($filename);
+		$file['is_readable'] = @is_readable($filename);
+		$file['is_writable'] = @is_writable($filename);
+		$file['modification_date'] = @filemtime($filename);
+		$file['path'] = $pathInfo['dirname'];
+		$file['permissions'] = @fileperms($filename);
 
 		// calculate human readable size
-		$size = $aFile['size'];
+		$size = $file['size'];
 		$mod = 1024;
 		for($i = 0; $size > $mod; $i++) $size /= $mod;
-		$aFile['human_readable_size'] = round($size, 2) .' '. $units[$i];
+		$file['human_readable_size'] = round($size, 2) .' '. $units[$i];
 
 		// clear cache
 		@clearstatcache();
 
 		// cough it up
-		return $aFile;
+		return $file;
 	}
 
 
@@ -610,7 +609,7 @@ class SpoonFile
 		}
 
 		// define list
-		$aFiles = array();
+		$files = array();
 
 		// directory exists
 		if(SpoonDirectory::exists($path))
@@ -628,14 +627,14 @@ class SpoonFile
 						if($includeRegexp !== null)
 						{
 							// init var
-							$aMatches = array();
+							$matches = array();
 
 							// is this a match?
-							if(preg_match($includeRegexp, $file, $aMatches) != 0) $aFiles[] = $file;
+							if(preg_match($includeRegexp, $file, $matches) != 0) $files[] = $file;
 						}
 
 						// no excludes defined
-						else $aFiles[] = $file;
+						else $files[] = $file;
 					}
 				}
 			}
@@ -645,18 +644,18 @@ class SpoonFile
 		}
 
 		// directory doesn't exist or a problem occured
-		return $aFiles;
+		return $files;
 	}
 
 
 	/**
 	 * Move/rename a directory/file.
 	 *
-	 * @return	bool						true if the file was moved or renamed, false if not.
+	 * @return	bool						True if the file was moved or renamed, false if not.
 	 * @param	string $source				Path of the source file.
 	 * @param	string $destination			Path of the destination.
 	 * @param 	bool[optional] $overwrite	Should an existing file be overwritten?
-	 * @param	int[optional] $chmod		Mode that should be applied on the file.
+	 * @param	int[optional] $chmod		Chmod mode that should be applied on the file/directory.
 	 */
 	public static function move($source, $destination, $overwrite = true, $chmod = 0777)
 	{
@@ -668,7 +667,7 @@ class SpoonFile
 	/**
 	 * Writes a string to a file.
 	 *
-	 * @return	bool						true if the content was written, false if not.
+	 * @return	bool						True if the content was written, false if not.
 	 * @param	string $filename			The path of the file.
 	 * @param	string $content				The content that should be written.
 	 * @param	bool[optional] $createFile	Should the file be created if it doesn't exists?

@@ -51,35 +51,35 @@ class SpoonLog
 	 *
 	 * @var	string
 	 */
-	private static $logPath;
+	private static $path;
 
 
 	/**
-	 * Get the log path
+	 * Get the log path.
 	 *
 	 * @return	string	The path where the logfiles will be stored.
 	 */
 	public static function getPath()
 	{
-		if(self::$logPath === null) return (string) str_replace('/spoon/log/log.php', '', __FILE__);
-		return self::$logPath;
+		if(self::$path === null) return (string) str_replace('/spoon/log/log.php', '', __FILE__);
+		return self::$path;
 	}
 
 
 	/**
-	 * Set the logpath
+	 * Set the logpath.
 	 *
 	 * @return	void
 	 * @param	string $path	The path where the logfiles should be stored.
 	 */
 	public static function setPath($path)
 	{
-		self::$logPath = (string) $path;
+		self::$path = (string) $path;
 	}
 
 
 	/**
-	 * Write an error
+	 * Write an error/custom message to the log.
 	 *
 	 * @return	void
 	 * @param	string $message			The messages that should be logged.

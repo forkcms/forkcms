@@ -1,6 +1,6 @@
 <?php
 
-// @todo rework with subclasses, based on the available PDO drivers.
+// @todo davy - rework with subclasses, based on the available PDO drivers.
 
 /**
  * Spoon Library
@@ -518,7 +518,7 @@ class SpoonDatabase
 			$keys = null;
 
 			// fetch results
-			$tmpResults = self::getRecords($query, $parameters);
+			$tmpResults = (array) self::getRecords($query, $parameters);
 
 			// loop results
 			foreach($tmpResults as $result)

@@ -139,7 +139,7 @@ class SpoonForm
 
 
 	/**
-	 * Add one or more objects to the stack
+	 * Add one or more objects to the stack.
 	 *
 	 * @return	void
 	 * @param	object $object
@@ -159,7 +159,7 @@ class SpoonForm
 				else
 				{
 					// not an object
-					if(!is_object($argument)) throw new SpoonFormException('The provided argument ('. $argument .') is not an object.');
+					if(!is_object($argument)) throw new SpoonFormException('The provided argument is not a valid object.');
 
 					// valid object
 					$this->objects[$argument->getName()] = $argument;
@@ -175,7 +175,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single button
+	 * Adds a single button.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -194,7 +194,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single checkbox
+	 * Adds a single checkbox.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -213,7 +213,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more checkboxes
+	 * Adds one or more checkboxes.
 	 *
 	 * @return	void
 	 */
@@ -235,7 +235,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single datefield
+	 * Adds a single datefield.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -255,7 +255,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single dropdown
+	 * Adds a single dropdown.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -276,7 +276,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds an error to the main error stack
+	 * Adds an error to the main error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -288,7 +288,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single file field
+	 * Adds a single file field.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -303,7 +303,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more file fields
+	 * Adds one or more file fields.
 	 *
 	 * @return	void
 	 */
@@ -314,7 +314,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single hidden field
+	 * Adds a single hidden field.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -328,7 +328,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more hidden fields
+	 * Adds one or more hidden fields.
 	 *
 	 * @return	void
 	 */
@@ -350,8 +350,7 @@ class SpoonForm
 
 
 	/**
-
-	 * Adds a single image field
+	 * Adds a single image field.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -369,7 +368,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more image fields
+	 * Adds one or more image fields.
 	 *
 	 * @return	void
 	 */
@@ -380,7 +379,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single multiple checkbox
+	 * Adds a single multiple checkbox.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -397,7 +396,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single password field
+	 * Adds a single password field.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -415,7 +414,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more password fields
+	 * Adds one or more password fields.
 	 *
 	 * @return	void
 	 */
@@ -437,7 +436,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single radiobutton
+	 * Adds a single radiobutton.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -454,7 +453,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single textarea
+	 * Adds a single textarea.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -471,7 +470,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more textareas
+	 * Adds one or more textareas.
 	 *
 	 * @return	void
 	 */
@@ -493,7 +492,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single textfield
+	 * Adds a single textfield.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -511,7 +510,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more textfields
+	 * Adds one or more textfields.
 	 *
 	 * @return	void
 	 */
@@ -533,7 +532,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single timefield
+	 * Adds a single timefield.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -549,7 +548,7 @@ class SpoonForm
 
 
 	/**
-	 * Adds one or more timefields
+	 * Adds one or more timefields.
 	 *
 	 * @return	void
 	 */
@@ -571,7 +570,7 @@ class SpoonForm
 
 
 	/**
-	 * Loop all the fields and remove the ones that dont need to be in the form
+	 * Loop all the fields and remove the ones that dont need to be in the form.
 	 *
 	 * @return	void
 	 */
@@ -589,7 +588,7 @@ class SpoonForm
 		 * isSubmitted method counts on this field to check whether or
 		 * not the form has been submitted
 		 */
-		if(!in_array('form', $this->fields)) $this->fields[] = 'form'; // default
+		if(!in_array('form', $this->fields)) $this->fields[] = 'form';
 
 		// post method
 		if($this->method == 'post')
@@ -614,7 +613,7 @@ class SpoonForm
 
 
 	/**
-	 * Creates a hidden field & adds it to the form
+	 * Creates a hidden field & adds it to the form.
 	 *
 	 * @return	void
 	 */
@@ -625,7 +624,7 @@ class SpoonForm
 
 
 	/**
-	 * Retrieve the action
+	 * Retrieve the action.
 	 *
 	 * @return	string
 	 */
@@ -636,7 +635,7 @@ class SpoonForm
 
 
 	/**
-	 * Retrieve the errors
+	 * Retrieve the errors.
 	 *
 	 * @return	string
 	 */
@@ -647,7 +646,7 @@ class SpoonForm
 
 
 	/**
-	 * Fetches a field
+	 * Fetches a field.
 	 *
 	 * @return	SpoonVisualFormElement
 	 * @param	string $name
@@ -663,7 +662,7 @@ class SpoonForm
 
 
 	/**
-	 * Retrieve all fields
+	 * Retrieve all fields.
 	 *
 	 * @return	array
 	 */
@@ -674,7 +673,7 @@ class SpoonForm
 
 
 	/**
-	 * Retrieve the method post/get
+	 * Retrieve the method post/get.
 	 *
 	 * @return	string
 	 */
@@ -685,7 +684,7 @@ class SpoonForm
 
 
 	/**
-	 * Retrieve the name of this form
+	 * Retrieve the name of this form.
 	 *
 	 * @return	string
 	 */
@@ -696,7 +695,7 @@ class SpoonForm
 
 
 	/**
-	 * Retrieve the parameters
+	 * Retrieve the parameters.
 	 *
 	 * @return	array
 	 */
@@ -707,7 +706,7 @@ class SpoonForm
 
 
 	/**
-	 * Retrieve the parameters in html form
+	 * Retrieve the parameters in html form.
 	 *
 	 * @return	string
 	 */
@@ -723,7 +722,7 @@ class SpoonForm
 
 
 	/**
-	 * Generates an example template, based on the elements already added
+	 * Generates an example template, based on the elements already added.
 	 *
 	 * @return	string
 	 */
@@ -764,7 +763,7 @@ class SpoonForm
 				// single checkboxes
 				elseif($object instanceof SpoonCheckBox)
 				{
-					$value .= "\t". '<label for="'. $object->getId() .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
 					$value .= "\t<p>\n";
 					$value .= "\t\t{\$chk". SpoonFilter::toCamelCase($object->getName()) ."}\n";
 					$value .= "\t\t{\$chk". SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
@@ -786,7 +785,7 @@ class SpoonForm
 				// dropdowns
 				elseif($object instanceof SpoonDropDown)
 				{
-					$value .= "\t". '<label for="'. $object->getId() .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
 					$value .= "\t<p>\n";
 					$value .= "\t\t". '{$ddm'. SpoonFilter::toCamelCase($object->getName()) ."}\n";
 					$value .= "\t\t". '{$ddm'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
@@ -796,7 +795,7 @@ class SpoonForm
 				// filefields
 				elseif($object instanceof SpoonFileField)
 				{
-					$value .= "\t". '<label for="'. $object->getId() .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
 					$value .= "\t<p>\n";
 					$value .= "\t\t". '{$file'. SpoonFilter::toCamelCase($object->getName()) ."}\n";
 					$value .= "\t\t". '{$file'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
@@ -818,7 +817,7 @@ class SpoonForm
 				// textfields
 				elseif(($object instanceof SpoonDateField) || ($object instanceof SpoonPasswordField) || ($object instanceof SpoonTextArea) || ($object instanceof SpoonTextField) || ($object instanceof SpoonTimeField))
 				{
-					$value .= "\t". '<label for="'. $object->getId() .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
 					$value .= "\t<p>\n";
 					$value .= "\t\t". '{$txt'. SpoonFilter::toCamelCase($object->getName()) ."}\n";
 					$value .= "\t\t". '{$txt'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
@@ -833,7 +832,7 @@ class SpoonForm
 
 
 	/**
-	 * Fetches all the values for this form as key/value pairs
+	 * Fetches all the values for this form as key/value pairs.
 	 *
 	 * @return	array
 	 * @param	mixed[optional] $excluded
@@ -855,21 +854,21 @@ class SpoonForm
 		}
 
 		// values
-		$aValues = array();
+		$values = array();
 
 		// loop objects
 		foreach($this->objects as $object)
 		{
-			if(method_exists($object, 'getValue') && !in_array($object->getName(), $excluded)) $aValues[$object->getName()] = $object->getValue();
+			if(method_exists($object, 'getValue') && !in_array($object->getName(), $excluded)) $values[$object->getName()] = $object->getValue();
 		}
 
 		// return data
-		return $aValues;
+		return $values;
 	}
 
 
 	/**
-	 * Returns the form's status
+	 * Returns the form's status.
 	 *
 	 * @return	bool
 	 */
@@ -884,7 +883,7 @@ class SpoonForm
 
 
 	/**
-	 * Returns whether this form has been submitted
+	 * Returns whether this form has been submitted.
 	 *
 	 * @return	bool
 	 */
@@ -911,7 +910,7 @@ class SpoonForm
 
 
 	/**
-	 * Parse this form in the given template
+	 * Parse this form in the given template.
 	 *
 	 * @return	void
 	 * @param	SpoonTemplate $template
@@ -927,7 +926,7 @@ class SpoonForm
 
 
 	/**
-	 * Set the action
+	 * Set the action.
 	 *
 	 * @return	void
 	 * @param	string $action
@@ -939,7 +938,7 @@ class SpoonForm
 
 
 	/**
-	 * Sets the correct value
+	 * Sets the correct value.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $correct
@@ -951,7 +950,7 @@ class SpoonForm
 
 
 	/**
-	 * Set the form method
+	 * Set the form method.
 	 *
 	 * @return	void
 	 * @param	string[optional] $method
@@ -963,7 +962,7 @@ class SpoonForm
 
 
 	/**
-	 * Set the name
+	 * Set the name.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -975,7 +974,7 @@ class SpoonForm
 
 
 	/**
-	 * Set a parameter for the form tag
+	 * Set a parameter for the form tag.
 	 *
 	 * @return	void
 	 * @param	string $key
@@ -988,7 +987,7 @@ class SpoonForm
 
 
 	/**
-	 * Set multiple form parameters
+	 * Set multiple form parameters.
 	 *
 	 * @return	void
 	 * @param	array $parameters
@@ -1000,7 +999,7 @@ class SpoonForm
 
 
 	/**
-	 * Validates the form (when not wanting to use getcorrect)
+	 * Validates the form. This is an alternative for isCorrect, but without retrieve the status of course.
 	 *
 	 * @return	void
 	 */
@@ -1046,7 +1045,7 @@ class SpoonForm
 class SpoonFormAttributes extends SpoonFormElement
 {
 	/**
-	 * Retrieve the value for a specific attribute
+	 * Retrieve the value for a specific attribute.
 	 *
 	 * @return	string
 	 * @param	string $name
@@ -1058,7 +1057,7 @@ class SpoonFormAttributes extends SpoonFormElement
 
 
 	/**
-	 * Retrieves the custom attributes
+	 * Retrieves the custom attributes.
 	 *
 	 * @return	array
 	 */
@@ -1069,7 +1068,7 @@ class SpoonFormAttributes extends SpoonFormElement
 
 
 	/**
-	 * Retrieves the custom attributes as HTML
+	 * Retrieves the custom attributes as HTML.
 	 *
 	 * @return	string
 	 * @param	array $variables
@@ -1097,7 +1096,7 @@ class SpoonFormAttributes extends SpoonFormElement
 
 
 	/**
-	 * Set a custom attribute and its value
+	 * Set a custom attribute and its value.
 	 *
 	 * @return	void
 	 * @param	string $key
@@ -1114,7 +1113,7 @@ class SpoonFormAttributes extends SpoonFormElement
 
 
 	/**
-	 * Set multiple custom attributes at once
+	 * Set multiple custom attributes at once.
 	 *
 	 * @return	void
 	 * @param	array $attributes
@@ -1171,7 +1170,7 @@ class SpoonFormElement
 
 
 	/**
-	 * Retrieve the form method or the submitted data
+	 * Retrieve the form method or the submitted data.
 	 *
 	 * @return	string
 	 * @param	bool[optional] $array
@@ -1184,7 +1183,7 @@ class SpoonFormElement
 
 
 	/**
-	 * Retrieve the unique name of this object
+	 * Retrieve the unique name of this object.
 	 *
 	 * @return	string
 	 */
@@ -1195,7 +1194,7 @@ class SpoonFormElement
 
 
 	/**
-	 * Returns whether this form has been submitted
+	 * Returns whether this form has been submitted.
 	 *
 	 * @return	bool
 	 */
@@ -1216,7 +1215,7 @@ class SpoonFormElement
 
 
 	/**
-	 * Parse the html for the current element
+	 * Parse the html for the current element.
 	 *
 	 * @return	void
 	 * @param	SpoonTemplate[optional] $template
@@ -1228,7 +1227,7 @@ class SpoonFormElement
 
 
 	/**
-	 * Set the name of the form this field is a part of
+	 * Set the name of the form this field is a part of.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -1240,7 +1239,7 @@ class SpoonFormElement
 
 
 	/**
-	 * Set the form method
+	 * Set the form method.
 	 *
 	 * @return	void
 	 * @param	string[optional] $method
@@ -1289,7 +1288,7 @@ class SpoonInputField extends SpoonFormAttributes
 
 
 	/**
-	 * Adds an error to the error stack
+	 * Adds an error to the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -1301,7 +1300,7 @@ class SpoonInputField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the class html
+	 * Retrieve the class html.
 	 *
 	 * @return	string
 	 */
@@ -1335,7 +1334,7 @@ class SpoonInputField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the initial value
+	 * Retrieve the initial value.
 	 *
 	 * @return	string
 	 */
@@ -1346,7 +1345,7 @@ class SpoonInputField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the errors
+	 * Retrieve the errors.
 	 *
 	 * @return	string
 	 */
@@ -1357,7 +1356,7 @@ class SpoonInputField extends SpoonFormAttributes
 
 
 	/**
-	 * Overwrites the entire error stack
+	 * Overwrites the entire error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -1398,7 +1397,7 @@ class SpoonButton extends SpoonFormAttributes
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -1420,7 +1419,7 @@ class SpoonButton extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the initial value
+	 * Retrieve the initial value.
 	 *
 	 * @return	string
 	 */
@@ -1431,7 +1430,7 @@ class SpoonButton extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieves the button type
+	 * Retrieves the button type.
 	 *
 	 * @return	string
 	 */
@@ -1442,7 +1441,7 @@ class SpoonButton extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieves the value attribute
+	 * Retrieves the value attribute.
 	 *
 	 * @return	string
 	 */
@@ -1453,7 +1452,7 @@ class SpoonButton extends SpoonFormAttributes
 
 
 	/**
-	 * Parse the html for this button
+	 * Parse the html for this button.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -1469,13 +1468,12 @@ class SpoonButton extends SpoonFormAttributes
 		// parse
 		if($template !== null) $template->assign('btn'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
 
-		// cough it up
 		return $output;
 	}
 
 
 	/**
-	 * Set the button type (button, reset or submit)
+	 * Set the button type (button, reset or submit).
 	 *
 	 * @return	void
 	 * @param	string[optional] $type
@@ -1532,7 +1530,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -1553,7 +1551,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Adds an error to the error stack
+	 * Adds an error to the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -1565,7 +1563,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieves the class based on the errors status
+	 * Retrieves the class based on the errors status.
 	 *
 	 * @return	string
 	 */
@@ -1599,7 +1597,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the errors
+	 * Retrieve the errors.
 	 *
 	 * @return	string
 	 */
@@ -1610,7 +1608,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the extension of the uploaded file
+	 * Retrieve the extension of the uploaded file.
 	 *
 	 * @return	string
 	 * @param	bool[optional] $lowercase
@@ -1622,7 +1620,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the filename of the uploade file
+	 * Retrieve the filename of the uploade file.
 	 *
 	 * @return	string
 	 * @param	bool[optional] $includeExtension
@@ -1635,7 +1633,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the filesize of the file in a specified unit
+	 * Retrieve the filesize of the file in a specified unit.
 	 *
 	 * @return	int
 	 * @param	string[optional] $unit
@@ -1672,7 +1670,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Get the temporary filename
+	 * Get the temporary filename.
 	 *
 	 * @return	string
 	 */
@@ -1683,7 +1681,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Checks if the extension is allowed
+	 * Checks if the extension is allowed.
 	 *
 	 * @return	bool
 	 * @param	array $extensions
@@ -1717,7 +1715,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Checks of the filesize is greater, equal or smaller than the given number + units
+	 * Checks of the filesize is greater, equal or smaller than the given number + units.
 	 *
 	 * @return	bool
 	 * @param	int $size
@@ -1753,7 +1751,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Checks for a valid file name (including dots but no slashes and other forbidden characters)
+	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -1770,7 +1768,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Checks if this field was submitted & filled
+	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -1799,7 +1797,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Attemps to move the uploaded file to the new location
+	 * Attemps to move the uploaded file to the new location.
 	 *
 	 * @return	bool
 	 * @param	string $path
@@ -1819,7 +1817,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Parses the html for this filefield
+	 * Parses the html for this filefield.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -1842,13 +1840,12 @@ class SpoonFileField extends SpoonFormAttributes
 			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		// cough it up
 		return $output;
 	}
 
 
 	/**
-	 * Set the class on error
+	 * Set the class on error.
 	 *
 	 * @return	void
 	 * @param	string $class
@@ -1860,7 +1857,7 @@ class SpoonFileField extends SpoonFormAttributes
 
 
 	/**
-	 * Overwrites the error stack
+	 * Overwrites the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -1885,7 +1882,7 @@ class SpoonFileField extends SpoonFormAttributes
 class SpoonImageField extends SpoonFileField
 {
 	/**
-	 * Retrieve the extension of the uploaded file (based on the MIME-type)
+	 * Retrieve the extension of the uploaded file (based on the MIME-type).
 	 *
 	 * @return	string
 	 * @param	bool[optional] $lowercase
@@ -1963,7 +1960,7 @@ class SpoonImageField extends SpoonFileField
 
 
 	/**
-	 * Checks if the mime-type is allowed
+	 * Checks if the mime-type is allowed.
 	 * @see	http://www.w3schools.com/media/media_mimeref.asp
 	 *
 	 * @return	bool
@@ -2065,7 +2062,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -2085,7 +2082,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Adds an error to the error stack
+	 * Adds an error to the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -2097,7 +2094,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Retrieves the custom attributes as HTML
+	 * Retrieves the custom attributes as HTML.
 	 *
 	 * @return	string
 	 * @param	string $element
@@ -2123,7 +2120,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Retrieve the value of the checked item
+	 * Retrieve the value of the checked item.
 	 *
 	 * @return	bool
 	 */
@@ -2154,7 +2151,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Retrieve the errors
+	 * Retrieve the errors.
 	 *
 	 * @return	string
 	 */
@@ -2165,7 +2162,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Retrieves the name
+	 * Retrieves the name.
 	 *
 	 * @return	string
 	 */
@@ -2176,7 +2173,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Retrieves the initial or submitted value
+	 * Retrieves the initial or submitted value.
 	 *
 	 * @return	string
 	 */
@@ -2207,7 +2204,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Checks if this field was submitted & filled
+	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2227,7 +2224,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Parse the html for this button
+	 * Parse the html for this button.
 	 *
 	 * @return	array
 	 * @param	SpoonTemplate[optional] $template
@@ -2242,38 +2239,38 @@ class SpoonRadioButton extends SpoonFormElement
 		{
 			// init vars
 			$name = 'rbt'. SpoonFilter::toCamelCase($this->name);
-			$aElement = array();
-			$aElement[$name] = '<input type="radio" name="'. $this->name .'" value="'. $value .'"';
+			$element = array();
+			$element[$name] = '<input type="radio" name="'. $this->name .'" value="'. $value .'"';
 
 			// checked status
-			if($value == $this->getChecked()) $aElement[$name] .= ' checked="checked"';
+			if($value == $this->getChecked()) $element[$name] .= ' checked="checked"';
 
 			// add attributes
-			$aElement[$name] .= $this->getAttributesHTML($value, array('[id]' => $this->variables[$value]['id'], '[value]' => $value));
+			$element[$name] .= $this->getAttributesHTML($value, array('[id]' => $this->variables[$value]['id'], '[value]' => $value));
 
 			// add variables to this element
-			foreach($this->variables[$value] as $variableKey => $variableValue) $aElement[$variableKey] = $variableValue;
+			foreach($this->variables[$value] as $variableKey => $variableValue) $element[$variableKey] = $variableValue;
 
 			// end input tag
-			$aElement[$name] .= ' />';
+			$element[$name] .= ' />';
 
 			// add checkbox
-			$aRadioButton[] = $aElement;
+			$radioButtons[] = $element;
 		}
 
 		// template
 		if($template !== null)
 		{
-			$template->assign($this->name, $aRadioButton);
+			$template->assign($this->name, $radioButtons);
 			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		return $aRadioButton;
+		return $radioButtons;
 	}
 
 
 	/**
-	 * Set the checked value
+	 * Set the checked value.
 	 *
 	 * @return	void
 	 * @param	string $checked
@@ -2289,7 +2286,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Overwrites the error stack
+	 * Overwrites the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -2301,7 +2298,7 @@ class SpoonRadioButton extends SpoonFormElement
 
 
 	/**
-	 * Set the labels and their values
+	 * Set the labels and their values.
 	 *
 	 * @return	void
 	 * @param	array $values
@@ -2385,7 +2382,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -2425,7 +2422,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Retrieve the initial value
+	 * Retrieve the initial value.
 	 *
 	 * @return	string
 	 */
@@ -2436,7 +2433,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Retrieve the input mask
+	 * Retrieve the input mask.
 	 *
 	 * @return	string
 	 */
@@ -2447,7 +2444,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Returns a timestamp based on mask & optional fields
+	 * Returns a timestamp based on mask & optional fields.
 	 *
 	 * @return	int
 	 * @param	int[optional] $year
@@ -2500,7 +2497,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Retrieve the initial or submitted value
+	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
 	 */
@@ -2528,7 +2525,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field has any content (except spaces)
+	 * Checks if this field has any content (except spaces).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2550,7 +2547,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field is correctly submitted
+	 * Checks if this field is correctly submitted.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2643,7 +2640,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Parses the html for this date field
+	 * Parses the html for this date field.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -2666,13 +2663,12 @@ class SpoonDateField extends SpoonInputField
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		// cough
 		return $output;
 	}
 
 
 	/**
-	 * Set the input mask
+	 * Set the input mask.
 	 *
 	 * @return	void
 	 * @param	string[optional] $mask
@@ -2710,7 +2706,7 @@ class SpoonDateField extends SpoonInputField
 
 
 	/**
-	 * Set the value attribute for this date field
+	 * Set the value attribute for this date field.
 	 *
 	 * @return	void
 	 * @param	int $value
@@ -2743,7 +2739,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -2769,7 +2765,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Retrieve the initial or submitted value
+	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
 	 * @param	bool[optional] $allowHTML
@@ -2812,7 +2808,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field contains only letters a-z and A-Z
+	 * Checks if this field contains only letters a-z and A-Z.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2834,7 +2830,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field only contains letters & numbers (without spaces)
+	 * Checks if this field only contains letters & numbers (without spaces).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2856,7 +2852,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if the field is between a given minimum and maximum (includes min & max)
+	 * Checks if the field is between a given minimum and maximum (includes min & max).
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -2880,7 +2876,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks this field for a boolean (true/false | 0/1)
+	 * Checks this field for a boolean (true/false | 0/1).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2902,7 +2898,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field only contains numbers 0-9
+	 * Checks if this field only contains numbers 0-9.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2924,7 +2920,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks this field for a valid e-mail address
+	 * Checks this field for a valid e-mail address.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2946,7 +2942,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks for a valid file name (including dots but no slashes and other forbidden characters)
+	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2968,7 +2964,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field was submitted & filled
+	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -2990,7 +2986,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only)
+	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3012,7 +3008,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field is greater than another value
+	 * Checks if this field is greater than another value.
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -3035,7 +3031,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only)
+	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3057,7 +3053,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field is a proper ip address
+	 * Checks if this field is a proper ip address.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3079,7 +3075,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field does not exceed the given maximum
+	 * Checks if this field does not exceed the given maximum.
 	 *
 	 * @return	bool
 	 * @param	int $maximum
@@ -3102,7 +3098,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field's length is less (or equal) than the given maximum
+	 * Checks if this field's length is less (or equal) than the given maximum.
 	 *
 	 * @return	bool
 	 * @param	int $maximum
@@ -3125,7 +3121,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field is at least a given minimum
+	 * Checks if this field is at least a given minimum.
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -3148,7 +3144,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field's length is more (or equal) than the given minimum
+	 * Checks if this field's length is more (or equal) than the given minimum.
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -3171,7 +3167,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Alias for isDigital (Field may only contain numbers 0-9)
+	 * Alias for isDigital (Field may only contain numbers 0-9).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3183,7 +3179,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if the field is smaller than a given maximum
+	 * Checks if the field is smaller than a given maximum.
 	 *
 	 * @return	bool
 	 * @param	int $maximum
@@ -3206,7 +3202,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field contains any string that doesn't have control characters (ASCII 0 - 31) but spaces are allowed
+	 * Checks if this field contains any string that doesn't have control characters (ASCII 0 - 31) but spaces are allowed.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3228,7 +3224,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks this field for a valid url
+	 * Checks this field for a valid url.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3250,7 +3246,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Checks if the field validates against the regexp
+	 * Checks if the field validates against the regexp.
 	 *
 	 * @return	bool
 	 * @param	string $regexp
@@ -3273,7 +3269,7 @@ class SpoonTextField extends SpoonInputField
 
 
 	/**
-	 * Parses the html for this textfield
+	 * Parses the html for this textfield.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -3296,7 +3292,6 @@ class SpoonTextField extends SpoonInputField
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		// cough
 		return $output;
 	}
 }
@@ -3323,7 +3318,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -3349,7 +3344,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Retrieve the initial or submitted value
+	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
 	 * @param	bool[optional] $allowHTML
@@ -3392,7 +3387,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field contains only letters a-z and A-Z
+	 * Checks if this field contains only letters a-z and A-Z.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3414,7 +3409,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field only contains letters & numbers (without spaces)
+	 * Checks if this field only contains letters & numbers (without spaces).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3436,7 +3431,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field was submitted & filled
+	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3458,7 +3453,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field's length is less (or equal) than the given maximum
+	 * Checks if this field's length is less (or equal) than the given maximum.
 	 *
 	 * @return	bool
 	 * @param	int $maximum
@@ -3481,7 +3476,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field's length is more (or equal) than the given minimum
+	 * Checks if this field's length is more (or equal) than the given minimum.
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -3504,7 +3499,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Checks if the field validates against the regexp
+	 * Checks if the field validates against the regexp.
 	 *
 	 * @return	bool
 	 * @param	string $regexp
@@ -3527,7 +3522,7 @@ class SpoonPasswordField extends SpoonInputField
 
 
 	/**
-	 * Parses the html for this textfield
+	 * Parses the html for this textfield.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -3550,13 +3545,12 @@ class SpoonPasswordField extends SpoonInputField
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		// cough
 		return $output;
 	}
 
 
 	/**
-	 * Set the initial value
+	 * Set the initial value.
 	 *
 	 * @return	void
 	 * @param	string $value
@@ -3589,7 +3583,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -3615,7 +3609,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Retrieve the initial or submitted value
+	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
 	 * @param	bool[optional] $allowHTML
@@ -3658,7 +3652,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Checks if this field contains only letters a-z and A-Z
+	 * Checks if this field contains only letters a-z and A-Z.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3680,7 +3674,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Checks if this field only contains letters & numbers (without spaces)
+	 * Checks if this field only contains letters & numbers (without spaces).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3702,7 +3696,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Checks if this field was submitted & filled
+	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3724,7 +3718,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Checks if this field's length is less (or equal) than the given maximum
+	 * Checks if this field's length is less than or equal to the given maximum.
 	 *
 	 * @return	bool
 	 * @param	int $maximum
@@ -3747,7 +3741,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Checks if this field's length is more (or equal) than the given minimum
+	 * Checks if this field's length is more than or equal to the given minimum.
 	 *
 	 * @return	bool
 	 * @param	int $minimum
@@ -3770,7 +3764,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Checks if this field contains any string that doesn't have control characters (ASCII 0 - 31) but spaces are allowed
+	 * Checks if this field contains any string that doesn't have control characters (ASCII 0 - 31) but spaces are allowed.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3792,7 +3786,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Parses the html for this textarea
+	 * Parses the html for this textarea.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -3829,7 +3823,7 @@ class SpoonTextArea extends SpoonInputField
 
 
 	/**
-	 * Set the initial value
+	 * Set the initial value.
 	 *
 	 * @return	void
 	 * @param	string $value
@@ -3854,7 +3848,7 @@ class SpoonTextArea extends SpoonInputField
 class SpoonTimeField extends SpoonInputField
 {
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $name
@@ -3886,7 +3880,7 @@ class SpoonTimeField extends SpoonInputField
 
 
 	/**
-	 * Retrieve the initial or submitted value
+	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
 	 */
@@ -3914,7 +3908,7 @@ class SpoonTimeField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field has any content (except spaces)
+	 * Checks if this field has any content (except spaces).
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3936,7 +3930,7 @@ class SpoonTimeField extends SpoonInputField
 
 
 	/**
-	 * Checks if this field is correctly submitted
+	 * Checks if this field is correctly submitted.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -3988,7 +3982,7 @@ class SpoonTimeField extends SpoonInputField
 
 
 	/**
-	 * Parses the html for this time field
+	 * Parses the html for this time field.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -4011,13 +4005,12 @@ class SpoonTimeField extends SpoonInputField
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		// cough
 		return $output;
 	}
 
 
 	/**
-	 * Set the value attribute for this time field
+	 * Set the value attribute for this time field.
 	 *
 	 * @return	void
 	 * @param	string $value
@@ -4144,7 +4137,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Adds an error to the error stack
+	 * Adds an error to the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -4156,7 +4149,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieves the custom attributes as HTML
+	 * Retrieves the custom attributes as HTML.
 	 *
 	 * @return	string
 	 * @param	array $variables
@@ -4187,7 +4180,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the class html
+	 * Retrieve the class HTML.
 	 *
 	 * @return	string
 	 */
@@ -4221,7 +4214,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the initial value
+	 * Retrieve the initial value.
 	 *
 	 * @return	string
 	 */
@@ -4232,7 +4225,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the errors
+	 * Retrieve the errors.
 	 *
 	 * @return	string
 	 */
@@ -4243,7 +4236,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the list of option specific attributes by its' value
+	 * Retrieve the list of option specific attributes by its' value.
 	 *
 	 * @return	array
 	 * @param	string $value
@@ -4255,7 +4248,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieves the selected item(s)
+	 * Retrieves the selected item(s).
 	 *
 	 * @return	mixed
 	 */
@@ -4295,7 +4288,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the value(s)
+	 * Retrieve the value(s).
 	 *
 	 * @return	mixed
 	 */
@@ -4359,7 +4352,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Checks if this field was submitted & contains one more values
+	 * Checks if this field was submitted & contains one more values.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -4406,7 +4399,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Parses the html for this dropdown
+	 * Parses the html for this dropdown.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -4454,13 +4447,13 @@ class SpoonDropDown extends SpoonFormAttributes
 		// has option groups
 		if($this->optionGroups)
 		{
-			foreach ($this->values as $groupName => $group)
+			foreach($this->values as $groupName => $group)
 			{
 				// create optgroup
 				$output .= "\t" .'<optgroup label="'. $groupName .'">'."\n";
 
 				// loop valuesgoo
-				foreach ($group as $value => $label)
+				foreach($group as $value => $label)
 				{
 					// create option
 					$output .= "\t\t" . '<option value="'. $value .'"';
@@ -4503,7 +4496,7 @@ class SpoonDropDown extends SpoonFormAttributes
 		else
 		{
 			// loop values
-			foreach ($this->values as $value => $label)
+			foreach($this->values as $value => $label)
 			{
 				// create option
 				$output .= "\t". '<option value="'. $value .'"';
@@ -4548,13 +4541,12 @@ class SpoonDropDown extends SpoonFormAttributes
 			$template->assign('ddm'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		// cough it up
 		return $output;
 	}
 
 
 	/**
-	 * Should we allow external data to be added
+	 * Should we allow external data to be added.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on
@@ -4566,7 +4558,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Sets the default element (top of the dropdown)
+	 * Sets the default element (top of the dropdown).
 	 *
 	 * @return	void
 	 * @param	string $label
@@ -4579,7 +4571,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Overwrites the error stack
+	 * Overwrites the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -4591,7 +4583,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Sets custom option attributes for a specific value
+	 * Sets custom option attributes for a specific value.
 	 *
 	 * @return	void
 	 * @param	string $value
@@ -4608,7 +4600,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Whether you can select one or more items
+	 * Whether you can select one or more items.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $single
@@ -4620,7 +4612,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Set the default selected item(s)
+	 * Set the default selected item(s).
 	 *
 	 * @return	void
 	 * @param	mixed $selected
@@ -4650,7 +4642,7 @@ class SpoonDropDown extends SpoonFormAttributes
 
 
 	/**
-	 * Sets the values for this dropdown menu
+	 * Sets the values for this dropdown menu.
 	 *
 	 * @return	void
 	 * @param	array $values
@@ -4753,7 +4745,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Adds an error to the error stack
+	 * Adds an error to the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -4765,7 +4757,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the attributes as html
+	 * Retrieve the attributes as HTML.
 	 *
 	 * @return	string
 	 *.@param	array $variables
@@ -4793,7 +4785,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Returns the checked status for this checkbox
+	 * Returns the checked status for this checkbox.
 	 *
 	 * @return	bool
 	 */
@@ -4820,7 +4812,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieves the class based on the errors status
+	 * Retrieves the class based on the errors status.
 	 *
 	 * @return	string
 	 */
@@ -4854,7 +4846,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the errors
+	 * Retrieve the errors.
 	 *
 	 * @return	string
 	 */
@@ -4865,7 +4857,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the value(s)
+	 * Retrieve the value(s).
 	 *
 	 * @return	mixed
 	 */
@@ -4889,7 +4881,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Is this specific field checked
+	 * Is this specific field checked.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -4909,7 +4901,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Checks if this field was submitted & contains one more values
+	 * Checks if this field was submitted & contains one more values.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -4929,7 +4921,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Parses the html for this dropdown
+	 * Parses the html for this dropdown.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -4952,13 +4944,12 @@ class SpoonCheckBox extends SpoonFormAttributes
 			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		// cough
 		return $output;
 	}
 
 
 	/**
-	 * Sets the checked status
+	 * Sets the checked status.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $checked
@@ -4970,7 +4961,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 
 
 	/**
-	 * Overwrites the error stack
+	 * Overwrites the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -5064,7 +5055,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Adds an error to the error stack
+	 * Adds an error to the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -5076,7 +5067,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Retrieves the custom attributes as HTML
+	 * Retrieves the custom attributes as HTML.
 	 *
 	 * @return	string
 	 * @param	string $element
@@ -5102,7 +5093,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Retrieve the list of checked boxes
+	 * Retrieve the list of checked boxes.
 	 *
 	 * @return	array
 	 */
@@ -5117,7 +5108,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Retrieve the errors
+	 * Retrieve the errors.
 	 *
 	 * @return	string
 	 */
@@ -5128,7 +5119,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Retrieves the name
+	 * Retrieves the name.
 	 *
 	 * @return	string
 	 */
@@ -5139,7 +5130,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Retrieve the value(s)
+	 * Retrieve the value(s).
 	 *
 	 * @return	array
 	 */
@@ -5178,7 +5169,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Checks if this field was submitted & contains one more values
+	 * Checks if this field was submitted & contains one more values.
 	 *
 	 * @return	bool
 	 * @param	string[optional] $error
@@ -5205,7 +5196,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Parses the html for this dropdown
+	 * Parses the html for this dropdown.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -5220,38 +5211,38 @@ class SpoonMultiCheckBox extends SpoonFormElement
 		{
 			// init vars
 			$name = 'chk'. SpoonFilter::toCamelCase($this->name);
-			$aElement = array();
-			$aElement[$name] = '<input type="checkbox" name="'. $this->name .'[]" value="'. $value .'"';
+			$element = array();
+			$element[$name] = '<input type="checkbox" name="'. $this->name .'[]" value="'. $value .'"';
 
 			// checked status
-			if(in_array($value, $this->getChecked())) $aElement[$name] .= ' checked="checked"';
+			if(in_array($value, $this->getChecked())) $element[$name] .= ' checked="checked"';
 
 			// add attributes
-			$aElement[$name] .= $this->getAttributesHTML($value, array('[id]' => $this->variables[$value]['id'], '[value]' => $value));
+			$element[$name] .= $this->getAttributesHTML($value, array('[id]' => $this->variables[$value]['id'], '[value]' => $value));
 
 			// add variables to this element
-			foreach($this->variables[$value] as $variableKey => $variableValue) $aElement[$variableKey] = $variableValue;
+			foreach($this->variables[$value] as $variableKey => $variableValue) $element[$variableKey] = $variableValue;
 
 			// end input tag
-			$aElement[$name] .= ' />';
+			$element[$name] .= ' />';
 
 			// add checkbox
-			$aCheckBox[] = $aElement;
+			$checkBoxes[] = $element;
 		}
 
 		// template
 		if($template !== null)
 		{
-			$template->assign($this->name, $aCheckBox);
+			$template->assign($this->name, $checkBoxes);
 			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		return $aCheckBox;
+		return $checkBoxes;
 	}
 
 
 	/**
-	 * Should we allow external data
+	 * Should we allow external data.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on
@@ -5263,7 +5254,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Sets the checked status
+	 * Sets the checked status.
 	 *
 	 * @return	void
 	 * @param	mixed $checked
@@ -5286,7 +5277,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Overwrites the error stack
+	 * Overwrites the error stack.
 	 *
 	 * @return	void
 	 * @param	string $error
@@ -5298,7 +5289,7 @@ class SpoonMultiCheckBox extends SpoonFormElement
 
 
 	/**
-	 * Set the initial values
+	 * Set the initial values.
 	 *
 	 * @return	void
 	 * @param	mixed $values
@@ -5393,7 +5384,7 @@ class SpoonHiddenField extends SpoonFormAttributes
 
 
 	/**
-	 * Retrieve the initial or submitted value
+	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
 	 */
@@ -5421,7 +5412,7 @@ class SpoonHiddenField extends SpoonFormAttributes
 
 
 	/**
-	 * Checks if this field has any content (except spaces)
+	 * Checks if this field has any content (except spaces).
 	 *
 	 * @return	bool
 	 */
@@ -5437,7 +5428,7 @@ class SpoonHiddenField extends SpoonFormAttributes
 
 
 	/**
-	 * Parses the html for this hidden field
+	 * Parses the html for this hidden field.
 	 *
 	 * @return	string
 	 * @param	SpoonTemplate[optional] $template
@@ -5453,13 +5444,12 @@ class SpoonHiddenField extends SpoonFormAttributes
 		// parse hidden field
 		if($template !== null) $template->assign('hid'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
 
-		// cough it up
 		return $output;
 	}
 
 
 	/**
-	 * Set the value attribute for this hidden field
+	 * Set the value attribute for this hidden field.
 	 *
 	 * @return	void
 	 * @param	string $value

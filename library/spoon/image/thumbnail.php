@@ -120,10 +120,10 @@ class SpoonThumbnail
 
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 *
 	 * @return	void
-	 * @param	string $filename		The path to the source-image
+	 * @param	string $filename		The path to the source-image.
 	 * @param	int[optional] $width	The required width, if not provided it will be calculated based on the height.
 	 * @param	int[optional] $height	The required height, if not provided it will be calculated based on the width.
 	 * @param	bool[optional] $strict	Should strict-mode be activated?
@@ -139,7 +139,7 @@ class SpoonThumbnail
 		if($height != null) $height = (int) $height;
 
 		// set strict
-		$this->setStrict($strict);
+		$this->strict = (bool) $strict;
 
 		// validate
 		if(!SpoonFile::exists($filename)) throw new SpoonImageException('The sourcefile "'. $filename .'" couldn\'t be found.');
@@ -152,9 +152,9 @@ class SpoonThumbnail
 
 
 	/**
-	 * Check if file is supported
+	 * Check if file is supported.
 	 *
-	 * @return	bool				true if the file is supported, false if not.
+	 * @return	bool				True if the file is supported, false if not.
 	 * @param	string $filename	The path to the file tp check.
 	 */
 	public static function isSupportedFileType($filename)
@@ -185,7 +185,6 @@ class SpoonThumbnail
 
 	/**
 	 * Outputs the image as png to the browser.
-	 * Use the optional param for disabling the header, usefull for debugging purposes
 	 *
 	 * @return	void
 	 * @param	bool[optional] $headers		Should the headers be send? This is a usefull when you're debugging.
@@ -217,10 +216,10 @@ class SpoonThumbnail
 
 
 	/**
-	 * Saves the image to a file (quality is only used for jpg images)
+	 * Saves the image to a file (quality is only used for jpg images).
 	 *
-	 * @return	bool						true if the image was saved, false if not.
-	 * @param	string $filename			The path where the image should be saved
+	 * @return	bool						True if the image was saved, false if not.
+	 * @param	string $filename			The path where the image should be saved.
 	 * @param	int[optional] $quality		The quality to use (only applies on jpg-images).
 	 * @param	int[optional] $chmod		Mode that should be applied on the file.
 	 */
@@ -300,7 +299,7 @@ class SpoonThumbnail
 
 
 	/**
-	 * This internal function will resize/crop the image
+	 * This internal function will resize/crop the image.
 	 *
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
@@ -319,7 +318,7 @@ class SpoonThumbnail
 
 
 	/**
-	 * Resize the image with Force Aspect Ratio
+	 * Resize the image with Force Aspect Ratio.
 	 *
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
@@ -473,7 +472,7 @@ class SpoonThumbnail
 
 
 	/**
-	 * Resize the image without Force Aspect Ratio
+	 * Resize the image without Force Aspect Ratio.
 	 *
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
@@ -656,7 +655,7 @@ class SpoonThumbnail
 
 
 	/**
-	 * set the allowEnlargement, default is false
+	 * set the allowEnlargement, default is false.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on	May the original image be enlarged.
@@ -668,7 +667,7 @@ class SpoonThumbnail
 
 
 	/**
-	 * Sets the horizontal and vertical cropposition
+	 * Sets the horizontal and vertical cropposition.
 	 *
 	 * @return	mixed							In strict-mode it wil return false on errors.
 	 * @param	string[optional] $horizontal	The horizontal crop position, possible values are: left, center, right.
@@ -701,7 +700,7 @@ class SpoonThumbnail
 
 
 	/**
-	 * Enables the Force aspect ratio
+	 * Enables the Force aspect ratio.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on	Should the original aspect ratio be respected?
@@ -713,10 +712,10 @@ class SpoonThumbnail
 
 
 	/**
-	 * Set the strict option
+	 * Set the strict option.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on	Should strict-mode be active?
+	 * @param	bool[optional] $on	Should strict-mode be enabled?
 	 */
 	public function setStrict($on = true)
 	{

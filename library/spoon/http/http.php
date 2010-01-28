@@ -21,7 +21,7 @@ require_once 'spoon/filter/filter.php';
 
 
 /**
- * This exception is used to handle http related exceptions.
+ * This exception is used to handle HTTP related exceptions.
  *
  * @package		http
  *
@@ -44,31 +44,27 @@ class SpoonHTTPException extends SpoonException {}
 class SpoonHTTP
 {
 	/**
-	 * Redirect the browser with an optional delay (in seconds) and stop script execution
+	 * Redirect the browser with an optional delay and stop script execution.
 	 *
 	 * @return	void
-	 * @param	string $url				The URL.
+	 * @param	string $URL				The URL.
 	 * @param	int[optional] $code		The redirect code.
-	 * @param	int[optional] $delay	A delay in seconds.
+	 * @param	int[optional] $delay	A delay, expressed in seconds.
 	 */
-	public static function redirect($url, $code = 302, $delay = null)
+	public static function redirect($URL, $code = 302, $delay = null)
 	{
 		// redefine url
-		$url = (string) $url;
+		$URL = (string) $URL;
 		$code = SpoonFilter::getValue($code, array(301, 302), 302, 'int');
 
 		// redirect headers
 		self::setHeadersByCode($code);
 
 		// delay execution
-		if($delay !== null)
-		{
-			// sleep
-			sleep((int) $delay);
-		}
+		if($delay !== null) sleep((int) $delay);
 
 		// redirect
-		self::setHeaders("Location: $url");
+		self::setHeaders("Location: $URL");
 
 		// stop execution
 		exit;
@@ -76,21 +72,18 @@ class SpoonHTTP
 
 
 	/**
-	 * Get content from url
+	 * Get content from an URL.
 	 *
 	 * @return	string			The content.
-	 * @param	string $url		The URL of the webpage that should be retrieved.
+	 * @param	string $URL		The URL of the webpage that should be retrieved.
 	 */
-	public static function getContent($url)
+	public static function getContent($URL)
 	{
-		// redefine
-		$url = (string) $url;
-
 		// check if curl is loaded
 		if(!function_exists('curl_init')) throw new SpoonHTTPException('Curl isn\'t loaded.');
 
 		// set options
-		$options[CURLOPT_URL] = $url;
+		$options[CURLOPT_URL] = (string) $URL;
 		$options[CURLOPT_USERAGENT] = 'Spoon '. SPOON_VERSION;
 		$options[CURLOPT_FOLLOWLOCATION] = true;
 		$options[CURLOPT_RETURNTRANSFER] = true;
@@ -122,7 +115,7 @@ class SpoonHTTP
 
 
 	/**
-	 * Retrieve the list with headers that are sent or to be sent
+	 * Retrieve the list with headers that are sent or to be sent.
 	 *
 	 * @return	array
 	 */
@@ -133,7 +126,7 @@ class SpoonHTTP
 
 
 	/**
-	 * Retrieve the ip address
+	 * Retrieve the ip address.
 	 *
 	 * @return	string
 	 */
@@ -144,9 +137,9 @@ class SpoonHTTP
 
 
 	/**
-	 * Checks if any headers were already sent
+	 * Checks if any headers were already sent.
 	 *
-	 * @return	bool	true if the headers were sent, false if not.
+	 * @return	bool	True if the headers were sent, false if not.
 	 */
 	private static function isSent()
 	{
@@ -155,21 +148,18 @@ class SpoonHTTP
 
 
 	/**
-	 * Set one or multiple headers
+	 * Set one or multiple headers.
 	 *
 	 * @return	void
-	 * @param	mixed $headers	A string or array with headers to send.
+	 * @param	mixed $headers		A string or array with headers to send.
 	 */
 	public static function setHeaders($headers)
 	{
-		// redefine headers
-		$headers = (array) $headers;
-
 		// header already sent
 		if(self::isSent()) throw new SpoonHTTPException('Headers were already sent.');
 
 		// loop elements
-		foreach($headers as $header)
+		foreach((array) $headers as $header)
 		{
 			// set header
 			header((string) $header);
@@ -178,10 +168,10 @@ class SpoonHTTP
 
 
 	/**
-	 * Parse headers for a given status code
+	 * Parse headers for a given status code.
 	 *
 	 * @return	void
-	 * @param	int[optional] $code	The code to use, possible values are: 200, 301, 302, 304, 307, 400, 401, 403, 404, 410, 500, 501.
+	 * @param	int[optional] $code		The code to use, possible values are: 200, 301, 302, 304, 307, 400, 401, 403, 404, 410, 500, 501.
 	 */
 	public static function setHeadersByCode($code = 200)
 	{

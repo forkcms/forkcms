@@ -41,8 +41,7 @@ class SpoonDataGridException extends SpoonException {}
 
 
 /**
- * This class is the base class used to generate datagrids
- * from database queries.
+ * This class is the base class used to generate datagrids from a range of sources.
  *
  * @package			html
  * @subpackage		datagrid
@@ -256,11 +255,11 @@ class SpoonDataGrid
 
 
 	/**
-	 * Basic url
+	 * Basic URL
 	 *
 	 * @var	string
 	 */
-	private $url;
+	private $URL;
 
 
 	/**
@@ -287,18 +286,18 @@ class SpoonDataGrid
 
 
 	/**
-	 * Adds a new column
+	 * Adds a new column with a couple of options such as title, URL, image, ...
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $label
-	 * @param	string[optional] $value
-	 * @param	string[optional] $url
-	 * @param	string[optional] $title
-	 * @param	string[optional] $image
-	 * @param	int[optional] $sequence
+	 * @param	string $name				The name for this column, later used to refer to this column.
+	 * @param	string[optional] $label		The label that will be displayed in the header cell.
+	 * @param	string[optional] $value		The value you wish to display.
+	 * @param	string[optional] $URL		The URL to refer to.
+	 * @param	string[optional] $title		The title tag, in case you've provided a URL.
+	 * @param	string[optional] $image		The location to an image, used to fill the column.
+	 * @param	int[optional] $sequence		The sequence for this column, by default it will be added at the back.
 	 */
-	public function addColumn($name, $label = null, $value = null, $url = null, $title = null, $image = null, $sequence = null)
+	public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
 		// redefine name
 		$name = (string) $name;
@@ -310,7 +309,7 @@ class SpoonDataGrid
 		if($sequence === null) $sequence = count($this->columns) + 1;
 
 		// new column
-		$this->columns[$name] = new SpoonDataGridColumn($name, $label, $value, $url, $title, $image, $sequence);
+		$this->columns[$name] = new SpoonDataGridColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
 		// add the class as an attribute to this column
 		$this->columns[$name]->setAttributes(array('class' => $name));
@@ -318,7 +317,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Builds the requested url
+	 * Builds the requested URL.
 	 *
 	 * @return	string
 	 * @param	int $offset
@@ -332,7 +331,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Clears the attributes
+	 * Clears the attributes.
 	 *
 	 * @return	void
 	 */
@@ -343,10 +342,10 @@ class SpoonDataGrid
 
 
 	/**
-	 * Clears the attributes for a specific column
+	 * Clears the attributes for a specific column.
 	 *
 	 * @return	void
-	 * @param	string $column
+	 * @param	string $column		The name of the column you want to clear the column attributes from.
 	 */
 	public function clearColumnAttributes($column)
 	{
@@ -363,7 +362,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Clears the even row attributes
+	 * Clears the even row attributes.
 	 *
 	 * @return	void
 	 */
@@ -374,7 +373,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * clears the odd row attributes
+	 * clears the odd row attributes.
 	 *
 	 * @return	void
 	 */
@@ -385,7 +384,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Clears the row attributes
+	 * Clears the row attributes.
 	 *
 	 * @return	void
 	 */
@@ -396,7 +395,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Creates the default columns, based on the query
+	 * Creates the default columns, based on the initially provided source.
 	 *
 	 * @return	void
 	 */
@@ -422,7 +421,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Shows the output & stops script execution
+	 * Shows the output & stops script execution.
 	 *
 	 * @return	void
 	 */
@@ -434,7 +433,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Generates the array with the order columns
+	 * Generates the array with the order columns.
 	 *
 	 * @return	void
 	 */
@@ -467,7 +466,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve all the datagrid attributes
+	 * Retrieve all the datagrid attributes.
 	 *
 	 * @return	array
 	 */
@@ -478,7 +477,27 @@ class SpoonDataGrid
 
 
 	/**
- 	 * Fetch the list of columns in this datagrid
+	 * Fetch the column object for a specific column.
+	 *
+	 * @return	SpoonDataGridColumn
+	 * @param	string $column
+	 */
+	public function getColumn($column)
+	{
+		// has results
+		if($this->source->getNumResults() > 0)
+		{
+			// column doesnt exist
+			if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "'. $column .'" doesn\'t exist.');
+
+			// exists
+			return $this->columns[$column];
+		}
+	}
+
+
+	/**
+ 	 * Fetch the list of columns in this datagrid.
  	 *
  	 * @return	array
 	 */
@@ -489,7 +508,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the columns sequence
+	 * Retrieve the columns sequence.
 	 *
 	 * @return	array
 	 */
@@ -507,7 +526,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the final output
+	 * Retrieve the parsed output.
 	 *
 	 * @return	string
 	 */
@@ -522,7 +541,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Fetch the debug status
+	 * Fetch the debug status.
 	 *
 	 * @return	bool
 	 */
@@ -533,7 +552,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Returns the html attributes based on an array
+	 * Returns the html attributes based on an array.
 	 *
 	 * @return	string
 	 * @param	array[optional] $array
@@ -550,7 +569,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the offset value
+	 * Retrieve the offset value.
 	 *
 	 * @return	int
 	 */
@@ -590,7 +609,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieves the column that's currently being sorted on
+	 * Retrieves the column that's currently being sorted on.
 	 *
 	 * @return	string
 	 */
@@ -623,7 +642,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the number of results for this datagrids' source
+	 * Retrieve the number of results for this datagrids' source.
 	 *
 	 * @return	int
 	 */
@@ -634,7 +653,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Paging status
+	 * Is paging enabled?
 	 *
 	 * @return	bool
 	 */
@@ -645,7 +664,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Fetch the paging class
+	 * Fetch name of the class that will be used to parse the paging.
 	 *
 	 * @return	string
 	 */
@@ -656,7 +675,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Fetch the number of items per page
+	 * Fetch the number of items that will be shown on each page.
 	 *
 	 * @return	int
 	 */
@@ -667,9 +686,9 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the sorting method
+	 * Retrieve the sorting method.
 	 *
-	 * @return	string
+	 * @return	string		The sorting method, either asc or desc.
 	 */
 	public function getSort()
 	{
@@ -680,14 +699,12 @@ class SpoonDataGrid
 		else $sort = (isset($_GET['sort'])) ? (string) $_GET['sort'] : null;
 
 		// retrieve sort
-		$sort = SpoonFilter::getValue($sort, array('asc', 'desc'), 'asc');
-
-		return $sort;
+		return SpoonFilter::getValue($sort, array('asc', 'desc'), 'asc');
 	}
 
 
 	/**
-	 * Retrieve the sorting status
+	 * Retrieve the sorting status.
 	 *
 	 * @return	bool
 	 */
@@ -702,7 +719,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the full template path
+	 * Retrieve the location of the template that will be used.
 	 *
 	 * @return	string
 	 */
@@ -713,18 +730,18 @@ class SpoonDataGrid
 
 
 	/**
-	 * Retrieve the URL
+	 * Retrieve the URL.
 	 *
-	 * @return	string
+	 * @return	string	The URL that will be used, may contain variables with square brackets.
 	 */
 	public function getURL()
 	{
-		return $this->url;
+		return $this->URL;
 	}
 
 
 	/**
-	 * Parse the final output
+	 * Parse the datagrid.
 	 *
 	 * @return	void
 	 */
@@ -778,7 +795,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Parses the datagrid attributes
+	 * Parses the datagrid attributes.
 	 *
 	 * @return	void
 	 */
@@ -789,7 +806,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Parses the body
+	 * Parses the body.
 	 *
 	 * @return	void
 	 * @param	array $records
@@ -797,37 +814,37 @@ class SpoonDataGrid
 	private function parseBody(array $records)
 	{
 		// init var
-		$aRows = array();
+		$rows = array();
 
 		// columns sequence
-		$aSequence = $this->getColumnsSequence();
+		$sequence = $this->getColumnsSequence();
 
 		// loop records
 		foreach($records as $i => &$record)
 		{
-			// special record
+			// replace possible variables
 			$record = $this->parseRecord($record);
 
 			// parse column functions
 			$record = $this->parseColumnFunctions($record);
 
 			// reset row
-			$aRow = array('attributes' => '', 'oddAttributes' => '', 'evenAttributes' => '', 'columns' => array());
+			$row = array('attributes' => '', 'oddAttributes' => '', 'evenAttributes' => '', 'columns' => array());
 
 			// row attributes
-			$aRow['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
+			$row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
 
 			// odd row attributes (reversed since the first $i = 0)
-			if(!SpoonFilter::isOdd($i)) $aRow['oddAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_odd']));
+			if(!SpoonFilter::isOdd($i)) $row['oddAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_odd']));
 
 			// even row attributes
-			else $aRow['evenAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_even']));
+			else $row['evenAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_even']));
 
 			// define the columns
-			$aColumns = array();
+			$columns = array();
 
 			// loop columns
-			foreach($aSequence as $name)
+			foreach($sequence as $name)
 			{
 				// column
 				$column = $this->columns[$name];
@@ -916,30 +933,30 @@ class SpoonDataGrid
 				if(!$column->getHidden())
 				{
 					// add this column
-					$aColumns[] = array('attributes' => $columnAttributes, 'value' => $columnValue);
+					$columns[] = array('attributes' => $columnAttributes, 'value' => $columnValue);
 
 					// add to custom list
-					$aRow['column'][$name] = $columnValue;
+					$row['column'][$name] = $columnValue;
 				}
 			}
 
 			// add the columns to the rows
-			$aRow['columns'] = $aColumns;
+			$row['columns'] = $columns;
 
 			// add the row
-			$aRows[] = $aRow;
+			$rows[] = $row;
 		}
 
 		// assign body
-		$this->tpl->assign('rows', $aRows);
+		$this->tpl->assign('rows', $rows);
 
 		// assign the number of columns
-		$this->tpl->assign('numColumns', count($aRows[0]['columns']));
+		$this->tpl->assign('numColumns', count($rows[0]['columns']));
 	}
 
 
 	/**
-	 * Parses the caption tag
+	 * Parses the caption tag.
 	 *
 	 * @return	void
 	 */
@@ -950,7 +967,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Parses the column functions
+	 * Parses the column functions.
 	 *
 	 * @return	array
 	 * @param	array $record
@@ -964,10 +981,10 @@ class SpoonDataGrid
 		error_reporting(E_WARNING | E_NOTICE);
 
 		// loop functions
-		foreach ($this->columnFunctions as $function)
+		foreach($this->columnFunctions as $function)
 		{
 			// no arguments given
-			if(is_null($function['arguments'])) $value = call_user_func($function['function']);
+			if($function['arguments'] == null) $value = call_user_func($function['function']);
 
 			// array
 			elseif(is_array($function['arguments']))
@@ -1035,7 +1052,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Parses the footer
+	 * Parses the footer.
 	 *
 	 * @return	void
 	 */
@@ -1050,74 +1067,74 @@ class SpoonDataGrid
 
 
 	/**
-	 * Parses the header row
+	 * Parses the header row.
 	 *
 	 * @return	void
 	 */
 	private function parseHeader()
 	{
 		// init vars
-		$aHeader = array();
+		$header = array();
 
 		// sequence
-		$aSequence = $this->getColumnsSequence();
+		$sequence = $this->getColumnsSequence();
 
 		// sorting enabled?
 		$sorting = $this->getSorting();
 
 		// sortable columns
-		$aSortingColumns = array();
-		foreach($aSequence as $column) if($this->columns[$column]->getSorting()) $aSortingColumns[] = $column;
+		$sortingColumns = array();
+		foreach($sequence as $oColumn) if($this->columns[$oColumn]->getSorting()) $sortingColumns[] = $oColumn;
 
 		// loop columns
-		foreach($aSequence as $name)
+		foreach($sequence as $name)
 		{
 			// define column
-			$aColumn = array();
+			$column = array();
 
 			// column
-			$column = $this->columns[$name];
+			$oColumn = $this->columns[$name];
 
 			// visible
-			if(!$column->getHidden())
+			if(!$oColumn->getHidden())
 			{
 				// sorting globally enabled AND for this column
-				if($sorting && in_array($name, $aSortingColumns))
+				if($sorting && in_array($name, $sortingColumns))
 				{
 					// init var
-					$aColumn['sorting'] = true;
-					$aColumn['noSorting'] = false;
+					$column['sorting'] = true;
+					$column['noSorting'] = false;
 
 					// sorted on this column?
 					if($this->getOrder() == $name)
 					{
 						// sorted
-						$aColumn['sorted'] = true;
-						$aColumn['notSorted'] = false;
+						$column['sorted'] = true;
+						$column['notSorted'] = false;
 
 						// asc
 						if($this->getSort() == 'asc')
 						{
-							$aColumn['sortedAsc'] = true;
-							$aColumn['sortedDesc'] = false;
+							$column['sortedAsc'] = true;
+							$column['sortedDesc'] = false;
 						}
 
 						// desc
 						else
 						{
-							$aColumn['sortedAsc'] = false;
-							$aColumn['sortedDesc'] = true;
+							$column['sortedAsc'] = false;
+							$column['sortedDesc'] = true;
 						}
 					}
 
 					/**
 					 * This column is sortable, but there's currently not being
-					 * sorted on this column
+					 * sorted on this column.
 					 */
-					elseif(in_array($name, $aSortingColumns))
+					elseif(in_array($name, $sortingColumns))
 					{
-						$aColumn['sorted'] = false;
-						$aColumn['notSorted'] = true;
+						$column['sorted'] = false;
+						$column['notSorted'] = true;
 					}
 
 					/**
@@ -1137,9 +1154,9 @@ class SpoonDataGrid
 					else $sortingMethod = 'asc';
 
 					// build actual urls
-					$aColumn['sortingURL'] = $this->buildURL($this->getOffset(), $name, $sortingMethod);
-					$aColumn['sortingURLAsc'] = $this->buildURL($this->getOffset(), $name, 'asc');
-					$aColumn['sortingURLDesc'] = $this->buildURL($this->getOffset(), $name, 'desc');
+					$column['sortingURL'] = $this->buildURL($this->getOffset(), $name, $sortingMethod);
+					$column['sortingURLAsc'] = $this->buildURL($this->getOffset(), $name, 'asc');
+					$column['sortingURLDesc'] = $this->buildURL($this->getOffset(), $name, 'desc');
 
 					/**
 					 * There's no point in parsing the icon for this column if there's
@@ -1158,9 +1175,9 @@ class SpoonDataGrid
 					else $sortingIcon = $this->sortingIcons['descSelected'];
 
 					// asc & desc icons
-					$aColumn['sortingIcon'] = $sortingIcon;
-					$aColumn['sortingIconAsc'] = ($this->getSort() == 'asc') ? $this->sortingIcons['ascSelected'] : $this->sortingIcons['asc'];
-					$aColumn['sortingIconDesc'] = ($this->getSort() == 'desc') ? $this->sortingIcons['descSelected'] : $this->sortingIcons['desc'];
+					$column['sortingIcon'] = $sortingIcon;
+					$column['sortingIconAsc'] = ($this->getSort() == 'asc') ? $this->sortingIcons['ascSelected'] : $this->sortingIcons['asc'];
+					$column['sortingIconDesc'] = ($this->getSort() == 'desc') ? $this->sortingIcons['descSelected'] : $this->sortingIcons['desc'];
 
 					// not sorted on this column
 					if($this->getOrder() != $name) $sortingLabel = $this->sortingLabels[$this->columns[$name]->getSortingMethod()];
@@ -1169,36 +1186,37 @@ class SpoonDataGrid
 					elseif($this->getSort() == 'asc') $sortingLabel = $this->sortingLabels['ascSelected'];
 					else $sortingLabel = $this->sortingLabels['descSelected'];
 
-					$aColumn['sortingLabel'] = $sortingLabel;
-					$aColumn['sortingLabelAsc'] = $this->sortingLabels['asc'];
-					$aColumn['sortingLabelDesc'] = $this->sortingLabels['desc'];
+					// add sorting labels
+					$column['sortingLabel'] = $sortingLabel;
+					$column['sortingLabelAsc'] = $this->sortingLabels['asc'];
+					$column['sortingLabelDesc'] = $this->sortingLabels['desc'];
 				}
 
 				// no sorting enabled for this column
 				else
 				{
-					$aColumn['sorting'] = false;
-					$aColumn['noSorting'] = true;
+					$column['sorting'] = false;
+					$column['noSorting'] = true;
 				}
 
 				// parse vars
-				$aColumn['label'] = $column->getLabel();
+				$column['label'] = $oColumn->getLabel();
 
 				// add attributes
-				$aColumn['attributes'] = $this->getHTMLAttributes($column->getHeaderAttributes());
+				$column['attributes'] = $this->getHTMLAttributes($oColumn->getHeaderAttributes());
 
 				// add to array
-				$aHeader[] = $aColumn;
+				$header[] = $column;
 			}
 		}
 
 		// default headers
-		$this->tpl->assign('headers', $aHeader);
+		$this->tpl->assign('headers', $header);
 	}
 
 
 	/**
-	 * Parses the paging
+	 * Parses the paging.
 	 *
 	 * @return	void
 	 */
@@ -1232,13 +1250,16 @@ class SpoonDataGrid
 
 
 	/**
-	 * Parses the record
+	 * Parses the record.
 	 *
 	 * @return	array
 	 * @param	array $record
 	 */
 	private function parseRecord(array $record)
 	{
+		// init var
+		$array = array('labels' => array(), 'values' => array());
+
 		// create labels/values array
 		foreach($record as $label => $value)
 		{
@@ -1280,7 +1301,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Parses the summary
+	 * Parses the summary.
 	 *
 	 * @return	void
 	 */
@@ -1291,7 +1312,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set main datagrid attributes
+	 * Set main datagrid attributes.
 	 *
 	 * @return	void
 	 * @param	array $attributes
@@ -1303,7 +1324,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the table caption or main description
+	 * Sets the table caption or main description.
 	 *
 	 * @return	void
 	 * @param	string $value
@@ -1315,7 +1336,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set one or more attributes for a column
+	 * Set one or more attributes for a specific column.
 	 *
 	 * @return	void
 	 * @param	string $column
@@ -1336,7 +1357,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set a custom column confirm message
+	 * Set a custom column confirm message.
 	 *
 	 * @return	void
 	 * @param	string $column
@@ -1358,7 +1379,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the column function to be executed for every row
+	 * Sets the column function to be executed for every row.
 	 *
 	 * @return	void
 	 * @param	mixed $function
@@ -1382,7 +1403,7 @@ class SpoonDataGrid
 			else
 			{
 				// method checks
-				if(count($function) != 2) throw new SpoonDataGridException('When providing a method for a column function is must be like array(\'class\', \'method\')');
+				if(count($function) != 2) throw new SpoonDataGridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
 
 				// method doesn't exist
 				elseif(!method_exists($function[0], $function[1])) throw new SpoonDataGridException('The method '. (string) $function[0] .'::'. (string) $function[1] .' does not exist.');
@@ -1395,7 +1416,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set one or more attributes for a columns' header
+	 * Set one or more attributes for a columns' header.
 	 *
 	 * @return	void
 	 * @param	string $column
@@ -1416,7 +1437,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets a single column hidden
+	 * Sets a single column hidden.
 	 *
 	 * @return	void
 	 * @param	string $column
@@ -1437,7 +1458,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets one or more columns hidden
+	 * Sets one or more columns hidden.
 	 *
 	 * @return	void
 	 * @param	array $columns
@@ -1448,23 +1469,20 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// array
-			if(is_array($columns)) foreach($columns as $column) $this->setColumnHidden($column);
+			if(is_array($columns)) foreach($columns as $column) $this->setColumnHidden((string) $column);
 
 			// multiple arguments
 			else
 			{
-				// redefine columns
-				$columns = func_get_args();
-
 				// set columns hidden
-				foreach($columns as $column) $this->setColumnHidden($column);
+				foreach(func_get_args() as $column) $this->setColumnHidden($column);
 			}
 		}
 	}
 
 
 	/**
-	 * Sets the columns sequence
+	 * Sets the columns sequence.
 	 *
 	 * @return	void
 	 * @param	array $columns
@@ -1481,19 +1499,19 @@ class SpoonDataGrid
 			else
 			{
 				// current sequence
-				$aSequence = $this->getColumnsSequence();
+				$sequences = $this->getColumnsSequence();
 
 				// fetch arguments
 				$arguments = func_get_args();
 
 				// build columns
-				$aColumns = (is_array($arguments[0])) ? $arguments[0] : $arguments;
+				$columns = (is_array($arguments[0])) ? $arguments[0] : $arguments;
 
 				// counter
 				$i = 1;
 
 				// loop colums
-				foreach ($aColumns as $column)
+				foreach($columns as $column)
 				{
 					// column exists
 					if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "'. (string) $column .'" doesn\'t exist. Therefor its sequence can\'t be altered.');
@@ -1502,8 +1520,8 @@ class SpoonDataGrid
 					$this->columns[(string) $column]->setSequence($i);
 
 					// remove from the original list
-					$iKey = (int) array_search((string) $column, $aSequence);
-					unset($aSequence[$iKey]);
+					$iKey = (int) array_search((string) $column, $sequences);
+					unset($sequences[$iKey]);
 
 					// update counter
 					$i++;
@@ -1513,10 +1531,10 @@ class SpoonDataGrid
 				$i = 1;
 
 				// add remaining columns
-				foreach($aSequence as $sequence)
+				foreach($sequences as $sequence)
 				{
 					// update sequence
-					$this->columns[$sequence]->setSequence(count($aColumns) + $i);
+					$this->columns[$sequence]->setSequence(count($columns) + $i);
 
 					// update counter
 					$i++;
@@ -1527,7 +1545,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set the default sorting method for a column
+	 * Set the default sorting method for a column.
 	 *
 	 * @return	void
 	 * @param	string $column
@@ -1539,7 +1557,7 @@ class SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "'. (string) $column .'" doesn\'t exist and therefor no default sorting method can be applied.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "'. (string) $column .'" doesn\'t exist and therefor no default sorting method can be applied to it.');
 
 			// exists
 			$this->columns[(string) $column]->setSortingMethod($sort);
@@ -1548,29 +1566,29 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set the url for a column
+	 * Set the URL for a column.
 	 *
 	 * @return	void
 	 * @param	string $column
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	string[optional] $title
 	 */
-	public function setColumnURL($column, $url, $title = null)
+	public function setColumnURL($column, $URL, $title = null)
 	{
 		// has results
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "'. (string) $column .'" doesn\'t exist and therefor no url can be applied.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDataGridException('The column "'. (string) $column .'" doesn\'t exist and therefor no URL can be applied.');
 
 			// exists
-			$this->columns[(string) $column]->setURL($url, $title);
+			$this->columns[(string) $column]->setURL($URL, $title);
 		}
 	}
 
 
 	/**
-	 * Sets the compile directory
+	 * Sets the compile directory.
 	 *
 	 * @return	void
 	 * @param	string $path
@@ -1582,7 +1600,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Adjust the debug setting
+	 * Adjust the debug setting.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on
@@ -1594,7 +1612,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set the even row attributes
+	 * Set the even row attributes.
 	 *
 	 * @return	void
 	 * @param	array $attributes
@@ -1611,7 +1629,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set the header labels
+	 * Set the header labels.
 	 *
 	 * @return	void
 	 * @param	array $labels
@@ -1625,7 +1643,7 @@ class SpoonDataGrid
 			foreach($labels as $column => $label)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "'. $column .'" doesn\t exist, therefor no label can be assigned.');
+				if(!isset($this->columns[$column])) throw new SpoonDataGridException('The column "'. $column .'" doesn\t exist, therefor no label can be assigned to it.');
 
 				// exists
 				else $this->columns[$column]->setLabel($label);
@@ -1635,7 +1653,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Set the odd row attributes
+	 * Set the odd row attributes.
 	 *
 	 * @return	void
 	 * @param	array $attributes
@@ -1652,7 +1670,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the value for offset. eg from the url
+	 * Sets the value for offset. eg from the URL.
 	 *
 	 * @return	void
 	 * @param	int[optional] $value
@@ -1664,7 +1682,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the value for the order. eg from the url
+	 * Sets the value for the order. eg from the URL.
 	 *
 	 * @return	void
 	 * @param	string[optional] $value
@@ -1676,7 +1694,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Allow/disallow showing the results on multiple pages
+	 * Allow/disallow showing the results on multiple pages.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on
@@ -1688,7 +1706,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the alternative paging class
+	 * Sets an alternative paging class.
 	 *
 	 * @return	void
 	 * @param	string $class
@@ -1711,7 +1729,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the number of results per page
+	 * Sets the number of results per page.
 	 *
 	 * @return	void
 	 * @param	int[optional] $limit
@@ -1723,7 +1741,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the row attributes
+	 * Sets the row attributes.
 	 *
 	 * @return	void
 	 * @param	array $attributes
@@ -1735,7 +1753,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the columns that may be sorted on
+	 * Sets the columns that may be sorted on.
 	 *
 	 * @return	void
 	 * @param	array $columns
@@ -1783,7 +1801,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the sorting icons
+	 * Sets the sorting icons.
 	 *
 	 * @return	void
 	 * @param	string[optional] $asc
@@ -1801,7 +1819,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the sorting labels
+	 * Sets the sorting labels.
 	 *
 	 * @return	void
 	 * @param	string[optional] $asc
@@ -1819,7 +1837,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the value to sort
+	 * Sets the value to sort.
 	 *
 	 * @return	void
 	 * @param	string[optional] $value
@@ -1831,7 +1849,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the source for this datagrid
+	 * Sets the source for this datagrid.
 	 *
 	 * @return	void
 	 * @param	SpoonDataGridSource $source
@@ -1843,7 +1861,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the table summary
+	 * Sets the table summary.
 	 *
 	 * @return	void
 	 * @param	string $value
@@ -1855,7 +1873,7 @@ class SpoonDataGrid
 
 
 	/**
-	 * Sets the path to the template file
+	 * Sets the path to the template file.
 	 *
 	 * @return	void
 	 * @param	string $template
@@ -1867,14 +1885,14 @@ class SpoonDataGrid
 
 
 	/**
-	 * Defines the default url
+	 * Defines the default URL.
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $URL
 	 */
-	public function setURL($url)
+	public function setURL($URL)
 	{
-		$this->url = (string) $url;
+		$this->URL = (string) $URL;
 	}
 }
 
@@ -2001,7 +2019,7 @@ class SpoonDataGridColumn
 	 *
 	 * @var	string
 	 */
-	private $url;
+	private $URL;
 
 
 	/**
@@ -2039,7 +2057,7 @@ class SpoonDataGridColumn
 		$this->value = (string) $value;
 
 		// url, title & image
-		if($URL !== null) $this->url = (string) $URL;
+		if($URL !== null) $this->URL = (string) $URL;
 		if($title !== null) $this->urlTitle = (string) $title;
 		if($image !== null) $this->image = (string) $image;
 
@@ -2049,7 +2067,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Clears the list of attributes for this column
+	 * Clears the list of attributes for this column.
 	 *
 	 * @return	void
 	 */
@@ -2060,7 +2078,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the attributes
+	 * Retrieve the attributes.
 	 *
 	 * @return	array
 	 */
@@ -2071,7 +2089,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the confirm setting
+	 * Retrieve the confirm setting.
 	 *
 	 * @return	bool
 	 */
@@ -2082,7 +2100,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Fetch the confirm custom script
+	 * Fetch the confirm custom script.
 	 *
 	 * @return	string
 	 */
@@ -2093,7 +2111,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the confirm message
+	 * Retrieve the confirm message.
 	 *
 	 * @return	string
 	 */
@@ -2104,7 +2122,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the header attributes
+	 * Retrieve the header attributes.
 	 *
 	 * @return	array
 	 */
@@ -2115,7 +2133,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the hidden status
+	 * Retrieve the hidden status.
 	 *
 	 * @return	bool
 	 */
@@ -2126,7 +2144,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the image
+	 * Retrieve the image.
 	 *
 	 * @return	string
 	 */
@@ -2137,7 +2155,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the image title
+	 * Retrieve the image title.
 	 *
 	 * @return	string
 	 */
@@ -2148,7 +2166,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the label
+	 * Retrieve the label.
 	 *
 	 * @return	string
 	 */
@@ -2159,7 +2177,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the name
+	 * Retrieve the name.
 	 *
 	 * @return	string
 	 */
@@ -2170,7 +2188,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the overwrite value setting
+	 * Retrieve the overwrite value setting.
 	 *
 	 * @return	bool
 	 */
@@ -2181,7 +2199,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the sequence
+	 * Retrieve the sequence.
 	 *
 	 * @return	int
 	 */
@@ -2192,7 +2210,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the sorting setting
+	 * Retrieve the sorting setting.
 	 *
 	 * @return	bool
 	 */
@@ -2203,7 +2221,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the default sorting method
+	 * Retrieve the default sorting method.
 	 *
 	 * @return	void
 	 */
@@ -2214,18 +2232,18 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the url
+	 * Retrieve the URL.
 	 *
 	 * @return	string
 	 */
 	public function getURL()
 	{
-		return $this->url;
+		return $this->URL;
 	}
 
 
 	/**
-	 * Retrieve the url title tag
+	 * Retrieve the URL title tag.
 	 *
 	 * @return	string
 	 */
@@ -2236,7 +2254,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Retrieve the value
+	 * Retrieve the value.
 	 *
 	 * @return	string
 	 */
@@ -2247,7 +2265,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Set the attributes
+	 * Set the attributes.
 	 *
 	 * @return	void
 	 * @param	array $attributes
@@ -2259,7 +2277,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the confirm message
+	 * Sets the confirm message.
 	 *
 	 * @return	void
 	 * @param	string $message
@@ -2274,7 +2292,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Set the header attributes
+	 * Set the header attributes.
 	 *
 	 * @return	void
 	 * @param	array $attributes
@@ -2286,7 +2304,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the hidden status
+	 * Sets the hidden status.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on
@@ -2298,7 +2316,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the image
+	 * Sets the image.
 	 *
 	 * @return	void
 	 * @param	string $image
@@ -2312,7 +2330,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the label
+	 * Sets the label.
 	 *
 	 * @return	void
 	 * @param	string $label
@@ -2324,7 +2342,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the overwrite status
+	 * Sets the overwrite status.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on
@@ -2336,7 +2354,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the sequence
+	 * Sets the sequence.
 	 *
 	 * @return	void
 	 * @param	int $sequence
@@ -2348,7 +2366,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the sorting
+	 * Sets the sorting.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on
@@ -2360,7 +2378,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the default sorting method for this column
+	 * Sets the default sorting method for this column.
 	 *
 	 * @return	void
 	 * @param	string[optional] $sort
@@ -2372,7 +2390,7 @@ class SpoonDataGridColumn
 
 
 	/**
-	 * Sets the url
+	 * Sets the URL.
 	 *
 	 * @return	void
 	 * @param	string $url
@@ -2380,13 +2398,13 @@ class SpoonDataGridColumn
 	 */
 	public function setURL($URL, $title = null)
 	{
-		$this->url = (string) $URL;
+		$this->URL = (string) $URL;
 		$this->urlTitle = (string) $title;
 	}
 
 
 	/**
-	 * Sets the value & its overwrite setting
+	 * Sets the value & its overwrite setting.
 	 *
 	 * @return	void
 	 * @param	string $value
@@ -2398,8 +2416,6 @@ class SpoonDataGridColumn
 		$this->overwriteValue = (bool) $overwrite;
 	}
 }
-
-
 
 
 /**
@@ -2442,8 +2458,6 @@ class SpoonDataGridSource
 }
 
 
-
-
 /**
  * This class is used for datagrids based on array sources
  *
@@ -2481,7 +2495,7 @@ class SpoonDataGridSourceArray extends SpoonDataGridSource
 
 
 	/**
-	 * Apply the sorting method
+	 * Apply the sorting method.
 	 *
 	 * @return	int
 	 * @param	array $firstArray
@@ -2496,7 +2510,7 @@ class SpoonDataGridSourceArray extends SpoonDataGridSource
 
 
 	/**
-	 * Retrieve the columns
+	 * Retrieve the columns.
 	 *
 	 * @return	array
 	 */
@@ -2507,7 +2521,7 @@ class SpoonDataGridSourceArray extends SpoonDataGridSource
 
 
 	/**
-	 * Fetch the data as an array
+	 * Fetch the data as an array.
 	 *
 	 * @return	array
 	 * @param	int[optional] $offset
@@ -2541,7 +2555,7 @@ class SpoonDataGridSourceArray extends SpoonDataGridSource
 
 
 	/**
-	 * Sets the number of results
+	 * Sets the number of results.
 	 *
 	 * @return	void
 	 */
@@ -2623,7 +2637,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 
 
 	/**
-	 * Get the list of columns
+	 * Get the list of columns.
 	 *
 	 * @return	array
 	 */
@@ -2636,7 +2650,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 			switch($this->db->getDriver())
 			{
 				case 'mysql':
-					// @todo davy - this might also be LIMIT with a tab before or after instead of a space, use a regular expression to fix this.
+					// @todo davy - this might also be LIMIT with a tab before or after instead of a space, use a decent regular expression to fix this.
 					$query = (substr_count($this->query, 'LIMIT ') > 0) ? $this->query : $this->query .' LIMIT 1';
 				break;
 
@@ -2646,16 +2660,16 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 			}
 
 			// fetch record
-			$aRecord = $this->db->getRecord($query, $this->queryParameters);
+			$record = $this->db->getRecord($query, $this->queryParameters);
 
 			// fetch columns
-			return array_keys($aRecord);
+			return array_keys($record);
 		}
 	}
 
 
 	/**
-	 * Fetch the data as an array
+	 * Fetch the data as an array.
 	 *
 	 * @return	array
 	 * @param	int[optional] $offset
@@ -2680,7 +2694,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 
 
 	/**
-	 * Set the number of results
+	 * Set the number of results.
 	 *
 	 * @return	void
 	 */
@@ -2695,7 +2709,7 @@ class SpoonDataGridSourceDB extends SpoonDataGridSource
 
 
 	/**
-	 * Set the queries
+	 * Set the queries.
 	 *
 	 * @return	void
 	 * @param	string $query
@@ -2764,7 +2778,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 
 
 	/**
-	 * Builds & returns the pagination
+	 * Builds & returns the pagination.
 	 *
 	 * @return	string
 	 * @param	string $url
@@ -2778,12 +2792,11 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 	 */
 	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{
-		// @todo davy - make sure that all the default values are set.
 		// current page
-		$iCurrentPage = ceil($offset / $numPerPage) + 1;
+		$currentPage = ceil($offset / $numPerPage) + 1;
 
 		// number of pages
-		$iPages = ceil($numResults / $numPerPage);
+		$numPages = ceil($numResults / $numPerPage);
 
 		// load template
 		$tpl = new SpoonTemplate();
@@ -2796,7 +2809,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 		$tpl->setForceCompile((bool) $debug);
 
 		// previous url
-		if($iCurrentPage > 1)
+		if($currentPage > 1)
 		{
 			// label & url
 			$previousLabel = self::$previous;
@@ -2806,7 +2819,7 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 		}
 
 		// next url
-		if($iCurrentPage < $iPages)
+		if($currentPage < $numPages)
 		{
 			// label & url
 			$nextLabel = self::$next;
@@ -2818,35 +2831,35 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 		// limit
 		$limit = 7;
 		$breakpoint = 4;
-		$aItems = array();
+		$items = array();
 
 		/**
 		 * Less than or 7 pages. We know all the keys, and we put them in the array
 		 * that we will use to generate the actual pagination.
 		 */
-		if($iPages <= $limit)
+		if($numPages <= $limit)
 		{
-			for($i = 1; $i <= $iPages; $i++) $aItems[$i] = $i;
+			for($i = 1; $i <= $numPages; $i++) $items[$i] = $i;
 		}
 
 		// more than 7 pages
 		else
 		{
 			// first page
-			if($iCurrentPage == 1)
+			if($currentPage == 1)
 			{
 				// [1] 2 3 4 5 6 7 8 9 10 11 12 13
-				for($i = 1; $i <= $limit; $i++) $aItems[$i] = $i;
-				$aItems[$limit + 1] = '...';
+				for($i = 1; $i <= $limit; $i++) $items[$i] = $i;
+				$items[$limit + 1] = '...';
 			}
 
 
 			// last page
-			elseif($iCurrentPage == $iPages)
+			elseif($currentPage == $numPages)
 			{
 				// 1 2 3 4 5 6 7 8 9 10 11 12 [13]
-				$aItems[$iPages -  $limit - 1] = '...';
-				for($i = ($iPages - $limit); $i <= $iPages; $i++) $aItems[$i] = $i;
+				$items[$numPages -  $limit - 1] = '...';
+				for($i = ($numPages - $limit); $i <= $numPages; $i++) $items[$i] = $i;
 			}
 
 			// other page
@@ -2855,8 +2868,8 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 				// 1 2 3 [4] 5 6 7 8 9 10 11 12 13
 
 				// define min & max
-				$min = $iCurrentPage - $breakpoint + 1;
-				$max = $iCurrentPage + $breakpoint - 1;
+				$min = $currentPage - $breakpoint + 1;
+				$max = $currentPage + $breakpoint - 1;
 
 				// minimum doesnt exist
 				while($min <= 0)
@@ -2866,56 +2879,56 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 				}
 
 				// maximum doesnt exist
-				while($max > $iPages)
+				while($max > $numPages)
 				{
 					$min--;
 					$max--;
 				}
 
 				// create the list
-				if($min != 1) $aItems[$min - 1] = '...';
-				for($i = $min; $i <= $max; $i++) $aItems[$i] = $i;
-				if($max != $iPages) $aItems[$max + 1] = '...';
+				if($min != 1) $items[$min - 1] = '...';
+				for($i = $min; $i <= $max; $i++) $items[$i] = $i;
+				if($max != $numPages) $items[$max + 1] = '...';
 			}
 		}
 
 		// init var
-		$aPages = array();
+		$pages = array();
 
 		// loop pages
-		foreach($aItems as $item)
+		foreach($items as $item)
 		{
 			// counter
 			if(!isset($i)) $i = 0;
 
 			// base details
-			$aPages[$i]['page'] = false;
-			$aPages[$i]['currentPage'] = false;
-			$aPages[$i]['otherPage'] = false;
-			$aPages[$i]['noPage'] = false;
-			$aPages[$i]['url'] = '';
-			$aPages[$i]['pageNumber'] = $item;
+			$pages[$i]['page'] = false;
+			$pages[$i]['currentPage'] = false;
+			$pages[$i]['otherPage'] = false;
+			$pages[$i]['noPage'] = false;
+			$pages[$i]['url'] = '';
+			$pages[$i]['pageNumber'] = $item;
 
 			// hellips
-			if($item == '...') $aPages[$i]['noPage'] = true;
+			if($item == '...') $pages[$i]['noPage'] = true;
 
 			// regular page
 			else
 			{
 				// show page
-				$aPages[$i]['page'] = true;
+				$pages[$i]['page'] = true;
 
 				// current page ?
-				if($item == $iCurrentPage) $aPages[$i]['currentPage'] = true;
+				if($item == $currentPage) $pages[$i]['currentPage'] = true;
 
 				// other page
 				else
 				{
 					// show the page
-					$aPages[$i]['otherPage'] = true;
+					$pages[$i]['otherPage'] = true;
 
 					// url to this page
-					$aPages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $url);
+					$pages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $url);
 				}
 			}
 
@@ -2924,10 +2937,10 @@ class SpoonDataGridPaging implements iSpoonDataGridPaging
 		}
 
 		// first key needs to be zero
-		$aPages = SpoonFilter::arraySortKeys($aPages);
+		$pages = SpoonFilter::arraySortKeys($pages);
 
 		// assign pages
-		$tpl->assign('pages', $aPages);
+		$tpl->assign('pages', $pages);
 
 		// cough it up
 		ob_start();

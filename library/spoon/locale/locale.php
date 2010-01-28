@@ -63,7 +63,7 @@ class SpoonLocale
 
 
 	/**
-	 * Retrieve the list of countries
+	 * Retrieve the list of countries.
 	 *
 	 * @return	array						An array with all known countries in the requested language.
 	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).

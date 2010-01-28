@@ -99,7 +99,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Adds a form to this template
+	 * Adds a form to this template.
 	 *
 	 * @return	void
 	 * @param	SpoonForm $form
@@ -111,7 +111,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Assign values to variables
+	 * Assign values to variables.
 	 *
 	 * @return	void
 	 * @param	mixed $variable			The key to search for or an array with keys & values.
@@ -139,7 +139,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Assign an entire array with keys & values
+	 * Assign an entire array with keys & values.
 	 *
 	 * @return	void
 	 * @param	array $values				This array with keys and values will be used to search and replace in the template file.
@@ -156,7 +156,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Cache a certain block
+	 * Cache a certain block.
 	 *
 	 * @return	void
 	 * @param	string $name				The name of the block that you want to cache.
@@ -173,7 +173,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Clear the entire cache or a certain item
+	 * Clear the entire cache or a specific item.
 	 *
 	 * @return	void
 	 * @param	string[optional] $name	The name of the cache block that you want to clear from the directory with cached files.
@@ -196,7 +196,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Clear the entire compiled directory or a specific template
+	 * Clear the entire compiled directory or a specific template.
 	 *
 	 * @return	void
 	 * @param	string[optional] $template	The filename of a specific template to mark for recompiling.
@@ -219,7 +219,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Compile a given template
+	 * Compile a given template.
 	 *
 	 * @return	void
 	 * @param	string $path		The path to the template, excluding the template filename.
@@ -245,7 +245,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Returns the correct element from the list, based on the counter
+	 * Returns the correct element from the list, based on the counter.
 	 *
 	 * @return	string				The item based on the counter from $elements.
 	 * @param	int $counter		The index of the item to retrieve from the list $elements.
@@ -269,7 +269,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Deassign a variable
+	 * Deassign a variable.
 	 *
 	 * @return	void
 	 * @param	string $name	The name of the key that you want to remove from the list of already assigned variables.
@@ -281,7 +281,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Display the output
+	 * Display the output.
 	 *
 	 * @return	void
 	 * @param	string $template	The filename of the template that you want to display.
@@ -316,7 +316,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Retrieves the already assigned value
+	 * Retrieves the already assigned value.
 	 *
 	 * @return	mixed				Returns an array, string, int or null
 	 * @param	string $variable	The name of the variable that you want to retrieve the already assigned value from.
@@ -329,7 +329,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Get the cache directory path
+	 * Get the cache directory path.
 	 *
 	 * @return	string	The location of the cache directory.
 	 */
@@ -340,7 +340,7 @@ class SpoonTemplate
 
 
 	/**
-	 * get the compile directory path
+	 * Get the compile directory path.
 	 *
 	 * @return	string	The location of the compile directory.
 	 */
@@ -351,7 +351,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Retrieve the compiled name for this template
+	 * Retrieve the compiled name for this template.
 	 *
 	 * @return	string					The special unique name, used for storing this file once compiled in the compile directory.
 	 * @param	string $template		The filename of the template.
@@ -391,7 +391,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Get the force compiling directive
+	 * Get the force compiling directive.
 	 *
 	 * @return	bool	Do we need to recompile this template every time it's loaded.
 	 */
@@ -402,7 +402,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Get the template language
+	 * Get the template language.
 	 *
 	 * @return	string	The language that's being used as default for this template. (Check SpoonLocale for the list of available languages.)
 	 */
@@ -413,7 +413,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Is the cache for this item still valid
+	 * Is the cache for this item still valid.
 	 *
 	 * @return	bool			Is this template block cached?
 	 * @param	string $name	The name of the cached block.
@@ -438,7 +438,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Map a modifier to a given function/method
+	 * Map a modifier to a given function/method.
 	 *
 	 * @return	void
 	 * @param	string $name		The name that you wish to use in the templates as a modifier.
@@ -451,7 +451,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Set the cache directory
+	 * Set the cache directory.
 	 *
 	 * @return	void
 	 * @param	string $path	The location of the directory where you want to store your cached template blocks.
@@ -463,7 +463,7 @@ class SpoonTemplate
 
 
 	/**
-	 * Set the compile directory
+	 * Set the compile directory.
 	 *
 	 * @return	void
 	 * @param	string $path	The location of the directory where you want to store your compiled templates.
@@ -475,7 +475,7 @@ class SpoonTemplate
 
 
 	/**
-	 * If enabled, recompiles a template even if it has already been compiled
+	 * If enabled, recompiles a template even if it has already been compiled.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on	Do we need to recompile the template every time it loads.
@@ -588,7 +588,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Retrieve the compiled name for this template
+	 * Retrieve the compiled name for this template.
 	 *
 	 * @return	string				The unique filename used to store the compiled template in the compile directory.
 	 * @param	string $template	The name of the template.
@@ -600,7 +600,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Retrieve the content
+	 * Retrieve the content.
 	 *
 	 * @return	string	The php compiled template.
 	 */
@@ -612,7 +612,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Creates a string of the provided value with the variables encapsulated
+	 * Creates a string of the provided value with the variables encapsulated.
 	 *
 	 * @return	string			The variable value as php code.
 	 * @param	string $value	The value that needs to be compiled to php code.
@@ -620,7 +620,7 @@ class SpoonTemplateCompiler
 	private function getVariableString($value)
 	{
 		// init var
-		$aVariables = array();
+		$variables = array();
 
 		// remove ' and "
 		$value = str_replace(array('"', "'"), '', (string) $value);
@@ -631,7 +631,7 @@ class SpoonTemplateCompiler
 		// find variables
 		if(preg_match_all($pattern, $value, $matches))
 		{
-			foreach($matches[0] as $match) $aVariables[] = $this->parseVariable($match);
+			foreach($matches[0] as $match) $variables[] = $this->parseVariable($match);
 		}
 
 		// replace the variables by %s
@@ -645,12 +645,12 @@ class SpoonTemplateCompiler
 		if(mb_substr($value, -4, mb_strlen($value, SPOON_CHARSET), SPOON_CHARSET) == " .''") $value = mb_substr($value, 0, -4, SPOON_CHARSET);
 
 		// add the variables
-		return vsprintf($value, $aVariables);
+		return vsprintf($value, $variables);
 	}
 
 
 	/**
-	 * Parse the template
+	 * Parse the template.
 	 *
 	 * @return	void
 	 */
@@ -705,7 +705,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse the cache tags
+	 * Parse the cache tags.
 	 *
 	 * @return	string				The updated content, containing the parsed cache tags.
 	 * @param	string $content		The content that may contain the parse tags.
@@ -724,17 +724,21 @@ class SpoonTemplateCompiler
 				// variable
 				$variable = $this->getVariableString($match);
 
+				// init vars
+				$search = array();
+				$replace = array();
+
 				// search for
-				$aSearch[0] = '{cache:'. $match .'}';
-				$aSearch[1] = '{/cache:'. $match .'}';
+				$search[0] = '{cache:'. $match .'}';
+				$search[1] = '{/cache:'. $match .'}';
 
 				// replace with
-				$aReplace[0] = "<?php if(!\$this->isCached(". $variable .")): ?>\n<?php ob_start(); ?>";
-				$aReplace[1] = "<?php SpoonFile::setContent(\$this->cacheDirectory .'/'. $variable .'_cache.tpl', ob_get_clean()); ?>\n<?php endif; ?>\n";
-				$aReplace[1] .= "<?php require \$this->cacheDirectory .'/'. $variable .'_cache.tpl'; ?>";
+				$replace[0] = "<?php if(!\$this->isCached(". $variable .")): ?>\n<?php ob_start(); ?>";
+				$replace[1] = "<?php SpoonFile::setContent(\$this->cacheDirectory .'/'. $variable .'_cache.tpl', ob_get_clean()); ?>\n<?php endif; ?>\n";
+				$replace[1] .= "<?php require \$this->cacheDirectory .'/'. $variable .'_cache.tpl'; ?>";
 
 				// execute
-				$content = str_replace($aSearch, $aReplace, $content);
+				$content = str_replace($search, $replace, $content);
 			}
 		}
 
@@ -743,7 +747,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parses the cycle tags in the given content
+	 * Parses the cycle tags in the given content.
 	 *
 	 * @return	string				The updated content, containing the parsed cycle tags.
 	 * @param	string $content		The content that may contain the cycle tags.
@@ -761,33 +765,33 @@ class SpoonTemplateCompiler
 			$name = trim($name, '.');
 
 			// explode using the dots
-			$aChunks = explode('.', $name);
+			$chunks = explode('.', $name);
 
 			// number of chunks
-			$numChunks = count($aChunks);
+			$numChunks = count($chunks);
 
 			// 1 or 2 chunks ?
-			if($numChunks == 1) $variable = '$'. $aChunks[0];
-			else $variable = '$'. $aChunks[0] .'[\''. $aChunks[1] .'\']';
+			if($numChunks == 1) $variable = '$'. $chunks[0];
+			else $variable = '$'. $chunks[0] .'[\''. $chunks[1] .'\']';
 
 			// loop matches
 			foreach($matches[1] as $i => $match)
 			{
 				// create list
-				$aCycle = explode(':', trim($match, ':'));
+				$cycle = explode(':', trim($match, ':'));
 
 				// search & replace
 				$search = $matches[0][$i];
-				$replace = '<?php echo $this->cycle('. $variable .'I, array(\''. implode('\',\'', $aCycle) .'\')); ?>';
+				$replace = '<?php echo $this->cycle('. $variable .'I, array(\''. implode('\',\'', $cycle) .'\')); ?>';
 
 				// init var
-				$aIterations = array();
+				$iterations = array();
 
 				// match current iteration
-				preg_match_all('|{iteration:'. $iteration .'}.*{/iteration:'. $iteration .'}|ismU', $content, $aIterations);
+				preg_match_all('|{iteration:'. $iteration .'}.*{/iteration:'. $iteration .'}|ismU', $content, $iterations);
 
 				// loop mathes
-				foreach($aIterations as $block)
+				foreach($iterations as $block)
 				{
 					// build new content
 					$newContent = str_replace($search, $replace, $block);
@@ -803,7 +807,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse the forms
+	 * Parse the forms.
 	 *
 	 * @return	string				The updated content, containing the parsed form tags.
 	 * @param	string $content		The content that may contain the form tags.
@@ -822,12 +826,16 @@ class SpoonTemplateCompiler
 				// form object with that name exists
 				if(isset($this->forms[$name]))
 				{
+					// init vars
+					$search = array();
+					$replace = array();
+
 					// start & close tag
-					$aSearch = array('{form:'. $name .'}', '{/form:'. $name .'}');
-					$aReplace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersHTML(); ?>>' ."\n<div>\n";
-					$aReplace[0] .= $this->forms[$name]->getField('form')->parse();
-					$aReplace[1] = "\n</div>\n</form>";
-					$content = str_replace($aSearch, $aReplace, $content);
+					$search = array('{form:'. $name .'}', '{/form:'. $name .'}');
+					$replace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersHTML(); ?>>' ."\n<div>\n";
+					$replace[0] .= $this->forms[$name]->getField('form')->parse();
+					$replace[1] = "\n</div>\n</form>";
+					$content = str_replace($search, $replace, $content);
 				}
 			}
 		}
@@ -837,7 +845,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse the include tags
+	 * Parse the include tags.
 	 *
 	 * @return	string				The updated content, containing the parsed include tags.
 	 * @param	string $content		The content that may contain the include tags.
@@ -880,7 +888,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse the iterations (recursively)
+	 * Parse the iterations (recursively).
 	 *
 	 * @return	string				The updated content, containing the parsed iteration tags.
 	 * @param	string $content		The content that my contain the iteration tags.
@@ -894,75 +902,61 @@ class SpoonTemplateCompiler
 		if(preg_match_all($pattern, $content, $matches))
 		{
 			// init var
-			$aIterations = array();
+			$iterations = array();
 
 			// loop matches
 			foreach($matches[1] as $match)
 			{
-				if(!in_array($match, $aIterations)) $aIterations[] = $match;
+				if(!in_array($match, $iterations)) $iterations[] = $match;
 			}
 
 			// has iterations
-			if(count($aIterations) != 0)
+			if(count($iterations) != 0)
 			{
 				// loop iterations
-				foreach($aIterations as $iteration)
+				foreach($iterations as $iteration)
 				{
 					// parse cycle tag
 					$content = $this->parseCycle($content, $iteration);
 
+					// init vars
+					$search = array();
+					$replace = array();
+
 					// search
-					$aSearch[0] = '{iteration:'. $iteration .'}';
-					$aSearch[1] = '{/iteration:'. $iteration .'}';
+					$search[0] = '{iteration:'. $iteration .'}';
+					$search[1] = '{/iteration:'. $iteration .'}';
 
 					// convert multiple dots to a single one
 					$name = preg_replace('/\.+/', '.', $iteration);
 					$name = trim($name, '.');
 
 					// explode using the dots
-					$aChunks = explode('.', $name);
+					$chunks = explode('.', $name);
 
 					// number of chunks
-					$numChunks = count($aChunks);
+					$numChunks = count($chunks);
 
 					// 1 or 2 chunks?
-					if($numChunks == 2) $variable = '$'. $aChunks[0] .'[\''. $aChunks[1] .'\']';
-					else $variable = '$this->variables[\''. $aChunks[0] .'\']';
+					if($numChunks == 2) $variable = '$'. $chunks[0] .'[\''. $chunks[1] .'\']';
+					else $variable = '$this->variables[\''. $chunks[0] .'\']';
 
 					// replace
-					$aReplace[0] = '<?php foreach((array) '. $variable .' as $'. $aChunks[$numChunks - 1] .'I => $'. $aChunks[$numChunks - 1] .'): ?>';
-					$aReplace[0] .= "<?php
-					if(isset(\$". $aChunks[$numChunks - 1] ."['formElements']) && is_array(\$". $aChunks[$numChunks - 1] ."['formElements']))
+					$replace[0] = '<?php foreach((array) '. $variable .' as $'. $chunks[$numChunks - 1] .'I => $'. $chunks[$numChunks - 1] .'): ?>';
+					$replace[0] .= "<?php
+					if(isset(\$". $chunks[$numChunks - 1] ."['formElements']) && is_array(\$". $chunks[$numChunks - 1] ."['formElements']))
 					{
-						foreach(\$". $aChunks[$numChunks - 1] ."['formElements'] as \$name => \$object)
+						foreach(\$". $chunks[$numChunks - 1] ."['formElements'] as \$name => \$object)
 						{
-							// @todo if we're dealing with radiobuttons or checkboxes, an alternative way of parsing needs to be used!
-							\$". $aChunks[$numChunks - 1] ."[\$name] = \$object->parse();
-							\$". $aChunks[$numChunks - 1] ."[\$name .'Error'] = (\$object->getErrors() == '') ? '' : '<span class=\"formError\">'. \$object->getErrors() .'</span>';
+							\$". $chunks[$numChunks - 1] ."[\$name] = \$object->parse();
+							\$". $chunks[$numChunks - 1] ."[\$name .'Error'] = (\$object->getErrors() == '') ? '' : '<span class=\"formError\">'. \$object->getErrors() .'</span>';
 						}
 					}
-					?>
-					";
-
-					/*
-					 * <?php
-	if(isset($tabs['formElements']) && is_array($tabs['formElements']))
-	{
-		foreach($tabs['formElements'] as $name => $object)
-		{
-			$tabs[$name] = $object->parse();
-			$tabs[$name .'Error'] = ($object->getErrors() == '') ? '' : '<span class="formError">'. $object->getErrors() .'</span>';
-		}
-	}
-
-	?>
-					 */
-
-
-					$aReplace[1] = '<?php endforeach; ?>';
+					?>";
+					$replace[1] = '<?php endforeach; ?>';
 
 					// replace
-					$content = str_replace($aSearch, $aReplace, $content);
+					$content = str_replace($search, $replace, $content);
 				}
 			}
 		}
@@ -972,7 +966,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse the options in the given content & scope
+	 * Parse the options in the given content & scope.
 	 *
 	 * @return	string				The updated content, containing the parsed option tags.
 	 * @param	string $content		The content that may contain the option tags.
@@ -982,8 +976,8 @@ class SpoonTemplateCompiler
 		// regex pattern
 		$pattern = "/{option:([a-z0-9-_\.\[\]\!]+)}.*?{\/option:\\1}/is";
 
-		// init var
-		$aOptions = array();
+		// init vars
+		$options = array();
 
 		// keep finding those options!
 		while(1)
@@ -1001,31 +995,35 @@ class SpoonTemplateCompiler
 					$variable = $this->parseVariable($match);
 
 					// already matched
-					if(in_array($match, $aOptions)) continue;
+					if(in_array($match, $options)) continue;
+
+					// init vars
+					$search = array();
+					$replace = array();
 
 					// not yet used
-					$aOptions[] = $match;
+					$options[] = $match;
 
 					// search for
-					$aSearch[] = '{option:'. $match .'}';
-					$aSearch[] = '{/option:'. $match .'}';
+					$search[] = '{option:'. $match .'}';
+					$search[] = '{/option:'. $match .'}';
 					// inverse option
-					$aSearch[] = '{option:!'. $match .'}';
-					$aSearch[] = '{/option:!'. $match .'}';
+					$search[] = '{option:!'. $match .'}';
+					$search[] = '{/option:!'. $match .'}';
 
 					// replace with
-					$aReplace[] = '<?php if(isset('. $variable .') && count('. $variable .') != 0 && '. $variable .' != \'\' && '. $variable .' !== false): ?>';
-					$aReplace[] = '<?php endif; ?>';
+					$replace[] = '<?php if(isset('. $variable .') && count('. $variable .') != 0 && '. $variable .' != \'\' && '. $variable .' !== false): ?>';
+					$replace[] = '<?php endif; ?>';
 					// inverse option
-					$aReplace[] = '<?php if(!isset('. $variable .') || count('. $variable .') == 0 || '. $variable .' == \'\' || '. $variable .' === false): ?>';
-					$aReplace[] = '<?php endif; ?>';
+					$replace[] = '<?php if(!isset('. $variable .') || count('. $variable .') == 0 || '. $variable .' == \'\' || '. $variable .' === false): ?>';
+					$replace[] = '<?php endif; ?>';
 
 					// go replace
-					$content = str_replace($aSearch, $aReplace, $content);
+					$content = str_replace($search, $replace, $content);
 
 					// reset vars
-					unset($aSearch);
-					unset($aReplace);
+					unset($search);
+					unset($replace);
 				}
 			}
 
@@ -1038,7 +1036,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse the template to a file
+	 * Parse the template to a file.
 	 *
 	 * @return	void
 	 */
@@ -1049,9 +1047,9 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse a single variable within the provided scope or up
+	 * Parse a single variable.
 	 *
-	 * @return	string				The variable as php code.
+	 * @return	string				The variable as PHP code.
 	 * @param	string $variable	The variable that needs to be converted to php code.
 	 */
 	private function parseVariable($variable)
@@ -1064,63 +1062,63 @@ class SpoonTemplateCompiler
 		$variable = str_replace(array('[', ']'), '.', $variable);
 
 		// fetch modifiers
-		$aVar = explode('|', $variable);
+		$var = explode('|', $variable);
 
 		// base variable
 		$variable = '';
 
 		// convert multiple dots to a single one
-		$aVar[0] = preg_replace('/\.+/', '.', $aVar[0]);
-		$aVar[0] = trim($aVar[0], '.');
+		$var[0] = preg_replace('/\.+/', '.', $var[0]);
+		$var[0] = trim($var[0], '.');
 
 		// explode using the dots
-		$aVarChunks = explode('.', $aVar[0]);
+		$varChunks = explode('.', $var[0]);
 
 		// number of chunks
-		$numChunks = count($aVarChunks);
+		$numChunks = count($varChunks);
 
 		// more than 2 chunks is NOT allowed
-		if($numChunks > 2) return '\'[$'. implode('|', $aVar) .']\'';
+		if($numChunks > 2) return '\'[$'. implode('|', $var) .']\'';
 
 		// 2 chunks
-		elseif($numChunks == 2) $variable = '$'. $aVarChunks[0] .'[\''. $aVarChunks[1] .'\']';
+		elseif($numChunks == 2) $variable = '$'. $varChunks[0] .'[\''. $varChunks[1] .'\']';
 
 		// 1 chunk
-		else $variable = '$this->variables[\''. $aVar[0] .'\']';
+		else $variable = '$this->variables[\''. $var[0] .'\']';
 
 		// has modifiers ?
-		if(isset($aVar[1]))
+		if(isset($var[1]))
 		{
 			// loop modifiers
-			foreach($aVar as $i => $modifier)
+			foreach($var as $i => $modifier)
 			{
 				// skip first record
 				if($i == 0) continue;
 
 				// modifier + parameters
-				$aModifier = explode(':', $modifier);
+				$modifierChunks = explode(':', $modifier);
 
 				// modifier doesn't exist
-				if(!isset($this->modifiers[$aModifier[0]])) throw new SpoonTemplateException('The modifier ('. $aModifier[0] .') does not exist.');
+				if(!isset($this->modifiers[$modifierChunks[0]])) throw new SpoonTemplateException('The modifier ('. $modifierChunks[0] .') does not exist.');
 
 				// add call
 				else
 				{
 					// method call
-					if(is_array($this->modifiers[$aModifier[0]])) $variable = implode('::', $this->modifiers[$aModifier[0]]) .'('. $variable;
+					if(is_array($this->modifiers[$modifierChunks[0]])) $variable = implode('::', $this->modifiers[$modifierChunks[0]]) .'('. $variable;
 
 					// function call
-					else $variable = $this->modifiers[$aModifier[0]] .'('. $variable;
+					else $variable = $this->modifiers[$modifierChunks[0]] .'('. $variable;
 				}
 
 				// has arguments
-				if(count($aModifier) > 1)
+				if(count($modifierChunks) > 1)
 				{
 					// loop arguments
-					for($i = 1; $i < count($aModifier); $i++)
+					for($i = 1; $i < count($modifierChunks); $i++)
 					{
 						// add modifier
-						$variable .= ', '. $aModifier[$i];
+						$variable .= ', '. $modifierChunks[$i];
 					}
 				}
 
@@ -1134,7 +1132,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Parse all the variables in this string
+	 * Parse all the variables in this string.
 	 *
 	 * @return	string				The updated content, containing the parsed variables.
 	 * @param	string $content		The content that may contain variables.
@@ -1145,7 +1143,7 @@ class SpoonTemplateCompiler
 		$pattern = '/\{\$([a-z0-9\.\[\]\_\-\|\:\'\"\$\s])*\}/i';
 
 		// temp variables
-		$aVariables = array();
+		$variables = array();
 
 		// we want to keep parsing vars until none can be found.
 		while(1)
@@ -1157,13 +1155,13 @@ class SpoonTemplateCompiler
 				foreach($matches[0] as $match)
 				{
 					// variable doesn't already exist
-					if(array_search($match, $aVariables, true) === false)
+					if(array_search($match, $variables, true) === false)
 					{
 						// unique key
 						$key = md5($match);
 
 						// add parsed variable
-						$aVariables[$key] = $this->parseVariable($match);
+						$variables[$key] = $this->parseVariable($match);
 
 						// replace in content
 						$content = str_replace($match, '[$'. $key .']', $content);
@@ -1179,16 +1177,16 @@ class SpoonTemplateCompiler
 		 * Every variable needs to be searched & replaced one by one,
 		 * since only then the nesting process works as intended.
 		 */
-		foreach($aVariables as $key => $value)
+		foreach($variables as $key => $value)
 		{
 			// loop each element except this one
-			foreach($aVariables as $keyIndex => $valueContent)
+			foreach($variables as $keyIndex => $valueContent)
 			{
 				// skip myself
 				if($key == $keyIndex) continue;
 
 				// replace myself in the other var
-				$aVariables[$keyIndex] = str_replace('.$'. $key .'.', $aVariables[$key], $aVariables[$keyIndex]);
+				$variables[$keyIndex] = str_replace('.$'. $key .'.', $variables[$key], $variables[$keyIndex]);
 			}
 		}
 
@@ -1196,7 +1194,7 @@ class SpoonTemplateCompiler
 		 * Now loop these vars again, but this time parse them in the
 		 * content we're actually working with.
 		 */
-		foreach($aVariables as $key => $value)
+		foreach($variables as $key => $value)
 		{
 			$content = str_replace('[$'. $key .']', '<?php echo '. $value .'; ?>', $content);
 		}
@@ -1206,7 +1204,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Set the cache directory
+	 * Set the cache directory.
 	 *
 	 * @return	void
 	 * @param	string $path	The location of the cache directory to store cached template blocks.
@@ -1218,7 +1216,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Set the compile directory
+	 * Set the compile directory.
 	 *
 	 * @return	void
 	 * @param	string $path	The location of the compile directory to store compiled templates in.
@@ -1230,7 +1228,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * If enabled, recompiles a template even if it has already been compiled
+	 * If enabled, recompiles a template even if it has already been compiled.
 	 *
 	 * @return	void
 	 * @param	bool[optional] $on	Should this template be recompiled every time it's loaded.
@@ -1242,7 +1240,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Sets the forms
+	 * Sets the forms.
 	 *
 	 * @return	void
 	 * @param	array $forms	An array of forms that need to be included in this template.
@@ -1254,7 +1252,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Strips php code from the content
+	 * Strips php code from the content.
 	 *
 	 * @return	string				The updated content, no longer containing php code.
 	 * @param	string $content		The content that may contain php code.
@@ -1266,7 +1264,7 @@ class SpoonTemplateCompiler
 
 
 	/**
-	 * Strip comments from the output
+	 * Strip comments from the output.
 	 *
 	 * @return	string				The updated content, no longer containing template comments.
 	 * @param	string $content		The content that may contain template comments.
@@ -1279,7 +1277,7 @@ class SpoonTemplateCompiler
 
 
 /**
- * This class implements modifier mapping for the templat engine
+ * This class implements modifier mapping for the template engine.
  *
  * @package		template
  *
@@ -1314,7 +1312,7 @@ class SpoonTemplateModifiers
 
 
 	/**
-	 * Clears the entire modifiers list
+	 * Clears the entire modifiers list.
 	 *
 	 * @return	void
 	 */
@@ -1325,7 +1323,7 @@ class SpoonTemplateModifiers
 
 
 	/**
-	 * Converts links to HTML links (only to be used with cleartext)
+	 * Converts links to HTML links (only to be used with cleartext).
 	 *
 	 * @return	string			The text containing the parsed html links.
 	 * @param	string $text	The cleartext that may contain urls that need to be transformed to html links.
@@ -1337,7 +1335,7 @@ class SpoonTemplateModifiers
 
 
 	/**
-	 * Formats a language specific date
+	 * Formats a language specific date.
 	 *
 	 * @return	string						The formatted date according to the timestamp, format and provided language.
 	 * @param	int $timestamp				The timestamp that you want to apply the format to.
@@ -1351,7 +1349,7 @@ class SpoonTemplateModifiers
 
 
 	/**
-	 * Retrieves the modifiers
+	 * Retrieves the modifiers.
 	 *
 	 * @return	array	The list of modifiers and the function/method that they're mapped to.
 	 */
@@ -1374,7 +1372,7 @@ class SpoonTemplateModifiers
 
 
 	/**
-	 * Maps a specific modifier to a function/method
+	 * Maps a specific modifier to a function/method.
 	 *
 	 * @return	void
 	 * @param	string $name		The name of the modifier that you want to map.
@@ -1411,7 +1409,7 @@ class SpoonTemplateModifiers
 
 
 	/**
-	 * Makes the string uppercase and takes entities into account
+	 * Transform the string to uppercase.
 	 *
 	 * @return	string			The string, completly uppercased.
 	 * @param	string $string	The string that you want to apply this method on.

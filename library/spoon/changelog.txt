@@ -1,9 +1,23 @@
-1.1.4
+1.1.4 (2010-01-27)
 ----
 - Added SpoonTemplate::getContent which returns the output of the executed template. Can not be used in combination with
   cache tags.
+- Added SpoonFilter::stripHTML, it strips all HTML elements from a string. Optional attributes include:
+	+ Replacing images with alt text
+	+ Replacing anchor links with their href value
+	+ Let paragraph elements receive an extra linebreak at the end to keep basic formatting
+- SpoonEmail now uses SpoonFilter::stripHTML to generate plain-text contents.
+- SpoonEmail now supports SSL and TLS in SMTP connections. Use SpoonEmail::setSMTPSecurity() to set the SMTP security layer.
 - When you create a datagrid, the column names will be used as the class attribute.
 - SpoonSession::exists now works as intended, pretty similar to SpoonCookie::exists.
+- Removed getLanguages from SpoonLocale since the source files were not reliable.
+- You can now use SpoonDropDown::setOptionAttributes to add some custom attributes to specific options in a dropdown.
+  Examples are 'disabled' or 'rel'.
+- Added htmlspecialcharsDecode to SpoonFilter.
+- Reworked SpoonSession::delete to offer the same flexibility as SpoonCookie::delete.
+- Added SpoonDataGrid::getColumn which grants you access to the actual SpoonDataGridColumn object, providing you with more
+  options to set for a column.
+- Internal code has been refactored to implement the new naming conventions for arrays.
 
 
 1.1.3 (2010-01-05)

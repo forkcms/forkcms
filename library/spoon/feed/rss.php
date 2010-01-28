@@ -200,7 +200,7 @@ class SpoonRSS
 
 
 	/**
-	 * The sortingmethod
+	 * The sortingmethod (used in compare-method)
 	 *
 	 * @var	string
 	 */
@@ -240,7 +240,7 @@ class SpoonRSS
 	 * @param	string $description		The description of the feed.
 	 * @param	array[optional] $items	An array with SpoonRSSItems.
 	 */
-	public function __construct($title, $link, $description, $items = array())
+	public function __construct($title, $link, $description, array $items = array())
 	{
 		// set properties
 		$this->setTitle($title);
@@ -248,33 +248,38 @@ class SpoonRSS
 		$this->setDescription($description);
 
 		// loop items and add them
-		foreach ($items as $item) $this->addItem($item);
+		foreach($items as $item) $this->addItem($item);
 	}
 
 
 	/**
-	 * Adds a category for the feed
+	 * Adds a category for the feed.
 	 *
 	 * @return	void
 	 * @param	string $category			The name of the category.
-	 * @param	string[optional] $domain	A domain that idenitifies a categorization taxonomy
+	 * @param	string[optional] $domain	A domain that idenitifies a categorization taxonomy.
 	 */
 	public function addCategory($category, $domain = null)
 	{
-		// build array
-		$aCategory['category'] = (string) $category;
-		if($domain) $aCategory['domain'] = (string) $domain;
+		// init var
+		$categoryDetails = array();
+
+		// add category
+		$categoryDetails['category'] = (string) $category;
+
+		// add domain (optional)
+		if($domain !== null) $categoryDetails['domain'] = (string) $domain;
 
 		// set property
-		$this->categories[] = $aCategory;
+		$this->categories[] = $categoryDetails;
 	}
 
 
 	/**
-	 * Add an item to the feed
+	 * Add an item to the feed.
 	 *
 	 * @return	void
-	 * @param	SpoonRSSItem $item	A SpoonRSSItem that represents a single article in the feed.
+	 * @param	SpoonRSSItem $item		A SpoonRSSItem that represents a single article in the feed.
 	 */
 	public function addItem(SpoonRSSItem $item)
 	{
@@ -283,17 +288,18 @@ class SpoonRSS
 
 
 	/**
-	 * Add a day to skip. the default value is sunday
+	 * Add a day to skip. The default value is sunday.
 	 *
 	 * @return	void
-	 * @param	string $day	Add a day where aggregators should skip updating the feed.
+	 * @param	string $day		Add a day where aggregators should skip updating the feed.
 	 */
 	public function addSkipDay($day)
 	{
-		$aAllowedDays = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saterday');
+		// allowed days
+		$allowedDays = array('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saterday');
 
 		// redefine var
-		$day = (string) SpoonFilter::getValue(strtolower($day), $aAllowedDays, 'sunday');
+		$day = (string) SpoonFilter::getValue(strtolower($day), $allowedDays, 'sunday');
 
 		// validate
 		if(in_array($day, $this->skipDays)) throw new SpoonRSSException('This ('. $day .') day is already added.');
@@ -304,21 +310,21 @@ class SpoonRSS
 
 
 	/**
-	 * Add a hour to skip, default is 0
+	 * Add a hour to skip, default is 0.
 	 *
 	 * @return	void
-	 * @param 	int $hour	Add a hour where aggregators should skip updating the feed.
+	 * @param 	int $hour	Add an hour where aggregators should skip updating the feed.
 	 */
 	public function addSkipHour($hour)
 	{
 		// allowed hours
-		$aAllowedHours = array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23);
+		$allowedHours = range(0, 23);
 
 		// redefine var
-		$hour = (int) SpoonFilter::getValue($hour, $aAllowedHours, 0);
+		$hour = (int) SpoonFilter::getValue($hour, $allowedHours, 0);
 
 		// validate
-		if(!in_array($hour, $aAllowedHours)) throw new SpoonRSSException('This ('. $hour .') isn\'t a valid hour. Only '. join(', ', $aAllowedHours) .' are allowed.)');
+		if(!in_array($hour, $allowedHours)) throw new SpoonRSSException('This ('. $hour .') isn\'t a valid hour. Only '. join(', ', $allowedHours) .' are allowed.)');
 		if(in_array($hour, $this->skipHours)) throw new SpoonRSSException('This ('. $hour .') hour is already added.');
 
 		// set property
@@ -337,96 +343,100 @@ class SpoonRSS
 		if($this->getSorting()) $this->sort();
 
 		// init xml
-		$xml = '<?xml version="1.0" encoding="'. strtolower($this->getCharset()) .'" ?>'."\n";
-		$xml .= '<rss version="2.0">'."\n";
-		$xml .= '<channel>'."\n";
+		$XML = '<?xml version="1.0" encoding="'. strtolower($this->getCharset()) .'" ?>'."\n";
+		$XML .= '<rss version="2.0">'."\n";
+		$XML .= '<channel>'."\n";
 
 		// insert title
-		$xml .= '	<title>'. $this->getTitle() .'</title>'."\n";
+		$XML .= '	<title>'. $this->getTitle() .'</title>'."\n";
 
 		// insert link
-		$xml .= '	<link>'. $this->getLink() .'</link>'."\n";
+		$XML .= '	<link>'. $this->getLink() .'</link>'."\n";
 
 		// insert description
-		$xml .= '	<description>'."\n";
-		$xml .= '		<![CDATA['."\n";
-		$xml .= '		'. $this->getDescription() ."\n";
-		$xml .= '		]]>'."\n";
-		$xml .= '</description>'."\n";
+		$XML .= '	<description>'."\n";
+		$XML .= '		<![CDATA['."\n";
+		$XML .= '		'. $this->getDescription() ."\n";
+		$XML .= '		]]>'."\n";
+		$XML .= '</description>'."\n";
+
+		// fetch image properties
+		$imageProperties = $this->getImage();
 
 		// insert image if needed
-		$imageProperties = $this->getImage();
 		if(!empty($imageProperties))
 		{
 			$image = $this->getImage();
 
-			$xml .= '	<image>'."\n";
-			$xml .= '		<title>'. $image['title'] .'</title>'."\n";
-			$xml .= '		<url>'. $image['url'] .'</url>'."\n";
-			$xml .= '		<link>'. $image['link'] .'</link>'."\n";
-			if(isset($image['width']) && $image['width'] != '') $xml .= '		<width>'. $image['title'] .'</width>'."\n";
-			if(isset($image['height']) && $image['height'] != '') $xml .= '		<height>'. $image['title'] .'</height>'."\n";
-			if(isset($image['description']) && $image['description'] != '') $xml .= '		<description><![CDATA['. $image['title'] .']]></description>'."\n";
-			$xml .= '	</image>'."\n";
+			$XML .= '	<image>'."\n";
+			$XML .= '		<title>'. $image['title'] .'</title>'."\n";
+			$XML .= '		<url>'. $image['url'] .'</url>'."\n";
+			$XML .= '		<link>'. $image['link'] .'</link>'."\n";
+			if(isset($image['width']) && $image['width'] != '') $XML .= '		<width>'. $image['title'] .'</width>'."\n";
+			if(isset($image['height']) && $image['height'] != '') $XML .= '		<height>'. $image['title'] .'</height>'."\n";
+			if(isset($image['description']) && $image['description'] != '') $XML .= '		<description><![CDATA['. $image['title'] .']]></description>'."\n";
+			$XML .= '	</image>'."\n";
 		}
 
 		// insert last build date
-		if($this->getLastBuildDate() != '') $xml .= '	<lastBuildDate>'. $this->getLastBuildDate('r') .'</lastBuildDate>'."\n";
+		if($this->getLastBuildDate() != '') $XML .= '	<lastBuildDate>'. $this->getLastBuildDate('r') .'</lastBuildDate>'."\n";
 
 		// insert publication date
-		if($this->getPublicationDate() != '') $xml .= '	<pubDate>'. $this->getPublicationDate('r') .'</pubDate>'."\n";
+		if($this->getPublicationDate() != '') $XML .= '	<pubDate>'. $this->getPublicationDate('r') .'</pubDate>'."\n";
 
 		// insert time to live
-		if($this->getTTL() != '') $xml .= '	<ttl>'. $this->getTTL() .'</ttl>'."\n";
+		if($this->getTTL() != '') $XML .= '	<ttl>'. $this->getTTL() .'</ttl>'."\n";
 
 		// insert managing editor
-		if($this->getManagingEditor() != '') $xml .= '	<managingEditor>'. $this->getManagingEditor() .'</managingEditor>>'."\n";
+		if($this->getManagingEditor() != '') $XML .= '	<managingEditor>'. $this->getManagingEditor() .'</managingEditor>>'."\n";
 
 		// insert webmaster
-		if($this->getWebmaster() != '') $xml .= '	<webmaster>'. $this->getWebmaster() .'></webmaster>'."\n";
+		if($this->getWebmaster() != '') $XML .= '	<webmaster>'. $this->getWebmaster() .'></webmaster>'."\n";
 
 		// insert copyright
-		if($this->getCopyright() != '') $xml .= '	<copyright>'. $this->getCopyright() .'</copyright>'."\n";
+		if($this->getCopyright() != '') $XML .= '	<copyright>'. $this->getCopyright() .'</copyright>'."\n";
+
+		// fetch categories
+		$categories = $this->getCategories();
 
 		// insert categories
-		$categories = $this->getCategories();
 		if(!empty($categories))
 		{
-			foreach ($this->getCategories() as $category)
+			foreach($this->getCategories() as $category)
 			{
-				if(isset($category['domain']) && $category['domain'] != '') $xml .= '	<category domain="'. $category['domain'] .'"><![CDATA['. $category['category'] .']]></category>'."\n";
-				else $xml .= '	<category><![CDATA['. $category['category'] .']]</category>'."\n";
+				if(isset($category['domain']) && $category['domain'] != '') $XML .= '	<category domain="'. $category['domain'] .'"><![CDATA['. $category['category'] .']]></category>'."\n";
+				else $XML .= '	<category><![CDATA['. $category['category'] .']]</category>'."\n";
 			}
 		}
 
 		// insert rating
-		if($this->getRating() != '') $xml .= '	<rating>'. $this->getRating() .'</rating>'."\n";
+		if($this->getRating() != '') $XML .= '	<rating>'. $this->getRating() .'</rating>'."\n";
 
 		// insert generator
-		if($this->getGenerator() != '') $xml .= '	<generator><![CDATA['. $this->getGenerator() .']]></generator>'."\n";
+		if($this->getGenerator() != '') $XML .= '	<generator><![CDATA['. $this->getGenerator() .']]></generator>'."\n";
 
 		// insert language
-		if($this->getLanguage() != '') $xml .= '	<language>'. $this->getLanguage() .'</language>'."\n";
+		if($this->getLanguage() != '') $XML .= '	<language>'. $this->getLanguage() .'</language>'."\n";
 
 		// insert docs
-		if($this->getDocs() != '') $xml .= '	<docs>'. $this->getDocs() .'</docs>'."\n";
+		if($this->getDocs() != '') $XML .= '	<docs>'. $this->getDocs() .'</docs>'."\n";
 
 		// insert skipdays
 		$skipDays = $this->getSkipDays();
 		if(!empty($skipDays))
 		{
-			$xml .= '	<skipDays>'."\n";
-			foreach ($skipDays as $day) $xml .= '	<day>'.$day.'</day>'."\n";
-			$xml .= '	</skipDays>'."\n";
+			$XML .= '	<skipDays>'."\n";
+			foreach($skipDays as $day) $XML .= '	<day>'.$day.'</day>'."\n";
+			$XML .= '	</skipDays>'."\n";
 		}
 
 		// insert skiphours
 		$skipHours = $this->getSkipHours();
 		if(!empty($skipHours))
 		{
-			$xml .= '	<skipHours>'."\n";
-			foreach ($skipHours as $hour) 			$xml .= '	<hour>'.$hour.'</hour>'."\n";
-			$xml .= '	</skipHours>'."\n";
+			$XML .= '	<skipHours>'."\n";
+			foreach($skipHours as $hour) 			$XML .= '	<hour>'.$hour.'</hour>'."\n";
+			$XML .= '	</skipHours>'."\n";
 		}
 
 		// insert cloud
@@ -434,29 +444,29 @@ class SpoonRSS
 		if(!empty($cloudProperties))
 		{
 			$cloud = $this->getCloud();
-			$xml .= '	<cloud domain="'. $cloud['domain'] .'" port="'. $cloud['port'] .'" path="'. $cloud['path'] .'" registerProce-dure="'. $cloud['register_procedure'] .'" protocol="'. $cloud['protocol'] .'" />'."\n";
+			$XML .= '	<cloud domain="'. $cloud['domain'] .'" port="'. $cloud['port'] .'" path="'. $cloud['path'] .'" registerProce-dure="'. $cloud['register_procedure'] .'" protocol="'. $cloud['protocol'] .'" />'."\n";
 		}
 
 		// insert items
-		foreach ($this->getItems() as $item)
+		foreach($this->getItems() as $item)
 		{
-			$xml .= $item->parse();
+			$XML .= $item->parse();
 		}
 
 		// add endtags
-		$xml .= '</channel>'."\n";
-		$xml .= '</rss>'."\n";
+		$XML .= '</channel>'."\n";
+		$XML .= '</rss>'."\n";
 
-		return $xml;
+		return $XML;
 	}
 
 
 	/**
-	 * Compare Objects for sorting on publication date
+	 * Compare objects for sorting on publication date.
 	 *
-	 * @return	int									An integer used for sorting
-	 * @param	SpoonRSSItem $object1				The first element
-	 * @param	SpoonRSSItem $object2				The second element
+	 * @return	int							An integer used for sorting.
+	 * @param	SpoonRSSItem $object1		The first element.
+	 * @param	SpoonRSSItem $object2		The second element.
 	 */
 	private static function compareObjects(SpoonRSSItem $object1, SpoonRSSItem $object2)
 	{
@@ -486,7 +496,7 @@ class SpoonRSS
 
 
 	/**
-	 * Retrieves the categories for a feed
+	 * Retrieves the categories for a feed.
 	 *
 	 * @return	array
 	 */
@@ -497,7 +507,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the charset
+	 * Get the charset.
 	 *
 	 * @return	string
 	 */
@@ -508,7 +518,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the cloud
+	 * Get the cloud.
 	 *
 	 * @return	array
 	 */
@@ -519,7 +529,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the copyright
+	 * Get the copyright.
 	 *
 	 * @return	string
 	 */
@@ -530,7 +540,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the description
+	 * Get the description.
 	 *
 	 * @return	string
 	 */
@@ -541,7 +551,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the docs
+	 * Get the docs.
 	 *
 	 * @return	string
 	 */
@@ -552,7 +562,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the generator
+	 * Get the generator.
 	 *
 	 * @return	string
 	 */
@@ -563,7 +573,7 @@ class SpoonRSS
 
 
 	/**
-	 * Retrieves the image properties
+	 * Retrieves the image properties.
 	 *
 	 * @return	array
 	 */
@@ -574,7 +584,7 @@ class SpoonRSS
 
 
 	/**
-	 * Retrieves the items
+	 * Retrieves the items.
 	 *
 	 * @return	array
 	 */
@@ -585,7 +595,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the language
+	 * Get the language.
 	 *
 	 * @return	string
 	 */
@@ -596,9 +606,9 @@ class SpoonRSS
 
 
 	/**
-	 * Get the last build date
+	 * Get the last build date.
 	 *
-	 * @return	mixed						If no format is specified the date will be returned as a UNIXtimestamp.
+	 * @return	mixed						If no format is specified the date will be returned as a UNIX timestamp.
 	 * @param	string[optional] $format	The format for the date.
 	 */
 	public function getLastBuildDate($format = null)
@@ -616,7 +626,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the link
+	 * Get the link.
 	 *
 	 * @return	string
 	 */
@@ -627,7 +637,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the managing editor
+	 * Get the managing editor.
 	 *
 	 * @return	string
 	 */
@@ -638,9 +648,9 @@ class SpoonRSS
 
 
 	/**
-	 * Get the publication date
+	 * Get the publication date.
 	 *
-	 * @return	mixed						If no format is specified the date will be returned as a UNIXtimestamp.
+	 * @return	mixed						If no format is specified the date will be returned as a UNIX timestamp.
 	 * @param	string[optional] $format	The format for the date.
 	 */
 	public function getPublicationDate($format = null)
@@ -669,7 +679,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the raw XML
+	 * Get the raw XML.
 	 *
 	 * @return	string
 	 */
@@ -680,7 +690,7 @@ class SpoonRSS
 
 
 	/**
-	 * Retrieves the days to skip
+	 * Retrieves the days to skip.
 	 *
 	 * @return	array	An array with all the days to skip.
 	 */
@@ -691,9 +701,9 @@ class SpoonRSS
 
 
 	/**
-	 * Retrieves the hours to skip
+	 * Retrieves the hours to skip.
 	 *
-	 * @return	array	An array with all teh hours to skip.
+	 * @return	array	An array with all the hours to skip.
 	 */
 	public function getSkipHours()
 	{
@@ -702,7 +712,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get sorting status
+	 * Get sorting status.
 	 *
 	 * @return	bool
 	 */
@@ -713,7 +723,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the sorting method
+	 * Get the sorting method.
 	 *
 	 * @return	string
 	 */
@@ -724,7 +734,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the title
+	 * Get the title.
 	 *
 	 * @return	string
 	 */
@@ -735,9 +745,9 @@ class SpoonRSS
 
 
 	/**
-	 * Get the time to life
+	 * Get the time to life.
 	 *
-	 * @return	int	The TTL in seconds
+	 * @return	int		The TTL in seconds.
 	 */
 	public function getTTL()
 	{
@@ -746,7 +756,7 @@ class SpoonRSS
 
 
 	/**
-	 * Get the webmaster
+	 * Get the webmaster.
 	 *
 	 * @return	string
 	 */
@@ -757,32 +767,32 @@ class SpoonRSS
 
 
 	/**
-	 * Checks if the feed is valid
+	 * Checks if the feed is valid.
 	 *
 	 * @return	bool
-	 * @param	string $url				A url where the feed is located or the XML of the feed
-	 * @param	string[optional] $type	The type of feed, possible values are: url, string.
+	 * @param	string $URL					An URL where the feed is located or the XML of the feed.
+	 * @param	string[optional] $type		The type of feed, possible values are: url, string.
 	 */
-	public static function isValid($url, $type = 'url')
+	public static function isValid($URL, $type = 'url')
 	{
 		// redefine var
-		$url = (string) $url;
+		$URL = (string) $URL;
 		$type = (string) SpoonFilter::getValue($type, array('url', 'string'), 'url');
 
 		// validate
-		if($type == 'url' && !SpoonFilter::isURL($url)) throw new SpoonRSSException('This ('. $url .') isn\'t a valid url.');
+		if($type == 'url' && !SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .') isn\'t a valid url.');
 
 		// load xmlstring
 		if($type == 'url')
 		{
 			// check if allow_url_fopen is enabled
-			if(ini_get('allow_url_fopen') == 0) throw new SpoonRSSException('allow_url_fopen should be enabled, if you want to get a remote url.');
+			if(ini_get('allow_url_fopen') == 0) throw new SpoonRSSException('allow_url_fopen should be enabled, if you want to get a remote URL.');
 
 			// open the url
-			$handle = @fopen($url, 'r');
+			$handle = @fopen($URL, 'r');
 
 			// validate the handle
-			if($handle === false) throw new SpoonRSSException('Something went wrong while retrieving the url.');
+			if($handle === false) throw new SpoonRSSException('Something went wrong while retrieving the URL.');
 
 			// read the string
 			$xmlString = @stream_get_contents($handle);
@@ -792,19 +802,19 @@ class SpoonRSS
 		}
 
 		// not that url
-		else $xmlString = $url;
+		else $xmlString = $URL;
 
 		// convert to simpleXML
-		$xml = @simplexml_load_string($xmlString);
+		$XML = @simplexml_load_string($xmlString);
 
 		// invalid XML?
-		if($xml === false) return false;
+		if($XML === false) return false;
 
 		// check if all needed elements are present
-		if(!isset($xml->channel) || !isset($xml->channel->title) || !isset($xml->channel->link) || !isset($xml->channel->description) || !isset($xml->channel->item)) return false;
+		if(!isset($XML->channel) || !isset($XML->channel->title) || !isset($XML->channel->link) || !isset($XML->channel->description) || !isset($XML->channel->item)) return false;
 
 		// loop items
-		foreach ($xml->channel->item as $item)
+		foreach($XML->channel->item as $item)
 		{
 			// validate items
 			if(!SpoonRSSItem::isValid($item)) return false;
@@ -816,15 +826,15 @@ class SpoonRSS
 
 
 	/**
-	 * Parse the feed and output the feed into the browser
+	 * Parse the feed and output the feed into the browser.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging)
+	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging).
 	 */
 	public function parse($headers = true)
 	{
 		// set headers
-		if($headers) SpoonHTTP::setHeaders(self::HEADER . $this->getCharset());
+		if((bool) $headers) SpoonHTTP::setHeaders(self::HEADER . $this->getCharset());
 
 		// output
 		echo $this->buildXML();
@@ -843,41 +853,41 @@ class SpoonRSS
 	public function parseToFile($path)
 	{
 		// get xml
-		$xml = $this->buildXML();
+		$XML = $this->buildXML();
 
 		// write content
-		SpoonFile::setFileContent((string) $path, $xml, false, true);
+		SpoonFile::setContent((string) $path, $XML, false, true);
 	}
 
 
 	/**
-	 * Reads an feed into a SpoonRSS object
+	 * Reads an feed into a SpoonRSS object.
 	 *
-	 * @return	SpoonRSS				Returns as an instance of SpoonRSS.
-	 * @param	string $url				A url where the feed is located or the XML of the feed.
-	 * @param	string[optional] $type	The type of feed, possible values are: url, string.
+	 * @return	SpoonRSS					Returns as an instance of SpoonRSS.
+	 * @param	string $URL					An URL where the feed is located or the XML of the feed.
+	 * @param	string[optional] $type		The type of feed, possible values are: url, string.
 	 */
-	public static function readFromFeed($url, $type = 'url')
+	public static function readFromFeed($URL, $type = 'url')
 	{
 		// redefine var
-		$url = (string) $url;
+		$URL = (string) $URL;
 		$type = (string) SpoonFilter::getValue($type, array('url', 'string'), 'url');
 
 		// validate
-		if($type == 'url' && !SpoonFilter::isURL($url)) throw new SpoonRSSException('This ('. SpoonFilter::htmlentities($url) .') isn\'t a valid url.');
-		if(!self::isValid($url, $type)) throw new SpoonRSSException('Invalid feed');
+		if($type == 'url' && !SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. SpoonFilter::htmlentities($URL) .') isn\'t a valid URL.');
+		if(!self::isValid($URL, $type)) throw new SpoonRSSException('Invalid feed');
 
 		// load xmlstring
 		if($type == 'url')
 		{
 			// check if allow_url_fopen is enabled
-			if(ini_get('allow_url_fopen') == 0) throw new SpoonRSSException('allow_url_fopen should be enabled, if you want to get a remote url.');
+			if(ini_get('allow_url_fopen') == 0) throw new SpoonRSSException('allow_url_fopen should be enabled, if you want to get a remote URL.');
 
 			// open the url
-			$handle = @fopen($url, 'r');
+			$handle = @fopen($URL, 'r');
 
 			// validate the handle
-			if($handle === false) throw new SpoonRSSException('Something went wrong while retrieving the url.');
+			if($handle === false) throw new SpoonRSSException('Something went wrong while retrieving the URL.');
 
 			// read the string
 			$xmlString = @stream_get_contents($handle);
@@ -887,31 +897,31 @@ class SpoonRSS
 		}
 
 		// not that url
-		else $xmlString = $url;
+		else $xmlString = $URL;
 
 		// convert to simpleXML
-		$xml = @simplexml_load_string($xmlString);
+		$XML = @simplexml_load_string($xmlString);
 
 		// validate the feed
-		if($xml === false) throw new SpoonRSSException('Invalid rss-string.');
+		if($XML === false) throw new SpoonRSSException('Invalid rss-string.');
 
 		// get title, link and description
-		$title = (string) $xml->channel->title;
-		$link = (string) $xml->channel->link;
-		$description = (string) $xml->channel->description;
+		$title = (string) $XML->channel->title;
+		$link = (string) $XML->channel->link;
+		$description = (string) $XML->channel->description;
 
 		// create instance
-		$rss = new SpoonRSS($title, $link, $description);
+		$RSS = new SpoonRSS($title, $link, $description);
 
 		// add items
-		foreach($xml->channel->item as $item)
+		foreach($XML->channel->item as $item)
 		{
 			// try to read
 			try
 			{
 				// read xml
 				$item = SpoonRSSItem::readFromXML($item);
-				$rss->addItem($item);
+				$RSS->addItem($item);
 			}
 
 			// catch exceptions
@@ -922,26 +932,26 @@ class SpoonRSS
 		}
 
 		// add category
-		if(isset($xml->channel->category))
+		if(isset($XML->channel->category))
 		{
-			foreach ($xml->channel->category as $category)
+			foreach($XML->channel->category as $category)
 			{
-				if(isset($category['domain'])) $rss->addCategory((string) $category, (string) $category['domain']);
-				else $rss->addCategory((string) $category);
+				if(isset($category['domain'])) $RSS->addCategory((string) $category, (string) $category['domain']);
+				else $RSS->addCategory((string) $category);
 			}
 		}
 
 		// add skip day
-		if(isset($xml->channel->skipDays))
+		if(isset($XML->channel->skipDays))
 		{
 			// loop ski-days
-			foreach ($xml->channel->skipDays->day as $day)
+			foreach($XML->channel->skipDays->day as $day)
 			{
 				// try to add
 				try
 				{
 					// add skip-day
-					$rss->addSkipDay((string) $day);
+					$RSS->addSkipDay((string) $day);
 				}
 
 				// catch exception
@@ -953,15 +963,15 @@ class SpoonRSS
 		}
 
 		// add skip hour
-		if(isset($xml->channel->skipHours))
+		if(isset($XML->channel->skipHours))
 		{
-			foreach ($xml->channel->skipHours->hour as $hour)
+			foreach($XML->channel->skipHours->hour as $hour)
 			{
 				// try to add
 				try
 				{
 					// add skip hour
-					$rss->addSkipHour((int) $hour);
+					$RSS->addSkipHour((int) $hour);
 				}
 
 				// catch exception
@@ -973,61 +983,61 @@ class SpoonRSS
 		}
 
 		// set cloud
-		if(isset($xml->channel->cloud['domain']) && isset($xml->channel->cloud['port']) && isset($xml->channel->cloud['path']) && isset($xml->channel->cloud['registerProce-dure']) && isset($xml->channel->cloud['protocol']))
+		if(isset($XML->channel->cloud['domain']) && isset($XML->channel->cloud['port']) && isset($XML->channel->cloud['path']) && isset($XML->channel->cloud['registerProce-dure']) && isset($XML->channel->cloud['protocol']))
 		{
 			// read attributes
-			$cloudDomain = (string) $xml->channel->cloud['domain'];
-			$cloudPort = (int) $xml->channel->cloud['port'];
-			$cloudPath = (string) $xml->channel->cloud['path'];
-			$cloudRegisterProcedure = (string) $xml->channel->cloud['registerProce-dure'];
-			$cloudProtocol = (string) $xml->channel->cloud['protocol'];
+			$cloudDomain = (string) $XML->channel->cloud['domain'];
+			$cloudPort = (int) $XML->channel->cloud['port'];
+			$cloudPath = (string) $XML->channel->cloud['path'];
+			$cloudRegisterProcedure = (string) $XML->channel->cloud['registerProce-dure'];
+			$cloudProtocol = (string) $XML->channel->cloud['protocol'];
 
 			// set property
-			$rss->setCloud($cloudDomain, $cloudPort, $cloudPath, $cloudRegisterProcedure, $cloudProtocol);
+			$RSS->setCloud($cloudDomain, $cloudPort, $cloudPath, $cloudRegisterProcedure, $cloudProtocol);
 		}
 
 		// set copyright
-		if(isset($xml->channel->copyright))
+		if(isset($XML->channel->copyright))
 		{
-			$copyright = (string) $xml->channel->copyright;
-			$rss->setCopyright($copyright);
+			$copyright = (string) $XML->channel->copyright;
+			$RSS->setCopyright($copyright);
 		}
 
 		// set docs
-		if(isset($xml->channel->docs))
+		if(isset($XML->channel->docs))
 		{
-			$docs = (string) $xml->channel->docs;
-			$rss->setDocs($docs);
+			$docs = (string) $XML->channel->docs;
+			$RSS->setDocs($docs);
 		}
 
 		// set generator if it is present
-		if(isset($xml->channel->generator))
+		if(isset($XML->channel->generator))
 		{
-			$generator = (string) $xml->channel->generator;
-			$rss->setGenerator($generator);
+			$generator = (string) $XML->channel->generator;
+			$RSS->setGenerator($generator);
 		}
 
 		// set image if it is present
-		if(isset($xml->channel->image->title) && isset($xml->channel->image->url) && isset($xml->channel->image->link))
+		if(isset($XML->channel->image->title) && isset($XML->channel->image->url) && isset($XML->channel->image->link))
 		{
 			// read properties
-			$imageTitle = (string) $xml->channel->image->title;
-			$imageUrl = (string) $xml->channel->image->url;
-			$imageLink = (string) $xml->channel->image->link;
+			$imageTitle = (string) $XML->channel->image->title;
+			$imageURL = (string) $XML->channel->image->url;
+			$imageLink = (string) $XML->channel->image->link;
 
 			// read optional properties
-			if(isset($xml->channel->image->width)) $imageWidth = (int) $xml->channel->image->width;
+			if(isset($XML->channel->image->width)) $imageWidth = (int) $XML->channel->image->width;
 			else $imageWidth = null;
-			if(isset($xml->channel->image->height)) $imageHeight = (int) $xml->channel->image->height;
+			if(isset($XML->channel->image->height)) $imageHeight = (int) $XML->channel->image->height;
 			else $imageHeight = null;
-			if(isset($xml->channel->image->description)) $imageDescription = (string) $xml->channel->image->description;
+			if(isset($XML->channel->image->description)) $imageDescription = (string) $XML->channel->image->description;
 			else $imageDescription = null;
 
 			// try to set image
 			try
 			{
 				// set image
-				$rss->setImage($imageUrl, $imageTitle, $imageLink, $imageWidth, $imageHeight, $imageDescription);
+				$RSS->setImage($imageURL, $imageTitle, $imageLink, $imageWidth, $imageHeight, $imageDescription);
 			}
 
 			// catch exception
@@ -1038,64 +1048,64 @@ class SpoonRSS
 		}
 
 		// set language if its is present
-		if(isset($xml->channel->language))
+		if(isset($XML->channel->language))
 		{
-			$language = (string) $xml->channel->language;
-			$rss->setLanguage($language);
+			$language = (string) $XML->channel->language;
+			$RSS->setLanguage($language);
 		}
 
 		// set last build date if it is present
-		if(isset($xml->channel->lastBuildDate))
+		if(isset($XML->channel->lastBuildDate))
 		{
-			$lastBuildDate = (int) strtotime($xml->channel->lastBuildDate);
-			$rss->setLastBuildDate($lastBuildDate);
+			$lastBuildDate = (int) strtotime($XML->channel->lastBuildDate);
+			$RSS->setLastBuildDate($lastBuildDate);
 		}
 
 		// set managing editor
-		if(isset($xml->channel->managingEditor))
+		if(isset($XML->channel->managingEditor))
 		{
-			$managingEditor = (string) $xml->channel->managingEditor;
-			$rss->setManagingEditor($managingEditor);
+			$managingEditor = (string) $XML->channel->managingEditor;
+			$RSS->setManagingEditor($managingEditor);
 		}
 
 		// set publication date
-		if(isset($xml->channel->pubDate))
+		if(isset($XML->channel->pubDate))
 		{
-			$publicationDate = (int) strtotime($xml->channel->pubDate);
-			$rss->setPublicationDate($publicationDate);
+			$publicationDate = (int) strtotime($XML->channel->pubDate);
+			$RSS->setPublicationDate($publicationDate);
 		}
 
 		// set rating
-		if(isset($xml->channel->rating))
+		if(isset($XML->channel->rating))
 		{
-			$rating = (string) $xml->channel->rating;
-			$rss->setRating($rating);
+			$rating = (string) $XML->channel->rating;
+			$RSS->setRating($rating);
 		}
 
 		// set ttl
-		if(isset($xml->channel->ttl))
+		if(isset($XML->channel->ttl))
 		{
-			$ttl = (int) $xml->channel->ttl;
-			$rss->setTTL($ttl);
+			$ttl = (int) $XML->channel->ttl;
+			$RSS->setTTL($ttl);
 		}
 
 		// set webmaster
-		if(isset($xml->channel->webmaster))
+		if(isset($XML->channel->webmaster))
 		{
-			$webmaster = (string) $xml->channel->webmaster;
-			$rss->setWebmaster($webmaster);
+			$webmaster = (string) $XML->channel->webmaster;
+			$RSS->setWebmaster($webmaster);
 		}
 
 		// return
-		return $rss;
+		return $RSS;
 	}
 
 
 	/**
-	 * Set the charset
+	 * Set the charset.
 	 *
 	 * @return	void
-	 * @param	string[optional] $charset	The charset that should be used. Possible charsets can be found in spoon.php
+	 * @param	string[optional] $charset	The charset that should be used. Possible charsets can be found in spoon.php.
 	 */
 	public function setCharset($charset = 'utf-8')
 	{
@@ -1104,13 +1114,13 @@ class SpoonRSS
 
 
 	/**
-	 * Set the cloud for the feed
+	 * Set the cloud for the feed.
 	 *
 	 * @return	void
-	 * @param	string $domain				The domain
-	 * @param	int $port					The port
-	 * @param	string $path				The path
-	 * @param	string $registerProcedure	The procedure
+	 * @param	string $domain				The domain.
+	 * @param	int $port					The port.
+	 * @param	string $path				The path.
+	 * @param	string $registerProcedure	The procedure.
 	 * @param	string $protocol			The protocol to use. Possible values are: xml-rpc, soap, http-post.
 	 */
 	public function setCloud($domain, $port, $path, $registerProcedure, $protocol)
@@ -1124,7 +1134,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set the copyright
+	 * Set the copyright.
 	 *
 	 * @return	void
 	 * @param	string $copyright
@@ -1136,7 +1146,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set the description for the feed
+	 * Set the description for the feed.
 	 *
 	 * @return	void
 	 * @param	string $description
@@ -1148,7 +1158,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set the doc for the feed
+	 * Set the doc for the feed.
 	 *
 	 * @return	void
 	 * @param	string $docs
@@ -1160,40 +1170,40 @@ class SpoonRSS
 
 
 	/**
-	 * Set the generator for the feed
+	 * Set the generator for the feed.
 	 *
 	 * @return	void
 	 * @param	string[optional] $generator
 	 */
 	public function setGenerator($generator = null)
 	{
-		$this->generator = ($generator == null) ? 'Spoon/'.SPOON_VERSION : (string) $generator;
+		$this->generator = ($generator == null) ? 'Spoon/'. SPOON_VERSION : (string) $generator;
 	}
 
 
 	/**
-	 * Set the image for the feed
+	 * Set the image for the feed.
 	 *
 	 * @return	void
-	 * @param	string $url						URL of the image.
+	 * @param	string $URL						URL of the image.
 	 * @param	string $title					Title of the image.
 	 * @param	string $link					Link of the image.
 	 * @param	int[optional] $width			Width of the image.
 	 * @param	int[optional] $height			Height of the image.
 	 * @param	string[optional] $description	Description of the image.
 	 */
-	public function setImage($url, $title, $link, $width = null, $height = null, $description = null)
+	public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
 	{
 		// redefine vars
-		$url = (string) $url;
+		$URL = (string) $URL;
 		$link = (string) $link;
 
 		// validate
-		if(!SpoonFilter::isURL($url)) throw new SpoonRSSException('This ('. $url .')isn\'t a valid url.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .')isn\'t a valid URL.');
 		if(!SpoonFilter::isURL($link)) throw new SpoonRSSException('This ('. $link .') isn\'t a valid link.');
 
 		// set properties
-		$this->image['url'] = $url;
+		$this->image['url'] = $URL;
 		$this->image['title'] = (string) $title;
 		$this->image['link'] = $link;
 		if($width) $this->image['width'] = (int) $width;
@@ -1203,7 +1213,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set the language for the feed
+	 * Set the language for the feed.
 	 *
 	 * @return	void
 	 * @param	string $language
@@ -1215,20 +1225,19 @@ class SpoonRSS
 
 
 	/**
-	 * Set the last build date for the feed
+	 * Set the last build date for the feed.
 	 *
 	 * @return	void
-	 * @param	int[optional] $lastBuildDate	A UNIX-timestamp that represents the last build date.
+	 * @param	int[optional] $lastBuildDate	A UNIX timestamp that represents the last build date.
 	 */
 	public function setLastBuildDate($lastBuildDate = null)
 	{
-		if($lastBuildDate) $lastBuildDate = time();
-		$this->lastBuildDate = (int) $lastBuildDate;
+		$this->lastBuildDate = ($lastBuildDate !== null) ? (int) $lastBuildDate : time();
 	}
 
 
 	/**
-	 * Set the link for the feed
+	 * Set the link for the feed.
 	 *
 	 * @return	void
 	 * @param	string $link
@@ -1247,7 +1256,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set the managing editor for the feed
+	 * Set the managing editor for the feed.
 	 *
 	 * @return	void
 	 * @param	string $managingEditor
@@ -1259,10 +1268,10 @@ class SpoonRSS
 
 
 	/**
-	 * Sets the publication date for the feed
+	 * Sets the publication date for the feed.
 	 *
 	 * @return	void
-	 * @param	int[optional] $publicationDate	A UNIX-timestamp that represents the publication date.
+	 * @param	int[optional] $publicationDate		A UNIX timestamp that represents the publication date.
 	 */
 	public function setPublicationDate($publicationDate = null)
 	{
@@ -1272,7 +1281,7 @@ class SpoonRSS
 
 
 	/**
-	 * Sets the rating
+	 * Sets the rating.
 	 *
 	 * @return	void
 	 * @param	string $rating
@@ -1284,10 +1293,10 @@ class SpoonRSS
 
 
 	/**
-	 * Set sorting status
+	 * Set sorting status.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on	Should the post be sorted?
+	 * @param	bool[optional] $on		Should the post be sorted?
 	 */
 	public function setSorting($on = true)
 	{
@@ -1296,7 +1305,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set the sorting method
+	 * Set the sorting method.
 	 *
 	 * @return	void
 	 * @param	string[optional] $sortingMethod		Set the sorting method that should be used, possible values are: desc, asc.
@@ -1311,7 +1320,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set the title for the feed
+	 * Set the title for the feed.
 	 *
 	 * @return	void
 	 * @param	string $title
@@ -1323,7 +1332,7 @@ class SpoonRSS
 
 
 	/**
-	 * Set time to live for the feed
+	 * Set time to live for the feed.
 	 *
 	 * @return	void
 	 * @param	int $ttl	The time to live in seconds.
@@ -1335,7 +1344,7 @@ class SpoonRSS
 
 
 	/**
-	 * Sets the webmaster for the feed
+	 * Sets the webmaster for the feed.
 	 *
 	 * @return	void
 	 * @param	string $webmaster
@@ -1347,7 +1356,7 @@ class SpoonRSS
 
 
 	/**
-	 * Sort the item on publication date
+	 * Sort the item on publication date.
 	 *
 	 * @return	void
 	 */
@@ -1458,12 +1467,12 @@ class SpoonRSSItem
 
 
 	/**
-	 * Default constructor
+	 * Default constructor.
 	 *
 	 * @return	void
-	 * @param	string $title			The title for the item
-	 * @param	string $link			The link for the item
-	 * @param	string $description		The content for the item
+	 * @param	string $title			The title for the item.
+	 * @param	string $link			The link for the item.
+	 * @param	string $description		The content for the item.
 	 */
 	public function __construct($title, $link, $description)
 	{
@@ -1475,41 +1484,41 @@ class SpoonRSSItem
 
 
 	/**
-	 * Build the XML
+	 * Builds the XML.
 	 *
-	 * @return	string	The fully build XML for an item.
+	 * @return	string		The fully build XML for an item.
 	 */
 	public function buildXML()
 	{
 		// init xmlstring
-		$xml = '<item>'."\n";
+		$XML = '<item>'."\n";
 
 		// insert title
-		$xml .= '	<title><![CDATA['. $this->getTitle() .']]></title>'."\n";
+		$XML .= '	<title><![CDATA['. $this->getTitle() .']]></title>'."\n";
 
 		// insert link
-		$xml .= '	<link>'. $this->getLink() .'</link>'."\n";
+		$XML .= '	<link>'. $this->getLink() .'</link>'."\n";
 
 		// insert description
-		$xml .= '	<description>'."\n";
-		$xml .= '		<![CDATA['."\n";
-		$xml .= '			'. $this->getDescription() ."\n";
-		$xml .= '		]]>'."\n";
-		$xml .= '	</description>'."\n";
+		$XML .= '	<description>'."\n";
+		$XML .= '		<![CDATA['."\n";
+		$XML .= '			'. $this->getDescription() ."\n";
+		$XML .= '		]]>'."\n";
+		$XML .= '	</description>'."\n";
 
 		// insert item publication date
 		$publicationDate = $this->getPublicationDate();
-		if($publicationDate != '') $xml .= '	<pubDate>'. date('r', $publicationDate) .'</pubDate>'."\n";
+		if($publicationDate != '') $XML .= '	<pubDate>'. date('r', $publicationDate) .'</pubDate>'."\n";
 
 		// insert author
 		$author = $this->getAuthor();
-		if($author != '') $xml .= '	<author><![CDATA['. $author .']]></author>'."\n";
+		if($author != '') $XML .= '	<author><![CDATA['. $author .']]></author>'."\n";
 
 		// insert source
 		$source = $this->getSource();
 		if(!empty($source))
 		{
-			$xml .= '	<source url="'. $source['url'] .'"><![CDATA['. $source['name'] .']]></source>'."\n";
+			$XML .= '	<source url="'. $source['url'] .'"><![CDATA['. $source['name'] .']]></source>'."\n";
 		}
 
 		// insert categories
@@ -1518,8 +1527,8 @@ class SpoonRSSItem
 		{
 			foreach($categories as $category)
 			{
-				if(isset($category['domain'])) $xml .= '	<category domain="'. $category['domain'] .'"><![CDATA['. $category['name'] .']]></category>'."\n";
-				else $xml .= '	<category><![CDATA['. $category['name'] .']]></category>'."\n";
+				if(isset($category['domain'])) $XML .= '	<category domain="'. $category['domain'] .'"><![CDATA['. $category['name'] .']]></category>'."\n";
+				else $XML .= '	<category><![CDATA['. $category['name'] .']]></category>'."\n";
 			}
 		}
 
@@ -1527,38 +1536,39 @@ class SpoonRSSItem
 		$guid = $this->getGuid();
 		if(!empty($guid))
 		{
-			$xml .= '	<guid isPermaLink="'. $guid['isPermaLink'] .'">'. $guid['url'] .'</guid>'."\n";
+			$XML .= '	<guid isPermaLink="'. $guid['isPermaLink'] .'">'. $guid['url'] .'</guid>'."\n";
 		}
 
 		// insert enclosure
 		$enclosure = $this->getEnclosure();
 		if(!empty($enclosure))
 		{
-			if(isset($enclosure['url']) && isset($enclosure['length']) && isset($enclosure['type'])) $xml .= '	<enclosure url="'. $enclosure['url'] .'" length="'. $enclosure['length'] .'" type="'. $enclosure['type'] .'" />'."\n";
+			if(isset($enclosure['url']) && isset($enclosure['length']) && isset($enclosure['type'])) $XML .= '	<enclosure url="'. $enclosure['url'] .'" length="'. $enclosure['length'] .'" type="'. $enclosure['type'] .'" />'."\n";
 		}
 
 		// insert comments
 		$commentsLink = $this->getCommentsLink();
-		if($commentsLink != '') $xml .= '	<comments>'. $commentsLink .'</comments>'."\n";
+		if($commentsLink != '') $XML .= '	<comments>'. $commentsLink .'</comments>'."\n";
 
-		$xml .= '	</item>'."\n";
+		// close item
+		$XML .= '	</item>'."\n";
 
 		// return
-		return $xml;
+		return $XML;
 	}
 
 
 	/**
-	 * Add a category for the item
+	 * Add a category for the item.
 	 *
 	 * @return	void
-	 * @param	string $categoryName		The name of the category.
+	 * @param	string $name				The name of the category.
 	 * @param	string[optional] $domain	The domain of the category.
 	 */
-	public function addCategory($categoryName, $domain = null)
+	public function addCategory($name, $domain = null)
 	{
 		// create array
-		$category['name'] = (string) $categoryName;
+		$category['name'] = (string) $name;
 
 		// has a domain
 		if($domain != null) $category['domain'] = (string) $domain;
@@ -1569,7 +1579,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the author
+	 * Get the author.
 	 *
 	 * @return	string
 	 */
@@ -1580,9 +1590,9 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the categories
+	 * Get the categories.
 	 *
-	 * @return	array	An array with all categories
+	 * @return	array	An array with all categories.
 	 */
 	public function getCategories()
 	{
@@ -1591,7 +1601,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the comment link
+	 * Get the comment link.
 	 *
 	 * @return	string
 	 */
@@ -1602,7 +1612,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the description
+	 * Get the description.
 	 *
 	 * @return	string
 	 */
@@ -1613,7 +1623,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the enclosure properties
+	 * Get the enclosure properties.
 	 *
 	 * @return	array
 	 */
@@ -1624,7 +1634,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the guid properties
+	 * Get the guid properties.
 	 *
 	 * @return	array
 	 */
@@ -1635,7 +1645,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the link
+	 * Get the link.
 	 *
 	 * @return	string
 	 */
@@ -1646,7 +1656,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the publication date
+	 * Get the publication date.
 	 *
 	 * @return	int
 	 */
@@ -1657,7 +1667,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the raw XML
+	 * Get the raw XML.
 	 *
 	 * @return	string
 	 */
@@ -1668,7 +1678,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the source properties
+	 * Get the source properties.
 	 *
 	 * @return	array
 	 */
@@ -1679,7 +1689,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Get the title
+	 * Get the title.
 	 *
 	 * @return	string
 	 */
@@ -1690,9 +1700,9 @@ class SpoonRSSItem
 
 
 	/**
-	 * Validate if the given XML is valid
+	 * Validate if the given XML is valid.
 	 *
-	 * @return	bool						true if the item is valid, otherwise false.
+	 * @return	bool						True if the item is valid, otherwise false.
 	 * @param	SimpleXMLElement $item		An item/article from the whole feed.
 	 */
 	public static function isValid(SimpleXMLElement $item)
@@ -1717,7 +1727,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Read an item from a SimpleXMLElement
+	 * Read an item from a SimpleXMLElement.
 	 *
 	 * @return	SpoonRSSItem				An instance of SpoonRSS.
 	 * @param	SimpleXMLElement $item		The XML-element that represents a single item in the feed.
@@ -1737,11 +1747,8 @@ class SpoonRSSItem
 		{
 			foreach($item->category as $category)
 			{
-				$categoryName = (string) $category;
-				$domain = $category['domain'];
-
 				// set property
-				$rssItem->addCategory($categoryName, $domain);
+				$rssItem->addCategory((string) $category, $category['domain']);
 			}
 		}
 
@@ -1769,7 +1776,7 @@ class SpoonRSSItem
 		if(isset($item->enclosure['url']) && isset($item->enclosure['length']) && isset($item->enclosure['type']))
 		{
 			// read data
-			$url = (string) $item->enclosure['url'];
+			$URL = (string) $item->enclosure['url'];
 			$length = (int) $item->enclosure['length'];
 			$type = (string) $item->enclosure['type'];
 
@@ -1777,7 +1784,7 @@ class SpoonRSSItem
 			try
 			{
 				// set enclosure
-				$rssItem->setEnclosure($url, $length, $type);
+				$rssItem->setEnclosure($URL, $length, $type);
 			}
 
 			// catch exceptions
@@ -1791,14 +1798,14 @@ class SpoonRSSItem
 		if(isset($item->guid))
 		{
 			// read data
-			$url = (string) $item->guid;
+			$URL = (string) $item->guid;
 			$isPermaLink = (bool) $item->guid['isPermaLink'];
 
 			// try to set GUID
 			try
 			{
 				// set GUID
-				$rssItem->setGuid($url, $isPermaLink);
+				$rssItem->setGuid($URL, $isPermaLink);
 			}
 
 			// catch exceptions
@@ -1816,13 +1823,13 @@ class SpoonRSSItem
 		{
 			// read data
 			$name = (string) $item->source;
-			$url = (string) $item->source['url'];
+			$URL = (string) $item->source['url'];
 
 			// try to set source
 			try
 			{
 				// set source
-				$rssItem->setSource($name, $url);
+				$rssItem->setSource($name, $URL);
 			}
 
 			// catch exceptions
@@ -1837,7 +1844,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set the author
+	 * Set the author.
 	 *
 	 * @return	void
 	 * @param	string $author
@@ -1849,7 +1856,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set the comment link
+	 * Set the comments link.
 	 *
 	 * @return	void
 	 * @param	string $link	The link where the comments are available.
@@ -1868,10 +1875,10 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set the description
+	 * Set the description.
 	 *
 	 * @return	void
-	 * @param	string $description		The content of the item
+	 * @param	string $description		The content of the item.
 	 */
 	public function setDescription($description)
 	{
@@ -1883,20 +1890,20 @@ class SpoonRSSItem
 	 * Set the enclosure
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	int $length
 	 * @param	string $type
 	 */
-	public function setEnclosure($url, $length, $type)
+	public function setEnclosure($URL, $length, $type)
 	{
 		// redefine var
-		$url = (string) $url;
+		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($url)) throw new SpoonRSSException('This ('. $url .') isn\'t a valid url for an enclosure.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .') isn\'t a valid URL for an enclosure.');
 
 		// create array
-		$enclosure['url'] = $url;
+		$enclosure['url'] = $URL;
 		$enclosure['length'] = (int) $length;
 		$enclosure['type'] = (string) $type;
 
@@ -1906,22 +1913,22 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set the guid
+	 * Set the guid.
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	bool[optional] $isPermaLink
 	 */
-	public function setGuid($url, $isPermaLink = true)
+	public function setGuid($URL, $isPermaLink = true)
 	{
-		// reefine var
-		$url = (string) $url;
+		// redefine var
+		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($url)) throw new SpoonRSSException('This ('. $url .') isn\t a valid url for guid.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .') isn\t a valid URL for guid.');
 
 		// create array
-		$guid['url'] = $url;
+		$guid['url'] = $URL;
 		$guid['isPermaLink'] = (bool) $isPermaLink;
 
 		// set property
@@ -1930,7 +1937,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set the link
+	 * Set the link.
 	 *
 	 * @return	void
 	 * @param	string $link
@@ -1949,7 +1956,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set the publication date
+	 * Set the publication date.
 	 *
 	 * @return	void
 	 * @param	int $publicationDate
@@ -1961,23 +1968,23 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set source
+	 * Set source.
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	string $url
+	 * @param	string $URL
 	 */
-	public function setSource($name, $url)
+	public function setSource($name, $URL)
 	{
 		// redefine var
-		$url = (string) $url;
+		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($url)) throw new SpoonRSSException('This ('. $url .') isn\'t a valid url for a source.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .') isn\'t a valid URL for a source.');
 
 		// create array
 		$source['name'] = (string) $name;
-		$source['url'] = $url;
+		$source['url'] = $URL;
 
 		// set property
 		$this->source = $source;
@@ -1985,7 +1992,7 @@ class SpoonRSSItem
 
 
 	/**
-	 * Set the title
+	 * Set the title.
 	 *
 	 * @return	void
 	 * @param	string $title

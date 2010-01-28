@@ -65,7 +65,7 @@ class SpoonException extends Exception
 
 
 	/**
-	 * Retrieve the name of this exception
+	 * Retrieve the name of this exception.
 	 *
 	 * @return	string
 	 */
@@ -76,7 +76,7 @@ class SpoonException extends Exception
 
 
 	/**
-	 * Return an array of elements that need to be obfuscated
+	 * Return an array of elements that need to be obfuscated.
 	 *
 	 * @return	array
 	 */
@@ -100,12 +100,12 @@ set_exception_handler('exceptionHandler');
 function exceptionHandler($exception)
 {
 	// fetch trace stack
-	$aTrace = $exception->getTrace();
+	$trace = $exception->getTrace();
 
 	// class & function exist and are spoon related
-	if(isset($aTrace[0]['class']) && isset($aTrace[0]['function']) && strtolower(substr($aTrace[0]['class'], 0, 5)) == 'spoon')
+	if(isset($trace[0]['class']) && isset($trace[0]['function']) && strtolower(substr($trace[0]['class'], 0, 5)) == 'spoon')
 	{
-		$documentationURL = strtolower($aTrace[0]['class']) .'/'. strtolower($aTrace[0]['function']);
+		$documentationURL = strtolower($trace[0]['class']) .'/'. strtolower($trace[0]['function']);
 		$documentation = '&raquo; <a href="http://docs.spoon-library.be/'. $documentationURL .'">view documentation</a>';
 	}
 
@@ -322,7 +322,7 @@ function exceptionHandler($exception)
 								$entireTraceStack = $exception->getTrace();
 
 								// loop elements
-								foreach ($entireTraceStack as $traceStack)
+								foreach($entireTraceStack as $traceStack)
 								{
 									// open defintion list
 									$output .= "<dl>\r\n";
