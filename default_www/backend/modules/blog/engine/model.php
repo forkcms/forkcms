@@ -234,7 +234,8 @@ class BackendBlogModel
 									   m.url
 									   FROM blog_posts AS p
 									   INNER JOIN meta AS m ON m.id = p.meta_id
-									   WHERE p.id = ?;', array($id));
+									   WHERE p.id = ? AND status = ?
+									   LIMIT 1;', array($id, 'active'));
 	}
 
 
@@ -438,7 +439,9 @@ class BackendBlogModel
 
 		// build array
 		$item['id'] = $id;
+		$item['status'] = 'active';
 		$item['language'] = $version['language'];
+		$item['edited_on'] = date('Y-m-d H:i:s');
 
 		// archive all older versions
 		$db->update('blog_posts', array('status' => 'archived'), 'id = ?', array($id));
@@ -460,6 +463,8 @@ class BackendBlogModel
 		// delete other revisions
 		if(!empty($revisionIdsToKeep)) $db->delete('blog_posts', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
 
+		// return the id
+		return $id;
 	}
 
 

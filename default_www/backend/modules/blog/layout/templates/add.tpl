@@ -21,6 +21,7 @@
 					<div class="tabs">
 						<ul>
 							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+							<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 							<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 						</ul>
 
@@ -160,6 +161,16 @@
 												{$txtTags} {$txtTagsError}
 											</div>
 										</div>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
+						<div id="tabPermissions">
+							<table border="0" cellspacing="0" cellpadding="0" width="100%">
+								<tr>
+									<td>
+										{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label>
 									</td>
 								</tr>
 							</table>

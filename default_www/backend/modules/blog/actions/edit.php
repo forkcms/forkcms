@@ -3,7 +3,6 @@
 // @todo 'publish' box
 // @todo fix URL below title and in SEO tab
 // @todo javascript show/hide for summary
-// @todo permissions tab with allow_comments checkbox
 
 /**
  * BackendBlogEdit
@@ -109,6 +108,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addEditorField('text', $this->record['text']);
 		$this->frm->addEditorField('introduction', $this->record['introduction']);
 		$this->frm->addRadioButton('hidden', $rbtHiddenValues, $this->record['hidden']);
+		$this->frm->addCheckBox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
 		$this->frm->addDropDown('category_id', $this->categories, $this->record['category_id']);
 		$this->frm->addDropDown('user_id', $this->users, $this->record['user_id']);
 		$this->frm->addTextField('tags', BackendTagsModel::getTags($this->url->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
@@ -187,14 +187,15 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// shorten fields
-			/* @var $txtTitle SpoonTextField */				$txtTitle = $this->frm->getField('title');
-			/* @var $txtIntroduction SpoonTextArea */		$txtIntroduction = $this->frm->getField('introduction');
-			/* @var $txtText SpoonTextArea */				$txtText = $this->frm->getField('introduction');
-			/* @var $txtPublishDate SpoonDateField */		$txtPublishDate = $this->frm->getField('publish_on_date');
-			/* @var $txtPublishTime SpoonTimeField */		$txtPublishTime = $this->frm->getField('publish_on_time');
-			/* @var $ddmUserId SpoonDropDown */				$ddmUserId = $this->frm->getField('user_id');
-			/* @var $ddmCategoryId SpoonDropDown */			$ddmCategoryId = $this->frm->getField('category_id');
-			/* @var $rbtHidden SpoonRadioButton */			$rbtHidden = $this->frm->getField('hidden');
+			$txtTitle = $this->frm->getField('title');
+			$txtIntroduction = $this->frm->getField('introduction');
+			$txtText = $this->frm->getField('introduction');
+			$txtPublishDate = $this->frm->getField('publish_on_date');
+			$txtPublishTime = $this->frm->getField('publish_on_time');
+			$ddmUserId = $this->frm->getField('user_id');
+			$ddmCategoryId = $this->frm->getField('category_id');
+			$rbtHidden = $this->frm->getField('hidden');
+			$chkAllowComments = $this->frm->getField('allow_comments');
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
@@ -215,19 +216,16 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 				// build item
 				$item['meta_id'] = $this->meta->save(true);
-				$item['revision_id'] = null; // @todo save revision ID
 				$item['category_id'] = $ddmCategoryId->getValue();
 				$item['user_id'] = $ddmUserId->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $txtTitle->getValue();
 				$item['introduction'] = $txtIntroduction->getValue();
 				$item['text'] = $txtText->getValue();
-				$item['status'] = 'active'; // @todo needs value from inputfield
 				$item['publish_on'] = $formattedDate.' '.$formattedTime;
 				$item['created_on'] = date('Y-m-d H:i:s', $this->record['created_on']);
-				$item['edited_on'] = date('Y-m-d H:i:s');
 				$item['hidden'] = $rbtHidden->getValue();
-				$item['allow_comments'] = 'Y'; // @todo needs value from inputfield
+				$item['allow_comments'] = $chkAllowComments->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;
 
 				// insert the item

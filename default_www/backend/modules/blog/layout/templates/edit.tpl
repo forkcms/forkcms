@@ -167,6 +167,16 @@
 							</table>
 						</div>
 						
+						<div id="tabPermissions">
+							<table border="0" cellspacing="0" cellpadding="0" width="100%">
+								<tr>
+									<td>
+										{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label>
+									</td>
+								</tr>
+							</table>
+						</div>
+						
 						<div id="tabRevisions">
 							<h3>{$lblRevisions|ucfirst}</h3>
 							<p>{$msgHelpRevisions}</p>
