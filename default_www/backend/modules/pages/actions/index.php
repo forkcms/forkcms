@@ -16,6 +16,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
 	/**
 	 * Execute the action
 	 *
+	 * @todo tijs - verslepen van pagina's werkt niet meer.
+	 *
 	 * @return	void
 	 */
 	public function execute()
