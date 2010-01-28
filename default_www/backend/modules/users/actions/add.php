@@ -116,7 +116,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));
 				$aSettings['password_key'] = uniqid();
-				$aSettings['avatar'] = null;
+				$aSettings['avatar'] = 'no-avatar.gif';
 
 				// build user-array
 				$aUser['username'] = $this->frm->getField('username')->getValue(true);
