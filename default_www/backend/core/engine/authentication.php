@@ -55,6 +55,7 @@ class BackendAuthentication
 
 	/**
 	 * Returns the encrypted password for a user by giving a username/password
+	 * Returns false if no user was found for this user/pass combination
 	 *
 	 * @return	string
 	 * @param string $username
@@ -70,7 +71,10 @@ class BackendAuthentication
 		require_once BACKEND_PATH .'/modules/users/engine/model.php';
 
 		// fetch user ID by username
-		$userId = (int) BackendUsersModel::getIdByUsername($username);
+		$userId = BackendUsersModel::getIdByUsername($username);
+
+		// check if a user ID was found, return false if no user exists
+		if($userId === false) return false;
 
 		// fetch user record
 		$user = new BackendUser($userId);
@@ -309,12 +313,15 @@ class BackendAuthentication
 		// init vars
 		$db = BackendModel::getDB();
 
+		// fetch the encrypted password
+		$passwordEncrypted = BackendAuthentication::getEncryptedPassword($login, $password);
+
 		// check in database (is the user active and not deleted, are the username and password correct?)
 		$userId = (int) $db->getVar('SELECT u.id
 										FROM users AS u
 										WHERE u.username = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
 										LIMIT 1;',
-										array($login, BackendAuthentication::getEncryptedPassword($login, $password), 'Y', 'N'));
+										array($login, $passwordEncrypted, 'Y', 'N'));
 
 		// not 0, a valid user!
 		if($userId !== 0)
