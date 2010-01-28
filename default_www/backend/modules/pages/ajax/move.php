@@ -1,9 +1,7 @@
 <?php
 
 /**
- * PagesAjaxMove
- *
- * This is the add-action, it will display a form to create a new item
+ * BackendPagesAjaxMove
  *
  * @package		backend
  * @subpackage	pages
@@ -11,7 +9,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class PagesAjaxMove extends BackendBaseAJAXAction
+class BackendPagesAjaxMove extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action

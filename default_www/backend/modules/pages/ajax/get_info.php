@@ -1,9 +1,7 @@
 <?php
 
 /**
- * PagesAjaxGetInfo
- *
- * This is the add-action, it will display a form to create a new item
+ * BackendPagesAjaxGetInfo
  *
  * @package		backend
  * @subpackage	pages
@@ -11,7 +9,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class PagesAjaxGetInfo extends BackendBaseAJAXAction
+class BackendPagesAjaxGetInfo extends BackendBaseAJAXAction
 {
 	/**
 	 * Execute the action
