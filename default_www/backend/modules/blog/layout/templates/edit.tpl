@@ -24,6 +24,7 @@
 						<ul>
 							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
 							<li><a href="#tabRevisions">{$lblRevisions|ucfirst}</a></li>
+							<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 							<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 						</ul>
 

@@ -1,7 +1,6 @@
 <?php
 
 // @todo publish box? does this need anything still?
-// @todo tags don't save yet for some reason
 // @todo fix URL below title and in SEO tab
 // @todo javascript show/hide for summary
 // @todo permissions tab with allow_comments checkbox

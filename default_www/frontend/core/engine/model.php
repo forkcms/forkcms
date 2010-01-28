@@ -41,6 +41,10 @@ class FrontendModel
 			// create instance
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
+			// utf8 compliance
+			$db->execute('SET CHARACTER SET utf8;');
+			$db->execute('SET NAMES utf8;');
+
 			// store
 			Spoon::setObjectReference('database', $db);
 		}

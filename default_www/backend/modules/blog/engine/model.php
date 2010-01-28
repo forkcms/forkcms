@@ -188,13 +188,11 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get records and return them
-		return (array) $db->getPairs('SELECT id, name
-										FROM blog_categories AS c;',
-										null, 'id');
+		return (array) $db->getPairs('SELECT c.id, c.name FROM blog_categories AS c;');
 	}
 
 
-/**
+	/**
 	 * Get all data for a given id
 	 *
 	 * @return	array
