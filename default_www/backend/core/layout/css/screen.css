@@ -1432,14 +1432,12 @@ td.comments {
 		padding: 0;
 	}
 
-	#pageTitle {
+	div#pageTitle {
+		/* div prefix to prevent conflict with input named #pageTitle */
 		vertical-align: middle;
 		border: 1px solid #999;
 		padding-left: 12px;
 	}
-
-
-
 
 	.avatarAndNickName a {
 
@@ -3206,7 +3204,7 @@ a.mainButton:focus {
 		Comments
 	*/
 
-	.datagrid .button {
+	.datagrid tbody .button {
 		margin-bottom: 8px;
 	}
 
@@ -3250,7 +3248,7 @@ a.mainButton:focus {
 		border: 1px solid #636363;
 		line-height: 1;
 		font-size: 11px;
-		font-family: "Lucida grande";
+		font-family: "Lucida grande", Arial, sans-serif;
 
 		/* @inc .topRc */
 

@@ -191,7 +191,7 @@ class BackendDataGrid extends SpoonDataGrid
 				<p>
 					'. $actionDropDown->parse() .'
 				</p>
-				<p><a href="#" class="submitButton button" id="massActionButton"><span><span><span>'. ucfirst(BL::getLabel('Execute')) .'</span></span></span></a></p>';
+				<div class="buttonHolder"><a href="#" class="submitButton button" id="massActionButton"><span><span><span>'. ucfirst(BL::getLabel('Execute')) .'</span></span></span></a></div>';
 
 		// assign parsed html
 		$this->tpl->assign('massAction', $HTML);

@@ -159,6 +159,7 @@
 #jstree-dragged.tree-fork li li.open {
 	background-position: 0 -16px;
 }
+
 #jstree-marker {
 	border-bottom: 1px dashed #000;
 }
@@ -186,7 +187,12 @@
 .tree-fork li a.clicked,
 .tree-fork li a.clicked:hover,
 .tree-fork li span.clicked {
-	background: #000;
+	background: #3875D7;
+	
+	/* @inc .rc */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
 	color: #FFF;
 }
 
