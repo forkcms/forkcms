@@ -69,7 +69,7 @@ class Init
 		// require spoon-classes
 		$this->requireSpoonClasses();
 
-		// require frontend-classes
+		// require backend-classes
 		$this->requireBackendClasses();
 
 		// disable magic quotes
@@ -150,6 +150,7 @@ class Init
 
 		// frontend
 		require FRONTEND_CORE_PATH .'/engine/language.php';
+		require FRONTEND_CORE_PATH .'/engine/model.php';
 
 		switch($this->type)
 		{

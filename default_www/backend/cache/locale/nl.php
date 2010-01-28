@@ -129,6 +129,7 @@ $lbl['core']['CheckCommentsForSpam'] = 'filter reacties op spam';
 $lbl['core']['Comment'] = 'reactie';
 $lbl['core']['Comments'] = 'reacties';
 $lbl['core']['Content'] = 'inhoud';
+$lbl['pages']['Core'] = 'algemeen';
 $lbl['core']['CustomURL'] = 'aangepaste URL';
 // d
 $lbl['core']['Dashboard'] = 'dashboard';
@@ -226,6 +227,7 @@ $lbl['core']['SEO'] = 'SEO';
 $lbl['core']['Settings'] = 'instellingen';
 $lbl['core']['SignIn'] = 'aanmelden';
 $lbl['core']['SignOut'] = 'afmelden';
+$lbl['core']['Sitemap'] = 'sitemap';
 $lbl['core']['SortAscending'] = 'sorteer oplopend';
 $lbl['core']['SortDescending'] = 'sorteer aflopend';
 $lbl['core']['SortedAscending'] = 'oplopend gesorteerd';
