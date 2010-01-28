@@ -47,7 +47,7 @@ class FrontendTemplate extends SpoonTemplate
 
 	/**
 	 * Output the template into the browser
-	 * Will also assign the interfacelabels and all user-defined constants.
+	 * Will also assign the labels and all user-defined constants.
 	 *
 	 * @return	void
 	 * @param	string $template
@@ -70,11 +70,8 @@ class FrontendTemplate extends SpoonTemplate
 		// parse locale
 		$this->parseLocale();
 
-		// assign a placeholder var
-		$this->assign('var', '');
-
-		// assign the current timestamp
-		$this->assign('currentTimestamp', time());
+		// parse vars
+		$this->parseVars();
 
 		// parse headers
 		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
@@ -85,23 +82,15 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
-	 * Map the fork-specific modifiers
+	 * Map the frontend-specific modifiers
 	 *
 	 * @return	void
 	 */
 	private function mapCustomModifiers()
 	{
-		// convert vars into an url, syntax {$var|geturl:<pageId>}
-		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
-		$this->mapModifier('getURL', array('FrontendTemplateModifiers', 'getURL'));
-
-		// convert var into navigation, syntax {$var|getnavigation[:<start-depth>][:<end-depth>]}
+		// convert var into navigation
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 		$this->mapModifier('getNavigation', array('FrontendTemplateModifiers', 'getNavigation'));
-
-		// convert var into a title, syntax {$var|gettitle:<pageId>}
-		$this->mapModifier('gettitle', array('FrontendTemplateModifiers', 'getTitle'));
-		$this->mapModifier('getTitle', array('FrontendTemplateModifiers', 'getTitle'));
 
 		// string
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
@@ -151,7 +140,6 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function parseDebug()
 	{
-		// @todo for now we only check if SPOON_DEBUG is true
 		if(SPOON_DEBUG) $this->assign('debug', true);
 	}
 
@@ -163,29 +151,17 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
-		// get all actions
-		$actions = FrontendLanguage::getActions();
-
-		// get all errors
-		$errors = FrontendLanguage::getErrors();
-
-		// get all labels
-		$labels = FrontendLanguage::getLabels();
-
-		// get all messages
-		$messages = FrontendLanguage::getMessages();
-
 		// assign actions
-		$this->assignArray($actions, 'act');
+		$this->assignArray(FrontendLanguage::getActions(), 'act');
 
 		// assign errors
-		$this->assignArray($errors, 'err');
+		$this->assignArray(FrontendLanguage::getErrors(), 'err');
 
 		// assign labels
-		$this->assignArray($labels, 'lbl');
+		$this->assignArray(FrontendLanguage::getLabels(), 'lbl');
 
 		// assign messages
-		$this->assignArray($messages, 'msg');
+		$this->assignArray(FrontendLanguage::getMessages(), 'msg');
 	}
 
 
@@ -216,13 +192,26 @@ class FrontendTemplate extends SpoonTemplate
 		// assign
 		$this->assignArray($localeToAssign);
 	}
+
+
+	/**
+	 * Assign some default vars
+	 *
+	 * @return	void
+	 */
+	private function parseVars()
+	{
+		// assign a placeholder var
+		$this->assign('var', '');
+
+		// assign the current timestamp
+		$this->assign('currentTimestamp', time());
+	}
 }
 
 
 /**
- * FrontendTemplateMofidiers, contains all Fork-related modifiers
- *
- * This source file is part of Fork CMS.
+ * FrontendTemplateMofidiers, contains all Frontend-related custom modifiers
  *
  * @package		frontend
  * @subpackage	template
@@ -234,6 +223,7 @@ class FrontendTemplateModifiers
 {
 	/**
 	 * Dumps the data
+	 *  syntax: {$var|dump}
 	 *
 	 * @return	string
 	 * @param	string $var
@@ -241,21 +231,6 @@ class FrontendTemplateModifiers
 	public static function dump($var)
 	{
 		Spoon::dump($var, false);
-	}
-
-
-	/**
-	 * Convert a var into a url
-	 * 	syntax: {$var|geturl:<action>[:<module>]}
-	 *
-	 * @return	void
-	 * @param	string[optional] $var
-	 * @param	string $action
-	 * @param	string[optional] $module
-	 */
-	public static function getURL($var = null, $action = null, $module = null)
-	{
-		return FrontendModel::createURLForAction($action, $module, FRONTEND_LANGUAGE);
 	}
 
 
@@ -287,28 +262,8 @@ class FrontendTemplateModifiers
 
 
 	/**
-	 * Convert a var into a certain pagetitle
-	 * 	syntax: {$var|gettitle:<pageId>}
-	 *
-	 * @return	void
-	 * @param	string[optional] $var
-	 * @param	int $pageId
-	 */
-	public static function getTitle($var = null, $pageId)
-	{
-		// get info
-		$pageInfo = FrontendNavigation::getPageInfo($pageId);
-
-		// return the title
-		if($pageInfo !== false && isset($pageInfo['navigation'])) return $pageInfo['navigation'];
-
-		// fallback
-		return $var;
-	}
-
-
-	/**
 	 * Truncate a string
+	 *  syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
 	 * @param	string $var
@@ -339,55 +294,6 @@ class FrontendTemplateModifiers
 			return SpoonFilter::htmlspecialchars($var);
 		}
 	}
-
-}
-
-
-/**
- * This source file is part of Fork CMS.
- *
- * @package		frontend
- * @subpackage	template
- *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
- */
-class FrontendTemplateCustom
-{
-	/**
-	 * Template instance
-	 *
-	 * @var	ForkTemplate
-	 */
-	private $tpl;
-
-
-	/**
-	 * Default constructor
-	 *
-	 * @return	void
-	 * @param	ForkTemplate $tpl
-	 */
-	public function __construct($tpl)
-	{
-		// set property
-		$this->tpl = $tpl;
-
-		// call parse
-		$this->parse();
-	}
-
-
-	/**
-	 * Parse the custom stuff
-	 *
-	 * @return	void
-	 */
-	private function parse()
-	{
-		// insert your custom stuff here...
-	}
-
 }
 
 ?>

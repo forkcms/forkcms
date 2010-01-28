@@ -2,7 +2,6 @@
 
 /**
  * FrontendNavigation
- *
  * This class will be used to build the navigation
  *
  * @package		frontend
@@ -14,7 +13,7 @@
 class FrontendNavigation extends FrontendBaseObject
 {
 	/**
-	 * The keys
+	 * The keys an structural data for pages
 	 *
 	 * @var	array
 	 */
@@ -23,7 +22,7 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
-	 * The page-ids for the selected pages
+	 * The selected pageIds
 	 *
 	 * @var	array
 	 */
@@ -50,17 +49,21 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @return	string
 	 * @param	string[optional] $type
-	 * @param	int[optional] $startDepth
-	 * @param	int[optional] $maxDepth
+	 * @param	int[optional] $parentId
+	 * @param	int[optional] $depth
 	 * @param	array[optional] $excludedIds
 	 * @param	string[optional] $html
+	 * @param	int[optional] $depthCounter
 	 */
 	private static function createHtml($type = 'page', $parentId = 0, $depth = null, $excludedIds = array(), $html = '', $depthCounter = 1)
 	{
 		// redefine
 		$type = (string) $type;
+		$parentId = (int) $parentId;
+		$depth = ($depth !== null) ? (int) $depth : null;
 		$excludedIds = (array) $excludedIds;
 		$html = (string) $html;
+		$depthCounter = (int) $depthCounter;
 
 		// if the depthCounter exceeds the required depth return the generated HTML, we have the build the required HTML.
 		if($depth !== null && $depthCounter > $depth) return $html;
@@ -75,17 +78,19 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t available in the navigation.');
 		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
 
-		// start HTML, only when parentId is different from 1, the first level below home should be on the same level.
+		// start HTML, only when parentId is different from 1, the first level below home should be on the same level as home
 		if($parentId != 1) $html .= '<ul>' . "\n";
 
 		// loop elements
 		foreach($navigation[$type][$parentId] as $page)
 		{
-			// some IDs should be excluded
+			// some Ids should be excluded
 			if(in_array($page['page_id'], $excludedIds)) continue;
 
-			// start HTML
+			// if the item is in the selected page it should get an selected class
 			if(in_array($page['page_id'], self::$selectedPageIds)) $html .= '	<li class="'. $defaultSelectedClass .'">'."\n";
+
+			// just start the html
 			else $html .= '	<li>'."\n";
 
 			// add link
@@ -130,7 +135,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// loop depths
 		foreach($navigation as $depth => $parent)
 		{
-			// first check
+			// no availabe, skip this element
 			if(!isset($parent[$pageId])) continue;
 
 			// get keys
@@ -164,7 +169,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// loop links
 		foreach($navigation['footer'][0] as $id => $data)
 		{
-			// temp array
+			// build temp array
 			$temp = array();
 			$temp['id'] = $id;
 			$temp['url'] = self::getURL($id);
@@ -194,7 +199,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// does the keys exists in the cache?
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
-			// validate file
+			// validate file @later	the file should be regenerated
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php')) throw new FrontendException('No key-file (keys_'. $language .'.php) found.');
 
 			// init var
@@ -225,7 +230,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// does the keys exists in the cache?
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
-			// validate file
+			// validate file @later: the file should be regenerated
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php')) throw new FrontendException('No navigation-file (navigation_'. $language .'.php) found.');
 
 			// init var
@@ -248,8 +253,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @return	string
 	 * @param	string[optional] $type
-	 * @param	int[optional] $startDepth
-	 * @param	int[optional] $endDepth
+	 * @param	int[optional] $parentId
+	 * @param	int[optional] $depth
 	 * @param	array[optional] $excludeIds
 	 */
 	public static function getNavigationHtml($type = 'page', $parentId = 0, $depth = null, $excludeIds = array())
@@ -259,7 +264,7 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
-	 * Get a menuid for an specified url
+	 * Get a menuId for an specified url
 	 *
 	 * @return	int
 	 * @param 	string $url
@@ -277,8 +282,10 @@ class FrontendNavigation extends FrontendBaseObject
 		// get key
 		$key = array_search($url, $keys);
 
-		// return
+		// return 404 if we don't known a valid Id
 		if($key === false) return 404;
+
+		// return the real Id
 		return (int) $key;
 	}
 
@@ -320,46 +327,10 @@ class FrontendNavigation extends FrontendBaseObject
 		// fallback
 		return false;
 	}
-//
-//
-//	/**
-//	 * Get parentId
-//	 *
-//	 * @return	mixed
-//	 * @param	string $url
-//	 * @param	string[optional] $language
-//	 */
-//	public static function getParentIdByURL($url, $language = null)
-//	{
-//		// redefine
-//		$url = (string) $url;
-//		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-//
-//		// init vars
-//		$navigation = self::getNavigation($language);
-//		$pageId = self::getPageId($url, $language);
-//
-//		// loop levels
-//		foreach($navigation as $level)
-//		{
-//			// loop parents
-//			foreach($level as $parentId => $children)
-//			{
-//				// loop childs
-//				foreach($children as $itemId => $item)
-//				{
-//					if($pageId == $itemId) return (int) $parentId;
-//				}
-//			}
-//		}
-//
-//		// fallback
-//		return false;
-//	}
-//
-//
+
+
 	/**
-	 * Get url for a given pageId
+	 * Get URL for a given pageId
 	 *
 	 * @return	string
 	 * @param	int $pageId
@@ -404,7 +375,7 @@ class FrontendNavigation extends FrontendBaseObject
 			// get page id
 			$pageId = self::getPageId((string) implode('/', $pages));
 
-			// add to selected item
+			// add pageId into selected items
 			if($pageId !== false) self::$selectedPageIds[] = $pageId;
 
 			// remove last element

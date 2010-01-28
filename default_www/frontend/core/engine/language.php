@@ -5,7 +5,7 @@
  *
  * This class will store the language-dependant content for the frontend.
  *
- * @package		backend
+ * @package		frontend
  * @subpackage	language
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
@@ -13,7 +13,7 @@
  */
 class FrontendLanguage
 {
-	// Default language
+	// default language
 	const DEFAULT_LANGUAGE = 'nl';
 
 
@@ -33,8 +33,8 @@ class FrontendLanguage
 	 *
 	 * @var	array
 	 */
-	private static $languages = array('active' => array('nl', 'fr', 'en'),
-										'possible_redirect' => array('nl', 'fr', 'en'));
+	private static $languages = array('active' => array(),
+										'possible_redirect' => array());
 
 
 	/**
@@ -57,7 +57,7 @@ class FrontendLanguage
 
 
 	/**
-	 * Get the actions
+	 * Get all the actions
 	 *
 	 * @return	array
 	 */
@@ -74,6 +74,17 @@ class FrontendLanguage
 	 */
 	public static function getActiveLanguages()
 	{
+		// validate array
+		if(empty(self::$languages['active']))
+		{
+			// grab from settings
+			$activeLanguages = (array) FrontendModel::getModuleSetting('core', 'languages');
+
+			// store
+			self::$languages['active'] = $activeLanguages;
+		}
+
+		// return
 		return self::$languages['active'];
 	}
 
@@ -141,7 +152,7 @@ class FrontendLanguage
 
 
 	/**
-	 * Get the errors
+	 * Get all the errors
 	 *
 	 * @return	array
 	 */
@@ -171,7 +182,7 @@ class FrontendLanguage
 
 
 	/**
-	 * Get the labels
+	 * Get all the labels
 	 *
 	 * @return	array
 	 */
@@ -201,7 +212,7 @@ class FrontendLanguage
 
 
 	/**
-	 * Get the messages
+	 * Get all the messages
 	 *
 	 * @return	array
 	 */
@@ -218,6 +229,17 @@ class FrontendLanguage
 	 */
 	public static function getRedirectLanguages()
 	{
+		// validate array
+		if(empty(self::$languages['possible_redirect']))
+		{
+			// grab from settings
+			$redirectLanguages = (array) FrontendModel::getModuleSetting('core', 'active_languages');
+
+			// store
+			self::$languages['possible_redirect'] = $redirectLanguages;
+		}
+
+		// return
 		return self::$languages['possible_redirect'];
 	}
 
@@ -234,7 +256,7 @@ class FrontendLanguage
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// validate language
-		if(!in_array($language, self::$languages['active'])) throw new FrontendException('Invalid language ('. $language .').');
+		if(!in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language ('. $language .').');
 
 		// init vars
 		$act = array();

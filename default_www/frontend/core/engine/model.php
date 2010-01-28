@@ -1,9 +1,7 @@
 <?php
 
 /**
- * Fork
- *
- * This source file is part of Fork CMS.
+ * FrontendModel
  *
  * @package		frontend
  * @subpackage	core
@@ -14,7 +12,7 @@
 class FrontendModel
 {
 	/**
-	 * Cached modules
+	 * cached modules
 	 *
 	 * @var	array
 	 */
@@ -22,7 +20,7 @@ class FrontendModel
 
 
 	/**
-	 * Cached module-settings
+	 * cached module-settings
 	 *
 	 * @var	array
 	 */
@@ -31,6 +29,7 @@ class FrontendModel
 
 	/**
 	 * Get (or create and get) a database-connection
+	 * @later: we should extend SpoonDatabase with FrontendDatabas, which will enable us to split read and write-connections.
 	 *
 	 * @return	SpoonDatabase
 	 */
@@ -71,13 +70,14 @@ class FrontendModel
 		if(empty(self::$moduleSettings))
 		{
 			// fetch settings
-			$settings = (array) $db->retrieve('SELECT module, name, value FROM modules_settings;');
+			$settings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
+												FROM modules_settings AS ms;');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
 		}
 
-		// if the setting doesn't exists, store it
+		// if the setting doesn't exists, store it (it will be available from te cache)
 		if(!isset(self::$moduleSettings[$module][$name])) self::setModuleSetting($module, $name, $defaultValue);
 
 		// return
@@ -117,11 +117,11 @@ class FrontendModel
 		// validate
 		if(empty($record)) return array();
 
-		// unserialize parameters
+		// unserialize page data and template data
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = unserialize($record['template_data']);
 
-		// add blocks
+		// get blocks
 		$record['blocks'] = (array) $db->retrieve('SELECT pb.extra_id, pb.html,
 													pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 													FROM pages_blocks AS pb
@@ -129,14 +129,15 @@ class FrontendModel
 													WHERE pb.revision_id = ? AND pb.status = ?;',
 													array($record['revision_id'], 'active'));
 
-		// unserialize data for blocks
+		// loop blocks
 		foreach($record['blocks'] as $index => $row)
 		{
+			// unserialize data if it is available
 			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
 		}
 
 		// return
-		return (array) $record;
+		return $record;
 	}
 
 

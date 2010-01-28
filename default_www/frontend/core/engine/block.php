@@ -65,6 +65,9 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Default constructor
 	 *
 	 * @return	void
+	 * @param	string $module
+	 * @param	string $action
+	 * @param	mixed[optional] $data
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -92,7 +95,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	public function execute()
 	{
 		// build action-class-name
-		$actionClassName = SpoonFilter::toCamelCase('frontend_'. $this->getModule() .'_'. $this->getAction());
+		$actionClassName = 'Frontend'. SpoonFilter::toCamelCase($this->getModule() .'_'. $this->getAction());
 
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance off the file).
 		require_once FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/actions/'. $this->getAction() .'.php';
@@ -120,7 +123,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 */
 	public function getAction()
 	{
-		// no action specified? @todo	base on URL
+		// no action specified?
 		if($this->action === null)
 		{
 			// get first parameter
@@ -282,7 +285,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 /**
  * FrontendBlockWidget
  *
- * This class will handle all stuff related to blocks
+ * This class will handle all stuff related to widgets
  *
  * @package		frontend
  * @subpackage	core
@@ -325,14 +328,6 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 
 	/**
-	 * Should the template overwrite the current one
-	 *
-	 * @var	bool
-	 */
-	protected $overwrite = false;
-
-
-	/**
 	 * The path for the template
 	 *
 	 * @var	string
@@ -344,6 +339,9 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 * Default constructor
 	 *
 	 * @return	void
+	 * @param	string $module
+	 * @param	string $action
+	 * @param	mixed[optional] $data
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -368,7 +366,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	public function execute()
 	{
 		// build action-class-name
-		$actionClassName = SpoonFilter::toCamelCase('frontend_'. $this->getModule() .'_widget_'. $this->getAction());
+		$actionClassName = 'Frontend'. SpoonFilter::toCamelCase($this->getModule() .'_widget_'. $this->getAction());
 
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
@@ -398,7 +396,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 */
 	public function getAction()
 	{
-		// no action specified? @todo	base on URL
+		// no action specified?
 		if($this->action === null) $this->setAction($this->config->getDefaultAction());
 
 		// return
@@ -426,17 +424,6 @@ class FrontendBlockWidget extends FrontendBaseObject
 	public function getModule()
 	{
 		return $this->module;
-	}
-
-
-	/**
-	 * Get overwrite mode
-	 *
-	 * @return	bool
-	 */
-	public function getOverwrite()
-	{
-		return $this->overwrite;
 	}
 
 
@@ -501,18 +488,6 @@ class FrontendBlockWidget extends FrontendBaseObject
 	private function setModule($module)
 	{
 		$this->module = (string) $module;
-	}
-
-
-	/**
-	 * Set overwrite mode
-	 *
-	 * @return	void
-	 * @param	bool $overwrite
-	 */
-	private function setOverwrite($overwrite)
-	{
-		$this->overwrite = (bool) $overwrite;
 	}
 
 

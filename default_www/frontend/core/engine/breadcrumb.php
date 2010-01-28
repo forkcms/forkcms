@@ -14,7 +14,7 @@
 class FrontendBreadcrumb extends FrontendBaseObject
 {
 	/**
-	 * The items that will be used in the breadcrumb
+	 * The items in the breadcrumb
 	 *
 	 * @var	array
 	 */
@@ -30,6 +30,9 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	{
 		// call parent
 		parent::__construct();
+
+		// add into the reference
+		Spoon::setObjectReference('breadcrumb', $this);
 
 		// get more information for the homepage
 		$homeInfo = FrontendNavigation::getPageInfo(1);
@@ -73,7 +76,10 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		krsort($items);
 
 		// loop and add elements
-		foreach($items as $row) $this->addElement($row['title'], $row['url']);
+		foreach($items as $row)
+		{
+			$this->addElement($row['title'], $row['url']);
+		}
 	}
 
 
@@ -91,13 +97,18 @@ class FrontendBreadcrumb extends FrontendBaseObject
 
 
 	/**
-	 * Clear all elements in the breadcrumb
+	 * Clear all (or a specific) elements in the breadcrumb
 	 *
 	 * @return	void
+	 * @param	int[optional] $key
 	 */
-	public function clear()
+	public function clear($key = null)
 	{
-		$this->items = array();
+		// key given?
+		if($key !== null) unset($this->items[(int) $key]);
+
+		// clear all
+		else $this->items = array();
 	}
 
 

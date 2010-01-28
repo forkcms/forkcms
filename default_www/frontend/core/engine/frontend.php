@@ -31,4 +31,5 @@ class Frontend
 		new FrontendPage();
 	}
 }
+
 ?>

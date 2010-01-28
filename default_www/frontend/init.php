@@ -24,8 +24,8 @@ class Init
 	/**
 	 * Default constructor
 	 *
-	 * @param	string $type
 	 * @return	void
+	 * @param	string $type
 	 */
 	public function __construct($type)
 	{
@@ -140,21 +140,20 @@ class Init
 	 */
 	private function requireFrontendClasses()
 	{
-		// @todo check
-		require_once FRONTEND_CORE_PATH .'/engine/base_object.php';
-		require_once FRONTEND_CORE_PATH .'/engine/base_config.php';
-		require_once FRONTEND_CORE_PATH .'/engine/base_block.php';
+		// require base classes
+		require_once FRONTEND_CORE_PATH .'/engine/base.php';
 
 		// general classes
 		require_once FRONTEND_CORE_PATH .'/engine/exception.php';
 		require_once FRONTEND_CORE_PATH .'/engine/template.php';
+		require_once FRONTEND_CORE_PATH .'/engine/template_custom.php';
 		require_once FRONTEND_CORE_PATH .'/engine/language.php';
 		require_once FRONTEND_CORE_PATH .'/engine/model.php';
 		require_once FRONTEND_CORE_PATH .'/engine/url.php';
 		require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
 
 		// based on the type
-		switch ($this->type)
+		switch($this->type)
 		{
 			case 'frontend':
 				require_once FRONTEND_CORE_PATH .'/engine/frontend.php';
@@ -169,8 +168,6 @@ class Init
 
 			case 'frontend_ajax':
 				require_once FRONTEND_CORE_PATH .'/engine/ajax.php';
-				require_once FRONTEND_CORE_PATH .'/engine/base_ajax_action.php';
-				require_once FRONTEND_CORE_PATH .'/engine/ajax_action.php';
 			break;
 
 			case 'frontend_js':
@@ -193,7 +190,7 @@ class Init
 			case 'frontend_ajax':
 			case 'frontend_js':
 				require_once '../../library/globals.php';
-				require_once '../../library/globals_backend.php';
+				require_once '../../library/globals_frontend.php';
 			break;
 
 			// default
@@ -212,6 +209,7 @@ class Init
 	 */
 	private function requireSpoonClasses()
 	{
+		// general classes
 		require_once 'spoon/spoon.php';
 		require_once 'spoon/locale/locale.php';
 		require_once 'spoon/session/session.php';
@@ -220,12 +218,12 @@ class Init
 		require_once 'spoon/http/http.php';
 		require_once 'spoon/template/template.php';
 
+		// based on the type
 		switch($this->type)
 		{
 			case 'frontend':
 				require_once 'spoon/html/datagrid/datagrid.php';
 				require_once 'spoon/html/form/form.php';
-				require_once 'spoon/image/thumbnail.php';
 			break;
 		}
 	}
@@ -241,14 +239,20 @@ class Init
 		// debugging enabled
 		if(SPOON_DEBUG)
 		{
+			// set error reporting as high as possible
 			error_reporting(E_ALL | E_STRICT);
+
+			// show on screen
 			ini_set('display_errors', 'On');
 		}
 
 		// debugging disabled
 		else
 		{
+			// set error reporting as low as possible
 			error_reporting(0);
+
+			// don't show errors on screen
 			ini_set('display_errors', 'Off');
 		}
 	}
@@ -261,6 +265,7 @@ class Init
 	 */
 	private function setIncludePath()
 	{
+		// prepend the libary and document_root to the existing include path
 		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }

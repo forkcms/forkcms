@@ -1,16 +1,7 @@
 <?php
 
 /**
- * FrontendTemplate, this is our extended version of SpoonTemplate
- *
- * This class will handle a lot of stuff for you, for example:
- * 	- it will assign all labels
- *	- it will map some modifiers
- *  - it will assign a lot of constants
- * 	- ...
- *
- *
- * This source file is part of Fork CMS.
+ * FrontendPage
  *
  * @package		frontend
  * @subpackage	core
@@ -47,19 +38,9 @@ class FrontendPage extends FrontendBaseObject
 	/**
 	 * Blocks
 	 *
-	 * @var	FrontendBlock
-	 *
-	 * @var unknown_type
+	 * @var	array
 	 */
 	private $blocks;
-
-
-	/**
-	 * Body instance
-	 *
-	 * @var	FrontendBody
-	 */
-	private $body;
 
 
 	/**
@@ -79,14 +60,6 @@ class FrontendPage extends FrontendBaseObject
 
 
 	/**
-	 * Navigation instance
-	 *
-	 * @var	FrontendNavigation
-	 */
-	private $navigation;
-
-
-	/**
 	 * The current pageId
 	 *
 	 * @var	int
@@ -103,7 +76,7 @@ class FrontendPage extends FrontendBaseObject
 
 
 	/**
-	 * The pages statuscode
+	 * The statuscode
 	 *
 	 * @var	int
 	 */
@@ -120,13 +93,13 @@ class FrontendPage extends FrontendBaseObject
 		// call parent
 		parent::__construct();
 
-		// get menu id for requested url
+		// get pageId for requested url
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->url->getPages()));
 
 		// make the pageId accessible through a static method
 		self::$currentPageId = $this->pageId;
 
-		// set headers if this is a 404 page @todo	check me
+		// set headers if this is a 404 page
 		if($this->pageId == 404) $this->statusCode = 404;
 
 		// get pagecontent
@@ -147,7 +120,7 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	public function display()
 	{
-		// set headers
+		// only overwrite when status code is 404
 		if($this->statusCode == 404) SpoonHTTP::setHeadersByCode(404);
 
 		// store statistics
@@ -191,8 +164,8 @@ class FrontendPage extends FrontendBaseObject
 		// get page record
 		$this->record = (array) FrontendModel::getPage($this->pageId);
 
-		// empty record (pageId doesn't exists)
-		if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404); // @todo we don't want a redirect
+		// empty record (pageId doesn't exists, hope this line is never used)
+		if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
 
 		// init var
 		$redirect = true;
@@ -219,8 +192,8 @@ class FrontendPage extends FrontendBaseObject
 				// build url
 				$url = FrontendNavigation::getURL($firstChildId);
 
-				// redirect (temporary)
-				SpoonHTTP::redirect($url, 307);
+				// redirect
+				SpoonHTTP::redirect($url, 302);
 			}
 		}
 	}
@@ -268,14 +241,13 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private function processPage()
 	{
-		// create navigation instance
-		$this->navigation = new FrontendNavigation();
-
 		// create header instance
 		$this->header = new FrontendHeader();
 
 		// set pageTitle
 		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
+
+		// set meta-data
 		$this->header->setMetaDescription($this->record['meta_description'], (bool) ($this->record['meta_description_overwrite'] == 'Y'));
 		$this->header->setMetaKeywords($this->record['meta_keywords'], (bool) ($this->record['meta_keywords_overwrite'] == 'Y'));
 		$this->header->setMetaCustom($this->record['meta_custom']);
@@ -318,7 +290,7 @@ class FrontendPage extends FrontendBaseObject
 					// overwrite the template
 					if($extra->getOverwrite()) $this->templatePath = $extra->getTemplatePath();
 
-					// assign
+					// assign the templatepath so it will be included
 					else $this->tpl->assign($templateVariable, $extra->getTemplatePath());
 				}
 
@@ -330,7 +302,7 @@ class FrontendPage extends FrontendBaseObject
 					// execute
 					$widget->execute();
 
-					// assign
+					// assign the templatepath so it will be included
 					$this->tpl->assign($templateVariable, $widget->getTemplatePath());
 				}
 			}
@@ -349,13 +321,13 @@ class FrontendPage extends FrontendBaseObject
 
 
 	/**
-	 * Store the temporary statistics
-	 * @later: implement me
+	 * @todo	Store the temporary statistics
 	 *
 	 * @return	void
 	 */
 	private function storeStatistics()
 	{
+		// code goed here ...
 	}
 }
 

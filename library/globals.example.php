@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Global configuration options and constants of the FORK CMS
  *
@@ -27,23 +28,22 @@ define('SPOON_CHARSET', 'utf-8');
 // type of connection
 define('DB_TYPE', 'mysql');
 // database name
-define('DB_DATABASE', 'forkng');
+define('DB_DATABASE', '<database-name>');
 // database host
-//define('DB_HOSTNAME', 'mysql.local');
-define('DB_HOSTNAME', '10.1.11.37');
+define('DB_HOSTNAME', '<database-hostname>');
 // database username
-define('DB_USERNAME', 'forkng');
+define('DB_USERNAME', '<database-username>');
 // datebase password
-define('DB_PASSWORD', 'forkng');
+define('DB_PASSWORD', '<database-password>');
 
 
 /**
  * Site configuration
  */
 // the domain (without http)
-define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : 'forkng.local');
+define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '<domain-without-http>');
 // the default title
-define('SITE_DEFAULT_TITLE', 'Fork NG');
+define('SITE_DEFAULT_TITLE', '<default-title>');
 // the url
 define('SITE_URL', 'http://'. SITE_DOMAIN);
 // is the site multilanguage?
@@ -53,10 +53,10 @@ define('SITE_MULTILANGUAGE', true);
 /**
  * Path configuration
  *
- * Depends on the serverlayout. Openminds ftw!
+ * Depends on the serverlayout
  */
 // path to the website itself
-define('PATH_WWW', '/Users/tijs/Sites/forkng.local/default_www');
+define('PATH_WWW', '<path-of-document-root>');
 // path to the Spoon library
 define('PATH_LIBRARY', dirname(__FILE__));
 

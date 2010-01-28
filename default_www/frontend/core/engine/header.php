@@ -6,8 +6,6 @@
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
- * @todo	append the "last_modified" to css, js, img, ...
- *
  * @package		frontend
  * @subpackage	core
  *
@@ -77,18 +75,18 @@ class FrontendHeader extends FrontendBaseObject
 		// store in reference
 		Spoon::setObjectReference('header', $this);
 
-		// add some css
-		$this->addCssFile('/frontend/core/layout/css/screen.css');
-		$this->addCssFile('/frontend/core/layout/css/print.css', 'print');
+		// add some default CSS files
+		$this->addCSSFile('/frontend/core/layout/css/screen.css');
+		$this->addCSSFile('/frontend/core/layout/css/print.css', 'print');
 
-		// IE stylesheets
-		$this->addCssFile('/frontend/core/layout/css/ie6.css', 'screen', 'lte IE 6');
-		$this->addCssFile('/frontend/core/layout/css/ie7.css', 'screen', 'IE 7');
+		// add default IE stylesheets
+		$this->addCSSFile('/frontend/core/layout/css/ie6.css', 'screen', 'lte IE 6');
+		$this->addCSSFile('/frontend/core/layout/css/ie7.css', 'screen', 'IE 7');
 
 		// debug stylesheet
-		if(SPOON_DEBUG) $this->addCssFile('/frontend/core/layout/css/debug.css');
+		if(SPOON_DEBUG) $this->addCSSFile('/frontend/core/layout/css/debug.css');
 
-		// add jquery
+		// add default javascript-files
 		$this->addJavascript('/frontend/core/js/jquery/jquery.js', false);
 		$this->addJavascript('/frontend/core/js/frontend.js', true);
 		$this->addJavascript('/frontend/core/js/utils.js', true);
@@ -96,13 +94,15 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Adds a css file into the array
+	 * Add a CSS file into the array
 	 *
 	 * @return	void
 	 * @param 	string $file
 	 * @param	string[optional] $media
+	 * @param	string[optional] $condition
+	 * @param	bool[optional] $minify
 	 */
-	public function addCssFile($file, $media = 'screen',  $condition = null, $minify = true)
+	public function addCSSFile($file, $media = 'screen',  $condition = null, $minify = true)
 	{
 		// redefine
 		$file = (string) $file;
@@ -114,7 +114,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(SPOON_DEBUG) $minify = false;
 
 		// try to modify
-		if($minify) $file = $this->minifyCss($file);
+		if($minify) $file = $this->minifyCSS($file);
 
 		// in array
 		$inArray = false;
@@ -130,10 +130,6 @@ class FrontendHeader extends FrontendBaseObject
 			$temp['media'] = (string) $media;
 			$temp['condition'] = (string) $condition;
 
-			// options
-			$temp['oHasCondition'] = (bool) ($condition !== null);
-			$temp['oHasNoCondition'] = (bool) ($condition === null);
-
 			// add to files
 			$this->cssFiles[] = $temp;
 		}
@@ -141,11 +137,12 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Adds a js file into the array
+	 * Add a javascript file into the array
 	 *
 	 * @return	void
 	 * @param 	string $file
 	 * @param	bool[optional] $minify
+	 * @param	bool[optional] $parseThroughPHP
 	 */
 	public function addJavascript($file, $minify = true, $parseThroughPHP = false)
 	{
@@ -173,9 +170,9 @@ class FrontendHeader extends FrontendBaseObject
 		}
 
 		// try to modify
-		if($minify) $file = $this->minifyJs($file);
+		if($minify) $file = $this->minifyJavascript($file);
 
-		// add to array
+		// already in array?
 		if(!in_array($file, $this->javascriptFiles))
 		{
 			// add to files
@@ -200,6 +197,7 @@ class FrontendHeader extends FrontendBaseObject
 		{
 			// if condition is not empty, add to lowest key
 			if($file['condition'] != '') $aTemp['z'.$i][] = $file;
+
 			else
 			{
 				// if media == screen, add to highest key
@@ -232,11 +230,11 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Get all added CSS-files
+	 * Get all added CSS files
 	 *
 	 * @return	array
 	 */
-	public function getCssFiles()
+	public function getCSSFiles()
 	{
 		// sort the cssfiles
 		$this->cssSort();
@@ -247,7 +245,7 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * get all added JS-files
+	 * get all added javascript files
 	 *
 	 * @return	array
 	 */
@@ -307,14 +305,14 @@ class FrontendHeader extends FrontendBaseObject
 	 * @return	string
 	 * @param	string $file
 	 */
-	private function minifyCss($file)
+	private function minifyCSS($file)
 	{
 		// create unique filename
 		$fileName = md5($file) .'.css';
 		$finalUrl = FRONTEND_CACHE_URL .'/minified_css/'. $fileName;
 		$finalPath = FRONTEND_CACHE_PATH .'/minified_css/'. $fileName;
 
-		// file already exists (if SPOON_DEBUG is true, we should reminify every time
+		// file already exists (if SPOON_DEBUG is true, we should reminify every time)
 		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalUrl;
 
 		// grab content
@@ -369,12 +367,12 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
-	 * Minify a JS-file
+	 * Minify a javascript-file
 	 *
 	 * @return	string
 	 * @param	string $file
 	 */
-	private function minifyJs($file)
+	private function minifyJavascript($file)
 	{
 		// create unique filename
 		$fileName = md5($file) .'.js';
@@ -398,7 +396,7 @@ class FrontendHeader extends FrontendBaseObject
 		$content = preg_replace('|\r|iU', '', $content);
 
 		// remove empty lines
-		$content = preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $content);
+		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
 
 		// store
 		SpoonFile::setContent($finalPath, $content);
@@ -425,11 +423,12 @@ class FrontendHeader extends FrontendBaseObject
 
 		// init var
 		$cssFiles = null;
+		$existingCSSFiles = $this->getCSSFiles();
 
 		// if there aren't any JS-files added we don't need to do something
-		if(!empty($this->javascriptFiles))
+		if(!empty($existingCSSFiles))
 		{
-			foreach($this->cssFiles as $file)
+			foreach($existingCSSFiles as $file)
 			{
 				// add lastmodified time
 				$file['file'] = $file['file'] .'?m='. LAST_MODIFIED_TIME;
@@ -444,15 +443,16 @@ class FrontendHeader extends FrontendBaseObject
 
 		// init var
 		$javascriptFiles = null;
+		$existingJavascriptFiles = $this->getJavascriptFiles();
 
 		// if there aren't any JS-files added we don't need to do something
-		if(!empty($this->javascriptFiles))
+		if(!empty($existingJavascriptFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
 			$ignoreCache = array('/frontend/core/js/jquery/jquery.js');
 
 			// loop the JS-files
-			foreach($this->javascriptFiles as $file)
+			foreach($existingJavascriptFiles as $file)
 			{
 				// some files shouldn't be uncachable
 				if(in_array($file, $ignoreCache)) $javascriptFiles[] = array('file' => $file);

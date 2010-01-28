@@ -22,7 +22,7 @@ class FrontendJavascript
 
 
 	/**
-	 * The working language
+	 * The language
 	 *
 	 * @var	string
 	 */
@@ -107,7 +107,7 @@ class FrontendJavascript
 	 * @return	void
 	 * @param	string $value
 	 */
-	public function setFile($value)
+	private function setFile($value)
 	{
 		// set property
 		$this->file = (string) $value;
@@ -148,16 +148,16 @@ class FrontendJavascript
 	 * @return	void
 	 * @param	string $value
 	 */
-	public function setLanguage($value)
+	private function setLanguage($value)
 	{
 		// set property
 		$this->language = (string) $value;
 
-		// set the locale (we need this for the labels)
-		FrontendLanguage::setLocale($this->language);
-
 		// define constant
 		define('FRONTEND_LANGUAGE', $this->language);
+
+		// set the locale (we need this for the labels)
+		FrontendLanguage::setLocale($this->language);
 	}
 
 
@@ -167,7 +167,7 @@ class FrontendJavascript
 	 * @return	void
 	 * @param	string $value
 	 */
-	public function setModule($value)
+	private function setModule($value)
 	{
 		$this->module = (string) $value;
 	}

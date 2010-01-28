@@ -124,18 +124,23 @@ class FrontendURL
 
 	/**
 	 * Get a parameter specified by the given index
-	 * @todo	sync with backendURL (type)
+	 * The function will return null if the key is not available
+	 *
+	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
+	 * Possible values are: bool, boolean, int, integer, float, double, string, array
 	 *
 	 * @return	mixed
-	 * @param	int $index
+	 * @param	string $key
+	 * @param	string[optional] $type
 	 */
-	public function getParameter($index)
+	public function getParameter($key, $type = 'string')
 	{
-		// redefine
-		$index = (int) $index;
-
 		// does the index exists
-		if(isset($this->parameters[$index])) return $this->parameters[$index];
+		if(isset($this->parameters[$key]))
+		{
+			// parameter exists
+			if(isset($this->parameters[$key])) return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
+		}
 
 		// fallback
 		return null;
@@ -192,8 +197,15 @@ class FrontendURL
 				// get key and value
 				$getChunks = explode('=', $getItem, 2);
 
-				// set get
-				if(isset($getChunks[0])) $_GET[$getChunks[0]] =  (isset($getChunks[1])) ? (string) $getChunks[1] : '';
+				// key available?
+				if(isset($getChunks[0]))
+				{
+					// reset in $_GET
+					$_GET[$getChunks[0]] =  (isset($getChunks[1])) ? (string) $getChunks[1] : '';
+
+					// add into parameters
+					if(isset($getChunks[1])) $this->parameters[(string) $getChunks[0]] = (string) $getChunks[1];
+				}
 			}
 		}
 
@@ -318,6 +330,9 @@ class FrontendURL
 		{
 			// get 404 url
 			$url = FrontendNavigation::getURL(404);
+
+			// remove language
+			if(SITE_MULTILANGUAGE) $url = str_replace('/'. $language, '', $url);
 		}
 
 		// set pages
@@ -328,9 +343,6 @@ class FrontendURL
 		{
 			// explode in pages
 			$pages = explode('/', $url);
-
-			// remove language in case of multilanguage site
-			if(SITE_MULTILANGUAGE) array_shift($pages);
 
 			// reset pages
 			$this->setPages($pages);
@@ -345,7 +357,10 @@ class FrontendURL
 		// has at least one parameter
 		if($parameters != '')
 		{
+			// parameters will be separated by /
 			$parameters = explode('/', $parameters);
+
+			// set parameters
 			$this->setParameters($parameters);
 		}
 
@@ -360,16 +375,16 @@ class FrontendURL
 		if($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra']))
 		{
 			// get 404 url
-			$url = trim(FrontendNavigation::getURL(404), '/');
+			$url = FrontendNavigation::getURL(404);
+
+			// remove language
+			if(SITE_MULTILANGUAGE) $url = trim(str_replace('/'. $language, '', $url), '/');
 
 			// currently not in the homepage
 			if($url != '')
 			{
 				// explode in pages
 				$pages = explode('/', $url);
-
-				// remove language in case of multilanguage site
-				if(SITE_MULTILANGUAGE) array_shift($pages);
 
 				// reset pages
 				$this->setPages($pages);
@@ -413,7 +428,7 @@ class FrontendURL
 	 */
 	private function setParameters(array $parameters = array())
 	{
-		$this->parameters = (array) $parameters;
+		foreach($parameters as $key => $value) $this->parameters[$key] = $value;
 	}
 
 
