@@ -25,7 +25,7 @@
 			// build replace html
 			var html = 	'<div class="tagsWrapper">'+
 						'	<div class="oneLiner">'+
-						'		<p><input class="inputText" id="addValue-'+ id +'" type="text" /></p>'+
+						'		<p><input class="inputText" id="addValue-'+ id +'" name="addValue-'+ id +'" type="text" /></p>'+
 						'		<div class="buttonHolder">'+
 						'			<a href="#" id="addButton-'+ id +'" class="button icon iconAdd iconOnly disabledButton">'+
 						'				<span><span><span>'+ options.addLabel +'</span></span></span>'+
@@ -37,9 +37,9 @@
 						'</div>';
 			
 			// hide current element
-			$(this).hide()
+			$(this).css('visibility', 'hidden')
 				   .attr('tabindex', '-1');
-
+			
 			// prepend html
 			$(this).before(html);
 

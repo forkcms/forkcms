@@ -151,7 +151,7 @@
 											</div>
 										</div>
 
-										<div id="tags" class="box">
+										<div id="tagBox" class="box">
 											<div class="heading">
 												<h4>Tags</h4>
 											</div>

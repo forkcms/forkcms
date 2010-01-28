@@ -123,6 +123,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
+			$this->frm->getField('text')->isFilled(BL::getError('TextIsRequired'));
 
 			// validate meta
 			$this->meta->validate();
