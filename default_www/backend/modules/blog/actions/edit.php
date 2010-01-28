@@ -215,7 +215,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$formattedTime = SpoonDate::getDate('H:i:s', strtotime($txtPublishTime->getValue())); // @todo switch this to $txtPublishTime->getTimestamp whenever it is available
 
 				// build item
-				$item['meta_id'] = $this->meta->save(true);
+				$item['meta_id'] = $this->meta->save();
 				$item['category_id'] = $ddmCategoryId->getValue();
 				$item['user_id'] = $ddmUserId->getValue();
 				$item['language'] = BL::getWorkingLanguage();

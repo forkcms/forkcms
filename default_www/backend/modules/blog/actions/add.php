@@ -3,7 +3,6 @@
 // @todo publish box? does this need anything still?
 // @todo fix URL below title and in SEO tab
 // @todo javascript show/hide for summary
-// @todo permissions tab with allow_comments checkbox
 
 /**
  * BackendBlogAddCategory
@@ -152,7 +151,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['introduction'] = $txtIntroduction->getValue();
 				$item['text'] = $txtText->getValue();
 				$item['status'] = 'active';
-				$item['publish_on'] = $formattedDate.' '.$formattedTime;
+				$item['publish_on'] = $formattedDate .' '. $formattedTime;
 				$item['created_on'] = date('Y-m-d H:i:s');
 				$item['edited_on'] = date('Y-m-d H:i:s');
 				$item['hidden'] = $rbtHidden->getValue();

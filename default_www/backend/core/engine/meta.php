@@ -207,8 +207,8 @@ class BackendMeta
 		else $title = $this->frm->getField($this->baseFieldName)->getValue();
 
 		// get url
-		if($this->frm->getField('url_overwrite')->isChecked()) $url = SpoonFilter::urlise($this->frm->getField('url')->getValue());
-		else $url = SpoonFilter::urlise($this->frm->getField($this->baseFieldName)->getValue());
+		if($this->frm->getField('url_overwrite')->isChecked()) $url = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue()));
+		else $url = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue()));
 
 		// build parameters for use in the callback
 		$parameters[] = $url;

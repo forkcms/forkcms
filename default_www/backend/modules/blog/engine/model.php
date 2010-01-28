@@ -74,12 +74,15 @@ class BackendBlogModel
 	 * Deletes one or more blogposts
 	 *
 	 * @return	void
-	 * @param array $ids
+	 * @param 	mixed $ids
 	 */
-	public static function delete(array $ids)
+	public static function delete($ids)
 	{
 		// get db
 		$db = BackendModel::getDB();
+
+		// if $ids is not an array, make one
+		$ids = (!is_array($ids)) ? array($ids) : $ids;
 
 		// delete blogpost records
 		$db->execute('DELETE p, m FROM blog_posts AS p INNER JOIN meta AS m WHERE m.id = p.meta_id AND p.id IN('. implode(',', $ids) .');');
