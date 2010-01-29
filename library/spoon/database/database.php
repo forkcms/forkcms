@@ -342,10 +342,10 @@ class SpoonDatabase
     public function getEnumValues($table, $field)
     {
     	// build query
-    	$query = 'SHOW COLUMNS FROM '. (string) $table .' LIKE ?;';
+    	$query = 'SHOW COLUMNS FROM '. (string) $table .' LIKE "'. (string) $field .'";';
 
     	// get information
-    	$row = $this->getRecord($query, (string) $field);
+    	$row = $this->getRecord($query);
 
     	// has no type, so NOT an enum field
     	if(!isset($row['Type'])) throw new SpoonDatabaseException('There is no type information available about this field', 0, $this->password);
