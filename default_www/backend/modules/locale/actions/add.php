@@ -11,7 +11,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class BackendLocaleEdit extends BackendBaseActionEdit
+class BackendLocaleAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
@@ -20,44 +20,20 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	 */
 	public function execute()
 	{
-		// get parameters
-		$this->id = $this->getParameter('id', 'int');
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
 
-		// does the item exists
-		if(BackendLocaleModel::exists($this->id))
-		{
-			// call parent, this will probably add some general CSS/JS or other required files
-			parent::execute();
+		// load the form
+		$this->loadForm();
 
-			// get all data for the item we want to edit
-			$this->getData();
+		// validate the form
+		$this->validateForm();
 
-			// load the form
-			$this->loadForm();
+		// parse the datagrid
+		$this->parse();
 
-			// validate the form
-			$this->validateForm();
-
-			// parse the datagrid
-			$this->parse();
-
-			// display the page
-			$this->display();
-		}
-
-		// no item found, throw an exceptions, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
-	}
-
-
-	/**
-	 * Get the data
-	 *
-	 * @return	void
-	 */
-	private function getData()
-	{
-		$this->record = BackendLocaleModel::get($this->id);
+		// display the page
+		$this->display();
 	}
 
 
@@ -69,29 +45,14 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('edit');
+		$this->frm = new BackendForm('add');
+		$this->frm->addDropDown('application', array('backend' => 'backend', 'frontend' => 'frontend'));
+		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false));
+		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), 'lbl');
+		$this->frm->addTextField('name');
+		$this->frm->addTextField('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
 		$this->frm->addDropDown('language', array('nl' => 'Nederlands', 'fr' => 'Frans', 'en' => 'Engels'), 'nl'); // @todo davy - opbouwen van een goeie lijst
-		$this->frm->addDropDown('application', array('backend' => 'backend', 'frontend' => 'frontend'), $this->record['application']);
-		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
-		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->record['type']);
-		$this->frm->addTextField('name', $this->record['name']);
-		$this->frm->addTextField('value', $this->record['value'], null, 'inputTextfield', 'inputTextfieldError', true);
 		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
-	}
-
-
-	/**
-	 * Parse the form
-	 *
-	 * @return	void
-	 */
-	protected function parse()
-	{
-		// call parent
-		parent::parse();
-
-		// assign id, name
-		$this->tpl->assign('id', $this->record['id']);
 	}
 
 
@@ -128,9 +89,9 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 					else
 					{
 						// this name already exists in this language
-						if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->id))
+						if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
 						{
-							$txtName->setError('Dit veld bestaat al in de database in deze taal & applicatie'); // @todo davy - foutmelding toevoegen
+							$txtName->setError('Dit veld bestaat al in de database in deze taal'); // @todo davy - foutmelding toevoegen
 						}
 					}
 				}
@@ -165,10 +126,10 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 				$locale['value'] = $this->frm->getField('value')->getValue();
 
 				// update item
-				BackendLocaleModel::update($this->id, $locale);
+				BackendLocaleModel::insert($locale);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($locale['name']));
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($locale['name']));
 			}
 		}
 	}

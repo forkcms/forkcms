@@ -6,7 +6,7 @@
 			</div>
 
 			<div class="inner">
-				{form:edit}
+				{form:add}
 					<p>
 						<label for="language">Taal</label>
 						{$ddmLanguage} {$ddmLanguageError}
@@ -42,7 +42,7 @@
 							{$btnSave}
 						</div>
 					</div>
-				{/form:edit}
+				{/form:add}
 			</div>
 		</td>
 	</tr>

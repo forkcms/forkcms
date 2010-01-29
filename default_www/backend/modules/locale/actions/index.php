@@ -42,15 +42,26 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendLocaleModel::QRY_DATAGRID_BROWSE, BL::getWorkingLanguage());
+		$this->datagrid = new BackendDataGridDB(BackendLocaleModel::QRY_DATAGRID_BROWSE);
 
 		// header labels
-//		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Category')), 'num_posts' => ucfirst(BL::getLabel('PostsInThisCategory'))));
+		$this->datagrid->setHeaderLabels(array('language' => ucfirst(BL::getLabel('Language')), 'application' => ucfirst(BL::getLabel('Application')), 'module' => ucfirst(BL::getLabel('Module')), 'type' => ucfirst(BL::getLabel('Type')), 'name' => ucfirst(BL::getLabel('Name')), 'value' => ucfirst(BL::getLabel('Value'))));
 
 		// sorting columns
-//		$this->datagrid->setSortingColumns(array('name', 'num_posts'), 'name');
+		$this->datagrid->setSortingColumns(array('language', 'application', 'module', 'type', 'name', 'value'), 'name');
 
-		// add column
+		// add the multicheckbox column
+		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
+		$this->datagrid->setColumnsSequence('checkbox');
+
+		// add mass action dropdown
+		$ddmMassAction = new SpoonDropDown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$this->datagrid->setMassAction($ddmMassAction);
+
+		// update value
+		$this->datagrid->setColumnFunction('truncater', array('[value]', 30), 'value', true);
+
+		// add columns
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 	}
 
@@ -64,6 +75,17 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	{
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
+}
+
+
+function truncater($value, $length)
+{
+	if(mb_strlen($value, SPOON_CHARSET) > $length)
+	{
+		return SpoonFilter::htmlspecialchars(mb_substr($value, 0, $length, SPOON_CHARSET)) .'...';
+	}
+
+	return SpoonFilter::htmlspecialchars($value);
 }
 
 ?>

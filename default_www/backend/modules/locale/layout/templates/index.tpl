@@ -14,7 +14,12 @@
 								<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span><span><span>{$lblAddLabel|ucfirst}</span></span></span></a>
 							</div>
 						</div>
-						{$datagrid}
+
+						<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="massLocaleAction">
+							<div class="datagridHolder">
+								{$datagrid}
+							</div>
+						</form>
 					</div>
 				{/option:datagrid}
 				{option:!datagrid}{$msgNoItems}{/option:!datagrid}
