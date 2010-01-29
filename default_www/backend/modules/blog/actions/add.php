@@ -1,7 +1,5 @@
 <?php
 
-// @todo fix URL below title and in SEO tab
-
 /**
  * BackendBlogAddCategory
  *
@@ -100,6 +98,21 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 
 	/**
+	 * parse the form
+	 *
+	 * @return	void
+	 */
+	protected function parse()
+	{
+		// call parent
+		parent::parse();
+
+		// parse additional variables
+		$this->tpl->assign('blogUrl', SITE_URL); // @todo tijs - need FrontendModel::createURLForAction() for this
+	}
+
+
+	/**
 	 * Validate the form
 	 *
 	 * @return	void
@@ -115,7 +128,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			// shorten fields
 			$txtTitle = $this->frm->getField('title');
 			$txtIntroduction = $this->frm->getField('introduction');
-			$txtText = $this->frm->getField('introduction');
+			$txtText = $this->frm->getField('text');
 			$txtPublishDate = $this->frm->getField('publish_on_date');
 			$txtPublishTime = $this->frm->getField('publish_on_time');
 			$ddmUserId = $this->frm->getField('user_id');

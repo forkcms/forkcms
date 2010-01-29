@@ -13,7 +13,7 @@
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="{$SITE_URL}">{$SITE_URL}</a></span>
+								<span><a href="{$blogUrl}">{$blogUrl}</a></span>
 							</p>
 						</div>
 					</div>

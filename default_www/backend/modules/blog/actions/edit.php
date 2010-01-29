@@ -1,7 +1,5 @@
 <?php
 
-// @todo fix URL below title and in SEO tab
-
 /**
  * BackendBlogEdit
  *
@@ -161,10 +159,13 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
-		$this->tpl->assign('id', $this->record['id']);
+		// assign the active record and additional variables
+		$this->tpl->assign($this->record);
+		$this->tpl->assign('blogUrl', SITE_URL); // @todo tijs - need FrontendModel::createURLForAction() for this
 		$this->tpl->assign('status', BL::getLabel(ucfirst($this->record['status'])));
-		$this->tpl->assign('title', $this->record['title']);
-		$this->tpl->assign('revision_id', $this->record['revision_id']);
+
+		// show the summary
+		if(!empty($this->record['introduction']) || $this->frm->getField('introduction')->isFilled()) $this->tpl->assign('oShowSummary', true);
 
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
@@ -187,7 +188,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			// shorten fields
 			$txtTitle = $this->frm->getField('title');
 			$txtIntroduction = $this->frm->getField('introduction');
-			$txtText = $this->frm->getField('introduction');
+			$txtText = $this->frm->getField('text');
 			$txtPublishDate = $this->frm->getField('publish_on_date');
 			$txtPublishTime = $this->frm->getField('publish_on_time');
 			$ddmUserId = $this->frm->getField('user_id');
@@ -213,7 +214,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$formattedTime = SpoonDate::getDate('H:i:s', strtotime($txtPublishTime->getValue())); // @todo switch this to $txtPublishTime->getTimestamp whenever it is available
 
 				// build item
-				$item['meta_id'] = $this->meta->save();
+				$item['meta_id'] = $this->meta->save(true);
 				$item['category_id'] = $ddmCategoryId->getValue();
 				$item['user_id'] = $ddmUserId->getValue();
 				$item['language'] = BL::getWorkingLanguage();

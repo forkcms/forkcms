@@ -15,7 +15,7 @@
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="{$SITE_URL}">{$SITE_URL}</a></span>
+								<span><a href="{$blogUrl}/{$url}">{$blogUrl}/{$url}</a></span>
 							</p>
 						</div>
 					</div>
@@ -39,13 +39,13 @@
 													<div class="collapseBox" id="summary">
 														<div class="collapseBoxHeading">
 															<div class="buttonHolderSingle">
-																<a href="#" class="button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
+																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
 															</div>
 
-															<h4><a href="#">Summary</a></h4>
+															<h4><a href="#summary .options" class="toggleDiv">Summary</a></h4>
 														</div>
 
-														<div class="options">
+														<div class="options hidden"{option:oShowSummary} style="display: block"{/option:oShowSummary}>
 															<p class="helpTxt">If you enter a summary, the summary will be shown on "list" pages (e.g. the blog overview). If you don't, the full blog post will be shown in the overview.</p>
 															{$txtIntroduction} {$txtIntroductionError}
 														</div>
@@ -235,7 +235,7 @@
 									<ul class="inputList">
 										<li>
 											{$chkUrlOverwrite}
-											<span id="urlFirstPart">{$SITE_URL}</span>{$txtUrl} {$txtUrlError}
+											<span id="urlFirstPart">{$blogUrl}/</span>{$txtUrl} {$txtUrlError}
 										</li>
 									</ul>
 
