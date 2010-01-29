@@ -50,7 +50,7 @@
 
 			<!-- content -->
 			<div id="content">
-				<h2>{$pageDatatitle}</h2>
+				{option:!hideContentTitle}<h2>{$pageDatatitle}</h2>{/option:!hideContentTitle}
 
 				<!-- Block 0 -->
 				{option:blockAIsHTML}{$blockA}{/option:blockAIsHTML}

@@ -163,7 +163,7 @@ class FrontendURL
 	 *
 	 * @return	string
 	 */
-	private function getQueryString()
+	public function getQueryString()
 	{
 		return $this->queryString;
 	}

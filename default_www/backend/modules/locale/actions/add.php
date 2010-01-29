@@ -88,10 +88,25 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 					// syntax is completely fine
 					else
 					{
-						// this name already exists in this language
-						if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
+						// check if exists
+						if($this->frm->getField('application')->getValue() == 'backend')
 						{
-							$txtName->setError('Dit veld bestaat al in de database in deze taal'); // @todo davy - foutmelding toevoegen
+							// this name already exists in this language
+							if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
+							{
+								$txtName->setError('Dit veld bestaat al in de database in deze taal'); // @todo davy - foutmelding toevoegen
+							}
+						}
+
+						// check if exists
+						if($this->frm->getField('application')->getValue() == 'backend')
+						{
+							// @todo	Davy, frontendModel is geladen als ik me niet vergis...
+							// this name already exists in this language
+							if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
+							{
+//								$txtName->setError('Dit veld bestaat al in de database in deze taal'); // @todo davy - foutmelding toevoegen
+							}
 						}
 					}
 				}

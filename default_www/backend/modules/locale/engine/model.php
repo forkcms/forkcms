@@ -21,9 +21,15 @@ class BackendLocaleModel
 		// get db
 		$db = BackendModel::getDB();
 
+		// get types
 		$types = $db->getEnumValues('locale', 'type');
 
-		$locale = (array) $db->getRecords('SELECT type, module, name, value FROM locale WHERE language = ? AND application = ? ORDER BY type ASC, name ASC, module ASC;', array((string) $language, (string) $application));
+		// get locale for backend
+		$locale = (array) $db->getRecords('SELECT type, module, name, value
+											FROM locale
+											WHERE language = ? AND application = ?
+											ORDER BY type ASC, name ASC, module ASC;',
+											array((string) $language, (string) $application));
 
 		// @todo davy - opkuisen en/of vereenvoudigen
 		$value = '<?php' ."\n";
@@ -58,20 +64,20 @@ class BackendLocaleModel
 					}
 
 					// parse
-					$value .= '$'. $type .'[\''. $item['module'] .'\'][\''. $item['name'] .'\'] = \''. addslashes($item['value']) .'\';'. "\n";
+					if($application == 'backend') $value .= '$'. $type .'[\''. $item['module'] .'\'][\''. $item['name'] .'\'] = \''. addslashes($item['value']) .'\';'. "\n";
+					else $value .= '$'. $type .'[\''. $item['name'] .'\'] = \''. addslashes($item['value']) .'\';'. "\n";
 
 					// unset
 					unset($locale[$i]);
 				}
 			}
-
 		}
 
 		$value .=  "\n";
 		$value .= '?>';
 
+		// store
 		SpoonFile::setContent(constant(strtoupper($application) .'_CACHE_PATH') .'/locale/'. $language .'.php', $value);
-
 	}
 
 

@@ -1,5 +1,5 @@
 			<div id="breadcrumb">
-				<span>{$lblYouAreHere|ucfirst}:</span>
+				<span>{$msgYouAreHere|ucfirst}:</span>
 				{iteration:breadcrumb}
 					{option:breadcrumb.url}<a href="{$breadcrumb.url}" title="{$breadcrumb.title}">{/option:breadcrumb.url}
 						{$breadcrumb.title}

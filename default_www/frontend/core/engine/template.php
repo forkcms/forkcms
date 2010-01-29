@@ -94,6 +94,13 @@ class FrontendTemplate extends SpoonTemplate
 
 		// string
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
+		$this->mapModifier('cleanupPlainText', array('FrontendTemplateModifiers', 'cleanupPlainText'));
+
+		// dates
+		$this->mapModifier('timeAgo', array('FrontendTemplateModifiers', 'timeAgo'));
+
+		// users
+		$this->mapModifier('userSetting', array('FrontendTemplateModifiers', 'userSetting'));
 
 		// debug stuff
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));
@@ -222,6 +229,36 @@ class FrontendTemplate extends SpoonTemplate
 class FrontendTemplateModifiers
 {
 	/**
+	 * Formats plain text as HTML, links will be detected, paragraphs will be inserted
+	 *
+	 * @return	string
+	 * @param	string $var
+	 */
+	public static function cleanupPlainText($var)
+	{
+		// redefine
+		$var = (string) $var;
+
+		// detect links
+		$var = SpoonFilter::replaceURLsWithAnchors($var);
+
+		// replace newlines
+		$var = str_replace("\r", '', $var);
+		$var = preg_replace('/(?<!.)(\r\n|\r|\n){3,}$/m', '', $var);
+
+		// replace br's into p's
+		$var = '<p>'. str_replace("\n", '</p><p>', $var) .'</p>';
+
+		// cleanup
+		$var = str_replace("\n", '', $var);
+		$var = str_replace('<p></p>', '', $var);
+
+		// return
+		return $var;
+	}
+
+
+	/**
 	 * Dumps the data
 	 *  syntax: {$var|dump}
 	 *
@@ -262,6 +299,26 @@ class FrontendTemplateModifiers
 
 
 	/**
+	 * Formats a timestamp as a string that indicates the time ago
+	 *  syntax: {$var|timeAgo}
+	 *
+	 * @return	string
+	 * @param	string $var
+	 */
+	public static function timeAgo($var = null)
+	{
+		// redefine
+		$var = (int) $var;
+
+		// invalid timestamp
+		if($var == 0) return '';
+
+		// return
+		return '<abbr title="'. SpoonDate::getDate('d/m/Y H:i:s', $var, FRONTEND_LANGUAGE) .'">'. FrontendModel::calculateTimeAgo($var) .'</abbr>';
+	}
+
+
+	/**
 	 * Truncate a string
 	 *  syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
@@ -293,6 +350,32 @@ class FrontendTemplateModifiers
 			// return
 			return SpoonFilter::htmlspecialchars($var);
 		}
+	}
+
+
+	/**
+	 * Get the value for a user-setting
+	 *  syntax {$var|userSetting:<setting>[:<userId>]}
+	 *
+	 * @return	string
+	 * @param	string $var
+	 * @param	string $setting
+	 * @param	int[optional] $userId
+	 */
+	public static function userSetting($var = null, $setting, $userId = null)
+	{
+		// redefine
+		$userId = ($var !== null) ? (int) $var : (int) $userId;
+		$setting = (string) $setting;
+
+		// validate
+		if($userId === 0) throw new FrontendException('Invalid userid');
+
+		// get user
+		$user = FrontendUser::getBackendUser($userId);
+
+		// return setting
+		return (string) $user->getSetting($setting);
 	}
 }
 

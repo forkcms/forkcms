@@ -103,7 +103,7 @@ class BackendModel
 
 		// calculate seconds ago
 		$secondsAgo = floor($secondsBetween);
-		if($secondsAgo > 1) return sprintf(BL::getMessage('TimeSecondAgo'), $secondsAgo);
+		if($secondsAgo > 1) return sprintf(BL::getMessage('TimeSecondsAgo'), $secondsAgo);
 		if($secondsAgo <= 1) return BL::getMessage('TimeOneSecondAgo');
 	}
 

@@ -28,6 +28,57 @@ class FrontendModel
 
 
 	/**
+	 * Calculate the time ago from a given timestamp and returns a decent sentence.
+	 *
+	 * @return	string
+	 * @param	string $timestamp
+	 */
+	public static function calculateTimeAgo($timestamp)
+	{
+		// redefine
+		$timestamp = (int) $timestamp;
+
+		// get seconds between given timestamp and current timestamp
+		$secondsBetween = time() - $timestamp;
+
+		// calculate years ago
+		$yearsAgo = floor($secondsBetween / (365.242199 * 24 * 60 * 60));
+		if($yearsAgo > 1) return sprintf(FL::getMessage('TimeYearsAgo'), $yearsAgo);
+		if($yearsAgo == 1) return FL::getMessage('TimeOneYearAgo');
+
+		// calculate months ago
+		$monthsAgo = floor($secondsBetween / ((365.242199/12) * 24 * 60 * 60));
+		if($monthsAgo > 1) return sprintf(FL::getMessage('TimeMonthsAgo'), $monthsAgo);
+		if($monthsAgo == 1) return FL::getMessage('TimeOneMonthAgo');
+
+		// calculate weeks ago
+		$weeksAgo = floor($secondsBetween / (7 * 24 * 60 * 60));
+		if($weeksAgo > 1) return sprintf(FL::getMessage('TimeWeeksAgo'), $weeksAgo);
+		if($weeksAgo == 1) return FL::getMessage('TimeOneWeekAgo');
+
+		// calculate days ago
+		$daysAgo = floor($secondsBetween / (24 * 60 * 60));
+		if($daysAgo > 1) return sprintf(FL::getMessage('TimeDaysAgo'), $daysAgo);
+		if($daysAgo == 1) return FL::getMessage('TimeOneDayAgo');
+
+		// calculate hours ago
+		$hoursAgo = floor($secondsBetween / (60 * 60));
+		if($hoursAgo > 1) return sprintf(FL::getMessage('TimeHoursAgo'), $hoursAgo);
+		if($hoursAgo == 1) return FL::getMessage('TimeOneHourAgo');
+
+		// calculate minutes ago
+		$minutesAgo = floor($secondsBetween / 60);
+		if($minutesAgo > 1) return sprintf(FL::getMessage('TimeMinutesAgo'), $minutesAgo);
+		if($minutesAgo == 1) return FL::getMessage('TimeOneMinuteAgo');
+
+		// calculate seconds ago
+		$secondsAgo = floor($secondsBetween);
+		if($secondsAgo > 1) return sprintf(FL::getMessage('TimeSecondsAgo'), $secondsAgo);
+		if($secondsAgo <= 1) return FL::getMessage('TimeOneSecondAgo');
+	}
+
+
+	/**
 	 * Get (or create and get) a database-connection
 	 * @later: we should extend SpoonDatabase with FrontendDatabas, which will enable us to split read and write-connections.
 	 *
@@ -67,12 +118,12 @@ class FrontendModel
 		$module = (string) $module;
 		$name = (string) $name;
 
-		// get db
-		$db = self::getDB();
-
 		// get them all
 		if(empty(self::$moduleSettings))
 		{
+			// get db
+			$db = self::getDB();
+
 			// fetch settings
 			$settings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
 												FROM modules_settings AS ms;');
@@ -86,6 +137,39 @@ class FrontendModel
 
 		// return
 		return self::$moduleSettings[$module][$name];
+	}
+
+
+	/**
+	 * Get all module settings at once
+	 *
+	 * @return	array
+	 * @param	string $module
+	 */
+	public static function getModuleSettings($module)
+	{
+		// redefine
+		$module = (string) $module;
+
+		// get them all
+		if(empty(self::$moduleSettings[$module]))
+		{
+			// get db
+			$db = self::getDB();
+
+			// fetch settings
+			$settings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
+												FROM modules_settings AS ms;');
+
+			// loop settings and cache them, also unserialize the values
+			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
+		}
+
+		// validate again
+		if(!isset(self::$moduleSettings[$module])) return array();
+
+		// return
+		return self::$moduleSettings[$module];
 	}
 
 
@@ -142,6 +226,40 @@ class FrontendModel
 
 		// return
 		return $record;
+	}
+
+
+	public static function isSpam($content, $permaLink, $author = null, $email = null, $url = null, $type = 'comment')
+	{
+		// get some settings
+		$akismetKey = self::getModuleSetting('core', 'akismet_key');
+
+		// invalid key, so we can't detect spam
+		if($akismetKey === '') return false;
+
+		// require the class
+		require_once PATH_LIBRARY .'/external/akismet.php';
+
+		// create new instance
+		$akismet = new Akismet($akismetKey, SITE_URL);
+
+		// set properties
+		$akismet->setTimeOut(10);
+		$akismet->setUserAgent('Fork CMS/2.0');
+
+		try
+		{
+			// check with Akismet if the item is spam
+			return $akismet->isSpam($content, $author, $email, $url, $permaLink, $type);
+		}
+		catch(Exception $e)
+		{
+			// in debug mode we will see exceptions
+			if(SPOON_DEBUG) throw $e;
+		}
+
+		// fallback
+		return false;
 	}
 
 

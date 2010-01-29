@@ -14,20 +14,43 @@
 class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 {
 	/**
+	 * The recent comments
+	 *
+	 * @var	array
+	 */
+	private $recentComments;
+
+
+	/**
 	 * Execute the extra
 	 *
 	 * @return	void
 	 */
 	public function execute()
 	{
-		// call parent, will add JS
+		// call parent
 		parent::execute();
 
 		// load template
 		$this->loadTemplate();
 
+		// load the data
+		$this->getData();
+
 		// parse
 		$this->parse();
+	}
+
+
+	/**
+	 * Load the data
+	 *
+	 * @return	void
+	 */
+	private function getData()
+	{
+		// get recent comments
+		$this->recentComments = FrontendBlogModel::getRecentComments(5);
 	}
 
 
@@ -38,18 +61,8 @@ class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		// @todo make this work in a decent way
-		$recentComments = array(
-								array('author' => 'Android X10', 'url' => '/nl/blog/detail/webdesign-proces-bij-netlash#comment-1', 'entry_title' => 'Webdesign proces bij Netlash'),
-								array('author' => 'wannes', 'url' => '/nl/blog/detail/webdesign-proces-bij-netlash#comment-2', 'entry_title' => 'Webdesign proces bij Netlash'),
-								array('author' => 'Jan Ottenbourg', 'url' => '/nl/blog/detail/webdesign-proces-bij-netlash#comment-3', 'entry_title' => 'Webdesign proces bij Netlash'),
-								array('author' => 'Jan Seurinck', 'url' => '/nl/blog/detail/webdesign-proces-bij-netlash#comment-4', 'entry_title' => 'Webdesign proces bij Netlash'),
-								array('author' => 'Thomas', 'url' => '/nl/blog/detail/webdesign-proces-bij-netlash#comment-5', 'entry_title' => 'Webdesign proces bij Netlash')
-							);
-
-		// assign
-		$this->tpl->assign('recentComments', $recentComments);
+		// assign comments
+		$this->tpl->assign('recentComments', $this->recentComments);
 	}
-
 }
 ?>

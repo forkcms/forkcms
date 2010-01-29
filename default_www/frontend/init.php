@@ -145,6 +145,7 @@ class Init
 
 		// general classes
 		require_once FRONTEND_CORE_PATH .'/engine/exception.php';
+		require_once FRONTEND_CORE_PATH .'/engine/user.php';
 		require_once FRONTEND_CORE_PATH .'/engine/template.php';
 		require_once FRONTEND_CORE_PATH .'/engine/template_custom.php';
 		require_once FRONTEND_CORE_PATH .'/engine/language.php';
@@ -163,6 +164,7 @@ class Init
 				require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
 				require_once FRONTEND_CORE_PATH .'/engine/footer.php';
 				require_once FRONTEND_CORE_PATH .'/engine/block.php';
+				require_once FRONTEND_CORE_PATH .'/engine/form.php';
 				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
 			break;
 

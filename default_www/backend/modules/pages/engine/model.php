@@ -32,8 +32,18 @@ class BackendPagesModel
 	 */
 	public static function buildCache()
 	{
+		// get db
+		$db = FrontendModel::getDB();
+
+
 		// get tree
 		$levels = self::getTree(array(0));
+
+		// get extras
+		$extras = (array) $db->retrieve('SELECT pe.id, pe.module, pe.action
+											FROM pages_extras AS pe
+											WHERE pe.type = ?;',
+											array('block'), 'id');
 
 		// init vars
 		$keys = array();
@@ -65,6 +75,24 @@ class BackendPagesModel
 				$temp['title'] = $page['title'];
 				$temp['navigation_title'] = $page['navigation_title'];
 				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
+				$temp['extra_blocks'] = null;
+
+				// any linked extra's?
+				if($page['extra_ids'] !== null)
+				{
+					// get ids
+					$ids = (array) explode(',', $page['extra_ids']);
+
+					// loop ids
+					foreach($ids as $id)
+					{
+						// redefine
+						$id = (int) $id;
+
+						// available in extras, so add it to the temp-array
+						if(isset($extras[$id])) $temp['extra_blocks'][$id] = $extras[$id];
+					}
+				}
 
 				// calculate tree-type
 				$treeType = 'page';
@@ -131,13 +159,53 @@ class BackendPagesModel
 					// loop properties
 					foreach($properties as $key => $value)
 					{
-						// cast properly
-						if($key == 'page_id') $value = (int) $value;
-						elseif($key == 'has_extra') $value = ($value) ? 'true' : 'false';
-						else $value = '\''. $value .'\'';
+						// page_id should be an integer
+						if($key == 'page_id') $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = '. (int) $value .';'."\n";
+
+						// has_extra should be a boolean
+						elseif($key == 'has_extra')
+						{
+							if($value) $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = true;'."\n";
+							else $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = false;'."\n";
+						}
+
+						// extra_blocks should be an array
+						elseif($key == 'extra_blocks')
+						{
+							if($value === null) $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = null;'."\n";
+							else
+							{
+								// init var
+								$extras = array();
+
+								foreach($value as $row)
+								{
+									// init var
+									$temp = 'array(';
+
+									// add properties
+									$temp .= '\'id\' => '. (int) $row['id'];
+									$temp .= ', \'module\' => \''. (string) $row['module'] .'\'';
+
+									if($row['action'] === null) $temp .= ', \'action\' => null';
+									else $temp .= ', \'action\' => \''. (string) $row['action'] .'\'';
+
+									$temp .= ')';
+
+									// add into extras
+									$extras[] = $temp;
+								}
+
+								// set line
+								$line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = array('. implode(', ', $extras) .');'."\n";
+							}
+						}
+
+						// fallback
+						else $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = \''. (string) $value .'\';'."\n";
 
 						// add line
-						$navigationString .= '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = '. $value .';'."\n";
+						$navigationString .= $line;
 					}
 
 					$navigationString .= "\n";
@@ -775,11 +843,14 @@ class BackendPagesModel
 		$db = BackendModel::getDB();
 
 		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden, p.has_extra,
+													GROUP_CONCAT(pb.extra_id) as extra_ids,
 													m.url
 												FROM pages AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
+												LEFT OUTER JOIN pages_blocks AS pb ON p.revision_id = pb.revision_id
 												WHERE p.parent_id IN ('. implode(', ', $ids) .')
 												AND p.status = ? AND p.language = ?
+												GROUP BY p.id
 												ORDER BY p.sequence ASC;',
 												array('active', BackendLanguage::getWorkingLanguage()), 'id');
 

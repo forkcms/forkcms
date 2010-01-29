@@ -258,6 +258,9 @@ class FrontendLanguage
 		// validate language
 		if(!in_array($language, self::getActiveLanguages())) throw new FrontendException('Invalid language ('. $language .').');
 
+		// validate file
+		if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/locale/'. $language .'.php')) throw new FrontendException('No locale-file ('. $language .'.php) found.');
+
 		// init vars
 		$act = array();
 		$err = array();

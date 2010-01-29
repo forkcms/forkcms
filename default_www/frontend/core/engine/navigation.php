@@ -360,6 +360,76 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
+	 * @todo	PHPDoc
+	 * @param unknown_type $module
+	 * @param unknown_type $action
+	 * @param unknown_type $language
+	 */
+	public static function getURLForBlock($module, $action = null, $language = null)
+	{
+		// redefine
+		$module = (string) $module;
+		$action = ($action !== null) ? (string) $action : null;
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// init var
+		$pageIdForURL = null;
+
+		// get the menuItems
+		$navigation = self::getNavigation($language);
+
+		// loop types
+		foreach($navigation as $type => $level)
+		{
+			// loop level
+			foreach($level as $parentId => $pages)
+			{
+				// loop pages
+				foreach($pages as $pageId => $properties)
+				{
+					// only process pages with extra_blocks
+					if(isset($properties['extra_blocks']))
+					{
+						// loop extras
+						foreach($properties['extra_blocks'] as $extra)
+						{
+							// direct link?
+							if($extra['module'] == $module && $extra['action'] == $action)
+							{
+								// @todo	implement me
+								Spoon::dump($properties);
+							}
+
+							// correct module but no action
+							elseif($extra['module'] == $module && $extra['action'] == null)
+							{
+								// store pageId
+								$pageIdForURL = (int) $pageId;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// pageId stored?
+		if($pageIdForURL !== null)
+		{
+			// build url
+			$url = self::getURL($pageIdForURL, $language);
+
+			// append action
+			$url .= '/'. FrontendLanguage::getAction(SpoonFilter::toCamelCase($action));
+
+			// return the URL
+			return $url;
+		}
+
+		// fallback
+		return self::getURL(404);
+	}
+
+	/**
 	 * Set the selected page ids
 	 *
 	 * @return	void
