@@ -87,8 +87,8 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 * Add an element
 	 *
 	 * @return	void
-	 * @param	string $title
-	 * @param	string[optional] $URL
+	 * @param	string $title			The label that will be used in the breadcrumb
+	 * @param	string[optional] $URL	The URL for this item
 	 */
 	public function addElement($title, $URL = null)
 	{
@@ -100,7 +100,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 * Clear all (or a specific) elements in the breadcrumb
 	 *
 	 * @return	void
-	 * @param	int[optional] $key
+	 * @param	int[optional] $key	If the key is provided it will be removed from the array
 	 */
 	public function clear($key = null)
 	{

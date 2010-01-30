@@ -97,7 +97,7 @@ class FrontendAJAX
 	 * Set action
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The action that should be executed
 	 */
 	public function setAction($value)
 	{
@@ -109,7 +109,7 @@ class FrontendAJAX
 	 * Set the language
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The (interface-)language, will be used to parse labels
 	 */
 	public function setLanguage($value)
 	{
@@ -132,7 +132,7 @@ class FrontendAJAX
 	 * Set module
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The module, wherefore an action will be executed
 	 */
 	public function setModule($value)
 	{
@@ -183,8 +183,8 @@ class FrontendAJAXAction
 	 * You have to specify the action and module so we know what to do with this instance.
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $module
+	 * @param	string $action	The action that should be executed
+	 * @param	string $module	The module that wherein the action is available
 	 */
 	public function __construct($action, $module)
 	{
@@ -279,7 +279,7 @@ class FrontendAJAXAction
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action	The action that should be executed
 	 */
 	private function setAction($action)
 	{
@@ -291,7 +291,7 @@ class FrontendAJAXAction
 	 * Set the module
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module wherin the action is available
 	 */
 	private function setModule($module)
 	{

@@ -23,7 +23,7 @@ class FrontendTemplateCustom
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	ForkTemplate $tpl
+	 * @param	FrontendTemplate $tpl	The template instance
 	 */
 	public function __construct($tpl)
 	{

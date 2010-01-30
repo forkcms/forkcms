@@ -49,7 +49,7 @@ class FrontendUser
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	int[optional] $userId
+	 * @param	int[optional] $userId	If you provide a userId, the object will be loaded with the data for this user
 	 */
 	public function __construct($userId = null)
 	{
@@ -62,7 +62,7 @@ class FrontendUser
 	 * Get a backend user
 	 *
 	 * @return	FrontendUser
-	 * @param	int[optional] $userId
+	 * @param	int[optional] $userId	The users id in the backend
 	 */
 	public static function getBackendUser($userId)
 	{
@@ -76,13 +76,15 @@ class FrontendUser
 	/**
 	 * Get a setting
 	 *
-	 * @return	mixed
-	 * @param	string $key
+	 * @return	mixed			The stored value, if the setting wasn't found null will be returned
+	 * @param	string $key		The name of the setting
 	 */
 	public function getSetting($key)
 	{
 		// redefine
 		$key = (string) $key;
+
+		if(!isset($this->settings[$key])) return null;
 
 		// return
 		return $this->settings[$key];
@@ -92,7 +94,7 @@ class FrontendUser
 	/**
 	 * Get all settings at once
 	 *
-	 * @return	array
+	 * @return	array	An key-value-array with all settings for this user
 	 */
 	public function getSettings()
 	{
@@ -123,10 +125,10 @@ class FrontendUser
 
 
 	/**
-	 * Load a user
+	 * Load the data for the given user
 	 *
 	 * @return	void
-	 * @param	int $userId
+	 * @param	int $userId		The users id in the backend
 	 */
 	public function loadUser($userId)
 	{
@@ -144,7 +146,7 @@ class FrontendUser
 											array($userId, 'Y', 'N'));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) unset($this);
+		if(empty($userData)) throw new FrontendException('The user ('. $userId .') doesn\'t exist.');
 
 		// set properties
 		$this->setUserId($userData['id']);

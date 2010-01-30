@@ -69,7 +69,7 @@ class FrontendURL
 	/**
 	 * Get the domain
 	 *
-	 * @return	string
+	 * @return	string	The current domain (without www.)
 	 */
 	public function getDomain()
 	{
@@ -96,7 +96,7 @@ class FrontendURL
 	 * Get a page specified by the given index
 	 *
 	 * @return	mixed
-	 * @param	int $index
+	 * @param	int $index	The index (0-based)
 	 */
 	public function getPage($index)
 	{
@@ -125,21 +125,19 @@ class FrontendURL
 	/**
 	 * Get a parameter specified by the given index
 	 * The function will return null if the key is not available
-	 *
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
-	 * Possible values are: bool, boolean, int, integer, float, double, string, array
 	 *
 	 * @return	mixed
-	 * @param	string $key
-	 * @param	string[optional] $type
+	 * @param	mixed $index				The index of the parameter
+	 * @param	string[optional] $type		The return type, possible values are: bool, boolean, int, integer, float, double, string, array
 	 */
-	public function getParameter($key, $type = 'string')
+	public function getParameter($index, $type = 'string')
 	{
 		// does the index exists
-		if(isset($this->parameters[$key]))
+		if(isset($this->parameters[$index]))
 		{
 			// parameter exists
-			if(isset($this->parameters[$key])) return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
+			if(isset($this->parameters[$index])) return SpoonFilter::getValue($this->parameters[$index], null, null, $type);
 		}
 
 		// fallback

@@ -9,6 +9,19 @@ FileETag MTime Size
 	</FilesMatch>
 </IfModule>
 
+# gzip
+<IfModule mod_deflate.c>
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml application/xml text/javascript text/css application/x-javascript application/xhtml+xml application/javascript
+
+	# these browsers do not support deflate
+	BrowserMatch ^Mozilla/4 gzip-only-text/html 
+	BrowserMatch ^Mozilla/4.0[678] no-gzip
+	BrowserMatch bMSIE !no-gzip !gzip-only-text/html
+
+	SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force
+</IfModule>
+
+
 # options 
 Options -Indexes
 Options +FollowSymlinks

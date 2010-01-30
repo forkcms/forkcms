@@ -48,10 +48,11 @@ class FrontendTemplate extends SpoonTemplate
 	/**
 	 * Output the template into the browser
 	 * Will also assign the labels and all user-defined constants.
+	 * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
 	 *
 	 * @return	void
-	 * @param	string $template
-	 * @param	bool[optional] $customHeaders
+	 * @param	string $template				The path of the template to use
+	 * @param	bool[optional] $customHeaders	Are custom headers already set?
 	 */
 	public function display($template, $customHeaders = false)
 	{
@@ -230,6 +231,7 @@ class FrontendTemplateModifiers
 {
 	/**
 	 * Formats plain text as HTML, links will be detected, paragraphs will be inserted
+	 *  syntax: {$var|cleanupPlainText}
 	 *
 	 * @return	string
 	 * @param	string $var
@@ -277,10 +279,10 @@ class FrontendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string[optional] $var
-	 * @param	string[optional] $type
-	 * @param	int[optional] $startDepth
-	 * @param	int[optional] $endDepth
-	 * @param	string[optional] $excludeIds
+	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer
+	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build
+	 * @param	int[optional] $depth			The maximum depth that has to be build
+	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -)
 	 */
 	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
 	{
@@ -324,8 +326,8 @@ class FrontendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string $var
-	 * @param	int $length
-	 * @param	bool[optional] $useHellip
+	 * @param	int $length					The maximum length of the truncated string
+	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
@@ -359,8 +361,8 @@ class FrontendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string $var
-	 * @param	string $setting
-	 * @param	int[optional] $userId
+	 * @param	string $setting			The name of the setting you want
+	 * @param	int[optional] $userId	The userId, if not set by $var
 	 */
 	public static function userSetting($var = null, $setting, $userId = null)
 	{

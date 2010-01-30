@@ -30,7 +30,7 @@ class FrontendBaseObject
 
 
 	/**
-	 * Class constructor.
+	 * Default constructor.
 	 * It will grab stuff from the reference.
 	 *
 	 * @return	void
@@ -111,7 +111,7 @@ class FrontendBaseConfig
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module wherefor this is the configuration-file
 	 */
 	public function __construct($module)
 	{
@@ -305,9 +305,9 @@ class FrontendBaseBlock
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $module
-	 * @param	string[optional] $data
+	 * @param	string $action				The name of the action
+	 * @param	string $module				The name of the module
+	 * @param	string[optional] $data		The data that should be available in this block
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -394,8 +394,8 @@ class FrontendBaseBlock
 	 * Load the template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template
-	 * @param	bool[optional] $overwrite
+	 * @param	string[optional] $template		The path for the template to use
+	 * @param	bool[optional] $overwrite		Should the template overwrite the default?
 	 */
 	protected function loadTemplate($template = null, $overwrite = false)
 	{
@@ -546,14 +546,15 @@ class FrontendBaseBlock
 		$this->tpl->assign('pagination', $pagination);
 	}
 
+
 	/**
 	 * Redirect to a given URL
 	 *
 	 * @return	void
-	 * @param	string $URL
-	 * @param	int[optional] $code
+	 * @param	string $URL				The URL whereto will be redirected
+	 * @param	int[optional] $code		The redirect code, default is 307 which means this is a temporary redirect.
 	 */
-	public function redirect($URL, $code = 302)
+	public function redirect($URL, $code = 307)
 	{
 		SpoonHTTP::redirect((string) $URL, (int) $code);
 	}
@@ -795,19 +796,6 @@ class FrontendBaseWidget
 
 		// set template
 		$this->setTemplatePath($template);
-	}
-
-
-	/**
-	 * Redirect to a given URL
-	 *
-	 * @return	void
-	 * @param	string $URL
-	 * @param	int[optional] $code
-	 */
-	public function redirect($URL, $code = 302)
-	{
-		SpoonHTTP::redirect((string) $URL, (int) $code);
 	}
 
 
