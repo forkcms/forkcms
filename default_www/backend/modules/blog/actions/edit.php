@@ -103,7 +103,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addTextField('title', $this->record['title']);
 		$this->frm->addEditorField('text', $this->record['text']);
 		$this->frm->addEditorField('introduction', $this->record['introduction']);
-		$this->frm->addRadioButton('hidden', $rbtHiddenValues, $this->record['hidden']);
+		$this->frm->addRadioButton('hide', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addCheckBox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
 		$this->frm->addDropDown('category_id', $this->categories, $this->record['category_id']);
 		$this->frm->addDropDown('user_id', $this->users, $this->record['user_id']);
@@ -193,7 +193,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$txtPublishTime = $this->frm->getField('publish_on_time');
 			$ddmUserId = $this->frm->getField('user_id');
 			$ddmCategoryId = $this->frm->getField('category_id');
-			$rbtHidden = $this->frm->getField('hidden');
+			$rbtHidden = $this->frm->getField('hide');
 			$chkAllowComments = $this->frm->getField('allow_comments');
 
 			// validate fields
