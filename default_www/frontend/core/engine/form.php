@@ -45,7 +45,7 @@ class FrontendForm extends SpoonForm
 		$this->header = Spoon::getObjectReference('header');
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/'. $this->url->getQueryString() : (string) $action;
+		$action = ($action === null) ? '/'. $this->URL->getQueryString() : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method);

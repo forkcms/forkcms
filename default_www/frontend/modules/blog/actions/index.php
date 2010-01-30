@@ -26,7 +26,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'item_count' => null, 'pages_count' => null);
+	protected $pagination = array('limit' => 1, 'offset' => 0, 'requested_page' => 1, 'item_count' => null, 'pages_count' => null);
 
 
 	/**
@@ -58,7 +58,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	private function getData()
 	{
 		// requested page
-		$requestedPage = $this->url->getParameter(0, 'int');
+		$requestedPage = $this->URL->getParameter(0, 'int');
 
 		// no page given
 		if($requestedPage === null) $requestedPage = 1;
@@ -79,6 +79,8 @@ class FrontendBlogIndex extends FrontendBaseBlock
 
 		// get articles
 		$this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
+
+//		Spoon::dump($this->articles);
 	}
 
 

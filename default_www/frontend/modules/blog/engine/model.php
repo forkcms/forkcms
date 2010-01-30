@@ -41,12 +41,12 @@ class FrontendBlogModel
 	 * Get an article
 	 *
 	 * @return	array
-	 * @param	string $url
+	 * @param	string $URL
 	 */
-	public static function get($url)
+	public static function get($URL)
 	{
 		// redefine
-		$url = (string) $url;
+		$URL = (string) $URL;
 
 		// get db
 		$db = FrontendModel::getDB();
@@ -64,7 +64,7 @@ class FrontendBlogModel
 										INNER JOIN meta AS m ON bp.meta_id = m.id
 										WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND m.url = ?
 										LIMIT 1;',
-										array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00', $url));
+										array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00', $URL));
 	}
 
 

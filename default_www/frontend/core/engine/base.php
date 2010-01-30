@@ -40,7 +40,7 @@ class FrontendBaseObject
 		// get template from reference
 		$this->tpl = Spoon::getObjectReference('template');
 
-		// get url from reference
+		// get URL from reference
 		$this->URL = Spoon::getObjectReference('url');
 	}
 }
@@ -278,7 +278,7 @@ class FrontendBaseBlock
 
 
 	/**
-	 * A reference to the url-instance
+	 * A reference to the URL-instance
 	 *
 	 * @var	FrontendURL
 	 */
@@ -335,7 +335,7 @@ class FrontendBaseBlock
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
 
-		// buil url to the module
+		// buil URL to the module
 		$frontendModuleURL = '/frontend/modules/'. $this->getModule() .'/js';
 
 		// add javascriptfile with same name as module (if the file exists)
@@ -496,10 +496,10 @@ class FrontendBaseBlock
 			for($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++)
 			{
 				// init var
-				$url = $this->pagination['url'] .'/'. $i;
+				$URL = $this->pagination['url'] .'/'. $i;
 
 				// add
-				$pagination['pages_first'][] = array('url' => $url, 'label' => $i);
+				$pagination['pages_first'][] = array('url' => $URL, 'label' => $i);
 			}
 		}
 
@@ -508,10 +508,10 @@ class FrontendBaseBlock
 		{
 			// init var
 			$current = ($i == $this->pagination['requested_page']);
-			$url = $this->pagination['url'] .'/'. $i;
+			$URL = $this->pagination['url'] .'/'. $i;
 
 			// add
-			$pagination['pages'][] = array('url' => $url, 'label' => $i, 'current' => $current);
+			$pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
 		}
 
 		// show last pages?
@@ -525,10 +525,10 @@ class FrontendBaseBlock
 			for($i = $pagesLastStart; $i <= $pagesLastEnd; $i++)
 			{
 				// init var
-				$url = $this->pagination['url'] .'/'. $i;
+				$URL = $this->pagination['url'] .'/'. $i;
 
 				// add
-				$pagination['pages_last'][] = array('url' => $url, 'label' => $i);
+				$pagination['pages_last'][] = array('url' => $URL, 'label' => $i);
 			}
 		}
 

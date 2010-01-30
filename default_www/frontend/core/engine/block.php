@@ -127,22 +127,22 @@ class FrontendBlockExtra extends FrontendBaseObject
 		if($this->action === null)
 		{
 			// get first parameter
-			$actionParameter = $this->url->getParameter(0);
+			$actionParameter = $this->URL->getParameter(0);
 
-			// unknown action and not provided in url
+			// unknown action and not provided in URL
 			if($actionParameter === null) $this->setAction($this->config->getDefaultAction());
 
-			// action provided in the url
+			// action provided in the URL
 			else
 			{
 				// loop possible actions
 				foreach($this->config->getPossibleActions() as $actionName)
 				{
 					// get action that should be passed as parameter
-					$actionUrl = FrontendLanguage::getAction(SpoonFilter::toCamelCase($actionName));
+					$actionURL = FrontendLanguage::getAction(SpoonFilter::toCamelCase($actionName));
 
 					// the action is the requested one
-					if($actionUrl == $actionParameter)
+					if($actionURL == $actionParameter)
 					{
 						// set action
 						$this->setAction($actionName);

@@ -83,10 +83,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	private function getData()
 	{
 		// validate incoming parameters
-		if($this->url->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
 
 		// get by url
-		$this->record = FrontendBlogModel::get($this->url->getParameter(1));
+		$this->record = FrontendBlogModel::get($this->URL->getParameter(1));
 
 		// anything found?
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
@@ -158,9 +158,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->parse($this->tpl);
 
 		// some options
-		if($this->url->getParameter('comment', 'string') == 'moderation') $this->tpl->assign('commentIsInModeration', true);
-		if($this->url->getParameter('comment', 'string') == 'spam') $this->tpl->assign('commentIsSpam', true);
-		if($this->url->getParameter('comment', 'string') == 'true') $this->tpl->assign('commentIsAdded', true);
+		if($this->URL->getParameter('comment', 'string') == 'moderation') $this->tpl->assign('commentIsInModeration', true);
+		if($this->URL->getParameter('comment', 'string') == 'spam') $this->tpl->assign('commentIsSpam', true);
+		if($this->URL->getParameter('comment', 'string') == 'true') $this->tpl->assign('commentIsAdded', true);
 
 		// assign settings
 		// loop values @todo	we should do this in a decent way...
@@ -250,9 +250,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				try
 				{
 					// set cookies
-					SpoonCookie::set('comment_author', $author, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
-					SpoonCookie::set('comment_email', $email, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
-					SpoonCookie::set('comment_website', $website, (7 * 24 * 60 * 60), '/', '.'. $this->url->getDomain());
+					SpoonCookie::set('comment_author', $author, (7 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_email', $email, (7 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_website', $website, (7 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
 				}
 				catch(Exception $e)
 				{
