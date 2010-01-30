@@ -139,9 +139,24 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	{
 		// @todo	find a decent way to decide which block should be removed... I hate blocks.
 
+		// get RSS-link
+		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_'. FRONTEND_LANGUAGE);
+		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
+
+		// add RSS-feed into the metaCustom
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
+
+		// add into breadcrumb
+		$this->breadcrumb->addElement($this->record['title']);
+
+		// set meta
+		$this->header->setPageTitle($this->record['title']);
+		$this->header->setMetaDescription($this->record['meta_description'], ($this->record['meta_description_overwrite'] == 'Y'));
+		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
+
 		// assign article
 		// loop values @todo	we should do this in a decent way...
-		foreach($this->record as $key => $value) $this->tpl->assign('blogArticle'. SpoonFilter::toCamelCase($key), $value);
+		foreach($this->record as $key => $value) if($value !== null) $this->tpl->assign('blogArticle'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('blogArticle', $this->record);
 
 		// count comments
@@ -164,7 +179,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// assign settings
 		// loop values @todo	we should do this in a decent way...
-		foreach($this->settings as $key => $value) $this->tpl->assign('blogSettings'. SpoonFilter::toCamelCase($key), $value);
+		foreach($this->settings as $key => $value) if($value !== null) $this->tpl->assign('blogSettings'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('blogSettings', $this->settings);
 	}
 
@@ -258,7 +273,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				{
 					// ignore
 				}
-
 
 				// redirect
 				$this->redirect($redirectLink);

@@ -112,18 +112,11 @@ class FrontendLanguage
 				// redefine language
 				$language = substr($language, 0, 2); // first two characters
 
-				// @todo tijs - onderstaande if/else documenteren, I dont get it.
 				// find possible language
 				if($forRedirect)
 				{
 					// check in the redirect-languages
 					if(in_array($language, $redirectLanguages)) return $language;
-				}
-
-				else
-				{
-					// check in the active-languages
-					if(in_array($language, $possibleLanguages)) return $language;
 				}
 			}
 		}

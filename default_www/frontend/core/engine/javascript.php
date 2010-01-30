@@ -18,7 +18,7 @@ class FrontendJavascript
 	 *
 	 * @var	string
 	 */
-	private $file; // @todo tijs - ik zou in heel Frontend $file vervangen door $filename (1 lijn, is ook zo in php en spoon)
+	private $filename;
 
 
 	/**
@@ -75,7 +75,7 @@ class FrontendJavascript
 	 */
 	public function getFile()
 	{
-		return $this->file;
+		return $this->filename;
 	}
 
 
@@ -110,13 +110,13 @@ class FrontendJavascript
 	private function setFile($value)
 	{
 		// set property
-		$this->file = (string) $value;
+		$this->filename = (string) $value;
 
 		// core is a special module
 		if($this->module == 'core')
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(FRONTEND_CORE_PATH .'/js/'. $this->file))
+			if(!SpoonFile::exists(FRONTEND_CORE_PATH .'/js/'. $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);
@@ -130,7 +130,7 @@ class FrontendJavascript
 		else
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->file))
+			if(!SpoonFile::exists(FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);

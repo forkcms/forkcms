@@ -1,8 +1,8 @@
 <?php
 
 /**
- * FrontendBlogIndex
- * This is the overview-action
+ * FrontendBlogCategory
+ * This is the category-action
  *
  * @package		frontend
  * @subpackage	blog
@@ -10,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendBlogIndex extends FrontendBaseBlock
+class FrontendBlogCategory extends FrontendBaseBlock
 {
 	/**
 	 * The articles
@@ -21,12 +21,20 @@ class FrontendBlogIndex extends FrontendBaseBlock
 
 
 	/**
+	 * The requested category
+	 *
+	 * @var	array
+	 */
+	private $category;
+
+
+	/**
 	 * The pagination array.
 	 * It will hold all needed parameters, some of them need initialization
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 1, 'offset' => 0, 'requested_page' => 1, 'item_count' => null, 'pages_count' => null);
+	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'item_count' => null, 'pages_count' => null);
 
 
 	/**
@@ -57,17 +65,29 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	 */
 	private function getData()
 	{
+		// get categories
+		$categories = FrontendBlogModel::getAllCategories();
+		$possibleCategories = array();
+		foreach($categories as $category) $possibleCategories[$category['url']] = $category['id'];
+
 		// requested page
-		$requestedPage = $this->URL->getParameter(0, 'int');
+		$requestedCategory = SpoonFilter::getValue($this->url->getParameter(1, 'string'), array_keys($possibleCategories), 'false');
+		$requestedPage = $this->url->getParameter(2, 'int');
+
+		// set category
+		$this->category = $categories[$possibleCategories[$requestedCategory]];
+
+		// validate category
+		if($requestedCategory == 'false') $this->redirect(FrontendNavigation::getURL(404));
 
 		// no page given
 		if($requestedPage === null) $requestedPage = 1;
 
 		// set url
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog');
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $requestedCategory;
 
 		// populate count fields in pagination
-		$this->pagination['item_count'] = FrontendBlogModel::getAllCount();
+		$this->pagination['item_count'] = FrontendBlogModel::getAllForCategoryCount($requestedCategory);
 		$this->pagination['pages_count'] = (int) ceil($this->pagination['item_count'] / $this->pagination['limit']);
 
 		// redirect if the request page doesn't exists
@@ -78,9 +98,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
 		// get articles
-		$this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
-
-//		Spoon::dump($this->articles);
+		$this->articles = FrontendBlogModel::getAllForCategory($requestedCategory, $this->pagination['limit'], $this->pagination['offset']);
 	}
 
 
@@ -97,6 +115,19 @@ class FrontendBlogIndex extends FrontendBaseBlock
 
 		// add RSS-feed into the metaCustom
 		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
+
+		// add into breadcrumb
+		$this->breadcrumb->addElement(ucfirst(FL::getLabel('Category')));
+		$this->breadcrumb->addElement($this->category['name']);
+
+		// set pageTitle
+		$this->header->setPageTitle(ucfirst(FL::getLabel('Category')));
+		$this->header->setPageTitle($this->category['name']);
+
+		// assign category
+		// loop values @todo	we should do this in a decent way...
+		foreach($this->category as $key => $value) if($value !== null) $this->tpl->assign('blogCategory'. SpoonFilter::toCamelCase($key), $value);
+		$this->tpl->assign('blogCategory', $this->category);
 
 		// assign articles
 		$this->tpl->assign('blogArticles', $this->articles);

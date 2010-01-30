@@ -230,7 +230,17 @@ class FrontendModel
 	}
 
 
-	// @todo tijs - phpdoc
+	/**
+	 * General method to check if something is spam
+	 *
+	 * @return	bool
+	 * @param	string $content
+	 * @param	string $permaLink
+	 * @param	string[optional] $author
+	 * @param	string[optional] $email
+	 * @param	string[optional] $URL
+	 * @param	string[optional] $type
+	 */
 	public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
 	{
 		// get some settings
@@ -249,15 +259,17 @@ class FrontendModel
 		$akismet->setTimeOut(10);
 		$akismet->setUserAgent('Fork CMS/2.0');
 
-		// @todo tijs - docs en/of uitlijning
+		// try it to decide it the item is spam
 		try
 		{
 			// check with Akismet if the item is spam
 			return $akismet->isSpam($content, $author, $email, $URL, $permaLink, $type);
 		}
+
+		// catch exceptions
 		catch(Exception $e)
 		{
-			// in debug mode we will see exceptions
+			// in debug mode we want to see exceptions, otherwise the fallback will be triggered
 			if(SPOON_DEBUG) throw $e;
 		}
 

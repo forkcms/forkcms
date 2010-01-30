@@ -358,7 +358,14 @@ class FrontendNavigation extends FrontendBaseObject
 	}
 
 
-	// @todo tijs - phpdoc
+	/**
+	 * Get the URL for a give module & action combination
+	 *
+	 * @return	string
+	 * @param	string $module
+	 * @param	string[optional] $action
+	 * @param	string[optional] $language
+	 */
 	public static function getURLForBlock($module, $action = null, $language = null)
 	{
 		// redefine

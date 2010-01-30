@@ -5,8 +5,6 @@
  *
  * This class represents a META-object
  *
- * @todo	write getters
- *
  * @package		backend
  * @subpackage	core
  *
@@ -106,13 +104,137 @@ class BackendMeta
 
 
 	/**
+	 * Get the current value for the meta-description;
+	 *
+	 * @return	mixed
+	 */
+	public function getDescription()
+	{
+		// not set so return null
+		if(!isset($this->data['description'])) return null;
+
+		// return value
+		return $this->data['description'];
+	}
+
+
+	/**
+	 * Should the description overwrite the default
+	 *
+	 * @return	mixed
+	 */
+	public function getDescriptionOverwrite()
+	{
+		// not set so return null
+		if(!isset($this->data['description_overwrite'])) return null;
+
+		// return value
+		return ($this->data['description_overwrite'] == 'Y');
+	}
+
+
+	/**
+	 * Get the current value for the metaId;
+	 *
+	 * @return	mixed
+	 */
+	public function getId()
+	{
+		// not set so return null
+		if(!isset($this->data['id'])) return null;
+
+		// return value
+		return (int) $this->data['id'];
+	}
+
+
+	/**
+	 * Get the current value for the meta-keywords;
+	 *
+	 * @return	mixed
+	 */
+	public function getKeywords()
+	{
+		// not set so return null
+		if(!isset($this->data['keywords'])) return null;
+
+		// return value
+		return $this->data['keywords'];
+	}
+
+
+	/**
+	 * Should the keywords overwrite the default
+	 *
+	 * @return	mixed
+	 */
+	public function getKeywordsOverwrite()
+	{
+		// not set so return null
+		if(!isset($this->data['keywords_overwrite'])) return null;
+
+		// return value
+		return ($this->data['keywords_overwrite'] == 'Y');
+	}
+
+
+	/**
+	 * Get the current value for the page title;
+	 *
+	 * @return	mixed
+	 */
+	public function getTitle()
+	{
+		// not set so return null
+		if(!isset($this->data['title'])) return null;
+
+		// return value
+		return $this->data['title'];
+	}
+
+
+	/**
+	 * Should the title overwrite the default
+	 *
+	 * @return	mixed
+	 */
+	public function getTitleOverwrite()
+	{
+		// not set so return null
+		if(!isset($this->data['title_overwrite'])) return null;
+
+		// return value
+		return ($this->data['title_overwrite'] == 'Y');
+	}
+
+
+	/**
 	 * Return the current value for an url
 	 *
-	 * @return	string
+	 * @return	mixed
 	 */
 	public function getURL()
 	{
+		// not set so return null
+		if(!isset($this->data['url'])) return null;
+
+		// return value
 		return $this->data['url'];
+	}
+
+
+	/**
+	 * Should the url overwrite the default
+	 *
+	 * @return	mixed
+	 */
+	public function getURLOverwrite()
+	{
+		// not set so return null
+		if(!isset($this->data['url_overwrite'])) return null;
+
+		// return value
+		return ($this->data['url_overwrite'] == 'Y');
 	}
 
 

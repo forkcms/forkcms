@@ -103,10 +103,8 @@ class BackendForm extends SpoonForm
 		if($type == 'till' && ($date == 0 || $date == null)) throw new BackendException('A datefield with type "till" should have a valid date-parameter.');
 		if($type == 'range' && ($date == 0 || $date2 == 0 || $date == null || $date2 == null)) throw new BackendException('A datefield with type "range" should have 2 valid date-parameters.');
 
-		// @todo	get prefered mask
+		// @later	get prefered mask & first day
 		$mask = 'd/m/Y';
-
-		// @todo	get firstday
 		$firstday = 1;
 
 		// rebuild mask

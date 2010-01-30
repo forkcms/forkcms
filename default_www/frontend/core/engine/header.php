@@ -27,7 +27,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private $javascriptFiles = array(); // @todo tijs - ik zou dit jsFiles noemen, kwestie van $cssFiles te volgen
+	private $javascriptFiles = array();
 
 
 	/**
@@ -182,11 +182,23 @@ class FrontendHeader extends FrontendBaseObject
 
 
 	/**
+	 * Add data into metacustom
+	 *
+	 * @return	void
+	 * @param	string $value
+	 */
+	public function addMetaCustom($value)
+	{
+		$this->metaCustom .= (string) $value;
+	}
+
+
+	/**
 	 * Sort function for CSS-files
 	 *
 	 * @return	void
 	 */
-	public function cssSort()
+	private function cssSort()
 	{
 		// init vars
 		$i = 0;
@@ -344,7 +356,7 @@ class FrontendHeader extends FrontendBaseObject
 				// removes real newlines
 				$tempContent = preg_replace('|\n|iU', ' ', $tempContent);
 
-				// @todo comment ?
+				// replace the new block in the general content
 				$content = str_replace($aMatches[0][$key], '{'. $tempContent .'}', $content);
 			}
 		}
@@ -540,7 +552,7 @@ class FrontendHeader extends FrontendBaseObject
 			if($this->metaKeywords == '') $this->metaKeywords = $value;
 
 			// append to current value
-			else $this->metaKeywords .= $value .', ';
+			else $this->metaKeywords .= ', '. $value;
 		}
 	}
 

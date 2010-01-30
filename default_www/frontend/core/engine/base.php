@@ -437,8 +437,8 @@ class FrontendBaseBlock
 		$showLastPages = false;
 
 		// validate pagination array
-		if(!isset($this->pagination['limit'])) throw new FrontendException('no limit limit in the pagination-property.');
-		if(!isset($this->pagination['offset'])) throw new FrontendException('no limit offset in the pagination-property.');
+		if(!isset($this->pagination['limit'])) throw new FrontendException('no limit in the pagination-property.');
+		if(!isset($this->pagination['offset'])) throw new FrontendException('no offset in the pagination-property.');
 		if(!isset($this->pagination['requested_page'])) throw new FrontendException('no requested_page available in the pagination-property.');
 		if(!isset($this->pagination['item_count'])) throw new FrontendException('no item_count available in the pagination-property.');
 		if(!isset($this->pagination['url'])) throw new FrontendException('no url available in the pagination-property.');
@@ -542,7 +542,7 @@ class FrontendBaseBlock
 		// assign pagination
 		// @todo we should do this in a decent way...
 		// loop values
-		foreach($pagination as $key => $value) $this->tpl->assign('pagination'. SpoonFilter::toCamelCase($key), $value);
+		foreach($pagination as $key => $value) if($value !== null) $this->tpl->assign('pagination'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('pagination', $pagination);
 	}
 

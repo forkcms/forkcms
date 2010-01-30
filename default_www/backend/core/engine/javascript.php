@@ -75,7 +75,7 @@ class BackendJavascript
 	 */
 	public function getFile()
 	{
-		return $this->file;
+		return $this->filename;
 	}
 
 
@@ -110,13 +110,13 @@ class BackendJavascript
 	public function setFile($value)
 	{
 		// set property
-		$this->file = (string) $value;
+		$this->filename = (string) $value;
 
 		// core is a special module
 		if($this->module == 'core')
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(BACKEND_CORE_PATH .'/js/'. $this->file))
+			if(!SpoonFile::exists(BACKEND_CORE_PATH .'/js/'. $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);
@@ -130,7 +130,7 @@ class BackendJavascript
 		else
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->file))
+			if(!SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);

@@ -134,6 +134,98 @@ class FrontendBlogModel
 	}
 
 
+	/**
+	 * Get all blogposts (at least a chunk)
+	 *
+	 * @return	array
+	 * @param	string $categoryURL
+	 * @param	int[optional] $limit
+	 * @param	int[optional] $offset
+	 */
+	public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
+	{
+		// redefine
+		$categoryURL = (string) $categoryURL;
+		$limit = (int) $limit;
+		$offset = (int) $offset;
+
+		// get db
+		$db = FrontendModel::getDB();
+
+		// init
+		$return = array();
+
+		// get the blogposts
+		$articles = (array) $db->retrieve('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,
+											bc.name AS category_name, bc.url AS category_url,
+											UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
+											m.url
+											FROM blog_posts AS bp
+											INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
+											INNER JOIN meta AS m ON bp.meta_id = m.id
+											WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bc.url = ?
+											ORDER BY bp.publish_on DESC
+											LIMIT ?, ?;',
+											array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00', $categoryURL, $offset, $limit), 'id');
+
+		// no results?
+		if(empty($articles)) return array();
+
+		// init var
+		$postIds = array();
+		$blogLink = FrontendNavigation::getURLForBlock('blog', 'detail');
+		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
+
+		// loop
+		foreach($articles as $key => $row)
+		{
+			// ids
+			$postIds[] = (int) $row['id'];
+
+			// urls
+			$articles[$key]['full_url'] = $blogLink .'/'. $row['url'];
+			$articles[$key]['category_full_url'] = $categoryLink .'/'. $row['category_url'];
+
+			// comments
+			if($row['comments_count'] > 0) $articles[$key]['comments'] = true;
+			if($row['comments_count'] > 1) $articles[$key]['comments_multiple'] = true;
+		}
+
+		// get all tags
+		$tags = FrontendTagsModel::getForMultipleItems('blog', $postIds);
+
+		// loop tags
+		foreach($tags as $postId => $tags) $articles[$postId]['tags'] = $tags;
+
+		// return
+		return $articles;
+	}
+
+
+	/**
+	 * Get all categories used in blog
+	 *
+	 * @return	array
+	 */
+	public static function getAllCategories()
+	{
+		// get db
+		$db = FrontendModel::getDB();
+
+		return (array) $db->retrieve('SELECT bc.id, bc.name, bc.url, COUNT(bc.id) AS num_posts
+										FROM blog_categories AS bc
+										INNER JOIN blog_posts AS bp ON bc.id = bp.category_id AND bc.language = bp.language
+										WHERE bc.language = ? AND bp.status = ? AND bp.hidden = ? AND bp.publish_on <= ?
+										GROUP BY bc.id;',
+										array(FRONTEND_LANGUAGE, 'active', 'N', date('Y-m-d H:i') .':00'), 'id');
+	}
+
+
+	/**
+	 * Get the number of blog posts
+	 *
+	 * @return	int
+	 */
 	public static function getAllCount()
 	{
 		// get db
@@ -145,6 +237,27 @@ class FrontendBlogModel
 									array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00'), 'id');
 	}
 
+
+	/**
+	 * Get the number of blog post in a given category
+	 *
+	 * @return	int
+	 */
+	public static function getAllForCategoryCount($categoryURL)
+	{
+		// redefine
+		$categoryURL = (string) $categoryURL;
+
+		// get db
+		$db = FrontendModel::getDB();
+
+		// return the number of items
+		return (int) $db->getVar('SELECT COUNT(bp.id) AS count
+									FROM blog_posts AS bp
+									INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
+									WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bc.url = ?;',
+									array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00', $categoryURL));
+	}
 
 
 	/**

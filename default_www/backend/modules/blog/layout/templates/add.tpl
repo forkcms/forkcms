@@ -9,7 +9,6 @@
 				{form:add}
 					{$txtTitle} {$txtTitleError}
 
-					<!-- @todo does this have to be here? Answer: yes -->
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
@@ -17,7 +16,7 @@
 							</p>
 						</div>
 					</div>
-					
+
 					<div class="tabs">
 						<ul>
 							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
@@ -72,7 +71,7 @@
 												<p class="status">Status: <strong>draft</strong></p>
 											</div>
 											-->
-											
+
 											<div class="options">
 												<ul class="inputList">
 													{iteration:hidden}
@@ -83,14 +82,14 @@
 													{/iteration:hidden}
 												</ul>
 											</div>
-											
+
 											<div class="options">
 												<dl>
 													<dt><label for="publishOnDate">{$lblPublishOn|ucfirst}:</label></dt>
 													<dd>{$txtPublishOnDate} <label for="publishOnTime">{$lblAt}</label> {$txtPublishOnTime}</dd>
 												</dl>
 											</div>
-											
+
 											<div class="footer">
 												<table border="0" cellpadding="0" cellspacing="0">
 													<tbody>
@@ -133,10 +132,10 @@
 												</div>
 												 -->
 											</div>
-											
+
 											<div class="options">
 												{$ddmUserId} {$ddmUserIdError}
-												
+
 												<!--  @todo ?
 												<ul>
 													<li>
@@ -165,7 +164,7 @@
 								</tr>
 							</table>
 						</div>
-						
+
 						<div id="tabPermissions">
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>

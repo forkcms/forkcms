@@ -323,19 +323,6 @@ class BackendBaseActionAdd extends BackendBaseAction
 
 
 	/**
-	 * Execute the current action
-	 * This method will be overwriten in most of the actions, but still be called to add general stuff
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, will add general CSS and JS
-		parent::execute();
-	}
-
-
-	/**
 	 * Parse the form
 	 *
 	 * @return	void
@@ -400,19 +387,6 @@ class BackendBaseActionEdit extends BackendBaseAction
 	 * @var	array
 	 */
 	protected $record;
-
-
-	/**
-	 * Execute the current action
-	 * This method will be overwriten in most of the actions, but still be called to add general stuff
-	 *
-	 * @return	void
-	 */ // @todo ik mag weg volgens Davy. (anderen ook)
-	public function execute()
-	{
-		// call parent, will add general CSS and JS
-		parent::execute();
-	}
 
 
 	/**

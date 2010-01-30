@@ -327,7 +327,7 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private function storeStatistics()
 	{
-		// @todo save temp statistics data here.
+		// @later	save temp statistics data here.
 	}
 }
 
