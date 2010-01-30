@@ -34,7 +34,7 @@ class BackendBlogModel
 											COUNT(p.id) AS num_posts
 											FROM blog_categories AS c
 											LEFT OUTER JOIN blog_posts AS p ON p.category_id = c.id
-											WHERE c.language = ?
+											WHERE c.language = ? AND p.status = "active"
 											GROUP BY c.id';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT id, UNIX_TIMESTAMP(created_on) AS created_on, author, text FROM blog_comments WHERE status = ?;';
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
