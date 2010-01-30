@@ -180,10 +180,17 @@
 						</div>
 						
 						<div id="tabRevisions">
-							<h3>{$lblRevisions|ucfirst}</h3>
-							<p>{$msgHelpRevisions}</p>
-							{option:revisions}{$revisions}{/option:revisions}
-							{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+							<div class="datagridHolder">
+								<div class="tableHeading">
+									<div class="oneLiner">
+										<h3 class="floater">{$lblRevisions|ucfirst}</h3>
+										<abbr class="help floater" title="{$msgHelpRevisions}">(?)</abbr>
+									</div>
+								</div>
+
+								{option:revisions}{$revisions}{/option:revisions}
+								{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+							</div>
 						</div>
 
 						<div id="tabSEO">

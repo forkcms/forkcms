@@ -78,7 +78,6 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		if($this->frm->isSubmitted())
 		{
 			// shorten fields
-			/* @var $feedburnerURL SpoonTextField */
 			$feedburnerURL = $this->frm->getField('feedburner_url');
 
 			// validation
