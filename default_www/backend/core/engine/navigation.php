@@ -311,6 +311,31 @@ class BackendNavigation
 		$urlAction = $this->url->getAction();
 		$urlToSearch = $urlModule .'/'. $urlAction;
 
+		// build an array so we can find out what submenu is used
+		foreach($this->navigation as $key => $level)
+		{
+			if(isset($level['children']))
+			{
+				foreach($level['children'] as $module => $child)
+				{
+					if(isset($child['children']))
+					{
+						foreach($child['children'] as $index => $grandchild)
+						{
+							if(!empty($grandchild['url']))
+							{
+								// split the url so we know the module/action
+								$explodedURL = explode('/', $grandchild['url']);
+
+								// store the submenu for this module and action
+								$actions[$explodedURL[0]]['actions'][$explodedURL[1]] = $key;
+							}
+						}
+					}
+				}
+			}
+		}
+
 		// loop the first level
 		foreach($this->navigation as $key => $level)
 		{
@@ -326,8 +351,18 @@ class BackendNavigation
 					// add all keys if the url is found
 					if($level['url'] == $urlToSearch || $module == $urlModule)
 					{
-						$keys[] = $key;
-						$keys[] = $module;
+						// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
+						if(isset($actions[$urlModule]['actions'][$urlAction]) && $actions[$urlModule]['actions'][$urlAction] == 'settings')
+						{
+							$keys[] = 'settings';
+							$keys[] = 'modules';
+						}
+
+						else
+						{
+							$keys[] = $key;
+							$keys[] = $module;
+						}
 					}
 
 					// has children?
@@ -339,8 +374,18 @@ class BackendNavigation
 							// url found?
 							if($level['url'] == $urlToSearch || $module == $urlModule)
 							{
-								$keys[] = $key;
-								$keys[] = $module;
+								// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
+								if(isset($actions[$urlModule]['actions'][$urlAction]) && $actions[$urlModule]['actions'][$urlAction] == 'settings')
+								{
+									$keys[] = 'settings';
+									$keys[] = 'modules';
+								}
+
+								else
+								{
+									$keys[] = $key;
+									$keys[] = $module;
+								}
 							}
 						}
 					}
