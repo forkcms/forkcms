@@ -49,6 +49,7 @@ class FrontendAJAX
 		// create a new action
 		$action = new FrontendAJAXAction($this->getAction(), $this->getModule());
 
+		// attempt to execute this action
 		try
 		{
 			// execute the action
@@ -58,7 +59,7 @@ class FrontendAJAX
 		// we should catch exceptions
 		catch(Exception $e)
 		{
-			// if we are debugging we should see the exceptions
+			// if we are debugging, we obviously want to see the exception
 			if(SPOON_DEBUG) throw $e;
 
 			// create fake action
@@ -142,7 +143,7 @@ class FrontendAJAX
 
 
 /**
- * FrontendBaseAction
+ * FrontendAJAXAction
  *
  * @package		frontend
  * @subpackage	core
@@ -178,8 +179,8 @@ class FrontendAJAXAction
 
 
 	/**
-	 * Default constructor
-	 * You have to specify the action and module so we know what to do with this instance
+	 * Class constructor.
+	 * You have to specify the action and module so we know what to do with this instance.
 	 *
 	 * @return	void
 	 * @param	string $action
@@ -197,7 +198,7 @@ class FrontendAJAXAction
 
 
 	/**
-	 * Execute the action
+	 * Execute the action.
 	 * We will build the classname, require the class and call the execute method.
 	 *
 	 * @return	void
@@ -210,7 +211,7 @@ class FrontendAJAXAction
 		// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
 		require_once FRONTEND_MODULE_PATH .'/ajax/'. $this->getAction() .'.php';
 
-		// validate if class exists (aka has correct name)
+		// validate if class exists
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
 		// create action-object
@@ -222,8 +223,8 @@ class FrontendAJAXAction
 
 
 	/**
-	 * Get the current action
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+	 * Get the current action.
+	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code.
 	 *
 	 * @return	string
 	 */
@@ -234,8 +235,8 @@ class FrontendAJAXAction
 
 
 	/**
-	 * Get the current module
-	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code
+	 * Get the current module.
+	 * REMARK: You should not use this method from your code, but it has to be public so we can access it later on in the core-code.
 	 *
 	 * @return	string
 	 */
@@ -247,8 +248,8 @@ class FrontendAJAXAction
 
 	/**
 	 * Load the config file for the requested module.
-	 * In the config file we have to find dissabled actions, the constructor will read the folder and set possible actions
-	 * Other configurations will be stored in it also.
+	 * In the config file we have to find disabled actions, the constructor will read the folder and set possible actions.
+	 * Other configurations will also be stored in it.
 	 *
 	 * @return	void
 	 */
