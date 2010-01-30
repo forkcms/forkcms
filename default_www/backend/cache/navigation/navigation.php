@@ -6,7 +6,7 @@ $navigation['pages'] = array('url' => 'pages/index', 'label' => 'Pages');
 
 $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
-$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'label' => 'Posts');
+$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Posts');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/categories', 'label' => 'Categories');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/comments', 'label' => 'Reacties');
 $navigation['modules']['children']['events'] = array('url' => 'events/index', 'label' => 'Events');
@@ -30,10 +30,10 @@ $navigation['modules']['children']['extranet']['children'][] = array('url' => 'e
 $navigation['modules']['children']['locale'] = array('url' => 'locale/index', 'label' => 'Locale');
 
 $navigation['mailmotor'] = array('url' => null, 'label' => 'Mailmotor');
-$navigation['mailmotor']['children'][] = array('url' => 'mailmotor/index', 'label' => 'Newsletters');
-$navigation['mailmotor']['children'][] = array('url' => 'mailmotor/groups', 'label' => 'Groups');
-$navigation['mailmotor']['children'][] = array('url' => 'mailmotor/addresses', 'label' => 'Addresses');
-$navigation['mailmotor']['children'][] = array('url' => 'mailmotor/settings', 'label' => 'Settings');
+$navigation['mailmotor']['children']['mailmotor'] = array('url' => 'mailmotor/index', 'label' => 'Newsletters');
+$navigation['mailmotor']['children']['mailmotor'] = array('url' => 'mailmotor/groups', 'label' => 'Groups');
+$navigation['mailmotor']['children']['mailmotor'] = array('url' => 'mailmotor/addresses', 'label' => 'Addresses');
+$navigation['mailmotor']['children']['mailmotor'] = array('url' => 'mailmotor/settings', 'label' => 'Settings');
 
 $navigation['statistics'] = array('url' => null, 'label' => 'Statistics');
 $navigation['statistics']['children']['this_month'] = array('url' => null, 'label' => 'ThisMonth');

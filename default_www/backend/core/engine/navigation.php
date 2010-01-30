@@ -71,6 +71,11 @@ class BackendNavigation
 		// init html
 		$html = '<ul>'."\n";
 
+		// set active URL
+		$activeModule = $this->url->getModule();
+		$activeAction = $this->url->getAction();
+		$activeURL = $activeModule .'/'. $activeAction;
+
 		// search parent
 		foreach($this->navigation[$selectedKeys[0]]['children'] as $key => $level)
 		{
@@ -139,8 +144,8 @@ class BackendNavigation
 						// is allowed?
 						if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 						{
-							// selected state
-							$childSelected = (bool) ($child['url'] == $this->url->getModule() .'/'. $this->url->getAction());
+							// selected state - does the child URL match 'module/action' or is the action present in the selected_for_actions array?
+							$childSelected = (bool) ($child['url'] == $activeURL) || (isset($child['selected_for_actions']) && in_array($activeAction, $child['selected_for_actions']));
 
 							if($childSelected) $subHTML .= '<li class="selected">'."\n";
 							else $subHTML .= '<li>'."\n";
@@ -299,9 +304,12 @@ class BackendNavigation
 	{
 		// init var
 		$keys = array();
+		$actions = array();
 
 		// build the url to search for
-		$urlToSearch = $this->url->getModule() .'/'. $this->url->getAction();
+		$urlModule = $this->url->getModule();
+		$urlAction = $this->url->getAction();
+		$urlToSearch = $urlModule .'/'. $urlAction;
 
 		// loop the first level
 		foreach($this->navigation as $key => $level)
@@ -316,7 +324,7 @@ class BackendNavigation
 				foreach($level['children'] as $module => $level)
 				{
 					// add all keys if the url is found
-					if($level['url'] == $urlToSearch)
+					if($level['url'] == $urlToSearch || $module == $urlModule)
 					{
 						$keys[] = $key;
 						$keys[] = $module;
@@ -329,7 +337,7 @@ class BackendNavigation
 						foreach($level['children'] as $level)
 						{
 							// url found?
-							if($level['url'] == $urlToSearch)
+							if($level['url'] == $urlToSearch || $module == $urlModule)
 							{
 								$keys[] = $key;
 								$keys[] = $module;
