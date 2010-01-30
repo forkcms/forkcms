@@ -82,7 +82,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 		$this->loadConfig();
 
 		// is the requested action possible? If not we throw an exception. We don't redirect because that could trigger a redirect loop
-		if(!in_array($this->getAction(), $this->config->getPossibleActions())) throw new FrontendException('This is an invalid action ('. $this->getAction() .').');
+		if(!in_array($this->getAction(), $this->config->getPossibleActions())) $this->setAction($this->config->getDefaultAction());
 	}
 
 

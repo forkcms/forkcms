@@ -425,6 +425,127 @@ class FrontendBaseBlock
 
 
 	/**
+	 * Parse pagination
+	 *
+	 * @return	void
+	 */
+	protected function parsePagination()
+	{
+		// init var
+		$pagination = null;
+		$showFirstPages = false;
+		$showLastPages = false;
+
+		// validate pagination array
+		if(!isset($this->pagination['limit'])) throw new FrontendException('no limit limit in the pagination-property.');
+		if(!isset($this->pagination['offset'])) throw new FrontendException('no limit offset in the pagination-property.');
+		if(!isset($this->pagination['requested_page'])) throw new FrontendException('no requested_page available in the pagination-property.');
+		if(!isset($this->pagination['item_count'])) throw new FrontendException('no item_count available in the pagination-property.');
+		if(!isset($this->pagination['url'])) throw new FrontendException('no url available in the pagination-property.');
+
+		// no pagination needed
+		if($this->pagination['pages_count'] < 1) return;
+
+		// populate count fields
+		$pagination['pages_count'] = $this->pagination['pages_count'];
+		$pagination['current_page'] = $this->pagination['requested_page'];
+
+		// as long as we are below page 7 we should show all pages starting from 1
+		if($this->pagination['requested_page'] < 8)
+		{
+			$pagesStart = 1;
+			$pagesEnd = ($this->pagination['pages_count'] >= 8) ? 8 : $this->pagination['pages_count'];
+
+			// show last pages
+			if($this->pagination['pages_count'] > 8) $showLastPages = true;
+		}
+
+		// as long as we are 7 pages from the end we should show all pages till the end
+		elseif($this->pagination['requested_page'] >= ($this->pagination['pages_count'] - 8))
+		{
+			$pagesStart = ($this->pagination['pages_count'] - 7);
+			$pagesEnd = $this->pagination['pages_count'];
+
+			$showFirstPages = true;
+		}
+
+		// page 7
+		else
+		{
+			$pagesStart = $this->pagination['requested_page'] - 2;
+			$pagesEnd = $this->pagination['requested_page'] + 2;
+			$showFirstPages = true;
+			$showLastPages = true;
+		}
+
+		// show previous
+		if($this->pagination['requested_page'] > 1)
+		{
+			$pagination['show_previous'] = true;
+			$pagination['previous_url'] = $this->pagination['url'] .'/'. ($this->pagination['requested_page'] - 1);
+		}
+
+		// show first pages?
+		if($showFirstPages)
+		{
+			// init var
+			$pagesFirstStart = 1;
+			$pagesFirstEnd = 2;
+
+			// loop pages
+			for($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++)
+			{
+				// init var
+				$url = $this->pagination['url'] .'/'. $i;
+
+				// add
+				$pagination['pages_first'][] = array('url' => $url, 'label' => $i);
+			}
+		}
+
+		// build array
+		for($i = $pagesStart; $i <= $pagesEnd; $i++)
+		{
+			// init var
+			$current = ($i == $this->pagination['requested_page']);
+			$url = $this->pagination['url'] .'/'. $i;
+
+			// add
+			$pagination['pages'][] = array('url' => $url, 'label' => $i, 'current' => $current);
+		}
+
+		// show last pages?
+		if($showLastPages)
+		{
+			// init var
+			$pagesLastStart = $this->pagination['pages_count'] - 1;
+			$pagesLastEnd = $this->pagination['pages_count'];
+
+			// loop pages
+			for($i = $pagesLastStart; $i <= $pagesLastEnd; $i++)
+			{
+				// init var
+				$url = $this->pagination['url'] .'/'. $i;
+
+				// add
+				$pagination['pages_last'][] = array('url' => $url, 'label' => $i);
+			}
+		}
+
+		// show next
+		if($this->pagination['requested_page'] < $this->pagination['pages_count'])
+		{
+			$pagination['show_next'] = true;
+			$pagination['next_url'] = $this->pagination['url'] .'/'. ($this->pagination['requested_page'] + 1);
+		}
+
+		// assign pagination
+		// loop values @todo	we should do this in a decent way...
+		foreach($pagination as $key => $value) $this->tpl->assign('pagination'. SpoonFilter::toCamelCase($key), $value);
+		$this->tpl->assign('pagination', $pagination);
+	}
+
+	/**
 	 * Redirect to a given url
 	 *
 	 * @return	void

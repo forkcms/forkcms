@@ -396,8 +396,8 @@ class FrontendNavigation extends FrontendBaseObject
 							// direct link?
 							if($extra['module'] == $module && $extra['action'] == $action)
 							{
-								// @todo	implement me
-								Spoon::dump($properties);
+								// exacte page was found, so return
+								return self::getURL($properties['page_id']);
 							}
 
 							// correct module but no action

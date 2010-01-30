@@ -134,6 +134,19 @@ class FrontendBlogModel
 	}
 
 
+	public static function getAllCount()
+	{
+		// get db
+		$db = FrontendModel::getDB();
+
+		return (int) $db->getVar('SELECT COUNT(bp.id) AS count
+									FROM blog_posts AS bp
+									WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ?;',
+									array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00'), 'id');
+	}
+
+
+
 	/**
 	 * Get the comments for an article
 	 *

@@ -21,6 +21,15 @@ class FrontendBlogIndex extends FrontendBaseBlock
 
 
 	/**
+	 * The pagination array.
+	 * It will hold all needed parameters, some of them need initialization
+	 *
+	 * @var	array
+	 */
+	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'item_count' => null, 'pages_count' => null);
+
+
+	/**
 	 * Execute the extra
 	 *
 	 * @return	void
@@ -48,12 +57,28 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	 */
 	private function getData()
 	{
-		// @todo	fetch from URL
-		$limit = 100;
-		$offset = 0;
+		// requested page
+		$requestedPage = $this->url->getParameter(0, 'int');
+
+		// no page given
+		if($requestedPage === null) $requestedPage = 1;
+
+		// set url
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog');
+
+		// populate count fields in pagination
+		$this->pagination['item_count'] = FrontendBlogModel::getAllCount();
+		$this->pagination['pages_count'] = (int) ceil($this->pagination['item_count'] / $this->pagination['limit']);
+
+		// redirect if the request page doesn't exists
+		if($requestedPage > $this->pagination['pages_count'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+
+		// populate calculated fields in pagination
+		$this->pagination['requested_page'] = $requestedPage;
+		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
 		// get articles
-		$this->articles = FrontendBlogModel::getAll($limit, $offset);
+		$this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
 	}
 
 
@@ -66,6 +91,8 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	{
 		// assign articles
 		$this->tpl->assign('blogArticles', $this->articles);
+
+		$this->parsePagination();
 	}
 }
 ?>

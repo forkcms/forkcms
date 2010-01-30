@@ -81,7 +81,8 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'author', 'comments'));
+		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'author', 'comments'), 'publish_on');
+		$this->dgPosts->setSortParameter('desc');
 
 		// set colum URLs
 		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&id=[id]');
