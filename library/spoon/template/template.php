@@ -941,15 +941,21 @@ class SpoonTemplateCompiler
 					if($numChunks == 2) $variable = '$'. $chunks[0] .'[\''. $chunks[1] .'\']';
 					else $variable = '$this->variables[\''. $chunks[0] .'\']';
 
+					// internal variable
+					$internalVariable = $chunks[$numChunks - 1];
+
 					// replace
-					$replace[0] = '<?php foreach((array) '. $variable .' as $'. $chunks[$numChunks - 1] .'I => $'. $chunks[$numChunks - 1] .'): ?>';
+					$replace[0] = '<?php $'. $internalVariable .'Count = count('. $variable ."); ?>\n";
+					$replace[0] .= '<?php foreach((array) '. $variable .' as $'. $internalVariable .'I => $'. $internalVariable ."): ?>\n";
 					$replace[0] .= "<?php
-					if(isset(\$". $chunks[$numChunks - 1] ."['formElements']) && is_array(\$". $chunks[$numChunks - 1] ."['formElements']))
+					if(!isset(\$". $internalVariable ."['first']) && \$". $internalVariable ."I == 0) \$". $internalVariable ."['first'] = true;
+					if(!isset(\$". $internalVariable ."['last']) && \$". $internalVariable ."I == \$". $internalVariable ."Count - 1) \$". $internalVariable ."['last'] = true;
+					if(isset(\$". $internalVariable ."['formElements']) && is_array(\$". $internalVariable ."['formElements']))
 					{
-						foreach(\$". $chunks[$numChunks - 1] ."['formElements'] as \$name => \$object)
+						foreach(\$". $internalVariable ."['formElements'] as \$name => \$object)
 						{
-							\$". $chunks[$numChunks - 1] ."[\$name] = \$object->parse();
-							\$". $chunks[$numChunks - 1] ."[\$name .'Error'] = (\$object->getErrors() == '') ? '' : '<span class=\"formError\">'. \$object->getErrors() .'</span>';
+							\$". $internalVariable ."[\$name] = \$object->parse();
+							\$". $internalVariable ."[\$name .'Error'] = (\$object->getErrors() == '') ? '' : '<span class=\"formError\">'. \$object->getErrors() .'</span>';
 						}
 					}
 					?>";
@@ -974,7 +980,7 @@ class SpoonTemplateCompiler
 	private function parseOptions($content)
 	{
 		// regex pattern
-		$pattern = "/{option:([a-z0-9-_\.\[\]\!]+)}.*?{\/option:\\1}/is";
+		$pattern = "/{option:([a-z0-9-_\.\[\]\!\']+)}.*?{\/option:\\1}/is";
 
 		// init vars
 		$options = array();
@@ -1058,18 +1064,11 @@ class SpoonTemplateCompiler
 		$variable = ltrim($variable, '{$');
 		$variable = rtrim($variable, '}');
 
-		// replace [ & ]
-		$variable = str_replace(array('[', ']'), '.', $variable);
-
 		// fetch modifiers
 		$var = explode('|', $variable);
 
 		// base variable
 		$variable = '';
-
-		// convert multiple dots to a single one
-		$var[0] = preg_replace('/\.+/', '.', $var[0]);
-		$var[0] = trim($var[0], '.');
 
 		// explode using the dots
 		$varChunks = explode('.', $var[0]);
@@ -1078,13 +1077,67 @@ class SpoonTemplateCompiler
 		$numChunks = count($varChunks);
 
 		// more than 2 chunks is NOT allowed
-		if($numChunks > 2) return '\'[$'. implode('|', $var) .']\'';
+		if($numChunks > 2) return '\'{$'. implode('|', $var) .'}\'';
 
 		// 2 chunks
-		elseif($numChunks == 2) $variable = '$'. $varChunks[0] .'[\''. $varChunks[1] .'\']';
+		elseif($numChunks == 2)
+		{
+			// contains [
+			if(strpos($varChunks[1],'[') !== false)
+			{
+				// get rid of ]
+				$varChunks[1] = str_replace(']', '', $varChunks[1]);
+
+				// create chunks
+				$bracketChunks = explode('[', $varChunks[1]);
+
+				// add first part
+				$variable = '$'. $varChunks[0];
+
+				// loop all chunks
+				for($i = 0; $i < count($bracketChunks); $i++)
+				{
+					// explicitly add single quotes for the first element
+					if($i == 0) $variable .= '[\''. $bracketChunks[$i] .'\']';
+
+					// everything after first as is provided in the template
+					else $variable .= '['. $bracketChunks[$i] .']';
+				}
+			}
+
+			// no square bracketes used
+			else $variable = '$'. $varChunks[0] .'[\''. $varChunks[1] .'\']';
+		}
 
 		// 1 chunk
-		else $variable = '$this->variables[\''. $var[0] .'\']';
+		else
+		{
+			// contains [
+			if(strpos($varChunks[0],'[') !== false)
+			{
+				// get rid of ]
+				$varChunks[0] = str_replace(']', '', $varChunks[0]);
+
+				// create chunks
+				$bracketChunks = explode('[', $varChunks[0]);
+
+				// add first part
+				$variable = '$this->variables[\''. $bracketChunks[0] .'\']';
+
+				// loop all chunks
+				for($i = 1; $i < count($bracketChunks); $i++)
+				{
+					// add this chunk (as provided in the template)
+					$variable .= '['. $bracketChunks[$i] .']';
+				}
+			}
+
+			// no square brackets used
+			else $variable = '$this->variables[\''. $var[0] .'\']';
+		}
+
+		// @todo davy - if you encapsulate your arguments with ', you should be able to do {$date|date:'y-m-d H:i:s'}
+		// @todo davy - komma's should be allowed within arguments for modifiers
 
 		// has modifiers ?
 		if(isset($var[1]))
@@ -1186,7 +1239,7 @@ class SpoonTemplateCompiler
 				if($key == $keyIndex) continue;
 
 				// replace myself in the other var
-				$variables[$keyIndex] = str_replace('.$'. $key .'.', $variables[$key], $variables[$keyIndex]);
+				$variables[$keyIndex] = str_replace('[$'. $key .']', $variables[$key], $variables[$keyIndex]);
 			}
 		}
 
