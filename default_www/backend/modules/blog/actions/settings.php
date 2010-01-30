@@ -9,6 +9,7 @@
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendBlogSettings extends BackendBaseActionEdit
@@ -37,37 +38,74 @@ class BackendBlogSettings extends BackendBaseActionEdit
 	}
 
 
+	/**
+	 * Loads the settings form
+	 *
+	 * @return	void
+	 */
 	private function loadForm()
 	{
+		// init settings form
 		$this->frm = new SpoonForm('settings');
+
+		// add fields for spam
 		$this->frm->addCheckBox('spamfilter', BackendModel::getSetting('blog', 'spamfilter', false));
+
+		// add fields for comments
+		$this->frm->addCheckBox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
+
+		// add fields for SEO
 		$this->frm->addCheckBox('ping_services', BackendModel::getSetting('blog', 'ping_services', false));
+
+		// add fields for RSS
 		$this->frm->addTextField('rss_title', BackendModel::getSetting('blog', 'rss_title_'. BL::getWorkingLanguage()));
 		$this->frm->addTextArea('rss_description', BackendModel::getSetting('blog', 'rss_description_'. BL::getWorkingLanguage()));
 		$this->frm->addTextField('feedburner_url', BackendModel::getSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage()));
+
+		// submit button
 		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
+
+	/**
+	 * Validates the settings form
+	 *
+	 * @return	void
+	 */
 	private function validateForm()
 	{
+		// form is submitted
 		if($this->frm->isSubmitted())
 		{
+			// shorten fields
+			/* @var $feedburnerURL SpoonTextField */
+			$feedburnerURL = $this->frm->getField('feedburner_url');
+
+			// validation
 			$this->frm->getField('rss_title')->isFilled(BL::getError('FieldIsRequired'));
 
-			if($this->frm->getField('feedburner_url')->isFilled())
+			// feedburner URL is set
+			if($feedburnerURL->isFilled())
 			{
-				// @todo davy - valideren dat http er op zijn minst voorstaat...
-				$this->frm->getField('feedburner_url')->isURL(BL::getError('InvalidURL'));
+				// check if http:// is set and add if necessary
+				$feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://'. $feedburnerURL->getValue() : $feedburnerURL->getValue();
+
+				// check if feedburner URL is valid
+				if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError('InvalidURL');
 			}
 
+			// form is validated
 			if($this->frm->isCorrect())
 			{
+				// set our settings
 				BackendModel::setSetting('blog', 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
+				BackendModel::setSetting('blog', 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
 				BackendModel::setSetting('blog', 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
 				BackendModel::setSetting('blog', 'rss_title_'. BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
 				BackendModel::setSetting('blog', 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
-				BackendModel::setSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage(), $this->frm->getField('feedburner_url')->getValue());
+				BackendModel::setSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
 
+				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings'));
 			}
 		}

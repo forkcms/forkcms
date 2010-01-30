@@ -20,6 +20,19 @@
 							</ul>
 						</div>
 					</div>
+					
+					<div class="box">
+						<div class="heading">
+							<h3>{$lblAllowComments|ucfirst}</h3>
+						</div>
+
+						<div class="options">
+							<p>{$msgHelpAllowComments}:</p>
+							<ul class="inputList p0">
+								<li>{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label></li>
+							</ul>
+						</div>
+					</div>
 
 					<div class="box">
 						<div class="heading">
