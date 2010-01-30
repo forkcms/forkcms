@@ -27,7 +27,7 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private $javascriptFiles = array();
+	private $javascriptFiles = array(); // @todo tijs - ik zou dit jsFiles noemen, kwestie van $cssFiles te volgen
 
 
 	/**
@@ -309,11 +309,11 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		// create unique filename
 		$fileName = md5($file) .'.css';
-		$finalUrl = FRONTEND_CACHE_URL .'/minified_css/'. $fileName;
+		$finalURL = FRONTEND_CACHE_URL .'/minified_css/'. $fileName;
 		$finalPath = FRONTEND_CACHE_PATH .'/minified_css/'. $fileName;
 
 		// file already exists (if SPOON_DEBUG is true, we should reminify every time)
-		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalUrl;
+		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
 
 		// grab content
 		$content = SpoonFile::getContent(PATH_WWW . $file);
@@ -362,7 +362,7 @@ class FrontendHeader extends FrontendBaseObject
 		SpoonFile::setContent($finalPath, $content);
 
 		// return
-		return $finalUrl;
+		return $finalURL;
 	}
 
 
@@ -376,11 +376,11 @@ class FrontendHeader extends FrontendBaseObject
 	{
 		// create unique filename
 		$fileName = md5($file) .'.js';
-		$finalUrl = FRONTEND_CACHE_URL .'/minified_js/'. $fileName;
+		$finalURL = FRONTEND_CACHE_URL .'/minified_js/'. $fileName;
 		$finalPath = FRONTEND_CACHE_PATH .'/minified_js/'. $fileName;
 
 		// file already exists (if SPOON_DEBUG is true, we should reminify every time
-		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalUrl;
+		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
 
 		// grab content
 		$content = SpoonFile::getContent(PATH_WWW . $file);
@@ -402,7 +402,7 @@ class FrontendHeader extends FrontendBaseObject
 		SpoonFile::setContent($finalPath, $content);
 
 		// return
-		return $finalUrl;
+		return $finalURL;
 	}
 
 
@@ -577,7 +577,7 @@ class FrontendHeader extends FrontendBaseObject
 				else $this->pageTitle = $value . SITE_TITLE_SEPERATOR . $this->pageTitle;
 			}
 		}
-
 	}
 }
+
 ?>

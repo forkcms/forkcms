@@ -18,7 +18,7 @@ class FrontendLanguage
 
 
 	/**
-	 * The labels
+	 * Locale arrays
 	 *
 	 * @var	array
 	 */
@@ -33,7 +33,7 @@ class FrontendLanguage
 	 *
 	 * @var	array
 	 */
-	private static $languages = array('active' => array(),
+	private static $languages = array(	'active' => array(),
 										'possible_redirect' => array());
 
 
@@ -63,7 +63,7 @@ class FrontendLanguage
 	 */
 	public static function getActions()
 	{
-		return (array) self::$act;
+		return self::$act;
 	}
 
 
@@ -84,7 +84,6 @@ class FrontendLanguage
 			self::$languages['active'] = $activeLanguages;
 		}
 
-		// return
 		return self::$languages['active'];
 	}
 
@@ -101,28 +100,30 @@ class FrontendLanguage
 		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2)
 		{
 			// get languages
-			$aPossibleLanguages = self::getActiveLanguages();
-			$aRedirectLanguages = self::getRedirectLanguages();
+			$possibleLanguages = self::getActiveLanguages();
+			$redirectLanguages = self::getRedirectLanguages();
 
 			// prefered languages
-			$aBrowserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
+			$browserLanguages = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 
 			// loop until result
-			foreach($aBrowserLanguages as $language)
+			foreach($browserLanguages as $language)
 			{
 				// redefine language
 				$language = substr($language, 0, 2); // first two characters
 
+				// @todo tijs - onderstaande if/else documenteren, I dont get it.
 				// find possible language
 				if($forRedirect)
 				{
 					// check in the redirect-languages
-					if(in_array($language, $aRedirectLanguages)) return $language;
+					if(in_array($language, $redirectLanguages)) return $language;
 				}
+
 				else
 				{
 					// check in the active-languages
-					if(in_array($language, $aPossibleLanguages)) return $language;
+					if(in_array($language, $possibleLanguages)) return $language;
 				}
 			}
 		}
@@ -158,7 +159,7 @@ class FrontendLanguage
 	 */
 	public static function getErrors()
 	{
-		return (array) self::$err;
+		return self::$err;
 	}
 
 
@@ -188,7 +189,7 @@ class FrontendLanguage
 	 */
 	public static function getLabels()
 	{
-		return (array) self::$lbl;
+		return self::$lbl;
 	}
 
 
@@ -218,7 +219,7 @@ class FrontendLanguage
 	 */
 	public static function getMessages()
 	{
-		return (array) self::$msg;
+		return self::$msg;
 	}
 
 
@@ -332,7 +333,6 @@ class FL extends FrontendLanguage
 	 *
 	 * @return	string
 	 * @param	string $key
-	 * @param	string[optional] $module
 	 */
 	public static function msg($key)
 	{

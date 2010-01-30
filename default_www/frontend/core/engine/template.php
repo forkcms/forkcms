@@ -180,7 +180,7 @@ class FrontendTemplate extends SpoonTemplate
 	private function parseLocale()
 	{
 		// init vars
-		$localeToAssign = array();
+		$locale = array();
 
 		// get months
 		$monthsLong = SpoonLocale::getMonths(FRONTEND_LANGUAGE, false);
@@ -191,13 +191,13 @@ class FrontendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong'. ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort'. ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $localeToAssign['locDayLong'. ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $localeToAssign['locDayShort'. ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $locale['locMonthLong'. ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $locale['locMonthShort'. ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $locale['locDayLong'. ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $locale['locDayShort'. ucfirst($key)] = $value;
 
 		// assign
-		$this->assignArray($localeToAssign);
+		$this->assignArray($locale);
 	}
 
 

@@ -18,7 +18,7 @@ class FrontendJavascript
 	 *
 	 * @var	string
 	 */
-	private $file;
+	private $file; // @todo tijs - ik zou in heel Frontend $file vervangen door $filename (1 lijn, is ook zo in php en spoon)
 
 
 	/**

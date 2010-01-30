@@ -30,6 +30,8 @@ class FrontendModel
 	/**
 	 * Calculate the time ago from a given timestamp and returns a decent sentence.
 	 *
+	 * @todo davy - dit moet nog in 1 of andere vorm in Spoon zien te geraken.
+	 *
 	 * @return	string
 	 * @param	string $timestamp
 	 */
@@ -224,12 +226,12 @@ class FrontendModel
 			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
 		}
 
-		// return
 		return $record;
 	}
 
 
-	public static function isSpam($content, $permaLink, $author = null, $email = null, $url = null, $type = 'comment')
+	// @todo tijs - phpdoc
+	public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
 	{
 		// get some settings
 		$akismetKey = self::getModuleSetting('core', 'akismet_key');
@@ -247,10 +249,11 @@ class FrontendModel
 		$akismet->setTimeOut(10);
 		$akismet->setUserAgent('Fork CMS/2.0');
 
+		// @todo tijs - docs en/of uitlijning
 		try
 		{
 			// check with Akismet if the item is spam
-			return $akismet->isSpam($content, $author, $email, $url, $permaLink, $type);
+			return $akismet->isSpam($content, $author, $email, $URL, $permaLink, $type);
 		}
 		catch(Exception $e)
 		{
@@ -258,7 +261,7 @@ class FrontendModel
 			if(SPOON_DEBUG) throw $e;
 		}
 
-		// fallback
+		// when everything fails
 		return false;
 	}
 

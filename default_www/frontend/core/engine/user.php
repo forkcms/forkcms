@@ -46,7 +46,7 @@ class FrontendUser
 
 
 	/**
-	 * Default constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	int[optional] $userId

@@ -94,7 +94,7 @@ class FrontendPage extends FrontendBaseObject
 		parent::__construct();
 
 		// get pageId for requested url
-		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->url->getPages()));
+		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
 		// make the pageId accessible through a static method
 		self::$currentPageId = $this->pageId;
@@ -190,10 +190,10 @@ class FrontendPage extends FrontendBaseObject
 			if($firstChildId !== false)
 			{
 				// build url
-				$url = FrontendNavigation::getURL($firstChildId);
+				$URL = FrontendNavigation::getURL($firstChildId);
 
 				// redirect
-				SpoonHTTP::redirect($url, 302);
+				SpoonHTTP::redirect($URL, 302);
 			}
 		}
 	}
@@ -321,13 +321,13 @@ class FrontendPage extends FrontendBaseObject
 
 
 	/**
-	 * @todo	Store the temporary statistics
+	 * Store the data for statistics
 	 *
 	 * @return	void
 	 */
 	private function storeStatistics()
 	{
-		// code goed here ...
+		// @todo save temp statistics data here.
 	}
 }
 

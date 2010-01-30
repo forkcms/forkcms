@@ -41,7 +41,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		$this->addElement($homeInfo['navigation_title'], FrontendNavigation::getURL(1));
 
 		// get other pages
-		$pages = $this->url->getPages();
+		$pages = $this->URL->getPages();
 
 		// init vars
 		$items = array();
@@ -51,21 +51,21 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		while(!empty($pages))
 		{
 			// init vars
-			$url = implode('/', $pages);
-			$menuId = FrontendNavigation::getPageId($url);
+			$URL = implode('/', $pages);
+			$menuId = FrontendNavigation::getPageId($URL);
 			$pageInfo = FrontendNavigation::getPageInfo($menuId);
 
 			// do we know something about the page
 			if($pageInfo !== false && isset($pageInfo['navigation_title']))
 			{
 				// get url
-				$pageUrl = FrontendNavigation::getUrl($menuId);
+				$pageURL = FrontendNavigation::getUrl($menuId);
 
 				// if this is the error-page, so we won't show an url.
-				if($pageUrl == $errorUrl) $pageUrl = null;
+				if($pageURL == $errorUrl) $pageURL = null;
 
 				// add to the items
-				$items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageUrl);
+				$items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageURL);
 			}
 
 			// remove element
@@ -88,11 +88,11 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 *
 	 * @return	void
 	 * @param	string $title
-	 * @param	string[optional] $url
+	 * @param	string[optional] $URL
 	 */
-	public function addElement($title, $url = null)
+	public function addElement($title, $URL = null)
 	{
-		$this->items[] = array('title' => (string) $title, 'url' => $url);
+		$this->items[] = array('title' => (string) $title, 'url' => $URL);
 	}
 
 
@@ -160,4 +160,5 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		$this->tpl->assign('breadcrumb', $items);
 	}
 }
+
 ?>

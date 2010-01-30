@@ -154,7 +154,6 @@ class FrontendBlockExtra extends FrontendBaseObject
 			}
 		}
 
-		// return
 		return $this->action;
 	}
 
@@ -399,7 +398,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// no action specified?
 		if($this->action === null) $this->setAction($this->config->getDefaultAction());
 
-		// return
+		// return action
 		return $this->action;
 	}
 

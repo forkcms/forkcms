@@ -26,12 +26,12 @@ class FrontendBaseObject
 	 *
 	 * @var	FrontendURL
 	 */
-	protected $url;
+	protected $URL;
 
 
 	/**
-	 * Default constructor
-	 * It will grab stuff from the reference
+	 * Class constructor.
+	 * It will grab stuff from the reference.
 	 *
 	 * @return	void
 	 */
@@ -41,7 +41,7 @@ class FrontendBaseObject
 		$this->tpl = Spoon::getObjectReference('template');
 
 		// get url from reference
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 	}
 }
 
@@ -49,7 +49,7 @@ class FrontendBaseObject
 /**
  * FrontendBaseConfig
  *
- * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class
+ * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class.
  *
  * @package		frontend
  * @subpackage	core
@@ -108,7 +108,7 @@ class FrontendBaseConfig
 
 
 	/**
-	 * Default constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	string $module
@@ -175,7 +175,7 @@ class FrontendBaseConfig
 
 
 	/**
-	 * Set the possible actions, based on files in folder
+	 * Set the possible actions, based on files in folder.
 	 * You can disable action in the config file. (Populate $disabledActions)
 	 *
 	 * @return	void
@@ -219,7 +219,7 @@ class FrontendBaseConfig
  *
  * This class implements a lot of functionality that can be extended by a specific block
  *
- * @todo	Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
+ * @todo Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
@@ -282,7 +282,7 @@ class FrontendBaseBlock
 	 *
 	 * @var	FrontendURL
 	 */
-	public $url;
+	public $URL;
 
 
 	/**
@@ -314,7 +314,7 @@ class FrontendBaseBlock
 		// get objects from the reference so they are accessable
 		$this->tpl = Spoon::getObjectReference('template');
 		$this->header = Spoon::getObjectReference('header');
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 		$this->breadcrumb = Spoon::getObjectReference('breadcrumb');
 
 		// set properties
@@ -336,13 +336,13 @@ class FrontendBaseBlock
 		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
 
 		// buil url to the module
-		$frontendModuleUrl = '/frontend/modules/'. $this->getModule() .'/js';
+		$frontendModuleURL = '/frontend/modules/'. $this->getModule() .'/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($frontendModuleUrl .'/'. $this->getModule() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getModule() .'.js', false, true);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($frontendModuleUrl .'/'. $this->getAction() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getAction() .'.js', false, true);
 	}
 
 
@@ -416,7 +416,7 @@ class FrontendBaseBlock
 		else $template = (string) $template;
 
 		// check if the file exists
-		if(!SpoonFile::exists($template)) throw new FrontendException('The template ('. $template .') doesn\'t exists.');
+		if(!SpoonFile::exists($template)) throw new FrontendException('The template ('. $template .') doesn\'t exist.');
 
 		// set properties
 		$this->setOverwrite($overwrite);
@@ -540,21 +540,22 @@ class FrontendBaseBlock
 		}
 
 		// assign pagination
-		// loop values @todo	we should do this in a decent way...
+		// @todo we should do this in a decent way...
+		// loop values
 		foreach($pagination as $key => $value) $this->tpl->assign('pagination'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('pagination', $pagination);
 	}
 
 	/**
-	 * Redirect to a given url
+	 * Redirect to a given URL
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	int[optional] $code
 	 */
-	public function redirect($url, $code = 302)
+	public function redirect($URL, $code = 302)
 	{
-		SpoonHTTP::redirect((string) $url, (int) $code);
+		SpoonHTTP::redirect((string) $URL, (int) $code);
 	}
 
 
@@ -632,7 +633,7 @@ class FrontendBaseBlock
  *
  * This class implements a lot of functionality that can be extended by a specific widget
  *
- * @todo	Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
+ * @todo Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
@@ -687,7 +688,7 @@ class FrontendBaseWidget
 	 *
 	 * @var	FrontendURL
 	 */
-	public $url;
+	public $URL;
 
 
 	/**
@@ -704,7 +705,7 @@ class FrontendBaseWidget
 		// get objects from the reference so they are accessable
 		$this->tpl = Spoon::getObjectReference('template');
 		$this->header = Spoon::getObjectReference('header');
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 
 		// set properties
 		$this->setModule($module);
@@ -725,13 +726,13 @@ class FrontendBaseWidget
 		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
 
 		// buil url to the module
-		$frontendModuleUrl = '/frontend/modules/'. $this->getModule() .'/js';
+		$frontendModuleURL = '/frontend/modules/'. $this->getModule() .'/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($frontendModuleUrl .'/'. $this->getModule() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getModule() .'.js', false, true);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($frontendModuleUrl .'/'. $this->getAction() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getAction() .'.js', false, true);
 	}
 
 
@@ -798,15 +799,15 @@ class FrontendBaseWidget
 
 
 	/**
-	 * Redirect to a given url
+	 * Redirect to a given URL
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	int[optional] $code
 	 */
-	public function redirect($url, $code = 302)
+	public function redirect($URL, $code = 302)
 	{
-		SpoonHTTP::redirect((string) $url, (int) $code);
+		SpoonHTTP::redirect((string) $URL, (int) $code);
 	}
 
 
@@ -880,7 +881,7 @@ class FrontendBaseWidget
  */
 class FrontendBaseAJAXAction
 {
-	// statuscode constants
+	// status codes
 	const OK = 200;
 	const BAD_REQUEST = 400;
 	const FORBIDDEN = 403;
@@ -926,7 +927,7 @@ class FrontendBaseAJAXAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the childs
+		// this method will be overwritten by the children
 	}
 
 

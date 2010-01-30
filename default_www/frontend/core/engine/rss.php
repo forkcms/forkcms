@@ -1,4 +1,5 @@
 <?php
+
 // require SpoonRSS
 require_once 'spoon/feed/rss.php';
 

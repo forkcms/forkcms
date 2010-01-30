@@ -292,10 +292,10 @@ class FrontendURL
 			if($mustRedirect)
 			{
 				// build url
-				$url = '/'. $language .'/'. $this->getQueryString();
+				$URL = '/'. $language .'/'. $this->getQueryString();
 
 				// set header & redirect
-				SpoonHTTP::redirect($url, 301);
+				SpoonHTTP::redirect($URL, 301);
 			}
 		}
 
@@ -309,40 +309,40 @@ class FrontendURL
 		$keys = FrontendNavigation::getKeys();
 
 		// full url
-		$url = implode('/', $chunks);
-		$startURL = $url;
+		$URL = implode('/', $chunks);
+		$startURL = $URL;
 
 		// loop until we find the url in the list of pages
-		while(!in_array($url, $keys))
+		while(!in_array($URL, $keys))
 		{
 			// remove the last chunk
 			array_pop($chunks);
 
 			// redefine the url
-			$url = implode('/', $chunks);
+			$URL = implode('/', $chunks);
 		}
 
 		// remove language from querystring
 		$queryString = trim(substr($queryString, strlen($language)), '/');
 
 		// if it's the homepage AND parameters were given (not allowed!)
-		if($url == '' && $queryString != '')
+		if($URL == '' && $queryString != '')
 		{
 			// get 404 url
-			$url = FrontendNavigation::getURL(404);
+			$URL = FrontendNavigation::getURL(404);
 
 			// remove language
-			if(SITE_MULTILANGUAGE) $url = str_replace('/'. $language, '', $url);
+			if(SITE_MULTILANGUAGE) $URL = str_replace('/'. $language, '', $URL);
 		}
 
 		// set pages
-		$url = trim($url, '/');
+		$URL = trim($URL, '/');
 
 		// currently not in the homepage
-		if($url != '')
+		if($URL != '')
 		{
 			// explode in pages
-			$pages = explode('/', $url);
+			$pages = explode('/', $URL);
 
 			// reset pages
 			$this->setPages($pages);
@@ -352,7 +352,7 @@ class FrontendURL
 		}
 
 		// set parameters
-		$parameters = trim(substr($startURL, strlen($url)), '/');
+		$parameters = trim(substr($startURL, strlen($URL)), '/');
 
 		// has at least one parameter
 		if($parameters != '')
@@ -375,16 +375,16 @@ class FrontendURL
 		if($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra']))
 		{
 			// get 404 url
-			$url = FrontendNavigation::getURL(404);
+			$URL = FrontendNavigation::getURL(404);
 
 			// remove language
-			if(SITE_MULTILANGUAGE) $url = trim(str_replace('/'. $language, '', $url), '/');
+			if(SITE_MULTILANGUAGE) $URL = trim(str_replace('/'. $language, '', $URL), '/');
 
 			// currently not in the homepage
-			if($url != '')
+			if($URL != '')
 			{
 				// explode in pages
-				$pages = explode('/', $url);
+				$pages = explode('/', $URL);
 
 				// reset pages
 				$this->setPages($pages);
@@ -416,7 +416,7 @@ class FrontendURL
 	 */
 	private function setPages(array $pages = array())
 	{
-		$this->pages = (array) $pages;
+		$this->pages = $pages;
 	}
 
 

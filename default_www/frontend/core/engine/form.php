@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FrontendForm, this is our extended version of SpoonForm
+ * FrontendForm, this is our extended version of SpoonForm.
  *
  * @package		frontend
  * @subpackage	core
@@ -24,7 +24,7 @@ class FrontendForm extends SpoonForm
 	 *
 	 * @var	FrontendURL
 	 */
-	private $url;
+	private $URL;
 
 
 	/**
@@ -41,7 +41,7 @@ class FrontendForm extends SpoonForm
 		$name = (string) $name;
 
 		// init the URL-instance
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 		$this->header = Spoon::getObjectReference('header');
 
 		// build the action if it wasn't provided

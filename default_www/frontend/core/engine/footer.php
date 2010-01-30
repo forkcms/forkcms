@@ -3,7 +3,7 @@
 /**
  * FrontendFooter
  *
- * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend
+ * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
  *
  * @package		frontend
  * @subpackage	core
@@ -27,10 +27,10 @@ class FrontendFooter extends FrontendBaseObject
 		$this->tpl->assign('footerLinks', $footerLinks);
 
 		// get site wide html
-		$siteWideHtml = (string) FrontendModel::getModuleSetting('core', 'site_wide_html', '');
+		$siteWideHTML = (string) FrontendModel::getModuleSetting('core', 'site_wide_html', '');
 
 		// assign site wide html
-		$this->tpl->assign('siteWideHTML', $siteWideHtml);
+		$this->tpl->assign('siteWideHTML', $siteWideHTML);
 	}
 }
 

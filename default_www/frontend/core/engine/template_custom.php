@@ -44,6 +44,6 @@ class FrontendTemplateCustom
 	{
 		// insert your custom stuff here...
 	}
-
 }
+
 ?>
