@@ -158,6 +158,8 @@ jsBackend.pages.template = {
 
 jsBackend.pages.tree = {
 	init: function() {
+		if($('#tree div').length == 0) return false;
+	
 		var options = { ui: { theme_name: 'fork' },
 						rules: { multiple: false, multitree: 'all', drag_copy: false },
 						lang: { loading: '{$lblLoading|ucfirst}' },

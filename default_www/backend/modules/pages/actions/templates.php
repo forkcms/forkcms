@@ -42,13 +42,10 @@ class BackendPagesTemplates extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB('SELECT * FROM pages_templates');
+		$this->datagrid = new BackendDataGridDB('SELECT id, label FROM pages_templates');
 
 		// set headers
-//		$this->datagrid->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title'))));
-
-		// sorting columns
-//		$this->datagrid->setSortingColumns(array('title'));
+		$this->datagrid->setHeaderLabels(array('label' => ucfirst(BL::getLabel('Title'))));
 
 		// add edit column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_template') .'&id=[id]', BL::getLabel('Edit'));
