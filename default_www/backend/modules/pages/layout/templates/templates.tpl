@@ -1,4 +1,5 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
+{include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 <table border="0" cellspacing="0" cellpadding="0" id="pagesHolder">
 	<tr>
 		<td id="pagesTree" width="264">
