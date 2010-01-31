@@ -1,0 +1,632 @@
+<?php
+
+/**
+ * Spoon Library
+ *
+ * This source file is part of the Spoon Library. More information,
+ * documentation and tutorials can be found @ http://www.spoon-library.be
+ *
+ * @package		webservices
+ * @subpackage	xmlrpc
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.be>
+ * @author		Dave Lens <dave@spoon-library.be>
+ * @since		1.1.2
+ */
+
+
+/**
+ * This exception is used to handle XMLRPC related exceptions.
+ *
+ * @package		webservices
+ * @subpackage	XMLRPC
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		1.1.4
+ */
+class SpoonXMLRPCException extends SpoonException {}
+
+
+/**
+ * This base class provides all the methods used by a XMLRPC-client.
+ *
+ * @package		webservices
+ * @subpackage	XMLRPC
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		1.1.4
+ */
+class SpoonXMLRPCClient
+{
+	/**
+	 * The headers
+	 *
+	 * @var	array
+	 */
+	private $headers = array();
+
+
+	/**
+	 * The port
+	 *
+	 * @var	int
+	 */
+	private $port = 80;
+
+
+	/**
+	 * The server
+	 *
+	 * @var	string
+	 */
+	private $server;
+
+
+	/**
+	 * The timeout in seconds
+	 *
+	 * @var	int
+	 */
+	private $timeout = 10;
+
+
+	/**
+	 * The user-agent
+	 *
+	 * @var	string
+	 */
+	private $userAgent;
+
+
+	/**
+	 * Default constructor
+	 *
+	 * @return	void
+	 * @param	string $server	The server to communicate with
+	 */
+	public function __construct($server)
+	{
+		$this->setServer($server);
+	}
+
+
+	/**
+	 * Build the XML to send
+	 *
+	 * @return	string
+	 * @param	string $method
+	 * @param	array[optional] $parameters
+	 */
+	private function buildXML($method, array $parameters)
+	{
+		// redefine
+		$method = (string) $method;
+
+		// init var
+		$xml = '<?xml version="1.0"?>'."\n";
+		$xml .= '<methodCall>'."\n";
+
+		// add method
+		$xml .= '	<methodName>'. (string) $method .'</methodName>'."\n";
+
+		if(!empty($parameters))
+		{
+			// start parameters
+			$xml .= '	<params>'."\n";
+
+			// loop parameters
+			foreach($parameters as $parameter)
+			{
+				// build parameters
+				$xml .= '		<param>'. $this->buildValueXML($parameter) .'</param>'."\n";
+			}
+
+			// end parameters
+			$xml .= '	</params>'."\n";
+		}
+
+		// end XML
+		$xml .= '</methodCall>'."\n";
+
+		// return
+		return $xml;
+	}
+
+
+	/**
+	 * Build parameter XML
+	 *
+	 * @return	string
+	 * @param	array $parameter
+	 */
+	private function buildValueXML(array $parameter)
+	{
+		switch($parameter['type'])
+		{
+			// array
+			case 'array':
+				// start
+				$xml = '<array>'."\n";
+				$xml .= '	<data>'."\n";
+
+				// loop values
+				foreach($parameter['value'] as $item) $xml .= '		<value>'. $this->buildValueXML($item) .'</value>'."\n";
+
+				// end
+				$xml .= '	</data>'."\n";
+				$xml .= '</array>';
+
+				// return
+				return $xml;
+			break;
+
+			// base64
+			case 'base64':
+				return '<base64>'. (string) $parameter['value'] .'</base64>';
+			break;
+
+			// boolean
+			case 'boolean':
+				return ((bool) $parameter['value']) ? '<boolean>1</boolean>' : '<boolean>0</boolean>';
+			break;
+
+			// date/time
+			case 'date/time':
+				if(is_integer($parameter['value'])) $parameter['value'] = date('c', (int) $parameter['value']);
+				return '<dateTime.iso8601>'. (string) $parameter['value'] .'</dateTime.iso8601>';
+			break;
+
+			// double
+			case 'double':
+				return '<double>'. (float) $parameter['value'] .'</double>';
+			break;
+
+			// int
+			case 'int':
+				return '<int>'. (int) $parameter['value'] .'</int>';
+			break;
+
+			// i4
+			case 'i4':
+				return '<i4>'. (int) $parameter['value'] .'</i4>';
+			break;
+
+			// string
+			case 'string':
+				return '<string>'. (string) $parameter['value'] .'</string>';
+			break;
+
+			// struct
+			case 'struct':
+				// start
+				$xml = '<struct>'."\n";
+
+				// loop values
+				foreach($parameter['value'] as $item)
+				{
+
+					$xml .= '	<member>'."\n";
+					$xml .= '		<name>'. (string) $item['name'] .'</name>' ."\n";
+					$xml .= '		<value>'. $this->buildValueXML($item) .'</value>'."\n";
+					$xml .= '	</member>'."\n";
+				}
+
+				// end
+				$xml .= '</struct>';
+
+				// return
+				return $xml;
+			break;
+
+			// nil
+			case 'nil':
+				return '<nil/>';
+			break;
+
+			default:
+				throw new SpoonXMLRPCException('Invalid type ('. $parameter['type'] .').');
+		}
+	}
+
+
+	/**
+	 * Decode XMLRPC-response
+	 *
+	 * @return	mixed
+	 * @param	SimpleXMLElement $xml
+	 */
+	private function decode($xml)
+	{
+		// validate
+		if(!isset($xml->params->param)) throw new SpoonXMLRPCException('Invalid response.');
+
+		// init var
+		$return = array();
+
+		// loop params
+		foreach($xml->params->param as $param)
+		{
+			$return[] = $this->decodeValue($param->value);
+		}
+
+		// if there is just one param we return it at once
+		if(count($return) == 1) return $return[0];
+
+		// fallback (multiple params in response)
+		return $return;
+	}
+
+
+	/**
+	 * Decode XMLRPC fault
+	 *
+	 * @return	array
+	 * @param	SimpleXMLElement $xml
+	 */
+	private function decodeFaultXML($xml)
+	{
+		// validate
+		if(!isset($xml->value)) return false;
+
+		// decode
+		return $this->decodeValue($xml->value);
+	}
+
+
+	/**
+	 * Decode a value
+	 *
+	 * @return	mixed
+	 * @param	SimpleXMLElement $xml
+	 */
+	private function decodeValue($xml)
+	{
+		// loop children
+		foreach($xml->children() as $element)
+		{
+			// get type
+			$type = $element->getName();
+
+			// decode correct
+			switch($type)
+			{
+				// array
+				case 'array':
+					// init
+					$return = array();
+
+					// loop members
+					foreach($element->data as $data) $return[] = $this->decodeValue($data->value);
+
+					// return
+					return $return;
+				break;
+
+				// base64
+				case 'base64':
+					return base64_decode((string) $element);
+				break;
+
+				// boolean
+				case 'boolean':
+					return (bool) ((string) $element == '1');
+				break;
+
+				// date/time
+				case 'dateTime.iso8601':
+					// convert to UNIX-timestamp
+					$value = strtotime((string) $element);
+
+					// validate timestamp
+					if($value == 0) $value = (string) $element;
+
+					// return value
+					return $value;
+				break;
+
+				// double
+				case 'double':
+					return (float) $element;
+				break;
+
+				// int
+				case 'int':
+					return (int) $element;
+				break;
+
+				// i4
+				case 'i4':
+					return (int) $element;
+				break;
+
+				// string
+				case 'string':
+					return (string) $element;
+				break;
+
+				// struct
+				case 'struct':
+					// init
+					$return = array();
+
+					// loop members
+					foreach($element->member as $member)
+					{
+						$name = (string) $member->name;
+						$value = $this->decodeValue($member->value);
+
+						// add
+						$return[$name] = $value;
+					}
+
+					// return
+					return $return;
+				break;
+
+				// nil
+				case 'nil':
+					return null;
+				break;
+
+				default:
+					throw new SpoonXMLRPCException('Invalid type ('. $type .').');
+			}
+		}
+	}
+
+
+
+	/**
+	 * Make the call.
+	 *
+	 * @return	string
+	 * @param	string $method
+	 * @param	array[optional] $parameters
+	 */
+	public function execute($method, array $parameters = null)
+	{
+		// redefine
+		$method = (string) $method;
+		$parameters = (array) $parameters;
+
+		// possible parameter types
+		$allowedTypes = array('array', 'base64', 'boolean', 'date/time', 'double', 'int', 'i4', 'string', 'struct', 'nil');
+
+		// validate
+		foreach($parameters as $parameter)
+		{
+			// validate if needed stuff is available
+			if(!isset($parameter['type'])) throw new SpoonXMLRPCException('Invalid parameter. A parameter needs type and value as keys.');
+			if($parameter['type'] !== 'nil' && !isset($parameter['value'])) throw new SpoonXMLRPCException('Invalid parameter. A parameter needs type and value as keys.');
+
+			// validate type
+			if(!in_array($parameter['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type ('. $parameter['type'] .'). Possible types are: '. implode(', ', $allowedTypes).'.');
+
+			// extra checks for array-type
+			if($parameter['type'] == 'array')
+			{
+				// loop values
+				foreach((array) $parameter['value'] as $value)
+				{
+					// is needed stuff available?
+					if(!isset($value['type']) || !isset($value['value'])) throw new SpoonXMLRPCException('Invalid parameter, an array-type needs the value to be an array wherein each item needs type and value as keys.');
+
+					// validate types
+					if(!in_array($value['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type ('. $value['type'] .'). Possible types are: '. implode(', ', $allowedTypes).'.');
+				}
+			}
+
+			// extra checks for struct type
+			if($parameter['type'] == 'struct')
+			{
+				// loop values
+				foreach((array) $parameter['value'] as $value)
+				{
+					// is needed stuff available?
+					if(!isset($value['type']) || !isset($value['value']) || !isset($value['name'])) throw new SpoonXMLRPCException('Invalid parameter, a struct-type needs value to be an array wherin each items needs type, value and name as keys.');
+
+					// validate types
+					if(!in_array($value['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type ('. $value['type'] .'). Possible types are: '. implode(', ', $allowedTypes).'.');
+				}
+			}
+		}
+
+		// build xml
+		$xml = $this->buildXML($method, $parameters);
+
+		// init curl options
+		$options[CURLOPT_URL] = $this->getServer();
+		$options[CURLOPT_PORT] = $this->getPort();
+		$options[CURLOPT_USERAGENT] = $this->getUserAgent();
+		$options[CURLOPT_TIMEOUT] = $this->getTimeout();
+		$options[CURLOPT_RETURNTRANSFER] = true;
+		$options[CURLOPT_CUSTOMREQUEST] = 'POST';
+
+		// get headers
+		$headers = $this->getCustomHeaders();
+
+		// add ours
+		$headers[] = 'Content-type: text/xml';
+		$headers[] = 'Content-length: '. mb_strlen($xml) ."\r\n";
+		$headers[] = $xml;
+
+		// set headers
+		$options[CURLOPT_HTTPHEADER] = $headers;
+
+		// init curl
+		$curl = curl_init();
+
+		// set options
+		curl_setopt_array($curl, $options);
+
+		// execute
+		$response = curl_exec($curl);
+		$headers = curl_getinfo($curl);
+
+		// fetch errors
+		$errorNumber = curl_errno($curl);
+		$errorMessage = curl_error($curl);
+
+		// close curl
+		curl_close($curl);
+
+		// validate errors
+		if($errorNumber != 0) throw new SpoonXMLRPCException('An error occured with the following message: ('. $errorNumber .')'. $errorMessage .'.');
+
+		// validate headers
+		if($headers['http_code'] != 200) throw new SpoonXMLRPCException('Invalid headers, a header with status-code '. $headers['http_code'] .' was returned.');
+
+		// we expect XML so decode it
+		$xml = @simplexml_load_string($response, null, LIBXML_NOCDATA);
+
+		// validate XML
+		if($xml === false) throw new SpoonXMLRPCException('Invalid response.');
+
+		// validate
+		if($xml->getName() == 'fault')
+		{
+			// decode
+			$response = $this->decodeFaultXML($xml);
+
+			// validate
+			if($response === false || !isset($response['faultString'])) throw new SpoonXMLRPCException('Unknown fault.');
+			else
+			{
+				$code = (isset($response['faultCode'])) ? (int) $response['faultCode'] : null;
+				$message = $response['faultString'];
+
+				// throw
+				throw new SpoonXMLRPCException($message, $code);
+			}
+		}
+
+		// return the response
+		return $this->decode($xml);
+	}
+
+
+	/**
+	 * Get the headers.
+	 *
+	 * @return	array
+	 */
+	public function getCustomHeaders()
+	{
+		return $this->headers;
+	}
+
+
+	/**
+	 * Get the port that will be used.
+	 *
+	 * @return	int
+	 */
+	public function getPort()
+	{
+		return $this->port;
+	}
+
+
+	/**
+	 * Get the server that will be used.
+	 *
+	 * @return	string
+	 */
+	public function getServer()
+	{
+		return $this->server;
+	}
+
+
+	/**
+	 * Get the timeout in seconds that will be used.
+	 *
+	 * @return	int
+	 */
+	public function getTimeout()
+	{
+		return $this->timeout;
+	}
+
+
+	/**
+	 * Get the user-agent that will be used. Keep in mind that a spoon header will be prepended.
+	 *
+	 * @return	string
+	 */
+	public function getUserAgent()
+	{
+		// prepend SpoonHeader
+		$userAgent = 'Spoon '. SPOON_VERSION .'/';
+		$userAgent .= ($this->userAgent === null) ? 'SpoonXMLRPCClient' : $this->userAgent;
+
+		// return
+		return $userAgent;
+	}
+
+
+	/**
+	 * Add custom headers that will be sent with each request.
+	 *
+	 * @return	void
+	 * @param	array $headers		The header, passed as key-value pairs.
+	 */
+	public function setCustomHeader(array $headers)
+	{
+		foreach($headers as $name => $value) $this->headers[(string) $name] = (string) $value;
+	}
+
+
+	/**
+	 * Set the port for the XMLRPC-server, default is 80.
+	 *
+	 * @return	void
+	 * @param	int $port
+	 */
+	public function setPort($port)
+	{
+		$this->port = (int) $port;
+	}
+
+
+	/**
+	 * Set the URL for the XMLRPC-server
+	 *
+	 * @return	vois
+	 * @param	string $server
+	 */
+	public function setServer($server)
+	{
+		$this->server = (string) $server;
+	}
+
+
+	/**
+	 * Set timeout.
+	 *
+	 * @return	void
+	 * @param	int $seconds
+	 */
+	public function setTimeout($seconds)
+	{
+		$this->timeout = (int) $seconds;
+	}
+
+
+	/**
+	 * Set a custom user-agent.
+	 *
+	 * @return	void
+	 * @param	string $userAgent
+	 */
+	public function setUserAgent($userAgent)
+	{
+		$this->userAgent = (string) $userAgent;
+	}
+}
+
+?>

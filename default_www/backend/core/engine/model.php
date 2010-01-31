@@ -15,6 +15,15 @@
 class BackendModel
 {
 	/**
+	 * The keys an structural data for pages
+	 *
+	 * @var	array
+	 */
+	private static	$keys = array(),
+					$navigation = array();
+
+
+	/**
 	 * Cached module settings
 	 *
 	 * @var	array
@@ -182,6 +191,95 @@ class BackendModel
 
 
 	/**
+	 * Get (or create and get) a database-connection
+	 * If the database wasn't stored in the reference before we will create it and add it
+	 *
+	 * @todo	extend SpoonDatabase with BackendDatabase
+	 * @return	SpoonDatabase
+	 */
+	public static function getDB()
+	{
+		// do we have a db-object ready?
+		if(!Spoon::isObjectReference('database'))
+		{
+			// create instance
+			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+
+			// utf8 compliance
+			$db->execute('SET CHARACTER SET utf8;');
+			$db->execute('SET NAMES utf8;');
+
+			// store
+			Spoon::setObjectReference('database', $db);
+		}
+
+		// return it
+		return Spoon::getObjectReference('database');
+	}
+
+	/**
+	 * Get the page-keys
+	 *
+	 * @return	array
+	 */
+	public static function getKeys($language = null)
+	{
+		// redefine
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+
+		// does the keys exists in the cache?
+		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
+		{
+			// validate file @later	the file should be regenerated
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php')) throw new BackendException('No key-file (keys_'. $language .'.php) found.');
+
+			// init var
+			$keys = array();
+
+			// require file
+			require FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php';
+
+			// store
+			self::$keys[$language] = $keys;
+		}
+
+		return self::$keys[$language];
+	}
+
+
+	/**
+	 * Get the navigation-items
+	 *
+	 * @return	array
+	 * @param	string[optional] $language
+	 */
+	public static function getNavigation($language = null)
+	{
+		// redefine
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// does the keys exists in the cache?
+		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
+		{
+			// validate file @later: the file should be regenerated
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php')) throw new BackendException('No navigation-file (navigation_'. $language .'.php) found.');
+
+			// init var
+			$navigation = array();
+
+			// require file
+			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
+
+			// store
+			self::$navigation[$language] = $navigation;
+		}
+
+		// return
+		return self::$navigation[$language];
+	}
+
+
+	/**
 	 * Get the modules
 	 *
 	 * @todo deze lijst moet in lokale cache komen, aangezien die redelijk veel wordt opgevraagd.
@@ -230,33 +328,6 @@ class BackendModel
 		return $dropdown;
 	}
 
-
-	/**
-	 * Get (or create and get) a database-connection
-	 * If the database wasn't stored in the reference before we will create it and add it
-	 *
-	 * @todo	extend SpoonDatabase with BackendDatabase
-	 * @return	SpoonDatabase
-	 */
-	public static function getDB()
-	{
-		// do we have a db-object ready?
-		if(!Spoon::isObjectReference('database'))
-		{
-			// create instance
-			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
-
-			// utf8 compliance
-			$db->execute('SET CHARACTER SET utf8;');
-			$db->execute('SET NAMES utf8;');
-
-			// store
-			Spoon::setObjectReference('database', $db);
-		}
-
-		// return it
-		return Spoon::getObjectReference('database');
-	}
 
 
 	/**
@@ -317,6 +388,226 @@ class BackendModel
 
 		// return
 		return self::$moduleSettings;
+	}
+
+
+	/**
+	 * Get URL for a given pageId
+	 *
+	 * @return	string
+	 * @param	int $pageId
+	 * @param	string[optional] $language
+	 */
+	public static function getURL($pageId, $language = null)
+	{
+		// redefine
+		$pageId = (int) $pageId;
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// init url
+		$URL = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
+
+		// get the menuItems
+		$keys = self::getKeys($language);
+
+		// get the url, if it doens't exist return 404
+		if(!isset($keys[$pageId])) return self::getURL(404);
+
+		// add url
+		else $URL .= $keys[$pageId];
+
+		// return
+		return $URL;
+	}
+
+	/**
+	 * Get the URL for a give module & action combination
+	 *
+	 * @return	string
+	 * @param	string $module
+	 * @param	string[optional] $action
+	 * @param	string[optional] $language
+	 */
+	public static function getURLForBlock($module, $action = null, $language = null)
+	{
+		// redefine
+		$module = (string) $module;
+		$action = ($action !== null) ? (string) $action : null;
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+
+		// init var
+		$pageIdForURL = null;
+
+		// get the menuItems
+		$navigation = self::getNavigation($language);
+
+		// loop types
+		foreach($navigation as $type => $level)
+		{
+			// loop level
+			foreach($level as $parentId => $pages)
+			{
+				// loop pages
+				foreach($pages as $pageId => $properties)
+				{
+					// only process pages with extra_blocks
+					if(isset($properties['extra_blocks']))
+					{
+						// loop extras
+						foreach($properties['extra_blocks'] as $extra)
+						{
+							// direct link?
+							if($extra['module'] == $module && $extra['action'] == $action)
+							{
+								// exacte page was found, so return
+								return self::getURL($properties['page_id']);
+							}
+
+							// correct module but no action
+							elseif($extra['module'] == $module && $extra['action'] == null)
+							{
+								// store pageId
+								$pageIdForURL = (int) $pageId;
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// pageId stored?
+		if($pageIdForURL !== null)
+		{
+			// build url
+			$URL = self::getURL($pageIdForURL, $language);
+
+			// set locale
+			FrontendLanguage::setLocale($language);
+
+			// append action
+			$URL .= '/'. FrontendLanguage::getAction(SpoonFilter::toCamelCase($action));
+
+			// return the URL
+			return $URL;
+		}
+
+		// fallback
+		return self::getURL(404);
+	}
+
+
+	/**
+	 * Ping the known webserviced
+	 *
+	 * @return	bool								If everything went fine true will be returned, otherwise false
+	 * @param	string[optional] $pageOrFeedURL		The page/feed that has changed
+	 * @param	string[optional] $category			An optional category for the site
+	 */
+	public static function ping($pageOrFeedURL = null, $category = null)
+	{
+		// redefine
+		$siteTitle = self::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+		$siteURL = SITE_URL;
+		$pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
+		$category = ($category !== null) ? (string) $category : null;
+
+		// get ping services
+		$pingServices = self::getSetting('core', 'ping_services', null);
+
+		// no ping services available or older then one 30 days
+		if($pingServices === null || $pingServices['date'] < (time() - (30 * 24 * 60 * 60)))
+		{
+			// get ForkAPI-keys
+			$publicKey = self::getSetting('core', 'fork_api_public_key', '');
+			$privateKey = self::getSetting('core', 'fork_api_private_key', '');
+
+			// validate keys
+			if($publicKey == '' || $privateKey == '') return false;
+
+
+			// require the class
+			require_once PATH_LIBRARY .'/external/fork_api.php';
+
+			// create instance
+			$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+			// try to get the services
+			try
+			{
+				$pingServices['services'] = $forkAPI->pingGetServices();
+				$pingServices['date'] = time();
+			}
+
+			// catch any exceptions
+			catch (Exception $e)
+			{
+				// in debugmode we want to see the exceptions
+				if(SPOON_DEBUG) throw $e;
+
+				// stop
+				else return false;
+			}
+
+			// store the services
+			self::setSetting('core', 'ping_services', $pingServices);
+		}
+
+		// require SpoonXMLRPCClient
+		require_once 'spoon/webservices/xmlrpc/client.php';
+
+		// loop services
+		foreach($pingServices['services'] as $service)
+		{
+			// create new client
+			$client = new SpoonXMLRPCClient($service['url']);
+
+			// set port
+			$client->setPort($service['port']);
+
+			// try to ping
+			try
+			{
+				// extended ping?
+				if($service['type'] == 'extended')
+				{
+					// no page or feed URL present?
+					if($pageOrFeedURL === null) continue;
+
+					// build parameters
+					$parameters[] = array('type' => 'string', 'value' => $siteTitle);
+					$parameters[] = array('type' => 'string', 'value' => $siteURL);
+					$parameters[] = array('type' => 'string', 'value' => $pageOrFeedURL);
+					if($category !== null) $parameters[] = array('type' => 'string', 'value' => $category);
+
+					// make the call
+					$client->execute('weblogUpdates.extendedPing', $parameters);
+				}
+
+				// default ping
+				else
+				{
+					// build parameters
+					$parameters[] = array('type' => 'string', 'value' => $siteTitle);
+					$parameters[] = array('type' => 'string', 'value' => $siteURL);
+
+					// make the call
+					$client->execute('weblogUpdates.ping', $parameters);
+				}
+			}
+
+			// catch any exceptions
+			catch (Exception $e)
+			{
+				// in debugmode we want to see the exceptions
+				if(SPOON_DEBUG) throw $e;
+
+				// next!
+				else continue;
+			}
+		}
+
+		// return
+		return true;
 	}
 
 

@@ -161,7 +161,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// assign the active record and additional variables
 		$this->tpl->assign($this->record);
-		$this->tpl->assign('blogUrl', SITE_URL); // @todo tijs - need FrontendModel::createURLForAction() for this
+		$this->tpl->assign('blogUrl', SITE_URL . BackendModel::getURLForBlock('blog', 'detail'));
 		$this->tpl->assign('status', BL::getLabel(ucfirst($this->record['status'])));
 
 		// show the summary
@@ -230,8 +230,10 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				// insert the item
 				$id = (int) BackendBlogModel::update($this->id, $item);
 
-				// @todo	ping
 				// @todo	tags
+
+				// ping
+				BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=id-'. $id);

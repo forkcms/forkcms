@@ -65,11 +65,11 @@
 
 		{form:react}
 			<p>
-				<label for="author">{$lblName|ucfirst}*</label>
+				<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtAuthor} {$txtAuthorError}
 			</p>
 			<p>
-				<label for="email">{$lblEmail|ucfirst}*</label>
+				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtEmail} {$txtEmailError}
 			</p>
 			<p>
@@ -77,7 +77,7 @@
 				{$txtWebsite} {$txtWebsiteError}
 			</p>
 			<p>
-				<label for="text">{$lblMessage|ucfirst}*</label>
+				<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtText} {$txtTextError}
 			</p>
 
