@@ -14,11 +14,12 @@
 class BackendAuthenticationIndex extends BackendBaseActionIndex
 {
 	/**
-	 * Form instance
+	 * Form instances
 	 *
 	 * @var	BackendForm
 	 */
-	private $frm, $frmForgotPassword;
+	private $frm,
+			$frmForgotPassword;
 
 
 	/**
@@ -70,7 +71,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Validate the form
+	 * Validate the forms
 	 *
 	 * @return	void
 	 */

@@ -2,9 +2,9 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">{$msgHeaderIndex}</p>
+				<p class="breadcrumb">{$lblSnippets|ucfirst} &gt; {$lblIndex|ucfirst}</p>
 			</div>
-			
+
 			{option:report}
 			<div id="report">
 				<div class="singleMessage successMessage">
@@ -12,9 +12,9 @@
 				</div>
 			</div>
 			{/option:report}
-	
+
 			<div class="inner">
-	
+
 				<div class="datagridHolder">
 					<div class="tableHeading">
 						<div class="buttonHolderRight">

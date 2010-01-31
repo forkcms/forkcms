@@ -1,7 +1,5 @@
 <?php
 
-// @todo fix URL for author column
-
 /**
  * BackendBlogIndex
  *
@@ -12,6 +10,7 @@
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBlogIndex extends BackendBaseActionIndex
@@ -69,10 +68,9 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	{
 		// create datagrid
 		$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE, array('active'));
-		$this->dgPosts->setColumnHidden('author_id');
 
 		// set headers values
-		$headers['author'] = ucfirst(BL::getLabel('Author'));
+		$headers['user_id'] = ucfirst(BL::getLabel('Author'));
 		$headers['title'] = ucfirst(BL::getLabel('Title'));
 		$headers['publish_on'] = ucfirst(BL::getLabel('PublishedOn'));
 		$headers['comments'] = ucfirst(BL::getLabel('Comments'));
@@ -81,7 +79,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'author', 'comments'), 'publish_on');
+		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'user_id', 'comments'), 'publish_on');
 		$this->dgPosts->setSortParameter('desc');
 
 		// set colum URLs
@@ -96,7 +94,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 		// set column functions
 		$this->dgPosts->setColumnFunction(array('SpoonDate', 'getDate'), array('d/m/Y @ H:i', '[publish_on]'), 'publish_on', true);
-		$this->dgPosts->setColumnFunction(array('BackendBlogModel', 'getAuthorHTML'), array('[author]', '[author_id]'), 'author', true);
+		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('action', array('delete' => BL::getLabel('Delete')), 'delete');

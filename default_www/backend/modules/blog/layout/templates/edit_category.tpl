@@ -2,16 +2,17 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Blog &gt; {$msgHeaderEditCategory|sprintf:{$name}}</p>
+				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst} &gt; {$msgEditWithItem|sprintf:{$name}}</p>
 			</div>
 
 			<div class="inner">
 				{form:editCategory}
 					<div class="box">
 						<div class="heading">
-							<h3>{$lblCategory|ucfirst}</h3>
+							&nbsp;
 						</div>
 						<div class="options">
+							<label for="name">{$lblCategory|ucfirst}</label>
 							{$txtName} {$txtNameError}
 						</div>
 					</div>

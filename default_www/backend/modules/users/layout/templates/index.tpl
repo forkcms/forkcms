@@ -2,9 +2,9 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 	<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Gebruikers > Overzicht</p>
+				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$lblIndex|ucfirst}</p>
 			</div>
-			
+
 			{option:report}
 			<div id="report">
 				<div class="singleMessage successMessage">
@@ -12,12 +12,11 @@
 				</div>
 			</div>
 			{/option:report}
-			
-			<div class="inner">
 
+			<div class="inner">
 				<div class="datagridHolder">
 					<div class="tableHeading">
-						<h3>{$msgHeaderIndex|ucfirst}</h3>
+						<h3>{$lblUsers|ucfirst}</h3>
 						<div class="buttonHolderRight">
 							<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 						</div>

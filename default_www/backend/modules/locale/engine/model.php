@@ -14,10 +14,17 @@
  */
 class BackendLocaleModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT id, language, application, module, type, name, value FROM locale AS l';
+	const QRY_DATAGRID_BROWSE = 'SELECT id, language, application, module, type, name, value
+									FROM locale AS l';
 
+	/**
+	 * @todo	PHPDoc
+	 * @param unknown_type $language
+	 * @param unknown_type $application
+	 */
 	public static function buildCache($language, $application)
 	{
+	 	// @todo	inline comments
 		// get db
 		$db = BackendModel::getDB();
 
@@ -81,6 +88,10 @@ class BackendLocaleModel
 	}
 
 
+	/**
+	 * @todo	PHPDoc
+	 * @param $ids
+	 */
 	public static function delete(array $ids)
 	{
 		// get db
@@ -94,6 +105,11 @@ class BackendLocaleModel
 		self::buildCache('nl', 'frontend');
 	}
 
+
+	/**
+	 * @todo	PHPDoc
+	 * @param unknown_type $id
+	 */
 	public static function exists($id)
 	{
 		// get db
@@ -103,6 +119,15 @@ class BackendLocaleModel
 		return $db->getNumRows('SELECT id FROM locale WHERE id = ?;', (int) $id);
 	}
 
+
+	/**
+	 * @todo	PHPDoc
+	 * @param $name
+	 * @param $type
+	 * @param $module
+	 * @param $language
+	 * @param $id
+	 */
 	public static function existsByName($name, $type, $module, $language, $id = null)
 	{
 		// get db
@@ -114,6 +139,10 @@ class BackendLocaleModel
 	}
 
 
+	/**
+	 * @todo	PHPDoc
+	 * @param $id
+	 */
 	public static function get($id)
 	{
 		// redefine
@@ -127,6 +156,9 @@ class BackendLocaleModel
 	}
 
 
+	/**
+	 * @todo	PHPDoc
+	 */
 	public static function getTypesForDropDown()
 	{
 		// get db
@@ -146,6 +178,10 @@ class BackendLocaleModel
 	}
 
 
+	/**
+	 * @todo	PHPDoc
+	 * @param $item
+	 */
 	public static function insert(array $item)
 	{
 		// get db
@@ -161,6 +197,10 @@ class BackendLocaleModel
 		return $id;
 	}
 
+
+	/**
+	 * @todo	PHPDoc
+	 */
 	public static function update($id, array $item)
 	{
 		// get db

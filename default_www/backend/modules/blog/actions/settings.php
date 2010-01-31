@@ -46,7 +46,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// init settings form
-		$this->frm = new SpoonForm('settings');
+		$this->frm = new BackendForm('settings');
 
 		// add fields for spam
 		$this->frm->addCheckBox('spamfilter', BackendModel::getSetting('blog', 'spamfilter', false));

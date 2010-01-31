@@ -89,8 +89,18 @@ class BackendMailer
 		// variables were set
 		if(!empty($variables)) $tpl->assign($variables);
 
+		// @todo	parse locale...
+
+		// grab the content
+		$content = $tpl->getContent($template);
+
+		// replace internal links/images
+		$search = array('href="/', 'src="/');
+		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
+		$content = str_replace($search, $replace, $content);
+
 		// return the content
-		return (string) $tpl->getContent($template);
+		return (string) $content;
 	}
 
 

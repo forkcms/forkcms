@@ -2,14 +2,14 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 	<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Gebruikers > Gebruiker toevoegen</p>
+				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$lblAdd|ucfirst}</p>
 			</div>
 			<div class="inner">
 
 				{form:add}
 				<div class="box">
 					<div class="heading">
-						<h3>{$msgHeaderAdd}</h3>
+						&nbsp;
 					</div>
 					<div class="options horizontal">
 						<p>
@@ -55,13 +55,13 @@
 
 					</div>
 				</div>
-				
+
 				<div class="fullwidthOptions">
 					<div class="buttonHolderRight">
 						{$btnAdd}
 					</div>
 				</div>
-				
+
 				{/form:add}
 
 			</div>

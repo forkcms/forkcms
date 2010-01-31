@@ -9,6 +9,7 @@
  * @subpackage	locale
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendLocaleIndex extends BackendBaseActionIndex
@@ -59,7 +60,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// update value
-		$this->datagrid->setColumnFunction('truncater', array('[value]', 30), 'value', true);
+		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'truncate'), array('[value]', 30), 'value', true);
 
 		// add columns
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
@@ -75,17 +76,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	{
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
-}
-
-
-function truncater($value, $length)
-{
-	if(mb_strlen($value, SPOON_CHARSET) > $length)
-	{
-		return SpoonFilter::htmlspecialchars(mb_substr($value, 0, $length, SPOON_CHARSET)) .'...';
-	}
-
-	return SpoonFilter::htmlspecialchars($value);
 }
 
 ?>

@@ -2,14 +2,14 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 	<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Gebruikers > Gebruiker toevoegen</p>
+				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$msgEditWithItem|sprintf:{$nickname}}</p>
 			</div>
 			<div class="inner">
 
 				{form:edit}
 				<div class="box">
 					<div class="heading">
-						<h3>{$msgHeaderEdit|sprintf:{$nickname}}</h3>
+						&nbsp;
 					</div>
 					<div class="options horizontal">
 						<p>
@@ -55,14 +55,14 @@
 
 					</div>
 				</div>
-				
+
 				<div class="fullwidthOptions">
 					<div class="buttonHolderRight">
 						{$btnEdit}
 						<a href="{$var|geturl:'delete'}?id={$id}" class="askConfirmation" rel="{$msgConfirmDelete|sprintf:{$nickname}}" title="{$lblDelete}">{$lblDelete}</a>
 					</div>
 				</div>
-				
+
 				{/form:edit}
 
 			</div>

@@ -2,7 +2,7 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Locale</p>
+				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblIndex|ucfirst}</p>
 			</div>
 
 			<div class="inner">
@@ -11,7 +11,7 @@
 						<div class="tableHeading">
 							<h3>{$lblLocale|ucfirst}</h3>
 							<div class="buttonHolderRight">
-								<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span><span><span>{$lblAddLabel|ucfirst}</span></span></span></a>
+								<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 							</div>
 						</div>
 

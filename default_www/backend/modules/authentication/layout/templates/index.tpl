@@ -19,8 +19,8 @@
 						</div>
 					</div>
 					{/option:hasError}
-					
-					
+
+
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>
 						<p>{$msgLoginFormHelp}</p>
@@ -57,9 +57,11 @@
 								<p>{$btnSend}</p>
 							</div>
 
+							{option:txtBackendEmailError}
 							<div class="errorMessage singleMessage">
 								<p>{$txtBackendEmailError}</p>
 							</div>
+							{/option:txtBackendEmailError}
 
 							{option:hasForgotpasswordError}
 							<div class="errorMessage singleMessage">

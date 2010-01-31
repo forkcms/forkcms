@@ -1,17 +1,15 @@
+<!-- @todo	fix labels -->
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Blog &gt; {$msgHeaderEdit|sprintf:{$title}}</p>
+				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$msgEditWithItem|sprintf:{$title}}</p>
 			</div>
+			{option:usingRevision}<div class="singleMessage warningMessage"><p>{$msgUsingARevision}</p></div>{/option:usingRevision}
 
 			<div class="inner">
-				{option:usingRevision}<p class="warning">{$msgUsingARevision}</p>{/option:usingRevision}
-				
 				{form:edit}
 					{$txtTitle} {$txtTitleError}
-
-					<!-- @todo does this have to be here? Answer: yes -->
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
@@ -19,7 +17,7 @@
 							</p>
 						</div>
 					</div>
-					
+
 					<div class="tabs">
 						<ul>
 							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
@@ -63,7 +61,7 @@
 												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
-											{* 
+											{*
 											<div class="options">
 												<div class="buttonHolder">
 													{$btnPreview}
@@ -75,7 +73,7 @@
 												<p class="status">Status: <strong>{$status}</strong></p>
 											</div>
 											*}
-											
+
 											<div class="options">
 												<ul class="inputList">
 													{iteration:hide}
@@ -86,14 +84,14 @@
 													{/iteration:hide}
 												</ul>
 											</div>
-											
+
 											<div class="options">
 												<dl>
 													<dt><label for="publishOnDate">{$lblPublishOn|ucfirst}:</label></dt>
 													<dd>{$txtPublishOnDate} <label for="publishOnTime">{$lblAt}</label> {$txtPublishOnTime}</dd>
 												</dl>
 											</div>
-											
+
 											<div class="footer">
 												<table border="0" cellpadding="0" cellspacing="0">
 													<tbody>
@@ -136,10 +134,10 @@
 												</div>
 												 -->
 											</div>
-											
+
 											<div class="options">
 												{$ddmUserId} {$ddmUserIdError}
-												
+
 												<!--  @todo ?
 												<ul>
 													<li>
@@ -168,7 +166,7 @@
 								</tr>
 							</table>
 						</div>
-						
+
 						<div id="tabPermissions">
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
@@ -178,7 +176,7 @@
 								</tr>
 							</table>
 						</div>
-						
+
 						<div id="tabRevisions">
 							<div class="datagridHolder">
 								<div class="tableHeading">

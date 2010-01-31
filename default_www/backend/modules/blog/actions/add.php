@@ -175,6 +175,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				// save the tags
 				BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->url->getModule());
 
+				// @todo	ping
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=id-'. $id);
 			}

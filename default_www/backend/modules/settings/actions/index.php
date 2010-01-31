@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SettingsIndex
+ * BackendSettingsIndex
  *
  * This is the index-action (default), it will display the setting-overview
  *

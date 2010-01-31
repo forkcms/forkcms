@@ -230,6 +230,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				// insert the item
 				$id = (int) BackendBlogModel::update($this->id, $item);
 
+				// @todo	ping
+				// @todo	tags
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=id-'. $id);
 			}

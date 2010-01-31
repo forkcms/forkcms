@@ -2,40 +2,46 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Locale</p>
+				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblEdit|ucfirst}</p>
 			</div>
 
 			<div class="inner">
 				{form:edit}
-					<p>
-						<label for="language">Taal</label>
-						{$ddmLanguage} {$ddmLanguageError}
-					</p>
+				<div class="box">
+					<div class="heading">
+						&nbsp;
+					</div>
+					<div class="options">
+						<p>
+							<label for="language">{$lblLanguage|ucfirst}</label>
+							{$ddmLanguage} {$ddmLanguageError}
+						</p>
 
-					<p>
-						<label for="application">Applicatie</label>
-						{$ddmApplication} {$ddmApplicationError}
-					</p>
+						<p>
+							<label for="application">{$lblApplication|ucfirst}</label>
+							{$ddmApplication} {$ddmApplicationError}
+						</p>
 
-					<p>
-						<label for="module">Module</label>
-						{$ddmModule} {$ddmModuleError}
-					</p>
+						<p>
+							<label for="module">{$lblModule|ucfirst}</label>
+							{$ddmModule} {$ddmModuleError}
+						</p>
 
-					<p>
-						<label for="type">Type</label>
-						{$ddmType} {$ddmTypeError}
-					</p>
+						<p>
+							<label for="type">{$lblType|ucfirst}</label>
+							{$ddmType} {$ddmTypeError}
+						</p>
 
-					<p>
-						<label for="name">Naam</label>
-						{$txtName} {$txtNameError}
-					</p>
+						<p>
+							<label for="name">{$lblName|ucfirst}</label>
+							{$txtName} {$txtNameError}
+						</p>
 
-					<p>
-						<label for="value">Waarde</label>
-						{$txtValue} {$txtValueError}
-					</p>
+						<p>
+							<label for="value">{$lblValue|ucfirst}</label>
+							{$txtValue} {$txtValueError}
+						</p>
+					</div>
 
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">

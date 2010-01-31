@@ -2,8 +2,16 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Tags &gt; {$msgHeaderIndex}</p>
+				<p class="breadcrumb">{$lblTags|ucfirst} &gt; {$lblIndex|ucfirst}</p>
 			</div>
+
+			{option:report}
+			<div id="report">
+				<div class="singleMessage successMessage">
+					<p>{$reportMessage}</p>
+				</div>
+			</div>
+			{/option:report}
 
 			<div class="inner">
 				{option:datagrid}

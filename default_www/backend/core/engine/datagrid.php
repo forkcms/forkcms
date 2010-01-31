@@ -486,6 +486,36 @@ class BackendDataGridDB extends BackendDataGrid
 class BackendDataGridFunctions
 {
 	/**
+	 * Formats plain text as HTML, links will be detected, paragraphs will be inserted
+	 *
+	 * @return	string
+	 * @param	string $var
+	 */
+	public static function cleanupPlainText($var)
+	{
+		// redefine
+		$var = (string) $var;
+
+		// detect links
+		$var = SpoonFilter::replaceURLsWithAnchors($var);
+
+		// replace newlines
+		$var = str_replace("\r", '', $var);
+		$var = preg_replace('/(?<!.)(\r\n|\r|\n){3,}$/m', '', $var);
+
+		// replace br's into p's
+		$var = '<p>'. str_replace("\n", '</p><p>', $var) .'</p>';
+
+		// cleanup
+		$var = str_replace("\n", '', $var);
+		$var = str_replace('<p></p>', '', $var);
+
+		// return
+		return $var;
+	}
+
+
+	/**
 	 * Format a date as a long representation according the users' settings
 	 *
 	 * @return	string
@@ -558,6 +588,40 @@ class BackendDataGridFunctions
 
 		// return
 		return $html;
+	}
+
+
+	/**
+	 * Truncate a string
+	 *
+	 * @return	string
+	 * @param	string $string
+	 * @param	int $length
+	 * @param	bool[optional] $useHellip
+	 */
+	public static function truncate($string = null, $length, $useHellip = true)
+	{
+		// remove special chars
+		$string = htmlspecialchars_decode($string);
+
+		// less characters
+		if(mb_strlen($string) <= $length) return SpoonFilter::htmlspecialchars($string);
+
+		// more characters
+		else
+		{
+			// hellip is seen as 1 char, so remove it from length
+			if($useHellip) $length = $length - 1;
+
+			// get the amount of requested characters
+			$string = mb_substr($string, 0, $length);
+
+			// add hellip
+			if($useHellip) $string .= '…';
+
+			// return
+			return SpoonFilter::htmlspecialchars($string);
+		}
 	}
 }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Login
+ * BackendAuthenticationConfig
  *
  * This is the configuration-object for the authentication module
  *

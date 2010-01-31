@@ -8,9 +8,4 @@
 	@todo	@johan	fix this.
 
 */
-
-/*div.error { color: #F00; }
-#pagesTree ul li li a { padding: 2px 4px 2px 0; }
-#tree div ul { min-height: 16px; }
-#tree div ul li { border: 1px dotted #CCC; }
-#tree div ul li ul li { border: none; }*/
+.warningMessage { background: #FBEC88; border-color: #FAD42E; padding: 5px; }

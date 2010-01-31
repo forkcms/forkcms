@@ -112,7 +112,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->addColumn('move');
 
 		// assign column functions
-		$this->dgPublished->setColumnFunction('nl2br', '[text]', 'text', true);
+		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
 		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('published', '[id]'), 'move', true);
 		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');

@@ -2,7 +2,7 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Blog &gt; {$msgHeaderCategories}</p>
+				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst}</p>
 			</div>
 
 			<div class="inner">

@@ -15,32 +15,19 @@
  */
 class BackendBlogModel
 {
-	const QRY_DATAGRID_BROWSE = "SELECT
-								p.id,
-								us.value AS author,
-								us.user_id AS author_id,
-								p.title,
-								UNIX_TIMESTAMP(p.publish_on) AS publish_on,
-								COUNT(bc.id) AS comments
+	const QRY_DATAGRID_BROWSE = 'SELECT p.id, p.user_id, p.title, UNIX_TIMESTAMP(p.publish_on) AS publish_on, num_comments AS comments
 								FROM blog_posts AS p
-								LEFT OUTER JOIN blog_comments AS bc ON bc.post_id = p.id
-								INNER JOIN users_settings AS us ON us.user_id = p.user_id AND us.name = 'nickname'
-								WHERE p.status = ?
-								GROUP BY p.id
-								";
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT
-											c.id,
-											c.name,
-											COUNT(p.id) AS num_posts
+								WHERE p.status = ?';
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT c.id, c.name, COUNT(p.id) AS num_posts
 											FROM blog_categories AS c
 											LEFT OUTER JOIN blog_posts AS p ON p.category_id = c.id
-											WHERE c.language = ? AND p.status = "active"
+											WHERE c.language = ? AND (p.status = "active" OR p.status IS NULL)
 											GROUP BY c.id';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT id, UNIX_TIMESTAMP(created_on) AS created_on, author, text FROM blog_comments WHERE status = ?;';
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
-									FROM blog_posts AS p
-									WHERE p.status = ? AND p.id = ?
-									ORDER BY p.edited_on DESC;';
+											FROM blog_posts AS p
+											WHERE p.status = ? AND p.id = ?
+											ORDER BY p.edited_on DESC;';
 
 	/**
 	 * Checks the settings and optionally returns an array with warnings
@@ -157,25 +144,6 @@ class BackendBlogModel
 
 		// exists?
 		return $db->getNumRows('SELECT id FROM blog_categories WHERE id = ?;', (int) $id);
-	}
-
-
-	/**
-	 * Returns the HTML for a user avatar + his name
-	 *
-	 * @return	void
-	 * @param 	string $author
-	 * @param 	string $authorId
-	 */
-	public static function getAuthorHTML($author, $authorId)
-	{
-		// fetch the user for this ID
-		$record = new BackendUser($authorId);
-		$avatar = SITE_URL . FRONTEND_FILES_URL .'/backend_users/avatars/32x32/'. $record->getSetting('avatar');
-		$author = unserialize($author);
-
-		// return the img + avatar
-		return '<div class="user"><a href="#"><img src="'. $avatar .'" alt="'. $author .'" width="24" height="24" /> '. $author .'</a></div>';
 	}
 
 
@@ -499,6 +467,8 @@ class BackendBlogModel
 	{
 		// get db
 		$db = BackendModel::getDB();
+
+		// @later	if the new status is spam, we should submit it to Akismet!
 
 		// update record
 		$db->execute('UPDATE blog_comments SET status = ? WHERE id IN('. implode(',', $ids) .');', $status);

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * BackendLocaleEdit
+ * BackendLocaleAdd
  *
- * This is the edit action, it will display a form to edit an existing label.
+ * This is the add action, it will display a form to add a label.
  *
  * @package		backend
  * @subpackage	locale
@@ -46,6 +46,8 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	{
 		// create form
 		$this->frm = new BackendForm('add');
+
+		// create and add elements
 		$this->frm->addDropDown('application', array('backend' => 'backend', 'frontend' => 'frontend'));
 		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false));
 		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), 'lbl');
@@ -69,11 +71,8 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// redefine fields @todo davy - opkuisen aub.
-			/* @var $txtName SpoonTextField */
+			// redefine fields
 			$txtName = $this->frm->getField('name');
-
-			/* @var $txtValue SpoonTextField */
 			$txtValue = $this->frm->getField('value');
 
 			// name checks

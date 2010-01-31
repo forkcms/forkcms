@@ -70,6 +70,8 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	{
 		// create form
 		$this->frm = new BackendForm('edit');
+
+		// create and add elements
 		$this->frm->addDropDown('language', array('nl' => 'Nederlands', 'fr' => 'Frans', 'en' => 'Engels'), 'nl'); // @todo davy - opbouwen van een goeie lijst
 		$this->frm->addDropDown('application', array('backend' => 'backend', 'frontend' => 'frontend'), $this->record['application']);
 		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->record['module']);
@@ -108,11 +110,8 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// redefine fields @todo davy - opkuisen aub.
-			/* @var $txtName SpoonTextField */
+			// redefine fields
 			$txtName = $this->frm->getField('name');
-
-			/* @var $txtValue SpoonTextField */
 			$txtValue = $this->frm->getField('value');
 
 			// name checks

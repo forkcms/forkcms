@@ -2,7 +2,7 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">Blog &gt; {$msgHeaderAdd|ucfirst}</p>
+				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblAdd|ucfirst}</p>
 			</div>
 
 			<div class="inner">
@@ -38,11 +38,11 @@
 																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
 															</div>
 
-															<h4><a href="#summary .options" class="toggleDiv">Summary</a></h4>
+															<h4><a href="#summary .options" class="toggleDiv">{$lblSummary|ucfirst}</a></h4>
 														</div>
 
 														<div class="options hide" style="display: none;">
-															<p class="helpTxt">If you enter a summary, the summary will be shown on "list" pages (e.g. the blog overview). If you don't, the full blog post will be shown in the overview.</p>
+															<p class="helpTxt">{$msgHelpSummary}</p>
 															{$txtIntroduction} {$txtIntroductionError}
 														</div>
 													</div>
@@ -123,7 +123,7 @@
 
 										<div id="authors" class="box">
 											<div class="heading">
-												<h4>Author</h4>
+												<h4>{$lblAuthor|ucfirst}</h4>
 												<!--  @todo
 												<div class="buttonHolderRight">
 													<a href="#" id="editAuthor" class="button icon iconEdit iconOnly">
@@ -153,7 +153,7 @@
 
 										<div id="tagBox" class="box">
 											<div class="heading">
-												<h4>Tags</h4>
+												<h4>{$lblTags|ucfirst}</h4>
 											</div>
 
 											<div class="options">

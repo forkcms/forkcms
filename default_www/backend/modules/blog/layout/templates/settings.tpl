@@ -5,8 +5,7 @@
 				<p class="breadcrumb">{$lblSettings|ucfirst} &gt; {$lblBlog|ucfirst}</p>
 			</div>
 
-			<!-- @todo @johan remove this forkForms class once forkForms is a default on forms -->
-			<div class="inner forkForms">
+			<div class="inner">
 				{form:settings}
 					<div class="box">
 						<div class="heading">
@@ -20,14 +19,13 @@
 							</ul>
 						</div>
 					</div>
-					
+
 					<div class="box">
 						<div class="heading">
-							<h3>{$lblAllowComments|ucfirst}</h3>
+							<h3>{$lblComments|ucfirst}</h3>
 						</div>
 
 						<div class="options">
-							<p>{$msgHelpAllowComments}:</p>
 							<ul class="inputList p0">
 								<li>{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label></li>
 							</ul>
