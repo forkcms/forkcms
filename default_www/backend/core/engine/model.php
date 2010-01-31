@@ -497,7 +497,7 @@ class BackendModel
 
 
 	/**
-	 * Ping the known webserviced
+	 * Ping the known webservices
 	 *
 	 * @return	bool								If everything went fine true will be returned, otherwise false
 	 * @param	string[optional] $pageOrFeedURL		The page/feed that has changed
@@ -523,7 +523,6 @@ class BackendModel
 
 			// validate keys
 			if($publicKey == '' || $privateKey == '') return false;
-
 
 			// require the class
 			require_once PATH_LIBRARY .'/external/fork_api.php';
@@ -560,6 +559,10 @@ class BackendModel
 		{
 			// create new client
 			$client = new SpoonXMLRPCClient($service['url']);
+
+			// set some properties
+			$client->setUserAgent('Fork '. FORK_VERSION);
+			$client->setTimeOut(10);
 
 			// set port
 			$client->setPort($service['port']);

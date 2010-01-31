@@ -23,6 +23,13 @@ define('SPOON_CHARSET', 'utf-8');
 
 
 /**
+ * Fork configuration
+ */
+// version of Fork
+define('FORK_VERSION', '2.0.0');
+
+
+/**
  * Database configuration
  */
 // type of connection

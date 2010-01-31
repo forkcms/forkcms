@@ -379,7 +379,6 @@ class SpoonXMLRPCClient
 	}
 
 
-
 	/**
 	 * Make the call.
 	 *
