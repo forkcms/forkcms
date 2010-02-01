@@ -117,7 +117,7 @@ class BackendNavigation
 			if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 			{
 				// selected state
-				$selected = (bool) (in_array($key, $selectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction());
+				$selected = (bool) (in_array($key, $selectedKeys, true) || $level['url'] == $activeURL);
 
 				// open li-tag
 				if($selected) $html .= '<li class="selected">'."\n";
@@ -198,12 +198,16 @@ class BackendNavigation
 		// init html
 		$html = '<ul>';
 
+		// set active URL
+		$activeModule = $this->url->getModule();
+		$activeAction = $this->url->getAction();
+		$activeURL = $activeModule .'/'. $activeAction;
+
 		// build and return the HTML
 		foreach($this->navigation as $key => $level)
 		{
 			// ignore some modules
 			if(in_array($key, $modulesToIgnore)) continue;
-
 
 			if($key == 'dashboard' || $key == 'pages')
 			{
@@ -217,7 +221,7 @@ class BackendNavigation
 				if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 				{
 					// open li-tag
-					if(in_array($key, $selectedKeys, true) || $level['url'] == $this->url->getModule() .'/'. $this->url->getAction()) $html .= '<li class="selected">'."\n";
+					if(in_array($key, $selectedKeys, true) || (isset($level['selected_for_actions']) && in_array($activeAction, $level['selected_for_actions'])) || $level['url'] == $activeURL) $html .= '<li class="selected">'."\n";
 					else $html .= '<li>'."\n";
 
 					// add the link
@@ -226,6 +230,9 @@ class BackendNavigation
 					// end li
 					$html .'</li>'."\n";
 				}
+
+				// if the active menu is 'settings', assign the option to set the selected state
+				if(in_array('settings', $selectedKeys, true)) Spoon::getObjectReference('template')->assign('oSettingsSelected', true);
 			}
 
 			// modules is a special one
@@ -272,7 +279,14 @@ class BackendNavigation
 					if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 					{
 						// open li-tag
-						if(in_array($key, $selectedKeys, true) || $child['url'] == $this->url->getModule() .'/'. $this->url->getAction()) $html .= '<li class="selected">'."\n";
+						if(in_array($key, $selectedKeys, true) || $child['url'] == $activeURL)
+						{
+							// settings is in the selected keys stack and the active submenu is modules, so we don't select this list item
+							if(in_array('settings', $selectedKeys, true) && $key == 'modules') $html .= '<li>'."\n";
+
+							// this item is selected
+							else $html .= '<li class="selected">'."\n";
+						}
 						else $html .= '<li>'."\n";
 
 						// add the link
@@ -308,9 +322,9 @@ class BackendNavigation
 		$actions = array();
 
 		// build the url to search for
-		$urlModule = $this->url->getModule();
-		$urlAction = $this->url->getAction();
-		$urlToSearch = $urlModule .'/'. $urlAction;
+		$activeModule = $this->url->getModule();
+		$activeAction = $this->url->getAction();
+		$activeURL = $activeModule .'/'. $activeAction;
 
 		// build an array so we can find out what submenu is used
 		foreach($this->navigation as $key => $level)
@@ -341,7 +355,7 @@ class BackendNavigation
 		foreach($this->navigation as $key => $level)
 		{
 			// url already known?
-			if($level['url'] == $urlToSearch) $keys[] = $key;
+			if($level['url'] == $activeURL) $keys[] = $key;
 
 			// has this level any children?
 			if(isset($level['children']))
@@ -350,10 +364,10 @@ class BackendNavigation
 				foreach($level['children'] as $module => $level)
 				{
 					// add all keys if the url is found
-					if($level['url'] == $urlToSearch || $module == $urlModule)
+					if($level['url'] == $activeURL || $module == $activeModule)
 					{
 						// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
-						if(isset($actions[$urlModule]['actions'][$urlAction]) && $actions[$urlModule]['actions'][$urlAction] == 'settings')
+						if(isset($actions[$activeModule]['actions'][$activeAction]) && $actions[$activeModule]['actions'][$activeAction] == 'settings')
 						{
 							$keys[] = 'settings';
 							$keys[] = 'modules';
@@ -373,10 +387,10 @@ class BackendNavigation
 						foreach($level['children'] as $level)
 						{
 							// url found?
-							if($level['url'] == $urlToSearch || $module == $urlModule)
+							if($level['url'] == $activeURL || $module == $activeModule)
 							{
 								// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
-								if(isset($actions[$urlModule]['actions'][$urlAction]) && $actions[$urlModule]['actions'][$urlAction] == 'settings')
+								if(isset($actions[$activeModule]['actions'][$activeAction]) && $actions[$activeModule]['actions'][$activeAction] == 'settings')
 								{
 									$keys[] = 'settings';
 									$keys[] = 'modules';

@@ -2,7 +2,7 @@
 
 $navigation['dashboard'] = array('url' => 'dashboard/index', 'label' => 'Dashboard');
 
-$navigation['pages'] = array('url' => 'pages/index', 'label' => 'Pages');
+$navigation['pages'] = array('url' => 'pages/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Pages');
 
 $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
