@@ -1,23 +1,23 @@
 <?php
 /**
- * FrontendBlogConfig
+ * FrontendSnippetsConfig
  *
  * This is the configuration-object
  *
  * @package		frontend
- * @subpackage	sitemap
+ * @subpackage	snippets
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class FrontendBlogConfig extends FrontendBaseConfig
+class FrontendSnippetsConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action
 	 *
 	 * @var	string
 	 */
-	protected $defaultAction = 'index';
+	protected $defaultAction = 'detail';
 
 
 	/**

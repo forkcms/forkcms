@@ -77,6 +77,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 		// set properties
 		$this->setModule($module);
 		$this->setAction($action);
+		if($data !== null) $this->setData($data);
 
 		// load the configfile for the required module
 		$this->loadConfig();
@@ -245,6 +246,17 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 
 	/**
+	 * Set the data
+	 *
+	 * @param string $data
+	 */
+	private function setData($data)
+	{
+		$this->data = $data;
+	}
+
+
+	/**
 	 * Set the module
 	 *
 	 * @return	void
@@ -350,6 +362,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// set properties
 		$this->setModule($module);
 		$this->setAction($action);
+		if($data !== null) $this->setData($data);
 
 		// load the configfile for the required module
 		$this->loadConfig();
@@ -475,6 +488,17 @@ class FrontendBlockWidget extends FrontendBaseObject
 	private function setAction($action = null)
 	{
 		if($action !== null) $this->action = (string) $action;
+	}
+
+
+	/**
+	 * Set the data
+	 *
+	 * @param string $data
+	 */
+	private function setData($data)
+	{
+		$this->data = $data;
 	}
 
 
