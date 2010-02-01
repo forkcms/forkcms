@@ -31,6 +31,18 @@
 							</ul>
 						</div>
 					</div>
+					
+					<div class="box">
+						<div class="heading">
+							<h3>{$lblModeration|ucfirst}</h3>
+						</div>
+
+						<div class="options">
+							<ul class="inputList p0">
+								<li>{$chkModeration} <label for="moderation">{$lblAllowModeration|ucfirst}</label></li>
+							</ul>
+						</div>
+					</div>
 
 					<div class="box">
 						<div class="heading">

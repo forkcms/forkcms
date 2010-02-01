@@ -3,7 +3,7 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$msgEditWithItem|sprintf:{$title}}</p>
+				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$msgEditWithItem|sprintf:{$blog['title']}}</p>
 			</div>
 			{option:usingRevision}<div class="singleMessage warningMessage"><p>{$msgUsingARevision}</p></div>{/option:usingRevision}
 
@@ -13,7 +13,7 @@
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="{$blogUrl}/{$url}">{$blogUrl}/{$url}</a></span>
+								<span><a href="{$blogUrl}/{$blog['url']}">{$blogUrl}/{$blog['url']}</a></span>
 							</p>
 						</div>
 					</div>
@@ -76,12 +76,12 @@
 
 											<div class="options">
 												<ul class="inputList">
-													{iteration:hide}
+													{iteration:hidden}
 													<li>
-														{$hide.rbtHide}
-														<label for="{$hide.id}">{$hide.label}</label>
+														{$hidden.rbtHidden}
+														<label for="{$hidden.id}">{$hidden.label}</label>
 													</li>
-													{/iteration:hide}
+													{/iteration:hidden}
 												</ul>
 											</div>
 

@@ -54,6 +54,9 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		// add fields for comments
 		$this->frm->addCheckBox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
 
+		// add fields for comments
+		$this->frm->addCheckBox('moderation', BackendModel::getSetting('blog', 'moderation', false));
+
 		// add fields for SEO
 		$this->frm->addCheckBox('ping_services', BackendModel::getSetting('blog', 'ping_services', false));
 
@@ -99,6 +102,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				// set our settings
 				BackendModel::setSetting('blog', 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
 				BackendModel::setSetting('blog', 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
+				BackendModel::setSetting('blog', 'moderation', (bool) $this->frm->getField('moderation')->getValue());
 				BackendModel::setSetting('blog', 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
 				BackendModel::setSetting('blog', 'rss_title_'. BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
 				BackendModel::setSetting('blog', 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
