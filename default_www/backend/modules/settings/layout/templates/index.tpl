@@ -5,7 +5,16 @@
 				<p class="breadcrumb">{$lblSettings|ucfirst} &gt; {$lblGeneral|ucfirst}</p>
 			</div>
 
+			{option:report}
+			<div id="report">
+				<div class="singleMessage successMessage">
+					<p>{$reportMessage}</p>
+				</div>
+			</div>
+			{/option:report}
+
 			<div class="inner">
+				<!-- @todo @tijs: check me -->
 				{option:formSucces}
 					<div class="generalMessage succesMessage">
 						<p>{$msgSaved}</p>

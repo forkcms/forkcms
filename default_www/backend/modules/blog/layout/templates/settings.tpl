@@ -5,6 +5,14 @@
 				<p class="breadcrumb">{$lblSettings|ucfirst} &gt; {$lblBlog|ucfirst}</p>
 			</div>
 
+			{option:formError}
+			<div id="report">
+				<div class="singleMessage errorMessage">
+					<p>{$errFormError}</p>
+				</div>
+			</div>
+			{/option:formError}
+
 			<div class="inner">
 				{form:settings}
 					<div class="box">
@@ -31,7 +39,7 @@
 							</ul>
 						</div>
 					</div>
-					
+
 					<div class="box">
 						<div class="heading">
 							<h3>{$lblModeration|ucfirst}</h3>

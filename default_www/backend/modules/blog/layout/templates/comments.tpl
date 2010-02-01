@@ -5,6 +5,14 @@
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblComments|ucfirst}</p>
 			</div>
 
+			{option:formError}
+			<div id="report">
+				<div class="singleMessage errorMessage">
+					<p>{$errFormError}</p>
+				</div>
+			</div>
+			{/option:formError}
+
 			<div class="inner">
 				<div id="tabs" class="tabs">
 					<ul>

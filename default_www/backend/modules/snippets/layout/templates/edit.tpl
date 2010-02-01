@@ -4,7 +4,19 @@
 				<div id="statusBar">
 					<p class="breadcrumb">{$lblSnippets|ucfirst} &gt; {$msgEditWithItem|sprintf:{$title}}</p>
 				</div>
-				{option:usingRevision}<div class="singleMessage warningMessage"><p>{$msgUsingARevision}</p></div>{/option:usingRevision}
+				{option:usingRevision}
+				<div class="singleMessage warningMessage">
+					<p>{$msgUsingARevision}</p>
+				</div>
+				{/option:usingRevision}
+
+				{option:formError}
+				<div id="report">
+					<div class="singleMessage errorMessage">
+						<p>{$errFormError}</p>
+					</div>
+				</div>
+				{/option:formError}
 
 				<div class="inner">
 					{form:edit}
@@ -44,7 +56,7 @@
 
 						<div class="fullwidthOptions">
 
-							<a href="{$var|geturl:'delete'}&id={$recordid}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+							<a href="{$var|geturl:'delete'}&id={$id}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 								<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 							</a>
 

@@ -4,8 +4,16 @@
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$lblAdd|ucfirst}</p>
 			</div>
-			<div class="inner">
 
+			{option:formError}
+			<div id="report">
+				<div class="singleMessage errorMessage">
+					<p>{$errFormError}</p>
+				</div>
+			</div>
+			{/option:formError}
+
+			<div class="inner">
 				{form:add}
 				<div class="box">
 					<div class="heading">

@@ -150,6 +150,18 @@ class BackendSnippetsModel
 		// insert and return the insertId
 		$db->insert('snippets', $values);
 
+		// build array
+		$extra['module'] = 'snippets';
+		$extra['type'] = 'widget';
+		$extra['label'] = 'Snippets';
+		$extra['action'] = 'detail';
+		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $newId));
+		$extra['hidden'] = 'N';
+		$extra['sequence'] = '200'. $newId;
+
+		// insert extra
+		$db->insert('pages_extras', $extra);
+
 		// insert the new id
 		return $newId;
 	}
@@ -201,6 +213,12 @@ class BackendSnippetsModel
 
 		// delete other revisions
 		if(!empty($revisionIdsToKeep)) $db->delete('snippets', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
+
+		// build array
+		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $id));
+
+		// update extra
+		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('snippets', 'widget', '200'. $id));
 
 		// return id
 		return $id;

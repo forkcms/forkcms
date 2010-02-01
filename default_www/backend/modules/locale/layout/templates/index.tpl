@@ -5,6 +5,14 @@
 				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblIndex|ucfirst}</p>
 			</div>
 
+			{option:report}
+			<div id="report">
+				<div class="singleMessage successMessage">
+					<p>{$reportMessage}</p>
+				</div>
+			</div>
+			{/option:report}
+
 			<div class="inner">
 				{option:datagrid}
 					<div class="datagridHolder">

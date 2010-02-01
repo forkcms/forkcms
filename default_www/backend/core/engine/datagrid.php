@@ -281,6 +281,9 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		// load template
 		$tpl = new SpoonTemplate();
 
+		// @todo	if there is just one page we don't want to see any paging
+		if($iPages == 1) return '';
+
 		// compile directory
 		if($compileDirectory !== null) $tpl->setCompileDirectory($compileDirectory);
 		else $tpl->setCompileDirectory(dirname(__FILE__));

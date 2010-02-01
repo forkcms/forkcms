@@ -124,7 +124,7 @@ class BackendNavigation
 				else $html .= '<li>'."\n";
 
 				// add the link
-				$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. $level['label'] .'</a>'."\n";
+				$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. ucfirst(BL::getLabel($level['label'], 'core')) .'</a>'."\n";
 
 				// should we go deeper?
 				if($selected && isset($level['children']))
@@ -152,7 +152,7 @@ class BackendNavigation
 							else $subHTML .= '<li>'."\n";
 
 							// add the link
-							$subHTML .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. $child['label'] .'</a>'."\n";
+							$subHTML .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. ucfirst(BL::getLabel($child['label'], 'core')) .'</a>'."\n";
 
 							// end li
 							$subHTML .='</li>'."\n";
@@ -221,7 +221,7 @@ class BackendNavigation
 					else $html .= '<li>'."\n";
 
 					// add the link
-					$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. $level['label'] .'</a>'."\n";
+					$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. ucfirst(BL::getLabel($level['label'], 'core')) .'</a>'."\n";
 
 					// end li
 					$html .'</li>'."\n";

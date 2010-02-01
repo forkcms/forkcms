@@ -8,7 +8,7 @@ $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Posts');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/categories', 'label' => 'Categories');
-$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/comments', 'label' => 'Reacties');
+$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/comments', 'label' => 'Comments');
 $navigation['modules']['children']['events'] = array('url' => 'events/index', 'label' => 'Events');
 $navigation['modules']['children']['faq'] = array('url' => null, 'label' => 'FAQ');
 $navigation['modules']['children']['faq']['children'][] = array('url' => 'faq/index', 'label' => 'Questions');
@@ -43,7 +43,7 @@ $navigation['statistics']['children']['this_month']['children'][] = array('url' 
 $navigation['statistics']['children']['archive'] = array('url' => null, 'label' => 'Archive');
 
 $navigation['settings'] = array('url' => null, 'label' => 'Settings');
-$navigation['settings']['children']['settings'] = array('url' => 'settings/index', 'label' => 'Website');
+$navigation['settings']['children']['settings'] = array('url' => 'settings/index', 'label' => 'General');
 $navigation['settings']['children']['labels'] = array('url' => 'settings/labels', 'label' => 'Translations');
 $navigation['settings']['children']['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'blog/settings', 'label' => 'Blog');

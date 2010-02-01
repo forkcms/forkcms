@@ -4,6 +4,15 @@
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$msgEditWithItem|sprintf:{$nickname}}</p>
 			</div>
+
+			{option:formError}
+			<div id="report">
+				<div class="singleMessage errorMessage">
+					<p>{$errFormError}</p>
+				</div>
+			</div>
+			{/option:formError}
+
 			<div class="inner">
 
 				{form:edit}
