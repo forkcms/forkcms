@@ -277,6 +277,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				}
 
 				// insert the blocks
+				// @todo rekening houden met de actions voor de url
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 				// save tags
