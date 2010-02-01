@@ -315,4 +315,20 @@ $locale['date']['days']['abbreviated']['thu'] = 'Do.';
 $locale['date']['days']['abbreviated']['fri'] = 'Fr.';
 $locale['date']['days']['abbreviated']['sat'] = 'Sa.';
 
+// time - time ago
+$locale['time']['SecondAgo'] = 'vor 1 Sekunde';
+$locale['time']['SecondsAgo'] = 'vor %s Sekunden';
+$locale['time']['MinuteAgo'] = 'vor 1 Minute';
+$locale['time']['MinutesAgo'] = 'vor %s Minuten';
+$locale['time']['HourAgo'] = 'vor 1 Stunde';
+$locale['time']['HoursAgo'] = 'vor %s Stunden';
+$locale['time']['DayAgo'] = 'vor 1 Tag';
+$locale['time']['DaysAgo'] = 'vor %s Tagen';
+$locale['time']['WeekAgo'] = 'vor 1 Woche';
+$locale['time']['WeeksAgo'] =  'vor %s Wochen';
+$locale['time']['MonthAgo'] = 'vor 1 Monat';
+$locale['time']['MonthsAgo'] = 'vor %s Monaten';
+$locale['time']['YearAgo'] = 'vor 1 Jahr';
+$locale['time']['YearsAgo'] = 'vor %s Jahren';
+
 ?>

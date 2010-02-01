@@ -75,6 +75,63 @@ class SpoonDate
 
 		return $date;
 	}
+
+
+	/**
+	 * Fetch the time ago as a language dependant sentence.
+	 *
+	 * @return	string							String containing a sentence like 'x minutes ago'
+	 * @param	int $timestamp					Timestamp you want to make a sentence of.
+	 * @param	string[optional] $language		Language to use, check SpoonLocale::getAvailableLanguages().
+	 */
+	public static function getTimeAgo($timestamp, $language = 'en')
+	{
+		// init vars
+		$timestamp = (int) $timestamp;
+		$language = SpoonFilter::getValue($language, SpoonLocale::getAvailableLanguages(), 'en', 'string');
+		$locale = array();
+
+		// fetch language
+		require 'spoon/locale/data/'. $language .'.php';
+
+		// get seconds between given timestamp and current timestamp
+		$secondsBetween = time() - $timestamp;
+
+		// calculate years ago
+		$yearsAgo = floor($secondsBetween / (365.242199 * 24 * 60 * 60));
+		if($yearsAgo > 1) return sprintf($locale['time']['YearsAgo'], $yearsAgo);
+		if($yearsAgo == 1) return $locale['time']['YearAgo'];
+
+		// calculate months ago
+		$monthsAgo = floor($secondsBetween / ((365.242199/12) * 24 * 60 * 60));
+		if($monthsAgo > 1) return sprintf($locale['time']['MonthsAgo'], $monthsAgo);
+		if($monthsAgo == 1) return $locale['time']['MonthAgo'];
+
+		// calculate weeks ago
+		$weeksAgo = floor($secondsBetween / (7 * 24 * 60 * 60));
+		if($weeksAgo > 1) return sprintf($locale['time']['WeeksAgo'], $weeksAgo);
+		if($weeksAgo == 1) return $locale['time']['WeekAgo'];
+
+		// calculate days ago
+		$daysAgo = floor($secondsBetween / (24 * 60 * 60));
+		if($daysAgo > 1) return sprintf($locale['time']['DaysAgo'], $daysAgo);
+		if($daysAgo == 1) return $locale['time']['DayAgo'];
+
+		// calculate hours ago
+		$hoursAgo = floor($secondsBetween / (60 * 60));
+		if($hoursAgo > 1) return sprintf($locale['time']['HoursAgo'], $hoursAgo);
+		if($hoursAgo == 1) return $locale['time']['HourAgo'];
+
+		// calculate minutes ago
+		$minutesAgo = floor($secondsBetween / 60);
+		if($minutesAgo > 1) return sprintf($locale['time']['MinutesAgo'], $minutesAgo);
+		if($minutesAgo == 1) return $locale['time']['MinuteAgo'];
+
+		// calculate seconds ago
+		$secondsAgo = floor($secondsBetween);
+		if($secondsAgo > 1) return sprintf($locale['time']['SecondsAgo'], $secondsAgo);
+		if($secondsAgo <= 1) return $locale['time']['SecondAgo'];
+	}
 }
 
 ?>

@@ -2211,11 +2211,15 @@ class SpoonRadioButton extends SpoonFormElement
 	 */
 	public function isFilled($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
+		// form submitted
+		if($this->isSubmitted())
+		{
+			// post/get data
+			$data = $this->getMethod(true);
 
-		// correct
-		if(isset($data[$this->name]) && isset($this->values[$data[$this->name]])) return true;
+			// correct
+			if(isset($data[$this->name]) && isset($this->values[$data[$this->name]])) return true;
+		}
 
 		// oh-oh
 		if($error !== null) $this->setError($error);
@@ -2469,26 +2473,34 @@ class SpoonDateField extends SpoonInputField
 				$longMask = str_replace(array('d', 'm', 'Y'), array('dd', 'mm', 'yyyy'), $this->mask);
 
 				// year found
-				if(strpos($longMask, 'yyyy') !== false)
+				if(strpos($longMask, 'yyyy') !== false && $year === null)
 				{
 					// redefine year
 					$year = substr($data[$this->attributes['name']], strpos($longMask, 'yyyy'), 4);
 				}
 
 				// month found
-				if(strpos($longMask, 'mm') !== false)
+				if(strpos($longMask, 'mm') !== false && $month === null)
 				{
 					// redefine month
 					$month = substr($data[$this->attributes['name']], strpos($longMask, 'mm'), 2);
 				}
 
 				// day found
-				if(strpos($longMask, 'dd') !== false)
+				if(strpos($longMask, 'dd') !== false && $day === null)
 				{
 					// redefine day
 					$day = substr($data[$this->attributes['name']], strpos($longMask, 'dd'), 2);
 				}
 			}
+
+			// init vars
+			$year = ($year !== null) ? (int) $year : (int) date('Y');
+			$month = ($month !== null) ? (int) $month : (int) date('n');
+			$day = ($day !== null) ? (int) $day : (int) date('j');
+			$hour = ($hour !== null) ? (int) $hour : (int) date('H');
+			$minute = ($minute !== null) ? (int) $minute : (int) date('i');
+			$second = ($second !== null) ? (int) $second : (int) date('s');
 		}
 
 		// create (default) time
@@ -2532,14 +2544,18 @@ class SpoonDateField extends SpoonInputField
 	 */
 	public function isFilled($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// check filled status
-		if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != ''))
+		// form submitted
+		if($this->isSubmitted())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// check filled status
+			if(!(isset($data[$this->getName()]) && trim($data[$this->getName()]) != ''))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
 		}
 
 		return true;
@@ -2815,17 +2831,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isAlphabetical($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphabetical($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphabetical($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -2837,17 +2861,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isAlphaNumeric($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphaNumeric($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphaNumeric($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -2861,17 +2893,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isBetween($minimum, $maximum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isBetween($minimum, $maximum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isBetween($minimum, $maximum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -2883,17 +2923,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isBool($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isBool($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isBool($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -2905,17 +2953,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isDigital($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isDigital($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isDigital($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -2927,17 +2983,21 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isEmail($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isEmail($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
-		}
+			// post/get data
+			$data = $this->getMethod(true);
 
-		return true;
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isEmail($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
+		}
 	}
 
 
@@ -2949,17 +3009,21 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isFilename($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isFilename($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
-		}
+			// post/get data
+			$data = $this->getMethod(true);
 
-		return true;
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isFilename($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
+		}
 	}
 
 
@@ -2993,17 +3057,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isFloat($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isFloat($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isFloat($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3016,17 +3088,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isGreaterThan($minimum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isGreaterThan($minimum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isGreaterThan($minimum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3038,17 +3118,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isInteger($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isInteger($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isInteger($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3060,17 +3148,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isIp($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isIp($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isIp($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3083,17 +3179,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isMaximum($maximum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximum($maximum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximum($maximum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3106,17 +3210,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isMaximumCharacters($maximum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximumCharacters($maximum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximumCharacters($maximum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3129,17 +3241,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isMinimum($minimum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimum($minimum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimum($minimum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3152,17 +3272,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isMinimumCharacters($minimum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimumCharacters($minimum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimumCharacters($minimum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3187,17 +3315,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isSmallerThan($maximum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isSmallerThan($maximum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isSmallerThan($maximum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3209,17 +3345,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isString($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isString($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isString($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3231,17 +3375,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isURL($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isURL($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isURL($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3254,17 +3406,25 @@ class SpoonTextField extends SpoonInputField
 	 */
 	public function isValidAgainstRegexp($regexp, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isValidAgainstRegexp((string) $regexp, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isValidAgainstRegexp((string) $regexp, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3394,17 +3554,25 @@ class SpoonPasswordField extends SpoonInputField
 	 */
 	public function isAlphabetical($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphabetical($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphabetical($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3416,17 +3584,25 @@ class SpoonPasswordField extends SpoonInputField
 	 */
 	public function isAlphaNumeric($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphaNumeric($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphaNumeric($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3461,17 +3637,25 @@ class SpoonPasswordField extends SpoonInputField
 	 */
 	public function isMaximumCharacters($maximum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximumCharacters($maximum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximumCharacters($maximum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3484,17 +3668,25 @@ class SpoonPasswordField extends SpoonInputField
 	 */
 	public function isMinimumCharacters($minimum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimumCharacters($minimum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimumCharacters($minimum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3507,17 +3699,25 @@ class SpoonPasswordField extends SpoonInputField
 	 */
 	public function isValidAgainstRegexp($regexp, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isValidAgainstRegexp($regexp, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isValidAgainstRegexp($regexp, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3659,17 +3859,25 @@ class SpoonTextArea extends SpoonInputField
 	 */
 	public function isAlphabetical($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphabetical($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphabetical($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3681,17 +3889,25 @@ class SpoonTextArea extends SpoonInputField
 	 */
 	public function isAlphaNumeric($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphaNumeric($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isAlphaNumeric($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3726,17 +3942,25 @@ class SpoonTextArea extends SpoonInputField
 	 */
 	public function isMaximumCharacters($maximum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximumCharacters($maximum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMaximumCharacters($maximum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3749,17 +3973,25 @@ class SpoonTextArea extends SpoonInputField
 	 */
 	public function isMinimumCharacters($minimum, $error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimumCharacters($minimum, $data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isMinimumCharacters($minimum, $data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3771,17 +4003,25 @@ class SpoonTextArea extends SpoonInputField
 	 */
 	public function isString($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// validate
-		if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isString($data[$this->attributes['name']]))
+		// filled
+		if($this->isFilled())
 		{
-			if($error !== null) $this->setError($error);
-			return false;
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// validate
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isString($data[$this->attributes['name']]))
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+
+			return true;
 		}
 
-		return true;
+		// not submitted
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -3880,6 +4120,44 @@ class SpoonTimeField extends SpoonInputField
 
 
 	/**
+	 * Returns a timestamp based on the value & optional fields.
+	 *
+	 * @return	int
+	 * @param	int[optional] $year
+	 * @param	int[optional] $month
+	 * @param	int[optional] $day
+	 */
+	public function getTimestamp($year = null, $month = null, $day = null)
+	{
+		// field has been filled in
+		if($this->isFilled())
+		{
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// valid field
+			if($this->isValid())
+			{
+				// fetch time
+				$hour = (int) substr($this->getValue(), 0, 2);
+				$minute = (int) substr($this->getValue(), 3, 2);
+
+				// init vars
+				$year = ($year !== null) ? (int) $year : (int) date('Y');
+				$month = ($month !== null) ? (int) $month : (int) date('n');
+				$day = ($day !== null) ? (int) $day : (int) date('j');
+
+				// create timestamp
+				return mktime($hour, $minute, 0, $month, $day, $year);
+			}
+		}
+
+		// nothing submitted
+		return false;
+	}
+
+
+	/**
 	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
@@ -3956,7 +4234,7 @@ class SpoonTimeField extends SpoonInputField
 			}
 
 			// maxlength checks out (needs to be equal)
-			if(strlen($time) == 5)
+			if(strlen($time) == 5 && strpos($time, ':') !== false)
 			{
 				// define hour & minutes
 				$hour = (int) substr($time, 0, 2);

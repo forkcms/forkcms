@@ -75,7 +75,7 @@ class FrontendBlogModel
 	 * @param	int[optional] $limit
 	 * @param	int[optional] $offset
 	 */
-	public static function getAll($limit = 10, $offset = 0)
+	public static function getAll($limit = 10, $offset = 0) // @todo tijs ik vind dit een kutnaam
 	{
 		// redefine
 		$limit = (int) $limit;

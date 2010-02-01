@@ -1,3 +1,12 @@
+1.2.0
+----
+- Added SpoonDate::getTimeAgo which presents you with a language dependant sentence based on the provided timestamp in the past.
+- Added SpoonTimeField::getTimestamp which returns a timestamp based on the provided values in conjunction with the hh:ii format in
+  the timefield.
+- Fixed a bug in SpoonDateField::getTimestamp when not providing all the optional arguments.
+- Template modifiers may now contain : if you encapsulate with single quotes. eg {$now|date:'Y-m-d H:i'}
+
+
 1.1.4 (2010-01-27)
 ----
 - Added SpoonTemplate::getContent which returns the output of the executed template. Can not be used in combination with

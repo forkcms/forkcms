@@ -1,4 +1,4 @@
-	{option:pagination}
+{option:pagination}
 	<!-- pagination -->
 	<div class="paginationWrap">
 		<div class="pagination">
@@ -39,12 +39,9 @@
 					{option:paginationShowNext}</a>{/option:paginationShowNext}
 				</li>
 			</ul>
-
-
-			</ul>
 		</div>
 
 		<!-- current page -->
-		<p class="paginationLocation">({$paginationCurrentPage}/{$paginationPagesCount})</p>
+		<p class="paginationLocation">({$paginationCurrentPage}/{$paginationNumPages})</p>
 	</div>
-	{/option:pagination}
+{/option:pagination}

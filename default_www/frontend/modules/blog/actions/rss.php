@@ -1,4 +1,5 @@
 <?php
+
 // require FrontendRSS
 require_once FRONTEND_CORE_PATH .'/engine/rss.php';
 

@@ -1136,9 +1136,6 @@ class SpoonTemplateCompiler
 			else $variable = '$this->variables[\''. $var[0] .'\']';
 		}
 
-		// @todo davy - if you encapsulate your arguments with ', you should be able to do {$date|date:'y-m-d H:i:s'}
-		// @todo davy - komma's should be allowed within arguments for modifiers
-
 		// has modifiers ?
 		if(isset($var[1]))
 		{
@@ -1167,11 +1164,27 @@ class SpoonTemplateCompiler
 				// has arguments
 				if(count($modifierChunks) > 1)
 				{
-					// loop arguments
-					for($i = 1; $i < count($modifierChunks); $i++)
+					// init vars
+					$inParameter = false;
+					$parameters = mb_substr($modifier, strlen($modifierChunks[0]), mb_strlen($modifier, SPOON_CHARSET), SPOON_CHARSET);
+
+					// loop every character
+					for($i = 0; $i < mb_strlen($parameters, SPOON_CHARSET); $i++)
 					{
-						// add modifier
-						$variable .= ', '. $modifierChunks[$i];
+						// fetch character
+						$string = mb_substr($parameters, $i, 1, SPOON_CHARSET);
+
+						// single quote in parameter, indicating the end for this parameter
+						if($string == "'" && $inParameter) $inParameter = false;
+
+						// single quotes, indicating the start of a new parameter
+						elseif($string == "'" && !$inParameter) $inParameter = true;
+
+						// semicolon outside parameter
+						elseif($string == ':' && !$inParameter) $string = ', ';
+
+						// add character
+						$variable .= $string;
 					}
 				}
 
@@ -1193,7 +1206,7 @@ class SpoonTemplateCompiler
 	private function parseVariables($content)
 	{
 		// regex pattern
-		$pattern = '/\{\$([a-z0-9\.\[\]\_\-\|\:\'\"\$\s])*\}/i';
+		$pattern = '/\{\$([a-z0-9\.\[\]\_\-\|\:\,\'\$\s])*\}/i';
 
 		// temp variables
 		$variables = array();
