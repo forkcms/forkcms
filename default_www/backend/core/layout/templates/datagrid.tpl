@@ -27,7 +27,7 @@
 			</tr>
 		{/iteration:rows}
 	</tbody>
-	{option:paging}
+	{option:footer}
 		<tfoot>
 			<tr{$footerAttributes}>
 				<td colspan="{$numColumns}">
@@ -40,5 +40,5 @@
 				</td>
 			</tr>
 		</tfoot>
-	{/option:paging}
+	{/option:footer}
 </table>

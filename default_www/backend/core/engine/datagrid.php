@@ -131,6 +131,24 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
+	 * Retrieve the parsed output.
+	 *
+	 * @return	string
+	 */
+	public function getContent()
+	{
+		// mass action was set
+		if($this->tpl->getAssignedValue('massAction') !== null) $this->tpl->assign('footer', true);
+
+		// has paging & more than 1 page
+		elseif($this->getPaging() && $this->getNumResults() > $this->getPagingLimit()) $this->tpl->assign('footer', true);
+
+		// execute parent
+		return parent::getContent();
+	}
+
+
+	/**
  	 * Sets the active tab for this datagrid
  	 *
  	 * @return	void
