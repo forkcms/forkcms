@@ -58,8 +58,6 @@ class BackendNavigation
 	 * Get the HTML for the navigation
 	 *
 	 * @return	string
-	 * @param	int $startDepth
-	 * @param	int[optional] $maximumDepth
 	 */
 	public function getNavigation()
 	{
@@ -184,8 +182,6 @@ class BackendNavigation
 	 * Get the HTML for the navigation
 	 *
 	 * @return	string
-	 * @param	int $startDepth
-	 * @param	int[optional] $maximumDepth
 	 */
 	public function getMainNavigation()
 	{

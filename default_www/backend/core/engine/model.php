@@ -104,8 +104,8 @@ class BackendModel
 	 *
 	 * @return	string
 	 * @param	string[optional] $action
-	 * @param	string[optiona] $module
-	 * @param	string[optiona] $language
+	 * @param	string[optional] $module
+	 * @param	string[optional] $language
 	 * @param	array[optional] $parameters
 	 * @param	bool[optional] $urlencode
 	 */
@@ -285,7 +285,7 @@ class BackendModel
 	 * @return	mixed
 	 * @param	string $module
 	 * @param	string $key
-	 * @param	mixed $defaultValue
+	 * @param	mixed[optional] $defaultValue
 	 */
 	public static function getSetting($module, $key, $defaultValue = null)
 	{
@@ -368,6 +368,7 @@ class BackendModel
 		// return
 		return $URL;
 	}
+
 
 	/**
 	 * Get the URL for a give module & action combination

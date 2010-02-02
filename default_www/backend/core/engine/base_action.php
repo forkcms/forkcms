@@ -66,8 +66,6 @@ class BackendBaseAction
 	 * The constructor will set some properties. It populates the parameter array with urldecoded values for easy-use.
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $module
 	 */
 	public function __construct()
 	{

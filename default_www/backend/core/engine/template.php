@@ -321,6 +321,7 @@ class BackendTemplate extends SpoonTemplate
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
+// @todo tijs - moeten we niemer alfabetisch werken?
 class BackendTemplateModifiers
 {
 	/**
@@ -341,7 +342,7 @@ class BackendTemplateModifiers
 	 *
 	 * @return	void
 	 * @param	string[optional] $var
-	 * @param	string $action
+	 * @param	string[optional] $action
 	 * @param	string[optional] $module
 	 */
 	public static function getURL($var = null, $action = null, $module = null)
@@ -356,18 +357,10 @@ class BackendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string[optional] $var
-	 * @param	int $startDepth
-	 * @param	int[optional] $maximumDepth
 	 */
 	public static function getNavigation($var = null)
 	{
-		// get navigation
-		$navigation = Spoon::getObjectReference('navigation');
-
-		// redefine
-		$var = (string) $var;
-
-		return $navigation->getNavigation();
+		return  Spoon::getObjectReference('navigation')->getNavigation();
 	}
 
 
@@ -376,7 +369,7 @@ class BackendTemplateModifiers
 	 *  syntax: {$var|getmainnavigation}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string[optional] $var
 	 */
 	public static function getMainNavigation($var = null)
 	{
