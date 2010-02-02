@@ -195,7 +195,7 @@ jsBackend.pages.tree = {
 		// init var
 		var result = false;
 		
-		// make the call @todo	Tijs, check: http://docs.jquery.com/Ajax/jQuery.ajaxSetup!
+		// make the call
 		$.ajax({ type: 'POST', dataType: 'json', 
 				 async: false, // important that this isn't asynchronous
 				 url: '/backend/ajax.php?module=pages&action=get_info&language={$LANGUAGE}',
@@ -233,7 +233,7 @@ jsBackend.pages.tree = {
 		// get pageID wheron the page has been dropped
 		var droppedOnPageID = $(refNode).attr('id').replace('page-', '');
 
-		// make the call @todo	Tijs, check: http://docs.jquery.com/Ajax/jQuery.ajaxSetup!
+		// make the call
 		$.ajax({ type: 'POST', dataType: 'json', 
 				 url: '/backend/ajax.php?module=pages&action=move&language={$LANGUAGE}',
 				 data: 'id=' + currentPageID + '&dropped_on='+ droppedOnPageID +'&type='+ type,
@@ -243,12 +243,15 @@ jsBackend.pages.tree = {
 				 success: function(json, textStatus) {
 					 if(json.code != 200) {
 						 if(jsBackend.debug) alert(textStatus);
-						 // show error
-						 // @todo	show errormessage
+						 
+						 // show message
+						 jsBackend.layout.showMessage('error', 'page can\'t be moved'); // @todo label
+						 
 						 // rollback
 						 $.tree.rollback(rollback);
 					 } else {
-					 // @todo	show succesmessage
+						 // show message
+						 jsBackend.layout.showMessage('success', 'page moved'); // @todo label
 					 }
 				 },
 		});

@@ -659,16 +659,7 @@ class BackendPagesModel
 		if(isset($keys[$id])) $URL = $keys[$id];
 
 		// not availble
-		else
-		{
-			// id 0 doesn't have an URL
-			if($id == 0) $URL = '';
-			else
-			{
-				// @todo	this method should use a genious caching-system
-				throw new BackendException('You should implement me.');
-			}
-		}
+		else throw new BackendException('keys-file isn\'t available.')
 
 		// if the is available in multiple languages we should add the current lang
 		if(SITE_MULTILANGUAGE) $URL = '/'. BackendLanguage::getWorkingLanguage() .'/'. $URL;
@@ -1344,9 +1335,11 @@ class BackendPagesModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param unknown_type $id
-	 * @param array $template
+	 * Update a template
+	 *
+	 * @return	void
+	 * @param	int $id				The id for the template to update
+	 * @param	array $template		The new data for the template
 	 */
 	public static function updateTemplate($id, array $template)
 	{
@@ -1358,6 +1351,8 @@ class BackendPagesModel
 
 		// update item
 		$db->update('pages_templates', $template, 'id = ?', (int) $id);
+
+		// @todo	update setting for maximum blocks
 	}
 }
 

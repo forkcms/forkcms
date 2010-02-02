@@ -7,8 +7,8 @@
 					<td id="treeHolder">
 						<div id="treeOptions">
 							<div class="buttonHolder">
-								<a href="{$var|geturl:"index"}" class="button icon iconBack iconOnly"><span><span><span>{$lblBack|ucfirst}</span></span></span></a>
-								<a href="{$var|geturl:"add"}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+								<a href="{$var|geturl:'index'}" class="button icon iconBack iconOnly"><span><span><span>{$lblBack|ucfirst}</span></span></span></a>
+								<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 							</div>
 						</div>
 						<div id="tree">
@@ -20,13 +20,14 @@
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
-			{option:errorMessage}
-				<div id="report">
-					<div class="errorMessage singleMessage">
-						<p>{$errorMessage}</p>
-					</div>
+			{option:!formError}
+			<div id="report" class="hidden">
+				<div class="singleMessage">
+					<p>&nbsp;</p>
 				</div>
-			{/option:errorMessage}
+			</div>
+			{/option:!formError}
+
 			{option:formError}
 				<div id="report">
 					<div class="errorMessage singleMessage">
@@ -34,8 +35,9 @@
 					</div>
 				</div>
 			{/option:formError}
+
 			<div class="inner">
-				
+
 				{form:add}
 					{$txtTitle} {$txtTitleError}
 					<div id="pageUrl">
@@ -91,7 +93,7 @@
 												<div class="heading">
 													<h3>{$lblPublish|ucfirst}</h3>
 												</div>
-												<!-- @todo
+												<!-- @later
 												<div class="options">
 													<div class="buttonHolder">
 														<a href="#" class="button icon iconZoom previewButton" target="_blank">
@@ -186,8 +188,7 @@
 								</div>
 							</div>
 
-							<!--
-								@todo @tijs
+							<!-- @todo @tijs
 							<div id="seoNofollow" class="box boxLevel2">
 								<div class="heading">
 									<h3>Nofollow</h3>

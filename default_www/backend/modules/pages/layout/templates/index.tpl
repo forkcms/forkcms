@@ -19,7 +19,7 @@
 				<div class="oneLiner" id="pagesCTA">
 					<p>{$msgHelpAdd}</p>
 					<div class="buttonHolder">
-						<a href="{$var|geturl:"add"}" class="button icon iconAdd">
+						<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 							<span><span><span>{$lblAdd|ucfirst}</span></span></span>
 						</a>
 					</div>

@@ -23,8 +23,23 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		// parse
+		$this->parse();
+
 		// display the page
 		$this->display();
+	}
+
+
+	/**
+	 * Parse
+	 *
+	 * @return	void
+	 */
+	private function parse()
+	{
+		// show report
+		if($this->getParameter('reset') == 'success') $this->tpl->assign('resetSuccess', true);
 	}
 }
 ?>

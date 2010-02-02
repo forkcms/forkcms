@@ -297,7 +297,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setSetting('core', 'site_domains', $siteDomains);
 
 				// assign report
-				$this->tpl->assign('formSucces', true);
+				$this->tpl->assign('report', true);
+				$this->tpl->assign('reportMessage', BL::getMessage('Saved'));
 			}
 		}
 	}

@@ -1,4 +1,13 @@
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
+{option:resetSuccess}
+<div id="report">
+	<div class="singleMessage successMessage">
+		<p>{$msgAuthenticationResetSuccess}</p> <!-- @todo add label -->
+	</div>
+</div>
+{/option:resetSuccess}
+
+
 <div id="dashboardWidgets">
 
 	<p style="text-align: center;">Welcome to Fork NG. What you are seeing is a work in progress. Report any bugs in the <a href="http://projects.netlash.com/public/index.php/projects/369">Fork NG</a> project in ActiveCollab.</p>

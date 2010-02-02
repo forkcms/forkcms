@@ -14,12 +14,6 @@
 			{/option:report}
 
 			<div class="inner">
-				<!-- @todo @tijs: check me -->
-				{option:formSucces}
-					<div class="generalMessage succesMessage">
-						<p>{$msgSaved}</p>
-					</div>
-				{/option:formSucces}
 				{form:settings}
 					{option:warnings}
 						<div class="generalMessage infoMessage">

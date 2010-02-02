@@ -1,7 +1,5 @@
 <?php
 
-//@todo finish the success/fail messages after redirect
-
 /**
  * BackendAuthenticationResetPassword
  *

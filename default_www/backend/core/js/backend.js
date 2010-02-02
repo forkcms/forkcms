@@ -403,6 +403,18 @@ jsBackend.layout = {
 		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
 		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
 	},
+	showMessage: function(type, content) {
+		if($('#report').length == 0) $('#contentHolder').prepend('<div id="report" class="hidden"><div class="singleMessage"><p></p></div></div>');
+			
+		// set class
+		$('#report div').attr('class', 'singleMessage '+ type +'Message');
+		
+		// set message
+		$('#report div p').html(content);
+		
+		// show
+		if($('#report').not(':visible')) $('#report').slideDown();
+	},
 	// end
 	eof: true
 }
