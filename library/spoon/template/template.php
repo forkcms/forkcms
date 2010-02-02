@@ -187,10 +187,10 @@ class SpoonTemplate
 		else
 		{
 			// list of *_cache.tpl files from cacheDirectory
-			$aFiles = SpoonFile::getList($this->cacheDirectory, '|.*\_cache\.tpl|');
+			$files = SpoonFile::getList($this->cacheDirectory, '|.*\_cache\.tpl|');
 
 			// delete
-			foreach($aFiles as $file) SpoonFile::delete($this->cacheDirectory .'/'. $file);
+			foreach($files as $file) SpoonFile::delete($this->cacheDirectory .'/'. $file);
 		}
 	}
 
@@ -210,10 +210,10 @@ class SpoonTemplate
 		else
 		{
 			// list of *.tpl.php files from compileDirectory
-			$aFiles = SpoonFile::getList($this->compileDirectory, '|.*\.tpl\.php|');
+			$files = SpoonFile::getList($this->compileDirectory, '|.*\.tpl\.php|');
 
 			// delete
-			foreach($aFiles as $file) SpoonFile::delete($this->compileDirectory .'/'. $file);
+			foreach($files as $file) SpoonFile::delete($this->compileDirectory .'/'. $file);
 		}
 	}
 
@@ -897,7 +897,7 @@ class SpoonTemplateCompiler
 	private function parseIterations($content)
 	{
 		// fetch iterations
-		$pattern = '/\{iteration:([a-z0-9_\.]+?)\}?/siU';
+		$pattern = '/\{iteration:([a-z0-9_\.\[\]\']+?)\}?/siU';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -938,12 +938,11 @@ class SpoonTemplateCompiler
 					// number of chunks
 					$numChunks = count($chunks);
 
-					// 1 or 2 chunks?
-					if($numChunks == 2) $variable = '$'. $chunks[0] .'[\''. $chunks[1] .'\']';
-					else $variable = '$this->variables[\''. $chunks[0] .'\']';
+					// define variable
+					$variable = $this->parseVariable($name);
 
 					// internal variable
-					$internalVariable = $chunks[$numChunks - 1];
+					$internalVariable = SpoonFilter::toCamelCase(str_replace(array('[', ']', "'", '_'), ' ', $chunks[$numChunks - 1]), ' ', true, SPOON_CHARSET);
 
 					// replace
 					$replace[0] = '<?php $'. $internalVariable .'Count = count('. $variable ."); ?>\n";
