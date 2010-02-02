@@ -28,59 +28,6 @@ class FrontendModel
 
 
 	/**
-	 * Calculate the time ago from a given timestamp and returns a decent sentence.
-	 *
-	 * @todo davy - dit moet nog in 1 of andere vorm in Spoon zien te geraken.
-	 *
-	 * @return	string
-	 * @param	string $timestamp
-	 */
-	public static function calculateTimeAgo($timestamp)
-	{
-		// redefine
-		$timestamp = (int) $timestamp;
-
-		// get seconds between given timestamp and current timestamp
-		$secondsBetween = time() - $timestamp;
-
-		// calculate years ago
-		$yearsAgo = floor($secondsBetween / (365.242199 * 24 * 60 * 60));
-		if($yearsAgo > 1) return sprintf(FL::getMessage('TimeYearsAgo'), $yearsAgo);
-		if($yearsAgo == 1) return FL::getMessage('TimeOneYearAgo');
-
-		// calculate months ago
-		$monthsAgo = floor($secondsBetween / ((365.242199/12) * 24 * 60 * 60));
-		if($monthsAgo > 1) return sprintf(FL::getMessage('TimeMonthsAgo'), $monthsAgo);
-		if($monthsAgo == 1) return FL::getMessage('TimeOneMonthAgo');
-
-		// calculate weeks ago
-		$weeksAgo = floor($secondsBetween / (7 * 24 * 60 * 60));
-		if($weeksAgo > 1) return sprintf(FL::getMessage('TimeWeeksAgo'), $weeksAgo);
-		if($weeksAgo == 1) return FL::getMessage('TimeOneWeekAgo');
-
-		// calculate days ago
-		$daysAgo = floor($secondsBetween / (24 * 60 * 60));
-		if($daysAgo > 1) return sprintf(FL::getMessage('TimeDaysAgo'), $daysAgo);
-		if($daysAgo == 1) return FL::getMessage('TimeOneDayAgo');
-
-		// calculate hours ago
-		$hoursAgo = floor($secondsBetween / (60 * 60));
-		if($hoursAgo > 1) return sprintf(FL::getMessage('TimeHoursAgo'), $hoursAgo);
-		if($hoursAgo == 1) return FL::getMessage('TimeOneHourAgo');
-
-		// calculate minutes ago
-		$minutesAgo = floor($secondsBetween / 60);
-		if($minutesAgo > 1) return sprintf(FL::getMessage('TimeMinutesAgo'), $minutesAgo);
-		if($minutesAgo == 1) return FL::getMessage('TimeOneMinuteAgo');
-
-		// calculate seconds ago
-		$secondsAgo = floor($secondsBetween);
-		if($secondsAgo > 1) return sprintf(FL::getMessage('TimeSecondsAgo'), $secondsAgo);
-		if($secondsAgo <= 1) return FL::getMessage('TimeOneSecondAgo');
-	}
-
-
-	/**
 	 * Get (or create and get) a database-connection
 	 * @later: we should extend SpoonDatabase with FrontendDatabas, which will enable us to split read and write-connections.
 	 *

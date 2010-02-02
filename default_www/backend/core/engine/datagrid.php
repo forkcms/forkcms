@@ -261,7 +261,7 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 	 * Builds & returns the pagination
 	 *
 	 * @return	string
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	int $offset
 	 * @param	string $order
 	 * @param	string $sort
@@ -270,19 +270,19 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 	 * @param	bool[optional] $debug
 	 * @param	string[optional] $compileDirectory
 	 */
-	public static function getContent($url, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
+	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{
 		// current page
-		$iCurrentPage = ceil($offset / $numPerPage) + 1;
+		$currentPage = ceil($offset / $numPerPage) + 1;
 
 		// number of pages
-		$iPages = ceil($numResults / $numPerPage);
+		$numPages = ceil($numResults / $numPerPage);
 
 		// load template
 		$tpl = new SpoonTemplate();
 
 		// @todo	if there is just one page we don't want to see any paging
-		if($iPages == 1) return '';
+		if($numPages == 1) return '';
 
 		// compile directory
 		if($compileDirectory !== null) $tpl->setCompileDirectory($compileDirectory);
@@ -291,19 +291,19 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		// force compiling
 		$tpl->setForceCompile((bool) $debug);
 
-		// previous url
-		if($iCurrentPage > 1)
+		// previous URL
+		if($currentPage > 1)
 		{
-			// label & url
-			$previousURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $url);
+			// label & URL
+			$previousURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $URL);
 			$tpl->assign('previousURL', $previousURL);
 		}
 
-		// next url
-		if($iCurrentPage < $iPages)
+		// next URL
+		if($currentPage < $numPages)
 		{
-			// label & url
-			$nextURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $url);
+			// label & URL
+			$nextURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $URL);
 			$tpl->assign('nextURL', $nextURL);
 		}
 
@@ -313,34 +313,34 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		// limit
 		$limit = 7;
 		$breakpoint = 4;
-		$aItems = array();
+		$items = array();
 
 		/**
 		 * Less than or 7 pages. We know all the keys, and we put them in the array
 		 * that we will use to generate the actual pagination.
 		 */
-		if($iPages <= $limit)
+		if($numPages <= $limit)
 		{
-			for($i = 1; $i <= $iPages; $i++) $aItems[$i] = $i;
+			for($i = 1; $i <= $numPages; $i++) $items[$i] = $i;
 		}
 
 		// more than 7 pages
 		else
 		{
 			// first page
-			if($iCurrentPage == 1)
+			if($currentPage == 1)
 			{
 				// [1] 2 3 4 5 6 7 8 9 10 11 12 13
-				for($i = 1; $i <= $limit; $i++) $aItems[$i] = $i;
-				$aItems[$limit + 1] = '...';
+				for($i = 1; $i <= $limit; $i++) $items[$i] = $i;
+				$items[$limit + 1] = '...';
 			}
 
 			// last page
-			elseif($iCurrentPage == $iPages)
+			elseif($currentPage == $numPages)
 			{
 				// 1 2 3 4 5 6 7 8 9 10 11 12 [13]
-				$aItems[$iPages -  $limit - 1] = '...';
-				for($i = ($iPages - $limit); $i <= $iPages; $i++) $aItems[$i] = $i;
+				$items[$numPages -  $limit - 1] = '...';
+				for($i = ($numPages - $limit); $i <= $numPages; $i++) $items[$i] = $i;
 			}
 
 			// other page
@@ -349,8 +349,8 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 				// 1 2 3 [4] 5 6 7 8 9 10 11 12 13
 
 				// define min & max
-				$min = $iCurrentPage - $breakpoint + 1;
-				$max = $iCurrentPage + $breakpoint - 1;
+				$min = $currentPage - $breakpoint + 1;
+				$max = $currentPage + $breakpoint - 1;
 
 				// minimum doesnt exist
 				while($min <= 0)
@@ -360,56 +360,56 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 				}
 
 				// maximum doesnt exist
-				while($max > $iPages)
+				while($max > $numPages)
 				{
 					$min--;
 					$max--;
 				}
 
 				// create the list
-				if($min != 1) $aItems[$min - 1] = '...';
-				for($i = $min; $i <= $max; $i++) $aItems[$i] = $i;
-				if($max != $iPages) $aItems[$max + 1] = '...';
+				if($min != 1) $items[$min - 1] = '...';
+				for($i = $min; $i <= $max; $i++) $items[$i] = $i;
+				if($max != $numPages) $items[$max + 1] = '...';
 			}
 		}
 
 		// init var
-		$aPages = array();
+		$pages = array();
 
 		// loop pages
-		foreach($aItems as $item)
+		foreach($items as $item)
 		{
 			// counter
 			if(!isset($i)) $i = 0;
 
 			// base details
-			$aPages[$i]['page'] = false;
-			$aPages[$i]['currentPage'] = false;
-			$aPages[$i]['otherPage'] = false;
-			$aPages[$i]['noPage'] = false;
-			$aPages[$i]['url'] = '';
-			$aPages[$i]['pageNumber'] = $item;
+			$pages[$i]['page'] = false;
+			$pages[$i]['currentPage'] = false;
+			$pages[$i]['otherPage'] = false;
+			$pages[$i]['noPage'] = false;
+			$pages[$i]['url'] = '';
+			$pages[$i]['pageNumber'] = $item;
 
 			// hellips
-			if($item == '...') $aPages[$i]['noPage'] = true;
+			if($item == '...') $pages[$i]['noPage'] = true;
 
 			// regular page
 			else
 			{
 				// show page
-				$aPages[$i]['page'] = true;
+				$pages[$i]['page'] = true;
 
 				// current page ?
-				if($item == $iCurrentPage) $aPages[$i]['currentPage'] = true;
+				if($item == $currentPage) $pages[$i]['currentPage'] = true;
 
 				// other page
 				else
 				{
 					// show the page
-					$aPages[$i]['otherPage'] = true;
+					$pages[$i]['otherPage'] = true;
 
 					// url to this page
-					$aPages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $url);
+					$pages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $URL);
 				}
 			}
 
@@ -418,10 +418,10 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		}
 
 		// first key needs to be zero
-		$aPages = SpoonFilter::arraySortKeys($aPages);
+		$pages = SpoonFilter::arraySortKeys($pages);
 
 		// assign pages
-		$tpl->assign('pages', $aPages);
+		$tpl->assign('pages', $pages);
 
 		// cough it up
 		return $tpl->getContent(BACKEND_CORE_PATH .'/layout/templates/datagrid_paging.tpl');
@@ -570,7 +570,7 @@ class BackendDataGridFunctions
 		$timestamp = (int) $timestamp;
 
 		// get the time ago as a string
-		$timeAgo = BackendModel::calculateTimeAgo($timestamp);
+		$timeAgo = SpoonDate::getTimeAgo($timestamp);
 
 		// get user setting for long dates
 		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s');

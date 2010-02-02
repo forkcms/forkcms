@@ -26,7 +26,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 1, 'offset' => 0, 'requested_page' => 1, 'item_count' => null, 'pages_count' => null);
+	protected $pagination = array('limit' => 1, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
 
 	/**

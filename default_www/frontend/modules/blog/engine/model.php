@@ -32,7 +32,7 @@ class FrontendBlogModel
 		// increment comment_count
 		$db->execute('UPDATE blog_posts SET num_comments = num_comments + 1 WHERE id = ?;', $comment['post_id']);
 
-		// retunr comment id
+		// return comment id
 		return $insertId;
 	}
 
@@ -75,7 +75,7 @@ class FrontendBlogModel
 	 * @param	int[optional] $limit
 	 * @param	int[optional] $offset
 	 */
-	public static function getAll($limit = 10, $offset = 0) // @todo tijs ik vind dit een kutnaam
+	public static function getAll($limit = 10, $offset = 0) // @todo tijs ik vind dit een kutnaam, maar ik weet atm niets beter :s
 	{
 		// redefine
 		$limit = (int) $limit;
