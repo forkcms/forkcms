@@ -54,11 +54,11 @@ class BackendBaseAction
 
 
 	/**
-	 * A reference to the url-instance
+	 * A reference to the URL-instance
 	 *
 	 * @var	BackendURL
 	 */
-	public $url; // @todo davy - maak hier eens $URL van en pas overal aan waar nodig.
+	public $URL; // @todo davy - maak hier eens $URL van en pas overal aan waar nodig.
 
 
 	/**
@@ -71,12 +71,12 @@ class BackendBaseAction
 	{
 		// get objects from the reference so they are accessable from the action-object
 		$this->tpl = Spoon::getObjectReference('template');
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 		$this->header = Spoon::getObjectReference('header');
 
-		// store the current module and action (we grab them from the url)
-		$this->setModule($this->url->getModule());
-		$this->setAction($this->url->getAction());
+		// store the current module and action (we grab them from the URL)
+		$this->setModule($this->URL->getModule());
+		$this->setAction($this->URL->getAction());
 
 		// populate the parameter array, we loop GET and urldecode the values for usage later on
 		foreach((array) $_GET as $key => $value)
@@ -109,7 +109,7 @@ class BackendBaseAction
 
 		// if no template is specified, we have to build the path ourself
 		// the default template is based on the name of the current action
-		if($template === null) $template = BACKEND_MODULE_PATH .'/layout/templates/'. $this->url->getAction() .'.tpl';
+		if($template === null) $template = BACKEND_MODULE_PATH .'/layout/templates/'. $this->URL->getAction() .'.tpl';
 
 		// display
 		$this->tpl->display($template);
@@ -193,14 +193,14 @@ class BackendBaseAction
 
 
 	/**
-	 * Redirect to a given url
+	 * Redirect to a given URL
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $URL
 	 */
-	public function redirect($url)
+	public function redirect($URL)
 	{
-		SpoonHTTP::redirect((string) $url);
+		SpoonHTTP::redirect((string) $URL);
 	}
 
 

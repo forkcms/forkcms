@@ -3,10 +3,10 @@
 /**
  * FrontendURL
  *
- * This class will handle the incomming url.
+ * This class will handle the incomming URL.
  *
  * @package			frontend
- * @subpackage		url
+ * @subpackage		core
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
  * @since			2.0
@@ -61,7 +61,7 @@ class FrontendURL
 		// set host for later use
 		$this->setHost($_SERVER['HTTP_HOST']);
 
-		// process url
+		// process URL
 		$this->processQueryString();
 	}
 
@@ -228,7 +228,7 @@ class FrontendURL
 			$possibleLanguages = (array) FrontendLanguage::getActiveLanguages();
 			$redirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
 
-			// the language is present in the url
+			// the language is present in the URL
 			if(isset($chunks[0]) && in_array($chunks[0], $possibleLanguages))
 			{
 				// define language
@@ -290,7 +290,7 @@ class FrontendURL
 			// redirect is required
 			if($mustRedirect)
 			{
-				// build url
+				// build URL
 				$URL = '/'. $language .'/'. $this->getQueryString();
 
 				// set header & redirect
@@ -304,20 +304,20 @@ class FrontendURL
 		// sets the localefile
 		FrontendLanguage::setLocale($language);
 
-		// list of pageIds & their full url
+		// list of pageIds & their full URL
 		$keys = FrontendNavigation::getKeys();
 
-		// full url
+		// full URL
 		$URL = implode('/', $chunks);
 		$startURL = $URL;
 
-		// loop until we find the url in the list of pages
+		// loop until we find the URL in the list of pages
 		while(!in_array($URL, $keys))
 		{
 			// remove the last chunk
 			array_pop($chunks);
 
-			// redefine the url
+			// redefine the URL
 			$URL = implode('/', $chunks);
 		}
 
@@ -327,7 +327,7 @@ class FrontendURL
 		// if it's the homepage AND parameters were given (not allowed!)
 		if($URL == '' && $queryString != '')
 		{
-			// get 404 url
+			// get 404 URL
 			$URL = FrontendNavigation::getURL(404);
 
 			// remove language
@@ -373,7 +373,7 @@ class FrontendURL
 		// invalid page, or parameters but no extra
 		if($pageInfo === false || (!empty($parameters) && !$pageInfo['has_extra']))
 		{
-			// get 404 url
+			// get 404 URL
 			$URL = FrontendNavigation::getURL(404);
 
 			// remove language

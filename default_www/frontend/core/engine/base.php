@@ -442,7 +442,7 @@ class FrontendBaseBlock
 		if(!isset($this->pagination['offset'])) throw new FrontendException('no offset in the pagination-property.');
 		if(!isset($this->pagination['requested_page'])) throw new FrontendException('no requested_page available in the pagination-property.');
 		if(!isset($this->pagination['num_items'])) throw new FrontendException('no num_items available in the pagination-property.');
-		if(!isset($this->pagination['url'])) throw new FrontendException('no url available in the pagination-property.');
+		if(!isset($this->pagination['url'])) throw new FrontendException('no URL available in the pagination-property.');
 
 		// no pagination needed
 		if($this->pagination['num_pages'] < 1) return;
@@ -685,7 +685,7 @@ class FrontendBaseWidget
 
 
 	/**
-	 * A reference to the url-instance
+	 * A reference to the URL-instance
 	 *
 	 * @var	FrontendURL
 	 */
@@ -726,7 +726,7 @@ class FrontendBaseWidget
 		// build path to the module
 		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
 
-		// buil url to the module
+		// buil URL to the module
 		$frontendModuleURL = '/frontend/modules/'. $this->getModule() .'/js';
 
 		// add javascriptfile with same name as module (if the file exists)
@@ -902,7 +902,7 @@ class FrontendBaseAJAXAction
 	 */
 	public function __construct($action, $module)
 	{
-		// store the current module and action (we grab them from the url)
+		// store the current module and action (we grab them from the URL)
 		$this->setModule($module);
 		$this->setAction($action);
 	}

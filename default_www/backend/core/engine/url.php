@@ -3,7 +3,7 @@
 /**
  * BackendURL
  *
- * This class will handle the incomming url.
+ * This class will handle the incomming URL.
  *
  * @package		backend
  * @subpackage	core
@@ -61,13 +61,13 @@ class BackendURL
 		// set host for later use
 		$this->setHost($_SERVER['HTTP_HOST']);
 
-		// process url
+		// process URL
 		$this->processQueryString();
 	}
 
 
 	/**
-	 * Get the current action found in the url
+	 * Get the current action found in the URL
 	 *
 	 * @return	string
 	 */
@@ -89,7 +89,7 @@ class BackendURL
 
 
 	/**
-	 * Get the current module found in the url
+	 * Get the current module found in the URL
 	 *
 	 * @return	string
 	 */
@@ -143,7 +143,7 @@ class BackendURL
 			}
 		}
 
-		// split into chunks, a Fork CMS url will always look like /<lang>/<module>/<action>(?GET)
+		// split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
 		$chunks = (array) explode('/', trim($queryString, '/'));
 
 		// get the language, this will always be in front

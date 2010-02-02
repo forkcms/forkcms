@@ -24,7 +24,7 @@ class BackendForm extends SpoonForm
 	 *
 	 * @var	BackendURL
 	 */
-	private $url;
+	private $URL;
 
 
 	/**
@@ -38,14 +38,14 @@ class BackendForm extends SpoonForm
 	public function __construct($name = null, $action = null, $method = 'post')
 	{
 		// init the URL-instance
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 		$this->header = Spoon::getObjectReference('header');
 
 		// build a name if there wasn't one provided
-		$name = ($name === null) ? SpoonFilter::toCamelCase($this->url->getModule() .'_'. $this->url->getAction(), '_', true) : (string) $name;
+		$name = ($name === null) ? SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true) : (string) $name;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/'. $this->url->getQueryString() : (string) $action;
+		$action = ($action === null) ? '/'. $this->URL->getQueryString() : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method);

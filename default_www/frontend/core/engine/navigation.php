@@ -263,7 +263,7 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
-	 * Get a menuId for an specified url
+	 * Get a menuId for an specified URL
 	 *
 	 * @return	int
 	 * @param 	string $URL
@@ -341,16 +341,16 @@ class FrontendNavigation extends FrontendBaseObject
 		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-		// init url
+		// init URL
 		$URL = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
 
 		// get the menuItems
 		$keys = self::getKeys($language);
 
-		// get the url, if it doens't exist return 404
+		// get the URL, if it doens't exist return 404
 		if(!isset($keys[$pageId])) return self::getURL(404);
 
-		// add url
+		// add URL
 		else $URL .= $keys[$pageId];
 
 		// return
@@ -416,7 +416,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// pageId stored?
 		if($pageIdForURL !== null)
 		{
-			// build url
+			// build URL
 			$URL = self::getURL($pageIdForURL, $language);
 
 			// append action

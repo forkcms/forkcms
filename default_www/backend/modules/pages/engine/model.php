@@ -58,14 +58,14 @@ class BackendPagesModel
 				// init var
 				$parentID = (int) $page['parent_id'];
 
-				// get url for parent
-				$url = (isset($keys[$parentID])) ? $keys[$parentID] : '';
+				// get URL for parent
+				$URL = (isset($keys[$parentID])) ? $keys[$parentID] : '';
 
 				// home is special
 				if($pageID == 1) $page['url'] = '';
 
 				// add it
-				$keys[$pageID] = trim($url .'/'. $page['url'], '/');
+				$keys[$pageID] = trim($URL .'/'. $page['url'], '/');
 
 				// build navigation array
 				$temp = array();
@@ -127,7 +127,7 @@ class BackendPagesModel
 		$keysString .= '$keys = array();'."\n\n";
 
 		// loop all keys
-		foreach($keys as $pageID => $url) $keysString .= '$keys['. $pageID .'] = \''. $url .'\';'."\n";
+		foreach($keys as $pageID => $URL) $keysString .= '$keys['. $pageID .'] = \''. $URL .'\';'."\n";
 
 		// end file
 		$keysString .= "\n".'?>';
@@ -588,7 +588,7 @@ class BackendPagesModel
 			// unserialize data
 			$row['data'] = @unserialize($row['data']);
 
-			// set url if needed
+			// set URL if needed
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
 
 			// build name
@@ -639,7 +639,7 @@ class BackendPagesModel
 
 
 	/**
-	 * Get the full-url for a given menuId
+	 * Get the full-URL for a given menuId
 	 *
 	 * @return	string
 	 * @param	int $menuId
@@ -656,13 +656,13 @@ class BackendPagesModel
 		require PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php';
 
 		// available in generated file?
-		if(isset($keys[$id])) $url = $keys[$id];
+		if(isset($keys[$id])) $URL = $keys[$id];
 
 		// not availble
 		else
 		{
-			// id 0 doesn't have an url
-			if($id == 0) $url = '';
+			// id 0 doesn't have an URL
+			if($id == 0) $URL = '';
 			else
 			{
 				// @todo	this method should use a genious caching-system
@@ -671,13 +671,13 @@ class BackendPagesModel
 		}
 
 		// if the is available in multiple languages we should add the current lang
-		if(SITE_MULTILANGUAGE) $url = '/'. BackendLanguage::getWorkingLanguage() .'/'. $url;
+		if(SITE_MULTILANGUAGE) $URL = '/'. BackendLanguage::getWorkingLanguage() .'/'. $URL;
 
 		// just prepend with slash
-		else $url = '/'. $url;
+		else $URL = '/'. $URL;
 
 		// return
-		return $url;
+		return $URL;
 	}
 
 
@@ -1003,14 +1003,14 @@ class BackendPagesModel
 	 * @todo	urlise should be user in this function
 	 *
 	 * @return	string
-	 * @param	string $url
+	 * @param	string $URL
 	 * @param	int[optional] $id
 	 * @param	int[optional] $parentId
 	 */
-	public static function getURL($url, $id = null, $parentId = 0)
+	public static function getURL($URL, $id = null, $parentId = 0)
 	{
 		// redefine
-		$url = (string) $url;
+		$URL = (string) $URL;
 		$parentId = (int) $parentId;
 
 		// get db
@@ -1019,70 +1019,70 @@ class BackendPagesModel
 		// no specific id
 		if($id === null)
 		{
-			// get number of childs within this parent with the specified url
+			// get number of childs within this parent with the specified URL
 			$number = (int) $db->getNumRows('SELECT p.id
 												FROM pages AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
 												WHERE p.parent_id = ? AND  p.status = ? AND m.url = ?;',
-												array($parentId, 'active', $url));
+												array($parentId, 'active', $URL));
 
 			// no items?
 			if($number != 0)
 			{
 				// add a number
-				$url = BackendModel::addNumber($url);
+				$URL = BackendModel::addNumber($URL);
 
-				// recall this method, but with a new url
-				return self::getURL($url, null, $parentId);
+				// recall this method, but with a new URL
+				return self::getURL($URL, null, $parentId);
 			}
 		}
 
 		// one item should be ignored
 		else
 		{
-			// get number of childs within this parent with the specified url
+			// get number of childs within this parent with the specified URL
 			$number = (int) $db->getNumRows('SELECT p.id
 												FROM pages AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
 												WHERE p.parent_id = ? AND  p.status = ? AND m.url = ? AND p.id != ?;',
-												array($parentId, 'active', $url, $id));
+												array($parentId, 'active', $URL, $id));
 
 			// there are items so, call this method again.
 			if($number != 0)
 			{
 				// add a number
-				$url = self::addNumber($url);
+				$URL = self::addNumber($URL);
 
-				// recall this method, but with a new url
-				return self::getURL($url, $id, $parentId);
+				// recall this method, but with a new URL
+				return self::getURL($URL, $id, $parentId);
 			}
 		}
 
-		// get full url
-		$fullUrl = self::getFullUrl($parentId) .'/'. $url;
+		// get full URL
+		$fullUrl = self::getFullUrl($parentId) .'/'. $URL;
 
 		// check if folder exists
 		if(SpoonDirectory::exists(PATH_WWW .'/'. $fullUrl))
 		{
 			// add a number
-			$url = BackendModel::addNumber($url);
+			$URL = BackendModel::addNumber($URL);
 
-			// recall this method, but with a new url
-			return self::getURL($url, $id, $parentId);
+			// recall this method, but with a new URL
+			return self::getURL($URL, $id, $parentId);
 		}
 
 		// check if it is an appliation
 		if(in_array(trim($fullUrl, '/'), array_keys(ApplicationRouting::getRoutes())))
 		{
 			// add a number
-			$url = BackendModel::addNumber($url);
+			$URL = BackendModel::addNumber($URL);
 
-			// recall this method, but with a new url
-			return self::getURL($url, $id, $parentId);
+			// recall this method, but with a new URL
+			return self::getURL($URL, $id, $parentId);
 		}
 
-		// return the unique url!
-		return $url;
+		// return the unique URL!
+		return $URL;
 	}
 
 

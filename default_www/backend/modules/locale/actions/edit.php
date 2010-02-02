@@ -56,7 +56,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			$this->display();
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our url
+		// no item found, throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 

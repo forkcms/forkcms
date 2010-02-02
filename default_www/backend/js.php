@@ -118,13 +118,13 @@ function javascriptExceptionHandler($exception)
 							<dt>URL</dt>
 								<dd>';
 
-								// request url
+								// request URL
 								$output .= '<a href="http://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] .'">http://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] .'</a>';
 								$output .= '</dd>
 							<dt>Referring URL</dt>
 								<dd>';
 
-								// referring url
+								// referring URL
 								$output .= (isset($_SERVER['HTTP_REFERER'])) ? '<a href="'. $_SERVER['HTTP_REFERER'] .'">'. $_SERVER['HTTP_REFERER'] .'</a>' : 'Unknown Referrer';
 								$output .= '</dd>
 							<dt>Request Method</dt>

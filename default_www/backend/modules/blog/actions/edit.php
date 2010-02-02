@@ -48,14 +48,14 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->display();
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our url
+		// no item found, throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
 
 	/**
 	 * Get the data
-	 * If a revision-id was specified in the url we load the revision and not the actual data
+	 * If a revision-id was specified in the URL we load the revision and not the actual data
 	 *
 	 * @return	void
 	 */
@@ -107,7 +107,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addCheckBox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
 		$this->frm->addDropDown('category_id', $this->categories, $this->record['category_id']);
 		$this->frm->addDropDown('user_id', $this->users, $this->record['user_id']);
-		$this->frm->addTextField('tags', BackendTagsModel::getTags($this->url->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addTextField('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 		$this->frm->addDateField('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTimeField('publish_on_time', SpoonDate::getDate('H:i', $this->record['publish_on']));
 
@@ -206,7 +206,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// set callback for generating an unique url
+				// set callback for generating an unique URL
 				$this->meta->setURLCallback('BackendBlogModel', 'getURL', array($txtTitle->getValue()));
 
 				// set formatted date and time

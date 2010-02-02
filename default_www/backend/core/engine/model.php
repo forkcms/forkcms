@@ -97,7 +97,7 @@ class BackendModel
 
 
 	/**
-	 * Creates an url for a given action and module
+	 * Creates an URL for a given action and module
 	 * If you don't specify an action the current action will be used
 	 * If you don't specify a module the current module will be used
 	 * If you don't specify a language the current language will be used
@@ -111,7 +111,7 @@ class BackendModel
 	 */
 	public static function createURLForAction($action = null, $module = null, $language = null, array $parameters = null, $urlencode = true)
 	{
-		// grab the url from the reference
+		// grab the URL from the reference
 		$URL = Spoon::getObjectReference('url');
 
 		// redefine parameters
@@ -134,7 +134,7 @@ class BackendModel
 		// add querystring
 		$querystring = '?'. trim($querystring, '&');
 
-		// build the url and return it
+		// build the URL and return it
 		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;
 	}
 
@@ -354,16 +354,16 @@ class BackendModel
 		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
-		// init url
+		// init URL
 		$URL = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
 
 		// get the menuItems
 		$keys = self::getKeys($language);
 
-		// get the url, if it doens't exist return 404
+		// get the URL, if it doens't exist return 404
 		if(!isset($keys[$pageId])) return self::getURL(404);
 
-		// add url
+		// add URL
 		else $URL .= $keys[$pageId];
 
 		// return
@@ -429,7 +429,7 @@ class BackendModel
 		// pageId stored?
 		if($pageIdForURL !== null)
 		{
-			// build url
+			// build URL
 			$URL = self::getURL($pageIdForURL, $language);
 
 			// set locale

@@ -125,7 +125,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// create datagrid
 		$this->datagrid = new BackendDataGridDB($query, $parameters);
 
-		// overrule default url
+		// overrule default URL
 		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value']), false));
 
 		// header labels

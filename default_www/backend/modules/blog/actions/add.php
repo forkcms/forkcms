@@ -146,7 +146,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// set callback for generating an unique url
+				// set callback for generating an unique URL
 				$this->meta->setURLCallback('BackendBlogModel', 'getURL', array($txtTitle->getValue()));
 
 				// set formatted date and time
@@ -173,7 +173,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$id = BackendBlogModel::insert($item);
 
 				// save the tags
-				BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->url->getModule());
+				BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// ping
 				BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());

@@ -49,7 +49,7 @@ class FrontendTagsModel
 		// loop tags
 		foreach($linkedTags as $row)
 		{
-			// add full url
+			// add full URL
 			$row['full_url'] = $tagLink .'/'. $row['url'];
 
 			// add
@@ -88,7 +88,7 @@ class FrontendTagsModel
 		// loop tags
 		foreach($linkedTags as $row)
 		{
-			// add full url
+			// add full URL
 			$row['full_url'] = $tagLink .'/'. $row['url'];
 
 			// add

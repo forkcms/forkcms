@@ -1,27 +1,30 @@
 <div id="blog" class="detail">
 	<div class="article">
+		{$blogArticle|dump}
+
 		<h1>
-			{$blogArticleTitle}
+			{$blogArticle['title']}
 		</h1>
 		<p class="date">
-			{$blogArticlePublishOn|date:'j F Y':{$LANGUAGE}}
+			{$blogArticle['publish_on']|date:'j F Y':{$LANGUAGE}}
 		</p>
 
 		<div class="content">
-			{$blogArticleText}
+			{$blogArticle['text']}
 		</div>
+
 		<div class="meta">
 			<ul>
 				<!-- Permalink -->
-				<li><a href="{$blogArticleFullUrl}" title="{$blogArticleTitle}">{$blogArticleTitle}</a> {$msgWroteBy|sprintf:{$blogArticleUserId|userSetting:'nickname'}}</li>
+				<li><a href="{$blogArticle['full_url']}" title="{$blogArticle['title']}">{$blogArticle['title']}</a> {$msgWroteBy|sprintf:{$blogArticle['user_id']|userSetting:'nickname'}}</li>
 
 				<!-- Category -->
-				<li>{$lblCategory|ucfirst}: <a href="{$blogArticleCategoryFullUrl}" title="{$blogArticleCategoryName}">{$blogArticleCategoryName}</a></li>
+				<li>{$lblCategory|ucfirst}: <a href="{$blogArticle['category_full_url']}" title="{$blogArticle['category_name']}">{$blogArticle['category_name']}</a></li>
 
-				{option:blogArticleTags}
+				{option:blogArticle['tags']}
 				<!-- Tags -->
 				<li>{$lblTags|ucfirst}: {iteration:blogArticleTags}<a href="{$blogArticleTags.full_url}" rel="tag" title="{$blogArticleTags.name}">{$blogArticleTags.name}</a>{option:!blogArticleTags.last}, {/option:!blogArticleTags.last}{/iteration:blogArticleTags}</li>
-				{/option:blogArticleTags}
+				{/option:blogArticle['tags']}
 
 				<!-- Comments -->
 				{option:!blogComments}<li><a href="{$blogArticleFullUrl}#{$actReact}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogComments}

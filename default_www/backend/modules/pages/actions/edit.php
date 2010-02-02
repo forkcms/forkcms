@@ -182,7 +182,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addTextField('navigation_title', $this->record['navigation_title']);
 
 		// tags
-		$this->frm->addTextField('tags', BackendTagsModel::getTags($this->url->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addTextField('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
@@ -260,12 +260,12 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// parse the form
 		$this->frm->parse($this->tpl);
 
-		// get full url
-		$url = BackendPagesModel::getFullURL($this->record['id']);
+		// get full URL
+		$URL = BackendPagesModel::getFullURL($this->record['id']);
 
-		// assign full url
-		$this->tpl->assign('pageUrl', $url);
-		$this->tpl->assign('seoPageUrl', str_replace($this->meta->getURL(), '', $url));
+		// assign full URL
+		$this->tpl->assign('pageUrl', $URL);
+		$this->tpl->assign('seoPageUrl', str_replace($this->meta->getURL(), '', $URL));
 
 		// parse datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
@@ -289,7 +289,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// set callback for generating an unique url
+			// set callback for generating an unique URL
 			$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id']));
 
 			// cleanup the submitted fields, ignore fields that were edited by hackers
@@ -385,7 +385,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
 				// save tags
-				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->url->getModule());
+				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($page['title']) .'&hilight=id-'. $page['id']);

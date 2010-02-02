@@ -192,11 +192,11 @@ class BackendJavascript
 			}
 		}
 
-		// create url instance, the templatemodifiers need this object
-		$url = new BackendURL();
+		// create URL instance, the templatemodifiers need this object
+		$URL = new BackendURL();
 
 		// set the module
-		$url->setModule($this->module);
+		$URL->setModule($this->module);
 	}
 }
 

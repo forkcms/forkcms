@@ -44,7 +44,7 @@ class BackendBaseAJAXAction
 	 */
 	public function __construct($action, $module)
 	{
-		// store the current module and action (we grab them from the url)
+		// store the current module and action (we grab them from the URL)
 		$this->setModule($module);
 		$this->setAction($action);
 	}

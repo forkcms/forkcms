@@ -21,7 +21,7 @@ class Frontend
 	 */
 	public function __construct()
 	{
-		// create url-object
+		// create URL-object
 		new FrontendURL();
 
 		// create and set template reference

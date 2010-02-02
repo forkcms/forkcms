@@ -45,7 +45,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->display();
 		}
 
-		// no user found, throw an exceptions, because somebody is fucking with our url
+		// no user found, throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
@@ -89,7 +89,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
-		// reset avatar url
+		// reset avatar URL
 		if($this->record['settings']['avatar'] != '') $this->record['settings']['avatar'] .= '?time='. time();
 
 		// only allow deletion of other users

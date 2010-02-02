@@ -57,38 +57,38 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @param	string $name
 	 * @param	string[optional] $label
 	 * @param	string[optional] $value
-	 * @param	string[optional] $url
+	 * @param	string[optional] $URL
 	 * @param	string[optional] $image
 	 * @param	int[optional] $sequence
 	 */
-	public function addColumn($name, $label = null, $value = null, $url = null, $title = null, $image = null, $sequence = null)
+	public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
 		// known actions that should have a button
 		if(in_array($name, array('add', 'edit', 'delete')))
 		{
 			// rebuild value, it should have special markup
-			$value = '<a href="'. $url .'" class="button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton">
+			$value = '<a href="'. $URL .'" class="button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton">
 						<span><span><span>'. $value .'</span></span></span>
 					</a>';
 
-			// reset url
-			$url = null;
+			// reset URL
+			$URL = null;
 		}
 
 		if(in_array($name, array('use_revision')))
 		{
 			// rebuild value, it should have special markup
-			$value = '<a href="'. $url .'" class="button icon'. SpoonFilter::toCamelCase($name) .'">
+			$value = '<a href="'. $URL .'" class="button icon'. SpoonFilter::toCamelCase($name) .'">
 						<span><span><span>'. $value .'</span></span></span>
 					</a>';
 
-			// reset url
-			$url = null;
+			// reset URL
+			$URL = null;
 
 		}
 
 		// add the column
-		parent::addColumn($name, $label, $value, $url, $title, $image, $sequence);
+		parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
 		// known actions
 		if(in_array($name, array('add', 'edit', 'delete', 'use_revision')))
@@ -223,7 +223,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 */
 	private function setSortingOptions()
 	{
-		// default url
+		// default URL
 		$this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
 
 		// sorting labels
@@ -408,7 +408,7 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 					// show the page
 					$pages[$i]['otherPage'] = true;
 
-					// url to this page
+					// URL to this page
 					$pages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $URL);
 				}
 			}

@@ -89,7 +89,7 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function mapCustomModifiers()
 	{
-		// convert vars into an url, syntax {$var|geturl:<pageId>}
+		// convert var into an URL, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
 		$this->mapModifier('getURL', array('BackendTemplateModifiers', 'getURL'));
 
@@ -168,14 +168,14 @@ class BackendTemplate extends SpoonTemplate
 		// we use some abbrviations and common terms, these should also be assigned
 		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
-		// get the url object, we need this for some template-constants
-		$url = Spoon::getObjectReference('url');
+		// get the URL object, we need this for some template-constants
+		$URL = Spoon::getObjectReference('url');
 
 		// assign the current module
-		$this->assign('MODULE', $url->getModule());
+		$this->assign('MODULE', $URL->getModule());
 
 		// assign the current action
-		$this->assign('ACTION', $url->getAction());
+		$this->assign('ACTION', $URL->getAction());
 
 		// is the user object filled?
 		if(BackendAuthentication::getUser()->isAuthenticated())
@@ -211,11 +211,11 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
-		// get the url from the reference, we need to know which module is requested
-		$url = Spoon::getObjectReference('url');
+		// get the URL from the reference, we need to know which module is requested
+		$URL = Spoon::getObjectReference('url');
 
 		// grab the current module
-		$currentModule = $url->getModule();
+		$currentModule = $URL->getModule();
 
 		// init vars
 		$realErrors = array();
@@ -337,7 +337,7 @@ class BackendTemplateModifiers
 
 
 	/**
-	 * Convert a var into a url
+	 * Convert a var into a URL
 	 * 	syntax: {$var|geturl:<action>[:<module>]}
 	 *
 	 * @return	void

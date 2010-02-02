@@ -45,7 +45,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 			$this->display();
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our url
+		// no item found, throw an exceptions, because somebody is fucking with our URL
 		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
@@ -90,7 +90,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		// assign id, name
 		$this->tpl->assign('id', $this->record['id']);
 		$this->tpl->assign('name', $this->record['name']);
-		
+
 		// the default category may not be deleted
 		if(BackendModel::getSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) != $this->id) $this->tpl->assign('deleteAllowed', true);
 	}
@@ -119,7 +119,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 				$category = array();
 				$category['name'] = $this->frm->getField('name')->getValue();
 				$category['url'] = BackendBlogModel::getURLForCategory($category['name'], $this->id);
-				
+
 				// upate the item
 				$id = (int) BackendBlogModel::updateCategory($this->id, $category);
 

@@ -74,7 +74,7 @@ class FrontendRSSItem extends SpoonRSSItem
 	 */
 	public function setDescription($description)
 	{
-		// replace urls and images
+		// replace URLs and images
 		$search = array('href="/', 'src="/');
 		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
 
@@ -99,7 +99,7 @@ class FrontendRSSItem extends SpoonRSSItem
 		// redefine var
 		$link = (string) $link;
 
-		// if link doesn't start with http, we prepend the url of the site
+		// if link doesn't start with http, we prepend the URL of the site
 		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
 
 		// call parent
@@ -119,7 +119,7 @@ class FrontendRSSItem extends SpoonRSSItem
 		// redefine var
 		$link = (string) $link;
 
-		// if link doesn't start with http, we prepend the url of the site
+		// if link doesn't start with http, we prepend the URL of the site
 		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
 
 		// call parent

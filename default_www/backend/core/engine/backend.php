@@ -21,8 +21,8 @@ class Backend
 	 */
 	public function __construct()
 	{
-		// create url-object to handle the url
-		$url = new BackendURL();
+		// create URL-object to handle the URL
+		$URL = new BackendURL();
 
 		// create new template so we have a reference that will be available on every module/action
 		new BackendTemplate();
@@ -34,7 +34,7 @@ class Backend
 		new BackendHeader();
 
 		// create a new action
-		$action = new BackendAction($url->getAction(), $url->getModule());
+		$action = new BackendAction($URL->getAction(), $URL->getModule());
 
 		// execute the action
 		$action->execute();

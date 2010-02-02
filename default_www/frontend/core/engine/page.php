@@ -93,7 +93,7 @@ class FrontendPage extends FrontendBaseObject
 		// call parent
 		parent::__construct();
 
-		// get pageId for requested url
+		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
 		// make the pageId accessible through a static method
@@ -189,7 +189,7 @@ class FrontendPage extends FrontendBaseObject
 			// validate the child
 			if($firstChildId !== false)
 			{
-				// build url
+				// build URL
 				$URL = FrontendNavigation::getURL($firstChildId);
 
 				// redirect

@@ -71,8 +71,8 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		foreach($categories as $category) $possibleCategories[$category['url']] = $category['id'];
 
 		// requested page
-		$requestedCategory = SpoonFilter::getValue($this->url->getParameter(1, 'string'), array_keys($possibleCategories), 'false');
-		$requestedPage = $this->url->getParameter(2, 'int');
+		$requestedCategory = SpoonFilter::getValue($this->URL->getParameter(1, 'string'), array_keys($possibleCategories), 'false');
+		$requestedPage = $this->URL->getParameter(2, 'int');
 
 		// set category
 		$this->category = $categories[$possibleCategories[$requestedCategory]];
@@ -83,7 +83,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		// no page given
 		if($requestedPage === null) $requestedPage = 1;
 
-		// set url
+		// set URL
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $requestedCategory;
 
 		// populate count fields in pagination

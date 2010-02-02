@@ -239,7 +239,7 @@ class BackendBlogModel
 
 
 	/**
-	 * Retrieve the unique url for an item
+	 * Retrieve the unique URL for an item
 	 *
 	 * @return	string
 	 * @param	int[optional] $itemId
@@ -275,7 +275,7 @@ class BackendBlogModel
 		// current category should be excluded
 		else
 		{
-			// get number of items with this url
+			// get number of items with this URL
 			$number = (int) $db->getNumRows('SELECT p.id
 												FROM blog_posts AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
@@ -297,7 +297,7 @@ class BackendBlogModel
 
 
 	/**
-	 * Retrieve the unique url for a category
+	 * Retrieve the unique URL for a category
 	 *
 	 * @return	string
 	 * @param	int[optional] $categoryId
@@ -330,7 +330,7 @@ class BackendBlogModel
 		// current category should be excluded
 		else
 		{
-			// get number of items with this url
+			// get number of items with this URL
 			$number = (int) $db->getNumRows('SELECT c.id FROM blog_categories AS C WHERE c.language = ? AND c.url = ? AND c.id != ?;', array(BL::getWorkingLanguage(), $URL, $categoryId));
 
 			// already exists

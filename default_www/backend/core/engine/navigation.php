@@ -27,7 +27,7 @@ class BackendNavigation
 	 *
 	 * @var	BackendURL
 	 */
-	private $url;
+	private $URL;
 
 
 	/**
@@ -41,7 +41,7 @@ class BackendNavigation
 		Spoon::setObjectReference('navigation', $this);
 
 		// grab from the reference
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 
 		// init var
 		$navigation = array();
@@ -71,20 +71,20 @@ class BackendNavigation
 		$html = '<ul>'."\n";
 
 		// set active URL
-		$activeModule = $this->url->getModule();
-		$activeAction = $this->url->getAction();
+		$activeModule = $this->URL->getModule();
+		$activeAction = $this->URL->getAction();
 		$activeURL = $activeModule .'/'. $activeAction;
 
 		// search parent
 		foreach($this->navigation[$selectedKeys[0]]['children'] as $key => $level)
 		{
-			// undefined url?
+			// undefined URL?
 			if($level['url'] === null && isset($level['children']))
 			{
-				// loop childs till we find a valid url
+				// loop childs till we find a valid URL
 				foreach($level['children'] as $child)
 				{
-					// break urls into parts
+					// break URL into parts
 					$chunks = (array) explode('/', $child['url']);
 
 					// @todo	check me
@@ -96,16 +96,16 @@ class BackendNavigation
 						// reset link
 						$level['url'] = $child['url'];
 
-						// stop searching for an url
+						// stop searching for an URL
 						break;
 					}
 				}
 			}
 
-			// no valid url, piss off
+			// no valid URL, piss off
 			if($level['url'] === null) continue;
 
-			// break urls into parts
+			// break URL into parts
 			$chunks = (array) explode('/', $level['url']);
 
 			// set first chunk
@@ -134,7 +134,7 @@ class BackendNavigation
 					{
 						$subHTML = '<ul>'."\n";
 
-						// break urls into parts
+						// break URL into parts
 						$chunks = (array) explode('/', $child['url']);
 
 						// set first chunk
@@ -195,8 +195,8 @@ class BackendNavigation
 		$html = '<ul>';
 
 		// set active URL
-		$activeModule = $this->url->getModule();
-		$activeAction = $this->url->getAction();
+		$activeModule = $this->URL->getModule();
+		$activeAction = $this->URL->getAction();
 		$activeURL = $activeModule .'/'. $activeAction;
 
 		// build and return the HTML
@@ -207,7 +207,7 @@ class BackendNavigation
 
 			if($key == 'dashboard' || $key == 'pages')
 			{
-				// break urls into parts
+				// break URL into parts
 				$chunks = (array) explode('/', $level['url']);
 
 				// set first chunk
@@ -239,13 +239,13 @@ class BackendNavigation
 				// loop the childs
 				foreach($level['children'] as $child)
 				{
-					// no url provided?
+					// no URL provided?
 					if($child['url'] === null && isset($child['children']))
 					{
 						// loop all childs till we find a valid one
 						foreach($child['children'] as $subChild)
 						{
-							// break urls into parts
+							// break URLs into parts
 							$chunks = (array) explode('/', $subChild['url']);
 
 							// set first chunk
@@ -254,7 +254,7 @@ class BackendNavigation
 							// is allowed?
 							if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 							{
-								// reset the child url
+								// reset the child URL
 								$child['url'] = $subChild['url'];
 
 								// stop after we found the first one
@@ -265,7 +265,7 @@ class BackendNavigation
 
 					if($child['url'] == '') continue;
 
-					// break urls into parts
+					// break URL into parts
 					$chunks = (array) explode('/', $child['url']);
 
 					// set first chunk
@@ -317,9 +317,9 @@ class BackendNavigation
 		$keys = array();
 		$actions = array();
 
-		// build the url to search for
-		$activeModule = $this->url->getModule();
-		$activeAction = $this->url->getAction();
+		// build the URL to search for
+		$activeModule = $this->URL->getModule();
+		$activeAction = $this->URL->getAction();
 		$activeURL = $activeModule .'/'. $activeAction;
 
 		// build an array so we can find out what submenu is used
@@ -335,7 +335,7 @@ class BackendNavigation
 						{
 							if(!empty($grandchild['url']))
 							{
-								// split the url so we know the module/action
+								// split the URL so we know the module/action
 								$explodedURL = explode('/', $grandchild['url']);
 
 								// store the submenu for this module and action
@@ -350,7 +350,7 @@ class BackendNavigation
 		// loop the first level
 		foreach($this->navigation as $key => $level)
 		{
-			// url already known?
+			// URL already known?
 			if($level['url'] == $activeURL) $keys[] = $key;
 
 			// has this level any children?
@@ -359,7 +359,7 @@ class BackendNavigation
 				// loop second level
 				foreach($level['children'] as $module => $level)
 				{
-					// add all keys if the url is found
+					// add all keys if the URL is found
 					if($level['url'] == $activeURL || $module == $activeModule)
 					{
 						// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
@@ -382,7 +382,7 @@ class BackendNavigation
 						// loop third level
 						foreach($level['children'] as $level)
 						{
-							// url found?
+							// URL found?
 							if($level['url'] == $activeURL || $module == $activeModule)
 							{
 								// if the action is a part of the submenu 'settings', we need to store the settings/modules keys

@@ -85,7 +85,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// validate incoming parameters
 		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
 
-		// get by url
+		// get by URL
 		$this->record = FrontendBlogModel::get($this->URL->getParameter(1));
 
 		// anything found?
@@ -155,9 +155,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
 
 		// assign article
-		// loop values @todo	we should do this in a decent way...
-		foreach($this->record as $key => $value) if($value !== null) $this->tpl->assign('blogArticle'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('blogArticle', $this->record);
+
+		// assign article tags
+		$this->tpl->assign('blogArticleTags', $this->record['tags']);
 
 		// count comments
 		$commentCount = count($this->comments);
@@ -178,8 +179,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if($this->URL->getParameter('comment', 'string') == 'true') $this->tpl->assign('commentIsAdded', true);
 
 		// assign settings
-		// loop values @todo	we should do this in a decent way...
-		foreach($this->settings as $key => $value) if($value !== null) $this->tpl->assign('blogSettings'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('blogSettings', $this->settings);
 	}
 
@@ -235,7 +234,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$comment['status'] = 'published';
 				$comment['data'] = serialize(array('server' => $_SERVER));
 
-				// get url for article
+				// get URL for article
 				$permaLink = FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $this->record['url'];
 				$redirectLink = $permaLink;
 
@@ -256,7 +255,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// insert comment
 				$commentId = FrontendBlogModel::addComment($comment);
 
-				// append a parameter to the url so we can show moderation
+				// append a parameter to the URL so we can show moderation
 				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('React');
 				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('React');
 				if($comment['status'] == 'published') $redirectLink .= '?comment=true#'. FL::getAction('Comment') .'-'. $commentId;

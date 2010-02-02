@@ -58,10 +58,10 @@ class FrontendBreadcrumb extends FrontendBaseObject
 			// do we know something about the page
 			if($pageInfo !== false && isset($pageInfo['navigation_title']))
 			{
-				// get url
+				// get URL
 				$pageURL = FrontendNavigation::getUrl($menuId);
 
-				// if this is the error-page, so we won't show an url.
+				// if this is the error-page, so we won't show an URL.
 				if($pageURL == $errorUrl) $pageURL = null;
 
 				// add to the items
@@ -138,10 +138,10 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		// loop items and add the seperator
 		foreach($this->items as $i => $row)
 		{
-			// remove url from last element
+			// remove URL from last element
 			if($i >= $count - 1)
 			{
-				// remove url for last object
+				// remove URL for last object
 				$row['url'] = null;
 				$row['last'] = true;
 			}

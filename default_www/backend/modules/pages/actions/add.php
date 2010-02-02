@@ -194,7 +194,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// init var
 				$parentId = 0;
 
-				// set callback for generating an unique url
+				// set callback for generating an unique URL
 				$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array($parentId));
 
 				// build page record
@@ -277,11 +277,11 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				}
 
 				// insert the blocks
-				// @todo rekening houden met act voor de url
+				// @todo rekening houden met de actions voor de URL
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 				// save tags
-				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->url->getModule());
+				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);

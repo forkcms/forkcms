@@ -43,7 +43,7 @@ class BackendHeader
 	 *
 	 * @var	BackendURL
 	 */
-	private $url;
+	private $URL;
 
 
 	/**
@@ -57,7 +57,7 @@ class BackendHeader
 		Spoon::setObjectReference('header', $this);
 
 		// grab from the reference
-		$this->url = Spoon::getObjectReference('url');
+		$this->URL = Spoon::getObjectReference('url');
 		$this->tpl = Spoon::getObjectReference('template');
 	}
 
@@ -76,7 +76,7 @@ class BackendHeader
 	{
 		// redefine
 		$fileName = (string) $fileName;
-		$module = (string) ($module !== null) ? $module : $this->url->getModule();
+		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$overwritePath = (bool) $overwritePath;
 
 		// init var
@@ -112,7 +112,7 @@ class BackendHeader
 	{
 		// redefine
 		$fileName = (string) $fileName;
-		$module = (string) ($module !== null) ? $module : $this->url->getModule();
+		$module = (string) ($module !== null) ? $module : $this->URL->getModule();
 		$parseThroughPHP = (bool) $parseThroughPHP;
 		$overwritePath = (bool) $overwritePath;
 

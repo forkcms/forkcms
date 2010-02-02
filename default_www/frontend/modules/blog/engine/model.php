@@ -75,7 +75,7 @@ class FrontendBlogModel
 	 * @param	int[optional] $limit
 	 * @param	int[optional] $offset
 	 */
-	public static function getAll($limit = 10, $offset = 0) // @todo tijs ik vind dit een kutnaam, maar ik weet atm niets beter :s
+	public static function getAll($limit = 10, $offset = 0)
 	{
 		// redefine
 		$limit = (int) $limit;
@@ -114,7 +114,7 @@ class FrontendBlogModel
 			// ids
 			$postIds[] = (int) $row['id'];
 
-			// urls
+			// URLs
 			$articles[$key]['full_url'] = $blogLink .'/'. $row['url'];
 			$articles[$key]['category_full_url'] = $categoryLink .'/'. $row['category_url'];
 
@@ -182,7 +182,7 @@ class FrontendBlogModel
 			// ids
 			$postIds[] = (int) $row['id'];
 
-			// urls
+			// URLs
 			$articles[$key]['full_url'] = $blogLink .'/'. $row['url'];
 			$articles[$key]['category_full_url'] = $categoryLink .'/'. $row['category_url'];
 
@@ -322,7 +322,7 @@ class FrontendBlogModel
 		// loop comments
 		foreach($comments as $row)
 		{
-			// add some urls
+			// add some URLs
 			$row['post_full_url'] = $blogLink .'/'. $row['post_url'];
 			$row['full_url'] = $blogLink .'/'. $row['post_url'] .'#'. FL::getAction('Comment') .'-'. $row['id'];
 

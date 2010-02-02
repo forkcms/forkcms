@@ -68,7 +68,7 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-		// set column url
+		// set column URL
 		$this->datagrid->setColumnUrl('title', BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 
 		// add column
