@@ -187,7 +187,7 @@ class SpoonTemplate
 		else
 		{
 			// list of *_cache.tpl files from cacheDirectory
-			$aFiles = SpoonDirectory::getList($this->cacheDirectory, true, array(), '|.*\_cache\.tpl|');
+			$aFiles = SpoonFile::getList($this->cacheDirectory, '|.*\_cache\.tpl|');
 
 			// delete
 			foreach($aFiles as $file) SpoonFile::delete($this->cacheDirectory .'/'. $file);
@@ -210,7 +210,7 @@ class SpoonTemplate
 		else
 		{
 			// list of *.tpl.php files from compileDirectory
-			$aFiles = SpoonDirectory::getList($this->compileDirectory, true, array(), '|.*\.tpl\.php|');
+			$aFiles = SpoonFile::getList($this->compileDirectory, '|.*\.tpl\.php|');
 
 			// delete
 			foreach($aFiles as $file) SpoonFile::delete($this->compileDirectory .'/'. $file);

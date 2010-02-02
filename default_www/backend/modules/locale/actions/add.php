@@ -132,12 +132,14 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 			{
 				// build item
 				$locale = array();
+				$locale['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$locale['language'] = $this->frm->getField('language')->getValue();
 				$locale['application'] = $this->frm->getField('application')->getValue();
 				$locale['module'] = $this->frm->getField('module')->getValue();
 				$locale['type'] = $this->frm->getField('type')->getValue();
 				$locale['name'] = $this->frm->getField('name')->getValue();
 				$locale['value'] = $this->frm->getField('value')->getValue();
+				$locale['edited_on'] = gmdate('Y-m-d H:i:s');
 
 				// update item
 				BackendLocaleModel::insert($locale);
