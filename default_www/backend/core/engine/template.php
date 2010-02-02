@@ -199,7 +199,7 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseDebug()
 	{
-		// @todo for now we only check if SPOON_DEBUG is true
+		// @later for now we only check if SPOON_DEBUG is true
 		if(SPOON_DEBUG) $this->assign('debug', true);
 	}
 

@@ -70,6 +70,7 @@ jsBackend.controls = {
 		jsBackend.controls.bindToggleDiv();
 		jsBackend.controls.bindConfirm();
 		jsBackend.controls.bindMassCheckbox();
+		jsBackend.controls.bindPasswordStrengthMeter();
 	},
 	// bind confirm message
 	bindConfirm: function() {
@@ -126,6 +127,79 @@ jsBackend.controls = {
 			$($(this).closest('table').find('td input:checkbox')).attr('checked', $(this).is(':checked'));
 		});
 	},
+	bindPasswordStrengthMeter: function() {
+		if($('.passwordStrength').length > 0) {
+			$('.passwordStrength').each(function() {
+				// grab id
+				var id = $(this).attr('rel');
+				var wrapperId = $(this).attr('id');
+				
+				// hide all
+				$('#'+ wrapperId +' p.strength').hide();
+				
+				// excecute function directly
+				var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
+				
+				// show
+				$('#'+ wrapperId +' p.'+ classToShow).show(); 
+				
+				// bind keypress
+				$('#'+ id).bind('keyup', function() {
+					// hide all
+					$('#'+ wrapperId +' p.strength').hide();
+					
+					// excecute function directly
+					var classToShow = jsBackend.controls.checkPassword($('#'+ id).val());
+					
+					// show
+					$('#'+ wrapperId +' p.'+ classToShow).show(); 
+				});
+				
+				
+			});
+		}
+	},
+	
+	// check a string for passwordstrength
+	checkPassword: function(string) {
+		// init vars
+		var score = 0;
+		var uniqueChars = [];
+
+		// less then 4 chars isn't a valid password
+		if(string.length <= 4) return 'none';
+
+		// loop chars and add unique chars
+		for(var i in string) if(uniqueChars.indexOf(string.charAt(i)) == -1) uniqueChars.push(string.charAt(i));
+		
+		// less then 3 unique chars is just week
+		if(uniqueChars.length < 3) return 'weak';
+		
+		// more then 6 chars is good
+		if(string.length >= 6) score++;
+		
+		// more then 8 is beter
+		if(string.length >= 8) score++;
+		
+		// upper and lowercase?
+		if((string.match(/[a-z]/)) && string.match(/[A-Z]/)) score += 2;
+		
+		// number?
+		if(string.match(/\d+/)) score++;
+		
+		// special char?
+		if(string.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) score++;
+
+		// strong password
+		if(score >= 4) return 'strong';
+		
+		// ok
+		if(score >= 2) return 'ok';
+
+		// fallback
+		return 'weak';
+	},
+		
 	// toggle a div
 	bindToggleDiv: function() {
 		$('.toggleDiv').live('click', function(evt) {

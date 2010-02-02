@@ -60,22 +60,20 @@
 										{$txtUsername} {$txtUsernameError}
 									</p>
 									<p>
-										<label for="new_password">{$lblPassword|ucfirst}</label>
+										<label for="newPassword">{$lblPassword|ucfirst}</label>
 										{$txtNewPassword} {$txtNewPasswordError}
 
-										<!-- @todo
-										<table class="passwordStrength" cellspacing="0">
-											<td class="strength">
+										<table id="passwordStrengthMeter" class="passwordStrength" rel="newPassword" cellspacing="0">
+											<td class="strength" id="passwordStrength">
 												<p class="strength none">{$lblNone|ucfirst}</p>
-												<p class="strength weak">{$lblWeak|ucfirst}</p>
-												<p class="strength ok">{$lblOK|ucfirst}</p>
-												<p class="strength strong">{$lblStrong|ucfirst}</p>
+												<p class="strength weak" style="background: red;">{$lblWeak|ucfirst}</p>
+												<p class="strength ok" style="background: orange;">{$lblOK|ucfirst}</p>
+												<p class="strength strong" style="background: green;">{$lblStrong|ucfirst}</p>
 											</td>
 											<td>
 												<p class="helpTxt">{$msgHelpStrongPassword}</p>
 											</td>
 										</table>
-										-->
 									</p>
 									<p>
 										<label for="confirmPassword"">{$lblConfirmPassword|ucfirst}</label>
@@ -119,7 +117,7 @@
 								</div>
 								<div class="options horizontal">
 									<p>
-										<label for="interface_language">{$lblInterfaceLanguage|ucfirst}</label>
+										<label for="interfaceLanguage">{$lblInterfaceLanguage|ucfirst}</label>
 										{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
 									</p>
 								</div>
