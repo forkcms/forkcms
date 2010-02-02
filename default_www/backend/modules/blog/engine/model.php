@@ -66,7 +66,7 @@ class BackendBlogModel
 	public static function delete($ids)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// if $ids is not an array, make one
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
@@ -86,7 +86,7 @@ class BackendBlogModel
 	public static function deleteCategory($id)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// delete category
 		$db->delete('blog_categories', 'id = ?', (int) $id);
@@ -108,10 +108,11 @@ class BackendBlogModel
 	public static function deleteComments(array $ids)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update record
-		$db->execute('DELETE FROM blog_comments WHERE id IN('. implode(',', $ids) .');');
+		$db->execute('DELETE FROM blog_comments
+						WHERE id IN('. implode(',', $ids) .');');
 	}
 
 
@@ -127,7 +128,9 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// exists?
-		return $db->getNumRows('SELECT id FROM blog_posts WHERE id = ?;', (int) $id);
+		return $db->getNumRows('SELECT id
+								FROM blog_posts
+								WHERE id = ?;', (int) $id);
 	}
 
 
@@ -143,7 +146,9 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// exists?
-		return $db->getNumRows('SELECT id FROM blog_categories WHERE id = ?;', (int) $id);
+		return $db->getNumRows('SELECT id
+								FROM blog_categories
+								WHERE id = ?;', (int) $id);
 	}
 
 
@@ -159,7 +164,8 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get records and return them
-		return (array) $db->getPairs('SELECT c.id, c.name FROM blog_categories AS c;');
+		return (array) $db->getPairs('SELECT c.id, c.name
+										FROM blog_categories AS c;');
 	}
 
 
@@ -178,7 +184,8 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT * FROM blog_categories
+		return (array) $db->getRecord('SELECT *
+										FROM blog_categories
 										WHERE id = ?;', (int) $id);
 	}
 
@@ -357,7 +364,7 @@ class BackendBlogModel
 	public static function insert(array $item)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// calculate new id
 		$newId = (int) $db->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1;') + 1;
@@ -383,7 +390,7 @@ class BackendBlogModel
 	public static function insertCategory(array $item)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// create category
 		return $db->insert('blog_categories', $item);
@@ -403,7 +410,7 @@ class BackendBlogModel
 		$id = (int) $id;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// get current version
 		$version = self::get($id);
@@ -449,7 +456,7 @@ class BackendBlogModel
 	public static function updateCategory($id, array $item)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update category
 		$db->update('blog_categories', $item, 'id = ?', (int) $id);
@@ -466,7 +473,7 @@ class BackendBlogModel
 	public static function updateCommentStatuses(array $ids, $status)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// @later	if the new status is spam, we should submit it to Akismet!
 

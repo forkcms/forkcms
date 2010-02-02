@@ -361,7 +361,7 @@ class BackendMeta
 		$meta['custom'] = $custom;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// should we update the record
 		if($update)

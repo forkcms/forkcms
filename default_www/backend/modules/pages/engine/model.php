@@ -342,7 +342,7 @@ class BackendPagesModel
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// get record
 		$page = self::get($id, $language);
@@ -1095,7 +1095,7 @@ class BackendPagesModel
 	public static function insert(array $page)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// insert
 		$id = (int) $db->insert('pages', $page);
@@ -1117,7 +1117,7 @@ class BackendPagesModel
 	public static function insertBlocks(array $blocks, $hasBlock = false)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// rebuild value for has_extra
 		$hasExtra = ($hasBlock) ? 'Y' : 'N';
@@ -1139,7 +1139,7 @@ class BackendPagesModel
 	public static function insertTemplate(array $template)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// default?
 		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'));
@@ -1167,7 +1167,7 @@ class BackendPagesModel
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// reset type of drop for special pages
 		if($droppedOn == 1) $typeOfDrop = 'inside';
@@ -1273,7 +1273,7 @@ class BackendPagesModel
 	public static function update(array $page)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update old revisions
 		if($page['status'] != 'draft') $db->update('pages', array('status' => 'archive'), 'id = ?', (int) $page['id']);
@@ -1327,7 +1327,7 @@ class BackendPagesModel
 	public static function updateBlocks(array $blocks, $hasBlock = false)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// rebuild value for has_extra
 		$hasExtra = ($hasBlock) ? 'Y' : 'N';
@@ -1351,7 +1351,7 @@ class BackendPagesModel
 	public static function updateTemplate($id, array $template)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update old revisions
 		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'), '');

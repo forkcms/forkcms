@@ -24,7 +24,7 @@ class FrontendBlogModel
 	public static function addComment(array $comment)
 	{
 		// get db
-		$db = FrontendModel::getDB();
+		$db = FrontendModel::getDB(true);
 
 		// insert comment
 		$insertId = (int) $db->insert('blog_comments', $comment);

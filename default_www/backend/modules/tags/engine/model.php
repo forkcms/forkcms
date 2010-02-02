@@ -190,7 +190,7 @@ class BackendTagsModel
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// build record
 		$record['language'] = $language;
@@ -224,7 +224,7 @@ class BackendTagsModel
 		if(!is_array($tags)) $tags = (array) explode(',', $tags);
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// get current tags for item
 		$currentTags = (array) $db->getPairs('SELECT t.tag, t.id
@@ -309,7 +309,7 @@ class BackendTagsModel
 	public static function updateTag($tag)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// insert
 		$db->update('tags', $tag, 'id = ?', $tag['id']);

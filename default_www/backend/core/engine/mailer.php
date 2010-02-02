@@ -62,7 +62,7 @@ class BackendMailer
 		if($queue) $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') .'00:00';
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// insert the email into the database
 		$id = $db->insert('emails', $email);
@@ -116,7 +116,7 @@ class BackendMailer
 		$id = (int) $id;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// get record
 		$emailRecord = (array) $db->getRecord('SELECT *

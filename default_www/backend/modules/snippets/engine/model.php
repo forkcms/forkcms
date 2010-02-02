@@ -39,7 +39,7 @@ class BackendSnippetsModel
 		$id = (int) $id;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// delete all records
 		$db->delete('snippets', 'id = ?', $id);
@@ -133,7 +133,7 @@ class BackendSnippetsModel
 	public static function insert(array $values)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// calculate new id
 		$newId = (int) $db->getVar('SELECT MAX(id) FROM snippets LIMIT 1;') + 1;
@@ -180,7 +180,7 @@ class BackendSnippetsModel
 		$id = (int) $id;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// get current version
 		$version = self::get($id);

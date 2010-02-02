@@ -46,7 +46,7 @@ class BackendAuthentication
 	public static function cleanupOldSessions()
 	{
 		// init var
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// remove all sessions that are invalid (older then 30min)
 		$db->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
@@ -235,7 +235,7 @@ class BackendAuthentication
 		if(SpoonSession::exists('backend_logged_in', 'backend_secret_key') && (bool) SpoonSession::get('backend_logged_in') && (string) SpoonSession::get('backend_secret_key') != '')
 		{
 			// get database instance
-			$db = BackendModel::getDB();
+			$db = BackendModel::getDB(true);
 
 			// get the row from the tables
 			$sessionData = $db->getRecord('SELECT us.id, us.user_id
@@ -285,7 +285,7 @@ class BackendAuthentication
 	public static function logout()
 	{
 		// init var
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// remove all rows owned by the current user
 		$db->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
@@ -311,7 +311,7 @@ class BackendAuthentication
 		$password = (string) $password;
 
 		// init vars
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// fetch the encrypted password
 		$passwordEncrypted = BackendAuthentication::getEncryptedPassword($login, $password);

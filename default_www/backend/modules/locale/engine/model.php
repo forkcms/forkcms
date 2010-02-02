@@ -92,7 +92,7 @@ class BackendLocaleModel
 	public static function delete(array $ids)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// delete records
 		$db->execute('DELETE FROM locale WHERE id IN ('. implode(',', $ids) .');');
@@ -165,7 +165,7 @@ class BackendLocaleModel
 		$dropdown = array();
 
 		// fetch types
-		$types = BackendModel::getDB()->getEnumValues('locale', 'type');
+		$types = $db->getEnumValues('locale', 'type');
 
 		// add types
 		foreach($types as $type) $dropdown[$type] = $type;
@@ -182,7 +182,7 @@ class BackendLocaleModel
 	public static function insert(array $item)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// insert item
 		$id = (int) $db->insert('locale', $item);
@@ -201,7 +201,7 @@ class BackendLocaleModel
 	public static function update($id, array $item)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update category
 		$db->update('locale', $item, 'id = ?', (int) $id);

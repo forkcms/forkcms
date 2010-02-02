@@ -29,11 +29,11 @@ class FrontendModel
 
 	/**
 	 * Get (or create and get) a database-connection
-	 * @later: we should extend SpoonDatabase with FrontendDatabas, which will enable us to split read and write-connections.
 	 *
 	 * @return	SpoonDatabase
+	 * @param	bool[optional] $write	Do you want the write-connection or not?
 	 */
-	public static function getDB()
+	public static function getDB($write = false)
 	{
 		// do we have a db-object ready?
 		if(!Spoon::isObjectReference('database'))
@@ -261,7 +261,7 @@ class FrontendModel
 		$value = serialize($value);
 
 		// get db
-		$db = self::getDB();
+		$db = self::getDB(true);
 
 		// store
 		$db->execute('INSERT INTO modules_settings (module, name, value)

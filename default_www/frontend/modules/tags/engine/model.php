@@ -61,6 +61,13 @@ class FrontendTagsModel
 	}
 
 
+	/**
+	 * Get tags for multiple items
+	 *
+	 * @return	array
+	 * @param	string $module	The module wherefor you want to retrieve the tags
+	 * @param 	array $otherIds	The ids for the items
+	 */
 	public static function getForMultipleItems($module, array $otherIds)
 	{
 		// redefine

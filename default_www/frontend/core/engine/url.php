@@ -133,9 +133,8 @@ class FrontendURL
 	 */
 	public function getParameter($index, $type = 'string')
 	{
-		// @todo davy - wat een domme code. Er moet nog gechecked worden op != '' en test dit in blog.
-		// does the index exists
-		if(isset($this->parameters[$index]))
+		// does the index exists and isn't this parameter  empty
+		if(isset($this->parameters[$index]) && $this->parameters[$index] != '')
 		{
 			// parameter exists
 			if(isset($this->parameters[$index])) return SpoonFilter::getValue($this->parameters[$index], null, null, $type);

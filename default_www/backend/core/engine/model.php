@@ -151,11 +151,14 @@ class BackendModel
 	 * Get (or create and get) a database-connection
 	 * If the database wasn't stored in the reference before we will create it and add it
 	 *
-	 * @todo	add $write = false
 	 * @return	SpoonDatabase
+	 * @param	bool[optional] $write	Do you want the write-connection or not?
 	 */
-	public static function getDB()
+	public static function getDB($write = false)
 	{
+		// redefine
+		$write = (bool) $write;
+
 		// do we have a db-object ready?
 		if(!Spoon::isObjectReference('database'))
 		{
@@ -621,7 +624,7 @@ class BackendModel
 		$valueToStore = serialize($value);
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// store
 		$db->execute('INSERT INTO modules_settings(module, name, value)

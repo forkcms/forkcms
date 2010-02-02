@@ -32,7 +32,7 @@ class BackendUsersModel
 		$id = (int) $id;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update the user
 		$db->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', $id);
@@ -51,7 +51,7 @@ class BackendUsersModel
 		$userId = (int) $userId;
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// delete the settings
 		$db->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $userId);
@@ -208,9 +208,9 @@ class BackendUsersModel
 
 		// get user-settings
 		$userId = $db->getVar('SELECT user_id
-													FROM users_settings AS us
-													WHERE us.value = ?;',
-													array(serialize($email)));
+								FROM users_settings AS us
+								WHERE us.value = ?;',
+								array(serialize($email)));
 
 		// return
 		return (int) $userId;
@@ -265,7 +265,7 @@ class BackendUsersModel
 	public static function insert(array $user, array $settings)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update user
 		$userId = (int) $db->insert('users', $user);
@@ -296,7 +296,7 @@ class BackendUsersModel
 	public static function update(array $user, array $settings)
 	{
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update user
 		$db->update('users', $user, 'id = ?', $user['id']);
@@ -331,7 +331,7 @@ class BackendUsersModel
 		$key = $user->getSetting('password_key');
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// update user
 		$db->update('users', array('password' => BackendAuthentication::getEncryptedString($password, $key)), 'id = ?', $userId);

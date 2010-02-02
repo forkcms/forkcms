@@ -326,7 +326,7 @@ class BackendUser
 		$valueToStore = serialize($value);
 
 		// get db
-		$db = BackendModel::getDB();
+		$db = BackendModel::getDB(true);
 
 		// store
 		$db->execute('INSERT INTO users_settings(user_id, name, value)
