@@ -694,9 +694,10 @@ class SpoonTemplateCompiler
 
 			// while developing, you might want to know about the undefined indexes
 			$errorReporting = (SPOON_DEBUG) ? 'E_ALL | E_STRICT' : 'E_WARNING';
+			$displayErrors = (SPOON_DEBUG) ? 'On' : 'Off';
 
 			// add error_reporting setting
-			$this->content = '<?php error_reporting('. $errorReporting .'); ?>'. "\n". $this->content;
+			$this->content = '<?php error_reporting('. $errorReporting .'); ini_set(\'display_errors\', \''. $displayErrors .'\'); ?>'. "\n". $this->content;
 
 			// parsed
 			$this->parsed = true;
