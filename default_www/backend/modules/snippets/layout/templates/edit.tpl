@@ -55,7 +55,6 @@
 						</div>
 
 						<div class="fullwidthOptions">
-
 							<a href="{$var|geturl:'delete'}&id={$id}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 								<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 							</a>

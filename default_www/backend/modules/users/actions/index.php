@@ -43,7 +43,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid with an overview of all active and undeleted users
-		$this->datagrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('Y', 'N'));
+		$this->datagrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
 
 		// header labels
 		$this->datagrid->setHeaderLabels(array('username' => ucfirst(BL::getLabel('Username'))));

@@ -62,14 +62,20 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addTextField('username', $this->record['username'], 75);
-		$this->frm->addPasswordField('password', null, 75);
+		$this->frm->addPasswordField('new_password', null, 75);
+		$this->frm->addPasswordField('confirm_password', null, 75);
 		$this->frm->addTextField('nickname', $this->record['settings']['nickname'], 75);
 		$this->frm->addTextField('email', $this->record['settings']['email'], 255);
 		$this->frm->addTextField('name', $this->record['settings']['name'], 255);
 		$this->frm->addTextField('surname', $this->record['settings']['surname'], 255);
 		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
 		$this->frm->addImageField('avatar');
+		$this->frm->addCheckBox('active', ($this->record['active'] == 'Y'));
+		$this->frm->addDropDown('group', BackendUsersModel::getGroups(), $this->record['group_id']);
 		$this->frm->addButton('edit', BL::getLabel('Edit'), 'submit');
+
+		// disable active field for current users
+		if(BackendAuthentication::getUser()->getUserId() == $this->record['id']) $this->frm->getField('active')->setAttribute('disabled', 'disabled');
 	}
 
 
@@ -83,12 +89,15 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
-		// show current avatar
-		$this->tpl->assign('avatarImage', FRONTEND_FILES_URL. '/backend_users/avatars/64x64/'. $this->record['settings']['avatar'] .'?time='. time());
+		// reset avatar url
+		if($this->record['settings']['avatar'] != '') $this->record['settings']['avatar'] .= '?time='. time();
 
-		// assign user-related data
-		$this->tpl->assign('nickname', $this->record['settings']['nickname']);
-		$this->tpl->assign('id', $this->record['id']);
+		// only allow deletion of other users
+		if(BackendAuthentication::getUser()->getUserId() != $this->id) $this->tpl->assign('deleteAllowed', true);
+
+		// assign
+		$this->tpl->assign('record', $this->record);
+		$this->tpl->assign('id', $this->id);
 	}
 
 
@@ -128,6 +137,10 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
 			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			if($this->frm->getField('new_password')->isFilled())
+			{
+				if($this->frm->getField('new_password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::getError('ValuesDontMatch'));
+			}
 
 			// validate avatar
 			if($this->frm->getField('avatar')->isFilled())
@@ -146,9 +159,10 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				// build user-array
 				$aUser['id'] = $this->id;
 				$aUser['username'] = $this->frm->getField('username')->getValue(true);
+				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $aUser['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
 
 				// update password (only if filled in)
-				if($this->frm->getField('password')->isFilled()) $aUser['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(), $this->record['settings']['password_key']);
+				if($this->frm->getField('new_password')->isFilled()) $aUser['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('new_password')->getValue(), $this->record['settings']['password_key']);
 
 				// build settings-array
 				$aSettings = $this->frm->getValues(array('username', 'password'));

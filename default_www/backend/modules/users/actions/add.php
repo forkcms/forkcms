@@ -48,15 +48,22 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		// create form
 		$this->frm = new BackendForm('add');
 
+		$groups = BackendUsersModel::getGroups();
+		$groupIds = array_keys($groups);
+		$defaultGroupId = BackendModel::getSetting('users', 'default_group', $groupIds[0]);
+
 		// create elements
 		$this->frm->addTextField('username', null, 75);
 		$this->frm->addPasswordField('password', null, 75);
+		$this->frm->addPasswordField('confirm_password', null, 75);
 		$this->frm->addTextField('nickname', null, 75);
 		$this->frm->addTextField('email', null, 255);
 		$this->frm->addTextField('name', null, 255);
 		$this->frm->addTextField('surname', null, 255);
 		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages());
 		$this->frm->addImageField('avatar');
+		$this->frm->addCheckBox('active', true);
+		$this->frm->addDropDown('group', $groups, $defaultGroupId);
 		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit');
 	}
 
@@ -95,9 +102,14 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			// required fields
 			$this->frm->getField('password')->isFilled(BL::getError('PasswordIsRequired'));
 			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frm->getField('nickname')->isFilled(BL::getError('NicknameIsRequired'));
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
 			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			if($this->frm->getField('password')->isFilled())
+			{
+				if($this->frm->getField('password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::getError('ValuesDontMatch'));
+			}
 
 			// validate avatar
 			if($this->frm->getField('avatar')->isFilled())
@@ -121,6 +133,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// build user-array
 				$aUser['username'] = $this->frm->getField('username')->getValue(true);
 				$aUser['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $aSettings['password_key']);
+				$aUser['group_id'] = $this->frm->getField('group')->getValue();
 
 				// save changes
 				$aUser['id'] = (int) BackendUsersModel::insert($aUser, $aSettings);

@@ -15,54 +15,117 @@
 
 			<div class="inner">
 				{form:add}
-				<div class="box">
-					<div class="heading">
-						&nbsp;
+					<div id="tabs" class="tabs">
+						<ul>
+							<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
+							<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
+						</ul>
+
+						<div id="tabSettings">
+							<div class="box boxLevel2">
+								<div class="heading">
+									<h3>{$lblCredentials|ucfirst}</h3>
+								</div>
+								<div class="options horizontal">
+									<p>
+										<label for="username">{$lblUsername|ucfirst}</label>
+										{$txtUsername} {$txtUsernameError}
+									</p>
+									<p>
+										<label for="new_password">{$lblPassword|ucfirst}</label>
+										{$txtPassword} {$txtPasswordError}
+
+										<!-- @todo
+										<table class="passwordStrength" cellspacing="0">
+											<td class="strength">
+												<p class="strength none">{$lblNone|ucfirst}</p>
+												<p class="strength weak">{$lblWeak|ucfirst}</p>
+												<p class="strength ok">{$lblOK|ucfirst}</p>
+												<p class="strength strong">{$lblStrong|ucfirst}</p>
+											</td>
+											<td>
+												<p class="helpTxt">{$msgHelpStrongPassword}</p>
+											</td>
+										</table>
+										-->
+									</p>
+									<p>
+										<label for="confirmPassword"">{$lblConfirmPassword|ucfirst}</label>
+										{$txtConfirmPassword} {$txtConfirmPasswordError}
+									</p>
+								</div>
+							</div>
+
+							<div class="box boxLevel2">
+								<div class="heading">
+									<h3>{$lblPersonalInformation|ucfirst}</h3>
+								</div>
+								<div class="options horizontal">
+									<p>
+										<label for="name">{$lblName|ucfirst}</label>
+										{$txtName} {$txtNameError}
+									</p>
+									<p>
+										<label for="surname">{$lblSurname|ucfirst}</label>
+										{$txtSurname} {$txtSurnameError}
+									</p>
+									<p>
+										<label for="email">{$lblEmail|ucfirst}</label>
+										{$txtEmail} {$txtEmailError}
+									</p>
+									<p>
+										<label for="nickname">{$lblNickname|ucfirst}</label>
+										{$txtNickname} {$txtNicknameError}
+										<span class="helpTxt">{$msgHelpNickname}</span>
+									</p>
+										<label for="avatar">{$lblAvatar|ucfirst}</label>
+										{$fileAvatar} {$fileAvatarError}
+										<span class="helpTxt">{$msgHelpAvatar}</span>
+									</p>
+								</div>
+							</div>
+
+							<div class="box boxLevel2">
+								<div class="heading">
+									<h3>{$lblInterfacePreferences|ucfirst}</h3>
+								</div>
+								<div class="options horizontal">
+									<p>
+										<label for="interface_language">{$lblInterfaceLanguage|ucfirst}</label>
+										{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div id="tabPermissions">
+							<div class="box boxLevel2">
+								<div class="heading">
+									<h3>{$lblAccountManagement|ucfirst}</h3>
+								</div>
+
+								<div class="options last horizontal">
+									<ul class="inputList">
+										<li>
+											{$chkActive}
+											<label for="active">{$msgEnableUser}</label>
+											 {$chkActiveError}
+										</li>
+									</ul>
+
+									<p>
+										<label for="group">{$lblGroup|ucfirst}</label>
+										{$ddmGroup} {$ddmGroupError}
+									</p>
+								</div>
+							</div>
+
+							<div class="box boxLevel2">
+								<div class="heading">
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="options horizontal">
-						<p>
-							<label for="username">{$lblUsername|ucfirst}</label>
-							{$txtUsername} {$txtUsernameError}
-						</p>
-
-						<p>
-							<label for="password">{$lblPassword|ucfirst}</label>
-							{$txtPassword} {$txtPasswordError}
-						</p>
-
-						<p>
-							<label for="nickname">{$lblNickname|ucfirst}</label>
-							{$txtNickname} {$txtNicknameError}
-						</p>
-
-						<p>
-							<label for="avatar">{$lblAvatar|ucfirst}</label>
-							<!-- <img src="{$avatarImage}" width="64" height="64" alt="avatar" /> -->
-							{$fileAvatar} {$fileAvatarError}
-						</p>
-
-						<p>
-							<label for="email">{$lblEmail|ucfirst}</label>
-							{$txtEmail} {$txtEmailError}
-						</p>
-
-						<p>
-							<label for="name">{$lblName|ucfirst}</label>
-							{$txtName} {$txtNameError}
-						</p>
-
-						<p>
-							<label for="surname">{$lblSurname|ucfirst}</label>
-							{$txtSurname} {$txtSurnameError}
-						</p>
-
-						<p>
-							<label for="username">{$lblInterfaceLanguage|ucfirst}</label>
-							{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
-						</p>
-
-					</div>
-				</div>
 
 				<div class="fullwidthOptions">
 					<div class="buttonHolderRight">

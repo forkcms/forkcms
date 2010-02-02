@@ -17,7 +17,7 @@ class BackendUsersModel
 	// overview of the active users
 	const QRY_BROWSE = 'SELECT u.id, u.username
 						FROM users AS u
-						WHERE u.active = ? AND u.deleted = ?;';
+						WHERE u.deleted = ?;';
 
 
 	/**
@@ -77,8 +77,8 @@ class BackendUsersModel
 		// if the user should also be active, there should be at least one row to return true
 		if($active) return ($db->getNumRows('SELECT u.id
 												FROM users AS u
-												WHERE u.id = ? AND u.active = ? AND u.deleted = ?;',
-												array($id, 'Y', 'N')) == 1);
+												WHERE u.id = ? AND u.deleted = ?;',
+												array($id, 'N')) == 1);
 
 		// fallback, this doesn't hold the active nor deleted status in account
 		return ($db->getNumRows('SELECT u.id
@@ -157,7 +157,7 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// get general user data
-		$user = (array) $db->getRecord('SELECT u.id, u.username
+		$user = (array) $db->getRecord('SELECT u.id, u.username, u.active, u.group_id
 										FROM users AS u
 										WHERE u.id = ?;',
 										array($id));
@@ -173,6 +173,22 @@ class BackendUsersModel
 
 		// return
 		return $user;
+	}
+
+
+	/**
+	 * Get user groups
+	 *
+	 * @return	array
+	 */
+	public static function getGroups()
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// return
+		return (array) $db->getPairs('SELECT g.id, g.name
+										FROM groups AS g');
 	}
 
 
