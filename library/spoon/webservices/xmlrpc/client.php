@@ -13,7 +13,7 @@
  * @author		Davy Hellemans <davy@spoon-library.be>
  * @author 		Tijs Verkoyen <tijs@spoon-library.be>
  * @author		Dave Lens <dave@spoon-library.be>
- * @since		1.1.2
+ * @since		1.1.4
  */
 
 
@@ -118,12 +118,8 @@ class SpoonXMLRPCClient
 			// start parameters
 			$xml .= '	<params>'."\n";
 
-			// loop parameters
-			foreach($parameters as $parameter)
-			{
-				// build parameters
-				$xml .= '		<param>'. $this->buildValueXML($parameter) .'</param>'."\n";
-			}
+			// loop parameters and build parameters
+			foreach($parameters as $parameter) $xml .= '		<param>'. $this->buildValueXML($parameter) .'</param>'."\n";
 
 			// end parameters
 			$xml .= '	</params>'."\n";
@@ -138,13 +134,14 @@ class SpoonXMLRPCClient
 
 
 	/**
-	 * Build parameter XML
+	 * Build XML for a value
 	 *
 	 * @return	string
 	 * @param	array $parameter
 	 */
 	private function buildValueXML(array $parameter)
 	{
+		// each type has his own XML
 		switch($parameter['type'])
 		{
 			// array
@@ -208,7 +205,6 @@ class SpoonXMLRPCClient
 				// loop values
 				foreach($parameter['value'] as $item)
 				{
-
 					$xml .= '	<member>'."\n";
 					$xml .= '		<name>'. (string) $item['name'] .'</name>' ."\n";
 					$xml .= '		<value>'. $this->buildValueXML($item) .'</value>'."\n";
@@ -227,6 +223,7 @@ class SpoonXMLRPCClient
 				return '<nil/>';
 			break;
 
+			// unknwon type
 			default:
 				throw new SpoonXMLRPCException('Invalid type ('. $parameter['type'] .').');
 		}
@@ -250,6 +247,7 @@ class SpoonXMLRPCClient
 		// loop params
 		foreach($xml->params->param as $param)
 		{
+			// decode value, and add it to the retuen array
 			$return[] = $this->decodeValue($param->value);
 		}
 
@@ -448,9 +446,13 @@ class SpoonXMLRPCClient
 		// get headers
 		$headers = $this->getCustomHeaders();
 
-		// add ours
+		// set correct content)type
 		$headers[] = 'Content-type: text/xml';
+
+		// set content-length
 		$headers[] = 'Content-length: '. mb_strlen($xml) ."\r\n";
+
+		// add XML
 		$headers[] = $xml;
 
 		// set headers
@@ -485,20 +487,25 @@ class SpoonXMLRPCClient
 		// validate XML
 		if($xml === false) throw new SpoonXMLRPCException('Invalid response.');
 
-		// validate
+		// validate response, if it is an XMLRPC-error we'll throw it as an exception
 		if($xml->getName() == 'fault')
 		{
-			// decode
+			// decode the fault
 			$response = $this->decodeFaultXML($xml);
 
-			// validate
+			// validate if the response was decoded, and it tye needed values are available
 			if($response === false || !isset($response['faultString'])) throw new SpoonXMLRPCException('Unknown fault.');
+
+			// everything is here
 			else
 			{
+				// get faultcode
 				$code = (isset($response['faultCode'])) ? (int) $response['faultCode'] : null;
+
+				// get message
 				$message = $response['faultString'];
 
-				// throw
+				// throw exception
 				throw new SpoonXMLRPCException($message, $code);
 			}
 		}
