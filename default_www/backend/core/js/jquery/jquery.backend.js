@@ -36,10 +36,11 @@
 						'	</div>'+
 						'</div>';
 			
-			// @todo	hide current element
+			// hide current element
 			$(this).css('visibility', 'hidden')
-				   .css('top', '-9000px;')
-				   .css('left', '-9000px;')
+				   .css('position', 'absolute')
+				   .css('top', '-9000px')
+				   .css('left', '-9000px')
 				   .attr('tabindex', '-1');
 			
 			// prepend html

@@ -81,7 +81,7 @@ class BackendLocaleModel
 		$value .= '?>';
 
 		// store
-		SpoonFile::setContent(constant(strtoupper($application) .'_CACHE_PATH') .'/locale/'. $language .'.php', $value);
+		SpoonFile::setContent(constant(mb_strtoupper($application) .'_CACHE_PATH') .'/locale/'. $language .'.php', $value);
 	}
 
 

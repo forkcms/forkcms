@@ -49,7 +49,7 @@
 															<h4><a href="#summary .options" class="toggleDiv">{$lblSummary|ucfirst}</a></h4>
 														</div>
 
-														<div class="options hide" style="display: none;">
+														<div class="options hidden" style="display: none;">
 															<p class="helpTxt">{$msgHelpSummary}</p>
 															{$txtIntroduction} {$txtIntroductionError}
 														</div>
@@ -67,7 +67,7 @@
 												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
-											<!-- @todo
+											<!-- @later
 											<div class="options">
 												<div class="buttonHolder">
 													<a href="#" class="button icon iconZoom"><span><span><span>Preview</span></span></span></a>
@@ -232,7 +232,7 @@
 									<ul class="inputList">
 										<li>
 											{$chkUrlOverwrite}
-											<span id="urlFirstPart">{$SITE_URL}</span>{$txtUrl} {$txtUrlError}
+											<span id="urlFirstPart">{$blogUrl}/</span>{$txtUrl} {$txtUrlError}
 										</li>
 									</ul>
 

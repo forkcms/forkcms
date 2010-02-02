@@ -104,10 +104,17 @@ class BackendLanguage
 	 */
 	public static function getInterfaceLanguages()
 	{
-		/**
-		 * We should get a listing of locale-files and cache this.
-		 */
-		return array('nl' => BackendLanguage::getLabel('Dutch')); // @todo gaan we dit hardcoded laten?
+		// grab from settings
+		$languages = BackendModel::getSetting('core', 'interface_languages', array('nl'));
+
+		// init var
+		$return = array();
+
+		// loop language to reset the label
+		foreach($languages as $key) $return[$key] = BackendLanguage::getLabel(mb_strtoupper($key), 'core');
+
+		// return
+		return $return;
 	}
 
 
@@ -215,12 +222,17 @@ class BackendLanguage
 	 */
 	public static function getWorkingLanguages()
 	{
-		/**
-		 * Retrieve from settings (core_languages)
-		 */
-		return array('nl' => BackendLanguage::getLabel('Dutch'),
-					 'fr' => BackendLanguage::getLabel('French'),
-					 'en' => BackendLanguage::getLabel('English')); // @todo gaan we dit hardcoded laten?
+		// get languages
+		$languages = BackendModel::getSetting('core', 'languages', array('nl'));
+
+		// init var
+		$return = array();
+
+		// loop language to reset the label
+		foreach($languages as $key) $return[$key] = BackendLanguage::getLabel(mb_strtoupper($key), 'core');
+
+		// return
+		return $return;
 	}
 
 

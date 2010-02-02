@@ -24,6 +24,14 @@ class BackendModel
 
 
 	/**
+	 * Cached modules
+	 *
+	 * @var	array
+	 */
+	private static $modules = array();
+
+
+	/**
 	 * Cached module settings
 	 *
 	 * @var	array
@@ -143,7 +151,7 @@ class BackendModel
 	 * Get (or create and get) a database-connection
 	 * If the database wasn't stored in the reference before we will create it and add it
 	 *
-	 * @todo	extend SpoonDatabase with BackendDatabase
+	 * @todo	add $write = false
 	 * @return	SpoonDatabase
 	 */
 	public static function getDB()
@@ -232,8 +240,6 @@ class BackendModel
 	/**
 	 * Get the modules
 	 *
-	 * @todo deze lijst moet in lokale cache komen, aangezien die redelijk veel wordt opgevraagd.
-	 *
 	 * @return	array
 	 * @param	bool[optional] $activeOnly
 	 */
@@ -242,18 +248,32 @@ class BackendModel
 		// redefine
 		$activeOnly = (bool) $activeOnly;
 
-		// get db
-		$db = self::getDB();
+		// validate cache
+		if(empty(self::$modules) || !isset(self::$modules['active']) || !isset(self::$modules['all']))
+		{
+			// get db
+			$db = self::getDB();
+
+			// get all modules
+			$modules = (array) $db->getPairs('SELECT m.name, m.active
+												FROM modules AS m');
+
+			// loop
+			foreach($modules as $module => $active)
+			{
+				// if the module is active
+				if($active == 'Y') self::$modules['active'][] = $module;
+
+				// add to all
+				self::$modules['all'][] = $module;
+			}
+		}
 
 		// only return the active modules
-		if($activeOnly) return $db->getColumn('SELECT name
-												FROM modules
-												WHERE active = ?;',
-												array('Y'));
+		if($activeOnly) return self::$modules['active'];
 
 		// fallback
-		return $db->getColumn('SELECT name
-								FROM modules;');
+		return self::$modules['all'];
 	}
 
 
@@ -271,8 +291,8 @@ class BackendModel
 		// fetch modules
 		$modules = self::getModules($activeOnly);
 
-		// @todo davy - later moeten de modules als language labels geparsed worden
-		foreach($modules as $module) $dropdown[$module] = $module;
+		// loop and add into the return-array (with correct label)
+		foreach($modules as $module) $dropdown[$module] = ucfirst(BackendLanguage::getLabel(SpoonFilter::toCamelCase($module)));
 
 		// return data
 		return $dropdown;

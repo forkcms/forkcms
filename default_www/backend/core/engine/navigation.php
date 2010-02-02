@@ -87,8 +87,8 @@ class BackendNavigation
 					// break URL into parts
 					$chunks = (array) explode('/', $child['url']);
 
-					// @todo	check me
-					if(!isset($chunks[1])) Spoon::dump($child);
+					// can't get here!
+					if(!isset($chunks[1])) throw new BackendException('invalid child');
 
 					// check if the action is allowed
 					if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))

@@ -79,10 +79,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addTextField('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
 		$this->frm->addTextField('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
 
-		/*
-		 * We need to create a list of the languages
-		 * @todo davy - correcte vertaling op basis van de lijsten in SpoonLocale
-		 */
+		// create a list of the languages
 		foreach(BackendModel::getSetting('core', 'languages', array('nl')) as $abbreviation)
 		{
 			// is this the default language
@@ -91,6 +88,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			// attributes
 			$attributes = array();
 			$attributes['id'] = 'language_'. $abbreviation;
+
+			$label = BackendLanguage::getLabel(mb_strtoupper($abbreviation), 'core');
 
 			// default may not be unselected
 			if($defaultLanguage)
@@ -104,7 +103,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			}
 
 			// add to the list
-			$languages[] = array('label' => $abbreviation, 'value' => $abbreviation, 'attributes' => $attributes, 'variables' => array('default' => $defaultLanguage));
+			$languages[] = array('label' => $label, 'value' => $abbreviation, 'attributes' => $attributes, 'variables' => array('default' => $defaultLanguage));
 		}
 
 		// create multilanguage checkbox

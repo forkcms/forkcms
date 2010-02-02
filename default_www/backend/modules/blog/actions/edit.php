@@ -230,7 +230,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				// insert the item
 				$id = (int) BackendBlogModel::update($this->id, $item);
 
-				// @todo	tags
+				// save the tags
+				BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// ping
 				BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());

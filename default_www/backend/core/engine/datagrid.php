@@ -281,7 +281,7 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		// load template
 		$tpl = new SpoonTemplate();
 
-		// @todo	if there is just one page we don't want to see any paging
+		// if there is just one page we don't want to see any paging, so return an empty string
 		if($numPages == 1) return '';
 
 		// compile directory
@@ -598,7 +598,6 @@ class BackendDataGridFunctions
 		$avatar = $user->getSetting('avatar', 'no-avatar.gif');
 		$nickname = $user->getSetting('nickname');
 
-		// @todo	Johan, why do we need an a-elements wrapped arround?
 		// build html
 		$html = '<div class="user">'."\n";
 		$html .= '	<a href="'. BackendModel::createURLForAction('edit', 'users') . '&id='. $id .'">'."\n";

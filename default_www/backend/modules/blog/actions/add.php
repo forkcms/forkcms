@@ -108,7 +108,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		parent::parse();
 
 		// parse additional variables
-		$this->tpl->assign('blogUrl', SITE_URL); // @todo tijs - need FrontendModel::createURLForAction() for this
+		$this->tpl->assign('blogUrl', SITE_URL . BackendModel::getURLForBlock('blog', 'detail'));
 	}
 
 
@@ -151,7 +151,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 				// set formatted date and time
 				$formattedDate = SpoonDate::getDate('Y-m-d', $txtPublishDate->getTimestamp());
-				$formattedTime = SpoonDate::getDate('H:i:s', strtotime($txtPublishTime->getValue())); // @todo switch this to $txtPublishTime->getTimestamp whenever it is available
+				$formattedTime = SpoonDate::getDate('H:i', strtotime($txtPublishTime->getValue())) .':00'; // @todo switch this to $txtPublishTime->getTimestamp whenever it is available
 
 				// build item
 				$item['meta_id'] = $this->meta->save();

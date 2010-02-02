@@ -58,7 +58,7 @@ class BackendBaseAction
 	 *
 	 * @var	BackendURL
 	 */
-	public $URL; // @todo davy - maak hier eens $URL van en pas overal aan waar nodig.
+	public $URL;
 
 
 	/**

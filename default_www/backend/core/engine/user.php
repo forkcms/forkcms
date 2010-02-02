@@ -236,12 +236,12 @@ class BackendUser
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
 											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id
-											WHERE u.id = ? AND u.active = ? AND u.deleted = ?
+											WHERE u.id = ?
 											LIMIT 1;',
-											array($userId, 'Y', 'N'));
+											array($userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) unset($this);
+		if(empty($userData)) Spoon::dump($userId);
 
 		// set properties
 		$this->setUserId($userData['id']);

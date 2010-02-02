@@ -1,4 +1,3 @@
-<!-- @todo	fix labels -->
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
 {include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
 		<td id="contentHolder">
@@ -52,11 +51,11 @@
 																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
 															</div>
 
-															<h4><a href="#summary .options" class="toggleDiv">Summary</a></h4>
+															<h4><a href="#summary .options" class="toggleDiv">{$lblSummary|ucfirst}</a></h4>
 														</div>
 
 														<div class="options hidden"{option:oShowSummary} style="display: block"{/option:oShowSummary}>
-															<p class="helpTxt">If you enter a summary, the summary will be shown on "list" pages (e.g. the blog overview). If you don't, the full blog post will be shown in the overview.</p>
+															<p class="helpTxt">{$msgHelpSummary}</p>
 															{$txtIntroduction} {$txtIntroductionError}
 														</div>
 													</div>
@@ -73,7 +72,7 @@
 												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
-											{*
+											<!-- @later
 											<div class="options">
 												<div class="buttonHolder">
 													{$btnPreview}
@@ -84,7 +83,7 @@
 											<div class="options">
 												<p class="status">Status: <strong>{$status}</strong></p>
 											</div>
-											*}
+											-->
 
 											<div class="options">
 												<ul class="inputList">
@@ -137,7 +136,7 @@
 
 										<div id="authors" class="box">
 											<div class="heading">
-												<h4>Author</h4>
+												<h4>{$lblAuthor|ucfirst}</h4>
 												<!--  @todo
 												<div class="buttonHolderRight">
 													<a href="#" id="editAuthor" class="button icon iconEdit iconOnly">
@@ -167,7 +166,7 @@
 
 										<div id="tagBox" class="box">
 											<div class="heading">
-												<h4>Tags</h4>
+												<h4>{$lblTags|ucfirst}</h4>
 											</div>
 
 											<div class="options">
