@@ -248,7 +248,7 @@ class BackendAuthentication
 			if($sessionData !== null)
 			{
 				// update the session in the table
-				$db->update('users_sessions', array('date' => date('Y-m-d H:i:s'), 'language' => BackendLanguage::getWorkingLanguage()), 'id = ?', (int) $sessionData['id']);
+				$db->update('users_sessions', array('date' => BackendModel::getUTCDate(), 'language' => BackendLanguage::getWorkingLanguage()), 'id = ?', (int) $sessionData['id']);
 
 				// create a user object, it will handle stuff related to the current authenticated user
 				self::$user = new BackendUser($sessionData['user_id']);

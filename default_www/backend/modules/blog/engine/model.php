@@ -412,7 +412,7 @@ class BackendBlogModel
 		$item['id'] = $id;
 		$item['status'] = 'active';
 		$item['language'] = $version['language'];
-		$item['edited_on'] = date('Y-m-d H:i:s');
+		$item['edited_on'] = BackendModel::getUTCDate();
 
 		// archive all older versions
 		$db->update('blog_posts', array('status' => 'archived'), 'id = ?', array($id));

@@ -188,7 +188,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 				$locale['type'] = $this->frm->getField('type')->getValue();
 				$locale['name'] = $this->frm->getField('name')->getValue();
 				$locale['value'] = $this->frm->getField('value')->getValue();
-				$locale['edited_on'] = gmdate('Y-m-d H:i:s');
+				$locale['edited_on'] = BackendModel::getUTCDate();
 
 				// update item
 				BackendLocaleModel::update($this->id, $locale);

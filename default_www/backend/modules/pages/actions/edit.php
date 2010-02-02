@@ -318,9 +318,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
 				$page['hidden'] = $this->frm->getField('hidden')->getValue();
 				$page['status'] = 'active';
-				$page['publish_on'] = date('Y-m-d H:i:s', $this->record['publish_on']);
-				$page['created_on'] = date('Y-m-d H:i:s', $this->record['created_on']);
-				$page['edited_on'] = date('Y-m-d H:i:s');
+				$page['publish_on'] = BackendModel::getUTCDate(null, $this->record['publish_on']);
+				$page['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
+				$page['edited_on'] = BackendModel::getUTCDate();
 				$page['allow_move'] = $this->record['allow_move'];
 				$page['allow_children'] = $this->record['allow_children'];
 				$page['allow_edit'] = $this->record['allow_edit'];
@@ -374,8 +374,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;
 					$block['status'] = 'active';
-					$block['created_on'] = date('Y-m-d H:i:s');
-					$block['edited_on'] = date('Y-m-d H:i:s');
+					$block['created_on'] = BackendModel::getUTCDate();
+					$block['edited_on'] = BackendModel::getUTCDate();
 
 					// edit block
 					$blocks[] = $block;

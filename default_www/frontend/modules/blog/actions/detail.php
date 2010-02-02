@@ -227,7 +227,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 				// build array
 				$comment['post_id'] = $this->record['id'];
-				$comment['created_on'] = date('Y-m-d H:i:s');
+				$comment['created_on'] = FrontendModel::getUTCDate();
 				$comment['author'] = $author;
 				$comment['email'] = $email;
 				$comment['website'] = $website;

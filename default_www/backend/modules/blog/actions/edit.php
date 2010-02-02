@@ -221,8 +221,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['title'] = $txtTitle->getValue();
 				$item['introduction'] = $txtIntroduction->getValue();
 				$item['text'] = $txtText->getValue();
-				$item['publish_on'] = $formattedDate.' '.$formattedTime;
-				$item['created_on'] = date('Y-m-d H:i:s', $this->record['created_on']);
+				$item['publish_on'] = $formattedDate.' '.$formattedTime; // @todo davy - dit moet nog geswitched worden naar de correcte UTC tijd + testen of het effectief 1 uur teruggaat.
+				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $this->record['created_on']);
 				$item['hidden'] = $rbtHidden->getValue();
 				$item['allow_comments'] = $chkAllowComments->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;

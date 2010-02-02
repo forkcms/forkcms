@@ -162,9 +162,9 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['introduction'] = $txtIntroduction->getValue();
 				$item['text'] = $txtText->getValue();
 				$item['status'] = 'active';
-				$item['publish_on'] = $formattedDate .' '. $formattedTime;
-				$item['created_on'] = date('Y-m-d H:i:s');
-				$item['edited_on'] = date('Y-m-d H:i:s');
+				$item['publish_on'] = $formattedDate .' '. $formattedTime; // @todo davy - dit moet nog correct naar de UTC tijd vertaald worden.
+				$item['created_on'] = BackendModel::getUTCDate();
+				$item['edited_on'] = BackendModel::getUTCDate();
 				$item['hidden'] = $rbtHidden->getValue();
 				$item['allow_comments'] = $chkAllowComments->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;

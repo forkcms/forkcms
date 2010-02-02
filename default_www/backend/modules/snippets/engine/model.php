@@ -144,8 +144,8 @@ class BackendSnippetsModel
 		$values['language'] = BL::getWorkingLanguage();
 		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
 		$values['status'] = 'active';
-		$values['created_on'] = date('Y-m-d H:i:s');
-		$values['edited_on'] = date('Y-m-d H:i:s');
+		$values['created_on'] = BackendModel::getUTCDate();
+		$values['edited_on'] = BackendModel::getUTCDate();
 
 		// insert and return the insertId
 		$db->insert('snippets', $values);
@@ -191,8 +191,8 @@ class BackendSnippetsModel
 		$values['language'] = $version['language'];
 		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
 		$values['status'] = 'active';
-		$values['created_on'] = date('Y-m-d H:i:s', $version['created_on']);
-		$values['edited_on'] = date('Y-m-d H:i:s');
+		$values['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $version['created_on']);
+		$values['edited_on'] = BackendModel::getUTCDate();
 
 		// archive all older versions
 		$db->update('snippets', array('status' => 'archived'), 'id = ?', array($id));

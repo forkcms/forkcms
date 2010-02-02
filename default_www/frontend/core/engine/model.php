@@ -178,6 +178,26 @@ class FrontendModel
 
 
 	/**
+	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
+	 *
+	 * @return	string
+	 * @param	string[optional] $format
+	 * @param	int[optional] $timestamp
+	 */
+	public static function getUTCDate($format = null, $timestamp = null)
+	{
+		// init var
+		$format = ($format !== null) ? (string) $format : 'Y-m-d H:i:s';
+
+		// no timestamp given
+		if($timestamp === null) return gmdate($format);
+
+		// timestamp given
+		return gmdate($format, (int) $timestamp);
+	}
+
+
+	/**
 	 * General method to check if something is spam
 	 *
 	 * @return	bool

@@ -211,9 +211,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
 				$page['hidden'] = $this->frm->getField('hidden')->getValue();
 				$page['status'] = 'active';
-				$page['publish_on'] = date('Y-m-d H:i:s'); // @todo moet door gebruiker ingevuld worden.
-				$page['created_on'] = date('Y-m-d H:i:s');
-				$page['edited_on'] = date('Y-m-d H:i:s');
+				$page['publish_on'] = BackendModel::getUTCDate();
+				$page['created_on'] = BackendModel::getUTCDate();
+				$page['edited_on'] = BackendModel::getUTCDate();
 				$page['allow_move'] = 'Y';
 				$page['allow_children'] = 'Y';
 				$page['allow_edit'] = 'Y';
@@ -269,15 +269,15 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;
 					$block['status'] = 'active';
-					$block['created_on'] = date('Y-m-d H:i:s');
-					$block['edited_on'] = date('Y-m-d H:i:s');
+					$block['created_on'] = BackendModel::getUTCDate();
+					$block['edited_on'] = BackendModel::getUTCDate();
 
 					// add block
 					$blocks[] = $block;
 				}
 
 				// insert the blocks
-				// @todo rekening houden met de actions voor de url
+				// @todo rekening houden met act voor de url
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 				// save tags

@@ -59,7 +59,7 @@ class BackendMailer
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
 		$email['html'] = self::getTemplateContent($template, $variables);
-		if($queue) $email['send_on'] = date('Y-m-d H') .'00:00';
+		if($queue) $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') .'00:00';
 
 		// get db
 		$db = BackendModel::getDB();
