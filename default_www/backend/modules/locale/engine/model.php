@@ -14,9 +14,6 @@
  */
 class BackendLocaleModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT id, language, application, module, type, name, value
-									FROM locale AS l';
-
 	/**
 	 * @todo	PHPDoc
 	 * @param unknown_type $language

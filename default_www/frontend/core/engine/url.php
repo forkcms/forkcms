@@ -133,6 +133,7 @@ class FrontendURL
 	 */
 	public function getParameter($index, $type = 'string')
 	{
+		// @todo davy - wat een domme code. Er moet nog gechecked worden op != '' en test dit in blog.
 		// does the index exists
 		if(isset($this->parameters[$index]))
 		{

@@ -15,6 +15,22 @@
 class BackendLocaleIndex extends BackendBaseActionIndex
 {
 	/**
+	 * Filter variables
+	 *
+	 * @var	arra
+	 */
+	private $filter;
+
+
+	/**
+	 * Form
+	 *
+	 * @var BackendForm
+	 */
+	private $frm;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -23,6 +39,12 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		// set filter
+		$this->setFilter();
+
+		// load form
+		$this->loadForm();
 
 		// load datagrids
 		$this->loadDataGrid();
@@ -35,6 +57,61 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	}
 
 
+	private function buildQuery()
+	{
+		$parameters = array(0);
+
+		$query = 'SELECT
+					l.id,
+					l.language,
+					l.application,
+					l.module,
+					l.type,
+					l.name,
+					l.value
+					FROM locale AS l
+					WHERE l.id > ?';
+
+		if($this->filter['language'] !== null)
+		{
+			$query .= ' AND l.language = ?';
+			$parameters[] = $this->filter['language'];
+		}
+
+		if($this->filter['application'] !== null)
+		{
+			$query .= ' AND l.application = ?';
+			$parameters[] = $this->filter['application'];
+		}
+
+		if($this->filter['module'] !== null)
+		{
+			$query .= ' AND l.module = ?';
+			$parameters[] = $this->filter['module'];
+		}
+
+		if($this->filter['type'] !== null)
+		{
+			$query .= ' AND l.type = ?';
+			$parameters[] = $this->filter['type'];
+		}
+
+		if($this->filter['name'] !== null)
+		{
+			$query .= ' AND l.name LIKE  ?';
+			$parameters[] = '%'. $this->filter['name'] .'%';
+		}
+
+		if($this->filter['value'] !== null)
+		{
+			$query .= ' AND l.value LIKE ?';
+			$parameters[] = '%'. $this->filter['value'] .'%';
+		}
+
+		return array($query, $parameters);
+	}
+
+
 	/**
 	 * Loads the datagrids
 	 *
@@ -42,8 +119,14 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
+		// fetch query and parameters
+		list($query, $parameters) = $this->buildQuery();
+
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendLocaleModel::QRY_DATAGRID_BROWSE);
+		$this->datagrid = new BackendDataGridDB($query, $parameters);
+
+		// overrule default url
+		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value']), false));
 
 		// header labels
 		$this->datagrid->setHeaderLabels(array('language' => ucfirst(BL::getLabel('Language')), 'application' => ucfirst(BL::getLabel('Application')), 'module' => ucfirst(BL::getLabel('Module')), 'type' => ucfirst(BL::getLabel('Type')), 'name' => ucfirst(BL::getLabel('Name')), 'value' => ucfirst(BL::getLabel('Value'))));
@@ -63,7 +146,35 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'truncate'), array('[value]', 30), 'value', true);
 
 		// add columns
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&id=[id]', BL::getLabel('Edit'));
+	}
+
+
+	// @todo davy - velden opkuisen
+	// @todo davy - testen wat dit geeft als je met speciale karaketers in de URL werkt. (urlencode nodig?)
+	private function loadForm()
+	{
+		$this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
+
+		$this->frm->addDropDown('language', array('nl' => BL::getLabel('Dutch')), $this->filter['language']);
+		$this->frm->getField('language')->setDefaultElement('Kies een taal');
+
+		$this->frm->addDropDown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
+		$this->frm->getField('application')->setDefaultElement('Kies een applicatie');
+
+		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
+		$this->frm->getField('module')->setDefaultElement('Kies een module');
+
+		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
+		$this->frm->getField('type')->setDefaultElement('Kies een type');
+
+		$this->frm->addTextField('name', $this->filter['name']);
+
+		$this->frm->addTextField('value', $this->filter['value']);
+
+		$this->frm->addButton('search', 'Search', 'submit');
+
+		$this->frm->parse($this->tpl);
 	}
 
 
@@ -74,7 +185,27 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// parse datagrid
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+
+		// parse paging & sorting
+		$this->tpl->assign('offset', $this->datagrid->getOffset());
+		$this->tpl->assign('order', $this->datagrid->getOrder());
+		$this->tpl->assign('sort', $this->datagrid->getSort());
+
+		// parse filter
+		$this->tpl->assign($this->filter);
+	}
+
+
+	private function setFilter()
+	{
+		$this->filter['language'] = $this->getParameter('language');
+		$this->filter['application'] = $this->getParameter('application');
+		$this->filter['module'] = $this->getParameter('module');
+		$this->filter['type'] = $this->getParameter('type');
+		$this->filter['name'] = $this->getParameter('name');
+		$this->filter['value'] = $this->getParameter('value');
 	}
 }
 

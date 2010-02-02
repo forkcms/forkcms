@@ -58,7 +58,7 @@ class BackendBaseAction
 	 *
 	 * @var	BackendURL
 	 */
-	public $url;
+	public $url; // @todo davy - maak hier eens $URL van en pas overal aan waar nodig.
 
 
 	/**
@@ -185,9 +185,9 @@ class BackendBaseAction
 		$key = (string) $key;
 
 		// parameter exists
-		if(isset($this->parameters[$key])) return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
+		if(isset($this->parameters[$key]) && $this->parameters[$key] != '') return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
 
-		// no such parammeter, fallback
+		// no such parameter
 		return null;
 	}
 

@@ -14,6 +14,14 @@
 class BackendLocaleAdd extends BackendBaseActionAdd
 {
 	/**
+	 * Filter variables
+	 *
+	 * @var	arra
+	 */
+	private $filter;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -22,6 +30,9 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		// filter options
+		$this->setFilter();
 
 		// load the form
 		$this->loadForm();
@@ -45,16 +56,37 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('add');
+		$this->frm = new BackendForm('add', BackendModel::createURLForAction(null, null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])));
 
 		// create and add elements
-		$this->frm->addDropDown('application', array('backend' => 'backend', 'frontend' => 'frontend'));
-		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false));
-		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), 'lbl');
+		$this->frm->addDropDown('application', array('backend' => 'backend', 'frontend' => 'frontend'), $this->filter['application']);
+		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
+		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
 		$this->frm->addTextField('name');
 		$this->frm->addTextField('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
-		$this->frm->addDropDown('language', array('nl' => 'Nederlands', 'fr' => 'Frans', 'en' => 'Engels'), 'nl'); // @todo davy - opbouwen van een goeie lijst
+		$this->frm->addDropDown('language', array('nl' => 'Nederlands', 'fr' => 'Frans', 'en' => 'Engels'), $this->filter['language']); // @todo davy - opbouwen van een goeie lijst
 		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
+	}
+
+	protected function parse()
+	{
+		// execute parent
+		parent::parse();
+
+		// parse filter
+		$this->tpl->assign($this->filter);
+	}
+
+
+	// @todo davy - phpdoc
+	private function setFilter()
+	{
+		$this->filter['language'] = $this->getParameter('language');
+		$this->filter['application'] = $this->getParameter('application');
+		$this->filter['module'] = $this->getParameter('module');
+		$this->filter['type'] = $this->getParameter('type');
+		$this->filter['name'] = $this->getParameter('name');
+		$this->filter['value'] = $this->getParameter('value');
 	}
 
 
@@ -145,7 +177,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				BackendLocaleModel::insert($locale);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($locale['name']));
+				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=added&var='. urlencode($locale['name']));
 			}
 		}
 	}

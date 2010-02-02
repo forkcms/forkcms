@@ -14,6 +14,14 @@
 class BackendLocaleEdit extends BackendBaseActionEdit
 {
 	/**
+	 * Filter variables
+	 *
+	 * @var	arra
+	 */
+	private $filter;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -28,6 +36,9 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
+
+			// filter options
+			$this->setFilter();
 
 			// get all data for the item we want to edit
 			$this->getData();
@@ -69,7 +80,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('edit');
+		$this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'], 'id' => $this->id)));
 
 		// create and add elements
 		$this->frm->addDropDown('language', array('nl' => 'Nederlands', 'fr' => 'Frans', 'en' => 'Engels'), 'nl'); // @todo davy - opbouwen van een goeie lijst
@@ -92,8 +103,22 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
+		// parse filter
+		$this->tpl->assign($this->filter);
+
 		// assign id, name
 		$this->tpl->assign('id', $this->record['id']);
+	}
+
+	// @todo davy - phpdoc
+	private function setFilter()
+	{
+		$this->filter['language'] = $this->getParameter('language');
+		$this->filter['application'] = $this->getParameter('application');
+		$this->filter['module'] = $this->getParameter('module');
+		$this->filter['type'] = $this->getParameter('type');
+		$this->filter['name'] = $this->getParameter('name');
+		$this->filter['value'] = $this->getParameter('value');
 	}
 
 
@@ -156,6 +181,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			{
 				// build item
 				$locale = array();
+				$locale['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$locale['language'] = $this->frm->getField('language')->getValue();
 				$locale['application'] = $this->frm->getField('application')->getValue();
 				$locale['module'] = $this->frm->getField('module')->getValue();
@@ -168,7 +194,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 				BackendLocaleModel::update($this->id, $locale);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($locale['name']));
+				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=edited&var='. urlencode($locale['name']));
 			}
 		}
 	}
