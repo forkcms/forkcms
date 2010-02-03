@@ -8,6 +8,8 @@ ONSITE TODO
 
 PRIVATE TODO
 --
+	noscript error
+
 	dashboard:
 		- get messages from API
 
