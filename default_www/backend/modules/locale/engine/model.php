@@ -15,9 +15,11 @@
 class BackendLocaleModel
 {
 	/**
-	 * @todo	PHPDoc
-	 * @param unknown_type $language
-	 * @param unknown_type $application
+	 * Build the language files
+	 *
+	 * @return	void
+	 * @param	string $language		The language to build the locale-file for..
+	 * @param	string $application		The application to build the locale-file for.
 	 */
 	public static function buildCache($language, $application)
 	{
@@ -57,6 +59,7 @@ class BackendLocaleModel
 			$value .= '$'. $type .' = array();' ."\n";
 			$value .= '$'. $type .'[\'core\'] = array();' ."\n";
 
+			// loop locale
 			foreach($locale as $i => $item)
 			{
 				if($item['type'] == $type)
@@ -86,8 +89,10 @@ class BackendLocaleModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param $ids
+	 * Delete (multiple) items from locale
+	 *
+	 * @return	void
+	 * @param	array $ids	The id(s) to delete.
 	 */
 	public static function delete(array $ids)
 	{
@@ -104,8 +109,11 @@ class BackendLocaleModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param unknown_type $id
+	 * Does an id exists
+	 * @todo	Davy: why does this return an integer
+	 *
+	 * @return	int
+	 * @param	int $id
 	 */
 	public static function exists($id)
 	{
@@ -118,12 +126,15 @@ class BackendLocaleModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param $name
-	 * @param $type
-	 * @param $module
-	 * @param $language
-	 * @param $id
+	 * Does locale exists by name
+	 * @todo	Davy: why does this return an integer
+	 *
+	 * @return	int
+	 * @param	string $name
+	 * @param	string $type
+	 * @param	string $module
+	 * @param	string $language
+	 * @param	int[optional] $id
 	 */
 	public static function existsByName($name, $type, $module, $language, $id = null)
 	{
@@ -137,8 +148,10 @@ class BackendLocaleModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param $id
+	 * Get a single item from locale
+	 *
+	 * @return	array
+	 * @param	int $id
 	 */
 	public static function get($id)
 	{
@@ -154,7 +167,9 @@ class BackendLocaleModel
 
 
 	/**
-	 * @todo	PHPDoc
+	 * Get all types of locale
+	 *
+	 * @return	array
 	 */
 	public static function getTypesForDropDown()
 	{
@@ -176,8 +191,10 @@ class BackendLocaleModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param $item
+	 * Insert a new row into locale
+	 *
+	 * @return	int
+	 * @param	array $item
 	 */
 	public static function insert(array $item)
 	{
@@ -196,7 +213,11 @@ class BackendLocaleModel
 
 
 	/**
-	 * @todo	PHPDoc
+	 * Update a row into locale
+	 *
+	 * @return	void
+	 * @param	int $id
+	 * @param	array $item
 	 */
 	public static function update($id, array $item)
 	{

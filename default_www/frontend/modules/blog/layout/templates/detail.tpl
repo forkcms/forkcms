@@ -1,7 +1,5 @@
 <div id="blog" class="detail">
 	<div class="article">
-		{$blogArticle|dump}
-
 		<h1>
 			{$blogArticle['title']}
 		</h1>
@@ -27,10 +25,10 @@
 				{/option:blogArticle['tags']}
 
 				<!-- Comments -->
-				{option:!blogComments}<li><a href="{$blogArticleFullUrl}#{$actReact}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogComments}
+				{option:!blogComments}<li><a href="{$blogArticle['full_url']}#{$actReact}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogComments}
 				{option:blogComments}
-					{option:blogCommentsMultiple}<li><a href="{$blogArticleFullUrl}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogCommentsCount}}</a></li>{/option:blogCommentsMultiple}
-					{option:!blogCommentsMultiple}<li><a href="{$blogArticleFullUrl}#{$actComments}">{$msgBlogOneComment}</a></li>{/option:!blogCommentsMultiple}
+					{option:blogCommentsMultiple}<li><a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogCommentsCount}}</a></li>{/option:blogCommentsMultiple}
+					{option:!blogCommentsMultiple}<li><a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogOneComment}</a></li>{/option:!blogCommentsMultiple}
 				{/option:blogComments}
 			</ul>
 		</div>

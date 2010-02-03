@@ -442,6 +442,7 @@ class FrontendBaseBlock
 		if(!isset($this->pagination['offset'])) throw new FrontendException('no offset in the pagination-property.');
 		if(!isset($this->pagination['requested_page'])) throw new FrontendException('no requested_page available in the pagination-property.');
 		if(!isset($this->pagination['num_items'])) throw new FrontendException('no num_items available in the pagination-property.');
+		if(!isset($this->pagination['num_pages'])) throw new FrontendException('no num_pages available in the pagination-property.');
 		if(!isset($this->pagination['url'])) throw new FrontendException('no URL available in the pagination-property.');
 
 		// no pagination needed

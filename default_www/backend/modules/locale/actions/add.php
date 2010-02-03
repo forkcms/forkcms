@@ -64,17 +64,19 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
 		$this->frm->addTextField('name');
 		$this->frm->addTextField('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
-		$this->frm->addDropDown('language', array('nl' => 'Nederlands', 'fr' => 'Frans', 'en' => 'Engels'), $this->filter['language']); // @todo davy - opbouwen van een goeie lijst
+		$this->frm->addDropDown('language', BackendLanguage::getWorkingLanguages(), $this->filter['language']);
 		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
 
 	/**
-	 * @todo	PHPDoc
+	 * Parse the form
+	 *
+	 * @return	void
 	 */
 	protected function parse()
 	{
-		// execute parent
+		// call parent
 		parent::parse();
 
 		// parse filter
@@ -115,7 +117,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 			if($txtName->isFilled(BL::getError('FieldIsRequired')))
 			{
 				// allowed regex (a-z and 0-9)
-				if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::getError('InvalidName', 'locale'))) // @todo davy - foutmelding toevoegen
+				if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::getError('InvalidName')))
 				{
 					// first letter does not seem to be a capital one
 					if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::getError('InvalidName', 'locale'));
@@ -129,7 +131,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 							// this name already exists in this language
 							if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
 							{
-								$txtName->setError('Dit veld bestaat al in de database in deze taal'); // @todo davy - foutmelding toevoegen
+								$txtName->setError(BL::getError('AlreadyExists'));
 							}
 						}
 
@@ -140,7 +142,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 							// this name already exists in this language
 							if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
 							{
-//								$txtName->setError('Dit veld bestaat al in de database in deze taal'); // @todo davy - foutmelding toevoegen
+//								$txtName->setError(BL::getError('AlreadyExists'));
 							}
 						}
 					}
@@ -153,7 +155,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				// in case this is a 'act' type, there are special rules concerning possible values
 				if($this->frm->getField('type')->getValue() == 'act')
 				{
-					$txtValue->isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', BL::getError('InvalidValue', 'locale')); // @todo davy - foutmelding toevoegen
+					$txtValue->isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', BL::getError('InvalidValue'));
 				}
 			}
 

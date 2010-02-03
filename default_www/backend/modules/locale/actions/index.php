@@ -150,8 +150,14 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	}
 
 
-	// @todo davy - velden opkuisen
-	// @todo davy - testen wat dit geeft als je met speciale karaketers in de URL werkt. (urlencode nodig?)
+	/**
+	 * Load the form
+	 *
+	 * @todo	davy: velden opkuisen
+	 * @todo	davy: testen wat dit geeft als je met speciale karaketers in de URL werkt. (urlencode nodig?)
+	 *
+	 * @return	void
+	 */
 	private function loadForm()
 	{
 		$this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');

@@ -140,19 +140,21 @@
 										<div id="authors" class="box">
 											<div class="heading">
 												<h4>{$lblAuthor|ucfirst}</h4>
-												<!--  @todo
+
+												{*
+													@later
+													Johan, this is realy complicated, can't we find a beter way to do this?
 												<div class="buttonHolderRight">
 													<a href="#" id="editAuthor" class="button icon iconEdit iconOnly">
 														<span><span><span>Edit</span></span></span>
 													</a>
 												</div>
-												 -->
+												 *}
 											</div>
 
 											<div class="options">
 												{$ddmUserId} {$ddmUserIdError}
-
-												<!--  @todo ?
+												{*
 												<ul>
 													<li>
 														<div class="avatarAndNickName">
@@ -163,7 +165,7 @@
 														</div>
 													</li>
 												</ul>
-												 -->
+												 *}
 											</div>
 										</div>
 

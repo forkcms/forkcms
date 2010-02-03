@@ -34,7 +34,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'item_count' => null, 'pages_count' => null);
+	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
 
 	/**
@@ -87,11 +87,11 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $requestedCategory;
 
 		// populate count fields in pagination
-		$this->pagination['item_count'] = FrontendBlogModel::getAllForCategoryCount($requestedCategory);
-		$this->pagination['pages_count'] = (int) ceil($this->pagination['item_count'] / $this->pagination['limit']);
+		$this->pagination['num_items'] = FrontendBlogModel::getAllForCategoryCount($requestedCategory);
+		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
 		// redirect if the request page doesn't exists
-		if($requestedPage > $this->pagination['pages_count'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
+		if($requestedPage > $this->pagination['num_pages'] || $requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
 
 		// populate calculated fields in pagination
 		$this->pagination['requested_page'] = $requestedPage;
@@ -125,8 +125,6 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->header->setPageTitle($this->category['name']);
 
 		// assign category
-		// loop values @todo	we should do this in a decent way...
-		foreach($this->category as $key => $value) if($value !== null) $this->tpl->assign('blogCategory'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('blogCategory', $this->category);
 
 		// assign articles

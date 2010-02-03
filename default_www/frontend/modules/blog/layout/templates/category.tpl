@@ -1,7 +1,7 @@
 <div id="blog" class="index">
-	<h2>{$blogCategoryName}</h2>
+	<h2>{$blogCategory['name']}</h2>
 
-	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItemsInCategory|sprintf:{$blogCategoryName}}</p></div>{/option:!blogArticles}
+	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItemsInCategory|sprintf:{$blogCategory['name']}}</p></div>{/option:!blogArticles}
 	{option:blogArticles}
 	<table class="datagrid" width="100%">
 		<thead>
