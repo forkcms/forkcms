@@ -77,7 +77,7 @@
 			}
 			
 			// bind keypress on value-field
-			$('#addValue-'+ id).live('keypress', function(evt) {
+			$('#addValue-'+ id).live('keyup', function(evt) {
 				// grab code
 				var code = (evt.which||evt.charCode||evt.keyCode);
 				

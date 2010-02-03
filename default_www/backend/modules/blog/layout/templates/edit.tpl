@@ -122,15 +122,23 @@
 										<div id="category" class="box">
 											<div class="heading">
 												<h4>{$lblCategory|ucfirst}</h4>
-												<!--  @todo
 												<div class="buttonHolderRight">
-													<a href="#" class="button icon iconAdd iconOnly"><span><span><span>add</span></span></span></a>
+													<a href="#newCategory" class="toggleDiv button icon iconAdd iconOnly"><span><span><span>{$lblAddCategory|ucfirst}</span></span></span></a>
 												</div>
-												 -->
 											</div>
-
 											<div class="options">
 												{$ddmCategoryId} {$ddmCategoryIdError}
+											</div>
+											<div id="newCategory" class="options hidden">
+												<div class="oneLiner">
+													<p>
+														<input id="newCategoryValue" class="inputTextfield" type="text" name="new_category" />
+														<span id="newCategoryError" class="formError">{$errAddingCategoryFailed}</span>
+													</p>
+													<div class="buttonHolder">
+														<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span><span><span>{$lblAddCategory|ucfirst}</span></span></span></a>
+													</div>
+												</div>
 											</div>
 										</div>
 

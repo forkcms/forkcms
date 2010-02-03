@@ -153,6 +153,33 @@ class BackendBlogModel
 
 
 	/**
+	 * Get all data for a given id
+	 *
+	 * @return	array
+	 * @param	int $id
+	 */
+	public static function get($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get record and return it
+		return (array) $db->getRecord('SELECT p.*,
+									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
+									   UNIX_TIMESTAMP(p.created_on) AS created_on,
+									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
+									   m.url
+									   FROM blog_posts AS p
+									   INNER JOIN meta AS m ON m.id = p.meta_id
+									   WHERE p.id = ? AND status = ?
+									   LIMIT 1;', array($id, 'active'));
+	}
+
+
+	/**
 	 * Get all categories
 	 *
 	 * @return	array
@@ -191,29 +218,26 @@ class BackendBlogModel
 
 
 	/**
-	 * Get all data for a given id
+	 * Get a category id by name
 	 *
-	 * @return	array
-	 * @param	int $id
+	 * @return	int
+	 * @param	string $name
+	 * @param	string[optional] $language
 	 */
-	public static function get($id)
+	public static function getCategoryId($name, $language = null)
 	{
 		// redefine
-		$id = (int) $id;
+		$name = (string) $name;
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// get db
 		$db = BackendModel::getDB();
 
-		// get record and return it
-		return (array) $db->getRecord('SELECT p.*,
-									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
-									   UNIX_TIMESTAMP(p.created_on) AS created_on,
-									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
-									   m.url
-									   FROM blog_posts AS p
-									   INNER JOIN meta AS m ON m.id = p.meta_id
-									   WHERE p.id = ? AND status = ?
-									   LIMIT 1;', array($id, 'active'));
+		// exists?
+		return (int) $db->getVar('SELECT bc.id
+									FROM blog_categories AS bc
+									WHERE bc.name = ? AND bc.language = ?;',
+									array($name, $language));
 	}
 
 
