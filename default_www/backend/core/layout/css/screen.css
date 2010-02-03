@@ -1032,7 +1032,7 @@ td.comments {
 	}
 	
 #pagesCTA {
-	font-size: 18px;
+	font-size: 16px;
 	padding: 50px 0 50px 50px;
 	background: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fafafa));
@@ -3194,6 +3194,16 @@ a.mainButton:focus {
 /*
 	Styles by module
 */
+
+/*
+	Pages
+*/
+
+	/*
+		Templates
+	*/
+	
+	#path { width: 420px;}
 
 /*
 	Blog
