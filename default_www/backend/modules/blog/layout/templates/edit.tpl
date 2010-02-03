@@ -260,12 +260,20 @@
 						</div>
 					</div>
 
-					<!-- @todo confirmation -->
 					<div class="fullwidthOptions">
-						<a href="{$var|geturl:'delete'}&amp;id={$id}" class="button linkButton icon iconDelete"><span><span><span>Delete</span></span></span></a>
+						<a href="{$var|geturl:'delete'}&amp;id={$id}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
+						</a>
 						<div class="buttonHolderRight">
 							{$btnEdit}
 						</div>
+					</div>
+
+					<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+						<p>
+							<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+							{$msgConfirmDelete|sprintf:{$blog['title']}}
+						</p>
 					</div>
 				{/form:edit}
 			</div>

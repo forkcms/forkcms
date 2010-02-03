@@ -76,7 +76,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm->addDropDown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
 		$this->frm->addTextField('format', $data['format']);
 		$this->frm->addCheckBox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addCheckBox('default', ($this->record['is_default'] == 'Y')); // @todo davy - is_default van het veld maken in form
+		$this->frm->addCheckBox('default', ($this->record['is_default'] == 'Y'));
 		$this->frm->addButton('save', ucfirst(BL::getLabel('EditTemplate')), 'submit');
 
 		// init var

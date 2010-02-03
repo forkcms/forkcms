@@ -245,13 +245,13 @@ jsBackend.pages.tree = {
 						 if(jsBackend.debug) alert(textStatus);
 						 
 						 // show message
-						 jsBackend.layout.showMessage('error', 'page can\'t be moved'); // @todo label
+						 jsBackend.layout.showMessage('error', '{$errCantBeMoved}');
 						 
 						 // rollback
 						 $.tree.rollback(rollback);
 					 } else {
 						 // show message
-						 jsBackend.layout.showMessage('success', 'page moved'); // @todo label
+						 jsBackend.layout.showMessage('success', '{$msgPageIsMoved}');
 					 }
 				 },
 		});

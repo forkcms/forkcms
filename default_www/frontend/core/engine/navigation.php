@@ -94,7 +94,19 @@ class FrontendNavigation extends FrontendBaseObject
 			else $HTML .= '	<li>'."\n";
 
 			// add link
-			$HTML .= '		<a href="'. FrontendNavigation::getURL($page['page_id']) .'">'. $page['navigation_title'] .'</a>'."\n";
+			$HTML .= '		<a href="'. FrontendNavigation::getURL($page['page_id']) .'" title="'. $page['title'] .'"';
+
+			// add nofollow attribute if needed
+			if($page['no_follow']) $HTML .= ' rel="nofollow"';
+
+			// end a tag
+			$HTML .= '>';
+
+			// add title
+			$HTML .= $page['navigation_title'];
+
+			// end link
+			$HTML .= '</a>'."\n";
 
 			// has children?
 			if(isset($navigation[$type][$page['page_id']]))
@@ -176,6 +188,9 @@ class FrontendNavigation extends FrontendBaseObject
 			$temp['title'] = $data['title'];
 			$temp['navigation_title'] = $data['navigation_title'];
 			$temp['selected'] = (bool) in_array($id, self::$selectedPageIds);
+
+			// add rel
+			if($data['no_follow']) $temp['rel'] = 'nofollow';
 
 			// add
 			$return[] = $temp;

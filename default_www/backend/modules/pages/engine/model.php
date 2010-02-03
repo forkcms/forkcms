@@ -75,6 +75,7 @@ class BackendPagesModel
 				$temp['title'] = $page['title'];
 				$temp['navigation_title'] = $page['navigation_title'];
 				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
+				$temp['no_follow'] = (bool) ($page['no_follow'] == 'Y');
 				$temp['extra_blocks'] = null;
 
 				// any linked extra's?
@@ -162,8 +163,8 @@ class BackendPagesModel
 						// page_id should be an integer
 						if($key == 'page_id') $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = '. (int) $value .';'."\n";
 
-						// has_extra should be a boolean
-						elseif($key == 'has_extra')
+						// booleans
+						elseif($key == 'has_extra' || $key == 'no_follow')
 						{
 							if($value) $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = true;'."\n";
 							else $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = false;'."\n";
@@ -336,9 +337,11 @@ class BackendPagesModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param unknown_type $id
-	 * @param unknown_type $language
+	 * Delete a page
+	 *
+	 * @return	bool
+	 * @param	int $id
+	 * @param	string[optional] $language
 	 */
 	public static function delete($id, $language = null)
 	{
@@ -463,8 +466,10 @@ class BackendPagesModel
 
 
 	/**
-	 * @todo	PHPDoc
-	 * @param unknown_type $id
+	 * Get a given template
+	 *
+	 * @return	array
+	 * @param	int $id		The id of the requested template
 	 */
 	public static function getTemplate($id)
 	{
@@ -848,7 +853,7 @@ class BackendPagesModel
 		// get db
 		$db = BackendModel::getDB();
 
-		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden, p.has_extra,
+		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden, p.has_extra, p.no_follow,
 													GROUP_CONCAT(pb.extra_id) as extra_ids,
 													m.url
 												FROM pages AS p

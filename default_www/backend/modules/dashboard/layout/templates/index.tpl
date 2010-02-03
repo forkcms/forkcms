@@ -2,7 +2,7 @@
 {option:resetSuccess}
 <div id="report">
 	<div class="singleMessage successMessage">
-		<p>{$msgAuthenticationResetSuccess}</p> <!-- @todo add label -->
+		<p>{$msgCoreResetSuccess}</p>
 	</div>
 </div>
 {/option:resetSuccess}

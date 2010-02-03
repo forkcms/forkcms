@@ -188,7 +188,6 @@
 								</div>
 							</div>
 
-							<!-- @todo @tijs
 							<div id="seoNofollow" class="box boxLevel2">
 								<div class="heading">
 									<h3>Nofollow</h3>
@@ -205,7 +204,6 @@
 									</fieldset>
 								</div>
 							</div>
-							 -->
 
 							<div id="seoMeta" class="box boxLevel2">
 								<div class="heading">

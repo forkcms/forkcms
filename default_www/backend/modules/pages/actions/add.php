@@ -114,6 +114,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addTextField('title');
 		$this->frm->addDropDown('template_id', $templatesForDropdown, $defaultTemplateId);
 		$this->frm->addRadioButton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
+		$this->frm->addCheckBox('no_follow');
 
 		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
@@ -218,6 +219,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['allow_children'] = 'Y';
 				$page['allow_edit'] = 'Y';
 				$page['allow_delete'] = 'Y';
+				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
 
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];

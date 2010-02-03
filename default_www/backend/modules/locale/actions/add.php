@@ -68,6 +68,10 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
+
+	/**
+	 * @todo	PHPDoc
+	 */
 	protected function parse()
 	{
 		// execute parent
