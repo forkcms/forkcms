@@ -34,7 +34,7 @@
 							<td id="user">
 								<ul>
 									<li class="settings">
-										<a href="{$var|geturl:'index':'settings'}" class="button linkButton icon iconSettings {option:oSettingsSelected}selected{/option:oSettingsSelected}">
+										<a href="{$var|geturl:'index':'settings'}" class="button linkButton icon iconSettings">
 											<span><span><span>{$lblSettings|ucfirst}</span></span></span>
 										</a>
 									</li>

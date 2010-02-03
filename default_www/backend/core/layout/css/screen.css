@@ -229,13 +229,10 @@ td {
 
 #headerHolder {
 	height: 36px;
-	
 	width: 100%;
-
 	min-width: 960px;
 	max-width: 1224px;
 	margin: 0 auto;
-	
 	position: relative;
 }
 
@@ -250,14 +247,14 @@ td {
 	#headerHolder #navigation {
 		min-width: 430px;
 	}
-	
+
 	#headerHolder #user {
 		min-width: 266px;
 		position: absolute;
 		top: 6px;
 		right: 0;
 	}
-	
+
 #header td {
 	vertical-align: middle;
 }
@@ -269,9 +266,9 @@ td {
 	#navigation li {
 		float: left;
 	}
-	
+
 	#navigation li a {
-		
+
 		/* @inc .navButtonColors */
 		color: #3A3A3A;
 		display: block;
@@ -293,22 +290,22 @@ td {
 		-webkit-border-radius: 3px;
 
 	}
-	
+
 	#navigation li a:hover,
 	#navigation li a:active,
 	#navigation li a:focus {
 		background: #FFF;
 	}
-	
+
 	#navigation li.selected a {
-		
+
 		/* @inc .navButtonSelected */
 		background: #000;
 		background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
 		background: -moz-linear-gradient(top, #666, #000);
 		border: 1px solid #000;
 		color: #FFF;
-		
+
 	}
 
 	#navigation a {
@@ -361,7 +358,7 @@ td {
 		font-family: "Lucida Grande";
 		border-bottom: none;
 	}
-	
+
 		.contentType {
 			background: #666;
 			background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999));
@@ -373,26 +370,26 @@ td {
 			font-size: 11px;
 			font-family: "Lucida Grande";
 		}
-		
+
 		.contentType label {
 			color: #FFF;
 		}
-		
+
 			.contentType select,
 			.contentType select optgroup {
 				font-size: 11px;
 				font-family: "Lucida Grande";
 			}
-	
+
 	.contentTitle table {
 		width: 100%;
 	}
-	
+
 		.contentTitle td.numbering {
 			width: 20px;
 			vertical-align: middle;
 		}
-	
+
 		.contentTitle .numbering {
 			padding-right: 10px;
 			font-size: 21px;
@@ -400,7 +397,7 @@ td {
 			font-family: Helvetica, Arial, sans-serif;
 			color: rgba(0,0,0,0.25);
 		}
-	
+
 	.contentTitle.selected,
 	.contentTitle:hover {
 		background: #000;
@@ -408,17 +405,17 @@ td {
 		background: -moz-linear-gradient(top, #3A3A3A, #000);
 		border-bottom: 1px solid #000;
 	}
-	
+
 		.contentTitle.selected a,
 		.contentTitle:hover a {
 			color: #FFF;
 		}
-		
+
 		.contentTitle.selected td,
 		.contentTitle:hover td {
 			color: #FFF;
 		}
-	
+
 	.blocktypeModule {
 		background: green;
 		color: #FFF;
@@ -430,7 +427,7 @@ td {
 		border-radius: 3px;
 		-moz-border-radius: 3px;
 		-webkit-border-radius: 3px;
-		
+
 	}
 
 	.blocktypeText {
@@ -444,9 +441,9 @@ td {
 		border-radius: 3px;
 		-moz-border-radius: 3px;
 		-webkit-border-radius: 3px;
-		
+
 	}
-	
+
 	.editContent {
 		padding: 12px 0;
 	}
@@ -459,15 +456,13 @@ td {
 			display: block;
 			line-height: 21px;
 		}
-	
+
 #main {
 	height: 100%;
 	border-top: none;
-	
 	min-width: 960px;
 	max-width: 1224px;
 	margin: 0 auto;
-
 	background: #FFF;
 }
 
@@ -497,7 +492,7 @@ td#contentHolder {
 		vertical-align: middle;
 		border-bottom: 1px solid #DDD;
 	}
-	
+
 .datagridHolder {
 	margin: 0 0 24px;
 	border-bottom: 1px solid #AEAEAE;
@@ -509,25 +504,27 @@ td#contentHolder {
 		float: left;
 		padding: 0;
 	}
-	
+
 	.datagridHolder .tableHeading .buttonHolderRight {
 		float: right;
 	}
-	
+
 		.tableHeading a.button:link,
 		.tableHeading a.button:visited {
 			margin-bottom: -6px;
 			position: relative;
 			bottom: 4px;
 		}
-	
+
 		.datagridHolder .tableHeading:after {
+
 			/* @inc .clearfix */
 			content: ".";
 			display: block;
 			height: 0;
 			clear: both;
 			visibility: hidden;
+
 		}
 
 .datagrid {
@@ -541,12 +538,14 @@ td#contentHolder {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 
 	#tabs .datagridHolder:after {
+
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
+
 	}
 
 	#tabs .datagrid {
@@ -573,16 +572,15 @@ td#contentHolder {
 .datagrid td.goto {
 	padding: 1px 5px;
 }
-	
+
 	.datagrid p {
 		padding: 0;
 	}
-	
+
 	.datagrid .content p {
 		padding: 0 0 12px;
 	}
-	
-	
+
 /*
 	Sprite config: th.gif
 	
@@ -601,7 +599,7 @@ td#contentHolder {
 
 .datagrid th {
 	font-size: 11px;
-	background: url(../images/th.gif) repeat-x 0 0;
+	background: url(../images/sprites/th.gif) repeat-x 0 0;
 	border-bottom: 1px solid #B4B4B4;
 	border-right: 1px solid #AEAEAE;
 	line-height: 22px;
@@ -614,7 +612,7 @@ td#contentHolder {
 
 .datagrid th a.sortedAsc,
 .datagrid th a.sortedDesc {
-	background: url(../images/th.gif) repeat-x 0 -48px;
+	background: url(../images/sprites/th.gif) repeat-x 0 -48px;
 }
 
 .datagrid th a.sortable:hover {
@@ -629,15 +627,15 @@ td#contentHolder {
 }
 
 .datagrid th a.sortable {
-	background: url(../images/th.gif) no-repeat right -193px;
+	background: url(../images/sprites/th.gif) no-repeat right -193px;
 }
 
 .datagrid th a.sortedDesc {
-	background: url(../images/th.gif) no-repeat right -215px;
+	background: url(../images/sprites/th.gif) no-repeat right -215px;
 }
 
 .datagrid th a.sortedAsc {
-	background: url(../images/th.gif) no-repeat right -237px;
+	background: url(../images/sprites/th.gif) no-repeat right -237px;
 }
 
 .datagrid th.checkboxHolder,
@@ -681,7 +679,7 @@ td#contentHolder {
 }
 
 .tableOptionsHolder {
-	background: url(../images/th.gif) repeat-x 0 -144px;
+	background: url(../images/sprites/th.gif) repeat-x 0 -144px;
 	border-top: 1px solid #AEAEAE;
 	width: 100%;
 }
@@ -691,12 +689,14 @@ td#contentHolder {
 }
 
 	.tableOptions:after {
+
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
+
 	}
 
 .tableOptions .massAction {
@@ -722,17 +722,18 @@ td#contentHolder {
 		margin-right: 4px;
 		font-size: 11px;
 	}
-	
+
 	.pagination ul:after {
+
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
+
 	}
-	
-	
+
 		.pagination li a,
 		.pagination li span {
 			float: left;
@@ -742,37 +743,37 @@ td#contentHolder {
 			border: 1px solid rgba(0,0,0,0.25);;
 			min-width: 15px;
 			text-align: center;
-			
 			color: #3a3a3a;
 			display: block;
 			background: #FFF;
 			background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
 			background: -moz-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
 			border: 1px solid #BFBFBF;
-			
+
 			/* @inc .rc */
 			border-radius: 4px;
 			-webkit-border-radius: 4px;
 			-moz-border-radius: 4px;
-			
+
 		}
-		
+
 		.pagination li span {
 			background: none;
 			border-color: transparent;
 			color: #AAA;
 		}
-		
+
 		.pagination li.selected span {
+
 			/* @inc .navButtonSelected */
 			background: #000;
 			background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
 			background: -moz-gradient(linear, left top, left bottom, from(#666), to(#000));
 			border: 1px solid #000;
 			color: #FFF;
-			
+
 		}
-		
+
 			.pagination li.previousPage *,
 			.pagination li.nextPage * {
 				padding-left: 6px;
@@ -782,11 +783,6 @@ td#contentHolder {
 		.pagination li a {
 			font-size: 11px;
 		}
-		
-		.pagination li span {
-			
-		}
-
 
 /* Special td types */
 
@@ -826,7 +822,7 @@ td#contentHolder {
 	.infoGrid tr:last-child th {
 		border-bottom: none;
 	}
-	
+
 .infoGrid th {
 	border-right: 1px solid #CCC;
 	padding-right: 6px;
@@ -915,7 +911,7 @@ table.datagrid a {
 	#pagesTree #treeHolder {
 		width: 259px;
 	}
-	
+
 	#treeHolder {
 		background: #F5F5F5;
 	}
@@ -943,7 +939,7 @@ table.datagrid a {
 	width: 5px;
 	background: url(../images/close_w.png) no-repeat 0 center;
 }
-	
+
 	#fullwidthSwitch.collapsed {
 		background: url(../images/close_w.png) no-repeat right center;
 	}
@@ -1024,29 +1020,28 @@ td.comments {
 		line-height: 22px;
 		/* Same height as button height */
 	}
-	
+
 	.oneLiner .help {
 		line-height: 22px;
 		position: relative;
 		display: block;
 	}
-	
+
 #pagesCTA {
-	font-size: 16px;
+	font-size: 18px;
 	padding: 50px 0 50px 50px;
 	background: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fafafa));
 	background: -moz-linear-gradient(top, #fff, #fafafa);
-	
 	margin: 0 0 14px;
 	border: 1px solid #CDCDCD;
 	font-family: Helvetica, Arial, sans-serif;
-	
+
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	
+
 }
 
 #pagesCTA p:first-child {
@@ -1078,12 +1073,12 @@ td.comments {
 			clear: both;
 			visibility: hidden;
 		}
-		
+
 		.collapseBoxHeading {
 			height: 22px;
 			padding: 3px;
 		}
-		
+
 		.collapseBox .collapseBoxHeading h4 {
 			padding: 0 0 0 6px;
 			float: left;
@@ -1094,12 +1089,12 @@ td.comments {
 		.collapseBox .buttonHolderSingle {
 			float: left;
 		}
-		
+
 		.collapseBox .collapseBoxHeading h4 a {
 			display: block;
 			color: #3A3A3A;
 		}
-	
+
 	.collapseBox .options {
 		background: #FFF;
 		padding: 12px;
@@ -1146,11 +1141,11 @@ td.comments {
 .widget .heading,
 .tableHeading {
 	background: #E4E4E4;
-	background: url(../images/th.gif) repeat-x 0 -97px;
+	background: url(../images/sprites/th.gif) repeat-x 0 -97px;
 	border: 1px solid #D7D7D7;
 	border-color: #D7D7D7 #D7D7D7 #AEAEAE #D7D7D7;
 	padding: 6px 12px;
-	
+
 	/* @inc .topRc */
 	border-top-left-radius: 4px;
 	-webkit-border-top-left-radius: 4px;
@@ -1158,6 +1153,7 @@ td.comments {
 	border-top-right-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
 	-moz-border-radius-topright: 4px;
+
 }
 
 .tableHeading {
@@ -1169,13 +1165,13 @@ td.comments {
 	.boxLevel2 .heading {
 		background: none;
 	}
-	
+
 	.box .heading h3,
 	.box .heading h4 {
 		float: left;
 		padding: 0;
 	}
-	
+
 	.box .heading:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 	.box .heading { zoom: 1; }
 
@@ -1213,14 +1209,13 @@ td.comments {
 	font-size: 11px;
 	border: 1px solid #b3b78d;
 	border-width: 0 1px 1px 1px;
-	
-	
+
 	/* @inc .noticeColors */
 	color: #3A3A3A;
 	background: #FFA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFD), to(#FFA));
 	background: -moz-linear-gradient(top, #FFD, #FFA);
-	
+
 }
 
 	.box .moderate p {
@@ -1232,6 +1227,7 @@ td.comments {
 	/* @inc .rcBottom */
 	-webkit-border-bottom-left-radius: 3px;
 	-webkit-border-bottom-right-radius: 3px;
+
 }
 
 .box .splitBox {
@@ -1277,12 +1273,11 @@ td.comments {
 	box-shadow: 0 4px 12px rgba(0,0,0,0.33);
 	-webkit-box-shadow: 0 4px 12px rgba(0,0,0,0.33);
 	-moz-box-shadow: rgba(0,0,0,0.33) 0 4px 12px;
-	
+
 	width: 550px;
 	position: relative;
 	left: -275px;
 	top: -220px;
-
 	background: #FFF;
 }
 
@@ -1295,7 +1290,7 @@ td.comments {
 		top: 6px;
 		right: 6px;
 	}
-	
+
 	.modal .heading h4 {
 		padding: 0;
 		line-height: 22px;
@@ -1352,12 +1347,12 @@ td.comments {
 		border: none;
 		margin: 0;
 	}
-	
+
 	#publishOptions .innerForm {
 		padding: 6px;
 		background: #E7E7FF;
 	}
-		
+
 		#publishOptions .innerForm ul {
 			padding: 3px 0;
 		}
@@ -1371,19 +1366,19 @@ td.comments {
 	#publishOptions li:last-child {
 		border: none;
 	}
-	
+
 	#publishOptions .footer table {
 		width: 100%;
 	}
-	
+
 	#publishOptions .footer table tr td {
 		padding: 0;
 	}
-	
+
 	#publishOptions .footer table tr td:first-child {
 		font-size: 11px;
 	}
-	
+
 .box h3 {
 	margin: 0;
 	padding: 0;
@@ -1397,7 +1392,7 @@ td.comments {
 	.boxLevel2 h3 {
 		font-size: 11px;
 	}
-	
+
 .boxLevel2 h4 {
 	border: 1px solid #CCC;
 	font-size: 11px;
@@ -1440,8 +1435,8 @@ td.comments {
 	}
 
 	.avatarAndNickName a {
-
 		border: 1px solid #a4bdec;
+
 		/* @inc .rc */
 		border-radius: 4px;
 		-webkit-border-radius: 4px;
@@ -1455,11 +1450,10 @@ td.comments {
 		background: #ecf3ff;
 		background: -webkit-gradient(linear, left top, left bottom, from(#ecf3ff), to(#e1e9f9));
 		background: -moz-linear-gradient(top, #ECF3FF, #E1E9F9);
-
 		overflow: hidden;
 		margin: 0 0 4px;
 	}
-	
+
 	.avatarAndNickName a:hover,
 	.avatarAndNickName a:active,
 	.avatarAndNickName a:focus,
@@ -1493,7 +1487,7 @@ textarea {
 	background: #F9F9F9 url(../images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
-	
+
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -1501,6 +1495,7 @@ textarea {
 	
 	/* Transition */
 	-webkit-transition: background-color 0.28s linear;
+
 }
 
 .inputText,
@@ -1558,7 +1553,7 @@ input[type="submit"] {
 	font-family: Arial, sans-serif;
 	font-weight: 700;
 }
-	
+
 	/* 
 		Focus outline; Mozilla specific since Safari implements this right
 		IE can f*** off
@@ -1570,7 +1565,7 @@ input[type="submit"] {
 			height: 14px;
 			line-height: 14px;
 		}
-		
+
 		.inputText:focus,
 		input[type="text"]:focus,
 		.inputPassword:focus,
@@ -1592,7 +1587,7 @@ input[type="submit"] {
 	.helpTxt a {
 		font-weight: 700;
 	}
-	
+
 .forkForms .inputList {
 	padding: 0 0 12px;
 }
@@ -1619,7 +1614,7 @@ input[type="submit"] {
 		left: 0;
 		top: 0;
 	}
-	
+
 	#urlManager ul {
 		margin: 0 0 8px;
 	}
@@ -1653,7 +1648,7 @@ input[type="submit"] {
 		padding-bottom: 0;
 		line-height: 21px;
 	}
-	
+
 	.oneLiner select {
 		margin-top: 1px;
 		margin-right: 3px;
@@ -1737,12 +1732,13 @@ fieldset legend {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+
 }
 
 	.formMessage p {
 		padding: 6px 12px;
 	}
-	
+
 .errorMessage {
 	color: #E2001A;
 	background: #FBF3F3;
@@ -1754,7 +1750,6 @@ fieldset legend {
 	-moz-border-radius: 4px;
 
 	padding: 12px;
-
 }
 
 	.errorMessage a {
@@ -1783,8 +1778,9 @@ fieldset legend {
 		border-radius: 0;
 		-webkit-border-radius: 0;
 		-moz-border-radius: 0;
+
 	}
-	
+
 		#report .singleMessage p {
 			padding: 6px 24px;
 			font-size: 11px;
@@ -1796,7 +1792,7 @@ fieldset legend {
 		color: #005f00;
 		border-color: #8dbd84;
 	}
-	
+
 	.successMessage a:hover,
 	.successMessage a:active,
 	.successMessage a:focus {
@@ -1812,7 +1808,7 @@ fieldset legend {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	
+
 	padding: 12px;
 }
 
@@ -1905,6 +1901,7 @@ fieldset legend {
 	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
+
 }
 
 .tagsWrapper ul:after,
@@ -1929,9 +1926,9 @@ fieldset legend {
 }
 
 abbr.help {
-	background: url(../images/help.png) no-repeat 0 0;
-	width: 13px;
-	height: 13px;
+	background: url(../images/sprites/fork_icons.png) no-repeat 0 -494px;
+	width: 14px;
+	height: 12px;
 	display: block;
 	text-indent: -9000px;
 	font-size: 11px;
@@ -1953,7 +1950,7 @@ abbr.help {
 		color: #000;
 		border: none;
 	}
-	
+
 	#siteTitle table,
 	#siteTitle td {
 		height: 36px;
@@ -1990,7 +1987,7 @@ abbr.help {
 	.templateVisual:hover {
 		opacity: 1;
 	}
-	
+
 	#tabTemplate .templateVisual {
 		width: 87px;
 	}
@@ -2014,7 +2011,7 @@ abbr.help {
 		padding: 6px 3px;
 		color: #2244BB;
 	}
-	
+
 	.templateVisual td.selected a {
 		color: #FFF;
 	}
@@ -2023,15 +2020,11 @@ abbr.help {
 		display: block;
 		background: #EEE;
 		color: #FFF;
-
 		background: #1a57ad;
 		background: -webkit-gradient(linear, left top, left bottom, from(#5C93D5), to(#1A57AD));
 		background: -moz-linear-gradient(top, #5C93D5, #1A57AD);
-
-		color: #FFF;
-
 	}
-	
+
 		.templateVisual td.hover {
 			border-style: solid;
 		}
@@ -2039,27 +2032,24 @@ abbr.help {
 	.templateVisual td:empty {
 		background: #EEE url(../images/na.png) repeat;
 	}
-	
+
 	.templateVisual td.selected,
 	.templateVisual td.selected.hover {
 		background: #000;
 		border: 1px solid #000;
 		background: -webkit-gradient(linear, left top, left bottom, from(#3A3A3A), to(#000));
 		background: -moz-linear-gradient(top, #3A3A3A, #000);
-
 	}
-	
+
 .fullwidthOptions {
 	font-family: "Lucida grande", Arial, sans-serif;
-
 	background: #EAEAEA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EAEAEA));
 	background: -moz-linear-gradient(top, #DDD, #EAEAEA);
-
 	border: 1px solid #BFBFBF;
 	padding: 6px;
 	margin-top: 12px;
-	
+
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
@@ -2134,13 +2124,13 @@ abbr.help {
 		padding: 6px 12px;
 		border-bottom: 1px solid #DDD;
 	}
-	
+
 	#contentList ul li.selected a,
 	#contentList ul li a:hover {
 		background: white;
 		color: #000;
 	}
-	
+
 		#container #contentList ul li li {
 			font-size: 11px;
 			font-weight: 400;
@@ -2157,7 +2147,7 @@ abbr.help {
 				background: #FAFAFA;
 				color: #5973CC;
 			}
-			
+
 			#encloser #container #contentList ul li li.selected a,
 			#encloser #contentList ul li.selected li a:hover {
 				background: #FFF;
@@ -2189,34 +2179,35 @@ abbr.help {
 
 	border-bottom: 1px solid #999;
 	position: relative;
-	
+
 	/* @inc .noticeColors */
 	color: #3A3A3A;
 	background: #FFA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFD), to(#FFA));
+
 }
 
 	#statusBar p.breadcrumb,
 	#filterBar p {
 		line-height: 29px;
 	}
-	
+
 		p.breadcrumb a {
 			color: #FFF;
 			border-bottom: 1px solid #CCC;
 		}
-	
+
 	#statusBar div.oneLiner,
 	#filterBar a {
 		position: absolute;
 		top: 3px;
 		right: 24px;
 	}
-	
+
 	#statusBar div.oneLiner .inputText {
 		border-color: #444;
 	}
-	
+
 	#searchModuleHolder a.button:link,
 	#searchModuleHolder a.button:visited {
 		position: relative;
@@ -2245,6 +2236,7 @@ abbr.help {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+
 }
 
 /*
@@ -2256,12 +2248,14 @@ abbr.help {
 }
 
 #dashboardWidgets:after {
+
 	/* @inc .clearfix */
 	content: ".";
 	display: block;
 	height: 0;
 	clear: both;
 	visibility: hidden;
+
 }
 
 #dashboardWidgets .leftColumn,
@@ -2287,7 +2281,7 @@ abbr.help {
 		border: none;
 		background: #FFF;
 	}
-	
+
 		#dashboardWidgets .box .datagridHolder .datagrid {
 			border-top: none;
 		}
@@ -2373,6 +2367,7 @@ abbr.help {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+
 }
 
 #widgetVisitors .quickStats td.stat1 div  {
@@ -2410,13 +2405,14 @@ abbr.help {
 		-webkit-border-top-right-radius: 4px;
 		-moz-border-radius-topright: 4px;
 	}
-	
+
 	.comboList li:nth-child(2n+1) {
 		background: rgba(255,255,255,0.4);
 	}
 
 	.comboList li:last-child {
 		border: 1px solid rgba(0,0,0,0.2);
+
 		/* @inc .bottomRc */
 		border-bottom-left-radius: 4px;
 		-webkit-border-bottom-left-radius: 4px;
@@ -2424,6 +2420,7 @@ abbr.help {
 		border-bottom-right-radius: 4px;
 		-webkit-border-bottom-right-radius: 4px;
 		-moz-border-radius-bottomright: 4px;
+
 	}
 
 /*
@@ -2437,7 +2434,7 @@ abbr.help {
 	#settingsApiKeys table input {
 		width: 240px;
 	}
-	
+
 /*
 	Login specific CSS
 */
@@ -2483,14 +2480,16 @@ abbr.help {
 		padding-left: 50px;
 		padding-bottom: 12px;
 	}
-	
+
 	#loginNav ul:after {
+
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
+
 	}
 
 	#loginNav li span {
@@ -2503,11 +2502,11 @@ abbr.help {
 		top: -24px;
 		left: -20px;
 	}
-	
+
 	#loginNav strong {
 		color: #000;
 	}
-	
+
 	#loginNav li {
 		font-size: 11px;
 		float: left;
@@ -2515,7 +2514,7 @@ abbr.help {
 		border-right: 1px solid #CCC;
 		margin-right: 12px;
 	}
-	
+
 		#loginNav li:last-child {
 			border: none;
 		}
@@ -2528,16 +2527,17 @@ abbr.help {
 	background: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
 	background: -moz-linear-gradient(top, #FFF, #F4F4F4);
-	
+
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	
+
 	/* @inc .boxShadow */
 	box-shadow: 0 2px 6px #AAA;
 	-webkit-box-shadow: 0 2px 6px #AAA;
 	-moz-box-shadow: #AAA 0 2px 6px;
+
 }
 
 	#loginBoxTop {
@@ -2558,41 +2558,40 @@ abbr.help {
 		font-size: 11px;
 		color: #808080;
 	}
-	
+
 	#loginFields {
 		border-top: 1px solid #CCC;
 		border-bottom: 1px solid #CCC;
 		padding-top: 12px;
 		margin: 0 0 12px;
 	}
-	
+
 		#loginFields p {
 			padding: 0 12px 12px 48px;
 		}
-		
+
 		#loginFields label {
 			font-size: 11px;
 			color: #666;
 			display: block;
 			width: 100px;
 		}
-		
+
 		#loginBox .formError {
 			padding-left: 110px;
 		}
-	
+
 		#loginBox p.spacing {
 			padding-bottom: 0;
 			padding-left: 158px;
 		}
-		
+
 		.balloon {
 			position: relative;
 			width: 248px;
 			padding: 12px 24px 36px;
 			background: #E9F0F7;
 			border: 1px solid #B8BCC9;
-			
 			background: -webkit-gradient(linear, left top, left bottom, from(#EFF5FD), to(#E9F0F7));
 			background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
 
@@ -2600,35 +2599,35 @@ abbr.help {
 			border-radius: 4px;
 			-webkit-border-radius: 4px;
 			-moz-border-radius: 4px;
-			
+
 			/* @inc .boxShadow */
 			box-shadow: 0 2px 6px #AAA;
 			-webkit-box-shadow: 0 2px 6px #AAA;
 			-moz-box-shadow: #AAA 0 2px 6px;
-			
+
 		}
 
 			/* @todo @tijs @johan make this work together with forgot password form */
 			.balloonNoMessage {
 				padding: 12px 24px 12px;
 			}
-		
+
 			#forgotPassword p {
 				font-size: 11px;
 			}
-			
+
 			#forgotPassword .singleMessage {
 				border-top: 1px solid #B8BCC9;
 				width: 100%;
 				position: absolute;
 				bottom: 0;
 				left: 0;
-				
+
 				/* Reset border radius */
 				border-radius: 0;
 				-webkit-border-radius: 0;
 				-moz-border-radius: 0;
-				
+
 				/* @inc .bottomRc */
 				border-bottom-left-radius: 4px;
 				-webkit-border-bottom-left-radius: 4px;
@@ -2636,6 +2635,7 @@ abbr.help {
 				border-bottom-right-radius: 4px;
 				-webkit-border-bottom-right-radius: 4px;
 				-moz-border-radius-bottomright: 4px;
+
 			}
 
 			.balloon .balloonTop {
@@ -2666,7 +2666,7 @@ abbr.help {
 	.defaultAvatar.female {
 		background: url(../images/avatars/default.png) no-repeat right;
 	}
-	
+
 .avatarHolder { 
 	width: 52px;
 	height: 52px;
@@ -2678,10 +2678,8 @@ abbr.help {
 	-webkit-border-radius: 24px;
 	-moz-border-radius: 24px;
 	overflow: hidden;
-
 	margin: 2px 0 0 2px;
 	z-index: 50;
-	
 }
 
 .avatarHolder img {
@@ -2749,11 +2747,12 @@ abbr.help {
 	top: -8px;
 	left: 12px;
 	font-size: 9px;
-	
+
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+
 }
 
 .userHolder li:hover {
@@ -2771,12 +2770,14 @@ abbr.help {
 }
 
 	.userHolder:after {
+
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
+
 	}
 
 /*
@@ -2805,9 +2806,8 @@ a.button:visited {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	
-	color: #3A3A3A;
 
+	color: #3A3A3A;
 	padding: 0 6px 0 0;
 	background-repeat: repeat-x;
 	background-position: right -132px;
@@ -2838,7 +2838,7 @@ a.mainButton:focus {
 		display: block;
 		padding: 0 0 0 6px;
 	}
-	
+
 	a.button:hover span,
 	a.button:active span,
 	a.button:focus span {
@@ -2846,7 +2846,7 @@ a.mainButton:focus {
 		display: block;
 		padding: 0 0 0 6px;
 	}
-	
+
 		a.mainButton:link span,
 		a.mainButton:visited span {
 			background-position: 0 0;
@@ -2857,7 +2857,7 @@ a.mainButton:focus {
 		a.mainButton:focus span {
 			background-position: 0 -22px;
 		}
-	
+
 	a.button:link span span,
 	a.button:visited span span {
 		background-position: 0 -220px;
@@ -2884,17 +2884,17 @@ a.mainButton:focus {
 		/*
 			Icons
 		*/
-		
+
 		a.icon:link,
 		a.icon:visited {
 			padding: 0 4px 0 0;
 		}
-		
+
 		a.icon:link span,
 		a.icon:visited span {
 			padding: 0 0 0 4px;
 		}
-		
+
 			a.icon:link span span,
 			a.icon:visited span span {
 				padding: 0 3px 0 0;
@@ -2909,8 +2909,9 @@ a.mainButton:focus {
 			padding: 0 0 0 18px !important;
 			display: block;
 			background-image: url(../images/sprites/fork_icons.png);
+			background-repeat: no-repeat;
 		}
-		
+
 		a.iconAdd span span span {
 			background-position: 0 0 !important; }
 		a.iconEdit span span span {
@@ -2933,6 +2934,8 @@ a.mainButton:focus {
 			background-position: 0 -198px !important; }
 		a.iconClose span span span {
 			background-position: 0 -220px !important; }
+		a.iconGoto span span span {
+			background-position: 0 -465px !important; }
 
 		a.iconOnly span span span {
 			width: 16px;
@@ -2940,11 +2943,22 @@ a.mainButton:focus {
 			text-indent: -9000px;
 			overflow: hidden;
 		}
-		
+
+		a.iconLink span span span {
+			width: 16px;
+			height: 22px;
+			padding: 0 !important;
+			text-indent: -9000px;
+			overflow: hidden;
+			display: block;
+			background-image: url(../images/sprites/fork_icons.png);
+			background-repeat: no-repeat;
+		}
+
 		/*
 			Button that looks like a link
 		*/
-		
+
 		a.linkButton:link,
 		a.linkButton:visited {
 			background: none;
@@ -2958,15 +2972,15 @@ a.mainButton:focus {
 			background: rgba(0,0,0,0.15);
 			color: #FFF;
 		}
-		
+
 			a.linkButton span {
 				background: none;
 			}
-			
+
 		/*
 			Disabled buttons
 		*/
-		
+
 		a.disabledButton:link,
 		a.disabledButton:visited,
 		a.disabledButton:hover,
@@ -3032,6 +3046,7 @@ a.mainButton:focus {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
+
 }
 
 /*
@@ -3049,26 +3064,23 @@ a.mainButton:focus {
 	/*
 		User
 	*/
-	
+
 		/*
 			Account management
 		*/
-		
+
 			#moduleRights td {
 				background: #FFF;
 				vertical-align: top;
 			}
-			
 
 			option.addOption {
 				background: green;
 				color: #FFF;
-				
 				background: #5f9919;
 				background: -webkit-gradient(linear, left top, left bottom, from(#5F9919), to(#90D637));
 				background: -moz-linear-gradient(top, #5F9919, #90D637);
 			}
-			
 
 /*
 	Alerter
@@ -3085,14 +3097,13 @@ a.mainButton:focus {
 	background: #777;
 	background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999));
 	background: -moz-linear-gradient(top, #666, #999);
-	
 	margin: 5px 0 2px;
-	
+
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	
+
 }
 
 	#alerter p {
@@ -3102,18 +3113,18 @@ a.mainButton:focus {
 		text-align: center;
 		font-weight: 700;
 	}
-	
+
 	#alerter.active {
 		background: #ffca29;
 		background: -webkit-gradient(linear, left top, left bottom, from(#ffca29), to(#ffca29));
 		/* @todo add moz gradient */
 		border: 1px solid #c56e11;
 	}
-	
+
 	#alerter.active p {
 		color: #4a4035;
 	}
-	
+
 /*
 	Status bubble
 */
@@ -3128,16 +3139,12 @@ a.mainButton:focus {
 	height: 16px;
 	line-height: 16px;
 	float: right;
-	
+
 	/* @inc .rc */
 	border-radius: 8px;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
-	
-}
 
-.statusDraft {
-	
 }
 
 /*
@@ -3154,6 +3161,7 @@ a.mainButton:focus {
 	box-shadow: 0 2px 6px #AAA;
 	-webkit-box-shadow: 0 2px 6px #AAA;
 	-moz-box-shadow: #AAA 0 2px 6px;
+
 }
 
 .ac_results ul {
@@ -3196,23 +3204,13 @@ a.mainButton:focus {
 */
 
 /*
-	Pages
-*/
-
-	/*
-		Templates
-	*/
-	
-	#path { width: 420px;}
-
-/*
 	Blog
 */
 
 	/*
 		Posts
 	*/
-	
+
 	#categoryId { width: 170px; }
 	#addValue-tags { width: 120px; }
 
@@ -3223,11 +3221,11 @@ a.mainButton:focus {
 	.datagrid tbody .button {
 		margin-bottom: 8px;
 	}
-	
+
 	/*
 		Settings
 	*/
-	
+
 	#rssDescription {
 		font-family: "Lucida Grande", Arial, sans-serif;
 		padding: 3px;
@@ -3287,6 +3285,7 @@ a.mainButton:focus {
 	}
 
 	#tabs.tabsBare .ui-tabs-nav li.ui-tabs-selected a {
+
 		/* @inc .navButtonSelectedI */
 		background: #FFF;
 		background: -webkit-gradient(linear, left top, left bottom, from(#F2f2f2), to(#fff));
@@ -3294,6 +3293,7 @@ a.mainButton:focus {
 		border: 1px solid #a2abb7;
 		border-bottom-color: #FFF;
 		color: #3a3a3a;
+
 	}
 
 	/*
