@@ -168,6 +168,7 @@ class Init
 			break;
 
 			case 'backend_ajax':
+				require_once PATH_WWW .'/routing.php';
 				require_once BACKEND_CORE_PATH .'/engine/ajax.php';
 				require_once BACKEND_CORE_PATH .'/engine/base_ajax_action.php';
 				require_once BACKEND_CORE_PATH .'/engine/ajax_action.php';

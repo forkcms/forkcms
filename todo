@@ -1,3 +1,8 @@
+GENERAL TODO
+--
+	general:
+		- installer
+
 ONSITE TODO
 -- 
 
@@ -8,10 +13,7 @@ PRIVATE TODO
 
 	general:
 		- tinyMCE deftig configureren
-		- write wrapper class for ForkAPI
 		- autosave
-		- BackendDataGrid::setURL => als er nog niets in de $_GET is meegegeven, dan moet hij order sort offset derbij plakken, just? (hou rekening met ? en &)
-		- BackendURL::createURL => indien $_GET order, sort en offset overnemen
 
 API TODO
 --
@@ -19,5 +21,4 @@ API TODO
 
 BUGS
 ---
-
 Als je 2 pagina's aanmaakt die beiden 1930-1940 heten, dan heeft de tweede als URL 1930-1941, da's niet goed, dat zou 1930-1940-2 moeten zijn

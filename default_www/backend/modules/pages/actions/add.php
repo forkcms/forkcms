@@ -61,7 +61,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// get extras
 		$this->extras = BackendPagesModel::getExtrasData();
 
-		// get maximum number of blocks	@todo	update this setting when adding/updating templates
+		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
@@ -115,7 +115,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addDropDown('template_id', $templatesForDropdown, $defaultTemplateId);
 		$this->frm->addRadioButton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
 
-		// get maximum number of blocks	@todo	update this setting when adding/updating templates
+		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
@@ -277,7 +277,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				}
 
 				// insert the blocks
-				// @todo rekening houden met de actions voor de URL
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 				// save tags

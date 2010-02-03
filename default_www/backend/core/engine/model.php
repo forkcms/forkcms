@@ -534,6 +534,12 @@ class BackendModel
 			// catch any exceptions
 			catch (Exception $e)
 			{
+				// some errors should be ignore, list them here
+				$errorsToIgnore = array('Invalid headers, a header with status-code 503 was returned.');
+
+				// check if the error should be ignored
+				if(in_array($e->getMessage(), $errorsToIgnore)) continue;
+
 				// in debugmode we want to see the exceptions
 				if(SPOON_DEBUG) throw $e;
 

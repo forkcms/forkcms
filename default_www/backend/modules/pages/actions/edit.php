@@ -65,7 +65,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// get extras
 		$this->extras = BackendPagesModel::getExtrasData();
 
-		// get maximum number of blocks	@todo davy - update setting bij het opslaan van een template
+		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
@@ -152,7 +152,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addDropDown('template_id', $templatesForDropdown, $this->record['template_id']);
 		$this->frm->addRadioButton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), $this->record['hidden']);
 
-		// get maximum number of blocks	@todo	update this setting when editing/updating templates
+		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array

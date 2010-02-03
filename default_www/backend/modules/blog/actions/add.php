@@ -146,9 +146,6 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// set callback for generating an unique URL
-				$this->meta->setURLCallback('BackendBlogModel', 'getURL', array($txtTitle->getValue()));
-
 				// set formatted date and time
 				$formattedDate = SpoonDate::getDate('Y-m-d', $txtPublishDate->getTimestamp());
 				$formattedTime = SpoonDate::getDate('H:i', strtotime($txtPublishTime->getValue())) .':00'; // @todo switch this to $txtPublishTime->getTimestamp whenever it is available

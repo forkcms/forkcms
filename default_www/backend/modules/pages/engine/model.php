@@ -10,6 +10,7 @@
  * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendPagesModel
@@ -34,7 +35,6 @@ class BackendPagesModel
 	{
 		// get db
 		$db = FrontendModel::getDB();
-
 
 		// get tree
 		$levels = self::getTree(array(0));
@@ -335,6 +335,11 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * @todo	PHPDoc
+	 * @param unknown_type $id
+	 * @param unknown_type $language
+	 */
 	public static function delete($id, $language = null)
 	{
 		// redefine
@@ -416,7 +421,7 @@ class BackendPagesModel
 	/**
 	 * Get the data for a record
 	 *
-	 * @return	array
+	 * @return	mixed		false if the record can't be found, otherwise an array with all data
 	 * @param	int $id
 	 */
 	public static function get($id, $language = null)
@@ -434,6 +439,8 @@ class BackendPagesModel
 											WHERE p.id = ? AND p.language = ? AND p.status = ?
 											LIMIT 1;',
 											array($id, $language, 'active'));
+
+		if(empty($return)) return false;
 
 		// can't be deleted
 		if(in_array($return['id'], array(1, 404))) $return['allow_delete'] = 'N';
@@ -455,6 +462,10 @@ class BackendPagesModel
 	}
 
 
+	/**
+	 * @todo	PHPDoc
+	 * @param unknown_type $id
+	 */
 	public static function getTemplate($id)
 	{
 		// get db
@@ -658,8 +669,11 @@ class BackendPagesModel
 		// available in generated file?
 		if(isset($keys[$id])) $URL = $keys[$id];
 
+		// parent id 0 hasn't an url
+		elseif($id == 0) return '';
+
 		// not availble
-		else throw new BackendException('keys-file isn\'t available.')
+		else throw new BackendException('keys-file isn\'t available.');
 
 		// if the is available in multiple languages we should add the current lang
 		if(SITE_MULTILANGUAGE) $URL = '/'. BackendLanguage::getWorkingLanguage() .'/'. $URL;
@@ -991,8 +1005,6 @@ class BackendPagesModel
 	/**
 	 * Get an URL for a page
 	 *
-	 * @todo	urlise should be user in this function
-	 *
 	 * @return	string
 	 * @param	string $URL
 	 * @param	int[optional] $id
@@ -1050,10 +1062,33 @@ class BackendPagesModel
 		}
 
 		// get full URL
-		$fullUrl = self::getFullUrl($parentId) .'/'. $URL;
+		$fullURL = self::getFullUrl($parentId) .'/'. $URL;
+
+		// get info about parent page
+		$parentPageInfo = self::get($parentId);
+
+		// does the parent has extra's?
+		if($parentPageInfo['has_extra'] == 'Y')
+		{
+			// set locale
+			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage());
+
+			// get all onsite action
+			$actions = FrontendLanguage::getActions();
+
+			// if the new URL conflicts with an action we should rebuild the URL
+			if(in_array($URL, $actions))
+			{
+				// add a number
+				$URL = BackendModel::addNumber($URL);
+
+				// recall this method, but with a new URL
+				return self::getURL($URL, $id, $parentId);
+			}
+		}
 
 		// check if folder exists
-		if(SpoonDirectory::exists(PATH_WWW .'/'. $fullUrl))
+		if(SpoonDirectory::exists(PATH_WWW .'/'. $fullURL))
 		{
 			// add a number
 			$URL = BackendModel::addNumber($URL);
@@ -1063,7 +1098,7 @@ class BackendPagesModel
 		}
 
 		// check if it is an appliation
-		if(in_array(trim($fullUrl, '/'), array_keys(ApplicationRouting::getRoutes())))
+		if(in_array(trim($fullURL, '/'), array_keys(ApplicationRouting::getRoutes())))
 		{
 			// add a number
 			$URL = BackendModel::addNumber($URL);
@@ -1136,7 +1171,14 @@ class BackendPagesModel
 		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'));
 
 		// insert
-		return (int) $db->insert('pages_templates', $template);
+		$return = (int) $db->insert('pages_templates', $template);
+
+		// update setting for maximum blocks
+		self::setMaximumBlocks();
+
+		// return
+		return $return;
+
 	}
 
 
@@ -1247,11 +1289,44 @@ class BackendPagesModel
 		// fallback
 		else return false;
 
+		// get current URL
+		$currentURL = (string) $db->getVar('SELECT url
+											FROM meta AS m
+											WHERE m.id = ?;',
+											array($page['meta_id']));
+
+		// rebuild url
+		$newURL = self::getURL($currentURL, $id, $newParent);
+
+		// store
+		$db->update('meta', array('url' => $newURL), 'id = ?', array($page['meta_id']));
+
 		// rebuild cache
 		self::buildCache();
 
 		// return
 		return true;
+	}
+
+
+	/**
+	 * Calculate the maximum number of blocks for all active templates and store into a module-settings
+	 *
+	 * @return	void
+	 */
+	private static function setMaximumBlocks()
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// get maxim number of blocks for active templates
+		$maximumNumberOfBlocks = (int) $db->getVar('SELECT MAX(pt.num_blocks) AS max_num_blocks
+													FROM pages_templates AS pt
+													WHERE pt.active = ?;',
+													array('Y'));
+
+		// store
+		BackendModel::setSetting('core', 'template_max_blocks', $maximumNumberOfBlocks);
 	}
 
 
@@ -1352,7 +1427,8 @@ class BackendPagesModel
 		// update item
 		$db->update('pages_templates', $template, 'id = ?', (int) $id);
 
-		// @todo	update setting for maximum blocks
+		// update setting for maximum blocks
+		self::setMaximumBlocks();
 	}
 }
 

@@ -15,6 +15,15 @@
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
+
+			{option:report}
+			<div id="report">
+				<div class="singleMessage successMessage">
+					<p>{$reportMessage}</p>
+				</div>
+			</div>
+			{/option:report}
+
 			<div class="inner">
 				<div class="oneLiner" id="pagesCTA">
 					<p>{$msgHelpAdd}</p>

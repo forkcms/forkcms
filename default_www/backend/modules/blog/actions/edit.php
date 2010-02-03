@@ -182,6 +182,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// set callback for generating an unique URL
+			$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -206,9 +209,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// set callback for generating an unique URL
-				$this->meta->setURLCallback('BackendBlogModel', 'getURL', array($txtTitle->getValue()));
-
 				// set formatted date and time
 				$formattedDate = SpoonDate::getDate('Y-m-d', $txtPublishDate->getTimestamp());
 				$formattedTime = SpoonDate::getDate('H:i:s', strtotime($txtPublishTime->getValue())); // @todo switch this to $txtPublishTime->getTimestamp whenever it is available
