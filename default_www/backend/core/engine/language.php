@@ -261,7 +261,14 @@ class BackendLanguage
 		$language = (string) $language;
 
 		// check if file exists
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH .'/locale/'. $language .'.php')) throw new BackendException('Languagefile ('. $language .') can\'t be found.');
+		if(!SpoonFile::exists(BACKEND_CACHE_PATH .'/locale/'. $language .'.php'))
+		{
+			// require the BackendLocaleModel
+			require_once BACKEND_MODULES_PATH .'/locale/engine/model.php';
+
+			// build locale file
+			BackendLocaleModel::buildCache($language, APPLICATION);
+		}
 
 		// store
 		self::$currentInterfaceLanguage = $language;

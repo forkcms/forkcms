@@ -242,6 +242,48 @@ class BackendBlogModel
 
 
 	/**
+	 * Get the latest comments for a given type
+	 *
+	 * @return	array
+	 * @param	string $status
+	 * @param	int[optional] $limit
+	 */
+	public static function getLatestComments($status, $limit = 10)
+	{
+		// redefine
+		$status = (string) $status;
+		$limit = (int) $limit;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// return the comments (order by id, this is faster then on date, the higher the id, the more recent
+		$return = (array) $db->retrieve('SELECT bc.id, bc.author, bc.text, UNIX_TIMESTAMP(bc.created_on) AS created_in,
+											bp.title, bp.language, m.url
+										FROM blog_comments AS bc
+										INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
+										INNER JOIN meta AS m ON bp.meta_id = m.id
+										WHERE bc.status = ?
+										ORDER BY bc.id DESC
+										LIMIT ?;',
+										array($status, $limit));
+
+		// loop entries
+		foreach($return as $key => $row)
+		{
+			// get link to page
+			$link = BackendModel::getURLForBlock('blog', 'detail', $row['language']);
+
+			// add full url
+			$return[$key]['full_url'] = $link .'/'. $row['url'];
+		}
+
+		// return
+		return $return;
+	}
+
+
+	/**
 	 * Get all data for a given revision
 	 *
 	 * @return	array
@@ -266,6 +308,23 @@ class BackendBlogModel
 									   FROM blog_posts AS p
 									   INNER JOIN meta AS m ON m.id = p.meta_id
 									   WHERE p.id = ? AND p.revision_id = ?;', array($id, $revisionId));
+	}
+
+
+	/**
+	 * Get a count per comment
+	 *
+	 * @return	array
+	 */
+	public static function getCommentStatusCount()
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// return
+		return (array) $db->getPairs('SELECT bc.status, COUNT(bc.id)
+										FROM blog_comments AS bc
+										GROUP BY bc.status;');
 	}
 
 

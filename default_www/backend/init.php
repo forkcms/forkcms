@@ -145,7 +145,7 @@ class Init
 		require_once BACKEND_CORE_PATH .'/engine/user.php';
 		require_once BACKEND_CORE_PATH .'/engine/model.php';
 		require_once BACKEND_CORE_PATH .'/engine/url.php';
-		require_once BACKEND_CORE_PATH .'/engine/base_config.php';
+		require_once BACKEND_CORE_PATH .'/engine/base.php';
 		require_once BACKEND_CORE_PATH .'/engine/mailer.php';
 
 		// frontend
@@ -159,7 +159,6 @@ class Init
 				require_once BACKEND_CORE_PATH .'/engine/meta.php';
 				require_once BACKEND_CORE_PATH .'/engine/header.php';
 				require_once BACKEND_CORE_PATH .'/engine/navigation.php';
-				require_once BACKEND_CORE_PATH .'/engine/base_action.php';
 				require_once BACKEND_CORE_PATH .'/engine/action.php';
 				require_once BACKEND_CORE_PATH .'/engine/datagrid.php';
 				require_once BACKEND_CORE_PATH .'/engine/form.php';
@@ -170,7 +169,6 @@ class Init
 			case 'backend_ajax':
 				require_once PATH_WWW .'/routing.php';
 				require_once BACKEND_CORE_PATH .'/engine/ajax.php';
-				require_once BACKEND_CORE_PATH .'/engine/base_ajax_action.php';
 				require_once BACKEND_CORE_PATH .'/engine/ajax_action.php';
 			break;
 

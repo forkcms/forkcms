@@ -1,10 +1,10 @@
 <?php
 
 /**
- * BackendPagesAjaxMove
+ * BackendBlogAjaxAddCategory
  *
  * @package		backend
- * @subpackage	pages
+ * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
