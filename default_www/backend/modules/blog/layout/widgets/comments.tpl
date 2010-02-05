@@ -19,7 +19,7 @@
 		<table cellspacing="0" class="datagrid">
 			<tbody>
 				{iteration:blogComments}
-				<tr class="{cycle:odd:even}">
+				<tr class="{cycle:'odd':'even'}">
 					<td><a href="{$blogComments.full_url}">{$blogComments.title}</a></td>
 					<td class="name">{$blogComments.author}</td>
 				</tr>
