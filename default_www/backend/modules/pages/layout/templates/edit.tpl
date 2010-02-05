@@ -1,4 +1,4 @@
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 <table border="0" cellspacing="0" cellpadding="0" id="pagesHolder">
 	<tr>
 		<td id="pagesTree" width="264">
@@ -328,4 +328,4 @@
 	{iteration:extras}extraData[{$extras.id}] = {$extras.json}; {/iteration:extras}
 </script>
 
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

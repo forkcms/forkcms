@@ -1,4 +1,4 @@
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {option:resetSuccess}
 <div id="report">
 	<div class="singleMessage successMessage">
@@ -13,20 +13,20 @@
 
 	<div class="leftColumn">
 	{iteration:leftColumn}
-		{include:file="{$leftColumn.template}"}
+		{include:file='{$leftColumn.template}'}
 	{/iteration:leftColumn}
 	</div>
 
 	<div class="middleColumn">
 	{iteration:middleColumn}
-		{include:file="{$middleColumn.template}"}
+		{include:file='{$middleColumn.template}'}
 	{/iteration:middleColumn}
 	</div>
 
 	<div class="rightColumn">
 	{iteration:rightColumn}
-		{include:file="{$rightColumn.template}"}
+		{include:file='{$rightColumn.template}'}
 	{/iteration:rightColumn}
 	</div>
 </div>
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

@@ -29,6 +29,6 @@
 		</tbody>
 	</table>
 
-	{include:file="{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl"}
+	{include:file='{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl'}
 	{/option:blogArticles}
 </div>

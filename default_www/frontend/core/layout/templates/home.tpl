@@ -29,17 +29,17 @@
 	<div id="container">
 		<div id="topbar">
 			<!-- breadcrumb -->
-			{include:file="{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl"}
+			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
 
 			<!-- user -->
-			{include:file="{$FRONTEND_CORE_PATH}/layout/templates/user.tpl"}
+			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/user.tpl'}
 		</div>
 
 		<div id="header">
 			<h1><a href="/">{$siteTitle}</a></h1>
 
 			<!-- languages -->
-			{include:file="{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl"}
+			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
 		</div>
 
 		<div id="main">
@@ -54,20 +54,20 @@
 
 				<!-- Block 0 -->
 				{option:blockAIsHTML}{$blockA}{/option:blockAIsHTML}
-				{option:!blockAIsHTML}{include:file="{$blockA}"}{/option:!blockAIsHTML}
+				{option:!blockAIsHTML}{include:file='{$blockA}'}{/option:!blockAIsHTML}
 
 				<!-- Block 1 -->
 				{option:blockBIsHTML}{$blockB}{/option:blockBIsHTML}
-				{option:!blockBIsHTML}{include:file="{$blockB}"}{/option:!blockBIsHTML}
+				{option:!blockBIsHTML}{include:file='{$blockB}'}{/option:!blockBIsHTML}
 
 				<!-- Block 2 -->
 				{option:blockCIsHTML}{$blockC}{/option:blockCIsHTML}
-				{option:!blockCIsHTML}{include:file="{$blockC}"}{/option:!blockCIsHTML}
+				{option:!blockCIsHTML}{include:file='{$blockC}'}{/option:!blockCIsHTML}
 			</div>
 		</div>
 
 		<!-- footer -->
-		{include:file="{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl"}
+		{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
 	</div>
 </body>
 </html>

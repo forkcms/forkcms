@@ -1,5 +1,5 @@
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/header.tpl"}
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblTags|ucfirst} &gt; {$msgEditWithItem|sprintf:{$name}}</p>
@@ -37,4 +37,4 @@
 		</td>
 	</tr>
 </table>
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

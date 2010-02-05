@@ -1,4 +1,4 @@
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/head.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
 <body>
 	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
@@ -43,4 +43,4 @@
 			</td>
 		</tr>
 	</table>
-{include:file="{$BACKEND_CORE_PATH}/layout/templates/footer.tpl"}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

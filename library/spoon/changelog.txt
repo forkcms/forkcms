@@ -1,10 +1,12 @@
-1.2.0
+1.1.5 (2010-02-08)
 ----
 - Added SpoonDate::getTimeAgo which presents you with a language dependant sentence based on the provided timestamp in the past.
 - Added SpoonTimeField::getTimestamp which returns a timestamp based on the provided values in conjunction with the hh:ii format in
   the timefield.
 - Fixed a bug in SpoonDateField::getTimestamp when not providing all the optional arguments.
-- Template modifiers may now contain : if you encapsulate with single quotes. eg {$now|date:'Y-m-d H:i'}
+- Template modifiers may now contain semicolons if you encapsulate with single quotes. eg {$now|date:'Y-m-d H:i'}
+- Modifiers are no longer allowed within cache/include tags.
+- Implemented a few basic checks in SpoonTemplate for variables, iterations and options.
 
 
 1.1.4 (2010-01-27)
