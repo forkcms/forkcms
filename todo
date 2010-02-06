@@ -11,15 +11,12 @@ PRIVATE TODO
 	noscript error
 
 	dashboard:
-		- get messages from API
 
 	general:
-		- tinyMCE deftig configureren
 		- autosave
 
 API TODO
 --
-	- push message to users
 
 BUGS
 ---

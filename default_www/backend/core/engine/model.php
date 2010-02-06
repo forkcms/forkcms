@@ -348,7 +348,6 @@ class BackendModel
 	}
 
 
-
 	/**
 	 * Get a certain module-setting
 	 *
