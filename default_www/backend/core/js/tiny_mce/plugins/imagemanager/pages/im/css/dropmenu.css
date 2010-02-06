@@ -1,0 +1,82 @@
+/* Menu */
+.menu {
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	border: 1px solid #d4d0c8;
+	background: #EAE9E5;
+	z-index: 1000;
+	width: 100px;
+}
+
+.menu a {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	padding: 3px;
+	text-align: left;
+	overflow:auto; /* FF */
+}
+
+.menu a:hover {
+	background-color: #dbecf3
+}
+
+.menu .submenu {
+	background: url(../img/menu_arrow.gif) no-repeat center right
+}
+
+.menu .active {
+	background: #dbecf3 url(../img/menu_arrow.gif) no-repeat center right
+}
+
+.menu .active a:hover {
+	background-color: transparent
+}
+
+.menu .separator {
+	border-top: 1px solid gray;
+	height: 1px;
+	overflow: hidden
+}
+
+.menu .separator a {
+	display: none
+}
+
+.menu .disabled a {
+	cursor: default;
+	color: #aaa
+}
+
+/* Menu icons */
+.menu a {
+}
+
+.menu .add a {
+	background-position: 0 -60px
+}
+
+.menu .delete a {
+	background-position: 0 -80px
+}
+
+.menu .copy a {
+	background-position: 0 0
+}
+
+.menu .cut a {
+	background-position: 0 -20px
+}
+
+.menu .paste a {
+	background-position: 0 -40px
+}
+
+.menu .moveup a {
+	background-position: 0 -100px
+}
+
+.menu .movedown a {
+	background-position: 0 -120px
+}

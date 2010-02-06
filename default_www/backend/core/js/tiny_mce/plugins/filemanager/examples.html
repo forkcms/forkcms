@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>MCFileManager Example</title>
+<script type="text/javascript" src="js/mcfilemanager.js"></script>
+<style>
+body, input { font-family: Arial, Verdana; font-size: 11px; }
+h3 { font-size: 14px; }
+p { margin: 0; padding: 0; margin-bottom: 3px; }
+</style>
+</head>
+<body>
+
+<h3>Simple example</h3>
+<p>This is the most simple form of integration.</p>
+<form name="example1">
+<input type="text" name="url" value="Select file" size="80">
+<a href="javascript:mcFileManager.open('example1','url');">[MCFileManager]</a>
+</form>
+
+<h3>Relative URL example</h3>
+<p>This example will output the selected files as relative to the current document.</p>
+<form name="example2">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example2','url','','',{relative_urls : true});">[MCFileManager]</a>
+</form>
+
+<h3>Absolute URL with document_base_url option</h3>
+<p>This example will output the selected files as absolute URLs but with a different domain prefix.</p>
+<form name="example7">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example7','url','','',{document_base_url : 'http://tinymce.moxiecode.com/', remember_last_path : 1});">[MCFileManager]</a>
+</form>
+
+<h3>Absolute URL without host</h3>
+<p>This example will output the selected files as absolute URLs but without the protocol and host name parts.</p>
+<form name="example3">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example3','url','','',{remove_script_host : true});">[MCFileManager]</a>
+</form>
+
+<h3>Specify default path</h3>
+<p>This example shows how the default path can be specified with JavaScript, it also disables the remember last path feature.</p>
+<form name="example4">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example4','url','','',{path : 'files/moreimages', remember_last_path : false});">[MCFileManager]</a>
+</form>
+
+<h3>Specify rootpath</h3>
+<p>This example shows how the rootpath can be specified with JavaScript.</p>
+<form name="example5">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example5','url','','',{rootpath : 'files/moreimages'});">[MCFileManager]</a>
+</form>
+
+<h3>Custom JavaScript insert script</h3>
+<p>This example shows how one could implement a custom insertion JavaScript.</p>
+<script language="javascript" type="text/javascript">
+function insertURL(url) {
+	alert("A URL was intercepted: " + url);
+	document.forms['example6'].url.value = url;
+}
+</script>
+<form name="example6">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example6','url','','insertURL');">[MCFileManager]</a>
+</form>
+
+<h3>Custom filter script</h3>
+<p>This example shows you how to change/filter data passed back.</p>
+<script type="text/javascript">
+function filterURL(file) {
+	alert("Data was intercepted: URL: " + file.url + "\nsize: " + file.size);
+	file.url = file.url.toUpperCase();
+}
+</script>
+<form name="example8">
+<input type="text" name="url" value="" size="80" />
+<a href="javascript:mcFileManager.open('example8','url','','',{insert_filter : filterURL, custom_data : 'apa'});">[MCFileManager]</a>
+</form>
+
+<h3>Filtered file list example</h3>
+<p>This is the most simple form of integration.</p>
+<p><a href="javascript:mcFileManager.browse({extensions:'jpg', exclude_file_pattern:'/^dog/'});">[MCFileManager]</a></p>
+
+</body>
+</html>

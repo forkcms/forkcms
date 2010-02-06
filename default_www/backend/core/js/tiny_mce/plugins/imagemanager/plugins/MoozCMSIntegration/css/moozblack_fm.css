@@ -1,0 +1,246 @@
+body {
+	background: transparent;
+	color: #333;
+	text-shadow: #000 0 1px 1px;
+	font-family: arial;
+}
+
+.icon a, #folders a {
+	color: #ddd;
+}
+
+.icon a:hover, #folders a:hover {
+	color: #fff !important;
+}
+
+#tools .disabled a:hover {
+	color: #AAAAAA !important;
+}
+
+:focus {
+	outline: none;
+}
+
+#folders {
+	position: absolute;
+	top: 0;
+	left: 2px;
+	width: 192px;
+	background: none;
+}
+
+a.sortasc {
+	background: url(../img/fm/sortasc.png) no-repeat 100% 50%;
+}
+
+a.sortdesc {
+	background: url(../img/fm/sortdesc.png) no-repeat 100% 50%;
+}
+
+
+.filemanagertop {
+	background: transparent;
+	color: #666;
+}
+
+.filemanagertop a, .filemanagertop a:visited {
+	border-bottom: 1px solid #333;
+}
+
+.filemanagertop .disabled a, .filemanagertop .disabled a:visited {
+	border-bottom: none;
+}
+
+.filemanagertop a, .filemanagertop a:visited, #previewinfo { 
+	color: #bbb; 
+}
+
+.filemanagertop li a:hover { 
+	color: #eee;
+}
+
+
+.filelist th { 
+	color:#7a92c2;
+	background: #222;
+	border-bottom: 1px solid #000;
+}
+
+.filelist th.file { 
+	background: #222;
+	border-bottom: 1px solid #000;
+}
+
+.filelist td		{ background:#101010; color: #aaa; }
+.filelist td.file	{ background-color:#101010; color: #eee; }
+
+.filelist td.file a { color: #eee; }
+
+/* hover effect */
+
+.filelist tr.hover td { background: #000 !important; }
+.filelist tr.selected td { background: #222 !important; }
+.filelist tr.focused td	{ background: #333 !important; }
+
+#progress {
+	background-image: url(../img/fm/loading.gif);
+}
+
+.pagenav, .navigation {
+	color: #666;
+}
+
+#folders h2	{
+	background: none;
+	font-size: 110%;
+	color: #ddd;
+	padding: 4px 10px 10px 10px;
+}
+
+#folders h3	{
+	font-size: 110%;
+	color: #ddd;
+	border-top: 1px solid #444;
+	padding: 10px 8px 0 8px;
+}
+
+#folders div {
+	background: none;
+}
+
+#folders div.panel {
+	background: none;
+}
+
+#filepreview .actions a { 
+	color: #ccc;
+}
+
+#filepreview .actions a:hover { 
+	color: #eee;
+}
+
+
+
+
+#previewwrap { 
+	border: 1px solid #333;
+}
+
+.filelist th a, .filelist th a:visited { 
+	color: #bbb; 
+}
+
+.filelist th a:hover { 
+	color: #eee;
+}
+
+.filelist tr.hover td	{ background-color:#111; }
+
+.filelist tr.selected td	{ background-color:#333; }
+
+.filelist tr.focused td	{ background-color:#eaeaea; }
+
+/* toolbar.css */
+
+#topnav	{ 
+	background: none;
+}
+
+#topwrap { 
+	background: none; 
+	margin:0px 0px -10px 10px;
+}
+
+.navigation .desc { 
+	background: none; 
+}
+
+.icon a:hover { 
+	background: transparent;
+	color: #2e4e8c;
+}
+
+/* dialog */
+
+
+
+body .dialog {
+	color: #fff;
+	background: transparent;
+}
+
+body .dialog .top { 
+	background: #111;
+}
+
+.dialog .facts {
+	background: transparent;
+}
+
+a#singleupload {
+	color: #fff;
+}
+
+/* !change image paths */
+
+input.submit, .button { 
+	background:url(../img/fm/submit-grey.png) no-repeat;
+}
+
+input.default { 
+	background:url(../img/fm/submit-default.png) no-repeat;
+}
+
+input.cancel { 
+	background:url(../img/fm/submit-grey.png) no-repeat;
+}
+
+a.html, a.htm, a.php, a.asp, a.aspx, a.jsp, a.cfm { background-image: url(../img/fm/filetypes/html.gif); }
+a.mov, a.avi, a.wmv, a.rm, a.qt, a.mpg, a.mpeg { background-image: url(../img/fm/filetypes/movie.gif); }
+a.txt, a.nfo { background-image: url(../img/fm/filetypes/txt.gif); }
+a.swf, a.flv { background-image: url(../img/fm/filetypes/swf.gif); }
+
+
+#uploadarea #filelist {
+	border: 1px solid #414141;
+}
+
+#uploadarea #fileshead {
+	background: #111;
+	border-bottom: 1px solid #000;
+}
+
+
+#uploadarea #status {
+	border: 1px solid #cc9032;
+}
+
+#uploadarea #progressbar {
+	background: url(../img/fm/progress.gif);
+}
+
+#uploadarea .progresstext {
+	color: #888;
+}
+
+#uploadarea .progresstext a {
+	color: #aaa;
+}
+
+#uploadarea a {
+	color: #ddd;
+}
+
+#uploadarea a:hover {
+	color: #fff;
+}
+
+a#add:link, a#add:visited, a#uploadstart:link, a#uploadstart:visited {
+	color: #222;
+	text-shadow: none;
+}
+
+a#add:hover, a#add:visited:hover, a#uploadstart:hover, a#uploadstart:visited:hover {
+	color: #000 !important;
+}

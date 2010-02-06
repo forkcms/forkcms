@@ -1,0 +1,93 @@
+body {
+	background: transparent; 
+}
+
+:focus {
+	outline: none;
+}
+
+#folders {
+	position: absolute;
+	top: 0;
+	left: 2px;
+	width: 192px;
+	background: none;
+}
+
+.filemanagertop a, .filemanagertop a:visited { 
+	color: #444; 
+}
+
+.filemanagertop li a:hover { 
+	color: #111;
+}
+
+#folders h2	{
+	background: none;
+	font-size: 110%;
+	color: #333;
+	padding: 4px 10px 10px 10px;
+}
+
+#folders h3	{
+	font-size: 110%;
+	color: #333;
+	border-top: 1px solid #aaa;
+	padding: 10px 8px 0 8px;
+}
+
+#folders div {
+	background: none;
+}
+
+#folders div.panel {
+	background: none;
+}
+
+#filepreview .actions a { 
+	color: #444;
+}
+
+#filepreview .actions a:hover { 
+	color: #111;
+}
+
+
+#previewwrap { 
+	border: 1px solid #999;
+}
+
+.filelist th a, .filelist th a:visited { 
+	color: #444; 
+}
+
+.filelist th a:hover { 
+	color: #111;
+}
+
+.filelist tr.hover td	{ background-color:#eee; }
+
+.filelist tr.selected td	{ background-color:#bbb; }
+
+.filelist tr.focused td	{ background-color:#eaeaea; }
+
+/* toolbar.css */
+
+#topnav	{ 
+	background: none;
+}
+
+#topwrap { 
+	background: none; 
+	margin:0px 0px -10px 10px;
+}
+
+.navigation .desc { 
+	background: none; 
+}
+
+.icon a:hover { 
+	background: transparent;
+	color: #2e4e8c;
+}
+

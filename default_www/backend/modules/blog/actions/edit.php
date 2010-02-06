@@ -233,7 +233,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				// save the tags
 				BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
-				// ping
+				// ping @todo	only ping if needed
 				BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
 
 				// everything is saved, so redirect to the overview

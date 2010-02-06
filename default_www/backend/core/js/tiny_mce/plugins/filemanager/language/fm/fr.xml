@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<language-pack>
+  <header>
+    <author>Gérits Aurélien(www.clashdesign.net)</author>
+    <version minor="1" major="1" releasedate="2009-04-16" />
+    <description>
+			This is the french language pack for the MCFileManager.
+		</description>
+  </header>
+  <language code="fr" title="Français" dir="ltr">
+    <group target="error">
+      <item name="tofile_exists">Ce fichier existe déjà.</item>
+      <item name="no_from_file">Le fichier source n'existe pas.</item>
+      <item name="demo">Cette action est limitée en mode démonstration.</item>
+      <item name="invalid_filename">Nom du fichier non valide.</item>
+      <item name="no_write_access">Vous n'avez pas de droits en écriture sur ce fichier/dossier.</item>
+      <item name="copy_failed">La copie a échouée.</item>
+      <item name="move_failed">Le déplacement a échoué.</item>
+      <item name="template_missing">Template introuvable.</item>
+      <item name="createdoc_failed">La création du document a échouée.</item>
+      <item name="no_access">Vous ne disposez pas des droits pour réaliser cette action.</item>
+      <item name="file_exists">Ce fichier existe déjà.</item>
+      <item name="upload_failed">L'envoi a échoué, vérifiez les droits d'écriture sur le dossier.</item>
+      <item name="error_to_large">La taille maximum est dépassée.</item>
+      <item name="file_not_exists">Ce fichier n'existe pas.</item>
+      <item name="delete_failed">La suppression a échouée.</item>
+      <item name="folder_exists">Le dossier existe déjé.</item>
+      <item name="no_filesystem">Aucun systéme de fichier n'a été trouvé.</item>
+      <item name="createdir_failed">La création du dossier a échouée.</item>
+      <item name="createzip_failed">La création du zip a échouée.</item>
+      <item name="rename_failed">Le changement de nom a échoué.</item>
+    </group>
+    <group target="message">
+      <item name="zip_success">Zip terminé.</item>
+      <item name="copy_success">Copie terminé.</item>
+      <item name="move_success">Déplacement terminé.</item>
+      <item name="createdoc_success">Le document a été créé.</item>
+      <item name="delete_success">Suppression terminée.</item>
+      <item name="directory_ok">Dossier créé.</item>
+      <item name="keepalive">Keepalive</item>
+      <item name="upload_ok">Envoi terminé.</item>
+      <item name="confirm_cut">Voulez-vous vraiment couper les fichiers sélectionnés ?</item>
+      <item name="confirm_copy">Voulez-vous vraiment copier les fichiers sélectionnés ?</item>
+      <item name="confirm_paste">Voulez-vous vraiment coller les fichiers coupés/copiés ?</item>
+      <item name="confirm_delete">Voulez-vous vraiment supprimer les fichiers sélectionnés ?</item>
+      <item name="insert">Chargement du fichier, patientez...</item>
+      <item name="paste_in_progress">Collage en cours, patientez...</item>
+    </group>
+    <group target="common">
+      <item name="createdir">Créer dossier</item>
+      <item name="createfile">Nouveau fichier</item>
+      <item name="help">Aide</item>
+      <item name="refresh">Rafréchir</item>
+      <item name="upload">Upload</item>
+      <item name="directory">dossier sélectionné</item>
+      <item name="imagemanager">Image manager</item>
+      <item name="title">Moxiecode Gestionnaire de fichiers</item>
+      <item name="alert_ok">Ok</item>
+      <item name="confirm_yes">Oui</item>
+      <item name="confirm_no">Non</item>
+    </group>
+    <group target="button">
+      <item name="create">Créer</item>
+      <item name="cancel">Annulé</item>
+      <item name="save">Sauvergarder</item>
+    </group>
+    <group target="panel">
+      <item name="categories">Catégories</item>
+      <item name="preview">Prévisualisation</item>
+      <!-- Legacy items -->
+      <item name="favorites">Favoris</item>
+      <item name="history">Historique</item>
+    </group>
+    <group target="edit">
+      <item name="title">Editer un fichier</item>
+      <item name="description">Edition en cours veuillez patienter</item>
+      <item name="loading_wait">Chargement en cours veuillez patienter</item>
+      <item name="saving_wait">Sauvergarde en cours veuillez patienter</item>
+      <item name="file_path">File path:</item>
+    </group>
+    <group target="actions">
+      <item name="insert">Insérer</item>
+      <item name="download">Télécharger</item>
+      <item name="rename">Renommer</item>
+      <item name="cut">Couper</item>
+      <item name="copy">Copier</item>
+      <item name="paste">Coller</item>
+      <item name="deleteit">Supprimer</item>
+      <item name="zip">Zipper</item>
+      <item name="view">Afficher</item>
+      <item name="select_all">Tout cocher</item>
+      <item name="unselect_all">Tout décocher</item>
+      <item name="addfavorites">Ajouter aux favoris</item>
+      <item name="removefavorites">Supprimer des favoris</item>
+      <item name="edit">Editer</item>
+    </group>
+    <group target="filelist">
+      <item name="filename">Nom du fichier</item>
+      <item name="size">Taille</item>
+      <item name="type">Type</item>
+      <item name="modified">Date de modification</item>
+      <item name="with_selected">Avec la sélection :</item>
+      <item name="info_dirs">Dossiers :</item>
+      <item name="info_files">Fichiers :</item>
+      <item name="info_size">Taille du fichier :</item>
+      <item name="info_access">accés :</item>
+      <item name="loading">Chargement...</item>
+    </group>
+    <group target="createdir">
+      <item name="title">Créer dossier</item>
+      <item name="description">Insérez le nom du dossier que vous voulez créer.</item>
+      <item name="template">Template :</item>
+      <item name="select_template">-- template --</item>
+      <item name="directory_name">Nom du dossier :</item>
+      <item name="create_in">Créer dans :</item>
+      <item name="progress">Création du dossier, patientez...</item>
+    </group>
+    <group target="createdoc">
+      <item name="title">Créer document</item>
+      <item name="description">Remplissez le formulaire pour créer un document depuis le template.</item>
+      <item name="template">Template :</item>
+      <item name="select_template">-- template --</item>
+      <item name="name">Nom</item>
+      <item name="path">Chemin</item>
+      <item name="preview">Prévisualisation</item>
+    </group>
+    <group target="upload">
+      <item name="title">Upload</item>
+      <item name="description">Utilisez le formulaire pour uploader des fichiers.</item>
+      <item name="valid_extensions">Extensions valides :</item>
+      <item name="max_upload_size">Taille max :</item>
+      <item name="file_to_upload">Fichiers uploader :</item>
+      <item name="as_file_name">Comme :</item>
+      <item name="path">Chemin : </item>
+      <item name="button_upload">Upload</item>
+      <item name="browse">Parcourir</item>
+      <item name="progress">Upload en cours, patientez...</item>
+      <item name="upload_warn">Les fichiers sont téléchargés, vous êtes-vous sûr de vouloir annuler le transfert?</item>
+      <item name="statusrow">Vous avez {files} fichier (total {size}) attendent avec impatience d'être transféré.</item>
+      <item name="progressinfo">{loaded} de {total} téléchargement d'une vitesse de {speed}/s.</item>
+      <item name="abort">Abort upload</item>
+      <item name="add_more">Add more?</item>
+      <item name="upload_to_server">Télécharger sur le serveur</item>
+      <item name="cancelled">Annulé le téléchargement</item>
+      <item name="choose_files">Choisissez un fichier</item>
+      <item name="basic_upload">Si vous rencontrez des problèmes pour télécharger, vous pouvez toujours utiliser {a}le système classique{/a}.</item>
+      <item name="remove">Supprimé</item>
+      <item name="file">Fichier</item>
+      <item name="size">Taille</item>
+      <item name="status">Status</item>
+      <item name="no_valid_files">Le fichier selectionné est invalide, recommencer</item>
+    </group>
+    <group target="createzip">
+      <item name="title">Créer un zip</item>
+      <item name="description">Nom du fichier zip é créer.</item>
+      <item name="name">Nom :</item>
+      <item name="path">Chemin</item>
+    </group>
+    <group target="tinymce">
+      <item name="insertfile_desc">Insérer un fichier</item>
+    </group>
+    <group target="favorites">
+      <item name="special_folder_title">Favoris</item>
+      <item name="addfavorites">Ajouter aux favoris</item>
+      <item name="removefavorites">Supprimer les favoris</item>
+      <item name="confirm_remove_favorite">Êtes-vous sûr de vouloir supprimer cet élément de votre liste de favoris ?</item>
+      <item name="remove_favorite_failed">Impossible de supprimer le favori de votre liste.</item>
+    </group>
+    <group target="history">
+      <item name="special_folder_title">Historique</item>
+    </group>
+  </language>
+</language-pack>

@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{#view.title}</title>
+<!--[if IE]><script type="text/javascript" src="js/utils/fixpng.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="../../css/index.php?type=im&theme=im&package=core_css" />
+<link rel="stylesheet" type="text/css" href="../../css/index.php?type=im&theme=im&package=view_css" />
+</head>
+<body id="view">
+	<!-- This is outside the wrapper so we get it centered properly, might wana fix this with css instead -->
+	<div id="singleview">
+		<!-- This will be filled by the templates -->
+		<p id="nav">
+			<a id="prev" href="#action" class="prev" title="{#view.keyboard_prev}">&nbsp;</a><a id="gallery" href="#action" class="gallery">&nbsp;</a><a id="next" href="#action" class="next" title="{#view.keyboard_next}">&nbsp;</a>
+		</p>
+		<div id="singlecontent">&nbsp;</div>
+		<div id="singlefooter">&nbsp;</div>
+	</div>
+
+<script id="singleview_template" type="text/moxiecode-template">
+	<![CDATA[
+		<div class="singleimg" id="singleimg"><a href="#action"><img src="../../stream/index.php?cmd=im.streamFile&path={path:encodeURIComponent}" width="{width}" height="{height}" border="0" title="{name}" alt="{name}" class="viewimage" /></a></div>
+	]]>
+</script>
+
+<script id="mpg_template" type="text/moxiecode-template">
+	<![CDATA[
+		<object classid="clsid:6BF52A52-394A-11D3-B153-00C04F79FAA6" type="application/x-oleobject" width="{width}" height="{height}">
+			<param name="src" value="../../stream/index.php?cmd=im.streamFile&path={path}" />
+			<param name="url" value="../../stream/index.php?cmd=im.streamFile&path={path}" />
+			<param name="width" value="{width}" />
+			<param name="height" value="{height}" />
+			<embed type="application/x-mplayer2" src="../../stream/index.php?cmd=im.streamFile&path={path}" width="{width}" height="{height}"></embed>
+		</object>
+	]]>
+</script>
+
+<script id="rm_template" type="text/moxiecode-template">
+	<![CDATA[
+		<object id="realplayerwindow" classid="clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA" width="{width}" height="{height}">
+			<param name="src" value="../../stream/index.php?cmd=im.streamFile&path={path}" />
+			<param name="width" value="{width}" />
+			<param name="height" value="{height}" />
+			<param name="maintainaspect" value="true" />
+			<param name="autostart" value="true">
+			<param name="controls" value="ImageWindow">
+			<param name="loop" value="false">
+			<param name="console" value="video1" />
+			<embed type="audio/x-pn-realaudio-plugin" autostart="true" controls="ImageWindow" nojava="true" loop="false" maintainaspect="true" src="../../stream/index.php?cmd=im.streamFile&path={path}" width="{width}" height="{height}"></embed>
+		</object><br />
+		<object id="realplayercontrols" classid="clsid:CFCDAA03-8BE4-11cf-B84B-0020AFBBCCFA" width="{width}" height="30">
+			<param name="width" value="{width}" />
+			<param name="height" value="30" />
+			<param name="controls" value="ControlPanel">
+			<param name="console" value="_master" />
+			<embed type="audio/x-pn-realaudio-plugin" console="_master" controls="ControlPanel" nojava="true" width="{width}" height="30"></embed>
+		</object>
+	]]>
+</script>
+
+<script id="mov_template" type="text/moxiecode-template">
+	<![CDATA[
+		<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" codebase="http://www.apple.com/qtactivex/qtplugin.cab#version=6,0,2,0" width="{width}" height="{height}">
+			<param name="src" value="../../stream/index.php?cmd=im.streamFile&path={path}" />
+			<param name="width" value="{width}" />
+			<param name="height" value="{height}" />
+			<param name="loop" value="false" />
+			<param name="scale" value="aspect" />
+			<embed type="video/quicktime" loop="false" src="../../stream/index.php?cmd=im.streamFile&path={path}" width="{width}" height="{height}"></embed>
+		</object>
+	]]>
+</script>
+
+<script id="dcr_template" type="text/moxiecode-template">
+	<![CDATA[
+		<object classid="clsid:166B1BCA-3F9C-11CF-8075-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/director/sw.cab#version=8,5,1,0" width="{width}" height="{height}">
+			<param name="sound" value="true />
+			<param name="progress" value="true" />
+			<param name="autostart" value="true" />
+			<param name="swstretchstyle" value="stage" />
+			<param name="swstretchhalign" value="none" />
+			<param name="swstretchvalign" value="none" />
+			<param name="src" value="../../stream/index.php?cmd=im.streamFile&path={path}" />
+			<param name="width" value="{width}" />
+			<param name="height" value="{height}" />
+			<embed type="application/x-director" sound="true" progress="true" autostart="true" swliveconnect="false" swstretchstyle="stage" swstretchhalign="none" swstretchvalign="none" src="../../stream/index.php?cmd=im.streamFile&path={path}" width="{width}" height="{height}"></embed>
+		</object>
+	]]>
+</script>
+
+<script id="single_footer_full" type="text/moxiecode-template">
+	<![CDATA[
+		<div>{name} ({size:sizefix})</div>
+		<div>{#view.dimensions} {width}x{height}</div>
+		<div class="editsingle"><a id="edit" href="#action" class="edt">{#common.edit}</a> <a id="deleteit" href="#action" class="delete">{#common.deleteit}</a></div>
+	]]>
+</script>
+
+<script id="single_footer_no_edit" type="text/moxiecode-template">
+	<![CDATA[
+		<div>{name} ({size:sizefix})</div>
+		<div>{#view.dimensions} {width}x{height}px</div>
+		<div class="editsingle"><a id="deleteit" href="#action" class="delete">{#common.deleteit}</a></div>
+	]]>
+</script>
+
+<script id="single_footer_simple" type="text/moxiecode-template">
+	<![CDATA[
+		<div>{name} ({size:sizefix})</div>
+		<div class="editsingle"><a id="deleteit" href="#action" class="delete">{#common.deleteit}</a></div>
+	]]>
+</script>
+
+<script type="text/javascript" src="../../language/index.php?type=im"></script>
+<script type="text/javascript" src="../../js/index.php?type=im&theme=im&package=core"></script>
+<script type="text/javascript" src="../../js/index.php?type=im&theme=im&package=view"></script>
+
+</body>
+</html>

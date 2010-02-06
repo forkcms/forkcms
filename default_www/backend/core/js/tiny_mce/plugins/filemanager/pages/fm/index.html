@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{#common.title}</title>
+<!--[if IE]><script type="text/javascript" src="js/utils/fixpng.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="../../css/index.php?type=fm&theme=fm&package=core_css" />
+<link rel="stylesheet" type="text/css" href="../../css/index.php?type=fm&theme=fm&package=index_css" />
+</head>
+<body class="filelistPage">
+<div id="center">
+	<div id="topnav">
+		<div id="topwrap">
+			<div class="toolbar caption">
+				<div class="navigation" id="navigation">
+					<div class="desc">{#common.directory}</div>
+					<div id="curpath" class="path">&nbsp;</div>
+				</div>
+
+				<ul id="tools" class="icons">
+					<li id="createdir" class="icon disabled"><a href="#action" title="{#common.createdir}"><img src="img/icons/newfolder.png" width="16" height="16" alt="{#common.createdir}" /><span class="caption">{#common.createdir}</span></a></li>
+					<li id="upload" class="icon disabled"><a href="#action" title="{#common.upload}"><img src="img/icons/add.png" width="16" height="16" alt="{#common.upload}" /><span class="caption">{#common.upload}</span></a></li>
+					<li id="createdoc" class="icon disabled"><a href="#action" title="{#common.createfile}"><img src="img/icons/newdoc.png" width="16" height="16" alt="{#common.createfile}" /><span class="caption">{#common.createfile}</span></a></li>
+					<li id="refresh" class="icon disabled"><a href="#action" title="{#common.refresh}"><img src="img/icons/reload.png" width="16" height="16" alt="{#common.refresh}" /><span class="caption">{#common.refresh}</span></a></li>
+					<li id="help" class="icon disabled"><a href="#action" title="{#common.help}"><img src="img/icons/help.png" width="16" height="16" alt="{#common.help}" /><span class="caption">{#common.help}</span></a></li>
+					<li id="imagemanager" class="icon disabled"><a href="#action" title="{#common.imagemanager}"><img src="img/icons/imagemanager.png" width="16" height="16" alt="{#common.imagemanager}" /><span class="caption">{#common.imagemanager}</span></a></li>
+				</ul>
+			</div>
+
+			<br style="clear:both;" /><br />
+		</div>
+	</div>
+
+	<br style="clear:both;" />
+
+	<div id="listcontainer">
+		<div id="folders">
+			<div class="panel">
+				<h2>{#panel.categories}</h2>
+
+				<ul id="category_list" class="categories"></ul>
+				<ul id="special_list" class="special"></ul>
+
+				<h3>{#panel.preview}</h3>
+				<div id="filepreview">
+					<div id="previewinfo">&nbsp;</div>
+					<div id="previewwrap">
+						<iframe id="preview" src="javascript:''" frameborder="0" marginwidth="0" marginheight="0"></iframe>
+					</div>
+					<div id="view_actions" class="actions">
+						<ul>
+							<li id="insert" class="disabled"><a href="#action">{#actions.insert}</a> |</li>
+							<li id="download" class="disabled"><a href="#action">{#actions.download}</a> |</li>
+							<li id="view" class="disabled"><a href="#action">{#actions.view}</a></li>
+							<li class="end" class="disabled"> | </li>
+						</ul>
+					</div>
+				</div>
+				<div id="folderpreview">
+				</div>
+			</div>
+		</div>
+
+		<div id="listing">
+			<div id="dirinfo" class="pagenav">
+				<!-- Gets replaced by JS -->
+			</div>
+
+			<div id="progress" class="pagenav">
+				{#filelist.loading}
+			</div>
+
+			<div class="filemanagertop">
+				<ul id="selection_actions">
+					<li id="selectall" class="disabled"><a href="#action">{#actions.select_all}</a> | </li>
+					<li id="unselectall" class="disabled"><a href="#action">{#actions.unselect_all}</a> &nbsp; &nbsp; </li>
+					<li>{#filelist.with_selected}</li>
+					<li id="cut" class="disabled"><a href="#action">{#actions.cut}</a> | </li>
+					<li id="copy" class="disabled"><a href="#action">{#actions.copy}</a> | </li>
+					<li id="paste" class="disabled"><a href="#action">{#actions.paste}</a> | </li>
+					<li id="edit" class="disabled"><a href="#action">{#actions.edit}</a> | </li>
+					<li id="rename" class="disabled"><a href="#action">{#actions.rename}</a> | </li>
+					<li id="delete" class="disabled"><a href="#action">{#actions.deleteit}</a> | </li>
+					<li id="zip" class="disabled"><a href="#action">{#actions.zip}</a> </li>
+				</ul>
+			</div>
+
+			<div id="filemanagerlist">
+				<div>
+					<table class="filelist hoverrow sortable" cellpadding="0" cellspacing="0" summary="file list">
+						<thead>
+							<tr>
+								<th class="checkbox">&nbsp;</th>
+								<th class="file"><a id="sortbyname" href="#action" class="sort">{#filelist.filename}</a></th>
+								<th><a id="sortbysize" href="#action" class="sort">{#filelist.size}</a></th>
+								<th><a id="sortbytype" href="#action" class="sort">{#filelist.type}</a></th>
+								<th><a id="sortbymodified" href="#action" class="sort">{#filelist.modified}</a></th>
+							</tr>
+						</thead>
+						<tbody id="filelist">
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<br style="clear:both;" /><br /><br />
+
+	<script id="custom_dir_template" type="text/moxiecode-template">
+		<![CDATA[
+			<li><a href="#action" title="{path}" class="{type}">{title}</a></li>
+		]]>
+	</script>
+
+	<script id="preview_file_template" type="text/moxiecode-template">
+		<![CDATA[
+			{name}
+		]]>
+	</script>
+
+	<script id="path_template" type="text/moxiecode-template">
+		<![CDATA[
+			{visual_path}
+		]]>
+	</script>
+
+	<script id="dirinfo_template" type="text/moxiecode-template">
+		<![CDATA[
+			{#filelist.info_dirs} {dirs}, {#filelist.info_files} {files}, {#filelist.info_size} {filesize:sizefix}, {#filelist.info_access} {access}
+		]]>
+	</script>
+
+	<script id="folders_template" type="text/moxiecode-template">
+		<![CDATA[
+			<li><a href="{path}" title="{path}">{name}</a></li>
+		]]>
+	</script>
+
+	<script id="filelist_item_template" type="text/moxiecode-template">
+		<![CDATA[
+			<tr id="{id}" class="listrow {type}">
+				<td class="checkbox"><a href="#action" class="checkbox"></a></td>
+				<td class="file"><a href="javascript:void(0);" class="{type}">{name}</a></td>
+				<td>{size:sizefix}</td>
+				<td>{type}</td>
+				<td>{modified}</td>
+			</tr>
+		]]>
+	</script>
+</div>
+
+<script type="text/javascript" src="../../language/index.php?type=fm"></script>
+<script type="text/javascript" src="../../js/index.php?type=fm&theme=fm&package=core"></script>
+<script type="text/javascript" src="../../js/index.php?type=fm&theme=fm&package=filemanager"></script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+body	{ background:#fff url('../img/bg.gif'); color:#000; margin: 0; padding: 0; font:70% arial, helvetica, sans-serif; text-align:left; }
+
+td {font-size: 100%;}
+
+a				{ background:transparent; }
+a:link 			{ color:#000; }
+a:visited 		{ color:#000; }
+a:visited:hover { color:#000; }
+a:hover 		{ color:#000; }
+a:active 		{ color:#000; }
+
+img	{ behavior:expression(PNG.fix(this)); }
+
+.panel {
+	display: none;
+}
+
+#actionbar {
+	position: absolute;
+	left: 15px; top: 50px;
+	z-index: 10000;
+}
+
+input.text { border: 0; font-size: 100%; border: 1px solid #E0E0E0; }
+input.checkbox { padding: 0; margin: 0 3px 0 5px; vertical-align: middle; line-height: 20px; }
+input.radio { padding: 0; margin: 0 3px 0 5px; vertical-align: middle; line-height: 20px; }
+label { vertical-align: middle; line-height: 20px; }
+
+.toolbar { margin:0px; font:90% tahoma; padding:2px 20px 10px 15px; }
+
+.icons	{ margin:14px 0px 0px 0px; float:left; }
+.icon	{ margin:0px 2px 0px 1px; padding:0px; float:left; line-height:0px; position:relative; }
+
+.icon a { text-decoration:none; padding:2px; display:block; }
+.icon a:hover, .active { background:#d3d0ce; }
+.disabled img { opacity:0.3; -ms-filter:'alpha(opacity=30)'; filter:alpha(opacity=30); }
+.disabled span { color:gray }
+a.disabled:hover { background:transparent; }
+
+.icon .caption	{ display:none; padding:0px 4px 0px 4px; position:relative; top:-4px; }
+
+.toolbar .separator	{ margin:0px 4px; float:left; }
+
+#toolbar.caption span.caption { display: inline; }
+.panel span.caption { display: inline; }
+.panel a { text-decoration: none; display: block; }
+.panel a:hover { background: #d3d0ce; }
+
+.actionsettings { float: left; }
+.actionicons { float: left; }
+
+/* SelectionRect */
+
+.selection-corner-tl { cursor: nw-resize; }
+.selection-corner-tc { cursor: n-resize; }
+.selection-corner-tr { cursor: ne-resize; }
+.selection-corner-cl { cursor: w-resize; }
+.selection-corner-cr { cursor: e-resize; }
+.selection-corner-bl { cursor: sw-resize; }
+.selection-corner-bc { cursor: s-resize; }
+.selection-corner-br { cursor: se-resize; }
+
+div.selection {
+	display:none;
+	z-index: 1000;
+	cursor: move;
+	line-height: 1px;
+	overflow: hidden;
+	position:absolute;
+	border:1px solid gray;
+}
+
+.resize div.selection {
+	border: 0;
+}
+
+div.selection img {
+	position:absolute;
+}
+
+.selection-corner {
+	position: absolute;
+	left: 1px; top: 1px;
+	width: 8px; height: 8px;
+	border: 0; margin: 0; padding: 0;
+	background: transparent url('../img/selection_corner.gif') top left no-repeat;
+	z-index: 1001;
+	display:none;
+}
+
+/*a.selection-corner:hover {
+	background-position: -8px 0px;
+}*/
+
+#editArea {
+	position: absolute;
+	left: 15px; top: 80px;
+}
+
+#imageWrapper {
+	position: relative;
+	left: 0; top: 0;
+	width: 720px; height: 455px;
+	border: 1px solid black;
+	overflow: scroll;
+	cursor: crosshair;
+	background-color: #c0c0c0;
+}
+
+#eventElement {
+	position: relative;
+	left: 0; top: 0;
+	padding: 0;
+}
+
+#editImage {
+	padding: 0;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
+
+#marginWrapper {
+	padding: 10px;
+}
+
+td {
+	vertical-align: middle;
+}
+
+img.crop, .resize .selimage, .crop .mainimage {
+	opacity:0.5; -ms-filter:'alpha(opacity=50)'; filter:alpha(opacity=50);
+}
+
+.resize div.selection {
+	cursor: default;
+}

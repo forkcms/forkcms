@@ -1,0 +1,98 @@
+body {
+	background: transparent; 
+}
+
+:focus {
+	outline: none;
+}
+
+#folders {
+	position: absolute;
+	top: 0;
+	left: 2px;
+	width: 192px;
+	background: none;
+}
+
+#folders h2	{
+	background: none;
+	font-size: 110%;
+	color: #333;
+}
+
+#folders h3	{
+	font-size: 110%;
+	color: #333;
+	border-top: 1px solid #aaa;
+}
+
+#folders div {
+	background: none;
+}
+
+.pagenav .prev {background:url('../img/im/left.png') no-repeat left; width:20px; height:16px; text-decoration:none; behavior:expression(PNG.fix(this));}
+.pagenav .next {background:url('../img/im/right.png') no-repeat right; width:20px; height:16px; text-decoration:none; behavior:expression(PNG.fix(this));}
+
+/* toolbar.css */
+
+#topnav	{ 
+	background: none;
+}
+
+#topwrap { 
+	background: none; 
+	margin:0px 0px 0px 10px;
+}
+
+.navigation .desc { 
+	background: none; 
+}
+
+.icon a:hover { 
+	background: transparent;
+	color: #2e4e8c;
+}
+
+/* view.css */
+
+#singleview .prev	{ 
+	background:url('../img/im/left.png') no-repeat left;
+}
+
+#singleview .next	{ 
+	background:url('../img/im/right.png') no-repeat right;
+}
+#singleview #prev.disabled { 
+	background:url('../img/im/left_disabled.png') no-repeat left;
+}
+	
+#singleview #next.disabled { 
+	background:url('../img/im/right_disabled.png') no-repeat right;
+}
+
+/* viewmodes.css */
+
+.thumbnail { 
+	background:url(../img/im/im-topright.gif) no-repeat top right; 
+}
+
+.thumbnail .wrap { 
+	background:url(../img/im/im-topleft.gif) no-repeat;
+}
+
+.details { 
+	background:url(../img/im/im.gif) no-repeat bottom right;
+}
+
+.details .wrap2	{ 
+	background:url(../img/im/im-botleft.gif) no-repeat bottom left; 
+}
+
+.listview	{ 
+	background:url('../img/im/im-topright.gif') no-repeat top right;
+}
+
+.listview .wrap { 
+	background: url('../img/im/im-topleft.gif') no-repeat;
+}
+

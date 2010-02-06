@@ -276,6 +276,10 @@ class BackendLanguage
 		// store in cookie
 		SpoonCookie::set('backend_interface_language', $language);
 
+		// store in session for TinyMCE
+		SpoonSession::set('tiny_mce_language', $language);
+		SpoonSession::set('backend_interface_language', $language);
+
 		// init vars
 		$err = array();
 		$lbl = array();

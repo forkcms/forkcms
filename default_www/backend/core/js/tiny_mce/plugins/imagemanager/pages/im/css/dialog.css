@@ -1,0 +1,178 @@
+/* dialog popups */
+/* ########################################################## */
+
+body {
+	overflow: auto;
+}
+
+.dialog { 
+	position:relative;
+	text-align:left;
+	width:100%;
+}
+
+.dialog .top { 
+	padding:10px 12px;
+	background:#f3f2f0 url('../img/dialog-top.png') no-repeat right bottom;
+	behavior:expression(PNG.fix(this));
+}
+
+.dialog .close { 
+	position:absolute;
+	top:4px;
+	right:4px;
+}
+
+.dialog h2 {
+	font:bold 115% tahoma, arial, sans-serif;
+	margin:0px;
+}
+
+.dialog .description {
+	margin:0px;
+}
+
+.dialog .headline	{ 
+	padding:8px 0px 12px 40px; 
+}
+
+.dialog .createdir {
+	background: url('../img/dialog-icon-newfolder.png') no-repeat left;
+	behavior:expression(PNG.fix(this));
+}
+
+.dialog .upload {
+	background: url('../img/dialog-icon-upload.png') no-repeat left;
+	behavior:expression(PNG.fix(this));
+}
+
+.dialog .upload { 
+	background: url('../img/dialog-icon-upload.png') no-repeat left; 
+	behavior:expression(PNG.fix(this)); 
+}
+
+.dialog .facts { 
+	background:#f3f2f0;
+	padding:8px 16px 12px 20px;
+	font:90% tahoma, arial, sans-serif;
+}
+
+.dialog .body	{ 
+	padding:8px 16px 12px 20px;
+}
+
+#content { display: none; }
+
+/* Upload */
+
+#uploadarea {
+	position: relative;
+	padding: 16px;
+	height: 220px;
+	overflow: hidden;
+}
+
+* html #uploadarea {
+	height: 208px;
+}
+
+#uploadarea .small {
+	margin: 2em 0 -1em;
+	color: #6d88c4;
+	font-size: 0.9em;
+	text-transform: uppercase;
+}
+
+#uploadarea #add.hidden {
+	display: none;
+}
+
+#uploadarea .addbutton, #uploadarea #uploadstart {
+	display: block;
+	width: 182px;
+	height: 26px;
+	margin: 0 0 1em;
+	background: url(../img/submit-greyWide.png) no-repeat;
+	text-align: center;
+	font-size: 1em;
+	font-weight: bold;
+	line-height: 26px;
+	text-decoration: none;
+}
+
+#uploadarea #uploadstart {
+	background: url(../img/submit-wide.png) no-repeat;
+}
+
+#uploadarea #fileblock {
+	position:relative;
+	top:400px;
+}
+
+#uploadarea #filelist {
+	position:relative; 
+	max-height: 7em;
+	overflow: auto;
+	margin-bottom: 6px;
+	border: 1px solid #9fadc4;
+}
+
+* html #uploadarea #filelist {
+	height: 7em;
+}
+
+#uploadarea #fileshead {
+	width: 100%;
+	font-weight: bold;
+	background: #eee;
+	border-bottom: 1px solid #fff;
+}
+
+#uploadarea #files {
+	width: 490px;
+}
+
+#uploadarea #status {
+	position: absolute;
+	top: 4px;
+	border: 1px solid #9fadc4;
+	padding: 1px;
+	width: 506px;
+	height: 34px;
+	display: none;
+}
+
+#uploadarea #progressbar {
+	position: relative;
+	width: 100%;
+	height: 34px;
+	background: url(../img/progress.gif);
+	z-index: 10;
+}
+
+#uploadarea .progresstext {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	color: #535353;
+	font-weight: bold;
+	line-height: 36px;
+	z-index: 11;
+}
+
+#uploadarea .progresstext a {
+	text-decoration: none;
+	color: #535353;
+}
+
+#files .fname a {display:block; width:295px; overflow:hidden}
+#files .disabled {text-decoration:none; cursor:default}
+#files .done {color:gray}
+#files .failed {color:red}
+
+#multiupload_view {display:none}
+#singleupload_view {display:none}
+#multiupload_view #selectview {position:relative}
+#files input.text {width:290px; margin:0; padding:0}

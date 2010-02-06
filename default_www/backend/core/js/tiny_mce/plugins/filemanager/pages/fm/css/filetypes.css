@@ -1,0 +1,17 @@
+/* File types */
+
+a.folder { background-image: url(../img/folder.png); }
+a.parent { background-image: url(../img/icons/up.png); }
+a.jpg, a.gif, a.bmp, a.tif, a.jpeg, a.png { background-image: url(../img/filetypes/image.gif); }
+a.html, a.htm, a.php, a.asp, a.aspx, a.jsp, a.cfm { background-image: url(../img/filetypes/html.gif); }
+a.mov, a.avi, a.wmv, a.rm, a.qt, a.mpg, a.mpeg { background-image: url(../img/filetypes/movie.gif); }
+a.ppt, a.ppm { background-image: url(../img/filetypes/powerpoint.gif); }
+a.pdf { background-image: url(../img/filetypes/pdf.gif); }
+a.txt, a.nfo { background-image: url(../img/filetypes/txt.gif); }
+a.swf, a.flv { background-image: url(../img/filetypes/swf.gif); }
+a.doc, a.dot, a.docx { background-image: url(../img/filetypes/word.gif); }
+a.xls { background-image: url(../img/filetypes/excel.gif); }
+a.zip, a.rar, a.arj, a.tar, a.tgz, a.gz, a.zoo, a.lha, a.lzh { background-image: url(../img/filetypes/archive.gif); }
+a.xml, a.xsl, a.xsd, a.dtd { background-image: url(../img/filetypes/xml.gif); }
+a.mp3, a.mp2, a.aif, a.aiff, a.wav { background-image: url(../img/filetypes/sound.gif); }
+a.exe, a.com { background-image: url(../img/filetypes/exe.gif); }

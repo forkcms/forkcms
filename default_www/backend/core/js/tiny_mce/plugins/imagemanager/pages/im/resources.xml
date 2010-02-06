@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<resources>
+	<!-- Main package loaded by all .html files -->
+	<package id="core">
+		<file path="js/utils/domain.js" />
+		<file path="js/jquery/jquery.js" />
+		<file path="js/jquery/jquery.i18n.js" />
+		<file path="js/jquery/jquery.dialog.js" />
+		<file path="js/jquery/jquery.dialog.status.js" />
+		<file path="js/jquery/jquery.domutils.js" />
+		<file path="js/jquery/jquery.json.js" />
+		<file path="js/jquery/jquery.template.js" />
+		<file path="js/jquery/jquery.template.ext.js" />
+		<file path="js/jquery/jquery.uri.js" />
+		<file path="js/jquery/jquery.cleanname.js" />
+		<file path="js/utils/rpc.js" />
+		<file path="js/utils/tinymce.js" />
+	</package>
+
+	<package id="imagemanager">
+		<file path="js/jquery/jquery.dropmenu.js" />
+		<file path="js/utils/basemanager.js" />
+		<file path="js/imagemanager.js" />
+	</package>
+
+	<package id="edit">
+		<file path="js/jquery/jquery.imageselection.js" />
+		<file path="js/jquery/jquery.imageutils.js" />
+		<file path="js/edit.js" />
+	</package>
+
+	<package id="view">
+		<file path="js/utils/swfobject.js" />
+		<file path="js/view.js" />
+	</package>
+
+	<package id="createdir">
+		<file path="js/createdir.js" />
+	</package>
+
+	<package id="upload">
+		<file path="js/utils/gears_init.js" />
+		<file path="js/utils/swfobject.js" />
+		<file path="js/jquery/jquery.scrollto.js" />
+		<file path="js/jquery/jquery.multiupload.js" />
+		<file path="js/jquery/jquery.multiupload.gears.js" />
+		<file path="js/jquery/jquery.multiupload.flash.js" />
+		<file path="js/jquery/jquery.multiupload.silverlight.js" />
+		<file path="js/upload.js" />
+	</package>
+
+	<package id="core_css">
+		<file path="css/core.css" />
+		<file path="css/toolbar.css" />
+		<file path="css/viewmodes.css" />
+		<file path="css/dialog.css" />
+		<file path="css/forms.css" />
+		<file path="css/dropmenu.css" />
+		<file path="css/window_clearlooks2.css" />
+	</package>
+
+	<package id="view_css">
+		<file path="css/view.css" />
+	</package>
+
+	<package id="edit_css">
+		<file path="css/window_clearlooks2.css" />
+		<file path="css/imageeditor.css" />
+	</package>
+
+	<package id="static_files">
+		<file id="multiupload_xap" path="js/jquery/jquery.multiupload.silverlight.xap" type="application/x-silverlight-app" />
+	</package>
+</resources>

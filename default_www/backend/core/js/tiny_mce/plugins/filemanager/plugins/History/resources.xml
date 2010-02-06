@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<resources>
+	<package id="filemanager">
+		<file path="js/history.js" />
+	</package>
+
+	<package id="imagemanager">
+		<file path="js/history.js" />
+	</package>
+
+	<package id="core_css">
+		<file path="css/history.css" />
+	</package>
+</resources>

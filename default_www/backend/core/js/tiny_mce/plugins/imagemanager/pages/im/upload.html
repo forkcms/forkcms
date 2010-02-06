@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{#upload.title}</title>
+<!--[if IE]><script type="text/javascript" src="js/utils/fixpng.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="../../css/index.php?type=im&theme=im&package=core_css" />
+</head>
+<body style="overflow:hidden; height:200px">
+
+<div class="dialog">
+	<div class="top">
+		<div class="headline upload">
+			<h2>{#upload.title}</h2>
+			<p class="description">{#upload.description}</p>
+		</div>
+	</div>
+
+	<div id="facts" class="facts"></div>
+
+	<script id="facts_template" type="text/moxiecode-template"><![CDATA[
+		{#upload.valid_extensions} {extensions}<br />
+		{#upload.max_upload_size} {maxsize}<br />
+		{#upload.path} {path}<br />
+	]]></script>
+
+	<div id="content">
+		<div id="uploadarea">
+			
+			<div id="singleupload_view">
+				<div id="uploadForms">
+					<form id="uploadForm_0" method="post" action="../../stream/index.php" enctype="multipart/form-data" target="uploadFrame">
+						<div id="uploadFormContents_0">
+							<input type="hidden" name="cmd" value="im.upload" />	
+							<input type="hidden" name="path" value="" />	
+							<input type="hidden" name="domain" value="" />
+
+							<table>
+								<tbody>
+									<tr>
+										<td><label for="file0">{#upload.file_to_upload}</label></td>
+										<td><input id="file0" name="file0" type="file" size="20" class="file required" /></td>
+									</tr>
+
+									<tr>
+										<td><label for="name0">{#upload.as_file_name}</label></td>
+										<td><input id="name0" name="name0" type="text" size="42" maxlength="255" class="text required" /></td>
+									</tr>
+								</tbody>
+							</table>
+	
+							<input type="submit" name="upload" value="{#upload.button_upload}" class="submit default" />
+							<input type="button" id="cancel" name="cancel" value="{#button.cancel}" class="button cancel" />
+						</div>
+					</form>
+				</div>
+
+				<!-- File will be uploaded into this -->
+				<iframe id="uploadFrame" name="uploadFrame" src="javascript:''" width="1" height="1" frameborder="0"></iframe>
+			</div>
+	
+			<div id="multiupload_view">
+				<div id="selectview">
+					<p><a id="add" class="addbutton hidden" href="#">{#upload.choose_files}</a></p>
+					<div class="uploadtype"><!-- Gets filled by upload.js --></div>
+				</div>
+
+				<div id="fileblock">
+					<table id="fileshead">
+						<thead>
+							<tr>
+								<td width="300">{#upload.file}</td>
+								<td width="100">{#upload.size}</td>
+								<td width="100">{#upload.status}</td>
+							</tr>
+						</thead>
+					</table>
+
+					<div id="filelist">
+						<table id="files">
+							<thead>
+								<tr>
+									<td width="300"></td>
+									<td width="100"></td>
+									<td width="80"></td>
+								</tr>
+							</thead>
+
+							<tbody>
+								<!-- Gets filled with file items -->
+							</tbody>
+						</table>
+					</div>
+
+					<p id="statsrow"><span id="stats"></span> <a id="addmore" href="#action">{#upload.add_more}</a></p>
+
+					<div style="position:relative">
+						<p style="position:absolute;"><a id="uploadstart" href="#action">{#upload.upload_to_server}</a></p>
+
+						<div id="status">
+							<div id="progressbar"></div>
+							<div class="progresstext"><span id="progressinfo"></span>&nbsp;<a id="abortupload" href="#action">{#upload.abort}</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script id="filelist_item_template" type="text/moxiecode-template">
+	<![CDATA[
+		<tr id="{id}">
+			<td class="fname"><a href="#action" class="rename">{name}</a></td>
+			<td class="size">{size:sizefix}</td>
+			<td class="status"><a href="#action" class="remove">{#upload.remove}</a></td>
+		</tr>
+	]]>
+</script>
+
+<script type="text/javascript" src="../../language/index.php?type=im"></script>
+<script type="text/javascript" src="../../js/index.php?type=im&theme=im&package=core"></script>
+<script type="text/javascript" src="../../js/index.php?type=im&theme=im&package=upload"></script>
+
+</body>
+</html>

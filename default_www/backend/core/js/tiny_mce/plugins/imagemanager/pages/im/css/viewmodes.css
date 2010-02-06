@@ -1,0 +1,155 @@
+/* Thumbnail view */
+/* ########################################################## */
+
+#viewcontainer {
+	padding-left: 212px;
+	padding-top: 10px;
+}
+
+#thumbs	{ 
+	margin:0 10px 10px 0px;
+}
+
+#textlists { 
+	margin:0 10px 10px 0px;
+}
+
+.thumbnail { 
+	position:relative;
+	float:left; 
+	margin:3px;
+	background:url(../img/im-topright.gif) no-repeat top right; 
+	text-align:center;
+}
+
+.thumbnail .wrap { 
+	background:url(../img/im-topleft.gif) no-repeat;
+}
+
+.thumbnailimage { 
+	border: 0;
+}
+
+.pic { 
+	display: block;
+	position:relative;
+	margin: 0 auto;
+}
+
+.pic[class] { 
+	display:table; 
+	position:static; 
+	padding-top:6px; 
+}
+
+.mid { 
+	position:absolute; 
+	top:50%; 
+	left:50%;
+} 					/* ie6 */
+
+.mid .mid2 { 
+	position:relative;
+	top:-50%; 
+	left:-50%; 
+} 					/* ie6 */
+
+html>body .mid { 
+	position:absolute;
+	top:50%;
+	left:50%;
+} 					/* ie7 */
+html>body .mid .mid2 { 
+	position:relative;
+	top:-60%;
+	left:-50%;
+} 					/* ie7 */
+
+html:not([dummy]) .mid[class] { 
+	display:table-cell; 
+	vertical-align:middle; 
+	position:static; 
+} 					/* ff + safari */
+
+html:not([dummy]) .mid .mid2 { 
+	position:static;
+} 					/* ff + safari */
+
+@media all and (min-width:0px) { html>body .mid { 
+	display:table-cell;
+	vertical-align:middle;
+	position:static; } 
+} 					/* opera */
+@media all and (min-width:0px) { html>body .mid .mid2 { 
+	position:static; } 
+} 					/* opera */
+
+.details { 
+	background:url(../img/im.gif) no-repeat bottom right;
+	text-align:left;
+}
+
+.details .wrap2	{ 
+	background:url(../img/im-botleft.gif) no-repeat bottom left; 
+	width:25px; 
+	line-height:11px;
+}
+
+.name { 
+	margin:0px 5px;
+	padding:3px 0px 2px 0px;
+	font:90% tahoma, arial, sans-serif;
+	overflow:hidden;
+	text-align:center;
+	line-height: 16px;
+	height:16px;
+	white-space:nowrap;
+}
+
+* html .name { 
+	height:21px;
+}
+
+.name a	{ 
+	text-decoration:none;
+	color:#000;
+}
+
+.name a:hover { 
+	color:#827a69;
+}
+
+.parent .act {
+	display: none;
+}
+
+.act { 
+	position:absolute;
+	bottom:3px;
+	right:3px;
+	cursor:pointer;
+}
+
+
+/* List view */
+/* ########################################################## */
+
+.listview	{ 
+	position:relative;
+	margin:3px;
+	background:url('../img/im-topright.gif') no-repeat top right;
+	float:left;
+	text-align:left; 
+	width:100px;
+}
+
+.listview .name {width:75px}
+
+.listview .wrap { 
+	width:15px;
+	height:2px;
+	background: url('../img/im-topleft.gif') no-repeat;
+	line-height:0px;
+	font-size:0px;
+}
+

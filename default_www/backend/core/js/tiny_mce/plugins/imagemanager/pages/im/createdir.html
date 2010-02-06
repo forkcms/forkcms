@@ -1,0 +1,65 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{#createdir.title}</title>
+<!--[if IE]><script type="text/javascript" src="js/utils/fixpng.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="../../css/index.php?type=im&theme=im&package=core_css" />
+</head>
+<body id="createdir">
+
+<div class="dialog">
+	<div class="top">
+		<div class="headline createdir">
+			<h2>{#createdir.title}</h2>
+			<p class="description">{#createdir.description}</p>
+		</div>
+	</div>
+
+	<div id="content" class="body">
+		<form method="get" action="#action">
+			<div>
+				<table>
+					<tbody>
+						<tr id="templaterow">
+							<td><label for="template">{#createdir.template}</label></td>
+							<td>
+								<select id="template" name="template" style="width:200px">
+									<option value="">{#createdir.select_template}</option>
+								</select>
+
+								<script id="template_template" type="text/moxiecode-template"><![CDATA[
+									<option value="{value}">{name}</option>
+								]]></script>
+							</td>
+						</tr>
+
+						<tr>
+							<td><label for="dirname">{#createdir.directory_name}</label></td>
+							<td><input id="dirname" name="dirname" type="text" class="required" style="width:200px" /></td>
+						</tr>
+
+						<tr>
+							<td>{#createdir.create_in}</td>
+							<td id="createin"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<div id="result">
+				<!-- Will be filled by the thumbs_template template -->
+			</div>
+
+			<input type="submit" name="createdir" value="{#button.create}" class="submit default" />
+			<input id="cancel" type="button" name="cancel" value="{#button.cancel}" class="button cancel" />
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" src="../../language/index.php?type=im"></script>
+<script type="text/javascript" src="../../js/index.php?type=im&theme=im&package=core"></script>
+<script type="text/javascript" src="../../js/index.php?type=im&theme=im&package=createdir"></script>
+
+</body>
+</html>

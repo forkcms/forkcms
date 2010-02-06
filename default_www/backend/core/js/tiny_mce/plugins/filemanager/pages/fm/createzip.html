@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{#createzip.title}</title>
+<!--[if IE]><script type="text/javascript" src="js/utils/fixpng.js"></script><![endif]-->
+<link rel="stylesheet" type="text/css" href="../../css/index.php?type=fm&theme=fm&package=core_css" />
+</head>
+<body id="createdoc">
+
+<div class="dialog">
+	<div class="top">
+		<div class="headline createzip">
+			<h2>{#createzip.title}</h2>
+			<p class="description">{#createzip.description}</p>
+		</div>
+	</div>
+
+	<div class="body">
+		<form method="get" action="#action">
+			<div>
+				<table>
+					<tbody>
+						<tr>
+							<td><label for="zipname">{#createzip.name}</label></td>
+							<td><input id="zipname" name="zipname" type="text" class="required" style="width:200px" /></td>
+						</tr>
+
+						<tr>
+							<td>{#createzip.path}</td>
+							<td id="createin"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+
+			<input type="submit" name="createzip" value="{#button.create}" class="submit default" />
+			<input id="cancel" type="button" name="cancel" value="{#button.cancel}" class="button cancel" />
+		</form>
+	</div>
+</div>
+
+<script type="text/javascript" src="../../language/index.php?type=fm"></script>
+<script type="text/javascript" src="../../js/index.php?type=fm&theme=fm&package=core"></script>
+<script type="text/javascript" src="../../js/index.php?type=fm&theme=fm&package=createzip"></script>
+
+</body>
+</html>
