@@ -40,8 +40,13 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// loads the requirements
-		$this->loadRequirements();
+		// get some data
+		$modulesThatRequireAkismet = BackendSettingsModel::getModulesThatRequireAkismet();
+		$modulesThatRequireGoogleMaps = BackendSettingsModel::getModulesThatRequireGoogleMaps();
+
+		// set properties
+		$this->needsAkismet = (!empty($modulesThatRequireAkismet));
+		$this->needsGoogleMaps = (!empty($modulesThatRequireGoogleMaps));
 
 		// load the form
 		$this->loadForm();
@@ -116,29 +121,6 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Loads the requirements
-	 *
-	 * @return	void
-	 */
-	private function loadRequirements()
-	{
-		// init vars
-		$activeModules = BackendModel::getModules(true);
-		$modulesThatRequireAkismet = BackendSettingsModel::getModulesThatRequireAkismet();
-		$modulesThatRequireGoogleMaps = BackendSettingsModel::getModulesThatRequireGoogleMaps();
-		$this->needsAkismet = false;
-		$this->needsGoogleMaps = false;
-
-		// loop active modules
-		foreach($activeModules as $module)
-		{
-			if(in_array($module, $modulesThatRequireAkismet)) $this->needsAkismet = true;
-			if(in_array($module, $modulesThatRequireGoogleMaps)) $this->needsGoogleMaps = true;
-		}
-	}
-
-
-	/**
 	 * Parse the form
 	 *
 	 * @return	void
@@ -164,33 +146,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 	 */
 	private function parseWarnings()
 	{
-		// init vars
-		$warnings = array();
-		$activeModules = BackendModel::getModules(true);
-
-		// add warnings
-		$warnings = array_merge($warnings, BackendModel::checkSettings());
-
-		// loop active modules
-		foreach($activeModules as $module)
-		{
-			// model class
-			$class = 'Backend'. ucfirst($module) .'Model';
-
-			// model file exists
-			if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php'))
-			{
-				// require class
-				require_once BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php';
-			}
-
-			// method exists
-			if(method_exists($class, 'checkSettings'))
-			{
-				// add possible warnings
-				$warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));
-			}
-		}
+		// get warnings
+		$warnings = BackendSettingsModel::getWarnings();
 
 		// assign warnings
 		$this->tpl->assign('warnings', $warnings);

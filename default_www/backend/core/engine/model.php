@@ -100,6 +100,52 @@ class BackendModel
 			$warnings[] = array('message' => BL::getError('GoogleMapsKey'));
 		}
 
+		// fork API keys
+		if(BackendModel::getSetting('core', 'fork_api_private_key') == '' || BackendModel::getSetting('core', 'fork_api_public_key') == '')
+		{
+			$warnings[] = array('message' => BL::getError('ForkAPIKeys'));
+		}
+
+		// debug
+		if(SPOON_DEBUG) $warnings[] = array('message' => BL::getError('DebugModeIsActive'));
+
+		// robots.txt
+		if(SpoonFile::exists(PATH_WWW .'/robots.txt'))
+		{
+			// get content
+			$content = SpoonFile::getContent(PATH_WWW .'/robots.txt');
+			$isOK = true;
+
+			// split into lines
+			$lines = explode("\n", $content);
+
+			// loop lines
+			foreach($lines as $line)
+			{
+				// cleanup line
+				$line = mb_strtolower(trim($line));
+
+				// validate disallow
+				if(substr($line, 0, 8) == 'disallow')
+				{
+					// split into chunks
+					$chunks = explode(':', $line);
+
+					// get routes
+					$routes = ApplicationRouting::getRoutes();
+
+					foreach($routes as $url => $route)
+					{
+						if($route == 'backend' && isset($chunks[1]) && trim($chunks[1]) != '/'. $url) $isOK = false;
+					}
+				}
+			}
+
+			// add warning
+			if(!$isOK) $warnings[] = array('message' => BL::getError('RobotsFileIsNotOK'));
+		}
+
+		// return
 		return $warnings;
 	}
 

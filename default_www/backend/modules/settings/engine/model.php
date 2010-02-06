@@ -64,6 +64,46 @@ class BackendSettingsModel
 		// final list
 		return $modules;
 	}
+
+
+	/**
+	 * Get warnings for active modules
+	 *
+	 * @return	array
+	 */
+	public static function getWarnings()
+	{
+			// init vars
+		$warnings = array();
+		$activeModules = BackendModel::getModules(true);
+
+		// add warnings
+		$warnings = array_merge($warnings, BackendModel::checkSettings());
+
+		// loop active modules
+		foreach($activeModules as $module)
+		{
+			// model class
+			$class = 'Backend'. ucfirst($module) .'Model';
+
+			// model file exists
+			if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php'))
+			{
+				// require class
+				require_once BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php';
+			}
+
+			// method exists
+			if(method_exists($class, 'checkSettings'))
+			{
+				// add possible warnings
+				$warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));
+			}
+		}
+
+		return (array) $warnings;
+	}
+
 }
 
 ?>
