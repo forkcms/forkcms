@@ -172,6 +172,7 @@ class BackendHeader
 			// some files should be cached, even if we don't want cached (mostly libraries)
 			$ignoreCache = array('/backend/core/js/jquery/jquery.js',
 									'/backend/core/js/jquery/jquery.ui.js',
+									'/backend/core/js/jquery/jquery.tools.js',
 									'/backend/core/js/jquery/jquery.autocomplete.js',
 									'/backend/core/js/jquery/jquery.backend.js',
 									'/backend/core/js/tiny_mce/tiny_mce.js');

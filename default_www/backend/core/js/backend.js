@@ -12,6 +12,7 @@ jsBackend = {
 		jsBackend.forms.init();
 		jsBackend.layout.init();
 		jsBackend.tabs.init();
+		jsBackend.tooltip.init();
 		//jsBackend.tableSequenceByDragAndDrop.init();
 	},
 	
@@ -442,6 +443,17 @@ jsBackend.tabs = {
 	// end
 	eof: true
 }
+
+jsBackend.tooltip = {
+	// init, something like a constructor
+	init: function() {
+		if($('.help').length > 0) { $('.help').tooltip(); }
+	},
+	
+	// end
+	eof: true	
+}
+
 
 jsBackend.tableSequenceByDragAndDrop = {
 	// init, something like a constructor

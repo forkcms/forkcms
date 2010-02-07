@@ -202,7 +202,10 @@
 								<div class="tableHeading">
 									<div class="oneLiner">
 										<h3 class="floater">{$lblRevisions|ucfirst}</h3>
-										<abbr class="help floater" title="{$msgHelpRevisions}">(?)</abbr>
+										<abbr class="help floater">(?)</abbr>
+										<div class="balloon" style="display: none;">
+											<p>{$msgHelpRevisions}</p>
+										</div>
 									</div>
 								</div>
 
