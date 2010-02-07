@@ -32,7 +32,8 @@ jsBackend.pages.autosave = {
 				 },
 				 success: function(json, textStatus) {
 					 console.log(json);
-				 },
+				 }
+				
 		});
 
 		
@@ -166,7 +167,7 @@ jsBackend.pages.tree = {
 						callback: {
 							beforemove: jsBackend.pages.tree.beforeMove,
 							onselect: jsBackend.pages.tree.onSelect,
-							onmove: jsBackend.pages.tree.onMove,
+							onmove: jsBackend.pages.tree.onMove
 						},
 						types: {
 							'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/backend/modules/pages/js/jstree/themes/fork/icons.gif' } },
@@ -181,7 +182,7 @@ jsBackend.pages.tree = {
 						plugins: { 
 							cookie: { prefix: 'jstree_', types: { selected: false } }
 						}
-					  };
+					};
 
 		// create tree
 		$('#tree div').tree(options);
@@ -211,7 +212,7 @@ jsBackend.pages.tree = {
 					 } else {
 						 if(json.data.allow_move == 'Y') result = true;
 					 }
-				 },
+				 }
 		});
 
 		// return
@@ -253,7 +254,7 @@ jsBackend.pages.tree = {
 						 // show message
 						 jsBackend.layout.showMessage('success', '{$msgPageIsMoved}');
 					 }
-				 },
+				 }
 		});
 	},
 	
