@@ -516,15 +516,18 @@ td#contentHolder {
 			bottom: 4px;
 		}
 
-		.datagridHolder .tableHeading:after {
 
+		.datagridHolder .tableHeading {
+			zoom: 1;
+		}
+
+		.datagridHolder .tableHeading:after {
 			/* @inc .clearfix */
 			content: ".";
 			display: block;
 			height: 0;
 			clear: both;
 			visibility: hidden;
-
 		}
 
 .datagrid {
@@ -538,14 +541,12 @@ td#contentHolder {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
 
 	#tabs .datagridHolder:after {
-
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
-
 	}
 
 	#tabs .datagrid {
@@ -689,14 +690,12 @@ td#contentHolder {
 }
 
 	.tableOptions:after {
-
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
-
 	}
 
 .tableOptions .massAction {
@@ -723,15 +722,17 @@ td#contentHolder {
 		font-size: 11px;
 	}
 
-	.pagination ul:after {
+	.pagination ul {
+		zoom: 1;
+	}
 
+	.pagination ul:after {
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
-
 	}
 
 		.pagination li a,
@@ -1065,6 +1066,10 @@ td.comments {
 	margin: 0 0 12px;
 	font-family: "Lucida Grande";
 }
+
+		.collapseBox .collapseBoxHeading {
+			zoom: 1;
+		}
 
 		.collapseBox .collapseBoxHeading:after {
 			content: ".";
@@ -1699,6 +1704,7 @@ label {
 
 .forkForms .block{ display: block !important; }
 .forkForms p:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.forkForms p { zoom: 1; }
 
 fieldset.visiblefieldset {
 	padding: 16px;
@@ -1904,6 +1910,11 @@ fieldset legend {
 
 }
 
+.tagsWrapper ul,
+.tagsWrapper li {
+	zoom: 1;
+}
+
 .tagsWrapper ul:after,
 .tagsWrapper li:after {
 	content: ".";
@@ -2063,6 +2074,10 @@ abbr.help {
 		background: none;
 		padding: 6px 0;
 	}
+
+.fullwidthOptions {
+	zoom: 1;
+}
 
 .fullwidthOptions:after {
 	content: ".";
@@ -2245,17 +2260,16 @@ abbr.help {
 
 #dashboardWidgets {
 	padding: 12px 0;
+	zoom: 1;
 }
 
 #dashboardWidgets:after {
-
 	/* @inc .clearfix */
 	content: ".";
 	display: block;
 	height: 0;
 	clear: both;
 	visibility: hidden;
-
 }
 
 #dashboardWidgets .leftColumn,
@@ -2479,17 +2493,16 @@ abbr.help {
 	#loginNav ul {
 		padding-left: 50px;
 		padding-bottom: 12px;
+		zoom: 1;
 	}
 
 	#loginNav ul:after {
-
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
-
 	}
 
 	#loginNav li span {
@@ -2770,14 +2783,16 @@ abbr.help {
 }
 
 	.userHolder:after {
+		zoom: 1;
+	}
 
+	.userHolder:after {
 		/* @inc .clearfix */
 		content: ".";
 		display: block;
 		height: 0;
 		clear: both;
 		visibility: hidden;
-
 	}
 
 /*
