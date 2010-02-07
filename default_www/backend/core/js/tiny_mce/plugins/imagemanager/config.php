@@ -12,7 +12,7 @@
 	$mcImageManagerConfig['general.disabled_tools'] = "";
 	$mcImageManagerConfig['general.user_friendly_paths'] = true;
 	$mcImageManagerConfig['general.encrypt_paths'] = true;
-	$mcImageManagerConfig['general.plugins'] = "History,Favorites"; // comma seperated
+	$mcImageManagerConfig['general.plugins'] = "";
 	$mcImageManagerConfig['general.demo'] = false;
 	$mcImageManagerConfig['general.debug'] = false;
 	$mcImageManagerConfig['general.error_log'] = "";

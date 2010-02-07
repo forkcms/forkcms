@@ -1,5 +1,0 @@
-name = MCImageManager
-description = Enables the Tinymce MCImageManager as an editor plugin.
-package = User interface
-core = 6.x
-version = "3.1.1.4"

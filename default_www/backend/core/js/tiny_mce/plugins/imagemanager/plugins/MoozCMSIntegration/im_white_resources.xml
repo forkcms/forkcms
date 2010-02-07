@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<resources>
-	<package id="core_css">
-		<file path="css/moozwhite_im.css" />
-	</package>
-</resources>
