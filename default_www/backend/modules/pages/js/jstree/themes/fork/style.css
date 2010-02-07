@@ -1,20 +1,20 @@
 /* TREE LAYOUT */
 .tree ul {
-	margin:0 0 0 0;
-	padding:0 0 0 0;
+	margin: 0;
+	padding: 0;
 	list-style-type:none;
 	background: url(data:image/gif;base64,R0lGODlhAgACAIAAAB4dGf///yH5BAEAAAEALAAAAAACAAIAAAICRF4AOw==);
-	background-position: 7px 0;
-	background-repeat:repeat-y;
+	background-position: 10px 1px;
+	background-repeat: repeat-y;
 }
 .tree li {
-	display:block;
-	min-height:16px;
-	line-height:16px; 
-	padding:0 0 0 16px;
-	margin:0;
+	display: block;
+	min-height: 16px;
+	line-height: 16px; 
+	padding: 0 0 0 21px;
+	margin: 0;
 	/* Background fix */
-	clear:both;
+	clear: both;
 }
 
 .tree li ul {
@@ -24,14 +24,14 @@
 .tree li a:link,
 .tree li a:visited,
 .tree li span {
-	display:inline-block;
-	line-height:16px;
+	display: inline-block;
+	line-height: 16px;
 	height: 16px;
-	color:black;
-	white-space:nowrap;
-	text-decoration:none;
 	padding: 2px;
-	margin:0;
+	color: #000;
+	white-space: nowrap;
+	text-decoration: none;
+	margin: 0;
 	background: #F5F5F5;
 	border: none !important;
 	outline: 0 !important;
@@ -39,18 +39,6 @@
 
 .tree li a:focus {
 	outline: none;
-}
-
-.tree li a input,
-.tree li span input {
-	margin:0;
-	padding:0;
-	display:inline-block;
-	height:12px !important;
-	border:1px solid white;
-	background:white;
-	font-size:10px;
-	font-family:Verdana;
 }
 
 .tree li a input:not([class="xxx"]),
@@ -145,12 +133,12 @@
 
 /* OPEN or CLOSED */
 
-.tree-fork li.leaf { background-position: 0 2px; background-repeat: no-repeat; }
-.tree-fork li.closed { background-position: -264px 2px; background-repeat: no-repeat;}
-.tree-fork li.open { background-position: -528px 2px; background-repeat: no-repeat; }
-.tree-fork li.closed.last { background-position: -792px 2px; background-repeat: no-repeat;}
-.tree-fork li.open.last { background-position: -1056px 2px; background-repeat: no-repeat;}
-.tree-fork li.last { background-position: -1320px 2px; background-repeat: no-repeat;}
+.tree-fork li.leaf {        background: url(separate/leaf.gif) no-repeat 0 0; }
+.tree-fork li.closed {      background: url(separate/closed.gif) no-repeat 0 0; }
+.tree-fork li.open {        background: url(separate/open.gif) no-repeat 0 0; }
+.tree-fork li.closed.last { background: url(separate/closed_last.gif) no-repeat 0 0; }
+.tree-fork li.open.last {   background: url(separate/open_last.gif) no-repeat 0 0; }
+.tree-fork li.last {        background: url(separate/last.gif) no-repeat 0 0; }
 
 .tree-fork li.dragged {
 	outline: 1px dotted #000;
