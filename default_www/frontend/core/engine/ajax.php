@@ -65,14 +65,14 @@ class FrontendAJAX
 			// create fake action
 			$fakeAction = new FrontendBaseAJAXAction('', '');
 
-			// output the error
+			// output the exceptions-message as an error
 			$fakeAction->output(FrontendBaseAJAXAction::ERROR, null, $e->getMessage());
 		}
 	}
 
 
 	/**
-	 * Get action
+	 * Get the loaded action
 	 *
 	 * @return	string
 	 */
@@ -83,7 +83,7 @@ class FrontendAJAX
 
 
 	/**
-	 * Get module
+	 * Get the loaded module
 	 *
 	 * @return	string
 	 */
@@ -214,6 +214,8 @@ class FrontendAJAXAction
 		// validate if class exists
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
+		// @later check if the action implements the interface
+
 		// create action-object
 		$object = new $actionClassName($this->getAction(), $this->getModule());
 
@@ -269,6 +271,8 @@ class FrontendAJAXAction
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');
+
+		// @later	check if the config implements the interface
 
 		// create config-object, the constructor will do some magic
 		$this->config = new $configClassName($this->getModule());

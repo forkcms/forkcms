@@ -218,7 +218,6 @@ class FrontendBaseConfig
  * FrontendBaseBlock
  *
  * This class implements a lot of functionality that can be extended by a specific block
- *
  * @todo Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @package		frontend
@@ -455,6 +454,7 @@ class FrontendBaseBlock
 		// as long as we are below page 7 we should show all pages starting from 1
 		if($this->pagination['requested_page'] < 8)
 		{
+			// init vars
 			$pagesStart = 1;
 			$pagesEnd = ($this->pagination['num_pages'] >= 8) ? 8 : $this->pagination['num_pages'];
 
@@ -465,15 +465,18 @@ class FrontendBaseBlock
 		// as long as we are 7 pages from the end we should show all pages till the end
 		elseif($this->pagination['requested_page'] >= ($this->pagination['num_pages'] - 8))
 		{
+			// init vars
 			$pagesStart = ($this->pagination['num_pages'] - 7);
 			$pagesEnd = $this->pagination['num_pages'];
 
+			// show first pages
 			$showFirstPages = true;
 		}
 
 		// page 7
 		else
 		{
+			// init vars
 			$pagesStart = $this->pagination['requested_page'] - 2;
 			$pagesEnd = $this->pagination['requested_page'] + 2;
 			$showFirstPages = true;
@@ -632,9 +635,7 @@ class FrontendBaseBlock
 
 /**
  * FrontendBaseWidget
- *
  * This class implements a lot of functionality that can be extended by a specific widget
- *
  * @todo Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @package		frontend
