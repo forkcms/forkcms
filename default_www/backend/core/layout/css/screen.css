@@ -3246,6 +3246,12 @@ a.mainButton:focus {
 		padding: 3px;
 	}
 
+/*
+	Locale
+*/
+
+#filter {
+}
 
 /*
 	jQuery UI overrides

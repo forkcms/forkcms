@@ -15,38 +15,44 @@
 
 			<div class="inner">
 				{form:filter}
-					<p>
-						<label for="language">{$lblLanguage|ucfirst}</label>
-						{$ddmLanguage} {$ddmLanguageError}
-					</p>
+				<div class="box">
+					<div class="heading">
+						<h3>{$lblFilter}</h3>
+					</div>
+					<div class="options">
+						<div class="horizontal">
+							<p>
+								<label for="name">{$lblName|ucfirst}</label>
+								{$txtName} {$txtNameError}
+							</p>
+							<p>
+								<label for="value">{$lblValue|ucfirst}</label>
+								{$txtValue} {$txtValueError}
+							</p>
+							<p>
+								<label for="language">{$lblLanguage|ucfirst}</label>
+								{$ddmLanguage} {$ddmLanguageError}
+							</p>
+							<p>
+								<label for="application">{$lblApplication|ucfirst}</label>
+								{$ddmApplication} {$ddmApplicationError}
+							</p>
+							<p>
+								<label for="module">{$lblModule|ucfirst}</label>
+								{$ddmModule} {$ddmModuleError}
+							</p>
+							<p>
+								<label for="type">{$lblType|ucfirst}</label>
+								{$ddmType} {$ddmTypeError}
+							</p>
+							<p class="spacing">
+								{$btnSearch}
+							</p>
+						</div>
+						
 
-					<p>
-						<label for="application">{$lblApplication|ucfirst}</label>
-						{$ddmApplication} {$ddmApplicationError}
-					</p>
-
-					<p>
-						<label for="module">{$lblModule|ucfirst}</label>
-						{$ddmModule} {$ddmModuleError}
-					</p>
-
-					<p>
-						<label for="type">{$lblType|ucfirst}</label>
-						{$ddmType} {$ddmTypeError}
-					</p>
-
-					<p>
-						<label for="name">{$lblName|ucfirst}</label>
-						{$txtName} {$txtNameError}
-					</p>
-
-					<p>
-						<label for="value">{$lblValue|ucfirst}</label>
-						{$txtValue} {$txtValueError}
-					</p>
-
-					{$btnSearch}
-					<br /><br /><br />
+					</div>
+				</div>
 				{/form:filter}
 
 				{option:datagrid}
