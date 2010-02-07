@@ -431,11 +431,7 @@ jsBackend.tabs = {
 			$('.tabSelect').live('click', function(evt) {
 				// prevent default
 				evt.preventDefault();
-				
-				console.log($(this));
-				
 				$('.tabs').tabs('select', $(this).attr('href'));
-				
 			});
 		}
 	},
