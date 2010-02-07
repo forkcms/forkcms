@@ -4,6 +4,8 @@
 	padding: 0;
 	list-style-type:none;
 	background: url(data:image/gif;base64,R0lGODlhAgACAIAAAB4dGf///yH5BAEAAAEALAAAAAACAAIAAAICRF4AOw==);
+	:background: url(separate/decoded_base64.gif);
+	
 	background-position: 10px 1px;
 	background-repeat: repeat-y;
 }
