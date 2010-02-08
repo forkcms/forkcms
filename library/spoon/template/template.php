@@ -671,15 +671,12 @@ class SpoonTemplateCompiler
 		{
 			// cycle string
 			case 'cycle':
-
 				// the number of single qoutes should always be an even number
 				if(!SpoonFilter::isEven(substr_count($string, "'"))) return false;
-
 			break;
 
 			// iteration string
 			case 'iteration':
-
 				// the number of square opening/closing brackets should be equal
 				if(substr_count($string, '[') != substr_count($string, ']')) return false;
 
@@ -699,13 +696,11 @@ class SpoonTemplateCompiler
 				if(substr_count($string, '[]') != 0) return false;
 
 				// empty inversed brackets are NOT allowed
-				if(substr_count($string, '][') != 0) return false;
-
+//				if(substr_count($string, '][') != 0) return false;
 			break;
 
 			// option string
 			case 'option':
-
 				// the number of square opening/closing brackets should be equal
 				if(substr_count($string, '[') != substr_count($string, ']')) return false;
 
@@ -725,13 +720,11 @@ class SpoonTemplateCompiler
 				if(substr_count($string, '[]') != 0) return false;
 
 				// empty inversed brackets are NOT allowed
-				if(substr_count($string, '][') != 0) return false;
-
+//				if(substr_count($string, '][') != 0) return false;
 			break;
 
 			// variable string
 			case 'variable':
-
 				// the number of square opening/closing brackets should be equal
 				if(substr_count($string, '[') != substr_count($string, ']')) return false;
 
@@ -751,8 +744,7 @@ class SpoonTemplateCompiler
 				if(substr_count($string, '[]') != 0) return false;
 
 				// empty inversed brackets are NOT allowed
-				if(substr_count($string, '][') != 0) return false;
-
+//				if(substr_count($string, '][') != 0) return false;
 			break;
 		}
 

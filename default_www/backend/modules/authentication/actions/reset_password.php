@@ -85,7 +85,6 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		// create elements and add to the form
 		$this->frm->addPasswordField('backend_new_password');
 		$this->frm->addPasswordField('backend_new_password_repeated');
-		$this->frm->addButton('login', ucfirst(BL::getMessage('ResetPasswordAndSignIn')), 'submit', 'inputButton button mainButton');
 	}
 
 

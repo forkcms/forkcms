@@ -27,7 +27,7 @@
 
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
-							{$btnSave}
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEditTemplate|ucfirst}" />
 						</div>
 					</div>
 				{/form:edit}

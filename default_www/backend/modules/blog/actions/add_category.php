@@ -49,7 +49,6 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addTextField('name');
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
 
@@ -77,7 +76,7 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 				$category['name'] = $this->frm->getField('name')->getValue();
 				$category['language'] = BL::getWorkingLanguage();
 				$category['url'] = BackendBlogModel::getURLForCategory($category['name']);
-				
+
 				// insert the item
 				$id = BackendBlogModel::insertCategory($category);
 

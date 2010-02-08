@@ -119,7 +119,7 @@
 																<td><p>&nbsp;</p></td>
 																<td>
 																	<div class="buttonHolderRight">
-																		{$btnAdd}
+																		<input id="save" class="inputButton button" type="submit" name="save" value="{$lblSave|ucfirst}" />
 																	</div>
 																</td>
 															</tr>
@@ -286,7 +286,7 @@
 					</div>
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
-							{$btnAdd}
+							<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
 						</div>
 					</div>
 				{/form:add}

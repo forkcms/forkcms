@@ -72,7 +72,6 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addImageField('avatar');
 		$this->frm->addCheckBox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addDropDown('group', BackendUsersModel::getGroups(), $this->record['group_id']);
-		$this->frm->addButton('edit', BL::getLabel('Edit'), 'submit');
 
 		// disable autocomplete
 		$this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));

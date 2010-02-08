@@ -38,7 +38,7 @@
 							</div>
 						{/option:deleteAllowed}
 						<div class="buttonHolderRight">
-							{$btnSave}
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
 						</div>
 					</div>
 				{/form:editCategory}

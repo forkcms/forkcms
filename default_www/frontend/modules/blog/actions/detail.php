@@ -126,7 +126,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->addTextField('email', $email);
 		$this->frm->addTextField('website', $website);
 		$this->frm->addTextArea('text');
-		$this->frm->addButton('react', ucfirst(FL::lbl('React')));
 	}
 
 

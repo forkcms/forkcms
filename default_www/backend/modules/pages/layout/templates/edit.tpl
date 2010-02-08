@@ -125,7 +125,7 @@
 																<td><p>{$lblLastSave|ucfirst}: {$recordedited_on|date:'H:i'}</p></td>
 																<td>
 																	<div class="buttonHolderRight">
-																		{$btnEdit}
+																		<input id="save" class="inputButton button" type="submit" name="save" value="{$lblSave|ucfirst}" />
 																	</div>
 																</td>
 															</tr>
@@ -319,7 +319,7 @@
 						</div>
 						{/option:showDelete}
 						<div class="buttonHolderRight">
-							{$btnEdit}
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
 						</div>
 					</div>
 				{/form:edit}

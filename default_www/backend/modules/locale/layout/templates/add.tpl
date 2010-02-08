@@ -55,7 +55,7 @@
 
 						<div class="fullwidthOptions">
 							<div class="buttonHolderRight">
-								{$btnSave}
+								<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
 							</div>
 						</div>
 					</div>

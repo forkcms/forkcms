@@ -73,7 +73,6 @@ class BackendTagsEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addTextField('name', $this->record['name']);
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
 

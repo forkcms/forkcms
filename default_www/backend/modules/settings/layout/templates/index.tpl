@@ -125,7 +125,7 @@
 
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
-							{$btnSave}
+							<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 						</div>
 					</div>
 				{/form:settings}

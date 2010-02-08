@@ -138,9 +138,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
-
-		// add button
-		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit', 'inputButton button mainButton');
 	}
 
 

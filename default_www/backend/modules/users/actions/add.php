@@ -64,7 +64,6 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addImageField('avatar');
 		$this->frm->addCheckBox('active', true);
 		$this->frm->addDropDown('group', $groups, $defaultGroupId);
-		$this->frm->addButton('add', ucfirst(BL::getLabel('Add')), 'submit');
 
 		// disable autocomplete
 		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));

@@ -93,7 +93,6 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 		$this->frm->addTextField('title', $this->record['title']);
 		$this->frm->addEditorField('content', $this->record['content']);
 		$this->frm->addCheckBox('hidden', ($this->record['hidden'] == 'N'));
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Edit')), 'submit');
 	}
 
 

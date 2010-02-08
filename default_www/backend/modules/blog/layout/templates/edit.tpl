@@ -75,8 +75,6 @@
 											<!-- @later
 											<div class="options">
 												<div class="buttonHolder">
-													{$btnPreview}
-													{$btnSave}
 												</div>
 											</div>
 
@@ -110,7 +108,7 @@
 															<td><p>&nbsp;</p></td>
 															<td>
 																<div class="buttonHolderRight">
-																	{$btnEdit}
+																	<input id="save" class="inputButton button" type="submit" name="save" value="{$lblSave|ucfirst}" />
 																</div>
 															</td>
 														</tr>
@@ -277,7 +275,7 @@
 							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 						</a>
 						<div class="buttonHolderRight">
-							{$btnEdit}
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
 						</div>
 					</div>
 

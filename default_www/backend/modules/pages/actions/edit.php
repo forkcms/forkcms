@@ -211,10 +211,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-
-		// edit button
-		$this->frm->addButton('preview', ucfirst(BL::getLabel('Preview')), 'submit', 'inputButton button previewButton');
-		$this->frm->addButton('edit', ucfirst(BL::getLabel('Edit')), 'submit', 'inputButton button mainButton');
 	}
 
 

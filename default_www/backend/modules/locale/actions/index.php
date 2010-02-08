@@ -176,21 +176,14 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 		$this->frm->addDropDown('language', array('nl' => BL::getLabel('Dutch')), $this->filter['language']);
 		$this->frm->getField('language')->setDefaultElement('Kies een taal');
-
 		$this->frm->addDropDown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
 		$this->frm->getField('application')->setDefaultElement('Kies een applicatie');
-
 		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
 		$this->frm->getField('module')->setDefaultElement('Kies een module');
-
 		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
 		$this->frm->getField('type')->setDefaultElement('Kies een type');
-
 		$this->frm->addTextField('name', $this->filter['name']);
-
 		$this->frm->addTextField('value', $this->filter['value']);
-
-		$this->frm->addButton('search', 'Search', 'submit');
 
 		$this->frm->parse($this->tpl);
 	}

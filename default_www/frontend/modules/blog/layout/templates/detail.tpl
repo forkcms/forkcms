@@ -83,7 +83,7 @@
 			</p>
 
 			<p>
-				{$btnReact}
+				<input id="react" class="inputButton button mainButton" type="submit" name="react" value="{$lblReact|ucfirst}" />
 			</p>
 		{/form:react}
 	</div>

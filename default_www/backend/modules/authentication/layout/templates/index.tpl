@@ -40,7 +40,7 @@
 								</p>
 							</div>
 							<p class="spacing">
-								{$btnLogin}
+								<input id="login" class="inputButton button mainButton" type="submit" name="login" value="{$lblSignIn|ucfirst}" />
 							</p>
 						</div>
 					{/form:authenticationIndex}
@@ -54,7 +54,9 @@
 							<div class="oneLiner">
 								<p><label for="backendEmail">{$lblEmail|ucfirst}</label></p>
 								<p>{$txtBackendEmail}</p>
-								<p>{$btnSend}</p>
+								<p>
+									<input id="send" class="inputButton button mainButton" type="submit" name="send" value="{$lblSend|ucfirst}" />
+								</p>
 							</div>
 
 							{option:txtBackendEmailError}

@@ -54,7 +54,6 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		$this->frm->addTextField('format');
 		$this->frm->addCheckBox('active');
 		$this->frm->addCheckBox('default');
-		$this->frm->addButton('save', ucfirst(BL::getLabel('AddTemplate')), 'submit');
 
 		// init var
 		$names = array();

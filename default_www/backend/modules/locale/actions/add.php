@@ -65,7 +65,6 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addTextField('name');
 		$this->frm->addTextField('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
 		$this->frm->addDropDown('language', BackendLanguage::getWorkingLanguages(), $this->filter['language']);
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
 

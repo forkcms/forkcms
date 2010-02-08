@@ -64,9 +64,6 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm->addTextField('rss_title', BackendModel::getSetting('blog', 'rss_title_'. BL::getWorkingLanguage()));
 		$this->frm->addTextArea('rss_description', BackendModel::getSetting('blog', 'rss_description_'. BL::getWorkingLanguage()));
 		$this->frm->addTextField('feedburner_url', BackendModel::getSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage()));
-
-		// submit button
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button mainButton');
 	}
 
 

@@ -125,14 +125,12 @@
 						</div>
 					</div>
 
-				<div class="fullwidthOptions">
-					<div class="buttonHolderRight">
-						{$btnAdd}
+					<div class="fullwidthOptions">
+						<div class="buttonHolderRight">
+							<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+						</div>
 					</div>
-				</div>
-
 				{/form:add}
-
 			</div>
 		</td>
 	</tr>

@@ -77,7 +77,6 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm->addTextField('format', $data['format']);
 		$this->frm->addCheckBox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addCheckBox('default', ($this->record['is_default'] == 'Y'));
-		$this->frm->addButton('save', ucfirst(BL::getLabel('EditTemplate')), 'submit');
 
 		// init var
 		$names = array();

@@ -20,7 +20,9 @@
 							<td>
 								<div class="avatarHolder">
 									<div class="defaultAvatar">
-										{option:record['settings']['avatar']}<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record['settings']['avatar']}" width="52" height="52" alt="" />{/option:record['settings']['avatar']}
+										{option:record['settings']['avatar']}
+											<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record['settings']['avatar']}" width="52" height="52" alt="" />
+										{/option:record['settings']['avatar']}
 									</div>
 								</div>
 							</td>
@@ -161,7 +163,7 @@
 						{/option:deleteAllowed}
 
 						<div class="buttonHolderRight">
-							{$btnEdit}
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
 						</div>
 					</div>
 

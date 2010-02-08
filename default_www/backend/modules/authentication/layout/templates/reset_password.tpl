@@ -35,7 +35,7 @@
 								</p>
 							</div>
 							<p class="spacing">
-								{$btnLogin}
+								<input id="login" class="inputButton button mainButton" type="submit" name="login" value="{$msgResetPasswordAndSignIn|ucfirst}" />
 							</p>
 						</div>
 					{/form:authenticationResetPassword}

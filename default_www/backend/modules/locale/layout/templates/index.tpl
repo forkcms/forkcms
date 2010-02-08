@@ -46,7 +46,7 @@
 									{$ddmType} {$ddmTypeError}
 								</p>
 								<p class="spacing">
-									{$btnSearch}
+									<input id="search" class="inputButton button mainButton" type="submit" name="search" value="{$lblSearch|ucfirst}" />
 								</p>
 							</div>
 						</div>

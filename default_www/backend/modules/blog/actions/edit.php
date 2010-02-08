@@ -115,10 +115,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
 		// add button
-		$this->frm->addButton('edit', ucfirst(BL::getLabel('Edit')), 'submit', 'inputButton button mainButton');
-		$this->frm->addButton('publish', ucfirst(BL::getLabel('Publish')), 'submit', 'inputButton button mainButton');
-		$this->frm->addButton('preview', ucfirst(BL::getLabel('Preview')), 'submit', 'inputButton button previewButton');
-		$this->frm->addButton('save', ucfirst(BL::getLabel('Save')), 'submit', 'inputButton button saveButton');
 	}
 
 
