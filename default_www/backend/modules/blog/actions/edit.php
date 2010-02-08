@@ -300,7 +300,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $this->id .'&draft='. $id .'&report=draft&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+					$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $this->id .'&draft='. $id .'&report=saved_as_draft&var='. urlencode($item['title']) .'&highlight=id-'. $id);
 				}
 			}
 		}

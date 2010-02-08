@@ -56,7 +56,7 @@
 	</div>
 	{/option:blogComments}
 
-	{option:blogSettingsAllowComments}
+	{option:blogArticle['allow_comments']}
 	<div class="commentForm">
 		<h3 id="{$actReact}">{$lblReact|ucfirst}</h3>
 
@@ -87,6 +87,6 @@
 			</p>
 		{/form:react}
 	</div>
-	{/option:blogSettingsAllowComments}
+	{/option:blogArticle['allow_comments']}
 
 </div>

@@ -97,6 +97,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// overwrite URLs
 		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $this->record['category_url'];
 		$this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $this->record['url'];
+		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags
 		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
@@ -106,6 +107,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// get settings
 		$this->settings = FrontendModel::getModuleSettings('blog');
+
+		// reset allow comments
+		if(!$this->settings['allow_comments']) $this->record['allow_comments'] = false;
 	}
 
 
