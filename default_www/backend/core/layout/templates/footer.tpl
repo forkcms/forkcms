@@ -8,6 +8,7 @@
 		{option:formError}jsBackend.messages.add('error', "{$errFormError}");{/option:formError}
 		{option:usingRevision}jsBackend.messages.add('notice', "{$msgUsingARevision}");{/option:usingRevision}
 		{option:report}jsBackend.messages.add('success', "{$reportMessage}");{/option:report}
+		{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage}");{/option:errorMessage}
 	</script>
 
 </body>

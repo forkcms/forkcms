@@ -30,7 +30,7 @@ class BackendBlogMassCommentAction extends BackendBaseAction
 		$action = SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
 
 		// no id's provided
-		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') .'&error=non-existing');
+		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') .'&error=no-items-selected');
 
 		// at least one id
 		else

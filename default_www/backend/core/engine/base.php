@@ -144,6 +144,31 @@ class BackendBaseAction
 
 		// debug css
 		if(SPOON_DEBUG) $this->header->addCSS('debug.css', 'core');
+
+		// is there a report to show?
+		if($this->getParameter('report') !== null)
+		{
+			// show the report
+			$this->tpl->assign('report', true);
+
+			// camelcase the string
+			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'));
+
+			// if we have data to use it will be passed as the var-parameter, if so assign it
+			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
+			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
+
+			// hightlight an element with the given id if needed
+			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
+		}
+
+		// is there an error to show?
+		if($this->getParameter('error') !== null)
+		{
+			// show the error and the errormessage
+			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), '-')));
+		}
+
 	}
 
 
@@ -263,30 +288,6 @@ class BackendBaseActionIndex extends BackendBaseAction
 	{
 		// call parent, will add general CSS and JS
 		parent::execute();
-
-		// is there a report to show?
-		if($this->getParameter('report') !== null)
-		{
-			// show the report
-			$this->tpl->assign('report', true);
-
-			// camelcase the string
-			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'));
-
-			// if we have data to use it will be passed as the var-parameter, if so assign it
-			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
-			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
-
-			// hightlight an element with the given id if needed
-			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
-		}
-
-		// is there an error to show?
-		if($this->getParameter('error') !== null)
-		{
-			// show the error and the errormessage
-			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), '-')));
-		}
 	}
 }
 

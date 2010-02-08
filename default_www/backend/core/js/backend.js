@@ -510,7 +510,6 @@ jsBackend.tooltip = {
 	eof: true	
 }
 
-
 jsBackend.tableSequenceByDragAndDrop = {
 	// init, something like a constructor
 	init: function() {
@@ -536,14 +535,21 @@ jsBackend.tableSequenceByDragAndDrop = {
 						data: 'new_id_sequence=' + newIdSequence.join(','),
 						success: function(data, textStatus) { 
 							// not a succes so revert the changes
-							if(data.code != 200) { $(this).sortable('cancel'); }
+							if(data.code != 200) { 
+								// revert
+								$(this).sortable('cancel');
+								// show message
+								jsBackend.messages.add('error', 'alter sequence failed.');
+							}
 						
 							// alert the user
 							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
-							// revert changes
+							// revert
 							$(this).sortable('cancel');
+							// show message
+							jsBackend.messages.add('error', 'alter sequence failed.');
 
 							// alert the user
 							if(jsBackend.debug) alert(textStatus);

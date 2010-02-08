@@ -27,7 +27,7 @@ class BackendBlogMassPostAction extends BackendBaseAction
 		$action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
 		// no id's provided
-		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') .'&error=no-items-selected');
 
 		// at least one id
 		else

@@ -29,8 +29,13 @@ jsBackend.pages.autosave = {
 				 data: 'data=' + data +'&type=draft&id='+ pageID,
 				 error: function(XMLHttpRequest, textStatus, errorThrown) {
 					if(jsBackend.debug) alert(textStatus);
+					
+					// show messages
+					jsBackend.messages.add('error', textStatus);
 				 },
 				 success: function(json, textStatus) {
+						// show messages
+						jsBackend.messages.add('success', textStatus);
 				 }
 		});
 	},

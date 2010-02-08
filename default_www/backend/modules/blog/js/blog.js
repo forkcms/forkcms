@@ -65,13 +65,24 @@ jsBackend.blog.category = {
 					$('#newCategoryValue').val('');
 					$('#newCategoryButton').addClass('disabledButton');
 					$('#newCategory').slideUp();
+					
+					// show message
+					jsBackend.messages.add('success', "{$msgCategoryAdded}");
+				} else {
+					// show message
+					jsBackend.messages.add('error', textStatus);
 				}
-			
+				
 				// alert the user
 				if(data.code != 200 && jsBackend.debug) { alert(data.message); }
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				// show box again
 				$('#newCategoryError').show();
+				
+				// show message
+				jsBackend.messages.add('error', textStatus);
+				
 				// alert the user
 				if(jsBackend.debug) alert(textStatus);
 			}
