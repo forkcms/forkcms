@@ -2998,6 +2998,11 @@ class SpoonTextField extends SpoonInputField
 
 			return true;
 		}
+
+		// @todo	Davy fix me
+		// fallback
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
