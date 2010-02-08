@@ -48,8 +48,8 @@ class BackendAuthentication
 		// init var
 		$db = BackendModel::getDB(true);
 
-		// remove all sessions that are invalid (older then 30min)
-		$db->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+		// remove all sessions that are invalid (older then 30 min)
+		$db->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)'); // @todo davy - timezone shit controleren
 	}
 
 
@@ -58,8 +58,8 @@ class BackendAuthentication
 	 * Returns false if no user was found for this user/pass combination
 	 *
 	 * @return	string
-	 * @param string $username
-	 * @param string $password
+	 * @param	string $username
+	 * @param	string $password
 	 */
 	public static function getEncryptedPassword($username, $password)
 	{
@@ -100,7 +100,7 @@ class BackendAuthentication
 		$salt = (string) $salt;
 
 		// return the encrypted string
-		return (string) sha1(md5($salt).md5($string));
+		return (string) sha1(md5($salt) . md5($string));
 	}
 
 
@@ -238,7 +238,7 @@ class BackendAuthentication
 			$db = BackendModel::getDB(true);
 
 			// get the row from the tables
-			$sessionData = $db->getRecord('SELECT us.id, us.user_id
+			$sessionData = $db->getRecord('SELECT us.id, us.user_id, us.session_id, us.secret_key
 											FROM users_sessions AS us
 											WHERE us.session_id = ? AND us.secret_key = ?
 											LIMIT 1;',
@@ -335,7 +335,7 @@ class BackendAuthentication
 			$session['language'] = BackendLanguage::getWorkingLanguage();
 			$session['secret_key'] = BackendAuthentication::getEncryptedString(SpoonSession::getSessionId(), $userId);
 			$session['session_id'] = SpoonSession::getSessionId();
-			$session['date'] = date('Y-m-d H:i:s');
+			$session['date'] = date('Y-m-d H:i:s'); // @todo davy - aanpassen naar BackendModel::getUTCDate();
 
 			// insert a new row in the session-table
 			$db->insert('users_sessions', $session);
