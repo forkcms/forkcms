@@ -2999,8 +2999,7 @@ class SpoonTextField extends SpoonInputField
 			return true;
 		}
 
-		// @todo	Davy fix me
-		// fallback
+		// has error
 		if($error !== null) $this->setError($error);
 		return false;
 	}
@@ -3029,6 +3028,10 @@ class SpoonTextField extends SpoonInputField
 
 			return true;
 		}
+
+		// has error
+		if($error !== null) $this->setError($error);
+		return false;
 	}
 
 
@@ -4698,6 +4701,7 @@ class SpoonDropDown extends SpoonFormAttributes
 		// start html generation
 		$output = "\r\n" . '<select';
 
+		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name']));
 
 		// end select tag
@@ -5177,7 +5181,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 		// not checked
 		else
 		{
-			if($error !== null) $this->addError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 	}
@@ -5198,7 +5202,7 @@ class SpoonCheckBox extends SpoonFormAttributes
 		if(isset($data[$this->attributes['name']]) && $data[$this->attributes['name']] == 'Y') return true;
 
 		// nothing submitted
-		if($error !== null) $this->addError($error);
+		if($error !== null) $this->setError($error);
 		return false;
 	}
 
@@ -5472,8 +5476,8 @@ class SpoonMultiCheckBox extends SpoonFormElement
 			}
 		}
 
-		// no values found
-		if($error !== null) $this->addError($error);
+		// not submitted
+		if($error !== null) $this->setError($error);
 		return false;
 	}
 
