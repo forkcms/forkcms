@@ -570,7 +570,7 @@ class BackendDataGridFunctions
 		$timestamp = (int) $timestamp;
 
 		// get the time ago as a string
-		$timeAgo = SpoonDate::getTimeAgo($timestamp);
+		$timeAgo = SpoonDate::getTimeAgo($timestamp, BL::getInterfaceLanguage());
 
 		// get user setting for long dates
 		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s');

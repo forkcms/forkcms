@@ -285,7 +285,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=added&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);
 			}
 		}
 	}
