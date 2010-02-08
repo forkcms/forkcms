@@ -2240,7 +2240,7 @@ abbr.help {
 
 	position: fixed;
 	bottom: 12px;
-	right: 12px;
+	left: 12px;
 	font-size: 10px;
 	text-transform: uppercase;
 	z-index: 300;
