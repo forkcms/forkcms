@@ -32,6 +32,7 @@ img { -moz-force-broken-image-icon: 1; }
 .hidden { display: none; }
 .block { display: block; }
 .p0 { padding: 0 !important; }
+.pb0 { padding-bottom: 0 !important; }
 .m0 { margin: 0 !important; }
 .noBorder, .noborder { border: none !important; }
 .floatLeft { float: left; }
@@ -2434,6 +2435,14 @@ abbr.help {
 		-moz-border-radius-bottomright: 4px;
 
 	}
+
+/*
+	Analyse widget
+*/
+
+#widgetSettingsAnalyse ul {
+	padding-bottom: 0;
+}
 
 /*
 	Settings specific CSS

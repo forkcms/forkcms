@@ -2,7 +2,7 @@
 	<div class="heading">
 		<h3>{$lblAnalyse|ucfirst}</a></h3>
 	</div>
-	<div>
+	<div class="options content">
 		{option:warnings}
 		<ul>
 			{iteration:warnings}
