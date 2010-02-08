@@ -9,18 +9,11 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendUser
 {
-	/**
-	 * All settings
-	 *
-	 * @var	array
-	 */
-	private $settings = array();
-
-
 	/**
 	 * The group id
 	 *
@@ -70,6 +63,14 @@ class BackendUser
 
 
 	/**
+	 * All settings
+	 *
+	 * @var	array
+	 */
+	private $settings = array();
+
+
+	/**
 	 * The users id
 	 *
 	 * @var	int
@@ -82,7 +83,7 @@ class BackendUser
 	 *
 	 * @var	string
 	 */
-	private $userName;
+	private $username;
 
 
 	/**
@@ -152,17 +153,6 @@ class BackendUser
 
 
 	/**
-	 * Get all settings at once
-	 *
-	 * @return	array
-	 */
-	public function getSettings()
-	{
-		return (array) $this->settings;
-	}
-
-
-	/**
 	 * Get secretkey
 	 *
 	 * @return	string
@@ -170,6 +160,17 @@ class BackendUser
 	public function getSecretKey()
 	{
 		return $this->secretKey;
+	}
+
+
+	/**
+	 * Get all settings at once
+	 *
+	 * @return	array
+	 */
+	public function getSettings()
+	{
+		return (array) $this->settings;
 	}
 
 
@@ -191,7 +192,7 @@ class BackendUser
 	 */
 	public function getUsername()
 	{
-		return $this->userName;
+		return $this->username;
 	}
 
 
@@ -235,10 +236,10 @@ class BackendUser
 		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.is_god,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
-											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id
+											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
 											WHERE u.id = ?
 											LIMIT 1;',
-											array($userId));
+											array(SpoonSession::getSessionId(), $userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
 		if(empty($userData)) Spoon::dump($userId);
@@ -359,7 +360,7 @@ class BackendUser
 	 */
 	private function setUsername($value)
 	{
-		$this->userName = (string) $value;
+		$this->username = (string) $value;
 	}
 }
 
