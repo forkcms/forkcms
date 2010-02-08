@@ -1755,7 +1755,6 @@ fieldset legend {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 
-	padding: 12px;
 }
 
 	.errorMessage a {
@@ -1767,14 +1766,13 @@ fieldset legend {
 .successMessage { 
 	color: #4f6d2c;
 	background: #d6efb8;
-	border-color: 2px solid #91AE8A;
+	border-color: #91AE8A;
 
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 
-	padding: 12px;
 }
 
 	#report .singleMessage {
@@ -3328,4 +3326,30 @@ a.mainButton:focus {
 	#ui-datepicker-div {
 		background: #FFF;
 		border: 1px solid #AAA;
+	}
+
+/*
+	Messages stack
+*/
+
+#messaging {
+	position: fixed;
+	right: 20px;
+	bottom: 20px;
+	z-index: 1001;
+}
+
+#messaging .formMessage {
+	width: 240px;
+	position: relative;
+	font-size: 11px;
+	margin-top: 20px;
+	z-index: 1002;
+}
+
+	#messaging .buttonHolder {
+		position: absolute;
+		top: -10px;
+		right: -10px;
+		z-index: 1003;
 	}
