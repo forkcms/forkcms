@@ -437,7 +437,7 @@ class BackendPagesModel
 		$db = BackendModel::getDB();
 
 		// get page (active version)
-		$return = (array) $db->getRecord('SELECT *, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+		$return = (array) $db->getRecord('SELECT *, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on, edited_on AS pooppoo
 											FROM pages AS p
 											WHERE p.id = ? AND p.language = ? AND p.status = ?
 											LIMIT 1;',
