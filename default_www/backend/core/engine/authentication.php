@@ -238,7 +238,7 @@ class BackendAuthentication
 			$db = BackendModel::getDB(true);
 
 			// get the row from the tables
-			$sessionData = $db->getRecord('SELECT us.id, us.user_id, us.session_id, us.secret_key
+			$sessionData = $db->getRecord('SELECT us.id, us.user_id
 											FROM users_sessions AS us
 											WHERE us.session_id = ? AND us.secret_key = ?
 											LIMIT 1;',
@@ -248,7 +248,7 @@ class BackendAuthentication
 			if($sessionData !== null)
 			{
 				// update the session in the table
-				$db->update('users_sessions', array('date' => BackendModel::getUTCDate(), 'language' => BackendLanguage::getWorkingLanguage()), 'id = ?', (int) $sessionData['id']);
+				$db->update('users_sessions', array('date' => BackendModel::getUTCDate()), 'id = ?', (int) $sessionData['id']);
 
 				// create a user object, it will handle stuff related to the current authenticated user
 				self::$user = new BackendUser($sessionData['user_id']);
@@ -332,10 +332,9 @@ class BackendAuthentication
 			// build the session array (will be stored in the database)
 			$session = array();
 			$session['user_id'] = $userId;
-			$session['language'] = BackendLanguage::getWorkingLanguage();
 			$session['secret_key'] = BackendAuthentication::getEncryptedString(SpoonSession::getSessionId(), $userId);
 			$session['session_id'] = SpoonSession::getSessionId();
-			$session['date'] = date('Y-m-d H:i:s'); // @todo davy - aanpassen naar BackendModel::getUTCDate();
+			$session['date'] = BackendModel::getUTCDate();
 
 			// insert a new row in the session-table
 			$db->insert('users_sessions', $session);
