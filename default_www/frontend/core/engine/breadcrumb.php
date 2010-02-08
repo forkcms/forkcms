@@ -2,7 +2,6 @@
 
 /**
  * FrontendBreadcrumb
- *
  * This class will be used to manage the breadcrumb
  *
  * @package		frontend

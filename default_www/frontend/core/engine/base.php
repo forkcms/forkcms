@@ -600,7 +600,7 @@ class FrontendBaseBlock
 	 * Set the module, for later use
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module that should be used.
 	 */
 	private function setModule($module)
 	{
@@ -612,7 +612,7 @@ class FrontendBaseBlock
 	 * Set overwrite mode
 	 *
 	 * @return	void
-	 * @param	bool $overwrite
+	 * @param	bool $overwrite		true if the template should overwrite the current template, false if not.
 	 */
 	private function setOverwrite($overwrite)
 	{
@@ -624,7 +624,7 @@ class FrontendBaseBlock
 	 * Set the path for the template to include or to replace the current one
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path to the template that should be loaded.
 	 */
 	private function setTemplatePath($path)
 	{
