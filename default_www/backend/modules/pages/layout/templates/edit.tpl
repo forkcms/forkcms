@@ -101,15 +101,13 @@
 												<div class="heading">
 													<h3>{$lblPublish|ucfirst}</h3>
 												</div>
-												<!-- @later
 												<div class="options">
 													<div class="buttonHolder">
-														<a href="#" class="button icon iconZoom previewButton" target="_blank">
-															<span><span><span>{$lblPreview|ucfirst}</span></span></span>
+														<a href="{$SITE_URL}{$pageUrl}" class="button icon iconZoom previewButton" target="_blank">
+															<span><span><span>{$lblView|ucfirst}</span></span></span>
 														</a>
 													</div>
 												</div>
-												 -->
 												<div class="options">
 													<ul class="inputList">
 														{iteration:hidden}

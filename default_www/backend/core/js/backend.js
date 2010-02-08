@@ -385,13 +385,14 @@ jsBackend.forms = {
 			$('form.submitWithLink').each(function() {
 				// get id
 				var formId = $(this).attr('id');
+				var dontSubmit = false;
 				
 				// validate id
 				if(formId != '') {
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function() {
 						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'submitButton button ' + $(this).attr('class')))
-								.remove()
+								.css({position:'absolute', top:'-9000px', left: '-9000px'})
 								.attr('tabindex', -1); 
 					});
 
@@ -400,12 +401,13 @@ jsBackend.forms = {
 						evt.preventDefault();
 						$('form#'+ formId).submit();
 					});
+
+					// dont submit the form on certain elements
+					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
+					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
 					
-					// bind keypress
-					$('form#'+ formId +' input').bind('keyup', function(evt) {
-						// enter && element may submit
-						if(evt.which == 13 && !$(this).hasClass('dontSubmit')) { $('form#'+ formId).submit(); }
-					});
+					// hijack the submit event
+					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
 				}
 			});
 		}

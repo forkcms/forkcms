@@ -43,10 +43,19 @@ class BackendBlogMassCommentAction extends BackendBaseAction
 
 			// other actions (status updates)
 			else BackendBlogModel::updateCommentStatuses($aIds, $action);
-		}
 
-		// redirect
-		$this->redirect(BackendModel::createURLForAction('comments') .'&report='. $action .'#tab'. ucfirst($from));
+			// init var
+			if($action == 'published') $report = 'published_moved';
+			if($action == 'moderation') $report = 'moderation_moved';
+			if($action == 'spam') $report = 'spam_moved';
+			if($action == 'delete') $report = 'delete_moved';
+
+			// multiple items?
+			if(count($aIds) > 1) $report .= '_multiple';
+
+			// redirect
+			$this->redirect(BackendModel::createURLForAction('comments') .'&report='. $report .'#tab'. ucfirst($from));
+		}
 	}
 }
 

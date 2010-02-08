@@ -241,7 +241,14 @@ class BackendModel
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file @later	the file should be regenerated
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php')) throw new BackendException('No key-file (keys_'. $language .'.php) found.');
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php'))
+			{
+				// require BackendPagesModel
+				require_once BACKEND_MODULES_PATH .'/pages/engine/model.php';
+
+				// regenerate cache
+				BackendPagesModel::buildCache();
+			}
 
 			// init var
 			$keys = array();
@@ -272,7 +279,14 @@ class BackendModel
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file @later: the file should be regenerated
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php')) throw new BackendException('No navigation-file (navigation_'. $language .'.php) found.');
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
+			{
+				// require BackendPagesModel
+				require_once BACKEND_MODULES_PATH .'/pages/engine/model.php';
+
+				// regenerate cache
+				BackendPagesModel::buildCache();
+			}
 
 			// init var
 			$navigation = array();

@@ -275,7 +275,7 @@ class BackendBaseActionIndex extends BackendBaseAction
 
 			// if we have data to use it will be passed as the var-parameter, if so assign it
 			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
-			else $this->tpl->assign('reportMessage', $messageName);
+			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
 
 			// hightlight an element with the given id if needed
 			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));

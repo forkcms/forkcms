@@ -18,7 +18,7 @@ tinyMCE.init({
 	
 	// theme options
 	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code',
-	theme_advanced_buttons2: 'outdent, indent,|,fullscreen,table,|,image,|,formatselect',
+	theme_advanced_buttons2: 'table,|,image,|,formatselect',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,
 	theme_advanced_resize_horizontal: false,
@@ -32,6 +32,8 @@ tinyMCE.init({
 	// image manager
 	imagemanager_handle: 'image',
 	
-	// custom
-	setup: function(ed) { ed.onPaste.add( function(ed, e, o) { ed.execCommand('mcePasteText', true); return tinymce.dom.Event.cancel(e); }); }
+	// paste
+	paste_auto_cleanup_on_paste : true,
+	paste_remove_spans: true,
+	paste_remove_styles: true
 });
