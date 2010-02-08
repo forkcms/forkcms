@@ -37,25 +37,47 @@ jsBackend.balloons = {
 			}
 		});
 	
-		$('.toggleBalloon').click(function() {
-			// get linked balloon
-			var rel = $(this).attr('rel');
-			// rel available? 
-			if(rel != '') {
-				// hide if already visible
-				if($('#'+ rel).is(':visible')) $('#'+ rel).fadeOut(500);
-				// not visible
-				else
-				{
-					// position
-					$('#'+ rel).css('position', 'absolute')
-							   .css('top', $(this).offset().top + $(this).height() + 10)
-							   .css('left', $(this).offset().left - 30);
-					// show
-					$('#'+ rel).fadeIn(500);
-				}
+		$('.toggleBalloon').click(jsBackend.balloons.click);
+	},
+	click: function(evt) {
+		var clickedElement = $(this);
+		
+		// get linked balloon
+		var rel = clickedElement.attr('rel');
+
+		// rel available? 
+		if(rel != '') {
+			// hide if already visible
+			if($('#'+ rel).is(':visible')) {
+				// hide
+				$('#'+ rel).fadeOut(500);
+				
+				// unbind
+				$(window).unbind('resize');
 			}
-		});
+		
+			// not visible
+			else
+			{
+				// position
+				jsBackend.balloons.position(clickedElement, $('#'+ rel));
+				
+				// show
+				$('#'+ rel).fadeIn(500);
+				
+				// bind resize
+				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ rel)) });
+			}
+		}
+	},
+	position: function(clickedElement, element) {
+		
+		console.log('hoer');
+		
+		// position
+		element.css('position', 'absolute')
+				   .css('top', clickedElement.offset().top + clickedElement.height() + 10)
+				   .css('left', clickedElement.offset().left - 30);
 	},
 	// end
 	eof: true
