@@ -139,7 +139,7 @@ jsBackend.controls = {
 			$(this).parent().addClass('collapsed')
 		});
 	},
-	// jaja dikke lul
+	// check all checkboxes with one checkbox in the tableheader
 	bindMassCheckbox: function() {
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt) {
 			// check or uncheck all the checkboxes in this datagrid
