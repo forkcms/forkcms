@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblIndex|ucfirst}</p>
+				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblOverview|ucfirst}</p>
 			</div>
 
 			{option:report}
@@ -15,50 +15,48 @@
 
 			<div class="inner">
 				{form:filter}
-				<div class="box">
-					<div class="heading">
-						<h3>{$lblFilter}</h3>
-					</div>
-					<div class="options">
-						<div class="horizontal">
-							<p>
-								<label for="name">{$lblName|ucfirst}</label>
-								{$txtName} {$txtNameError}
-							</p>
-							<p>
-								<label for="value">{$lblValue|ucfirst}</label>
-								{$txtValue} {$txtValueError}
-							</p>
-							<p>
-								<label for="language">{$lblLanguage|ucfirst}</label>
-								{$ddmLanguage} {$ddmLanguageError}
-							</p>
-							<p>
-								<label for="application">{$lblApplication|ucfirst}</label>
-								{$ddmApplication} {$ddmApplicationError}
-							</p>
-							<p>
-								<label for="module">{$lblModule|ucfirst}</label>
-								{$ddmModule} {$ddmModuleError}
-							</p>
-							<p>
-								<label for="type">{$lblType|ucfirst}</label>
-								{$ddmType} {$ddmTypeError}
-							</p>
-							<p class="spacing">
-								{$btnSearch}
-							</p>
+					<div class="box">
+						<div class="heading">
+							<h3>{$lblFilter|ucfirst}</h3>
 						</div>
-						
-
+						<div class="options">
+							<div class="horizontal">
+								<p>
+									<label for="name">{$lblName|ucfirst}</label>
+									{$txtName} {$txtNameError}
+								</p>
+								<p>
+									<label for="value">{$lblValue|ucfirst}</label>
+									{$txtValue} {$txtValueError}
+								</p>
+								<p>
+									<label for="language">{$lblLanguage|ucfirst}</label>
+									{$ddmLanguage} {$ddmLanguageError}
+								</p>
+								<p>
+									<label for="application">{$lblApplication|ucfirst}</label>
+									{$ddmApplication} {$ddmApplicationError}
+								</p>
+								<p>
+									<label for="module">{$lblModule|ucfirst}</label>
+									{$ddmModule} {$ddmModuleError}
+								</p>
+								<p>
+									<label for="type">{$lblType|ucfirst}</label>
+									{$ddmType} {$ddmTypeError}
+								</p>
+								<p class="spacing">
+									{$btnSearch}
+								</p>
+							</div>
+						</div>
 					</div>
-				</div>
 				{/form:filter}
 
 				{option:datagrid}
 					<div class="datagridHolder">
 						<div class="tableHeading">
-							<h3>{$lblLocale|ucfirst}</h3>
+							<h3>{$lblTranslations|ucfirst}</h3>
 							<div class="buttonHolderRight">
 								<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 							</div>

@@ -57,51 +57,62 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	}
 
 
+	/**
+	 * Builds the query for this datagrid
+	 *
+	 * @return	array		An array with two arguments containing the query and its parameters.
+	 */
 	private function buildQuery()
 	{
-		$parameters = array(0);
+		// init var
+		$parameters = array();
 
-		$query = 'SELECT
-					l.id,
-					l.language,
-					l.application,
-					l.module,
-					l.type,
-					l.name,
-					l.value
-					FROM locale AS l
-					WHERE l.id > ?';
+		// start query
+		$query = 'SELECT l.id, l.language,
+						l.application,
+						l.module,
+						l.type,
+						l.name,
+						l.value
+						FROM locale AS l
+						WHERE 1';
 
+		// add language
 		if($this->filter['language'] !== null)
 		{
 			$query .= ' AND l.language = ?';
 			$parameters[] = $this->filter['language'];
 		}
 
+		// add application
 		if($this->filter['application'] !== null)
 		{
 			$query .= ' AND l.application = ?';
 			$parameters[] = $this->filter['application'];
 		}
 
+		// add module
 		if($this->filter['module'] !== null)
 		{
 			$query .= ' AND l.module = ?';
 			$parameters[] = $this->filter['module'];
 		}
 
+		// add type
 		if($this->filter['type'] !== null)
 		{
 			$query .= ' AND l.type = ?';
 			$parameters[] = $this->filter['type'];
 		}
 
+		// add name
 		if($this->filter['name'] !== null)
 		{
 			$query .= ' AND l.name LIKE  ?';
 			$parameters[] = '%'. $this->filter['name'] .'%';
 		}
 
+		// add value
 		if($this->filter['value'] !== null)
 		{
 			$query .= ' AND l.value LIKE ?';
@@ -113,7 +124,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Loads the datagrids
+	 * Load the datagrids.
 	 *
 	 * @return void
 	 */
@@ -160,6 +171,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function loadForm()
 	{
+		// @todo davy - kuis je rommel op.
 		$this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
 
 		$this->frm->addDropDown('language', array('nl' => BL::getLabel('Dutch')), $this->filter['language']);
@@ -195,9 +207,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 
 		// parse paging & sorting
-		$this->tpl->assign('offset', $this->datagrid->getOffset());
-		$this->tpl->assign('order', $this->datagrid->getOrder());
-		$this->tpl->assign('sort', $this->datagrid->getSort());
+		$this->tpl->assign('offset', (int) $this->datagrid->getOffset());
+		$this->tpl->assign('order', (string) $this->datagrid->getOrder());
+		$this->tpl->assign('sort', (string) $this->datagrid->getSort());
 
 		// parse filter
 		$this->tpl->assign($this->filter);
