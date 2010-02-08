@@ -171,20 +171,22 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function loadForm()
 	{
-		// @todo davy - kuis je rommel op.
+		// create form
 		$this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
 
-		$this->frm->addDropDown('language', array('nl' => BL::getLabel('Dutch')), $this->filter['language']);
-		$this->frm->getField('language')->setDefaultElement('Kies een taal');
-		$this->frm->addDropDown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
-		$this->frm->getField('application')->setDefaultElement('Kies een applicatie');
-		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-		$this->frm->getField('module')->setDefaultElement('Kies een module');
-		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
-		$this->frm->getField('type')->setDefaultElement('Kies een type');
+		// add fields
 		$this->frm->addTextField('name', $this->filter['name']);
 		$this->frm->addTextField('value', $this->filter['value']);
+		$this->frm->addDropDown('language', BL::getInterfaceLanguages(), $this->filter['language']);
+		$this->frm->getField('language')->setDefaultElement(ucfirst(BL::getLabel('ChooseALanguage')));
+		$this->frm->addDropDown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
+		$this->frm->getField('application')->setDefaultElement(ucfirst(BL::getLabel('ChooseAnApplication')));
+		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
+		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::getLabel('ChooseAModule')));
+		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
+		$this->frm->getField('type')->setDefaultElement(ucfirst(BL::getLabel('ChooseAType')));
 
+		// manually parse fields
 		$this->frm->parse($this->tpl);
 	}
 
@@ -209,6 +211,11 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	}
 
 
+	/**
+	 * Sets the filter based on the $_GET array.
+	 *
+	 * @return	void
+	 */
 	private function setFilter()
 	{
 		$this->filter['language'] = $this->getParameter('language');

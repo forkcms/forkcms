@@ -3,7 +3,7 @@
 /**
  * BackendLocaleAdd
  *
- * This is the add action, it will display a form to add a label.
+ * This is the add action, it will display a form to add an item to the locale.
  *
  * @package		backend
  * @subpackage	locale
@@ -16,7 +16,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	/**
 	 * Filter variables
 	 *
-	 * @var	arra
+	 * @var	array
 	 */
 	private $filter;
 
@@ -59,12 +59,12 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add', BackendModel::createURLForAction(null, null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])));
 
 		// create and add elements
-		$this->frm->addDropDown('application', array('backend' => 'backend', 'frontend' => 'frontend'), $this->filter['application']);
+		$this->frm->addDropDown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
 		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
 		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
 		$this->frm->addTextField('name');
 		$this->frm->addTextField('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
-		$this->frm->addDropDown('language', BackendLanguage::getWorkingLanguages(), $this->filter['language']);
+		$this->frm->addDropDown('language', BackendLanguage::getInterfaceLanguages(), $this->filter['language']);
 	}
 
 
@@ -83,7 +83,11 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	}
 
 
-	// @todo davy - phpdoc
+	/**
+	 * Sets the filter based on the $_GET array.
+	 *
+	 * @return	void
+	 */
 	private function setFilter()
 	{
 		$this->filter['language'] = $this->getParameter('language');
@@ -119,30 +123,15 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::getError('InvalidName')))
 				{
 					// first letter does not seem to be a capital one
-					if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::getError('InvalidName', 'locale'));
+					if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::getError('InvalidName'));
 
 					// syntax is completely fine
 					else
 					{
-						// check if exists
-						if($this->frm->getField('application')->getValue() == 'backend')
+						// this name already exists in this language
+						if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue()))
 						{
-							// this name already exists in this language
-							if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
-							{
-								$txtName->setError(BL::getError('AlreadyExists'));
-							}
-						}
-
-						// check if exists
-						if($this->frm->getField('application')->getValue() == 'backend')
-						{
-							// @todo	Davy, frontendModel is geladen als ik me niet vergis...
-							// this name already exists in this language
-							if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue()))
-							{
-//								$txtName->setError(BL::getError('AlreadyExists'));
-							}
+							$txtName->setError(BL::getError('AlreadyExists'));
 						}
 					}
 				}

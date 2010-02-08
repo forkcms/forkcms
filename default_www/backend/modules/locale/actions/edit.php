@@ -3,7 +3,7 @@
 /**
  * BackendLocaleEdit
  *
- * This is the edit action, it will display a form to edit an existing label.
+ * This is the edit action, it will display a form to edit an existing locale item.
  *
  * @package		backend
  * @subpackage	locale
@@ -109,7 +109,11 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->tpl->assign('id', $this->record['id']);
 	}
 
-	// @todo davy - phpdoc
+	/**
+	 * Sets the filter based on the $_GET array.
+	 *
+	 * @return	void
+	 */
 	private function setFilter()
 	{
 		$this->filter['language'] = $this->getParameter('language');
@@ -145,13 +149,13 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 				if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::getError('InvalidName')))
 				{
 					// first letter does not seem to be a capital one
-					if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::getError('InvalidName', 'locale'));
+					if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::getError('InvalidName'));
 
 					// syntax is completely fine
 					else
 					{
 						// check if exists
-						if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->id))
+						if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id))
 						{
 							$txtName->setError(BL::getError('AlreadyExists'));
 						}

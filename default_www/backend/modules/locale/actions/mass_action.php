@@ -3,7 +3,7 @@
 /**
  * BackendLocaleMassAction
  *
- * This action is used to update one or more comments (status, delete, ...)
+ * This action is used to update one or more locale items.
  *
  * @package		backend
  * @subpackage	blog
@@ -55,6 +55,11 @@ class BackendLocaleMassAction extends BackendBaseAction
 	}
 
 
+	/**
+	 * Sets the filter based on the $_GET array.
+	 *
+	 * @return	void
+	 */
 	private function setFilter()
 	{
 		$this->filter['language'] = $this->getParameter('language');

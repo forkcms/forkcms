@@ -134,16 +134,17 @@ class BackendLocaleModel
 	 * @param	string $type
 	 * @param	string $module
 	 * @param	string $language
+	 * @param	string $application
 	 * @param	int[optional] $id
 	 */
-	public static function existsByName($name, $type, $module, $language, $id = null)
+	public static function existsByName($name, $type, $module, $language, $application, $id = null)
 	{
 		// get db
 		$db = BackendModel::getDB();
 
 		// exists?
-		if($id !== null) return $db->getNumRows('SELECT id FROM locale WHERE name = ? AND type = ? AND module = ? AND language = ? AND id != ?;', array((string) $name, (string) $type, (string) $module, (string) $language, (int) $id));
-		else return $db->getNumRows('SELECT id FROM locale WHERE name = ? AND type = ? AND module = ? AND language = ?;', array((string) $name, (string) $type, (string) $module, (string) $language));
+		if($id !== null) return $db->getNumRows('SELECT id FROM locale WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?;', array((string) $name, (string) $type, (string) $module, (string) $language, (string) $application, (int) $id));
+		else return $db->getNumRows('SELECT id FROM locale WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?;', array((string) $name, (string) $type, (string) $module, (string) $language, (string) $application));
 	}
 
 
