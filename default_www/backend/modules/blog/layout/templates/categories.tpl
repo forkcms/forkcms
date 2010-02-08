@@ -5,14 +5,6 @@
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst}</p>
 			</div>
 
-			{option:formError}
-			<div id="report">
-				<div class="singleMessage errorMessage">
-					<p>{$errFormError}</p>
-				</div>
-			</div>
-			{/option:formError}
-
 			<div class="inner">
 				{option:datagrid}
 					<div class="datagridHolder">

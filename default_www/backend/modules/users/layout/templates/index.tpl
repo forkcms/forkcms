@@ -5,14 +5,6 @@
 				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$lblIndex|ucfirst}</p>
 			</div>
 
-			{option:report}
-			<div id="report">
-				<div class="singleMessage successMessage">
-					<p>{$reportMessage}</p>
-				</div>
-			</div>
-			{/option:report}
-
 			<div class="inner">
 				<div class="datagridHolder">
 					<div class="tableHeading">

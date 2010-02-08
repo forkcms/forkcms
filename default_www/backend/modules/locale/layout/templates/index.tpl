@@ -5,14 +5,6 @@
 				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblOverview|ucfirst}</p>
 			</div>
 
-			{option:report}
-			<div id="report">
-				<div class="singleMessage successMessage">
-					<p>{$reportMessage}</p>
-				</div>
-			</div>
-			{/option:report}
-
 			<div class="inner">
 				{form:filter}
 					<div class="box">

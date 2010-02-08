@@ -5,14 +5,6 @@
 				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblEdit|ucfirst}</p>
 			</div>
 
-			{option:formError}
-			<div id="report">
-				<div class="singleMessage errorMessage">
-					<p>{$errFormError}</p>
-				</div>
-			</div>
-			{/option:formError}
-
 			<div class="inner">
 				{form:edit}
 				<div class="box">

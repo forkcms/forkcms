@@ -4,19 +4,6 @@
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$msgEditWithItem|sprintf:{$blog['title']}}</p>
 			</div>
-			{option:usingRevision}
-			<div class="singleMessage warningMessage">
-				<p>{$msgUsingARevision}</p>
-			</div>
-			{/option:usingRevision}
-
-			{option:formError}
-			<div id="report">
-				<div class="singleMessage errorMessage">
-					<p>{$errFormError}</p>
-				</div>
-			</div>
-			{/option:formError}
 
 			<div class="inner">
 				{form:edit}

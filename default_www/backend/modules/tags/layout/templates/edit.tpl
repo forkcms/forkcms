@@ -5,14 +5,6 @@
 				<p class="breadcrumb">{$lblTags|ucfirst} &gt; {$msgEditWithItem|sprintf:{$name}}</p>
 			</div>
 
-			{option:formError}
-			<div id="report">
-				<div class="singleMessage errorMessage">
-					<p>{$errFormError}</p>
-				</div>
-			</div>
-			{/option:formError}
-
 			<div class="inner">
 				{form:edit}
 					<div class="box">

@@ -5,14 +5,6 @@
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst} &gt; {$lblAdd|ucfirst}</p>
 			</div>
 
-			{option:formError}
-			<div id="report">
-				<div class="singleMessage errorMessage">
-					<p>{$errFormError}</p>
-				</div>
-			</div>
-			{/option:formError}
-
 			<div class="inner">
 				{form:addCategory}
 					<div class="box">

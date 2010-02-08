@@ -20,30 +20,6 @@
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
-				{option:report}
-				<div id="report">
-					<div class="singleMessage successMessage">
-						<p>{$reportMessage}</p>
-					</div>
-				</div>
-				{/option:report}
-
-				{option:formError}
-				<div id="report">
-					<div class="singleMessage errorMessage">
-						<p>{$errFormError}</p>
-					</div>
-				</div>
-				{/option:formError}
-
-				{option:usingRevision}
-				<div id="report">
-					<div class="singleMessage warningMessage">
-						<p class="warning">{$msgUsingARevision}</p>
-					</div>
-				</div>
-				{/option:usingRevision}
-
 				<div class="inner">
 				{form:edit}
 					{$txtTitle} {$txtTitleError}

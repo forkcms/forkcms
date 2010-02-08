@@ -28,14 +28,6 @@
 			</div>
 			{/option:!formError}
 
-			{option:formError}
-				<div id="report">
-					<div class="errorMessage singleMessage">
-						<p>{$errGeneralFormError}</p>
-					</div>
-				</div>
-			{/option:formError}
-
 			<div class="inner">
 
 				{form:add}

@@ -10,6 +10,7 @@ jsBackend = {
 		jsBackend.controls.init();
 		jsBackend.forms.init();
 		jsBackend.layout.init();
+		jsBackend.messages.init();
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
 		//jsBackend.tableSequenceByDragAndDrop.init();
@@ -430,21 +431,51 @@ jsBackend.layout = {
 		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
 		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
 	},
-	showMessage: function(type, content) {
-		if($('#report').length == 0) $('#contentHolder').prepend('<div id="report" class="hidden"><div class="singleMessage"><p></p></div></div>');
+	// end
+	eof: true
+}
+
+jsBackend.messages = {
+	timers: [],
+	
+	// init, something like a constructor
+	init: function() {
+		// bind close button
+		$('#messaging .formMessage .iconClose').live('click', function(evt) {
+			evt.preventDefault();
+			jsBackend.messages.hide($($(this).parents('.formMessage')));
 			
-		// set class
-		$('#report div').attr('class', 'singleMessage '+ type +'Message');
+		});
+	},
+	// hide a message
+	hide: function(element) {
+		// fade out
+		element.fadeOut();
+	},
+	// add a new message into the que
+	add: function(type, content) {
+		var uniqueId = 'e'+ new Date().getTime().toString();
+		var html = '<div id="'+ uniqueId +'" class="formMessage '+ type +'Message" style="display: none;">'+
+					'	<p>'+ content +'</p>'+
+					'	<div class="buttonHolder">'+
+					'		<a class="button icon iconClose iconOnly" href="#"><span><span><span>X</span></span></span></a>'+
+					'	</div>'+
+					'</div>';
 		
-		// set message
-		$('#report div p').html(content);
+		// prepend
+		$('#messaging').prepend(html);
 		
 		// show
-		if($('#report').not(':visible')) $('#report').slideDown();
+		$('#'+ uniqueId).fadeIn();
+		
+		// timeout
+		if(type == 'notice') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 20000); }
+		if(type == 'success') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
 	},
 	// end
 	eof: true
 }
+
 
 jsBackend.tabs = {
 	// init, something like a constructor

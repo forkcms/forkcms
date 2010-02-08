@@ -5,14 +5,6 @@
 				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$msgEditWithItem|sprintf:{$record['username']}}</p>
 			</div>
 
-			{option:formError}
-			<div id="report">
-				<div class="singleMessage errorMessage">
-					<p>{$errFormError}</p>
-				</div>
-			</div>
-			{/option:formError}
-
 			<div class="inner">
 				{form:edit}
 					<table id="settingsUserInfo" border="0" cellspacing="0" cellpadding="0">
