@@ -1,4 +1,4 @@
-1.1.5 (2010-02-08)
+1.1.5 (2010-02-07)
 ----
 - Added SpoonDate::getTimeAgo which presents you with a language dependant sentence based on the provided timestamp in the past.
 - Added SpoonTimeField::getTimestamp which returns a timestamp based on the provided values in conjunction with the hh:ii format in
