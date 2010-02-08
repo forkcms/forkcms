@@ -59,16 +59,16 @@
 												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
-											<!-- @later
 											<div class="options">
 												<div class="buttonHolder">
+													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span><span><span>{$lblPreview|ucfirst}</span></span></span></a>
+													<a href="#" id="saveAsDraft" class="button"><span><span><span>{$lblSave|ucfirst}</span></span></span></a>
 												</div>
 											</div>
 
 											<div class="options">
-												<p class="status">Status: <strong>{$status}</strong></p>
+												<p class="status">{$lblStatus|ucfirst}: <strong>{$status}</strong></p>
 											</div>
-											-->
 
 											<div class="options">
 												<ul class="inputList">
@@ -183,6 +183,23 @@
 						</div>
 
 						<div id="tabRevisions">
+							{option:drafts}
+							<div class="datagridHolder">
+								<div class="tableHeading">
+									<div class="oneLiner">
+										<h3 class="floater">{$lblDrafts|ucfirst}</h3>
+										<abbr class="help floater">(?)</abbr>
+										<div class="balloon" style="display: none;">
+											<p>{$msgHelpDrafts}</p>
+										</div>
+									</div>
+								</div>
+
+								{$drafts}
+							</div>
+							{/option:drafts}
+
+
 							<div class="datagridHolder">
 								<div class="tableHeading">
 									<div class="oneLiner">

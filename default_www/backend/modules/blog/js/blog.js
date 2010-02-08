@@ -2,6 +2,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 jsBackend.blog = {
 	init: function() {
+		jsBackend.blog.controls.init();
 		jsBackend.blog.category.init();
 	},
 	
@@ -100,6 +101,17 @@ jsBackend.blog.category = {
 		else $('#newCategoryButton').addClass('disabledButton');
 	},
 	
+	// end
+	eoo: true
+}
+
+jsBackend.blog.controls = {
+	init: function() {
+		$('#saveAsDraft').click(function(evt) {
+			$('form#edit').append('<input type="hidden" name="status" value="draft" />');
+			$('form#edit').submit();
+		})
+	},
 	// end
 	eoo: true
 }

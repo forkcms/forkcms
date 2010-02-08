@@ -285,6 +285,38 @@ class FrontendBlogModel
 
 
 	/**
+	 * Get a draft for an article
+	 *
+	 * @return	array
+	 * @param	string $URL
+	 * @param	int $draft
+	 */
+	public static function getDraft($URL, $draft)
+	{
+		// redefine
+		$URL = (string) $URL;
+		$draft = (int) $draft;
+
+		// get db
+		$db = FrontendModel::getDB();
+
+		// get the blogposts
+		return (array) $db->getRecord('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text,
+										bc.name AS category_name, bc.url AS category_url,
+										UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
+										m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+										m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+										m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+										m.url
+										FROM blog_posts AS bp
+										INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
+										INNER JOIN meta AS m ON bp.meta_id = m.id
+										WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bp.revision_id = ? AND m.url = ?
+										LIMIT 1;',
+										array('draft', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00', $draft, $URL));
+	}
+
+	/**
 	 * Get recent comments
 	 *
 	 * @return	array

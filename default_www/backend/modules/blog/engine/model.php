@@ -28,6 +28,10 @@ class BackendBlogModel
 											FROM blog_posts AS p
 											WHERE p.status = ? AND p.id = ?
 											ORDER BY p.edited_on DESC;';
+	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+											FROM blog_posts AS p
+											WHERE p.status = ? AND p.id = ? AND p.user_id = ?
+											ORDER BY p.edited_on DESC;';
 
 	/**
 	 * Checks the settings and optionally returns an array with warnings
@@ -238,6 +242,27 @@ class BackendBlogModel
 									FROM blog_categories AS bc
 									WHERE bc.name = ? AND bc.language = ?;',
 									array($name, $language));
+	}
+
+
+	public static function getDraft($id, $draftId)
+	{
+		// redefine
+		$id = (int) $id;
+		$draftId = (int) $draftId;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get record and return it
+		return (array) $db->getRecord('SELECT p.*,
+									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
+									   UNIX_TIMESTAMP(p.created_on) AS created_on,
+									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
+									   m.url
+									   FROM blog_posts AS p
+									   INNER JOIN meta AS m ON m.id = p.meta_id
+									   WHERE p.id = ? AND p.revision_id = ?;', array($id, $draftId));
 	}
 
 
@@ -477,6 +502,28 @@ class BackendBlogModel
 
 		// create category
 		return $db->insert('blog_categories', $item);
+	}
+
+
+	public static function insertDraft($id, array $item)
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// remove old
+		$db->delete('blog_posts', 'id = ? AND user_id = ? AND status = ?', array($id, BackendAuthentication::getUser()->getUserId(), 'draft'));
+
+		// alter
+		$item['id'] = $id;
+		$item['status'] = 'draft';
+		$item['edited_on'] = BackendModel::getUTCDate();
+
+		// insert and return the insertId
+		$newId = $db->insert('blog_posts', $item);
+
+		// return the new id
+		return $newId;
+
 	}
 
 

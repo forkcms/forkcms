@@ -6,8 +6,12 @@
 
 	<script type="text/javascript">
 		{option:formError}jsBackend.messages.add('error', "{$errFormError}");{/option:formError}
+
 		{option:usingRevision}jsBackend.messages.add('notice', "{$msgUsingARevision}");{/option:usingRevision}
+		{option:usingDraft}jsBackend.messages.add('notice', "{$msgUsingADraft}");{/option:usingDraft}
+
 		{option:report}jsBackend.messages.add('success', "{$reportMessage}");{/option:report}
+
 		{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage}");{/option:errorMessage}
 	</script>
 
