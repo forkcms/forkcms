@@ -42,6 +42,9 @@ class BackendDataGrid extends SpoonDataGrid
 		// set default sorting options
 		$this->setSortingOptions();
 
+		// add classes on headers
+		foreach($this->getColumns() as $column) $this->setColumnHeaderAttributes($column, array('class' => $column));
+
 		// set paging class
 		$this->setPagingClass('BackendDatagridPaging');
 
@@ -97,6 +100,9 @@ class BackendDataGrid extends SpoonDataGrid
 			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),
 													'width' => '10%'));
 		}
+
+		// set header attributes
+		$this->setColumnHeaderAttributes($name, array('class' => $name));
 	}
 
 
@@ -184,6 +190,7 @@ class BackendDataGrid extends SpoonDataGrid
 			// timeAgo
 			case array('BackendDataGridFunctions', 'getTimeAgo'):
 				$attributes = array('class' => 'date');
+				$headerAttributes = array('class' => 'date');
 			break;
 		}
 
@@ -192,6 +199,13 @@ class BackendDataGrid extends SpoonDataGrid
 		{
 			// loop and set attributes
 			foreach($columns as $column) $this->setColumnAttributes($column, $attributes);
+		}
+
+		// add attributes if they are given
+		if(!empty($headerAttributes))
+		{
+			// loop and set attributes
+			foreach($columns as $column) $this->setColumnHeaderAttributes($column, $attributes);
 		}
 	}
 
