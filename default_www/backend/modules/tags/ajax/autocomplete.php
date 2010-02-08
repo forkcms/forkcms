@@ -3,7 +3,7 @@
 /**
  * BackendTagsAjaxAutocomplete
  *
- * This is the autocomplete-action, it will display a form to create a new item
+ * This is the autocomplete-action, it will output a list of tags that start with a certain string.
  *
  * @package		backend
  * @subpackage	tags

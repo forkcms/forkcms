@@ -11,7 +11,7 @@ require_once BACKEND_MODULE_PATH .'/engine/model.php';
  * @package		backend
  * @subpackage	tags
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 final class BackendTagsConfig extends BackendBaseConfig

@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">{$lblTags|ucfirst} &gt; {$lblIndex|ucfirst}</p>
+				<p class="breadcrumb">{$lblTags|ucfirst} &gt; {$lblOverview|ucfirst}</p>
 			</div>
 
 			<div class="inner">

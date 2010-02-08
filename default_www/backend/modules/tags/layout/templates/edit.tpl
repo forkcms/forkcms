@@ -13,7 +13,7 @@
 						</div>
 						<div class="options">
 							<p>
-								<label for="tag">{$lblName|ucfirst}</label>
+								<label for="name">{$lblName|ucfirst}</label>
 								{$txtName} {$txtNameError}
 							</p>
 						</div>

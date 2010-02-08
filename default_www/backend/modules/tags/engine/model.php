@@ -11,6 +11,7 @@
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendTagsModel
@@ -42,6 +43,24 @@ class BackendTagsModel
 
 
 	/**
+	 * Get tag record
+	 *
+	 * @return	array
+	 * @param	int $id
+	 */
+	public static function get($id)
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// make the call
+		return (array) $db->getRecord('SELECT t.tag AS name
+										FROM tags AS t
+										WHERE t.id = ?;', (int) $id);
+	}
+
+
+	/**
 	 * Get tags that start with the given string
 	 *
 	 * @return	array
@@ -60,24 +79,6 @@ class BackendTagsModel
 										ORDER BY t.tag ASC
 										LIMIT ?;',
 										array((string) $query .'%', (int) $limit));
-	}
-
-
-	/**
-	 * Get tag record
-	 *
-	 * @return	array
-	 * @param	int $id
-	 */
-	public static function get($id)
-	{
-		// get db
-		$db = BackendModel::getDB();
-
-		// make the call
-		return (array) $db->getRecord('SELECT t.tag AS name
-										FROM tags AS t
-										WHERE t.id = ?;', (int) $id);
 	}
 
 
