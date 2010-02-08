@@ -335,6 +335,9 @@
 
 	var extraData = {};
 	{iteration:extras}extraData[{$extras.id}] = {$extras.json}; {/iteration:extras}
+
+	$('#page-'+ pageID).addClass('selected');
+
 </script>
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
