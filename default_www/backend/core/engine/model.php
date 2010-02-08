@@ -215,6 +215,9 @@ class BackendModel
 			$db->execute('SET CHARACTER SET utf8;');
 			$db->execute('SET NAMES utf8;');
 
+			// mysql timezone
+			$db->execute("SET time_zone = '+0:00';");
+
 			// store
 			Spoon::setObjectReference('database', $db);
 		}
