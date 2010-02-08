@@ -21,11 +21,15 @@
 			// define some vars
 			var id = $(this).attr('id');
 			var elements = get();
+			var blockSubmit = false;
 
+			// bind submit
+			$(this.form).submit(function() { return !blockSubmit; })
+			
 			// build replace html
 			var html = 	'<div class="tagsWrapper">'+
 						'	<div class="oneLiner">'+
-						'		<p><input class="inputText" id="addValue-'+ id +'" name="addValue-'+ id +'" type="text" /></p>'+
+						'		<p><input class="inputText dontSubmit" id="addValue-'+ id +'" name="addValue-'+ id +'" type="text" /></p>'+
 						'		<div class="buttonHolder">'+
 						'			<a href="#" id="addButton-'+ id +'" class="button icon iconAdd iconOnly disabledButton">'+
 						'				<span><span><span>'+ options.addLabel +'</span></span></span>'+
@@ -77,12 +81,15 @@
 			}
 			
 			// bind keypress on value-field
-			$('#addValue-'+ id).live('keyup', function(evt) {
+			$('#addValue-'+ id).bind('keyup', function(evt) {
+				blockSubmit = true;
+				
 				// grab code
-				var code = (evt.which||evt.charCode||evt.keyCode);
+				var code = evt.which;
 				
 				// enter of splitchar should add an element
 				if(code == 13 || String.fromCharCode(code) == options.splitChar) {
+					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
 					
@@ -91,12 +98,15 @@
 				}
 
 				// disable or enable button
-				if($(this).val().replace(/^\s+|\s+$/g, '') == '') $('#addButton-'+ id).addClass('disabledButton');
+				if($(this).val().replace(/^\s+|\s+$/g, '') == '') {
+					blockSubmit = false;
+					$('#addButton-'+ id).addClass('disabledButton');
+				}
 				else $('#addButton-'+ id).removeClass('disabledButton');
 			});
 			
 			// bind click on add-button
-			$('#addButton-'+ id).live('click', function(evt) {
+			$('#addButton-'+ id).bind('click', function(evt) {
 				// dont submit
 				evt.preventDefault();
 				evt.stopPropagation();
@@ -117,6 +127,7 @@
 			
 			// add an element
 			function add() {
+				blockSubmit = false;
 				// init some vars
 				var value = $('#addValue-'+ id).val().replace(/^\s+|\s+$/g, '');
 				var inElements = false;

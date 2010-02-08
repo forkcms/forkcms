@@ -127,7 +127,7 @@
 											<div id="newCategory" class="options hidden">
 												<div class="oneLiner">
 													<p>
-														<input id="newCategoryValue" class="inputTextfield" type="text" name="new_category" />
+														<input id="newCategoryValue" class="inputTextfield dontSubmit" type="text" name="new_category" />
 														<span id="newCategoryError" class="formError">{$errAddingCategoryFailed}</span>
 													</p>
 													<div class="buttonHolder">

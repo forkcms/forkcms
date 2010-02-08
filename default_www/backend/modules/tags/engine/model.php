@@ -234,7 +234,7 @@ class BackendTagsModel
 												array($module, $otherId, $language));
 
 		// remove old links
-		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN ('. implode(array_values(', ', $currentTags)) .')');
+		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN ('. implode(', ', array_values($currentTags)) .')');
 
 		// tags provided
 		if(!empty($tags))

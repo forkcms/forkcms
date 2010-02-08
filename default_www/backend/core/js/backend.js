@@ -8,7 +8,6 @@ jsBackend = {
 	init: function() {
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
-		//jsBackend.effects.init();
 		jsBackend.forms.init();
 		jsBackend.layout.init();
 		jsBackend.tabs.init();
@@ -71,9 +70,6 @@ jsBackend.balloons = {
 		}
 	},
 	position: function(clickedElement, element) {
-		
-		console.log('hoer');
-		
 		// position
 		element.css('position', 'absolute')
 				   .css('top', clickedElement.offset().top + clickedElement.height() + 10)
@@ -395,7 +391,7 @@ jsBackend.forms = {
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function() {
 						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'submitButton button ' + $(this).attr('class')))
-								.css({position:'absolute', top:'-9000px', left: '-9000px'})
+								.remove()
 								.attr('tabindex', -1); 
 					});
 
@@ -403,6 +399,12 @@ jsBackend.forms = {
 					$('form#'+ formId + ' a.submitButton').bind('click', function(evt) {
 						evt.preventDefault();
 						$('form#'+ formId).submit();
+					});
+					
+					// bind keypress
+					$('form#'+ formId +' input').bind('keyup', function(evt) {
+						// enter && element may submit
+						if(evt.which == 13 && !$(this).hasClass('dontSubmit')) { $('form#'+ formId).submit(); }
 					});
 				}
 			});

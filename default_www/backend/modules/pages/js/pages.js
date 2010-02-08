@@ -31,7 +31,6 @@ jsBackend.pages.autosave = {
 					if(jsBackend.debug) alert(textStatus);
 				 },
 				 success: function(json, textStatus) {
-					 console.log(json);
 				 }
 				
 		});
