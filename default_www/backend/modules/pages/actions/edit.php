@@ -273,10 +273,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());
-
-		// parse timeformat
-		$this->tpl->assign('timeFormatHi', 'H:i');
-
 	}
 
 

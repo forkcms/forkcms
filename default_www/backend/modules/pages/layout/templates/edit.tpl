@@ -116,7 +116,7 @@
 													<table border="0" cellpadding="0" cellspacing="0">
 														<tbody>
 															<tr>
-																<td><p>{$lblLastSave|ucfirst}: {$recordedited_on|date:{$timeFormatHi}}</p></td>
+																<td><p>{$lblLastSave|ucfirst}: {$recordedited_on|date:'H:i'}</p></td>
 																<td>
 																	<div class="buttonHolderRight">
 																		{$btnEdit}

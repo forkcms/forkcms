@@ -443,7 +443,10 @@ jsBackend.tabs = {
 jsBackend.tooltip = {
 	// init, something like a constructor
 	init: function() {
-		if($('.help').length > 0) { $('.help').tooltip(); }
+		if($('.help').length > 0) { 
+			$('.help').tooltip({ effect: 'fade' })
+					  .dynamic(); 
+		}
 	},
 	
 	// end
