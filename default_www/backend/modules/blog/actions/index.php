@@ -93,7 +93,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setColumnsSequence('checkbox');
 
 		// set column functions
-		$this->dgPosts->setColumnFunction(array('SpoonDate', 'getDate'), array('d/m/Y @ H:i', '[publish_on]'), 'publish_on', true);
+		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[publish_on]'), 'publish_on', true);
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add mass action dropdown

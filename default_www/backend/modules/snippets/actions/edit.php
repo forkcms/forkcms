@@ -120,7 +120,7 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 
 		// add use column
-		$this->dgRevisions->addColumn('use', null, BL::getLabel('UseThisVersion'), BackendModel::createURLForAction('edit') .'&id=[id]&revision=[revision_id]', BL::getLabel('Edit'));
+		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&id=[id]&revision=[revision_id]', BL::getLabel('UseThisVersion'));
 	}
 
 

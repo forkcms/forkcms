@@ -32,10 +32,7 @@ jsBackend.pages.autosave = {
 				 },
 				 success: function(json, textStatus) {
 				 }
-				
 		});
-
-		
 	},
 	
 	// end
