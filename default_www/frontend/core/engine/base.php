@@ -269,22 +269,6 @@ class FrontendBaseBlock
 
 
 	/**
-	 * A reference to the current template
-	 *
-	 * @var	FrontendTemplate
-	 */
-	public $tpl;
-
-
-	/**
-	 * A reference to the URL-instance
-	 *
-	 * @var	FrontendURL
-	 */
-	public $URL;
-
-
-	/**
 	 * Should the current template be replaced with the blocks one?
 	 *
 	 * @var	bool
@@ -293,11 +277,35 @@ class FrontendBaseBlock
 
 
 	/**
+	 * Pagination array
+	 *
+	 * @var	array
+	 */
+	protected $pagination;
+
+
+	/**
+	 * A reference to the current template
+	 *
+	 * @var	FrontendTemplate
+	 */
+	public $tpl;
+
+
+	/**
 	 * The path of the template to include, or that replaced the current one
 	 *
 	 * @var	string
 	 */
 	private $templatePath;
+
+
+	/**
+	 * A reference to the URL-instance
+	 *
+	 * @var	FrontendURL
+	 */
+	public $URL;
 
 
 	/**
@@ -430,11 +438,11 @@ class FrontendBaseBlock
 	 */
 	protected function parsePagination()
 	{
-		// @todo tijs - pagination moet met $_GET parameters werken
 		// init var
 		$pagination = null;
 		$showFirstPages = false;
 		$showLastPages = false;
+		$useQuestionMark = true;
 
 		// validate pagination array
 		if(!isset($this->pagination['limit'])) throw new FrontendException('no limit in the pagination-property.');
@@ -443,6 +451,9 @@ class FrontendBaseBlock
 		if(!isset($this->pagination['num_items'])) throw new FrontendException('no num_items available in the pagination-property.');
 		if(!isset($this->pagination['num_pages'])) throw new FrontendException('no num_pages available in the pagination-property.');
 		if(!isset($this->pagination['url'])) throw new FrontendException('no URL available in the pagination-property.');
+
+		// should we use a questionmark or an ampersand
+		if(mb_strpos($this->pagination['url'], '?') > 0) $useQuestionMark = false;
 
 		// no pagination needed
 		if($this->pagination['num_pages'] < 1) return;
@@ -486,8 +497,13 @@ class FrontendBaseBlock
 		// show previous
 		if($this->pagination['requested_page'] > 1)
 		{
+			// build URL
+			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] - 1);
+			else $URL = $this->pagination['url'] .'&page='. ($this->pagination['requested_page'] - 1);
+
+			// set
 			$pagination['show_previous'] = true;
-			$pagination['previous_url'] = $this->pagination['url'] .'/'. ($this->pagination['requested_page'] - 1);
+			$pagination['previous_url'] = $URL;
 		}
 
 		// show first pages?
@@ -500,11 +516,12 @@ class FrontendBaseBlock
 			// loop pages
 			for($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++)
 			{
-				// init var
-				$URL = $this->pagination['url'] .'/'. $i;
+				// build URL
+				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
+				else $URL = $this->pagination['url'] .'&page='. $i;
 
 				// add
-				$pagination['pages_first'][] = array('url' => $URL, 'label' => $i);
+				$pagination['first'][] = array('url' => $URL, 'label' => $i);
 			}
 		}
 
@@ -513,7 +530,10 @@ class FrontendBaseBlock
 		{
 			// init var
 			$current = ($i == $this->pagination['requested_page']);
-			$URL = $this->pagination['url'] .'/'. $i;
+
+			// build URL
+			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
+			else $URL = $this->pagination['url'] .'&page='. $i;
 
 			// add
 			$pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
@@ -529,24 +549,28 @@ class FrontendBaseBlock
 			// loop pages
 			for($i = $pagesLastStart; $i <= $pagesLastEnd; $i++)
 			{
-				// init var
-				$URL = $this->pagination['url'] .'/'. $i;
+				// build URL
+				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
+				else $URL = $this->pagination['url'] .'&page='. $i;
 
 				// add
-				$pagination['pages_last'][] = array('url' => $URL, 'label' => $i);
+				$pagination['last'][] = array('url' => $URL, 'label' => $i);
 			}
 		}
 
 		// show next
 		if($this->pagination['requested_page'] < $this->pagination['num_pages'])
 		{
+			// build URL
+			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] + 1);
+			else $URL = $this->pagination['url'] .'&page='. ($this->pagination['requested_page'] + 1);
+
+			// set
 			$pagination['show_next'] = true;
-			$pagination['next_url'] = $this->pagination['url'] .'/'. ($this->pagination['requested_page'] + 1);
+			$pagination['next_url'] = $URL;
 		}
 
 		// assign pagination
-		// @todo we should do this in a decent way...
-		foreach($pagination as $key => $value) if($value !== null) $this->tpl->assign('pagination'. SpoonFilter::toCamelCase($key), $value);
 		$this->tpl->assign('pagination', $pagination);
 	}
 

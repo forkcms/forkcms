@@ -380,9 +380,6 @@ class BackendPagesModel
 		// delete page and the revisions
 		if(!empty($revisionIDs)) $db->delete('pages', 'revision_id IN ('. implode(',', $revisionIDs) .')');
 
-		// rebuild cach
-		self::buildCache();
-
 		// return
 		return true;
 	}
@@ -546,7 +543,8 @@ class BackendPagesModel
 		return (array) $db->retrieve('SELECT pb.*, UNIX_TIMESTAMP(pb.created_on) AS created_on, UNIX_TIMESTAMP(pb.edited_on) AS edited_on
 										FROM pages_blocks AS pb
 										INNER JOIN pages AS p ON pb.revision_id = p.revision_id
-										WHERE p.id = ? AND p.language = ? AND p.status = ?;',
+										WHERE p.id = ? AND p.language = ? AND p.status = ?
+										ORDER BY pb.id ASC;',
 										array($id, $language, 'active'));
 	}
 
@@ -848,20 +846,18 @@ class BackendPagesModel
 	 * @param	int[optional] $level
 	 * @return	array
 	 */
-	public static function getTree(array $ids, array $data = null, $level = 1) // @todo davy - terug private zetten
+	private static function getTree(array $ids, array $data = null, $level = 1)
 	{
 		// get db
 		$db = BackendModel::getDB();
 
 		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden, p.has_extra, p.no_follow,
-													GROUP_CONCAT(pb.extra_id) as extra_ids,
+													p.extra_ids,
 													m.url
 												FROM pages AS p
 												INNER JOIN meta AS m ON p.meta_id = m.id
-												LEFT OUTER JOIN pages_blocks AS pb ON p.revision_id = pb.revision_id
 												WHERE p.parent_id IN ('. implode(', ', $ids) .')
 												AND p.status = ? AND p.language = ?
-												GROUP BY p.id
 												ORDER BY p.sequence ASC;',
 												array('active', BackendLanguage::getWorkingLanguage()), 'id');
 
@@ -869,7 +865,7 @@ class BackendPagesModel
 		$childIds = array_keys($data[$level]);
 
 		// build array
-		if(!empty($data[$level])) $data = self::getTree($childIds, $data, ++$level);
+		if(!empty($data[$level])) return self::getTree($childIds, $data, ++$level);
 
 		// cleanup
 		else unset($data[$level]);
@@ -1131,9 +1127,6 @@ class BackendPagesModel
 		// insert
 		$id = (int) $db->insert('pages', $page);
 
-		// rebuild the cache
-		self::buildCache();
-
 		// return the new revision id
 		return $id;
 	}
@@ -1153,8 +1146,18 @@ class BackendPagesModel
 		// rebuild value for has_extra
 		$hasExtra = ($hasBlock) ? 'Y' : 'N';
 
+		// init var
+		$extraIds = array();
+
+		// loop blocks to add extraIds
+		foreach($blocks as $block) if($block['extra_id'] !== null) $extraIds[] = $block['extra_id'];
+
+		// init var
+		$extraIdsValue = null;
+		if(!empty($extraIds)) $extraIdsValue = implode(',', $extraIds);
+
 		// update page
-		$db->update('pages', array('has_extra' => $hasExtra), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
+		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
@@ -1306,9 +1309,6 @@ class BackendPagesModel
 		// store
 		$db->update('meta', array('url' => $newURL), 'id = ?', array($page['meta_id']));
 
-		// rebuild cache
-		self::buildCache();
-
 		// return
 		return true;
 	}
@@ -1381,9 +1381,6 @@ class BackendPagesModel
 			}
 		}
 
-		// rebuild the cache
-		self::buildCache();
-
 		// return the new revision id
 		return $id;
 	}
@@ -1403,8 +1400,18 @@ class BackendPagesModel
 		// rebuild value for has_extra
 		$hasExtra = ($hasBlock) ? 'Y' : 'N';
 
+		// init var
+		$extraIds = array();
+
+		// loop blocks to add extraIds
+		foreach($blocks as $block) if($block['extra_id'] !== null) $extraIds[] = $block['extra_id'];
+
+		// init var
+		$extraIdsValue = null;
+		if(!empty($extraIds)) $extraIdsValue = implode(',', $extraIds);
+
 		// update page
-		$db->update('pages', array('has_extra' => $hasExtra), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
+		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// update old revisions
 		$db->update('pages_blocks', array('status' => 'archive'), 'id = ?', $blocks[0]['id']);

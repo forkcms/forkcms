@@ -350,9 +350,6 @@ class BackendTemplateModifiers
 	}
 
 
-	// @todo davy - getURLForBlock toevoegen, mappen en testen.
-
-
 	/**
 	 * Convert a var into main-navigation-html
 	 *  syntax: {$var|getmainnavigation}

@@ -4,19 +4,19 @@
 		<div class="pagination">
 			<ul class="clearfix">
 				<li class="previousPage">
-					{option:paginationShowPrevious}<a href="{$paginationPreviousUrl}" rel="previous nofollow" title="{$lblPreviousPage|ucfirst}">{/option:paginationShowPrevious}
-					{option:!paginationShowPrevious}<span>{/option:!paginationShowPrevious}
+					{option:pagination['show_previous']}<a href="{$pagination['previous_url']}" rel="previous nofollow" title="{$lblPreviousPage|ucfirst}">{/option:pagination['show_previous']}
+					{option:!pagination['show_previous']}<span>{/option:!pagination['show_previous']}
 						&lt; {$lblPreviousPage|ucfirst}
-					{option:!paginationShowPrevious}</span>{/option:!paginationShowPrevious}
-					{option:paginationShowPrevious}</a>{/option:paginationShowPrevious}
+					{option:!pagination['show_previous']}</span>{/option:!pagination['show_previous']}
+					{option:pagination['show_previous']}</a>{/option:pagination['show_previous']}
 				</li>
 
-				{option:paginationPagesFirst}
-				{iteration:paginationPagesFirst}<li><a href="{$paginationPagesFirst.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationPagesFirst.label}">{$paginationPagesFirst.label}</a></li>{/iteration:paginationPagesFirst}
+				{option:pagination['first']}
+				{iteration:pagination['first']}<li><a href="{$paginationFirst.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationFirst.label}">{$paginationFirst.label}</a></li>{/iteration:pagination['first']}
 				<li class="ellipsis"><span>&hellip;</span></li>
-				{/option:paginationPagesFirst}
+				{/option:pagination['first']}
 
-				{iteration:paginationPages}
+				{iteration:pagination['pages']}
 				<li{option:paginationPages.current} class="currentPage"{/option:paginationPages.current}>
 					{option:!paginationPages.current}<a href="{$paginationPages.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationPages.label}">{/option:!paginationPages.current}
 					{option:paginationPages.current}<span>{/option:paginationPages.current}
@@ -24,24 +24,24 @@
 					{option:paginationPages.current}</span>{/option:paginationPages.current}
 					{option:!paginationPages.current}</a>{/option:!paginationPages.current}
 				</li>
-				{/iteration:paginationPages}
+				{/iteration:pagination['pages']}
 
-				{option:paginationPagesLast}
+				{option:pagination['last']}
 				<li class="ellipsis"><span>&hellip;</span></li>
-				{iteration:paginationPagesLast}<li><a href="{$paginationPagesLast.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationPagesLast.label}">{$paginationPagesLast.label}</a></li>{/iteration:paginationPagesLast}
-				{/option:paginationPagesLast}
+				{iteration:pagination['last']}<li><a href="{$paginationLast.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationLast.label}">{$paginationLast.label}</a></li>{/iteration:pagination['last']}
+				{/option:pagination['last']}
 
 				<li class="nextPage">
-					{option:paginationShowNext}<a href="{$paginationNextUrl}" rel="next nofollow" title="{$lblNextPage|ucfirst}">{/option:paginationShowNext}
-					{option:!paginationShowNext}<span>{/option:!paginationShowNext}
+					{option:pagination['show_next']}<a href="{$pagination['next_url']}" rel="next nofollow" title="{$lblNextPage|ucfirst}">{/option:pagination['show_next']}
+					{option:!pagination['show_next']}<span>{/option:!pagination['show_next']}
 						{$lblNextPage|ucfirst} &gt;
-					{option:!paginationShowNext}</span>{/option:!paginationShowNext}
-					{option:paginationShowNext}</a>{/option:paginationShowNext}
+					{option:!pagination['show_next']}</span>{/option:!pagination['show_next']}
+					{option:pagination['show_next']}</a>{/option:pagination['show_next']}
 				</li>
 			</ul>
 		</div>
 
 		<!-- current page -->
-		<p class="paginationLocation">({$paginationCurrentPage}/{$paginationNumPages})</p>
+		<p class="paginationLocation">({$pagination['current_page']}/{$pagination['num_pages']})</p>
 	</div>
 {/option:pagination}

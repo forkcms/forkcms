@@ -32,6 +32,9 @@ class BackendPagesDelete extends BackendBaseActionDelete
 		// delete the page
 		$success = BackendPagesModel::delete($id);
 
+		// build cache
+		BackendPagesModel::buildCache();
+
 		// page is deleted, so redirect to the overview
 		if($success) $this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($page['title']));
 		else $this->redirect(BackendModel::createURLForAction('edit') .'&error=delete&var='. urlencode($page['title']));

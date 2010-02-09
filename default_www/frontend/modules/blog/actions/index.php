@@ -26,7 +26,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 20, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
+	protected $pagination = array('limit' => 2, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
 
 	/**
@@ -58,7 +58,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	private function getData()
 	{
 		// requested page
-		$requestedPage = $this->URL->getParameter(0, 'int');
+		$requestedPage = $this->URL->getParameter('page', 'int');
 
 		// no page given
 		if($requestedPage === null) $requestedPage = 1;

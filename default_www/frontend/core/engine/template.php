@@ -335,7 +335,7 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURLForBlock($var, $module, $action = null, $language = null)
 	{
-		return FrontendNavigation::getURLForBlock($module, $action, $language); // @todo davy - mappen & testen
+		return FrontendNavigation::getURLForBlock($module, $action, $language);
 	}
 
 
@@ -405,8 +405,6 @@ class FrontendTemplateModifiers
 	 */
 	public static function userSetting($var = null, $setting, $userId = null)
 	{
-		// @todo tijs - wavoor nut heeft de functie userSetting in frontend?
-
 		// redefine
 		$userId = ($var !== null) ? (int) $var : (int) $userId;
 		$setting = (string) $setting;

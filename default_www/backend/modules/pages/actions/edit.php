@@ -405,6 +405,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
+				// build cache
+				BackendPagesModel::buildCache();
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&hilight=id-'. $page['id']);
 			}
