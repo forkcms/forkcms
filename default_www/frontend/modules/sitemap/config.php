@@ -1,6 +1,7 @@
 <?php
+
 /**
- * Sitemap
+ * FrontendSitemapConfig
  *
  * This is the configuration-object
  *
@@ -17,7 +18,7 @@ class FrontendSitemapConfig extends FrontendBaseConfig
 	 *
 	 * @var	string
 	 */
-	protected $defaultAction = 'overview';
+	protected $defaultAction = 'index';
 
 
 	/**
@@ -27,4 +28,5 @@ class FrontendSitemapConfig extends FrontendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
+
 ?>

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Sitemap
+ * FrontendSitemapIndex
  *
- * This is the overview-action
+ * This is the index-action
  *
  * @package		frontend
  * @subpackage	sitemap
@@ -11,7 +11,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendSitemapOverview extends FrontendBaseBlock
+class FrontendSitemapIndex extends FrontendBaseBlock
 {
 	/**
 	 * Execute the extra
@@ -24,4 +24,5 @@ class FrontendSitemapOverview extends FrontendBaseBlock
 		$this->loadTemplate();
 	}
 }
+
 ?>
