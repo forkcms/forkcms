@@ -9,6 +9,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class Init
@@ -98,7 +99,7 @@ class Init
 	{
 		// fix the Application setting
 		if($this->type == 'frontend_js') define('APPLICATION', 'frontend');
-		if($this->type == 'frontend_ajax') define('APPLICATION', 'frontend');
+		elseif($this->type == 'frontend_ajax') define('APPLICATION', 'frontend');
 
 		// general paths
 		define('FRONTEND_PATH', PATH_WWW .'/'. APPLICATION);
@@ -261,7 +262,7 @@ class Init
 
 
 	/**
-	 * Set includepath
+	 * Set include path
 	 *
 	 * @return	void
 	 */

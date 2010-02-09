@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This is the custom exception-handler for javascript
  *
@@ -8,12 +9,12 @@
 function javascriptExceptionHandler($exception)
 {
 	// fetch trace stack
-	$aTrace = $exception->getTrace();
+	$trace = $exception->getTrace();
 
 	// class & function exist and are spoon related
-	if(isset($aTrace[0]['class']) && isset($aTrace[0]['function']) && strtolower(substr($aTrace[0]['class'], 0, 5)) == 'spoon')
+	if(isset($trace[0]['class']) && isset($trace[0]['function']) && strtolower(substr($trace[0]['class'], 0, 5)) == 'spoon')
 	{
-		$documentationURL = strtolower($aTrace[0]['class']) .'/'. strtolower($aTrace[0]['function']);
+		$documentationURL = strtolower($trace[0]['class']) .'/'. strtolower($trace[0]['function']);
 		$documentation = '&raquo; <a href="http://docs.spoon-library.be/'. $documentationURL .'">view documentation</a>';
 	}
 
@@ -281,7 +282,7 @@ function javascriptExceptionHandler($exception)
 	exit;
 }
 
-/** require init */
+// require init
 require_once 'init.php';
 
 // initialize components
