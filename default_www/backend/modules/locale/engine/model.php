@@ -71,8 +71,8 @@ class BackendLocaleModel
 					}
 
 					// parse
-					if($application == 'backend') $value .= '$'. $type .'[\''. $item['module'] .'\'][\''. $item['name'] .'\'] = \''. addslashes($item['value']) .'\';'. "\n";
-					else $value .= '$'. $type .'[\''. $item['name'] .'\'] = \''. addslashes($item['value']) .'\';'. "\n";
+					if($application == 'backend') $value .= '$'. $type .'[\''. $item['module'] .'\'][\''. $item['name'] .'\'] = \''. str_replace('\"', '"', addslashes($item['value'])) .'\';'. "\n";
+					else $value .= '$'. $type .'[\''. $item['name'] .'\'] = \''. str_replace('\"', '"', addslashes($item['value'])) .'\';'. "\n";
 
 					// unset
 					unset($locale[$i]);
