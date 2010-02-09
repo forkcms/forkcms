@@ -6,6 +6,7 @@
  * @package			Frontend
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author			Davy Hellemans <davy@netlash.com>
  * @since			2.0
  */
 class ApplicationRouting
@@ -26,18 +27,7 @@ class ApplicationRouting
 
 
 	/**
-	 * Get the possible routes
-	 *
-	 * @return	array
-	 */
-	public static function getRoutes()
-	{
-		return self::$routes;
-	}
-
-
-	/**
-	 * Default constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 */
@@ -48,6 +38,17 @@ class ApplicationRouting
 
 		// require correct app
 		require_once APPLICATION .'/index.php';
+	}
+
+
+	/**
+	 * Get the possible routes
+	 *
+	 * @return	array
+	 */
+	public static function getRoutes()
+	{
+		return self::$routes;
 	}
 
 
