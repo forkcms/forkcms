@@ -15,6 +15,24 @@
 class FrontendTagsModel
 {
 	/**
+	 * Fetch the list of all tags, ordered by their occurence
+	 *
+	 * @return	array
+	 */
+	public static function getAll()
+	{
+		// get db
+		$db = FrontendModel::getDB();
+
+		// fetch items
+		return (array) $db->getRecords('SELECT t.tag AS name, t.url, t.number
+										FROM tags AS t
+										WHERE t.language = ?
+										ORDER BY number DESC;', FRONTEND_LANGUAGE);
+	}
+
+
+	/**
 	 * Get tags for an item
 	 *
 	 * @return	array
@@ -62,11 +80,11 @@ class FrontendTagsModel
 
 
 	/**
-	 * Get tags for multiple items
+	 * Get tags for multiple items.
 	 *
 	 * @return	array
-	 * @param	string $module	The module wherefor you want to retrieve the tags
-	 * @param 	array $otherIds	The ids for the items
+	 * @param	string $module		The module wherefor you want to retrieve the tags.
+	 * @param 	array $otherIds		The ids for the items.
 	 */
 	public static function getForMultipleItems($module, array $otherIds)
 	{

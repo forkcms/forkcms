@@ -23,7 +23,6 @@ class BackendLocaleModel
 	 */
 	public static function buildCache($language, $application)
 	{
-	 	// @todo	inline comments
 		// get db
 		$db = BackendModel::getDB();
 
@@ -37,7 +36,7 @@ class BackendLocaleModel
 											ORDER BY type ASC, name ASC, module ASC;',
 											array((string) $language, (string) $application));
 
-		// @todo davy - opkuisen en/of vereenvoudigen
+		// start generating PHP
 		$value = '<?php' ."\n";
 		$value .= '/**' ."\n";
 		$value .= ' *' ."\n";
@@ -62,8 +61,10 @@ class BackendLocaleModel
 			// loop locale
 			foreach($locale as $i => $item)
 			{
+				// types match
 				if($item['type'] == $type)
 				{
+					// new module
 					if(!in_array($item['module'], $modules))
 					{
 						$value  .= '$'. $type .'[\''. $item['module'] .'\'] = array();'. "\n";
@@ -80,6 +81,7 @@ class BackendLocaleModel
 			}
 		}
 
+		// close php
 		$value .=  "\n";
 		$value .= '?>';
 

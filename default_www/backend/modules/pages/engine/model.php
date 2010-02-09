@@ -848,7 +848,7 @@ class BackendPagesModel
 	 * @param	int[optional] $level
 	 * @return	array
 	 */
-	private static function getTree(array $ids, array $data = null, $level = 1)
+	public static function getTree(array $ids, array $data = null, $level = 1) // @todo davy - terug private zetten
 	{
 		// get db
 		$db = BackendModel::getDB();

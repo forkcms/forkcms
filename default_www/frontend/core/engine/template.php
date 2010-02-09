@@ -89,6 +89,14 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function mapCustomModifiers()
 	{
+		// URL for a specific pageId
+		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
+		$this->mapModifier('getURL', array('FrontendTemplateModifiers', 'getURL'));
+
+		// URL for a specific block
+		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'getURLForBlock'));
+		$this->mapModifier('getURLForBlock', array('FrontendTemplateModifiers', 'getURLForBlock'));
+
 		// convert var into navigation
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 		$this->mapModifier('getNavigation', array('FrontendTemplateModifiers', 'getNavigation'));
@@ -301,6 +309,37 @@ class FrontendTemplateModifiers
 
 
 	/**
+	 * Get the URL for a given pageId & language
+	 * 	syntax: {$var|geturl:404}
+	 *
+	 * @return	string
+	 * @param	string $var
+	 * @param	int $pageId
+	 * @param	string[optional] $language
+	 */
+	public static function getURL($var, $pageId, $language = null)
+	{
+		return FrontendNavigation::getURL($pageId, $language); // @todo davy - mappen & testen.
+	}
+
+
+	/**
+	 * Get the URL for a give module & action combination
+	 * 	syntax: {$var|geturlforblock:<module>:<action>:<language>}
+	 *
+	 * @return	string
+	 * @param	string $var
+	 * @param	string $module
+	 * @param	string[optional] $action
+	 * @param	string[optional] $language
+	 */
+	public static function getURLForBlock($var, $module, $action = null, $language = null)
+	{
+		return FrontendNavigation::getURLForBlock($module, $action, $language); // @todo davy - mappen & testen
+	}
+
+
+	/**
 	 * Formats a timestamp as a string that indicates the time ago
 	 *  syntax: {$var|timeAgo}
 	 *
@@ -366,6 +405,8 @@ class FrontendTemplateModifiers
 	 */
 	public static function userSetting($var = null, $setting, $userId = null)
 	{
+		// @todo tijs - wavoor nut heeft de functie userSetting in frontend?
+
 		// redefine
 		$userId = ($var !== null) ? (int) $var : (int) $userId;
 		$setting = (string) $setting;

@@ -49,7 +49,7 @@ class BackendAuthentication
 		$db = BackendModel::getDB(true);
 
 		// remove all sessions that are invalid (older then 30 min)
-		$db->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)'); // @todo davy - timezone shit controleren
+		$db->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
 	}
 
 

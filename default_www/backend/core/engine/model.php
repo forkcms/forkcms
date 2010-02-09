@@ -437,7 +437,7 @@ class BackendModel
 	{
 		// redefine
 		$pageId = (int) $pageId;
-		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// init URL
 		$URL = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
