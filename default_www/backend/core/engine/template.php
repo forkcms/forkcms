@@ -22,6 +22,13 @@
 class BackendTemplate extends SpoonTemplate
 {
 	/**
+	 * URL instance
+	 *
+	 * @var	BackendURL
+	 */
+	private $URL;
+
+	/**
 	 * Default constructor
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
@@ -29,6 +36,8 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	public function __construct($dontAdd = false)
 	{
+		$this->URL = Spoon::getObjectReference('url');
+
 		// store in reference so we can access it from everywhere
 		if(!$dontAdd) Spoon::setObjectReference('template', $this);
 
@@ -71,8 +80,8 @@ class BackendTemplate extends SpoonTemplate
 		// parse locale
 		$this->parseLocale();
 
-		// asign a placeholder var
-		$this->assign('var', '');
+		// parse some vars
+		$this->parseVars();
 
 		// parse headers
 		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
@@ -165,14 +174,11 @@ class BackendTemplate extends SpoonTemplate
 		// we use some abbrviations and common terms, these should also be assigned
 		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
-		// get the URL object, we need this for some template-constants
-		$URL = Spoon::getObjectReference('url');
-
 		// assign the current module
-		$this->assign('MODULE', $URL->getModule());
+		$this->assign('MODULE', $this->URL->getModule());
 
 		// assign the current action
-		$this->assign('ACTION', $URL->getAction());
+		$this->assign('ACTION', $this->URL->getAction());
 
 		// is the user object filled?
 		if(BackendAuthentication::getUser()->isAuthenticated())
@@ -208,11 +214,8 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseLabels()
 	{
-		// get the URL from the reference, we need to know which module is requested
-		$URL = Spoon::getObjectReference('url');
-
 		// grab the current module
-		$currentModule = $URL->getModule();
+		$currentModule = $this->URL->getModule();
 
 		// init vars
 		$realErrors = array();
@@ -302,6 +305,29 @@ class BackendTemplate extends SpoonTemplate
 
 		// assign
 		$this->assignArray($localeToAssign);
+	}
+
+
+	/**
+	 * Parse some vars
+	 *
+	 * @return	void
+	 */
+	private function parseVars()
+	{
+		// asign a placeholder var
+		$this->assign('var', '');
+
+		// assign body ID
+		$this->assign('bodyID', SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));
+
+		// build classes
+		$bodyClass = SpoonFilter::toCamelCase($this->URL->getAction(), '_', true);
+
+		if($bodyClass == 'add' || $bodyClass == 'edit') $bodyClass .= ' addEdit';
+
+		// assign
+		$this->assign('bodyClass', $bodyClass);
 	}
 
 }
