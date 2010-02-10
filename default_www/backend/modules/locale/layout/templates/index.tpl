@@ -53,7 +53,6 @@
 								<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 							</div>
 						</div>
-
 						<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="massLocaleAction">
 							<input type="hidden" name="offset" value="{$offset}" />
 							<input type="hidden" name="order" value="{$order}" />
@@ -70,7 +69,21 @@
 						</form>
 					</div>
 				{/option:datagrid}
-				{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+				{option:!datagrid}
+				<div class="datagridHolder">
+					<div class="tableHeading">
+						<h3>{$lblTranslations|ucfirst}</h3>
+						<div class="buttonHolderRight">
+							<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+						</div>
+					</div>
+					<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+						<tr>
+							<td>{$msgNoItems}</td>
+						</tr>
+					</table>
+				</div>
+				{/option:!datagrid}
 			</div>
 		</td>
 	</tr>
