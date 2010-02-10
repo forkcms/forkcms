@@ -91,22 +91,19 @@ class FrontendTemplate extends SpoonTemplate
 	{
 		// URL for a specific pageId
 		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
-		$this->mapModifier('getURL', array('FrontendTemplateModifiers', 'getURL'));
 
 		// URL for a specific block
 		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'getURLForBlock'));
-		$this->mapModifier('getURLForBlock', array('FrontendTemplateModifiers', 'getURLForBlock'));
 
 		// convert var into navigation
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
-		$this->mapModifier('getNavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 
 		// string
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
-		$this->mapModifier('cleanupPlainText', array('FrontendTemplateModifiers', 'cleanupPlainText'));
+		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
 
 		// dates
-		$this->mapModifier('timeAgo', array('FrontendTemplateModifiers', 'timeAgo'));
+		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
 
 		// users
 		$this->mapModifier('userSetting', array('FrontendTemplateModifiers', 'userSetting'));

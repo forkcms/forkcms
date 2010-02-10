@@ -1,3 +1,3 @@
 <div id="sitemap">
-	{$var|getNavigation}
+	{$var|getnavigation}
 </div>

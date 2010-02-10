@@ -992,7 +992,7 @@ class SpoonTemplateCompiler
 			foreach($matches[1] as $match)
 			{
 				// file
-				$file = $this->getVariableString($match); // @todo herwerken.
+				$file = $this->getVariableString($match);
 
 				// template path
 				$template = eval('error_reporting(0); return '. $file .';');

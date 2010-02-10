@@ -45,11 +45,11 @@
 					{$lblBy|ucfirst}
 					{option:blogComments.website}<a href="{$blogComments.website}">{$blogComments.author}</a>{/option:blogComments.website}
 					{option:!blogComments.website}{$blogComments.author}{/option:!blogComments.website}
-					{$blogComments.created_on|timeAgo}
+					{$blogComments.created_on|timeago}
 				</p>
 			</div>
 			<div class="commentText">
-				{$blogComments.text|cleanupPlainText}
+				{$blogComments.text|cleanupplaintext}
 			</div>
 		</div>
 		{/iteration:blogComments}

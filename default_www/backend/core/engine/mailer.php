@@ -89,7 +89,7 @@ class BackendMailer
 		// variables were set
 		if(!empty($variables)) $tpl->assign($variables);
 
-		// @todo	parse locale...
+		// @todo parse locale
 
 		// grab the content
 		$content = $tpl->getContent($template);

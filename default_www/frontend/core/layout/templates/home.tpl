@@ -45,7 +45,7 @@
 		<div id="main">
 			<!-- navigation -->
 			<div id="navigation">
-				{$var|getNavigation}
+				{$var|getnavigation}
 			</div>
 
 			<!-- content -->
