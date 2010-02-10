@@ -2,6 +2,8 @@
 
 /**
  * BackendForm, this is our extended version of SpoonForm
+ * @todo	extend all formelement, all based on textfield should have inputText as class
+ * @todo	classes should be null, if null the classes should be defined in the method
  *
  * @package		backend
  * @subpackage	core
@@ -65,7 +67,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $type
 	 * @param	string[optional] $class
 	 */
-	public function addButton($name, $value, $type = 'submit', $class = 'inputButton')
+	public function addButton($name, $value, $type = 'submit', $class = 'inputText inputButton')
 	{
 		// do a check
 		if($type == 'submit' && $name == 'submit') throw new BackendException('You can\'t add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
@@ -87,7 +89,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classError
 	 */
-	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = 'inputDatefield', $classError = 'inputDatefieldError')
+	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = 'inputText inputDatefield', $classError = 'inputTextError inputDatefieldError')
 	{
 		// redefine
 		$name = (string) $name;

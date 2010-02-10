@@ -23,7 +23,7 @@ class BackendNavigation
 
 
 	/**
-	 * Url-instance
+	 * URL-instance
 	 *
 	 * @var	BackendURL
 	 */
@@ -37,6 +37,8 @@ class BackendNavigation
 	 */
 	public function __construct()
 	{
+		Spoon::dump('Download ook de live opname van volgende Absynthe Minded concerten op www.tagger.fm met deze tagcode: xxxxxx (dit is een gratis sms en een laatste herinnering).');
+
 		// store in reference so we can access it from everywhere
 		Spoon::setObjectReference('navigation', $this);
 
@@ -192,7 +194,7 @@ class BackendNavigation
 		$selectedKeys = (array) $this->getSelectedKeys();
 
 		// init html
-		$html = '<ul>';
+		$html = '<ul>'."\n";
 
 		// set active URL
 		$activeModule = $this->URL->getModule();
@@ -217,14 +219,16 @@ class BackendNavigation
 				if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 				{
 					// open li-tag
-					if(in_array($key, $selectedKeys, true) || (isset($level['selected_for_actions']) && in_array($activeAction, $level['selected_for_actions'])) || $level['url'] == $activeURL) $html .= '<li class="selected">'."\n";
-					else $html .= '<li>'."\n";
+					if(in_array($key, $selectedKeys, true)) $html .= '<li class="selected">';
+					elseif(($chunks[0] == $activeModule && isset($level['selected_for_actions']) && in_array($activeAction, $level['selected_for_actions']))) $html .= '<li class="selected">';
+					elseif($level['url'] == $activeURL) $html .= '<li class="selected">';
+					else $html .= '<li>';
 
 					// add the link
-					$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. ucfirst(BL::getLabel($level['label'], 'core')) .'</a>'."\n";
+					$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. ucfirst(BL::getLabel($level['label'], 'core')) .'</a>';
 
 					// end li
-					$html .'</li>'."\n";
+					$html .='</li>'."\n";
 				}
 
 				// if the active menu is 'settings', assign the option to set the selected state
@@ -278,18 +282,18 @@ class BackendNavigation
 						if(in_array($key, $selectedKeys, true) || $child['url'] == $activeURL)
 						{
 							// settings is in the selected keys stack and the active submenu is modules, so we don't select this list item
-							if(in_array('settings', $selectedKeys, true) && $key == 'modules') $html .= '<li>'."\n";
+							if(in_array('settings', $selectedKeys, true) && $key == 'modules') $html .= '<li>';
 
 							// this item is selected
-							else $html .= '<li class="selected">'."\n";
+							else $html .= '<li class="selected">';
 						}
-						else $html .= '<li>'."\n";
+						else $html .= '<li>';
 
 						// add the link
-						$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. $level['label'] .'</a>'."\n";
+						$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. $level['label'] .'</a>';
 
 						// end li
-						$html .'</li>'."\n";
+						$html .='</li>'."\n";
 
 						// stop
 						break;
