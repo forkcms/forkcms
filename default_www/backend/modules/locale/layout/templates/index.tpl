@@ -16,11 +16,14 @@
 								<p>
 									<label for="name">{$lblName|ucfirst}</label>
 									{$txtName} {$txtNameError}
+									<span class="helpTxt">{$msgNameHelpTxt}</span>
 								</p>
 								<p>
 									<label for="value">{$lblValue|ucfirst}</label>
 									{$txtValue} {$txtValueError}
+									<span class="helpTxt">{$msgValueHelpTxt}</span>
 								</p>
+
 								<p>
 									<label for="language">{$lblLanguage|ucfirst}</label>
 									{$ddmLanguage} {$ddmLanguageError}

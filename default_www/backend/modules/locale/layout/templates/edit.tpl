@@ -15,14 +15,17 @@
 						<div class="horizontal">
 
 							<p>
-								<label for="name">{$lblName|ucfirst}</label>
-								{$txtName} {$txtNameError}
+								<label for="value">{$lblValue|ucfirst}</label>
+								{$txtValue} {$txtValueError}
+								<span class="helpTxt">{$msgAddValueHelpTxt}</span>
 							</p>
 
 							<p>
-								<label for="value">{$lblValue|ucfirst}</label>
-								{$txtValue} {$txtValueError}
+								<label for="name">{$lblName|ucfirst}</label>
+								{$txtName} {$txtNameError}
+								<span class="helpTxt">{$msgEditValueHelpTxt}</span>
 							</p>
+
 
 							<p>
 								<label for="language">{$lblLanguage|ucfirst}</label>

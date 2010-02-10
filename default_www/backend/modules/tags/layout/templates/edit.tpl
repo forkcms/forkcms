@@ -9,7 +9,7 @@
 				{form:edit}
 					<div class="box">
 						<div class="heading">
-							&nbsp;
+							<h3>{$lblEditTag}</h3>
 						</div>
 						<div class="options">
 							<p>

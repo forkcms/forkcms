@@ -3273,8 +3273,21 @@ a.mainButton:focus {
 	Locale
 */
 
-#filter {
+#locale.index #filter select,
+#locale.add select,
+#locale.edit select {
+	font-size: 11px;
 }
+
+#locale.addedit #value {
+	width: 320px;
+}
+
+#locale.addedit #name {
+	width: 260px;
+}
+
+
 
 /*
 	jQuery UI overrides
