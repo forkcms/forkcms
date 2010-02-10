@@ -143,8 +143,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
-		// @todo	find a decent way to decide which block should be removed... I hate blocks.
-
 		// get RSS-link
 		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_'. FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
