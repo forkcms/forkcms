@@ -242,7 +242,7 @@ class BackendUser
 											array(SpoonSession::getSessionId(), $userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) Spoon::dump($userId);
+		if(empty($userData)) Spoon::dump('Probleem bij het opvragen van de data van userId '. $userId); // @todo tijs/davy we moeten dit nog uitzoeken. Wordt ook getriggered bij reset password.
 
 		// set properties
 		$this->setUserId($userData['id']);
