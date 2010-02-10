@@ -37,7 +37,7 @@ class BackendNavigation
 	 */
 	public function __construct()
 	{
-		Spoon::dump('Download ook de live opname van volgende Absynthe Minded concerten op www.tagger.fm met deze tagcode: xxxxxx (dit is een gratis sms en een laatste herinnering).');
+//		Spoon::dump('Download ook de live opname van volgende Absynthe Minded concerten op www.tagger.fm met deze tagcode: xxxxxx (dit is een gratis sms en een laatste herinnering).');
 
 		// store in reference so we can access it from everywhere
 		Spoon::setObjectReference('navigation', $this);

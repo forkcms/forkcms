@@ -14,7 +14,8 @@
 					{/option:headers.sorting}
 
 					{option:headers.noSorting}
-						<span>{$headers.label}</span>
+						{option:headers.label}<span>{$headers.label}</span>{/option:headers.label}
+						{option:!headers.label}<span>&#160;</span>{/option:!headers.label}
 					{/option:headers.noSorting}
 				</th>
 			{/iteration:headers}
