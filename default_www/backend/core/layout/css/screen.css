@@ -140,6 +140,10 @@ body {
 	line-height: 1.4;
 	color: #666;
 	background: #FFF;
+	
+	background: #F1F5FA;
+	background: rgba(218,232,249,0.26);
+	
 	font-size: 12px;
 	position: relative;
 
@@ -206,15 +210,6 @@ h4 {
 	padding: 0 0 4px;
 }
 
-a {
-	text-decoration: none;
-	color: #2244BB;
-}
-
-.content a {
-	border-bottom: 1px solid #C3CFFB;
-}
-
 td {
 	vertical-align: top;
 }
@@ -225,24 +220,48 @@ td {
 }
 
 /*
+	Default link behavior
+*/
+
+a:link,
+a:visited {
+	text-decoration: none;
+	color: #2244BB;
+}
+
+.content a {
+	border-bottom: 1px solid #C3CFFB;
+}
+
+a:hover,
+a:active {
+	text-decoration: none;
+	color: #001A77;
+}
+
+
+
+/*
 	Header
 */
 
 #headerHolder {
-	height: 36px;
+	height: 48px;
 	width: 100%;
 	min-width: 960px;
 	max-width: 1224px;
 	margin: 0 auto;
 	position: relative;
+	
+	background: #FFF;
+	border: 1px solid #DDD;
+	border-width: 0 1px;
+
 }
 
 	#headerHolder #header {
-		border-bottom: 1px solid #BFBFBF;
-		border-right: 1px solid #BFBFBF;
-		border-left: 1px solid #BFBFBF;
 		width: 100%;
-		height: 36px;
+		height: 48px;
 	}
 
 	#headerHolder #navigation {
@@ -251,9 +270,6 @@ td {
 
 	#headerHolder #user {
 		min-width: 266px;
-		position: absolute;
-		top: 6px;
-		right: 0;
 	}
 
 #header td {
@@ -327,10 +343,11 @@ td {
 
 #user ul {
 	float: right;
+	padding-right: 24px;
 }
 
 #user li {
-	padding-right: 16px;
+	padding-left: 12px;
 	float: left;
 	line-height: 24px;
 }
@@ -464,7 +481,9 @@ td {
 	min-width: 960px;
 	max-width: 1224px;
 	margin: 0 auto;
-	background: #FFF;
+	background: #FAFAFA;
+	border: 1px solid #DDD;
+	border-width: 0 1px;
 }
 
 td#contentHolder {
@@ -474,8 +493,8 @@ td#contentHolder {
 
 #contentHolder .inner {
 	padding: 24px;
-	border-right: 1px solid #DDD;
-	border-bottom: 1px solid #DDD;
+	border-top: 1px solid #DDD;
+	background: #FAFAFA;
 
 	min-height: 465px;
 	height: auto !important;
@@ -496,7 +515,7 @@ td#contentHolder {
 
 .datagridHolder {
 	margin: 0 0 24px;
-	border-bottom: 1px solid #AEAEAE;
+	border-bottom: 1px solid #DDD;
 }
 
 	.datagridHolder .tableHeading h3 {
@@ -517,7 +536,6 @@ td#contentHolder {
 			bottom: 4px;
 		}
 
-
 		.datagridHolder .tableHeading {
 			zoom: 1;
 		}
@@ -534,7 +552,7 @@ td#contentHolder {
 .datagrid {
 	width: 100%;
 	border-collapse: separate;
-	border-top: 1px solid #AEAEAE;
+	border-top: 1px solid #BDBDBD;
 }
 
 /* Fix nasty safari bug when inserting a datagrid into jQuery #tabs */
@@ -563,16 +581,15 @@ td#contentHolder {
 .datagrid th {
 	padding: 4px 6px;
 	vertical-align: middle;
-	border-right: 1px solid #DDD;
 }
 
 	.datagrid tr td:first-child,
 	.datagrid tr th:first-child {
-		border-left: 1px solid #AEAEAE;
+		border-left: 1px solid #DDD;
 	}
 	.datagrid tr td:last-child,
 	.datagrid tr th:last-child {
-		border-right: 1px solid #AEAEAE;
+		border-right: 1px solid #DDD;
 	}
 
 .datagrid td.goto {
@@ -607,7 +624,7 @@ td#contentHolder {
 	font-size: 11px;
 	background: url(../images/sprites/th.gif) repeat-x 0 0;
 	border-bottom: 1px solid #B4B4B4;
-	border-right: 1px solid #AEAEAE;
+	border-right: 1px solid #BDBDBD;
 	line-height: 22px;
 	padding: 0;
 }
@@ -665,7 +682,6 @@ td#contentHolder {
 }
 
 .datagrid tr td {
-	border-bottom: 1px solid #D8D8D8;
 }
 
 .datagrid tr:nth-child(2n+1) td {
@@ -675,7 +691,6 @@ td#contentHolder {
 .datagrid tr:nth-child(2n) td {
 	background: #F1F5FA;
 	background: rgba(218,232,249,0.26);
-	border-bottom: 1px solid #DDD;
 }
 
 .datagrid tr:last-child td {
@@ -684,12 +699,12 @@ td#contentHolder {
 
 .datagrid tfoot td {
 	padding: 0;
-	border-color: #AEAEAE !important;
+	border-color: #BDBDBD !important;
 }
 
 .tableOptionsHolder {
 	background: url(../images/sprites/th.gif) repeat-x 0 -144px;
-	border-top: 1px solid #AEAEAE;
+	border-top: 1px solid #BDBDBD;
 	width: 100%;
 }
 
@@ -925,24 +940,15 @@ table.datagrid a {
 
 	#pagesTree #treeHolder {
 		width: 259px;
+		border-top: 1px solid #DDD;
 	}
 
-	#treeHolder {
-		background: #F5F5F5;
+	#pagesTree {
+		background: #FFF;
 	}
-
-		#pagesTree #treeHolder #tree {
-			border-left: 1px solid #BEBEBE;
-			border-bottom: 1px solid #CCC;
-		}
 
 #treeOptions {
-	background: #c8c8c8;
-	background: -webkit-gradient(linear, left top, left bottom, from(#E1E1E1), to(#BEBEBE));
-	background: -moz-linear-gradient(top, #E1E1E1, #BEBEBE);
 	height: 54px;
-	border-bottom: 1px solid #919191;
-	border-left: 1px solid #b0b0b0;
 	width: 100%;
 }
 
@@ -975,7 +981,6 @@ table.datagrid a {
 		padding: 4px 12px;
 		margin: 0;
 		color: #000;
-		background: #C8C8C8;
 	}
 
 	#treeHolder #tree {
@@ -984,7 +989,7 @@ table.datagrid a {
 	}
 
 	#pagesTree #tree .tree {
-		margin: 12px;
+		margin: 6px 12px 12px;
 	}
 
 /*
@@ -1043,14 +1048,14 @@ td.comments {
 	}
 
 #pagesCTA {
-	font-size: 18px;
-	padding: 50px 0 50px 50px;
+	font-size: 13px;
+	line-height: 21px;
+	padding: 35px 0 35px 35px;
 	background: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fafafa));
 	background: -moz-linear-gradient(top, #fff, #fafafa);
 	margin: 0 0 14px;
 	border: 1px solid #CDCDCD;
-	font-family: Helvetica, Arial, sans-serif;
 
 	/* @inc .rc */
 	border-radius: 4px;
@@ -1162,7 +1167,7 @@ td.comments {
 	background: #E4E4E4;
 	background: url(../images/sprites/th.gif) repeat-x 0 -97px;
 	border: 1px solid #D7D7D7;
-	border-color: #AEAEAE;
+	border-color: #BDBDBD;
 	padding: 6px 12px;
 
 	/* @inc .topRc */
@@ -1508,7 +1513,7 @@ td.comments {
 input[type="text"],
 input[type="password"],
 textarea {
-	background: #F9F9F9 url(../images/ds.png) repeat-x;
+	background: #FFF url(../images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
@@ -1552,7 +1557,7 @@ input[type="password"] {
 	input[type="password"].focus,
 	textarea.focus {
 		color: #000;
-		background: #FFF;
+		background: #FFC;
 	}
 
 /*
@@ -1752,6 +1757,16 @@ fieldset legend {
 	font-size: 11px;
 }
 
+	/* 
+		
+	*/
+	
+	.errorMessage .formError {
+		color: #FFF;
+		display: block;
+		font-size: 11px;
+	}
+
 .singleMessage {
 	border: 1px solid #CCC;
 }
@@ -1789,7 +1804,7 @@ fieldset legend {
 }
 
 	.errorMessage a {
-		color: #E2001A;
+		color: #FFF;
 		font-weight: 700;
 		border-bottom: 1px solid #f5abb4;
 	}
@@ -1984,7 +1999,7 @@ abbr.help {
 	}
 
 #siteTitle {
-	padding-right: 24px;
+	padding-right: 52px;
 	min-width: 260px;
 }
 
@@ -2093,7 +2108,7 @@ abbr.help {
 	background: #EAEAEA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EAEAEA));
 	background: -moz-linear-gradient(top, #DDD, #EAEAEA);
-	border: 1px solid #BFBFBF;
+	border: 1px solid #DDD;
 	padding: 6px;
 	margin-top: 12px;
 
@@ -2106,7 +2121,7 @@ abbr.help {
 
 	.collapseBox .fullwidthOptions {
 		border: none;
-		border-top: 1px solid #BFBFBF;
+		border-top: 1px solid #DDD;
 		background: none;
 		padding: 6px 0;
 	}
@@ -2158,22 +2173,26 @@ abbr.help {
 */
 
 #contentList {
-	border-left: 1px solid #BFBFBF;
-	background: #F5F5F5;
+	background: #FAFAFA;
 }
 
 #contentList ul {
 	background: #EEE;
 	width: 264px;
+	border-top: 1px solid #DDDDDD;
 	font-family: "Lucida Grande";
 	font-weight: 700;
 	font-size: 11px;
 }
 
+	#contentList ul ul {
+		border: none;
+	}
+
 	#contentList ul li a {
 		display: block;
 		padding: 6px 12px;
-		border-bottom: 1px solid #DDD;
+		border-bottom: 1px solid #FFF;
 	}
 
 	#contentList ul li.selected a,
@@ -2203,6 +2222,8 @@ abbr.help {
 			#encloser #contentList ul li.selected li a:hover {
 				background: #FFF;
 				color: #000;
+				
+				
 			}
 
 #statusBar {
@@ -2238,6 +2259,10 @@ abbr.help {
 
 }
 
+	#statusBar {
+		display: none;
+	}
+	
 	#statusBar p.breadcrumb,
 	#filterBar p {
 		line-height: 29px;
@@ -2277,12 +2302,13 @@ abbr.help {
 	border: 1px solid #a60000;
 	
 
-	padding: 2px 9px;
+	padding: 2px 6px;
 
 	position: fixed;
 	bottom: 12px;
 	left: 12px;
-	font-size: 10px;
+	font-size: 9px;
+	font-family: "Menlo", "Monaco", "Courier New", monospace;
 	text-transform: uppercase;
 	z-index: 300;
 
@@ -2300,6 +2326,8 @@ abbr.help {
 #dashboardWidgets {
 	padding: 12px 0;
 	zoom: 1;
+	
+	border-top: 1px solid #DDD;
 }
 
 #dashboardWidgets:after {
@@ -2511,7 +2539,6 @@ abbr.help {
 	vertical-align: middle;
 }
 
-#loginNav,
 #loginBox {
 	width: 500px;
 	margin: 0 auto;
@@ -2522,7 +2549,7 @@ abbr.help {
 	padding-top: 68px;
 }
 
-#loginError {
+#loginError .errorMessage {
 	/* Reset border radius */
 	border-radius: 0;
 	-webkit-border-radius: 0;
@@ -2531,58 +2558,46 @@ abbr.help {
 	position: absolute;
 	left: 0;
 	top: 0;
-	width: 100%;
 	z-index: 3;
-	border: none;
-	border-bottom: 1px solid #C3C3C3;
+	font-size: 11px;
+	
+	padding: 14px 48px;
 }
 
-	#loginNav ul {
-		padding-left: 50px;
-		padding-bottom: 12px;
-		zoom: 1;
-	}
-
-	#loginNav ul:after {
-		/* @inc .clearfix */
-		content: ".";
-		display: block;
-		height: 0;
-		clear: both;
-		visibility: hidden;
-	}
-
-	#loginNav li span {
-		background: url(../images/logo.png) no-repeat 0 0;
-		width: 68px;
-		height: 57px;
-		display: block;
-		text-indent: -9000px;
+	#loginBox #loginNav {
 		position: absolute;
-		top: -24px;
-		left: -20px;
+		top: 12px;
+		right: 12px;
+		font-size: 11px;
 	}
 
-	#loginNav strong {
-		color: #000;
-	}
+		#loginBox #loginNav a {
+			color: #808080;
+		}
+	
+		#loginBox #loginNav a:hover,
+		#loginBox #loginNav a:active,
+		#loginBox #loginNav a:focus {
+			color: #000;
+		}
+
 
 	#loginNav li {
 		font-size: 11px;
 		float: left;
-		padding-right: 12px;
-		border-right: 1px solid #CCC;
-		margin-right: 12px;
+		padding-left: 12px;
+		border-left: 1px solid #CCC;
+		margin-left: 12px;
 	}
 
-		#loginNav li:last-child {
+		#loginNav li:first-child {
 			border: none;
 		}
 
 #loginBox {
-	border: 1px solid #c3c3c3;
+	border: 1px solid #C3C3C3;
 	width: 400px;
-	padding: 25px 50px;
+	padding: 24px 48px;
 
 	background: #FFF;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f4f4f4));
@@ -2593,11 +2608,6 @@ abbr.help {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 
-	/* @inc .boxShadow */
-	box-shadow: 0 2px 6px #AAA;
-	-webkit-box-shadow: 0 2px 6px #AAA;
-	-moz-box-shadow: #AAA 0 2px 6px;
-
 }
 
 	#loginBoxTop {
@@ -2606,18 +2616,10 @@ abbr.help {
 	}
 
 #loginBox h2 {
-	padding: 0 0 12px;
+	padding: 24px 0 12px;
 	font-size: 18px;
 	color: #000;
 }
-
-	#loginBox #forgotPasswordLink {
-		position: absolute;
-		top: 10px;
-		right: 10px;
-		font-size: 11px;
-		color: #808080;
-	}
 
 	#loginFields {
 		border-top: 1px solid #CCC;
@@ -2762,7 +2764,7 @@ abbr.help {
 	padding: 12px 8px 10px 8px;
 	min-width: 270px;
 	margin: 0 8px 8px 0;
-	border: 1px solid #BFBFBF;
+	border: 1px solid #DDD;
 
 	/* @inc .rc */
 	border-radius: 4px;
@@ -3299,7 +3301,7 @@ a.mainButton.focus {
 */
 
 .datafilter {
-	border: 1px solid #AEAEAE;
+	border: 1px solid #BDBDBD;
 	border-bottom: none;
 	background: #DDD;
 	padding: 6px;
@@ -3457,7 +3459,7 @@ a.mainButton.focus {
 	#messaging .buttonHolder {
 		position: absolute;
 		top: -10px;
-		right: -20px;
+		right: -10px;
 		z-index: 1003;
 	}
 

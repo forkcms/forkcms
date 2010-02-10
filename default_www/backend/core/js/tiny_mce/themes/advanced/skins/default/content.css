@@ -22,13 +22,13 @@ abbr, html\:abbr {border-bottom:1px dashed #CCC; cursor:help}
 
 /* IE */
 * html body {
-scrollbar-3dlight-color:#F0F0EE;
+scrollbar-3dlight-color:#f5f5f5;
 scrollbar-arrow-color:#676662;
-scrollbar-base-color:#F0F0EE;
+scrollbar-base-color:#f5f5f5;
 scrollbar-darkshadow-color:#DDD;
 scrollbar-face-color:#E0E0DD;
-scrollbar-highlight-color:#F0F0EE;
-scrollbar-shadow-color:#F0F0EE;
+scrollbar-highlight-color:#f5f5f5;
+scrollbar-shadow-color:#f5f5f5;
 scrollbar-track-color:#F5F5F5;
 }
 

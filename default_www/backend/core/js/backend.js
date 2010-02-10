@@ -129,16 +129,30 @@ jsBackend.controls = {
 	},
 	// toggle between full width and sidebar-layout
 	bindFullWidthSwitch: function() {
-		$('#fullwidthSwitch').bind('click', function(evt) {
+		$('#fullwidthSwitch a').toggle(function(evt) {
 			// prevent default behaviour
 			evt.preventDefault();
 			
-			// toggle
-			$('#pagesTree, #contentList').toggle();
-			
 			// add class
 			$(this).parent().addClass('collapsed')
+
+			// toggle
+			$('#contentList, #pagesTree').fadeOut(250);
+			
+			
+		}, function(evt) {
+			// Stuff to do every *even* time the element is clicked;
+			evt.preventDefault();
+
+			// remove class
+			$(this).parent().removeClass('collapsed')
+			
+			// toggle
+			$('#contentList, #pagesTree').fadeIn(500);
+
 		});
+		
+		
 	},
 	// check all checkboxes with one checkbox in the tableheader
 	bindMassCheckbox: function() {

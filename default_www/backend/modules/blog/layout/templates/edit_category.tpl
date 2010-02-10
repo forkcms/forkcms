@@ -1,5 +1,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
+
 		<td id="contentHolder">
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst} &gt; {$msgEditWithItem|sprintf:{$name}}</p>
@@ -35,6 +36,7 @@
 					</div>
 				{/form:editCategory}
 			</div>
+
 		</td>
 	</tr>
 </table>

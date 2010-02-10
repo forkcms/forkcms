@@ -1,5 +1,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
+
 		<td id="contentHolder">
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$msgEditWithItem|sprintf:{$blog['title']}}</p>
@@ -61,8 +62,12 @@
 
 											<div class="options">
 												<div class="buttonHolder">
+													<!-- @todo style this @johan @yoni -->
+													<!-- @todo label for save as draft -->
+
 													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span><span><span>{$lblPreview|ucfirst}</span></span></span></a>
-													<a href="#" id="saveAsDraft" class="button"><span><span><span>{$lblSave|ucfirst}</span></span></span></a>
+													<br /><br />
+													<a href="#" id="saveAsDraft" class="button mainButton"><span><span><span>Kladversie opslaan</span></span></span></a>
 												</div>
 											</div>
 
@@ -291,6 +296,7 @@
 					</div>
 				{/form:edit}
 			</div>
+
 		</td>
 	</tr>
 </table>

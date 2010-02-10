@@ -4,13 +4,6 @@
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
-				<div id="loginNav">
-					<ul>
-						<li><span>Fork</span> <strong>CMS</strong></li>
-						<li><a href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
-						<li><a href="http://docs.fork-cms.be">{$lblDeveloper|ucfirst}</a></li>
-					</ul>
-				</div>
 				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
 					{option:hasError}
 					<div id="loginError">
@@ -23,7 +16,6 @@
 
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>
-						<p>{$msgLoginFormHelp}</p>
 					</div>
 
 					{form:authenticationIndex}
@@ -44,7 +36,13 @@
 							</p>
 						</div>
 					{/form:authenticationIndex}
-					<a href="#" id="forgotPasswordLink" class="toggleBalloon" rel="forgotPasswordHolder">{$msgForgotPassword}</a>
+					
+						<ul id="loginNav">
+							<li><a href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
+							<li><a href="http://docs.fork-cms.be">{$lblDeveloper|ucfirst}</a></li>
+							<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" rel="forgotPasswordHolder">{$msgForgotPassword}</a></li>
+						</ul>
+					</div>
 				</div>
 				<div id="forgotPasswordHolder" class="balloon"{option:!showForm} style="display: none;"{/option:!showForm}>
 					<div id="forgotPassword">

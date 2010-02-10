@@ -52,7 +52,7 @@
 /*.ui-widget input, .ui-widget select, .ui-widget textarea, .ui-widget button { font-family: Arial, sans-serif; font-size: 1em; }*/
 /*.ui-widget-content { border: 1px solid #dddddd; color: #333333; }*/
 /*.ui-widget-content a { color: #333333; }*/
-/*.ui-widget-header { border: 1px solid #AEAEAE; color: #ffffff; font-weight: bold; }*/
+/*.ui-widget-header { border: 1px solid #ddd; color: #ffffff; font-weight: bold; }*/
 .ui-widget-header a { color: #ffffff; }
 
 /* Interaction states
@@ -61,7 +61,7 @@
 .ui-state-default a, .ui-state-default a:link, .ui-state-default a:visited { color: #2244BB; text-decoration: none; outline: none; }
 .ui-state-hover, .ui-widget-content .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus { border: 1px solid #BBB; background: #EEE; font-weight: bold; color: #c77405; outline: none; }
 .ui-state-hover a, .ui-state-hover a:hover { color: #000; text-decoration: none; outline: none; }
-.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #aeaeae; background: #ffffff; font-weight: bold; color: #eb8f00; outline: none; }
+.ui-state-active, .ui-widget-content .ui-state-active { border: 1px solid #ddd; background: #ffffff; font-weight: bold; color: #eb8f00; outline: none; }
 .ui-state-active a, .ui-state-active a:link, .ui-state-active a:visited { color: #000; outline: none; text-decoration: none; }
 
 /* Interaction Cues
@@ -403,7 +403,7 @@
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected { padding-bottom: 1px; border-bottom-width: 0; }
 .ui-tabs .ui-tabs-nav li.ui-tabs-selected a, .ui-tabs .ui-tabs-nav li.ui-state-disabled a, .ui-tabs .ui-tabs-nav li.ui-state-processing a { cursor: text; }
 .ui-tabs .ui-tabs-nav li a, .ui-tabs.ui-tabs-collapsible .ui-tabs-nav li.ui-tabs-selected a { cursor: pointer; } /* first selector in group seems obsolete, but required to overcome bug in Opera applying cursor: text overall if defined elsewhere... */
-.ui-tabs .ui-tabs-panel { padding: 12px; display: block; border-width: 0; background: none; border: 1px solid #AEAEAE; background: #FFF;}
+.ui-tabs .ui-tabs-panel { padding: 12px; display: block; border-width: 0; background: none; border: 1px solid #ddd; background: #FFF;}
 
 .ui-tabs .ui-tabs-hide { display: none !important; }
 
