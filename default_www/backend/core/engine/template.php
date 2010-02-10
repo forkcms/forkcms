@@ -27,10 +27,10 @@ class BackendTemplate extends SpoonTemplate
 	 *
 	 * @return	void
 	 */
-	public function __construct()
+	public function __construct($dontAdd = false)
 	{
 		// store in reference so we can access it from everywhere
-		Spoon::setObjectReference('template', $this);
+		if(!$dontAdd) Spoon::setObjectReference('template', $this);
 
 		// set cache directory
 		$this->setCacheDirectory(BACKEND_CACHE_PATH .'/cached_templates');

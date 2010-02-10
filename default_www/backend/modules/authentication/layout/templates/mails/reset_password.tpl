@@ -1,4 +1,3 @@
-<!-- @todo labels -->
 <html>
 <head>
 	<title>Fork CMS</title>
@@ -24,7 +23,7 @@
 					</td>
 					<td width="68" valign="middle" style="font-size: 11px;"><strong>CMS</strong></td>
 					<td valign="middle">
-						<h2>Wijzig je wachtwoord</h2>
+						<h2>{$msgResetYourPasswordMailSubject|ucfirst}</h2>
 					</td>
 				</tr>
 			</table>
@@ -32,7 +31,7 @@
 				<tr>
 					<td width="40px" style="width: 40px;">&nbsp;</td>
 					<td colspan="2" style="border: 1px solid #C3C3C3; padding: 25px 50px; background-color: #FFF;">
-						<p>Reset je wachtwoord door op de link hieronder te klikken. Indien je niet hier niet om gevraagd hebt hoef je geen actie te ondernemen.</p>
+						<p>{$msgResetYourPasswordMailContent}</p>
 						<p><a href="{$resetLink}">{$resetLink}</a></p>
 					</td>
 				</tr>

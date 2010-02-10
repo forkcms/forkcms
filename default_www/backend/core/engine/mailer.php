@@ -32,7 +32,7 @@ class BackendMailer
 	 * @param	string[optional] $fromName
 	 * @param	bool[optional] $queue
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $language = null)
 	{
 		// redefine
 		$subject = (string) $subject;
@@ -82,14 +82,13 @@ class BackendMailer
 	private static function getTemplateContent($template, $variables = null)
 	{
 		// new template instance
-		$tpl = new SpoonTemplate();
-		$tpl->setCompileDirectory(BACKEND_CACHE_PATH .'/templates');
+		$tpl = new BackendTemplate(true);
+
+		// set some options
 		$tpl->setForceCompile(true);
 
 		// variables were set
 		if(!empty($variables)) $tpl->assign($variables);
-
-		// @todo parse locale
 
 		// grab the content
 		$content = $tpl->getContent($template);
