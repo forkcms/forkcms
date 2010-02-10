@@ -9,38 +9,42 @@
 				{form:edit}
 				<div class="box">
 					<div class="heading">
-						&nbsp;
+						<h3>{$lblEditTranslation}
 					</div>
 					<div class="options">
-						<p>
-							<label for="language">{$lblLanguage|ucfirst}</label>
-							{$ddmLanguage} {$ddmLanguageError}
-						</p>
+						<div class="horizontal">
 
-						<p>
-							<label for="application">{$lblApplication|ucfirst}</label>
-							{$ddmApplication} {$ddmApplicationError}
-						</p>
+							<p>
+								<label for="name">{$lblName|ucfirst}</label>
+								{$txtName} {$txtNameError}
+							</p>
 
-						<p>
-							<label for="module">{$lblModule|ucfirst}</label>
-							{$ddmModule} {$ddmModuleError}
-						</p>
+							<p>
+								<label for="value">{$lblValue|ucfirst}</label>
+								{$txtValue} {$txtValueError}
+							</p>
 
-						<p>
-							<label for="type">{$lblType|ucfirst}</label>
-							{$ddmType} {$ddmTypeError}
-						</p>
+							<p>
+								<label for="language">{$lblLanguage|ucfirst}</label>
+								{$ddmLanguage} {$ddmLanguageError}
+							</p>
 
-						<p>
-							<label for="name">{$lblName|ucfirst}</label>
-							{$txtName} {$txtNameError}
-						</p>
+							<p>
+								<label for="application">{$lblApplication|ucfirst}</label>
+								{$ddmApplication} {$ddmApplicationError}
+							</p>
 
-						<p>
-							<label for="value">{$lblValue|ucfirst}</label>
-							{$txtValue} {$txtValueError}
-						</p>
+							<p>
+								<label for="module">{$lblModule|ucfirst}</label>
+								{$ddmModule} {$ddmModuleError}
+							</p>
+
+							<p>
+								<label for="type">{$lblType|ucfirst}</label>
+								{$ddmType} {$ddmTypeError}
+							</p>
+
+						</div>
 					</div>
 
 					<div class="fullwidthOptions">

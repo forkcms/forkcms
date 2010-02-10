@@ -9,7 +9,7 @@
 				{form:add}
 					<div class="box">
 						<div class="heading">
-							&nbsp;
+							<h3>{$lblAddTranslation|ucfirst}</h3>
 						</div>
 						<div class="options">
 							<div class="horizontal">
