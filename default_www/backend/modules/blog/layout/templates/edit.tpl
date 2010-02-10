@@ -63,11 +63,13 @@
 											<div class="options">
 												<div class="buttonHolder">
 													<!-- @todo style this @johan @yoni -->
-													<!-- @todo label for save as draft -->
 
+													{option:usingDraft}
 													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span><span><span>{$lblPreview|ucfirst}</span></span></span></a>
 													<br /><br />
-													<a href="#" id="saveAsDraft" class="button mainButton"><span><span><span>Kladversie opslaan</span></span></span></a>
+													{/option:usingDraft}
+
+													<a href="#" id="saveAsDraft" class="button mainButton"><span><span><span>{$lblSaveAsDraft|ucfirst}</span></span></span></a>
 												</div>
 											</div>
 
