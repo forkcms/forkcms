@@ -105,9 +105,9 @@ class BackendUsersModel
 		// check if the user is present in our database
 		return ($db->getNumRows('SELECT u.id
 									FROM users AS u
-									INNER JOIN users_settings AS us
-									WHERE us.name = ? AND us.value = ?;',
-									array('email', serialize($email))) >= 1);
+									INNER JOIN users_settings AS us ON u.id = us.user_id
+									WHERE u.active = ? AND u.deleted = ? AND us.name = ? AND us.value = ?;',
+									array('Y', 'N', 'email', serialize($email))) > 0);
 	}
 
 
