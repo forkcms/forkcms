@@ -2,8 +2,6 @@
 
 /**
  * BackendForm, this is our extended version of SpoonForm
- * @todo	extend all formelement, all based on textfield should have inputText as class
- * @todo	classes should be null, if null the classes should be defined in the method
  *
  * @package		backend
  * @subpackage	core
@@ -67,13 +65,41 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $type
 	 * @param	string[optional] $class
 	 */
-	public function addButton($name, $value, $type = 'submit', $class = 'inputText inputButton')
+	public function addButton($name, $value, $type = 'submit', $class = null)
 	{
+		// redefine
+		$name = (string) $name;
+		$value = ($value !== null) ? (string) $value : null;
+		$type = (string) $type;
+		$class = ($class !== null) ? (string) $class : 'inputText inputButton';
+
 		// do a check
 		if($type == 'submit' && $name == 'submit') throw new BackendException('You can\'t add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
 
 		// call the real form class
 		return parent::addButton($name, $value, $type, $class);
+	}
+
+
+	/**
+	 * Adds a single checkbox.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	bool[optional] $checked
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addCheckBox($name, $checked = false, $class = null, $classError = null)
+	{
+		// redefine
+		$name = (string) $name;
+		$checked = (bool) $checked;
+		$class = ($class !== null) ? (string) $class : 'inputCheckbox';
+		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
+
+		// return element
+		return parent::addCheckBox($name, $checked, $class, $classError);
 	}
 
 
@@ -89,7 +115,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classError
 	 */
-	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = 'inputText inputDatefield', $classError = 'inputTextError inputDatefieldError')
+	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -97,8 +123,8 @@ class BackendForm extends SpoonForm
 		$type = SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
 		$date = ($date !== null) ? (int) $date : null;
 		$date2 = ($date2 !== null) ? (int) $date2 : null;
-		$class = (string) $class;
-		$classError = (string) $classError;
+		$class = ($class !== null) ? (string) $class : 'inputText inputDatefield';
+		$classError = ($classError !== null) ? (string) $classError : 'inputTextError inputDatefieldError';
 
 		// validate
 		if($type == 'from' && ($date == 0 || $date == null)) throw new BackendException('A datefield with type "from" should have a valid date-parameter.');
@@ -154,6 +180,32 @@ class BackendForm extends SpoonForm
 
 
 	/**
+	 * Adds a single dropdown.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	array $values
+	 * @param	string[optional] $selected
+	 * @param	bool[optional] $multipleSelection
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addDropDown($name, array $values, $selected = null, $multipleSelection = false, $class = null, $classError = null)
+	{
+		// redefine
+		$name = (string) $name;
+		$values = (array) $values;
+		$selected = ($selected !== null) ? (string) $selected : null;
+		$multipleSelection = (bool) $multipleSelection;
+		$class = ($class !== null) ? (string) $class : 'inputDropdown';
+		$classError = ($classError !== null) ? (string) $classError : 'inputDropdownError';
+
+		// return element
+		return parent::addDropDown($name, $values, $selected, $multipleSelection, $class, $classError);
+	}
+
+
+	/**
 	 * Add an editor field
 	 *
 	 * @return	void
@@ -163,13 +215,13 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $classError
 	 * @param	bool[optional] $HTML
 	 */
-	public function addEditorField($name, $value = null, $class = 'inputEditor', $classError = 'inputEditorError', $HTML = true)
+	public function addEditorField($name, $value = null, $class = null, $classError = null, $HTML = true)
 	{
 		// redefine
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
-		$class = (string) $class;
-		$classError = (string) $classError;
+		$class = 'inputEditor '. (string) $class;
+		$classError = 'inputEditorError '. (string) $classError;
 		$HTML = (bool) $HTML;
 
 		// we add JS because we need TinyMCE
@@ -178,6 +230,191 @@ class BackendForm extends SpoonForm
 
 		// add the field
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
+	}
+
+
+	/**
+	 * Adds a single file field.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addFileField($name, $class = null, $classError = null)
+	{
+		// redefine
+		$name = (string) $name;
+		$class = ($class !== null) ? (string) $class : 'inputFilefield';
+		$classError = ($classError !== null) ? (string) $classError : 'inputFilefieldError';
+
+		// return element
+		return parent::addFileField($name, $class, $classError);
+	}
+
+
+	/**
+	 * Adds a single image field.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addImageField($name, $class = null, $classError = null)
+	{
+		// redefine
+		$name = (string) $name;
+		$class = ($class !== null) ? (string) $class : 'inputFilefield';
+		$classError = ($classError !== null) ? (string) $classError : 'inputFilefieldError';
+
+		// return element
+		return parent::addImageField($name, $class, $classError);
+	}
+
+
+	/**
+	 * Adds a single multiple checkbox.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	array $values
+	 * @param	bool[optional] $checked
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addMultiCheckBox($name, array $values, $checked = null, $class = null, $classError = null)
+	{
+		// redefine
+		$name = (string) $name;
+		$values = (array) $values;
+		$checked = ($checked !== null) ? (bool) $checked : null;
+		$class = ($class !== null) ? (string) $class : 'inputCheckbox';
+		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
+
+		// return element
+		return parent::addMultiCheckBox($name, $values, $checked, $class, $classError);
+	}
+
+
+	/**
+	 * Adds a single password field.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $value
+	 * @param	int[optional] $maxlength
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 * @param	bool[optional] $HTML
+	 */
+	public function addPasswordField($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
+	{
+		// redefine
+		$name = (string) $name;
+		$value = ($value !== null) ? (string) $value : null;
+		$maxlength = ($maxlength !== null) ? (int) $maxlength : null;
+		$class = ($class !== null) ? (string) $class : 'inputText inputPassword';
+		$classError = ($classError !== null) ? (string) $classError : 'inputTextError inputPasswordError';
+		$HTML = (bool) $HTML;
+
+		// return element
+		return parent::addPasswordField($name, $value, $maxlength, $class, $classError, $HTML);
+	}
+
+
+	/**
+	 * Adds a single radiobutton.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	array $values
+	 * @param	string[optional] $checked
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addRadioButton($name, array $values, $checked = null, $class = null, $classError = null)
+	{
+		// redefine
+		$name = (string) $name;
+		$values = (array) $values;
+		$checked = ($checked !== null) ? (string) $checked : null;
+		$class = ($class !== null) ? (string) $class : 'inputRadiobutton';
+		$classError = ($classError !== null) ? (string) $classError : 'inputRadiobuttonError';
+
+		// return element
+		return parent::addRadioButton($name, $values, $checked, $class, $classError);
+	}
+
+
+	/**
+	 * Adds a single textarea.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $value
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 * @param	bool[optional] $HTML
+	 */
+	public function addTextArea($name, $value = null, $class = null, $classError = null, $HTML = false)
+	{
+		// redefine
+		$name = (string) $name;
+		$value = ($value !== null) ? (string) $value : null;
+		$class = ($class !== null) ? (string) $class : 'inputTextarea';
+		$classError = ($classError !== null) ? (string) $classError : 'inputTextareaError';
+		$HTML = (bool) $HTML;
+
+		// return element
+		return parent::addTextArea($name, $value, $class, $classError, $HTML);
+	}
+
+
+	/**
+	 * Adds a single textfield.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $value
+	 * @param	int[optional] $maxlength
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 * @param	bool[optional] $HTML
+	 */
+	public function addTextField($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
+	{
+		// redefine
+		$name = (string) $name;
+		$value = ($value !== null) ? (string) $value : null;
+		$maxlength = ($maxlength !== null) ? (int) $maxlength : null;
+		$class = ($class !== null) ? (string) $class : 'inputTextfield';
+		$classError = ($classError !== null) ? (string) $classError : 'inputTextfieldError';
+		$HTML = (bool) $HTML;
+
+		// return element
+		return parent::addTextField($name, $value, $maxlength, $class, $classError, $HTML);
+	}
+
+
+	/**
+	 * Adds a single timefield.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $value
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 */
+	public function addTimeField($name, $value = null, $class = null, $classError = null)
+	{
+		$name = (string) $name;
+		$value = ($value !== null) ? (string) $value : null;
+		$class = ($class !== null) ? (string) $class : 'inputTimefield';
+		$classError = ($classError !== null) ? (string) $classError : 'inputTimefieldError';
+
+		// return element
+		return parent::addTimeField($name, $value, $class, $classError);
 	}
 
 
