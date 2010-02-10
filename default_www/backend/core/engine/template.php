@@ -91,15 +91,12 @@ class BackendTemplate extends SpoonTemplate
 	{
 		// convert var into an URL, syntax {$var|geturl:<pageId>}
 		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
-		$this->mapModifier('getURL', array('BackendTemplateModifiers', 'getURL'));
 
 		// convert var into navigation, syntax {$var|getnavigation:<startdepth>:<enddepth>}
 		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
-		$this->mapModifier('getNavigation', array('BackendTemplateModifiers', 'getNavigation'));
 
 		// convert var into navigation, syntax {$var|getmainnavigation}
 		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
-		$this->mapModifier('getMainNavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
 
 		// string
 		$this->mapModifier('truncate', array('BackendTemplateModifiers', 'truncate'));

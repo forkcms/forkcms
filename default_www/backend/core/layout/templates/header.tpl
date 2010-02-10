@@ -1,5 +1,5 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-<body>
+<body id="{$MODULE}" class="{$ACTION}">
 	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
 	<table border="0" cellspacing="0" cellpadding="0" id="encloser">
 		<tr>
