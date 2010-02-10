@@ -262,6 +262,9 @@ class BackendUser
 
 		// loop settings and store them in the object
 		foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
+
+		// nickname available?
+		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] .' '. $this->settings['surname']);
 	}
 
 
