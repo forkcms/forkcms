@@ -1747,9 +1747,13 @@ fieldset legend {
 	}
 
 .errorMessage {
-	color: #E2001A;
-	background: #FBF3F3;
-	border-color: #E2001A;
+	/* @inc .errorColors */
+	color: #FFF;
+	font-weight: 700;
+	background: #DE3636;
+	background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#FF2626));
+	background: -moz-linear-gradient(top, #DE3636, #FF2626);
+	border: 1px solid #a60000;
 
 	/* @inc .rc */
 	border-radius: 4px;
@@ -2230,13 +2234,16 @@ abbr.help {
 
 /* Debug message */
 #debugnotify {
+	
+	/* @inc .errorColors */
 	color: #FFF;
 	font-weight: 700;
 	background: #DE3636;
 	background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#FF2626));
 	background: -moz-linear-gradient(top, #DE3636, #FF2626);
-
 	border: 1px solid #a60000;
+	
+
 	padding: 2px 9px;
 
 	position: fixed;
@@ -3359,6 +3366,6 @@ a.mainButton:focus {
 	#messaging .buttonHolder {
 		position: absolute;
 		top: -10px;
-		right: -10px;
+		right: -20px;
 		z-index: 1003;
 	}
