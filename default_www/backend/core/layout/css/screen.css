@@ -952,7 +952,7 @@ table.datagrid a {
 
 #fullwidthSwitch {
 	width: 5px;
-	background: url(../images/close_w.png) no-repeat 0 center;
+	background: #EAEAEA url(../images/close_w.png) no-repeat 0 center;
 }
 
 	#fullwidthSwitch.collapsed {
@@ -1220,6 +1220,11 @@ td.comments {
 
 	.box .last {
 		border-bottom: none;
+	}
+	
+	.options p:last-child {
+		padding-bottom: 0;
+		/* @todo JS selector for IE */
 	}
 
 .box .moderate {
@@ -1506,6 +1511,7 @@ textarea {
 	background: #F9F9F9 url(../images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
 
 	/* @inc .rc */
 	border-radius: 4px;
@@ -1539,7 +1545,12 @@ input[type="password"] {
 	input[type="text"]:focus,
 	.inputPassword:focus,
 	input[type="password"]:focus,
-	textarea:focus {
+	textarea:focus,
+	.inputText.focus,
+	input[type="text"].focus,
+	.inputPassword.focus,
+	input[type="password"].focus,
+	textarea.focus {
 		color: #000;
 		background: #FFF;
 	}
@@ -1557,6 +1568,8 @@ textarea.code {
 /* Selects should be left alone (not stylable without troubles) s*/
 select {
 	/* Nothing */
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	
 }
 
 /* Input type file should be left alone */
@@ -1962,6 +1975,13 @@ abbr.help {
 	border: none;
 	cursor: help;
 }
+
+	abbr.help {
+		display: inline-block;
+		position: relative;
+		top: 4px;
+		margin-left: -2px;
+	}
 
 #siteTitle {
 	padding-right: 24px;
@@ -2625,26 +2645,11 @@ abbr.help {
 			padding-bottom: 0;
 			padding-left: 158px;
 		}
-
-		.balloon {
-			position: relative;
-			width: 308px;
+		
+		/* Balloon overrides */
+		#forgotPasswordHolder.balloon {
 			padding: 12px 24px 36px;
-			background: #E9F0F7;
-			border: 1px solid #B8BCC9;
-			background: -webkit-gradient(linear, left top, left bottom, from(#EFF5FD), to(#E9F0F7));
-			background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
-
-			/* @inc .rc */
-			border-radius: 4px;
-			-webkit-border-radius: 4px;
-			-moz-border-radius: 4px;
-
-			/* @inc .boxShadow */
-			box-shadow: 0 2px 6px #AAA;
-			-webkit-box-shadow: 0 2px 6px #AAA;
-			-moz-box-shadow: #AAA 0 2px 6px;
-
+			width: 308px;
 		}
 
 			/* @todo @tijs @johan make this work together with forgot password form */
@@ -2682,15 +2687,6 @@ abbr.help {
 					width: 160px;
 				}
 
-			.balloon .balloonTop {
-				width: 15px;
-				height: 8px;
-				background: url(../images/balloontop.gif) no-repeat 0 0;
-				display: block;
-				position: absolute;
-				top: -8px;
-				left: 27%;
-			}
 
 /*
 	Avatar
@@ -2862,7 +2858,8 @@ a.button:visited {
 
 a.button:hover,
 a.button:active,
-a.button:focus {
+a.button:focus,
+a.button.focus {
 	background-position: right -154px;
 }
 
@@ -2874,7 +2871,8 @@ a.mainButton:visited {
 
 a.mainButton:hover,
 a.mainButton:active,
-a.mainButton:focus {
+a.mainButton:focus,
+a.mainButton.focus {
 	background-position: right -110px;
 }
 
@@ -2900,7 +2898,8 @@ a.mainButton:focus {
 
 		a.mainButton:hover span,
 		a.mainButton:active span,
-		a.mainButton:focus span {
+		a.mainButton:focus span,
+		a.mainButton.focus span {
 			background-position: 0 -22px;
 		}
 
@@ -2923,7 +2922,9 @@ a.mainButton:focus {
 		}
 
 		a.mainButton:hover span span,
-		a.mainButton:active span span {
+		a.mainButton:active span span,
+		a.mainButton:focus span span,
+		a.mainButton.focus span span {
 			background-position: 0 -198px;
 		}
 
@@ -3031,7 +3032,8 @@ a.mainButton:focus {
 		a.disabledButton:visited,
 		a.disabledButton:hover,
 		a.disabledButton:active,
-		a.disabledButton:focus {
+		a.disabledButton:focus,
+		a.disabledButton.focus {
 			opacity: 0.5;
 			cursor: default;
 		}
@@ -3283,20 +3285,82 @@ a.mainButton:focus {
 */
 
 #locale.index #filter select,
-#locale.add select,
-#locale.edit select {
+#locale.index #filter input,
+#locale.addedit select {
 	font-size: 11px;
 }
 
-#locale.addedit #value {
-	width: 320px;
+#locale #value { width: 320px; }
+#locale #name { width: 260px; }
+#locale select { width: 140px; }
+
+/*
+	Datafilter
+*/
+
+.datafilter {
+	border: 1px solid #AEAEAE;
+	border-bottom: none;
+	background: #DDD;
+	padding: 6px;
 }
 
-#locale.addedit #name {
-	width: 260px;
-}
+	.datafilter table {
+		width: 100%;
+	}
 
+	.datafilter td .options {
 
+		background: rgba(0,0,0,0.07);
+		border: 1px solid #999;
+		padding: 6px;
+
+		-moz-box-shadow: inset #AAA 0 2px 6px;
+	}
+	
+	.datafilter tbody td:first-child .options,
+	.datafilter tbody td.firstChild .options {
+		/* @inc .rcleftOnly */
+		border-top-left-radius: 4px;
+		-moz-border-radius-topleft: 4px;
+		-webkit-border-top-left-radius: 4px;
+		border-right: 0;
+	}
+
+	.datafilter tbody td:last-child .options,
+	.datafilter tbody td.lastChild .options {
+		/* @inc .rcRightOnly */
+		border-top-right-radius: 4px;
+		-moz-border-radius-topright: 4px;
+		-webkit-border-top-right-radius: 4px;
+		border-left: 0;
+	}
+	
+	.datafilter td .options {
+		background: #CECECE;
+		background: rgba(0,0,0,0.07);
+		border: 1px solid #999;
+		border-bottom: none;
+		padding: 6px;
+
+		-moz-box-shadow: inset #AAA 0 2px 6px;
+	}
+	
+	.datafilter tfoot td .options {
+		background: #B0B0B0;
+		background: rgba(0,0,0,0.2);
+
+		/* Inset highlight moz only*/
+		-moz-box-shadow: inset rgba(255,255,255,0.5) 0 1px 2px;
+		
+		/* @inc .rcBottomOnly */
+		border-bottom-right-radius: 4px;
+		-moz-border-radius-bottomright: 4px;
+		-webkit-border-bottom-right-radius: 4px;
+		border-bottom-left-radius: 4px;
+		-moz-border-radius-bottomleft: 4px;
+		-webkit-border-bottom-left-radius: 4px;
+	}
 
 /*
 	jQuery UI overrides
@@ -3395,4 +3459,57 @@ a.mainButton:focus {
 		top: -10px;
 		right: -20px;
 		z-index: 1003;
+	}
+
+/*
+	Balloon
+*/
+
+.balloon {
+	display: block;
+	width: 240px;
+
+	z-index: 2001;
+	
+	padding: 4px 12px;
+
+	position: relative;
+	background: #E9F0F7;
+	border: 1px solid #B8BCC9;
+	background: -webkit-gradient(linear, left top, left bottom, from(#EFF5FD), to(#E9F0F7));
+	background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+
+}
+
+/* Alternate purple style */
+.balloonAlt {
+	background: #8947d6;
+	border: 1px solid #8645d3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#ac67ff), to(#8645d3));
+	background: -moz-linear-gradient(top, #ac67ff, #8645d3);
+	color: #FFF;
+	
+	font-weight: 400;
+	font-size: 11px;
+	line-height: 16px;
+}
+
+	.balloon .balloonTop {
+		width: 15px;
+		height: 8px;
+		background: url(../images/balloontop.gif) no-repeat 0 0;
+		display: block;
+		position: absolute;
+		top: -8px;
+		left: 27%;
 	}

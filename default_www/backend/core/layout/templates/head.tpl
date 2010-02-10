@@ -2,6 +2,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	<meta http-equiv="X-UA-Compatible" content="chrome=1">
 
 	<title>{$SITE_TITLE} - Fork CMS</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
