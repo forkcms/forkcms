@@ -242,7 +242,7 @@ class BackendUser
 											array(SpoonSession::getSessionId(), $userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) throw new BackendException('user ('. $userId .') can\'t be loaded.')
+		if(empty($userData)) throw new BackendException('user ('. $userId .') can\'t be loaded.');
 
 		// set properties
 		$this->setUserId($userData['id']);
