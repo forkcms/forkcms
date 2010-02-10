@@ -444,6 +444,51 @@ jsBackend.layout = {
 		// hovers
 		$('.contentTitle').hover(function() { $(this).addClass('hover'); }, function() { $(this).removeClass('hover'); });
 		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
+		
+		jsBackend.layout.showBrowserWarning();
+	},
+	// if the browser isn't supported show a warning
+	showBrowserWarning: function() {
+		var showWarning = false;
+		
+		// check firefox
+		if(jQuery.browser.mozilla) {
+			// get version
+			var version = parseInt(jQuery.browser.version.substr(0,3).replace(/\./g, ''))
+
+			// lower then 3?
+			if(version < 19) showWarning = true;
+		}
+		
+		// check opera
+		if(jQuery.browser.opera) {
+			// get version
+			var version = parseInt(jQuery.browser.version.substr(0,1))
+
+			// lower then 9?
+			if(version < 9) showWarning = true;
+		}
+		
+		// check safari, should be webkit when using 1.4
+		if(jQuery.browser.safari) {
+			// get version
+			var version = parseInt(jQuery.browser.version.substr(0,3))
+
+			// lower then 9?
+			if(version < 400) showWarning = true;
+		}
+
+		// check IE
+		if(jQuery.browser.msie) {
+			// get version
+			var version = parseInt(jQuery.browser.version.substr(0,1))
+			
+			// lower or equal then 6
+			if(version <= 6) showWarning = true;
+		}
+
+		// show warning if needed
+		if(showWarning) $('#showBrowserWarning').show();
 	},
 	// end
 	eof: true
