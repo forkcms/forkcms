@@ -563,12 +563,16 @@ td#contentHolder {
 .datagrid th {
 	padding: 4px 6px;
 	vertical-align: middle;
-	border-right: 1px solid #CDCDCD;
+	border-right: 1px solid #DDD;
 }
 
 	.datagrid tr td:first-child,
 	.datagrid tr th:first-child {
 		border-left: 1px solid #AEAEAE;
+	}
+	.datagrid tr td:last-child,
+	.datagrid tr th:last-child {
+		border-right: 1px solid #AEAEAE;
 	}
 
 .datagrid td.goto {
@@ -1154,7 +1158,7 @@ td.comments {
 	background: #E4E4E4;
 	background: url(../images/sprites/th.gif) repeat-x 0 -97px;
 	border: 1px solid #D7D7D7;
-	border-color: #D7D7D7 #D7D7D7 #AEAEAE #D7D7D7;
+	border-color: #AEAEAE;
 	padding: 6px 12px;
 
 	/* @inc .topRc */
@@ -3256,8 +3260,9 @@ a.mainButton:focus {
 		Comments
 	*/
 
-	.datagrid tbody .button {
+	#blog.comments .datagrid tbody .button {
 		margin-bottom: 8px;
+		clear: left;
 	}
 
 	/*

@@ -66,9 +66,7 @@
 							<input type="hidden" name="type" value="{$type}" />
 							<input type="hidden" name="name" value="{$name}" />
 							<input type="hidden" name="value" value="{$value}" />
-							<div class="datagridHolder">
-								{$datagrid}
-							</div>
+							{$datagrid}
 						</form>
 					</div>
 				{/option:datagrid}
