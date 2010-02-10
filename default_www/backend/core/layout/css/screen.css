@@ -735,14 +735,14 @@ td#contentHolder {
 		visibility: hidden;
 	}
 
-		.pagination li a,
+		.pagination li a:link,
+		.pagination li a:visited,
 		.pagination li span {
 			float: left;
 			display: block;
-			padding: 1px;
+			padding: 1px 3px;
 			background: rgba(255,255,255,0.25);
-			border: 1px solid rgba(0,0,0,0.25);;
-			min-width: 15px;
+			border: 1px solid rgba(0,0,0,0.25);
 			text-align: center;
 			color: #3a3a3a;
 			display: block;
@@ -756,6 +756,12 @@ td#contentHolder {
 			-webkit-border-radius: 4px;
 			-moz-border-radius: 4px;
 
+		}
+		
+		.pagination li a:hover,
+		.pagination li a:active,
+		.pagination li a:focus {
+			border-color: #000;
 		}
 
 		.pagination li span {
