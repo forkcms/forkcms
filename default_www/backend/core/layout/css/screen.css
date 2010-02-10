@@ -643,13 +643,17 @@ td#contentHolder {
 	background: url(../images/sprites/th.gif) no-repeat right -237px;
 }
 
-.datagrid th.checkboxHolder,
-.datagrid td.checkboxHolder {
+.datagrid th.checkbox,
+.datagrid td.checkbox {
 	text-align: center;
 	height: 24px;
 	padding: 0;
 	height: 24px;
 }
+
+	.datagrid th.checkbox span {
+		padding: 0;
+	}
 
 .datagrid td.rowMover a {
 	background: url(../images/move_handle.gif) no-repeat 0 0;
