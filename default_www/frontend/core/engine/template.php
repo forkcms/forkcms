@@ -316,7 +316,7 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURL($var, $pageId, $language = null)
 	{
-		return FrontendNavigation::getURL($pageId, $language); // @todo davy - mappen & testen.
+		return FrontendNavigation::getURL($pageId, $language);
 	}
 
 
