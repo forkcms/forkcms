@@ -143,10 +143,6 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// set formatted date and time
-				$formattedDate = SpoonDate::getDate('Y-m-d', $txtPublishDate->getTimestamp());
-				$formattedTime = SpoonDate::getDate('H:i', strtotime($txtPublishTime->getValue())) .':00'; // @todo switch this to $txtPublishTime->getTimestamp whenever it is available
-
 				// build item
 				$item['meta_id'] = $this->meta->save();
 				$item['category_id'] = $ddmCategoryId->getValue();
@@ -156,7 +152,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['introduction'] = $txtIntroduction->getValue();
 				$item['text'] = $txtText->getValue();
 				$item['status'] = 'active';
-				$item['publish_on'] = $formattedDate .' '. $formattedTime; // @todo davy - dit moet nog correct naar de UTC tijd vertaald worden.
+				$item['publish_on'] = $item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($txtPublishDate, $txtPublishTime));
 				$item['created_on'] = BackendModel::getUTCDate();
 				$item['edited_on'] = BackendModel::getUTCDate();
 				$item['hidden'] = $rbtHidden->getValue();

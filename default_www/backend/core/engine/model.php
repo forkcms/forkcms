@@ -553,6 +553,38 @@ class BackendModel
 
 
 	/**
+	 * Get the UTC timestamp for a date/time object combination.
+	 *
+	 * @return	int
+	 * @param	SpoonDateField $date
+	 * @param	SpoonTimeField[optional] $time
+	 */
+	public static function getUTCTimestamp(SpoonDateField $date, SpoonTimeField $time = null)
+	{
+		// init vars
+		$year = date('Y', $date->getTimestamp());
+		$month = date('m', $date->getTimestamp());
+		$day = date('j', $date->getTimestamp());
+
+		// time object was given
+		if($time !== null)
+		{
+			// define hour & minute
+			list($hour, $minute) = explode(':', $time->getValue());
+		}
+
+		// user default time
+		else
+		{
+			$hour = 12;
+			$minute = 0;
+		}
+
+		return mktime($hour, $minute, 0, $month, $day, $year);
+	}
+
+
+	/**
 	 * Ping the known webservices
 	 *
 	 * @return	bool								If everything went fine true will be returned, otherwise false
