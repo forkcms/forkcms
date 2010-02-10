@@ -2,7 +2,6 @@
 
 /**
  * FrontendLanguage
- *
  * This class will store the language-dependant content for the frontend.
  *
  * @package		frontend
@@ -33,15 +32,14 @@ class FrontendLanguage
 	 *
 	 * @var	array
 	 */
-	private static $languages = array(	'active' => array(),
-										'possible_redirect' => array());
+	private static $languages = array('active' => array(), 'possible_redirect' => array());
 
 
 	/**
 	 * Get an action from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function getAction($key)
 	{
@@ -74,16 +72,17 @@ class FrontendLanguage
 	 */
 	public static function getActiveLanguages()
 	{
-		// validate array
+		// validate the cache
 		if(empty(self::$languages['active']))
 		{
 			// grab from settings
 			$activeLanguages = (array) FrontendModel::getModuleSetting('core', 'languages');
 
-			// store
+			// store in cache
 			self::$languages['active'] = $activeLanguages;
 		}
 
+		// return from cache
 		return self::$languages['active'];
 	}
 
@@ -92,7 +91,7 @@ class FrontendLanguage
 	 * Get the prefered language by using the browser-language
 	 *
 	 * @return	string
-	 * @param	bool[optional] $forRedirect
+	 * @param	bool[optional] $forRedirect		Only look in the languages to redirect?
 	 */
 	public static function getBrowserLanguage($forRedirect = true)
 	{
@@ -130,7 +129,7 @@ class FrontendLanguage
 	 * Get an error from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function getError($key)
 	{
@@ -160,7 +159,7 @@ class FrontendLanguage
 	 * Get a label from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function getLabel($key)
 	{
@@ -190,7 +189,7 @@ class FrontendLanguage
 	 * Get a message from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function getMessage($key)
 	{
@@ -223,13 +222,13 @@ class FrontendLanguage
 	 */
 	public static function getRedirectLanguages()
 	{
-		// validate array
+		// validate the cache
 		if(empty(self::$languages['possible_redirect']))
 		{
 			// grab from settings
 			$redirectLanguages = (array) FrontendModel::getModuleSetting('core', 'active_languages');
 
-			// store
+			// store in cache
 			self::$languages['possible_redirect'] = $redirectLanguages;
 		}
 
@@ -242,7 +241,7 @@ class FrontendLanguage
 	 * Set locale
 	 *
 	 * @return	void
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language	The language to load, if not provided we will load the language based on the URL.
 	 */
 	public static function setLocale($language = null)
 	{
@@ -289,7 +288,7 @@ class FL extends FrontendLanguage
 	 * Get an action from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function act($key)
 	{
@@ -301,7 +300,7 @@ class FL extends FrontendLanguage
 	 * Get an error from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function err($key)
 	{
@@ -313,7 +312,7 @@ class FL extends FrontendLanguage
 	 * Get a label from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function lbl($key)
 	{
@@ -325,7 +324,7 @@ class FL extends FrontendLanguage
 	 * Get a message from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
+	 * @param	string $key		The key to get.
 	 */
 	public static function msg($key)
 	{

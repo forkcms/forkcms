@@ -2,8 +2,7 @@
 
 /**
  * FrontendUser
- *
- * The class below will handle all stuff relates to the current authenticated user
+ * The class below will handle all stuff relates to users
  *
  * @package		frontend
  * @subpackage	core
@@ -49,7 +48,7 @@ class FrontendUser
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	int[optional] $userId	If you provide a userId, the object will be loaded with the data for this user
+	 * @param	int[optional] $userId	If you provide a userId, the object will be loaded with the data for this user.
 	 */
 	public function __construct($userId = null)
 	{
@@ -62,7 +61,7 @@ class FrontendUser
 	 * Get a backend user
 	 *
 	 * @return	FrontendUser
-	 * @param	int[optional] $userId	The users id in the backend
+	 * @param	int $userId		The users id in the backend.
 	 */
 	public static function getBackendUser($userId)
 	{
@@ -84,6 +83,7 @@ class FrontendUser
 		// redefine
 		$key = (string) $key;
 
+		// not set? return null
 		if(!isset($this->settings[$key])) return null;
 
 		// return
@@ -94,7 +94,7 @@ class FrontendUser
 	/**
 	 * Get all settings at once
 	 *
-	 * @return	array	An key-value-array with all settings for this user
+	 * @return	array	An key-value-array with all settings for this user.
 	 */
 	public function getSettings()
 	{
@@ -128,7 +128,7 @@ class FrontendUser
 	 * Load the data for the given user
 	 *
 	 * @return	void
-	 * @param	int $userId		The users id in the backend
+	 * @param	int $userId		The users id in the backend.
 	 */
 	public function loadUser($userId)
 	{

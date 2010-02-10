@@ -1,4 +1,5 @@
 <?php
+// @todo	check documentation
 
 /**
  * FrontendBlockExtra

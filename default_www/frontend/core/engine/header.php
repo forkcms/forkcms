@@ -2,7 +2,6 @@
 
 /**
  * FrontendHeader
- *
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
@@ -97,10 +96,10 @@ class FrontendHeader extends FrontendBaseObject
 	 * Add a CSS file into the array
 	 *
 	 * @return	void
-	 * @param 	string $file
-	 * @param	string[optional] $media
-	 * @param	string[optional] $condition
-	 * @param	bool[optional] $minify
+	 * @param 	string $file					The path for the CSS-file that should be loaded.
+	 * @param	string[optional] $media			The media to use.
+	 * @param	string[optional] $condition		A condition for the CSS-file.
+	 * @param	bool[optional] $minify			Should the CSS be minified?
 	 */
 	public function addCSSFile($file, $media = 'screen',  $condition = null, $minify = true)
 	{
@@ -122,7 +121,7 @@ class FrontendHeader extends FrontendBaseObject
 		// check if the file already exists in the array
 		foreach($this->cssFiles as $row) if($row['file'] == $file && $row['media'] == $media) $inArray = true;
 
-		// add to array
+		// add to array if it isn't there already
 		if(!$inArray)
 		{
 			// build temporary arrat
@@ -140,9 +139,9 @@ class FrontendHeader extends FrontendBaseObject
 	 * Add a javascript file into the array
 	 *
 	 * @return	void
-	 * @param 	string $file
-	 * @param	bool[optional] $minify
-	 * @param	bool[optional] $parseThroughPHP
+	 * @param 	string $file						The path to the javascript-file that should be loaded.
+	 * @param	bool[optional] $minify				Should the file be minified?
+	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
 	 */
 	public function addJavascript($file, $minify = true, $parseThroughPHP = false)
 	{
@@ -185,7 +184,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * Add data into metacustom
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The string that should be appended to the meta-custom.
 	 */
 	public function addMetaCustom($value)
 	{
@@ -315,7 +314,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * Minify a CSS-file
 	 *
 	 * @return	string
-	 * @param	string $file
+	 * @param	string $file	The file to be minified.
 	 */
 	private function minifyCSS($file)
 	{
@@ -382,7 +381,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * Minify a javascript-file
 	 *
 	 * @return	string
-	 * @param	string $file
+	 * @param	string $file	The file to be minified.
 	 */
 	private function minifyJavascript($file)
 	{
@@ -493,7 +492,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * Set meta-custom
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	Overwrite the meta-custom with this value.
 	 */
 	public function setMetaCustom($value)
 	{
@@ -505,8 +504,8 @@ class FrontendHeader extends FrontendBaseObject
 	 * Set meta-description
 	 *
 	 * @return	void
-	 * @param	string $value
-	 * @param	bool[optional] $overwrite
+	 * @param	string $value				The description to be set or to be appended.
+	 * @param	bool[optional] $overwrite	Should the existing description be overwritten?
 	 */
 	public function setMetaDescription($value, $overwrite = false)
 	{
@@ -533,8 +532,8 @@ class FrontendHeader extends FrontendBaseObject
 	 * Set meta-keywords
 	 *
 	 * @return	void
-	 * @param	string $value
-	 * @param	bool[optional] $overwrite
+	 * @param	string $value				The keywords to be set or to be appended.
+	 * @param	bool[optional] $overwrite	Should the existing keyword be overwritten?
 	 */
 	public function setMetaKeywords($value, $overwrite = false)
 	{
@@ -561,8 +560,8 @@ class FrontendHeader extends FrontendBaseObject
 	 * Set the pagetitle
 	 *
 	 * @return	void
-	 * @param	string $value
-	 * @param	bool[optional] $overwrite
+	 * @param	string $value				The pagetitle to be set or to be prepended.
+	 * @param	bool[optional] $overwrite	Should the existing pagetitle be overwritten?
 	 */
 	public function setPageTitle($value, $overwrite = false)
 	{

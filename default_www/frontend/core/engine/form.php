@@ -1,4 +1,5 @@
 <?php
+// @todo	sync with BackendForm
 
 /**
  * FrontendForm, this is our extended version of SpoonForm.

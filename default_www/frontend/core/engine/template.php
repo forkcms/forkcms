@@ -2,15 +2,11 @@
 
 /**
  * FrontendTemplate, this is our extended version of SpoonTemplate
- *
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
  *	- it will map some modifiers
  *  - it will assign a lot of constants
  * 	- ...
- *
- *
- * This source file is part of Fork CMS.
  *
  * @package		frontend
  * @subpackage	template
@@ -239,7 +235,7 @@ class FrontendTemplateModifiers
 	 *  syntax: {$var|cleanupPlainText}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var		The text to cleanup.
 	 */
 	public static function cleanupPlainText($var)
 	{
@@ -270,7 +266,7 @@ class FrontendTemplateModifiers
 	 *  syntax: {$var|dump}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var		The variable to dump
 	 */
 	public static function dump($var)
 	{
@@ -311,8 +307,8 @@ class FrontendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string $var
-	 * @param	int $pageId
-	 * @param	string[optional] $language
+	 * @param	int $pageId						The id of the page to build the URL for.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
 	public static function getURL($var, $pageId, $language = null)
 	{
@@ -326,9 +322,9 @@ class FrontendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string $var
-	 * @param	string $module
-	 * @param	string[optional] $action
-	 * @param	string[optional] $language
+	 * @param	string $module					The module wherefor the URL should be build.
+	 * @param	string[optional] $action		A specific action wherefor the URL should be build, otherwise the default will be used.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
 	public static function getURLForBlock($var, $module, $action = null, $language = null)
 	{
@@ -341,7 +337,7 @@ class FrontendTemplateModifiers
 	 *  syntax: {$var|timeAgo}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var		A UNIX-timestamp that will be formated as a time-ago-string.
 	 */
 	public static function timeAgo($var = null)
 	{
@@ -362,7 +358,7 @@ class FrontendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string $var
-	 * @param	int $length					The maximum length of the truncated string
+	 * @param	int $length					The maximum length of the truncated string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
@@ -397,8 +393,8 @@ class FrontendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string $var
-	 * @param	string $setting			The name of the setting you want
-	 * @param	int[optional] $userId	The userId, if not set by $var
+	 * @param	string $setting			The name of the setting you want.
+	 * @param	int[optional] $userId	The userId, if not set by $var.
 	 */
 	public static function userSetting($var = null, $setting, $userId = null)
 	{

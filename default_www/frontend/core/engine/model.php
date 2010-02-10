@@ -29,6 +29,7 @@ class FrontendModel
 
 	/**
 	 * Get (or create and get) a database-connection
+	 * @later split the write and read connection
 	 *
 	 * @return	SpoonDatabase
 	 * @param	bool[optional] $write	Do you want the write-connection or not?
@@ -60,9 +61,9 @@ class FrontendModel
 	 * Get a module setting
 	 *
 	 * @return	mixed
-	 * @param	string $module
-	 * @param	string $name
-	 * @param	mixed[optional] $defaultValue
+	 * @param	string $module					The module wherefor a setting has to be retrieved.
+	 * @param	string $name					The name of the setting to be retrieved.
+	 * @param	mixed[optional] $defaultValue	A value that will be stored if the setting isn't present.
 	 */
 	public static function getModuleSetting($module, $name, $defaultValue = null)
 	{
@@ -96,7 +97,7 @@ class FrontendModel
 	 * Get all module settings at once
 	 *
 	 * @return	array
-	 * @param	string $module
+	 * @param	string $module	The module wherefor all settings has to be retrieved.
 	 */
 	public static function getModuleSettings($module)
 	{
@@ -129,7 +130,7 @@ class FrontendModel
 	 * Get all data for a page
 	 *
 	 * @return	array
-	 * @param	int $pageId
+	 * @param	int $pageId		The pageId wherefor the data will be retrieved.
 	 */
 	public static function getPage($pageId)
 	{
@@ -184,8 +185,8 @@ class FrontendModel
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
 	 * @return	string
-	 * @param	string[optional] $format
-	 * @param	int[optional] $timestamp
+	 * @param	string[optional] $format	The format wherin the data will be returned, if not provided we will return it in MySQL-datetime-format.
+	 * @param	int[optional] $timestamp	A UNIX-timestamp that will be used as base.
 	 */
 	public static function getUTCDate($format = null, $timestamp = null)
 	{
@@ -204,12 +205,12 @@ class FrontendModel
 	 * General method to check if something is spam
 	 *
 	 * @return	bool
-	 * @param	string $content
-	 * @param	string $permaLink
-	 * @param	string[optional] $author
-	 * @param	string[optional] $email
-	 * @param	string[optional] $URL
-	 * @param	string[optional] $type
+	 * @param	string $content				The content that was submitted
+	 * @param	string $permalink			The permanent location of the entry the comment was submitted to
+	 * @param	string[optional] $author	Commenters name
+	 * @param	string[optional] $email		Commenters email address
+	 * @param	string[optional] $url		Commenters URL
+	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration"
 	 */
 	public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
 	{
@@ -252,9 +253,9 @@ class FrontendModel
 	 * Store a modulesetting
 	 *
 	 * @return	void
-	 * @param	string $module
-	 * @param	string $name
-	 * @param	mixed $value
+	 * @param	string $module		The module wherefor a setting has to be stored.
+	 * @param	string $name		The name of the setting.
+	 * @param	mixed $value		The value (will be serialized so make sure the type is correct).
 	 */
 	public static function setModuleSetting($module, $name, $value)
 	{

@@ -2,7 +2,6 @@
 
 /**
  * FrontendJavascript
- *
  * This class will handle files JS-files that have to be parsed by PHP
  *
  * @package		frontend
@@ -44,7 +43,7 @@ class FrontendJavascript
 	 */
 	public function __construct()
 	{
-		// define the Named appliation
+		// if the application wasn't defined before we will define it
 		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'frontend');
 
 		// set the module
@@ -105,7 +104,7 @@ class FrontendJavascript
 	 * Set file
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The file to load.
 	 */
 	private function setFile($value)
 	{

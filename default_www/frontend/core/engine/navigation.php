@@ -30,7 +30,7 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
-	 * Class constructor.
+	 * Default constructor.
 	 *
 	 * @return	void
 	 */
@@ -48,12 +48,12 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Creates the HTML for the menu
 	 *
 	 * @return	string
-	 * @param	string[optional] $type
-	 * @param	int[optional] $parentId
-	 * @param	int[optional] $depth
-	 * @param	array[optional] $excludedIds
-	 * @param	string[optional] $HTML
-	 * @param	int[optional] $depthCounter
+	 * @param	string[optional] $type			The type of navigation the HTML should be build for.
+	 * @param	int[optional] $parentId			The parentID to start of.
+	 * @param	int[optional] $depth			The maximum depth to parse.
+	 * @param	array[optional] $excludedIds	PageIDs to be excluded.
+	 * @param	string[optional] $HTML			The already build HTML.
+	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
 	 */
 	private static function createHTML($type = 'page', $parentId = 0, $depth = null, $excludedIds = array(), $HTML = '', $depthCounter = 1)
 	{
@@ -84,7 +84,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// loop elements
 		foreach($navigation[$type][$parentId] as $page)
 		{
-			// some Ids should be excluded
+			// some ids should be excluded
 			if(in_array($page['page_id'], $excludedIds)) continue;
 
 			// if the item is in the selected page it should get an selected class
@@ -134,7 +134,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get the first child for a given parent
 	 *
 	 * @return	mixed
-	 * @param	int $pageId
+	 * @param	int $pageId		The pageID wherefor we should retrieve the first child.
 	 */
 	public static function getFirstChildId($pageId)
 	{
@@ -204,6 +204,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get the page-keys
 	 *
 	 * @return	array
+	 * @param	string[optional] $language	The language wherefor the navigation should be loaded, if not provided we will load the language that was provided in the URL.
 	 */
 	public static function getKeys($language = null)
 	{
@@ -226,6 +227,7 @@ class FrontendNavigation extends FrontendBaseObject
 			self::$keys[$language] = $keys;
 		}
 
+		// return from cache
 		return self::$keys[$language];
 	}
 
@@ -234,7 +236,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get the navigation-items
 	 *
 	 * @return	array
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language	The language wherefor the keys should be loaded, if not provided we will load the language that was provided in the URL.
 	 */
 	public static function getNavigation($language = null)
 	{
@@ -266,10 +268,10 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get navigation HTML
 	 *
 	 * @return	string
-	 * @param	string[optional] $type
-	 * @param	int[optional] $parentId
-	 * @param	int[optional] $depth
-	 * @param	array[optional] $excludeIds
+	 * @param	string[optional] $type			The type of navigation the HTML should be build for.
+	 * @param	int[optional] $parentId			The parentID to start of.
+	 * @param	int[optional] $depth			The maximum depth to parse.
+	 * @param	array[optional] $excludedIds	PageIDs to be excluded.
 	 */
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array())
 	{
@@ -281,8 +283,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get a menuId for an specified URL
 	 *
 	 * @return	int
-	 * @param 	string $URL
-	 * @param	string[optional] $language
+	 * @param 	string $URL						The URL wherfor you want a pageID.
+	 * @param	string[optional] $language		The language wherefor the pageID should be retrieved, if not provided we will load the language that was provided in the URL.
 	 */
 	public static function getPageId($URL, $language = null)
 	{
@@ -308,7 +310,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get more info about a page
 	 *
 	 * @return	mixed
-	 * @param	int $pageId
+	 * @param	int $pageId		The pageID wherefor you want more information.
 	 */
 	public static function getPageInfo($pageId)
 	{
@@ -347,8 +349,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get URL for a given pageId
 	 *
 	 * @return	string
-	 * @param	int $pageId
-	 * @param	string[optional] $language
+	 * @param	int $pageId						The pageID wherefor you want the URL.
+	 * @param	string[optional] $language		The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
 	 */
 	public static function getURL($pageId, $language = null)
 	{
@@ -377,9 +379,9 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Get the URL for a give module & action combination
 	 *
 	 * @return	string
-	 * @param	string $module
-	 * @param	string[optional] $action
-	 * @param	string[optional] $language
+	 * @param	string $module					The module wherefor the URL should be build.
+	 * @param	string[optional] $action		The specific action wherefor the URL shoul be build.
+	 * @param	string[optional] $language		The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
 	 */
 	public static function getURLForBlock($module, $action = null, $language = null)
 	{
@@ -444,6 +446,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// fallback
 		return self::getURL(404);
 	}
+
 
 	/**
 	 * Set the selected page ids

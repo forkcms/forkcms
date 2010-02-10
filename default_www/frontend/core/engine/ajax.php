@@ -2,7 +2,6 @@
 
 /**
  * FrontendAJAX
- *
  * This class will handle AJAX-related stuff
  *
  * @package		frontend
@@ -97,7 +96,7 @@ class FrontendAJAX
 	 * Set action
 	 *
 	 * @return	void
-	 * @param	string $value	The action that should be executed
+	 * @param	string $value	The action that should be executed.
 	 */
 	public function setAction($value)
 	{
@@ -109,7 +108,7 @@ class FrontendAJAX
 	 * Set the language
 	 *
 	 * @return	void
-	 * @param	string $value	The (interface-)language, will be used to parse labels
+	 * @param	string $value	The (interface-)language, will be used to parse labels.
 	 */
 	public function setLanguage($value)
 	{
@@ -132,7 +131,7 @@ class FrontendAJAX
 	 * Set module
 	 *
 	 * @return	void
-	 * @param	string $value	The module, wherefore an action will be executed
+	 * @param	string $value	The module, wherefore an action will be executed.
 	 */
 	public function setModule($value)
 	{
@@ -179,7 +178,7 @@ class FrontendAJAXAction
 
 
 	/**
-	 * Class constructor.
+	 * Default constructor.
 	 * You have to specify the action and module so we know what to do with this instance.
 	 *
 	 * @return	void
@@ -283,7 +282,7 @@ class FrontendAJAXAction
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action	The action that should be executed
+	 * @param	string $action	The action that should be executed.
 	 */
 	private function setAction($action)
 	{
@@ -295,7 +294,7 @@ class FrontendAJAXAction
 	 * Set the module
 	 *
 	 * @return	void
-	 * @param	string $module	The module wherin the action is available
+	 * @param	string $module	The module wherin the action is available.
 	 */
 	private function setModule($module)
 	{

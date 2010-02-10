@@ -2,7 +2,6 @@
 
 /**
  * FrontendFooter
- *
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
  *
  * @package		frontend

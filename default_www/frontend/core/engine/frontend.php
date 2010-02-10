@@ -2,7 +2,6 @@
 
 /**
  * Frontend
- *
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
  *

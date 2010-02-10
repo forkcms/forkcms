@@ -70,7 +70,7 @@ class FrontendRSSItem extends SpoonRSSItem
 	 * All links and images that link to internal files will be prepended with the sites URL
 	 *
 	 * @return	void
-	 * @param	string $description	The content of the item.
+	 * @param	string $description		The content of the item.
 	 */
 	public function setDescription($description)
 	{
@@ -112,7 +112,7 @@ class FrontendRSSItem extends SpoonRSSItem
 	 * If the link is an internal link the sites URL will be prepended.
 	 *
 	 * @return	void
-	 * @param	string $link	The link for the item
+	 * @param	string $link	The link for the item.
 	 */
 	public function setLink($link)
 	{
