@@ -2,9 +2,7 @@
 
 /**
  * FrontendTagsModel
- *
  * In this file we store all generic functions
- *
  *
  * @package		frontend
  * @subpackage	tags
@@ -36,8 +34,8 @@ class FrontendTagsModel
 	 * Get tags for an item
 	 *
 	 * @return	array
-	 * @param	string $module
-	 * @param	int $otherId
+	 * @param	string $module		The module wherin the otherId occurs.
+	 * @param	int $otherId		The id of the item.
 	 */
 	public static function getForItem($module, $otherId)
 	{

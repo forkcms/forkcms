@@ -6,4 +6,4 @@
 	</ul>
 {/option:tags}
 
-{option:!tags}Er zijn nog géén tags{/option:!tags}
+{option:!tags}<!-- @todo label -->Er zijn nog géén tags{/option:!tags}

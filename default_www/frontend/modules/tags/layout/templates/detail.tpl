@@ -35,6 +35,7 @@
 	</div>
 
 	{option:blogComments}
+	<!-- Comments -->
 	<div class="comments">
 		<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
 
@@ -57,6 +58,7 @@
 	{/option:blogComments}
 
 	{option:blogArticle['allow_comments']}
+	<!-- Commentform -->
 	<div class="commentForm">
 		<h3 id="{$actReact}">{$lblReact|ucfirst}</h3>
 
