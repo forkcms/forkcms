@@ -23,7 +23,13 @@ class BackendBlogModel
 											LEFT OUTER JOIN blog_posts AS p ON p.category_id = c.id
 											WHERE c.language = ? AND (p.status = "active" OR p.status IS NULL)
 											GROUP BY c.id';
-	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT id, UNIX_TIMESTAMP(created_on) AS created_on, author, text FROM blog_comments WHERE status = ?;';
+	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT bc.id, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.author, bc.text,
+											bp.id AS post_id, bp.title AS post_title, m.url AS post_url
+											FROM blog_comments AS bc
+											INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
+											INNER JOIN meta AS m ON bp.meta_id = m.id
+											WHERE bc.status = ?
+											GROUP BY bc.id;';
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
 											FROM blog_posts AS p
 											WHERE p.status = ? AND p.id = ?
@@ -32,6 +38,7 @@ class BackendBlogModel
 											FROM blog_posts AS p
 											WHERE p.status = ? AND p.id = ? AND p.user_id = ?
 											ORDER BY p.edited_on DESC;';
+
 
 	/**
 	 * Checks the settings and optionally returns an array with warnings
@@ -114,9 +121,18 @@ class BackendBlogModel
 		// get db
 		$db = BackendModel::getDB(true);
 
+		// get blogpost ids
+		$postIds = (array) $db->getColumn('SELECT post_id
+											FROM blog_comments
+											WHERE id IN('. implode(',', $ids) .');');
+
 		// update record
 		$db->execute('DELETE FROM blog_comments
 						WHERE id IN('. implode(',', $ids) .');');
+
+
+		// recalculate the comment count
+		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
 	}
 
 
@@ -505,6 +521,13 @@ class BackendBlogModel
 	}
 
 
+	/**
+	 * Insert a draft
+	 *
+	 * @return	int
+	 * @param	int $id			The id of the blogpost.
+	 * @param	array $item		The item to insert.
+	 */
 	public static function insertDraft($id, array $item)
 	{
 		// get db
@@ -525,6 +548,49 @@ class BackendBlogModel
 		return $newId;
 
 	}
+
+
+	/**
+	 * Recalculate the commentcount
+	 *
+	 * @return	bool
+	 * @param	array $ids	The id(s) of the post wherefor the commentcount should be recalculated.
+	 */
+	public static function reCalculateCommentCount(array $ids)
+	{
+		// init var
+		$uniqueIds = array();
+
+		// make unique ids
+		foreach($ids as $id) if(!in_array($id, $uniqueIds)) $uniqueIds[] = $id;
+
+		// validate
+		if(empty($uniqueIds)) return false;
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get counts
+		$commentCounts = (array) $db->getPairs('SELECT bc.post_id, COUNT(bc.id) AS comment_count
+												FROM blog_comments AS bc
+												WHERE bc.status = ? AND bc.post_id IN('. implode(',', $uniqueIds) .')
+												GROUP BY bc.post_id;',
+												array('published'));
+
+		// loop posts
+		foreach($uniqueIds as $id)
+		{
+			// get count
+			$count = (isset($commentCounts[$id])) ? (int) $commentCounts[$id] : 0;
+
+			// update
+			$db->update('blog_posts', array('num_comments' => $count), 'id = ?', array($id));
+		}
+
+		// return
+		return true;
+	}
+
 
 
 	/**
@@ -606,9 +672,19 @@ class BackendBlogModel
 		$db = BackendModel::getDB(true);
 
 		// @later	if the new status is spam, we should submit it to Akismet!
+		// get blogpost ids
+		$postIds = (array) $db->getColumn('SELECT post_id
+											FROM blog_comments
+											WHERE id IN('. implode(',', $ids) .');');
 
 		// update record
-		$db->execute('UPDATE blog_comments SET status = ? WHERE id IN('. implode(',', $ids) .');', $status);
+		$db->execute('UPDATE blog_comments
+						SET status = ?
+						WHERE id IN('. implode(',', $ids) .');',
+						$status);
+
+		// recalculate the comment count
+		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
 	}
 }
 

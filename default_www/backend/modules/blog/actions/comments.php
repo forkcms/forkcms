@@ -22,6 +22,32 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 
 	/**
+	 * Add postdata into the comment
+	 *
+	 * @return	string
+	 * @param 	string $text	The comment.
+	 * @param	string $title	The title for the blogarticle.
+	 * @param	string $URL		The URL for the blogarticle.
+	 */
+	public static function addPostData($text, $title, $URL)
+	{
+		// redefine
+		$text = (string) $text;
+		$title = (string) $title;
+		$URL = (string) $URL;
+
+		// reset URL
+		$URL = BackendModel::getURLForBlock('blog', 'detail') .'/'. $URL;
+
+		$HTML = '<p><em>'. sprintf(BL::getMessage('CommentOnWithURL'), $URL, $title) .'</em></p>'."\n";
+		$HTML .= $text;
+
+		// return
+		return $HTML;
+	}
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -101,7 +127,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setActiveTab('tabPublished');
 
 		// num items per page
-		$this->dgPublished->setPagingLimit(5);
+		$this->dgPublished->setPagingLimit(30);
 
 		// header labels
 		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
@@ -112,25 +138,29 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->addColumn('move');
 
 		// assign column functions
-		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
 		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('published', '[id]'), 'move', true);
+		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
+		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
+
+		// sorting
 		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');
+
+		// hide columns
+		$this->dgPublished->setColumnsHidden('post_title', 'post_url');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('action', array('moderation' => BL::getLabel('MoveToModeration'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'spam');
 		$this->dgPublished->setMassAction($ddmMassAction);
 
-		/*
-		 * Datagrid for the comments that are awaiting moderation
-		 */
+		// datagrid for the comments that are awaiting moderation
 		$this->dgModeration = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'moderation');
 
 		// active tab
 		$this->dgModeration->setActiveTab('tabModeration');
 
 		// num items per page
-		$this->dgModeration->setPagingLimit(5);
+		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
 		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
@@ -141,10 +171,16 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->addColumn('move');
 
 		// assign column functions
-		$this->dgModeration->setColumnFunction('nl2br', '[text]', 'text', true);
 		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('moderation', '[id]'), 'move', true);
+		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
+		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
+
+		// sorting
 		$this->dgModeration->setSortingColumns(array('created_on', 'text'), 'text');
+
+		// hide columns
+		$this->dgModeration->setColumnsHidden('post_title', 'post_url');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'published');
@@ -159,7 +195,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setActiveTab('tabSpam');
 
 		// num items per page
-		$this->dgSpam->setPagingLimit(5);
+		$this->dgSpam->setPagingLimit(30);
 
 		// header labels
 		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
@@ -170,10 +206,16 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->addColumn('move');
 
 		// assign column functions
-		$this->dgSpam->setColumnFunction('nl2br', '[text]', 'text', true);
 		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('spam', '[id]'), 'move', true);
+		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
+		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
+
+		// sorting
 		$this->dgSpam->setSortingColumns(array('created_on', 'text'), 'text');
+
+		// hide columns
+		$this->dgSpam->setColumnsHidden('post_title', 'post_url');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'moderation' => BL::getLabel('MoveToModeration'), 'delete' => BL::getLabel('Delete')), 'published');
