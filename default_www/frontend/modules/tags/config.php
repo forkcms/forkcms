@@ -10,7 +10,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class FrontendTagsConfig extends FrontendBaseConfig
+final class FrontendTagsConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action

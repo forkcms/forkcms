@@ -21,8 +21,8 @@ class FrontendBlogIndex extends FrontendBaseBlock
 
 
 	/**
-	 * The pagination array.
-	 * It will hold all needed parameters, some of them need initialization
+	 * The pagination array
+	 * It will hold all needed parameters, some of them need initialization.
 	 *
 	 * @var	array
 	 */

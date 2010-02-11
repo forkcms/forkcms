@@ -116,6 +116,7 @@ class FrontendBlogRss extends FrontendBaseBlock
 				$description .= '.</p>'."\n";
 			}
 
+			// end HTML
 			$description .= '</div>'."\n";
 
 			// create new instance
@@ -128,13 +129,11 @@ class FrontendBlogRss extends FrontendBaseBlock
 
 			// add item
 			$rss->addItem($rssItem);
-
-			// add item
-			$rss->addItem($rssItem);
 		}
 
 		// output
 		$rss->parse();
 	}
 }
+
 ?>

@@ -2,7 +2,6 @@
 
 /**
  * FrontendSitemapConfig
- *
  * This is the configuration-object
  *
  * @package		frontend
@@ -11,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendSitemapConfig extends FrontendBaseConfig
+final class FrontendSitemapConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action

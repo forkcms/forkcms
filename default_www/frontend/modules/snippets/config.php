@@ -1,7 +1,7 @@
 <?php
+
 /**
  * FrontendSnippetsConfig
- *
  * This is the configuration-object
  *
  * @package		frontend
@@ -10,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendSnippetsConfig extends FrontendBaseConfig
+final class FrontendSnippetsConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action
@@ -27,4 +27,5 @@ class FrontendSnippetsConfig extends FrontendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
+
 ?>

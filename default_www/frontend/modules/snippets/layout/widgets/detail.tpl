@@ -8,7 +8,10 @@
 			{$snippet|dump}
 		</div>
 	{/option:snippet['is1']}
- *}
+
+	variables that are available:
+	- {$snippet}: contains the content for the snippet
+*}
 
 {option:snippet}
 	<div class="widget">

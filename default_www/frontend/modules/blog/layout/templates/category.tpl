@@ -1,3 +1,9 @@
+{*
+	variables that are available:
+	- {$blogCategory}: contains data about the category
+	- {$blogArticles}: contains an array with all posts, each element contains data about the post
+*}
+
 <div id="blog" class="index">
 	<h2>{$blogCategory['name']}</h2>
 

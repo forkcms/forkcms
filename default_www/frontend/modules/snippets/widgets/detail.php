@@ -2,7 +2,6 @@
 
 /**
  * FrontendSnippetsDetail
- *
  * This is the detail-action
  *
  * @package		frontend
@@ -19,6 +18,7 @@ class FrontendSnippetsWidgetDetail extends FrontendBaseWidget
 	 * @var	array
 	 */
 	private $snippet;
+
 
 	/**
 	 * Execute the extra
@@ -60,7 +60,7 @@ class FrontendSnippetsWidgetDetail extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		// assign
+		// assign if the snippet isn't empty
 		if(!empty($this->snippet))
 		{
 			// add an extra item so we can use it as an option

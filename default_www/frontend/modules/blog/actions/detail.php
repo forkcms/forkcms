@@ -2,7 +2,6 @@
 
 /**
  * FrontendBlogDetail
- *
  * This is the detail-action
  *
  * @package		frontend
@@ -91,7 +90,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// get data
 			$this->record = FrontendBlogModel::getDraft($this->URL->getParameter(1), $this->URL->getParameter('draft', 'int'));
 
-			// add met custom
+			// add no-index into meta-custom, so the draft don't get accidentally indexed
 			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
 		}
 
@@ -290,4 +289,5 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		}
 	}
 }
+
 ?>

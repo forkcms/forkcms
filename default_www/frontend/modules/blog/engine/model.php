@@ -2,15 +2,14 @@
 
 /**
  * FrontendBlogModel
- *
  * In this file we store all generic functions that we will be using in the blog module
- *
  *
  * @package		frontend
  * @subpackage	blog
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBlogModel
@@ -19,7 +18,7 @@ class FrontendBlogModel
 	 * Add a comment
 	 *
 	 * @return	int
-	 * @param	array $comment
+	 * @param	array $comment	The comment to add.
 	 */
 	public static function addComment(array $comment)
 	{
@@ -30,7 +29,10 @@ class FrontendBlogModel
 		$insertId = (int) $db->insert('blog_comments', $comment);
 
 		// increment comment_count
-		$db->execute('UPDATE blog_posts SET num_comments = num_comments + 1 WHERE id = ?;', $comment['post_id']);
+		$db->execute('UPDATE blog_posts
+						SET num_comments = num_comments + 1
+						WHERE id = ?;',
+						$comment['post_id']);
 
 		// return comment id
 		return $insertId;
@@ -41,7 +43,7 @@ class FrontendBlogModel
 	 * Get an article
 	 *
 	 * @return	array
-	 * @param	string $URL
+	 * @param	string $URL		The URL for the article.
 	 */
 	public static function get($URL)
 	{
@@ -73,8 +75,8 @@ class FrontendBlogModel
 	 * Get all blogposts (at least a chunk)
 	 *
 	 * @return	array
-	 * @param	int[optional] $limit
-	 * @param	int[optional] $offset
+	 * @param	int[optional] $limit		The number of articles to get.
+	 * @param	int[optional] $offset		The offset.
 	 */
 	public static function getAll($limit = 10, $offset = 0)
 	{
@@ -139,9 +141,9 @@ class FrontendBlogModel
 	 * Get all blogposts (at least a chunk)
 	 *
 	 * @return	array
-	 * @param	string $categoryURL
-	 * @param	int[optional] $limit
-	 * @param	int[optional] $offset
+	 * @param	string $categoryURL		The URL of the category to retrieve the posts for.
+	 * @param	int[optional] $limit	The number of articles to get.
+	 * @param	int[optional] $offset	The offset.
 	 */
 	public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
 	{
@@ -243,6 +245,7 @@ class FrontendBlogModel
 	 * Get the number of blog post in a given category
 	 *
 	 * @return	int
+	 * @param	string $URL		The URL for the category.
 	 */
 	public static function getAllForCategoryCount($categoryURL)
 	{
@@ -265,7 +268,7 @@ class FrontendBlogModel
 	 * Get the comments for an article
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The ID of the blogpost to get the comments for.
 	 */
 	public static function getComments($id)
 	{
@@ -289,8 +292,8 @@ class FrontendBlogModel
 	 * Get a draft for an article
 	 *
 	 * @return	array
-	 * @param	string $URL
-	 * @param	int $draft
+	 * @param	string $URL		The URL for the article to get.
+	 * @param	int $draft		The draftID.
 	 */
 	public static function getDraft($URL, $draft)
 	{
@@ -318,11 +321,12 @@ class FrontendBlogModel
 										array('draft', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00', $draft, $URL));
 	}
 
+
 	/**
 	 * Get recent comments
 	 *
 	 * @return	array
-	 * @param	int $limit
+	 * @param	int $limit	The number of comments to get.
 	 */
 	public static function getRecentComments($limit = 5)
 	{
@@ -373,8 +377,8 @@ class FrontendBlogModel
 	 * Get moderation status for an author
 	 *
 	 * @return	bool
-	 * @param	string $author
-	 * @param	string $email
+	 * @param	string $author	The name for the author.
+	 * @param	string $email	The emailaddress for the author.
 	 */
 	public static function isModerated($author, $email)
 	{

@@ -1,3 +1,9 @@
+{*
+	variables that are available:
+	- {$tags}: contains an array with all tags that are used on the site, each element contains data about the tag
+*}
+
+{option:!tags}<div class="message warning"><p>{$msgTagsNoItems}</p></div>{/option:!tags}
 {option:tags}
 	<ul>
 		{iteration:tags}
@@ -5,5 +11,3 @@
 		{/iteration:tags}
 	</ul>
 {/option:tags}
-
-{option:!tags}<!-- @todo label -->Er zijn nog géén tags{/option:!tags}

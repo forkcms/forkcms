@@ -1,7 +1,7 @@
 <?php
+
 /**
  * FrontendBlogConfig
- *
  * This is the configuration-object
  *
  * @package		frontend
@@ -27,4 +27,5 @@ final class FrontendBlogConfig extends FrontendBaseConfig
 	 */
 	protected $disabledActions = array();
 }
+
 ?>

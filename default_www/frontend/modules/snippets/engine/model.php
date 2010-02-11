@@ -2,14 +2,13 @@
 
 /**
  * FrontendSnippetsModel
- *
- * In this file we store all generic functions that we will be using in the blog module
- *
+ * In this file we store all generic functions that we will be using in the snippets module
  *
  * @package		frontend
  * @subpackage	snippets
  *
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendSnippetsModel
@@ -18,7 +17,7 @@ class FrontendSnippetsModel
 	 * Get a snippet
 	 *
 	 * @return	array
-	 * @param	string $id
+	 * @param	string $id	The id of the snippet to fetch
 	 */
 	public static function get($id)
 	{

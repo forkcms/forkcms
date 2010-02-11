@@ -1,3 +1,8 @@
+{*
+	variables that are available:
+	- {$blogArticles}: contains an array with all posts, each element contains data about the post
+*}
+
 <div id="blog" class="index">
 	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItems}</p></div>{/option:!blogArticles}
 	{option:blogArticles}
@@ -9,7 +14,7 @@
 					</a>
 				</h2>
 				<p class="date">
-					{$blogArticles.publish_on|date:'j F Y':{$LANGUAGE}}
+					{$blogArticles.publish_on|date:'j F Y H:i:s':{$LANGUAGE}}
 				</p>
 
 				<div class="content">

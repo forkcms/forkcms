@@ -29,12 +29,12 @@ class FrontendBlogCategory extends FrontendBaseBlock
 
 
 	/**
-	 * The pagination array.
+	 * The pagination array
 	 * It will hold all needed parameters, some of them need initialization
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
+	protected $pagination = array('limit' => 1, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
 
 	/**
@@ -70,18 +70,20 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$possibleCategories = array();
 		foreach($categories as $category) $possibleCategories[$category['url']] = $category['id'];
 
-		// requested page
+		// requested category
 		$requestedCategory = SpoonFilter::getValue($this->URL->getParameter(1, 'string'), array_keys($possibleCategories), 'false');
-		$requestedPage = $this->URL->getParameter(2, 'int');
+
+		// requested page
+		$requestedPage = $this->URL->getParameter('page', 'int');
+
+		// no page given
+		if($requestedPage === null) $requestedPage = 1;
 
 		// set category
 		$this->category = $categories[$possibleCategories[$requestedCategory]];
 
 		// validate category
 		if($requestedCategory == 'false') $this->redirect(FrontendNavigation::getURL(404));
-
-		// no page given
-		if($requestedPage === null) $requestedPage = 1;
 
 		// set URL
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $requestedCategory;
@@ -134,4 +136,5 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->parsePagination();
 	}
 }
+
 ?>

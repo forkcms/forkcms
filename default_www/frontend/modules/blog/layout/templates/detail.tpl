@@ -1,3 +1,9 @@
+{*
+	variables that are available:
+	- {$blogArticle}: contains data about the post
+	- {$blogComments}: contains an array with the comments for the post, each element contains data about the comment.
+*}
+
 <div id="blog" class="detail">
 	<div class="article">
 		<h1>
