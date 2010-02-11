@@ -2,7 +2,6 @@
 
 /**
  * BackendUsersDelete
- *
  * This is the delete-action, it will deactivate and set the user as deleted
  *
  * @package		backend
@@ -43,4 +42,5 @@ class BackendUsersDelete extends BackendBaseActionDelete
 		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 }
+
 ?>

@@ -3,6 +3,15 @@ GENERAL TODO
 	general:
 		- installer
 		- check if we use not-UTF8-safe functions
+		- cronjob system
+		- frontend-mailer
+		
+	check:
+		- core
+		- pages
+		- blog
+		- dashboard
+		
 
 ONSITE TODO
 -- 
@@ -10,8 +19,6 @@ ONSITE TODO
 PRIVATE TODO
 --
 	noscript error
-
-	dashboard:
 
 	general:
 		- autosave

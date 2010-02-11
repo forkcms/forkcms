@@ -2,13 +2,13 @@
 
 /**
  * BackendSnippetsAdd
- *
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
  * @subpackage	snippets
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSnippetsAdd extends BackendBaseActionAdd

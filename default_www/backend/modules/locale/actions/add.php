@@ -2,7 +2,6 @@
 
 /**
  * BackendLocaleAdd
- *
  * This is the add action, it will display a form to add an item to the locale.
  *
  * @package		backend

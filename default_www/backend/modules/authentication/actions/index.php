@@ -2,7 +2,6 @@
 
 /**
  * BackendAuthenticationIndex
- *
  * This is the index-action (default), it will display the login screen
  *
  * @package		backend

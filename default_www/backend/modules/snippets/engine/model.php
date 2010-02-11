@@ -2,14 +2,13 @@
 
 /**
  * BackendSnippetsModel
- *
  * In this file we store all generic functions that we will be using in the SnippetsModule
- *
  *
  * @package		backend
  * @subpackage	snippets
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSnippetsModel
@@ -31,7 +30,7 @@ class BackendSnippetsModel
 	 * Delete a snippets-item
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The id of the record to delete.
 	 */
 	public static function delete($id)
 	{
@@ -50,8 +49,8 @@ class BackendSnippetsModel
 	 * Does the snippets-item exists
 	 *
 	 * @return	bool
-	 * @param	int $id
-	 * @param	bool[optional] $activeOnly
+	 * @param	int $id							The id of the record to check for existence.
+	 * @param	bool[optional] $activeOnly		Only check in active items?
 	 */
 	public static function exists($id, $activeOnly = true)
 	{
@@ -80,7 +79,7 @@ class BackendSnippetsModel
 	 * Get all data for a given id
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The ID for the record to get.
 	 */
 	public static function get($id)
 	{
@@ -103,8 +102,8 @@ class BackendSnippetsModel
 	 * Get all data for a given revision
 	 *
 	 * @return	array
-	 * @param	int $id
-	 * @param	int $revisionId
+	 * @param	int $id				The Id for the item wherefor you want a revision.
+	 * @param	int $revisionId		The Id of the revision.
 	 */
 	public static function getRevision($id, $revisionId)
 	{
@@ -125,10 +124,10 @@ class BackendSnippetsModel
 
 
 	/**
-	 * Add a new spotlight-item
+	 * Add a new snippet-item
 	 *
 	 * @return	int
-	 * @param	array $values
+	 * @param	array $values		The data to insert.
 	 */
 	public static function insert(array $values)
 	{
@@ -168,11 +167,11 @@ class BackendSnippetsModel
 
 
 	/**
-	 * Update an existing spotlight-item
+	 * Update an existing snippet-item
 	 *
 	 * @return	int
-	 * @param	int $id
-	 * @param	array $values
+	 * @param	int $id				The Id for the item to update.
+	 * @param	array $values		The new data.
 	 */
 	public static function update($id, array $values)
 	{

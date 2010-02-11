@@ -2,7 +2,6 @@
 
 /**
  * BackendSettingsModel
- *
  * In this file we store all generic functions that we will be using in the SettingsModule
  *
  *
@@ -10,6 +9,7 @@
  * @subpackage	settings
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSettingsModel
@@ -103,7 +103,6 @@ class BackendSettingsModel
 
 		return (array) $warnings;
 	}
-
 }
 
 ?>

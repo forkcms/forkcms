@@ -6,8 +6,8 @@
 			</div>
 
 			<div class="inner">
-				<!-- temp code -->
-				
+				<!-- @todo tijs check me -->
+
 					<script type="text/javascript" charset="utf-8">
 						$(document).ready(function() {
 
@@ -26,12 +26,12 @@
 								});
 								group.height(tallest);
 							}
-							
+
 							equalHeight($(".datafilter tbody .options"));
 						});
-						
+
 					</script>
-					
+
 
 					<div class="datagridHolder">
 						<div class="tableHeading">
@@ -40,7 +40,7 @@
 								<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span><span><span>{$lblAddTranslation|ucfirst}</span></span></span></a>
 							</div>
 						</div>
-						
+
 						{form:filter}
 						<div class="datafilter">
 							<table>
@@ -118,7 +118,7 @@
 							</table>
 						</div>
 						{/form:filter}
-						
+
 						{option:datagrid}
 						<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="massLocaleAction">
 							<input type="hidden" name="offset" value="{$offset}" />
@@ -134,9 +134,10 @@
 						</form>
 						{/option:datagrid}
 					</div>
-					
+
 
 					{option:!datagrid}
+					<!-- @todo check me plz. -->
 					<div class="datagridHolder">
 						<div class="tableHeading">
 							<h3>{$lblTranslations|ucfirst}</h3>
@@ -153,7 +154,7 @@
 					{/option:!datagrid}
 				</div>
 			</div>
-			
+
 		</td>
 	</tr>
 </table>

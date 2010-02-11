@@ -616,6 +616,14 @@ class BackendBaseConfig
 
 
 	/**
+	 * The current loaded module
+	 *
+	 * @var	string
+	 */
+	protected $module;
+
+
+	/**
 	 * All the possible actions
 	 *
 	 * @var	array
@@ -635,11 +643,33 @@ class BackendBaseConfig
 	 * Default constructor
 	 *
 	 * @return	void
+	 * @param	string $module	The module wherefor this is the configuration-file.
 	 */
-	public function __construct()
+	public function __construct($module)
 	{
+		// set module
+		$this->module = (string) $module;
+
+		// check if model exists
+		if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php'))
+		{
+			// the model exists, so we require it
+			require_once BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php';
+		}
+
 		// read the possible actions based on the files
 		$this->setPossibleActions();
+	}
+
+
+	/**
+	 * Get the current loaded module
+	 *
+	 * @return	string
+	 */
+	public function getModule()
+	{
+		return $this->module;
 	}
 
 

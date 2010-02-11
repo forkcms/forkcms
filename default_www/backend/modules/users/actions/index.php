@@ -2,7 +2,6 @@
 
 /**
  * BackendUsersIndex
- *
  * This is the index-action (default), it will display the users-overview
  *
  * @package		backend
@@ -54,7 +53,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Parse the datagrid and the reports
+	 * Parse the datagrid
 	 *
 	 * @return	void
 	 */

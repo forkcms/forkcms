@@ -25,13 +25,13 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
 		$categoryName = trim(SpoonFilter::getPostValue('category_name', null, '', 'string'));
 
 		// validate
-		if($categoryName == '') $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'no category_name provided');
+		if($categoryName == '') $this->output(self::BAD_REQUEST, null, 'no category_name provided');
 
 		// get existing id
 		$existingId = BackendBlogModel::getCategoryId($categoryName);
 
 		// existing category
-		if($existingId !== 0) $this->output(BackendBaseAJAXAction::OK, array('id' => $existingId), 'category exists');
+		if($existingId !== 0) $this->output(self::OK, array('id' => $existingId), 'category exists');
 
 		// build array
 		$category = array();
@@ -43,8 +43,8 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
 		$id = BackendBlogModel::insertCategory($category);
 
 		// output
-		if($id !== 0) $this->output(BackendBaseAJAXAction::OK, array('new_id' => $id), 'category added');
-		else $this->output(BackendBaseAJAXAction::ERROR, null, 'adding category failed');
+		if($id !== 0) $this->output(self::OK, array('new_id' => $id), 'category added');
+		else $this->output(self::ERROR, null, 'adding category failed');
 	}
 }
 

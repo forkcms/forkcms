@@ -70,8 +70,6 @@ class BackendWidgetAnalyse extends BackendBaseWidget
 		// assign warnings
 		$this->tpl->assign('warnings', $warnings);
 	}
-
-
 }
 
 ?>

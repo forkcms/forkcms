@@ -2,7 +2,6 @@
 
 /**
  * BackendLocaleIndex
- *
  * This is the index-action, it will display the overview of language labels
  *
  * @package		backend
@@ -17,7 +16,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	/**
 	 * Filter variables
 	 *
-	 * @var	arra
+	 * @var	array
 	 */
 	private $filter;
 
@@ -67,13 +66,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// init var
 		$parameters = array();
 
-		// start query
-		$query = 'SELECT l.id, l.language,
-						l.application,
-						l.module,
-						l.type,
-						l.name,
-						l.value
+		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
+		// wherin we allow the query to be in the actionfile itself
+		$query = 'SELECT l.id, l.language, l.application, l.module, l.type, l.name, l.value
 						FROM locale AS l
 						WHERE 1';
 
@@ -124,7 +119,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Load the datagrids.
+	 * Load the datagrids
 	 *
 	 * @return void
 	 */

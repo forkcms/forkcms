@@ -2,7 +2,6 @@
 
 /**
  * BackendLocaleEdit
- *
  * This is the edit action, it will display a form to edit an existing locale item.
  *
  * @package		backend
@@ -16,7 +15,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	/**
 	 * Filter variables
 	 *
-	 * @var	arra
+	 * @var	array
 	 */
 	private $filter;
 
@@ -108,6 +107,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		// assign id, name
 		$this->tpl->assign('id', $this->record['id']);
 	}
+
 
 	/**
 	 * Sets the filter based on the $_GET array.

@@ -2,9 +2,7 @@
 
 /**
  * BackendUserModel
- *
  * In this file we store all generic functions that we will be using in the UsersModule
- *
  *
  * @package		backend
  * @subpackage	users
@@ -24,7 +22,7 @@ class BackendUsersModel
 	 * Mark the user as deleted and reset the active-status
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The userId to delete.
 	 */
 	public static function delete($id)
 	{
@@ -43,12 +41,12 @@ class BackendUsersModel
 	 * Deletes the reset_password_key and reset_password_timestamp for a given user ID
 	 *
 	 * @return	void
-	 * @param int $userId
+	 * @param	int $id		The userId wherfore the reset-stuff should be deleted.
 	 */
-	public static function deleteResetPasswordSettings($userId)
+	public static function deleteResetPasswordSettings($id)
 	{
 		// redefine
-		$userId = (int) $userId;
+		$id = (int) $id;
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -62,8 +60,8 @@ class BackendUsersModel
 	 * Does the user exist
 	 *
 	 * @return	bool
-	 * @param	int $id
-	 * @param	bool[optional] $active
+	 * @param	int $id						The userId to check for existance.
+	 * @param	bool[optional] $active		Should the user be active also?
 	 */
 	public static function exists($id, $active = true)
 	{
@@ -92,7 +90,7 @@ class BackendUsersModel
 	 * Does the user with a given emailadress exist
 	 *
 	 * @return	bool
-	 * @param	string $email
+	 * @param	string $email	The email to check for existance.
 	 */
 	public static function existsEmail($email)
 	{
@@ -116,8 +114,8 @@ class BackendUsersModel
 	 * If you specify a userId, the username with the given id will be ignored
 	 *
 	 * @return	bool
-	 * @param	string $username
-	 * @param	int[optional] $id
+	 * @param	string $username		The username to check for existance.
+	 * @param	int[optional] $id		The userId to be ignored.
 	 */
 	public static function existsUsername($username, $id = null)
 	{
@@ -146,7 +144,7 @@ class BackendUsersModel
 	 * Get all data for a given user
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The userId to get the data for.
 	 */
 	public static function get($id)
 	{
@@ -196,7 +194,7 @@ class BackendUsersModel
 	 * Get the user ID linked to a given user e-mail address
 	 *
 	 * @return	int
-	 * @param	string $email
+	 * @param	string $email	The email for the user.
 	 */
 	public static function getIdByEmail($email)
 	{
@@ -221,7 +219,7 @@ class BackendUsersModel
 	 * Get the user ID linked to a given username
 	 *
 	 * @return	int
-	 * @param	string $username
+	 * @param	string $username	The username for the user.
 	 */
 	public static function getIdByUsername($username)
 	{
@@ -259,8 +257,8 @@ class BackendUsersModel
 	 * Add a new user
 	 *
 	 * @return	int
-	 * @param	array $user
-	 * @param	array $settings
+	 * @param	array $user			The userdata.
+	 * @param	array $settings		The settings for the new user.
 	 */
 	public static function insert(array $user, array $settings)
 	{
@@ -290,8 +288,8 @@ class BackendUsersModel
 	 * Remark: $user['id'] should be available
 	 *
 	 * @return	void
-	 * @param	array $user
-	 * @param	array $settings
+	 * @param	array $user			The userdata.
+	 * @param	array $settings		The settings for the user.
 	 */
 	public static function update(array $user, array $settings)
 	{
@@ -317,8 +315,8 @@ class BackendUsersModel
 	 * Update the user password
 	 *
 	 * @return	void
-	 * @param BackendUser $user
-	 * @param string $password
+	 * @param BackendUser $user		An instance of BackendUser.
+	 * @param string $password		The new password for the user.
 	 */
 	public static function updatePassword(BackendUser $user, $password)
 	{

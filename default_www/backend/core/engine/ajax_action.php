@@ -148,7 +148,7 @@ class BackendAJAXAction
 		if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: '. $configClassName .'.');
 
 		// create config-object, the constructor will do some magic
-		$this->config = new $configClassName;
+		$this->config = new $configClassName($this->getModule());
 	}
 
 

@@ -2,7 +2,6 @@
 
 /**
  * BackendSnippetsEdit
- *
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend

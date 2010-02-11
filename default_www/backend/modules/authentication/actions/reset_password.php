@@ -2,7 +2,6 @@
 
 /**
  * BackendAuthenticationResetPassword
- *
  * This is the reset password action, it will display a form that allows the user to reset his/her password.
  *
  * @package		backend

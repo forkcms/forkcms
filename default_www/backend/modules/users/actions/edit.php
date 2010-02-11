@@ -2,7 +2,6 @@
 
 /**
  * BackendUsersEdit
- *
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
  * @package		backend

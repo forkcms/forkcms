@@ -2,7 +2,6 @@
 
 /**
  * BackendTagsAjaxAutocomplete
- *
  * This is the autocomplete-action, it will output a list of tags that start with a certain string.
  *
  * @package		backend
@@ -26,16 +25,16 @@ class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 
 		// get parameters
 		$query = SpoonFilter::getGetValue('q', null, '');
-		$limit = SpoonFilter::getGetValue('limit', null, 10);
+		$limit = SpoonFilter::getGetValue('limit', null, 10, 'int');
 
 		// validate
-		if($query == '') $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'Query is missing.');
+		if($query == '') $this->output(self::BAD_REQUEST, null, 'Query is missing.');
 
 		// get tags
 		$tags = BackendTagsModel::getStartsWith($query, $limit);
 
 		// output
-		$this->output(BackendBaseAJAXAction::OK, $tags);
+		$this->output(self::OK, $tags);
 	}
 }
 

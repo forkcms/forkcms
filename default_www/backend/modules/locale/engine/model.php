@@ -2,7 +2,6 @@
 
 /**
  * BackendLocaleModel
- *
  * In this file we store all generic functions that we will be using in the locale module
  *
  *
@@ -18,7 +17,7 @@ class BackendLocaleModel
 	 * Build the language files
 	 *
 	 * @return	void
-	 * @param	string $language		The language to build the locale-file for..
+	 * @param	string $language		The language to build the locale-file for.
 	 * @param	string $application		The application to build the locale-file for.
 	 */
 	public static function buildCache($language, $application)
@@ -115,7 +114,7 @@ class BackendLocaleModel
 	 * @todo	Davy: why does this return an integer
 	 *
 	 * @return	int
-	 * @param	int $id
+	 * @param	int $id		The id to check for existence.
 	 */
 	public static function exists($id)
 	{
@@ -129,7 +128,7 @@ class BackendLocaleModel
 
 	/**
 	 * Does locale exists by name
-	 * @todo	Davy: why does this return an integer
+	 * @todo	Davy: why does this return an integer, document params
 	 *
 	 * @return	int
 	 * @param	string $name
@@ -154,7 +153,7 @@ class BackendLocaleModel
 	 * Get a single item from locale
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The id of the item to get.
 	 */
 	public static function get($id)
 	{
@@ -197,7 +196,7 @@ class BackendLocaleModel
 	 * Insert a new row into locale
 	 *
 	 * @return	int
-	 * @param	array $item
+	 * @param	array $item		The data to insert.
 	 */
 	public static function insert(array $item)
 	{
@@ -219,8 +218,8 @@ class BackendLocaleModel
 	 * Update a row into locale
 	 *
 	 * @return	void
-	 * @param	int $id
-	 * @param	array $item
+	 * @param	int $id			The id of the item to update.
+	 * @param	array $item		The new data.
 	 */
 	public static function update($id, array $item)
 	{

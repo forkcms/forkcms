@@ -2,9 +2,7 @@
 
 /**
  * BackendTagsModel
- *
  * In this file we store all generic functions that we will be using in the TagsModule
- *
  *
  * @package		backend
  * @subpackage	tags
@@ -16,10 +14,7 @@
  */
 class BackendTagsModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT
-									t.id,
-									t.tag,
-									t.number AS num_tags
+	const QRY_DATAGRID_BROWSE = 'SELECT t.id, t.tag, t.number AS num_tags
 									FROM tags AS t
 									LEFT OUTER JOIN modules_tags AS mt ON mt.tag_id = t.id
 									WHERE t.language = ?
@@ -30,15 +25,21 @@ class BackendTagsModel
 	 * Check if a tag exists
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		The id to check for existence
 	 */
 	public static function exists($id)
 	{
+		// redefine
+		$id = (int) $id;
+
 		// get db
 		$db = BackendModel::getDB();
 
 		// exists?
-		return $db->getNumRows('SELECT id FROM tags WHERE id = ?;', (int) $id);
+		return $db->getNumRows('SELECT id
+								FROM tags
+								WHERE id = ?;',
+								$id);
 	}
 
 
@@ -46,17 +47,21 @@ class BackendTagsModel
 	 * Get tag record
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The id of the record to get.
 	 */
 	public static function get($id)
 	{
+		// redefine
+		$id = (int) $id;
+
 		// get db
 		$db = BackendModel::getDB();
 
 		// make the call
 		return (array) $db->getRecord('SELECT t.tag AS name
 										FROM tags AS t
-										WHERE t.id = ?;', (int) $id);
+										WHERE t.id = ?;',
+										$id);
 	}
 
 
@@ -64,11 +69,15 @@ class BackendTagsModel
 	 * Get tags that start with the given string
 	 *
 	 * @return	array
-	 * @param	string $query
-	 * @param	int[optional] $limit
+	 * @param	string $query			The searchstring.
+	 * @param	int[optional] $limit	The maximum number of items to retrieve.
 	 */
 	public static function getStartsWith($query, $limit = 10)
 	{
+		// redefine
+		$query = (string) $query;
+		$limit = (int) $limit;
+
 		// get db
 		$db = BackendModel::getDB();
 
@@ -78,7 +87,7 @@ class BackendTagsModel
 										WHERE t.tag LIKE ?
 										ORDER BY t.tag ASC
 										LIMIT ?;',
-										array((string) $query .'%', (int) $limit));
+										array($query .'%', $limit));
 	}
 
 
@@ -86,10 +95,10 @@ class BackendTagsModel
 	 * Get tags for an item
 	 *
 	 * @return	mixed
-	 * @param	string $module
-	 * @param	int $otherId
-	 * @param	string[optional] $type
-	 * @param	string[optional] $language
+	 * @param	string $module				The module wherin will be searched.
+	 * @param	int $otherId				The id of the record.
+	 * @param	string[optional] $type		The type of the returnvalue, possible values are: array, string (tags will be joined by ,).
+	 * @param	string[optional] $language	The language to use, of not provided the working language will be used.
 	 */
 	public static function getTags($module, $otherId, $type = 'string', $language = null)
 	{
@@ -122,8 +131,8 @@ class BackendTagsModel
 	 * Get a unique URL for a tag
 	 *
 	 * @return	string
-	 * @param	string $URL
-	 * @param	int[optional] $id
+	 * @param	string $URL			The URL to use as a base.
+	 * @param	int[optional] $id	The ID to ignore.
 	 */
 	public static function getURL($URL, $id = null)
 	{
@@ -156,6 +165,9 @@ class BackendTagsModel
 		// specific id given
 		else
 		{
+			// redefine
+			$id = (int) $id;
+
 			// get number of tags with the specified url
 			$number = (int) $db->getNumRows('SELECT t.id
 												FROM tags AS t
@@ -173,6 +185,7 @@ class BackendTagsModel
 			}
 		}
 
+		// return
 		return $URL;
 	}
 
@@ -181,8 +194,8 @@ class BackendTagsModel
 	 * Insert a new tag
 	 *
 	 * @return	int
-	 * @param	string $tag
-	 * @param	string[optional] $language
+	 * @param	string $tag						The data for the tag.
+	 * @param	string[optional] $language		The language wherin the tag will be inserted, if not provided the workinglanguage will be used.
 	 */
 	public static function insertTag($tag, $language = null)
 	{
@@ -208,10 +221,10 @@ class BackendTagsModel
 	 * Save the tags
 	 *
 	 * @return	void
-	 * @param	int $otherId
-	 * @param	mixed $tags
-	 * @param	string $module
-	 * @param	string[optional] $language
+	 * @param	int $otherId				The if of the item to tag.
+	 * @param	mixed $tags					The tags for the item.
+	 * @param	string $module				The module wherin the item is located.
+	 * @param	string[optional] $language	The language wherin the tags will be inserted, if not provided the workinglanguage will be used.
 	 */
 	public static function saveTags($otherId, $tags, $module, $language = null)
 	{
@@ -303,9 +316,10 @@ class BackendTagsModel
 
 	/**
 	 * Update a tag
+	 * Remark: $tag['id'] should be available.
 	 *
 	 * @return	void
-	 * @param	array $tag
+	 * @param	array $tag		The new data for the tag
 	 */
 	public static function updateTag($tag)
 	{

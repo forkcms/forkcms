@@ -1,5 +1,6 @@
 <html>
 <head>
+<!-- @todo Johan design a default template for system mailings -->
 	<title>Fork CMS</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
@@ -7,7 +8,6 @@
 		h2 { font-size: 18px; padding: 0 0 12px; }
 		p { font-size: 12px; padding: 0 0 12px; }
 	</style>
-
 </head>
 <body>
 <table border="0" cellpadding="0" width="100%" style="margin:0; padding:0; font-family: Lucida Grande, Verdana, Arial, sans-serif;">

@@ -1,11 +1,7 @@
 <?php
 
-// require the Model-class
-require_once BACKEND_MODULE_PATH .'/engine/model.php';
-
 /**
- * Locale
- *
+ * BackendLocaleConfig
  * This is the configuration-object for the locale module
  *
  * @package		backend

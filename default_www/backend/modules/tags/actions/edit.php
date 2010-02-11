@@ -2,7 +2,6 @@
 
 /**
  * BackendTagsEdit
- *
  * This is the edit action, it will display a form to edit an existing tag.
  *
  * @package		backend

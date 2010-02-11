@@ -2,7 +2,6 @@
 
 /**
  * BackendAuthenticationLogout
- *
  * This is the logout-action, it will logout the current user
  *
  * @package		backend

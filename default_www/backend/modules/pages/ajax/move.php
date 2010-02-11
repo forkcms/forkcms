@@ -27,16 +27,16 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 		$typeOfDrop = SpoonFilter::getPostValue('type', null, '');
 
 		// validate
-		if($id == 0) $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'no id provided');
-		if($droppedOn == 0) $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'no id provided');
-		if($typeOfDrop == '') $this->output(BackendBaseAJAXAction::BAD_REQUEST, null, 'no type provided');
+		if($id == 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($droppedOn == 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($typeOfDrop == '') $this->output(self::BAD_REQUEST, null, 'no type provided');
 
 		// get page
 		$success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop);
 
 		// output
-		if($success) $this->output(BackendBaseAJAXAction::OK, null, 'page moved');
-		else $this->output(BackendBaseAJAXAction::ERROR, null, 'page not moved');
+		if($success) $this->output(self::OK, null, 'page moved');
+		else $this->output(self::ERROR, null, 'page not moved');
 	}
 }
 

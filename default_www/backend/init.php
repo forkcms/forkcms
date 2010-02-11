@@ -2,7 +2,6 @@
 
 /**
  * Init
- *
  * This class will initiate the backend-application
  *
  * @package		backend
@@ -24,8 +23,8 @@ class Init
 	/**
 	 * Default constructor
 	 *
-	 * @param	string $type
 	 * @return	void
+	 * @param	string $type	The type of init to load, possible values are: backend, backend_ajax, backend_js.
 	 */
 	public function __construct($type)
 	{
@@ -152,6 +151,7 @@ class Init
 		require FRONTEND_CORE_PATH .'/engine/language.php';
 		require FRONTEND_CORE_PATH .'/engine/model.php';
 
+		// for specific types, specific files should be loaded
 		switch($this->type)
 		{
 			case 'backend':
@@ -199,7 +199,6 @@ class Init
 				require_once '../library/globals.php';
 				require_once '../library/globals_backend.php';
 		}
-
 	}
 
 

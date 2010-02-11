@@ -2,7 +2,6 @@
 
 /**
  * BackendLocaleMassAction
- *
  * This action is used to update one or more locale items.
  *
  * @package		backend
@@ -16,7 +15,7 @@ class BackendLocaleMassAction extends BackendBaseAction
 	/**
 	 * Filter variables
 	 *
-	 * @var	arra
+	 * @var	array
 	 */
 	private $filter;
 

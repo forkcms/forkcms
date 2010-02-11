@@ -2,7 +2,6 @@
 
 /**
  * BackendTagsIndex
- *
  * This is the index-action, it will display the overview of tags
  *
  * @package		backend

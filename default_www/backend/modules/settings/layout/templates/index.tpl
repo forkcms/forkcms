@@ -98,7 +98,7 @@
 									</tr>
 									{option:needsGoogleMaps}
 										<tr>
-											<td class="title">Google key</td>
+											<td class="title">Google maps key</td>
 											<td>{$txtGoogleMapsKey} {$txtGoogleMapsKeyError}</td>
 											<td><a href="http://code.google.com/apis/maps/signup.html">http://code.google.com/apis/maps/signup.html</a></td>
 										</tr>

@@ -285,12 +285,12 @@ function javascriptExceptionHandler($exception)
 require_once 'init.php';
 
 // initialize components
-$init = new Init('backend_js');
+new Init('backend_js');
 
 // set the exception handler
 if(!SPOON_DEBUG) set_exception_handler('javascriptExceptionHandler');
 
 // create backend-javascript-object
-$js = new BackendJavascript();
+new BackendJavascript();
 
 ?>

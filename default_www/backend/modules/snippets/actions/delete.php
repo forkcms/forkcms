@@ -2,13 +2,13 @@
 
 /**
  * BackendSnippetsDelete
- *
  * This is the delete-action, it will delete a snippets-item
  *
  * @package		backend
  * @subpackage	snippets
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSnippetsDelete extends BackendBaseActionDelete

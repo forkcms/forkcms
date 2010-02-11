@@ -2,7 +2,6 @@
 
 /**
  * BackendSettingsIndex
- *
  * This is the index-action (default), it will display the setting-overview
  *
  * @package		backend
@@ -220,19 +219,13 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				if($this->needsAkismet) BackendModel::setSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());
 				if($this->needsGoogleMaps) BackendModel::setSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
 
-				/*
-				 * Before we save the languages, we need to ensure that each language actually
-				 * exists and may be chosen.
-				 */
+				// before we save the languages, we need to ensure that each language actually exists and may be chosen.
 				$languages = array(BackendModel::getSetting('core', 'default_language', null));
 
 				// save active languages
 				BackendModel::setSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('languages')->getValue())));
 
-				/*
-				 * Domains may not contain www, http or https. Therefor we must loop
-				 * and create the list of domains.
-				 */
+				// domains may not contain www, http or https. Therefor we must loop and create the list of domains.
 				$siteDomains = array();
 
 				// domains filled in
