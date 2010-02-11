@@ -1,9 +1,7 @@
 <?php
-// @todo	check documentation
 
 /**
  * FrontendBaseObject
- *
  * This class will be the base of the objects used in onsite
  *
  * @package		frontend
@@ -49,7 +47,6 @@ class FrontendBaseObject
 
 /**
  * FrontendBaseConfig
- *
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class.
  *
  * @package		frontend
@@ -109,10 +106,10 @@ class FrontendBaseConfig
 
 
 	/**
-	 * Class constructor.
+	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $module	The module wherefor this is the configuration-file
+	 * @param	string $module	The module wherefor this is the configuration-file.
 	 */
 	public function __construct($module)
 	{
@@ -217,9 +214,8 @@ class FrontendBaseConfig
 
 /**
  * FrontendBaseBlock
- *
  * This class implements a lot of functionality that can be extended by a specific block
- * @todo Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
+ * @later Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
@@ -313,9 +309,9 @@ class FrontendBaseBlock
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $action				The name of the action
-	 * @param	string $module				The name of the module
-	 * @param	string[optional] $data		The data that should be available in this block
+	 * @param	string $action				The name of the action.
+	 * @param	string $module				The name of the module.
+	 * @param	string[optional] $data		The data that should be available in this block.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -402,7 +398,7 @@ class FrontendBaseBlock
 	 * Load the template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template		The path for the template to use
+	 * @param	string[optional] $template		The path for the template to use.
 	 * @param	bool[optional] $overwrite		Should the template overwrite the default?
 	 */
 	protected function loadTemplate($template = null, $overwrite = false)
@@ -593,7 +589,7 @@ class FrontendBaseBlock
 	 * Set the action, for later use
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action		The action to set.
 	 */
 	private function setAction($action)
 	{
@@ -605,7 +601,7 @@ class FrontendBaseBlock
 	 * Set the data, for later use
 	 *
 	 * @return	void
-	 * @param	string $data
+	 * @param	string[optional] $data	The data that should be available.
 	 */
 	private function setData($data = null)
 	{
@@ -661,7 +657,7 @@ class FrontendBaseBlock
 /**
  * FrontendBaseWidget
  * This class implements a lot of functionality that can be extended by a specific widget
- * @todo Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
+ * @later Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
@@ -724,9 +720,9 @@ class FrontendBaseWidget
 	 * The constructor will set some properties.
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $module
-	 * @param	string[optional] $data
+	 * @param	string $module				The module to use.
+	 * @param	string $action				The action to use.
+	 * @param	string[optional] $data		The data that should be available.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -801,7 +797,7 @@ class FrontendBaseWidget
 	 * Load the template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template
+	 * @param	string[optional] $template		The path for the template to use.
 	 */
 	protected function loadTemplate($template = null)
 	{
@@ -830,7 +826,7 @@ class FrontendBaseWidget
 	 * Set the action, for later use
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action		The action to use.
 	 */
 	private function setAction($action)
 	{
@@ -842,7 +838,7 @@ class FrontendBaseWidget
 	 * Set the data, for later use
 	 *
 	 * @return	void
-	 * @param	string $data
+	 * @param	string $data	The data that should available.
 	 */
 	private function setData($data = null)
 	{
@@ -862,7 +858,7 @@ class FrontendBaseWidget
 	 * Set the module, for later use
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module to use.
 	 */
 	private function setModule($module)
 	{
@@ -874,7 +870,7 @@ class FrontendBaseWidget
 	 * Set the path for the template to include or to replace the current one
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path to the template that should be loaded.
 	 */
 	private function setTemplatePath($path)
 	{
@@ -885,7 +881,6 @@ class FrontendBaseWidget
 
 /**
  * FrontendBaseAJAXAction
- *
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @package		frontend
@@ -924,8 +919,8 @@ class FrontendBaseAJAXAction
 	 * The constructor will set some properties
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $module
+	 * @param	string $action		The action to use.
+	 * @param	string $module		The module to use.
 	 */
 	public function __construct($action, $module)
 	{
@@ -972,9 +967,9 @@ class FrontendBaseAJAXAction
 	 * Output an answer to the browser
 	 *
 	 * @return	void
-	 * @param	int $statusCode
-	 * @param	mixed[optional] $data
-	 * @param	string[optional] $message
+	 * @param	int $statusCode				The status code to use, use one of the available constants (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
+	 * @param	mixed[optional] $data		The data to be returned (will be encoded as JSON).
+	 * @param	string[optional] $message	A text-message.
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
@@ -999,7 +994,7 @@ class FrontendBaseAJAXAction
 	 * Set the action, for later use
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action	The action to use.
 	 */
 	protected function setAction($action)
 	{
@@ -1011,7 +1006,7 @@ class FrontendBaseAJAXAction
 	 * Set the module, for later use
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module to use.
 	 */
 	protected function setModule($module)
 	{

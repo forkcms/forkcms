@@ -1,5 +1,4 @@
 <?php
-// @todo	check documentation
 
 /**
  * FrontendPage
@@ -194,7 +193,7 @@ class FrontendPage extends FrontendBaseObject
 				$URL = FrontendNavigation::getURL($firstChildId);
 
 				// redirect
-				SpoonHTTP::redirect($URL, 302);
+				SpoonHTTP::redirect($URL, 307);
 			}
 		}
 	}

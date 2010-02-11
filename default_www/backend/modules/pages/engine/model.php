@@ -76,6 +76,7 @@ class BackendPagesModel
 				$temp['navigation_title'] = $page['navigation_title'];
 				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
 				$temp['no_follow'] = (bool) ($page['no_follow'] == 'Y');
+				$temp['hidden'] = (bool) ($page['hidden'] == 'Y');
 				$temp['extra_blocks'] = null;
 
 				// any linked extra's?
@@ -164,7 +165,7 @@ class BackendPagesModel
 						if($key == 'page_id') $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = '. (int) $value .';'."\n";
 
 						// booleans
-						elseif($key == 'has_extra' || $key == 'no_follow')
+						elseif($key == 'has_extra' || $key == 'no_follow' || $key == 'hidden')
 						{
 							if($value) $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = true;'."\n";
 							else $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = false;'."\n";

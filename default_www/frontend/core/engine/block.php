@@ -1,9 +1,7 @@
 <?php
-// @todo	check documentation
 
 /**
  * FrontendBlockExtra
- *
  * This class will handle all stuff related to blocks
  *
  * @package		frontend
@@ -39,7 +37,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 
 	/**
-	 * The current moduled
+	 * The current module
 	 *
 	 * @var	string
 	 */
@@ -66,9 +64,9 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $module
-	 * @param	string $action
-	 * @param	mixed[optional] $data
+	 * @param	string $module			The module to load.
+	 * @param	string $action			The action to load.
+	 * @param	mixed[optional] $data	The data that was passed from the database.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -104,6 +102,8 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
+
+		// @later check if the action implements an interface
 
 		// create action-object
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
@@ -226,6 +226,8 @@ class FrontendBlockExtra extends FrontendBaseObject
 		// require the config file, we validated before for existence.
 		require_once $frontendModulePath .'/config.php';
 
+		// @later	check if the config implements an interface
+
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');
 
@@ -238,7 +240,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action	The action to load.
 	 */
 	private function setAction($action = null)
 	{
@@ -249,7 +251,8 @@ class FrontendBlockExtra extends FrontendBaseObject
 	/**
 	 * Set the data
 	 *
-	 * @param string $data
+	 * @return	void
+	 * @param	mixed $data		The data that should be set.
 	 */
 	private function setData($data)
 	{
@@ -261,7 +264,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Set the module
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module to load.
 	 */
 	private function setModule($module)
 	{
@@ -273,7 +276,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Set overwrite mode
 	 *
 	 * @return	void
-	 * @param	bool $overwrite
+	 * @param	bool $overwrite		Should the template overwrite the already loaded template.
 	 */
 	private function setOverwrite($overwrite)
 	{
@@ -296,7 +299,6 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 /**
  * FrontendBlockWidget
- *
  * This class will handle all stuff related to widgets
  *
  * @package		frontend
@@ -351,9 +353,9 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $module
-	 * @param	string $action
-	 * @param	mixed[optional] $data
+	 * @param	string $module			The module to load.
+	 * @param	string $action			The action to load.
+	 * @param	mixed[optional] $data	The data that was passed from the database.
 	 */
 	public function __construct($module, $action, $data = null)
 	{
@@ -389,6 +391,8 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
+
+		// @later	check if the action implements an interface
 
 		// create action-object
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
@@ -472,6 +476,8 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// require the config file, we validated before for existence.
 		require_once $frontendModulePath .'/config.php';
 
+		// @later	check if the class implements an interface
+
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');
 
@@ -484,7 +490,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action		The action to load.
 	 */
 	private function setAction($action = null)
 	{
@@ -495,7 +501,8 @@ class FrontendBlockWidget extends FrontendBaseObject
 	/**
 	 * Set the data
 	 *
-	 * @param string $data
+	 * @return	void
+	 * @param	mixed $data		The data that should be set.
 	 */
 	private function setData($data)
 	{
@@ -507,7 +514,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 * Set the module
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module		The module to load.
 	 */
 	private function setModule($module)
 	{
@@ -519,7 +526,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 * Set the path for the template
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path		The path for the template to use.
 	 */
 	private function setTemplatePath($path)
 	{

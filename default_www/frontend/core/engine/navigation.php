@@ -84,6 +84,9 @@ class FrontendNavigation extends FrontendBaseObject
 		// loop elements
 		foreach($navigation[$type][$parentId] as $page)
 		{
+			// not hidden
+			if($page['hidden']) continue;
+
 			// some ids should be excluded
 			if(in_array($page['page_id'], $excludedIds)) continue;
 
