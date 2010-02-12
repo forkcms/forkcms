@@ -2,7 +2,6 @@
 
 /**
  * BackendPagesIndex
- *
  * This is the index-action (default), it will display the pages-overview
  *
  * @package		backend
@@ -15,7 +14,6 @@ class BackendPagesIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
-	 *
 	 *
 	 * @return	void
 	 */

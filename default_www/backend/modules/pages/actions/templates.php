@@ -2,13 +2,13 @@
 
 /**
  * BackendPagesTemplates
- *
  * This is the templates-action, it will display the templates-overview
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	pages
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendPagesTemplates extends BackendBaseActionIndex
@@ -42,7 +42,7 @@ class BackendPagesTemplates extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB('SELECT id, label FROM pages_templates');
+		$this->datagrid = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_TEMPLATES);
 
 		// set headers
 		$this->datagrid->setHeaderLabels(array('label' => ucfirst(BL::getLabel('Title'))));

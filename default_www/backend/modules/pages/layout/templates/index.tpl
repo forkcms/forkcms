@@ -11,7 +11,6 @@
 					</td>
 				</tr>
 			</table>
-
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">

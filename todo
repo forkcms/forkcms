@@ -7,10 +7,7 @@ GENERAL TODO
 		- frontend-mailer
 		
 	check:
-		- core
-		- pages
-		- blog
-		- dashboard
+		- backend core classes
 		
 
 ONSITE TODO

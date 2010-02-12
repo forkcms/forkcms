@@ -4,7 +4,6 @@
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst}</p>
 			</div>
-
 			<div class="inner">
 				{option:datagrid}
 					<div class="datagridHolder">

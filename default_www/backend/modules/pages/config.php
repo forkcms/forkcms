@@ -2,7 +2,6 @@
 
 /**
  * PagesConfig
- *
  * This is the configuration-object for the pages module
  *
  * @package		backend

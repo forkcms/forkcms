@@ -2,9 +2,7 @@
 
 /**
  * BackendBlogModel
- *
  * In this file we store all generic functions that we will be using in the blog module
- *
  *
  * @package		backend
  * @subpackage	blog
@@ -64,6 +62,7 @@ class BackendBlogModel
 			$warnings[] = array('message' => sprintf(BL::getError('BlogRSSDescription'), BackendModel::createURLForAction('settings', 'blog')));
 		}
 
+		// return
 		return $warnings;
 	}
 
@@ -72,7 +71,7 @@ class BackendBlogModel
 	 * Deletes one or more blogposts
 	 *
 	 * @return	void
-	 * @param 	mixed $ids
+	 * @param 	mixed $ids	The ids to delete.
 	 */
 	public static function delete($ids)
 	{
@@ -92,21 +91,24 @@ class BackendBlogModel
 	 * Deletes a category
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The id of the category to delete.
 	 */
 	public static function deleteCategory($id)
 	{
+		// redefine
+		$id = (int) $id;
+
 		// get db
 		$db = BackendModel::getDB(true);
 
 		// delete category
-		$db->delete('blog_categories', 'id = ?', (int) $id);
+		$db->delete('blog_categories', 'id = ?', $id);
 
 		// default category
 		$defaultCategoryId = BackendModel::getSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null);
 
 		// update category for the posts that might be in this category
-		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', (int) $defaultCategoryId);
+		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', $defaultCategoryId);
 	}
 
 
@@ -114,7 +116,7 @@ class BackendBlogModel
 	 * Deletes one or more comments
 	 *
 	 * @return	void
-	 * @param	array $ids
+	 * @param	array $ids	The id(s) of the comment(s) to delete.
 	 */
 	public static function deleteComments(array $ids)
 	{
@@ -140,17 +142,21 @@ class BackendBlogModel
 	 * Checks if a blogpost exists
 	 *
 	 * @return	int
-	 * @param int $id
+	 * @param	int $id		The id of the blogpost to check for existence.
 	 */
 	public static function exists($id)
 	{
+		// redefine
+		$id = (int) $id;
+
 		// get db
 		$db = BackendModel::getDB();
 
 		// exists?
 		return $db->getNumRows('SELECT id
 								FROM blog_posts
-								WHERE id = ?;', (int) $id);
+								WHERE id = ?;',
+								$id);
 	}
 
 
@@ -158,7 +164,7 @@ class BackendBlogModel
 	 * Checks if a category exists
 	 *
 	 * @return	int
-	 * @param int $id
+	 * @param	int $id		The id of the category to check for existence.
 	 */
 	public static function existsCategory($id)
 	{
@@ -176,7 +182,7 @@ class BackendBlogModel
 	 * Get all data for a given id
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The Id of the blogpost to fetch?
 	 */
 	public static function get($id)
 	{
@@ -187,15 +193,13 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT p.*,
-									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
-									   UNIX_TIMESTAMP(p.created_on) AS created_on,
-									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
-									   m.url
-									   FROM blog_posts AS p
-									   INNER JOIN meta AS m ON m.id = p.meta_id
-									   WHERE p.id = ? AND status = ?
-									   LIMIT 1;', array($id, 'active'));
+		return (array) $db->getRecord('SELECT p.*, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on,
+										m.url
+										FROM blog_posts AS p
+										INNER JOIN meta AS m ON m.id = p.meta_id
+										WHERE p.id = ? AND p.status = ?
+										LIMIT 1;',
+										array($id, 'active'));
 	}
 
 
@@ -203,7 +207,6 @@ class BackendBlogModel
 	 * Get all categories
 	 *
 	 * @return	array
-	 * @param	int $id
 	 */
 	public static function getCategories()
 	{
@@ -220,13 +223,10 @@ class BackendBlogModel
 	 * Get all data for a given id
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The id of the category to fetch.
 	 */
 	public static function getCategory($id)
 	{
-		// redefine
-		$id = (int) $id;
-
 		// get db
 		$db = BackendModel::getDB();
 
@@ -241,8 +241,8 @@ class BackendBlogModel
 	 * Get a category id by name
 	 *
 	 * @return	int
-	 * @param	string $name
-	 * @param	string[optional] $language
+	 * @param	string $name					The name of the category.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function getCategoryId($name, $language = null)
 	{
@@ -261,6 +261,13 @@ class BackendBlogModel
 	}
 
 
+	/**
+	 * Get a draft
+	 *
+	 * @return	array
+	 * @param	int $id			The id of the post.
+	 * @param	int $draftId	The draft
+	 */
 	public static function getDraft($id, $draftId)
 	{
 		// redefine
@@ -271,14 +278,12 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT p.*,
-									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
-									   UNIX_TIMESTAMP(p.created_on) AS created_on,
-									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
-									   m.url
-									   FROM blog_posts AS p
-									   INNER JOIN meta AS m ON m.id = p.meta_id
-									   WHERE p.id = ? AND p.revision_id = ?;', array($id, $draftId));
+		return (array) $db->getRecord('SELECT p.*, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on,
+										m.url
+										FROM blog_posts AS p
+										INNER JOIN meta AS m ON m.id = p.meta_id
+										WHERE p.id = ? AND p.revision_id = ?;',
+										array($id, $draftId));
 	}
 
 
@@ -286,8 +291,8 @@ class BackendBlogModel
 	 * Get the latest comments for a given type
 	 *
 	 * @return	array
-	 * @param	string $status
-	 * @param	int[optional] $limit
+	 * @param	string $status			The status for the comments to retrieve.
+	 * @param	int[optional] $limit	The maximum number of items to retrieve.
 	 */
 	public static function getLatestComments($status, $limit = 10)
 	{
@@ -328,8 +333,8 @@ class BackendBlogModel
 	 * Get all data for a given revision
 	 *
 	 * @return	array
-	 * @param	int $id
-	 * @param	int $revisionId
+	 * @param	int $id				The id of the blogpost.
+	 * @param	int $revisionId		The revision to get.
 	 */
 	public static function getRevision($id, $revisionId)
 	{
@@ -372,8 +377,8 @@ class BackendBlogModel
 	/**
 	 * Retrieve the unique URL for an item
 	 *
-	 * @return	string
-	 * @param	int[optional] $itemId
+	 * @return	string						The URL to base on.
+	 * @param	int[optional] $itemId		The id of the blogpost to ignore.
 	 */
 	public static function getURL($URL, $itemId = null)
 	{
@@ -431,7 +436,8 @@ class BackendBlogModel
 	 * Retrieve the unique URL for a category
 	 *
 	 * @return	string
-	 * @param	int[optional] $categoryId
+	 * @param	string $URL						The string wheron the URL will be based.
+	 * @param	int[optional] $categoryId		The id of the category to ignore.
 	 */
 	public static function getURLForCategory($URL, $categoryId = null)
 	{
@@ -483,7 +489,7 @@ class BackendBlogModel
 	 * Inserts a blogpost into the database
 	 *
 	 * @return	int
-	 * @param	array $item
+	 * @param	array $item		The data to insert.
 	 */
 	public static function insert(array $item)
 	{
@@ -509,7 +515,7 @@ class BackendBlogModel
 	 * Inserts a new category into the database
 	 *
 	 * @return	int
-	 * @param	array $item
+	 * @param	array $item		The data for the category to insert.
 	 */
 	public static function insertCategory(array $item)
 	{
@@ -546,7 +552,6 @@ class BackendBlogModel
 
 		// return the new id
 		return $newId;
-
 	}
 
 
@@ -592,13 +597,12 @@ class BackendBlogModel
 	}
 
 
-
 	/**
 	 * Update an existing blogpost
 	 *
 	 * @return	int
-	 * @param	int $id
-	 * @param	array $item
+	 * @param	int $id			The id of the post to update.
+	 * @param	array $item		The new data.
 	 */
 	public static function update($id, array $item)
 	{
@@ -646,8 +650,8 @@ class BackendBlogModel
 	 * Update an existing category
 	 *
 	 * @return	int
-	 * @param	int $id
-	 * @param	array $item
+	 * @param	int $id			The id of the category to update.
+	 * @param	array $item		The new data.
 	 */
 	public static function updateCategory($id, array $item)
 	{
@@ -663,8 +667,8 @@ class BackendBlogModel
 	 * Updates one or more comments' status
 	 *
 	 * @return	void
-	 * @param	array $ids
-	 * @param	string $status
+	 * @param	array $ids			The id(s) of the comment(s) to change the status for.
+	 * @param	string $status		The new status.
 	 */
 	public static function updateCommentStatuses(array $ids, $status)
 	{

@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogEdit
- *
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend
@@ -13,6 +12,11 @@
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
+	/**
+	 * Datagrid for the drafts
+	 *
+	 * @var	BackendDatagrid
+	 */
 	private $dgDrafts;
 
 

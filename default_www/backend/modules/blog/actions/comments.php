@@ -72,8 +72,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 	 * Fetch the html for the two buttons
 	 *
 	 * @return	string
-	 * @param	string $type
-	 * @param	int $id
+	 * @param	string $type	The status of the comment.
+	 * @param	int $id			The id of the comment.
 	 */
 	public static function getCommentActionsHTML($type, $id)
 	{

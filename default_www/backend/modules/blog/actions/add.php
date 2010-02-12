@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogAddCategory
- *
  * This is the add-action, it will display a form to create a new post
  *
  * @package		backend

@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogDelete
- *
  * This action will delete a blogpost
  *
  * @package		backend

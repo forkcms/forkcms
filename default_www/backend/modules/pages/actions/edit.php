@@ -2,7 +2,6 @@
 
 /**
  * BackendPagesEdit
- *
  * This is the edit-action, it will display a form to create a new pages item
  *
  * @package		backend
@@ -47,30 +46,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	{
 		// call parent, this will probably edit some general CSS/JS or other required files
 		parent::execute();
-
-		// is there a report to show?
-		if($this->getParameter('report') !== null)
-		{
-			// show the report
-			$this->tpl->assign('report', true);
-
-			// camelcase the string
-			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'));
-
-			// if we have data to use it will be passed as the var-parameter, if so assign it
-			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
-			else $this->tpl->assign('reportMessage', $messageName);
-
-			// hightlight an element with the given id if needed
-			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
-		}
-
-		// is there an error to show?
-		if($this->getParameter('error') !== null)
-		{
-			// show the error and the errormessage
-			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), '-')));
-		}
 
 		// add js
 		$this->header->addJavascript('jstree/jquery.tree.js');
@@ -137,7 +112,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// set headers
 		$this->dgRevisions->setHeaderLabels(array(	'user_id' => ucfirst(BL::getLabel('By')),
-												'edited_on' => ucfirst(BL::getLabel('Date'))));
+													'edited_on' => ucfirst(BL::getLabel('Date'))));
 
 	}
 

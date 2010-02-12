@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendWidgetAnalyse
+ * BackendSettingsWidgetAnalyse
  *
  * @package		backend
  * @subpackage	settings
@@ -9,7 +9,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendWidgetAnalyse extends BackendBaseWidget
+class BackendSettingsWidgetAnalyse extends BackendBaseWidget
 {
 	/**
 	 * Execute the widget

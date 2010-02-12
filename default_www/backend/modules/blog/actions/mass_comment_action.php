@@ -1,8 +1,7 @@
 <?php
 
 /**
- * BackendBlogCommentStatus
- *
+ * BackendBlogMassCommentAction
  * This action is used to update one or more comments (status, delete, ...)
  *
  * @package		backend

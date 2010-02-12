@@ -6,7 +6,6 @@ jsBackend.pages = {
 		jsBackend.pages.tree.init();
 		jsBackend.pages.template.init();
 	},
-	
 	// end
 	eoo: true
 }
@@ -15,7 +14,6 @@ jsBackend.pages = {
 jsBackend.pages.autosave = {
 	init: function() {
 	},
-
 	save: function() {
 		// save all TinyMCE instances
 		if($('.inputEditor').length > 0) tinyMCE.triggerSave();
@@ -49,7 +47,6 @@ jsBackend.pages.controls = {
 		jsBackend.pages.controls.changeExtra();
 		if($('.contentTitle .inputDropdown').length > 0) { $('.contentTitle .inputDropdown').bind('change', jsBackend.pages.controls.changeExtra); }
 	},
-	
 	changeExtra: function(evt) {
 		// find element with a block selected
 		var element = $('.contentTitle option[rel=block]:selected');
@@ -87,10 +84,8 @@ jsBackend.pages.controls = {
 				$('#blockContentExtra-'+ index).show();
 				$('#blockContentExtra-'+ index + ' p').html(html);
 			}
-			
 		});
 	},
-	
 	// end
 	eoo: true
 }
@@ -102,7 +97,6 @@ jsBackend.pages.template = {
 			$('#templateList input:radio').bind('change', jsBackend.pages.template.changeTemplate);
 		}
 	},
-	
 	changeTemplate: function() {
 		// get checked
 		var selected = $('#templateList input:checked').attr('value');
@@ -153,7 +147,6 @@ jsBackend.pages.template = {
 
 		$(showId).show();
 	},
-	
 	// end
 	eoo: true
 }
@@ -258,10 +251,8 @@ jsBackend.pages.tree = {
 				 }
 		});
 	},
-	
 	// end
 	eoo: true
 }
-
 
 $(document).ready(function() { jsBackend.pages.init(); });

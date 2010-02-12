@@ -1,14 +1,14 @@
 <?php
 
 /**
- * BackendSnippetsAdd
- *
- * This is the add-action, it will display a form to create a new item
+ * BackendPagesEditTemplate
+ * This is the edit-action, it will display a form to edit an item
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	pages
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendPagesEditTemplate extends BackendBaseActionEdit
@@ -68,6 +68,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// create form
 		$this->frm = new BackendForm('edit');
 
+		// unserialize the data
 		$data = unserialize($this->record['data']);
 
 		// create elements
@@ -81,6 +82,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// init var
 		$names = array();
 
+		// add some fields
 		for($i = 1; $i <= 10; $i++)
 		{
 			$value = isset($data['names'][$i - 1]) ? $data['names'][$i - 1] : null;
@@ -88,6 +90,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$names[$i]['formElements']['txtName'] = $this->frm->addTextField('name_'. $i, $value);
 		}
 
+		// assign
 		$this->tpl->assign('names', $names);
 	}
 
@@ -110,14 +113,13 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->frm->getField('label')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('format')->isFilled(BL::getError('FieldIsRequired'));
 
-			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
-			{
-				$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
-			}
+			// loop the known blocks and validate the fields
+			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++) $this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
+				// build array
 				$template = array();
 				$template['label'] = $this->frm->getField('label')->getValue();
 				$template['path'] = $this->frm->getField('path')->getValue();
@@ -126,12 +128,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$template['is_default'] = ($this->frm->getField('default')->getChecked()) ? 'Y' : 'N';
 				$template['data']['format'] = $this->frm->getField('format')->getValue();
 
+				// loop the blocks
 				for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 				{
+					// add
 					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
 					$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
 				}
 
+				// serialize
 				$template['data'] = serialize($template['data']);
 
 				// insert the item

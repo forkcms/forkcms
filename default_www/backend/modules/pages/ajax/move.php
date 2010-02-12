@@ -18,7 +18,7 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
+		// call parent
 		parent::execute();
 
 		// get parameters

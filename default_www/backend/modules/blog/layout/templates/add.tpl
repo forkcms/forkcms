@@ -4,7 +4,6 @@
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblAdd|ucfirst}</p>
 			</div>
-
 			<div class="inner">
 				{form:add}
 					{$txtTitle} {$txtTitleError}
@@ -25,7 +24,6 @@
 						</ul>
 
 						<div id="tabContent">
-
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
 									<td>

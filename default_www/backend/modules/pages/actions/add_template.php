@@ -1,14 +1,14 @@
 <?php
 
 /**
- * BackendSnippetsAdd
- *
+ * BackendPagesAddTemplate
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	pages
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendPagesAddTemplate extends BackendBaseActionAdd
@@ -58,12 +58,14 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		// init var
 		$names = array();
 
+		// add some fields
 		for($i = 1; $i <= 10; $i++)
 		{
 			$names[$i]['i'] = $i;
 			$names[$i]['formElements']['txtName'] = $this->frm->addTextField('name_'. $i);
 		}
 
+		// assign
 		$this->tpl->assign('names', $names);
 	}
 
@@ -86,14 +88,13 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			$this->frm->getField('label')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('format')->isFilled(BL::getError('FieldIsRequired'));
 
-			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
-			{
-				$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
-			}
+			// loop the know fields and validate them
+			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++) $this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
+				// build array
 				$template = array();
 				$template['label'] = $this->frm->getField('label')->getValue();
 				$template['path'] = $this->frm->getField('path')->getValue();
@@ -102,12 +103,14 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$template['is_default'] = ($this->frm->getField('default')->getChecked()) ? 'Y' : 'N';
 				$template['data']['format'] = $this->frm->getField('format')->getValue();
 
+				// loop fields
 				for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 				{
 					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
 					$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
 				}
 
+				// serialize the data
 				$template['data'] = serialize($template['data']);
 
 				// insert the item

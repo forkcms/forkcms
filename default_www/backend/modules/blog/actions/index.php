@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogIndex
- *
  * This is the index-action (default), it will display the overview of blog posts
  *
  * @package		backend
@@ -134,7 +133,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	private function parse()
 	{
 		// parse the datagrid for the most recent blogposts
-		//$this->tpl->assign('dgRecent', ($this->dgRecent->getNumResults() != 0) ? $this->dgRecent->getContent() : false);
+//		$this->tpl->assign('dgRecent', ($this->dgRecent->getNumResults() != 0) ? $this->dgRecent->getContent() : false);
 
 		// parse the datagrid for all blogposts
 		$this->tpl->assign('dgPosts', ($this->dgPosts->getNumResults() != 0) ? $this->dgPosts->getContent() : false);

@@ -9,7 +9,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendWidgetComments extends BackendBaseWidget
+class BackendBlogWidgetComments extends BackendBaseWidget
 {
 	/**
 	 * The comments
@@ -76,8 +76,6 @@ class BackendWidgetComments extends BackendBaseWidget
 		// any comments to moderate?
 		if(isset($this->numCommentStatus['moderation']) && (int) $this->numCommentStatus['moderation'] > 0) $this->tpl->assign('numCommentsToModerate', $this->numCommentStatus['moderation']);
 	}
-
-
 }
 
 ?>

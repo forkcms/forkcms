@@ -24,6 +24,8 @@ class BackendPagesModel
 									FROM pages AS p
 									WHERE p.id = ? AND p.status = ? AND p.language = ?
 									ORDER BY p.edited_on DESC;';
+	const QRY_BROWSE_TEMPLATES = 'SELECT id, label
+									FROM pages_templates';
 
 
 	/**
@@ -69,7 +71,7 @@ class BackendPagesModel
 
 				// build navigation array
 				$temp = array();
-				$temp['page_id'] = $pageID;
+				$temp['page_id'] = (int) $pageID;
 				$temp['url'] = $page['url'];
 				$temp['full_url'] = $keys[$pageID];
 				$temp['title'] = $page['title'];
@@ -162,10 +164,10 @@ class BackendPagesModel
 					foreach($properties as $key => $value)
 					{
 						// page_id should be an integer
-						if($key == 'page_id') $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = '. (int) $value .';'."\n";
+						if(is_int($value)) $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = '. (int) $value .';'."\n";
 
 						// booleans
-						elseif($key == 'has_extra' || $key == 'no_follow' || $key == 'hidden')
+						elseif(is_bool($value))
 						{
 							if($value) $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = true;'."\n";
 							else $line = '$navigation[\''. $type .'\']['. $parentID .']['. $pageID .'][\''. $key .'\'] = false;'."\n";
@@ -210,6 +212,7 @@ class BackendPagesModel
 						$navigationString .= $line;
 					}
 
+					// end
 					$navigationString .= "\n";
 				}
 			}
@@ -227,7 +230,7 @@ class BackendPagesModel
 	 * Build HTML for a template (visual representation)
 	 *
 	 * @return	string
-	 * @param	array $template
+	 * @param	array $template		The template data.
 	 */
 	public static function buildTemplateHTML($template)
 	{
@@ -295,11 +298,10 @@ class BackendPagesModel
 	 * Creates the html for the menu
 	 *
 	 * @return	string
-	 * @param	int[optional] $parentId
-	 * @param	int[optional] $startDepth
-	 * @param	int[optional] $maxDepth
-	 * @param	array[optional] $excludedIds
-	 * @param	string[optional] $html
+	 * @param	string[optional] $type			The type of navigation.
+	 * @param	int[optional] $depth			The maximum depth to show.
+	 * @param	int[optional] $parentId			The Id to start from.
+	 * @param	string[optional] $html			Will hold the created HTML.
 	 */
 	public static function createHtml($type = 'page', $depth = 0, $parentId = 1, $html = '')
 	{
@@ -341,8 +343,8 @@ class BackendPagesModel
 	 * Delete a page
 	 *
 	 * @return	bool
-	 * @param	int $id
-	 * @param	string[optional] $language
+	 * @param	int $id							The id of the page to delete.
+	 * @param	string[optional] $language		The language wherin the page will be deleted, if not provided we will use the working language.
 	 */
 	public static function delete($id, $language = null)
 	{
@@ -390,7 +392,7 @@ class BackendPagesModel
 	 * Check if a page exists
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		The id to check for existence.
 	 */
 	public static function exists($id)
 	{
@@ -404,26 +406,38 @@ class BackendPagesModel
 		// get number of rows, if that result is more than 0 it means the page exists
 		return (bool) ($db->getNumRows('SELECT p.id
 										FROM pages AS p
-										WHERE p.id = ? AND p.language = ? AND p.status IN ("active", "draft");',
+										WHERE p.id = ? AND p.language = ? AND p.status IN("active", "draft");',
 										array($id, $language)) > 0);
 	}
 
 
+	/**
+	 * Check if a template exists
+	 *
+	 * @return	bool
+	 * @param	int $id		The Id of the template to check for existence.
+	 */
 	public static function existsTemplate($id)
 	{
+		// redefine
+		$id = (int) $id;
+
 		// get db
 		$db = BackendModel::getDB();
 
 		// get data
-		return (bool) $db->getNumRows('SELECT id FROM pages_templates WHERE id = ?;', (int) $id);
+		return (bool) $db->getNumRows('SELECT id
+										FROM pages_templates
+										WHERE id = ?;',
+										$id);
 	}
 
 
 	/**
 	 * Get the data for a record
 	 *
-	 * @return	mixed		false if the record can't be found, otherwise an array with all data
-	 * @param	int $id
+	 * @return	mixed		false if the record can't be found, otherwise an array with all data.
+	 * @param	int $id		The Id of the page to fetch.
 	 */
 	public static function get($id, $language = null)
 	{
@@ -441,6 +455,7 @@ class BackendPagesModel
 											LIMIT 1;',
 											array($id, $language, 'active'));
 
+		// no page?
 		if(empty($return)) return false;
 
 		// can't be deleted
@@ -467,15 +482,21 @@ class BackendPagesModel
 	 * Get a given template
 	 *
 	 * @return	array
-	 * @param	int $id		The id of the requested template
+	 * @param	int $id		The id of the requested template.
 	 */
 	public static function getTemplate($id)
 	{
+		// redefine
+		$id = (int) $id;
+
 		// get db
 		$db = BackendModel::getDB();
 
 		// fetch data
-		return (array) $db->getRecord('SELECT * FROM pages_templates WHERE id = ?;', (int) $id);
+		return (array) $db->getRecord('SELECT *
+										FROM pages_templates
+										WHERE id = ?;',
+										$id);
 	}
 
 
@@ -483,8 +504,8 @@ class BackendPagesModel
 	 * Get the revisioned data for a record
 	 *
 	 * @return	array
-	 * @param	int $id
-	 * @param	int $revisionId
+	 * @param	int $id				The Id of the page.
+	 * @param	int $revisionId		The revision to grab.
 	 */
 	public static function getRevision($id, $revisionId)
 	{
@@ -504,6 +525,9 @@ class BackendPagesModel
 											WHERE p.id = ? AND p.revision_id = ? AND p.language = ?
 											LIMIT 1;',
 											array($id, $revisionId, $language));
+
+		// anything found
+		if(empty($return)) return array();
 
 		// can't be deleted
 		if(in_array($return['id'], array(1, 404))) $return['allow_delete'] = 'N';
@@ -529,7 +553,7 @@ class BackendPagesModel
 	 * Get the blocks in a certain page
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The Id of the page to get the blocks for.
 	 */
 	public static function getBlocks($id)
 	{
@@ -554,8 +578,8 @@ class BackendPagesModel
 	 * Get revisioned blocks for a certain page
 	 *
 	 * @return	array
-	 * @param 	int $id
-	 * @param	int $revisionId
+	 * @param 	int $id				The Id of the page.
+	 * @param	int $revisionId		The revision to grab.
 	 */
 	public static function getBlocksRevision($id, $revisionId)
 	{
@@ -628,7 +652,7 @@ class BackendPagesModel
 	 * Get the first child for a given parent
 	 *
 	 * @return	mixed
-	 * @param	int $pageId
+	 * @param	int $pageId		The Id of the page to get the first child for.
 	 */
 	public static function getFirstChildId($pageId)
 	{
@@ -657,7 +681,7 @@ class BackendPagesModel
 	 * Get the full-URL for a given menuId
 	 *
 	 * @return	string
-	 * @param	int $menuId
+	 * @param	int $id		The Id of the page to get the URL for.
 	 */
 	public static function getFullURL($id)
 	{
@@ -710,7 +734,7 @@ class BackendPagesModel
 	 * Get the maximum unique id for pages
 	 *
 	 * @return	int
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function getMaximumMenuId($language = null)
 	{
@@ -739,8 +763,8 @@ class BackendPagesModel
 	 * Get the maximum sequence inside a leaf
 	 *
 	 * @return	int
-	 * @param	int $parentId
-	 * @param	int[optional] $language
+	 * @param	int $parentId				The Id of the parent.
+	 * @param	int[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function getMaximumSequence($parentId, $language = null)
 	{
@@ -763,9 +787,9 @@ class BackendPagesModel
 	 * Get the subtree for a root element
 	 *
 	 * @return	string
-	 * @param	array $navigation
-	 * @param 	int $parentId
-	 * @param	string[optional] $html
+	 * @param	array $navigation			The navigation array.
+	 * @param 	int $parentId				The id of the parent.
+	 * @param	string[optional] $html		A holder for the generated HTML.
 	 */
 	public static function getSubtree($navigation, $parentId, $html = '')
 	{
@@ -808,7 +832,7 @@ class BackendPagesModel
 	/**
 	 * Get templates
 	 *
-	 * @return unknown
+	 * @return	array
 	 */
 	public static function getTemplates()
 	{
@@ -842,10 +866,10 @@ class BackendPagesModel
 	/**
 	 * Get all pages/level
 	 *
-	 * @param	array $ids
-	 * @param	array[optional] $data
-	 * @param	int[optional] $level
 	 * @return	array
+	 * @param	array $ids				The parentIds.
+	 * @param	array[optional] $data	A holder for the generated data.
+	 * @param	int[optional] $level	The counter for the level.
 	 */
 	private static function getTree(array $ids, array $data = null, $level = 1)
 	{
@@ -1005,12 +1029,12 @@ class BackendPagesModel
 
 
 	/**
-	 * Get an URL for a page
+	 * Get an unique URL for a page
 	 *
 	 * @return	string
-	 * @param	string $URL
-	 * @param	int[optional] $id
-	 * @param	int[optional] $parentId
+	 * @param	string $URL					The URL to base on.
+	 * @param	int[optional] $id			The id to ignore.
+	 * @param	int[optional] $parentId		The parent for the page to create an url for.
 	 */
 	public static function getURL($URL, $id = null, $parentId = 0)
 	{
@@ -1118,7 +1142,7 @@ class BackendPagesModel
 	 * Insert a page
 	 *
 	 * @return	int
-	 * @param	array $page
+	 * @param	array $page		The data for the page.
 	 */
 	public static function insert(array $page)
 	{
@@ -1137,7 +1161,7 @@ class BackendPagesModel
 	 * Insert multiple blocks at once
 	 *
 	 * @return	void
-	 * @param	array $blocks
+	 * @param	array $blocks		The blocks to insert.
 	 */
 	public static function insertBlocks(array $blocks, $hasBlock = false)
 	{
@@ -1169,7 +1193,7 @@ class BackendPagesModel
 	 * Inserts a new template
 	 *
 	 * @return	int
-	 * @param	array $template
+	 * @param	array $template	The data for the template to insert.
 	 */
 	public static function insertTemplate(array $template)
 	{
@@ -1195,10 +1219,10 @@ class BackendPagesModel
 	 * Move a page
 	 *
 	 * @return	bool
-	 * @param	int $id
-	 * @param	int $droppedOn
-	 * @param	string $typeOfDrop
-	 * @param	string[optional] $language
+	 * @param	int $id							The id for the page that has to be moved.
+	 * @param	int $droppedOn					The id for the page where to page has been dropped on.
+	 * @param	string $typeOfDrop				The type of drop, possible values are: before, after, inside.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function move($id, $droppedOn, $typeOfDrop, $language = null)
 	{
@@ -1340,7 +1364,7 @@ class BackendPagesModel
 	 * Update a page
 	 *
 	 * @return	int
-	 * @param	array $page
+	 * @param	array $page		The new data for the page.
 	 */
 	public static function update(array $page)
 	{
@@ -1391,7 +1415,8 @@ class BackendPagesModel
 	 * Update the blocks
 	 *
 	 * @return	void
-	 * @param	array $blocks
+	 * @param	array $blocks	The blocks to update.
+	 * @param	bool $hasBlock	Is there a real block inside the blocks.
 	 */
 	public static function updateBlocks(array $blocks, $hasBlock = false)
 	{
@@ -1426,8 +1451,8 @@ class BackendPagesModel
 	 * Update a template
 	 *
 	 * @return	void
-	 * @param	int $id				The id for the template to update
-	 * @param	array $template		The new data for the template
+	 * @param	int $id				The id for the template to update.
+	 * @param	array $template		The new data for the template.
 	 */
 	public static function updateTemplate($id, array $template)
 	{

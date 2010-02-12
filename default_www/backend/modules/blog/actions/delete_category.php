@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogDeleteCategory
- *
  * This action will delete a category
  *
  * @package		backend

@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogMassPostAction
- *
  * This action is used to update one or more blogposts (delete, ...)
  *
  * @package		backend

@@ -2,8 +2,7 @@
 
 /**
  * BackendPagesAdd
- *
- * This is the add-action, it will display a form to create a new pages item
+ * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
  * @subpackage	pages

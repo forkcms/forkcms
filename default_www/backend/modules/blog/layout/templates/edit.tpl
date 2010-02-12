@@ -298,7 +298,6 @@
 					</div>
 				{/form:edit}
 			</div>
-
 		</td>
 	</tr>
 </table>

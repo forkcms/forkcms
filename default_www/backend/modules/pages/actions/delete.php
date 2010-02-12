@@ -2,8 +2,7 @@
 
 /**
  * BackendPagesDelete
- *
- * This is the add-action, it will display a form to create a new pages item
+ * This is the delete-action, it will delete a page
  *
  * @package		backend
  * @subpackage	pages

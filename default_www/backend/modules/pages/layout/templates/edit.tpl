@@ -218,19 +218,16 @@
 											{$txtMetaDescription} {$txtMetaDescriptionError}
 										</li>
 									</ul>
-
 									<p>
 										<label for="meta_keywords_overwrite">{$lblMetaKeywords|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 									</p>
-
 									<ul class="inputList">
 										<li>
 											{$chkMetaKeywordsOverwrite}
 											{$txtMetaKeywords} {$txtMetaKeywordsError}
 										</li>
 									</ul>
-
 									<p>
 										<label for="meta_custom">{$lblMetaCustom|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaCustom}</span>
@@ -244,17 +241,14 @@
 									<h3>{$lblURL}</h3>
 								</div>
 								<div class="options">
-
 									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>
 									<span class="helpTxt">{$msgHelpMetaURL}</span>
-
 									<ul class="inputList">
 										<li>
 											{$chkUrlOverwrite}
 											<span id="urlFirstPart">{$SITE_URL}{$seoPageUrl}</span>{$txtUrl} {$txtUrlError}
 										</li>
 									</ul>
-
 								</div>
 							</div>
 						</div>
@@ -313,7 +307,6 @@
 	{iteration:extras}extraData[{$extras.id}] = {$extras.json}; {/iteration:extras}
 
 	$('#page-'+ pageID).addClass('selected');
-
 </script>
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

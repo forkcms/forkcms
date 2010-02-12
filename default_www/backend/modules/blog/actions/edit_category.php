@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogEditCategory
- *
  * This is the edit category action, it will display a form to edit an existing category.
  *
  * @package		backend

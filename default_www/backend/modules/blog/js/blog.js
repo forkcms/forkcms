@@ -5,7 +5,6 @@ jsBackend.blog = {
 		jsBackend.blog.controls.init();
 		jsBackend.blog.category.init();
 	},
-	
 	// end
 	eoo: true
 }
@@ -13,7 +12,6 @@ jsBackend.blog = {
 jsBackend.blog.category = {
 	init: function() {
 		if($('#newCategory').length > 0) {
-			
 			// set disabled state
 			$('#newCategoryButton').addClass('disabledButton');
 			

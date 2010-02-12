@@ -2,7 +2,6 @@
 
 /**
  * BackendDashboardIndex
- *
  * This is the index-action (default), it will display the login screen
  *
  * @package		backend
@@ -71,7 +70,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 					require_once $pathName .'/widgets/'. $widget;
 
 					// build classname
-					$className = 'BackendWidget'. SpoonFilter::toCamelCase(str_replace('.php', '', $widget));
+					$className = 'Backend'. SpoonFilter::toCamelCase($module)  .'Widget'. SpoonFilter::toCamelCase(str_replace('.php', '', $widget));
 
 					// validate if the class exists
 					if(!class_exists($className)) throw new BackendException('The widgetfile is present, but the classname should be: '. $className .'.');
@@ -124,4 +123,5 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		$this->tpl->assign('rightColumn', $this->widgets['right']);
 	}
 }
+
 ?>

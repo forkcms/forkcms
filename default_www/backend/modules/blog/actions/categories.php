@@ -2,7 +2,6 @@
 
 /**
  * BackendBlogCategories
- *
  * This is the categories-action, it will display the overview of blog categories
  *
  * @package		backend
@@ -32,8 +31,8 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		// display the page
 		$this->display();
 	}
-	
-	
+
+
 	/**
 	 * Loads the datagrids
 	 *
@@ -43,16 +42,16 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	{
 		// create datagrid
 		$this->datagrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
-		
+
 		// header labels
 		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Category')), 'num_posts' => ucfirst(BL::getLabel('PostsInThisCategory'))));
-		
+
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('name', 'num_posts'), 'name');
-		
+
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_category') .'&id=[id]', BL::getLabel('Edit'));
-		
+
 		// disable paging
 		$this->datagrid->setPaging(false);
 	}
