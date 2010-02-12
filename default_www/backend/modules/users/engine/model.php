@@ -52,7 +52,7 @@ class BackendUsersModel
 		$db = BackendModel::getDB(true);
 
 		// delete the settings
-		$db->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $userId);
+		$db->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $id);
 	}
 
 
