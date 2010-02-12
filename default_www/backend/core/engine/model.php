@@ -211,15 +211,8 @@ class BackendModel
 			// create instance
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
-			// @todo	Davy, test this.
-
-			// utf8 compliance
+			// utf8 compliance & MySQL-timezone
 			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00";');
-//			$db->execute('SET CHARACTER SET utf8;');
-//			$db->execute('SET NAMES utf8;');
-
-			// mysql timezone
-//			$db->execute("SET time_zone = '+0:00';");
 
 			// store
 			Spoon::setObjectReference('database', $db);
