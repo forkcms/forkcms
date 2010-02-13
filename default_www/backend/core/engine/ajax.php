@@ -22,6 +22,14 @@ class BackendAJAX
 
 
 	/**
+	 * The working language
+	 *
+	 * @var	string
+	 */
+	private $language;
+
+
+	/**
 	 * The module
 	 *
 	 * @var	string
@@ -61,7 +69,7 @@ class BackendAJAX
 		catch(Exception $e)
 		{
 			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
+			SpoonHTTP::setHeadersByCode(500);
 
 			// if we are debugging we should see the exceptions
 			if(SPOON_DEBUG) throw $e;
@@ -74,7 +82,7 @@ class BackendAJAX
 
 
 	/**
-	 * Get action
+	 * Get the action
 	 *
 	 * @return	string
 	 */
@@ -122,7 +130,7 @@ class BackendAJAX
 		if(!in_array($value, array_keys($possibleLanguages)))
 		{
 			// set correct headers
-			SpoonHTTP::setHeadersByCode(403);
+			SpoonHTTP::setHeadersByCode(500);
 
 			// output
 			$fakeAction = new BackendBaseAJAXAction('', '');

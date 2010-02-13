@@ -3,7 +3,6 @@ GENERAL TODO
 	general:
 		- installer
 		- check if we use not-UTF8-safe functions
-		- cronjob system
 		- frontend-mailer
 		
 

@@ -3,10 +3,8 @@
 // require SpoonEmail
 require_once 'spoon/email/email.php';
 
-
 /**
  * BackendMailer
- *
  * This class will send mails
  *
  * @package		backend
@@ -32,7 +30,7 @@ class BackendMailer
 	 * @param	string[optional] $fromName		The from-name for the mail
 	 * @param	bool[optional] $queue			Should the mail be queued?
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $language = null)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $language = null)
 	{
 		// redefine
 		$subject = (string) $subject;
@@ -59,7 +57,14 @@ class BackendMailer
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
 		$email['html'] = self::getTemplateContent($template, $variables);
-		if($queue) $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') .'00:00';
+		$email['created_on'] = BackendModel::getUTCDate();
+
+		// set send date
+		if($queue)
+		{
+			if($sendOn === null) $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') .':00:00';
+			else $email['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
+		}
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -100,6 +105,24 @@ class BackendMailer
 
 		// return the content
 		return (string) $content;
+	}
+
+
+	/**
+	 * Get all queued mail ids
+	 *
+	 * @return	array
+	 */
+	public static function getQueuedMailIds()
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// return the ids
+		return (array) $db->getColumn('SELECT e.id
+										FROM emails AS e
+										WHERE e.send_on < ?;',
+										array(BackendModel::getUTCDate()));
 	}
 
 
@@ -156,7 +179,6 @@ class BackendMailer
 			$db->delete('emails', 'id = ?', array($id));
 		}
 	}
-
 }
 
 ?>

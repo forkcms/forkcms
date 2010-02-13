@@ -724,6 +724,202 @@ class BackendBaseConfig
 
 
 /**
+ * BackendBaseCronjob
+ * This is the base-object for cronjobs. The module-specific cronjob-files can extend the functionality from this class
+ *
+ * @package		backend
+ * @subpackage	core
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class BackendBaseCronjob
+{
+	/**
+	 * The current action
+	 *
+	 * @var	string
+	 */
+	protected $action;
+
+
+	/**
+	 * The current id
+	 *
+	 * @var	int
+	 */
+	protected $id;
+
+
+	/**
+	 * The current module
+	 *
+	 * @var	string
+	 */
+	protected $module;
+
+
+	/**
+	 * Default constructor
+	 * The constructor will set some properties.
+	 *
+	 * @return	void
+	 * @param	string $action		The action to load.
+	 * @param	string $module		The module to load.
+	 * @param	string $id			The id of the cronjob.
+	 */
+	public function __construct($action, $module, $id)
+	{
+		// store the current module and action (we grab them from the URL)
+		$this->setModule($module);
+		$this->setAction($action);
+		$this->setId($id);
+	}
+
+
+	/**
+	 * Clear/removed the busy file
+	 *
+	 * @return void
+	 */
+	protected function clearBusyFile()
+	{
+		// build path
+		$path = BACKEND_CACHE_PATH .'/cronjobs/'. $this->getId() .'.busy';
+
+		// remove the file
+		SpoonFile::delete($path);
+	}
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// this method will be overwritten by the childs so
+	}
+
+
+	/**
+	 * Get the action
+	 *
+	 * @return	string
+	 */
+	public function getAction()
+	{
+		return $this->action;
+	}
+
+
+	/**
+	 * Get the id
+	 *
+	 * @return	int
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
+
+
+	/**
+	 * Get the module
+	 *
+	 * @return	string
+	 */
+	public function getModule()
+	{
+		return $this->module;
+	}
+
+
+	/**
+	 * Set the action, for later use
+	 *
+	 * @return	void
+	 * @param	string $action		The action to load.
+	 */
+	protected function setAction($action)
+	{
+		$this->action = (string) $action;
+	}
+
+
+	/**
+	 * Set the busy file
+	 *
+	 * @return	void
+	 */
+	protected function setBusyFile()
+	{
+		// build path
+		$path = BACKEND_CACHE_PATH .'/cronjobs/'. $this->getId() .'.busy';
+
+		// init var
+		$isBusy = false;
+
+		// does the busy file already exists.
+		if(SpoonFile::exists($path))
+		{
+			$isBusy = true;
+
+			// grab counter
+			$counter = (int) SpoonFile::getContent($path);
+
+			// check the counter
+			if($counter > 9)
+			{
+				// build class name
+				$className = 'Backend'. SpoonFilter::toCamelCase($this->getModule()  .'_cronjob_'. $this->getAction());
+
+				// notify user
+				throw new BackendException('Cronjob ('. $className .') is still busy after 10 runs, check it out!');
+			}
+		}
+
+		// set counter
+		else $counter = 0;
+
+		// increment counter
+		$counter++;
+
+		// store content
+		SpoonFile::setContent($path, $counter, true, false);
+
+		// if the cronjob is busy we shoul NOT proceed.
+		if($isBusy) exit;
+	}
+
+
+	/**
+	 * Set the action, for later use
+	 *
+	 * @return	void
+	 * @param	int $id		The id of the cronjob.
+	 */
+	protected function setId($id)
+	{
+		$this->id = (int) $id;
+	}
+
+
+	/**
+	 * Set the module, for later use
+	 *
+	 * @return	void
+	 * @param	string $module		The module to load.
+	 */
+	protected function setModule($module)
+	{
+		$this->module = (string) $module;
+	}
+}
+
+
+/**
  * BackendBaseWidget
  * This is the base-object for widgets
  *

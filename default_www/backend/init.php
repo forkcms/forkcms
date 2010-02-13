@@ -29,7 +29,7 @@ class Init
 	public function __construct($type)
 	{
 		// init vars
-		$allowedTypes = array('backend', 'backend_ajax', 'backend_js');
+		$allowedTypes = array('backend', 'backend_ajax', 'backend_js', 'backend_cronjob');
 		$type = (string) $type;
 
 		// check if this is a valid type
@@ -87,8 +87,9 @@ class Init
 	private function definePaths()
 	{
 		// fix the Application setting
-		if($this->type == 'backend_js') define('APPLICATION', 'backend');
 		if($this->type == 'backend_ajax') define('APPLICATION', 'backend');
+		if($this->type == 'backend_js') define('APPLICATION', 'backend');
+		if($this->type == 'backend_cronjob') define('APPLICATION', 'backend');
 
 		// general paths
 		define('BACKEND_PATH', PATH_WWW .'/'. APPLICATION);
@@ -173,6 +174,10 @@ class Init
 				require_once BACKEND_CORE_PATH .'/engine/ajax_action.php';
 			break;
 
+			case 'backend_cronjob':
+				require_once BACKEND_CORE_PATH .'/engine/cronjob.php';
+			break;
+
 			case 'backend_js':
 				require_once BACKEND_CORE_PATH .'/engine/javascript.php';
 			break;
@@ -190,6 +195,7 @@ class Init
 		switch($this->type)
 		{
 			case 'backend_ajax':
+			case 'backend_cronjob':
 			case 'backend_js':
 				require_once '../../library/globals.php';
 				require_once '../../library/globals_backend.php';
