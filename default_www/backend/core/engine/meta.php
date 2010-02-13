@@ -2,7 +2,6 @@
 
 /**
  * BackendMeta
- *
  * This class represents a META-object
  *
  * @package		backend
@@ -73,10 +72,10 @@ class BackendMeta
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	BackendForm $form
-	 * @param	int[optional] $metaId
-	 * @param	string[optional] $baseFieldName
-	 * @param	bool[optional] $custom
+	 * @param	BackendForm $form					An instance of Backendform, the elements will be parsed in here.
+	 * @param	int[optional] $metaId				The metaID to load.
+	 * @param	string[optional] $baseFieldName		The field where the URL should be based on.
+	 * @param	bool[optional] $custom				Add/show custom-meta.
 	 */
 	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
 	{
@@ -274,7 +273,7 @@ class BackendMeta
 	 * Load a specific meta-record
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The id of the record to load.
 	 */
 	private function loadMeta($id)
 	{
@@ -298,8 +297,8 @@ class BackendMeta
 	/**
 	 * Saves the meta object
 	 *
-	 * @return	void
-	 * @param	bool[optional] $update
+	 * @return	int
+	 * @param	bool[optional] $update		Should we update the record or insert a new one.
 	 */
 	public function save($update = false)
 	{
@@ -393,9 +392,9 @@ class BackendMeta
 	 * REMARK: if you specify arguments they will be appended
 	 *
 	 * @return	void
-	 * @param	string $className
-	 * @param	string $methodName
-	 * @param	array[optional] $parameters
+	 * @param	string $className				Name of the class to use.
+	 * @param	string $methodName				Name of the method to use.
+	 * @param	array[optional] $parameters		Parameters to parse, they will be passed after ours.
 	 */
 	public function setURLCallback($className, $methodName, $parameters = array())
 	{

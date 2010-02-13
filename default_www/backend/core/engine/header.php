@@ -2,7 +2,6 @@
 
 /**
  * BackendHeader
- *
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
@@ -39,7 +38,7 @@ class BackendHeader
 
 
 	/**
-	 * Url-instance
+	 * URL-instance
 	 *
 	 * @var	BackendURL
 	 */
@@ -68,9 +67,9 @@ class BackendHeader
 	 * If you set overwritePath to true we expect a full path (It has to start with a slash '/')
 	 *
 	 * @return	void
-	 * @param	string $fileName
-	 * @param	string[optional] $module
-	 * @param	bool[optional] $overwritePath
+	 * @param	string $fileName				The name of the file to load.
+	 * @param	string[optional] $module		The module wherin the file is located.
+	 * @param	bool[optional] $overwritePath	Should we overwrite the full path?
 	 */
 	public function addCSS($fileName, $module = null, $overwritePath = false)
 	{
@@ -103,10 +102,10 @@ class BackendHeader
 	 * If you set overwritePath to true we expect a full path (It has to start with a /)
 	 *
 	 * @return	void
-	 * @param	string $fileName
-	 * @param	string[optional] $module
-	 * @param	bool[optional] $parseThroughPHP
-	 * @param	bool[optional] $overwritePath
+	 * @param	string $fileName					The file to load.
+	 * @param	string[optional] $module			The module wherin the file is located.
+	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed by PHP?
+	 * @param	bool[optional] $overwritePath		Should we overwrite the full path?
 	 */
 	public function addJavascript($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false)
 	{

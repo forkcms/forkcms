@@ -266,7 +266,7 @@ class FrontendTemplateModifiers
 	 *  syntax: {$var|dump}
 	 *
 	 * @return	string
-	 * @param	string $var		The variable to dump
+	 * @param	string $var		The variable to dump.
 	 */
 	public static function dump($var)
 	{

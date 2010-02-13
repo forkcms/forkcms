@@ -2,15 +2,11 @@
 
 /**
  * BackendTemplate, this is our extended version of SpoonTemplate
- *
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
  *	- it will map some modifiers
  *  - it will assign a lot of constants
  * 	- ...
- *
- *
- * This source file is part of Fork CMS.
  *
  * @package		backend
  * @subpackage	core
@@ -28,14 +24,17 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private $URL;
 
+
 	/**
 	 * Default constructor
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @return	void
+	 * @param	bool[optional] $dontAdd		Should the instance be added into the reference.
 	 */
 	public function __construct($dontAdd = false)
 	{
+		// get URL instance
 		$this->URL = Spoon::getObjectReference('url');
 
 		// store in reference so we can access it from everywhere
@@ -60,8 +59,8 @@ class BackendTemplate extends SpoonTemplate
 	 * Will also assign the interfacelabels and all user-defined constants.
 	 *
 	 * @return	void
-	 * @param	string $template
-	 * @param	bool[optional] $customHeaders
+	 * @param	string $template				The path for the template.
+	 * @param	bool[optional] $customHeaders	Are there custom headers set?
 	 */
 	public function display($template, $customHeaders = false)
 	{
@@ -329,14 +328,11 @@ class BackendTemplate extends SpoonTemplate
 		// assign
 		$this->assign('bodyClass', $bodyClass);
 	}
-
 }
 
 
 /**
  * BackendTemplateModifiers, this is our class with custom modifiers.
- *
- * This source file is part of Fork CMS.
  *
  * @package		backend
  * @subpackage	template
@@ -348,9 +344,10 @@ class BackendTemplateModifiers
 {
 	/**
 	 * Dumps the data
+	 *  syntax: {$var|dump}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var		The variable to dump.
 	 */
 	public static function dump($var)
 	{
@@ -363,9 +360,9 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|geturl:<action>[:<module>]}
 	 *
 	 * @return	void
-	 * @param	string[optional] $var
-	 * @param	string[optional] $action
-	 * @param	string[optional] $module
+	 * @param	string[optional] $var		A placeholder variable, it will be replaced with the URL.
+	 * @param	string[optional] $action	The action to build the URL for.
+	 * @param	string[optional] $module	The module to build the URL for.
 	 */
 	public static function getURL($var = null, $action = null, $module = null)
 	{
@@ -378,7 +375,7 @@ class BackendTemplateModifiers
 	 *  syntax: {$var|getmainnavigation}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
 	 */
 	public static function getMainNavigation($var = null)
 	{
@@ -398,7 +395,7 @@ class BackendTemplateModifiers
 	 *  syntax: {$var|getnavigation:startdepth[:maximumdepth]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
 	 */
 	public static function getNavigation($var = null)
 	{
@@ -408,11 +405,12 @@ class BackendTemplateModifiers
 
 	/**
 	 * Truncate a string
+	 *  syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
-	 * @param	string $var
-	 * @param	int $length
-	 * @param	bool[optional] $useHellip
+	 * @param	string $var					A placeholder var, will be replaced with the generated HTML.
+	 * @param	int $length					The maximum length of the truncated string.
+	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */
 	public static function truncate($var = null, $length, $useHellip = true)
 	{

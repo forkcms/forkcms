@@ -2,8 +2,7 @@
 
 /**
  * BackendBaseAction
- *
- * This class is the real code for Fork, it creates an action, loads the configfile, ...
+ * This class is the real code, it creates an action, loads the configfile, ...
  *
  * @package		backend
  * @subpackage	core
@@ -43,8 +42,8 @@ class BackendAJAXAction
 	 * You have to specify the action and module so we know what to do with this instance
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $module
+	 * @param	string $action		The action to load.
+	 * @param	string $module		The module to load.
 	 */
 	public function __construct($action, $module)
 	{
@@ -156,7 +155,7 @@ class BackendAJAXAction
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action	The action to load.
 	 */
 	private function setAction($action)
 	{
@@ -168,7 +167,7 @@ class BackendAJAXAction
 	 * Set the module
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module to load.
 	 */
 	private function setModule($module)
 	{

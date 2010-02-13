@@ -2,7 +2,6 @@
 
 /**
  * BackendAuthentication
- *
  * The class below will handle all authentication stuff. It will handle module-access, action-acces, ...
  *
  * @package		backend
@@ -58,8 +57,8 @@ class BackendAuthentication
 	 * Returns false if no user was found for this user/pass combination
 	 *
 	 * @return	string
-	 * @param	string $username
-	 * @param	string $password
+	 * @param	string $username	The username.
+	 * @param	string $password	The password.
 	 */
 	public static function getEncryptedPassword($username, $password)
 	{
@@ -90,8 +89,8 @@ class BackendAuthentication
 	 * 	The salt is an optional extra string you can put in
 	 *
 	 * @return	string
-	 * @param string $string
-	 * @param string[optional] $salt
+	 * @param string $string			The string to encrypt.
+	 * @param string[optional] $salt	The salt to use.
 	 */
 	public static function getEncryptedString($string, $salt = null)
 	{
@@ -123,8 +122,8 @@ class BackendAuthentication
 	 * Is the given action allowed for the current user
 	 *
 	 * @return	bool
-	 * @param	string $action
-	 * @param	string $module
+	 * @param	string $action		The action to check for.
+	 * @param	string $module		The module wherin the action is located.
 	 */
 	public static function isAllowedAction($action, $module)
 	{
@@ -185,7 +184,7 @@ class BackendAuthentication
 	 * Is the given module allowed for the current user
 	 *
 	 * @return	bool
-	 * @param	string $module
+	 * @param	string $module	The module to check for.
 	 */
 	public static function isAllowedModule($module)
 	{
@@ -301,8 +300,8 @@ class BackendAuthentication
 	 * Will return a boolean that indicates if the user is logged in.
 	 *
 	 * @return	bool
-	 * @param	string $login
-	 * @param	string $password
+	 * @param	string $login		The users login.
+	 * @param	string $password	The password provided by the user.
 	 */
 	public static function loginUser($login, $password)
 	{

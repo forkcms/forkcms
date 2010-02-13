@@ -23,14 +23,14 @@ class BackendMailer
 	 * Adds an email to the queue.
 	 *
 	 * @return	void
-	 * @param	string $subject
-	 * @param	string $template
-	 * @param	array[optional] $variables
-	 * @param	string[optional] $toEmail
-	 * @param	string[optional] $toName
-	 * @param	string[optional] $fromEmail
-	 * @param	string[optional] $fromName
-	 * @param	bool[optional] $queue
+	 * @param	string $subject					The subject for the email.
+	 * @param	string $template				The template to use.
+	 * @param	array[optional] $variables		Variables that should be assigned in the email.
+	 * @param	string[optional] $toEmail		The to-address for the email.
+	 * @param	string[optional] $toName		The to-name for the email.
+	 * @param	string[optional] $fromEmail		The from-address for the mail.
+	 * @param	string[optional] $fromName		The from-name for the mail
+	 * @param	bool[optional] $queue			Should the mail be queued?
 	 */
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $language = null)
 	{
@@ -52,9 +52,9 @@ class BackendMailer
 		$email['reply_to_name'] = (empty($replyToName)) ? (string) $replyTo[1] : $replyToName;
 
 		// validate
-		if(!empty($email['to_email']) && !SpoonFilter::isEmail($email['to_email'])) throw new BackendMailerException('Invalid e-mail address for recipient.');
-		if(!empty($email['from_email']) && !SpoonFilter::isEmail($email['from_email'])) throw new BackendMailerException('Invalid e-mail address for sender.');
-		if(!empty($email['reply_to_email']) && !SpoonFilter::isEmail($email['reply_to_email'])) throw new BackendMailerException('Invalid e-mail address for reply-to address.');
+		if(!empty($email['to_email']) && !SpoonFilter::isEmail($email['to_email'])) throw new BackendException('Invalid e-mail address for recipient.');
+		if(!empty($email['from_email']) && !SpoonFilter::isEmail($email['from_email'])) throw new BackendException('Invalid e-mail address for sender.');
+		if(!empty($email['reply_to_email']) && !SpoonFilter::isEmail($email['reply_to_email'])) throw new BackendException('Invalid e-mail address for reply-to address.');
 
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
@@ -76,8 +76,8 @@ class BackendMailer
 	 * Returns the content from a given template
 	 *
 	 * @return	string
-	 * @param	string	$template
-	 * @param	array[optional]	$variables
+	 * @param	string	$template				The template to use.
+	 * @param	array[optional]	$variables		The variabled to assign.
 	 */
 	private static function getTemplateContent($template, $variables = null)
 	{
@@ -107,7 +107,7 @@ class BackendMailer
 	 * Send an email
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The id of the mail to send.
 	 */
 	public static function send($id)
 	{
@@ -141,7 +141,7 @@ class BackendMailer
 			$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
 		}
 
-		// set some properties
+		// set some properties	@todo	Check this, why don't we use the reply-to
 		$email->setFrom($emailRecord['from_email'], $emailRecord['from_name']);
 		$email->addRecipient($emailRecord['to_email'], $emailRecord['to_name']);
 		$email->setReplyTo($emailRecord['reply_to_email']);
@@ -158,20 +158,5 @@ class BackendMailer
 	}
 
 }
-
-
-/**
- * BackendMailer
- *
- * This class is used when an exceptions occures in the BackendMailer class
- *
- * @package		backend
- * @subpackage	mailer
- *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @since		2.0
- */
-class BackendMailerException extends BackendException {}
 
 ?>

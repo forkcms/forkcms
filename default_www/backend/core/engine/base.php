@@ -2,7 +2,6 @@
 
 /**
  * BackendBaseAction
- *
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @package		backend
@@ -100,7 +99,7 @@ class BackendBaseAction
 	 * If no template is specified we build the path form the current module and action
 	 *
 	 * @return	void
-	 * @param	string[optional] $template
+	 * @param	string[optional] $template	The template to use, if not provided it will be based on the action.
 	 */
 	public function display($template = null)
 	{
@@ -197,13 +196,11 @@ class BackendBaseAction
 	/**
 	 * Get a parameter for a given key
 	 * The function will return null if the key is not available
-	 *
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
-	 * Possible values are: bool, boolean, int, integer, float, double, string, array
 	 *
 	 * @return	mixed
-	 * @param	string $key
-	 * @param	string[optional] $type
+	 * @param	string $key					The name of the parameter.
+	 * @param	string[optional] $type		The return-type, possible values are: bool, boolean, int, integer, float, double, string, array
 	 */
 	public function getParameter($key, $type = 'string')
 	{
@@ -222,7 +219,7 @@ class BackendBaseAction
 	 * Redirect to a given URL
 	 *
 	 * @return	void
-	 * @param	string $URL
+	 * @param	string $URL	The URL to redirect to.
 	 */
 	public function redirect($URL)
 	{
@@ -234,8 +231,7 @@ class BackendBaseAction
 	 * Set the action, for later use
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $action
+	 * @param	string $action	The action to load.
 	 */
 	private function setAction($action)
 	{
@@ -247,7 +243,7 @@ class BackendBaseAction
 	 * Set the module, for later use
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module to load.
 	 */
 	private function setModule($module)
 	{
@@ -258,7 +254,6 @@ class BackendBaseAction
 
 /**
  * BackendBaseActionIndex
- *
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the index action
  *
@@ -294,7 +289,6 @@ class BackendBaseActionIndex extends BackendBaseAction
 
 /**
  * BackendBaseActionAdd
- *
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the add action
  *
@@ -337,7 +331,6 @@ class BackendBaseActionAdd extends BackendBaseAction
 
 /**
  * BackendBaseActionEdit
- *
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the edit action
  *
@@ -403,7 +396,6 @@ class BackendBaseActionEdit extends BackendBaseAction
 
 /**
  * BackendBaseActionDelete
- *
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the delete action
  *
@@ -445,7 +437,6 @@ class BackendBaseActionDelete extends BackendBaseAction
 
 /**
  * BackendBaseAJAXAction
- *
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @package		backend
@@ -460,6 +451,7 @@ class BackendBaseAJAXAction
 	const BAD_REQUEST = 400;
 	const FORBIDDEN = 403;
 	const ERROR = 500;
+
 
 	/**
 	 * The current action
@@ -482,8 +474,8 @@ class BackendBaseAJAXAction
 	 * The constructor will set some properties. It populates the parameter array with urldecoded values for easy-use.
 	 *
 	 * @return	void
-	 * @param	string $action
-	 * @param	string $module
+	 * @param	string $action		The action to load.
+	 * @param	string $module		The module to load.
 	 */
 	public function __construct($action, $module)
 	{
@@ -530,9 +522,9 @@ class BackendBaseAJAXAction
 	 * Output an answer to the browser
 	 *
 	 * @return	void
-	 * @param	int $statusCode
-	 * @param	mixed[optional] $data
-	 * @param	string[optional] $message
+	 * @param	int $statusCode				The status code for the response, use the available constants. (self::OK, self::BAD_REQUEST, self::FORBIDDEN, self::ERROR).
+	 * @param	mixed[optional] $data		The data to output.
+	 * @param	string[optional] $message	The text-message to send.
 	 */
 	public function output($statusCode, $data = null, $message = null)
 	{
@@ -557,7 +549,7 @@ class BackendBaseAJAXAction
 	 * Set the action, for later use
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action		The action to load.
 	 */
 	protected function setAction($action)
 	{
@@ -569,7 +561,7 @@ class BackendBaseAJAXAction
 	 * Set the module, for later use
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module		The module to load.
 	 */
 	protected function setModule($module)
 	{
@@ -580,7 +572,6 @@ class BackendBaseAJAXAction
 
 /**
  * BackendBaseConfig
- *
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class
  *
  * @package		backend
@@ -734,7 +725,6 @@ class BackendBaseConfig
 
 /**
  * BackendBaseWidget
- *
  * This is the base-object for widgets
  *
  * @package		backend
@@ -795,7 +785,7 @@ class BackendBaseWidget
 	 * If no template is specified we build the path form the current module and action
 	 *
 	 * @return	void
-	 * @param	string[optional] $template
+	 * @param	string[optional] $template		The template to use.
 	 */
 	protected function display($template = null)
 	{
@@ -840,7 +830,7 @@ class BackendBaseWidget
 	 * Set column for the widget
 	 *
 	 * @return	void
-	 * @param	string $column	Possible values are: left, middle, right
+	 * @param	string $column	Possible values are: left, middle, right.
 	 */
 	protected function setColumn($column)
 	{
@@ -856,13 +846,12 @@ class BackendBaseWidget
 	 * Set the position for the widget
 	 *
 	 * @return	void
-	 * @param	int $position
+	 * @param	int $position	The position for the widget.
 	 */
 	protected function setPosition($position)
 	{
 		$this->position = (int) $position;
 	}
 }
-
 
 ?>

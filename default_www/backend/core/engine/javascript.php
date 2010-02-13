@@ -2,7 +2,6 @@
 
 /**
  * BackendJavascript
- *
  * This class will handle files JS-files that have to be parsed by PHP
  *
  * @package		backend
@@ -105,7 +104,7 @@ class BackendJavascript
 	 * Set file
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value		The file to load.
 	 */
 	public function setFile($value)
 	{
@@ -146,7 +145,7 @@ class BackendJavascript
 	 * Set language
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The language to load.
 	 */
 	public function setLanguage($value)
 	{
@@ -158,6 +157,7 @@ class BackendJavascript
 
 		// unknown user (fallback to default language)
 		else $language = FrontendLanguage::DEFAULT_LANGUAGE;
+
 
 		// set the locale (we need this for the labels)
 		BackendLanguage::setLocale($language);
@@ -171,7 +171,7 @@ class BackendJavascript
 	 * Set module
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The module to use.
 	 */
 	public function setModule($value)
 	{

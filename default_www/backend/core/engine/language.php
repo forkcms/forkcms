@@ -2,7 +2,6 @@
 
 /**
  * BackendLanguage
- *
  * This class will store the language-dependant content for the Backend, it will also store the current language for the user.
  *
  * @package		backend
@@ -47,8 +46,8 @@ class BackendLanguage
 	 * Get an error from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
-	 * @param	string[optional] $module
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module wherin we should search.
 	 */
 	public static function getError($key, $module = null)
 	{
@@ -122,8 +121,8 @@ class BackendLanguage
 	 * Get a label from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
-	 * @param	string[optional] $module
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module wherin we should search.
 	 */
 	public static function getLabel($key, $module = null)
 	{
@@ -165,8 +164,8 @@ class BackendLanguage
 	 * Get a message from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
-	 * @param	string[optional] $module
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module wherin we should search.
 	 */
 	public static function getMessage($key, $module = null)
 	{
@@ -240,7 +239,7 @@ class BackendLanguage
 	 * Set the current working language
 	 *
 	 * @return	void
-	 * @param	string $language
+	 * @param	string $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function setWorkingLanguage($language)
 	{
@@ -253,7 +252,7 @@ class BackendLanguage
 	 * It will require the correct file and init the needed vars
 	 *
 	 * @return	void
-	 * @param	string $language
+	 * @param	string $language		The language to load.
 	 */
 	public static function setLocale($language)
 	{
@@ -312,8 +311,8 @@ class BL extends BackendLanguage
 	 * Get an error from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
-	 * @param	string[optional] $module
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module to look in.
 	 */
 	public static function err($key, $module = 'core')
 	{
@@ -325,8 +324,8 @@ class BL extends BackendLanguage
 	 * Get a label from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
-	 * @param	string[optional] $module
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module to look in.
 	 */
 	public static function lbl($key, $module = 'core')
 	{
@@ -338,8 +337,8 @@ class BL extends BackendLanguage
 	 * Get a message from the language-file
 	 *
 	 * @return	string
-	 * @param	string $key
-	 * @param	string[optional] $module
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module to look in.
 	 */
 	public static function msg($key, $module = 'core')
 	{

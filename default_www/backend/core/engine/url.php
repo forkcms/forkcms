@@ -2,7 +2,6 @@
 
 /**
  * BackendURL
- *
  * This class will handle the incomming URL.
  *
  * @package		backend
@@ -115,7 +114,7 @@ class BackendURL
 	 *
 	 * @return	void
 	 */
-	private function processQueryString($useGet = false)
+	private function processQueryString()
 	{
 		// store the querystring local, so we don't alter it.
 		$queryString = $this->getQueryString();
@@ -241,7 +240,7 @@ class BackendURL
 	 * Set the current action
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action	The action to set.
 	 */
 	private function setAction($action)
 	{
@@ -253,7 +252,7 @@ class BackendURL
 	 * Set the host
 	 *
 	 * @return	void
-	 * @param	string $host
+	 * @param	string $host	The host.
 	 */
 	private function setHost($host)
 	{
@@ -265,7 +264,7 @@ class BackendURL
 	 * Set the current module
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module to set.
 	 */
 	public function setModule($module)
 	{
@@ -277,7 +276,7 @@ class BackendURL
 	 * Set the querystring
 	 *
 	 * @return	void
-	 * @param	string $queryString
+	 * @param	string $queryString		The full query-string.
 	 */
 	private function setQueryString($queryString)
 	{

@@ -2,7 +2,6 @@
 
 /**
  * BackendUser
- *
  * The class below will handle all stuff relates to the current authenticated user
  *
  * @package		backend
@@ -136,8 +135,8 @@ class BackendUser
 	 * Get a setting
 	 *
 	 * @return	mixed
-	 * @param	string $key
-	 * @param	mixed[optional] $defaultValue
+	 * @param	string $key						The key for the setting to get.
+	 * @param	mixed[optional] $defaultValue	Default value, will be stored in the setting isn't set.
 	 */
 	public function getSetting($key, $defaultValue = null)
 	{
@@ -222,7 +221,7 @@ class BackendUser
 	 * Load a user
 	 *
 	 * @return	void
-	 * @param	int $userId
+	 * @param	int $userId		The id of the user to load.
 	 */
 	public function loadUser($userId)
 	{
@@ -272,7 +271,7 @@ class BackendUser
 	 * Set groupid
 	 *
 	 * @return	void
-	 * @param	int $value
+	 * @param	int $value	The id of the group.
 	 */
 	private function setGroupId($value)
 	{
@@ -284,7 +283,7 @@ class BackendUser
 	 * Set last logged in date
 	 *
 	 * @return	void
-	 * @param	int $value
+	 * @param	int $value	The date (UNIX-timestamp) to set.
 	 */
 	private function setLastloggedInDate($value)
 	{
@@ -296,7 +295,7 @@ class BackendUser
 	 * Set secretkey
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The secret key.
 	 */
 	private function setSecretKey($value)
 	{
@@ -308,7 +307,7 @@ class BackendUser
 	 * Set sessionid
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The sessionID.
 	 */
 	private function setSessionId($value)
 	{
@@ -320,8 +319,8 @@ class BackendUser
 	 * Set a setting
 	 *
 	 * @return	void
-	 * @param	string $key
-	 * @param	mixed $value
+	 * @param	string $key		The key of the setting.
+	 * @param	mixed $value	The value to store.
 	 */
 	public function setSetting($key, $value)
 	{
@@ -347,7 +346,7 @@ class BackendUser
 	 * Set userid
 	 *
 	 * @return	void
-	 * @param	int $value
+	 * @param	int $value	The Id of the user.
 	 */
 	private function setUserId($value)
 	{
@@ -359,7 +358,7 @@ class BackendUser
 	 * Set username
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The username to set.
 	 */
 	private function setUsername($value)
 	{

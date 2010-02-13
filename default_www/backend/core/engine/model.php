@@ -2,9 +2,7 @@
 
 /**
  * BackendModel
- *
  * In this file we store all generic functions that we will be using in the backend.
- *
  *
  * @package		backend
  * @subpackage	core
@@ -43,7 +41,7 @@ class BackendModel
 	 * Add a number to the string
 	 *
 	 * @return	string
-	 * @param	string $string
+	 * @param	string $string	The string where the number will be appended to.
 	 */
 	public static function addNumber($string)
 	{
@@ -157,11 +155,11 @@ class BackendModel
 	 * If you don't specify a language the current language will be used
 	 *
 	 * @return	string
-	 * @param	string[optional] $action
-	 * @param	string[optional] $module
-	 * @param	string[optional] $language
-	 * @param	array[optional] $parameters
-	 * @param	bool[optional] $urlencode
+	 * @param	string[optional] $action		The action to build the URL for.
+	 * @param	string[optional] $module		The module to build the URL for.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param	array[optional] $parameters		GET-parameters to use.
+	 * @param	bool[optional] $urlencode		Should the parameters be urlencoded?
 	 */
 	public static function createURLForAction($action = null, $module = null, $language = null, array $parameters = null, $urlencode = true)
 	{
@@ -227,6 +225,7 @@ class BackendModel
 	 * Get the page-keys
 	 *
 	 * @return	array
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function getKeys($language = null)
 	{
@@ -264,7 +263,7 @@ class BackendModel
 	 * Get the navigation-items
 	 *
 	 * @return	array
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function getNavigation($language = null)
 	{
@@ -303,7 +302,7 @@ class BackendModel
 	 * Get the modules
 	 *
 	 * @return	array
-	 * @param	bool[optional] $activeOnly
+	 * @param	bool[optional] $activeOnly	Only return the active modules.
 	 */
 	public static function getModules($activeOnly = true)
 	{
@@ -343,7 +342,7 @@ class BackendModel
 	 * Fetch the list of modules, but for a dropdown
 	 *
 	 * @return	array
-	 * @param	bool[optional] $activeOnly
+	 * @param	bool[optional] $activeOnly	Only return the active modules.
 	 */
 	public static function getModulesForDropDown($activeOnly = true)
 	{
@@ -365,9 +364,9 @@ class BackendModel
 	 * Get a certain module-setting
 	 *
 	 * @return	mixed
-	 * @param	string $module
-	 * @param	string $key
-	 * @param	mixed[optional] $defaultValue
+	 * @param	string $module					The module wherin the setting is stored.
+	 * @param	string $key						The name of the setting.
+	 * @param	mixed[optional] $defaultValue	The value to store if the setting isn't present.
 	 */
 	public static function getSetting($module, $key, $defaultValue = null)
 	{
@@ -426,8 +425,8 @@ class BackendModel
 	 * Get URL for a given pageId
 	 *
 	 * @return	string
-	 * @param	int $pageId
-	 * @param	string[optional] $language
+	 * @param	int $pageId						The id of the page to get the URL for.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function getURL($pageId, $language = null)
 	{
@@ -456,9 +455,9 @@ class BackendModel
 	 * Get the URL for a give module & action combination
 	 *
 	 * @return	string
-	 * @param	string $module
-	 * @param	string[optional] $action
-	 * @param	string[optional] $language
+	 * @param	string $module					The module to get the URL for.
+	 * @param	string[optional] $action		The action to get the URL for.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
 	public static function getURLForBlock($module, $action = null, $language = null)
 	{
@@ -532,8 +531,8 @@ class BackendModel
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
 	 * @return	string
-	 * @param	string[optional] $format
-	 * @param	int[optional] $timestamp
+	 * @param	string[optional] $format	The format to return the timestamp in. Default is MySQL datetime format.
+	 * @param	int[optional] $timestamp	The timestamp to use, if not provided the current time will be used.
 	 */
 	public static function getUTCDate($format = null, $timestamp = null)
 	{
@@ -552,8 +551,8 @@ class BackendModel
 	 * Get the UTC timestamp for a date/time object combination.
 	 *
 	 * @return	int
-	 * @param	SpoonDateField $date
-	 * @param	SpoonTimeField[optional] $time
+	 * @param	SpoonDateField $date				An instance of SpoonDateField.
+	 * @param	SpoonTimeField[optional] $time		An instance of SpoonTimeField.
 	 */
 	public static function getUTCTimestamp(SpoonDateField $date, SpoonTimeField $time = null)
 	{
@@ -706,9 +705,9 @@ class BackendModel
 	 * Saves a module-setting into the DB and the cached array
 	 *
 	 * @return	void
-	 * @param	string $module
-	 * @param	string $key
-	 * @param	string $value
+	 * @param	string $module		The module to set the setting for.
+	 * @param	string $key			The name of the setting.
+	 * @param	string $value		The value to store.
 	 */
 	public static function setSetting($module, $key, $value)
 	{

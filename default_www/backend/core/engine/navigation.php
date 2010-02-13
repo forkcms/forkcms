@@ -2,7 +2,6 @@
 
 /**
  * BackendNavigation
- *
  * This class will be used to build the navigation
  *
  * @package		backend

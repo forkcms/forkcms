@@ -1,7 +1,8 @@
 <?php
 
 /**
- * BackendDatagrid, this is our extended version of SpoonDatagrid
+ * BackendDatagrid,
+ * this is our extended version of SpoonDatagrid
  *
  * This class will handle a lot of stuff for you, for example:
  * 	- it will set debugmode
@@ -12,6 +13,7 @@
  * @subpackage	datagrid
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendDataGrid extends SpoonDataGrid
@@ -20,7 +22,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param SpoonDataGridSource $source
+	 * @param SpoonDataGridSource $source	The datasource
 	 */
 	public function __construct(SpoonDataGridSource $source)
 	{
@@ -57,12 +59,12 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Adds a new column
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $label
-	 * @param	string[optional] $value
-	 * @param	string[optional] $URL
-	 * @param	string[optional] $image
-	 * @param	int[optional] $sequence
+	 * @param	string $name				The name for the new column.
+	 * @param	string[optional] $label		The label for the column.
+	 * @param	string[optional] $value		The value for the column.
+	 * @param	string[optional] $URL		The URL for the link inside the column.
+	 * @param	string[optional] $image		An URL to the image inside the column.
+	 * @param	int[optional] $sequence		The sequence for the column.
 	 */
 	public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
@@ -158,7 +160,7 @@ class BackendDataGrid extends SpoonDataGrid
  	 * Sets the active tab for this datagrid
  	 *
  	 * @return	void
- 	 * @param	string $tab
+ 	 * @param	string $tab		The name of the tab to show.
 	 */
 	public function setActiveTab($tab)
 	{
@@ -170,10 +172,10 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Sets the column function to be executed for every row
 	 *
 	 * @return	void
-	 * @param	mixed $function
-	 * @param	mixed[optional] $arguments
-	 * @param	mixed $columns
-	 * @param	bool[optional] $overwrite
+	 * @param	mixed $function					The function to execute.
+	 * @param	mixed[optional] $arguments		The arguments to pass to the function.
+	 * @param	mixed $columns					The column wherin the result will be printed.
+	 * @param	bool[optional] $overwrite		Should the orginal value be overwritten.
 	 */
 	public function setColumnFunction($function, $arguments = null, $columns, $overwrite = true)
 	{
@@ -214,7 +216,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Sets the dropdown for the mass action
 	 *
 	 * @return	void
-	 * @param	SpoonDropDown $actionDropDown
+	 * @param	SpoonDropDown $actionDropDown	A dropdown-instance.
 	 */
 	public function setMassAction(SpoonDropDown $actionDropDown)
 	{
@@ -249,8 +251,8 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Sets an URL, optionally only appending the provided piece
 	 *
 	 * @return	void
-	 * @param	string $URL
-	 * @param	bool[optional] $append
+	 * @param	string $URL					The URL to set.
+	 * @param	bool[optional] $append		Should it be appended to the existing URL.
 	 */
 	public function setURL($URL, $append = false)
 	{
@@ -267,6 +269,7 @@ class BackendDataGrid extends SpoonDataGrid
  * @subpackage	datagrid
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendDatagridPaging implements iSpoonDataGridPaging
@@ -275,14 +278,14 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 	 * Builds & returns the pagination
 	 *
 	 * @return	string
-	 * @param	string $URL
-	 * @param	int $offset
-	 * @param	string $order
-	 * @param	string $sort
-	 * @param	int $numResults
-	 * @param	int $numPerPage
-	 * @param	bool[optional] $debug
-	 * @param	string[optional] $compileDirectory
+	 * @param	string $URL								The URL.
+	 * @param	int $offset								The calculated offset.
+	 * @param	string $order							The name of the column to sort on.
+	 * @param	string $sort							The sorting method, possible values are: asc, desc.
+	 * @param	int $numResults							The number of results.
+	 * @param	int $numPerPage							The items per page.
+	 * @param	bool[optional] $debug					Should debugging be enabled?
+	 * @param	string[optional] $compileDirectory		The director for compiled templates.
 	 */
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{
@@ -447,8 +450,6 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
  * BackendDatagridArray
  * A datagrid with an array as source
  *
- * This source file is part of Fork CMS.
- *
  * @package		backend
  * @subpackage	datagrid
  *
@@ -461,7 +462,7 @@ class BackendDataGridArray extends BackendDataGrid
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	array $array
+	 * @param	array $array	The data.
 	 */
 	public function __construct(array $array)
 	{
@@ -478,8 +479,6 @@ class BackendDataGridArray extends BackendDataGrid
  * BackendDatagridDB
  * A datagrid with a DB-connection as source
  *
- * This source file is part of Fork CMS.
- *
  * @package		backend
  * @subpackage	datagrid
  *
@@ -492,8 +491,8 @@ class BackendDataGridDB extends BackendDataGrid
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $query
-	 * @param	array[optional] $parameters
+	 * @param	string $query					The query to retrieve the data.
+	 * @param	array[optional] $parameters		The parameters to be used inside the query.
 	 */
 	public function __construct($query, $parameters = array())
 	{
@@ -510,8 +509,6 @@ class BackendDataGridDB extends BackendDataGrid
  * BackendDatagridFunctions
  * A set of common used functions that will be applied on rows or columns
  *
- * This source file is part of Fork CMS.
- *
  * @package		backend
  * @subpackage	datagrid
  *
@@ -524,7 +521,7 @@ class BackendDataGridFunctions
 	 * Formats plain text as HTML, links will be detected, paragraphs will be inserted
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var		The data to cleanup.
 	 */
 	public static function cleanupPlainText($var)
 	{
@@ -554,7 +551,7 @@ class BackendDataGridFunctions
 	 * Format a date as a long representation according the users' settings
 	 *
 	 * @return	string
-	 * @param	int $timestamp
+	 * @param	int $timestamp		The UNIX-timestamp to format as a human readable date.
 	 */
 	public static function getLongDate($timestamp)
 	{
@@ -576,7 +573,7 @@ class BackendDataGridFunctions
 	 * Get time ago as a string for use in a datagrid
 	 *
 	 * @return	string
-	 * @param	int $timestamp
+	 * @param	int $timestamp		The UNIX-timestamp to convert in a time-ago-string.
 	 */
 	public static function getTimeAgo($timestamp)
 	{
@@ -598,7 +595,7 @@ class BackendDataGridFunctions
 	 * Get the HTML for a user to use in a datagrid
 	 *
 	 * @return	string
-	 * @param	int $id
+	 * @param	int $id		The Id of the user.
 	 */
 	public static function getUser($id)
 	{
@@ -629,9 +626,9 @@ class BackendDataGridFunctions
 	 * Truncate a string
 	 *
 	 * @return	string
-	 * @param	string $string
-	 * @param	int $length
-	 * @param	bool[optional] $useHellip
+	 * @param	string $string				The string to truncate.
+	 * @param	int $length					The maximumlength for the string.
+	 * @param	bool[optional] $useHellip	Should a hellip be appended?
 	 */
 	public static function truncate($string = null, $length, $useHellip = true)
 	{

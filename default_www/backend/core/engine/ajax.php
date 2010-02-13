@@ -2,7 +2,6 @@
 
 /**
  * BackendAJAX
- *
  * This class will handle AJAX-related stuff
  *
  * @package		backend
@@ -100,7 +99,7 @@ class BackendAJAX
 	 * Set action
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The action to use.
 	 */
 	public function setAction($value)
 	{
@@ -112,7 +111,7 @@ class BackendAJAX
 	 * Set the language
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The language to set.
 	 */
 	public function setLanguage($value)
 	{
@@ -139,7 +138,7 @@ class BackendAJAX
 	 * Set module
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The module to use.
 	 */
 	public function setModule($value)
 	{
