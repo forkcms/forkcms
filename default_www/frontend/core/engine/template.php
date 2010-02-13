@@ -21,11 +21,12 @@ class FrontendTemplate extends SpoonTemplate
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @return	void
+	 * @param	bool[optional]	$dontAdd	Should the instance be added into the reference.
 	 */
-	public function __construct()
+	public function __construct($dontAdd = false)
 	{
 		// store in reference so we can access it from everywhere
-		Spoon::setObjectReference('template', $this);
+		if(!$dontAdd) Spoon::setObjectReference('template', $this);
 
 		// set cache directory
 		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');

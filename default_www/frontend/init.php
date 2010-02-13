@@ -152,6 +152,7 @@ class Init
 		require_once FRONTEND_CORE_PATH .'/engine/model.php';
 		require_once FRONTEND_CORE_PATH .'/engine/url.php';
 		require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
+		require_once FRONTEND_CORE_PATH .'/engine/mailer.php';
 
 		// based on the type
 		switch($this->type)

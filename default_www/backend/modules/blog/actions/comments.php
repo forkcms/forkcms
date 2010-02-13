@@ -147,7 +147,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');
 
 		// hide columns
-		$this->dgPublished->setColumnsHidden('post_title', 'post_url');
+		$this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('action', array('moderation' => BL::getLabel('MoveToModeration'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'spam');
@@ -180,7 +180,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setSortingColumns(array('created_on', 'text'), 'text');
 
 		// hide columns
-		$this->dgModeration->setColumnsHidden('post_title', 'post_url');
+		$this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'published');
@@ -215,7 +215,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setSortingColumns(array('created_on', 'text'), 'text');
 
 		// hide columns
-		$this->dgSpam->setColumnsHidden('post_title', 'post_url');
+		$this->dgSpam->setColumnsHidden('post_id', 'post_title', 'post_url');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'moderation' => BL::getLabel('MoveToModeration'), 'delete' => BL::getLabel('Delete')), 'published');

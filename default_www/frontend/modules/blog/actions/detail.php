@@ -274,9 +274,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				try
 				{
 					// set cookies
-					SpoonCookie::set('comment_author', $author, (7 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('comment_email', $email, (7 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('comment_website', $website, (7 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
 				}
 				catch(Exception $e)
 				{
