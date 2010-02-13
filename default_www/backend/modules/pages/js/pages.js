@@ -45,7 +45,7 @@ jsBackend.pages.autosave = {
 jsBackend.pages.controls = {
 	init: function() {
 		jsBackend.pages.controls.changeExtra();
-		if($('.contentTitle .inputDropdown').length > 0) { $('.contentTitle .inputDropdown').bind('change', jsBackend.pages.controls.changeExtra); }
+		if($('.contentTitle .select').length > 0) { $('.contentTitle .select').bind('change', jsBackend.pages.controls.changeExtra); }
 	},
 	changeExtra: function(evt) {
 		// find element with a block selected
@@ -58,7 +58,7 @@ jsBackend.pages.controls = {
 		else $('.contentTitle option[rel=block]:not(:selected)').attr('disabled', 'disabled');
 		
 		// loop all
-		$('.contentTitle .inputDropdown').each(function() {
+		$('.contentTitle .select').each(function() {
 			// get selected value
 			var val = $(this).val();
 			var id = $(this).attr('id');
