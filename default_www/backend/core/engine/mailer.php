@@ -164,11 +164,10 @@ class BackendMailer
 			$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
 		}
 
-		// set some properties	@todo	Check this, why don't we use the reply-to
+		// set some properties
 		$email->setFrom($emailRecord['from_email'], $emailRecord['from_name']);
 		$email->addRecipient($emailRecord['to_email'], $emailRecord['to_name']);
 		$email->setReplyTo($emailRecord['reply_to_email']);
-
 		$email->setSubject($emailRecord['subject']);
 		$email->setHTMLContent($emailRecord['html']);
 
