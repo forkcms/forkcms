@@ -10,3 +10,7 @@
 */
 .warningMessage { background: #FBEC88; border-color: #FAD42E; padding: 5px; }
 #newCategoryValue { width: 120px; }
+
+/* Debug stuff */
+#console { position: fixed; height: 200px; width: 100%; bottom: 0; left: 0; overflow: auto; background-color: #000;  }
+	#console pre { background: none; margin: 7px; padding: 0; font: 300 11px Monaco, sans-serif; color: #FFF; }

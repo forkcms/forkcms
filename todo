@@ -3,6 +3,9 @@ GENERAL TODO
 	general:
 		- installer
 		- check if we use not-UTF8-safe functions
+		
+	Spoon:
+		- check with Frank if we need ATTR_EMULATE_PREPARES
 
 ONSITE TODO
 -- 
