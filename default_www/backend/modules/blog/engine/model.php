@@ -27,15 +27,23 @@ class BackendBlogModel
 											INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
 											INNER JOIN meta AS m ON bp.meta_id = m.id
 											WHERE bc.status = ?
-											GROUP BY bc.id;';
+											GROUP BY bc.id';
+	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT p.id, p.user_id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on, num_comments AS comments
+													FROM blog_posts AS p
+													WHERE p.status = ? AND p.user_id = ?';
+	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT p.id, p.user_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on, num_comments AS comments
+										FROM blog_posts AS p
+										WHERE p.status = ?
+										ORDER BY p.edited_on DESC
+										LIMIT 4';
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
 											FROM blog_posts AS p
 											WHERE p.status = ? AND p.id = ?
-											ORDER BY p.edited_on DESC;';
-	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
-											FROM blog_posts AS p
-											WHERE p.status = ? AND p.id = ? AND p.user_id = ?
-											ORDER BY p.edited_on DESC;';
+											ORDER BY p.edited_on DESC';
+	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+													FROM blog_posts AS p
+													WHERE p.status = ? AND p.id = ? AND p.user_id = ?
+													ORDER BY p.edited_on DESC';
 
 
 	/**
@@ -330,6 +338,21 @@ class BackendBlogModel
 
 
 	/**
+	 * Get the maximum id
+	 *
+	 * @return	int
+	 */
+	public static function getMaximumId()
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// return
+		return (int) $db->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1;');
+	}
+
+
+	/**
 	 * Get all data for a given revision
 	 *
 	 * @return	array
@@ -531,11 +554,14 @@ class BackendBlogModel
 	 * Insert a draft
 	 *
 	 * @return	int
-	 * @param	int $id			The id of the blogpost.
-	 * @param	array $item		The item to insert.
+	 * @param	int $id	The id of the blogpost.
+	 * @param	array $item			The item to insert.
 	 */
 	public static function insertDraft($id, array $item)
 	{
+		// redefine
+		$id = (int) $id;
+
 		// get db
 		$db = BackendModel::getDB(true);
 
@@ -614,6 +640,9 @@ class BackendBlogModel
 
 		// get current version
 		$version = self::get($id);
+
+		// no previous version found (draft)
+		if(empty($version)) $version['language'] = BackendLanguage::getWorkingLanguage();
 
 		// build array
 		$item['id'] = $id;

@@ -57,18 +57,18 @@
 												<h3>{$lblPublish|ucfirst}</h3>
 											</div>
 
-											<!-- @later
 											<div class="options">
 												<div class="buttonHolder">
-													<a href="#" class="button icon iconZoom"><span><span><span>Preview</span></span></span></a>
-													<a href="#" class="button"><span><span><span>Save</span></span></span></a>
+													<!-- @todo style this @johan @yoni -->
+
+													{option:usingDraft}
+													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span><span><span>{$lblPreview|ucfirst}</span></span></span></a>
+													<br /><br />
+													{/option:usingDraft}
+
+													<a href="#" id="saveAsDraft" class="button mainButton"><span><span><span>{$lblSaveAsDraft|ucfirst}</span></span></span></a>
 												</div>
 											</div>
-
-											<div class="options">
-												<p class="status">Status: <strong>draft</strong></p>
-											</div>
-											-->
 
 											<div class="options">
 												<ul class="inputList">

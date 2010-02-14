@@ -7,6 +7,29 @@
 			</div>
 
 			<div class="inner">
+				{option:dgRecent}
+					<div class="datagridHolder">
+						<div class="tableHeading">
+							<h3>{$lblRecentlyEdited|ucfirst}</h3>
+							<div class="buttonHolderRight">
+								<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
+									<span><span><span>{$lblAdd|ucfirst}</span></span></span>
+								</a>
+							</div>
+						</div>
+						{$dgRecent}
+					</div>
+				{/option:dgRecent}
+
+				{option:dgDrafts}
+					<div class="datagridHolder">
+						<div class="tableHeading">
+							<h3>{$lblDrafts|ucfirst}</h3>
+						</div>
+						{$dgDrafts}
+					</div>
+				{/option:dgDrafts}
+
 				{option:dgPosts}
 				<form action="{$var|geturl:'mass_post_action'}" method="get" class="forkForms submitWithLink" id="posts">
 					<input type="hidden" name="from" value="posts" />

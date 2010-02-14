@@ -1,14 +1,13 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
-
 		<td id="contentHolder">
 			<div id="statusBar">
 				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$msgEditWithItem|sprintf:{$blog['title']}}</p>
 			</div>
-
 			<div class="inner">
 				{form:edit}
 					{$txtTitle} {$txtTitleError}
+
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
@@ -26,7 +25,6 @@
 						</ul>
 
 						<div id="tabContent">
-							<!-- Content tab -->
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
 									<td>
@@ -137,6 +135,7 @@
 										<div id="authors" class="box">
 											<div class="heading">
 												<h4>{$lblAuthor|ucfirst}</h4>
+
 												{*
 													@later
 													Johan, this is realy complicated, can't we find a beter way to do this?

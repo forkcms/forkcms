@@ -106,8 +106,8 @@ jsBackend.blog.category = {
 jsBackend.blog.controls = {
 	init: function() {
 		$('#saveAsDraft').click(function(evt) {
-			$('form#edit').append('<input type="hidden" name="status" value="draft" />');
-			$('form#edit').submit();
+			$('form').append('<input type="hidden" name="status" value="draft" />');
+			$('form').submit();
 		})
 	},
 	// end

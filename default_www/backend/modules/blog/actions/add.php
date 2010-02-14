@@ -118,6 +118,9 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// get the status
+			$status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -143,6 +146,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
 				$item['meta_id'] = $this->meta->save();
 				$item['category_id'] = $ddmCategoryId->getValue();
 				$item['user_id'] = $ddmUserId->getValue();
@@ -157,18 +161,36 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['hidden'] = $rbtHidden->getValue();
 				$item['allow_comments'] = $chkAllowComments->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;
+				$item['status'] = $status;
 
-				// insert the item
-				$id = BackendBlogModel::insert($item);
+				// active
+				if($status == 'active')
+				{
+					// insert the item
+					$id = BackendBlogModel::insert($item);
 
-				// save the tags
-				BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+					// save the tags
+					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
-				// ping
-				if(BackendModel::getSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
+					// ping
+					if(BackendModel::getSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
 
-				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+					// everything is saved, so redirect to the overview
+					$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+				}
+
+				// draft
+				else
+				{
+					// insert the item
+					$id = (int) BackendBlogModel::insertDraft($item['id'], $item);
+
+					// save the tags
+					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+
+					// everything is saved, so redirect to the overview
+					$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $item['id'] .'&draft='. $id .'&report=saved_as_draft&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+				}
 			}
 		}
 	}

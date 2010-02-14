@@ -80,7 +80,7 @@ class BackendDataGrid extends SpoonDataGrid
 			$URL = null;
 		}
 
-		if(in_array($name, array('use_revision')))
+		if(in_array($name, array('use_revision', 'use_draft')))
 		{
 			// rebuild value, it should have special markup
 			$value = '<a href="'. $URL .'" class="button icon'. SpoonFilter::toCamelCase($name) .'">
@@ -96,7 +96,7 @@ class BackendDataGrid extends SpoonDataGrid
 		parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
 
 		// known actions
-		if(in_array($name, array('add', 'edit', 'delete', 'use_revision')))
+		if(in_array($name, array('add', 'edit', 'delete', 'use_revision', 'use_draft')))
 		{
 			// add special attributes for actions we know
 			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),

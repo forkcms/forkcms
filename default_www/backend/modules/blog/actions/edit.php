@@ -108,6 +108,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			// assign draft
 			$this->tpl->assign('draftId', $draftToLoad);
 		}
+
+		// no item found, throw an exceptions, because somebody is fucking with our URL
+		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
 
@@ -119,7 +122,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	private function loadDrafts()
 	{
 		// create datagrid
-		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', $this->record['id'], BackendAuthentication::getUser()->getUserId()));
+		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS, array('draft', $this->record['id'], BackendAuthentication::getUser()->getUserId()));
 
 		// hide columns
 		$this->dgDrafts->setColumnsHidden(array('id', 'revision_id'));
@@ -134,7 +137,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 
 		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::getLabel('UseThisdraft')), BackendModel::createURLForAction('edit') .'&id=[id]&draft=[revision_id]', BL::getLabel('UseThisDraft'));
+		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::getLabel('UseThisDraft')), BackendModel::createURLForAction('edit') .'&id=[id]&draft=[revision_id]', BL::getLabel('UseThisDraft'));
 	}
 
 
@@ -233,6 +236,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			// set callback for generating an unique URL
 			$this->meta->setUrlCallback('BackendBlogModel', 'getURL', array($this->record['id']));
 
+			// get the status
 			$status = SpoonFilter::getPostValue('status', array('active', 'draft'), 'active');
 
 			// cleanup the submitted fields, ignore fields that were added by hackers
@@ -271,7 +275,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
 				$item['hidden'] = $rbtHidden->getValue();
 				$item['allow_comments'] = $chkAllowComments->getChecked() ? 'Y' : 'N';
-				$item['num_comments'] = 0;
 				$item['status'] = $status;
 
 				// active
