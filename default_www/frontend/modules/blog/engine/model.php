@@ -279,12 +279,18 @@ class FrontendBlogModel
 		$db = FrontendModel::getDB();
 
 		// get the comments
-		return (array) $db->retrieve('SELECT bc.id, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.text, bc.data,
+		$comments = (array) $db->retrieve('SELECT bc.id, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.text, bc.data,
 										bc.author, bc.email, bc.website
 										FROM blog_comments AS bc
 										WHERE bc.post_id = ? AND bc.status = ?
 										ORDER BY bc.created_on ASC;',
 										array($id, 'published'));
+
+		// loop comments
+		foreach($comments as $key => $row) $comments[$key]['gravatar_id'] = md5($row['email']);
+
+		// return the comments
+		return $comments;
 	}
 
 

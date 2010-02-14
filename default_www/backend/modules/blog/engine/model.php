@@ -222,8 +222,29 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// get records and return them
-		return (array) $db->getPairs('SELECT c.id, c.name
-										FROM blog_categories AS c;');
+		$categories = (array) $db->getPairs('SELECT c.id, c.name
+											FROM blog_categories AS c;');
+
+		// no categories?
+		if(empty($categories))
+		{
+			// build array
+			$category['language'] = BL::getWorkingLanguage();
+			$category['name'] = 'default';
+			$category['url'] = 'default';
+
+			// insert category
+			$id = self::insertCategory($category);
+
+			// store in settings
+			BackendModel::setSetting('blog', 'default_category_'. BL::getWorkingLanguage(), $id);
+
+			// recall
+			return self::getCategories();
+		}
+
+		// return the categories
+		return $categories;
 	}
 
 
@@ -524,7 +545,6 @@ class BackendBlogModel
 
 		// build array
 		$item['id'] = $newId;
-		$item['revision_id'] = $newId;
 
 		// insert and return the insertId
 		$db->insert('blog_posts', $item);

@@ -67,7 +67,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default category id
-		$defaultCategoryId = BackendModel::getSetting('blog', 'default_category', 1);
+		$defaultCategoryId = BackendModel::getSetting('blog', 'default_category_'. BL::getWorkingLanguage());
 
 		// create form
 		$this->frm = new BackendForm('add');

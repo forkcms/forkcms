@@ -91,6 +91,9 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError('InvalidURL');
 			}
 
+			// init variable
+			else $feedburner = null;
+
 			// form is validated
 			if($this->frm->isCorrect())
 			{
@@ -101,7 +104,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				BackendModel::setSetting('blog', 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
 				BackendModel::setSetting('blog', 'rss_title_'. BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
 				BackendModel::setSetting('blog', 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
-				BackendModel::setSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
+				if($feedburner !== null) BackendModel::setSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings'));

@@ -49,8 +49,10 @@
 			<div class="commentAuthor">
 				<p>
 					{$lblBy|ucfirst}
-					{option:blogComments.website}<a href="{$blogComments.website}">{$blogComments.author}</a>{/option:blogComments.website}
-					{option:!blogComments.website}{$blogComments.author}{/option:!blogComments.website}
+					{option:blogComments.website}<a href="{$blogComments.website}">{/option:blogComments.website}
+						<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="24" height="24" alt="{$blogComments.author}" class="replaceWithGravatar" rel="{$blogComments.gravatar_id}" />
+						{$blogComments.author}
+					{option:blogComments.website}</a>{/option:blogComments.website}
 					{$blogComments.created_on|timeago}
 				</p>
 			</div>
