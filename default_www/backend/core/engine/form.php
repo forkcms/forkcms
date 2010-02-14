@@ -297,7 +297,7 @@ class BackendForm extends SpoonForm
 		// redefine
 		$name = (string) $name;
 		$values = (array) $values;
-		$checked = ($checked !== null) ? (bool) $checked : null;
+		$checked = ($checked !== null) ? (array) $checked : null;
 		$class = ($class !== null) ? (string) $class : 'inputCheckbox';
 		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
 

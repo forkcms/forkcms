@@ -76,7 +76,7 @@ class FrontendLanguage
 		if(empty(self::$languages['active']))
 		{
 			// grab from settings
-			$activeLanguages = (array) FrontendModel::getModuleSetting('core', 'languages');
+			$activeLanguages = (array) FrontendModel::getModuleSetting('core', 'active_languages');
 
 			// store in cache
 			self::$languages['active'] = $activeLanguages;
