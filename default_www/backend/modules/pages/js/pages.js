@@ -177,7 +177,7 @@ jsBackend.pages.tree = {
 							'sitemap': { max_children: 0, icon: { position: '0 -176px' } }
 						},
 						plugins: { 
-							cookie: { prefix: 'jstree_', types: { selected: false } }
+							cookie: { prefix: 'jstree_', types: {}, options: { path: '/' } }
 						}
 					};
 
@@ -220,6 +220,8 @@ jsBackend.pages.tree = {
 		// get current and new URL
 		var currentPageURL = window.location.pathname + window.location.search; 
 		var newPageURL = $(node).find('a').attr('href');
+		
+		console.log('kak');
 		
 		// only redirect if destination isn't the current one.
 		if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
