@@ -5,6 +5,9 @@ jsBackend.pages = {
 		jsBackend.pages.controls.init();
 		jsBackend.pages.tree.init();
 		jsBackend.pages.template.init();
+		
+		// do meta
+		if($('#title').length > 0) $('#title').doMeta();
 	},
 	// end
 	eoo: true

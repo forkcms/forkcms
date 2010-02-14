@@ -11,7 +11,7 @@
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="{$blogUrl}">{$blogUrl}</a></span>
+								<span><a href="{$blogUrl}">{$blogUrl}/<span id="generatedUrl"></span></a></span>
 							</p>
 						</div>
 					</div>
@@ -193,7 +193,7 @@
 										<label for="meta_description_overwrite">{$lblMetaDescription|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaDescription}</span>
 									</p>
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkMetaDescriptionOverwrite}
 											{$txtMetaDescription} {$txtMetaDescriptionError}
@@ -205,7 +205,7 @@
 										<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 									</p>
 
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkMetaKeywordsOverwrite}
 											{$txtMetaKeywords} {$txtMetaKeywordsError}
@@ -229,7 +229,7 @@
 									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>
 									<span class="helpTxt">{$msgHelpMetaURL}</span>
 
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkUrlOverwrite}
 											<span id="urlFirstPart">{$blogUrl}/</span>{$txtUrl} {$txtUrlError}

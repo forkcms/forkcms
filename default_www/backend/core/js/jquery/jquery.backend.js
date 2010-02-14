@@ -3,13 +3,10 @@
 		// define defaults
 		var defaults =  {
 			splitChar: ',',
-			
 			emptyMessage: '',
 			addLabel: 'add',
 			removeLabel: 'delete',
-			
 			autoCompleteUrl: '',
-			
 			canAddNew: false
 		};
 		
@@ -211,6 +208,53 @@
 				
 				// rebuild element list
 				build();
+			}
+		});
+	};
+})(jQuery);
+
+
+(function($) {
+	$.fn.doMeta = function(options) {
+		// define defaults
+		var defaults =  {};
+		
+		// extend options
+		var options = $.extend(defaults, options);
+	
+		// loop all elements
+		return this.each(function() {
+			// initialize
+			calculateMeta(null, $(this));
+			
+			// bind keypress
+			$(this).bind('keyup', calculateMeta);
+
+			// calculate meta
+			function calculateMeta(evt, element) {
+				if(typeof element != 'undefined') var title = element.val(); 
+				else var title = $(this).val();
+
+				if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0) {
+					if(!$('#pageTitleOverwrite').is(':checked')) {
+						$('#pageTitle').val(title);
+					}
+				}
+				if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0) {
+					if(!$('#navigationTitleOverwrite').is(':checked')) {
+						$('#navigationTitle').val(title);
+					}
+				}
+				if(!$('#metaDescriptionOverwrite').is(':checked')) {
+					$('#metaDescription').val(title);
+				}
+				if(!$('#metaKeywordsOverwrite').is(':checked')) {
+					$('#metaKeywords').val(title);
+				}
+				if(!$('#urlOverwrite').is(':checked')) {
+					$('#url').val(utils.string.urlise(title));
+					$('#generatedUrl').html(utils.string.urlise(title));
+				}
 			}
 		});
 	};

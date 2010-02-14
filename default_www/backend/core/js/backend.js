@@ -91,6 +91,31 @@ jsBackend.controls = {
 		jsBackend.controls.bindConfirm();
 		jsBackend.controls.bindMassCheckbox();
 		jsBackend.controls.bindPasswordStrengthMeter();
+		jsBackend.controls.bindCheckboxTextfieldCombo();
+	},
+	// bind a checkbox textfield combo
+	bindCheckboxTextfieldCombo: function() {
+		$('.checkboxTextFieldCombo').each(function() {
+			// check if needed element exists
+			if($(this).find('input:checkbox').length > 0 && $(this).find('input:text').length > 0) {
+				var checkbox = $($(this).find('input:checkbox')[0]);
+				var textField = $($(this).find('input:text')[0])
+
+				checkbox.bind('change', function(evt) {
+					var combo = $(this).parents().filter('.checkboxTextFieldCombo');
+					var field = $(combo.find('input:text')[0]);
+					
+					if($(this).is(':checked')) {
+						field.removeClass('disabled').attr('disabled', '');
+						field.focus();
+					}
+					else field.addClass('disabled').attr('disabled', 'disabled');
+				});
+				
+				if(checkbox.is(':checked')) textField.removeClass('disabled').attr('disabled', '');
+				else textField.addClass('disabled').attr('disabled', 'disabled');
+			}
+		});
 	},
 	// bind confirm message
 	bindConfirm: function() {
@@ -538,7 +563,6 @@ jsBackend.messages = {
 	// end
 	eof: true
 }
-
 
 jsBackend.tabs = {
 	// init, something like a constructor

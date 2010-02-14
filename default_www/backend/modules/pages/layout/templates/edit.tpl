@@ -167,7 +167,7 @@
 										<label for="meta_pagetitle_overwrite">{$lblPageTitle|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpPageTitle}</span>
 									</p>
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkPageTitleOverwrite}
 											{$txtPageTitle} {$txtPageTitleError}
@@ -177,7 +177,7 @@
 										<label for="navigation_title_overwrite">{$lblNavigationTitle|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpNavigationTitle}</span>
 									</p>
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkNavigationTitleOverwrite}
 											{$txtNavigationTitle} {$txtNavigationTitleError}
@@ -212,7 +212,7 @@
 										<label for="meta_description_overwrite">{$lblMetaDescription|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaDescription}</span>
 									</p>
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkMetaDescriptionOverwrite}
 											{$txtMetaDescription} {$txtMetaDescriptionError}
@@ -222,7 +222,7 @@
 										<label for="meta_keywords_overwrite">{$lblMetaKeywords|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 									</p>
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkMetaKeywordsOverwrite}
 											{$txtMetaKeywords} {$txtMetaKeywordsError}
@@ -243,7 +243,7 @@
 								<div class="options">
 									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>
 									<span class="helpTxt">{$msgHelpMetaURL}</span>
-									<ul class="inputList">
+									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkUrlOverwrite}
 											<span id="urlFirstPart">{$SITE_URL}{$seoPageUrl}</span>{$txtUrl} {$txtUrlError}
