@@ -157,8 +157,19 @@ jsBackend.pages.template = {
 jsBackend.pages.tree = {
 	init: function() {
 		if($('#tree div').length == 0) return false;
-	
+
+		var openedIds = [];
+		if(typeof pageID != 'undefined') {
+			// get parents
+			var parents = $('#page-'+ pageID).parents('li');
+			// init array
+			openedIds = ['page-'+ pageID];
+			// add parents
+			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).attr('id'));
+		}
+		
 		var options = { ui: { theme_name: 'fork' },
+						opened: openedIds,
 						rules: { multiple: false, multitree: 'all', drag_copy: false },
 						lang: { loading: '{$lblLoading|ucfirst}' },
 						callback: {
@@ -177,7 +188,7 @@ jsBackend.pages.tree = {
 							'sitemap': { max_children: 0, icon: { position: '0 -176px' } }
 						},
 						plugins: { 
-							cookie: { prefix: 'jstree_', types: {}, options: { path: '/' } }
+							cookie: { prefix: 'jstree_', types: { selected: false }, options: { path: '/' } }
 						}
 					};
 
@@ -220,8 +231,6 @@ jsBackend.pages.tree = {
 		// get current and new URL
 		var currentPageURL = window.location.pathname + window.location.search; 
 		var newPageURL = $(node).find('a').attr('href');
-		
-		console.log('kak');
 		
 		// only redirect if destination isn't the current one.
 		if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
