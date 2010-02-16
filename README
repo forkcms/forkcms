@@ -1,1 +1,56 @@
-jquery.jstree isn't upgradable.
+# Fork NG README
+
+## Minimum requirements
+- PHP 5.2
+- MySQL 5.1
+- curl installed and enabled
+- GD2 installed and enabled
+- mb_string installed and enabled
+- PDO installed and enabled
+
+
+## Installation
+
+How to install Fork:
+1. Upload it. 
+	default_www should be the document_root of your vhost.
+2. Create a database (remember the credentials).
+3. Import default.sql into the database you created in step 2.
+// all steps below will be done by the installer when it is finished
+4. Navigate into the folder called library.
+	- Rename globals_backend.example.php to globals_backend.php.
+	- Rename globals_frontent.example.php to globals_frontend.php.
+	- Rename globals.example.php to globals.php.
+5. Open globals.php with your favorite texteditor.
+	- replace <database-name> with the name of the database you created in step 2.
+	- replace <database-hostname> with the hostname of your databaseserver (in most cases this is 127.0.0.1).
+	- replace <database-username> with the username for the database created in step 2.
+	- replace <database-password> with the password for the database created in step 2.
+	- replace <domain-without-http> with the domain (without http://) for the site (eg: www.netlash.com).
+	- replace <default-title>  with the title for the website, after install you can edit the title in the backend.
+	- replace <path-of-document-root> with the real path of the document_root (eg: /home/netlash/default_www). 
+6. Move the file (see attachment) nl.php to /default_www/backend/cache/locale
+7. Open your browser and enter <your-host>/private
+	- login (l: tijs, p: internet)
+	- navigate to Modules - Vertalingen (<your-host>/private/nl/locale/index)
+	- edit one item for application 'backend'.
+	- edit one item for application 'frontend'.
+	- navigate to Pagina's
+	- click 'Home' in the tree to edit the homepage, save the page.
+8. Point your browser to <your-host>, you should see the homepage!
+9. Have fun.
+
+
+## Pushing your site live
+
+When you're done developing:
+
+1. Edit /library/globals.php and change the value for 'SPOON_DEBUG' from true to false.
+2. Edit /default_www/robots.txt and change 'Disallow: /' to 'Disallow: /private/'.
+
+
+## Remarks
+
+The following folders need write permissions:
+- /default_www/backend/cache/*
+- /default_www/frontend/cache/*
