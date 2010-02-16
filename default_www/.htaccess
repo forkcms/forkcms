@@ -28,6 +28,7 @@ Options +FollowSymlinks
 
 # nice urls
 RewriteEngine On
+RewriteBase /
 RewriteCond %{REQUEST_URI} !^$
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule . index.php [NC,L]
