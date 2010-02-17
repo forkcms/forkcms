@@ -366,6 +366,12 @@ class BackendTemplateModifiers
 	 */
 	public static function getURL($var = null, $action = null, $module = null)
 	{
+		// redefine
+		$var = (string) $var;
+		$action = ($action !== null) ? (string) $action : null;
+		$module = ($module !== null) ? (string) $module : null;
+
+		// build the url
 		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage());
 	}
 
@@ -399,6 +405,10 @@ class BackendTemplateModifiers
 	 */
 	public static function getNavigation($var = null)
 	{
+		// redefine
+		$var = (string) $var;
+
+		// return
 		return  Spoon::getObjectReference('navigation')->getNavigation();
 	}
 

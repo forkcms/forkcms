@@ -87,9 +87,6 @@ class FrontendBlogModel
 		// get db
 		$db = FrontendModel::getDB();
 
-		// init
-		$return = array();
-
 		// get the blogposts
 		$articles = (array) $db->retrieve('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,
 											bc.name AS category_name, bc.url AS category_url,
@@ -154,9 +151,6 @@ class FrontendBlogModel
 
 		// get db
 		$db = FrontendModel::getDB();
-
-		// init
-		$return = array();
 
 		// get the blogposts
 		$articles = (array) $db->retrieve('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,

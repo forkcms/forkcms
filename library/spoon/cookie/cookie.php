@@ -43,6 +43,7 @@ class SpoonCookie
 	/**
 	 * Deletes one or more cookies.
 	 *
+	 * @todo	Davy, nakijken, argumenten worden opgehaald via func_get_args, maar keys is een array of een string.
 	 * @return	void
 	 * @param	mixed $keys		The key(s) that should be deleted.
 	 */

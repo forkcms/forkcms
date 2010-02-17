@@ -364,9 +364,6 @@ class FrontendURL
 			$this->setParameters($parameters);
 		}
 
-		// structural array
-		$navigation = FrontendNavigation::getNavigation();
-
 		// pageId, parentId & depth
 		$pageId = FrontendNavigation::getPageId(implode('/', $this->getPages()));
 		$pageInfo = FrontendNavigation::getPageInfo($pageId);

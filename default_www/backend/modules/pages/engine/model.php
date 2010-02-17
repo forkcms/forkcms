@@ -511,7 +511,7 @@ class BackendPagesModel
 	{
 		// redefine
 		$id = (int) $id;
-		$revisionOd = (int) $revisionId;
+		$revisionId = (int) $revisionId;
 		$language = BackendLanguage::getWorkingLanguage();
 
 		// get db

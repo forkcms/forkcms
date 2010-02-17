@@ -123,6 +123,7 @@ class SpoonDataGrid
 	/**
 	 * Offset value
 	 *
+	 * @todo	Davy, nakijken of property in gebruik is.
 	 * @var	int
 	 */
 	private $offset;

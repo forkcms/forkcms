@@ -678,7 +678,7 @@ class SpoonFilter
 		$value = (string) $value;
 
 		// init vars
-		$matches = array();
+		$matches = array();	// @todo	wat doet dit hier?
 
 		// build regexp
 		$pattern = '/(((http|ftp|https):\/{2})?(([0-9a-z_-]+\.)+('. implode('|', self::$tlds) .')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&=_-]+)?)?))\b/imu';

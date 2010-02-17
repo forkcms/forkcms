@@ -12,14 +12,6 @@
 class FrontendPage extends FrontendBaseObject
 {
 	/**
-	 * Content of the page
-	 *
-	 * @var	array
-	 */
-	private $record = array();
-
-
-	/**
 	 * Breadcrumb instance
 	 *
 	 * @var	FrontendBreadcrumb
@@ -33,14 +25,6 @@ class FrontendPage extends FrontendBaseObject
 	 * @var	int
 	 */
 	private static $currentPageId;
-
-
-	/**
-	 * Blocks
-	 *
-	 * @var	array
-	 */
-	private $blocks;
 
 
 	/**
@@ -65,6 +49,14 @@ class FrontendPage extends FrontendBaseObject
 	 * @var	int
 	 */
 	private $pageId;
+
+
+	/**
+	 * Content of the page
+	 *
+	 * @var	array
+	 */
+	private $record = array();
 
 
 	/**

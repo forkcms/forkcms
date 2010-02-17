@@ -325,7 +325,6 @@ class BackendUsersModel
 
 		// fetch user info
 		$userId = $user->getUserId();
-		$username = $user->getUsername();
 		$key = $user->getSetting('password_key');
 
 		// get db

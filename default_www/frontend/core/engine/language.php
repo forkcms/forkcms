@@ -99,7 +99,6 @@ class FrontendLanguage
 		if(isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) && strlen($_SERVER['HTTP_ACCEPT_LANGUAGE']) >= 2)
 		{
 			// get languages
-			$possibleLanguages = self::getActiveLanguages();
 			$redirectLanguages = self::getRedirectLanguages();
 
 			// prefered languages

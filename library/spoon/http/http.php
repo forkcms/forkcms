@@ -97,7 +97,6 @@ class SpoonHTTP
 
 		// execute
 		$response = curl_exec($curl);
-		$headers = curl_getinfo($curl);
 
 		// fetch errors
 		$errorNumber = curl_errno($curl);

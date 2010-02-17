@@ -17,7 +17,7 @@ class BackendJavascript
 	 *
 	 * @var	string
 	 */
-	private $file;
+	private $filename;
 
 
 	/**

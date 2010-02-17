@@ -995,7 +995,7 @@ class SpoonTemplateCompiler
 				$file = $this->getVariableString($match);
 
 				// template path
-				$template = eval('error_reporting(0); return '. $file .';');
+				$template = eval('error_reporting(0); return '. $file .';');	// @todo	Davy: what is this doing here?
 
 				// search string
 				$search = '{include:file=\''. $match .'\'}';

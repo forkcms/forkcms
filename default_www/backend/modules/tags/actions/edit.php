@@ -117,7 +117,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				$tag['url'] = BackendTagsModel::getURL($tag['tag'], $this->id);
 
 				// upate the item
-				$id = (int) BackendTagsModel::updateTag($tag);
+				BackendTagsModel::updateTag($tag);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($tag['tag']));

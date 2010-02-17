@@ -126,9 +126,7 @@ class BackendNavigation
 				// should we go deeper?
 				if($selected && isset($level['children']))
 				{
-					// init var
-					$first = true;
-
+					// loop childs
 					foreach($level['children'] as $child)
 					{
 						$subHTML = '<ul>'."\n";

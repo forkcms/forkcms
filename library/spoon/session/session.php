@@ -138,7 +138,6 @@ class SpoonSession
 		// start session if needed
 		if(!session_id()) self::start();
 
-
 		// redefine key
 		$key = (string) $key;
 

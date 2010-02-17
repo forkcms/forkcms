@@ -12,14 +12,6 @@
 class FrontendModel
 {
 	/**
-	 * cached modules
-	 *
-	 * @var	array
-	 */
-	private static $modules = array();
-
-
-	/**
 	 * cached module-settings
 	 *
 	 * @var	array
@@ -36,6 +28,9 @@ class FrontendModel
 	 */
 	public static function getDB($write = false)
 	{
+		// redefine
+		$write = (bool) $write;
+
 		// do we have a db-object ready?
 		if(!Spoon::isObjectReference('database'))
 		{

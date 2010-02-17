@@ -340,23 +340,23 @@ class FrontendHeader extends FrontendBaseObject
 		$content = preg_replace('| \n|i', "\n", $content);
 
 		// match stuff between brackets
-		$aMatches = array();
+		$matches = array();
 		preg_match_all('| \{(.*)}|iUms', $content, $aMatches);
 
 		// are there any matches
-		if(isset($aMatches[0]))
+		if(isset($matches[0]))
 		{
 			// loop matches
-			foreach($aMatches[0] as $key => $match)
+			foreach($matches[0] as $key => $match)
 			{
 				// remove faulty newlines
-				$tempContent = preg_replace('|\r|iU', '', $aMatches[1][$key]);
+				$tempContent = preg_replace('|\r|iU', '', $matches[1][$key]);
 
 				// removes real newlines
 				$tempContent = preg_replace('|\n|iU', ' ', $tempContent);
 
 				// replace the new block in the general content
-				$content = str_replace($aMatches[0][$key], '{'. $tempContent .'}', $content);
+				$content = str_replace($matches[0][$key], '{'. $tempContent .'}', $content);
 			}
 		}
 

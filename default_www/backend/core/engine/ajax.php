@@ -22,14 +22,6 @@ class BackendAJAX
 
 
 	/**
-	 * The working language
-	 *
-	 * @var	string
-	 */
-	private $language;
-
-
-	/**
 	 * The module
 	 *
 	 * @var	string

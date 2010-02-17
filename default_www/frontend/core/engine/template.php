@@ -54,7 +54,7 @@ class FrontendTemplate extends SpoonTemplate
 	public function display($template, $customHeaders = false)
 	{
 		// do custom stuff
-		$custom = new FrontendTemplateCustom($this);
+		new FrontendTemplateCustom($this);
 
 		// parse constants
 		$this->parseConstants();
@@ -313,6 +313,12 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURL($var, $pageId, $language = null)
 	{
+		// redefine
+		$var = (string) $var;
+		$pageId = (int) $pageId;
+		$language = ($language !== null) ? (string) $language : null;
+
+		// return
 		return FrontendNavigation::getURL($pageId, $language);
 	}
 
@@ -329,6 +335,13 @@ class FrontendTemplateModifiers
 	 */
 	public static function getURLForBlock($var, $module, $action = null, $language = null)
 	{
+		// redefine
+		$var = (string) $var;
+		$module = (string) $module;
+		$action = ($action !== null) ? (string) $action : null;
+		$language = ($language !== null) ? (string) $language : null;
+
+		// return
 		return FrontendNavigation::getURLForBlock($module, $action, $language);
 	}
 

@@ -119,7 +119,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 				$category['url'] = BackendBlogModel::getURLForCategory($category['name'], $this->id);
 
 				// upate the item
-				$id = (int) BackendBlogModel::updateCategory($this->id, $category);
+				BackendBlogModel::updateCategory($this->id, $category);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited&var='. urlencode($category['name']));

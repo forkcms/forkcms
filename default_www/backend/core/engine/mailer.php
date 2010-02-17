@@ -30,7 +30,7 @@ class BackendMailer
 	 * @param	string[optional] $fromName		The from-name for the mail
 	 * @param	bool[optional] $queue			Should the mail be queued?
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $language = null)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null)
 	{
 		// redefine
 		$subject = (string) $subject;
