@@ -84,6 +84,9 @@ class SpoonRESTClient
 	 */
 	public function execute($url, array $parameters = null, $method = 'GET')
 	{
+		// check if curl is available
+		if(!function_exists('curl_init')) throw new SpoonFileSystemException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
+
 		// init var
 		$allowedMethods = array('GET', 'POST');
 

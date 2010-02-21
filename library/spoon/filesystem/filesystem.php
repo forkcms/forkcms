@@ -446,6 +446,9 @@ class SpoonFile
 	 */
 	public static function download($sourceURL, $destinationPath, $overwrite = true)
 	{
+		// check if curl is available
+		if(!function_exists('curl_init')) throw new SpoonFileSystemException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
+
 		// redefine
 		$sourceURL = (string) $sourceURL;
 		$destinationPath = (string) $destinationPath;

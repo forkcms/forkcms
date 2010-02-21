@@ -79,8 +79,8 @@ class SpoonHTTP
 	 */
 	public static function getContent($URL)
 	{
-		// check if curl is loaded
-		if(!function_exists('curl_init')) throw new SpoonHTTPException('Curl isn\'t loaded.');
+		// check if curl is available
+		if(!function_exists('curl_init')) throw new SpoonFileSystemException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
 
 		// set options
 		$options[CURLOPT_URL] = (string) $URL;

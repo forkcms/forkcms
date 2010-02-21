@@ -386,6 +386,9 @@ class SpoonXMLRPCClient
 	 */
 	public function execute($method, array $parameters = null)
 	{
+		// check if curl is available
+		if(!function_exists('curl_init')) throw new SpoonFileSystemException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
+
 		// redefine
 		$method = (string) $method;
 		$parameters = (array) $parameters;
