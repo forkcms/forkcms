@@ -10,7 +10,6 @@
 							</a>
 						</div>
 					</div>
-
 					{option:datagrid}{$datagrid}{/option:datagrid}
 					{option:!datagrid}{$msgNoItems}{/option:!datagrid}
 				</div>

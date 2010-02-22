@@ -42,10 +42,19 @@
 										<table border="0" cellspacing="0" cellpadding="0">
 											<tr>
 												<td><a class="user" href="{$authenticatedUserEditUrl}">{$authenticatedUserNickname}</a></td>
-												<td><a href="{$authenticatedUserEditUrl}"><img src="{$FRONTEND_FILES_URL}/backend_users/avatars/32x32/{$authenticatedUserAvatar}" width="24" height="24" alt="{$authenticatedUserNickname}" class="avatar"></a></td>
-												<td><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a>
+												<td>
+													<div class="avatar av24">
+														<div class="avOverlay">&nbsp;</div>
+														<a href="{$authenticatedUserEditUrl}">
+															<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/32x32/{$authenticatedUserAvatar}" width="24" height="24" alt="{$authenticatedUserNickname}" />
+														</a>
+													</div>
+												</td>
 											</tr>
 										</table>
+									</li>
+									<li>
+										<a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a>
 									</li>
 								</ul>
 							</td>

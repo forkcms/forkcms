@@ -22,7 +22,7 @@ th { text-align: left; }
 a:focus { overflow: hidden; }
 
 /* Debug code */
-img { -moz-force-broken-image-icon: 1; }
+/*img { -moz-force-broken-image-icon: 1; }*/
 
 /*
 	General purpose classes
@@ -239,8 +239,6 @@ a:active {
 	color: #001A77;
 }
 
-
-
 /*
 	Header
 */
@@ -271,6 +269,10 @@ a:active {
 	#headerHolder #user {
 		min-width: 266px;
 	}
+	
+		#user .avatar {
+			margin-left: 4px;
+		}
 
 #header td {
 	vertical-align: middle;
@@ -350,12 +352,6 @@ a:active {
 	padding-left: 12px;
 	float: left;
 	line-height: 24px;
-}
-
-#user li img {
-	float: left;
-	padding-left: 3px;
-	margin-right: 16px;
 }
 
 #user li td {
@@ -1042,8 +1038,9 @@ td.comments {
 	}
 
 	.oneLiner .help {
-		line-height: 22px;
 		position: relative;
+		top: 2px;
+		left: 2px;
 		display: block;
 	}
 
@@ -2689,57 +2686,6 @@ abbr.help {
 					width: 160px;
 				}
 
-
-/*
-	Avatar
-*/
-/*
-<div class="avatar male s48">
-	&nbsp;
-</div>
-*/
-
-.defaultAvatar {
-	background: url(../images/avatars/default.png);
-	width: 52px;
-	height: 52px;
-}
-
-	.defaultAvatar.female {
-		background: url(../images/avatars/default.png) no-repeat right;
-	}
-
-.avatarHolder { 
-	width: 52px;
-	height: 52px;
-	position: relative;
-
-}
-
-.avatarHolder .avatar img {
-	-webkit-border-radius: 24px;
-	-moz-border-radius: 24px;
-	overflow: hidden;
-	margin: 2px 0 0 2px;
-	z-index: 50;
-}
-
-.avatarHolder img {
-	display: block;
-}
-
-@media screen and (-webkit-min-device-pixel-ratio:0) {
-	.avatarHolder .overlay {
-		position: absolute;
-		background: url(../images/avatars/overlay.png);
-		top: 0;
-		left: 0;
-		z-index: 10000;
-		width: 100%;
-		height: 100%;
-	}
-}
-
 /*
 	Settings: user info
 */
@@ -3506,6 +3452,10 @@ a.mainButton.focus {
 	line-height: 16px;
 }
 
+	.oneLiner .balloonAlt p {
+		line-height: 16px;
+	}
+
 	.balloon .balloonTop {
 		width: 15px;
 		height: 8px;
@@ -3515,3 +3465,132 @@ a.mainButton.focus {
 		top: -8px;
 		left: 27%;
 	}
+
+
+/*
+	Avatars
+*/
+
+.avatar {
+	width: 48px;
+	height: 48px;
+	background: #FFF;
+	overflow: hidden;
+	position: relative;
+	text-indent: -9000px;
+	background: url(../images/avatars/male_48.gif) no-repeat; }
+
+.avatar a {
+	display: block;
+	width: 100%;
+	height: 100%;
+	z-index: 3;
+	position: relative;
+}
+
+.avatar a img {
+	display: block;
+}
+
+.avOverlay {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.av24 {
+	width: 24px;
+	height: 24px;
+	background: url(../images/avatars/male_24.gif) no-repeat;
+}
+
+.av24 img {
+	width: 24px;
+	height: 24px;
+}
+
+.av48 {
+	width: 48px;
+	height: 48px;
+}
+
+.av48 img {
+	width: 48px;
+	height: 48px;
+}
+
+.av96 {
+	width: 96px;
+	height: 96px;
+}
+
+.av96 img {
+	width: 96px;
+	height: 96px;
+}
+
+.av128 {
+	width: 128px;
+	height: 128px;
+}
+
+.av128 img {
+	width: 128px;
+	height: 128px;
+}
+
+.av24 .avOverlay { background: url(../images/avatars/av24_overlay.png) no-repeat; }
+.av48 .avOverlay { background: url(../images/avatars/av48_overlay.png) no-repeat; }
+.av96 .avOverlay { background: url(../images/avatars/av96_overlay.png) no-repeat; }
+.av128 .avOverlay { background: url(../images/avatars/av128_overlay.png) no-repeat; }
+
+/* Specific */
+
+
+/*
+	Avatar
+	Old avatar code
+*/
+
+.defaultAvatar {
+	background: url(../images/avatars/default.png);
+	width: 52px;
+	height: 52px;
+}
+
+	.defaultAvatar.female {
+		background: url(../images/avatars/default.png) no-repeat right;
+	}
+
+.avatarHolder { 
+	width: 52px;
+	height: 52px;
+	position: relative;
+
+}
+
+.avatarHolder .avatar img {
+	-webkit-border-radius: 24px;
+	-moz-border-radius: 24px;
+	overflow: hidden;
+	margin: 2px 0 0 2px;
+	z-index: 50;
+}
+
+.avatarHolder img {
+	display: block;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.avatarHolder .overlay {
+		position: absolute;
+		background: url(../images/avatars/overlay.png);
+		top: 0;
+		left: 0;
+		z-index: 10000;
+		width: 100%;
+		height: 100%;
+	}
+}

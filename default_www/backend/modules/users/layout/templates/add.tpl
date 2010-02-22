@@ -40,7 +40,7 @@
 										</table>
 									</p>
 									<p>
-										<label for="confirmPassword"">{$lblConfirmPassword|ucfirst}</label>
+										<label for="confirmPassword">{$lblConfirmPassword|ucfirst}</label>
 										{$txtConfirmPassword} {$txtConfirmPasswordError}
 									</p>
 								</div>
