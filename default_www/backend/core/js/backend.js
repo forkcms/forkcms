@@ -85,13 +85,14 @@ jsBackend.balloons = {
 jsBackend.controls = {
 	// init, something like a constructor
 	init: function() { 
-		jsBackend.controls.bindWorkingLanguageSelection();
-		jsBackend.controls.bindFullWidthSwitch();
-		jsBackend.controls.bindToggleDiv();
+		jsBackend.controls.bindCheckboxTextfieldCombo();
 		jsBackend.controls.bindConfirm();
+		jsBackend.controls.bindFullWidthSwitch();
 		jsBackend.controls.bindMassCheckbox();
 		jsBackend.controls.bindPasswordStrengthMeter();
-		jsBackend.controls.bindCheckboxTextfieldCombo();
+		jsBackend.controls.bindWorkingLanguageSelection();
+		jsBackend.controls.bindTableCheckbox();
+		jsBackend.controls.bindToggleDiv();
 	},
 	// bind a checkbox textfield combo
 	bindCheckboxTextfieldCombo: function() {
@@ -184,6 +185,9 @@ jsBackend.controls = {
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt) {
 			// check or uncheck all the checkboxes in this datagrid
 			$($(this).closest('table').find('td input:checkbox')).attr('checked', $(this).is(':checked'));
+			// set selected class
+			if($(this).is(':checked')) $($(this).parents().filter('table')[0]).find('tbody tr').addClass('selected');
+			else $($(this).parents().filter('table')[0]).find('tbody tr').removeClass('selected');
 		});
 	},
 	bindPasswordStrengthMeter: function() {
@@ -218,7 +222,6 @@ jsBackend.controls = {
 			});
 		}
 	},
-	
 	// check a string for passwordstrength
 	checkPassword: function(string) {
 		// init vars
@@ -258,7 +261,6 @@ jsBackend.controls = {
 		// fallback
 		return 'weak';
 	},
-		
 	// toggle a div
 	bindToggleDiv: function() {
 		$('.toggleDiv').live('click', function(evt) {
@@ -274,6 +276,16 @@ jsBackend.controls = {
 			// set selected class on parent
 			if($(id).is(':visible')) $(this).parent().addClass('selected');
 			else $(this).parent().removeClass('selected');
+		});
+	},
+	// bind checkboxes in a row
+	bindTableCheckbox: function() {
+		// set classes
+		$('tr td input:checkbox:checked').each(function() { $($(this).parents().filter('tr')[0]).addClass('selected'); });
+		// bind change-events
+		$('tr td input:checkbox').live('change', function(evt) {
+			if($(this).is(':checked')) $($(this).parents().filter('tr')[0]).addClass('selected');
+			else $($(this).parents().filter('tr')[0]).removeClass('selected');
 		});
 	},
 	// togle between the working languages
