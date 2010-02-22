@@ -77,8 +77,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		// create elements
 		$this->frm->addTextField('site_title', BackendModel::getSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
 		$this->frm->addTextField('email', BackendModel::getSetting('core', 'email_'. BL::getWorkingLanguage(), null));
-		$this->frm->addTextArea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'inputTextarea', 'inputTextareaError', true);
-		$this->frm->addTextArea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)));
+		$this->frm->addTextArea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
+		$this->frm->addTextArea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
 		$this->frm->addTextField('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
 		$this->frm->addTextField('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
 
