@@ -7,15 +7,15 @@
 
 			<div class="inner">
 				{form:edit}
-					<table id="settingsUserInfo" border="0" cellspacing="0" cellpadding="0">
+					<table class="settingsUserInfo" border="0" cellspacing="0" cellpadding="0">
 						<tr>
 							<td>
-								<div class="avatarHolder">
-									<div class="defaultAvatar">
-										{option:record['settings']['avatar']}
-											<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record['settings']['avatar']}" width="52" height="52" alt="" />
-										{/option:record['settings']['avatar']}
-									</div>
+								<div class="avatar av48">
+									<div class="avOverlay">&nbsp;</div>
+									{option:record['settings']['avatar']}
+										<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record['settings']['avatar']}" width="52" height="52" alt="" />
+									{/option:record['settings']['avatar']}
+									<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/48x48/{$authenticatedUserAvatar}" width="48" height="48" alt="{$authenticatedUserNickname}" />
 								</div>
 							</td>
 							<td>

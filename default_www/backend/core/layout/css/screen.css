@@ -3478,7 +3478,12 @@ a.mainButton.focus {
 	overflow: hidden;
 	position: relative;
 	text-indent: -9000px;
-	background: url(../images/avatars/male_48.gif) no-repeat; }
+	background: url(../images/avatars/male_48.gif) no-repeat;
+}
+
+.avOverlay {
+	display: none;
+}
 
 .avatar a {
 	display: block;
@@ -3547,6 +3552,17 @@ a.mainButton.focus {
 .av128 .avOverlay { background: url(../images/avatars/av128_overlay.png) no-repeat; }
 
 /* Specific */
+
+.datagridAvatar .avatar {
+	float: left;
+}
+
+.datagridAvatar p {
+	float: left;
+	line-height: 24px;
+	padding-left: 3px;
+}
+
 
 
 /*

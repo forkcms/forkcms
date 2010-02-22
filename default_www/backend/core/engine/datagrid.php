@@ -610,11 +610,14 @@ class BackendDataGridFunctions
 		$nickname = $user->getSetting('nickname');
 
 		// build html
-		$html = '<div class="user">'."\n";
-		$html .= '	<a href="'. BackendModel::createURLForAction('edit', 'users') . '&id='. $id .'">'."\n";
-		$html .= '		<img src="'. FRONTEND_FILES_URL .'/backend_users/avatars/32x32/'. $avatar .'" width="24" height="24" alt="'. $nickname .'" />'."\n";
-		$html .= '		'. $nickname ."\n";
-		$html .= '	</a>'."\n";
+		$html = '<div class="datagridAvatar">' . "\n";
+		$html .= '	<div class="avatar av24">' . "\n";
+		$html .= '		<div class="avOverlay">&nbsp;</div>'."\n";
+		$html .= '		<a href="'. BackendModel::createURLForAction('edit', 'users') . '&id='. $id .'">'."\n";
+		$html .= '			<img src="'. FRONTEND_FILES_URL .'/backend_users/avatars/32x32/'. $avatar .'" width="24" height="24" alt="'. $nickname .'" />'."\n";
+		$html .= '		</a>'."\n";
+		$html .= '	</div>';
+		$html .= '	<p><a href="'. BackendModel::createURLForAction('edit', 'users') . '&id='. $id .'">' . $nickname . '</a></p>' . "\n";
 		$html .= '</div>';
 
 		// return
