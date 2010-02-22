@@ -6,7 +6,7 @@
 			</div>
 
 			<div class="inner">
-				{form:settings}
+				{form:generalsettings}
 					{option:warnings}
 						<div class="generalMessage infoMessage">
 							<p><strong>{$msgConfigurationError}</strong></p>
@@ -114,13 +114,12 @@
 							</div>
 						</div>
 					</div>
-
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
 							<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 						</div>
 					</div>
-				{/form:settings}
+				{/form:generalsettings}
 			</div>
 		</td>
 	</tr>

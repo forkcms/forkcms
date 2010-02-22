@@ -111,6 +111,7 @@ class SpoonDatabase
 
 	/**
 	 * Creates a database connection instance.
+	 * @todo	Davy, valideer wat meer, valid hostname (127.0.0.1:123465)
 	 *
 	 * @return	void
 	 * @param	string $driver		The driver to use. Available drivers depend on your server configuration.
@@ -948,11 +949,14 @@ class SpoonDatabase
 	 */
 	private function setDriver($driver)
 	{
+		// redefine
+		$driver = (string) $driver;
+
 		// validate backend
 		if(!in_array($driver, PDO::getAvailableDrivers())) throw new SpoonDatabaseException('The driver "'. (string) $driver .'" is not supported. Only '. implode(', ', PDO::getAvailableDrivers()) .' are supported');
 
 		// set property
-		$this->driver = (string) $driver;
+		$this->driver = $driver;
 	}
 
 

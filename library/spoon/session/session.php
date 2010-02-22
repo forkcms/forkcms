@@ -180,6 +180,7 @@ class SpoonSession
 
     /**
 	 * Starts the session.
+	 * @todo	@tijs validate if the session is really started
 	 *
 	 * @return void
 	 */
