@@ -263,7 +263,7 @@ a:active {
 	}
 
 	#headerHolder #navigation {
-		min-width: 430px;
+		min-width: 400px;
 	}
 
 	#headerHolder #user {
@@ -515,10 +515,10 @@ td#contentHolder {
 }
 
 	.datagridHolder .tableHeading h3 {
-		font-size: 12px;
-		line-height: 14px;
+		font-size: 14px;
 		float: left;
-		padding: 0;
+		padding: 0 0 12px;
+		color: #000;
 	}
 
 	.datagridHolder .tableHeading .buttonHolderRight {
@@ -680,6 +680,20 @@ td#contentHolder {
 .datagrid tr td {
 }
 
+#encloser .datagrid tr:hover td,
+#encloser .datagrid tr.selected td {
+	background: #1A57AD;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
+	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
+}
+
+	#encloser .datagrid tr:hover td,
+	#encloser .datagrid tr:hover td a,
+	#encloser .datagrid tr.selected td,
+	#encloser .datagrid tr.selected td a {
+		color: #FFF;
+	}
+
 .datagrid tr:nth-child(2n+1) td {
 	background: #FFF;
 }
@@ -821,7 +835,7 @@ td#contentHolder {
 /* Title*/
 .datagrid td.title a,
 .datagrid td.title {
-	font-size: 12px;
+	font-size: 11px;
 	font-weight: 700;
 }
 
@@ -941,6 +955,10 @@ table.datagrid a {
 
 	#pagesTree {
 		background: #FFF;
+	}
+	
+	#pages.index #tree {
+		padding-top: 20px;
 	}
 
 #treeOptions {
@@ -1159,8 +1177,7 @@ td.comments {
 }
 
 .box .heading,
-.widget .heading,
-.tableHeading {
+.widget .heading {
 	background: #E4E4E4;
 	background: url(../images/sprites/th.gif) repeat-x 0 -97px;
 	border: 1px solid #D7D7D7;
@@ -1178,7 +1195,7 @@ td.comments {
 }
 
 .tableHeading {
-	padding: 6px;
+	padding: 6px 0;
 	border-bottom: none;
 }
 
@@ -1996,7 +2013,7 @@ abbr.help {
 	}
 
 #siteTitle {
-	padding-right: 52px;
+	padding-right: 28px;
 	min-width: 260px;
 }
 
@@ -3609,4 +3626,24 @@ a.mainButton.focus {
 		width: 100%;
 		height: 100%;
 	}
+}
+
+/*
+	Table widths
+*/
+
+#pages.index .datagrid .user_id {
+	width: 20%;
+}
+
+#pages.index .datagrid .date {
+	width: 20%;
+}
+
+#pages.index .datagrid .title {
+	width: 40%;
+}
+
+#pages.index .datagrid .action {
+	width: 20%;
 }

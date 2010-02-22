@@ -31,14 +31,22 @@
 										<div class="oneLiner">
 											<h3 class="floater">{$lblRevisions|ucfirst}</h3>
 											<abbr class="help floater">(?)</abbr>
-											<div class="balloon" style="display: none;">
+											<div class="balloon balloonAlt" style="display: none;">
 												<p>{$msgHelpRevisions}</p>
 											</div>
 										</div>
 									</div>
 
 									{option:revisions}{$revisions}{/option:revisions}
-									{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+									{option:!revisions}
+										<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+											<tr>
+												<td>
+													{$msgNoRevisions}
+												</td>
+											</tr>
+										</table>
+									{/option:!revisions}
 								</div>
 							</div>
 						</div>
