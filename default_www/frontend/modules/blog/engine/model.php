@@ -322,6 +322,34 @@ class FrontendBlogModel
 	}
 
 
+	public static function getForTags(array $ids) // @todo davy - die naam zuigt
+	{
+		// get db
+		$db = FrontendModel::getDB();
+
+		// fetch items
+		$items = (array) $db->getRecords('SELECT p.title, m.url
+											FROM blog_posts AS p
+											INNER JOIN meta AS m ON m.id = p.meta_id
+											WHERE p.status = ? AND
+											p.hidden = ? AND
+											p.id IN ('. implode(',', $ids) .')
+											ORDER BY p.publish_on DESC;', array('active', 'N'));
+
+		// has items
+		if(!empty($items))
+		{
+			for($i = 0; $i < count($items); $i++)
+			{
+				$items[$i]['url'] = FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $items[$i]['url'];
+			}
+		}
+
+		// return
+		return $items;
+	}
+
+
 	/**
 	 * Get recent comments
 	 *
