@@ -21,7 +21,7 @@
 
 	<!-- javascript files -->
 	{iteration:javascriptFiles}
-	<script type="text/javascript" src="{$javascriptFiles.file}"></script>
+		<script type="text/javascript" src="{$javascriptFiles.file}"></script>
 	{/iteration:javascriptFiles}
 </head>
 

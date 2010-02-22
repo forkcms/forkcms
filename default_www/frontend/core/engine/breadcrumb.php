@@ -8,6 +8,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class FrontendBreadcrumb extends FrontendBaseObject
@@ -44,7 +45,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 
 		// init vars
 		$items = array();
-		$errorUrl = FrontendNavigation::getUrl(404);
+		$errorURL = FrontendNavigation::getUrl(404);
 
 		// loop pages
 		while(!empty($pages))
@@ -61,7 +62,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 				$pageURL = FrontendNavigation::getUrl($menuId);
 
 				// if this is the error-page, so we won't show an URL.
-				if($pageURL == $errorUrl) $pageURL = null;
+				if($pageURL == $errorURL) $pageURL = null;
 
 				// add to the items
 				$items[] = array('title' => $pageInfo['navigation_title'], 'url' => $pageURL);
@@ -128,28 +129,20 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	{
 		// init vars
 		$items = array();
-		$first = true;
-		$count = count($this->items);
+		$numItems = count($this->items);
 
 		// loop items and add the seperator
 		foreach($this->items as $i => $row)
 		{
 			// remove URL from last element
-			if($i >= $count - 1)
+			if($i >= $numItems - 1)
 			{
 				// remove URL for last object
 				$row['url'] = null;
-				$row['last'] = true;
 			}
 
-			// not the last element
-			else $row['last'] = false;
-
-			// add
+			// add item
 			$items[] = $row;
-
-			// no more first
-			$first = false;
 		}
 
 		// assign
