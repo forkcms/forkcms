@@ -54,8 +54,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// call the parent
 		parent::execute();
 
-		// show contenTitle
-		$this->tpl->assign('hideContentTitle', true); // @todo tijs - ist nu show of hide?
+		// hide contenTitle, in the template the title is wrapped with an inverse-option
+		$this->tpl->assign('hideContentTitle', true);
 
 		// load template
 		$this->loadTemplate();

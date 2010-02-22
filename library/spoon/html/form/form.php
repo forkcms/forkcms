@@ -386,9 +386,8 @@ class SpoonForm
 	 * @param	array $values
 	 * @param	bool[optional] $checked
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classError	@todo	Davy, deze parameter word niet doorgegeven en is dus nutteloos.
 	 */
-	public function addMultiCheckBox($name, array $values, $checked = null, $class = 'inputCheckbox', $classError = 'inputCheckboxError')
+	public function addMultiCheckBox($name, array $values, $checked = null, $class = 'inputCheckbox')
 	{
 		$this->add(new SpoonMultiCheckBox($name, $values, $checked, $class));
 		return $this->getField($name);
@@ -443,9 +442,8 @@ class SpoonForm
 	 * @param	array $values
 	 * @param	string[optional] $checked
 	 * @param	string[optional] $class
-	 * @param	string[optional] $classError	@todo	unused?
 	 */
-	public function addRadioButton($name, array $values, $checked = null, $class = 'inputRadiobutton', $classError = 'inputRadiobuttonError')
+	public function addRadioButton($name, array $values, $checked = null, $class = 'inputRadiobutton')
 	{
 		$this->add(new SpoonRadioButton($name, $values, $checked, $class));
 		return $this->getField($name);
@@ -940,7 +938,7 @@ class SpoonForm
 	/**
 	 * Sets the correct value.
 	 *
-	 * @todo	unused?
+	 * @todo	@Davy, unused?
 	 * @return	void
 	 * @param	bool[optional] $correct
 	 */
@@ -1545,7 +1543,6 @@ class SpoonFileField extends SpoonFormAttributes
 		// set name & id
 		$this->attributes['id'] = SpoonFilter::toCamelCase((string) $name, '_', true);
 		$this->attributes['name'] = (string) $name;
-
 
 		// custom optional fields
 		$this->attributes['class'] = (string) $class;
@@ -4144,7 +4141,7 @@ class SpoonTimeField extends SpoonInputField
 		if($this->isFilled())
 		{
 			// post/get data
-			$data = $this->getMethod(true);	// @todo	Davy, what is this doing here?
+			$data = $this->getMethod(true);
 
 			// valid field
 			if($this->isValid())
