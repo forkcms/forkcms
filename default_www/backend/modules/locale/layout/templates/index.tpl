@@ -108,7 +108,7 @@
 									<tr>
 										<td colspan="99">
 											<div class="options">
-												<div class="buttonHolderRight">
+												<div class="buttonHolder">
 													<input id="search" class="inputButton button mainButton" type="submit" name="search" value="{$lblUpdateFilter|ucfirst}" />
 												</div>
 											</div>

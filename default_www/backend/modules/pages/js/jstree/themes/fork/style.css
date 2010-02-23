@@ -159,7 +159,8 @@
 .tree-fork li a:hover,
 .tree-fork li a.active,
 .tree-fork li a.focus,
-.tree-fork li span {
+.tree-fork li span,
+.tree-fork li.selected > a {
 	
 	background: #1A57AD;
 	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));

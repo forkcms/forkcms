@@ -309,6 +309,8 @@ a:active {
 		background: -moz-linear-gradient(top, #FFF, #FAFAFA);
 		border: 1px solid #BED7E9;
 		border-bottom-color: #FAFAFA;
+		
+		color: #000;
 
 	}
 
@@ -928,7 +930,6 @@ table.datagrid a {
 #modulesHolder {
 	width: 100%;
 	height: 100%;
-	border-bottom: 1px solid #BED7E9;
 	border-top: 1px solid #BED7E9;
 }
 
@@ -2042,6 +2043,7 @@ abbr.help {
 		background: rgba(0,0,0,0.18);
 		color: #FFF;
 		padding: 1px 6px;
+		border: 1px solid rgba(0,0,0,0.09);
 		
 		/* @inc .rc */
 		border-radius: 4px;
@@ -2573,6 +2575,26 @@ abbr.help {
 body#login {
 	background: url(../images/fork.png) no-repeat bottom center;
 }
+
+#login #debugnotify {
+	text-align: center;
+	position: fixed;
+	top: 24px;
+	right: 0;
+	left: 0;
+	font-size: 11px;
+	font-family: "Menlo", "Courier";
+	font-style: italic;
+	font-weight: 700;
+	color: #F15D2B;
+}
+
+	#login #debugnotify img {
+		display: block;
+		width: 65px;
+		margin: 0 auto;
+		padding-bottom: 4px;
+	}
 
 #loginHolder {
 	width: 100%;
@@ -3385,8 +3407,10 @@ a.mainButton.focus {
 
 #messaging {
 	position: fixed;
-	right: 20px;
-	bottom: 20px;
+	right: 50%;
+	left: 50%;
+	top: 50%;
+	bottom: 50%;
 	z-index: 1001;
 }
 
@@ -3395,7 +3419,17 @@ a.mainButton.focus {
 	position: relative;
 	font-size: 11px;
 	margin-top: 20px;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	font-size: 14px;
 	z-index: 1002;
+
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+
+	text-align: center;
 }
 
 	#messaging .buttonHolder {
@@ -3625,4 +3659,12 @@ a.mainButton.focus {
 
 #pages.index .datagrid .action {
 	width: 20%;
+}
+
+/*
+	Input widths by ID
+*/
+
+#settings.index #siteTitle {
+	width: 320px;
 }

@@ -1,6 +1,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
 <body id="login">
-	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
+	{option:debug}<div id="debugnotify"><img src="/backend/core/layout/images/monsters/3.png" />WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
@@ -12,7 +12,7 @@
 						</div>
 					</div>
 					{/option:hasError}
-
+					
 
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>

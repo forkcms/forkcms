@@ -47,7 +47,7 @@
 							<p>{$msgLanguagesText}:</p>
 							<ul class="inputList">
 								{iteration:languages}
-									<li>{$languages.chkLanguages} <label for="language_{$languages.value}">{$languages.label}{option:languages.default} ({$lblDefault}){/option:languages.default}</label></li>
+									<li>{$languages.chkLanguages} <label for="language_{$languages.value}">{$languages.label|ucfirst}{option:languages.default} ({$lblDefault}){/option:languages.default}</label></li>
 								{/iteration:languages}
 							</ul>
 						</div>
