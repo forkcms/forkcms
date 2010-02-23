@@ -2542,6 +2542,10 @@ abbr.help {
 	Login specific CSS
 */
 
+body#login {
+	background: url(../images/fork.png) no-repeat bottom center;
+}
+
 #loginHolder {
 	width: 100%;
 	height: 100%;
