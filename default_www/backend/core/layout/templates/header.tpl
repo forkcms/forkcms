@@ -1,6 +1,5 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
 <body id="{$bodyID}" class="{$bodyClass}">
-	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
 	<table border="0" cellspacing="0" cellpadding="0" id="encloser">
 		<tr>
 			<td>
@@ -13,6 +12,11 @@
 							</td>
 							<td id="user">
 								<ul>
+									{option:debug}
+									<li>
+										<div id="debugnotify">Debug mode</div>
+									</li>
+									{/option:debug}
 									{option:workingLanguages}
 									<li>
 										Werktaal:
