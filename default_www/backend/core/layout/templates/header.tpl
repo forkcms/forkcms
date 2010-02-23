@@ -5,43 +5,32 @@
 		<tr>
 			<td>
 				<div id="headerHolder">
+					<h1><a href="/">{$SITE_TITLE} <span>Bezoek website &rarr;</span></a></h1>
 					<table cellspacing="0" cellpadding="0" id="header">
 						<tr>
-							<td id="siteTitle" width="266">
-
-								<table border="0" cellspacing="0" cellpadding="0">
-									<tr>
-										<td>
-											<h1>
-												<a href="/">{$SITE_TITLE|truncate:20}</a>
-											</h1>
-										</td>
-										{option:workingLanguages}
-										<td>
-											<select id="workingLanguage">
-												{iteration:workingLanguages}
-													<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label|ucfirst}</option>
-												{/iteration:workingLanguages}
-											</select>
-										</td>
-										{/option:workingLanguages}
-									</tr>
-								</table>
-							</td>
 							<td id="navigation">
 								{$var|getmainnavigation}
 							</td>
 							<td id="user">
 								<ul>
+									{option:workingLanguages}
+									<li>
+										Werktaal:
+										<select id="workingLanguage">
+											{iteration:workingLanguages}
+												<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label|ucfirst}</option>
+											{/iteration:workingLanguages}
+										</select>
+									</li>
+									{/option:workingLanguages}
 									<li class="settings">
-										<a href="{$var|geturl:'index':'settings'}" class="button linkButton icon iconSettings">
-											<span><span><span>{$lblSettings|ucfirst}</span></span></span>
+										<a href="{$var|geturl:'index':'settings'}" class="icon iconSettings">
+											{$lblSettings|ucfirst}
 										</a>
 									</li>
 									<li>
 										<table border="0" cellspacing="0" cellpadding="0">
 											<tr>
-												<td><a class="user" href="{$authenticatedUserEditUrl}">{$authenticatedUserNickname}</a></td>
 												<td>
 													<div class="avatar av24">
 														<div class="avOverlay">&nbsp;</div>
@@ -50,6 +39,7 @@
 														</a>
 													</div>
 												</td>
+												<td><a class="user" href="{$authenticatedUserEditUrl}">{$authenticatedUserNickname}</a></td>
 											</tr>
 										</table>
 									</li>

@@ -15,17 +15,14 @@
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
 			<div class="inner">
-				<div class="oneLiner" id="pagesCTA">
-					<p>{$msgHelpAdd}</p>
-					<div class="buttonHolder">
-						<a href="{$var|geturl:'add'}" class="button icon iconAdd">
-							<span><span><span>{$msgAddPage}</span></span></span>
-						</a>
-					</div>
-				</div>
 				<div class="datagridHolder">
 					<div class="tableHeading">
 						<h3>{$lblRecentlyEdited|ucfirst}</h3>
+						<div class="buttonHolderRight">
+							<a href="{$var|geturl:'add'}" class="button icon iconAdd">
+								<span><span><span>{$msgAddPage}</span></span></span>
+							</a>
+						</div>
 					</div>
 
 					{option:datagrid}{$datagrid}{/option:datagrid}

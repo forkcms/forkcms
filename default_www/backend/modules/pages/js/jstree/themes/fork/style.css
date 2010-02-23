@@ -44,7 +44,7 @@
 
 .tree li a input:not([class="xxx"]),
 .tree li span input:not([class="xxx"]) {
-	padding:1px 0;
+	padding: 1px 0;
 }
 
 /* FOR DOTS */
@@ -68,10 +68,10 @@
 /* FOR DRAGGING */
 #jstree-dragged {
 	position:absolute;
-	top:-10px;
-	left:-10px;
-	margin:0;
-	padding:0;
+	top: -10px;
+	left: -10px;
+	margin: 0;
+	padding: 0;
 }
 
 #jstree-dragged ul ul ul {
@@ -79,28 +79,28 @@
 }
 
 #jstree-marker {
-	padding:0;
-	margin:0;
-	line-height:5px;
-	font-size:1px;
-	overflow:hidden;
-	height:5px;
-	position:absolute;
-	left:-45px;
-	top:-30px;
-	z-index:1000;
-	background-color:transparent;
-	background-repeat:no-repeat;
-	display:none;
+	padding: 0;
+	margin: 0;
+	line-height: 5px;
+	font-size: 1px;
+	overflow: hidden;
+	height: 5px;
+	position: absolute;
+	left: -45px;
+	top: -30px;
+	z-index: 1000;
+	background-color: transparent;
+	background-repeat: no-repeat;
+	display: none;
 } 
 
 #jstree-marker.marker {
-	width:45px;
-	background-position:-32px top;
+	width: 45px;
+	background-position: -32px top;
 }
 
 #jstree-marker.marker_plus {
-	width:5px;
+	width: 5px;
 	background-position:right top;
 } 
 
@@ -112,12 +112,12 @@
 .tree ul ins {
 	display:inline-block;
 	text-decoration:none;
-	width:16px;
-	height:16px;
+	width: 16px;
+	height: 16px;
 }
 
 .tree .ltr ins {
-	margin:0;
+	margin: 0;
 } 
 
 /* DOTS */
