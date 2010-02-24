@@ -140,8 +140,8 @@ body {
 	line-height: 1.4;
 	color: #666;
 	background: #EBF3F9;
-	
-	
+
+
 	font-size: 12px;
 	position: relative;
 
@@ -195,6 +195,10 @@ td {
 	vertical-align: top;
 }
 
+code {
+	font-family: "Menlo", "Monaco", "Courier New", Courier, monospace;
+}
+
 .content ul {
 	list-style: disc;
 	padding: 0 0 24px 18px;
@@ -240,7 +244,7 @@ a:active {
 	#headerHolder #user {
 		min-width: 266px;
 	}
-	
+
 		#user .avatar {
 			margin-right: 4px;
 		}
@@ -281,8 +285,8 @@ a:active {
 		border-top-right-radius: 4px;
 		-webkit-border-top-right-radius: 4px;
 		-moz-border-radius-topright: 4px;
-		
-		
+
+
 		background: #EBF3F9;
 		background: -webkit-gradient(linear, left top, left bottom, from(#EBF3F9), to(#DCE9F4));
 		background: -moz-linear-gradient(top, #EBF3F9, #DCE9F4);
@@ -309,7 +313,7 @@ a:active {
 		background: -moz-linear-gradient(top, #FFF, #FAFAFA);
 		border: 1px solid #BED7E9;
 		border-bottom-color: #FAFAFA;
-		
+
 		color: #000;
 
 	}
@@ -592,7 +596,7 @@ a:active {
 
 /*
 	Sprite config: th.gif
-	
+
 	0-47 regular th
 	1px checking line
 	49-94 th sorted
@@ -600,7 +604,7 @@ a:active {
 	96-142 table heading
 	1px checking line
 	144-191 table tfoot
-	
+
 	193-214 sortable icon
 	215-236 sorted ascending
 	237-xxx sorted descending icon
@@ -684,7 +688,7 @@ a:active {
 	.datagrid tbody tr:hover td a.linkButton:link {
 		color: #FFF !important;
 	}
-	
+
 
 .datagrid tr:nth-child(2n+1) td {
 	background: #FFF;
@@ -782,7 +786,7 @@ a:active {
 			-moz-border-radius: 4px;
 
 		}
-		
+
 		.pagination li a:hover,
 		.pagination li a:active,
 		.pagination li a:focus {
@@ -950,7 +954,7 @@ table.datagrid a {
 	margin: 24px 0 0 24px;
 	border: 1px solid #DDD;
 	border-bottom: none;
-	
+
 	/* @inc .topRc */
 	border-top-left-radius: 4px;
 	-webkit-border-top-left-radius: 4px;
@@ -958,7 +962,7 @@ table.datagrid a {
 	border-top-right-radius: 4px;
 	-webkit-border-top-right-radius: 4px;
 	-moz-border-radius-topright: 4px;
-	
+
 }
 
 	#treeOptions .buttonHolder {
@@ -1008,8 +1012,8 @@ table.datagrid a {
 		margin-right: 0;
 		margin-top: 0;
 		background: #FFF;
-		
-		
+
+
 		/* @inc .bottomRc */
 		border-bottom-left-radius: 4px;
 		-webkit-border-bottom-left-radius: 4px;
@@ -1017,10 +1021,10 @@ table.datagrid a {
 		border-bottom-right-radius: 4px;
 		-webkit-border-bottom-right-radius: 4px;
 		-moz-border-radius-bottomright: 4px;
-		
-		
+
+
 	}
-	
+
 	#pages.index #tree {
 		padding-top: 12px;
 		border-top: 1px solid #DDD;
@@ -1035,7 +1039,7 @@ table.datagrid a {
 		-moz-border-radius-topright: 4px;
 
 	}
-	
+
 
 	#pagesTree #tree .tree {
 		margin: 6px 6px 12px;
@@ -1258,7 +1262,7 @@ td.comments {
 	.box .last {
 		border-bottom: none;
 	}
-	
+
 	.options p:last-child {
 		padding-bottom: 0;
 		/* @todo JS selector for IE */
@@ -1328,7 +1332,7 @@ td.comments {
 	top: 50%;
 	left: 50%;
 	z-index: 2200;
-	
+
 }
 
 .box.modal {
@@ -1557,10 +1561,18 @@ textarea {
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-	
+
 	/* Transition */
 	-webkit-transition: background-color 0.28s linear;
 
+}
+
+/* Disabled fields */
+input.inputText[disabled="disabled"],
+input.inputPassword[disabled="disabled"],
+input.disabled {
+	background: #EEE;
+	color: #666 !important;
 }
 
 .inputText,
@@ -1609,7 +1621,7 @@ textarea.code {
 select {
 	/* Nothing */
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
-	
+
 }
 
 /* Input type file should be left alone */
@@ -1626,12 +1638,12 @@ input[type="submit"] {
 	font-weight: 700;
 }
 
-	/* 
+	/*
 		Focus outline; Mozilla specific since Safari implements this right
 		IE can f*** off
 	*/
 	@-moz-document url-prefix() {
-		
+
 		.inputText,
 		.inputPassword {
 			height: 14px;
@@ -1642,7 +1654,7 @@ input[type="submit"] {
 		input[type="text"]:focus,
 		.inputPassword:focus,
 		input[type="password"]:focus,
-		textarea:focus { 
+		textarea:focus {
 			outline: 2px solid #C2DEFF;
 			-moz-outline-radius: 5px;
 			border-color: #456b99;
@@ -1792,10 +1804,10 @@ fieldset legend {
 	font-size: 11px;
 }
 
-	/* 
-		
+	/*
+
 	*/
-	
+
 	.errorMessage .formError {
 		color: #FFF;
 		display: block;
@@ -1806,7 +1818,7 @@ fieldset legend {
 	border: 1px solid #CCC;
 }
 
-.formMessage { 
+.formMessage {
 	font-weight: 700;
 	border: 1px solid #CCC;
 	margin: 0 0 10px;
@@ -1844,7 +1856,7 @@ fieldset legend {
 		border-bottom: 1px solid #f5abb4;
 	}
 
-.successMessage { 
+.successMessage {
 	color: #4f6d2c;
 	background: #d6efb8;
 	border-color: #91AE8A;
@@ -1884,7 +1896,7 @@ fieldset legend {
 		color: #002f00;
 	}
 
-.generalMessage { 
+.generalMessage {
 	font-weight: 700;
 	border: 1px solid #CCC;
 	margin: 0 0 10px;
@@ -1905,7 +1917,7 @@ fieldset legend {
 	padding: 6px 12px;
 }
 
-.infoMessage { 
+.infoMessage {
 	background-color: #FFA;
 	font-weight: normal;
 }
@@ -2037,7 +2049,7 @@ abbr.help {
 	margin: 0;
 	padding: 12px 0 0;
 	font-size: 14px;
-	
+
 }
 
 	#headerHolder h1 a {
@@ -2051,15 +2063,15 @@ abbr.help {
 		color: #FFF;
 		padding: 1px 6px;
 		border: 1px solid rgba(0,0,0,0.09);
-		
+
 		/* @inc .rc */
 		border-radius: 4px;
 		-webkit-border-radius: 4px;
 		-moz-border-radius: 4px;
-		
+
 		text-shadow: 1px 1px 1px rgba(0,0,0,0.45);
 	}
-	
+
 
 
 .templateVisual {
@@ -2222,12 +2234,12 @@ abbr.help {
 	border: 1px solid #D7DADF;
 	background: #F1F5FA;
 	padding: 3px;
-	
+
 	/* @inc .rc */
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
-	
+
 }
 
 #contentList ul ul {
@@ -2308,12 +2320,12 @@ abbr.help {
 	font-weight: 700;
 	height: 29px;
 	padding: 0 24px;
-	
+
 	background: #666;
 	background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999));
 	border-bottom: 1px solid #666;
 	position: relative;
-	
+
 }
 
 #filterBar {
@@ -2336,7 +2348,7 @@ abbr.help {
 	#statusBar {
 		display: none;
 	}
-	
+
 	#statusBar p.breadcrumb,
 	#filterBar p {
 		line-height: 29px;
@@ -2376,7 +2388,7 @@ abbr.help {
 #dashboardWidgets {
 	padding: 12px 0;
 	zoom: 1;
-	
+
 	border-top: 1px solid #DDD;
 }
 
@@ -2628,13 +2640,13 @@ body#login {
 	border-radius: 0;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
-	
+
 	position: absolute;
 	left: 0;
 	top: 0;
 	z-index: 3;
 	font-size: 11px;
-	
+
 	padding: 14px 48px;
 }
 
@@ -2648,7 +2660,7 @@ body#login {
 		#loginBox #loginNav a {
 			color: #808080;
 		}
-	
+
 		#loginBox #loginNav a:hover,
 		#loginBox #loginNav a:active,
 		#loginBox #loginNav a:focus {
@@ -2719,7 +2731,7 @@ body#login {
 			padding-bottom: 0;
 			padding-left: 158px;
 		}
-		
+
 		/* Balloon overrides */
 		#forgotPasswordHolder.balloon {
 			padding: 12px 24px 36px;
@@ -2756,7 +2768,7 @@ body#login {
 				-moz-border-radius-bottomright: 4px;
 
 			}
-			
+
 				#forgotPassword #backendEmail {
 					width: 160px;
 				}
@@ -3107,7 +3119,7 @@ a.mainButton.focus {
 	padding: 2px 6px;
 	min-width: 40px;
 	margin-top: 5px;
-	
+
 	text-transform: uppercase;
 	font-size: 11px;
 	text-align: center;
@@ -3255,6 +3267,62 @@ a.mainButton.focus {
 */
 
 	/*
+		Pages
+	*/
+
+		/*
+			Index
+		*/
+
+			/*
+				Table widths
+			*/
+
+			#pages.index .datagrid .user_id {
+				width: 20%;
+			}
+
+			#pages.index .datagrid .date {
+				width: 20%;
+			}
+
+			#pages.index .datagrid .title {
+				width: 40%;
+			}
+
+			#pages.index .datagrid .action {
+				width: 20%;
+			}
+
+		/*
+			Add/edit
+		*/
+
+			/*
+				Tab SEO
+			*/
+
+			#pages.addEdit #tabSEO #pageTitle {
+				width: 340px;
+			}
+
+			#pages.addEdit #tabSEO #navigationTitle {
+				width: 160px;
+			}
+
+			#pages.addEdit #tabSEO #metaDescription {
+				width: 480px;
+			}
+
+			#pages.addEdit #tabSEO #metaKeywords {
+				width: 480px;
+			}
+
+			#pages.addEdit #tabSEO #url {
+				width: 240px;
+			}
+
+	/*
 		Blog
 	*/
 
@@ -3262,8 +3330,8 @@ a.mainButton.focus {
 			Add/edit
 		*/
 
-		#blog.addedit #categoryId { width: 170px; }
-		#blog.addedit #addValue-tags { width: 120px; }
+		#blog.addEdit #categoryId { width: 170px; }
+		#blog.addEdit #addValue-tags { width: 120px; }
 
 		/*
 			Settings
@@ -3286,11 +3354,11 @@ a.mainButton.focus {
 			margin-bottom: 8px;
 			clear: left;
 		}
-	
+
 	/*
 		Settings
 	*/
-	
+
 		/*
 			Index
 		*/
@@ -3306,14 +3374,14 @@ a.mainButton.focus {
 		/*
 			Add/edit
 		*/
-		
-		#locale.addedit select {
+
+		#locale.addEdit select {
 			font-size: 11px;
 		}
-		
-		#locale.addedit #value { width: 590px; }
-		#locale.addedit #name { width: 260px; }
-		#locale.addedit select { width: 140px; }
+
+		#locale.addEdit #value { width: 590px; }
+		#locale.addEdit #name { width: 260px; }
+		#locale.addEdit select { width: 140px; }
 
 		/*
 			Index
@@ -3350,7 +3418,7 @@ a.mainButton.focus {
 		padding: 6px;
 
 	}
-	
+
 	.datafilter tfoot td .options {
 		background: #B0B0B0;
 		background: rgba(0,0,0,0.2);
@@ -3367,7 +3435,7 @@ a.mainButton.focus {
 		Overrides for referrers tab on dashboard
 	*/
 
-	#tabs.tabsBare .ui-tabs-nav { 
+	#tabs.tabsBare .ui-tabs-nav {
 		padding: 6px 12px 0;
 		background: #c8c8c8;
 		background: -webkit-gradient(linear, left top, left bottom, from(#dadada), to(#aaa));
@@ -3479,7 +3547,7 @@ a.mainButton.focus {
 	width: 240px;
 
 	z-index: 2001;
-	
+
 	padding: 4px 12px;
 
 	position: relative;
@@ -3507,7 +3575,7 @@ a.mainButton.focus {
 	background: -webkit-gradient(linear, left top, left bottom, from(#ac67ff), to(#8645d3));
 	background: -moz-linear-gradient(top, #ac67ff, #8645d3);
 	color: #FFF;
-	
+
 	font-weight: 400;
 	font-size: 11px;
 	line-height: 16px;
@@ -3641,7 +3709,7 @@ a.mainButton.focus {
 		background: url(../images/avatars/default.png) no-repeat right;
 	}
 
-.avatarHolder { 
+.avatarHolder {
 	width: 52px;
 	height: 52px;
 	position: relative;
@@ -3670,24 +3738,4 @@ a.mainButton.focus {
 		width: 100%;
 		height: 100%;
 	}
-}
-
-/*
-	Table widths
-*/
-
-#pages.index .datagrid .user_id {
-	width: 20%;
-}
-
-#pages.index .datagrid .date {
-	width: 20%;
-}
-
-#pages.index .datagrid .title {
-	width: 40%;
-}
-
-#pages.index .datagrid .action {
-	width: 20%;
 }
