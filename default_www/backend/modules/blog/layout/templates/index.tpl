@@ -41,12 +41,26 @@
 					</div>
 				</form>
 				{/option:dgPosts}
-				{option:!dgPosts}
-				<p>{$msgNoItems}</p>
 
-				<div class="buttonHolder">
-					<a class="button icon iconAdd" href="{$var|geturl:'add'}" title="{$lblAdd}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+				{option:!dgPosts}
+				<div class="datagridHolder">
+					<div class="tableHeading">
+						<h3>{$lblAllPosts|ucfirst}</h3>
+						<div class="buttonHolderRight">
+							<a class="button icon iconAdd" href="{$var|geturl:'add'}" title="{$lblAdd}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+						</div>
+					</div>
+					<table cellspacing="0" class="datagrid">
+						<tbody>
+							<tr>
+								<td>
+									{$msgNoItems}
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
+
 				{/option:!dgPosts}
 			</div>
 

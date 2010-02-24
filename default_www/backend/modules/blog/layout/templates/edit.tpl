@@ -79,7 +79,7 @@
 													<br /><br />
 													{/option:usingDraft}
 
-													<a href="#" id="saveAsDraft" class="button mainButton"><span><span><span>{$lblSaveAsDraft|ucfirst}</span></span></span></a>
+													<a href="#" id="saveAsDraft" class="button"><span><span><span>{$lblSaveAsDraft|ucfirst}</span></span></span></a>
 												</div>
 											</div>
 
@@ -112,7 +112,7 @@
 															<td><p>&nbsp;</p></td>
 															<td>
 																<div class="buttonHolderRight">
-																	<input id="save" class="inputButton button" type="submit" name="save" value="{$lblSave|ucfirst}" />
+																	<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblPublish|ucfirst}" />
 																</div>
 															</td>
 														</tr>
@@ -297,7 +297,7 @@
 							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 						</a>
 						<div class="buttonHolderRight">
-							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
 						</div>
 					</div>
 

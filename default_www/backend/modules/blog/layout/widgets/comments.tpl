@@ -28,8 +28,20 @@
 		</table>
 	</div>
 	{/option:blogComments}
-	<!-- @todo	@johan: style the no items message -->
-	{option:!blogComments}<p>{$msgNoComments}</p>{/option:!blogComments}
+
+	{option:!blogComments}
+	<div class="datagridHolder">
+		<table cellspacing="0" class="datagrid">
+			<tbody>
+				<tr>
+					<td>
+						{$msgNoComments}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	{/option:!blogComments}
 
 	<div class="footer">
 		<div class="buttonHolderRight">

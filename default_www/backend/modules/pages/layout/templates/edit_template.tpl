@@ -15,6 +15,8 @@
 							<p>
 								<label for="path">{$lblPath|ucfirst}</label>
 								{$txtPath} {$txtPathError}
+								{* @todo add label *}
+								<span class="helpTxt">vb:. core/layout/templates/home.tpl</span>
 							</p>
 							<p>
 								<label for="label">{$lblLabel|ucfirst}</label>

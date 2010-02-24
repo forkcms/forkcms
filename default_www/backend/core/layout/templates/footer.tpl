@@ -1,6 +1,6 @@
 				{include:file='{$BACKEND_CORE_PATH}/layout/templates/messaging.tpl'}
 				</div>
-			<td>
+			</td>
 		</tr>
 	</table>
 

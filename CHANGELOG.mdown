@@ -1,0 +1,3 @@
+# CHANGELOG
+
+No changelog entries until first release.
