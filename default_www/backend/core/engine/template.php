@@ -106,6 +106,9 @@ class BackendTemplate extends SpoonTemplate
 		// convert var into navigation, syntax {$var|getmainnavigation}
 		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
 
+		// rand
+		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));
+
 		// string
 		$this->mapModifier('truncate', array('BackendTemplateModifiers', 'truncate'));
 
@@ -410,6 +413,20 @@ class BackendTemplateModifiers
 
 		// return
 		return  Spoon::getObjectReference('navigation')->getNavigation();
+	}
+
+
+	/**
+ 	 * Get a random var between a min and max
+ 	 *
+ 	 * @return	int
+ 	 * @param	string[optional] $var
+ 	 * @param	int $min
+ 	 * @param	int $max
+	 */
+	public static function rand($var = null, $min, $max)
+	{
+		return rand((int) $min, (int) $max);
 	}
 
 
