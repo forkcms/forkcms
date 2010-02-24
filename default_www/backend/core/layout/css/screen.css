@@ -2209,8 +2209,6 @@ abbr.help {
 /*
 	contentList
 */
-#contentList {
-}
 
 #contentList li a {
 	text-decoration: none;
@@ -2233,7 +2231,8 @@ abbr.help {
 }
 
 #contentList ul ul {
-	padding: 0 0 5px 20px;
+	padding: 5px 0 5px 0;
+	border: none;
 	margin: 0;
 	width: auto;
 }
@@ -2267,6 +2266,7 @@ abbr.help {
 #contentList li.selected li a:link,
 #contentList li.selected li a:visited {
 	font-weight: 300;
+	padding-left: 18px;
 }
 
 #contentList li.selected li a:hover,
@@ -3343,12 +3343,6 @@ a.mainButton.focus {
 		width: 100%;
 	}
 
-	.datafilter td .options {
-
-
-	}
-
-	
 	.datafilter td .options {
 		background: #CECECE;
 		background: rgba(0,0,0,0.07);
