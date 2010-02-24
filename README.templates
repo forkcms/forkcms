@@ -22,6 +22,10 @@ truncate
 	Truncate a string
 	syntax: {$var|truncate:<length>[:useHellip]}
 		useHellip: possible values: true, false
+
+rand
+	Random number between two values
+	syntax: {$var|rand:1:3}
 	
 
 Frontend
