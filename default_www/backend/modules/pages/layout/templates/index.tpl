@@ -26,7 +26,17 @@
 					</div>
 
 					{option:datagrid}{$datagrid}{/option:datagrid}
-					{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+					
+					
+					{option:!datagrid}
+					<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+						<tr>
+							<td>
+								{$msgNoItems}
+							</td>
+						</tr>
+					</table>
+					{/option:!datagrid}
 				</div>
 			</div>
 		</td>

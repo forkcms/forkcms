@@ -670,19 +670,21 @@ a:active {
 }
 
 
-#encloser .datagrid tbody tr:hover td,
-#encloser .datagrid tbody tr.selected td {
+.datagrid tbody tr:hover td,
+.datagrid tbody tr.selected td {
 	background: #1A57AD;
 	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
 	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
 }
 
-	#encloser .datagrid tbody tr:hover td,
-	#encloser .datagrid tbody tr:hover td a,
-	#encloser .datagrid tbody tr.selected td,
-	#encloser .datagrid tbody tr.selected td a {
-		color: #FFF;
+	.datagrid tbody tr:hover td,
+	.datagrid tbody tr:hover td a,
+	.datagrid tbody tr.selected td,
+	.datagrid tbody tr.selected td a,
+	.datagrid tbody tr:hover td a.linkButton:link {
+		color: #FFF !important;
 	}
+	
 
 .datagrid tr:nth-child(2n+1) td {
 	background: #FFF;
@@ -1002,6 +1004,7 @@ table.datagrid a {
 		border: 1px solid #DDD;
 		border-top: none;
 		margin: 24px;
+		padding: 0 0 20px;
 		margin-right: 0;
 		margin-top: 0;
 		background: #FFF;
@@ -1203,6 +1206,10 @@ td.comments {
 	-webkit-border-top-right-radius: 4px;
 	-moz-border-radius-topright: 4px;
 
+}
+
+.box .headingRTE {
+	border-bottom: none;
 }
 
 .tableHeading {
@@ -2212,7 +2219,7 @@ abbr.help {
 #contentList ul {
 	padding: 0;
 	margin: 24px 12px 24px 24px;
-	width: 225px;
+	width: 125px;
 	background: #FAFAFA;
 	border: 1px solid #D7DADF;
 	background: #F1F5FA;
@@ -2583,15 +2590,14 @@ body#login {
 	right: 0;
 	left: 0;
 	font-size: 11px;
-	font-family: "Menlo", "Courier";
+	font-family: "Menlo", "Courier New", "Courier", Arial, sans-serif;
 	font-style: italic;
-	font-weight: 700;
-	color: #F15D2B;
+	color: #666;
 }
 
 	#login #debugnotify img {
 		display: block;
-		width: 65px;
+		height: 65px;
 		margin: 0 auto;
 		padding-bottom: 4px;
 	}
@@ -2855,7 +2861,7 @@ a.button:visited {
 	white-space: nowrap;
 	text-decoration: none;
 	border: none;
-	color: #3A3A3A;
+	color: #3A3A3A !important;
 	font-family: "Lucida Grande";
 	font-size: 11px;
 	font-weight: 700;
@@ -2866,7 +2872,6 @@ a.button:visited {
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 
-	color: #3A3A3A;
 	padding: 0 6px 0 0;
 	background-repeat: repeat-x;
 	background-position: right -132px;
@@ -2883,7 +2888,7 @@ a.button.focus {
 a.mainButton:link,
 a.mainButton:visited {
 	background-position: right -88px;
-	color: #FFF;
+	color: #FFF !important;
 }
 
 a.mainButton:hover,
@@ -3026,7 +3031,7 @@ a.mainButton.focus {
 		a.linkButton:link,
 		a.linkButton:visited {
 			background: none;
-			color: #085dbd;
+			color: #085dbd !important;
 			font-weight: 400;
 		}
 
@@ -3034,7 +3039,7 @@ a.mainButton.focus {
 		a.linkButton:active,
 		a.linkButton:focus {
 			background: rgba(0,0,0,0.15);
-			color: #FFF;
+			color: #FFF !important;
 		}
 
 			a.linkButton span {
@@ -3249,48 +3254,80 @@ a.mainButton.focus {
 	Styles by module
 */
 
-/*
-	Blog
-*/
-
 	/*
-		Posts
+		Blog
 	*/
 
-	#categoryId { width: 170px; }
-	#addValue-tags { width: 120px; }
+		/*
+			Add/edit
+		*/
 
-	/*
-		Comments
-	*/
+		#blog.addedit #categoryId { width: 170px; }
+		#blog.addedit #addValue-tags { width: 120px; }
 
-	#blog.comments .datagrid tbody .button {
-		margin-bottom: 8px;
-		clear: left;
-	}
+		/*
+			Settings
+		*/
 
+		#blog.settings #feedburnerUrl {
+			width: 320px;
+		}
+
+		#blog.settings #rssDescription {
+			font-family: "Lucida Grande", Arial, sans-serif;
+			padding: 3px;
+		}
+
+		/*
+			Comments
+		*/
+
+		#blog.comments .datagrid tbody .button {
+			margin-bottom: 8px;
+			clear: left;
+		}
+	
 	/*
 		Settings
 	*/
+	
+		/*
+			Index
+		*/
 
-	#rssDescription {
-		font-family: "Lucida Grande", Arial, sans-serif;
-		padding: 3px;
-	}
+		#settings.index #siteTitle {
+			width: 320px;
+		}
 
-/*
-	Locale
-*/
+	/*
+		Locale
+	*/
 
-#locale.index #filter select,
-#locale.index #filter input,
-#locale.addedit select {
-	font-size: 11px;
-}
+		/*
+			Add/edit
+		*/
+		
+		#locale.addedit select {
+			font-size: 11px;
+		}
+		
+		#locale.addedit #value { width: 590px; }
+		#locale.addedit #name { width: 260px; }
+		#locale.addedit select { width: 140px; }
 
-#locale #value { width: 320px; }
-#locale #name { width: 260px; }
-#locale select { width: 140px; }
+		/*
+			Index
+		*/
+
+		#locale.index #filter select,
+		#locale.index #filter input {
+			font-size: 11px;
+		}
+
+		#locale.index #value { width: 340px; }
+		#locale.index #name { width: 260px; }
+		#locale.index select { width: 140px; }
+
 
 /*
 	Datafilter
@@ -3659,12 +3696,4 @@ a.mainButton.focus {
 
 #pages.index .datagrid .action {
 	width: 20%;
-}
-
-/*
-	Input widths by ID
-*/
-
-#settings.index #siteTitle {
-	width: 320px;
 }

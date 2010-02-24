@@ -27,7 +27,20 @@
 						<div id="tabContent">
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
+									
+									{* Left side *}
 									<td>
+										<div id="publishOptions" class="box">
+											<div class="heading headingRTE">
+												<h3>{$lblMainContent|ucfirst}</h3>
+											</div>
+											<div class="optionsRTE">
+												{$txtText} {$txtTextError}
+											</div>
+										</div>
+										
+										<br />
+										
 										<table border="0" cellspacing="0" cellpadding="0" id="advancedOptions">
 											<tr>
 												<td>
@@ -40,7 +53,7 @@
 															<h4><a href="#summary .options" class="toggleDiv">{$lblSummary|ucfirst}</a></h4>
 														</div>
 
-														<div class="options hidden"{option:oShowSummary} style="display: block"{/option:oShowSummary}>
+														<div class="options hidden" style="display: none;">
 															<p class="helpTxt">{$msgHelpSummary}</p>
 															{$txtIntroduction} {$txtIntroductionError}
 														</div>
@@ -48,10 +61,9 @@
 												</td>
 											</tr>
 										</table>
-										<br />
-										{$txtText} {$txtTextError}
 									</td>
 
+									{* Right side *}
 									<td id="pagesSide">
 										<div id="publishOptions" class="box">
 											<div class="heading">
