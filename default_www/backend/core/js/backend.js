@@ -442,7 +442,7 @@ jsBackend.forms = {
 				// get id
 				var formId = $(this).attr('id');
 				var dontSubmit = false;
-				
+
 				// validate id
 				if(formId != '') {
 					// loop every button to be replaced

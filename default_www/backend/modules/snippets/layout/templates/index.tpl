@@ -2,14 +2,14 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
 			<div id="statusBar">
-				<p class="breadcrumb">{$lblSnippets|ucfirst} &gt; {$lblOverview|ucfirst}</p>
+				<p class="breadcrumb">{$lblContentBlocks|ucfirst} &gt; {$lblOverview|ucfirst}</p>
 			</div>
 
 			<div class="inner">
 
 				<div class="datagridHolder">
 					<div class="tableHeading">
-						<h3>{$lblSnippets|ucfirst}</h3>
+						<h3>{$lblContentBlocks|ucfirst}</h3>
 						<div class="buttonHolderRight">
 							<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
 								<span><span><span>{$lblAdd|ucfirst}</span></span></span>

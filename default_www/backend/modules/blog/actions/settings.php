@@ -107,7 +107,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				if($feedburner !== null) BackendModel::setSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
 
 				// redirect to the settings page
-				$this->redirect(BackendModel::createURLForAction('settings'));
+				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');
 			}
 		}
 	}

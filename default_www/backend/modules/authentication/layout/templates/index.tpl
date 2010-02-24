@@ -24,7 +24,7 @@
 			{$errBrowserNotSupported}
 		</div>
 	<![endif]-->
-	
+
 	{option:debug}<div id="debugnotify"><img src="/backend/core/layout/images/monsters/{$var|rand:1:3}.png" />WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
@@ -69,7 +69,7 @@
 					</div>
 				</div>
 				<div id="forgotPasswordHolder" class="balloon"{option:!showForm} style="display: none;"{/option:!showForm}>
-					<div id="forgotPassword">
+					<div id="forgotPasswordBox">
 						<div class="balloonTop">&nbsp;</div>
 						<p>{$msgForgotPasswordHelp}</p>
 						{form:forgotPassword}
@@ -77,7 +77,7 @@
 								<p><label for="backendEmail">{$lblEmail|ucfirst}</label></p>
 								<p>{$txtBackendEmail}</p>
 								<p>
-									<input id="send" class="inputButton button mainButton" type="submit" name="send" value="{$lblSend|ucfirst}" />
+									<input id="send" type="submit" name="send" value="{$lblSend|ucfirst}" />
 								</p>
 							</div>
 
@@ -104,4 +104,5 @@
 			</td>
 		</tr>
 	</table>
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+</body>
+</html>

@@ -50,6 +50,9 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
 		$this->datagrid->setSortParameter('desc');
 
+		// set colum URLs
+		$this->datagrid->setColumnURL('tag', BackendModel::createURLForAction('edit') .'&id=[id]');
+
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 	}

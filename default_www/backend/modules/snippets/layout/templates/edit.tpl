@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 			<td id="contentHolder">
 				<div id="statusBar">
-					<p class="breadcrumb">{$lblSnippets|ucfirst} &gt; {$msgEditWithItem|sprintf:{$title}}</p>
+					<p class="breadcrumb">{$lblContentBlocks|ucfirst} &gt; {$msgEditWithItem|sprintf:{$title}}</p>
 				</div>
 				<div class="inner">
 					{form:edit}

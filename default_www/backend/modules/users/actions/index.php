@@ -47,6 +47,9 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		// header labels
 		$this->datagrid->setHeaderLabels(array('username' => ucfirst(BL::getLabel('Username'))));
 
+		// set colum URLs
+		$this->datagrid->setColumnURL('username', BackendModel::createURLForAction('edit') .'&id=[id]');
+
 		// add edit column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]');
 	}

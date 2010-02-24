@@ -31,7 +31,7 @@ $navigation['modules']['children']['links']['children'][] = array('url' => 'link
 $navigation['modules']['children']['news'] = array('url' => 'news/index', 'label' => 'News');
 $navigation['modules']['children']['slideshow'] = array('url' => 'slideshow/index', 'label' => 'Slideshow');
 $navigation['modules']['children']['location'] = array('url' => 'location/index', 'label' => 'Location');
-$navigation['modules']['children']['snippets'] = array('url' => 'snippets/index', 'label' => 'Snippets');
+$navigation['modules']['children']['snippets'] = array('url' => 'snippets/index', 'label' => 'ContentBlocks');
 $navigation['modules']['children']['formbuilder'] = array('url' => 'formbuilder/index', 'label' => 'FormBuilder');
 $navigation['modules']['children']['tags'] = array('url' => 'tags/index', 'label' => 'Tags');
 $navigation['modules']['children']['extranet'] = array('url' => null, 'label' => 'Extranet');
@@ -59,7 +59,7 @@ $navigation['settings']['children']['modules'] = array('url' => null, 'label' =>
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'blog/settings', 'label' => 'Blog');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'news/settings', 'label' => 'News');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'location/settings', 'label' => 'Location');
-$navigation['settings']['children']['modules']['children'][] = array('url' => 'pages/templates', 'label' => 'Pages');
+$navigation['settings']['children']['modules']['children'][] = array('url' => 'pages/templates', 'selected_for_actions' => array('add_template', 'edit_template'), 'label' => 'Pages');
 $navigation['settings']['children']['users'] = array('url' => 'users/index', 'label' => 'Users');
 
 ?>
