@@ -126,11 +126,12 @@ class BackendNavigation
 				// should we go deeper?
 				if($selected && isset($level['children']))
 				{
+					// create list
+					$subHTML = '<ul>'."\n";
+
 					// loop childs
 					foreach($level['children'] as $child)
 					{
-						$subHTML = '<ul>'."\n";
-
 						// break URL into parts
 						$chunks = (array) explode('/', $child['url']);
 
@@ -152,14 +153,13 @@ class BackendNavigation
 							// end li
 							$subHTML .='</li>'."\n";
 						}
-
-						// end html, or replace it by nothing
-						if($subHTML == '<ul>'."\n") $subHTML = '';
-						else $subHTML .= '</ul>'."\n";
-
-						// add html
-						$html .= $subHTML;
 					}
+
+					// close list
+					$subHTML .= '</ul>' . "\n";
+
+					// add to html
+					$html .= $subHTML;
 				}
 
 				// end li
