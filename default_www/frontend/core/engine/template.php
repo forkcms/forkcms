@@ -95,6 +95,9 @@ class FrontendTemplate extends SpoonTemplate
 		// convert var into navigation
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 
+		// rand
+		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'rand'));
+
 		// string
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
@@ -343,6 +346,20 @@ class FrontendTemplateModifiers
 
 		// return
 		return FrontendNavigation::getURLForBlock($module, $action, $language);
+	}
+
+
+	/**
+ 	 * Get a random var between a min and max
+ 	 *
+ 	 * @return	int
+ 	 * @param	string[optional] $var
+ 	 * @param	int $min
+ 	 * @param	int $max
+	 */
+	public static function rand($var = null, $min, $max)
+	{
+		return rand((int) $min, (int) $max);
 	}
 
 
