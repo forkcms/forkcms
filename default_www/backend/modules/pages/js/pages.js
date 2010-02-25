@@ -5,10 +5,46 @@ jsBackend.pages = {
 		jsBackend.pages.controls.init();
 		jsBackend.pages.tree.init();
 		jsBackend.pages.template.init();
+		jsBackend.pages.manageTemplates.init();
 		
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
 	},
+	// end
+	eoo: true
+}
+
+/*
+	@todo @tijs check code for showBlockNames
+
+	When editing or adding a templates, controls the amount of block
+	names shown, depending on the value in 'amount of blocks' dropdown
+
+*/
+jsBackend.pages.manageTemplates = {
+	init: function() {
+		// hide all instances of blockName
+		$('.blockName').hide();
+
+		jsBackend.pages.manageTemplates.showBlockNames();
+
+		$('#numBlocks').change(function() {
+			jsBackend.pages.manageTemplates.showBlockNames();
+		});
+	},
+	showBlockNames: function() {
+		// find selected element's value (e.g. 3)
+		var amountToShow = $('#numBlocks option:selected').html();
+
+		// get all instances of .blockName
+		$('.blockName').each(function(index) {
+			$(this).show();
+			if ((index + 1) > amountToShow) {
+				$(this).hide();
+			};
+		});
+	},
+	
 	// end
 	eoo: true
 }
@@ -48,20 +84,20 @@ jsBackend.pages.autosave = {
 jsBackend.pages.controls = {
 	init: function() {
 		jsBackend.pages.controls.changeExtra();
-		if($('.contentTitle .select').length > 0) { $('.contentTitle .select').bind('change', jsBackend.pages.controls.changeExtra); }
+		if($('.modal .select').length > 0) { $('.modal .select').bind('change', jsBackend.pages.controls.changeExtra); }
 	},
 	changeExtra: function(evt) {
 		// find element with a block selected
-		var element = $('.contentTitle option[rel=block]:selected');
+		var element = $('.modal option[rel=block]:selected');
 		
 		// nothing selected, so free all other elements
-		if(element.length == 0) $('.contentTitle option').attr('disabled', '');
+		if(element.length == 0) $('.modal option').attr('disabled', '');
 		
 		// disable all other elements
-		else $('.contentTitle option[rel=block]:not(:selected)').attr('disabled', 'disabled');
+		else $('.modal option[rel=block]:not(:selected)').attr('disabled', 'disabled');
 		
 		// loop all
-		$('.contentTitle .select').each(function() {
+		$('.modal .select').each(function() {
 			// get selected value
 			var val = $(this).val();
 			var id = $(this).attr('id');
@@ -85,7 +121,7 @@ jsBackend.pages.controls = {
 				
 				$('#blockContentHTML-'+ index).hide();
 				$('#blockContentExtra-'+ index).show();
-				$('#blockContentExtra-'+ index + ' p').html(html);
+				$('#blockContentExtra-'+ index + ' div').html(html);
 			}
 		});
 	},
@@ -167,7 +203,7 @@ jsBackend.pages.tree = {
 			// add parents
 			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).attr('id'));
 		}
-		
+
 		var options = { ui: { theme_name: 'fork' },
 						opened: openedIds,
 						rules: { multiple: false, multitree: 'all', drag_copy: false },

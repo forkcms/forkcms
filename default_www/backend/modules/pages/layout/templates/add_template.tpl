@@ -9,7 +9,8 @@
 				{form:add}
 					<div class="box horizontal">
 						<div class="heading">
-							&nbsp;
+							{* @todo add label *}
+							<h3>Voeg template toe</h3>
 						</div>
 						<div class="options">
 							<p>

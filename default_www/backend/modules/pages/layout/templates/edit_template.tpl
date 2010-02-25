@@ -9,8 +9,10 @@
 				{form:edit}
 					<div class="box horizontal">
 						<div class="heading">
-							&nbsp;
+							{* @todo add label *}
+							<h3>Bewerk template</h3>
 						</div>
+
 						<div class="options">
 							<p>
 								<label for="path">{$lblPath|ucfirst}</label>
@@ -23,28 +25,31 @@
 								{$txtLabel} {$txtLabelError}
 							</p>
 							<p>
-								<label for="num_blocks">{$lblNumberOfBlocks|ucfirst}</label>
-								{$ddmNumBlocks} {$ddmNumBlocksError}
+								<label for="format">{$lblLayout|ucfirst}</label>
+								{$txtFormat} {$txtFormatError}
+								{* @todo add label *}
+								<span class="helpTxt">e.g. [0,1],[2,none]</span>
 							</p>
 						</div>
 						<div class="options">
-							{iteration:names}
 							<p>
+								<label for="num_blocks">{$lblNumberOfBlocks|ucfirst}</label>
+								{$ddmNumBlocks} {$ddmNumBlocksError}
+							</p>
+							{iteration:names}
+							<p class="blockName">
 								<label for="name{$names.i}">{$lblName|ucfirst} {$names.i}</label>
 								{$names.txtName} {$names.txtNameError}
 							</p>
 							{/iteration:names}
 						</div>
 						<div class="options">
-							<p>
-								<label for="format">{$lblLayout|ucfirst}</label>
-								{$txtFormat} {$txtFormatError}
-							</p>
-
-							<ul class="inputList">
-								<li>{$chkActive} <label for="active">{$lblActive|ucfirst}</label> {$chkActiveError}</li>
-								<li>{$chkDefault} <label for="default">{$msgIsDefault}</label> {$chkDefaultError}</li>
-							</ul>
+							<div class="spacing">
+								<ul class="inputList pb0">
+									<li>{$chkActive} <label for="active">{$lblActive|ucfirst}</label> {$chkActiveError}</li>
+									<li>{$chkDefault} <label for="default">{$msgIsDefault}</label> {$chkDefaultError}</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 
