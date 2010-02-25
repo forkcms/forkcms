@@ -6,32 +6,6 @@
 			</div>
 
 			<div class="inner">
-				<!-- @todo tijs check me -->
-
-					<script type="text/javascript" charset="utf-8">
-						$(document).ready(function() {
-
-							// Add last child and first child for IE
-							$('.datafilter tbody td:first-child').addClass('firstChild')
-							$('.datafilter tbody td:last-child').addClass('lastChild')
-
-							// Make sure all options are the same height (eq height cols)
-							function equalHeight(group) {
-								var tallest = 0;
-								group.each(function() {
-									var thisHeight = $(this).height();
-									if(thisHeight > tallest) {
-										tallest = thisHeight;
-									}
-								});
-								group.height(tallest);
-							}
-
-							equalHeight($(".datafilter tbody .options"));
-						});
-
-					</script>
-
 
 					<div class="datagridHolder">
 						<div class="tableHeading">

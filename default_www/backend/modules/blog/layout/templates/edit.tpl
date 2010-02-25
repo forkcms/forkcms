@@ -217,7 +217,7 @@
 							</div>
 							{/option:drafts}
 
-
+							{option:!drafts}
 							<div class="datagridHolder">
 								<div class="tableHeading">
 									<div class="oneLiner">
@@ -232,10 +232,11 @@
 								{option:revisions}{$revisions}{/option:revisions}
 								{option:!revisions}{$msgNoRevisions}{/option:!revisions}
 							</div>
+							{/option:!drafts}
 						</div>
 
 						<div id="tabSEO">
-							<div id="seoMeta" class="box boxLevel2">
+							<div id="seoMeta" class="subtleBox">
 								<div class="heading">
 									<h3>{$lblMetaInformation|ucfirst}</h3>
 								</div>
@@ -263,17 +264,17 @@
 										</li>
 									</ul>
 
-									<p>
+									<div class="textareaHolder">
 										<label for="meta_custom">{$lblMetaCustom|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaCustom}</span>
 										{$txtMetaCustom} {$txtMetaCustomError}
-									</p>
+									</div>
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
-									<h3>{$lblURL}</h3>
+									<h3>{$lblURL|uppercase}</h3>
 								</div>
 								<div class="options">
 

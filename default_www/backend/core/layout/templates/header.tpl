@@ -14,12 +14,12 @@
 								<ul>
 									{option:debug}
 									<li>
-										<div id="debugnotify">Debug mode</div>
+										<div id="debugnotify">{$lblDebugMode|ucfirst}</div>
 									</li>
 									{/option:debug}
 									{option:workingLanguages}
 									<li>
-										Werktaal:
+										{$lblWorkingLanguage|ucfirst}:
 										<select id="workingLanguage">
 											{iteration:workingLanguages}
 												<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label|ucfirst}</option>

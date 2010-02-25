@@ -9,7 +9,7 @@
 				{form:editCategory}
 					<div class="box">
 						<div class="heading">
-							&nbsp;
+							{$lblEditCategory|ucfirst}
 						</div>
 						<div class="options">
 							<label for="name">{$lblCategory|ucfirst}</label>

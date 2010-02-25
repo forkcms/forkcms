@@ -35,7 +35,7 @@
 					<input type="hidden" name="from" value="posts" />
 					<div class="datagridHolder">
 						<div class="tableHeading">
-							<h3>{$lblAllPosts|ucfirst}</h3>
+							<h3>{$lblPublishedPosts|ucfirst}</h3>
 						</div>
 						{$dgPosts}
 					</div>
@@ -45,7 +45,7 @@
 				{option:!dgPosts}
 				<div class="datagridHolder">
 					<div class="tableHeading">
-						<h3>{$lblAllPosts|ucfirst}</h3>
+						<h3>{$lblPublishedPosts|ucfirst}</h3>
 						<div class="buttonHolderRight">
 							<a class="button icon iconAdd" href="{$var|geturl:'add'}" title="{$lblAdd}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 						</div>

@@ -529,6 +529,10 @@ a:active {
 	vertical-align: middle;
 }
 
+.datagrid th {
+	font-weight: 700;
+}
+
 	.datagrid tr td:first-child,
 	.datagrid tr th:first-child {
 		border-left: 1px solid #DDD;
@@ -538,9 +542,27 @@ a:active {
 		border-right: 1px solid #DDD;
 	}
 
-.datagrid td.goto {
-	padding: 1px 5px;
-}
+/*
+	Special td types
+*/
+
+	/* Price */
+	.datagrid td.price {
+		text-align: right;
+		font-family: "Menlo", "Monaco", "Courier New", monospace;
+	}
+
+	/* Title */
+	.datagrid td.title a,
+	.datagrid td.title {
+		font-size: 11px;
+		font-weight: 700;
+	}
+
+	/* Goto */
+	.datagrid td.goto {
+		padding: 1px 5px;
+	}
 
 	.datagrid p {
 		padding: 0;
@@ -775,21 +797,6 @@ a:active {
 		.pagination li a {
 			font-size: 11px;
 		}
-
-/* Special td types */
-
-/* Price */
-.datagrid td.price {
-	text-align: right;
-	font-family: "Menlo", "Monaco", "Courier New", monospace;
-}
-
-/* Title*/
-.datagrid td.title a,
-.datagrid td.title {
-	font-size: 11px;
-	font-weight: 700;
-}
 
 /*
 	Infogrid
@@ -3293,7 +3300,7 @@ a.mainButton.focus {
 			}
 
 			#pages.addEdit #tabSEO #url {
-				width: 240px;
+				width: 340px;
 			}
 			
 		/*
@@ -3307,6 +3314,19 @@ a.mainButton.focus {
 	/*
 		Blog
 	*/
+	
+		/*
+			Index
+		*/
+
+		/*
+			Categories
+		*/
+
+		#blog.categories .datagrid td.name a {
+			font-size: 11px;
+			font-weight: 700;
+		}
 
 		/*
 			Add/edit
@@ -3314,6 +3334,30 @@ a.mainButton.focus {
 
 		#blog.addEdit #categoryId { width: 170px; }
 		#blog.addEdit #addValue-tags { width: 120px; }
+		
+			/*
+				Tab SEO
+			*/
+
+			#blog.addEdit #tabSEO #pageTitle {
+				width: 340px;
+			}
+
+			#blog.addEdit #tabSEO #navigationTitle {
+				width: 160px;
+			}
+
+			#blog.addEdit #tabSEO #metaDescription {
+				width: 480px;
+			}
+
+			#blog.addEdit #tabSEO #metaKeywords {
+				width: 480px;
+			}
+
+			#blog.addEdit #tabSEO #url {
+				width: 340px;
+			}
 
 		/*
 			Settings
@@ -3347,6 +3391,19 @@ a.mainButton.focus {
 
 		#settings.index #siteTitle {
 			width: 320px;
+		}
+
+	/*
+		Tags
+	*/
+
+		/*
+			Index
+		*/
+
+		#tags.index .datagrid td.tag a {
+			font-size: 11px;
+			font-weight: 700;
 		}
 
 	/*
@@ -3404,14 +3461,11 @@ a.mainButton.focus {
 	.datafilter tfoot td .options {
 		background: #B0B0B0;
 		background: rgba(0,0,0,0.2);
-
-
 	}
 
 /*
 	jQuery UI overrides
 */
-
 
 	/*
 		Overrides for referrers tab on dashboard
@@ -3467,9 +3521,9 @@ a.mainButton.focus {
 		background: #FFF;
 		background: -webkit-gradient(linear, left top, left bottom, from(#F2f2f2), to(#fff));
 		background: -moz-gradient(linear, left top, left bottom, from(#FFF), to(#fff));
-		border: 1px solid #a2abb7;
+		border: 1px solid #A2ABB7;
 		border-bottom-color: #FFF;
-		color: #3a3a3a;
+		color: #3A3A3A;
 
 	}
 
