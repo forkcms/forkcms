@@ -1,0 +1,266 @@
+/*
+
+    Forms
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+/* Modify input[type="text"] and textareas */
+
+.inputText,
+.inputPassword,
+input[type="text"],
+input[type="password"],
+textarea {
+	background: #FFF url(/backend/core/layout/images//ds.png) repeat-x;
+	border: 1px solid #BBB;
+	border-color: #888 #BABABA #BABABA #CDCDCD;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+	/* Transition */
+	-webkit-transition: background-color 0.28s linear;
+
+}
+
+/* Disabled fields */
+input.inputText[disabled="disabled"],
+input.inputPassword[disabled="disabled"],
+input.disabled {
+	background: #EEE;
+	color: #666 !important;
+}
+
+.inputText,
+input[type="text"],
+.inputPassword,
+input[type="password"] {
+	padding: 3px 2px;
+	color: #333;
+}
+
+	/* Fix alignment in Chrome/Saf */
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+		.inputText,
+		input[type="text"],
+		.inputPassword,
+		input[type="password"] {
+			height: 14px;
+		}
+	}
+
+	.inputText:focus,
+	input[type="text"]:focus,
+	.inputPassword:focus,
+	input[type="password"]:focus,
+	textarea:focus,
+	.inputText.focus,
+	input[type="text"].focus,
+	.inputPassword.focus,
+	input[type="password"].focus,
+	textarea.focus {
+		color: #000;
+		background: #FFC;
+	}
+
+/*
+	Inputs with a .code class get a monospaced font
+*/
+
+input.code,
+textarea.code {
+	font-family: "Menlo", "Monaco", "Courier New", monospace;
+	font-size: 11px;
+}
+
+/* Selects should be left alone (not stylable without troubles) */
+select {
+	/* Nothing */
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+
+}
+
+/* Input type file should be left alone */
+.inputFile {
+	font-size: 11px;
+}
+
+/* Input submit gets replaced by a button, yet some styles here for better buildup */
+
+input[type="submit"] {
+	font-size: 11px;
+	font-family: Arial, sans-serif;
+	font-weight: 700;
+}
+
+	/*
+		Focus outline; Mozilla specific since Safari implements this right
+		IE can f*** off
+	*/
+	@-moz-document url-prefix() {
+
+		.inputText,
+		.inputPassword {
+			height: 14px;
+			line-height: 14px;
+		}
+
+		.inputText:focus,
+		input[type="text"]:focus,
+		.inputPassword:focus,
+		input[type="password"]:focus,
+		textarea:focus {
+			outline: 2px solid #C2DEFF;
+			-moz-outline-radius: 5px;
+			border-color: #456b99;
+		}
+
+	}
+
+.helpTxt {
+	display: block;
+	font-size: 11px;
+	color: #808080;
+}
+
+	.helpTxt a {
+		font-weight: 700;
+	}
+
+.forkForms .inputList {
+	padding: 0 0 12px;
+}
+
+.forkForms .inputList li {
+	position: relative;
+	padding: 0 0 4px 24px;
+}
+
+	.forkForms .inputList li li {
+		padding-left: 0;
+	}
+
+.forkForms .horizontal .inputList label {
+	float: none;
+	width: auto;
+}
+
+	.forkForms .inputList li .inputRadio,
+	.forkForms .inputList li .inputCheckbox,
+	.forkForms .inputList li input[type="radio"],
+	.forkForms .inputList li input[type="checkbox"] {
+		position: absolute;
+		left: 0;
+		top: 0;
+	}
+
+	#urlManager ul {
+		margin: 0 0 8px;
+	}
+
+		#urlManager ul .inputText,
+		#urlManager ul input[type="text"] {
+			font-size: 11px;
+			width: 210px;
+		}
+
+.forkForms .section {
+	clear: both;
+	padding: 6px 0;
+	border-bottom: 1px solid #E2E2E2;
+}
+
+/*
+	The Magic One Liner
+	----
+	General method to wrap form and other elements on one line
+	Gets cleared see clearing section of this css file
+*/
+
+.oneLiner p,
+.oneLiner .buttonHolder,
+.oneLiner .floater {
+	float: left;
+	margin-right: 4px;
+}
+
+	.oneLiner p {
+		padding-bottom: 0;
+		line-height: 22px;
+		/* Same height as button height */
+	}
+
+	.oneLiner .help {
+		position: relative;
+		top: 2px;
+		left: 2px;
+		display: block;
+	}
+	
+	.oneLiner select {
+		margin-top: 1px;
+		margin-right: 3px;
+	}
+
+/* "Fake" label */
+
+label {
+	font-weight: 700;
+	color: #4A4A4A;
+	font-size: 11px;
+}
+
+.forkForms p.label {
+	padding-bottom: 0;
+	border: none;
+	font-size: 11px;
+	font-weight: 700;
+	color: #4A4A4A;
+}
+
+.forkForms p label {
+	display: block;
+}
+
+.forkForms textarea { width: 90%; }
+.forkForms .horizontal textarea { width: auto;}
+.forkForms ul .helpTxt{ padding: 0 0 0 24px; }
+.forkForms .long li{ padding: 0 0 8px; }
+.forkForms .horizontal p label,
+.forkForms .horizontal .section label,{ display: inline; }
+.forkForms .horizontal .helpTxt,
+.forkForms .horizontal .section .helpTxt{ display: block; padding: 1px 0 1px 115px; }
+.forkForms .horizontal label,
+.forkForms .horizontal p.label,
+.forkForms .horizontal label,
+.forkForms .horizontal p.label{ float: left; width: 105px; padding-right: 10px; line-height: 21px;}
+
+#profilePassword .horizontal label { width: 170px; }
+
+.forkForms .horizontal p.label{ margin: 0; }
+.forkForms .spacing,
+.forkForms .horizontal span.formError { padding-left: 115px; }
+.forkForms abbr { cursor: help; }
+
+.forkForms .block{ display: block !important; }
+.forkForms p:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.forkForms p { zoom: 1; }
+
+fieldset.visiblefieldset {
+	padding: 16px;
+	margin: 0 0 16px;
+	border: 1px solid #DDD;
+}
+
+fieldset legend {
+	display:none;
+}

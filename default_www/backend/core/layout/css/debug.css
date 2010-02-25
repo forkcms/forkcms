@@ -1,16 +1,49 @@
 /*
 
-	Debug stylesheet for Fork NG
-
-	Media:      screen, projection
-	Copyright:  Netlash <http://www.netlash.com>
-
-	@todo	@johan	fix this.
+    Debug stylesheet for Fork NG
+    
+    @package      backend
+    @subpackage   core
+    
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
 
 */
-.warningMessage { background: #FBEC88; border-color: #FAD42E; padding: 5px; }
-#newCategoryValue { width: 120px; }
 
-/* Debug stuff */
-#console { position: fixed; height: 200px; width: 100%; bottom: 0; left: 0; overflow: auto; background-color: #000;  }
-	#console pre { background: none; margin: 7px; padding: 0; font: 300 11px Monaco, sans-serif; color: #FFF; }
+/*
+	Console
+*/
+
+#console {
+	position: fixed;
+	height: 200px;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	overflow: auto;
+	background-color: #000;
+}
+
+#console pre {
+	background: none;
+	margin: 7px;
+	padding: 0;
+	font: 300 11px Monaco, sans-serif;
+	color: #FFF;
+}
+
+/*
+	Display broken image indicator in Firefox
+*/
+
+img {
+	-moz-force-broken-image-icon: 1;
+}
+
+/*
+	Debug message
+*/
+
+#debugnotify {
+	color: red;
+}

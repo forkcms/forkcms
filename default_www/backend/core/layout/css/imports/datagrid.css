@@ -1,0 +1,388 @@
+/*
+
+    Datagrid
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+.datagridHolder {
+	margin: 0 0 24px;
+	border-bottom: 1px solid #BDBDBD;
+}
+
+	.datagridHolder .tableHeading h3 {
+		font-size: 14px;
+		float: left;
+		padding: 0 0 4px;
+	}
+
+	.datagridHolder .tableHeading .buttonHolderRight {
+		float: right;
+	}
+
+		.tableHeading a.button:link,
+		.tableHeading a.button:visited {
+			margin-bottom: -6px;
+			position: relative;
+			bottom: 4px;
+		}
+
+		.datagridHolder .tableHeading {
+			zoom: 1;
+		}
+
+		.datagridHolder .tableHeading:after {
+			/* @inc .clearfix */
+			content: ".";
+			display: block;
+			height: 0;
+			clear: both;
+			visibility: hidden;
+		}
+
+.datagrid {
+	width: 100%;
+	border-collapse: separate;
+	border-top: 1px solid #BDBDBD;
+}
+
+	.datagrid a {
+		border: none;
+	}
+
+/* Fix nasty safari bug when inserting a datagrid into jQuery #tabs */
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+
+	#tabs .datagridHolder:after {
+		/* @inc .clearfix */
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+	#tabs .datagrid {
+		max-width: 100%;
+		float: left;
+	}
+
+}
+
+/* End bugfix */
+
+.datagrid td,
+.datagrid th {
+	padding: 4px 6px;
+	vertical-align: middle;
+}
+
+.datagrid th {
+	font-weight: 700;
+}
+
+	.datagrid tr td:first-child,
+	.datagrid tr th:first-child {
+		border-left: 1px solid #DDD;
+	}
+	.datagrid tr td:last-child,
+	.datagrid tr th:last-child {
+		border-right: 1px solid #DDD;
+	}
+
+/*
+	Special td types
+*/
+
+	/* Price */
+	.datagrid td.price {
+		text-align: right;
+		font-family: "Menlo", "Monaco", "Courier New", monospace;
+	}
+
+	/* Title */
+	.datagrid td.title a,
+	.datagrid td.title {
+		font-size: 11px;
+		font-weight: 700;
+	}
+
+	/* Goto */
+	.datagrid td.goto {
+		padding: 1px 5px;
+	}
+
+	.datagrid p {
+		padding: 0;
+	}
+
+	.datagrid .content p {
+		padding: 0 0 12px;
+	}
+
+/*
+	Sprite config: th.gif
+
+	0-47 regular th
+	1px checking line
+	49-94 th sorted
+	1px checking line
+	96-142 table heading
+	1px checking line
+	144-191 table tfoot
+
+	193-214 sortable icon
+	215-236 sorted ascending
+	237-xxx sorted descending icon
+*/
+
+.datagrid th {
+	font-size: 11px;
+	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 0;
+	border-bottom: 1px solid #B4B4B4;
+	border-right: 1px solid #BDBDBD;
+	line-height: 22px;
+	padding: 0;
+	font-weight: 400;
+}
+
+.datagrid td {
+	font-size: 11px;
+}
+
+.datagrid th a.sortedAsc,
+.datagrid th a.sortedDesc {
+	background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 -48px;
+}
+
+.datagrid th a.sortable:hover {
+	color: #000;
+}
+
+.datagrid th a,
+.datagrid th span {
+	padding: 0 18px 0 6px;
+	display: block;
+}
+
+.datagrid th a.sortable {
+	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -193px;
+}
+
+.datagrid th a.sortedDesc {
+	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -215px;
+}
+
+.datagrid th a.sortedAsc {
+	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -237px;
+}
+
+.datagrid th.checkbox,
+.datagrid td.checkbox {
+	text-align: center;
+	height: 24px;
+	padding: 0;
+	height: 24px;
+	min-width: 16px;
+}
+
+	.datagrid th.checkbox span {
+		padding: 0;
+	}
+
+.datagrid td.rowMover a {
+	background: url(/backend/core/layout/images/move_handle.gif) no-repeat 0 0;
+	width: 6px;
+	height: 14px;
+	display: block;
+	font-size: 0;
+	cursor: move;
+}
+
+
+.datagrid tbody tr:hover td,
+.datagrid tbody tr.selected td {
+	background: #1A57AD;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
+	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
+}
+
+	.datagrid tbody tr:hover td,
+	.datagrid tbody tr:hover td a,
+	.datagrid tbody tr.selected td,
+	.datagrid tbody tr.selected td a,
+	.datagrid tbody tr:hover td a.linkButton:link {
+		color: #FFF !important;
+	}
+
+
+.datagrid tr:nth-child(2n+1) td {
+	background: #FFF;
+}
+
+.datagrid tr:nth-child(2n) td {
+	background: #F1F5FA;
+	background: rgba(218,232,249,0.26);
+}
+
+.datagrid tr:last-child td {
+	border-bottom: none;
+}
+
+.datagridHolder .datagrid tfoot tr td {
+	padding: 0;
+	background: #DDD;
+	border: 1px solid #BDBDBD;
+	border-bottom: none;
+}
+
+.tableOptionsHolder {
+	width: 100%;
+}
+
+.tableOptions {
+	padding: 4px 6px;
+}
+
+	.tableOptions:after {
+		/* @inc .clearfix */
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+.tableOptions .massAction {
+	float: left;
+}
+
+.tableOptions .amount {
+	float: right;
+}
+
+	.tableOptions .amount p {
+		padding: 0 12px 0 0;
+		line-height: 22px;
+	}
+
+.tableOptions .pagination {
+	float: right;
+	padding-top: 2px;
+}
+
+	.pagination li {
+		float: left;
+		margin-right: 4px;
+		font-size: 11px;
+	}
+
+	.pagination ul {
+		zoom: 1;
+	}
+
+	.pagination ul:after {
+		/* @inc .clearfix */
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+
+		.pagination li a:link,
+		.pagination li a:visited,
+		.pagination li span {
+			float: left;
+			display: block;
+			padding: 1px 3px;
+			background: rgba(255,255,255,0.25);
+			border: 1px solid rgba(0,0,0,0.25);
+			text-align: center;
+			color: #3a3a3a;
+			display: block;
+			background: #FFF;
+			background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#FAFAFA));
+			background: -moz-gradient(linear, left top, left bottom, from(#fff), to(#FAFAFA));
+			border: 1px solid #BFBFBF;
+
+			/* @inc .rc */
+			border-radius: 4px;
+			-webkit-border-radius: 4px;
+			-moz-border-radius: 4px;
+
+		}
+
+		.pagination li a:hover,
+		.pagination li a:active,
+		.pagination li a:focus {
+			border-color: #000;
+		}
+
+		.pagination li span {
+			background: none;
+			border-color: transparent;
+			color: #AAA;
+		}
+
+		.pagination li.selected span {
+
+			/* @inc .navButtonSelected */
+			background: #000;
+			background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#000));
+			background: -moz-gradient(linear, left top, left bottom, from(#666), to(#000));
+			border: 1px solid #000;
+			color: #FFF;
+
+		}
+
+			.pagination li.previousPage *,
+			.pagination li.nextPage * {
+				padding-left: 6px;
+				padding-right: 6px;
+			}
+
+		.pagination li a {
+			font-size: 11px;
+		}
+
+/*
+	Infogrid
+*/
+
+.infoGrid {
+	width: 100%;
+	margin: 0 0 24px;
+}
+
+.infoGrid td {
+	width: 100%;
+}
+
+.infoGrid td,
+.infoGrid th {
+	font-size: 11px;
+	padding: 3px;
+}
+
+	.infoGrid tr:last-child td,
+	.infoGrid tr:last-child th {
+		border-bottom: none;
+	}
+
+.infoGrid th {
+	border-right: 1px solid #CCC;
+	padding-right: 6px;
+}
+
+	.infoGrid td {
+		padding-left: 6px;
+	}
+
+/* end infogrid */

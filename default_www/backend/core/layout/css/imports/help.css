@@ -1,0 +1,91 @@
+/*
+
+    Help system
+    Tooltips, help balloons
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+/*
+	Help indicator
+*/
+
+abbr.help {
+	background: url(/backend/core/layout/images//sprites/fork_icons.png) no-repeat 0 -494px;
+	width: 14px;
+	height: 12px;
+	display: block;
+	text-indent: -9000px;
+	font-size: 11px;
+	border: none;
+	cursor: help;
+}
+
+	abbr.help {
+		display: inline-block;
+		position: relative;
+		top: 4px;
+		margin-left: -2px;
+	}
+
+/*
+	Balloon
+*/
+
+.balloon {
+	display: block;
+	width: 240px;
+
+	z-index: 2001;
+
+	padding: 4px 12px;
+
+	position: relative;
+	background: #E9F0F7;
+	border: 1px solid #B8BCC9;
+	background: -webkit-gradient(linear, left top, left bottom, from(#EFF5FD), to(#E9F0F7));
+	background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+
+}
+
+/* Alternate purple style */
+.balloonAlt {
+	background: #8947d6;
+	border: 1px solid #8645d3;
+	background: -webkit-gradient(linear, left top, left bottom, from(#AC67FF), to(#8645D3));
+	background: -moz-linear-gradient(top, #AC67FF, #8645D3);
+	color: #FFF;
+
+	font-weight: 400;
+	font-size: 11px;
+	line-height: 16px;
+}
+
+	.oneLiner .balloonAlt p {
+		line-height: 16px;
+	}
+
+	.balloon .balloonTop {
+		width: 15px;
+		height: 8px;
+		background: url(/backend/core/layout/images//balloontop.gif) no-repeat 0 0;
+		display: block;
+		position: absolute;
+		top: -8px;
+		left: 27%;
+	}

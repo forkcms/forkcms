@@ -1,0 +1,175 @@
+/*
+
+    Messaging system
+    Includes Growl-like messaging stack,
+    styles for errors warning and notices
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+/*
+	Messages stack
+*/
+
+#messaging {
+	position: fixed;
+	right: 50%;
+	left: 50%;
+	top: 50%;
+	bottom: 50%;
+	z-index: 1001;
+}
+
+#messaging .formMessage {
+	width: 240px;
+	position: relative;
+	font-size: 11px;
+	margin-top: 20px;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	font-size: 12px;
+	z-index: 1002;
+
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+
+	text-align: center;
+}
+
+	#messaging .buttonHolder {
+		position: absolute;
+		top: -10px;
+		right: -20px;
+		z-index: 1003;
+	}
+
+/* Form messages */
+
+/* Inline error */
+.formError {
+	color: #E2001A;
+	display: block;
+	font-size: 11px;
+}
+
+	.errorMessage .formError {
+		color: #FFF;
+		display: block;
+		font-size: 11px;
+	}
+
+.singleMessage {
+	border: 1px solid #CCC;
+}
+
+.formMessage {
+	font-weight: 700;
+	border: 1px solid #CCC;
+	margin: 0 0 10px;
+	background: #FFF;
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+}
+
+	.formMessage p {
+		padding: 6px 12px;
+	}
+
+.errorMessage {
+	/* @inc .errorColors */
+	color: #FFF;
+	font-weight: 700;
+	background: #DE3636;
+	background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#FF2626));
+	background: -moz-linear-gradient(top, #DE3636, #FF2626);
+	border: 1px solid #a60000;
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+}
+
+	.errorMessage a {
+		color: #FFF;
+		font-weight: 700;
+		border-bottom: 1px solid #f5abb4;
+	}
+
+.successMessage {
+	color: #4f6d2c;
+	background: #d6efb8;
+	border-color: #91AE8A;
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+}
+
+	#report .singleMessage {
+		border-width: 0 0 1px;
+
+		/* @inc .rc */
+		border-radius: 0;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+
+	}
+
+		#report .singleMessage p {
+			padding: 6px 24px;
+			font-size: 11px;
+			font-weight: 700;
+		}
+
+	.successMessage a:link,
+	.successMessage a:visited {
+		color: #005f00;
+		border-color: #8dbd84;
+	}
+
+	.successMessage a:hover,
+	.successMessage a:active,
+	.successMessage a:focus {
+		color: #002f00;
+	}
+
+.generalMessage {
+	font-weight: 700;
+	border: 1px solid #CCC;
+	margin: 0 0 10px;
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+	padding: 12px;
+}
+
+.singleMessage {
+	padding: 0;
+}
+
+.singleMessage p {
+	padding: 6px 12px;
+}
+
+.infoMessage {
+	background-color: #FFA;
+	font-weight: normal;
+}

@@ -1,0 +1,97 @@
+/*
+
+    Dashboard
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+/*
+	Work in progress activecollab reminder
+	@todo remove when we have a release
+*/
+
+	#wip p {
+		text-align: center;
+		font-size: 11px;
+		padding-top: 12px;
+	}
+
+
+#dashboardWidgets {
+	padding: 12px 0;
+	zoom: 1;
+
+	border-top: 1px solid #DDD;
+}
+
+#dashboardWidgets:after {
+	/* @inc .clearfix */
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+#dashboardWidgets .leftColumn,
+#dashboardWidgets .middleColumn,
+#dashboardWidgets .rightColumn {
+	float: left;
+	max-width: 407px;
+	width: 33.3%;
+}
+
+#dashboardWidgets .middleColumn {
+}
+
+#dashboardWidgets .box {
+	padding: 12px;
+	margin: 0;
+	border: none;
+}
+
+	#dashboardWidgets .box .datagridHolder {
+		padding: 0;
+		margin: 0;
+		border-width: 0 0 1px;
+		background: #FFF;
+	}
+
+		#dashboardWidgets .box .datagridHolder .datagrid {
+			border-top: none;
+		}
+
+	#dashboardWidgets .heading a {
+		color: #3A3A3A;
+		border: none;
+	}
+
+#dashboardWidgets .datagrid td {
+	font-size: 11px;
+}
+
+#dashboardWidgets .datagrid tr td:first-child {
+	padding-left: 12px;
+}
+
+#dashboardWidgets .datagrid tr td:last-child {
+	padding-right: 12px;
+}
+
+#dashboardWidgets .datagrid td a {
+	font-size: 11px;
+	font-weight: 400;
+}
+
+/*
+	Analyse widget
+*/
+
+#widgetSettingsAnalyse ul {
+	padding-bottom: 0;
+}

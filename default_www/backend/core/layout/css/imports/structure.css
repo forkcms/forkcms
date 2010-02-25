@@ -1,0 +1,256 @@
+/*
+
+    General structure
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+body, html {
+	height: 100%;
+}
+
+body {
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	line-height: 1.4;
+	color: #666;
+	background: #EBF3F9;
+
+	font-size: 12px;
+	position: relative;
+
+	height: 100%;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+#encloser {
+	width: 100%;
+	height: 100%;
+}
+
+#container {
+	height: 100%;
+	padding: 0 24px;
+}
+
+
+#main {
+	height: 100%;
+	border-top: none;
+	min-width: 960px;
+	max-width: 1224px;
+	margin: 0 auto;
+	background: #FAFAFA;
+	border: 1px solid #BED7E9;
+	border-width: 0 1px;
+}
+
+#contentHolder {
+	height: 100%;
+}
+
+#contentHolder .inner {
+	padding: 24px;
+	background: #FAFAFA;
+
+	min-height: 465px;
+	height: auto !important;
+	height: 465px;
+}
+
+#pagesHolder,
+#modulesHolder {
+	width: 100%;
+	height: 100%;
+	border-top: 1px solid #BED7E9;
+}
+
+#sidebar {
+	width: 202px;
+	padding-left: 24px;
+}
+
+/*
+	Header
+*/
+
+#headerHolder {
+	padding: 0 24px;
+	min-width: 960px;
+	max-width: 1224px;
+	margin: 0 auto;
+	position: relative;
+	
+}
+
+	#headerHolder #header {
+		width: 100%;
+		height: 36px;
+	}
+
+	#headerHolder #user {
+		min-width: 266px;
+	}
+
+		#user .avatar {
+			margin-right: 4px;
+		}
+
+#header td {
+	vertical-align: middle;
+}
+
+
+/*
+	Site title
+*/
+
+#headerHolder h1 {
+	margin: 0;
+	padding: 12px 0 0;
+	font-size: 14px;
+}
+
+	#headerHolder h1 a:link,
+	#headerHolder h1 a:visited {
+		color: #000;
+	}
+
+	#headerHolder h1 a:hover,
+	#headerHolder h1 a:active,
+	#headerHolder h1 a:focus {
+		color: #001A77;
+	}
+
+   #headerHolder h1 a:link span,
+   #headerHolder h1 a:visited span {
+		font-size: 11px;
+		font-weight: 400;
+		background: rgba(0,0,0,0.18);
+		color: #FFF;
+		padding: 1px 6px;
+		border: 1px solid rgba(0,0,0,0.09);
+
+		/* @inc .rc */
+		border-radius: 4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px;
+
+		text-shadow: 1px 1px 1px rgba(0,0,0,0.45);
+	}
+
+	#headerHolder h1 a:hover span,
+	#headerHolder h1 a:active span,
+	#headerHolder h1 a:focus span {
+		background: rgba(0,0,0,0.36);
+		border: 1px solid rgba(0,0,0,0.18);
+	}
+
+
+/*
+	Navigation
+*/
+
+	#navigation li {
+		float: left;
+	}
+
+	#navigation li a {
+
+		/* @inc .navButtonColors */
+		display: block;
+		border-bottom: none;
+
+		float: left;
+		margin: 10px 4px 0 0;
+		padding: 7px 17px;
+		position: relative;
+		top: 1px;
+		right: 1px;
+		line-height: 1;
+		font-size: 11px;
+		font-weight: 700;
+		font-family: "Lucida grande", Arial, sans-serif;
+
+		/* @inc .rcTopOnly */
+		border-top-left-radius: 4px;
+		-webkit-border-top-left-radius: 4px;
+		-moz-border-radius-topleft: 4px;
+		border-top-right-radius: 4px;
+		-webkit-border-top-right-radius: 4px;
+		-moz-border-radius-topright: 4px;
+
+
+		background: #EBF3F9;
+		background: -webkit-gradient(linear, left top, left bottom, from(#EBF3F9), to(#DCE9F4));
+		background: -moz-linear-gradient(top, #EBF3F9, #DCE9F4);
+		border: 1px solid #BAD4E8;
+
+	}
+
+	#navigation li a:hover,
+	#navigation li a:active,
+	#navigation li a:focus {
+		/* @inc .navButtonSelected */
+		background: #E9F2FA;
+		background: -webkit-gradient(linear, left top, left bottom, from(#E9F2FA), to(#F2F5FA));
+		background: -moz-linear-gradient(top, #E9F2FA, #F2F5FA);
+		border: 1px solid #BED7E9;
+		border-bottom-color: #BED7E9;
+	}
+
+	#navigation li.selected a {
+
+		/* @inc .navButtonSelected */
+		background: #F9F9F9;
+		background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#FAFAFA));
+		background: -moz-linear-gradient(top, #FFF, #FAFAFA);
+		border: 1px solid #BED7E9;
+		border-bottom-color: #FAFAFA;
+
+		color: #000;
+
+	}
+
+	#navigation a {
+		border: none;
+	}
+
+/*
+	Header > User
+*/
+
+#user {
+	font-size: 11px;
+}
+
+	#user .selected {
+		color: #000;
+	}
+
+#user ul {
+	float: right;
+	padding-right: 24px;
+}
+
+#user li {
+	padding-left: 12px;
+	border-left: 1px solid rgba(0,0,0,0.1);
+	margin-left: 12px;
+	float: left;
+	line-height: 24px;
+}
+
+	#user li:first-child {
+		border: none;
+	}
+
+#user li td {
+	padding: 0;
+	border: 0;
+}

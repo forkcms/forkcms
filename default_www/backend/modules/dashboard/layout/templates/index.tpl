@@ -8,7 +8,9 @@
 {/option:resetSuccess}
 
 <div id="dashboardWidgets">
-	<p style="text-align: center; font-size: 11px; padding-top: 12px">Welcome to Fork NG. What you are seeing is a work in progress. Report any bugs in the <a href="http://projects.netlash.com/public/index.php/projects/369">Fork NG</a> project in ActiveCollab.</p>
+	<div id="wip" class="content">
+		<p>Welcome to Fork NG. What you are seeing is a work in progress. Report any bugs in the <a href="http://projects.netlash.com/public/index.php/projects/369">Fork NG</a> project in ActiveCollab.</p>
+	</div>
 
 	<div class="leftColumn">
 	{iteration:leftColumn}

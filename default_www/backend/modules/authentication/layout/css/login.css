@@ -1,0 +1,185 @@
+/*
+	Login specific CSS
+*/
+
+body#login {
+	background: url(/backend/core/layout/images//fork.png) no-repeat bottom center;
+}
+
+#login #debugnotify {
+	text-align: center;
+	position: fixed;
+	top: 24px;
+	right: 0;
+	left: 0;
+	font-size: 11px;
+	font-family: "Menlo", "Courier New", "Courier", Arial, sans-serif;
+	font-style: italic;
+	color: #666;
+}
+
+	#login #debugnotify img {
+		display: block;
+		height: 65px;
+		margin: 0 auto;
+		padding-bottom: 4px;
+	}
+
+#loginHolder {
+	width: 100%;
+	height: 100%;
+}
+
+#loginHolder td {
+	width: 100%;
+	height: 100%;
+	vertical-align: middle;
+}
+
+#loginBox {
+	width: 500px;
+	margin: 0 auto;
+	position: relative;
+}
+
+#loginBox.hasError {
+	padding-top: 68px;
+}
+
+#loginError .errorMessage {
+	/* Reset border radius */
+	border-radius: 0;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 3;
+	font-size: 11px;
+
+	padding: 14px 48px;
+}
+
+	#loginBox #loginNav {
+		position: absolute;
+		top: 12px;
+		right: 12px;
+		font-size: 11px;
+	}
+
+		#loginBox #loginNav a {
+			color: #808080;
+		}
+
+		#loginBox #loginNav a:hover,
+		#loginBox #loginNav a:active,
+		#loginBox #loginNav a:focus {
+			color: #000;
+		}
+
+
+	#loginNav li {
+		font-size: 11px;
+		float: left;
+		padding-left: 12px;
+		border-left: 1px solid #CCC;
+		margin-left: 12px;
+	}
+
+		#loginNav li:first-child {
+			border: none;
+		}
+
+#loginBox {
+	border: 1px solid #C3C3C3;
+	width: 400px;
+	padding: 24px 48px;
+
+	background: #FFF;
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#FAFAFA));
+	background: -moz-linear-gradient(top, #FFF, #FAFAFA);
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+}
+
+	#loginBoxTop {
+		padding: 0 48px;
+		width: 300px;
+	}
+
+#loginBox h2 {
+	padding: 24px 0 12px;
+	font-size: 18px;
+	color: #000;
+}
+
+	#loginFields {
+		border-top: 1px solid #CCC;
+		padding-top: 12px;
+	}
+
+		#loginFields p {
+			padding: 0 12px 12px 48px;
+		}
+
+		#loginFields label {
+			font-size: 11px;
+			color: #666;
+			display: block;
+			width: 100px;
+		}
+
+		#loginBox .formError {
+			padding-left: 110px;
+		}
+
+		#loginBox p.spacing {
+			padding-bottom: 0;
+			padding-left: 158px;
+		}
+
+		/* Balloon overrides */
+		#forgotPasswordHolder.balloon {
+			padding: 12px 24px 36px;
+			width: 308px;
+		}
+
+			/* @todo @tijs @johan make this work together with forgot password form */
+			.balloonNoMessage {
+				padding: 12px 24px 12px;
+			}
+
+			#forgotPassword p {
+				font-size: 11px;
+			}
+
+			#forgotPassword .singleMessage {
+				border-top: 1px solid #B8BCC9;
+				width: 100%;
+				position: absolute;
+				bottom: 0;
+				left: 0;
+
+				/* Reset border radius */
+				border-radius: 0;
+				-webkit-border-radius: 0;
+				-moz-border-radius: 0;
+
+				/* @inc .bottomRc */
+				border-bottom-left-radius: 4px;
+				-webkit-border-bottom-left-radius: 4px;
+				-moz-border-radius-bottomleft: 4px;
+				border-bottom-right-radius: 4px;
+				-webkit-border-bottom-right-radius: 4px;
+				-moz-border-radius-bottomright: 4px;
+
+			}
+
+				#forgotPassword #backendEmail {
+					width: 160px;
+				}

@@ -63,7 +63,7 @@
 									</td>
 
 									{* Right side *}
-									<td id="pagesSide">
+									<td id="sidebar">
 										<div id="publishOptions" class="box">
 											<div class="heading">
 												<h3>{$lblPublish|ucfirst}</h3>
@@ -71,7 +71,6 @@
 
 											<div class="options">
 												<div class="buttonHolder">
-													<!-- @todo style this @johan @yoni -->
 
 													{option:usingDraft}
 													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span><span><span>{$lblPreview|ucfirst}</span></span></span></a>
@@ -142,32 +141,9 @@
 										<div id="authors" class="box">
 											<div class="heading">
 												<h4>{$lblAuthor|ucfirst}</h4>
-
-												{*
-													@later
-													Johan, this is realy complicated, can't we find a beter way to do this?
-												<div class="buttonHolderRight">
-													<a href="#" id="editAuthor" class="button icon iconEdit iconOnly">
-														<span><span><span>Edit</span></span></span>
-													</a>
-												</div>
-												 *}
 											</div>
-
 											<div class="options">
 												{$ddmUserId} {$ddmUserIdError}
-												{*
-												<ul>
-													<li>
-														<div class="avatarAndNickName">
-															<a href="#">
-																<img src="images/avatars/fun/mushimushi.png" width="24" height="24" alt="Mushimush2">
-																<span>Bram_ (Bram Vanderhaeghe)</span>
-															</a>
-														</div>
-													</li>
-												</ul>
-												 *}
 											</div>
 										</div>
 
@@ -196,7 +172,7 @@
 						</div>
 
 						<div id="tabSEO">
-							<div id="seoMeta" class="box boxLevel2">
+							<div id="seoMeta" class="subtleBox">
 								<div class="heading">
 									<h3>{$lblMetaInformation|ucfirst}</h3>
 								</div>
@@ -224,17 +200,17 @@
 										</li>
 									</ul>
 
-									<p>
+									<div class="textareaHolder">
 										<label for="meta_custom">{$lblMetaCustom|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaCustom}</span>
 										{$txtMetaCustom} {$txtMetaCustomError}
-									</p>
+									</div>
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
-									<h3>{$lblURL}</h3>
+									<h3>{$lblURL|uppercase}</h3>
 								</div>
 								<div class="options">
 

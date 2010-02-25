@@ -1,0 +1,67 @@
+/* "Fake" includes that have to stay consistent */
+
+/* Rounded corners on all sides */
+.rc {
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+/* Rounded corners only on the top sides */
+.topRc {
+	/* @inc .topRc */
+	border-top-left-radius: 4px;
+	-webkit-border-top-left-radius: 4px;
+	-moz-border-radius-topleft: 4px;
+	border-top-right-radius: 4px;
+	-webkit-border-top-right-radius: 4px;
+	-moz-border-radius-topright: 4px;
+}
+
+/* Rounded corners only on the bottom sides */
+.bottomRc {
+	/* @inc .bottomRc */
+	border-bottom-left-radius: 4px;
+	-webkit-border-bottom-left-radius: 4px;
+	-moz-border-radius-bottomleft: 4px;
+	border-bottom-right-radius: 4px;
+	-webkit-border-bottom-right-radius: 4px;
+	-moz-border-radius-bottomright: 4px;
+}
+
+.doubleRc {
+	/* @inc .doubleRc */
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+}
+
+.opacity {
+	/* @inc opacity */
+	opacity: .5; /* Standard: FF gt 1.5, Opera, Safari */
+	filter: alpha(opacity=50); /* IE lt 8 */
+	-ms-filter: "alpha(opacity=50)"; /* IE 8 */
+	-khtml-opacity: .5; /* Safari 1.x */
+	-moz-opacity: .5; /* FF lt 1.5, Netscape */
+}
+
+.boxShadow {
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+}
+
+.secondaryContent {
+	/* @inc .secondarycontent */
+	font-size: 11px;
+}
+
+.accessibility {
+	/* @inc .offScreen */
+	position: absolute;
+	top: -9000px;
+	left: -9000px;
+	/* For screenreaders*/
+}

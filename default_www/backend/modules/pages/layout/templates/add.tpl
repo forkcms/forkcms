@@ -71,7 +71,7 @@
 												{/iteration:blocks}
 											</div>
 										</td>
-										<td id="pagesSide">
+										<td id="sidebar">
 											<div id="publishOptions" class="box">
 												<div class="heading">
 													<h3>{$lblPublish|ucfirst}</h3>

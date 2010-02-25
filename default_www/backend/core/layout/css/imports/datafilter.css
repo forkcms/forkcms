@@ -1,0 +1,33 @@
+/*
+
+    Datafilter
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+.datafilter {
+	border-bottom: none;
+	margin: 6px 0 12px;
+	border: 1px solid #BDBDBD;
+}
+
+	.datafilter table {
+		width: 100%;
+	}
+
+	.datafilter td .options {
+		background: #CECECE;
+		background: rgba(0,0,0,0.07);
+		border-bottom: none;
+		padding: 6px;
+	}
+
+	.datafilter tfoot td .options {
+		background: #B0B0B0;
+		background: rgba(0,0,0,0.2);
+	}

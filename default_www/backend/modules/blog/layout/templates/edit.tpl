@@ -64,7 +64,7 @@
 									</td>
 
 									{* Right side *}
-									<td id="pagesSide">
+									<td id="sidebar">
 										<div id="publishOptions" class="box">
 											<div class="heading">
 												<h3>{$lblPublish|ucfirst}</h3>
