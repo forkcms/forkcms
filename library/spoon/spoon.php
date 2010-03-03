@@ -185,6 +185,9 @@ class Spoon
 
 			// new item
 			self::$registry[$name] = $object;
+
+			// retrieve object
+			return self::getObjectReference($name);
 		}
 	}
 }

@@ -229,7 +229,7 @@ class SpoonDatabase
 
 
 	/**
-	 * Exectues a query.
+	 * Executes a query.
 	 *
 	 * @return	void
 	 * @param	string $query					The query to execute, only use with queries that don't return a result

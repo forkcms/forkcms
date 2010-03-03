@@ -4,7 +4,7 @@
 - Added SpoonTimeField::getTimestamp which returns a timestamp based on the provided values in conjunction with the hh:ii format in
   the timefield.
 - Fixed a bug in SpoonDateField::getTimestamp when not providing all the optional arguments.
-- Template modifiers may now contain semicolons if you encapsulate with single quotes. eg {$now|date:'Y-m-d H:i'}
+- Template modifiers may now contain colons if you encapsulate with single quotes. eg {$now|date:'Y-m-d H:i'}
 - Modifiers are no longer allowed within cache/include tags.
 - Implemented a few basic checks in SpoonTemplate for variables, iterations and options.
 

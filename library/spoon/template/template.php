@@ -694,9 +694,6 @@ class SpoonTemplateCompiler
 
 				// empty brackets are NOT allowed
 				if(substr_count($string, '[]') != 0) return false;
-
-				// empty inversed brackets are NOT allowed
-//				if(substr_count($string, '][') != 0) return false;
 			break;
 
 			// option string
@@ -718,9 +715,6 @@ class SpoonTemplateCompiler
 
 				// empty brackets are NOT allowed
 				if(substr_count($string, '[]') != 0) return false;
-
-				// empty inversed brackets are NOT allowed
-//				if(substr_count($string, '][') != 0) return false;
 			break;
 
 			// variable string
@@ -742,9 +736,6 @@ class SpoonTemplateCompiler
 
 				// empty brackets are NOT allowed
 				if(substr_count($string, '[]') != 0) return false;
-
-				// empty inversed brackets are NOT allowed
-//				if(substr_count($string, '][') != 0) return false;
 			break;
 		}
 
@@ -992,7 +983,7 @@ class SpoonTemplateCompiler
 			foreach($matches[1] as $match)
 			{
 				// file
-				$file = $this->getVariableString($match);
+				$file = $this->getVariableString($match); // @todo herwerken.
 
 				// template path
 				$template = eval('error_reporting(0); return '. $file .';');	// @todo	Davy: what is this doing here? $template is nergens gebruikt
@@ -1072,6 +1063,8 @@ class SpoonTemplateCompiler
 
 						// define variable
 						$variable = $this->parseVariable($name);
+
+						// @todo counter herdefinieren, startend vanaf 1 en niet de key van de array elements.
 
 						// internal variable
 						$internalVariable = SpoonFilter::toCamelCase(str_replace(array('[', ']', "'", '_'), ' ', $chunks[$numChunks - 1]), ' ', true, SPOON_CHARSET);

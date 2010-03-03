@@ -131,13 +131,13 @@ class SpoonCookie
 		$value = (get_magic_quotes_gpc()) ? stripslashes($_COOKIE[$key]) : $_COOKIE[$key];
 
 		// unserialize
-		$realValue = @unserialize($value);
+		$actualValue = @unserialize($value);
 
 		// unserialize failed
-		if($realValue === false && serialize(false) != $value) throw new SpoonCookieException('The value of the cookie "'. $key .'" could not be retrieved. This might indicate that it has been tampered with OR the cookie was not initially set using SpoonCookie.');
+		if($actualValue === false && serialize(false) != $value) throw new SpoonCookieException('The value of the cookie "'. $key .'" could not be retrieved. This might indicate that it has been tampered with OR the cookie was not initially set using SpoonCookie.');
 
 		// everything is fine
-		return $realValue;
+		return $actualValue;
 	}
 
 
