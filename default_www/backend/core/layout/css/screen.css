@@ -24,6 +24,7 @@
 		/* UI core */
 		@import url("imports/ui_constructs.css");
 		@import url("imports/buttons.css");
+		@import url("imports/tags.css");
 
 		/* Messaging system */
 		@import url("imports/forms.css");
