@@ -28,6 +28,9 @@
 #messaging .formMessage {
 	width: 240px;
 	position: relative;
+	right: 120px;
+	bottom: 46px;
+
 	font-size: 11px;
 	margin-top: 20px;
 	padding-top: 8px;
