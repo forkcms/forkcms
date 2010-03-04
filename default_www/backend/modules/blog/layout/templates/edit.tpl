@@ -207,7 +207,7 @@
 									<div class="oneLiner">
 										<h3 class="floater">{$lblDrafts|ucfirst}</h3>
 										<abbr class="help floater">(?)</abbr>
-										<div class="balloon" style="display: none;">
+										<div class="balloon balloonAlt" style="display: none;">
 											<p>{$msgHelpDrafts}</p>
 										</div>
 									</div>
