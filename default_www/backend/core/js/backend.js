@@ -163,7 +163,7 @@ jsBackend.controls = {
 			$(this).parent().addClass('collapsed')
 
 			// toggle
-			$('#contentList, #pagesTree').fadeOut(250);
+			$('#subnavigation, #pagesTree').fadeOut(250);
 			
 			
 		}, function(evt) {
@@ -174,7 +174,7 @@ jsBackend.controls = {
 			$(this).parent().removeClass('collapsed')
 			
 			// toggle
-			$('#contentList, #pagesTree').fadeIn(500);
+			$('#subnavigation, #pagesTree').fadeIn(500);
 
 		});
 		
