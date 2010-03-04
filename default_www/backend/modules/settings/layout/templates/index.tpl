@@ -6,6 +6,10 @@
 			</div>
 
 			<div class="inner">
+
+				<!-- @todo @johan add label -->
+				<h3>Algemene instellingen</h3>
+				
 				{form:generalsettings}
 					{option:warnings}
 						<div class="generalMessage infoMessage content">

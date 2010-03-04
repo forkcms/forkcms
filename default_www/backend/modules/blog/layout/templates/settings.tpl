@@ -6,6 +6,10 @@
 			</div>
 
 			<div class="inner">
+				
+				<!-- @todo @johan add label -->
+				<h3>Module-instellingen: blog</h3>
+				
 				{form:settings}
 					<div class="box">
 						<div class="heading">
