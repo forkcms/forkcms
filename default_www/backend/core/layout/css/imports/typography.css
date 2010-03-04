@@ -11,7 +11,7 @@
 */
 
 h2, h3, h4 {
-	font-family: "Lucida Grande", Arial, sans-serif;
+	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
 	color: #444;
 	line-height: 1.1;
 }
@@ -36,6 +36,7 @@ h3 {
 
 h4 {
 	padding: 0 0 4px;
+	font-size: 12px;
 }
 
 p {

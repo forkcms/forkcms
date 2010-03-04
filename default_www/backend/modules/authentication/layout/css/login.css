@@ -141,7 +141,7 @@ body#login {
 			font-size: 11px;
 			color: #666;
 			display: block;
-			width: 100px;
+			width: 110px;
 		}
 
 		#loginBox .formError {
@@ -150,7 +150,7 @@ body#login {
 
 		#loginBox p.spacing {
 			padding-bottom: 0;
-			padding-left: 158px;
+			padding-left: 168px;
 		}
 
 		/* Balloon overrides */

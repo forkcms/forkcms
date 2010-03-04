@@ -84,7 +84,7 @@
 						<div class="content">
 							<p>{$msgApiKeysText}:</p>
 							<div class="datagridHolder">
-								<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
+								<table border="0" cellspacing="0" cellpadding="0" class="datagrid dynamicStriping">
 									<tr>
 										<th class="title" width="20%"><span>{$lblName|ucfirst}</span></th>
 										<th width="40%"><span>{$lblAPIKey|ucfirst}</span></th>

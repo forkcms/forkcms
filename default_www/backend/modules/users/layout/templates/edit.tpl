@@ -44,11 +44,11 @@
 						</ul>
 
 						<div id="tabSettings">
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblCredentials|ucfirst}</h3>
 								</div>
-								<div class="options horizontal">
+								<div class="options horizontal labelWidthLong">
 									<p>
 										<label for="username">{$lblUsername|ucfirst}</label>
 										{$txtUsername} {$txtUsernameError}
@@ -72,17 +72,17 @@
 										</table>
 									</p>
 									<p>
-										<label for="confirmPassword"">{$lblConfirmPassword|ucfirst}</label>
+										<label for="confirmPassword">{$lblConfirmPassword|ucfirst}</label>
 										{$txtConfirmPassword} {$txtConfirmPasswordError}
 									</p>
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblPersonalInformation|ucfirst}</h3>
 								</div>
-								<div class="options horizontal">
+								<div class="options horizontal labelWidthLong">
 									<p>
 										<label for="name">{$lblName|ucfirst}</label>
 										{$txtName} {$txtNameError}
@@ -100,6 +100,7 @@
 										{$txtNickname} {$txtNicknameError}
 										<span class="helpTxt">{$msgHelpNickname}</span>
 									</p>
+									<p>
 										<label for="avatar">{$lblAvatar|ucfirst}</label>
 										{$fileAvatar} {$fileAvatarError}
 										<span class="helpTxt">{$msgHelpAvatar}</span>
@@ -107,11 +108,11 @@
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblInterfacePreferences|ucfirst}</h3>
 								</div>
-								<div class="options horizontal">
+								<div class="options horizontal labelWidthLong">
 									<p>
 										<label for="interfaceLanguage">{$lblInterfaceLanguage|ucfirst}</label>
 										{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
@@ -121,12 +122,12 @@
 						</div>
 
 						<div id="tabPermissions">
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblAccountManagement|ucfirst}</h3>
 								</div>
 
-								<div class="options last horizontal">
+								<div class="options">
 									<ul class="inputList">
 										<li>
 											{$chkActive}
@@ -142,10 +143,6 @@
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
-								<div class="heading">
-								</div>
-							</div>
 						</div>
 					</div>
 

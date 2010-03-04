@@ -23,7 +23,7 @@
 	</thead>
 	<tbody>
 		{iteration:rows}
-			<tr{$rows.attributes}{$rows.oddAttributes}{$rows.evenAttributes}>
+			<tr{$rows.attributes}{$rows.oddAttributes}{$rows.evenAttributes} class="{cycle:'odd':'even'}">
 				{iteration:rows.columns}<td{$columns.attributes}>{$columns.value}</td>{/iteration:rows.columns}
 			</tr>
 		{/iteration:rows}

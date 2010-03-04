@@ -10,7 +10,7 @@
 
 */
 
-body, html {
+html {
 	height: 100%;
 }
 
@@ -25,7 +25,6 @@ body {
 
 	height: 100%;
 	width: 100%;
-	overflow-x: hidden;
 }
 
 #encloser {
@@ -38,9 +37,7 @@ body {
 	padding: 0 24px;
 }
 
-
 #main {
-	height: 100%;
 	border-top: none;
 	min-width: 960px;
 	max-width: 1224px;
@@ -105,7 +102,6 @@ body {
 	vertical-align: middle;
 }
 
-
 /*
 	Site title
 */
@@ -127,14 +123,16 @@ body {
 		color: #001A77;
 	}
 
-   #headerHolder h1 a:link span,
-   #headerHolder h1 a:visited span {
+	#headerHolder h1 a:link span,
+	#headerHolder h1 a:visited span {
 		font-size: 11px;
 		font-weight: 400;
+		background: #C0C7CC;
 		background: rgba(0,0,0,0.18);
 		color: #FFF;
 		padding: 1px 6px;
-		border: 1px solid rgba(0,0,0,0.09);
+		border: 1px solid #AEB5B9;
+		border-color: rgba(0,0,0,0.09);
 
 		/* @inc .rc */
 		border-radius: 4px;
@@ -150,7 +148,6 @@ body {
 		background: rgba(0,0,0,0.36);
 		border: 1px solid rgba(0,0,0,0.18);
 	}
-
 
 /*
 	Navigation
@@ -172,6 +169,7 @@ body {
 		position: relative;
 		top: 1px;
 		right: 1px;
+		:right: 0px;
 		line-height: 1;
 		font-size: 11px;
 		font-weight: 700;
@@ -184,7 +182,6 @@ body {
 		border-top-right-radius: 4px;
 		-webkit-border-top-right-radius: 4px;
 		-moz-border-radius-topright: 4px;
-
 
 		background: #EBF3F9;
 		background: -webkit-gradient(linear, left top, left bottom, from(#EBF3F9), to(#DCE9F4));
@@ -240,7 +237,8 @@ body {
 
 #user li {
 	padding-left: 12px;
-	border-left: 1px solid rgba(0,0,0,0.1);
+	border-left: 1px solid #D3DADF;
+	border-color: rgba(0,0,0,0.1);
 	margin-left: 12px;
 	float: left;
 	line-height: 24px;
@@ -254,7 +252,6 @@ body {
 	padding: 0;
 	border: 0;
 }
-
 
 /*
 	Subnavigation (modulelist)

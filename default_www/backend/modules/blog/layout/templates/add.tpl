@@ -93,10 +93,14 @@
 											</div>
 
 											<div class="options">
-												<dl>
-													<dt><label for="publishOnDate">{$lblPublishOn|ucfirst}:</label></dt>
-													<dd>{$txtPublishOnDate} <label for="publishOnTime">{$lblAt}</label> {$txtPublishOnTime}</dd>
-												</dl>
+												<p>
+													<label for="publishOnDate">{$lblPublishOn|ucfirst}:</label>
+													{$txtPublishOnDate}
+												</p>
+												<p>
+													<label for="publishOnTime">{$lblAt}</label>
+													{$txtPublishOnTime}
+												</p>
 											</div>
 
 											<div class="footer">

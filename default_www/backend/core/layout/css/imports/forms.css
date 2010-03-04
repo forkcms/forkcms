@@ -104,7 +104,6 @@ input[type="submit"] {
 
 	/*
 		Focus outline; Mozilla specific since Safari implements this right
-		IE can f*** off
 	*/
 	@-moz-document url-prefix() {
 
@@ -211,7 +210,7 @@ input[type="submit"] {
 		margin-right: 3px;
 	}
 
-/* "Fake" label */
+
 
 label {
 	font-weight: 700;
@@ -219,6 +218,7 @@ label {
 	font-size: 11px;
 }
 
+/* "Fake" label */
 .forkForms p.label {
 	padding-bottom: 0;
 	border: none;
@@ -231,24 +231,50 @@ label {
 	display: block;
 }
 
-.forkForms textarea { width: 90%; }
-.forkForms .horizontal textarea { width: auto;}
-.forkForms ul .helpTxt{ padding: 0 0 0 24px; }
-.forkForms .long li{ padding: 0 0 8px; }
-.forkForms .horizontal p label,
-.forkForms .horizontal .section label,{ display: inline; }
-.forkForms .horizontal .helpTxt,
-.forkForms .horizontal .section .helpTxt{ display: block; padding: 1px 0 1px 115px; }
+.forkForms textarea {
+	width: 90%;
+}
+
+.forkForms .horizontal textarea {
+	width: auto;
+}
+
+.forkForms ul .helpTxt {
+	padding: 0 0 0 24px;
+}
+
+.forkForms .horizontal p label {
+	display: inline;
+}
+.forkForms .horizontal .helpTxt { display: block; padding: 1px 0 1px 115px; }
+
+.forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 145px; }
+
 .forkForms .horizontal label,
-.forkForms .horizontal p.label,
-.forkForms .horizontal label,
-.forkForms .horizontal p.label{ float: left; width: 105px; padding-right: 10px; line-height: 21px;}
+.forkForms .horizontal p.label { float: left; width: 105px; padding-right: 10px; line-height: 17px; padding: 2px 0;}
+
+	/* Alternate label widths */
+	
+	.forkForms .labelWidthLong label,
+	.forkForms .labelWidthLong p.label {
+		width: 145px;
+	}
 
 #profilePassword .horizontal label { width: 170px; }
 
-.forkForms .horizontal p.label{ margin: 0; }
+.forkForms .horizontal p.label {
+	margin: 0;
+}
+
 .forkForms .spacing,
-.forkForms .horizontal span.formError { padding-left: 115px; }
+.forkForms .horizontal span.formError {
+	padding-left: 115px;
+}
+
+.forkForms .labelWidthLong span.formError  {
+	padding-left: 155px;
+}
+
 .forkForms abbr { cursor: help; }
 
 .forkForms .block{ display: block !important; }

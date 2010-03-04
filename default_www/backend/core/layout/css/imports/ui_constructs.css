@@ -84,12 +84,14 @@
 }
 
 .subtleBox h3 {
-	font-size: 14px;
+	font-size: 13px;
 	color: #000;
+	border-bottom: 1px solid #DDD;
+	margin: 0 0 12px;
 }
 
 .subtleBox {
-	border-bottom: 1px solid #DDD;
+	margin: 0 0 12px;
 }
 
 .textareaHolder {
@@ -284,7 +286,15 @@
 }
 
 #templateList {
-	overflow: auto;
+	zoom: 1;
+}
+
+#templateList:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
 }
 
 #templateList li {
