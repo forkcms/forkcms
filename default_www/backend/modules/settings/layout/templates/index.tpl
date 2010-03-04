@@ -8,9 +8,9 @@
 			<div class="inner">
 				{form:generalsettings}
 					{option:warnings}
-						<div class="generalMessage infoMessage">
+						<div class="generalMessage infoMessage content">
 							<p><strong>{$msgConfigurationError}</strong></p>
-							<ul class="comboList">
+							<ul class="pb0">
 								{iteration:warnings}
 									<li>{$warnings.message}</li>
 								{/iteration:warnings}
