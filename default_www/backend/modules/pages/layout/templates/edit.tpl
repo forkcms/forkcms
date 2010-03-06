@@ -245,7 +245,7 @@
 
 							<div class="box boxLevel2">
 								<div class="heading">
-									<h3>{$lblURL}</h3>
+									<h3>{$lblURL|uppercase}</h3>
 								</div>
 								<div class="options">
 									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>

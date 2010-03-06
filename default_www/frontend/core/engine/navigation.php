@@ -278,7 +278,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array())
 	{
-		return (string) self::createHTML($type, $parentId, $depth, $excludeIds);
+		return self::createHTML($type, $parentId, $depth, $excludeIds);
 	}
 
 

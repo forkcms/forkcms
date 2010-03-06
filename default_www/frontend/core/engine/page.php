@@ -271,6 +271,7 @@ class FrontendPage extends FrontendBaseObject
 			// an extra
 			if($block['extra_id'] !== null)
 			{
+				// block
 				if($block['extra_type'] == 'block')
 				{
 					// create new instance
@@ -286,6 +287,7 @@ class FrontendPage extends FrontendBaseObject
 					else $this->tpl->assign($templateVariable, $extra->getTemplatePath());
 				}
 
+				// widget
 				else
 				{
 					// create new instance

@@ -45,7 +45,7 @@
 		<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
 
 		{iteration:blogComments}
-		<div id="{$actComment}-{$blogComments.id}" class="comment">
+		<div id="{$actComment}-{$blogComments.id}" class="comment {cycle:'<b>test</b>':'TETN'}">
 			<div class="commentAuthor">
 				<p>
 					{$lblBy|ucfirst}
