@@ -225,8 +225,8 @@ class Init
 		switch($this->type)
 		{
 			case 'frontend':
-				require_once 'spoon/html/datagrid/datagrid.php';
-				require_once 'spoon/html/form/form.php';
+				require_once 'spoon/datagrid/datagrid.php';
+				require_once 'spoon/form/form.php';
 			break;
 		}
 	}
