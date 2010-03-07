@@ -228,7 +228,7 @@ class BackendLanguage
 		$return = array();
 
 		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = BackendLanguage::getLabel(mb_strtoupper($key), 'core');
+		foreach($languages as $key) $return[$key] = ucfirst(BackendLanguage::getLabel(mb_strtoupper($key), 'core'));
 
 		// return
 		return $return;
