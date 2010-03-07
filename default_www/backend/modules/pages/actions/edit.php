@@ -306,7 +306,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['language'] = BackendLanguage::getWorkingLanguage();
 				$page['type'] = $this->record['type'];
 				$page['title'] = $this->frm->getField('title')->getValue();
-				$page['navigation_title'] = $this->frm->getField('navigation_title')->getValue(); // @todo tijs - de tree baseert zich op dit veld (in de meeste gevallen is dit leeg)
+				$page['navigation_title'] = ($this->frm->getField('navigation_title')->getValue() != '') ? $this->frm->getField('navigation_title')->getValue() : $this->frm->getField('title')->getValue();
 				$page['navigation_title_overwrite'] = ($this->frm->getField('navigation_title_overwrite')->isChecked()) ? 'Y' : 'N';
 				$page['hidden'] = $this->frm->getField('hidden')->getValue();
 				$page['status'] = 'active';
