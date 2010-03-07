@@ -75,12 +75,12 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm = new BackendForm('generalsettings');
 
 		// create elements
-		$this->frm->addTextField('site_title', BackendModel::getSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
-		$this->frm->addTextField('email', BackendModel::getSetting('core', 'email_'. BL::getWorkingLanguage(), null));
-		$this->frm->addTextArea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
-		$this->frm->addTextArea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
-		$this->frm->addTextField('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
-		$this->frm->addTextField('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
+		$this->frm->addText('site_title', BackendModel::getSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+		$this->frm->addText('email', BackendModel::getSetting('core', 'email_'. BL::getWorkingLanguage(), null));
+		$this->frm->addTextarea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
+		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
+		$this->frm->addText('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
+		$this->frm->addText('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
 
 		// create a list of the languages
 		foreach(BackendModel::getSetting('core', 'languages', array('nl')) as $abbreviation)
@@ -110,11 +110,11 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		}
 
 		// create multilanguage checkbox
-		$this->frm->addMultiCheckBox('languages', $languages, BackendModel::getSetting('core', 'active_languages', array('nl')));
+		$this->frm->addMultiCheckbox('languages', $languages, BackendModel::getSetting('core', 'active_languages', array('nl')));
 
 		// api keys are not required for every module
-		if($this->needsAkismet) $this->frm->addTextField('akismet_key', BackendModel::getSetting('core', 'akismet_key', null));
-		if($this->needsGoogleMaps) $this->frm->addTextField('google_maps_key', BackendModel::getSetting('core', 'google_maps_key', null));
+		if($this->needsAkismet) $this->frm->addText('akismet_key', BackendModel::getSetting('core', 'akismet_key', null));
+		if($this->needsGoogleMaps) $this->frm->addText('google_maps_key', BackendModel::getSetting('core', 'google_maps_key', null));
 	}
 
 

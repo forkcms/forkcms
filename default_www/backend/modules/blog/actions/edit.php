@@ -156,16 +156,16 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$rbtHiddenValues[] = array('label' => BL::getLabel('Published'), 'value' => 'N');
 
 		// create elements
-		$this->frm->addTextField('title', $this->record['title']);
-		$this->frm->addEditorField('text', $this->record['text']);
-		$this->frm->addEditorField('introduction', $this->record['introduction']);
-		$this->frm->addRadioButton('hidden', $rbtHiddenValues, $this->record['hidden']);
-		$this->frm->addCheckBox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
-		$this->frm->addDropDown('category_id', $this->categories, $this->record['category_id']);
-		$this->frm->addDropDown('user_id', $this->users, $this->record['user_id']);
-		$this->frm->addTextField('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
-		$this->frm->addDateField('publish_on_date', $this->record['publish_on']);
-		$this->frm->addTimeField('publish_on_time', SpoonDate::getDate('H:i', $this->record['publish_on']));
+		$this->frm->addText('title', $this->record['title']);
+		$this->frm->addEditor('text', $this->record['text']);
+		$this->frm->addEditor('introduction', $this->record['introduction']);
+		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
+		$this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
+		$this->frm->addDropdown('category_id', $this->categories, $this->record['category_id']);
+		$this->frm->addDropdown('user_id', $this->users, $this->record['user_id']);
+		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
+		$this->frm->addTime('publish_on_time', SpoonDate::getDate('H:i', $this->record['publish_on']));
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);

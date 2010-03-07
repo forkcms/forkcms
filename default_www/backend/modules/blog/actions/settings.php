@@ -47,21 +47,21 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm = new BackendForm('settings');
 
 		// add fields for spam
-		$this->frm->addCheckBox('spamfilter', BackendModel::getSetting('blog', 'spamfilter', false));
+		$this->frm->addCheckbox('spamfilter', BackendModel::getSetting('blog', 'spamfilter', false));
 
 		// add fields for comments
-		$this->frm->addCheckBox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
+		$this->frm->addCheckbox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
 
 		// add fields for comments
-		$this->frm->addCheckBox('moderation', BackendModel::getSetting('blog', 'moderation', false));
+		$this->frm->addCheckbox('moderation', BackendModel::getSetting('blog', 'moderation', false));
 
 		// add fields for SEO
-		$this->frm->addCheckBox('ping_services', BackendModel::getSetting('blog', 'ping_services', false));
+		$this->frm->addCheckbox('ping_services', BackendModel::getSetting('blog', 'ping_services', false));
 
 		// add fields for RSS
-		$this->frm->addTextField('rss_title', BackendModel::getSetting('blog', 'rss_title_'. BL::getWorkingLanguage()));
-		$this->frm->addTextArea('rss_description', BackendModel::getSetting('blog', 'rss_description_'. BL::getWorkingLanguage()));
-		$this->frm->addTextField('feedburner_url', BackendModel::getSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage()));
+		$this->frm->addText('rss_title', BackendModel::getSetting('blog', 'rss_title_'. BL::getWorkingLanguage()));
+		$this->frm->addTextarea('rss_description', BackendModel::getSetting('blog', 'rss_description_'. BL::getWorkingLanguage()));
+		$this->frm->addText('feedburner_url', BackendModel::getSetting('blog', 'feedburner_url_'. BL::getWorkingLanguage()));
 	}
 
 

@@ -110,10 +110,10 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('defaultTemplateId', $defaultTemplateId);
 
 		// create elements
-		$this->frm->addTextField('title');
-		$this->frm->addDropDown('template_id', $templatesForDropdown, $defaultTemplateId);
-		$this->frm->addRadioButton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
-		$this->frm->addCheckBox('no_follow');
+		$this->frm->addText('title');
+		$this->frm->addDropdown('template_id', $templatesForDropdown, $defaultTemplateId);
+		$this->frm->addRadiobutton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
+		$this->frm->addCheckbox('no_follow');
 
 		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
@@ -121,19 +121,19 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// build blocks array
 		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
 		{
-			$this->blocks[$i]['formElements']['ddmExtraId'] = $this->frm->addDropDown('block_extra_id_'. $i, $this->extras['dropdown']);
-			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditorField('block_html_'. $i, '');
+			$this->blocks[$i]['formElements']['ddmExtraId'] = $this->frm->addDropdown('block_extra_id_'. $i, $this->extras['dropdown']);
+			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, '');
 
 			// set types
 			foreach($this->extras['types'] as $value => $type) $this->frm->getField('block_extra_id_'. $i)->setOptionAttributes($value, array('rel' => $type));
 		}
 
 		// page info
-		$this->frm->addCheckBox('navigation_title_overwrite');
-		$this->frm->addTextField('navigation_title');
+		$this->frm->addCheckbox('navigation_title_overwrite');
+		$this->frm->addText('navigation_title');
 
 		// tags
-		$this->frm->addTextField('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addText('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);

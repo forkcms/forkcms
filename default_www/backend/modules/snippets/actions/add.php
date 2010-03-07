@@ -48,9 +48,9 @@ class BackendSnippetsAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// create elements
-		$this->frm->addTextField('title');
-		$this->frm->addEditorField('content');
-		$this->frm->addCheckBox('hidden', true);
+		$this->frm->addText('title');
+		$this->frm->addEditor('content');
+		$this->frm->addCheckbox('hidden', true);
 	}
 
 

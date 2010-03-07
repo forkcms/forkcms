@@ -40,6 +40,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
+		// @todo tijs - als je een categorie toevoegt, dan is die 'default' niet meer zichtbaar in de datagrid. Weird shit.
 		// create datagrid
 		$this->datagrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
 

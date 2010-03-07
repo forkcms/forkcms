@@ -245,26 +245,26 @@ class BackendMeta
 	private function loadForm()
 	{
 		// add page title elements into the form
-		$this->frm->addCheckBox('page_title_overwrite', (isset($this->data['title_overwrite']) && $this->data['title_overwrite'] == 'Y'));
-		$this->frm->addTextField('page_title', (isset($this->data['title'])) ? $this->data['title'] : null);
+		$this->frm->addCheckbox('page_title_overwrite', (isset($this->data['title_overwrite']) && $this->data['title_overwrite'] == 'Y'));
+		$this->frm->addText('page_title', (isset($this->data['title'])) ? $this->data['title'] : null);
 
 		// add meta description elements into the form
-		$this->frm->addCheckBox('meta_description_overwrite', (isset($this->data['description_overwrite']) && $this->data['description_overwrite'] == 'Y'));
-		$this->frm->addTextField('meta_description', (isset($this->data['description'])) ? $this->data['description'] : null);
+		$this->frm->addCheckbox('meta_description_overwrite', (isset($this->data['description_overwrite']) && $this->data['description_overwrite'] == 'Y'));
+		$this->frm->addText('meta_description', (isset($this->data['description'])) ? $this->data['description'] : null);
 
 		// add meta keywords elements into the form
-		$this->frm->addCheckBox('meta_keywords_overwrite', (isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] == 'Y'));
-		$this->frm->addTextField('meta_keywords', (isset($this->data['keywords'])) ? $this->data['keywords'] : null);
+		$this->frm->addCheckbox('meta_keywords_overwrite', (isset($this->data['keywords_overwrite']) && $this->data['keywords_overwrite'] == 'Y'));
+		$this->frm->addText('meta_keywords', (isset($this->data['keywords'])) ? $this->data['keywords'] : null);
 
 		// add URL elements into the form
-		$this->frm->addCheckBox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
-		$this->frm->addTextField('url', (isset($this->data['url'])) ? $this->data['url'] : null);
+		$this->frm->addCheckbox('url_overwrite', (isset($this->data['url_overwrite']) && $this->data['url_overwrite'] == 'Y'));
+		$this->frm->addText('url', (isset($this->data['url'])) ? $this->data['url'] : null);
 
 		// should we add the meta-custom field
 		if($this->custom)
 		{
 			// add meta custom element into the form
-			$this->frm->addTextArea('meta_custom', (isset($this->data['custom'])) ? $this->data['custom'] : null);
+			$this->frm->addTextarea('meta_custom', (isset($this->data['custom'])) ? $this->data['custom'] : null);
 		}
 	}
 

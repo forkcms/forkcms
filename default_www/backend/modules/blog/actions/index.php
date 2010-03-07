@@ -1,5 +1,7 @@
 <?php
 
+// @todo tijs - ik zou de 'recent aangepaste' hier enkel zetten als we meer dan 1 pagina hebben. Wat vind jij?
+
 /**
  * BackendBlogIndex
  * This is the index-action (default), it will display the overview of blog posts
@@ -96,7 +98,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
 		$this->dgPosts->setMassAction($ddmMassAction);
 
 		// add edit column

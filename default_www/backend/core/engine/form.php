@@ -92,7 +92,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addCheckBox($name, $checked = false, $class = null, $classError = null)
+	public function addCheckbox($name, $checked = false, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -101,7 +101,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
 
 		// return element
-		return parent::addCheckBox($name, $checked, $class, $classError);
+		return parent::addCheckbox($name, $checked, $class, $classError);
 	}
 
 
@@ -117,7 +117,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class			Class(es) that have to be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that have to be applied when an error occurs on the element.
 	 */
-	public function addDateField($name, $value = null, $type = null, $date = null, $date2 = null, $class = null, $classError = null)
+	public function addDate($name, $value = null, $type = null, $date = null, $date2 = null, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -171,7 +171,7 @@ class BackendForm extends SpoonForm
 		}
 
 		// call parent
-		parent::addDateField($name, $value, $mask, $class, $classError);
+		parent::addDate($name, $value, $mask, $class, $classError);
 
 		// set attributes
 		parent::getField($name)->setAttributes(array('rel' => $rel));
@@ -192,7 +192,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class				Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError		Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addDropDown($name, array $values, $selected = null, $multipleSelection = false, $class = null, $classError = null)
+	public function addDropdown($name, array $values, $selected = null, $multipleSelection = false, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -210,7 +210,7 @@ class BackendForm extends SpoonForm
 		}
 
 		// return element
-		return parent::addDropDown($name, $values, $selected, $multipleSelection, $class, $classError);
+		return parent::addDropdown($name, $values, $selected, $multipleSelection, $class, $classError);
 	}
 
 
@@ -224,7 +224,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 * @param	bool[optional] $HTML			Will the field contain HTML?
 	 */
-	public function addEditorField($name, $value = null, $class = null, $classError = null, $HTML = true)
+	public function addEditor($name, $value = null, $class = null, $classError = null, $HTML = true)
 	{
 		// redefine
 		$name = (string) $name;
@@ -250,7 +250,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addFileField($name, $class = null, $classError = null)
+	public function addFile($name, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -258,7 +258,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputFileError';
 
 		// return element
-		return parent::addFileField($name, $class, $classError);
+		return parent::addFile($name, $class, $classError);
 	}
 
 
@@ -270,7 +270,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addImageField($name, $class = null, $classError = null)
+	public function addImage($name, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -278,12 +278,12 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
 
 		// return element
-		return parent::addImageField($name, $class, $classError);
+		return parent::addImage($name, $class, $classError);
 	}
 
 
 	/**
-	 * Adds a single multiple checkbox.
+	 * Adds a multiple checkbox.
 	 *
 	 * @return	void
 	 * @param	string $name					The name of the element.
@@ -292,7 +292,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addMultiCheckBox($name, array $values, $checked = null, $class = null, $classError = null)
+	public function addMultiCheckbox($name, array $values, $checked = null, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -302,7 +302,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
 
 		// return element
-		return parent::addMultiCheckBox($name, $values, $checked, $class, $classError);
+		return parent::addMultiCheckbox($name, $values, $checked, $class, $classError);
 	}
 
 
@@ -317,7 +317,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 * @param	bool[optional] $HTML			Will the field contain HTML?
 	 */
-	public function addPasswordField($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
+	public function addPassword($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
 	{
 		// redefine
 		$name = (string) $name;
@@ -328,7 +328,7 @@ class BackendForm extends SpoonForm
 		$HTML = (bool) $HTML;
 
 		// return element
-		return parent::addPasswordField($name, $value, $maxlength, $class, $classError, $HTML);
+		return parent::addPassword($name, $value, $maxlength, $class, $classError, $HTML);
 	}
 
 
@@ -342,7 +342,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addRadioButton($name, array $values, $checked = null, $class = null, $classError = null)
+	public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
@@ -352,7 +352,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputRadioError';
 
 		// return element
-		return parent::addRadioButton($name, $values, $checked, $class, $classError);
+		return parent::addRadiobutton($name, $values, $checked, $class, $classError);
 	}
 
 
@@ -366,7 +366,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 * @param	bool[optional] $HTML			Will the element contain HTML?
 	 */
-	public function addTextArea($name, $value = null, $class = null, $classError = null, $HTML = false)
+	public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
 	{
 		// redefine
 		$name = (string) $name;
@@ -376,7 +376,7 @@ class BackendForm extends SpoonForm
 		$HTML = (bool) $HTML;
 
 		// return element
-		return parent::addTextArea($name, $value, $class, $classError, $HTML);
+		return parent::addTextarea($name, $value, $class, $classError, $HTML);
 	}
 
 
@@ -391,7 +391,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 * @param	bool[optional] $HTML			Will this element contain HTML?
 	 */
-	public function addTextField($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
+	public function addText($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
 	{
 		// redefine
 		$name = (string) $name;
@@ -402,7 +402,7 @@ class BackendForm extends SpoonForm
 		$HTML = (bool) $HTML;
 
 		// return element
-		return parent::addTextField($name, $value, $maxlength, $class, $classError, $HTML);
+		return parent::addText($name, $value, $maxlength, $class, $classError, $HTML);
 	}
 
 
@@ -415,7 +415,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addTimeField($name, $value = null, $class = null, $classError = null)
+	public function addTime($name, $value = null, $class = null, $classError = null)
 	{
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
@@ -423,7 +423,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputTextError inputTimeError';
 
 		// return element
-		return parent::addTimeField($name, $value, $class, $classError);
+		return parent::addTime($name, $value, $class, $classError);
 	}
 
 

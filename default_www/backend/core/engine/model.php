@@ -551,10 +551,10 @@ class BackendModel
 	 * Get the UTC timestamp for a date/time object combination.
 	 *
 	 * @return	int
-	 * @param	SpoonDateField $date				An instance of SpoonDateField.
-	 * @param	SpoonTimeField[optional] $time		An instance of SpoonTimeField.
+	 * @param	SpoonformDate $date					An instance of SpoonFormDate.
+	 * @param	SpoonFormTime[optional] $time		An instance of SpoonFormTime.
 	 */
-	public static function getUTCTimestamp(SpoonDateField $date, SpoonTimeField $time = null)
+	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
 	{
 		// init vars
 		$year = date('Y', $date->getTimestamp());

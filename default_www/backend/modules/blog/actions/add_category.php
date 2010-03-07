@@ -47,7 +47,7 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addCategory');
 
 		// create elements
-		$this->frm->addTextField('name');
+		$this->frm->addText('name');
 	}
 
 

@@ -150,7 +150,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('action', array('moderation' => BL::getLabel('MoveToModeration'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'spam');
+		$ddmMassAction = new SpoonFormDropdown('action', array('moderation' => BL::getLabel('MoveToModeration'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'spam');
 		$this->dgPublished->setMassAction($ddmMassAction);
 
 		// datagrid for the comments that are awaiting moderation
@@ -183,7 +183,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'published');
+		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::getLabel('MoveToPublished'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'published');
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		/*
@@ -218,7 +218,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setColumnsHidden('post_id', 'post_title', 'post_url');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('action', array('published' => BL::getLabel('MoveToPublished'), 'moderation' => BL::getLabel('MoveToModeration'), 'delete' => BL::getLabel('Delete')), 'published');
+		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::getLabel('MoveToPublished'), 'moderation' => BL::getLabel('MoveToModeration'), 'delete' => BL::getLabel('Delete')), 'published');
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 

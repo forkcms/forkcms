@@ -56,9 +56,9 @@ class FrontendContactIndex extends FrontendBaseBlock
 		$this->frm = new FrontendForm('contact', null, null, 'contactForm');
 
 		// create & add elements
-		$this->frm->addTextField('author', $author);
-		$this->frm->addTextField('email', $email);
-		$this->frm->addTextArea('message');
+		$this->frm->addText('author', $author);
+		$this->frm->addText('email', $email);
+		$this->frm->addTextarea('message');
 	}
 
 

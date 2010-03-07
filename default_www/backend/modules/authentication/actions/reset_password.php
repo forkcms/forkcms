@@ -82,8 +82,8 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		$this->frm = new BackendForm();
 
 		// create elements and add to the form
-		$this->frm->addPasswordField('backend_new_password');
-		$this->frm->addPasswordField('backend_new_password_repeated');
+		$this->frm->addPassword('backend_new_password');
+		$this->frm->addPassword('backend_new_password_repeated');
 	}
 
 

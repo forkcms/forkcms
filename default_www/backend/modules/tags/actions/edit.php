@@ -71,7 +71,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// create elements
-		$this->frm->addTextField('name', $this->record['name']);
+		$this->frm->addText('name', $this->record['name']);
 	}
 
 

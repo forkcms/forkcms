@@ -145,7 +145,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonDropDown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// update value
@@ -170,15 +170,15 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->frm = new BackendForm('filter', BackendModel::createURLForAction(), 'get');
 
 		// add fields
-		$this->frm->addTextField('name', $this->filter['name']);
-		$this->frm->addTextField('value', $this->filter['value']);
-		$this->frm->addDropDown('language', BL::getInterfaceLanguages(), $this->filter['language']);
+		$this->frm->addText('name', $this->filter['name']);
+		$this->frm->addText('value', $this->filter['value']);
+		$this->frm->addDropdown('language', BL::getInterfaceLanguages(), $this->filter['language']);
 		$this->frm->getField('language')->setDefaultElement(ucfirst(BL::getLabel('ChooseALanguage')));
-		$this->frm->addDropDown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
+		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
 		$this->frm->getField('application')->setDefaultElement(ucfirst(BL::getLabel('ChooseAnApplication')));
-		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
+		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
 		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::getLabel('ChooseAModule')));
-		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
+		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
 		$this->frm->getField('type')->setDefaultElement(ucfirst(BL::getLabel('ChooseAType')));
 
 		// manually parse fields

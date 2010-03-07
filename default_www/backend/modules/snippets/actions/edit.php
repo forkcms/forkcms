@@ -89,9 +89,9 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// create elements
-		$this->frm->addTextField('title', $this->record['title']);
-		$this->frm->addEditorField('content', $this->record['content']);
-		$this->frm->addCheckBox('hidden', ($this->record['hidden'] == 'N'));
+		$this->frm->addText('title', $this->record['title']);
+		$this->frm->addEditor('content', $this->record['content']);
+		$this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 	}
 
 

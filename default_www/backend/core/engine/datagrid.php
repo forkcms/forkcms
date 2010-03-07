@@ -216,9 +216,9 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Sets the dropdown for the mass action
 	 *
 	 * @return	void
-	 * @param	SpoonDropDown $actionDropDown	A dropdown-instance.
+	 * @param	SpoonFormDropdown $actionDropDown	A dropdown-instance.
 	 */
-	public function setMassAction(SpoonDropDown $actionDropDown)
+	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
 		// buid HTML
 		$HTML = '<p><label>'. ucfirst(BL::getLabel('WithSelected')) .'</label></p>

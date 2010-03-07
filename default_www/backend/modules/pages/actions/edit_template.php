@@ -72,12 +72,12 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$data = unserialize($this->record['data']);
 
 		// create elements
-		$this->frm->addTextField('label', $this->record['label']);
-		$this->frm->addTextField('path', $this->record['path']);
-		$this->frm->addDropDown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
-		$this->frm->addTextField('format', $data['format']);
-		$this->frm->addCheckBox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addCheckBox('default', ($this->record['is_default'] == 'Y'));
+		$this->frm->addText('label', $this->record['label']);
+		$this->frm->addText('path', $this->record['path']);
+		$this->frm->addDropdown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
+		$this->frm->addText('format', $data['format']);
+		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
+		$this->frm->addCheckbox('default', ($this->record['is_default'] == 'Y'));
 
 		// init var
 		$names = array();
@@ -87,7 +87,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		{
 			$value = isset($data['names'][$i - 1]) ? $data['names'][$i - 1] : null;
 			$names[$i]['i'] = $i;
-			$names[$i]['formElements']['txtName'] = $this->frm->addTextField('name_'. $i, $value);
+			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i, $value);
 		}
 
 		// assign

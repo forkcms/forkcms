@@ -52,17 +52,17 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$defaultGroupId = BackendModel::getSetting('users', 'default_group', $groupIds[0]);
 
 		// create elements
-		$this->frm->addTextField('username', null, 75);
-		$this->frm->addPasswordField('password', null, 75);
-		$this->frm->addPasswordField('confirm_password', null, 75);
-		$this->frm->addTextField('nickname', null, 75);
-		$this->frm->addTextField('email', null, 255);
-		$this->frm->addTextField('name', null, 255);
-		$this->frm->addTextField('surname', null, 255);
-		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages());
-		$this->frm->addImageField('avatar');
-		$this->frm->addCheckBox('active', true);
-		$this->frm->addDropDown('group', $groups, $defaultGroupId);
+		$this->frm->addText('username', null, 75);
+		$this->frm->addPassword('password', null, 75);
+		$this->frm->addPassword('confirm_password', null, 75);
+		$this->frm->addText('nickname', null, 75);
+		$this->frm->addText('email', null, 255);
+		$this->frm->addText('name', null, 255);
+		$this->frm->addText('surname', null, 255);
+		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
+		$this->frm->addImage('avatar');
+		$this->frm->addCheckbox('active', true);
+		$this->frm->addDropdown('group', $groups, $defaultGroupId);
 
 		// disable autocomplete
 		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));

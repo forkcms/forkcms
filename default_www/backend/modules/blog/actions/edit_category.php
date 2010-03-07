@@ -71,7 +71,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		$this->frm = new BackendForm('editCategory');
 
 		// create elements
-		$this->frm->addTextField('name', $this->record['name']);
+		$this->frm->addText('name', $this->record['name']);
 	}
 
 

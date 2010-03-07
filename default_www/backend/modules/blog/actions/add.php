@@ -77,16 +77,16 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$rbtHiddenValues[] = array('label' => BL::getLabel('Published'), 'value' => 'N');
 
 		// create elements
-		$this->frm->addTextField('title');
-		$this->frm->addEditorField('text');
-		$this->frm->addEditorField('introduction');
-		$this->frm->addRadioButton('hidden', $rbtHiddenValues, 'N');
-		$this->frm->addCheckBox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
-		$this->frm->addDropDown('category_id', $this->categories, $defaultCategoryId);
-		$this->frm->addDropDown('user_id', $this->users, BackendAuthentication::getUser()->getUserId());
-		$this->frm->addTextField('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
-		$this->frm->addDateField('publish_on_date');
-		$this->frm->addTimeField('publish_on_time');
+		$this->frm->addText('title');
+		$this->frm->addEditor('text');
+		$this->frm->addEditor('introduction');
+		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+		$this->frm->addCheckbox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
+		$this->frm->addDropdown('category_id', $this->categories, $defaultCategoryId);
+		$this->frm->addDropdown('user_id', $this->users, BackendAuthentication::getUser()->getUserId());
+		$this->frm->addText('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addDate('publish_on_date');
+		$this->frm->addTime('publish_on_time');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);

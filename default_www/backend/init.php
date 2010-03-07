@@ -227,9 +227,9 @@ class Init
 		switch($this->type)
 		{
 			case 'backend':
-				require_once 'spoon/html/datagrid/datagrid.php';
-				require_once 'spoon/html/form/form.php';
-				require_once 'spoon/image/thumbnail.php';
+				require_once 'spoon/datagrid/datagrid.php';
+				require_once 'spoon/form/form.php';
+				require_once 'spoon/thumbnail/thumbnail.php';
 			break;
 		}
 	}

@@ -135,10 +135,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$website = (SpoonCookie::exists('comment_website')) ? SpoonCookie::get('comment_website') : null;
 
 		// create elements
-		$this->frm->addTextField('author', $author);
-		$this->frm->addTextField('email', $email);
-		$this->frm->addTextField('website', $website);
-		$this->frm->addTextArea('text');
+		$this->frm->addText('author', $author);
+		$this->frm->addText('email', $email);
+		$this->frm->addText('website', $website);
+		$this->frm->addTextarea('text');
 	}
 
 

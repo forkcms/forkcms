@@ -58,12 +58,12 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add', BackendModel::createURLForAction(null, null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])));
 
 		// create and add elements
-		$this->frm->addDropDown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
-		$this->frm->addDropDown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-		$this->frm->addDropDown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
-		$this->frm->addTextField('name');
-		$this->frm->addTextField('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
-		$this->frm->addDropDown('language', BackendLanguage::getInterfaceLanguages(), $this->filter['language']);
+		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
+		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
+		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
+		$this->frm->addText('name');
+		$this->frm->addText('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
+		$this->frm->addDropdown('language', BackendLanguage::getInterfaceLanguages(), $this->filter['language']);
 	}
 
 

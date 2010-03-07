@@ -48,12 +48,12 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// create elements
-		$this->frm->addTextField('label');
-		$this->frm->addTextField('path');
-		$this->frm->addDropDown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 1);
-		$this->frm->addTextField('format');
-		$this->frm->addCheckBox('active');
-		$this->frm->addCheckBox('default');
+		$this->frm->addText('label');
+		$this->frm->addText('path');
+		$this->frm->addDropdown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), 1);
+		$this->frm->addText('format');
+		$this->frm->addCheckbox('active');
+		$this->frm->addCheckbox('default');
 
 		// init var
 		$names = array();
@@ -62,7 +62,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		for($i = 1; $i <= 10; $i++)
 		{
 			$names[$i]['i'] = $i;
-			$names[$i]['formElements']['txtName'] = $this->frm->addTextField('name_'. $i);
+			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i);
 		}
 
 		// assign

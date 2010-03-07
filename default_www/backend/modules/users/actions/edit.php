@@ -60,17 +60,17 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// create elements
-		$this->frm->addTextField('username', $this->record['username'], 75);
-		$this->frm->addPasswordField('new_password', null, 75);
-		$this->frm->addPasswordField('confirm_password', null, 75);
-		$this->frm->addTextField('nickname', $this->record['settings']['nickname'], 75);
-		$this->frm->addTextField('email', $this->record['settings']['email'], 255);
-		$this->frm->addTextField('name', $this->record['settings']['name'], 255);
-		$this->frm->addTextField('surname', $this->record['settings']['surname'], 255);
-		$this->frm->addDropDown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
-		$this->frm->addImageField('avatar');
-		$this->frm->addCheckBox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addDropDown('group', BackendUsersModel::getGroups(), $this->record['group_id']);
+		$this->frm->addText('username', $this->record['username'], 75);
+		$this->frm->addPassword('new_password', null, 75);
+		$this->frm->addPassword('confirm_password', null, 75);
+		$this->frm->addText('nickname', $this->record['settings']['nickname'], 75);
+		$this->frm->addText('email', $this->record['settings']['email'], 255);
+		$this->frm->addText('name', $this->record['settings']['name'], 255);
+		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
+		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
+		$this->frm->addImage('avatar');
+		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
+		$this->frm->addDropdown('group', BackendUsersModel::getGroups(), $this->record['group_id']);
 
 		// disable autocomplete
 		$this->frm->getField('new_password')->setAttributes(array('autocomplete' => 'off'));
