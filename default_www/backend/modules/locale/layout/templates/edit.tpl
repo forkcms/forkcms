@@ -9,7 +9,7 @@
 				{form:edit}
 				<div class="box">
 					<div class="heading">
-						<h3>{$lblEditTranslation}
+						<h3>{$lblEditTranslation}</h3>
 					</div>
 					<div class="options">
 						<div class="horizontal">
@@ -17,13 +17,13 @@
 							<p>
 								<label for="value">{$lblValue|ucfirst}</label>
 								{$txtValue} {$txtValueError}
-								<span class="helpTxt">{$msgAddValueHelpTxt}</span>
+								<span class="helpTxt">{$msgAddValueHelpText}</span>
 							</p>
 
 							<p>
 								<label for="name">{$lblName|ucfirst}</label>
 								{$txtName} {$txtNameError}
-								<span class="helpTxt">{$msgEditValueHelpTxt}</span>
+								<span class="helpTxt">{$msgEditValueHelpText}</span>
 							</p>
 
 

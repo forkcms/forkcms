@@ -63,7 +63,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
 		$this->frm->addText('name');
 		$this->frm->addText('value', null, null, 'inputTextfield', 'inputTextFieldError', true);
-		$this->frm->addDropdown('language', BackendLanguage::getInterfaceLanguages(), $this->filter['language']);
+		$this->frm->addDropdown('language', BackendLanguage::getLocaleLanguages(), $this->filter['language']);
 	}
 
 

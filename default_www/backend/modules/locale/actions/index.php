@@ -172,7 +172,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// add fields
 		$this->frm->addText('name', $this->filter['name']);
 		$this->frm->addText('value', $this->filter['value']);
-		$this->frm->addDropdown('language', BL::getInterfaceLanguages(), $this->filter['language']);
+		$this->frm->addDropdown('language', BL::getLocaleLanguages(), $this->filter['language']);
 		$this->frm->getField('language')->setDefaultElement(ucfirst(BL::getLabel('ChooseALanguage')));
 		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
 		$this->frm->getField('application')->setDefaultElement(ucfirst(BL::getLabel('ChooseAnApplication')));

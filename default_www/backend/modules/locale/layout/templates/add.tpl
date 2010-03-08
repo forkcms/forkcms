@@ -16,13 +16,13 @@
 								<p>
 									<label for="value">{$lblValue|ucfirst}</label>
 									{$txtValue} {$txtValueError}
-									<span class="helpTxt">{$msgAddValueHelpTxt}</span>
+									<span class="helpTxt">{$msgAddValueHelpText}</span>
 								</p>
 
 								<p>
 									<label for="name">{$lblName|ucfirst}</label>
 									{$txtName} {$txtNameError}
-									<span class="helpTxt">{$msgAddNameHelpTxt}</span>
+									<span class="helpTxt">{$msgAddNameHelpText}</span>
 								</p>
 
 								<p>
