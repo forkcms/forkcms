@@ -101,7 +101,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				$attributes['disabled'] = 'disabled';
 
 				// overrule in $_POST
-				if(!isset($_POST['languages']) || !is_array($_POST['languages'])) $_POST['languages'] = array('nl');
+				if(!isset($_POST['languages']) || !is_array($_POST['languages'])) $_POST['languages'] = array('nl'); // @todo davy - default language moet op een andere manier bepaald worden.
 				elseif(!in_array($abbreviation, $_POST['languages'])) $_POST['languages'][] = $abbreviation;
 			}
 

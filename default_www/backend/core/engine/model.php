@@ -108,6 +108,7 @@ class BackendModel
 		if(SPOON_DEBUG) $warnings[] = array('message' => BL::getError('DebugModeIsActive'));
 
 		// robots.txt
+		// @todo tijs - het is mij niet duidelijk vanaf wanneer robots.txt geldig is.
 		if(SpoonFile::exists(PATH_WWW .'/robots.txt'))
 		{
 			// get content
