@@ -146,7 +146,7 @@ class BackendURL
 		$chunks = (array) explode('/', trim($queryString, '/'));
 
 		// get the language, this will always be in front
-		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], FrontendLanguage::getActiveLanguages(), FrontendLanguage::DEFAULT_LANGUAGE) : FrontendLanguage::DEFAULT_LANGUAGE;
+		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE) : SITE_DEFAULT_LANGUAGE;
 
 		// get the module, null will be the default
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
@@ -161,7 +161,7 @@ class BackendURL
 		if($isJS)
 		{
 			// set the working language, this is not the interface language
-			BackendLanguage::setWorkingLanguage(SpoonFilter::getGetValue('language', null, FrontendLanguage::DEFAULT_LANGUAGE));
+			BackendLanguage::setWorkingLanguage(SpoonFilter::getGetValue('language', null, SITE_DEFAULT_LANGUAGE));
 
 			// set current module
 			$this->setModule(SpoonFilter::getGetValue('module', null, null));

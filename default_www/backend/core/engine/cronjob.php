@@ -64,7 +64,7 @@ class BackendCronjob
 		$this->setId(SpoonFilter::getGetValue('id', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), FrontendLanguage::DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
 		// create URL instance
 		new BackendURL();

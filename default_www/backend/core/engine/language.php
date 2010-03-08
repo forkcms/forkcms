@@ -13,7 +13,7 @@
 class BackendLanguage
 {
 	// Default language for the CMS-user-interface
-	const DEFAULT_LANGUAGE = 'nl';
+	const DEFAULT_LANGUAGE = 'nl'; // @todo tijs - in backend lijkt dit mij overbodig?
 
 
 	/**

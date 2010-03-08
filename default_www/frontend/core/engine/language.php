@@ -12,10 +12,6 @@
  */
 class FrontendLanguage
 {
-	// default language
-	const DEFAULT_LANGUAGE = 'nl';
-
-
 	/**
 	 * Locale arrays
 	 *
@@ -120,7 +116,7 @@ class FrontendLanguage
 		}
 
 		// fallback
-		return self::DEFAULT_LANGUAGE;
+		return SITE_DEFAULT_LANGUAGE;
 	}
 
 

@@ -16,5 +16,7 @@
 define('SITE_TITLE_SEPERATOR', ' - ');
 // the default RSS generator
 define('SITE_RSS_GENERATOR', 'Fork CMS');
+// the default language
+define('SITE_DEFAULT_LANGUAGE', 'nl');
 
 ?>

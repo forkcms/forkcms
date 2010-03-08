@@ -220,7 +220,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				if($this->needsGoogleMaps) BackendModel::setSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
 
 				// before we save the languages, we need to ensure that each language actually exists and may be chosen.
-				$languages = array(BackendModel::getSetting('core', 'default_language', null));
+				$languages = array(BackendModel::getSetting('core', 'default_language', null)); // @todo dit kan conflicteren met SITE_DEFAULT_LANGUAGE & de vroegere Frontend::DEFAULT_LANGUAGE
 
 				// save active languages
 				BackendModel::setSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('languages')->getValue())));

@@ -199,12 +199,14 @@ class Init
 			case 'backend_js':
 				require_once '../../library/globals.php';
 				require_once '../../library/globals_backend.php';
+				require_once '../../library/globals_frontend.php';
 			break;
 
 			// default
 			default:
 				require_once '../library/globals.php';
 				require_once '../library/globals_backend.php';
+				require_once '../library/globals_frontend.php';
 		}
 	}
 

@@ -53,7 +53,7 @@ class BackendJavascript
 		$this->setFile(SpoonFilter::getGetValue('file', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), FrontendLanguage::DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new BackendTemplate();
@@ -156,8 +156,7 @@ class BackendJavascript
 		if(BackendAuthentication::isLoggedIn()) $language = BackendAuthentication::getUser()->getSetting('backend_interface_language');
 
 		// unknown user (fallback to default language)
-		else $language = FrontendLanguage::DEFAULT_LANGUAGE;
-
+		else $language = SITE_DEFAULT_LANGUAGE;
 
 		// set the locale (we need this for the labels)
 		BackendLanguage::setLocale($language);
