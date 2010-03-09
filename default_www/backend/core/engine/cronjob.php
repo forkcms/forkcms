@@ -64,7 +64,7 @@ class BackendCronjob
 		$this->setId(SpoonFilter::getGetValue('id', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE)); // @todo tijs - deze mag zich toch op alle languages beroepen en niet enkel op actieve languages. Aangezien fr mssn niet actief is onsite maar wel bewerkt wordt in het private.
 
 		// create URL instance
 		new BackendURL();

@@ -562,7 +562,7 @@ class BackendDataGridFunctions
 		if($timestamp <= 0) return '';
 
 		// get user setting for long dates
-		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s');
+		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s'); // @todo Tijs - we moeten die formaten 1 keer toevoegen bij het aanmaken van een gebruiker. Nadien wil ik hier geen default values meer zien. Dit kan verschillen afhankelijk van welk stuk code 1st wordt uitgevoerd.
 
 		// format the date according the user his settings
 		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
@@ -584,7 +584,7 @@ class BackendDataGridFunctions
 		$timeAgo = SpoonDate::getTimeAgo($timestamp, BL::getInterfaceLanguage());
 
 		// get user setting for long dates
-		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s');
+		$format = BackendAuthentication::getUser()->getSetting('date_long_format', 'd/m/Y H:i:s'); // @todo Tijs - formaat moet reeds bepaald zijn. Mag hier eigenlijk niet staan.
 
 		// return
 		return '<abbr title="'. SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage()) .'">'. $timeAgo .'</abbr>';

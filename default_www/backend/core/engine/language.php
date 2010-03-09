@@ -13,7 +13,7 @@
 class BackendLanguage
 {
 	// Default language for the CMS-user-interface
-	const DEFAULT_LANGUAGE = 'nl'; // @todo tijs - in backend lijkt dit mij overbodig?
+	const DEFAULT_LANGUAGE = 'nl'; // @todo tijs - in backend lijkt dit mij overbodig? dit moet uit de settings komen. (default_interface_language in core in het geval de gebruiker al ingelogd is moeten we interface_language uit zijn settings halen).
 
 
 	/**
@@ -110,7 +110,7 @@ class BackendLanguage
 		$return = array();
 
 		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = BackendLanguage::getLabel(mb_strtoupper($key), 'core');
+		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
 
 		// return
 		return $return;
@@ -157,6 +157,27 @@ class BackendLanguage
 	public static function getLabels()
 	{
 		return self::$lbl;
+	}
+
+
+	/**
+	 * Get all the possible locale languages
+	 *
+	 * @return	array
+	 */
+	public static function getLocaleLanguages()
+	{
+		// grab from settings
+		$languages = BackendModel::getSetting('locale', 'languages');
+
+		// init var
+		$return = array();
+
+		// loop language to reset the label
+		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+
+		// return
+		return $return;
 	}
 
 
@@ -228,7 +249,7 @@ class BackendLanguage
 		$return = array();
 
 		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = ucfirst(BackendLanguage::getLabel(mb_strtoupper($key), 'core'));
+		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
 
 		// return
 		return $return;
@@ -273,11 +294,11 @@ class BackendLanguage
 		self::$currentInterfaceLanguage = $language;
 
 		// store in cookie
-		SpoonCookie::set('backend_interface_language', $language);
+		SpoonCookie::set('interface_language', $language);
 
 		// store in session for TinyMCE
 		SpoonSession::set('tiny_mce_language', $language);
-		SpoonSession::set('backend_interface_language', $language);
+		SpoonSession::set('interface_language', $language);
 
 		// init vars
 		$err = array();

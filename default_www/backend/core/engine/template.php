@@ -189,7 +189,7 @@ class BackendTemplate extends SpoonTemplate
 			$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
 
 			// assign the authentiated users preferred interface language
-			$this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('backend_interface_language'));
+			$this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
 		// assign some variable constants (such as site-title)
@@ -388,14 +388,7 @@ class BackendTemplateModifiers
 	 */
 	public static function getMainNavigation($var = null)
 	{
-		// get navigation
-		$navigation = Spoon::getObjectReference('navigation');
-
-		// redefine
-		$var = (string) $var;
-
-		// return
-		return $navigation->getMainNavigation();
+		return Spoon::getObjectReference('navigation')->getMainNavigation();
 	}
 
 
@@ -408,10 +401,6 @@ class BackendTemplateModifiers
 	 */
 	public static function getNavigation($var = null)
 	{
-		// redefine
-		$var = (string) $var;
-
-		// return
 		return  Spoon::getObjectReference('navigation')->getNavigation();
 	}
 

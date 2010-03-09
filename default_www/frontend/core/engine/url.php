@@ -216,7 +216,7 @@ class FrontendURL
 		if(!SITE_MULTILANGUAGE)
 		{
 			// set language id
-			$language = FrontendLanguage::DEFAULT_LANGUAGE;
+			$language = SITE_DEFAULT_LANGUAGE;
 		}
 
 		// multiple languages
@@ -226,7 +226,7 @@ class FrontendURL
 			$mustRedirect = false;
 
 			// get possible languages
-			$possibleLanguages = (array) FrontendLanguage::getActiveLanguages();
+			$possibleLanguages = (array) FrontendLanguage::getActiveLanguages(); // @todo tijs - activeLanguages en redirectLanguages zijn momenteel hetzelfde.
 			$redirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
 
 			// the language is present in the URL

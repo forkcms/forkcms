@@ -151,9 +151,9 @@ class BackendModel
 
 	/**
 	 * Creates an URL for a given action and module
-	 * If you don't specify an action the current action will be used
-	 * If you don't specify a module the current module will be used
-	 * If you don't specify a language the current language will be used
+	 * If you don't specify an action the current action will be used.
+	 * If you don't specify a module the current module will be used.
+	 * If you don't specify a language the current language will be used.
 	 *
 	 * @return	string
 	 * @param	string[optional] $action		The action to build the URL for.
@@ -274,7 +274,7 @@ class BackendModel
 		// does the keys exists in the cache?
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
-			// validate file @later: the file should be regenerated
+			// validate file @later: the file should be re-generated
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
 			{
 				// require BackendPagesModel

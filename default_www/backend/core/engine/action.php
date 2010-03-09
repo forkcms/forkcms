@@ -92,7 +92,7 @@ class BackendAction
 		$workingLanguages = array();
 
 		// loop languages and build an array that we can assign
-		foreach($languages as $abbr => $label) $workingLanguages[] = array('abbr' => $abbr, 'label' => $label, 'selected' => ($abbr == BackendLanguage::getWorkingLanguage()));
+		foreach($languages as $abbr => $label) $workingLanguages[] = array('abbr' => $abbr, 'label' => $label, 'selected' => ($abbr == BackendLanguage::getWorkingLanguage())); // @todo tijs - waarom $abbr en niet $abbreviation?
 
 		// assign the languages
 		$this->tpl->assign('workingLanguages', $workingLanguages);

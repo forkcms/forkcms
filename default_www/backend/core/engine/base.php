@@ -157,7 +157,7 @@ class BackendBaseAction
 			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
 			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
 
-			// hightlight an element with the given id if needed
+			// highlight an element with the given id if needed
 			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
 		}
 
@@ -167,7 +167,6 @@ class BackendBaseAction
 			// show the error and the errormessage
 			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), '-')));
 		}
-
 	}
 
 
