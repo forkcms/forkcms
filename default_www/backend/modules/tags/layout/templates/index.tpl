@@ -7,12 +7,14 @@
 
 			<div class="inner">
 				{option:datagrid}
-					<div class="datagridHolder">
-						<div class="tableHeading">
-							<h3>Tags</h3>
+					<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="tags">
+						<div class="datagridHolder">
+							<div class="tableHeading">
+								<h3>Tags</h3>
+							</div>
+							{$datagrid}
 						</div>
-						{$datagrid}
-					</div>
+					</form>
 				{/option:datagrid}
 				{option:!datagrid}{$msgNoItems}{/option:!datagrid}
 			</div>

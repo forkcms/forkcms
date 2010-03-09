@@ -22,6 +22,26 @@ class BackendTagsModel
 
 
 	/**
+	 * Delete one or more tags.
+	 *
+	 * @return	void
+	 * @param 	mixed $ids	The ids to delete.
+	 */
+	public static function delete($ids)
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// if $ids is not an array, make it so.
+		$ids = (!is_array($ids)) ? array($ids) : $ids;
+
+		// delete tags
+		$db->execute('DELETE FROM tags WHERE id IN ('. implode(',', $ids) .');');
+		$db->execute('DELETE FROM modules_tags WHERE tag_id IN ('. implode(',', $ids) .');');
+	}
+
+
+	/**
 	 * Check if a tag exists
 	 *
 	 * @return	bool
