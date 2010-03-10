@@ -202,7 +202,7 @@ class CSSToInlineStyles
 			}
 		}
 
-		// load css
+		// process css
 		$this->processCSS();
 
 		// create new DOMDocument
@@ -322,7 +322,7 @@ class CSSToInlineStyles
 		$css = preg_replace('/\s\s+/', ' ', $css);
 
 		// rules are splitted by }
-		$rules = (arrat) explode('}', $css);
+		$rules = (array) explode('}', $css);
 
 		// loop rules
 		foreach($rules as $rule)
