@@ -1,33 +1,33 @@
 <?php
 
 /**
- * BackendSnippetsModel
- * In this file we store all generic functions that we will be using in the SnippetsModule
+ * BackendContentblocksModel
+ * In this file we store all generic functions that we will be using in the ContentblocksModule
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendSnippetsModel
+class BackendContentblocksModel
 {
 	// overview of the items
-	const QRY_BROWSE = 'SELECT s.id, s.title
-						FROM snippets AS s
-						WHERE s.status = ?;';
+	const QRY_BROWSE = 'SELECT c.id, c.title
+						FROM contentblocks AS c
+						WHERE c.status = ?;';
 
 
 	// overview of the revisions for an item
-	const QRY_BROWSE_REVISIONS = 'SELECT s.id, s.revision_id, s.title, UNIX_TIMESTAMP(s.edited_on) AS edited_on
-									FROM snippets AS s
-									WHERE s.status = ? AND s.id = ?
-									ORDER BY s.edited_on DESC;';
+	const QRY_BROWSE_REVISIONS = 'SELECT c.id, c.revision_id, c.title, UNIX_TIMESTAMP(c.edited_on) AS edited_on
+									FROM contentblocks AS c
+									WHERE c.status = ? AND c.id = ?
+									ORDER BY c.edited_on DESC;';
 
 
 	/**
-	 * Delete a snippets-item
+	 * Delete a contentblocks-item
 	 *
 	 * @return	void
 	 * @param	int $id		The id of the record to delete.
@@ -41,12 +41,12 @@ class BackendSnippetsModel
 		$db = BackendModel::getDB(true);
 
 		// delete all records
-		$db->delete('snippets', 'id = ?', $id);
+		$db->delete('contentblocks', 'id = ?', $id);
 	}
 
 
 	/**
-	 * Does the snippets-item exists
+	 * Does the contentblocks-item exists
 	 *
 	 * @return	bool
 	 * @param	int $id							The id of the record to check for existence.
@@ -62,15 +62,15 @@ class BackendSnippetsModel
 		$db = BackendModel::getDB();
 
 		// if the item should also be active, there should be at least one row to return true
-		if($activeOnly) return ($db->getNumRows('SELECT s.id
-												FROM snippets AS s
-												WHERE s.id = ? AND s.status = ?;',
+		if($activeOnly) return ($db->getNumRows('SELECT c.id
+												FROM contentblocks AS c
+												WHERE c.id = ? AND c.status = ?;',
 												array($id, 'active')) >= 1);
 
 		// fallback, this doesn't take the active status in account
-		return ($db->getNumRows('SELECT s.id
-									FROM snippets AS s
-									WHERE s.revision_id = ?;',
+		return ($db->getNumRows('SELECT c.id
+									FROM contentblocks AS c
+									WHERE c.revision_id = ?;',
 									array($id)) >= 1);
 	}
 
@@ -90,9 +90,9 @@ class BackendSnippetsModel
 		$db = BackendModel::getDB();
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT s.*, UNIX_TIMESTAMP(created_on) AS created_on, UNIX_TIMESTAMP(edited_on) AS edited_on
-										FROM snippets AS s
-										WHERE s.id = ? AND s.status = ?
+		return (array) $db->getRecord('SELECT c.*, UNIX_TIMESTAMP(created_on) AS created_on, UNIX_TIMESTAMP(edited_on) AS edited_on
+										FROM contentblocks AS c
+										WHERE c.id = ? AND c.status = ?
 										LIMIT 1;',
 										array($id, 'active'));
 	}
@@ -115,9 +115,9 @@ class BackendSnippetsModel
 		$db = BackendModel::getDB();
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT s.*, UNIX_TIMESTAMP(created_on) AS created_on, UNIX_TIMESTAMP(edited_on) AS edited_on
-										FROM snippets AS s
-										WHERE s.id = ? AND s.revision_id = ?
+		return (array) $db->getRecord('SELECT c.*, UNIX_TIMESTAMP(created_on) AS created_on, UNIX_TIMESTAMP(edited_on) AS edited_on
+										FROM contentblocks AS c
+										WHERE c.id = ? AND c.revision_id = ?
 										LIMIT 1;',
 										array($id, $revisionId));
 	}
@@ -135,7 +135,7 @@ class BackendSnippetsModel
 		$db = BackendModel::getDB(true);
 
 		// calculate new id
-		$newId = (int) $db->getVar('SELECT MAX(id) FROM snippets LIMIT 1;') + 1;
+		$newId = (int) $db->getVar('SELECT MAX(id) FROM contentblocks LIMIT 1;') + 1;
 
 		// build array
 		$values['id'] = $newId;
@@ -147,12 +147,12 @@ class BackendSnippetsModel
 		$values['edited_on'] = BackendModel::getUTCDate();
 
 		// insert and return the insertId
-		$db->insert('snippets', $values);
+		$db->insert('contentblocks', $values);
 
 		// build array
-		$extra['module'] = 'snippets';
+		$extra['module'] = 'contentblocks';
 		$extra['type'] = 'widget';
-		$extra['label'] = 'Snippets';
+		$extra['label'] = 'ContentBlocks';
 		$extra['action'] = 'detail';
 		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $newId));
 		$extra['hidden'] = 'N';
@@ -194,30 +194,30 @@ class BackendSnippetsModel
 		$values['edited_on'] = BackendModel::getUTCDate();
 
 		// archive all older versions
-		$db->update('snippets', array('status' => 'archived'), 'id = ?', array($id));
+		$db->update('contentblocks', array('status' => 'archived'), 'id = ?', array($id));
 
 		// insert new version
-		$db->insert('snippets', $values);
+		$db->insert('contentblocks', $values);
 
 		// how many revisions should we keep
-		$rowsToKeep = (int) BackendModel::getSetting('snippets', 'maximum_number_of_revisions', 5);
+		$rowsToKeep = (int) BackendModel::getSetting('contentblocks', 'maximum_number_of_revisions', 5);
 
 		// get revision-ids for items to keep
-		$revisionIdsToKeep = (array) $db->getColumn('SELECT s.revision_id
-														FROM snippets AS s
-														WHERE s.id = ? AND s.status = ?
-														ORDER BY s.edited_on DESC
+		$revisionIdsToKeep = (array) $db->getColumn('SELECT c.revision_id
+														FROM contentblocks AS c
+														WHERE c.id = ? AND c.status = ?
+														ORDER BY c.edited_on DESC
 														LIMIT ?;',
 														array($id, 'archived', $rowsToKeep));
 
 		// delete other revisions
-		if(!empty($revisionIdsToKeep)) $db->delete('snippets', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
+		if(!empty($revisionIdsToKeep)) $db->delete('contentblocks', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
 
 		// build array
 		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $id));
 
 		// update extra
-		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('snippets', 'widget', '200'. $id));
+		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('contentblocks', 'widget', '200'. $id));
 
 		// return id
 		return $id;

@@ -1,16 +1,16 @@
 <?php
 
 /**
- * FrontendSnippetsConfig
+ * FrontendContentBlocksConfig
  * This is the configuration-object
  *
  * @package		frontend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class FrontendSnippetsConfig extends FrontendBaseConfig
+final class FrontendContentBlocksConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action

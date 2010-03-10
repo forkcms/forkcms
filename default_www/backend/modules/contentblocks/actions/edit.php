@@ -1,16 +1,16 @@
 <?php
 
 /**
- * BackendSnippetsEdit
+ * BackendContentblocksEdit
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendSnippetsEdit extends BackendBaseActionEdit
+class BackendContentblocksEdit extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
@@ -23,7 +23,7 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if(BackendSnippetsModel::exists($this->id))
+		if(BackendContentblocksModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -61,7 +61,7 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 	private function getData()
 	{
 		// get the record
-		$this->record = (array) BackendSnippetsModel::get($this->id);
+		$this->record = (array) BackendContentblocksModel::get($this->id);
 
 		// is there a revision specified?
 		$revisionToLoad = $this->getParameter('revision', 'int');
@@ -70,7 +70,7 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 		if($revisionToLoad !== null)
 		{
 			// overwrite the current record
-			$this->record = (array) BackendSnippetsModel::getRevision($this->id, $revisionToLoad);
+			$this->record = (array) BackendContentblocksModel::getRevision($this->id, $revisionToLoad);
 
 			// show warning
 			$this->tpl->assign('usingRevision', true);
@@ -103,7 +103,7 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 	private function loadRevisions()
 	{
 		// create datagrid
-		$this->dgRevisions = new BackendDataGridDB(BackendSnippetsModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id']));
+		$this->dgRevisions = new BackendDataGridDB(BackendContentblocksModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id']));
 
 		// hide columns
 		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
@@ -165,7 +165,7 @@ class BackendSnippetsEdit extends BackendBaseActionEdit
 				$values = (array) $this->frm->getValues();
 
 				// insert the item
-				$id = (int) BackendSnippetsModel::update($this->id, $values);
+				$id = (int) BackendContentblocksModel::update($this->id, $values);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($values['title']) .'&highlight=id-'. $id);

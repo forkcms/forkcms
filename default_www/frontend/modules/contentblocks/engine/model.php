@@ -1,17 +1,17 @@
 <?php
 
 /**
- * FrontendSnippetsModel
- * In this file we store all generic functions that we will be using in the snippets module
+ * FrontendContentblocksModel
+ * In this file we store all generic functions that we will be using in the contentblocks module
  *
  * @package		frontend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendSnippetsModel
+class FrontendContentblocksModel
 {
 	/**
 	 * Get a snippet
@@ -28,9 +28,9 @@ class FrontendSnippetsModel
 		$db = FrontendModel::getDB();
 
 		// get data
-		return (array) $db->getRecord('SELECT s.id, s.title, s.content
-										FROM snippets AS s
-										WHERE s.id = ? AND s.status = ? AND s.hidden = ? AND s.language = ?;',
+		return (array) $db->getRecord('SELECT c.id, c.title, c.content
+										FROM contentblocks AS c
+										WHERE c.id = ? AND c.status = ? AND c.hidden = ? AND c.language = ?;',
 										array($id, 'active', 'N', FRONTEND_LANGUAGE));
 	}
 }

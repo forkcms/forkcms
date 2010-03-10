@@ -1,17 +1,17 @@
 <?php
 
 /**
- * BackendSnippetsIndex
- * This is the index-action (default), it will display the snippets-overview
+ * BackendContentblocksIndex
+ * This is the index-action (default), it will display the contentblocks-overview
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendSnippetsIndex extends BackendBaseActionIndex
+class BackendContentblocksIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action
@@ -42,7 +42,7 @@ class BackendSnippetsIndex extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendSnippetsModel::QRY_BROWSE, array('active'));
+		$this->datagrid = new BackendDataGridDB(BackendContentblocksModel::QRY_BROWSE, array('active'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title'))));

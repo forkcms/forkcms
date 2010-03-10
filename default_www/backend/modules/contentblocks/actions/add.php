@@ -1,17 +1,17 @@
 <?php
 
 /**
- * BackendSnippetsAdd
+ * BackendContentBlocksAdd
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendSnippetsAdd extends BackendBaseActionAdd
+class BackendContentBlocksAdd extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
@@ -78,7 +78,7 @@ class BackendSnippetsAdd extends BackendBaseActionAdd
 				$values = $this->frm->getValues();
 
 				// insert the item
-				$id = BackendSnippetsModel::insert($values);
+				$id = BackendContentBlocksModel::insert($values);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($values['title']) .'&highlight=id-'. $id);

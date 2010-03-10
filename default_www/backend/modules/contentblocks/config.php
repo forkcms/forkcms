@@ -1,17 +1,17 @@
 <?php
 
 /**
- * SnippetsConfig
+ * ContentblocksConfig
  *
- * This is the configuration-object for the snippets module
+ * This is the configuration-object for the contentblocks module
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-final class BackendSnippetsConfig extends BackendBaseConfig
+final class BackendContentblocksConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

@@ -1,16 +1,16 @@
 <?php
 
 /**
- * FrontendSnippetsDetail
+ * FrontendContentblocksDetail
  * This is the detail-action
  *
  * @package		frontend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendSnippetsWidgetDetail extends FrontendBaseWidget
+class FrontendContentblocksWidgetDetail extends FrontendBaseWidget
 {
 	/**
 	 * The snippet
@@ -49,7 +49,7 @@ class FrontendSnippetsWidgetDetail extends FrontendBaseWidget
 		if(!isset($this->data['id'])) throw new FrontendException('SnippetId not available');
 
 		// get the snippet
-		$this->snippet = FrontendSnippetsModel::get((int) $this->data['id']);
+		$this->snippet = FrontendContentblocksModel::get((int) $this->data['id']);
 	}
 
 

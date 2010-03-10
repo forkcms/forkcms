@@ -180,13 +180,13 @@ INSERT INTO `groups_rights_actions` VALUES (9, 1, 'users', 'edit_group', 7);
 INSERT INTO `groups_rights_actions` VALUES (10, 1, 'users', 'add_group', 7);
 INSERT INTO `groups_rights_actions` VALUES (16, 1, 'pages', 'index', 7);
 INSERT INTO `groups_rights_actions` VALUES (17, 1, 'pages', 'add', 7);
-INSERT INTO `groups_rights_actions` VALUES (18, 1, 'snippets', 'index', 7);
-INSERT INTO `groups_rights_actions` VALUES (19, 1, 'snippets', 'add', 7);
+INSERT INTO `groups_rights_actions` VALUES (18, 1, 'contentblocks', 'index', 7);
+INSERT INTO `groups_rights_actions` VALUES (19, 1, 'contentblocks', 'add', 7);
 INSERT INTO `groups_rights_actions` VALUES (20, 1, 'pages', 'edit', 7);
-INSERT INTO `groups_rights_actions` VALUES (21, 1, 'snippets', 'edit', 7);
+INSERT INTO `groups_rights_actions` VALUES (21, 1, 'contentblocks', 'edit', 7);
 INSERT INTO `groups_rights_actions` VALUES (22, 1, 'settings', 'index', 7);
 INSERT INTO `groups_rights_actions` VALUES (24, 1, 'blog', 'index', 7);
-INSERT INTO `groups_rights_actions` VALUES (25, 1, 'snippets', 'delete', 7);
+INSERT INTO `groups_rights_actions` VALUES (25, 1, 'contentblocks', 'delete', 7);
 INSERT INTO `groups_rights_actions` VALUES (26, 1, 'blog', 'categories', 7);
 INSERT INTO `groups_rights_actions` VALUES (27, 1, 'blog', 'comments', 7);
 INSERT INTO `groups_rights_actions` VALUES (28, 1, 'blog', 'settings', 7);
@@ -238,7 +238,7 @@ CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
 INSERT INTO `groups_rights_modules` VALUES (1, 1, 'dashboard');
 INSERT INTO `groups_rights_modules` VALUES (3, 1, 'users');
 INSERT INTO `groups_rights_modules` VALUES (6, 1, 'pages');
-INSERT INTO `groups_rights_modules` VALUES (7, 1, 'snippets');
+INSERT INTO `groups_rights_modules` VALUES (7, 1, 'contentblocks');
 INSERT INTO `groups_rights_modules` VALUES (8, 1, 'settings');
 INSERT INTO `groups_rights_modules` VALUES (9, 1, 'blog');
 INSERT INTO `groups_rights_modules` VALUES (10, 1, 'tags');
@@ -394,7 +394,7 @@ INSERT INTO `locale` VALUES (145, 1, 'nl', 'backend', 'core', 'lbl', 'SortAscend
 INSERT INTO `locale` VALUES (146, 1, 'nl', 'backend', 'core', 'lbl', 'SortDescending', 'sorteer aflopend', '2010-02-02 10:09:17');
 INSERT INTO `locale` VALUES (147, 1, 'nl', 'backend', 'core', 'lbl', 'SortedAscending', 'oplopend gesorteerd', '2010-02-02 10:09:17');
 INSERT INTO `locale` VALUES (148, 1, 'nl', 'backend', 'core', 'lbl', 'SortedDescending', 'aflopend gesorteerd', '2010-02-02 10:09:17');
-INSERT INTO `locale` VALUES (149, 1, 'nl', 'backend', 'core', 'lbl', 'Snippets', 'snippets', '2010-02-02 10:09:17');
+INSERT INTO `locale` VALUES (149, 1, 'nl', 'backend', 'core', 'lbl', 'Snippets', 'contentblocks', '2010-02-02 10:09:17');
 INSERT INTO `locale` VALUES (150, 1, 'nl', 'backend', 'core', 'lbl', 'Spam', 'spam', '2010-02-02 10:09:17');
 INSERT INTO `locale` VALUES (151, 1, 'nl', 'backend', 'core', 'lbl', 'SpamFilter', 'spamfilter', '2010-02-02 10:09:17');
 INSERT INTO `locale` VALUES (152, 1, 'nl', 'backend', 'core', 'lbl', 'Status', 'status', '2010-02-02 10:09:17');
@@ -1120,7 +1120,7 @@ CREATE TABLE IF NOT EXISTS `modules` (
 INSERT INTO `modules` VALUES ('blog', NULL, 'Y');
 INSERT INTO `modules` VALUES ('pages', 'Manage the pages for this website.', 'Y');
 INSERT INTO `modules` VALUES ('settings', NULL, 'Y');
-INSERT INTO `modules` VALUES ('snippets', NULL, 'Y');
+INSERT INTO `modules` VALUES ('contentblocks', NULL, 'Y');
 INSERT INTO `modules` VALUES ('statistics', NULL, 'Y');
 INSERT INTO `modules` VALUES ('tags', NULL, 'Y');
 INSERT INTO `modules` VALUES ('news', NULL, 'Y');
@@ -1199,9 +1199,9 @@ INSERT INTO `modules_settings` VALUES ('settings', 'requires_akismet', 'b:0;');
 INSERT INTO `modules_settings` VALUES ('settings', 'requires_google_maps', 'b:0;');
 INSERT INTO `modules_settings` VALUES ('sitemap', 'requires_akismet', 'b:0;');
 INSERT INTO `modules_settings` VALUES ('sitemap', 'requires_google_maps', 'b:0;');
-INSERT INTO `modules_settings` VALUES ('snippets', 'maximum_number_of_revisions', 'i:5;');
-INSERT INTO `modules_settings` VALUES ('snippets', 'requires_akismet', 'b:0;');
-INSERT INTO `modules_settings` VALUES ('snippets', 'requires_google_maps', 'b:0;');
+INSERT INTO `modules_settings` VALUES ('contentblocks', 'maximum_number_of_revisions', 'i:5;');
+INSERT INTO `modules_settings` VALUES ('contentblocks', 'requires_akismet', 'b:0;');
+INSERT INTO `modules_settings` VALUES ('contentblocks', 'requires_google_maps', 'b:0;');
 INSERT INTO `modules_settings` VALUES ('statistics', 'requires_akismet', 'b:0;');
 INSERT INTO `modules_settings` VALUES ('statistics', 'requires_google_maps', 'b:0;');
 INSERT INTO `modules_settings` VALUES ('tags', 'requires_akismet', 'b:0;');
@@ -1795,10 +1795,10 @@ CREATE TABLE IF NOT EXISTS `pages_extras` (
 
 INSERT INTO `pages_extras` VALUES (1, 'blog', 'block', 'Blog', NULL, NULL, 'N', 1000);
 INSERT INTO `pages_extras` VALUES (2, 'blog', 'widget', 'RecentComments', 'recent_comments', NULL, 'N', 1001);
-INSERT INTO `pages_extras` VALUES (8, 'snippets', 'widget', 'Snippets', 'detail', 'a:2:{s:11:"extra_label";s:24:"Dit is de tweede widget.";s:2:"id";i:2;}', 'N', 2002);
+INSERT INTO `pages_extras` VALUES (8, 'contentblocks', 'widget', 'Snippets', 'detail', 'a:2:{s:11:"extra_label";s:24:"Dit is de tweede widget.";s:2:"id";i:2;}', 'N', 2002);
 INSERT INTO `pages_extras` VALUES (5, 'sitemap', 'block', 'Sitemap', NULL, NULL, 'N', 3);
 INSERT INTO `pages_extras` VALUES (6, 'contact', 'block', 'ContactForm', NULL, NULL, 'N', 2);
-INSERT INTO `pages_extras` VALUES (7, 'snippets', 'widget', 'Snippets', 'detail', 'a:2:{s:11:"extra_label";s:32:"Een eerste snippet, maar bewerkt";s:2:"id";i:1;}', 'N', 2001);
+INSERT INTO `pages_extras` VALUES (7, 'contentblocks', 'widget', 'Snippets', 'detail', 'a:2:{s:11:"extra_label";s:32:"Een eerste snippet, maar bewerkt";s:2:"id";i:1;}', 'N', 2001);
 INSERT INTO `pages_extras` VALUES (9, 'tags', 'block', 'Tags', NULL, NULL, 'N', 1);
 
 -- --------------------------------------------------------
@@ -1946,11 +1946,11 @@ CREATE TABLE IF NOT EXISTS `profiles_settings` (
 -- --------------------------------------------------------
 
 -- 
--- Table structure for table `snippets`
+-- Table structure for table `contentblocks`
 -- 
 
-DROP TABLE IF EXISTS `snippets`;
-CREATE TABLE IF NOT EXISTS `snippets` (
+DROP TABLE IF EXISTS `contentblocks`;
+CREATE TABLE IF NOT EXISTS `contentblocks` (
   `id` int(11) NOT NULL,
   `revision_id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
@@ -1965,13 +1965,13 @@ CREATE TABLE IF NOT EXISTS `snippets` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Sometimes we need editable parts in the templates, this modu' AUTO_INCREMENT=32 ;
 
 -- 
--- Dumping data for table `snippets`
+-- Dumping data for table `contentblocks`
 -- 
 
-INSERT INTO `snippets` VALUES (1, 28, 1, 'nl', 'Een eerste snippet', '<p>Dit is de eerste snippet...</p>\r\n<p>De inhoud van dit item kan aan meerdere pagina''s gekoppeld worden.</p>', 'N', 'archived', '2010-02-01 10:20:47', '2010-02-01 10:20:47');
-INSERT INTO `snippets` VALUES (1, 29, 1, 'nl', 'Een eerste snippet, maar bewerkt', '<p>Dit is de eerste snippet...</p>\r\n<p>De inhoud van dit item kan aan meerdere pagina''s gekoppeld worden.</p>', 'N', 'archived', '2010-02-01 10:20:47', '2010-02-01 11:30:17');
-INSERT INTO `snippets` VALUES (2, 30, 1, 'nl', 'Dit is de tweede widget.', '<p>Deze gaan we verwijderen</p>', 'N', 'active', '2010-02-01 11:31:03', '2010-02-01 11:31:03');
-INSERT INTO `snippets` VALUES (1, 31, 1, 'nl', 'Een eerste snippet, maar bewerkt', '<p>Dit is de eerste snippet...</p>\r\n<p>De inhoud van dit item kan aan meerdere pagina''s gekoppeld worden.</p>', 'N', 'active', '2010-02-01 10:20:47', '2010-02-08 16:41:08');
+INSERT INTO `contentblocks` VALUES (1, 28, 1, 'nl', 'Een eerste snippet', '<p>Dit is de eerste snippet...</p>\r\n<p>De inhoud van dit item kan aan meerdere pagina''s gekoppeld worden.</p>', 'N', 'archived', '2010-02-01 10:20:47', '2010-02-01 10:20:47');
+INSERT INTO `contentblocks` VALUES (1, 29, 1, 'nl', 'Een eerste snippet, maar bewerkt', '<p>Dit is de eerste snippet...</p>\r\n<p>De inhoud van dit item kan aan meerdere pagina''s gekoppeld worden.</p>', 'N', 'archived', '2010-02-01 10:20:47', '2010-02-01 11:30:17');
+INSERT INTO `contentblocks` VALUES (2, 30, 1, 'nl', 'Dit is de tweede widget.', '<p>Deze gaan we verwijderen</p>', 'N', 'active', '2010-02-01 11:31:03', '2010-02-01 11:31:03');
+INSERT INTO `contentblocks` VALUES (1, 31, 1, 'nl', 'Een eerste snippet, maar bewerkt', '<p>Dit is de eerste snippet...</p>\r\n<p>De inhoud van dit item kan aan meerdere pagina''s gekoppeld worden.</p>', 'N', 'active', '2010-02-01 10:20:47', '2010-02-08 16:41:08');
 
 -- --------------------------------------------------------
 

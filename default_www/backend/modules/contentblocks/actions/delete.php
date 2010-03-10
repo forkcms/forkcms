@@ -1,17 +1,17 @@
 <?php
 
 /**
- * BackendSnippetsDelete
- * This is the delete-action, it will delete a snippets-item
+ * BackendContentblocksDelete
+ * This is the delete-action, it will delete a contentblocks-item
  *
  * @package		backend
- * @subpackage	snippets
+ * @subpackage	contentblocks
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendSnippetsDelete extends BackendBaseActionDelete
+class BackendContentblocksDelete extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
@@ -24,16 +24,16 @@ class BackendSnippetsDelete extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the user exists
-		if(BackendSnippetsModel::exists($this->id))
+		if(BackendContentblocksModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
 			// get all data for the user we want to edit
-			$this->record = (array) BackendSnippetsModel::get($this->id);
+			$this->record = (array) BackendContentblocksModel::get($this->id);
 
 			// delete user
-			BackendSnippetsModel::delete($this->id);
+			BackendContentblocksModel::delete($this->id);
 
 			// user was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));
