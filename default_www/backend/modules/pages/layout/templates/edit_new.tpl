@@ -43,7 +43,7 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tbody>
 									<tr>
-										<td>
+										<td id="leftColumn">
 											<div id="editContent">
 												{iteration:blocks}
 												<div id="block-{$blocks.index}" class="box">
@@ -76,7 +76,7 @@
 															<div class="options">&nbsp;</div>
 														</fieldset>
 													</div>
-													
+
 													<div class="modalHolder">
 														<div class="box modal">
 															<div class="heading">
@@ -95,8 +95,8 @@
 															</div>
 														</div>
 													</div>
-													
-													
+
+
 												</div>
 												{/iteration:blocks}
 											</div>

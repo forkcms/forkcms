@@ -26,9 +26,9 @@
 						<div id="tabContent">
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
-									
+
 									{* Left side *}
-									<td>
+									<td id="leftColumn">
 										<div id="publishOptions" class="box">
 											<div class="heading headingRTE">
 												<h3>{$lblMainContent|ucfirst}</h3>
@@ -37,9 +37,9 @@
 												{$txtText} {$txtTextError}
 											</div>
 										</div>
-										
+
 										<br />
-										
+
 										<table border="0" cellspacing="0" cellpadding="0" id="advancedOptions">
 											<tr>
 												<td>

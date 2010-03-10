@@ -20,7 +20,7 @@
 		</td>
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
-				<div class="inner">
+				<div class="inner" id="leftColumn">
 				{form:edit}
 					{$txtTitle} {$txtTitleError}
 					<div id="pageUrl">
@@ -43,7 +43,7 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tbody>
 									<tr>
-										<td>
+										<td id="leftColumn">
 											<div id="editContent">
 												{iteration:blocks}
 												<div id="block-{$blocks.index}" class="contentBlock">

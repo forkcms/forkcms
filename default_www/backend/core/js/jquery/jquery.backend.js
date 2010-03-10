@@ -7,7 +7,8 @@
 			addLabel: 'add',
 			removeLabel: 'delete',
 			autoCompleteUrl: '',
-			canAddNew: false
+			canAddNew: false,
+			showIconOnly: true
 		};
 		
 		// extend options
@@ -28,7 +29,9 @@
 						'	<div class="oneLiner">'+
 						'		<p><input class="inputText dontSubmit" id="addValue-'+ id +'" name="addValue-'+ id +'" type="text" /></p>'+
 						'		<div class="buttonHolder">'+
-						'			<a href="#" id="addButton-'+ id +'" class="button icon iconAdd iconOnly disabledButton">'+
+						'			<a href="#" id="addButton-'+ id +'" class="button icon iconAdd disabledButton';
+			if(options.showIconOnly) html += ' iconOnly';
+			html +=		'">'+
 						'				<span><span><span>'+ options.addLabel +'</span></span></span>'+
 						'			</a>'+
 						'		</div>'+
