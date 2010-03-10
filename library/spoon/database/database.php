@@ -20,7 +20,7 @@
 
 
 /** SpoonDatabaseException */
-require_once 'spoon/cookie/exception.php';
+require_once 'spoon/database/exception.php';
 
 
 /**
