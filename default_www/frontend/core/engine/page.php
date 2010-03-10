@@ -247,6 +247,9 @@ class FrontendPage extends FrontendBaseObject
 		// create breadcrumb instance
 		$this->breadcrumb = new FrontendBreadcrumb();
 
+		// create navigation instance
+		new FrontendNavigation();
+
 		// new footer instance
 		$this->footer = new FrontendFooter();
 
