@@ -25,11 +25,13 @@
 		</div>
 	<![endif]-->
 
-	{option:debug}<div id="debugnotify"><img src="/backend/core/layout/images/monsters/{$var|rand:1:3}.png" />WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
+	{option:debug}<div id="debugnotify">WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
+
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
 				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
+
 					{option:hasError}
 					<div id="loginError">
 						<div class="errorMessage singleMessage">
@@ -68,8 +70,11 @@
 						</ul>
 					</div>
 				</div>
-				<div id="forgotPasswordHolder" class="balloon"{option:!showForm} style="display: none;"{/option:!showForm}>
+				<div id="forgotPasswordHolder" class="balloon {option:!showForm}balloonNoMessage{/option:!showForm}"{option:!showForm} style="display: none;"{/option:!showForm}>
 					<div id="forgotPasswordBox">
+						
+						<a class="button linkButton icon iconClose iconOnly" href="#"><span><span><span>X</span></span></span></a>
+
 						<div class="balloonTop">&nbsp;</div>
 						<p>{$msgForgotPasswordHelp}</p>
 						{form:forgotPassword}

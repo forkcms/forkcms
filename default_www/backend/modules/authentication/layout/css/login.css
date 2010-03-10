@@ -159,16 +159,21 @@ body#login {
 			width: 308px;
 		}
 
-			/* @todo @tijs @johan make this work together with forgot password form */
-			.balloonNoMessage {
+			#forgotPasswordHolder.balloonNoMessage {
 				padding: 12px 24px 12px;
 			}
+			
+			#forgotPasswordBox .iconClose {
+				position: absolute;
+				top: 2px;
+				right: 2px;
+			}
 
-			#forgotPassword p {
+			#forgotPasswordBox p {
 				font-size: 11px;
 			}
 
-			#forgotPassword .singleMessage {
+			#forgotPasswordBox .singleMessage {
 				border-top: 1px solid #B8BCC9;
 				width: 100%;
 				position: absolute;
@@ -190,6 +195,6 @@ body#login {
 
 			}
 
-				#forgotPassword #backendEmail {
+				#forgotPasswordBox #backendEmail {
 					width: 160px;
 				}

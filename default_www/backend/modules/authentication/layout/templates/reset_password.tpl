@@ -1,20 +1,47 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-<body>
-	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
+<body id="login">
+
+	<!--[if lte IE 6]>
+		<style type="text/css" media="screen">
+			#debugnotify, #loginBox {
+				display: none
+			}
+			#browserSupport {
+				padding: 20px;
+				border: 1px solid #DDD;
+				width: 400px;
+				margin: 40px auto
+			}
+			#browserSupport h2 {
+				padding: 0 0 12px;
+			}
+			body {
+				background: #FFF !important;
+			}
+		</style>
+		<div id="browserSupport" class="content">
+			<h2>{$lblBrowserNotSupported}</h2>
+			{$errBrowserNotSupported}
+		</div>
+	<![endif]-->
+
+	{option:debug}<div id="debugnotify"><img src="/backend/core/layout/images/monsters/{$var|rand:1:3}.png" />WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
+
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
-				<div id="loginNav">
-					<ul>
-						<li><span>Fork</span> <strong>CMS</strong></li>
-						<li><a href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
-						<li><a href="http://docs.fork-cms.be">{$lblDeveloper|ucfirst}</a></li>
-					</ul>
-				</div>
-				<div id="loginBox">
+				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
+
+					{option:hasError}
+					<div id="loginError">
+						<div class="errorMessage singleMessage">
+							<p>{$errInvalidUsernamePasswordCombination}</p>
+						</div>
+					</div>
+					{/option:hasError}
+
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>
-						<p>{$msgResetPasswordFormHelp}</p>
 					</div>
 
 					{form:authenticationResetPassword}
