@@ -1,5 +1,5 @@
 /*
- * jsTree 0.9.9b
+ * jsTree 0.9.9a
  * http://jstree.com/
  *
  * Copyright (c) 2009 Ivan Bozhanov (vakata.com)
@@ -8,7 +8,7 @@
  *   http://www.opensource.org/licenses/mit-license.php
  *   http://www.gnu.org/licenses/gpl.html
  *
- * Date: 2010-02-13
+ * Date: 2009-10-06
  *
  */
 
@@ -70,39 +70,38 @@
 				loading		: "Loading ..."
 			},
 			callback	: {
-				beforechange: function(NODE) { return true },
-				beforeopen	: function(NODE) { return true },
-				beforeclose	: function(NODE) { return true },
-				beforemove	: function(data) { return true }, 
-				beforecopy	: function(data) { return true }, 
-				beforecreate: function(data) { return true }, 
-				beforerename: function(data) { return true }, 
-				beforedelete: function(data) { return true }, 
-				beforedata	: function(NODE) { return { id : $(NODE).attr("id") || 0 } }, // PARAMETERS PASSED TO SERVER
-				ondata		: function(DATA) { return DATA; },		// modify data before parsing it
-				onparse		: function(STR ) { return STR; },		// modify string before visualizing it
-				onhover		: function(NODE) { },	// node hovered
-				onselect	: function(NODE) { },	// node selected
-				ondeselect	: function(NODE) { },	// node deselected
-				onchange	: function(NODE) { },	// focus changed
-				onrename	: function(data) { },	// node renamed
-				onmove		: function(data) { },	// move completed
-				oncopy		: function(data) { },	// copy completed
-				oncreate	: function(data) { },	// node created
-				ondelete	: function(data) { },	// node deleted
-				onopen		: function(NODE) { },	// node opened
-				onopen_all	: function() { },		// all nodes opened
-				onclose_all	: function() { },		// all nodes closed
-				onclose		: function(NODE) { },	// node closed
-				error		: function(TEXT) { },	// error occured
-				ondblclk	: function(data) { this.toggle_branch(data.node); this.select_branch(data.node); },
-				onrgtclk	: function(data) { },				// right click - to prevent use: EV.preventDefault(); EV.stopPropagation(); return false
-				onload		: function() { },
-				oninit		: function() { },
-				onfocus		: function() { },
-				ondestroy	: function() { },
-				onsearch	: function(NODES) { NODES.addClass("search"); },
-				ondrop		: function(data) { },
+				beforechange: function(NODE,TREE_OBJ) { return true },
+				beforeopen	: function(NODE,TREE_OBJ) { return true },
+				beforeclose	: function(NODE,TREE_OBJ) { return true },
+				beforemove	: function(NODE,REF_NODE,TYPE,TREE_OBJ) { return true }, 
+				beforecreate: function(NODE,REF_NODE,TYPE,TREE_OBJ) { return true }, 
+				beforerename: function(NODE,LANG,TREE_OBJ) { return true }, 
+				beforedelete: function(NODE,TREE_OBJ) { return true }, 
+				beforedata	: function(NODE,TREE_OBJ) { return { id : $(NODE).attr("id") || 0 } }, // PARAMETERS PASSED TO SERVER
+				ondata		: function(DATA,TREE_OBJ) { return DATA; },		// modify data before parsing it
+				onparse		: function(STR,TREE_OBJ) { return STR; },		// modify string before visualizing it
+				onhover		: function(NODE,TREE_OBJ) { },					// node hovered
+				onselect	: function(NODE,TREE_OBJ) { },					// node selected
+				ondeselect	: function(NODE,TREE_OBJ) { },					// node deselected
+				onchange	: function(NODE,TREE_OBJ) { },					// focus changed
+				onrename	: function(NODE,TREE_OBJ,RB) { },				// node renamed
+				onmove		: function(NODE,REF_NODE,TYPE,TREE_OBJ,RB) { },	// move completed
+				oncopy		: function(NODE,REF_NODE,TYPE,TREE_OBJ,RB) { },	// copy completed
+				oncreate	: function(NODE,REF_NODE,TYPE,TREE_OBJ,RB) { },	// node created
+				ondelete	: function(NODE,TREE_OBJ,RB) { },				// node deleted
+				onopen		: function(NODE,TREE_OBJ) { },					// node opened
+				onopen_all	: function(TREE_OBJ) { },						// all nodes opened
+				onclose_all	: function(TREE_OBJ) { },						// all nodes closed
+				onclose		: function(NODE,TREE_OBJ) { },					// node closed
+				error		: function(TEXT,TREE_OBJ) { },					// error occured
+				ondblclk	: function(NODE,TREE_OBJ) { TREE_OBJ.toggle_branch.call(TREE_OBJ, NODE); TREE_OBJ.select_branch.call(TREE_OBJ, NODE); },
+				onrgtclk	: function(NODE,TREE_OBJ,EV) { },				// right click - to prevent use: EV.preventDefault(); EV.stopPropagation(); return false
+				onload		: function(TREE_OBJ) { },
+				oninit		: function(TREE_OBJ) { },
+				onfocus		: function(TREE_OBJ) { },
+				ondestroy	: function(TREE_OBJ) { },
+				onsearch	: function(NODES, TREE_OBJ) { NODES.addClass("search"); },
+				ondrop		: function(NODE,REF_NODE,TYPE,TREE_OBJ) { },
 				check		: function(RULE,NODE,VALUE,TREE_OBJ) { return VALUE; },
 				check_move	: function(NODE,REF_NODE,TYPE,TREE_OBJ) { return true; }
 			},
@@ -180,16 +179,14 @@
 	// core
 	function tree_component () {
 		return {
-			cntr		: ++tree_component.cntr,
-			settings	: $.extend({},$.tree.defaults),
+			cntr : ++tree_component.cntr,
+			settings : $.extend({},$.tree.defaults),
 
 			init : function(elem, conf) {
 				var _this = this;
 				this.container = $(elem);
 				if(this.container.size == 0) return false;
 				tree_component.inst[this.cntr] = this;
-				
-
 				if(!this.container.attr("id")) this.container.attr("id","jstree_" + this.cntr); 
 				tree_component.inst[this.container.attr("id")] = tree_component.inst[this.cntr];
 				tree_component.focused = this.cntr;
@@ -214,7 +211,6 @@
 							if(this.src.toString().match(/jquery\.tree.*?js$/)) { _this.settings.ui.theme_path = this.src.toString().replace(/jquery\.tree.*?js$/, "") + "themes/" + _this.settings.ui.theme_name + "/style.css"; return false; }
 						});
 					}
-					else this.settings.ui.theme_path = this.settings.ui.theme_path.replace(/\/$/,"") + '/' + this.settings.ui.theme_name + '/style.css';
 					if(this.settings.ui.theme_path != "" && $.inArray(this.settings.ui.theme_path, tree_component.themes) == -1) {
 						tree_component.add_sheet({ url : this.settings.ui.theme_path });
 						tree_component.themes.push(this.settings.ui.theme_path);
@@ -227,11 +223,11 @@
 					if(!this.settings.types.hasOwnProperty(t)) continue;
 					if(!this.settings.types[t].icon) continue;
 					if( this.settings.types[t].icon.image || this.settings.types[t].icon.position) {
-						if(t == "default")  type_icons += '#' + this.container.attr("id") + ' li > a ins { ';
-						else type_icons += '#' + this.container.attr("id") + ' li[rel=' + t + '] > a ins { ';
-						if(this.settings.types[t].icon.image) type_icons += ' background-image:url(' + this.settings.types[t].icon.image + '); ';
-						if(this.settings.types[t].icon.position) type_icons += ' background-position:' + this.settings.types[t].icon.position + '; ';
-						type_icons += '} ';
+						if(t == "default")  type_icons += "#" + this.container.attr("id") + " li > a ins { ";
+						else type_icons += "#" + this.container.attr("id") + " li[rel=" + t + "] > a ins { ";
+						if(this.settings.types[t].icon.image) type_icons += " background-image:url(" + this.settings.types[t].icon.image + "); ";
+						if(this.settings.types[t].icon.position) type_icons += " background-position:" + this.settings.types[t].icon.position + "; ";
+						type_icons += "} ";
 					}
 				}
 				if(type_icons != "") tree_component.add_sheet({ str : type_icons });
@@ -396,7 +392,7 @@
 						//event.stopPropagation(); 
 						return true;
 					});
-				$("li", this.container[0])
+				$("li", this.container.get(0))
 					.live("click", function(event) { // WHEN CLICK IS ON THE ARROW
 						if(event.target.tagName != "LI") return true;
 						_this.off_height();
@@ -405,7 +401,7 @@
 						event.stopPropagation();
 						return false;
 					});
-				$("a", this.container[0])
+				$("a", this.container.get(0))
 					.live("click", function (event) { // WHEN CLICK IS ON THE TEXT OR ICON
 						if(event.which && event.which == 3) return true;
 						if(_this.locked) {
@@ -413,7 +409,7 @@
 							event.target.blur();
 							return _this.error("LOCKED");
 						}
-						_this.select_branch.apply(_this, [event.target, (event.ctrlKey || event.metaKey) || _this.settings.rules.multiple == "on"]);
+						_this.select_branch.apply(_this, [event.target, event.ctrlKey || _this.settings.rules.multiple == "on"]);
 						if(_this.inp) { _this.inp.blur(); }
 						event.preventDefault(); 
 						event.target.blur();
@@ -614,16 +610,14 @@
 				if($(ref_node).closest("li.dragged").size()) return false;
 
 				var tree1 = nod.parents(".tree:eq(0)").get(0);
-				var tree2 = ref_node === -1 ? this.container.get(0) : ref_node.parents(".tree:eq(0)").get(0);
+				var tree2 = ref_node.parents(".tree:eq(0)").get(0);
 				// if different trees
 				if(tree1 && tree1 != tree2) {
 					var m = $.tree.reference(tree2.id).settings.rules.multitree;
-					if(typeof m == "object") m = $.makeArray(m);
 					if(m == "none" || ($.isArray(m) && $.inArray(tree1.id, m) == -1)) return false;
 				}
 
 				var p = (how != "inside") ? this.parent(ref_node) : this.get_node(ref_node);
-				if(ref_node === -1) p = -1;
 				nod = this.get_node(nod);
 				if(p == false) return false;
 				var r = {
@@ -693,16 +687,13 @@
 			select_branch : function (obj, multiple) {
 				if(this.locked) return this.error("LOCKED");
 				if(!obj && this.hovered !== false) obj = this.hovered;
-
 				var _this = this;
 				obj = _this.get_node(obj);
 				if(!obj.size()) return this.error("SELECT: NOT A VALID NODE");
-				
 				obj.children("a").removeClass("hover");
 				// CHECK AGAINST RULES FOR SELECTABLE NODES
 				if(!_this.check("clickable", obj)) return this.error("SELECT: NODE NOT SELECTABLE");
 				if(_this.callback("beforechange",[obj.get(0),_this]) === false) return this.error("SELECT: STOPPED BY USER");
-				
 				// IF multiple AND obj IS ALREADY SELECTED - DESELECT IT
 				if(this.settings.rules.multiple != false && multiple && obj.children("a.clicked").size() > 0) {
 					return this.deselect_branch(obj);
@@ -774,39 +765,58 @@
 				if(obj.hasClass("closed"))	return this.open_branch(obj);
 				if(obj.hasClass("open"))	return this.close_branch(obj); 
 			},
-
 			open_branch : function (obj, disable_animation, callback) {
 				var _this = this;
+
 				if(this.locked) return this.error("LOCKED");
 				var obj = this.get_node(obj);
 				if(!obj.size()) return this.error("OPEN: NO SUCH NODE");
 				if(obj.hasClass("leaf")) return this.error("OPEN: OPENING LEAF NODE");
-
 				if(this.settings.data.async && obj.find("li").size() == 0) {
-					obj.children("a").addClass("loading");
-					//obj.children("ul:eq(0)").remove().end().append("<ul><li class='last'><a class='loading' href='#'><ins>&nbsp;</ins>" + (_this.settings.lang.loading || "Loading ...") + "</a></li></ul>");
-					//obj.removeClass("closed").addClass("open");
+					
+					if(this.callback("beforeopen",[obj.get(0),this]) === false) return this.error("OPEN: STOPPED BY USER");
 
-					this._load_branch(obj, function () { _this.open_branch(obj, disable_animation, callback); });
-					return;
-				}
-				obj.children("a").removeClass("loading");
-
-				if(this.callback("beforeopen",[obj.get(0),this]) === false) return this.error("OPEN: STOPPED BY USER");
-
-				if(parseInt(this.settings.ui.animation) > 0 && !disable_animation ) {
-					obj.children("ul:eq(0)").css("display","none");
+					obj.children("ul:eq(0)").remove().end().append("<ul><li class='last'><a class='loading' href='#'><ins>&nbsp;</ins>" + (_this.settings.lang.loading || "Loading ...") + "</a></li></ul>");
 					obj.removeClass("closed").addClass("open");
-					obj.children("ul:eq(0)").slideDown(parseInt(this.settings.ui.animation), function() {
-						$(this).css("display","");
-						if(callback) callback.call();
+
+					var _datastore = new $.tree.datastores[this.settings.data.type]();
+					_datastore.load(this.callback("beforedata",[obj,this]),this,this.settings.data.opts,function(data){
+						data = _this.callback("ondata", [data, _this]);
+						if(!data || data.length == 0) {
+							obj.removeClass("closed").removeClass("open").addClass("leaf").children("ul").remove();
+							if(callback) callback.call();
+							return;
+						}
+						_datastore.parse(data,_this,_this.settings.data.opts,function(str){
+							str = _this.callback("onparse", [str, _this]);
+							// if(obj.children('ul:eq(0)').children('li').size() > 1) obj.children("ul").find('.loaading').parent().replaceWith(str); else 
+							obj.children("ul:eq(0)").replaceWith($("<ul>").html(str));
+							obj.find("li:last-child").addClass("last").end().find("li:has(ul)").not(".open").addClass("closed");
+							obj.find("li").not(".open").not(".closed").addClass("leaf");
+							_this.open_branch.apply(_this, [obj]);
+							if(callback) callback.call();
+						});
 					});
-				} else {
-					obj.removeClass("closed").addClass("open");
-					if(callback) callback.call();
+					return true;
 				}
-				this.callback("onopen", [obj.get(0), this]);
-				return true;
+				else {
+					if(!this.settings.data.async) {
+						if(this.callback("beforeopen",[obj.get(0),this]) === false) return this.error("OPEN: STOPPED BY USER");
+					}
+					if(parseInt(this.settings.ui.animation) > 0 && !disable_animation ) {
+						obj.children("ul:eq(0)").css("display","none");
+						obj.removeClass("closed").addClass("open");
+						obj.children("ul:eq(0)").slideDown(parseInt(this.settings.ui.animation), function() {
+							$(this).css("display","");
+							if(callback) callback.call();
+						});
+					} else {
+						obj.removeClass("closed").addClass("open");
+						if(callback) callback.call();
+					}
+					this.callback("onopen", [obj.get(0), this]);
+					return true;
+				}
 			},
 			close_branch : function (obj, disable_animation) {
 				if(this.locked) return this.error("LOCKED");
@@ -818,12 +828,10 @@
 					obj.children("ul:eq(0)").slideUp(parseInt(this.settings.ui.animation), function() {
 						if(obj.hasClass("open")) obj.removeClass("open").addClass("closed");
 						$(this).css("display","");
-						_this.callback("onclose", [obj.get(0), _this]);
 					});
 				} 
 				else {
 					if(obj.hasClass("open")) obj.removeClass("open").addClass("closed");
-					this.callback("onclose", [obj.get(0), this]);
 				}
 				if(this.selected && this.settings.ui.selected_parent_close !== false && obj.children("ul:eq(0)").find("a.clicked").size() > 0) {
 					obj.find("li:has(a.clicked)").each(function() {
@@ -831,6 +839,7 @@
 					});
 					if(this.settings.ui.selected_parent_close == "select_parent" && obj.children("a.clicked").size() == 0) this.select_branch(obj, (this.settings.rules.multiple != false && this.selected_arr.length > 0) );
 				}
+				this.callback("onclose", [obj.get(0), this]);
 			},
 			open_all : function (obj, callback) {
 				if(this.locked) return this.error("LOCKED");
@@ -876,131 +885,45 @@
 				return this.current_lang;
 			},
 
-			_load_branch : function (obj, callback) {
-				var _this = this;
-				var obj = this.get_node(obj);
-				if(!obj.size()) return this.error("LOAD: NO SUCH NODE");
-				if(this.settings.data.async) {
-					var _datastore = new $.tree.datastores[this.settings.data.type]();
-					_datastore.load(this.callback("beforedata",[obj,this]),this,this.settings.data.opts,function(data){
-						data = _this.callback("ondata", [data, _this]);
-						if(!data || data.length == 0) {
-							obj.removeClass("closed").removeClass("open").addClass("leaf").children("ul").remove();
-							if(callback) callback.call();
-							return;
-						}
-						_datastore.parse(data,_this,_this.settings.data.opts,function(str){
-							str = _this.callback("onparse", [str, _this]);
-							// if(obj.children('ul:eq(0)').children('li').size() > 1) obj.children("ul").find('.loaading').parent().replaceWith(str); else 
-							obj.children("ul").remove();
-							obj.append($("<ul>").html(str));
-							obj.find("li:last-child").addClass("last").end().find("li:has(ul)").not(".open").addClass("closed");
-							obj.find("li").not(".open").not(".closed").addClass("leaf");
-							if(callback) callback.call();
-						});
-					});
-				}
-			},
-			_create : function (obj, ref_node, position, supress_callback) {
-				if(ref_node != -1) ref_node = this.get_node(ref_node);
-				if(typeof position == "undefined") position = "inside";
-				if(ref_node != -1 && position != "after" && position != "before" && ref_node.hasClass("closed") && this.settings.data.async && ref_node.children("ul").size() == 0) {
-					var _this = this;
-					return this._load_branch(ref_node, function () { _this._create.apply(_this, [obj, ref_node, position, supress_callback]); } );
-				}
-				switch(position) {
-					case "before":
-						position = ref_node.parent().children().index(ref_node);
-						ref_node = this.parent(ref_node);
-						break;
-					case "after":
-						position = ref_node.parent().children().index(ref_node) + 1;
-						ref_node = this.parent(ref_node);
-						break;
-					case "inside":
-						position = (this.settings.rules.createat == "top") ? 0 : this.children(ref_node).size();
-						break;
-					default: break;
-				}
-				// by this point ref_node is the parent node where we are inserting 
-				// and its children are loaded (or is -1 if we are inserting a root node)
-				// and position is a numeric index to insert in
-				var ref_dom = (ref_node == -1) ? this.container : ref_node;
-				var $ul = false;
-				// if the insert place has no ul in it
-				if(ref_dom.children("ul").size() == 0) {
-					if(ref_node != -1 && !ref_node.hasClass("open closed")) ref_node.removeClass("leaf").addClass("closed");
-					$ul = $("<ul>");
-					ref_dom.append($ul);
-				}
-				else { $ul = ref_dom.children("ul:eq(0)"); }
-				
-				if(obj instanceof jQuery) {
-					$li = obj;
-				}
-				else {
-					// parse data
-					obj = this.callback("ondata",[obj, this]);
-					var obj_s = $.tree.datastores.json().parse(obj,this);
-					obj_s = this.callback("onparse", [obj_s, this]);
-					var $li = $(obj_s);
-				}
-				// clean it up
-				if($li.children("ul").size()) { if(!$li.is(".open")) { $li.addClass("closed"); } }
-				else { $li.addClass("leaf"); }
-				$li.find("li:last-child").addClass("last").end().find("li:has(ul)").not(".open").addClass("closed");
-				$li.find("li").not(".open").not(".closed").addClass("leaf");
-				// append data (nth-child is not zero based)
-				var $ref_li = $ul.children("li:nth-child(" + (position + 1) + ")");
-				if($ref_li.size()) { $ref_li.before($li); }
-				else { $ul.append($li); }
-				$ul.children(".last").removeClass("last").end().children("li:last-child").addClass("last");
-				
-				if(!supress_callback) {
-					this.callback("oncreate", [{
-						'node'		: $li.get(0),
-						'parent'	: ref_node == -1 ? -1 : ref_node.get(0),
-						'position'	: position,
-						'is_ui'		: false
-					}]);
-				}
-
-				// return the created node
-				return $li;
-			},
 			create : function (obj, ref_node, position) { 
 				if(this.locked) return this.error("LOCKED");
-				if(ref_node != -1) ref_node = ref_node ? this.get_node(ref_node) : this.selected;
-				if(ref_node != -1 && (!ref_node || !ref_node.size())) return this.error("CREATE: NO NODE SELECTED");
-				if(typeof position == "undefined") position = "inside";
-				if(ref_node != -1 && position != "after" && position != "before" && ref_node.hasClass("closed")) {
-					if(this.settings.data.async && ref_node.children("ul").size() == 0) {
-						var _this = this;
-						return this.open_branch(ref_node, true, function () { _this.create.apply(_this, [obj, ref_node, position]); } );
-					}
-					else { this.open_branch(ref_node, true); }
-				}
-				switch(position) {
-					case "before":
-						position = ref_node.parent().children().index(ref_node);
-						ref_node = this.parent(ref_node);
-						break;
-					case "after":
-						position = ref_node.parent().children().index(ref_node) + 1;
-						ref_node = this.parent(ref_node);
-						break;
-					case "inside":
-						position = (this.settings.rules.createat == "top") ? 0 : this.children(ref_node).size();
-						break;
-					default: break;
-				}
-				if(!this.check("creatable", ref_node)) return this.error("CREATE: CANNOT CREATE IN NODE");
 				
+				var root = false;
+				if(ref_node == -1) { root = true; ref_node = this.container; }
+				else ref_node = ref_node ? this.get_node(ref_node) : this.selected;
+
+				if(!root && (!ref_node || !ref_node.size())) return this.error("CREATE: NO NODE SELECTED");
+
+				var pos = position;
+
+				var tmp = ref_node; // for type calculation
+				if(position == "before") {
+					position = ref_node.parent().children().index(ref_node);
+					ref_node = ref_node.parents("li:eq(0)");
+				}
+				if(position == "after") {
+					position = ref_node.parent().children().index(ref_node) + 1;
+					ref_node = ref_node.parents("li:eq(0)");
+				}
+				if(!root && ref_node.size() == 0) { root = true; ref_node = this.container; }
+
+				if(!root) {
+					if(!this.check("creatable", ref_node)) return this.error("CREATE: CANNOT CREATE IN NODE");
+					if(ref_node.hasClass("closed")) {
+						if(this.settings.data.async && ref_node.children("ul").size() == 0) {
+							var _this = this;
+							return this.open_branch(ref_node, true, function () { _this.create.apply(_this, [obj, ref_node, position]); } );
+						}
+						else this.open_branch(ref_node, true);
+					}
+				}
+
+				// creating new object to pass to parseJSON
 				var torename = false; 
 				if(!obj)	obj = {};
 				else		obj = $.extend(true, {}, obj);
 				if(!obj.attributes) obj.attributes = {};
-				if(!obj.attributes[this.settings.rules.type_attr]) obj.attributes[this.settings.rules.type_attr] = this.get_type(ref_node) || "default";
+				if(!obj.attributes[this.settings.rules.type_attr]) obj.attributes[this.settings.rules.type_attr] = this.get_type(tmp) || "default";
 				if(this.settings.languages.length) {
 					if(!obj.data) { obj.data = {}; torename = true; }
 					for(var i = 0; i < this.settings.languages.length; i++) {
@@ -1011,20 +934,30 @@
 					if(!obj.data) { obj.data = this.settings.lang.new_node; torename = true; }
 				}
 
-				// parse data
 				obj = this.callback("ondata",[obj, this]);
 				var obj_s = $.tree.datastores.json().parse(obj,this);
 				obj_s = this.callback("onparse", [obj_s, this]);
 				var $li = $(obj_s);
 
+				if($li.children("ul").size()) {
+					if(!$li.is(".open")) $li.addClass("closed");
+				}
+				else $li.addClass("leaf");
+				$li.find("li:last-child").addClass("last").end().find("li:has(ul)").not(".open").addClass("closed");
+				$li.find("li").not(".open").not(".closed").addClass("leaf");
+
 				var r = {
-					max_depth : this.settings.rules.use_max_depth ? this.check("max_depth", ref_node) : -1,
-					max_children : this.settings.rules.use_max_children ? this.check("max_children", ref_node) : -1,
-					valid_children : this.check("valid_children", ref_node)
+					max_depth : this.settings.rules.use_max_depth ? this.check("max_depth", (root ? -1 : ref_node) ) : -1,
+					max_children : this.settings.rules.use_max_children ? this.check("max_children", (root ? -1 : ref_node) ) : -1,
+					valid_children : this.check("valid_children", (root ? -1 : ref_node) )
 				};
+				var nod_type = this.get_type($li);
+				if(typeof r.valid_children != "undefined" && (r.valid_children == "none" || ($.isArray(r.valid_children) && $.inArray(nod_type, r.valid_children) == -1))) return this.error("CREATE: NODE NOT A VALID CHILD");
+
 				if(this.settings.rules.use_max_children) {
 					if(typeof r.max_children != "undefined" && r.max_children != -1 && r.max_children >= this.children(ref_node).size()) return this.error("CREATE: MAX_CHILDREN REACHED");
 				}
+
 				if(this.settings.rules.use_max_depth) {
 					if(typeof r.max_depth != "undefined" && r.max_depth === 0) return this.error("CREATE: MAX-DEPTH REACHED");
 					// check for max_depth up the chain
@@ -1032,7 +965,7 @@
 					var i = 0;
 					var t = ref_node;
 
-					while(t !== -1) {
+					while(t !== -1 && !root) {
 						t = this.parent(t);
 						i ++;
 						var m = this.check("max_depth",t);
@@ -1053,139 +986,81 @@
 					}
 				}
 
-				if(!this.callback("beforecreate", [{
-					'node'		: $li.get(0),
-					'parent'	: ref_node == -1 ? -1 : ref_node.get(0),
-					'position'	: position
-				}])) return this.error("CREATE: STOPPED");
+				if((typeof position).toLowerCase() == "undefined" || position == "inside") 
+					position = (this.settings.rules.createat == "top") ? 0 : ref_node.children("ul:eq(0)").children("li").size();
+				if(ref_node.children("ul").size() == 0 || (root == true && ref_node.children("ul").children("li").size() == 0) ) {
+					if(!root)	var a = this.moved($li,ref_node.children("a:eq(0)"),"inside", true);
+					else		var a = this.moved($li,this.container.children("ul:eq(0)"),"inside", true);
+				}
+				else if(pos == "before" && ref_node.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").size())
+					var a = this.moved($li,ref_node.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").children("a:eq(0)"),"before", true);
+				else if(pos == "after" &&  ref_node.children("ul:eq(0)").children("li:nth-child(" + (position) + ")").size())
+					var a = this.moved($li,ref_node.children("ul:eq(0)").children("li:nth-child(" + (position) + ")").children("a:eq(0)"),"after", true);
+				else if(ref_node.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").size())
+					var a = this.moved($li,ref_node.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").children("a:eq(0)"),"before", true);
+				else
+					var a = this.moved($li,ref_node.children("ul:eq(0)").children("li:last").children("a:eq(0)"),"after",true);
 
-				// Rollback
-				var rb = {}; 
-				rb[this.container.attr("id")] = this.get_rollback();
-				$li = this._create($li, ref_node, position, true);
+				if(a === false) return this.error("CREATE: ABORTED");
 
-				this.select_branch($li.children("a:eq(0)"));
-				this.rename(false, true, rb);
+				if(torename) {
+					this.select_branch($li.children("a:eq(0)"));
+					this.rename();
+				}
 				return $li;
 			},
-			_rename : function (obj, new_name, lang, supress_callback) {
-				obj = this.get_node(obj);
-				if(!obj || !obj.size()) return false;
-
-				if(lang) obj = obj.find("a." + lang);
-				else if(this.current_lang) obj = obj.find("a." + this.current_lang);
-				else obj = obj.find("a:first");
-
-				var icn = obj.children("ins").clone();
-				obj.text(new_name).prepend(icn);
-
-				if(!supress_callback) {
-					this.callback("onrename", [{
-						'node'		: this.get_node(obj).get(0),
-						'new_name'	: new_name,
-						'lang'		: lang ? lang : this.get_lang(),
-						'is_ui'		: false
-					}]);
-				}
-			},
-			rename : function (obj, is_create, create_rb) {
+			rename : function (obj, new_name) {
 				if(this.locked) return this.error("LOCKED");
 				obj = obj ? this.get_node(obj) : this.selected;
 				var _this = this;
 				if(!obj || !obj.size()) return this.error("RENAME: NO NODE SELECTED");
 				if(!this.check("renameable", obj)) return this.error("RENAME: NODE NOT RENAMABLE");
-				if(!this.callback("beforerename",[{ node : obj.get(0), lang : _this.current_lang }])) return this.error("RENAME: STOPPED BY USER");
+				if(!this.callback("beforerename",[obj.get(0), _this.current_lang, _this])) return this.error("RENAME: STOPPED BY USER");
 
 				obj.parents("li.closed").each(function () { _this.open_branch(this) });
+				if(this.current_lang)	obj = obj.find("a." + this.current_lang);
+				else					obj = obj.find("a:first");
 
 				// Rollback
 				var rb = {}; 
 				rb[this.container.attr("id")] = this.get_rollback();
 
-				var a = obj.children("a:visible");
-				var last_value = "";
-				a.contents().each(function () {
-					if(this.nodeType == 3) { last_value = this.data; return false; }
-				});
-
-				_this.inp = $("<input type='text' autocomplete='off' />");
-				_this.inp
-					.val(last_value.replace(/&amp;/g,"&").replace(/&gt;/g,">").replace(/&lt;/g,"<"))
-					.bind("mousedown",		function (event) { event.stopPropagation(); })
-					.bind("mouseup",		function (event) { event.stopPropagation(); })
-					.bind("click",			function (event) { event.stopPropagation(); })
-					.bind("keyup",			function (event) { 
-							var key = event.keyCode || event.which;
-							if(key == 27) { this.value = last_value; this.blur(); return }
-							if(key == 13) { this.blur(); return; }
+				var icn = obj.children("ins").clone();
+				if((typeof new_name).toLowerCase() == "string") {
+					obj.text(new_name).prepend(icn);
+					_this.callback("onrename", [_this.get_node(obj).get(0), _this, rb]);
+				}
+				else {
+					var last_value = "";
+					obj.contents().each(function () {
+						if(this.nodeType == 3) { last_value = this.data; return false; }
+					});
+					_this.inp = $("<input type='text' autocomplete='off' />");
+					_this.inp
+						.val(last_value.replace(/&amp;/g,"&").replace(/&gt;/g,">").replace(/&lt;/g,"<"))
+						.bind("mousedown",		function (event) { event.stopPropagation(); })
+						.bind("mouseup",		function (event) { event.stopPropagation(); })
+						.bind("click",			function (event) { event.stopPropagation(); })
+						.bind("keyup",			function (event) { 
+								var key = event.keyCode || event.which;
+								if(key == 27) { this.value = last_value; this.blur(); return }
+								if(key == 13) { this.blur(); return; }
+							});
+					_this.inp.blur(function(event) {
+							if(this.value == "") this.value = last_value; 
+							obj.text(this.value).prepend(icn);
+							obj.get(0).style.display = ""; 
+							obj.prevAll("span").remove(); 
+							_this.inp = false;
+							_this.callback("onrename", [_this.get_node(obj).get(0), _this, rb]);
 						});
-				_this.inp.blur(function(event) {
-						if(this.value == "") this.value = last_value; 
-						_this._rename(obj, this.value, false, true);
-						a.get(0).style.display = ""; 
-						a.prevAll("span").remove(); 
-						_this.inp = false;
-						if(is_create) {
-							var par = _this.parent(a);
-							_this.callback("oncreate", [{
-								'node'		: _this.get_node(a).get(0),
-								'parent'	: par == -1 ? -1 : par.get(0),
-								'new_name'	: this.value,
-								'lang'		: _this.get_lang(),
-								'is_ui'		: true,
-								'rollback'	: create_rb
-							}]);
-						}
-						else {
-							_this.callback("onrename", [{
-								'node'		: _this.get_node(obj).get(0),
-								'new_name'	: this.value,
-								'lang'		: _this.get_lang(),
-								'is_ui'		: true,
-								'last_name'	: last_value,
-								'rollback'	: rb
-							}]);
-						}
-					});
 
-				var spn = $("<span />").addClass(obj.attr("class")).append(a.children("ins").clone()).append(_this.inp);
-				a.get(0).style.display = "none";
-				obj.prepend(spn);
-				_this.inp.get(0).focus();
-				_this.inp.get(0).select();
-			},
-			_remove : function (obj, supress_callback) {
-				obj = this.get_node(obj);
-				if(!obj.size()) return false;
-				var _this = this;
-				var $parent = obj.parent();
-				var rebuild_selected_arr = obj.find("a.clicked").size() && this.selected_arr ? true : false;
-				var reset_selected = (obj.get(0) == this.selected || obj.find("li").index(this.selected) != -1) ? true : false;
-				obj = obj.remove();
-				$parent.children("li:last").addClass("last");
-				if($parent.children("li").size() == 0) {
-					$li = $parent.parents("li:eq(0)");
-					$li.removeClass("open").removeClass("closed").addClass("leaf").children("ul").remove();
+					var spn = $("<span />").addClass(obj.attr("class")).append(icn).append(_this.inp);
+					obj.get(0).style.display = "none";
+					obj.parent().prepend(spn);
+					_this.inp.get(0).focus();
+					_this.inp.get(0).select();
 				}
-
-				if(rebuild_selected_arr) {
-					this.selected_arr = [];
-					this.container.find("a.clicked").filter(":first-child").parent().each(function () {
-						_this.selected_arr.push($(this));
-					});
-				}
-				if(reset_selected && this.selected_arr) {
-					this.selected = this.selected_arr[0] || false;
-				}
-				$parent = this.get_node($parent);
-				if(!supress_callback) {
-					this.callback("ondelete", [{ 
-						'node'		: objs[i].get(0), 
-						'parent'	: $parent == -1 ? $parent : $parent.get(0),
-						'is_ui'		: false
-					}]);
-				}
-				return obj;
 			},
 			remove : function(obj) {
 				if(this.locked) return this.error("LOCKED");
@@ -1194,194 +1069,62 @@
 				// Rollback
 				var rb = {}; 
 				rb[this.container.attr("id")] = this.get_rollback();
-				
-				var objs = [];
-				if(obj) objs.push(this.get_node(obj));
-				else {
-					if(!this.selected) return this.error("DELETE: NO NODE SELECTED");
-					if(this.selected_arr) objs = $.makeArray(this.selected_arr);
-					else objs.push(this.selected);
-					var to_select = this.settings.ui.selected_delete == "select_previous" ? this.prev(this.selected) : false;
-				}
-				for(var i = 0; i < objs.length; i++) {
-					if(!this.check("deletable", objs[i])) {
-						this.error("DELETE: NODE NOT DELETABLE");
-						continue;
-					}
-					if(!this.callback("beforedelete",[{ node : objs[i] }])) {
-						this.error("DELETE: STOPPED BY USER");
-						continue;
-					}
-					var $parent = _this.parent(objs[i]);
-					var tmp = this._remove(objs[i], true);
-					this.callback("ondelete", [{ 
-						'node'		: tmp.get(0), 
-						'parent'	: $parent == -1 ? $parent : $parent.get(0),
-						'is_ui'		: true,
-						'rollback'	: rb
-					}]);
-				}
-				if(to_select) this.select_branch(to_select);
-			},
-			_move : function (obj, ref_node, position, is_copy, supress_callback) {
-				obj = this.get_node(obj);
-				if(ref_node != -1) ref_node = this.get_node(ref_node);
-				if(typeof position == "undefined") position = "inside";
-				if(ref_node != -1 && position != "after" && position != "before" && ref_node.hasClass("closed") && this.settings.data.async && ref_node.children("ul").size() == 0) {
-					var _this = this;
-					return this._load_branch(ref_node, function () { _this._move.apply(_this, [obj, ref_node, position, is_copy, supress_callback]); } );
-				}
-				switch(position) {
-					case "before":
-						position = ref_node.parent().children().index(ref_node);
-						ref_node = this.parent(ref_node);
-						break;
-					case "after":
-						position = ref_node.parent().children().index(ref_node) + 1;
-						ref_node = this.parent(ref_node);
-						break;
-					case "inside":
-						position = (this.settings.rules.createat == "top") ? 0 : this.children(ref_node).size();
-						break;
-					default: break;
-				}
-				var new_parent = (ref_node == -1) ? this.container : ref_node;
-				var old_parent = this.parent(obj);
 
-				var _obj = obj;
-				if(is_copy) {
-					_obj = obj.clone();
-					_obj.each(function (i) {
-						this.id = this.id + "_copy";
-						$(this).find("li").each(function () {
-							this.id = this.id + "_copy";
-						});
-						$(this).removeClass("dragged").find("a.clicked").removeClass("clicked").end().find("li.dragged").removeClass("dragged");
-					});
-				}
-				var tree_1 = $.tree.reference(obj);
-				var tree_2 = ref_node == -1 ? this : $.tree.reference(ref_node);
-				if(tree_1.cntr != tree_2.cntr) {
-					var res = [];
-					if(tree_1.settings.languages.length && tree_2.settings.languages.length) {
-						res = jQuery.map(tree_2.settings.languages, function(n,i) { return ('.' + n.toUpperCase()); });
-						_obj.find("a").not(res.join(",")).remove();
-						if(!obj.find("a:eq(0)").size()) return this.error("MOVE: NO COMMON LANGUAGES");
-					}
-					else if(tree_1.settings.languages.length) {
-						var t1cl = tree_1.get_lang();
-						_obj.find("a").not("." + t1cl).remove();
-						_obj.find("a").removeClass(t1cl);
-					}
-					else if(tree_2.settings.languages.length) {
-						var t2cl = tree_2.get_lang();
-						_obj.find("a").addClass(t2cl);
-					}
-					_obj.find("a.clicked").removeClass("clicked");
-				}
-
-				var $ul = false;
-				// if the insert place has no ul in it
-				if(new_parent.children("ul").size() == 0) {
-					if(ref_node != -1 && !new_parent.hasClass("open closed")) new_parent.removeClass("leaf").addClass("closed");
-					$ul = $("<ul>");
-					new_parent.append($ul);
-				}
-				else { $ul = new_parent.children("ul:eq(0)"); }
-
-				var $ref_li = $ul.children("li:nth-child(" + (position + 1) + ")");
-				if($ref_li.get(0) !== _obj.get(0)) {
-					if($ref_li.size()) { $ref_li.before(_obj.removeClass("last")); }
-					else { $ul.append(_obj.removeClass("last")); }
-				}
-				// clean the new parent
-				$ul.children(".last").removeClass("last").end().children("li:last-child").addClass("last");
-				// clean the old parent
-				if(old_parent === -1) old_parent = tree_1.container;
-				old_parent.children("ul").children(".last").removeClass("last").end().children("li:last-child").addClass("last");
-				if(!supress_callback) {
-					this.callback( (is_copy ? "onmove" : "oncopy"), [{
-						'node'			: _obj.get(0),
-						'parent'		: ref_node == -1 ? -1 : ref_node.get(0),
-						'position'		: position,
-						'is_ui'			: false,
-						'old_parent'	: old_parent.get(0),
-						'origin_tree'	: tree_1,
-						'receiving_tree': tree_2
-					}]);
-				}
-				return _obj;
-			},
-			moved : function (obj, ref_node, position, is_copy, rb) {
-				if(ref_node != -1) ref_node = this.get_node(ref_node);
-				if(typeof position == "undefined") position = "inside";
-				if(ref_node != -1 && position != "after" && position != "before" && ref_node.hasClass("closed") && this.settings.data.async && ref_node.children("ul").size() == 0) {
-					var _this = this;
-					return this.open_branch(ref_node, true, function () { _this.moved.apply(_this, [obj, ref_node, position, is_copy, rb]); } );
-				}
-
-				if($(obj).size() > 1) {
-					var _this = this;
-					var tmp = this.moved(obj.eq(0), ref_node, position, is_copy, rb);
-					obj.each(function (i) {
-						if(i == 0) return;
-						if(tmp) { // if tmp is false - the previous move was a no-go
-							tmp = _this.moved(this, tmp, "after", is_copy, rb);
+				if(obj && (!this.selected || this.get_node(obj).get(0) != this.selected.get(0) )) {
+					obj = this.get_node(obj);
+					if(obj.size()) {
+						if(!this.check("deletable", obj)) return this.error("DELETE: NODE NOT DELETABLE");
+						if(!this.callback("beforedelete",[obj.get(0), _this])) return this.error("DELETE: STOPPED BY USER");
+						$parent = obj.parent();
+						if(obj.find("a.clicked").size()) {
+							var reset_selected = false;
+							_this.selected_arr = [];
+							this.container.find("a.clicked").filter(":first-child").parent().each(function () {
+								if(!reset_selected && this == _this.selected.get(0)) reset_selected = true;
+								if($(this).parents().index(obj) != -1) return true;
+								_this.selected_arr.push($(this));
+							});
+							if(reset_selected) this.selected = this.selected_arr[0] || false;
 						}
-					});
-					return obj;
+						obj = obj.remove();
+						$parent.children("li:last").addClass("last");
+						if($parent.children("li").size() == 0) {
+							$li = $parent.parents("li:eq(0)");
+							$li.removeClass("open").removeClass("closed").addClass("leaf").children("ul").remove();
+						}
+						this.callback("ondelete", [obj.get(0), this, rb]);
+					}
 				}
-
-				if(!this.check_move(obj, ref_node, position)) return false;
-
-				obj = this.get_node(obj);
-				switch(position) {
-					case "before":
-						position = ref_node.parent().children().index(ref_node);
-						ref_node = this.parent(ref_node);
-						break;
-					case "after":
-						position = ref_node.parent().children().index(ref_node) + 1;
-						ref_node = this.parent(ref_node);
-						break;
-					case "inside":
-						position = (this.settings.rules.createat == "top") ? 0 : this.children(ref_node).size();
-						break;
-					default: break;
+				else if(this.selected) {
+					if(!this.check("deletable", this.selected)) return this.error("DELETE: NODE NOT DELETABLE");
+					if(!this.callback("beforedelete",[this.selected.get(0), _this])) return this.error("DELETE: STOPPED BY USER");
+					$parent = this.selected.parent();
+					var obj = this.selected;
+					if(this.settings.rules.multiple == false || this.selected_arr.length == 1) {
+						var stop = true;
+						var tmp = this.settings.ui.selected_delete == "select_previous" ? this.prev(this.selected) : false;
+					}
+					obj = obj.remove();
+					$parent.children("li:last").addClass("last");
+					if($parent.children("li").size() == 0) {
+						$li = $parent.parents("li:eq(0)");
+						$li.removeClass("open").removeClass("closed").addClass("leaf").children("ul").remove();
+					}
+					if(!stop && this.settings.rules.multiple != false) {
+						var _this = this;
+						this.selected_arr = [];
+						this.container.find("a.clicked").filter(":first-child").parent().each(function () {
+							_this.selected_arr.push($(this));
+						});
+						if(this.selected_arr.length > 0) {
+							this.selected = this.selected_arr[0];
+							this.remove();
+						}
+					}
+					if(stop && tmp) this.select_branch(tmp); 
+					this.callback("ondelete", [obj.get(0), this, rb]);
 				}
-				var new_parent = (ref_node == -1) ? this.container : ref_node;
-				var old_parent = this.parent(obj);
-				var tree_1 = $.tree.reference(obj);
-				var tree_2 = ref_node == -1 ? this : $.tree.reference(ref_node);
-
-				if(!this.callback( (is_copy ? "beforecopy" : "beforemove"), [{
-						'node'			: obj.get(0),
-						'parent'		: ref_node == -1 ? -1 : ref_node.get(0),
-						'position'		: position,
-						'is_ui'			: false,
-						'old_parent'	: old_parent == -1 ? -1 : old_parent.get(0),
-						'origin_tree'	: tree_1,
-						'receiving_tree': tree_2
-					}])) return false;
-
-				// Rollback
-				if(!rb) {
-					var rb = {}; 
-					rb[tree_1.container.attr("id")] = tree_1.get_rollback();
-					rb[tree_2.container.attr("id")] = tree_2.get_rollback();
-				}
-				var _obj = this._move(obj, ref_node, position, is_copy, true);
-				if(_obj) { var _this = this; _obj.parents(".closed").each(function () { _this.open_branch(this); }); }
-				this.callback( (is_copy ? "oncopy" : "onmove"), [{
-					'node'			: _obj.get(0),
-					'parent'		: ref_node == -1 ? -1 : ref_node.get(0),
-					'position'		: position,
-					'is_ui'			: true,
-					'old_parent'	: old_parent == -1 ? -1 : old_parent.get(0),
-					'origin_tree'	: tree_1,
-					'receiving_tree': tree_2
-				}]);
-				return _obj;
+				else return this.error("DELETE: NO NODE SELECTED");
 			},
 
 			next : function (obj, strict) {
@@ -1442,13 +1185,168 @@
 					}
 				}
 				p = this.settings.callback[cb];
-				if(typeof p == "function") return p.apply(this, args);
+				if(typeof p == "function") return p.apply(null, args);
 			},
 			get_rollback : function () {
 				var rb = {};
 				rb.html = this.container.html();
 				rb.selected = this.selected ? this.selected.attr("id") : false;
 				return rb;
+			},
+			moved : function (what, where, how, is_new, is_copy, rb) {
+				var what	= $(what);
+				var $parent	= $(what).parents("ul:eq(0)");
+				var $where	= $(where);
+				if($where.is("ins")) $where = $where.parent();
+
+				// Rollback
+				if(!rb) {
+					var rb = {}; 
+					rb[this.container.attr("id")] = this.get_rollback();
+					if(!is_new) {
+						var tmp = what.size() > 1 ? what.eq(0).parents(".tree:eq(0)") : what.parents(".tree:eq(0)");
+						if(tmp.get(0) != this.container.get(0)) {
+							tmp = tree_component.inst[tmp.attr("id")];
+							rb[tmp.container.attr("id")] = tmp.get_rollback();
+						}
+						delete tmp;
+					}
+				}
+
+				if(how == "inside" && this.settings.data.async) {
+					var _this = this;
+					if(this.get_node($where).hasClass("closed")) {
+						return this.open_branch(this.get_node($where), true, function () { _this.moved.apply(_this, [what, where, how, is_new, is_copy, rb]); });
+					}
+					if(this.get_node($where).find("> ul > li > a.loading").size() == 1) {
+						setTimeout(function () { _this.moved.apply(_this, [what, where, how, is_new, is_copy]); }, 200);
+						return;
+					}
+				}
+
+
+				// IF MULTIPLE
+				if(what.size() > 1) {
+					var _this = this;
+					var tmp = this.moved(what.eq(0), where, how, false, is_copy, rb);
+					what.each(function (i) {
+						if(i == 0) return;
+						if(tmp) { // if tmp is false - the previous move was a no-go
+							tmp = _this.moved(this, tmp.children("a:eq(0)"), "after", false, is_copy, rb);
+						}
+					});
+					return what;
+				}
+
+				if(is_copy) {
+					_what = what.clone();
+					_what.each(function (i) {
+						this.id = this.id + "_copy";
+						$(this).find("li").each(function () {
+							this.id = this.id + "_copy";
+						});
+						$(this).removeClass("dragged").find("a.clicked").removeClass("clicked").end().find("li.dragged").removeClass("dragged");
+					});
+				}
+				else _what = what;
+				if(is_new) {
+					if(!this.callback("beforecreate", [this.get_node(what).get(0), this.get_node(where).get(0),how,this])) return false;
+				}
+				else {
+					if(!this.callback("beforemove", [this.get_node(what).get(0), this.get_node(where).get(0),how,this])) return false;
+				}
+
+				if(!is_new) {
+					var tmp = what.parents(".tree:eq(0)");
+					// if different trees
+					if(tmp.get(0) != this.container.get(0)) {
+						tmp = tree_component.inst[tmp.attr("id")];
+
+						// if there are languages - otherwise - no cleanup needed
+						if(tmp.settings.languages.length) {
+							var res = [];
+							// if new tree has no languages - use current visible
+							if(this.settings.languages.length == 0) res.push("." + tmp.current_lang);
+							else {
+								for(var i in this.settings.languages) {
+									if(!this.settings.languages.hasOwnProperty(i)) continue;
+									for(var j in tmp.settings.languages) {
+										if(!tmp.settings.languages.hasOwnProperty(j)) continue;
+										if(this.settings.languages[i] == tmp.settings.languages[j]) res.push("." + this.settings.languages[i]);
+									}
+								}
+							}
+							if(res.length == 0) return this.error("MOVE: NO COMMON LANGUAGES");
+							_what.find("a").not(res.join(",")).remove();
+						}
+						_what.find("a.clicked").removeClass("clicked");
+					}
+				}
+				what = _what;
+
+				// ADD NODE TO NEW PLACE
+				switch(how) {
+					case "before":
+						$where.parents("ul:eq(0)").children("li.last").removeClass("last");
+						$where.parent().before(what.removeClass("last"));
+						$where.parents("ul:eq(0)").children("li:last").addClass("last");
+						break;
+					case "after":
+						$where.parents("ul:eq(0)").children("li.last").removeClass("last");
+						$where.parent().after(what.removeClass("last"));
+						$where.parents("ul:eq(0)").children("li:last").addClass("last");
+						break;
+					case "inside":
+						if($where.parent().children("ul:first").size()) {
+							if(this.settings.rules.createat == "top") {
+								$where.parent().children("ul:first").prepend(what.removeClass("last")).children("li:last").addClass("last");
+
+								// restored this section
+								var tmp_node = $where.parent().children("ul:first").children("li:first");
+								if(tmp_node.size()) {
+									how = "before";
+									where = tmp_node;
+								}
+							}
+							else {
+								// restored this section
+								var tmp_node = $where.parent().children("ul:first").children(".last");
+								if(tmp_node.size()) {
+									how = "after";
+									where = tmp_node;
+								}
+
+								$where.parent().children("ul:first").children(".last").removeClass("last").end().append(what.removeClass("last")).children("li:last").addClass("last");
+							}
+						}
+						else {
+							what.addClass("last");
+							$where.parent().removeClass("leaf").append("<ul/>");
+							if(!$where.parent().hasClass("open")) $where.parent().addClass("closed");
+							$where.parent().children("ul:first").prepend(what);
+						}
+						if($where.parent().hasClass("closed")) { this.open_branch($where); }
+						break;
+					default:
+						break;
+				}
+				// CLEANUP OLD PARENT
+				if($parent.find("li").size() == 0) {
+					var $li = $parent.parent();
+					$li.removeClass("open").removeClass("closed").addClass("leaf");
+					if(!$li.is(".tree")) $li.children("ul").remove();
+					$li.parents("ul:eq(0)").children("li.last").removeClass("last").end().children("li:last").addClass("last");
+				}
+				else {
+					$parent.children("li.last").removeClass("last");
+					$parent.children("li:last").addClass("last");
+				}
+
+				// NO LONGER CORRECT WITH position PARAM - if(is_new && how != "inside") where = this.get_node(where).parents("li:eq(0)");
+				if(is_copy)		this.callback("oncopy", [this.get_node(what).get(0), this.get_node(where).get(0), how, this, rb]);
+				else if(is_new)	this.callback("oncreate", [this.get_node(what).get(0), ($where.is("ul") ? -1 : this.get_node(where).get(0) ), how, this, rb]);
+				else			this.callback("onmove", [this.get_node(what).get(0), this.get_node(where).get(0), how, this, rb]);
+				return what;
 			},
 			error : function (code) {
 				this.callback("error",[code,this]);
@@ -1482,6 +1380,7 @@
 
 				if(!root && (!obj || !obj.size())) return this.error("PASTE: NO NODE SELECTED");
 				if(!tree_component.cut_copy.copy_nodes && !tree_component.cut_copy.cut_nodes) return this.error("PASTE: NOTHING TO DO");
+
 				var _this = this;
 
 				var pos = position;
@@ -1504,17 +1403,17 @@
 					if(!root && !this.check_move(tree_component.cut_copy.copy_nodes, obj.children("a:eq(0)"), "inside")) return false;
 
 					if(obj.children("ul").size() == 0 || (root == true && obj.children("ul").children("li").size() == 0) ) {
-						if(!root)	var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("a:eq(0)"),"inside", true);
-						else		var a = this.moved(tree_component.cut_copy.copy_nodes,this.container.children("ul:eq(0)"),"inside", true);
+						if(!root)	var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("a:eq(0)"),"inside", false, true);
+						else		var a = this.moved(tree_component.cut_copy.copy_nodes,this.container.children("ul:eq(0)"),"inside", false, true);
 					}
 					else if(pos == "before" && obj.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").size())
-						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").children("a:eq(0)"),"before", true);
+						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").children("a:eq(0)"),"before", false, true);
 					else if(pos == "after" && obj.children("ul:eq(0)").children("li:nth-child(" + (position) + ")").size())
-						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:nth-child(" + (position) + ")").children("a:eq(0)"),"after", true);
+						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:nth-child(" + (position) + ")").children("a:eq(0)"),"after", false, true);
 					else if(obj.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").size())
-						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").children("a:eq(0)"),"before", true);
+						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:nth-child(" + (position + 1) + ")").children("a:eq(0)"),"before", false, true);
 					else
-						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:last").children("a:eq(0)"),"after", true);
+						var a = this.moved(tree_component.cut_copy.copy_nodes,obj.children("ul:eq(0)").children("li:last").children("a:eq(0)"),"after", false, true);
 					tree_component.cut_copy.copy_nodes = false;
 				}
 				if(tree_component.cut_copy.cut_nodes && tree_component.cut_copy.cut_nodes.size()) {
@@ -1525,9 +1424,9 @@
 							return false;
 						}
 					});
-
 					if(!ok) return this.error("Invalid paste");
 					if(!root && !this.check_move(tree_component.cut_copy.cut_nodes, obj.children("a:eq(0)"), "inside")) return false;
+
 					if(obj.children("ul").size() == 0 || (root == true && obj.children("ul").children("li").size() == 0) ) {
 						if(!root)	var a = this.moved(tree_component.cut_copy.cut_nodes,obj.children("a:eq(0)"),"inside");
 						else		var a = this.moved(tree_component.cut_copy.cut_nodes,this.container.children("ul:eq(0)"),"inside");
@@ -1671,7 +1570,7 @@
 			tmp.drag_help.remove();
 			if(tmp.move_type) {
 				var tree1 = tree_component.inst[tmp.ref_node.parents(".tree:eq(0)").attr("id")];
-				if(tree1) tree1.moved(tmp.dragged, tmp.ref_node, tmp.move_type, (tmp.origin_tree.settings.rules.drag_copy == "on" || (tmp.origin_tree.settings.rules.drag_copy == "ctrl" && (event.ctrlKey || event.metaKey)) ) );
+				if(tree1) tree1.moved(tmp.dragged, tmp.ref_node, tmp.move_type, false, (tmp.origin_tree.settings.rules.drag_copy == "on" || (tmp.origin_tree.settings.rules.drag_copy == "ctrl" && event.ctrlKey) ) );
 			}
 			tmp.move_type	= false;
 			tmp.ref_node	= false;
@@ -1908,13 +1807,14 @@
 	$(function () {
 		var u = navigator.userAgent.toLowerCase();
 		var v = (u.match( /.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/ ) || [0,'0'])[1];
+
 		var css = '';
-		if(/msie/.test(u) && !/opera/.test(u)) { 
-			if(parseInt(v) == 6) css += '.tree li { height:18px; zoom:1; } .tree li li { overflow:visible; } .tree .ltr li.last { margin-top: expression( (this.previousSibling && /open/.test(this.previousSibling.className) ) ? "-2px" : "0"); } .marker { width:45px; background-position:-32px top; } .marker_plus { width:5px; background-position:right top; }';
-			if(parseInt(v) == 7) css += '.tree li li { overflow:visible; } .tree .ltr li.last { margin-top: expression( (this.previousSibling && /open/.test(this.previousSibling.className) ) ? "-2px" : "0"); }';
+		if($.browser.msie) { 
+			if($.browser.version == 6) css += '.tree li { height:18px; zoom:1; } .tree li li { overflow:visible; } .tree .ltr li.last { margin-top: expression( (this.previousSibling && /open/.test(this.previousSibling.className) ) ? "-2px" : "0"); } .marker { width:45px; background-position:-32px top; } .marker_plus { width:5px; background-position:right top; }';
+			if($.browser.version == 7) css += '.tree li li { overflow:visible; } .tree .ltr li.last { margin-top: expression( (this.previousSibling && /open/.test(this.previousSibling.className) ) ? "-2px" : "0"); }';
 		}
-		if(/opera/.test(u)) css += '.tree > ul > li.last:after { content:"."; display: block; height:1px; clear:both; visibility:hidden; }';
-		if(/mozilla/.test(u) && !/(compatible|webkit)/.test(u) && v.indexOf("1.8") == 0) css += '.tree .ltr li a { display:inline; float:left; } .tree li ul { clear:both; }';
+		if($.browser.opera) css += '.tree > ul > li.last:after { content:"."; display: block; height:1px; clear:both; visibility:hidden; }';
+		if($.browser.mozilla && $.browser.version.indexOf("1.8") == 0) css += '.tree .ltr li a { display:inline; float:left; } .tree li ul { clear:both; }';
 		tree_component.css = tree_component.add_sheet({ str : css });
 	});
 })(jQuery);
@@ -1949,7 +1849,7 @@
 						});
 					}
 					else {
-						callback.call(null, opts.staticData || tree.container.children("ul:eq(0)").html());
+						callback.call(null, opts.static || tree.container.children("ul:eq(0)").html());
 					}
 				}
 			};
@@ -1975,8 +1875,8 @@
 					if(obj.size() == 0) return [];
 
 					var json = { attributes : {}, data : {} };
-					if(obj.hasClass("open")) json.state = "open";
-					if(obj.hasClass("closed")) json.state = "closed";
+					if(obj.hasClass("open")) json.data.state = "open";
+					if(obj.hasClass("closed")) json.data.state = "closed";
 
 					for(var i in opts.outer_attrib) {
 						if(!opts.outer_attrib.hasOwnProperty(i)) continue;
@@ -2139,8 +2039,8 @@
 					return str;
 				},
 				load	: function(data, tree, opts, callback) {
-					if(opts.staticData) {
-						callback.call(null, opts.staticData);
+					if(opts.static) {
+						callback.call(null, opts.static);
 					} 
 					else {
 						$.ajax({
