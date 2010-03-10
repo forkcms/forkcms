@@ -1,8 +1,5 @@
 <?php
 
-// require SpoonEmail
-require_once 'spoon/email/email.php';
-
 /**
  * BackendMailer
  * This class will send mails
@@ -103,8 +100,18 @@ class BackendMailer
 		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
 		$content = str_replace($search, $replace, $content);
 
+		// require CSSToInlineStyles
+		require_once 'external/css_to_inline_styles.php';
+
+		// create instance
+		$cssToInlineStyles = new CSSToInlineStyles();
+
+		// set some properties
+		$cssToInlineStyles->setHTML($content);
+		$cssToInlineStyles->setUseInlineStylesBlock(true);
+
 		// return the content
-		return (string) $content;
+		return (string) $cssToInlineStyles->convert();
 	}
 
 
@@ -152,6 +159,9 @@ class BackendMailer
 		$SMTPUsername = BackendModel::getSetting('core', 'smtp_username');
 		$SMTPPassword = BackendModel::getSetting('core', 'smtp_password');
 
+		// require SpoonEmail
+		require_once 'spoon/email/email.php';
+
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
 		$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH .'/templates');
@@ -170,6 +180,7 @@ class BackendMailer
 		$email->setReplyTo($emailRecord['reply_to_email']);
 		$email->setSubject($emailRecord['subject']);
 		$email->setHTMLContent($emailRecord['html']);
+		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
 
 		// send the email
 		if($email->send())

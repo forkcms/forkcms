@@ -1,55 +1,44 @@
 <html>
 <head>
-<!-- @todo Johan design a default template for system mailings -->
 	<title>Fork CMS</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
-	<style type="text/css">
-		h2 { font-size: 18px; padding: 0 0 12px; }
-		p { font-size: 12px; padding: 0 0 12px; }
+	<style>
+		body { background-color:#f4f4f4 }
+		h2 {font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; color: #000000; margin: 12px 0 12px 0; padding: 0; text-align: left;}
+		h3 {font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #000000; margin: 12px 0 6px 0; padding: 0; text-align: left;}
+		h4 {font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; color: #000000; margin: 0 0 6px 0; padding: 0; text-align: left;}
+		p {font-family: Arial, sans-serif; font-size: 12px; color: #000000; margin: 0 0 12px 0; padding: 0; text-align: left;}
+		ul, ol, dl, table {font-family: Arial, sans-serif; font-size: 12px; color: #000000; text-align: left;}
+		a {color: #1E6AB4; text-decoration: underline;}
+		a:hover, a:active {color: #114477;}
+		h2 a, h3 a, h4 a {text-decoration: none;}
+		small {font-family: Arial, sans-serif; font-size: 11px; font-weight: normal; color: #a9a9a9; display: block;}
+		small a {color: #7f7f7f; border-color: #cdcdcd;}
+		img {border: 0; display: block;}
 	</style>
 </head>
 <body>
-<table border="0" cellpadding="0" width="100%" style="margin:0; padding:0; font-family: Lucida Grande, Verdana, Arial, sans-serif;">
-	<!-- Spacer -->
-	<tr><td height="50px"></td></tr>
-	<tr>
-		<td width="100%" align="center" valign="top">
-			<table width="580" cellpadding="0" cellspacing="0" border="0">
-				<!-- Logo & subject -->
-				<tr>
-					<td width="68" height="57">
-						<img src="/backend/core/layout/images/logo.png" width="68" height="57" alt="Fork" />
-					</td>
-					<td width="68" valign="middle" style="font-size: 11px;"><strong>CMS</strong></td>
-					<td valign="middle">
-						<h2>{$msgContactSubject}</h2>
-					</td>
-				</tr>
-			</table>
-			<table width="580" cellpadding="0" cellspacing="0" border="0">
-				<tr>
-					<td width="40px" style="width: 40px;">&nbsp;</td>
-					<td colspan="2" style="border: 1px solid #C3C3C3; padding: 25px 50px; background-color: #FFF;">
-						<p>
-							<strong>{$lblName|ucfirst}:</strong>
-							{$name}
-						</p>
-						<p>
-							<strong>{$lblEmail|ucfirst}:</strong>
-							{$email}
-						</p>
-						<p>
-							<strong>{$lblMessage|ucfirst}:</strong>
-						</p>
-							{$message}
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	<!-- Spacer -->
-	<tr><td height="50px"></td></tr>
-</table>
+	<style>
+		body { background-color:#f4f4f4 }
+		h2 {font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; color: #000000; margin: 12px 0 12px 0; padding: 0; text-align: left;}
+		h3 {font-family: Arial, sans-serif; font-size: 14px; font-weight: bold; color: #000000; margin: 12px 0 6px 0; padding: 0; text-align: left;}
+		h4 {font-family: Arial, sans-serif; font-size: 12px; font-weight: bold; color: #000000; margin: 0 0 6px 0; padding: 0; text-align: left;}
+		p {font-family: Arial, sans-serif; font-size: 12px; color: #000000; margin: 0 0 12px 0; padding: 0; text-align: left;}
+		ul, ol, dl, table {font-family: Arial, sans-serif; font-size: 12px; color: #000000; text-align: left;}
+		a {color: #1E6AB4; text-decoration: underline;}
+		a:hover, a:active {color: #114477;}
+		h2 a, h3 a, h4 a {text-decoration: none;}
+		small {font-family: Arial, sans-serif; font-size: 11px; font-weight: normal; color: #a9a9a9; display: block;}
+		small a {color: #7f7f7f; border-color: #cdcdcd;}
+		img {border: 0; display: block;}
+	</style>
+
+	<h2>Fork CMS</h2>
+	<hr />
+	<h4>{$msgContactSubject}</h4>
+	<p><strong>{$lblName|ucfirst}:</strong> {$author}</p>
+	<p><strong>{$lblEmail|ucfirst}:</strong> {$email}</p>
+	<p><strong>{$lblMessage|ucfirst}:</strong></p>
+	{$message}
 </body>
 </html>

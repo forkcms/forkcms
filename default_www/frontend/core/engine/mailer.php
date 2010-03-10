@@ -1,8 +1,5 @@
 <?php
 
-// require SpoonEmail
-require_once 'spoon/email/email.php';
-
 /**
  * FrontendMailer
  * This class will send mails
@@ -55,7 +52,6 @@ class FrontendMailer
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
 		$email['html'] = self::getTemplateContent($template, $variables);
-		// @todo	Plain text, also in BackendMailer $email['plain_text'] = '';
 		$email['created_on'] = FrontendModel::getUTCDate();
 
 		// set send date
@@ -102,8 +98,18 @@ class FrontendMailer
 		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
 		$content = str_replace($search, $replace, $content);
 
+		// require CSSToInlineStyles
+		require_once 'external/css_to_inline_styles.php';
+
+		// create instance
+		$cssToInlineStyles = new CSSToInlineStyles();
+
+		// set some properties
+		$cssToInlineStyles->setHTML($content);
+		$cssToInlineStyles->setUseInlineStylesBlock(true);
+
 		// return the content
-		return (string) $content;
+		return (string) $cssToInlineStyles->convert();
 	}
 
 
@@ -151,6 +157,9 @@ class FrontendMailer
 		$SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
 		$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
 
+		// require SpoonEmail
+		require_once 'spoon/email/email.php';
+
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
 		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
@@ -169,6 +178,7 @@ class FrontendMailer
 		$email->setReplyTo($emailRecord['reply_to_email']);
 		$email->setSubject($emailRecord['subject']);
 		$email->setHTMLContent($emailRecord['html']);
+		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
 
 		// send the email
 		if($email->send())
