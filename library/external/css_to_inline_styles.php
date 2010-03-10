@@ -202,9 +202,6 @@ class CSSToInlineStyles
 			}
 		}
 
-		// validate css
-		if($this->css == null) throw new CSSToInlineStylesException('No CSS provided.');
-
 		// load css
 		$this->processCSS();
 
@@ -310,7 +307,7 @@ class CSSToInlineStyles
 	private function processCSS()
 	{
 		// init vars
-		$css = $this->css;
+		$css = (string) $this->css;
 
 		// remove newlines
 		$css = str_replace(array("\r", "\n"), '', $css);
@@ -325,7 +322,7 @@ class CSSToInlineStyles
 		$css = preg_replace('/\s\s+/', ' ', $css);
 
 		// rules are splitted by }
-		$rules = explode('}', $css);
+		$rules = (arrat) explode('}', $css);
 
 		// loop rules
 		foreach($rules as $rule)
@@ -348,9 +345,6 @@ class CSSToInlineStyles
 			// loop selectors
 			foreach($selectors as $selector)
 			{
-				// validate selector
-//				if(strstr($selector, ':') !== false) throw new CSSToInlineStylesException('Pseudo-selectors ('. $selector .') aren\'t allowed.');
-
 				// cleanup
 				$selector = trim($selector);
 
