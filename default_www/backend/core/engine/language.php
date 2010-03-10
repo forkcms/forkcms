@@ -70,7 +70,7 @@ class BackendLanguage
 		if(isset(self::$err['core'][$key])) return self::$err['core'][$key];
 
 		// otherwise return the key in label-format
-		return '{$err'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
+		return '{$err'. SpoonFilter::toCamelCase($module) . $key .'}';
 	}
 
 
@@ -145,7 +145,7 @@ class BackendLanguage
 		if(isset(self::$lbl['core'][$key])) return self::$lbl['core'][$key];
 
 		// otherwise return the key in label-format
-		return '{$lbl'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
+		return '{$lbl'. SpoonFilter::toCamelCase($module) . $key .'}';
 	}
 
 
@@ -209,7 +209,7 @@ class BackendLanguage
 		if(isset(self::$msg['core'][$key])) return self::$msg['core'][$key];
 
 		// otherwise return the key in label-format
-		return '{$msg'. SpoonFilter::toCamelCase($module .'_'. $key)  .'}';
+		return '{$msg'. SpoonFilter::toCamelCase($module) . $key .'}';
 	}
 
 

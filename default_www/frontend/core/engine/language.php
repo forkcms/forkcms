@@ -46,7 +46,7 @@ class FrontendLanguage
 		if(isset(self::$act[$key])) return self::$act[$key];
 
 		// otherwise return the key in label-format
-		return '{$act'. SpoonFilter::toCamelCase($key)  .'}';
+		return '{$act'. $key .'}';
 	}
 
 
@@ -135,7 +135,7 @@ class FrontendLanguage
 		if(isset(self::$err[$key])) return self::$err[$key];
 
 		// otherwise return the key in label-format
-		return '{$err'. SpoonFilter::toCamelCase($key)  .'}';
+		return '{$err'. $key .'}';
 	}
 
 
@@ -165,7 +165,7 @@ class FrontendLanguage
 		if(isset(self::$lbl[$key])) return self::$lbl[$key];
 
 		// otherwise return the key in label-format
-		return '{$lbl'. SpoonFilter::toCamelCase($key)  .'}';
+		return '{$lbl'. $key .'}';
 	}
 
 
@@ -195,7 +195,7 @@ class FrontendLanguage
 		if(isset(self::$msg[$key])) return self::$msg[$key];
 
 		// otherwise return the key in label-format
-		return '{$msg'. SpoonFilter::toCamelCase($key)  .'}';
+		return '{$msg'. $key .'}';
 	}
 
 
