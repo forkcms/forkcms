@@ -72,8 +72,8 @@
 				</div>
 				<div id="forgotPasswordHolder" class="balloon {option:!showForm}balloonNoMessage{/option:!showForm}"{option:!showForm} style="display: none;"{/option:!showForm}>
 					<div id="forgotPasswordBox">
-						
-						<a class="button linkButton icon iconClose iconOnly" href="#"><span><span><span>X</span></span></span></a>
+
+						<a class="button linkButton icon iconClose iconOnly toggleBalloon" href="#" rel="forgotPasswordHolder"><span><span><span>X</span></span></span></a>
 
 						<div class="balloonTop">&nbsp;</div>
 						<p>{$msgForgotPasswordHelp}</p>
