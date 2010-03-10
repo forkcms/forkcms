@@ -1,6 +1,6 @@
 /*
 
-	Stylesheet for <Project name>
+	Stylesheet for <Default onsite CSS>
 	
 	Media:      screen, projection
 	Copyright:  Netlash <http://www.netlash.com>
@@ -904,3 +904,15 @@ li.ellipsis span {
 	list-style: none;
 	font-size: 11px;
 }
+
+/*
+	By module
+*/
+
+	/*
+		Blog
+	*/
+	
+	#commentForm label {
+		display: block;
+	}

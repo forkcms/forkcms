@@ -41,7 +41,5 @@
 			</ul>
 		</div>
 
-		<!-- current page -->
-		<p class="paginationLocation">({$pagination['current_page']}/{$pagination['num_pages']})</p>
 	</div>
 {/option:pagination}

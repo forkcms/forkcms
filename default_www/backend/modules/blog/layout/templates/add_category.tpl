@@ -12,7 +12,7 @@
 							&nbsp;
 						</div>
 						<div class="options">
-							<label for="name">{$lblCategory|ucfirst}</label>
+							<label for="name">{$lblName|ucfirst}</label>
 							{$txtName} {$txtNameError}
 						</div>
 					</div>

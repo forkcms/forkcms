@@ -41,7 +41,7 @@
 	</div>
 
 	{option:blogComments}
-	<div class="comments">
+	<div id="comments">
 		<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
 
 		{iteration:blogComments}
@@ -65,7 +65,7 @@
 	{/option:blogComments}
 
 	{option:blogArticle['allow_comments']}
-	<div class="commentForm">
+	<div id="commentForm">
 		<h3 id="{$actReact}">{$lblReact|ucfirst}</h3>
 
 		{option:commentIsInModeration}<div class="messsage warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
