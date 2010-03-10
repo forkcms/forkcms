@@ -207,7 +207,7 @@
 									<div class="oneLiner">
 										<h3 class="floater">{$lblDrafts|ucfirst}</h3>
 										<abbr class="help floater">(?)</abbr>
-										<div class="balloon balloonAlt" style="display: none;">
+										<div class="tooltip" style="display: none;">
 											<p>{$msgHelpDrafts}</p>
 										</div>
 									</div>
@@ -223,7 +223,7 @@
 									<div class="oneLiner">
 										<h3 class="floater">{$lblRevisions|ucfirst}</h3>
 										<abbr class="help floater">(?)</abbr>
-										<div class="balloon" style="display: none;">
+										<div class="tooltip" style="display: none;">
 											<p>{$msgHelpRevisions}</p>
 										</div>
 									</div>

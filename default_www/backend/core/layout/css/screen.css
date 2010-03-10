@@ -25,6 +25,8 @@
 		@import url("imports/ui_constructs.css");
 		@import url("imports/buttons.css");
 		@import url("imports/tags.css");
+		@import url("imports/balloon.css");
+		@import url("imports/tooltip.css");
 
 		/* Messaging system */
 		@import url("imports/forms.css");
@@ -35,10 +37,9 @@
 		/* Datagrid related */
 		@import url("imports/datagrid.css");
 		@import url("imports/datafilter.css");
-
+		
 		/* Standalone */
 		@import url("imports/general_purpose_classes.css");
-		@import url("imports/help.css");
 		@import url("imports/clearfix.css");
 		@import url("imports/avatars.css");
 

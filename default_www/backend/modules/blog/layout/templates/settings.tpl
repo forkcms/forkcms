@@ -77,7 +77,7 @@
 								<span class="helpTxt">{$msgHelpRSSDescription}</span>
 							</div>
 							<div class="options">
-								<label>{$lblFeedburnerURL}</label>
+								<label>{$lblFeedburnerURL|ucfirst}</label>
 								{$txtFeedburnerUrl} {$txtFeedburnerUrlError}
 								<span class="helpTxt">{$msgHelpFeedburnerURL}</span>
 							</div>

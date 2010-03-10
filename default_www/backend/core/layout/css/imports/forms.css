@@ -200,7 +200,7 @@ input[type="submit"] {
 
 	.oneLiner .help {
 		position: relative;
-		top: 2px;
+		top: 4px;
 		left: 2px;
 		display: block;
 	}
@@ -209,8 +209,6 @@ input[type="submit"] {
 		margin-top: 1px;
 		margin-right: 3px;
 	}
-
-
 
 label {
 	font-weight: 700;
@@ -246,7 +244,7 @@ label {
 .forkForms .horizontal p label {
 	display: inline;
 }
-.forkForms .horizontal .helpTxt { display: block; padding: 1px 0 1px 115px; }
+.forkForms .horizontal .helpTxt { display: block; padding: 1px 0 1px 106px; }
 
 .forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 145px; }
 
@@ -272,7 +270,7 @@ label {
 }
 
 .forkForms .labelWidthLong span.formError  {
-	padding-left: 155px;
+	padding-left: 145px;
 }
 
 .forkForms abbr { cursor: help; }

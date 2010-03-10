@@ -54,8 +54,8 @@
 													</p>
 													<p>
 														<abbr class="help">(?)</abbr>
-														<span class="balloon balloonAlt" style="display: none;">
-															{$msgNameHelpTxt}
+														<span class="tooltip" style="display: none;">
+															{$msgNameHelpText}
 														</span>
 													</p>
 												</div>
@@ -67,8 +67,8 @@
 													</p>
 													<p>
 														<abbr class="help">(?)</abbr>
-														<span class="balloon balloonAlt" style="display: none;">
-															{$msgValueHelpTxt}
+														<span class="tooltip" style="display: none;">
+															{$msgValueHelpText}
 														</span>
 													</p>
 												</div>

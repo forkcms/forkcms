@@ -14,11 +14,11 @@
 						</ul>
 
 						<div id="tabSettings">
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblCredentials|ucfirst}</h3>
 								</div>
-								<div class="options horizontal">
+								<div class="options labelWidthLong horizontal">
 									<p>
 										<label for="username">{$lblUsername|ucfirst}</label>
 										{$txtUsername} {$txtUsernameError}
@@ -46,11 +46,11 @@
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblPersonalInformation|ucfirst}</h3>
 								</div>
-								<div class="options horizontal">
+								<div class="options labelWidthLong horizontal">
 									<p>
 										<label for="name">{$lblName|ucfirst}</label>
 										{$txtName} {$txtNameError}
@@ -75,11 +75,11 @@
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblInterfacePreferences|ucfirst}</h3>
 								</div>
-								<div class="options horizontal">
+								<div class="options labelWidthLong horizontal">
 									<p>
 										<label for="interface_language">{$lblInterfaceLanguage|ucfirst}</label>
 										{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
@@ -89,7 +89,7 @@
 						</div>
 
 						<div id="tabPermissions">
-							<div class="box boxLevel2">
+							<div class="subtleBox">
 								<div class="heading">
 									<h3>{$lblAccountManagement|ucfirst}</h3>
 								</div>
@@ -110,10 +110,7 @@
 								</div>
 							</div>
 
-							<div class="box boxLevel2">
-								<div class="heading">
-								</div>
-							</div>
+
 						</div>
 					</div>
 

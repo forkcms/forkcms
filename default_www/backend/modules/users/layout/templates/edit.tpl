@@ -40,6 +40,7 @@
 					<div id="tabs" class="tabs">
 						<ul>
 							<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
+							<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>
 							<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 						</ul>
 
@@ -52,28 +53,6 @@
 									<p>
 										<label for="username">{$lblUsername|ucfirst}</label>
 										{$txtUsername} {$txtUsernameError}
-									</p>
-									<p>
-										<label for="newPassword">{$lblPassword|ucfirst}</label>
-										{$txtNewPassword} {$txtNewPasswordError}
-
-										<table id="passwordStrengthMeter" class="passwordStrength" rel="newPassword" cellspacing="0">
-											<tr>
-												<td class="strength" id="passwordStrength">
-													<p class="strength none">{$lblNone|ucfirst}</p>
-													<p class="strength weak" style="background: red;">{$lblWeak|ucfirst}</p>
-													<p class="strength ok" style="background: orange;">{$lblOK|ucfirst}</p>
-													<p class="strength strong" style="background: green;">{$lblStrong|ucfirst}</p>
-												</td>
-												<td>
-													<p class="helpTxt">{$msgHelpStrongPassword}</p>
-												</td>
-											</tr>
-										</table>
-									</p>
-									<p>
-										<label for="confirmPassword">{$lblConfirmPassword|ucfirst}</label>
-										{$txtConfirmPassword} {$txtConfirmPasswordError}
 									</p>
 								</div>
 							</div>
@@ -119,6 +98,41 @@
 									</p>
 								</div>
 							</div>
+						</div>
+						
+						<div id="tabPassword">
+							
+							<div class="subtleBox">
+							
+								<div class="heading">
+									<h3>{$lblChangePassword|ucfirst}</h3>
+								</div>
+								<div class="options horizontal labelWidthLong">
+									<p>
+										<label for="newPassword">{$lblPassword|ucfirst}</label>
+										{$txtNewPassword} {$txtNewPasswordError}
+
+										<table id="passwordStrengthMeter" class="passwordStrength" rel="newPassword" cellspacing="0">
+											<tr>
+												<td class="strength" id="passwordStrength">
+													<p class="strength none">/</p>
+													<p class="strength weak" style="background: red;">{$lblWeak|ucfirst}</p>
+													<p class="strength ok" style="background: orange;">{$lblOK|ucfirst}</p>
+													<p class="strength strong" style="background: green;">{$lblStrong|ucfirst}</p>
+												</td>
+												<td>
+													<p class="helpTxt">{$msgHelpStrongPassword}</p>
+												</td>
+											</tr>
+										</table>
+									</p>
+									<p>
+										<label for="confirmPassword">{$lblConfirmPassword|ucfirst}</label>
+										{$txtConfirmPassword} {$txtConfirmPasswordError}
+									</p>
+								</div>
+							</div>
+
 						</div>
 
 						<div id="tabPermissions">

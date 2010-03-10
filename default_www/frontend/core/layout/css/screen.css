@@ -762,7 +762,6 @@ li.ellipsis span {
 
 #breadcrumb {
 	font-size: 11px;
-	float: left;
 }
 
 /*
@@ -869,6 +868,10 @@ li.ellipsis span {
 	#navigation li li {
 		padding-left: 10px;
 	}
+	
+	#navigation li.selected {
+		font-weight: 700;
+	}
 
 #navigation li a {
 	border-bottom: 1px solid #CCC;
@@ -912,7 +915,7 @@ li.ellipsis span {
 	/*
 		Blog
 	*/
-	
+
 	#commentForm label {
 		display: block;
 	}

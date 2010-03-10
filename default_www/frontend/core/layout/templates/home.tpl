@@ -27,13 +27,6 @@
 
 <body class="{$LANGUAGE} frontend">
 	<div id="container">
-		<div id="topbar">
-			<!-- breadcrumb -->
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
-
-			<!-- user -->
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/user.tpl'}
-		</div>
 
 		<div id="header">
 			<h1><a href="/">{$siteTitle}</a></h1>
@@ -50,6 +43,10 @@
 
 			<!-- content -->
 			<div id="content">
+				
+				<!-- breadcrumb -->
+				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
+				
 				{option:!hideContentTitle}<h2>{$pageDatatitle}</h2>{/option:!hideContentTitle}
 
 				<!-- Block 0 -->

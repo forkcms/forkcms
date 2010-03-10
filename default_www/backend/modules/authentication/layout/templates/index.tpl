@@ -30,15 +30,15 @@
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
-				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
-
-					{option:hasError}
-					<div id="loginError">
-						<div class="errorMessage singleMessage">
-							<p>{$errInvalidUsernamePasswordCombination}</p>
-						</div>
+				{option:hasError}
+				<div id="loginError">
+					<div class="errorMessage singleMessage">
+						<p>{$errInvalidUsernamePasswordCombination}</p>
 					</div>
-					{/option:hasError}
+				</div>
+				{/option:hasError}
+				
+				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
 
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>
