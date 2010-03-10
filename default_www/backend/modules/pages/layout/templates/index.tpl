@@ -26,8 +26,6 @@
 					</div>
 
 					{option:datagrid}{$datagrid}{/option:datagrid}
-					
-					
 					{option:!datagrid}
 					<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
 						<tr>
@@ -42,4 +40,11 @@
 		</td>
 	</tr>
 </table>
+
+{option:openedPageId}
+<script type="text/javascript">
+	var pageID = {$openedPageId};
+</script>
+{/option:openedPageId}
+
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

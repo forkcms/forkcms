@@ -31,6 +31,9 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			// get all data for the user we want to edit
 			$this->record = (array) BackendBlogModel::get($this->id);
 
+			// reset some data
+			if(empty($this->record)) $this->record['title'] = '';
+
 			// delete user
 			BackendBlogModel::delete($this->id);
 

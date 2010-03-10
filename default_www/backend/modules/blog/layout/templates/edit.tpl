@@ -294,7 +294,7 @@
 					</div>
 
 					<div class="fullwidthOptions">
-						<a href="{$var|geturl:'delete'}&amp;id={$id}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+						<a href="{$var|geturl:'delete'}&amp;id={$blog['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 						</a>
 						<div class="buttonHolderRight">

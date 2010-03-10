@@ -136,6 +136,10 @@ jsBackend.controls = {
 																	window.location = url;
 																},
 										   '{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
+										 },
+								open: function(evt) { 
+											 // set focus on first button
+											 if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); } 
 										 }
 							 });
 
