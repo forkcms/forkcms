@@ -46,6 +46,12 @@ body {
 	border: 1px solid #BED7E9;
 	border-width: 0 1px;
 }
+	
+	@-moz-document url-prefix() {
+		#main {
+			height: 100%;
+		}
+	}
 
 #contentHolder {
 	height: 100%;

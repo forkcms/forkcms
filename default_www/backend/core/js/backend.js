@@ -547,7 +547,6 @@ jsBackend.messages = {
 		$('#messaging .formMessage .iconClose').live('click', function(evt) {
 			evt.preventDefault();
 			jsBackend.messages.hide($($(this).parents('.formMessage')));
-			
 		});
 	},
 	// hide a message
@@ -560,8 +559,8 @@ jsBackend.messages = {
 		var uniqueId = 'e'+ new Date().getTime().toString();
 		var html = '<div id="'+ uniqueId +'" class="formMessage '+ type +'Message" style="display: none;">'+
 					'	<p>'+ content +'</p>'+
-					'	<div class="buttonHolder">'+
-					'		<a class="button icon iconClose iconOnly" href="#"><span><span><span>X</span></span></span></a>'+
+					'	<div class="buttonHolderRight">'+
+					'		<a class="button icon linkButton iconClose iconOnly" href="#"><span><span><span>X</span></span></span></a>'+
 					'	</div>'+
 					'</div>';
 		

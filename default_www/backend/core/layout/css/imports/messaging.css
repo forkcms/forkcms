@@ -46,12 +46,18 @@
 	text-align: center;
 }
 
-	#messaging .buttonHolder {
+#messaging .errorMessage .iconClose span span span {
+	background-position: 0 -242px !important;
+}
+
+	#messaging .buttonHolderRight {
 		position: absolute;
-		top: -10px;
-		right: -20px;
+		top: 2px;
+		right: 2px;
 		z-index: 1003;
 	}
+	
+	
 
 /* Form messages */
 

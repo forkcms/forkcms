@@ -162,9 +162,9 @@ a.mainButton.focus {
 		a.iconSettings span span span {
 			background-position: 0 -176px !important; }
 		a.iconClose span span span {
-			background-position: 0 -198px !important; }
-		a.iconClose span span span {
 			background-position: 0 -220px !important; }
+		a.iconCloseI span span span {
+			background-position: 0 -242px !important; }
 		a.iconGoto span span span {
 			background-position: 0 -465px !important; }
 
