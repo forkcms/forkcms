@@ -114,7 +114,7 @@ class BackendNavigation
 			if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
 			{
 				// selected state
-				$selected = (bool) (in_array($key, $selectedKeys, true) || $level['url'] == $activeURL);
+				$selected = (bool) ($level['url'] == $activeURL || (isset($selectedKeys[1]) && $key == $selectedKeys[1]));
 
 				// open li-tag
 				if($selected) $html .= '<li class="selected">'."\n";
@@ -163,7 +163,7 @@ class BackendNavigation
 				}
 
 				// end li
-				$html .'</li>'."\n";
+				$html .= '</li>'."\n";
 			}
 		}
 
@@ -358,8 +358,36 @@ class BackendNavigation
 				// loop second level
 				foreach($level['children'] as $module => $level)
 				{
+					// init var
+					$selected = false;
+
+					// url and selected_for_actions are available?
+					if($level['url'] != '' && isset($level['selected_for_actions']))
+					{
+						// split url into chunks
+						$chunks = (array) explode('/', $level['url']);
+
+						// validate the chunks, and check if the module from the URL is the same as the active one
+						if(isset($chunks[0]) && $chunks[0] == $activeModule)
+						{
+							// loop actions wherefor this item should be selected
+							foreach((array) $level['selected_for_actions'] as $action)
+							{
+								// is the current URL is the same as the one for the sub-action?
+								if($activeURL == $activeModule .'/'. $action)
+								{
+									// this items should be selected
+									$selected = true;
+
+									// stop looking, we found it
+									break;
+								}
+							}
+						}
+					}
+
 					// add all keys if the URL is found
-					if($level['url'] == $activeURL || $module == $activeModule)
+					if($level['url'] == $activeURL || $module == $activeModule || $selected)
 					{
 						// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
 						if(isset($actions[$activeModule]['actions'][$activeAction]) && $actions[$activeModule]['actions'][$activeAction] == 'settings')
