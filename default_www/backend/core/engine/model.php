@@ -130,13 +130,8 @@ class BackendModel
 					// split into chunks
 					$chunks = explode(':', $line);
 
-					// get routes
-					$routes = ApplicationRouting::getRoutes();
-
-					foreach($routes as $url => $route)
-					{
-						if($route == 'backend' && isset($chunks[1]) && trim($chunks[1]) != '/'. $url) $isOK = false;
-					}
+					// validate disallow
+					if(isset($chunks[1]) && trim($chunks[1]) == '/') $isOK = false;
 				}
 			}
 
