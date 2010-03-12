@@ -263,7 +263,7 @@ class SpoonTemplate
 
 		// leftovers?
 		if($modulus == 0) return $elements[$numElements - 1];
-		else return $elements[$modulus - 1];
+		return $elements[$modulus - 1];
 	}
 
 
@@ -397,17 +397,6 @@ class SpoonTemplate
 	public function getForceCompile()
 	{
 		return $this->forceCompile;
-	}
-
-
-	/**
-	 * Get the template language.
-	 *
-	 * @return	string	The language that's being used as default for this template. (Check SpoonLocale for the list of available languages.)
-	 */
-	public function getLanguage()
-	{
-		return $this->language;
 	}
 
 

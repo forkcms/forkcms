@@ -104,15 +104,14 @@ function exceptionHandler($exception)
 	// fetch trace stack
 	$trace = $exception->getTrace();
 
-	// class & function exist and are spoon related
-	if(isset($trace[0]['class']) && isset($trace[0]['function']) && strtolower(substr($trace[0]['class'], 0, 5)) == 'spoon')
-	{
-		$documentationURL = strtolower($trace[0]['class']) .'/'. strtolower($trace[0]['function']);
-		$documentation = '&raquo; <a href="http://docs.spoon-library.be/'. $documentationURL .'">view documentation</a>';
-	}
-
 	// specific name
 	$name = (method_exists($exception, 'getName')) ? $exception->getName() : 'UnknownException';
+
+	// spoon type exception
+	if(method_exists($exception, 'getName') && strtolower(substr($exception->getName(), 0, 5)) == 'spoon' && $exception->getCode() != 0)
+	{
+		$documentation = '&raquo; <a href="http://www.spoon-library.be/exceptions/detail/'. $exception->getCode() .'">view documentation</a>';
+	}
 
 	// request uri?
 	if(!isset($_SERVER['HTTP_HOST'])) $_SERVER['HTTP_HOST'] = '';
@@ -229,6 +228,17 @@ function exceptionHandler($exception)
 								{
 									$output .= '<dt>Documentation</dt>
 													<dd>'. $documentation .'</dd>';
+								}
+
+								// we know about the last error
+								if(error_get_last() !== null)
+								{
+									// define message
+									$error = error_get_last();
+
+									// show output
+									$output .= '<dt>PHP error</dt>
+													<dd>'. $error['message'] .'</dd>';
 								}
 
 							// continue output

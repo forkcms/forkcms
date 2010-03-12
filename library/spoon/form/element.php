@@ -76,7 +76,7 @@ class SpoonFormElement
 			if($this->method == 'post') return $_POST;
 
 			// $_GET array
-			else return array_map('urldecode', $_GET); // @todo davy - make sure this works properly
+			else return array_map('urldecode', $_GET);
 		}
 
 		// submitted via met get or post

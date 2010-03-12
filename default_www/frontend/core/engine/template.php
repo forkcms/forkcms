@@ -183,7 +183,7 @@ class FrontendTemplate extends SpoonTemplate
 	 *
 	 * @return	void
 	 */
-	private function parseLocale() // @todo Tijs - waar wordt dit gebruikt of waavoor dient dit?
+	private function parseLocale()
 	{
 		// init vars
 		$locale = array();

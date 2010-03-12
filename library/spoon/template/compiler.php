@@ -381,7 +381,7 @@ class SpoonTemplateCompiler
 	private function parseCycle($content, $iteration)
 	{
 		// regex pattern
-		$pattern = "|\{cycle((:\'[a-z0-9\-_\<\/\>\s]+\')+)\}|is";
+		$pattern = "|\{cycle((:\'[a-z0-9\-_\<\/\>\"\=\;\:\s]+\')+)\}|is";
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -595,17 +595,16 @@ class SpoonTemplateCompiler
 						// define variable
 						$variable = $this->parseVariable($name);
 
-						// @todo counter herdefinieren, startend vanaf 1 en niet de key van de array elements.
-
 						// internal variable
 						$internalVariable = SpoonFilter::toCamelCase(str_replace(array('[', ']', "'", '_'), ' ', $chunks[$numChunks - 1]), ' ', true, SPOON_CHARSET);
 
 						// replace
-						$replace[0] = '<?php $'. $internalVariable .'Count = count('. $variable ."); ?>\n";
-						$replace[0] .= '<?php foreach((array) '. $variable .' as $'. $internalVariable .'I => $'. $internalVariable ."): ?>\n";
+						$replace[0] = '<?php $'. $internalVariable ."I = 1; ?>\n";
+						$replace[0] .= '<?php $'. $internalVariable .'Count = count('. $variable ."); ?>\n";
+						$replace[0] .= '<?php foreach((array) '. $variable .' as $'. $internalVariable ."): ?>\n";
 						$replace[0] .= "<?php
-						if(!isset(\$". $internalVariable ."['first']) && \$". $internalVariable ."I == 0) \$". $internalVariable ."['first'] = true;
-						if(!isset(\$". $internalVariable ."['last']) && \$". $internalVariable ."I == \$". $internalVariable ."Count - 1) \$". $internalVariable ."['last'] = true;
+						if(!isset(\$". $internalVariable ."['first']) && \$". $internalVariable ."I == 1) \$". $internalVariable ."['first'] = true;
+						if(!isset(\$". $internalVariable ."['last']) && \$". $internalVariable ."I == \$". $internalVariable ."Count) \$". $internalVariable ."['last'] = true;
 						if(isset(\$". $internalVariable ."['formElements']) && is_array(\$". $internalVariable ."['formElements']))
 						{
 							foreach(\$". $internalVariable ."['formElements'] as \$name => \$object)
@@ -615,7 +614,8 @@ class SpoonTemplateCompiler
 							}
 						}
 						?>";
-						$replace[1] = '<?php endforeach; ?>';
+						$replace[1] = '<?php $'. $internalVariable ."I++; ?>\n";
+						$replace[1] .= '<?php endforeach; ?>';
 
 						// replace
 						$content = str_replace($search, $replace, $content);

@@ -40,15 +40,14 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
-		// @todo tijs - als je een categorie toevoegt, dan is die 'default' niet meer zichtbaar in de datagrid. Weird shit.
 		// create datagrid
 		$this->datagrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
 
 		// header labels
-		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Category')), 'num_posts' => ucfirst(BL::getLabel('PostsInThisCategory'))));
+		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Category'))));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name', 'num_posts'), 'name');
+		$this->datagrid->setSortingColumns(array('name'), 'name');
 
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_category') .'&id=[id]', BL::getLabel('Edit'));

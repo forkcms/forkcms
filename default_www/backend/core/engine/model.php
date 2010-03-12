@@ -115,6 +115,8 @@ class BackendModel
 			$content = SpoonFile::getContent(PATH_WWW .'/robots.txt');
 			$isOK = true;
 
+			// @todo davy - fix die lelijke code en zorg dat het werkt.
+			if(str_replace(array("\n", ' ', "\r"), '', mb_strtolower($content)) == 'user-agent: *disallow: /') $isOK = false;
 			// split into lines
 			$lines = explode("\n", $content);
 

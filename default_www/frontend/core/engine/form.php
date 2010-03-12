@@ -78,9 +78,8 @@ class FrontendForm extends SpoonForm
 		$type = (string) $type;
 		$class = ($class !== null) ? (string) $class : 'inputText inputButton';
 
-		// @todo tijs - wat moet er gebeuren met het stuk code hieronder?
 		// do a check, only enable this if we use forms that are submitted with javascript
-		// if($type == 'submit' && $name == 'submit') throw new FrontendException('You can\'t add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
+		if($type == 'submit' && $name == 'submit') throw new FrontendException('You can\'t add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
 
 		// call the real form class
 		return parent::addButton($name, $value, $type, $class);

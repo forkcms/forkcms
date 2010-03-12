@@ -1,6 +1,6 @@
 <?php
 
-// @todo tijs - ik zou de 'recent aangepaste' hier enkel zetten als we meer dan 1 pagina hebben. Wat vind jij?
+// @todo tijs - ik zou de 'recent aangepaste' hier enkel zetten als we meer dan 1 pagina hebben. Wat vind jij? uitvoeren!
 
 /**
  * BackendBlogIndex

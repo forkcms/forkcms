@@ -46,8 +46,7 @@ class BackendAJAX
 		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', null, '')); // @todo tijs - moet deze zich niet baseren op languages en de SITE_DEFAULT_LANGUAGE constante?
-		// @todo ik vermoed dat de validatie naar setLanguage is verschoven (zie een paar functies hieronder)
+		$this->setLanguage(SpoonFilter::getGetValue('language', null, ''));
 
 		// create a new action
 		$action = new BackendAJAXAction($this->getAction(), $this->getModule());

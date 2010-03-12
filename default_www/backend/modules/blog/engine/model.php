@@ -16,11 +16,9 @@ class BackendBlogModel
 	const QRY_DATAGRID_BROWSE = 'SELECT p.id, p.user_id, p.title, UNIX_TIMESTAMP(p.publish_on) AS publish_on, num_comments AS comments
 								FROM blog_posts AS p
 								WHERE p.status = ?';
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT c.id, c.name, COUNT(p.id) AS num_posts
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT c.id, c.name
 											FROM blog_categories AS c
-											LEFT OUTER JOIN blog_posts AS p ON p.category_id = c.id
-											WHERE c.language = ? AND (p.status = "active" OR p.status IS NULL)
-											GROUP BY c.id';
+											WHERE c.language = ?';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT bc.id, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.author, bc.text,
 											bp.id AS post_id, bp.title AS post_title, m.url AS post_url
 											FROM blog_comments AS bc
