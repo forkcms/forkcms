@@ -59,7 +59,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->loadDatagridDrafts();
 
 		// the most recent blogposts
-		$this->loadDatagridRecentPosts();
+		if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDatagridRecentPosts();
 	}
 
 
@@ -199,7 +199,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->tpl->assign('dgPosts', ($this->dgPosts->getNumResults() != 0) ? $this->dgPosts->getContent() : false);
 
 		// parse the datagrid for the most recent blogposts
-		$this->tpl->assign('dgRecent', ($this->dgRecent->getNumResults() != 0) ? $this->dgRecent->getContent() : false);
+		$this->tpl->assign('dgRecent', (is_object($this->dgRecent) && $this->dgRecent->getNumResults() != 0) ? $this->dgRecent->getContent() : false);
 	}
 }
 
