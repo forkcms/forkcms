@@ -89,28 +89,36 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$defaultLanguage = ($abbreviation == SITE_DEFAULT_LANGUAGE) ? true : false;
 
 			// attributes
-			$attributes = array();
-			$attributes['id'] = 'language_'. $abbreviation;
+			$activeAttributes = array();
+			$activeAttributes['id'] = 'active_language_'. $abbreviation;
+			$redirectAttributes = array();
+			$redirectAttributes['id'] = 'redirect_language_'. $abbreviation;
 
-			$label = BackendLanguage::getLabel(mb_strtoupper($abbreviation), 'core');
+			// fetch label
+			$label = BackendLanguage::getMessage(mb_strtoupper($abbreviation), 'core');
 
 			// default may not be unselected
 			if($defaultLanguage)
 			{
 				// add to attributes
-				$attributes['disabled'] = 'disabled';
+				$activeAttributes['disabled'] = 'disabled';
+				$redirectAttributes['disabled'] = 'disabled';
 
 				// overrule in $_POST
-				if(!isset($_POST['languages']) || !is_array($_POST['languages'])) $_POST['languages'] = array('nl'); // @todo davy - default language moet op een andere manier bepaald worden.
-				elseif(!in_array($abbreviation, $_POST['languages'])) $_POST['languages'][] = $abbreviation;
+				if(!isset($_POST['active_languages']) || !is_array($_POST['active_languages'])) $_POST['active_languages'] = array(SITE_DEFAULT_LANGUAGE);
+				elseif(!in_array($abbreviation, $_POST['active_languages'])) $_POST['active_languages'][] = $abbreviation;
+				if(!isset($_POST['redirect_languages']) || !is_array($_POST['redirect_languages'])) $_POST['redirect_languages'] = array(SITE_DEFAULT_LANGUAGE);
+				elseif(!in_array($abbreviation, $_POST['redirect_languages'])) $_POST['redirect_languages'][] = $abbreviation;
 			}
 
 			// add to the list
-			$languages[] = array('label' => $label, 'value' => $abbreviation, 'attributes' => $attributes, 'variables' => array('default' => $defaultLanguage));
+			$activeLanguages[] = array('label' => $label, 'value' => $abbreviation, 'attributes' => $activeAttributes, 'variables' => array('default' => $defaultLanguage));
+			$redirectLanguages[] = array('label' => $label, 'value' => $abbreviation, 'attributes' => $redirectAttributes, 'variables' => array('default' => $defaultLanguage));
 		}
 
 		// create multilanguage checkbox
-		$this->frm->addMultiCheckbox('languages', $languages, BackendModel::getSetting('core', 'active_languages', array('nl')));
+		$this->frm->addMultiCheckbox('active_languages', $activeLanguages, BackendModel::getSetting('core', 'active_languages', array(SITE_MULTILANGUAGE)));
+		$this->frm->addMultiCheckbox('redirect_languages', $redirectLanguages, BackendModel::getSetting('core', 'redirect_languages', array(SITE_MULTILANGUAGE)));
 
 		// api keys are not required for every module
 		if($this->needsAkismet) $this->frm->addText('akismet_key', BackendModel::getSetting('core', 'akismet_key', null));
@@ -223,7 +231,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				$languages = array(SITE_DEFAULT_LANGUAGE);
 
 				// save active languages
-				BackendModel::setSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('languages')->getValue())));
+				BackendModel::setSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('active_languages')->getValue())));
+				BackendModel::setSetting('core', 'redirect_languages', array_unique(array_merge($languages, $this->frm->getField('redirect_languages')->getValue())));
 
 				// domains may not contain www, http or https. Therefor we must loop and create the list of domains.
 				$siteDomains = array();

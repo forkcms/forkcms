@@ -15,7 +15,6 @@
 @import url("imports/reset.css");
 	@import url("imports/typography.css");
 	@import url("imports/structure.css");
-		@import url("imports/debug.css");
 
 		/* Core modules */
 		@import url("imports/dashboard.css");

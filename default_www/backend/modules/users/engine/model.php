@@ -175,6 +175,26 @@ class BackendUsersModel
 
 
 	/**
+	 * Fetch the list of date formats with examples of the formats.
+	 *
+	 * @return	array
+	 */
+	public static function getDateFormats()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach(BackendModel::getSetting('users', 'date_formats') as $format)
+		{
+			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+		}
+
+		return $possibleFormats;
+	}
+
+
+	/**
 	 * Get user groups
 	 *
 	 * @return	array
@@ -233,6 +253,26 @@ class BackendUsersModel
 
 		// userId or false on error
 		return ($userId == 0) ? false : (int) $userId;
+	}
+
+
+	/**
+	 * Fetch the list of time formats with examples of the formats.
+	 *
+	 * @return	array
+	 */
+	public static function getTimeFormats()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach(BackendModel::getSetting('users', 'time_formats') as $format)
+		{
+			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+		}
+
+		return $possibleFormats;
 	}
 
 

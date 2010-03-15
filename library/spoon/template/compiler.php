@@ -514,10 +514,7 @@ class SpoonTemplateCompiler
 			foreach($matches[1] as $match)
 			{
 				// file
-				$file = $this->getVariableString($match); // @todo herwerken.
-
-				// template path
-				$template = eval('error_reporting(0); return '. $file .';');	// @todo	Davy: what is this doing here? $template is nergens gebruikt
+				$file = $this->getVariableString($match);
 
 				// search string
 				$search = '{include:file=\''. $match .'\'}';

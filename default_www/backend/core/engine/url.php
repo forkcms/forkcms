@@ -146,7 +146,6 @@ class BackendURL
 		$chunks = (array) explode('/', trim($queryString, '/'));
 
 		// get the language, this will always be in front
-		// @todo Tijs - deze mag zich toch op alle talen baseren en niet enkel op de actieve? Je kan toch fr bewerken in private als dit onsite nog niet enabled staat.
 		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE) : SITE_DEFAULT_LANGUAGE;
 
 		// get the module, null will be the default
@@ -178,7 +177,7 @@ class BackendURL
 			if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
 			{
 				// redirect to login
-				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/authentication/?querystring=/'. $this->getQueryString());  // @todo hier werd naar $language geredirect maar interface-language != working-language
+				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/authentication/?querystring=/'. $this->getQueryString());
 			}
 
 			// the person is logged in
@@ -218,7 +217,7 @@ class BackendURL
 						else
 						{
 							// init var
-							$interfaceLanguage = 'nl';
+							$interfaceLanguage = BackendModel::getSetting('core', 'default_interface_language');
 
 							// override with cookie value if that exists
 							if(SpoonCookie::exists('interface_language')) $interfaceLanguage = SpoonCookie::get('interface_language');

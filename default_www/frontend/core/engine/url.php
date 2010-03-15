@@ -226,8 +226,8 @@ class FrontendURL
 			$mustRedirect = false;
 
 			// get possible languages
-			$possibleLanguages = (array) FrontendLanguage::getActiveLanguages(); // @todo tijs - activeLanguages en redirectLanguages zijn momenteel hetzelfde.
-			$redirectLanguages = (array) FrontendLanguage::getRedirectLanguages(); // @todo davy - er moet een setting redirect_languages toegevoegd worden. In het cms aanpasbaar bij instellingen onder/naast actieve languages.
+			$possibleLanguages = (array) FrontendLanguage::getActiveLanguages();
+			$redirectLanguages = (array) FrontendLanguage::getRedirectLanguages();
 
 			// the language is present in the URL
 			if(isset($chunks[0]) && in_array($chunks[0], $possibleLanguages))

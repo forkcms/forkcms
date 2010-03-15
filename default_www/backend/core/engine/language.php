@@ -12,10 +12,6 @@
  */
 class BackendLanguage
 {
-	// Default language for the CMS-user-interface
-	const DEFAULT_LANGUAGE = 'nl'; // @todo tijs - in backend lijkt dit mij overbodig? dit moet uit de settings komen. (default_interface_language in core in het geval de gebruiker al ingelogd is moeten we interface_language uit zijn settings halen).
-
-
 	/**
 	 * The labels
 	 *

@@ -96,14 +96,22 @@
 										<label for="interfaceLanguage">{$lblInterfaceLanguage|ucfirst}</label>
 										{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
 									</p>
+									<p>
+										<label for="date_format">{$lblDateFormat|ucfirst}</label>
+										{$ddmDateFormat} {$ddmDateFormatError}
+									</p>
+									<p>
+										<label for="time_format">{$lblTimeFormat|ucfirst}</label>
+										{$ddmTimeFormat} {$ddmTimeFormatError}
+									</p>
 								</div>
 							</div>
 						</div>
-						
+
 						<div id="tabPassword">
-							
+
 							<div class="subtleBox">
-							
+
 								<div class="heading">
 									<h3>{$lblChangePassword|ucfirst}</h3>
 								</div>

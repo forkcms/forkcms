@@ -9,7 +9,7 @@
 
 				<!-- @todo @johan add label -->
 				<h3>Algemene instellingen</h3>
-				
+
 				{form:generalsettings}
 					{option:warnings}
 						<div class="generalMessage infoMessage content">
@@ -49,10 +49,18 @@
 						</div>
 						<div class="options">
 							<p>{$msgLanguagesText}:</p>
+
 							<ul class="inputList">
-								{iteration:languages}
-									<li>{$languages.chkLanguages} <label for="language_{$languages.value}">{$languages.label|ucfirst}{option:languages.default} ({$lblDefault}){/option:languages.default}</label></li>
-								{/iteration:languages}
+								{iteration:activeLanguages}
+									<li>{$activeLanguages.chkActiveLanguages} <label for="{$activeLanguages.id}">{$activeLanguages.label|ucfirst}{option:activeLanguages.default} ({$lblDefault}){/option:activeLanguages.default}</label></li>
+								{/iteration:activeLanguages}
+							</ul>
+
+							<p>{$msgRedirectLanguagesText}:</p>
+							<ul class="inputList">
+								{iteration:redirectLanguages}
+									<li>{$redirectLanguages.chkRedirectLanguages} <label for="{$redirectLanguages.id}">{$redirectLanguages.label|ucfirst}{option:redirectLanguages.default} ({$lblDefault}){/option:redirectLanguages.default}</label></li>
+								{/iteration:redirectLanguages}
 							</ul>
 						</div>
 					</div>

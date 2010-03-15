@@ -84,6 +84,14 @@
 										<label for="interface_language">{$lblInterfaceLanguage|ucfirst}</label>
 										{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
 									</p>
+									<p>
+										<label for="date_format">{$lblDateFormat|ucfirst}</label>
+										{$ddmDateFormat} {$ddmDateFormatError}
+									</p>
+									<p>
+										<label for="time_format">{$lblTimeFormat|ucfirst}</label>
+										{$ddmTimeFormat} {$ddmTimeFormatError}
+									</p>
 								</div>
 							</div>
 						</div>

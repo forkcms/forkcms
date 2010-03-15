@@ -56,6 +56,9 @@ class BackendUsersEdit extends BackendBaseActionEdit
 	 */
 	private function loadForm()
 	{
+		// create user object
+		$user = new BackendUser($this->id);
+
 		// create form
 		$this->frm = new BackendForm('edit');
 
@@ -63,11 +66,13 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addText('username', $this->record['username'], 75);
 		$this->frm->addPassword('new_password', null, 75);
 		$this->frm->addPassword('confirm_password', null, 75);
-		$this->frm->addText('nickname', $this->record['settings']['nickname'], 75);
+		$this->frm->addText('nickname', $this->record['settings']['nickname'], 20);
 		$this->frm->addText('email', $this->record['settings']['email'], 255);
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
+		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $user->getSetting('date_format'));
+		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $user->getSetting('time_format'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addDropdown('group', BackendUsersModel::getGroups(), $this->record['group_id']);
@@ -139,6 +144,8 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
 			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			$this->frm->getField('date_format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
 			if($this->frm->getField('new_password')->isFilled())
 			{
 				if($this->frm->getField('new_password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::getError('ValuesDontMatch'));
@@ -159,15 +166,16 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build user-array
-				$aUser['id'] = $this->id;
-				$aUser['username'] = $this->frm->getField('username')->getValue(true);
-				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $aUser['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
+				$user = array();
+				$user['id'] = $this->id;
+				$user['username'] = $this->frm->getField('username')->getValue(true);
+				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $user['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
 
 				// update password (only if filled in)
-				if($this->frm->getField('new_password')->isFilled()) $aUser['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('new_password')->getValue(), $this->record['settings']['password_key']);
+				if($this->frm->getField('new_password')->isFilled()) $user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('new_password')->getValue(), $this->record['settings']['password_key']);
 
 				// build settings-array
-				$aSettings = $this->frm->getValues(array('username', 'password'));
+				$settings = $this->frm->getValues(array('username', 'password'));
 
 				// is there a file given
 				if($this->frm->getField('avatar')->isFilled())
@@ -182,38 +190,43 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					}
 
 					// create new filename
-					$fileName = rand(0,3) .'_'. $aUser['id'] .'.'. $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) .'_'. $user['id'] .'.'. $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
-					$aSettings['avatar'] = $fileName;
+					$settings['avatar'] = $filename;
 
 					// move to new location
-					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
+					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename);
 
 					// resize (128x128)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 128, 128);
+					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename, 128, 128);
 					$thumbnail->setForceOriginalAspectRatio(false);
 					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $fileName);
+					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $filename);
 
 					// resize (64x64)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 64, 64);
+					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename, 64, 64);
 					$thumbnail->setForceOriginalAspectRatio(false);
 					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $fileName);
+					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $filename);
 
 					// resize (32x32)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 32, 32);
+					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename, 32, 32);
 					$thumbnail->setForceOriginalAspectRatio(false);
 					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $fileName);
+					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename);
 				}
 
+				// datetime formats
+				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
+				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
+				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
+
 				// save changes
-				BackendUsersModel::update($aUser, $aSettings);
+				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edit&var='. $aUser['username'] .'&highlight=userid-'. $aUser['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edit&var='. $user['username'] .'&highlight=userid-'. $user['id']);
 			}
 		}
 	}

@@ -221,7 +221,7 @@ class FrontendLanguage
 		if(empty(self::$languages['possible_redirect']))
 		{
 			// grab from settings
-			$redirectLanguages = (array) FrontendModel::getModuleSetting('core', 'active_languages');
+			$redirectLanguages = (array) FrontendModel::getModuleSetting('core', 'redirect_languages');
 
 			// store in cache
 			self::$languages['possible_redirect'] = $redirectLanguages;

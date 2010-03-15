@@ -108,15 +108,12 @@ class BackendModel
 		if(SPOON_DEBUG) $warnings[] = array('message' => BL::getError('DebugModeIsActive'));
 
 		// robots.txt
-		// @todo tijs - het is mij niet duidelijk vanaf wanneer robots.txt geldig is.
 		if(SpoonFile::exists(PATH_WWW .'/robots.txt'))
 		{
 			// get content
 			$content = SpoonFile::getContent(PATH_WWW .'/robots.txt');
 			$isOK = true;
 
-			// @todo davy - fix die lelijke code en zorg dat het werkt.
-			if(str_replace(array("\n", ' ', "\r"), '', mb_strtolower($content)) == 'user-agent: *disallow: /') $isOK = false;
 			// split into lines
 			$lines = explode("\n", $content);
 

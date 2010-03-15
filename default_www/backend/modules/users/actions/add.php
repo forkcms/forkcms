@@ -60,6 +60,8 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addText('name', null, 255);
 		$this->frm->addText('surname', null, 255);
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
+		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
+		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addDropdown('group', $groups, $defaultGroupId);
@@ -108,6 +110,8 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
 			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			$this->frm->getField('date_format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
 			if($this->frm->getField('password')->isFilled())
 			{
 				if($this->frm->getField('password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::getError('ValuesDontMatch'));
@@ -170,6 +174,11 @@ class BackendUsersAdd extends BackendBaseActionAdd
 					$thumbnail->setForceOriginalAspectRatio(false);
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $fileName);
 				}
+
+				// datetime formats
+				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
+				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
+				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 
 				// update settings (in this case the avatar)
 				BackendUsersModel::update($aUser, $aSettings);

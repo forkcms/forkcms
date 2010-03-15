@@ -322,7 +322,13 @@ class FrontendBlogModel
 	}
 
 
-	public static function getForTags(array $ids) // @todo davy - die naam zuigt
+	/**
+	 * Fetch the list of tags for a list of blog posts
+	 *
+	 * @return	array
+	 * @param	array $ids
+	 */
+	public static function getForTags(array $ids)
 	{
 		// get db
 		$db = FrontendModel::getDB();
@@ -339,13 +345,14 @@ class FrontendBlogModel
 		// has items
 		if(!empty($items))
 		{
+			// loop items
 			for($i = 0; $i < count($items); $i++)
 			{
+				// add url to this array
 				$items[$i]['url'] = FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $items[$i]['url'];
 			}
 		}
 
-		// return
 		return $items;
 	}
 
