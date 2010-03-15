@@ -69,7 +69,7 @@ input[type="password"] {
 	input[type="password"].focus,
 	textarea.focus {
 		color: #000;
-		background: #FFC;
+		border-color: #666 #999 #999 #AAA;
 	}
 
 /*

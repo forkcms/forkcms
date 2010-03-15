@@ -46,8 +46,14 @@ body {
 	border: 1px solid #BED7E9;
 	border-width: 0 1px;
 }
-	
+
 	@-moz-document url-prefix() {
+		#main {
+			height: 100%;
+		}
+	}
+	
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		#main {
 			height: 100%;
 		}
@@ -174,8 +180,6 @@ body {
 		padding: 7px 17px;
 		position: relative;
 		top: 1px;
-		right: 1px;
-		:right: 0px;
 		line-height: 1;
 		font-size: 11px;
 		font-weight: 700;
@@ -195,6 +199,12 @@ body {
 		border: 1px solid #BAD4E8;
 
 	}
+	
+		@-moz-document url-prefix() {
+			#navigation li a {
+				right: 1px;
+			}
+		}
 
 	#navigation li a:hover,
 	#navigation li a:active,

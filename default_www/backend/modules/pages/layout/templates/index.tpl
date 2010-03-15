@@ -15,7 +15,8 @@
 		<td id="fullwidthSwitch"><a href="#close">&nbsp;</a></td>
 		<td id="contentHolder">
 			<div class="inner">
-				<div class="datagridHolder">
+
+				<div class="datagridHolder {option:!datagrid}datagridHolderNoDatagrid{/option:!datagrid}">
 					<div class="tableHeading">
 						<h3>{$lblRecentlyEdited|ucfirst}</h3>
 						<div class="buttonHolderRight">
@@ -24,18 +25,10 @@
 							</a>
 						</div>
 					</div>
-
 					{option:datagrid}{$datagrid}{/option:datagrid}
-					{option:!datagrid}
-					<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
-						<tr>
-							<td>
-								{$msgNoItems}
-							</td>
-						</tr>
-					</table>
-					{/option:!datagrid}
+					{option:!datagrid}<p>{$msgNoItems}{/option:!datagrid}
 				</div>
+
 			</div>
 		</td>
 	</tr>

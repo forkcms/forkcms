@@ -15,6 +15,10 @@
 	border-bottom: 1px solid #BDBDBD;
 }
 
+.datagridHolderNoDatagrid {
+	border: none;
+}
+
 	.datagridHolder .tableHeading h3 {
 		font-size: 14px;
 		float: left;
