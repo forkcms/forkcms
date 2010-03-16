@@ -353,10 +353,10 @@ body {
 	font-size: 11px;
 	color: #5D6064;
 	padding: 2px 3px 2px 10px;
-	background: url(/backend/core/layout/images/bullets/bullet-grey.gif) no-repeat 0 9px;
+	background: transparent;
 }
 
 #subnavigation ul li.selected ul li.selected a {
 	color: #000;
-	background: url(/backend/core/layout/images/bullets/bullet-black.gif) no-repeat 0 9px;
+	background: transparent;
 }
