@@ -289,8 +289,17 @@ class BackendLanguage
 		// store
 		self::$currentInterfaceLanguage = $language;
 
-		// store in cookie
-		SpoonCookie::set('interface_language', $language);
+		try
+		{
+			// store in cookie
+			SpoonCookie::set('interface_language', $language);
+		}
+
+		// catch exceptions
+		catch(SpoonCookieException $e)
+		{
+			// settings cookies isn't allowed, because this isn't a real problem we ignore the exception
+		}
 
 		// store in session for TinyMCE
 		SpoonSession::set('tiny_mce_language', $language);

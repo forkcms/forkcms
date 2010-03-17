@@ -243,9 +243,9 @@ class FrontendURL
 				}
 
 				// fetch failed cookie
-				catch (Exception $e)
+				catch(SpoonCookieException $e)
 				{
-					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw new FrontendException($e->getMessage());
+					// settings cookies isn't allowed, because this isn't a real problem we ignore the exception
 				}
 
 				// set sessions
@@ -279,9 +279,9 @@ class FrontendURL
 				}
 
 				// fetch failed cookie
-				catch (Exception $e)
+				catch(SpoonCookieException $e)
 				{
-					if(substr_count($e->getMessage(), 'could not be set.') == 0) throw new FrontendException($e->getMessage());
+					// settings cookies isn't allowed, because this isn't a real problem we ignore the exception
 				}
 
 				// redirect is needed

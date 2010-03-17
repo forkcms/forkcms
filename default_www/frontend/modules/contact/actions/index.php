@@ -124,7 +124,7 @@ class FrontendContactIndex extends FrontendBaseBlock
 				}
 				catch(Exception $e)
 				{
-					// ignore
+					// settings cookies isn't allowed, because this isn't a real problem we ignore the exception
 				}
 
 				try
