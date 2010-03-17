@@ -139,7 +139,8 @@
 .tree-fork li.open.last {   background: url(separate/open_last.gif) no-repeat 0 0; }
 .tree-fork li.last {        background: url(separate/last.gif) no-repeat 0 0; }
 
-.tree-fork li[rel="hidden"] {
+.tree-fork li[rel="hidden"],
+.tree-fork li.hidden {
 	opacity: .5; /* Standard: FF gt 1.5, Opera, Safari */
 	filter: alpha(opacity=50); /* IE lt 8 */
 	-ms-filter: "alpha(opacity=50)"; /* IE 8 */
