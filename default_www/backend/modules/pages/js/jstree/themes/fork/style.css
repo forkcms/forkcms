@@ -5,7 +5,6 @@
 	list-style-type:none;
 	background: url(data:image/gif;base64,R0lGODlhAgACAIAAAB4dGf///yH5BAEAAAEALAAAAAACAAIAAAICRF4AOw==);
 	:background: url(separate/decoded_base64.gif);
-	
 	background-position: 10px 1px;
 	background-repeat: repeat-y;
 }
@@ -139,6 +138,14 @@
 .tree-fork li.closed.last { background: url(separate/closed_last.gif) no-repeat 0 0; }
 .tree-fork li.open.last {   background: url(separate/open_last.gif) no-repeat 0 0; }
 .tree-fork li.last {        background: url(separate/last.gif) no-repeat 0 0; }
+
+.tree-fork li[rel="hidden"] {
+	opacity: .5; /* Standard: FF gt 1.5, Opera, Safari */
+	filter: alpha(opacity=50); /* IE lt 8 */
+	-ms-filter: "alpha(opacity=50)"; /* IE 8 */
+	-khtml-opacity: .50; /* Safari 1.x */
+	-moz-opacity: .50; /* FF lt 1.5, Netscape */
+}
 
 .tree-fork li.dragged {
 	outline: 1px dotted #000;
