@@ -36,6 +36,11 @@
 					<div class="datagridHolder">
 						<div class="tableHeading">
 							<h3>{$lblPublishedPosts|ucfirst}</h3>
+							<div class="buttonHolderRight">
+								<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
+									<span><span><span>{$lblAdd|ucfirst}</span></span></span>
+								</a>
+							</div>
 						</div>
 						{$dgPosts}
 					</div>
