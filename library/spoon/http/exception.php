@@ -17,10 +17,6 @@
  */
 
 
-/** SpoonFilterExecption class */
-require_once 'spoon/filter/filter.php';
-
-
 /**
  * This exception is used to handle HTTP related exceptions.
  *

@@ -16,10 +16,10 @@
  * @since		0.1.1
  */
 
-/** SpoonHTTP */
-require_once 'spoon/http/http.php';
+/** SpoonHTTPException */
+require_once 'spoon/http/exception.php';
 
-/** SpoonFilterExecption */
+/** SpoonFilter */
 require_once 'spoon/filter/filter.php';
 
 
