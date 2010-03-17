@@ -312,8 +312,13 @@ class SpoonFile
 		// something went wrong
 		if($handler === false) throw new SpoonFileException('The file "'. $filename .'" could not be created. Check if PHP has enough permissions.');
 
-		// write to file & close it
-		@fwrite($handler, $content);
+		// write to file
+		$write = @fwrite($handler, $content);
+
+		// validate write
+		if($write === false) throw new SpoonFileException('The file "'. $filename .'" could not be written to. Check if PHP has enough permissions.');
+
+		// close the file
 		@fclose($handler);
 
 		// chmod file

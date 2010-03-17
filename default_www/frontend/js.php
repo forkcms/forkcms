@@ -202,6 +202,19 @@ function javascriptExceptionHandler($exception)
 									$output .= "</dl>\r\n";
 								}
 
+								// $_FILES has items
+								if(isset($_FILES))
+								{
+									// open defition list
+									$output .= "<dl>\r\n";
+
+									// title + array
+									$output .= "<dt>\$_FILES</dt>\r\n<dd><pre>". print_r($_FILES, true) ."</pre></dd>\r\n";
+
+									// close definition list
+									$output .= "</dl>\r\n";
+								}
+
 							$output .= '
 						</div>
 					</div>
@@ -278,7 +291,7 @@ function javascriptExceptionHandler($exception)
 		@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);
 	}
 
-	// output to the browser
+	// stop script execution
 	exit;
 }
 

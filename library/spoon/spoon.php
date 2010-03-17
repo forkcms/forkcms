@@ -48,6 +48,9 @@ if(!defined('SPOON_CHARSET')) define('SPOON_CHARSET', 'iso-8859-1');
 /** SpoonException class */
 require_once 'spoon/exception/exception.php';
 
+// check mbstring extension
+if(!extension_loaded('mbstring')) throw new SpoonException('You need to make sure the mbstring extension is loaded.');
+
 
 /**
  * This class holds objects in a name based registry to make them easily

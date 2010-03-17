@@ -202,6 +202,19 @@ function ajaxExceptionHandler($exception)
 									$output .= "</dl>\r\n";
 								}
 
+								// $_FILES has items
+								if(isset($_FILES))
+								{
+									// open defition list
+									$output .= "<dl>\r\n";
+
+									// title + array
+									$output .= "<dt>\$_FILES</dt>\r\n<dd><pre>". print_r($_FILES, true) ."</pre></dd>\r\n";
+
+									// close definition list
+									$output .= "</dl>\r\n";
+								}
+
 							$output .= '
 						</div>
 					</div>
@@ -283,6 +296,8 @@ function ajaxExceptionHandler($exception)
 
 	// output to the browser
 	echo json_encode($response);
+	
+	// stop script execution
 	exit;
 }
 

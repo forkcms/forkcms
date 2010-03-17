@@ -178,6 +178,7 @@ class SpoonThumbnail
 
 	/**
 	 * Outputs the image as png to the browser.
+	 * @todo	Tijs, check the @signs
 	 *
 	 * @return	void
 	 * @param	bool[optional] $headers		Should the headers be send? This is a usefull when you're debugging.
@@ -312,6 +313,7 @@ class SpoonThumbnail
 
 	/**
 	 * Resize the image with Force Aspect Ratio.
+	 * @todo	Tijs, check the @signs
 	 *
 	 * @return	void
 	 * @param	int $currentWidth		Original width.

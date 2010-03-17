@@ -872,6 +872,8 @@ class SpoonFeedRSS
 		// load xmlstring
 		if($type == 'url')
 		{
+			// @todo	Tijs Use cURL
+
 			// check if allow_url_fopen is enabled
 			if(ini_get('allow_url_fopen') == 0) throw new SpoonFeedException('allow_url_fopen should be enabled, if you want to get a remote URL.');
 
@@ -883,6 +885,9 @@ class SpoonFeedRSS
 
 			// read the string
 			$xmlString = @stream_get_contents($handle);
+
+			// validate the string
+			if($xmlString === false) throw new SpoonFeedException('Something went wrong while retrieving the content.');
 
 			// close the hanlde
 			@fclose($handle);
