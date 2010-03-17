@@ -14,12 +14,12 @@ body {
 /* MSIE specific */
 
 * html body {
-	scrollbar-3dlight-color: #f5f5f5;
+	scrollbar-3dlight-color: #F0F0EE;
 	scrollbar-arrow-color: #676662;
-	scrollbar-base-color: #f5f5f5;
+	scrollbar-base-color: #F0F0EE;
 	scrollbar-darkshadow-color: #DDDDDD;
 	scrollbar-face-color: #E0E0DD;
-	scrollbar-highlight-color: #f5f5f5;
-	scrollbar-shadow-color: #f5f5f5;
+	scrollbar-highlight-color: #F0F0EE;
+	scrollbar-shadow-color: #F0F0EE;
 	scrollbar-track-color: #F5F5F5;	
 }
