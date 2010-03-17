@@ -23,6 +23,14 @@ class BackendLanguage
 
 
 	/**
+	 * The active languages
+	 *
+	 * @var	array
+	 */
+	protected static $activeLanguages;
+
+
+	/**
 	 * The current interface-language
 	 *
 	 * @var	string
@@ -36,6 +44,29 @@ class BackendLanguage
 	 * @var	string
 	 */
 	protected static $currentWorkingLanguage;
+
+
+	/**
+	 * Get the active languages
+	 *
+	 * @return	array
+	 */
+	public static function getActiveLanguages()
+	{
+		// validate the cache
+		if(empty(self::$activeLanguages))
+		{
+			// grab from settings
+			$activeLanguages = (array) BackendModel::getSetting('core', 'active_languages');
+
+			// store in cache
+			self::$activeLanguages = $activeLanguages;
+		}
+
+		// return from cache
+		return self::$activeLanguages;
+	}
+
 
 
 	/**

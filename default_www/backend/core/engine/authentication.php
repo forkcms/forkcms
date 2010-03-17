@@ -66,9 +66,6 @@ class BackendAuthentication
 		$username = (string) $username;
 		$password = (string) $password;
 
-		// at this point we need the model for users
-		require_once BACKEND_PATH .'/modules/users/engine/model.php';
-
 		// fetch user ID by username
 		$userId = BackendUsersModel::getIdByUsername($username);
 

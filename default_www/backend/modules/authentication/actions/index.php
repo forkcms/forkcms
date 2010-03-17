@@ -119,9 +119,6 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		// is the form submitted
 		if($this->frmForgotPassword->isSubmitted())
 		{
-			// at this point we need the model for users
-			require_once BACKEND_PATH .'/modules/users/engine/model.php';
-
 			// backend email
 			$email = $this->frmForgotPassword->getField('backend_email')->getValue();
 

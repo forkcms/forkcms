@@ -38,6 +38,9 @@ class Init
 		// set type
 		$this->type = $type;
 
+		// register the autoloader
+		spl_autoload_register(array('Init', 'autoLoader'));
+
 		// set some ini-options
 		ini_set('memory_limit', '64M');
 
@@ -76,6 +79,41 @@ class Init
 
 		// start session
 		$this->initSession();
+	}
+
+
+	/**
+	 * Autoloader for the backend
+	 *
+	 * @return	void
+	 * @param	string $className	The name of the class to require
+	 */
+	public static function autoLoader($className)
+	{
+		// redefine
+		$className = strtolower((string) $className);
+
+		// init var
+		$pathToLoad = '';
+
+		// exceptions
+		$exceptions = array();
+		$exceptions['backend'] = BACKEND_CORE_PATH .'/engine/backend.php';
+		$exceptions['backendajaxaction'] = BACKEND_CORE_PATH .'/engine/ajax_action.php';
+		$exceptions['backenddatagriddb'] = BACKEND_CORE_PATH .'/engine/datagrid.php';
+		$exceptions['backendbaseconfig'] = BACKEND_CORE_PATH .'/engine/base.php';
+
+		// is it an exception
+		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
+
+		// backend
+		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = BACKEND_CORE_PATH .'/engine/'. str_replace('backend', '', $className) .'.php';
+
+		// frontend
+		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH .'/engine/'. str_replace('frontend', '', $className) .'.php';
+
+		// file check in core
+		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
 	}
 
 
@@ -137,49 +175,16 @@ class Init
 	 */
 	private function requireBackendClasses()
 	{
-		// general classes
-		require_once BACKEND_CORE_PATH .'/engine/exception.php';
-		require_once BACKEND_CORE_PATH .'/engine/template.php';
-		require_once BACKEND_CORE_PATH .'/engine/language.php';
-		require_once BACKEND_CORE_PATH .'/engine/authentication.php';
-		require_once BACKEND_CORE_PATH .'/engine/user.php';
-		require_once BACKEND_CORE_PATH .'/engine/model.php';
-		require_once BACKEND_CORE_PATH .'/engine/url.php';
-		require_once BACKEND_CORE_PATH .'/engine/base.php';
-		require_once BACKEND_CORE_PATH .'/engine/mailer.php';
-
-		// frontend
-		require FRONTEND_CORE_PATH .'/engine/exception.php';
-		require FRONTEND_CORE_PATH .'/engine/language.php';
-		require FRONTEND_CORE_PATH .'/engine/model.php';
-
 		// for specific types, specific files should be loaded
 		switch($this->type)
 		{
 			case 'backend':
-				require_once BACKEND_CORE_PATH .'/engine/backend.php';
-				require_once BACKEND_CORE_PATH .'/engine/meta.php';
-				require_once BACKEND_CORE_PATH .'/engine/header.php';
-				require_once BACKEND_CORE_PATH .'/engine/navigation.php';
-				require_once BACKEND_CORE_PATH .'/engine/action.php';
-				require_once BACKEND_CORE_PATH .'/engine/datagrid.php';
-				require_once BACKEND_CORE_PATH .'/engine/form.php';
 				require_once BACKEND_PATH .'/modules/tags/engine/model.php';
 				require_once BACKEND_PATH .'/modules/users/engine/model.php';
 			break;
 
 			case 'backend_ajax':
 				require_once PATH_WWW .'/routing.php';
-				require_once BACKEND_CORE_PATH .'/engine/ajax.php';
-				require_once BACKEND_CORE_PATH .'/engine/ajax_action.php';
-			break;
-
-			case 'backend_cronjob':
-				require_once BACKEND_CORE_PATH .'/engine/cronjob.php';
-			break;
-
-			case 'backend_js':
-				require_once BACKEND_CORE_PATH .'/engine/javascript.php';
 			break;
 		}
 	}

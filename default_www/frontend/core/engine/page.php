@@ -131,7 +131,7 @@ class FrontendPage extends FrontendBaseObject
 		$this->footer->parse();
 
 		// output
-		$this->tpl->display($this->templatePath);
+		$this->tpl->display($this->templatePath, false, true);
 	}
 
 

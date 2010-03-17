@@ -39,6 +39,9 @@ class Init
 		// set type
 		$this->type = $type;
 
+		// register the autoloader
+		spl_autoload_register(array('Init', 'autoLoader'));
+
 		// set some ini-options
 		ini_set('memory_limit', '64M');
 
@@ -86,6 +89,38 @@ class Init
 
 		// start session
 		$this->initSession();
+	}
+
+
+	/**
+	 * Autoloader for the frontend
+	 *
+	 * @return	void
+	 * @param	string $className	The name of the class to require
+	 */
+	public static function autoLoader($className)
+	{
+		// redefine
+		$className = strtolower((string) $className);
+
+		// init var
+		$pathToLoad = '';
+
+		// exceptions
+		$exceptions = array();
+		$exceptions['frontend'] = FRONTEND_CORE_PATH .'/engine/frontend.php';
+		$exceptions['frontendbaseconfig'] = FRONTEND_CORE_PATH .'/engine/base.php';
+		$exceptions['frontendbaseobject'] = FRONTEND_CORE_PATH .'/engine/base.php';
+		$exceptions['frontendblockextra'] = FRONTEND_CORE_PATH .'/engine/block.php';
+
+		// is it an exception
+		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
+
+		// frontend
+		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH .'/engine/'. str_replace('frontend', '', $className) .'.php';
+
+		// file check in core
+		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
 	}
 
 
@@ -140,41 +175,12 @@ class Init
 	 */
 	private function requireFrontendClasses()
 	{
-		// require base classes
-		require_once FRONTEND_CORE_PATH .'/engine/base.php';
-
-		// general classes
-		require_once FRONTEND_CORE_PATH .'/engine/exception.php';
-		require_once FRONTEND_CORE_PATH .'/engine/user.php';
-		require_once FRONTEND_CORE_PATH .'/engine/template.php';
-		require_once FRONTEND_CORE_PATH .'/engine/template_custom.php';
-		require_once FRONTEND_CORE_PATH .'/engine/language.php';
-		require_once FRONTEND_CORE_PATH .'/engine/model.php';
-		require_once FRONTEND_CORE_PATH .'/engine/url.php';
-		require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
-		require_once FRONTEND_CORE_PATH .'/engine/mailer.php';
-
 		// based on the type
 		switch($this->type)
 		{
 			case 'frontend':
-				require_once FRONTEND_CORE_PATH .'/engine/frontend.php';
-				require_once FRONTEND_CORE_PATH .'/engine/page.php';
-				require_once FRONTEND_CORE_PATH .'/engine/header.php';
-				require_once FRONTEND_CORE_PATH .'/engine/breadcrumb.php';
-				require_once FRONTEND_CORE_PATH .'/engine/navigation.php';
-				require_once FRONTEND_CORE_PATH .'/engine/footer.php';
-				require_once FRONTEND_CORE_PATH .'/engine/block.php';
-				require_once FRONTEND_CORE_PATH .'/engine/form.php';
+				require_once FRONTEND_CORE_PATH .'/engine/template_custom.php';
 				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
-			break;
-
-			case 'frontend_ajax':
-				require_once FRONTEND_CORE_PATH .'/engine/ajax.php';
-			break;
-
-			case 'frontend_js':
-				require_once FRONTEND_CORE_PATH .'/engine/javascript.php';
 			break;
 		}
 	}

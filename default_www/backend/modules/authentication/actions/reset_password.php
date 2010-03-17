@@ -101,9 +101,6 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		// if the email or the key aren't set, redirect the user
 		if($this->email !== '' && $this->key !== '')
 		{
-			// at this point we need the model for users
-			require_once BACKEND_PATH .'/modules/users/engine/model.php';
-
 			// fetch the user
 			$userId = BackendUsersModel::getIdByEmail($this->email);
 			$this->user = new BackendUser($userId);

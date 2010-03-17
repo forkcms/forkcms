@@ -51,10 +51,10 @@ class FrontendTemplate extends SpoonTemplate
 	 * @param	string $template				The path of the template to use
 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
 	 */
-	public function display($template, $customHeaders = false)
+	public function display($template, $customHeaders = false, $parseCustom = false)
 	{
 		// do custom stuff
-		new FrontendTemplateCustom($this);
+		if($parseCustom) new FrontendTemplateCustom($this);
 
 		// parse constants
 		$this->parseConstants();

@@ -39,9 +39,7 @@ jsBackend.pages.manageTemplates = {
 		// get all instances of .blockName
 		$('.blockName').each(function(index) {
 			$(this).show();
-			if ((index + 1) > amountToShow) {
-				$(this).hide();
-			};
+			if((index + 1) > amountToShow) { $(this).hide(); };
 		});
 	},
 	

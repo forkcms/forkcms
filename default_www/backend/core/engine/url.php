@@ -152,7 +152,7 @@ class BackendURL
 		$chunks = (array) explode('/', trim($processedQueryString, '/'));
 
 		// get the language, this will always be in front
-		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE) : SITE_DEFAULT_LANGUAGE;
+		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], BackendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE) : SITE_DEFAULT_LANGUAGE;
 
 		// get the module, null will be the default
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';

@@ -53,7 +53,7 @@ class BackendJavascript
 		$this->setFile(SpoonFilter::getGetValue('file', null, ''));
 
 		// set the language
-		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
+		$this->setLanguage(SpoonFilter::getGetValue('language', BackendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
 		// create a new template instance (this will handle all stuff for us)
 		$tpl = new BackendTemplate();

@@ -36,7 +36,7 @@ class BackendPagesModel
 	public static function buildCache()
 	{
 		// get db
-		$db = FrontendModel::getDB();
+		$db = BackendModel::getDB();
 
 		// get tree
 		$levels = self::getTree(array(0));
@@ -309,7 +309,7 @@ class BackendPagesModel
 		$navigation = array();
 
 		// require
-		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
+		require_once FRONTEND_CACHE_PATH .'/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
 
 		// check if item exists
 		if(isset($navigation[$type][$depth][$parentId]))
@@ -913,7 +913,7 @@ class BackendPagesModel
 		$navigation = array();
 
 		// require the file
-		require_once PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
+		require_once FRONTEND_CACHE_PATH .'/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
 
 		// start HTML
 		$html = '<h4>'. ucfirst(BL::getLabel('MainNavigation')) .'</h4>'."\n";

@@ -7,9 +7,6 @@
 	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItems}</p></div>{/option:!blogArticles}
 	{option:blogArticles}
 		{iteration:blogArticles}
-			{option:blogArticles.first}<strong>first</strong><br />{/option:blogArticles.first}
-			{option:blogArticles.last}<strong>last</strong><br />{/option:blogArticles.last}
-			{cycle:'<strong style="text-transform: uppercase;">odd</strong>':'even'}<br />
 			<div class="article">
 				<h2>
 					<a href="{$blogArticles.full_url}" title="{$blogArticles.title}">

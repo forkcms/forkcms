@@ -542,7 +542,7 @@ class FrontendHeader extends FrontendBaseObject
 		$overwrite = (bool) $overwrite;
 
 		// overwrite? reset the current value
-		if ($overwrite) $this->metaKeywords = $value;
+		if($overwrite) $this->metaKeywords = $value;
 
 		// add to current value
 		else

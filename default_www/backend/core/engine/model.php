@@ -230,12 +230,9 @@ class BackendModel
 		// does the keys exists in the cache?
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
-			// validate file @later	the file should be regenerated
+			// validate file
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php'))
 			{
-				// require BackendPagesModel
-				require_once BACKEND_MODULES_PATH .'/pages/engine/model.php';
-
 				// regenerate cache
 				BackendPagesModel::buildCache();
 			}
@@ -268,12 +265,9 @@ class BackendModel
 		// does the keys exists in the cache?
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
-			// validate file @later: the file should be re-generated
+			// validate file
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
 			{
-				// require BackendPagesModel
-				require_once BACKEND_MODULES_PATH .'/pages/engine/model.php';
-
 				// regenerate cache
 				BackendPagesModel::buildCache();
 			}
@@ -634,7 +628,7 @@ class BackendModel
 		}
 
 		// require SpoonXMLRPCClient
-		require_once 'spoon/webservices/xmlrpc/client.php';
+		require_once 'spoon/xmlrpc/client.php';
 
 		// loop services
 		foreach($pingServices['services'] as $service)
