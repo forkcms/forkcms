@@ -194,6 +194,9 @@ jsBackend.pages.tree = {
 	init: function() {
 		if($('#tree div').length == 0) return false;
 
+		// add "treeHidden"-class on leafs that are hidden, only for browsers that don't support opacity
+		if(!jQuery.support.opacity) $('#tree ul li[rel="hidden"]').addClass('treeHidden');
+		
 		var openedIds = [];
 		if(typeof pageID != 'undefined') {
 			// get parents
