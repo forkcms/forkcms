@@ -142,8 +142,14 @@ class BackendURL
 			}
 		}
 
+		// find the position of ? (which seperates real URL and GET-parameters)
+		$positionQuestionMark = strpos($queryString, '?');
+
+		// remove the GET-chunk from the parameters
+		$processedQueryString = ($positionQuestionMark === false) ? $queryString : substr($queryString, 0, $positionQuestionMark);
+
 		// split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
-		$chunks = (array) explode('/', trim($queryString, '/'));
+		$chunks = (array) explode('/', trim($processedQueryString, '/'));
 
 		// get the language, this will always be in front
 		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE) : SITE_DEFAULT_LANGUAGE;
@@ -177,7 +183,7 @@ class BackendURL
 			if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
 			{
 				// redirect to login
-				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/authentication/?querystring=/'. $this->getQueryString());
+				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/authentication/?querystring='. urlencode('/'. $this->getQueryString()));
 			}
 
 			// the person is logged in
@@ -187,7 +193,7 @@ class BackendURL
 				if(!BackendAuthentication::isAllowedModule($module))
 				{
 					// the user doesn't have access, redirect to error page
-					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-module&querystring='. urlencode($this->queryString));
+					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-module&querystring='. urlencode('/'. $this->getQueryString()));
 				}
 
 				// we have access
@@ -197,7 +203,7 @@ class BackendURL
 					if(!BackendAuthentication::isAllowedAction($action, $module))
 					{
 						// the user hasn't access, redirect to error page
-						SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-action&querystring='. urlencode($this->queryString));
+						SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-action&querystring='. urlencode('/'. $this->getQueryString()));
 					}
 
 					// let's do it
