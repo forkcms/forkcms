@@ -101,7 +101,7 @@ class CSSToInlineStyles
 		$selector = (string) $selector;
 
 		// the CSS selector
-		$cssSelector = array(	'/(\w)\s+(\w)/',				// E F				Matches any F element that is a descendant of an E element
+		$cssSelector = array(	'/(\w*)\s+(\w*)/',				// E F				Matches any F element that is a descendant of an E element
 								'/(\w)\s*>\s*(\w)/',			// E > F			Matches any F element that is a child of an element E
 								'/(\w):first-child/',			// E:first-child	Matches element E when E is the first child of its parent
 								'/(\w)\s*\+\s*(\w)/',			// E + F			Matches any F element immediately preceded by an element
@@ -241,7 +241,7 @@ class CSSToInlineStyles
 				$elements = $xPath->query($query);
 
 				// validate elements
-				if($elements === false) continue;
+				if($elements === false || $elements->length == 0) continue;
 
 				// loop found elements
 				foreach($elements as $element)
