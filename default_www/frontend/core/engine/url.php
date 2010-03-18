@@ -292,7 +292,7 @@ class FrontendURL
 			if($mustRedirect)
 			{
 				// build URL
-				$URL = '/'. $language .'/'. $this->getQueryString();
+				$URL = rtrim('/'. $language .'/'. $this->getQueryString(), '/');
 
 				// set header & redirect
 				SpoonHTTP::redirect($URL, 301);
