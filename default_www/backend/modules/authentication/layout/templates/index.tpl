@@ -37,7 +37,7 @@
 					</div>
 				</div>
 				{/option:hasError}
-				
+
 				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
 
 					<div id="loginBoxTop">
@@ -106,8 +106,16 @@
 						{/form:forgotPassword}
 					</div>
 				</div>
+
+				{include:file='{$BACKEND_CORE_PATH}/layout/templates/messaging.tpl'}
 			</td>
 		</tr>
 	</table>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			if(!utils.cookies.isEnabled()) $('#noCookies').show();
+		});
+	</script>
+
 </body>
 </html>

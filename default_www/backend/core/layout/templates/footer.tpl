@@ -14,6 +14,5 @@
 
 		{option:errorMessage}jsBackend.messages.add('error', "{$errorMessage}");{/option:errorMessage}
 	</script>
-
 </body>
 </html>

@@ -7,6 +7,35 @@ utils = {
 }
 
 /**
+ * Object that contains some function related to cookies
+ * 
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ */
+utils.cookies = {
+	/**
+	 * Are cookies enabled?
+	 * 
+	 * @return	bool
+	 */
+	isEnabled: function() {
+		// try to grab the property
+		var cookiesEnabled = (navigator.cookieEnabled) ? true : false;
+		
+		// unknown property?
+		if(typeof navigator.cookieEanbled == 'undefined' && !cookiesEnabled) {
+			// try to set a cookie
+			document.cookie = 'testcookie';
+			cookiesEnabled = (document.cookie.indexOf('testcookie') != -1);
+		}
+		
+		// return
+		return cookiesEnabled;
+	},
+	// end
+	eof: true
+}
+
+/**
  * Object that contains some functions related to forms
  * 
  * @author	Tijs Verkoyen <tijs@netlash.com>

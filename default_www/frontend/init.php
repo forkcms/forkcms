@@ -109,6 +109,7 @@ class Init
 		// exceptions
 		$exceptions = array();
 		$exceptions['frontend'] = FRONTEND_CORE_PATH .'/engine/frontend.php';
+		$exceptions['frontendbaseajaxaction'] = FRONTEND_CORE_PATH .'/engine/ajax.php';
 		$exceptions['frontendbaseconfig'] = FRONTEND_CORE_PATH .'/engine/base.php';
 		$exceptions['frontendbaseobject'] = FRONTEND_CORE_PATH .'/engine/base.php';
 		$exceptions['frontendblockextra'] = FRONTEND_CORE_PATH .'/engine/block.php';

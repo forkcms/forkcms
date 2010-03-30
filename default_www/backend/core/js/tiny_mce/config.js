@@ -35,6 +35,7 @@ tinyMCE.init({
 	
 	// paste
 	paste_auto_cleanup_on_paste : true,
+	paste_strip_class_attributes: 'mso',
 	paste_remove_spans: true,
 	paste_remove_styles: true
 });

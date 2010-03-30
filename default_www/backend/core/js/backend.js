@@ -81,7 +81,6 @@ jsBackend.balloons = {
 }
 
 
-
 jsBackend.controls = {
 	// init, something like a constructor
 	init: function() { 
@@ -490,6 +489,18 @@ jsBackend.layout = {
 		$('.datagrid td a').hover(function() { $(this).parent().addClass('hover'); }, function() { $(this).parent().removeClass('hover'); });
 		
 		jsBackend.layout.showBrowserWarning();
+		jsBackend.layout.datagrid();
+	},
+	// datagrid layout
+	datagrid: function() {
+		if(jQuery.browser.msie) {
+			$('.datagrid tr td:last-child').addClass('lastChild');
+			$('.datagrid tr td:first-child').addClass('firstChild');
+		}
+
+		// dynamic striping
+		$('.dynamicStriping.datagrid tr:nth-child(2n)').addClass('even');
+		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd')
 	},
 	// if the browser isn't supported show a warning
 	showBrowserWarning: function() {

@@ -1,15 +1,9 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblSettings|ucfirst} &gt; {$lblBlog|ucfirst}</p>
-			</div>
-
 			<div class="inner">
-				
-				<!-- @todo @johan add label -->
-				<h3>Module-instellingen: blog</h3>
-				
+				<h3>{$lblModuleSettings|ucfirst}: {$lblBlog|ucfirst}</h3>
+
 				{form:settings}
 					<div class="box">
 						<div class="heading">

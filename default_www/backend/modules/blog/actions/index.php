@@ -1,7 +1,5 @@
 <?php
 
-// @todo tijs - ik zou de 'recent aangepaste' hier enkel zetten als we meer dan 1 pagina hebben. Wat vind jij? uitvoeren!
-
 /**
  * BackendBlogIndex
  * This is the index-action (default), it will display the overview of blog posts

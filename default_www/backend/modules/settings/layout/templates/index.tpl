@@ -1,14 +1,8 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblSettings|ucfirst} &gt; {$lblGeneral|ucfirst}</p>
-			</div>
-
 			<div class="inner">
-
-				<!-- @todo @johan add label -->
-				<h3>Algemene instellingen</h3>
+				<h3>{$lblGeneralSettings|ucfirst}</h3>
 
 				{form:generalsettings}
 					{option:warnings}
