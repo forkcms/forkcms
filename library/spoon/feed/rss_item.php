@@ -178,7 +178,11 @@ class SpoonFeedRSSItem
 		$guid = $this->getGuid();
 		if(!empty($guid))
 		{
-			$XML .= '	<guid isPermaLink="'. $guid['isPermaLink'] .'">'. $guid['url'] .'</guid>'."\n";
+			// reformat
+			$isPermaLink = ($guid['isPermaLink']) ? 'true' : 'false';
+
+			// build xml
+			$XML .= '	<guid isPermaLink="'. $isPermaLink .'">'. $guid['url'] .'</guid>'."\n";
 		}
 
 		// insert enclosure

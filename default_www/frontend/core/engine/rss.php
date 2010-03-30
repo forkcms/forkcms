@@ -2,6 +2,7 @@
 
 // require SpoonRSS
 require_once 'spoon/feed/rss.php';
+require_once 'spoon/feed/rss_item.php';
 
 /**
  * FrontendRSS, this is our extended version of SpoonRSS
@@ -12,7 +13,7 @@ require_once 'spoon/feed/rss.php';
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendRSS extends SpoonRSS
+class FrontendRSS extends SpoonFeedRSS
 {
 	/**
 	 * The default constructor
@@ -46,7 +47,7 @@ class FrontendRSS extends SpoonRSS
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendRSSItem extends SpoonRSSItem
+class FrontendRSSItem extends SpoonFeedRSSItem
 {
 	/**
 	 * Default constructor.
@@ -64,6 +65,26 @@ class FrontendRSSItem extends SpoonRSSItem
 		// set some properties
 		$this->setGuid($link, true);
 	}
+
+
+	/**
+	 * Set the author.
+	 *
+	 * @return	void
+	 * @param	string $author
+	 */
+	public function setAuthor($author)
+	{
+		// redefine
+		$author = (string) $author;
+
+		// add fake-emailaddress
+		if(substr_count($author, '@') == 0) $author = SpoonFilter::urlise($author) .'@example.com ('. $author .')';
+
+		// set author
+		parent::setAuthor($author);
+	}
+
 
 	/**
 	 * Set the description.

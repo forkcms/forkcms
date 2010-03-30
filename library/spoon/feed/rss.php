@@ -1363,7 +1363,7 @@ class SpoonFeedRSS
 		$items = $this->getItems();
 
 		// sort
-		uasort($items, array('SpoonRSS', 'compareObjects'));
+		uasort($items, array('SpoonFeedRSS', 'compareObjects'));
 
 		// set items
 		$this->items = $items;
