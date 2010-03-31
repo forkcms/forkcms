@@ -1,9 +1,20 @@
 1.2.0 (xxxx-xx-xx)
 ----
-- The directory structure has changed for a couple of classes. Each class now has its own file.
+- The directory structure has changed for some packages.
 - A few classes have been renamed based on the above changes. People new to Spoon should have an easier time, trying 
   to find the location of the subpackages.
 - Spoon::setObjectReference now also returns the instance you provide it.
+- When an exception is thrown, we try to add the last PHP error message if it's available.
+- SpoonFilter::isURL now allowes square brackets and semicolons.
+- SpoonFilter::replaceURLsWithAnchors now allowes square brackets and semicolons.
+- If an exception has a code, this code will be used to link to the documentation section on the website which might
+  contain more information about this specific exception.
+- Template cycle tags may now contain a few more characters to give more flexibility in your templates.
+- Fixed a bug in SpoonTemplate which prevented first/last options to function normally when your arrays did not start with
+  the 0 key element.
+- An extension check has been added to make sure 'mbstring' is loaded before you can use any Spoon class.
+- Fixed some comments in multiple files
+- Exception-mails are formatted with inline styles
 
 
 1.1.5 (2010-02-07)

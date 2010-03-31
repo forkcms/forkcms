@@ -78,8 +78,8 @@ class Init
 		// set debugging
 		$this->setDebugging();
 
-		// require spoon-classes
-		$this->requireSpoonClasses();
+		// require spoon
+		require_once 'spoon/spoon.php';
 
 		// require frontend-classes
 		$this->requireFrontendClasses();
@@ -210,33 +210,6 @@ class Init
 				require_once '../library/globals_frontend.php';
 		}
 
-	}
-
-
-	/**
-	 * Require all needed Spoon classes
-	 *
-	 * @return	void
-	 */
-	private function requireSpoonClasses()
-	{
-		// general classes
-		require_once 'spoon/spoon.php';
-		require_once 'spoon/locale/locale.php';
-		require_once 'spoon/session/session.php';
-		require_once 'spoon/database/database.php';
-		require_once 'spoon/cookie/cookie.php';
-		require_once 'spoon/http/http.php';
-		require_once 'spoon/template/template.php';
-
-		// based on the type
-		switch($this->type)
-		{
-			case 'frontend':
-				require_once 'spoon/datagrid/datagrid.php';
-				require_once 'spoon/form/form.php';
-			break;
-		}
 	}
 
 

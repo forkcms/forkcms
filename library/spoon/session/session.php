@@ -17,10 +17,6 @@
  */
 
 
-/** SpoonSessionException */
-require_once 'spoon/session/exception.php';
-
-
 /**
  * This class provides some methods for setting, retrieving
  * and manipulating sessions
@@ -166,14 +162,34 @@ class SpoonSession
 
     /**
 	 * Starts the session.
-	 * @todo	@tijs validate if the session is really started
 	 *
 	 * @return void
 	 */
 	public static function start()
 	{
-		if(!session_id()) @session_start();
+		// session already started?
+		if(!session_id())
+		{
+			// start the session
+			return @session_start();
+		}
+		
+		// if already started
+		return true;
 	}
 }
+
+
+/**
+ * This exception is used to handle session related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	session
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonSessionException extends SpoonException {}
 
 ?>

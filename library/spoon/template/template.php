@@ -17,22 +17,6 @@
  */
 
 
-/** SpoonTemplateException */
-require_once 'spoon/template/exception.php';
-
-/** SpoonTemplateCompiler */
-require_once 'spoon/template/compiler.php';
-
-/** SpoonTemplateModifiers */
-require_once 'spoon/template/modifiers.php';
-
-/** SpoonFile */
-require_once 'spoon/file/file.php';
-
-/** SpoonDate */
-require_once 'spoon/date/date.php';
-
-
 /**
  * Spoon Library
  *
@@ -473,5 +457,18 @@ class SpoonTemplate
 		$this->forceCompile = (bool) $on;
 	}
 }
+
+
+/**
+ * This exception is used to handle template related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	template
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonTemplateException extends SpoonException {}
 
 ?>

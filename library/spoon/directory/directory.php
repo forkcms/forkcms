@@ -16,15 +16,6 @@
  * @since		0.1.1
  */
 
-/** SpoonDirectoryException */
-require_once 'spoon/directory/exception.php';
-
-/** SpoonFile */
-require_once 'spoon/file/file.php';
-
-/** SpoonFilter */
-require_once 'spoon/filter/filter.php';
-
 
 /**
  * Most of the functions you can apply on folders.
@@ -404,5 +395,18 @@ class SpoonDirectory
 		return $return;
 	}
 }
+
+
+/**
+ * This exception is used to handle directory related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	directory
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonDirectoryException extends SpoonException {}
 
 ?>

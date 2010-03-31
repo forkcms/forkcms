@@ -17,28 +17,6 @@
  */
 
 
-/** SpoonDatagridException */
-require_once 'spoon/datagrid/exception.php';
-
-/** SpoonDatagridColumn */
-require_once 'spoon/datagrid/column.php';
-
-/** SpoonDatagridSource */
-require_once 'spoon/datagrid/source.php';
-
-/** SpoonDatagridSourceArray */
-require_once 'spoon/datagrid/source_array.php';
-
-/** SpoonDatagridSourceDB */
-require_once 'spoon/datagrid/source_db.php';
-
-/** SpoonDatagridPaging */
-require_once 'spoon/datagrid/paging.php';
-
-/** SpoonTemplate */
-require_once 'spoon/template/template.php';
-
-
 /**
  * This class is the base class used to generate datagrids from a range of sources.
  *
@@ -1895,5 +1873,18 @@ class SpoonDatagrid
 		$this->URL = (string) $URL;
 	}
 }
+
+
+/**
+ * This exception is used to handle datagrid related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	datagrid
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonDatagridException extends SpoonException {}
 
 ?>

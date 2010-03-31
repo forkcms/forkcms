@@ -15,18 +15,6 @@
  * @since		1.1.0
  */
 
-/** SpoonFeedException */
-require_once 'spoon/feed/exception.php';
-
-/** SpoonFeedRSSItem */
-require_once 'spoon/feed/rss_item.php';
-
-/** SpoonFile */
-require_once 'spoon/file/file.php';
-
-/** SpoonHTTP */
-require_once 'spoon/http/http.php';
-
 
 /**
  * This base class provides all the methods used by RSS-files
@@ -870,28 +858,7 @@ class SpoonFeedRSS
 		if(!self::isValid($URL, $type)) throw new SpoonFeedException('Invalid feed');
 
 		// load xmlstring
-		if($type == 'url')
-		{
-			// @todo	Tijs Use cURL
-
-			// check if allow_url_fopen is enabled
-			if(ini_get('allow_url_fopen') == 0) throw new SpoonFeedException('allow_url_fopen should be enabled, if you want to get a remote URL.');
-
-			// open the url
-			$handle = @fopen($URL, 'r');
-
-			// validate the handle
-			if($handle === false) throw new SpoonFeedException('Something went wrong while retrieving the URL.');
-
-			// read the string
-			$xmlString = @stream_get_contents($handle);
-
-			// validate the string
-			if($xmlString === false) throw new SpoonFeedException('Something went wrong while retrieving the content.');
-
-			// close the hanlde
-			@fclose($handle);
-		}
+		if($type == 'url') $xmlString = SpoonHTTP::getContent($URL);
 
 		// not that url
 		else $xmlString = $URL;
@@ -922,7 +889,7 @@ class SpoonFeedRSS
 			}
 
 			// catch exceptions
-			catch (Exception $e)
+			catch(Exception $e)
 			{
 				// ignore exceptions
 			}

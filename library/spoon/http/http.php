@@ -16,12 +16,6 @@
  * @since		0.1.1
  */
 
-/** SpoonHTTPException */
-require_once 'spoon/http/exception.php';
-
-/** SpoonFilter */
-require_once 'spoon/filter/filter.php';
-
 
 /**
  * This class is used to manipulate raw http headers
@@ -188,5 +182,18 @@ class SpoonHTTP
 		self::setHeaders('HTTP/1.1 '. $aCodes[$code]);
 	}
 }
+
+
+/**
+ * This exception is used to handle HTTP related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	http
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonHTTPException extends SpoonException {}
 
 ?>

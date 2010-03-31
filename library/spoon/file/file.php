@@ -16,15 +16,6 @@
  * @since		0.1.1
  */
 
-/** SpoonFileException */
-require_once 'spoon/file/exception.php';
-
-/** SpoonDirectory */
-require_once 'spoon/directory/directory.php';
-
-/** SpoonFilter class */
-require_once 'spoon/filter/filter.php';
-
 
 /**
  * This class provides a wide range of methods to be used on
@@ -328,5 +319,18 @@ class SpoonFile
 		return true;
 	}
 }
+
+
+/**
+ * This exception is used to handle file related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	file
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonFileException extends SpoonException {}
 
 ?>

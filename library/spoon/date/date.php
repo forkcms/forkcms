@@ -17,13 +17,6 @@
  */
 
 
-/** SpoonDateException */
-require_once 'spoon/date/exception.php';
-
-/** SpoonLocale */
-require_once 'spoon/locale/locale.php';
-
-
 /**
  * This class provides some extra functionality when working with dates & time
  *
@@ -126,5 +119,18 @@ class SpoonDate
 		if($secondsAgo <= 1) return $locale['time']['SecondAgo'];
 	}
 }
+
+
+/**
+ * This exception is used to handle date related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	date
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonDateException extends SpoonException {}
 
 ?>

@@ -17,10 +17,6 @@
  */
 
 
-/** SpoonFilterException */
-require_once 'spoon/filter/exception.php';
-
-
 /**
  * This base class provides methods used to filter input of any kind.
  *
@@ -868,5 +864,18 @@ class SpoonFilter
 		return trim($newValue, '-');
 	}
 }
+
+
+/**
+ * This exception is used to handle filter related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	filter
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonFilterException extends SpoonException {}
 
 ?>

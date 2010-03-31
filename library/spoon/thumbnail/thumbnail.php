@@ -17,16 +17,6 @@
  */
 
 
-/** SpoonThumbnailException */
-require_once 'spoon/thumbnail/exception.php';
-
-/** SpoonFile */
-require_once 'spoon/file/file.php';
-
-/** SpoonHTTP */
-require_once 'spoon/http/http.php';
-
-
 /**
  * This class is used to create thumbnails
  *
@@ -178,7 +168,6 @@ class SpoonThumbnail
 
 	/**
 	 * Outputs the image as png to the browser.
-	 * @todo	Tijs, check the @signs
 	 *
 	 * @return	void
 	 * @param	bool[optional] $headers		Should the headers be send? This is a usefull when you're debugging.
@@ -203,8 +192,13 @@ class SpoonThumbnail
 		// resize image
 		$this->resizeImage($currentWidth, $currentHeight, $currentType, $currentMime);
 
-		// output image and cleanup memory
-		@imagepng($this->image);
+		// output image
+		$success = @imagepng($this->image);
+
+		// validate
+		if(!$success) throw new SpoonThumbnailException('Something went wrong while outputting the image.');
+
+		// cleanup the memory
 		@imagedestroy($this->image);
 	}
 
@@ -313,7 +307,6 @@ class SpoonThumbnail
 
 	/**
 	 * Resize the image with Force Aspect Ratio.
-	 * @todo	Tijs, check the @signs
 	 *
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
@@ -418,8 +411,14 @@ class SpoonThumbnail
 				throw new SpoonThumbnailException('The file you specified "'. $currentMime .'" is not supported. Only gif, jpeg, jpg and png are supported.');
 		}
 
+		// validate image
+		if($currentImage === false) throw new SpoonThumbnailException('The file you specified is corrupt.');
+
 		// create image resource
 		$this->image = @imagecreatetruecolor($newWidth, $newHeight);
+
+		// validate
+		if($this->image === false) throw new SpoonThumbnailException('Could not create new image.');
 
 		// set transparent
 		@imagealphablending($this->image, false);
@@ -427,9 +426,15 @@ class SpoonThumbnail
 		// transparency supported
 		if(in_array($currentType, array(IMG_GIF, 3, IMG_PNG)))
 		{
+			// get transparent color
 			$colorTransparent = @imagecolorallocatealpha($this->image, 0, 0, 0, 127);
-			@imagefill($this->image, 0, 0, $colorTransparent);
-			@imagesavealpha($this->image, true);
+
+			// any color found?
+			if($colorTransparent !== false)
+			{
+				@imagefill($this->image, 0, 0, $colorTransparent);
+				@imagesavealpha($this->image, true);
+			}
 		}
 
 		// resize
@@ -456,11 +461,20 @@ class SpoonThumbnail
 			{
 				// magic
 				$transparentColor = @imagecolorsforindex($currentImage, $transparentIndex);
-				$transparentIndex = @imagecolorallocate($this->image, $transparentColor['red'], $transparentColor['green'], $transparentColor['blue']);
 
-				// fill
-				@imagefill($this->image, 0, 0, $transparentIndex);
-				@imagecolortransparent($this->image, $transparentIndex);
+				// validate transparent color
+				if($transparentColor !== false)
+				{
+					// get color
+					$transparentIndex = @imagecolorallocate($this->image, $transparentColor['red'], $transparentColor['green'], $transparentColor['blue']);
+
+					// fill
+					if($transparentIndex !== false)
+					{
+						@imagefill($this->image, 0, 0, $transparentIndex);
+						@imagecolortransparent($this->image, $transparentIndex);
+					}
+				}
 			}
 		}
 	}
@@ -717,5 +731,18 @@ class SpoonThumbnail
 		$this->strict = (bool) $on;
 	}
 }
+
+
+/**
+ * This exception is used to handle image related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	thumbnail
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		1.0.0
+ */
+class SpoonThumbnailException extends SpoonException {}
 
 ?>

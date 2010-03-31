@@ -17,10 +17,6 @@
  */
 
 
-/** SpoonRESTException */
-require_once 'spoon/rest/exception.php';
-
-
 /**
  * This base class provides all the methods used by a REST-client.
  *
@@ -251,5 +247,18 @@ class SpoonRESTClient
 		$this->userAgent = (string) $userAgent;
 	}
 }
+
+
+/**
+ * This exception is used to handle REST related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	rest
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		1.1.1
+ */
+class SpoonRESTException extends SpoonException {}
 
 ?>

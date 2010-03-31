@@ -17,10 +17,6 @@
  */
 
 
-/** SpoonCookieException */
-require_once 'spoon/cookie/exception.php';
-
-
 /**
  * This base class provides some methods for setting, retrieving and
  * modifying cookies.
@@ -162,5 +158,18 @@ class SpoonCookie
 		return ($cookie === false) ? false : true;
 	}
 }
+
+
+/**
+ * This exception is used to handle cookie related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	cookie
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonCookieException extends SpoonException {}
 
 ?>

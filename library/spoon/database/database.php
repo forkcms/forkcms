@@ -19,10 +19,6 @@
  */
 
 
-/** SpoonDatabaseException */
-require_once 'spoon/database/exception.php';
-
-
 /**
  * This class provides most of the base methods implemented by almost
  * every database system
@@ -334,8 +330,12 @@ class SpoonDatabase
      */
     public function getEnumValues($table, $field)
     {
+		// redefine vars
+		$table = (string) $table;
+		$field = (string) $field;
+
     	// build query
-    	$query = 'SHOW COLUMNS FROM '. (string) $table .' LIKE "'. (string) $field .'";';
+    	$query = 'SHOW COLUMNS FROM '. $table .' LIKE "'. $field .'";';
 
     	// get information
     	$row = $this->getRecord($query);
@@ -344,7 +344,7 @@ class SpoonDatabase
     	if(!isset($row['Type'])) throw new SpoonDatabaseException('There is no type information available about this field', 0, $this->password);
 
     	// has a type but it's not an enum
-    	if(strtolower(substr($row['Type'], 0, 4) != 'enum')) throw new SpoonDatabaseException('This field "'. (string) $field .'" is not an enum field.', 0, $this->password);
+    	if(strtolower(substr($row['Type'], 0, 4) != 'enum')) throw new SpoonDatabaseException('This field "'. $field .'" is not an enum field.', 0, $this->password);
 
     	// process values
     	$aSearch = array('enum', '(', ')', '\'');
@@ -1086,5 +1086,19 @@ class SpoonDatabase
 		return (int) $statement->rowCount();
 	}
 }
+
+
+/**
+ * This exception is used to handle database related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	database
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		1.1.0
+ */
+class SpoonDatabaseException extends SpoonException {}
 
 ?>

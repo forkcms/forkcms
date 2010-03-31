@@ -17,61 +17,6 @@
  */
 
 
-/** SpoonFormException */
-require_once 'spoon/form/exception.php';
-
-/** SpoonFormElement */
-require_once 'spoon/form/element.php';
-
-/** SpoonFormAttributes */
-require_once 'spoon/form/attributes.php';
-
-/** SpoonFormButton */
-require_once 'spoon/form/button.php';
-
-/** SpoonFormCheckbox */
-require_once 'spoon/form/checkbox.php';
-
-/** SpoonFormMultiCheckbox */
-require_once 'spoon/form/multi_checkbox.php';
-
-/** SpoonFormRadiobutton */
-require_once 'spoon/form/radiobutton.php';
-
-/** SpoonFormDropdown */
-require_once 'spoon/form/dropdown.php';
-
-/** SpoonFormFile */
-require_once 'spoon/form/file.php';
-
-/** SpoonFormImage */
-require_once 'spoon/form/image.php';
-
-/** SpoonFormInput */
-require_once 'spoon/form/input.php';
-
-/** SpoonFormTextarea */
-require_once 'spoon/form/textarea.php';
-
-/** SpoonFormText */
-require_once 'spoon/form/text.php';
-
-/** SpoonFormDate */
-require_once 'spoon/form/date.php';
-
-/** SpoonFormTime */
-require_once 'spoon/form/time.php';
-
-/** SpoonFormPassword */
-require_once 'spoon/form/password.php';
-
-/** SpoonFormHidden */
-require_once 'spoon/form/hidden.php';
-
-/** SpoonFile */
-require_once 'spoon/file/file.php';
-
-
 /**
  * The class that handles forms.
  *
@@ -1078,5 +1023,18 @@ class SpoonForm
         }
 	}
 }
+
+
+/**
+ * This exception is used to handle form related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	form
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		0.1.1
+ */
+class SpoonFormException extends SpoonException {}
 
 ?>

@@ -17,13 +17,6 @@
  */
 
 
-/** SpoonLocaleException */
-require_once 'spoon/locale/exception.php';
-
-/** SpoonFilter */
-require_once 'spoon/filter/filter.php';
-
-
 /**
  * This class is used to handle locale specific actions
  *
@@ -128,5 +121,18 @@ class SpoonLocale
 		return $days;
 	}
 }
+
+
+/**
+ * This exception is used to handle locale related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	locale
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @since		1.1.0
+ */
+class SpoonLocaleException extends SpoonException {}
 
 ?>

@@ -17,10 +17,6 @@
  */
 
 
-/** SpoonLogException */
-require_once 'spoon/log/exception.php';
-
-
 /**
  * This base class provides methods used to log data.
  *
@@ -101,5 +97,17 @@ class SpoonLog
 		SpoonFile::setContent($file, $message, true, true);
 	}
 }
+
+
+/**
+ * This exception is used to handle log related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	log
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		1.0.0
+ */
+class SpoonLogException extends SpoonException {}
 
 ?>

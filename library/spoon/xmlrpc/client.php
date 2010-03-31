@@ -17,10 +17,6 @@
  */
 
 
-/** SpoonXMLRPCException */
-require_once 'spoon/xmlrpc/exception.php';
-
-
 /**
  * This base class provides all the methods used by a XMLRPC-client.
  *
@@ -628,5 +624,18 @@ class SpoonXMLRPCClient
 		$this->userAgent = (string) $userAgent;
 	}
 }
+
+
+/**
+ * This exception is used to handle XMLRPC related exceptions.
+ *
+ * @package		spoon
+ * @subpackage	xmlrpc
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @since		1.1.4
+ */
+class SpoonXMLRPCException extends SpoonException {}
 
 ?>
