@@ -1080,7 +1080,7 @@ class BackendPagesModel
 			if($number != 0)
 			{
 				// add a number
-				$URL = self::addNumber($URL);
+				$URL = BackendModel::addNumber($URL);
 
 				// recall this method, but with a new URL
 				return self::getURL($URL, $id, $parentId);
