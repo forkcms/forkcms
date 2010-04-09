@@ -697,6 +697,17 @@ class SpoonDatagrid
 
 
 	/**
+	 * Fetch the template instance
+	 *
+	 * @return	SpoonTemplate
+	 */
+	public function getTemplate()
+	{
+		return $this->tpl;
+	}
+
+
+	/**
 	 * Retrieve the location of the template that will be used.
 	 *
 	 * @return	string
