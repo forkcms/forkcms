@@ -114,6 +114,11 @@ class BackendTemplate extends SpoonTemplate
 
 		// debug stuff
 		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));
+
+		// dates
+		$this->mapModifier('formatDate', array('BackendTemplateModifiers', 'formatDate'));
+		$this->mapModifier('formatTime', array('BackendTemplateModifiers', 'formatTime'));
+		$this->mapModifier('formatDateTime', array('BackendTemplateModifiers', 'formatDateTime'));
 	}
 
 
@@ -355,6 +360,57 @@ class BackendTemplateModifiers
 	public static function dump($var)
 	{
 		Spoon::dump($var, false);
+	}
+
+
+	/**
+	 * Format a UNIX-timestamp as a date
+	 *  syntac: {$var|formatDate}
+	 *
+	 * @return	string
+	 * @param	int $var	The UNIX-timestamp to format
+	 */
+	public static function formatDate($var)
+	{
+		// get setting
+		$format = BackendAuthentication::getUser()->getSetting('date_format');
+
+		// format the date
+		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getWorkingLanguage());
+	}
+
+
+	/**
+	 * Format a UNIX-timestamp as a datetime
+	 *  syntac: {$var|formatDateTime}
+	 *
+	 * @return	string
+	 * @param	int $var	The UNIX-timestamp to format
+	 */
+	public static function formatDateTime($var)
+	{
+		// get setting
+		$format = BackendAuthentication::getUser()->getSetting('datetime_format');
+
+		// format the date
+		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getWorkingLanguage());
+	}
+
+
+	/**
+	 * Format a UNIX-timestamp as a date
+	 *  syntac: {$var|formatDate}
+	 *
+	 * @return	string
+	 * @param	int $var	The UNIX-timestamp to format
+	 */
+	public static function formatTime($var)
+	{
+		// get setting
+		$format = BackendAuthentication::getUser()->getSetting('time_format');
+
+		// format the date
+		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getWorkingLanguage());
 	}
 
 
