@@ -282,7 +282,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 		if($template !== null)
 		{
 			$template->assign($this->name, $radioButtons);
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('rbt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $radioButtons;

@@ -185,7 +185,7 @@ class BackendUsersModel
 		$possibleFormats = array();
 
 		// loop available formats
-		foreach(BackendModel::getSetting('users', 'date_formats') as $format)
+		foreach((array) BackendModel::getSetting('users', 'date_formats') as $format)
 		{
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}

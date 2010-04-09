@@ -132,26 +132,31 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build settings-array
-				$aSettings = $this->frm->getValues(array('username', 'password'));
-				$aSettings['password_key'] = uniqid();
-				$aSettings['avatar'] = 'no-avatar.gif';
+				$settings = $this->frm->getValues(array('username', 'password'));
+				$settings['password_key'] = uniqid();
+				$settings['avatar'] = 'no-avatar.gif';
+
+				// datetime formats
+				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
+				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
+				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 
 				// build user-array
-				$aUser['username'] = $this->frm->getField('username')->getValue(true);
-				$aUser['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $aSettings['password_key']);
-				$aUser['group_id'] = $this->frm->getField('group')->getValue();
+				$user['username'] = $this->frm->getField('username')->getValue(true);
+				$user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $settings['password_key']);
+				$user['group_id'] = $this->frm->getField('group')->getValue();
 
 				// save changes
-				$aUser['id'] = (int) BackendUsersModel::insert($aUser, $aSettings);
+				$user['id'] = (int) BackendUsersModel::insert($user, $settings);
 
 				// does the user submitted an avatar
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// create new filename
-					$fileName = rand(0,3) .'_'. $aUser['id'] .'.'. $this->frm->getField('avatar')->getExtension();
+					$fileName = rand(0,3) .'_'. $user['id'] .'.'. $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
-					$aSettings['avatar'] = $fileName;
+					$settings['avatar'] = $fileName;
 
 					// move to new location
 					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
@@ -175,16 +180,11 @@ class BackendUsersAdd extends BackendBaseActionAdd
 					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $fileName);
 				}
 
-				// datetime formats
-				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
-				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
-				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
-
 				// update settings (in this case the avatar)
-				BackendUsersModel::update($aUser, $aSettings);
+				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=add&var='. $aUser['username'] .'&highlight=userid-'. $aUser['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=add&var='. $user['username'] .'&highlight=userid-'. $user['id']);
 			}
 		}
 	}

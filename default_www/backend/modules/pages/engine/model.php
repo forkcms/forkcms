@@ -32,14 +32,18 @@ class BackendPagesModel
 	 * Build the cache
 	 *
 	 * @return	void
+	 * @param	string[optional] $language
 	 */
-	public static function buildCache()
+	public static function buildCache($language = null)
 	{
+		// redefine
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+
 		// get db
 		$db = BackendModel::getDB();
 
 		// get tree
-		$levels = self::getTree(array(0));
+		$levels = self::getTree(array(0), null, 1, $language);
 
 		// get extras
 		$extras = (array) $db->retrieve('SELECT pe.id, pe.module, pe.action
@@ -137,7 +141,7 @@ class BackendPagesModel
 		$keysString .= "\n".'?>';
 
 		// write the file
-		SpoonFile::setContent(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php', $keysString);
+		SpoonFile::setContent(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php', $keysString);
 
 		// write the navigation-file
 		$navigationString = '<?php' ."\n\n";
@@ -222,7 +226,7 @@ class BackendPagesModel
 		$navigationString .= '?>';
 
 		// write the file
-		SpoonFile::setContent(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php', $navigationString);
+		SpoonFile::setContent(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php', $navigationString);
 	}
 
 
@@ -867,15 +871,21 @@ class BackendPagesModel
 	 * Get all pages/level
 	 *
 	 * @return	array
-	 * @param	array $ids				The parentIds.
-	 * @param	array[optional] $data	A holder for the generated data.
-	 * @param	int[optional] $level	The counter for the level.
+	 * @param	array $ids					The parentIds.
+	 * @param	array[optional] $data		A holder for the generated data.
+	 * @param	int[optional] $level		The counter for the level.
+	 * @param	string[optional] $language	The language
 	 */
-	private static function getTree(array $ids, array $data = null, $level = 1)
+	private static function getTree(array $ids, array $data = null, $level = 1, $language = null)
 	{
+		// redefine
+		$level = (int) $level;
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+
 		// get db
 		$db = BackendModel::getDB();
 
+		// get data
 		$data[$level] = (array) $db->retrieve('SELECT p.id, p.title, p.parent_id, p.navigation_title, p.type, p.hidden, p.has_extra, p.no_follow,
 													p.extra_ids,
 													m.url
@@ -884,17 +894,18 @@ class BackendPagesModel
 												WHERE p.parent_id IN ('. implode(', ', $ids) .')
 												AND p.status = ? AND p.language = ?
 												ORDER BY p.sequence ASC;',
-												array('active', BackendLanguage::getWorkingLanguage()), 'id');
+												array('active', $language), 'id');
 
 		// get the childIDs
 		$childIds = array_keys($data[$level]);
 
 		// build array
-		if(!empty($data[$level])) return self::getTree($childIds, $data, ++$level);
+		if(!empty($data[$level])) return self::getTree($childIds, $data, ++$level, $language);
 
 		// cleanup
 		else unset($data[$level]);
 
+		// return
 		return $data;
 	}
 
@@ -1212,6 +1223,25 @@ class BackendPagesModel
 		// return
 		return $return;
 
+	}
+
+
+	/**
+	 * This method is used by installer
+	 *
+	 * @return	void
+	 */
+	public static function install()
+	{
+		// get all languages
+		$languages = BackendLanguage::getLocaleLanguages();
+
+		// loop the languages
+		foreach(array_keys($languages) as $language)
+		{
+			// create the cachefile
+			self::buildCache($language);
+		}
 	}
 
 

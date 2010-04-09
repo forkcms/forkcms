@@ -187,6 +187,49 @@ class BackendModel
 
 
 	/**
+	 * Generate a totally random but readable/speakable password
+	 *
+	 * @return	string
+	 * @param	int[optional] $length				The maximum length for the password to generate.
+	 * @param	bool[optional] $uppercaseAllowed	Are uppercase letters allowed?
+	 * @param	bool[optional] $lowercaseAllowed	Are lowercase letters allowed?
+	 */
+	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
+	{
+		// list of allowed vowels and vowelsounds
+		$vowels = array('a', 'e','u', 'ae', 'ea');
+
+		// list of allowed consonants and consonant sounds
+		$consonants = array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
+
+		// init vars
+		$consonantsCount = count($consonants);
+		$vowelsCount = count($vowels);
+		$pass = '';
+		$tmp = '';
+
+		// create temporary pass
+		for($i = 0; $i < $length; $i++) $tmp .= ($consonants[rand(0, $consonantsCount - 1)] . $vowels[rand(0, $vowelsCount - 1)]);
+
+		// reformat the pass
+		for ($i = 0; $i < $length; $i++)
+		{
+			if(rand(0, 1) == 1) $pass .= strtoupper(substr($tmp, $i, 1));
+			else $pass .= substr($tmp, $i, 1);
+		}
+
+		// reformat it again, if uppercase isn't allowed
+		if(!$uppercaseAllowed) $pass = strtolower($pass);
+
+		// reformat it again, if uppercase isn't allowed
+		if(!$lowercaseAllowed) $pass = strtoupper($pass);
+
+		// return pass
+		return $pass;
+	}
+
+
+	/**
 	 * Get (or create and get) a database-connection
 	 * If the database wasn't stored in the reference before we will create it and add it
 	 *
@@ -565,6 +608,67 @@ class BackendModel
 		}
 
 		return mktime($hour, $minute, 0, $month, $day, $year);
+	}
+
+
+	/**
+	 * This method will install the core
+	 *
+	 * @return	void
+	 */
+	public static function install()
+	{
+		// require
+		require_once WWW_PATH .'/backend/core/engine/authentication.php';
+		require_once WWW_PATH .'/backend/core/engine/language.php';
+		require_once WWW_PATH .'/backend/modules/locale/engine/model.php';
+		require_once WWW_PATH .'/backend/modules/users/engine/model.php';
+
+		// get all languages
+		$languages = BackendLanguage::getLocaleLanguages();
+
+		// loop the languages
+		foreach(array_keys($languages) as $language)
+		{
+			// generate cache file for backend
+			BackendLocaleModel::buildCache($language, 'backend');
+
+			// generate cache file for frontend
+			BackendLocaleModel::buildCache($language, 'frontend');
+		}
+
+		// create a random password for the new user
+		$password = BackendModel::generatePassword(6);
+
+		// build settings-array
+		$settings['email'] = SpoonSession::get('admin_email');
+		$settings['password_key'] = uniqid();
+		$settings['avatar'] = 'no-avatar.gif';
+		$settings['name'] = 'Super';
+		$settings['surname'] = 'User';
+
+		// datetime formats
+		$settings['date_format'] = 'd/m/Y';
+		$settings['time_format'] = 'H:i:s';
+		$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
+
+		// build user-array
+		$user['username'] = 'admin';
+		$user['password'] = BackendAuthentication::getEncryptedString($password, $settings['password_key']);
+		$user['group_id'] = 1;
+
+		// save changes
+		$userId = (int) BackendUsersModel::insert($user, $settings);
+
+		// build HTML for the message
+		$message = '<p>A new user is created for you, point your browser to <a href="'. SITE_URL .'/private">'. SITE_URL .'/private</a> and use the credentials below.</p>'."\n";
+		$message .= '<ul>'."\n";
+		$message .= '	<li><strong>username</strong>: '. $user['username'] .'</li>'."\n";
+		$message .= '	<li><strong>password</strong>: '. $password .'</li>'."\n";
+		$message .= '</ul>';
+
+		// return a message
+		return array(array('message' => $message, 'type' => 'success'));
 	}
 
 

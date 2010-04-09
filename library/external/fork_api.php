@@ -80,13 +80,13 @@ class ForkAPI
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $login	The login (username) that has to be used for authenticating
-	 * @param	string $apiKey	The API-key that has to be used for authentication (see http://bit.ly/account)
+	 * @param	string[optional] $login		The login (username) that has to be used for authenticating
+	 * @param	string[optional] $apiKey	The API-key that has to be used for authentication (see http://bit.ly/account)
 	 */
-	public function __construct($publicKey, $privateKey)
+	public function __construct($publicKey = null, $privateKey = null)
 	{
-		$this->setPublicKey($publicKey);
-		$this->setPrivateKey($privateKey);
+		if($publicKey !== null) $this->setPublicKey($publicKey);
+		if($publicKey !== null) $this->setPrivateKey($privateKey);
 	}
 
 
@@ -97,17 +97,31 @@ class ForkAPI
 	 * @param	string $url
 	 * @param	array[optional] $aParameters
 	 */
-	private function doCall($method, $aParameters = array())
+	private function doCall($method, $aParameters = array(), $authenticate = true)
 	{
 		// redefine
 		$method = (string) $method;
 		$aParameters = (array) $aParameters;
+		$authenticate = (bool) $authenticate;
 
 		// add required parameters
 		$aParameters['method'] = (string) $method;
-		$aParameters['public_key'] = $this->getPublicKey();
-		$aParameters['nonce'] = time();
-		$aParameters['secret'] = md5($this->getPublicKey() . $this->getPrivateKey() . $aParameters['nonce']);
+
+		// authentication stuff
+		if($authenticate)
+		{
+			// get keys
+			$publicKey = $this->getPublicKey();
+			$privateKey = $this->getPrivateKey();
+
+			// validate
+			if($publicKey == '' || $privateKey == '') throw new ForkAPIException('This method ('. $method .') requires authentication, provide a public and private key.');
+
+			// add prams
+			$aParameters['public_key'] = $publicKey;
+			$aParameters['nonce'] = time();
+			$aParameters['secret'] = md5($publicKey . $privateKey() . $aParameters['nonce']);
+		}
 
 		// init var
 		$queryString = '';
@@ -262,8 +276,48 @@ class ForkAPI
 	}
 
 
+// core methods
+
+	/**
+	 * Request public private key-pair
+	 *
+	 * @return	array
+	 * @param	string $siteUrl
+	 * @param	string $email
+	 */
+	public function coreRequestKeys($siteUrl, $email)
+	{
+		// build parameters
+		$parameters['site_url'] = (string) $siteUrl;
+		$parameters['email'] = (string) $email;
+
+		// make the call
+		$response = $this->doCall('core.requestKeys', $parameters, false);
+
+		// init var
+		$return = array();
+
+		// validate response
+		if(!isset($response->keys->public)) throw new ForkAPIException('Invalid XML-response.');
+		if(!isset($response->keys->private)) throw new ForkAPIException('Invalid XML-response.');
+
+		// loop services
+		$return['public'] = (string) $response->keys->public;
+		$return['private'] = (string) $response->keys->private;
+
+		// return
+		return $return;
+	}
+
+
+
 // message methods
 
+	/**
+	 * Get messages from the server
+	 *
+	 * @return	array
+	 */
 	public function messagesGet()
 	{
 		// make the call
@@ -278,7 +332,12 @@ class ForkAPI
 		// loop services
 		foreach($response->messages->message as $message)
 		{
-			$return[] = array('id' => (string) $message['id'], 'sent_on' => (int) strtotime((string) $message['sent_on']), 'subject' => (string) $message->subject, 'body' => (string) $message->body);
+			// add into array
+			$return[] = array(	'id' => (string) $message['id'],
+								'sent_on' => (int) strtotime((string) $message['sent_on']),
+								'subject' => (string) $message->subject,
+								'body' => (string) $message->body
+							);
 		}
 
 		// return

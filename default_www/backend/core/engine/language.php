@@ -195,7 +195,7 @@ class BackendLanguage
 	public static function getLocaleLanguages()
 	{
 		// grab from settings
-		$languages = BackendModel::getSetting('locale', 'languages');
+		$languages = (array) BackendModel::getSetting('locale', 'languages');
 
 		// init var
 		$return = array();

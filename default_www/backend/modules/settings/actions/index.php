@@ -1,4 +1,5 @@
 <?php
+// @todo	a way to configure the mail-server stuff.
 
 /**
  * BackendSettingsIndex

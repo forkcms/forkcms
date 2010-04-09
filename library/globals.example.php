@@ -15,7 +15,7 @@
 // should the debug information be shown
 define('SPOON_DEBUG', true);
 // mailaddress where the exceptions will be mailed to (<tag>-bugs@fork-cms.be)
-define('SPOON_DEBUG_EMAIL', '');
+define('SPOON_DEBUG_EMAIL', '<spoon-debug-email>');
 // message for the visitors when an exception occur
 define('SPOON_DEBUG_MESSAGE', 'Internal error.');
 // default charset used in spoon.
@@ -48,13 +48,13 @@ define('DB_PASSWORD', '<database-password>');
  * Site configuration
  */
 // the domain (without http)
-define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '<domain-without-http>');
+define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '<default-domain>');
 // the default title
 define('SITE_DEFAULT_TITLE', '<default-title>');
 // the url
 define('SITE_URL', 'http://'. SITE_DOMAIN);
 // is the site multilanguage?
-define('SITE_MULTILANGUAGE', true);
+define('SITE_MULTILANGUAGE', <multilanguage>);
 
 
 /**
