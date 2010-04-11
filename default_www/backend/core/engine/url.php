@@ -226,7 +226,11 @@ class BackendURL
 							$interfaceLanguage = BackendModel::getSetting('core', 'default_interface_language');
 
 							// override with cookie value if that exists
-							if(SpoonCookie::exists('interface_language')) $interfaceLanguage = SpoonCookie::get('interface_language');
+							if(SpoonCookie::exists('interface_language') && in_array(SpoonCookie::get('interface_language'), array_keys(BackendLanguage::getInterfaceLanguages())))
+							{
+								// set interface language based on the perons' cookies
+								$interfaceLanguage = SpoonCookie::get('interface_language');
+							}
 
 							// set interface language
 							BackendLanguage::setLocale($interfaceLanguage);

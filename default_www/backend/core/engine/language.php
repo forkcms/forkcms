@@ -320,6 +320,7 @@ class BackendLanguage
 		// store
 		self::$currentInterfaceLanguage = $language;
 
+		// attempt to set a cookie
 		try
 		{
 			// store in cookie
