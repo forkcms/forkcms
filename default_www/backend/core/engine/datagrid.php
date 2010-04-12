@@ -109,6 +109,38 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
+	 * Adds a new column with a custom action button
+	 *
+	 * @return	void
+	 * @param	string $name				The name for the new column.
+	 * @param	string[optional] $label		The label for the column.
+	 * @param	string[optional] $value		The value for the column.
+	 * @param	string[optional] $URL		The URL for the link inside the column.
+	 * @param	string[optional] $image		An URL to the image inside the column.
+	 * @param	int[optional] $sequence		The sequence for the column.
+	 */
+	public function addColumnAction($name, $value = null, $label = null, $URL = null, $title = null, $anchorAttributes = null, $image = null, $sequence = null)
+	{
+		// set anchorAttributes
+		if(empty($anchorAttributes)) $anchorAttributes = 'button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton';
+
+		// rebuild value
+		$value = '<a href="'. $URL .'" class="'. $anchorAttributes .'">
+						<span><span><span>'. $label .'</span></span></span>
+					</a>';
+
+		// add the column to the datagrid
+		parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
+
+		// set column attributes
+		$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name), 'width' => '10%'));
+
+		// set header attributes
+		$this->setColumnHeaderAttributes($name, array('class' => $name));
+	}
+
+
+	/**
 	 * Enable drag and drop for the current datagrid
 	 *
 	 * @return	void

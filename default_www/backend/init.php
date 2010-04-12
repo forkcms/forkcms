@@ -102,6 +102,7 @@ class Init
 		$exceptions['backendajaxaction'] = BACKEND_CORE_PATH .'/engine/ajax_action.php';
 		$exceptions['backenddatagriddb'] = BACKEND_CORE_PATH .'/engine/datagrid.php';
 		$exceptions['backendbaseconfig'] = BACKEND_CORE_PATH .'/engine/base.php';
+		$exceptions['backendbasecronjob'] = BACKEND_CORE_PATH .'/engine/base.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];

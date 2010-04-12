@@ -1,9 +1,5 @@
 <?php
 
-// require SpoonRSS
-require_once 'spoon/feed/rss.php';
-require_once 'spoon/feed/rss_item.php';
-
 /**
  * FrontendRSS, this is our extended version of SpoonRSS
  *

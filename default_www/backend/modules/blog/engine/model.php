@@ -600,18 +600,6 @@ class BackendBlogModel
 
 
 	/**
-	 * This method is used by installer and will do everything
-	 * needed to make this method work
-	 *
-	 * @return	void
-	 */
-	public static function install()
-	{
-//		Spoon::dump('kaka');
-	}
-
-
-	/**
 	 * Recalculate the commentcount
 	 *
 	 * @return	bool
