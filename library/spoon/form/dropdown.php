@@ -407,6 +407,9 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// name?
 		if(!$this->single) $this->attributes['name'] .= '[]';
 
+		// init var
+		$selected = $this->getSelected();
+
 		// start html generation
 		$output = "\r\n" . '<select';
 
@@ -426,14 +429,14 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			if(!$this->single)
 			{
 				// if the value is within the selected items array
-				if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($this->defaultElement[1], $this->getSelected())) $output .= ' selected="selected"';
+				if(is_array($selected) && count($selected) != 0 && in_array($this->defaultElement[1], $selected)) $output .= ' selected="selected"';
 			}
 
 			// single
 			else
 			{
 				// if the current value is equal to the submitted value
-				if($this->defaultElement[1] == $this->getSelected() && $this->getSelected() !== null) $output .= ' selected="selected"';
+				if($this->defaultElement[1] == $selected && $selected !== null) $output .= ' selected="selected"';
 			}
 
 			// end option
@@ -458,14 +461,14 @@ class SpoonFormDropdown extends SpoonFormAttributes
 					if(!$this->single)
 					{
 						// if the value is within the selected items array
-						if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($value, $this->getSelected())) $output .= ' selected="selected"';
+						if(is_array($selected) && count($selected) != 0 && in_array($value, $selected)) $output .= ' selected="selected"';
 					}
 
 					// single
 					else
 					{
 						// if the current value is equal to the submitted value
-						if($value == $this->getSelected()) $output .= ' selected="selected"';
+						if($value == $selected) $output .= ' selected="selected"';
 					}
 
 					// add custom attributes
@@ -501,14 +504,14 @@ class SpoonFormDropdown extends SpoonFormAttributes
 				if(!$this->single)
 				{
 					// if the value is within the selected items array
-					if(is_array($this->getSelected()) && count($this->getSelected()) != 0 && in_array($value, $this->getSelected())) $output .= ' selected="selected"';
+					if(is_array($selected) && count($selected) != 0 && in_array($value, $selected)) $output .= ' selected="selected"';
 				}
 
 				// single
 				else
 				{
 					// if the current value is equal to the submitted value
-					if($this->getSelected() !== null && $value == $this->getSelected()) $output .= ' selected="selected"';
+					if($this->getSelected() !== null && $value == $selected) $output .= ' selected="selected"';
 				}
 
 				// add custom attributes
