@@ -119,7 +119,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @param	string[optional] $image		An URL to the image inside the column.
 	 * @param	int[optional] $sequence		The sequence for the column.
 	 */
-	public function addColumnAction($name, $value = null, $label = null, $URL = null, $title = null, $anchorAttributes = null, $image = null, $sequence = null)
+	public function addColumnAction($name, $label = null, $value = null, $URL = null, $title = null, $anchorAttributes = null, $image = null, $sequence = null)
 	{
 		// reserve var for attributes
 		$attributes = '';
@@ -128,11 +128,11 @@ class BackendDataGrid extends SpoonDataGrid
 		if(empty($anchorAttributes)) $anchorAttributes['class'] = 'button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton';
 
 		// loop the attributes, build our attributes string
-		foreach($anchorAttributes as $attribute => $value) $attributes .= ' '.$attribute.'="'. $value .'"';
+		foreach($anchorAttributes as $attribute => $attributeValue) $attributes .= ' '.$attribute.'="'. $attributeValue .'"';
 
 		// rebuild value
 		$value = '<a href="'. $URL .'"'. $attributes .'>
-						<span><span><span>'. $label .'</span></span></span>
+						<span><span><span>'. $value .'</span></span></span>
 					</a>';
 
 		// add the column to the datagrid
