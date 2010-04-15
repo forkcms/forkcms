@@ -165,7 +165,7 @@ class BackendBaseAction
 		if($this->getParameter('error') !== null)
 		{
 			// show the error and the errormessage
-			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), '-')));
+			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'))));
 		}
 	}
 
