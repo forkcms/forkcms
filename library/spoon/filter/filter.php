@@ -771,7 +771,7 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// start all words with a capital letter
-		if(!$lcfirst) return str_replace(' ', '', mb_convert_case(str_replace((string) $separator, ' ', (string) $value), MB_CASE_TITLE, $charset));
+		if(!$lcfirst) return str_replace(' ', '', mb_convert_case(str_replace($separator, ' ', (string) $value), MB_CASE_TITLE, $charset));
 
 		// start all words, except the first one, with a capital letter
 		else
