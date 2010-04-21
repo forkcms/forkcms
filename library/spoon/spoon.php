@@ -187,6 +187,7 @@ class Spoon
 
 		// list of classes and their location
 		$classes = array();
+		$classes['ispoondatagridpaging'] = 'datagrid/paging.php';
 		$classes['spooncookie'] = 'cookie/cookie.php';
 		$classes['spoondatabase'] = 'database/database.php';
 		$classes['spoondatagrid'] = 'datagrid/datagrid.php';
