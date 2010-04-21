@@ -94,7 +94,14 @@ class SpoonFile
 
 		// validate the errornumber
 		if($errorNumber != 0) throw new SpoonFileException($errorMessage);
-		if($httpCode != 200) throw new SpoonFileException('The file "'. $sourceURL .'" isn\'t available for download.');
+		if($httpCode != 200)
+		{
+			// delete the destination path file, which is empty
+			SpoonFile::delete($destinationPath);
+
+			// throw exception
+			throw new SpoonFileSystemException('The file "'. $sourceURL .'" isn\'t available for download.');
+		}
 
 		// return
 		return true;
@@ -167,6 +174,9 @@ class SpoonFile
 
 		// fetch pathinfo
 		$pathInfo = pathinfo($filename);
+
+		// clear cache
+		@clearstatcache();
 
 		// build details array
 		$file = array();

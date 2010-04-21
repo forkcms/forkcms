@@ -15,6 +15,12 @@
 - An extension check has been added to make sure 'mbstring' is loaded before you can use any Spoon class.
 - Fixed some comments in multiple files
 - Exception-mails are formatted with inline styles
+- Fixed a performance issue with SpoonFormDropdown in the parse method.
+- Implemented an autoloader for Spoon.
+- SpoonFile::download() now deletes empty file handles when the HTTP return status is not 200
+- Added SpoonDatagrid::getTemplate to retrieve the actual template object being used for parsing your datagrid.
+- SpoonFilter::toCamelCase() now also accepts an array of separator characters.
+- Added initial version of the new SpoonFileCSV class.
 
 
 1.1.5 (2010-02-07)
