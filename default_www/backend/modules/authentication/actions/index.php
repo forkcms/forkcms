@@ -31,9 +31,6 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		// add css
-		$this->header->addCSS('/backend/modules/authentication/layout/css/login.css', null, true);
-
 		// load form
 		$this->load();
 

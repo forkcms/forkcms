@@ -144,6 +144,9 @@ class BackendBaseAction
 		// debug css
 		if(SPOON_DEBUG) $this->header->addCSS('debug.css', 'core');
 
+		// add module specific js
+		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/layout/css/'. $this->getModule() .'.css')) $this->header->addCSS($this->getModule() .'.css', null);
+
 		// is there a report to show?
 		if($this->getParameter('report') !== null)
 		{
