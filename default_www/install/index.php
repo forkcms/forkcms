@@ -4,6 +4,6 @@
 require_once 'engine/install.php';
 
 // new instance
-$installer = new Installer();
+new Installer();
 
 ?>

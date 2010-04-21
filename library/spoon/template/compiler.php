@@ -486,6 +486,10 @@ class SpoonTemplateCompiler
 					$search = array('{form:'. $name .'}', '{/form:'. $name .'}');
 					$replace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersHTML(); ?>>' ."\n<div>\n";
 					$replace[0] .= $this->forms[$name]->getField('form')->parse();
+
+					// if the form should use tokens, we add it here
+					if($this->forms[$name]->getUseToken()) $replace[0] .= "\n". $this->forms[$name]->getField('form_token')->parse();
+
 					$replace[1] = "\n</div>\n</form>";
 					$content = str_replace($search, $replace, $content);
 				}

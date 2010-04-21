@@ -192,6 +192,7 @@ class Spoon
 		$classes['spoondatabase'] = 'database/database.php';
 		$classes['spoondatagrid'] = 'datagrid/datagrid.php';
 		$classes['spoondatagridcolumn'] = 'datagrid/column.php';
+		$classes['ispoondatagridpaging'] = 'datagrid/paging.php';
 		$classes['spoondatagridpaging'] = 'datagrid/paging.php';
 		$classes['spoondatagridsource'] = 'datagrid/source.php';
 		$classes['spoondatagridsourcearray'] = 'datagrid/source_array.php';
