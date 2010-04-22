@@ -54,6 +54,9 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
+		// add css
+		$this->header->addCSS('/backend/modules/authentication/layout/css/login.css', null, true);
+
 		// the user email and key provided match
 		if(!$this->isUserAllowed()) $this->redirect(BackendModel::createURLForAction('index'));
 

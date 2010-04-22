@@ -131,7 +131,7 @@ body#login {
 			width: 110px;
 		}
 
-		#loginBox .formError {
+		#loginBox .horizontal .formError {
 			padding-left: 110px;
 		}
 
