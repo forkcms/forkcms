@@ -406,24 +406,6 @@ class FrontendForm extends SpoonForm
 
 
 	/**
-	 * Generate a token for usage in the forms
-	 *
-	 * @return	string
-	 */
-	public static function generateToken()
-	{
-		// generate a secret value
-		$token = md5(SpoonSession::getSessionId() . time());
-
-		// store in session
-		SpoonSession::set('form_token', $token);
-
-		// return
-		return $token;
-	}
-
-
-	/**
 	 * Fetches all the values for this form as key/value pairs
 	 *
 	 * @return	array

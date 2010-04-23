@@ -611,7 +611,7 @@ class SpoonTemplateCompiler
 							foreach(\$". $internalVariable ."['formElements'] as \$name => \$object)
 							{
 								\$". $internalVariable ."[\$name] = \$object->parse();
-								\$". $internalVariable ."[\$name .'Error'] = (\$object->getErrors() == '') ? '' : '<span class=\"formError\">'. \$object->getErrors() .'</span>';
+								\$". $internalVariable ."[\$name .'Error'] = (method_exists(\$object, 'getErrors') && \$object->getErrors() != '') ? '<span class=\"formError\">'. \$object->getErrors() .'</span>' : '';
 							}
 						}
 						?>";

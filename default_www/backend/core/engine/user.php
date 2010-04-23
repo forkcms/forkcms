@@ -251,7 +251,7 @@ class BackendUser
 		$this->setSecretKey($userData['secret_key']);
 		$this->setLastloggedInDate($userData['date']);
 		$this->isAuthenticated = true;
-		$this->isGod = (bool) ($userData['is_god'] == 'Y');
+		$this->isGod = ($userData['is_god'] == 'Y');
 
 		// get settings
 		$settings = (array) $db->getPairs('SELECT us.name, us.value

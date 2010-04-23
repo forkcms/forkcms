@@ -128,6 +128,7 @@ class BackendURL
 			// remove from querystring
 			$queryString = str_replace('?'. $getChunksFromUrl[1], '', $this->getQueryString());
 
+			//@todo @tijs: GET doesnt need to readded because its already in the GET array by default
 			// get key-value pairs
 			$get = explode('&', $getChunksFromUrl[1]);
 

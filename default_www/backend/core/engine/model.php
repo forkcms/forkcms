@@ -589,9 +589,9 @@ class BackendModel
 	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
 	{
 		// init vars
-		$year = date('Y', $date->getTimestamp());
-		$month = date('m', $date->getTimestamp());
-		$day = date('j', $date->getTimestamp());
+		$year = gmdate('Y', $date->getTimestamp());
+		$month = gmdate('m', $date->getTimestamp());
+		$day = gmdate('j', $date->getTimestamp());
 
 		// time object was given
 		if($time !== null)
@@ -603,11 +603,11 @@ class BackendModel
 		// user default time
 		else
 		{
-			$hour = 12;
+			$hour = 0;
 			$minute = 0;
 		}
 
-		return mktime($hour, $minute, 0, $month, $day, $year);
+		return gmmktime($hour, $minute, 0, $month, $day, $year);
 	}
 
 
