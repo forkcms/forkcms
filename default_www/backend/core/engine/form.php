@@ -434,7 +434,7 @@ class BackendForm extends SpoonForm
 	 * @return	array
 	 * @param	mixed[optional] $excluded		Which elements should be excluded?
 	 */
-	public function getValues($excluded = array('form', 'save'))
+	public function getValues($excluded = array('form', 'save', 'form_token'))
 	{
 		return parent::getValues($excluded);
 	}
