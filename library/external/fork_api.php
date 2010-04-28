@@ -120,7 +120,7 @@ class ForkAPI
 			// add prams
 			$aParameters['public_key'] = $publicKey;
 			$aParameters['nonce'] = time();
-			$aParameters['secret'] = md5($publicKey . $privateKey() . $aParameters['nonce']);
+			$aParameters['secret'] = md5($publicKey . $privateKey . $aParameters['nonce']);
 		}
 
 		// init var
