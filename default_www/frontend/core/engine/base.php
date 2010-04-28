@@ -635,7 +635,7 @@ class FrontendBaseBlock
 	 * @return	void
 	 * @param	bool $overwrite		true if the template should overwrite the current template, false if not.
 	 */
-	private function setOverwrite($overwrite)
+	protected function setOverwrite($overwrite)
 	{
 		$this->overwrite = (bool) $overwrite;
 	}
@@ -647,7 +647,7 @@ class FrontendBaseBlock
 	 * @return	void
 	 * @param	string $path	The path to the template that should be loaded.
 	 */
-	private function setTemplatePath($path)
+	protected function setTemplatePath($path)
 	{
 		$this->templatePath = (string) $path;
 	}
