@@ -320,7 +320,6 @@
 						</a>
 						<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 							<p>
-								<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 								{$msgConfirmDelete|sprintf:{$recordtitle}}
 							</p>
 						</div>

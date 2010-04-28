@@ -1,15 +1,11 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblTags|ucfirst} &gt; {$msgEditWithItem|sprintf:{$name}}</p>
-			</div>
-
 			<div class="inner">
 				{form:edit}
 					<div class="box">
 						<div class="heading">
-							<h3>{$lblEditTag}</h3>
+							<h3>{$lblEditTag} {$msgEditWithItem|sprintf:{$name}}</h3>
 						</div>
 						<div class="options">
 							<p>

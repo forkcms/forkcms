@@ -16,15 +16,16 @@
 		<td id="contentHolder">
 			<div class="inner">
 
-				<div class="datagridHolder {option:!datagrid}datagridHolderNoDatagrid{/option:!datagrid}">
-					<div class="tableHeading">
-						<h3>{$lblRecentlyEdited|ucfirst}</h3>
-						<div class="buttonHolderRight">
-							<a href="{$var|geturl:'add'}" class="button icon iconAdd">
-								<span><span><span>{$msgAddPage}</span></span></span>
-							</a>
-						</div>
+				<div class="pageTitle">
+					<h2>{$lblRecentlyEdited|ucfirst}</h2>
+					<div class="buttonHolderRight">
+						<a href="{$var|geturl:'add'}" class="button icon iconAdd">
+							<span><span><span>{$msgAddPage}</span></span></span>
+						</a>
 					</div>
+				</div>
+
+				<div class="datagridHolder {option:!datagrid}datagridHolderNoDatagrid{/option:!datagrid}">
 					{option:datagrid}{$datagrid}{/option:datagrid}
 					{option:!datagrid}<p>{$msgNoItems}{/option:!datagrid}
 				</div>

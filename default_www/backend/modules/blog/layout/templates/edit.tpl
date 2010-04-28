@@ -1,10 +1,12 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$msgEditWithItem|sprintf:{$blog['title']}}</p>
-			</div>
 			<div class="inner">
+
+				<div class="pageTitle">
+					<h2>{$lblBlog|ucfirst}: {$msgEditWithItem|sprintf:{$blog['title']}}</h2>
+				</div>
+
 				{form:edit}
 					{$txtTitle} {$txtTitleError}
 
@@ -298,13 +300,12 @@
 							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
 						</a>
 						<div class="buttonHolderRight">
-							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 						</div>
 					</div>
 
 					<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 						<p>
-							<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 							{$msgConfirmDelete|sprintf:{$blog['title']}}
 						</p>
 					</div>

@@ -1,16 +1,12 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblPages|ucfirst} &gt; {$lblAdd|ucfirst}</p>
-			</div>
 
 			<div class="inner">
 				{form:add}
 					<div class="box horizontal">
 						<div class="heading">
-							{* @todo add label *}
-							<h3>Voeg template toe</h3>
+							<h3>{$lblAddTemplate|ucfirst}</h3>
 						</div>
 						<div class="options">
 							<p>
@@ -39,11 +35,14 @@
 								<label for="format">{$lblLayout|ucfirst}</label>
 								{$txtFormat} {$txtFormatError}
 							</p>
-
-							<ul class="inputList">
-								<li>{$chkActive} <label for="active">{$lblActive|ucfirst}</label> {$chkActiveError}</li>
-								<li>{$chkDefault} <label for="default">{$msgIsDefault}</label> {$chkDefaultError}</li>
-							</ul>
+						</div>
+						<div class="options">
+							<div class="spacing">
+								<ul class="inputList">
+									<li>{$chkActive} <label for="active">{$lblActive|ucfirst}</label> {$chkActiveError}</li>
+									<li>{$chkDefault} <label for="default">{$msgIsDefault}</label> {$chkDefaultError}</li>
+								</ul>
+							</div>
 						</div>
 					</div>
 

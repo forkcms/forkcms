@@ -2,7 +2,9 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
 			<div class="inner">
-				<h3>{$lblGeneralSettings|ucfirst}</h3>
+				<div class="pageTitle">
+					<h2>{$lblGeneralSettings|ucfirst}</h2>
+				</div>
 
 				{form:generalsettings}
 					{option:warnings}

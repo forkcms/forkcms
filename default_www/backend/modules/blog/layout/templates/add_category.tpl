@@ -1,15 +1,11 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst} &gt; {$lblAdd|ucfirst}</p>
-			</div>
-
 			<div class="inner">
 				{form:addCategory}
 					<div class="box">
 						<div class="heading">
-							&nbsp;
+							<h3>{$lblAddCategory|ucfirst}</h3>
 						</div>
 						<div class="options">
 							<label for="name">{$lblName|ucfirst}</label>

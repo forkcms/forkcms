@@ -1,11 +1,9 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblCategories|ucfirst} &gt; {$msgEditWithItem|sprintf:{$name}}</p>
-			</div>
 
 			<div class="inner">
+				
 				{form:editCategory}
 					<div class="box">
 						<div class="heading">
@@ -24,7 +22,6 @@
 							</a>
 							<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 								<p>
-									<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 									{$msgConfirmDeleteCategory|sprintf:{$name}}
 								</p>
 							</div>

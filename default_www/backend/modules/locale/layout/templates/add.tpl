@@ -1,9 +1,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblLocale|ucfirst} &gt; {$lblAdd|ucfirst}</p>
-			</div>
 
 			<div class="inner">
 				{form:add}

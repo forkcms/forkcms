@@ -1,23 +1,18 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 	<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$lblOverview|ucfirst}</p>
-			</div>
-
-			<div class="inner">
-				<div class="datagridHolder">
-					<div class="tableHeading">
-						<h3>{$lblUsers|ucfirst}</h3>
-						<div class="buttonHolderRight">
-							<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
-						</div>
-					</div>
-					{option:datagrid}{$datagrid}{/option:datagrid}
-					{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+		<div class="inner">
+			<div class="pageTitle">
+				<h2>{$lblUsers|ucfirst}</h2>
+				<div class="buttonHolderRight">
+					<a class="button icon iconAdd" href="{$var|geturl:'add'}"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
 				</div>
 			</div>
-		</td>
+			<div class="datagridHolder">
+				{option:datagrid}{$datagrid}{/option:datagrid}
+				{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+			</div>
+		</div>
 	</tr>
 </table>
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

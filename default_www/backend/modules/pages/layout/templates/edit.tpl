@@ -22,6 +22,11 @@
 		<td id="contentHolder">
 				<div class="inner" id="leftColumn">
 				{form:edit}
+
+					<div class="pageTitle">
+						<h2>{$lblEdit|ucfirst}</h2>
+					</div>
+
 					{$txtTitle} {$txtTitleError}
 					<div id="pageUrl">
 						<div class="oneLiner">
@@ -290,7 +295,6 @@
 						</a>
 						<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 							<p>
-								<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 								{$msgConfirmDelete|sprintf:{$recordtitle}}
 							</p>
 						</div>

@@ -1,15 +1,12 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 			<td id="contentHolder">
-				<div id="statusBar">
-					<p class="breadcrumb">{$lblContentBlocks|ucfirst} &gt; {$msgEditWithItem|sprintf:{$title}}</p>
-				</div>
 				<div class="inner">
 					{form:edit}
-						<p>
-							<label for="title">{$lblTitle|ucfirst}</label>
-							{$txtTitle} {$txtTitleError}
-						</p>
+
+					<div class="pageTitle">
+						<h2>{$lblContentBlocks|ucfirst}: {$msgEditWithItem|sprintf:{$title}}</h2>
+					</div>
 
 						<div class="tabs">
 							<ul>
@@ -19,6 +16,12 @@
 
 							<div id="tabContent">
 								<fieldset>
+
+									<p>
+										<label for="title">{$lblTitle|ucfirst}</label>
+										{$txtTitle} {$txtTitleError}
+									</p>
+
 									<label for="content">{$lblContent|ucfirst}</label>
 									<p>{$txtContent} {$txtContentError}</p>
 									<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
@@ -63,7 +66,6 @@
 
 						<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 							<p>
-								<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 								{$msgConfirmDelete|sprintf:{$title}}
 							</p>
 						</div>

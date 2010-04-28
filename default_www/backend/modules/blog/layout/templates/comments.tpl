@@ -1,11 +1,13 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblBlog|ucfirst} &gt; {$lblComments|ucfirst}</p>
-			</div>
 
 			<div class="inner">
+				
+				<div class="pageTitle">
+					<h2>{$lblBlog|ucfirst}: {$lblComments}</h2>
+				</div>
+				
 				<div id="tabs" class="tabs">
 					<ul>
 						<li><a href="#tabPublished">{$lblPublishedComments|ucfirst} ({$numPublished})</a></li>

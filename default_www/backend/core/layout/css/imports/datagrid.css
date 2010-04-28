@@ -20,7 +20,7 @@
 }
 
 	.datagridHolder .tableHeading h3 {
-		font-size: 14px;
+		font-size: 13px;
 		float: left;
 		padding: 0 0 4px;
 	}
@@ -235,11 +235,14 @@
 }
 
 	.datagrid tbody tr:hover td,
-	.datagrid tbody tr:hover td a,
 	.datagrid tbody tr.selected td,
-	.datagrid tbody tr.selected td a,
-	.datagrid tbody tr:hover td a.linkButton:link {
-		color: #FFF !important;
+	#encloser #container .datagrid tbody tr:hover td a.linkButton span {
+		color: #FFF;
+	}
+	
+	.datagrid tbody tr:hover td a,
+	.datagrid tbody tr.selected td a {
+		color: #F1F5FA;
 	}
 
 .datagrid tr.odd td {

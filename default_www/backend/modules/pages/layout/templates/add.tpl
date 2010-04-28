@@ -22,6 +22,11 @@
 		<td id="contentHolder">
 			<div class="inner" id="leftColumn">
 				{form:add}
+				
+					<div class="pageTitle">
+						<h2>{$lblAdd|ucfirst}</h2>
+					</div>
+				
 					{$txtTitle} {$txtTitleError}
 					<div id="pageUrl">
 						<div class="oneLiner">

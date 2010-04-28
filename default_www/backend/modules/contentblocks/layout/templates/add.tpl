@@ -1,30 +1,26 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 	<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblContentBlocks|ucfirst} &gt; {$lblAdd|ucfirst}</p>
-			</div>
-
 			<div class="inner">
 				{form:add}
-					<p>
-						<label for="title">{$lblTitle|ucfirst}</label>
-						{$txtTitle} {$txtTitleError}
-					</p>
-
-					<div class="tabs">
-						<ul>
-							<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-						</ul>
-
-						<div id="tabContent">
+					<div class="box">
+						<div class="heading">
+							<h3>{$lblAddContentBlock}</h3>
+						</div>
+						<div class="content">
 							<fieldset>
+								<p>
+									<label for="title">{$lblTitle|ucfirst}</label>
+									{$txtTitle} {$txtTitleError}
+								</p>
+
 								<label for="content">{$lblContent|ucfirst}</label>
 								<p>{$txtContent} {$txtContentError}</p>
 								<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
 							</fieldset>
 						</div>
 					</div>
+					
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
 							<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
@@ -36,10 +32,3 @@
 	</tr>
 </table>
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
-
-
-
-
-
-
-

@@ -1,16 +1,13 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblPages|ucfirst} &gt; {$lblEdit|ucfirst}</p>
-			</div>
 
 			<div class="inner">
 				{form:edit}
 					<div class="box horizontal">
+
 						<div class="heading">
-							{* @todo add label *}
-							<h3>Bewerk template</h3>
+							<h3>{$lblEditTemplate|ucfirst}</h3>
 						</div>
 
 						<div class="options">
@@ -18,7 +15,7 @@
 								<label for="path">{$lblPath|ucfirst}</label>
 								{$txtPath} {$txtPathError}
 								{* @todo add label *}
-								<span class="helpTxt">vb:. core/layout/templates/home.tpl</span>
+								<span class="helpTxt">e.g.: core/layout/templates/home.tpl</span>
 							</p>
 							<p>
 								<label for="label">{$lblLabel|ucfirst}</label>

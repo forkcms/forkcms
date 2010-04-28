@@ -193,9 +193,14 @@ a.mainButton.focus {
 		a.linkButton:link,
 		a.linkButton:visited {
 			background: none;
-			color: #085dbd !important;
+			color: #085DBD;
 			font-weight: 400;
 		}
+		
+			#encloser #container a.linkButton:link span,
+			#encloser #container a.linkButton:visited span {
+				color: #085DBD;
+			}
 
 		a.linkButton:hover,
 		a.linkButton:active,

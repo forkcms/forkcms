@@ -1,11 +1,12 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 	<td id="contentHolder">
-			<div id="statusBar">
-				<p class="breadcrumb">{$lblUsers|ucfirst} &gt; {$msgEditWithItem|sprintf:{$record['username']}}</p>
-			</div>
-
 			<div class="inner">
+
+				<div class="pageTitle">
+					<h2>{$lblUsers|ucfirst}: {$msgEditWithItem|sprintf:{$record['username']}}</h2>
+				</div>
+
 				{form:edit}
 					<table class="settingsUserInfo" border="0" cellspacing="0" cellpadding="0">
 						<tr>
@@ -182,7 +183,6 @@
 
 					<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 						<p>
-							<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
 							{$msgConfirmDelete|sprintf:{$record['settings']['nickname']}}
 						</p>
 					</div>
