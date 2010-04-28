@@ -184,7 +184,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=add&var='. $user['username'] .'&highlight=userid-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. $user['username'] .'&highlight=userid-'. $user['id']);
 			}
 		}
 	}

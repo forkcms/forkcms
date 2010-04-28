@@ -35,7 +35,7 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			BackendUsersModel::delete($this->id);
 
 			// user was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'&report=delete&var='. $this->record['username']);
+			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. $this->record['username']);
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our URL
