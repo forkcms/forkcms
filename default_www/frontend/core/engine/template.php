@@ -241,7 +241,7 @@ class FrontendTemplateModifiers
 	 * @return	string
 	 * @param	string $var		The text to cleanup.
 	 */
-	public static function cleanupPlainText($var)
+	public static function cleanupPlainText($var) // @todo tijs - zou het nuttig zijn om deze in spoon te propppen (davy)
 	{
 		// redefine
 		$var = (string) $var;
