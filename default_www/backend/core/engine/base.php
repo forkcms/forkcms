@@ -154,7 +154,7 @@ class BackendBaseAction
 			$this->tpl->assign('report', true);
 
 			// camelcase the string
-			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'));
+			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), array('-', '_'));
 
 			// if we have data to use it will be passed as the var-parameter, if so assign it
 			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
