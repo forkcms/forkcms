@@ -74,6 +74,23 @@ class FrontendTemplate extends SpoonTemplate
 		// parse headers
 		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
 
+		// theme was set
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// core template
+			if(strpos($template, 'frontend/core/') !== false)
+			{
+				// path to possible theme template
+				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $template);
+
+				// does this template exist?
+				if(file_exists($themeTemplate)) $template = $themeTemplate;
+			}
+		}
+
 		// call the parent
 		parent::display($template);
 	}

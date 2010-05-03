@@ -329,6 +329,53 @@ class FrontendBaseBlock
 
 
 	/**
+	 * Add a CSS file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file					The path for the CSS-file that should be loaded.
+	 * @param	bool[optional] $overwritePath	Whether or not to add the module to this path. Module path is added by default.
+	 * @param	string[optional] $media			The media to use.
+	 * @param	string[optional] $condition		A condition for the CSS-file.
+	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 */
+	public function addCSSFile($file, $overwritePath = false, $media = 'screen',  $condition = null, $minify = true)
+	{
+		// redefine
+		$file = (string) $file;
+		$overwritePath = (bool) $overwritePath;
+
+		// use module path
+		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
+
+		// add css to the header
+		$this->header->addCSSFile($file, $media, $condition, $minify);
+	}
+
+
+	/**
+	 * Add a javascript file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file						The path to the javascript-file that should be loaded.
+	 * @param 	bool[optional] $overwritePath		Whether or not to add the module to this path. Module path is added by default.
+	 * @param	bool[optional] $minify				Should the file be minified?
+	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 */
+	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	{
+		// redefine
+		$file = (string) $file;
+		$overwritePath = (bool) $overwritePath;
+
+		// use module path
+		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/js/'. $file;
+
+		// add js to the header
+		$this->header->addJavascript($file, $minify, $parseThroughPHP);
+	}
+
+
+	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
 	 *
@@ -420,7 +467,7 @@ class FrontendBaseBlock
 		else $template = (string) $template;
 
 		// check if the file exists
-		if(!SpoonFile::exists($template)) throw new FrontendException('The template ('. $template .') doesn\'t exist.');
+		if(!SpoonFile::exists($template)) throw new FrontendException('The template ('. $template .') doesn\'t exist.'); // @todo tijs - is deze check wel nodig?
 
 		// set properties
 		$this->setOverwrite($overwrite);

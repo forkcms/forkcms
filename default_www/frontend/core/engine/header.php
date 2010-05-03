@@ -109,6 +109,33 @@ class FrontendHeader extends FrontendBaseObject
 		$condition = ($condition !== null) ? (string) $condition : null;
 		$minify = (bool) $minify;
 
+		// theme is set
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// core module
+			if(strpos($file, 'frontend/core/') !== false)
+			{
+				// path to possible theme css
+				$themeCSS = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $file);
+
+				// does this css exist?
+				if(file_exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
+			}
+
+			// other modules
+			else
+			{
+				// path to possible theme css
+				$themeCSS = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $file);
+
+				// does this css exist
+				if(file_exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
+			}
+		}
+
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;
 
@@ -148,6 +175,33 @@ class FrontendHeader extends FrontendBaseObject
 		// redefine
 		$file = (string) $file;
 		$minify = (bool) $minify;
+
+		// theme set
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// core module
+			if(strpos($file, 'frontend/core/') !== false)
+			{
+				// path to possible theme js
+				$themeJS = str_replace('frontend/core', 'frontend/themes/'. $theme .'/core', $file);
+
+				// does this js exist?
+				if(file_exists($themeJS)) $file = $themeJS;
+			}
+
+			// other modules
+			else
+			{
+				// path to possible theme js
+				$themeJS = str_replace('frontend/modules', 'frontend/themes/'. $theme .'/modules', $file);
+
+				// does this js exist
+				if(file_exists(PATH_WWW . $themeJS)) $file = $themeJS;
+			}
+		}
 
 		// no minifying when debugging
 		if(SPOON_DEBUG) $minify = false;

@@ -71,6 +71,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 		// parse
 		$this->parse();
+
+		$this->setTemplatePath(PATH_WWW .'/frontend/core/layout/templates/test.tpl');
 	}
 
 
