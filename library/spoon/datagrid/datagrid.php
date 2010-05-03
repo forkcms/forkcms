@@ -774,7 +774,6 @@ class SpoonDatagrid
 				ob_start();
 				$this->tpl->display($this->getTemplatePath());
 				$this->content = ob_get_clean();
-
 			}
 		}
 

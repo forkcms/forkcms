@@ -131,6 +131,7 @@ class SpoonDatabase
 			try
 			{
 				$this->handler = new PDO($this->driver .':host='. $this->hostname .';dbname='. $this->database, $this->username, $this->password);
+				$this->handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
 
 			catch(PDOException $e)
@@ -646,6 +647,9 @@ class SpoonDatabase
 		// has errors
 		if($statement->errorCode() != 0)
 		{
+//			Spoon::dump($statement->errorCode());
+//			Spoon::dump(error_get_last());
+//			Spoon::dump('hoer');
 			$aError = $statement->errorInfo();
 			throw new SpoonDatabaseException($aError[2]);
 		}

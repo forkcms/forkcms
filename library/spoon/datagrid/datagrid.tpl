@@ -1,12 +1,12 @@
 {*
   Below a list of globally availble options & variables.
-  
+
   Variables:
   - {$summary} / table summary
   - {$caption} / table caption
   - {$paging} / output of the paging class
   - {$numColumns} / number of visible columns
-  
+
   Options:
   - paging / whether pagination is enabled
 *}
@@ -15,7 +15,7 @@
 <table{option:summary} summary="{$summary}"{/option:summary}{$attributes}>
 	{option:caption}<caption>{$caption}</caption>{/option:caption}
 	<thead>
-		<tr{$headerAttributes}>
+		<tr>
 			{iteration:headers}
 			<th>
 				{option:headers.sorting}
@@ -26,7 +26,7 @@
 						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label} <img src="{$headers.sortingIcon}" /></a>
 					{/option:headers.notSorted}
 				{/option:headers.sorting}
-				
+
 				{option:headers.noSorting}
 					{$headers.label}
 				{/option:headers.noSorting}
@@ -36,16 +36,16 @@
 	</thead>
 	<tbody>
 		{iteration:rows}
-		<tr{$rows.attributes}{$rows.oddAttributes}{$rows.evenAttributes}>
-			{iteration:rows.columns}<td{$columns.attributes}>{$columns.value}</td>{/iteration:rows.columns}
-		</tr>
+			<tr{$rows.attributes}{$rows.oddAttributes}{$rows.evenAttributes}>
+				{iteration:rows.columns}<td{$columns.attributes}>{$columns.value}</td>{/iteration:rows.columns}
+			</tr>
 		{/iteration:rows}
 	</tbody>
 	{option:paging}
-	<tfoot>
-		<tr{$footerAttributes}>
-			<td colspan="{$numColumns}">{$paging}</td>
-		</tr>
-	</tfoot>
+		<tfoot>
+			<tr{$footerAttributes}>
+				<td colspan="{$numColumns}">{$paging}</td>
+			</tr>
+		</tfoot>
 	{/option:paging}
 </table>

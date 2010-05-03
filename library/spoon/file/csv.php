@@ -24,6 +24,8 @@
  * @subpackage	file
  *
  *
+ * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author		Tijs Verkoyen <tijs@spoon-library.be>
  * @author		Dave Lens <dave@spoon-library.be>
  * @since		1.2.0
  */
@@ -32,12 +34,13 @@ class SpoonFileCSV
 	/**
 	 * Converts an array to a CSV file
 	 *
-	 * @return	mixed
+	 * @return	void
 	 * @param	string $path				The full path to the file you wish to create
 	 * @param	array $array				The array to convert
 	 * @param	array[optional] $columns	The column names you want to use
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
+	 * @param	bool[optional] $download
 	 */
 	public static function arrayToFile($path, array $array, array $columns = array(), $delimiter = ',', $enclosure = '"', $download = false)
 	{

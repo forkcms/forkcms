@@ -823,7 +823,7 @@ class SpoonForm
 					$value .= "\t\t\t". '<label for="{$'. $object->getName() .'.id}">{$'. $object->getName() .'.chk'. SpoonFilter::toCamelCase($object->getName()) .'} {$'. $object->getName() .'.label}</label>' ."\n";
 					$value .= "\t\t{/iteration:". $object->getName() ."}\n";
 					$value .= "\t\t". '{$chk'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
-					$value .= "\t<p>\n";
+					$value .= "\t</p>\n";
 				}
 
 				// dropdowns
@@ -855,7 +855,7 @@ class SpoonForm
 					$value .= "\t\t\t". '<label for="{$'. $object->getName() .'.id}">{$'. $object->getName() .'.rbt'. SpoonFilter::toCamelCase($object->getName()) .'} {$'. $object->getName() .'.label}</label>' ."\n";
 					$value .= "\t\t{/iteration:". $object->getName() ."}\n";
 					$value .= "\t\t". '{$rbt'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
-					$value .= "\t<p>\n";
+					$value .= "\t</p>\n";
 				}
 
 				// textfields
@@ -1046,11 +1046,11 @@ class SpoonForm
 	 * Should we use a form token?
 	 *
 	 * @return	void
-	 * @param	bool $useToken
+	 * @param	bool[optional] $on
 	 */
-	private function setUseToken($useToken)
+	private function setUseToken($on = true)
 	{
-		$this->useToken = (bool) $useToken;
+		$this->useToken = (bool) $on;
 	}
 
 

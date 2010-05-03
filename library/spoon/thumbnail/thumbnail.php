@@ -391,6 +391,28 @@ class SpoonThumbnail
 			else throw new SpoonThumbnailException('No width or height specified.');
 		}
 
+		// check if we stay within the borders
+		if($this->width !== null && $this->height !== null)
+		{
+			if($newWidth > $this->width)
+			{
+				// width is specified
+				$newWidth = $this->width;
+
+				// calculate new height
+				$newHeight = (int) floor($currentHeight * ($this->width / $currentWidth));
+			}
+
+			if($newHeight > $this->height)
+			{
+				// height is specified
+				$newHeight = $this->height;
+
+				// calculate new width
+				$newWidth = (int) floor($currentWidth * ($this->height / $currentHeight));
+			}
+		}
+
 		// read current image
 		switch ($currentType)
 		{

@@ -304,7 +304,7 @@ class SpoonFilter
 	 */
 	public static function isAlphabetical($value)
 	{
-		return (bool) preg_match("/^[a-z]+$/i", (string) $value);
+		return (bool) ctype_alpha((string) $value);
 	}
 
 
@@ -316,7 +316,7 @@ class SpoonFilter
 	 */
 	public static function isAlphaNumeric($value)
 	{
-		return (bool) preg_match("/^[a-z0-9]+$/i", (string) $value);
+		return (bool) ctype_alnum((string) $value);
 	}
 
 
@@ -342,7 +342,7 @@ class SpoonFilter
 	 */
 	public static function isBool($value)
 	{
-		return (bool) preg_match("/^true$|^1|^false|^0$/i", (string) $value);
+		return (bool) (filter_var((string) $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null) ? false : true;
 	}
 
 
@@ -354,7 +354,7 @@ class SpoonFilter
 	 */
 	public static function isDigital($value)
 	{
-		return (bool) preg_match("/^[0-9]+$/", (string) $value);
+		return (bool) ctype_digit((string) $value);
 	}
 
 
@@ -366,7 +366,7 @@ class SpoonFilter
 	 */
 	public static function isEmail($value)
 	{
-		return (bool) preg_match("/^[a-z0-9!#\$%&'*+-\/=?^_`{|}\.~]+@([a-z0-9]+([\-]+[a-z0-9]+)*\.)+[a-z]{2,7}$/i", (string) $value);
+		return (filter_var((string) $value, FILTER_VALIDATE_EMAIL) === false) ? false : true;
 	}
 
 
@@ -470,7 +470,7 @@ class SpoonFilter
 	 */
 	public static function isIp($value)
 	{
-		return (bool) preg_match('/^\d{1,3}\.\d{1,3}\.\d{1,3}.\d{1,3}:?\d*$/', (string) $value);
+		return (filter_var((string) $value, FILTER_VALIDATE_IP) !== false) ? true : false;
 	}
 
 
@@ -593,8 +593,7 @@ class SpoonFilter
 	 */
 	public static function isURL($value)
 	{
-		$regexp = '/^((http|ftp|https):\/{2})?(([0-9a-zA-Z_-]+\.)+[0-9a-zA-Z]+)((:[0-9]+)?)((\/([~0-9a-zA-Z\#%@\.\/_-]+)?(\?[0-9a-zA-Z%@\/&\[\];=_-]+)?)?)$/';
-		return (bool) preg_match($regexp, (string) $value);
+		return (filter_var((string) $value, FILTER_VALIDATE_URL) !== false) ? true : false;
 	}
 
 
@@ -627,12 +626,11 @@ class SpoonFilter
 	 */
 	public static function isValidRegexp($regexp)
 	{
-		// regexp & dummy string
-		$regexp = (string) $regexp;
-		$dummy = 'spoon is growing every day';
+		// init var
+		$string = 'Spoon is growing every day';
 
 		// validate
-		return (@preg_match($regexp, $dummy) === false) ? false : true;
+		return (filter_var((string) $regexp, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp))) !== false) ? true : false;
 	}
 
 
@@ -781,10 +779,10 @@ class SpoonFilter
 			$skipped = false;
 
 			// fetch words
-			$aWords = explode($separator, $value);
+			$words = explode($separator, $value);
 
 			// create new string
-			foreach($aWords as $word)
+			foreach($words as $word)
 			{
 				// first word
 				if(!$skipped)
@@ -797,7 +795,7 @@ class SpoonFilter
 				}
 
 				// second, third, ...
-				else $string .= ucfirst($word);
+				else $string .= mb_convert_case($word, MB_CASE_TITLE, $charset);
 			}
 
 			return $string;
