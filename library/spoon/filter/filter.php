@@ -626,11 +626,12 @@ class SpoonFilter
 	 */
 	public static function isValidRegexp($regexp)
 	{
-		// init var
-		$string = 'Spoon is growing every day';
+		// regexp & dummy string
+		$regexp = (string) $regexp;
+		$dummy = 'spoon is growing every day';
 
 		// validate
-		return (filter_var((string) $regexp, FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => $regexp))) !== false) ? true : false;
+		return (@preg_match($regexp, $dummy) === false) ? false : true;
 	}
 
 
@@ -759,47 +760,40 @@ class SpoonFilter
 	 *
 	 * @return	string							The camelcased string.
 	 * @param	string $value					The string that should be camelcased.
-	 * @param	string[optional] $separator		The word-separator.
+	 * @param	mixed[optional] $separator		The word-separator.
 	 * @param	bool[optional] $lcfirst			Should the first charachter be lowercase?
 	 * @param	string[optional] $charset		The charset to use, default is based on SPOON_CHARSET.
 	 */
 	public static function toCamelCase($value, $separator = '_', $lcfirst = false, $charset = null)
 	{
-		// define charset
+		// init vars
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$value = str_replace($separator, ' ', (string) $value);
 
-		// start all words with a capital letter
-		if(!$lcfirst) return str_replace(' ', '', mb_convert_case(str_replace($separator, ' ', (string) $value), MB_CASE_TITLE, $charset));
+		// init var
+		$string = '';
 
-		// start all words, except the first one, with a capital letter
-		else
+		// fetch words
+		$words = explode(' ', $value);
+
+		// create new string
+		foreach($words as $i => $word)
 		{
-			// init var
-			$string = '';
-			$skipped = false;
-
-			// fetch words
-			$words = explode($separator, $value);
-
-			// create new string
-			foreach($words as $word)
+			// skip first word
+			if($i == 0 && $lcfirst)
 			{
-				// first word
-				if(!$skipped)
-				{
-					// add to value
-					$string .= $word;
+				// add as is
+				$string .= $word;
 
-					// update skippy
-					$skipped = true;
-				}
-
-				// second, third, ...
-				else $string .= mb_convert_case($word, MB_CASE_TITLE, $charset);
+				// go on
+				continue;
 			}
 
-			return $string;
+			// regular words
+			$string .= mb_strtoupper(mb_substr($word, 0, 1, $charset), $charset) . mb_substr($word, 1, mb_strlen($word), $charset);
 		}
+
+		return $string;
 	}
 
 

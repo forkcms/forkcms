@@ -78,7 +78,25 @@ class SpoonTemplate
 	 *
 	 * @var	array
 	 */
-	private $variables = array('CRLF' => "\n", 'TAB' => "\t");
+	private $variables = array();
+
+
+	/**
+ 	 * Creates a template instance and assigns a few default variables.
+ 	 *
+ 	 * @return	void
+	 */
+	public function __construct()
+	{
+		// carriage line feed
+		$this->assign('CRLF', "\n");
+
+		// tab
+		$this->assign('TAB', "\t");
+
+		// current date/time
+		$this->assign('now', time());
+	}
 
 
 	/**
