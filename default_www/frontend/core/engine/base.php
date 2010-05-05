@@ -747,6 +747,14 @@ class FrontendBaseWidget
 
 
 	/**
+	 * Path to the template
+	 *
+	 * @var	string
+	 */
+	protected $templatePath;
+
+
+	/**
 	 * A reference to the current template
 	 *
 	 * @var	FrontendTemplate
@@ -921,6 +929,34 @@ class FrontendBaseWidget
 	 */
 	private function setTemplatePath($path)
 	{
+		// theme in use
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// core template
+			if(strpos($path, 'frontend/core/') !== false)
+			{
+				// path to possible theme template
+				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
+
+				// does this template exist
+				if(file_exists($themeTemplate)) $path = $themeTemplate;
+			}
+
+			// module template
+			else
+			{
+				// path to possible theme template
+				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
+
+				// does this template exist
+				if(file_exists($themeTemplate)) $path = $themeTemplate;
+			}
+		}
+
+		// set template path
 		$this->templatePath = (string) $path;
 	}
 }

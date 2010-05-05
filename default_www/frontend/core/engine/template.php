@@ -25,6 +25,9 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	public function __construct($dontAdd = false)
 	{
+		// parent constructor
+		parent::__construct();
+
 		// store in reference so we can access it from everywhere
 		if(!$dontAdd) Spoon::setObjectReference('template', $this);
 

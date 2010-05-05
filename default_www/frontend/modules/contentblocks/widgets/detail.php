@@ -27,14 +27,14 @@ class FrontendContentblocksWidgetDetail extends FrontendBaseWidget
 	 */
 	public function execute()
 	{
-		// load template
-		$this->loadTemplate();
+		// parent execute
+		parent::execute();
 
 		// load data
 		$this->loadData();
 
 		// parse
-		$this->parse();
+		return $this->parse();
 	}
 
 
@@ -60,16 +60,8 @@ class FrontendContentblocksWidgetDetail extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		// assign if the snippet isn't empty
-		if(!empty($this->snippet))
-		{
-			// add an extra item so we can use it as an option
-			$this->snippet['is'. $this->snippet['id']] = true;
-
-			// assign
-			$this->tpl->assign('snippet', $this->snippet);
-		}
+		return (!empty($this->snippet['content'])) ? $this->snippet['content'] : '';
 	}
-
 }
+
 ?>

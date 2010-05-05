@@ -296,11 +296,22 @@ class FrontendPage extends FrontendBaseObject
 					// create new instance
 					$widget = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
-					// execute
-					$widget->execute();
+					// content block
+					if($block['extra_module'] == 'contentblocks' && $block['extra_action'] == 'detail')
+					{
+						// option (content block)
+						$this->tpl->assign($templateVariable .'IsHTML', true);
 
-					// assign the templatepath so it will be included
-					$this->tpl->assign($templateVariable, $widget->getTemplatePath());
+						// assign the actual HTML
+						$this->tpl->assign($templateVariable, $widget->execute());
+					}
+
+					// regular widget
+					else
+					{
+						// assign the templatepath so it will be included
+						$this->tpl->assign($templateVariable, $widget->getTemplatePath());
+					}
 				}
 			}
 

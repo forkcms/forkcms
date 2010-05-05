@@ -426,10 +426,13 @@ class FrontendBlockWidget extends FrontendBaseObject
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
 
 		// call the execute method of the real action (defined in the module)
-		$object->execute();
+		$output = $object->execute();
 
 		// set some properties
 		$this->setTemplatePath($object->getTemplatePath());
+
+		// return possible output
+		return $output;
 	}
 
 
