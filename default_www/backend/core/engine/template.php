@@ -32,8 +32,11 @@ class BackendTemplate extends SpoonTemplate
 	 * @return	void
 	 * @param	bool[optional] $dontAdd		Should the instance be added into the reference.
 	 */
-	public function __construct($dontAdd = false)
+	public function __construct($dontAdd = false) // @todo nog aanpassen naar addToReference
 	{
+		// parent constructor
+		parent::__construct();
+
 		// get URL instance
 		$this->URL = Spoon::getObjectReference('url');
 
