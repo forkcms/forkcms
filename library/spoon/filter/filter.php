@@ -64,7 +64,7 @@ class SpoonFilter
 	public static function arrayMapRecursive($callback, array $array)
 	{
 		// has no elements
-		if(empty($array)) throw new SpoonFilterException('The array needs to contain at least one element');
+		if(empty($array)) return array();
 
 		// just call the function once if this isn't an array
 		if(!is_array($array)) return($callback($array));
