@@ -55,6 +55,46 @@ class SpoonFilter
 
 
 	/**
+	 * This method will map functions to a multidimensional array
+	 *
+	 * @return	array
+	 * @param	mixed $callback
+	 * @param	array $array
+	 */
+	public static function arrayMapRecursive($callback, array $array)
+	{
+		// has no elements
+		if(empty($array)) throw new SpoonFilterException('The array needs to contain at least one element');
+
+		// just call the function once if this isn't an array
+		if(!is_array($array)) return($callback($array));
+
+		// declare our result array
+		$results = array();
+
+		// loop the array
+		foreach($array as $key => $value)
+		{
+			// if $value is an array, we make this stuff recursive
+			if(is_array($value)) $results[$key] = self::arrayMapRecursive($callback, $value);
+
+			// $value is no array
+			else
+			{
+				// more than 1 function given, so apply them all
+				if(is_array($callback)) $results[$key] = call_user_func_array($callback, $value);
+
+				// just 1 function given
+				else $results[$key] = $callback($value);
+			}
+		}
+
+		// return the results
+		return $results;
+	}
+
+
+	/**
 	 * This method will sort an array by its keys and reindex.
 	 *
 	 * @return	array					The sorted array.
@@ -177,25 +217,46 @@ class SpoonFilter
 	public static function getValue($variable, array $values = null, $defaultValue, $returnType = 'string')
 	{
 		// redefine arguments
-		$variable = (string) $variable;
-		$defaultValue = (string) $defaultValue;
+		$variable = !is_array($variable) ? (string) $variable : $variable;
+		$defaultValue = !is_array($defaultValue) ? (string) $defaultValue : $defaultValue;
 		$returnType = (string) $returnType;
 
 		// default value
 		$value = $defaultValue;
 
+		// variable is an array
+		if(is_array($variable) && !empty($variable))
+		{
+			// no values
+			if($values === null) $values = array();
+
+			// fetch difference between the 2 arrays
+			$differences = array_diff($variable, $values);
+
+			// set value
+			if(count($variable) != count($differences)) $value = array_intersect($variable, $values);
+
+			// values was empty
+			elseif(empty($values)) $value = $variable;
+		}
+
 		// provided values
-		if($values !== null && in_array($variable, $values)) $value = $variable;
+		elseif($values !== null && in_array($variable, $values)) $value = $variable;
 
 		// no values
 		elseif($values === null && $variable != '') $value = $variable;
 
 		/**
 		 * We have to define the return type. Too bad we cant force it within
-		 * a certain list of types, since that's what this method does xD
+		 * a certain list of types, since that's what this method actually does.
 		 */
 		switch($returnType)
 		{
+			// array
+			case 'array':
+				$value = ($value == '') ? array() : (array) $value;
+			break;
+
 			// bool
 			case 'bool':
 				$value = (bool) $value;

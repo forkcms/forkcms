@@ -83,9 +83,8 @@ class BackendBaseAction
 			// is the value an array?
 			if(is_array($value))
 			{
-				// urldecode each element in the array (REMARK: we don't support multidim arrays)
-				// arrays in GET are ugly and stupid
-				$this->parameters[$key] = (array) array_map('urldecode', $value);
+				// urldecode each element in the array
+				$this->parameters[$key] = (array) SpoonFilter::arrayMapRecursive('urldecode', $value);
 			}
 
 			// it's just a string
@@ -156,8 +155,11 @@ class BackendBaseAction
 			// camelcase the string
 			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), array('-', '_'));
 
-			// if we have data to use it will be passed as the var-parameter, if so assign it
-			if($this->getParameter('var') !== null) $this->tpl->assign('reportMessage', sprintf(BackendLanguage::getMessage($messageName), $this->getParameter('var')));
+			// store var so we don't have to call this function twice
+			$var = $this->getParameter('var', 'array');
+
+			// if we have data to use it will be passed as the var parameter
+			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BackendLanguage::getMessage($messageName), $var));
 			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
 
 			// highlight an element with the given id if needed
