@@ -336,10 +336,10 @@ class BackendBlogModel
 										FROM blog_comments AS bc
 										INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
 										INNER JOIN meta AS m ON bp.meta_id = m.id
-										WHERE bc.status = ?
+										WHERE bc.status = ? AND bp.status = ?
 										ORDER BY bc.id DESC
 										LIMIT ?;',
-										array($status, $limit));
+										array($status, 'active', $limit));
 
 		// loop entries
 		foreach($return as $key => $row)
