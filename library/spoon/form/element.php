@@ -76,7 +76,7 @@ class SpoonFormElement
 			if($this->method == 'post') return $_POST;
 
 			// $_GET array
-			else return array_map('urldecode', $_GET);
+			return SpoonFilter::arrayMapRecursive('urldecode', $_GET);
 		}
 
 		// submitted via met get or post

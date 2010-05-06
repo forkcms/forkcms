@@ -155,6 +155,11 @@ class BackendBaseAction
 			// camelcase the string
 			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), array('-', '_'));
 
+			/*
+			 @todo tijs		Controleren of onderstaande OK is
+			 @todo davy		Controleren of onderstaande OK is
+			*/
+
 			// store var so we don't have to call this function twice
 			$var = $this->getParameter('var', 'array');
 
