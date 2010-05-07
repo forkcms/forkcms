@@ -115,8 +115,19 @@ class Akismet
 		// build url
 		$url = self::API_URL .'/'. self::API_VERSION .'/'. $url;
 
+
 		// add key in front of url
-		if($authenticate) $url = str_replace('http://', 'http://'. $this->getApiKey() .'.', $url);
+		if($authenticate)
+		{
+			// get api key
+			$apiKey = $this->getApiKey();
+
+			// validate apiKey
+			if($apiKey == '') throw new AkismetException('Invalid API-key');
+
+			// prepend key
+			$url = str_replace('http://', 'http://'. $apiKey .'.', $url);
+		}
 
 		// add url into the parameters
 		$aParameters['blog'] = $this->getUrl();
