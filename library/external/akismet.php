@@ -14,6 +14,9 @@
  * Changelog since 1.0.1
  * - fixed some comments
  *
+ * Changelog since 1.0.2
+ * - when authenticating the key will be validate if it is not empty
+ *
  * License
  * Copyright (c) 2008, Tijs Verkoyen. All rights reserved.
  *
@@ -46,7 +49,7 @@ class Akismet
 	const API_VERSION = '1.1';
 
 	// current version
-	const VERSION = '1.0.2';
+	const VERSION = '1.0.3';
 
 
 	/**
