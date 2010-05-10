@@ -84,7 +84,7 @@ class BackendMailer
 	private static function getTemplateContent($template, $variables = null)
 	{
 		// new template instance
-		$tpl = new BackendTemplate(true);
+		$tpl = new BackendTemplate(false);
 
 		// set some options
 		$tpl->setForceCompile(true);

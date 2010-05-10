@@ -30,9 +30,9 @@ class BackendTemplate extends SpoonTemplate
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $dontAdd		Should the instance be added into the reference.
+	 * @param	bool[optional] $addToReference		Should the instance be added into the reference.
 	 */
-	public function __construct($dontAdd = false) // @todo nog aanpassen naar addToReference
+	public function __construct($addToReference = true)
 	{
 		// parent constructor
 		parent::__construct();
@@ -41,7 +41,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->URL = Spoon::getObjectReference('url');
 
 		// store in reference so we can access it from everywhere
-		if(!$dontAdd) Spoon::setObjectReference('template', $this);
+		if($addToReference) Spoon::setObjectReference('template', $this);
 
 		// set cache directory
 		$this->setCacheDirectory(BACKEND_CACHE_PATH .'/cached_templates');

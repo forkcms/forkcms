@@ -375,7 +375,7 @@ class FrontendBlogModel
 		$return = array();
 
 		// get comments
-		$comments = (array) $db->retrieve('SELECT bc.id, bc.author, bc.website, UNIX_TIMESTAMP(bc.created_on) AS created_on,
+		$comments = (array) $db->retrieve('SELECT bc.id, bc.author, bc.website, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.text,
 											bp.id AS post_id, bp.title AS post_title,
 											m.url AS post_url
 											FROM blog_comments AS bc

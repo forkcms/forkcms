@@ -309,6 +309,9 @@ class FrontendPage extends FrontendBaseObject
 					// regular widget
 					else
 					{
+						// execute widget
+						$widget->execute();
+
 						// assign the templatepath so it will be included
 						$this->tpl->assign($templateVariable, $widget->getTemplatePath());
 					}

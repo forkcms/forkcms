@@ -205,7 +205,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 					$domain = trim(str_replace(array('www.', 'http://', 'https://'), '', $domain));
 
 					// invalid URL
-					if(!SpoonFilter::isURL($domain))
+					if(!SpoonFilter::isURL('http://'. $domain))
 					{
 						// set error
 						$this->frm->getField('site_domains')->setError(BL::getError('InvalidDomain'));

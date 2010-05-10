@@ -82,7 +82,7 @@ class FrontendMailer
 	private static function getTemplateContent($template, $variables = null)
 	{
 		// new template instance
-		$tpl = new FrontendTemplate(true);
+		$tpl = new FrontendTemplate(false);
 
 		// set some options
 		$tpl->setForceCompile(true);

@@ -732,7 +732,7 @@ class BackendModel
 		}
 
 		// require SpoonXMLRPCClient
-		require_once 'spoon/xmlrpc/client.php';
+		require_once 'spoon/xmlrpc/client.php'; // @todo davy - is deze niet overbodig geworden met de autoloader?
 
 		// loop services
 		foreach($pingServices['services'] as $service)
@@ -779,7 +779,7 @@ class BackendModel
 			}
 
 			// catch any exceptions
-			catch (Exception $e)
+			catch(Exception $e)
 			{
 				// in debugmode we want to see the exceptions
 				if(SPOON_DEBUG) throw $e;

@@ -17,19 +17,19 @@
 class FrontendTemplate extends SpoonTemplate
 {
 	/**
-	 * Default constructor
+	 * Class constructor
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @return	void
-	 * @param	bool[optional]	$dontAdd	Should the instance be added into the reference.
+	 * @param	bool[optional]	$addToReference	Should the instance be added into the reference.
 	 */
-	public function __construct($dontAdd = false)
+	public function __construct($addToReference = true)
 	{
 		// parent constructor
 		parent::__construct();
 
 		// store in reference so we can access it from everywhere
-		if(!$dontAdd) Spoon::setObjectReference('template', $this);
+		if($addToReference) Spoon::setObjectReference('template', $this);
 
 		// set cache directory
 		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
@@ -236,9 +236,6 @@ class FrontendTemplate extends SpoonTemplate
 	{
 		// assign a placeholder var
 		$this->assign('var', '');
-
-		// assign the current timestamp
-		$this->assign('currentTimestamp', time());
 	}
 }
 

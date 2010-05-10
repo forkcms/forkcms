@@ -64,4 +64,5 @@ class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 		$this->tpl->assign('recentComments', $this->recentComments);
 	}
 }
+
 ?>

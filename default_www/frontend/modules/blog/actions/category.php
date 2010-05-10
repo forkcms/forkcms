@@ -34,7 +34,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 1, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
+	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
 
 	/**

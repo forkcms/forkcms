@@ -54,7 +54,7 @@ define('SITE_DEFAULT_TITLE', '<default-title>');
 // the url
 define('SITE_URL', 'http://'. SITE_DOMAIN);
 // is the site multilanguage?
-define('SITE_MULTILANGUAGE', <multilanguage>);
+define('SITE_MULTILANGUAGE', '<multilanguage>');
 
 
 /**
