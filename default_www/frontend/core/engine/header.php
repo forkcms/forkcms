@@ -122,7 +122,7 @@ class FrontendHeader extends FrontendBaseObject
 				$themeCSS = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $file);
 
 				// does this css exist?
-				if(file_exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
+				if(SpoonFile::exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
 			}
 
 			// other modules
@@ -132,7 +132,7 @@ class FrontendHeader extends FrontendBaseObject
 				$themeCSS = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $file);
 
 				// does this css exist
-				if(file_exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
+				if(SpoonFile::exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
 			}
 		}
 
@@ -385,7 +385,7 @@ class FrontendHeader extends FrontendBaseObject
 
 		// remove comments
 		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
-		$content = preg_replace('|\/\/.*|i', '', $content);
+		$content = preg_replace('|([\t\w]{1,})\/\/.*|i', '', $content);
 
 		// remove tabs
 		$content = preg_replace('|\t|i', '', $content);
@@ -452,7 +452,7 @@ class FrontendHeader extends FrontendBaseObject
 
 		// remove comments
 		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
-		$content = preg_replace('|\/\/.*|i', '', $content);
+		$content = preg_replace('|([\t\w]{1,})\/\/.*|i', '', $content);
 
 		// remove tabs
 		$content = preg_replace('|\t|i', ' ', $content);
