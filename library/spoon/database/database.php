@@ -647,9 +647,6 @@ class SpoonDatabase
 		// has errors
 		if($statement->errorCode() != 0)
 		{
-//			Spoon::dump($statement->errorCode());
-//			Spoon::dump(error_get_last());
-//			Spoon::dump('hoer');
 			$aError = $statement->errorInfo();
 			throw new SpoonDatabaseException($aError[2]);
 		}

@@ -31,18 +31,20 @@
  */
 class SpoonFileCSV
 {
+	const DEFAULT_DELIMITER = ',';
+	const DEFAULT_ENCLOSURE = '"';
+
 	/**
 	 * Converts an array to a CSV file
 	 *
-	 * @return	void
+	 * @return	mixed
 	 * @param	string $path				The full path to the file you wish to create
 	 * @param	array $array				The array to convert
 	 * @param	array[optional] $columns	The column names you want to use
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
-	 * @param	bool[optional] $download
 	 */
-	public static function arrayToFile($path, array $array, array $columns = array(), $delimiter = ',', $enclosure = '"', $download = false)
+	public static function arrayToFile($path, array $array, array $columns = null, $delimiter = ',', $enclosure = '"', $download = false)
 	{
 		// get the content of the file
 		$csv = self::arrayToString($array, $columns, $delimiter, $enclosure);
@@ -64,13 +66,13 @@ class SpoonFileCSV
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
 	 */
-	public static function arrayToString(array $array, array $columns = array(), $delimiter = ',', $enclosure = '"')
+	public static function arrayToString(array $array, array $columns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// validate array
-		if(!empty($array) && !isset($array[0])) throw new SpoonFileException('Invalid array format.');
+		if(!empty($array) && !isset($array[0])) throw new SpoonFileCSVException('Invalid array format.');
 
 		// no columns set means we will use the keys as the column name if they're not integers
-		if(empty($columns) && isset($array[0][0])) throw new SpoonFileException('Provide column names or use strings as array keys.');
+		if(empty($columns) && isset($array[0][0])) throw new SpoonFileCSVException('Provide column names or use strings as array keys.');
 
 		// column names are set
 		if(empty($columns)) $columns = array_keys($array[0]);
@@ -88,7 +90,7 @@ class SpoonFileCSV
 		foreach($array as $row)
 		{
 			// cellcount check
-			if($countCells != count($row)) throw new SpoonFileException('Each row has to have the same number of cells as the first row.');
+			if($countCells != count($row)) throw new SpoonFileSystemException('Each row has to have the same number of cells as the first row.');
 
 			// add this row to the CSV
 			$csv .= $enclosure . implode($enclosure . $delimiter . $enclosure, (array) $row) . $enclosure . PHP_EOL;
@@ -108,7 +110,7 @@ class SpoonFileCSV
 	private static function download($path)
 	{
 		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new SpoonFileException('The file '. $path .' doesn\'t exist.');
+		if(!SpoonFile::exists($path)) throw new SpoonFileCSVException('The file '. $path .' doesn\'t exist.');
 
 		// fetch the filename from the path string
 		$explodedFilename = explode('/', $path);
@@ -146,7 +148,7 @@ class SpoonFileCSV
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
 	 */
-	public static function fileToArray($path, array $columns = array(), $delimiter = null, $enclosure = null)
+	public static function fileToArray($path, array $columns = array(), $delimiter = ',', $enclosure = '"')
 	{
 		// reset variables
 		$path = (string) $path;
@@ -155,11 +157,7 @@ class SpoonFileCSV
 		if(!SpoonFile::exists($path)) throw new SpoonFileException($path . ' doesn\'t exists.');
 
 		// get delimiter and enclosure from the contents
-		$separators = self::getDelimiterAndEnclosure(SpoonFile::getContent($path));
-
-		// set delimiter and enclosure
-		$delimiter = ($delimiter === null) ? $separators[0] : (string) $delimiter;
-		$enclosure = ($enclosure === null) ? $separators[1] : (string) $enclosure;
+		list($delimiter, $enclosure) = self::getDelimiterAndEnclosure(SpoonFile::getContent($path), $delimiter, $enclosure);
 
 		// automagicaly detect line endings
 		@ini_set('auto_detect_line_endings', 1);
@@ -211,37 +209,62 @@ class SpoonFileCSV
 	 * Returns an array with the delimiter and enclosure used in the given string
 	 *
 	 * @return	array
-	 * @param	string $string	The string you want to extract delimiter and enclosure from
+	 * @param	string $string					The string you want to extract delimiter and enclosure from
+	 * @param	string[optional] $delimiter		The delimiter you wish to use instead of the default
+	 * @param	string[optional] $enclosure		The enclosure you wish to use instead of the default
 	 */
-	private static function getDelimiterAndEnclosure($string)
+	private static function getDelimiterAndEnclosure($string, $delimiter = null, $enclosure = null)
 	{
 		// reset variables
 		$string = (string) $string;
-		$delimiter = '';
-		$enclosure = '';
+		$delimiter = ($delimiter == null) ? self::DEFAULT_DELIMITER : $delimiter;
+		$enclosure = ($enclosure == null) ? self::DEFAULT_ENCLOSURE : $enclosure;
+		$delimiterCount = 0;
+		$enclosureCount = 0;
 
 		// check for comma delimiter
 		if(preg_match_all('/,/', $string, $matches))
 		{
 			// count the commas
-			$countDelimiter = count($matches[0]);
-			$delimiter = ',';
+			$newCount = count($matches[0]);
+
+			// replace the delimiter, if need be
+			if($delimiterCount < $newCount)
+			{
+				// overwrite the count
+				$delimiterCount = $newCount;
+				$delimiter = ',';
+			}
 		}
 
 		// check for semicolon delimiter
 		if(preg_match_all('/;/', $string, $matches))
 		{
-			// count the semicolons
-			$countDelimiter = count($matches[0]);
-			$delimiter = ';';
+			// count the commas
+			$newCount = count($matches[0]);
+
+			// replace the delimiter, if need be
+			if($delimiterCount < $newCount)
+			{
+				// overwrite the count
+				$delimiterCount = $newCount;
+				$delimiter = ';';
+			}
 		}
 
 		// check for tab delimiter
 		if(preg_match_all('/[\t]/', $string, $matches))
 		{
 			// count the commas
-			$countDelimiter = count($matches[0]);
-			$delimiter = "\t";
+			$newCount = count($matches[0]);
+
+			// replace the delimiter, if need be
+			if($delimiterCount < $newCount)
+			{
+				// overwrite the count
+				$delimiterCount = $newCount;
+				$delimiter = '\t';
+			}
 		}
 
 		// if delimiter is empty it might mean there is only one column
@@ -249,17 +272,31 @@ class SpoonFileCSV
 		// check for double quotes enclosure
 		if(preg_match_all('/"/', $string, $matches))
 		{
-			// count the double quotes
-			$countEnclosure = count($matches[0]);
-			$enclosure = '"';
+			// count the commas
+			$newCount = count($matches[0]);
+
+			// replace the delimiter, if need be
+			if($enclosureCount < $newCount)
+			{
+				// overwrite the count
+				$enclosureCount = $newCount;
+				$enclosure = '"';
+			}
 		}
 
 		// check for single quotes enclosure
 		if(preg_match_all("/'/", $string, $matches))
 		{
-			// count the single quotes
-			$countEnclosure = count($matches[0]);
-			$enclosure = "'";
+			// count the commas
+			$newCount = count($matches[0]);
+
+			// replace the delimiter, if need be
+			if($enclosureCount < $newCount)
+			{
+				// overwrite the count
+				$enclosureCount = $newCount;
+				$enclosure = "'";
+			}
 		}
 
 		// return the results
