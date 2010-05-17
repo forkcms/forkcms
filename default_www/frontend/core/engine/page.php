@@ -130,6 +130,9 @@ class FrontendPage extends FrontendBaseObject
 		// parse footer
 		$this->footer->parse();
 
+		// parse the current pageID
+		$this->tpl->assign(self::$currentPageId, true);
+
 		// output
 		$this->tpl->display($this->templatePath, false, true);
 	}
