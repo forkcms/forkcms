@@ -1,5 +1,7 @@
 <?php
 
+// @todo davy - refactoring van de interne variabelen (in de methods)
+
 /**
  * BackendMeta
  * This class represents a META-object

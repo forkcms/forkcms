@@ -588,6 +588,9 @@ class BackendModel
 	 */
 	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
 	{
+		// validate date/time object
+		if(!$date->isValid() || !$time->isValid()) throw new BackendException('You need to provide two objects that actully contain valid data.');
+
 		// init vars
 		$year = gmdate('Y', $date->getTimestamp());
 		$month = gmdate('m', $date->getTimestamp());

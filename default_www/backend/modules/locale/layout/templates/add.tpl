@@ -11,15 +11,15 @@
 						<div class="options">
 							<div class="horizontal">
 								<p>
-									<label for="value">{$lblValue|ucfirst}</label>
-									{$txtValue} {$txtValueError}
-									<span class="helpTxt">{$msgAddValueHelpText}</span>
-								</p>
-
-								<p>
 									<label for="name">{$lblName|ucfirst}</label>
 									{$txtName} {$txtNameError}
 									<span class="helpTxt">{$msgAddNameHelpText}</span>
+								</p>
+								
+								<p>
+									<label for="value">{$lblValue|ucfirst}</label>
+									{$txtValue} {$txtValueError}
+									<span class="helpTxt">{$msgAddValueHelpText}</span>
 								</p>
 
 								<p>

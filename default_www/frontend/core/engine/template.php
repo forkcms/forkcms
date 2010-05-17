@@ -126,7 +126,10 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
 
 		// users
-		$this->mapModifier('userSetting', array('FrontendTemplateModifiers', 'userSetting'));
+		$this->mapModifier('userSetting', array('FrontendTemplateModifiers', 'userSetting')); // @todo davy - dit moet nog lowercase worden.
+
+		// highlight
+		$this->mapModifier('highlight', array('FrontendTemplateModifiers', 'highlightCode'));
 
 		// debug stuff
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));
@@ -364,6 +367,36 @@ class FrontendTemplateModifiers
 		// return
 		return FrontendNavigation::getURLForBlock($module, $action, $language);
 	}
+
+
+	/**
+	 * Highlights all strings in <code> tags.
+	 *
+	 * @return	string
+	 * @param	string $content
+	 */
+	public static function highlightCode($content)
+	{
+		// regex pattern
+		$pattern = "/<code>.*?<\/code>/is";
+
+		// find matches
+		if(preg_match_all($pattern, $content, $matches))
+		{
+			// loop matches
+			foreach($matches[0] as $match)
+			{
+				// encase content in highlight_string
+				$content = str_replace($match, highlight_string($match, true), $content);
+
+				// replace highlighted code tags in match
+				$content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $content);
+			}
+		}
+
+		return $content;
+	}
+
 
 
 	/**

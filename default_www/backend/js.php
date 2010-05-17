@@ -7,6 +7,7 @@
  */
 function javascriptExceptionHandler($exception)
 {
+	// @todo tijs - deze exception handler moet overgenomen worden van de recentere versie van spoon.
 	// fetch trace stack
 	$aTrace = $exception->getTrace();
 
@@ -14,7 +15,7 @@ function javascriptExceptionHandler($exception)
 	if(isset($aTrace[0]['class']) && isset($aTrace[0]['function']) && strtolower(substr($aTrace[0]['class'], 0, 5)) == 'spoon')
 	{
 		$documentationURL = strtolower($aTrace[0]['class']) .'/'. strtolower($aTrace[0]['function']);
-		$documentation = '&raquo; <a href="http://docs.spoon-library.be/'. $documentationURL .'">view documentation</a>';
+		$documentation = '&raquo; <a href="http://docs.spoon-library.com/'. $documentationURL .'">view documentation</a>';
 	}
 
 	// specific name
@@ -271,7 +272,7 @@ function javascriptExceptionHandler($exception)
 		$headers .= "X-Priority: 3\n";
 		$headers .= "X-MSMail-Priority: Normal\n";
 		$headers .= "X-Mailer: SpoonLibrary Webmail\n";
-		$headers .= "From: Spoon Library <no-reply@spoon-library.be>\n";
+		$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 		// send email
 		@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);

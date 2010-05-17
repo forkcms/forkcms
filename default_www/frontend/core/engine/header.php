@@ -189,7 +189,7 @@ class FrontendHeader extends FrontendBaseObject
 				$themeJS = str_replace('frontend/core', 'frontend/themes/'. $theme .'/core', $file);
 
 				// does this js exist?
-				if(file_exists($themeJS)) $file = $themeJS;
+				if(SpoonFile::exists(PATH_WWW . $themeJS)) $file = $themeJS;
 			}
 
 			// other modules

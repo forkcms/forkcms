@@ -603,7 +603,7 @@ class BackendDataGridFunctions
 		$format = BackendAuthentication::getUser()->getSetting('datetime_format');
 
 		// format the date according the user his settings
-		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage());
+		return SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage(), true);
 	}
 
 

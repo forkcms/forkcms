@@ -84,6 +84,7 @@ class FrontendBlogRss extends FrontendBaseBlock
 			$link = $item['full_url'];
 			$description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];;
 
+			// @todo davy - dit moet in een setting komen of je dit al dan niet wil tonen in je rss feed.
 			// append meta
 			$description .= '<div class="meta">'."\n";
 			$description .= '	<p><a href="'. $link .'" title="'. $title .'">'. $title .'</a> ' . sprintf(FL::getMessage('WroteBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));

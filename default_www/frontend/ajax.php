@@ -8,6 +8,7 @@
  */
 function ajaxExceptionHandler($exception)
 {
+	// @todo tijs - deze exception handler moet overgenomen worden van de recentere versie van spoon.
 	// fetch trace stack
 	$trace = $exception->getTrace();
 
@@ -15,7 +16,7 @@ function ajaxExceptionHandler($exception)
 	if(isset($trace[0]['class']) && isset($trace[0]['function']) && strtolower(substr($trace[0]['class'], 0, 5)) == 'spoon')
 	{
 		$documentationURL = strtolower($trace[0]['class']) .'/'. strtolower($trace[0]['function']);
-		$documentation = '&raquo; <a href="http://docs.spoon-library.be/'. $documentationURL .'">view documentation</a>';
+		$documentation = '&raquo; <a href="http://docs.spoon-library.com/'. $documentationURL .'">view documentation</a>';
 	}
 
 	// specific name
@@ -285,7 +286,7 @@ function ajaxExceptionHandler($exception)
 		$headers .= "X-Priority: 3\n";
 		$headers .= "X-MSMail-Priority: Normal\n";
 		$headers .= "X-Mailer: SpoonLibrary Webmail\n";
-		$headers .= "From: Spoon Library <no-reply@spoon-library.be>\n";
+		$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 		// send email
 		@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);
@@ -296,7 +297,7 @@ function ajaxExceptionHandler($exception)
 
 	// output to the browser
 	echo json_encode($response);
-	
+
 	// stop script execution
 	exit;
 }

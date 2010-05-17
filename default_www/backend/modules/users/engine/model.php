@@ -289,7 +289,7 @@ class BackendUsersModel
 		// get general user data and return
 		return (array) $db->getPairs('SELECT u.id, u.username
 										FROM users AS u;',
-										null, 'id');
+										null, 'id'); // @todo davy - dit moet nog alfabetisch gesorteerd worden
 	}
 
 
