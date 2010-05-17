@@ -140,6 +140,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('language', 'application', 'module', 'type', 'name', 'value'), 'name');
 
+		// set colum URLs
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&id=[id]');
+
 		// add the multicheckbox column
 		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->datagrid->setColumnsSequence('checkbox');

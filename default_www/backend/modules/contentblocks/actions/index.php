@@ -50,6 +50,9 @@ class BackendContentblocksIndex extends BackendBaseActionIndex
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('title'));
 
+		// set colum URLs
+		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') .'&id=[id]');
+
 		// add edit column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
 	}
