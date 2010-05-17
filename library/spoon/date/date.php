@@ -4,15 +4,15 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	date
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author 		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		0.1.1
  */
 
@@ -24,7 +24,7 @@
  * @subpackage	date
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonDate
@@ -36,8 +36,9 @@ class SpoonDate
 	 * @param	string $format				The wanted format.
 	 * @param	int[optional] $timestamp	A UNIX-timestamp representing the date that should be formatted.
 	 * @param	string[optional] $language	The language to use (available languages can be found in SpoonLocale).
+	 * @param	bool[optional] $GMT			Should we consider this timestamp to be GMT/UTC?
 	 */
-	public static function getDate($format, $timestamp = null, $language = 'en')
+	public static function getDate($format, $timestamp = null, $language = 'en', $GMT = false)
 	{
 		// redefine arguments
 		$format = (string) $format;
@@ -45,7 +46,7 @@ class SpoonDate
 		$language = SpoonFilter::getValue($language, SpoonLocale::getAvailableLanguages(), 'en');
 
 		// create date
-		$date = date($format, $timestamp);
+		$date = (!$GMT) ? date($format, $timestamp) : gmdate($format, $timestamp);
 
 		// only for non-english versions
 		if($language != 'en')
@@ -128,7 +129,7 @@ class SpoonDate
  * @subpackage	date
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonDateException extends SpoonException {}

@@ -4,15 +4,15 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	form
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author 		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		0.1.1
  */
 
@@ -24,7 +24,7 @@
  * @subpackage	form
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonFormMultiCheckbox extends SpoonFormElement

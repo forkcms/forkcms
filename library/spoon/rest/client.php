@@ -4,15 +4,15 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	rest
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author 		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		1.1.2
  */
 
@@ -24,7 +24,7 @@
  * @subpackage	rest
  *
  *
- * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		1.1.1
  */
 class SpoonRESTClient
@@ -256,7 +256,7 @@ class SpoonRESTClient
  * @subpackage	rest
  *
  *
- * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		1.1.1
  */
 class SpoonRESTException extends SpoonException {}

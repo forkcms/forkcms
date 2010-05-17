@@ -4,15 +4,15 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	template
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author 		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		0.1.1
  */
 
@@ -21,14 +21,14 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	template
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author		Tijs Verkoyen <tijs@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonTemplate
@@ -290,7 +290,7 @@ class SpoonTemplate
 	public function display($template)
 	{
 		// validate name
-		if(trim($template) == '') throw new SpoonTemplateException('Please provide a template.');
+		if(trim($template) == '' || !SpoonFile::exists($template)) throw new SpoonTemplateException('Please provide an existing template.');
 
 		// compiled name
 		$compileName = $this->getCompileName((string) $template);
@@ -484,7 +484,7 @@ class SpoonTemplate
  * @subpackage	template
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonTemplateException extends SpoonException {}

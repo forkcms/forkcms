@@ -4,15 +4,15 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	file
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author 		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		1.2.0
  */
 
@@ -24,9 +24,9 @@
  * @subpackage	file
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		1.2.0
  */
 class SpoonFileCSV
@@ -67,10 +67,10 @@ class SpoonFileCSV
 	public static function arrayToString(array $array, array $columns = array(), $delimiter = ',', $enclosure = '"')
 	{
 		// validate array
-		if(!empty($array) && !isset($array[0])) throw new SpoonFileCSVException('Invalid array format.');
+		if(!empty($array) && !isset($array[0])) throw new SpoonFileException('Invalid array format.');
 
 		// no columns set means we will use the keys as the column name if they're not integers
-		if(empty($columns) && isset($array[0][0])) throw new SpoonFileCSVException('Provide column names or use strings as array keys.');
+		if(empty($columns) && isset($array[0][0])) throw new SpoonFileException('Provide column names or use strings as array keys.');
 
 		// column names are set
 		if(empty($columns)) $columns = array_keys($array[0]);
@@ -88,7 +88,7 @@ class SpoonFileCSV
 		foreach($array as $row)
 		{
 			// cellcount check
-			if($countCells != count($row)) throw new SpoonFileSystemException('Each row has to have the same number of cells as the first row.');
+			if($countCells != count($row)) throw new SpoonFileException('Each row has to have the same number of cells as the first row.');
 
 			// add this row to the CSV
 			$csv .= $enclosure . implode($enclosure . $delimiter . $enclosure, (array) $row) . $enclosure . PHP_EOL;
@@ -108,7 +108,7 @@ class SpoonFileCSV
 	private static function download($path)
 	{
 		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new SpoonFileCSVException('The file '. $path .' doesn\'t exist.');
+		if(!SpoonFile::exists($path)) throw new SpoonFileException('The file '. $path .' doesn\'t exist.');
 
 		// fetch the filename from the path string
 		$explodedFilename = explode('/', $path);
@@ -295,18 +295,5 @@ class SpoonFileCSV
 		return $array;
 	}
 }
-
-
-/**
- * This exception is used to handle file related exceptions.
- *
- * @package		spoon
- * @subpackage	file
- *
- *
- * @author		Dave Lens <dave@spoon-library.be>
- * @since		1.2.0
- */
-class SpoonFileCSVException extends SpoonException {}
 
 ?>

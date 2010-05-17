@@ -4,15 +4,15 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	exception
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author 		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		0.1.1
  */
 
@@ -24,7 +24,7 @@
  * @subpackage	exception
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonException extends Exception
@@ -110,7 +110,7 @@ function exceptionHandler($exception)
 	// spoon type exception
 	if(method_exists($exception, 'getName') && strtolower(substr($exception->getName(), 0, 5)) == 'spoon' && $exception->getCode() != 0)
 	{
-		$documentation = '&raquo; <a href="http://www.spoon-library.be/exceptions/detail/'. $exception->getCode() .'">view documentation</a>';
+		$documentation = '&raquo; <a href="http://www.spoon-library.com/exceptions/detail/'. $exception->getCode() .'">view documentation</a>';
 	}
 
 	// request uri?
@@ -377,7 +377,7 @@ function exceptionHandler($exception)
 		$headers .= "X-Priority: 3\n";
 		$headers .= "X-MSMail-Priority: Normal\n";
 		$headers .= "X-Mailer: SpoonLibrary Webmail\n";
-		$headers .= "From: Spoon Library <no-reply@spoon-library.be>\n";
+		$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 		// send email
 		@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);

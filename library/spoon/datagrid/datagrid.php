@@ -4,15 +4,15 @@
  * Spoon Library
  *
  * This source file is part of the Spoon Library. More information,
- * documentation and tutorials can be found @ http://www.spoon-library.be
+ * documentation and tutorials can be found @ http://www.spoon-library.com
  *
  * @package		spoon
  * @subpackage	datagrid
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
- * @author 		Tijs Verkoyen <tijs@spoon-library.be>
- * @author		Dave Lens <dave@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dave Lens <dave@spoon-library.com>
  * @since		1.0.0
  */
 
@@ -24,7 +24,7 @@
  * @subpackage		datagrid
  *
  *
- * @author			Davy Hellemans <davy@spoon-library.be>
+ * @author			Davy Hellemans <davy@spoon-library.com>
  * @since			1.0.0
  */
 class SpoonDatagrid
@@ -1631,7 +1631,7 @@ class SpoonDatagrid
 			foreach($labels as $column => $label)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\t exist, therefor no label can be assigned to it.');
+				if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no label can be assigned to it.');
 
 				// exists
 				else $this->columns[$column]->setLabel($label);
@@ -1892,7 +1892,7 @@ class SpoonDatagrid
  * @subpackage	datagrid
  *
  *
- * @author		Davy Hellemans <davy@spoon-library.be>
+ * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonDatagridException extends SpoonException {}
