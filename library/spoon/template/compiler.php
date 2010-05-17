@@ -235,9 +235,6 @@ class SpoonTemplateCompiler
 				// the number of single qoutes should always be an even number
 				if(!SpoonFilter::isEven(substr_count($string, "'"))) return false;
 
-				// first charachter should not be a number
-				if(SpoonFilter::isInteger(substr($string, 2, 1))) return false;
-
 				// square bracket followed by a dot is NOT allowed eg {option:variable[0].var}
 				if(substr_count($string, '].') != 0) return false;
 
