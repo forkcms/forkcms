@@ -1070,9 +1070,10 @@ class SpoonForm
         	// if we use tokens, we validate them here
         	if($this->getUseToken())
         	{
-        		// token not available? @todo	think this through
+        		// token not available?
         		if(!SpoonSession::exists('form_token')) $errors .= 'invalid token';
 
+        		// token was found
         		else
         		{
         			// compare tokens
@@ -1080,7 +1081,7 @@ class SpoonForm
         		}
         	}
 
-			// loop objecjts
+			// loop objects
 			foreach($this->objects as $oElement)
 			{
 				// check, since some objects don't have this method!

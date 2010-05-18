@@ -485,8 +485,9 @@ class SpoonTemplateCompiler
 					$replace[0] .= $this->forms[$name]->getField('form')->parse();
 
 					// if the form should use tokens, we add it here
-					if($this->forms[$name]->getUseToken()) $replace[0] .= "\n". $this->forms[$name]->getField('form_token')->parse();
+					if($this->forms[$name]->getUseToken()) $replace[0] .= "\n". '<?php echo $this->variables[\'hidFormToken\']; ?>';
 
+					// close form & replace it
 					$replace[1] = "\n</div>\n</form>";
 					$content = str_replace($search, $replace, $content);
 				}

@@ -1,7 +1,5 @@
 <?php
 
-// @todo davy - rework with subclasses, based on the available PDO drivers.
-
 /**
  * Spoon Library
  *
@@ -99,7 +97,6 @@ class SpoonDatabase
 
 	/**
 	 * Creates a database connection instance.
-	 * @todo	Davy, valideer wat meer, valid hostname (127.0.0.1:123465)
 	 *
 	 * @return	void
 	 * @param	string $driver		The driver to use. Available drivers depend on your server configuration.

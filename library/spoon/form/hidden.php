@@ -118,19 +118,6 @@ class SpoonFormHidden extends SpoonFormAttributes
 
 		return $output;
 	}
-
-
-	/**
-	 * Set the value attribute for this hidden field.
-	 *
-	 * @todo	Davy, unused?
-	 * @return	void
-	 * @param	string $value
-	 */
-	private function setValue($value)
-	{
-		$this->value = (string) $value;
-	}
 }
 
 ?>

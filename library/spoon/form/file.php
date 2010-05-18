@@ -46,15 +46,6 @@ class SpoonFormFile extends SpoonFormAttributes
 
 
 	/**
-	 * File extension
-	 *
-	 * @todo	Davy, unused?
-	 * @var	string
-	 */
-	private $extension;
-
-
-	/**
 	 * Filename (without extension)
 	 *
 	 * @var	string

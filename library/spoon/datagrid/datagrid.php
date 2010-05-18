@@ -98,15 +98,6 @@ class SpoonDatagrid
 
 
 	/**
-	 * Offset value
-	 *
-	 * @todo	Davy, nakijken of property in gebruik is.
-	 * @var	int
-	 */
-	private $offset;
-
-
-	/**
 	 * Offset start value
 	 *
 	 * @var	int

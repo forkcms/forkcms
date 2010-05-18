@@ -34,7 +34,6 @@ class SpoonFilter
 	 * List of top level domains
 	 *
 	 * @var	array
-	 * @todo Davy, this needs to be placed in a separate file.
 	 */
 	private static $tlds = array(	'aero', 'asia', 'biz', 'cat', 'com', 'coop', 'edu', 'gov', 'info', 'int', 'jobs', 'mil', 'mobi',
 									'museum', 'name', 'net', 'org', 'pro', 'tel', 'travel', 'ac', 'ad', 'ae', 'af', 'ag', 'ai', 'al',
@@ -524,7 +523,6 @@ class SpoonFilter
 
 	/**
 	 * Checks the value for a proper ip address.
-	 * @todo tijs - implement IPv6
 	 *
 	 * @return	bool			True if the value is a valid IPv4-address, false if not.
 	 * @param	string $value	The value to validate.
@@ -744,8 +742,6 @@ class SpoonFilter
 
 	/**
 	 * Strips HTML from a string
-	 *
-	 * @todo dave - review stripping of linebreaks, add missing entities
 	 *
 	 * @return	string										A string with all HTML elements stripped.
 	 * @param string $string								The string with HTML in it.

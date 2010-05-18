@@ -101,7 +101,6 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 			switch($this->db->getDriver())
 			{
 				case 'mysql':
-					// @todo davy - this might also be LIMIT with a tab before or after instead of a space, use a decent regular expression to fix this.
 					$query = (substr_count($this->query, 'LIMIT ') > 0) ? $this->query : $this->query .' LIMIT 1';
 				break;
 
