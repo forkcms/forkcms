@@ -89,12 +89,11 @@ class BackendUser
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	int[optional] $userId
+	 * @param	int $userId
 	 */
-	public function __construct($userId = null)
+	public function __construct($userId)
 	{
-		// if a userid is given we will load the user in this object
-		if($userId !== null) $this->loadUser($userId);
+		$this->loadUser((int) $userId);
 	}
 
 
@@ -159,6 +158,19 @@ class BackendUser
 	public function getSecretKey()
 	{
 		return $this->secretKey;
+	}
+
+
+	/**
+	 * Fetch a user setting for a specific user
+	 *
+	 * @return	mixed
+	 * @param	int $userId
+	 * @param	string $setting
+	 */
+	public static function getSettingByUserId($userId, $setting)
+	{
+		return @unserialize(BackendModel::getDB()->getVar('SELECT value FROM users_settings WHERE user_id = ? AND name = ?;', array((int) $userId, (string) $setting)));
 	}
 
 

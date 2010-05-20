@@ -44,11 +44,14 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		// create datagrid with an overview of all active and undeleted users
 		$this->datagrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
 
-		// header labels
-		$this->datagrid->setHeaderLabels(array('username' => ucfirst(BL::getLabel('Username'))));
+		// add column
+		$this->datagrid->addColumn('nickname', null, null, BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('edit'));
 
-		// set colum URLs
-		$this->datagrid->setColumnURL('username', BackendModel::createURLForAction('edit') .'&id=[id]');
+		// show the user's nickname
+		$this->datagrid->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
+
+		// header labels
+		$this->datagrid->setHeaderLabels(array('nickname' => ucfirst(BL::getLabel('Nickname'))));
 
 		// add edit column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]');

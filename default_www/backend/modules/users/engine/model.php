@@ -13,7 +13,7 @@
 class BackendUsersModel
 {
 	// overview of the active users
-	const QRY_BROWSE = 'SELECT u.id, u.username
+	const QRY_BROWSE = 'SELECT u.id
 						FROM users AS u
 						WHERE u.deleted = ?;';
 
