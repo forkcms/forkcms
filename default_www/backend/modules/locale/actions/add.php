@@ -92,7 +92,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->filter['language'] = $this->getParameter('language');
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
-		$this->filter['type'] = $this->getParameter('type');
+		$this->filter['type'] = ($this->getParameter('type') !== null) ? $this->getParameter('type') : 'lbl';
 		$this->filter['name'] = $this->getParameter('name');
 		$this->filter['value'] = $this->getParameter('value');
 	}
