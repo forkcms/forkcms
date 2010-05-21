@@ -146,6 +146,9 @@ class BackendBaseAction
 		// add module specific js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/layout/css/'. $this->getModule() .'.css')) $this->header->addCSS($this->getModule() .'.css', null);
 
+		// store var so we don't have to call this function twice
+		$var = $this->getParameter('var', 'array');
+
 		// is there a report to show?
 		if($this->getParameter('report') !== null)
 		{
@@ -160,9 +163,6 @@ class BackendBaseAction
 			 @todo davy		Controleren of onderstaande OK is
 			*/
 
-			// store var so we don't have to call this function twice
-			$var = $this->getParameter('var', 'array');
-
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BackendLanguage::getMessage($messageName), $var));
 			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
@@ -174,8 +174,15 @@ class BackendBaseAction
 		// is there an error to show?
 		if($this->getParameter('error') !== null)
 		{
+			// camelcase the string
+			$errorName = SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'));
+
+			// if we have data to use it will be passed as the var parameter
+			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BackendLanguage::getError($errorName), $var));
+			else $this->tpl->assign('errorMessage', BackendLanguage::getError($errorName));
+
 			// show the error and the errormessage
-			$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'))));
+			//$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'))));
 		}
 	}
 
