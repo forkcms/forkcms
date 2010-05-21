@@ -108,7 +108,7 @@ class BackendAuthentication
 	public static function getUser()
 	{
 		// if the user-object doesn't exist create a new one
-		if(self::$user === null) self::$user = BackendAuthentication::getUser();
+		if(self::$user === null) self::$user = new BackendUser();
 
 		// return the object
 		return self::$user;

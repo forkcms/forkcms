@@ -46,19 +46,19 @@ class BackendUser
 
 
 	/**
-	 * The session id for the user
-	 *
-	 * @var	string
-	 */
-	private $sessionId;
-
-
-	/**
 	 * The secret key for the user
 	 *
 	 * @var	string
 	 */
 	private $secretKey;
+
+
+	/**
+	 * The session id for the user
+	 *
+	 * @var	string
+	 */
+	private $sessionId;
 
 
 	/**
@@ -91,9 +91,9 @@ class BackendUser
 	 * @return	void
 	 * @param	int $userId
 	 */
-	public function __construct($userId)
+	public function __construct($userId = null)
 	{
-		$this->loadUser((int) $userId);
+		if($userId !== null) $this->loadUser((int) $userId);
 	}
 
 
@@ -116,6 +116,17 @@ class BackendUser
 	public function getLastloggedInDate()
 	{
 		return $this->lastLoggedInDate;
+	}
+
+
+	/**
+	 * Get secretkey
+	 *
+	 * @return	string
+	 */
+	public function getSecretKey()
+	{
+		return $this->secretKey;
 	}
 
 
@@ -147,17 +158,6 @@ class BackendUser
 
 		// return
 		return $this->settings[$key];
-	}
-
-
-	/**
-	 * Get secretkey
-	 *
-	 * @return	string
-	 */
-	public function getSecretKey()
-	{
-		return $this->secretKey;
 	}
 
 
