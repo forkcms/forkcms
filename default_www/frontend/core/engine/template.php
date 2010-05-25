@@ -90,7 +90,7 @@ class FrontendTemplate extends SpoonTemplate
 				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $template);
 
 				// does this template exist?
-				if(file_exists($themeTemplate)) $template = $themeTemplate;
+				if(SpoonFile::exists($themeTemplate)) $template = $themeTemplate;
 			}
 		}
 

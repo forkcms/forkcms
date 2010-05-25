@@ -815,7 +815,12 @@ class BackendBaseCronjob
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the childs so
+		// check if model exists
+		if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php'))
+		{
+			// the model exists, so we require it
+			require_once BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php';
+		}
 	}
 
 

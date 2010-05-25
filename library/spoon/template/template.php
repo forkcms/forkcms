@@ -291,6 +291,7 @@ class SpoonTemplate
 	{
 		// validate name
 		if(trim($template) == '' || !SpoonFile::exists($template)) throw new SpoonTemplateException('Please provide an existing template.');
+		if(!SpoonFile::exists($template)) throw new SpoonTemplateException('The file ('. $template .') does not exists.'); // @todo	Davy, mimimimimimimi
 
 		// compiled name
 		$compileName = $this->getCompileName((string) $template);

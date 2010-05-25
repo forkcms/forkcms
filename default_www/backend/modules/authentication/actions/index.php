@@ -88,7 +88,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			// all fields are ok?
 			if($txtUsername->isFilled() && $txtPassword->isFilled())
 			{
-				// try to login the user
+				// try to login the user	@todo	Davy, don't login the user before the formtoken is validated
 				if(!BackendAuthentication::loginUser($txtUsername->getValue(), $txtPassword->getValue()))
 				{
 					// add error

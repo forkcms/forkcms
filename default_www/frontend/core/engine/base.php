@@ -942,7 +942,7 @@ class FrontendBaseWidget
 				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
 
 				// does this template exist
-				if(file_exists($themeTemplate)) $path = $themeTemplate;
+				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
 			}
 
 			// module template
@@ -952,7 +952,7 @@ class FrontendBaseWidget
 				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
 
 				// does this template exist
-				if(file_exists($themeTemplate)) $path = $themeTemplate;
+				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
 			}
 		}
 

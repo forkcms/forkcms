@@ -155,7 +155,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['introduction'] = $txtIntroduction->getValue();
 				$item['text'] = $txtText->getValue();
 				$item['status'] = 'active';
-				$item['publish_on'] = $item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($txtPublishDate, $txtPublishTime));
+				$item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($txtPublishDate, $txtPublishTime));
 				$item['created_on'] = BackendModel::getUTCDate();
 				$item['edited_on'] = BackendModel::getUTCDate();
 				$item['hidden'] = $rbtHidden->getValue();
