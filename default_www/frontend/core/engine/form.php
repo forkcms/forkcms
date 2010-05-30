@@ -52,7 +52,7 @@ class FrontendForm extends SpoonForm
 		$action = ($action === null) ? '/'. $this->URL->getQueryString() : (string) $action;
 
 		// append hash
-		if($hash !== null) $action .'#'. $hash;
+		if($hash !== null) $action .= '#'. $hash;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);
