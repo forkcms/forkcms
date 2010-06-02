@@ -301,13 +301,32 @@ jsBackend.controls = {
 			var urlChunks = document.location.pathname.split('/');
 			
 			// get the querystring, we will append it later
-			var queryString = document.location.search;
+			var queryChunks = document.location.search.split('&');
+			var newChunks = [];
+
+			// any parts in the querystring
+			if(typeof queryChunks != 'undefined' && queryChunks.length > 0) {
+				// remove variables that could trigger an message
+				for(var i in queryChunks) {
+					if(queryChunks[i].substring(0, 5) != 'token' && 
+						queryChunks[i].substring(0, 5) != 'error' && 
+						queryChunks[i].substring(0, 6) == 'report' &&
+						queryChunks[i].substring(0, 3) == 'var' &&
+						queryChunks[i].substring(0, 9) == 'highlight') 
+					{
+						newChunks.push(queryChunks[i]);	
+					}
+				}
+			}
 			
 			// replace the third element with the new language
 			urlChunks[2] = $(this).val();
 
+			var url = urlChunks.join('/');
+			if(newChunks.length > 0) url += '?token=true&' + newChunks.join('&');
+
 			// rebuild the url and redirect
-			document.location.href = urlChunks.join('/') + queryString;
+			document.location.href = url;
 		});
 	},
 	// end
