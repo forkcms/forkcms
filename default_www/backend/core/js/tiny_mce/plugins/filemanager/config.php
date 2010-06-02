@@ -9,7 +9,7 @@
 	// General options
 	$mcFileManagerConfig['general.theme'] = "fm";
 	$mcFileManagerConfig['general.user_friendly_paths'] = true;
-	$mcFileManagerConfig['general.tools'] = "createdir,refresh,upload,rename,cut,copy,paste,delete,selectall,unselectall,view,download,insert";
+	$mcFileManagerConfig['general.tools'] = "createdir,refresh,upload,rename,delete,selectall,unselectall,download,insert";
 	$mcFileManagerConfig['general.disabled_tools'] = "";
 	$mcFileManagerConfig['general.error_log'] = "";
 	$mcFileManagerConfig['general.language'] = (isset($_SESSION['tiny_mce_language']) && $_SESSION['tiny_mce_language'] != '') ? $_SESSION['tiny_mce_language'] : "en"; // en, sv
@@ -17,7 +17,7 @@
 	$mcFileManagerConfig['general.demo'] = false;
 	$mcFileManagerConfig['general.debug'] = false;
 	$mcFileManagerConfig['general.encrypt_paths'] = true;
-	$mcFileManagerConfig['general.remember_last_path'] = true;
+	$mcFileManagerConfig['general.remember_last_path'] = false;
 	$mcFileManagerConfig['general.allow_override'] = "*";
 	$mcFileManagerConfig['general.allow_export'] = "demo,tools,disabled_tools,debug";
 
@@ -42,9 +42,9 @@
 	$mcFileManagerConfig['filesystem.include_file_pattern'] = '';
 	$mcFileManagerConfig['filesystem.exclude_file_pattern'] = '/^\.|mcic_/i';
 	$mcFileManagerConfig['filesystem.invalid_file_name_msg'] = "";
-	$mcFileManagerConfig['filesystem.extensions'] = "gif,jpg,htm,html,pdf,zip,txt,png,swf,dcr,mov,qt,ram,rm,avi,mpg,mpeg,asf,flv";
-	$mcFileManagerConfig['filesystem.file_templates'] = '${rootpath}/templates/document.htm,${rootpath}/templates/another_document.htm';
-	$mcFileManagerConfig['filesystem.directory_templates'] = '${rootpath}/templates/directory,${rootpath}/templates/another_directory';
+	$mcFileManagerConfig['filesystem.extensions'] = "*";
+	$mcFileManagerConfig['filesystem.file_templates'] = '';
+	$mcFileManagerConfig['filesystem.directory_templates'] = '';
 	$mcFileManagerConfig['filesystem.readable'] = true;
 	$mcFileManagerConfig['filesystem.writable'] = true;
 	$mcFileManagerConfig['filesystem.delete_recursive'] = true;
@@ -54,12 +54,12 @@
 	$mcFileManagerConfig['filesystem.allow_override'] = "*";
 
 	// Upload options
-	$mcFileManagerConfig['upload.maxsize'] = "10MB";
+	$mcFileManagerConfig['upload.maxsize'] = "50MB";
 	$mcFileManagerConfig['upload.overwrite'] = false;
 	$mcFileManagerConfig['upload.include_file_pattern'] = '';
 	$mcFileManagerConfig['upload.exclude_file_pattern'] = '';
-	$mcFileManagerConfig['upload.invalid_file_name_msg'] = "";
-	$mcFileManagerConfig['upload.extensions'] = "gif,jpg,png,pdf,zip";
+	$mcFileManagerConfig['upload.invalid_file_name_msg'] = '';
+	$mcFileManagerConfig['upload.extensions'] = "*";
 	$mcFileManagerConfig['upload.multiple_upload'] = true;
 	$mcFileManagerConfig['upload.chunk_size'] = '1mb';
 	$mcFileManagerConfig['upload.allow_export'] = "maxsize,multiple_upload,chunk_size,overwrite,extensions";
@@ -68,7 +68,7 @@
 	// Download options
 	$mcFileManagerConfig['download.include_file_pattern'] = "";
 	$mcFileManagerConfig['download.exclude_file_pattern'] = "";
-	$mcFileManagerConfig['download.extensions'] = "gif,jpg,htm,html,pdf,txt,zip";
+	$mcFileManagerConfig['download.extensions'] = "*";
 	$mcFileManagerConfig['download.allow_override'] = "*";
 
 	// Create document options
@@ -132,8 +132,8 @@
 	// Local filesystem options
 	$mcFileManagerConfig['filesystem.local.access_file_name'] = "mc_access";
 	$mcFileManagerConfig['filesystem.local.allow_override'] = "access_file_name";
-	$mcFileManagerConfig['filesystem.local.file_mask'] = "";
-	$mcFileManagerConfig['filesystem.local.directory_mask'] = "";
+	$mcFileManagerConfig['filesystem.local.file_mask'] = "0777";
+	$mcFileManagerConfig['filesystem.local.directory_mask'] = "0777";
 	$mcFileManagerConfig['filesystem.allow_override'] = "*";
 
 	// Stream options

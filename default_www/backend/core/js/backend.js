@@ -457,7 +457,7 @@ jsBackend.forms = {
 	
 	// set the focus on the first field
 	focusFirstField: function() {
-		console.log($('form input:visible:first').focus());
+		$('form input:visible:first').focus();
 	},
 	
 	submitWithLinks: function() {

@@ -47,10 +47,10 @@
 	$mcImageManagerConfig['filesystem.extensions'] = "gif,jpg,png,bmp,swf,dcr,mov,qt,ram,rm,avi,mpg,mpeg,asf,flv";
 	$mcImageManagerConfig['filesystem.readable'] = true;
 	$mcImageManagerConfig['filesystem.writable'] = true;
-	$mcImageManagerConfig['filesystem.delete_recursive'] = false;
+	$mcImageManagerConfig['filesystem.delete_recursive'] = true;
 	$mcImageManagerConfig['filesystem.directory_templates'] = '${rootpath}/templates/directory,${rootpath}/templates/another_directory';
 	$mcImageManagerConfig['filesystem.force_directory_template'] = false;
-	$mcImageManagerConfig['filesystem.list_directories'] = false;
+	$mcImageManagerConfig['filesystem.list_directories'] = true;
 	$mcImageManagerConfig['filesystem.clean_names'] = true;
 	$mcImageManagerConfig['filesystem.delete_format_images'] = true;
 	$mcImageManagerConfig['filesystem.allow_export'] = "extensions,readable,writable,directory_templates,force_directory_template,clean_names";
@@ -75,7 +75,7 @@
 	$mcImageManagerConfig['thumbnail.allow_override'] = "*";
 
 	// Upload options
-	$mcImageManagerConfig['upload.maxsize'] = "10MB";
+	$mcImageManagerConfig['upload.maxsize'] = "20MB";
 	$mcImageManagerConfig['upload.overwrite'] = false;
 	$mcImageManagerConfig['upload.include_file_pattern'] = '';
 	$mcImageManagerConfig['upload.exclude_file_pattern'] = '';
