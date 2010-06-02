@@ -378,7 +378,7 @@ class FrontendTemplateModifiers
 	public static function highlightCode($content)
 	{
 		// regex pattern
-		$pattern = "/<code>.*?<\/code>/is";
+		$pattern = '/<code>.*?<\/code>/is';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))

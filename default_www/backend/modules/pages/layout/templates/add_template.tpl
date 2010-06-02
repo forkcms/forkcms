@@ -10,8 +10,8 @@
 						</div>
 						<div class="options">
 							<p>
-								<label for="path">{$lblPath|ucfirst}</label>
-								{$txtPath} {$txtPathError}
+								<label for="path">{$lblFileName|ucfirst}</label>
+								<small><code>core/layout/templates/</code></small>{$txtFile} {$txtFileError}
 							</p>
 							<p>
 								<label for="label">{$lblLabel|ucfirst}</label>
@@ -22,11 +22,13 @@
 								{$ddmNumBlocks} {$ddmNumBlocksError}
 							</p>
 						</div>
-						<div class="options">
+						{* Don't change this ID *}
+						<div id="metaData" class="options">
 							{iteration:names}
 							<p>
 								<label for="name{$names.i}">{$lblName|ucfirst} {$names.i}</label>
-								{$names.txtName} {$names.txtNameError}
+								{$names.txtName} {$names.ddmType}
+								{$names.txtNameError} {$names.ddmTypeError}
 							</p>
 							{/iteration:names}
 						</div>
@@ -34,11 +36,13 @@
 							<p>
 								<label for="format">{$lblLayout|ucfirst}</label>
 								{$txtFormat} {$txtFormatError}
+								{* @todo add label *}
+								<span class="helpTxt">e.g. [0,1],[2,none]</span>
 							</p>
 						</div>
 						<div class="options">
 							<div class="spacing">
-								<ul class="inputList">
+								<ul class="inputList pb0">
 									<li>{$chkActive} <label for="active">{$lblActive|ucfirst}</label> {$chkActiveError}</li>
 									<li>{$chkDefault} <label for="default">{$msgIsDefault}</label> {$chkDefaultError}</li>
 								</ul>

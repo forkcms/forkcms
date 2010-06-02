@@ -54,11 +54,17 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
-		// get data
+		// get the default template
+		$defaultTemplateId = BackendModel::getSetting('core', 'default_template', 1);
+
+		// get the templates
 		$this->templates = BackendPagesModel::getTemplates();
 
-		// get extras
-		$this->extras = BackendPagesModel::getExtrasData();
+		// set the default template as checked
+		$this->templates[$defaultTemplateId]['checked'] = true;
+
+		// get the extras
+		$this->extras = BackendPagesModel::getExtras();
 
 		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
@@ -90,19 +96,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// get default template id
 		$defaultTemplateId = BackendModel::getSetting('core', 'default_template', 1);
 
-		// init var
-		$templatesForDropdown = array();
-
-		// build values
-		foreach($this->templates as $templateId => $row)
-		{
-			// set value
-			$templatesForDropdown[$templateId] = $row['label'];
-
-			// set checked
-			if($templateId == $defaultTemplateId) $this->templates[$templateId]['checked'] = true;
-		}
-
 		// create form
 		$this->frm = new BackendForm('add');
 
@@ -111,7 +104,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('title');
-		$this->frm->addDropdown('template_id', $templatesForDropdown, $defaultTemplateId);
+		$this->frm->addHidden('template_id', $defaultTemplateId);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
 		$this->frm->addCheckbox('no_follow');
 
@@ -121,11 +114,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// build blocks array
 		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
 		{
-			$this->blocks[$i]['formElements']['ddmExtraId'] = $this->frm->addDropdown('block_extra_id_'. $i, $this->extras['dropdown']);
+			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_'. $i);
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, '');
-
-			// set types
-			foreach($this->extras['types'] as $value => $type) $this->frm->getField('block_extra_id_'. $i)->setOptionAttributes($value, array('rel' => $type));
 		}
 
 		// page info
@@ -137,6 +127,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
+
+		// extra
+		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
 	}
 
 
@@ -150,7 +143,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// parse some variables
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
-		$this->tpl->assign('extras', $this->extras['data']);
+		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
+		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
 
 		// get default template id
 		$defaultTemplateId = BackendModel::getSetting('core', 'default_template', 1);
@@ -176,6 +170,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// set callback for generating an unique URL
+			$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array($parentId));
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
@@ -190,9 +187,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			{
 				// init var
 				$parentId = 0;
-
-				// set callback for generating an unique URL
-				$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array($parentId));
 
 				// build page record
 				$page = array();
@@ -218,6 +212,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
 
+				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
 
 				// insert page, store the id, we need it when building the blocks
@@ -239,7 +234,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					$html = null;
 
 					// extra-type is HTML
-					if($extraId == 'html')
+					if($extraId == 'html' || $extraId == '-1')
 					{
 						// reset vars
 						$extraId = null;
@@ -250,7 +245,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					else
 					{
 						// type of block
-						if($this->extras['types'][$extraId] == 'block')
+						if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
 						{
 							// set error
 							if($hasBlock) $this->frm->getField('block_extra_id_'. $i)->addError('Can\'t add 2 blocks');

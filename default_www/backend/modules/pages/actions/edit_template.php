@@ -55,6 +55,21 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 		// get the record
 		$this->record = BackendPagesModel::getTemplate($this->id);
+
+		// unserialize
+		$this->record['data'] = unserialize($this->record['data']);
+
+		// assign
+		$this->tpl->assign('template', $this->record);
+
+		// determine if deleting is allowed
+		$deleteAllowed = true;
+		if($this->record['is_default'] == 'Y') $deleteAllowed = false;
+		if(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
+		// @todo	check if the template is used
+
+		// assign
+		$this->tpl->assign('deleteAllowed', $deleteAllowed);
 	}
 
 
@@ -68,26 +83,29 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// create form
 		$this->frm = new BackendForm('edit');
 
-		// unserialize the data
-		$data = unserialize($this->record['data']);
-
 		// create elements
 		$this->frm->addText('label', $this->record['label']);
-		$this->frm->addText('path', $this->record['path']);
+		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
 		$this->frm->addDropdown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
-		$this->frm->addText('format', $data['format']);
+		$this->frm->addText('format', $this->record['data']['format']);
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addCheckbox('default', ($this->record['is_default'] == 'Y'));
 
-		// init var
+		// init vars
 		$names = array();
+		$types = BackendPagesModel::getTypes();
 
 		// add some fields
 		for($i = 1; $i <= 10; $i++)
 		{
-			$value = isset($data['names'][$i - 1]) ? $data['names'][$i - 1] : null;
+			// grab values
+			$name = isset($this->record['data']['names'][$i - 1]) ? $this->record['data']['names'][$i - 1] : null;
+			$type = isset($this->record['data']['types'][$i - 1]) ? $this->record['data']['types'][$i - 1] : null;
+
+			// build array
 			$names[$i]['i'] = $i;
-			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i, $value);
+			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i, $name);
+			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_'. $i, $types, $type);
 		}
 
 		// assign
@@ -109,12 +127,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// required fields
-			$this->frm->getField('path')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('file')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('label')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('format')->isFilled(BL::getError('FieldIsRequired'));
 
-			// loop the known blocks and validate the fields
-			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++) $this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
+			// loop the know fields and validate them
+			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
+			{
+				$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
+			}
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -122,18 +143,17 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// build array
 				$template = array();
 				$template['label'] = $this->frm->getField('label')->getValue();
-				$template['path'] = $this->frm->getField('path')->getValue();
+				$template['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
 				$template['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
 				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 				$template['is_default'] = ($this->frm->getField('default')->getChecked()) ? 'Y' : 'N';
 				$template['data']['format'] = $this->frm->getField('format')->getValue();
 
-				// loop the blocks
+				// loop fields
 				for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 				{
-					// add
 					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
-					$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
+					$template['data']['types'][] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
 				// serialize

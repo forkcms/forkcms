@@ -2,155 +2,297 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 jsBackend.pages = {
 	init: function() {
-		jsBackend.pages.controls.init();
+		// load the tree
 		jsBackend.pages.tree.init();
-		jsBackend.pages.template.init();
-		jsBackend.pages.manageTemplates.init();
+
+		// are we adding or editing?
+		if(typeof templates != 'undefined') {
+			// load stuff for the page
+			jsBackend.pages.template.init();
+			jsBackend.pages.extras.init();
+
+			// manage templates
+			jsBackend.pages.manageTemplates.init();
+		}
 		
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
 	},
+	
 	// end
 	eoo: true
 }
 
-/*
-	@todo @tijs check code for showBlockNames
+// all methods related to the controls (buttons, ...)
+jsBackend.pages.extras = {
+	init: function() {
+		// bind events
+		$('#extraType').change(jsBackend.pages.extras.populateExtraModules);
+		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
+	
+		// bind buttons
+		$('a.chooseExtra').live('click', jsBackend.pages.extras.showExtraDialog);
+		
+		// load initial data, or initialize the dialogs
+		jsBackend.pages.extras.load();
+	},
+	
+	// load initial data, or initialize the dialogs
+	load: function() {
+		// initialize the modal for choosing an extra
+		if($('#chooseExtra').length > 0) {
+			$('#chooseExtra').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
+				buttons: { '{$lblOK|ucfirst}': function() {
+											// change the extra for real
+											jsBackend.pages.extras.changeExtra();
+							
+											// close dialog
+											$(this).dialog('close');
+										},
+							'{$lblCancel|ucfirst}': function() {
+												// empty the extraForBlock
+												$('#extraForBlock').val('');
+														
+												// close the dialog
+												$(this).dialog('close'); 
+											}
+							}
+			 });
+		}
 
-	When editing or adding a templates, controls the amount of block
-	names shown, depending on the value in 'amount of blocks' dropdown
+		if($('#chooseTemplate').length > 0) {
+			$('#chooseTemplate').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, width: 500,
+				buttons: { '{$lblOK|ucfirst}': function() {
+													// change the template for real
+													jsBackend.pages.template.changeTemplate();
+				
+													// close dialog
+													$(this).dialog('close');
+												},
+						   '{$lblCancel|ucfirst}': function() {
+														// close the dialog
+														$(this).dialog('close'); 
+													}
+						 }
+			 });
+		}
+	},
+	
+	// change the extra for a block
+	showExtraDialog: function(evt) {
+		// prevent the default action
+		evt.preventDefault();
+		
+		// get the block wherefor we will change the extra
+		var blockId = $(this).attr('rel');
 
-*/
+		// get selected extra id
+		var selectedExtraId = $('#block_extra_id_'+ blockId).val();
+		
+		// populate the hidden field, so we know for which block we are changing
+		$('#extraForBlock').val(blockId);
+
+		// init var
+		var hasModules = false;
+		
+		// check if there already blocks linked
+		$('.linkedExtra input:hidden').each(function() {
+			var id = $(this).val();
+			if(id != '' && extrasById[id].type == 'block') hasModules = true;
+		});
+
+		// blocks linked?
+		if(hasModules) {
+			// show warning
+			$('#extraWarningAlreadyBlock').show();
+			
+			// disable blocks
+			$('#extraType option[value="block"]').attr('disabled', 'disabled');
+		}
+		
+		// hide warning
+		else $('#extraWarningAlreadyBlock').hide();
+		
+		// any extra selected before? And if so, does the extra still exists?
+		if(typeof extrasById[selectedExtraId] != 'undefined') {
+			// set type
+			$('#extraType').val(extrasById[selectedExtraId].type);
+			
+			// populate the modules
+			jsBackend.pages.extras.populateExtraModules();
+			
+			// set module
+			$('#extraModule').val(extrasById[selectedExtraId].module);
+			
+			// populate the ids
+			jsBackend.pages.extras.populateExtraIds();
+			
+			// set the extra id
+			$('#extraExtraId').val(extrasById[selectedExtraId].id);
+		} else {
+			// set type
+			$('#extraType').val('html');
+			
+			// populate the modules
+			jsBackend.pages.extras.populateExtraModules();
+		}
+		
+		// open the modal
+		$('#chooseExtra').dialog('open');
+	},
+	
+	// store the extra for real
+	changeExtra: function(selectedExtraId, selectedBlock) {
+		// if their are no arguments passed we should grab them
+		if(!selectedExtraId || !selectedBlock) {
+			// init vars
+			var selectedExtraId = $('#extraExtraId').val();
+			var selectedBlock = $('#extraForBlock').val();
+		}
+
+		// something is really fucked up
+		if(selectedBlock == '') return false;
+
+		// store
+		$('#block_extra_id_'+ selectedBlock).val(selectedExtraId);
+
+		// empty the extraForBlock
+		$('#extraForBlock').val('');
+
+		if($('#templateBlock-'+ selectedBlock).length > 0) {
+			if(typeof extrasById[selectedExtraId] != 'undefined') {
+				// set description
+				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html(extrasById[selectedExtraId].human_name);
+				
+				// hide block
+				$('#block-'+ selectedBlock).hide();
+			} else {
+				// set description
+				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html('{$lblRichText|ucfirst}');
+
+				// show block
+				$('#block-'+ selectedBlock).show();
+			}
+		}
+	},
+	
+	// populate the dropdown with the modules
+	populateExtraModules: function() {
+		// get selected value
+		var selectedType = $('#extraType').val();
+
+		// hide
+		$('#extraModuleHolder').hide();
+		$('#extraExtraIdHolder').hide();
+		$('#extraModule').html('<option value="-1">-</option>');
+		$('#extraExtraId').html('<option value="-1">-</option>');
+
+		// only widgets and block need the module dropdown
+		if(selectedType == 'widget' || selectedType == 'block') {
+			// loop modules
+			for(var i in extrasData) {
+				// add option if needed
+				if(typeof extrasData[i]['items'][selectedType] != 'undefined') $('#extraModule').append('<option value="'+ extrasData[i].value +'">'+ extrasData[i].name +'</option>');
+			}
+			
+			// show
+			$('#extraModuleHolder').show();
+		}
+	},
+	
+	// populates the dropdown with the extra's
+	populateExtraIds: function() {
+		// get selected value
+		var selectedType = $('#extraType').val();
+		var selectedModule = $('#extraModule').val();
+
+		// hide and clear previous items
+		$('#extraExtraIdHolder').hide();
+		$('#extraExtraId').html('');
+			
+		// any items?
+		if(typeof extrasData[selectedModule] != 'undefined' && typeof extrasData[selectedModule]['items'][selectedType] != 'undefined') {
+			
+			if(extrasData[selectedModule]['items'][selectedType].length == 1) {
+				$('#extraExtraId').append('<option selected="selected" value="'+ extrasData[selectedModule]['items'][selectedType][0].id +'">'+ extrasData[selectedModule]['items'][selectedType][0].label +'</option>');
+			}
+			
+			else {
+				// loop items
+				for(var i in extrasData[selectedModule]['items'][selectedType]) {
+					// add option
+					$('#extraExtraId').append('<option value="'+ extrasData[selectedModule]['items'][selectedType][i].id +'">'+ extrasData[selectedModule]['items'][selectedType][i].label +'</option>');
+				}
+
+				// show
+				$('#extraExtraIdHolder').show();
+			}
+		}
+	},
+	
+	// end
+	eoo: true
+}
+
+// all methods related to managing the templates
 jsBackend.pages.manageTemplates = {
 	init: function() {
-		// hide all instances of blockName
-		$('.blockName').hide();
-
-		jsBackend.pages.manageTemplates.showBlockNames();
-
-		$('#numBlocks').change(function() {
-			jsBackend.pages.manageTemplates.showBlockNames();
-		});
+		// check if we need to do something
+		if($('#numBlocks').length > 0) {
+			// bind event
+			$('#numBlocks').change(jsBackend.pages.manageTemplates.showMetaData);
+			
+			// execute, to initialize
+			jsBackend.pages.manageTemplates.showMetaData();
+		}
 	},
-	showBlockNames: function() {
-		// find selected element's value (e.g. 3)
-		var amountToShow = $('#numBlocks option:selected').html();
 
-		// get all instances of .blockName
-		$('.blockName').each(function(index) {
-			$(this).show();
-			if((index + 1) > amountToShow) { $(this).hide(); };
-		});
-	},
-	
-	// end
-	eoo: true
-}
-
-// temp
-jsBackend.pages.autosave = {
-	init: function() {
-	},
-	save: function() {
-		// save all TinyMCE instances
-		if($('.inputEditor').length > 0) tinyMCE.triggerSave();
-
-		// serialize data
-		var data = $('form').serialize();
-
-		// make the call
-		$.ajax({ type: 'POST', dataType: 'json', 
-				 url: '/backend/ajax.php?module=pages&action=save&language={$LANGUAGE}',
-				 data: 'data=' + data +'&type=draft&id='+ pageID,
-				 error: function(XMLHttpRequest, textStatus, errorThrown) {
-					if(jsBackend.debug) alert(textStatus);
-					
-					// show messages
-					jsBackend.messages.add('error', textStatus);
-				 },
-				 success: function(json, textStatus) {
-						// show messages
-						jsBackend.messages.add('success', textStatus);
-				 }
-		});
-	},
-	
-	// end
-	eoo: true
-}
-
-jsBackend.pages.controls = {
-	init: function() {
-		jsBackend.pages.controls.changeExtra();
-		if($('.modal .select').length > 0) { $('.modal .select').bind('change', jsBackend.pages.controls.changeExtra); }
-	},
-	changeExtra: function(evt) {
-		// find element with a block selected
-		var element = $('.modal option[rel=block]:selected');
+	// method to show the metadata about a specific block in a template
+	showMetaData: function() {
+		var itemsToShow = $('#numBlocks').val();
+		var i = 0;
 		
-		// nothing selected, so free all other elements
-		if(element.length == 0) $('.modal option').attr('disabled', '');
-		
-		// disable all other elements
-		else $('.modal option[rel=block]:not(:selected)').attr('disabled', 'disabled');
-		
-		// loop all
-		$('.modal .select').each(function() {
-			// get selected value
-			var val = $(this).val();
-			var id = $(this).attr('id');
-			var index = id.replace('blockExtraId', '');
-			var data = (val !== 'html') ? extraData[val] : null;
-
-			// no real data, show editor
-			if(data == null) {
-				$('#blockContentHTML-'+ index).show();
-				$('#blockContentExtra-'+ index).hide();
-				$('#blockContentExtra-'+ index + ' p').html('&nbsp;');
-			} else {
-				if(data.type == 'block') {
-					// build html
-					var html = '{$msgModuleAttached}'.replace('{url}', data.data.url)
-													 .replace('{name}', data.label);
-				} else {
-					// build html
-					var html = '{$msgWidgetAttached}';
-				}
-				
-				$('#blockContentHTML-'+ index).hide();
-				$('#blockContentExtra-'+ index).show();
-				$('#blockContentExtra-'+ index + ' div').html(html);
-			}
+		// loop elements
+		$('#metaData p').each(function() {
+			// hide if needed
+			if(i >= itemsToShow) $(this).hide();
+			
+			// show otherwise
+			else $(this).show();
+			
+			// increment
+			i++;
 		});
 	},
 	// end
 	eoo: true
 }
 
+// all methods related to the templates
 jsBackend.pages.template = {
 	init: function() {
-		if($('#templateList input:radio').length > 0) {
-			jsBackend.pages.template.changeTemplate();
-			$('#templateList input:radio').bind('change', jsBackend.pages.template.changeTemplate);
-		}
+		// bind events
+		$('#changeTemplate').bind('click', jsBackend.pages.template.showTemplateDialog);
+	
+		// load to initialize
+		jsBackend.pages.template.changeTemplate();
 	},
 	changeTemplate: function() {
 		// get checked
-		var selected = $('#templateList input:checked').attr('value');
-
+		var selected = $('#templateList input:radio:checked').val();
+		
 		// get current template
 		var current = templates[selected];
 		var i = 0;
-		
+
 		// hide unneeded blocks
 		$('.contentBlock').each(function() {
 			// hide if needed
 			if(i >= current.num_blocks) $(this).hide();
 			
-			// process
+			// show the block and set the name
 			else {
-				$(this).hide();
-				$('.numbering', this).html(i);
+				$(this).show();
 				$('.blockName', this).html(current.data.names[i]);
 			}
 			
@@ -160,14 +302,12 @@ jsBackend.pages.template = {
 
 		var i = 0;
 		$('#templateDetails tr').each(function() {
-			
 			// hide if needed
 			if(i >= current.num_blocks) $(this).hide();
 			
-			// process
+			// show the navigation and set the name
 			else {
 				$(this).show();
-				$('.numbering', this).html(i);
 				$('.blockName', this).html(current.data.names[i]);
 			}
 
@@ -175,15 +315,27 @@ jsBackend.pages.template = {
 			i++;
 		});
 		
+		// set HTML for the viual representation of the template
 		$('#templateVisual').html(current.html);
-
-		// show block
-		if($('#templateVisual td.selected a').length == 0) $('#templateVisual td a:first').parent().addClass('selected');
-
-		var showId = $('#templateVisual td.selected a').attr('href');
-
-		$(showId).show();
+		$('#templateVisualLarge').html(current.htmlLarge);
+		
+		// loop blocks and set extra's, to initialize the page
+		$('.contentBlock').each(function() {
+			var index = $(this).attr('id').replace('block-', '');
+			var extraId = $('#block_extra_id_'+ index).val();
+			jsBackend.pages.extras.changeExtra(extraId, index);
+		});
 	},
+	
+	// show the dialog to alter the selected template
+	showTemplateDialog: function(evt) {
+		// prevent the default action
+		evt.preventDefault();
+				
+		// open the modal
+		$('#chooseTemplate').dialog('open');
+	},
+	
 	// end
 	eoo: true
 }

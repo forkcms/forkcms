@@ -263,12 +263,6 @@ class BackendPagesModel
 			// loop cells
 			foreach($cells as $cell)
 			{
-				// selected state
-				$selected = (substr_count($cell, ':selected') > 0);
-
-				// remove selected state
-				if($selected) $cell = str_replace(':selected', '', $cell);
-
 				// decide selected state
 				$exists = (isset($template['data']['names'][$cell]));
 
@@ -276,15 +270,79 @@ class BackendPagesModel
 				$title = ($exists) ? $template['data']['names'][$cell] : '';
 				$index = ($exists) ? $cell : '';
 
+				// does the cell need content
+				if(!$exists) $html .= '		<td> </td>'."\n";
+
+				// the cell need a name
+				else $html .= '		<td><a href="#block-'. $index .'" title="'. $title .'">'. $title .'</a></td>'."\n";
+			}
+
+			// end html
+			$html .= '	</tbody>'."\n";
+			$html .= '</table>'."\n";
+		}
+
+		// return html
+		return $html;
+	}
+
+
+	/**
+	 * Build HTML for a template (visual representation)
+	 *
+	 * @return	string
+	 * @param	array $template		The template data.
+	 */
+	public static function buildTemplateHTMLLarge($template)
+	{
+		// validate
+		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
+
+		// init var
+		$html = '';
+
+		// split into rows
+		$rows = explode('],[', $template['data']['format']);
+
+		// loop rows
+		foreach($rows as $row)
+		{
+			// cleanup
+			$row = str_replace(array('[',']'), '', $row);
+
+			// add start html
+			$html .= '<table border="0" cellpadding="2" cellspacing="2">'."\n";
+			$html .= '	<tbody>'."\n";
+
+			// split into cells
+			$cells = explode(',', $row);
+
+			// loop cells
+			foreach($cells as $cell)
+			{
+				// decide selected state
+				$exists = (isset($template['data']['names'][$cell]));
+
+				// get title & index
+				$title = ($exists) ? $template['data']['names'][$cell] : '';
+				$type = ($exists) ? $template['data']['types'][$cell] : '';
+				$index = ($exists) ? $cell : '';
 
 				// does the cell need content
 				if(!$exists) $html .= '		<td> </td>'."\n";
 
+				// the cell need a name
 				else
 				{
-					// is the item selected?
-					if($selected) $html .= '		<td class="selected"><a href="#block-'. $index .'" class="toggleDiv" title="'. $title .'">'. $index .'</a></td>'."\n";
-					else $html .= '		<td><a href="#block-'. $index .'" class="toggleDiv" title="'. $title .'">'. $index .'</a></td>'."\n";
+					$html .= '		<td id="templateBlock-'. $index .'">
+										<h3 class="templateBlockTitle">'. $title .'</h3>
+										<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getLabel(SpoonFilter::toCamelCase($type))) .'</span></p>
+										<p>
+											<a href="#chooseExtra" class="button icon iconEdit chooseExtra" rel="'. $index .'">
+												<span><span><span>'. ucfirst(BL::getLabel('Edit')) .'</span></span></span>
+											</a>
+										</p>
+									</td>'."\n";
 				}
 			}
 
@@ -393,6 +451,45 @@ class BackendPagesModel
 
 
 	/**
+	 * Delete a template
+	 *
+	 * @return	bool
+	 * @param	int $id		The id of the template to delete.
+	 */
+	public static function deleteTemplate($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get all templates
+		$templates = self::getTemplates();
+
+		// we can't delete a template that doesn't exists
+		if(!isset($templates[$id])) return false;
+
+		// we can't delete the last template
+		if(count($templates) == 1) return false;
+
+		// we can't delete the default template
+		if($templates[$id]['is_default'] == 'Y') return false;
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// we can't delete templates that are still in use
+		if($db->getNumRows('SELECT p.template_id
+							FROM pages AS p
+							WHERE p.template_id = ?', $id) > 0) return false;
+
+		// delete
+		$db->delete('pages_templates', 'id = ?', $id);
+
+		// return
+		return true;
+	}
+
+
+	/**
 	 * Check if a page exists
 	 *
 	 * @return	bool
@@ -483,77 +580,6 @@ class BackendPagesModel
 
 
 	/**
-	 * Get a given template
-	 *
-	 * @return	array
-	 * @param	int $id		The id of the requested template.
-	 */
-	public static function getTemplate($id)
-	{
-		// redefine
-		$id = (int) $id;
-
-		// get db
-		$db = BackendModel::getDB();
-
-		// fetch data
-		return (array) $db->getRecord('SELECT *
-										FROM pages_templates
-										WHERE id = ?;',
-										$id);
-	}
-
-
-	/**
-	 * Get the revisioned data for a record
-	 *
-	 * @return	array
-	 * @param	int $id				The Id of the page.
-	 * @param	int $revisionId		The revision to grab.
-	 */
-	public static function getRevision($id, $revisionId)
-	{
-		// redefine
-		$id = (int) $id;
-		$revisionId = (int) $revisionId;
-		$language = BackendLanguage::getWorkingLanguage();
-
-		// get db
-		$db = BackendModel::getDB();
-
-		$db->setDebug(true);
-
-		// get page (active version)
-		$return = (array) $db->getRecord('SELECT *, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on
-											FROM pages AS p
-											WHERE p.id = ? AND p.revision_id = ? AND p.language = ?
-											LIMIT 1;',
-											array($id, $revisionId, $language));
-
-		// anything found
-		if(empty($return)) return array();
-
-		// can't be deleted
-		if(in_array($return['id'], array(1, 404))) $return['allow_delete'] = 'N';
-
-		// can't be moved
-		if(in_array($return['id'], array(1, 404))) $return['allow_move'] = 'N';
-
-		// can't have children
-		if(in_array($return['id'], array(404))) $return['allow_move'] = 'N';
-
-		// convert into bools for use in template engine
-		$return['move_allowed'] = (bool) ($return['allow_move'] == 'Y');
-		$return['children_allowed'] = (bool) ($return['allow_children'] == 'Y');
-		$return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
-		$return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
-
-		// return
-		return $return;
-	}
-
-
-	/**
 	 * Get the blocks in a certain page
 	 *
 	 * @return	array
@@ -605,6 +631,46 @@ class BackendPagesModel
 
 
 	/**
+	 * Get extras
+	 *
+	 * @return	array
+	 */
+	public static function getExtras()
+	{
+		// get db
+		$db = BackendModel::getDB();
+
+		// get all extras
+		$extras = (array) $db->retrieve('SELECT pe.id, pe.module, pe.type, pe.label, pe.data
+											FROM pages_extras AS pe
+											INNER JOIN modules AS m ON pe.module = m.name
+											WHERE m.active = ?
+											ORDER BY pe.module, pe.sequence;',
+											array('Y'), 'id');
+
+		// loop extras
+		foreach($extras as &$row)
+		{
+			// unserialize data
+			$row['data'] = @unserialize($row['data']);
+
+			// set URL if needed
+			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
+
+			// build name
+			$name = ucfirst(BL::getLabel($row['label']));
+			if(isset($row['data']['extra_label'])) $name .= ' '. $row['data']['extra_label'];
+
+			// add human readable name
+			$row['human_name'] = BackendLanguage::getLabel(SpoonFilter::toCamelCase($row['type'])) .': '. $name;
+		}
+
+		// return
+		return $extras;
+	}
+
+
+	/**
 	 * Get all the available extra's
 	 *
 	 * @return	array
@@ -623,7 +689,7 @@ class BackendPagesModel
 											array('Y'));
 
 		// build array
-		$values = array('dropdown' => array('' => array('html' => BL::getLabel('Editor'))));
+		$values = array();
 
 		// loop extras
 		foreach($extras as $row)
@@ -640,11 +706,11 @@ class BackendPagesModel
 
 			$moduleName = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module'])));
 
-			// add
-			$values['dropdown'][$moduleName][$row['id']] = $name;
-			$values['types'][$row['id']] = $row['type'];
-			$values['data'][$row['id']] = $row;
-			$values['data'][$row['id']]['json'] = json_encode($row);
+			// build array
+			if(!isset($values[$row['module']])) $values[$row['module']] = array('value' => $row['module'], 'name' => $moduleName, 'items' => array());
+
+			// add real extra
+			$values[$row['module']]['items'][$row['type']][] = array('id' => $row['id'], 'label' => $name);
 		}
 
 		// return
@@ -788,6 +854,55 @@ class BackendPagesModel
 
 
 	/**
+	 * Get the revisioned data for a record
+	 *
+	 * @return	array
+	 * @param	int $id				The Id of the page.
+	 * @param	int $revisionId		The revision to grab.
+	 */
+	public static function getRevision($id, $revisionId)
+	{
+		// redefine
+		$id = (int) $id;
+		$revisionId = (int) $revisionId;
+		$language = BackendLanguage::getWorkingLanguage();
+
+		// get db
+		$db = BackendModel::getDB();
+
+		$db->setDebug(true);
+
+		// get page (active version)
+		$return = (array) $db->getRecord('SELECT *, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on
+											FROM pages AS p
+											WHERE p.id = ? AND p.revision_id = ? AND p.language = ?
+											LIMIT 1;',
+											array($id, $revisionId, $language));
+
+		// anything found
+		if(empty($return)) return array();
+
+		// can't be deleted
+		if(in_array($return['id'], array(1, 404))) $return['allow_delete'] = 'N';
+
+		// can't be moved
+		if(in_array($return['id'], array(1, 404))) $return['allow_move'] = 'N';
+
+		// can't have children
+		if(in_array($return['id'], array(404))) $return['allow_move'] = 'N';
+
+		// convert into bools for use in template engine
+		$return['move_allowed'] = (bool) ($return['allow_move'] == 'Y');
+		$return['children_allowed'] = (bool) ($return['allow_children'] == 'Y');
+		$return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
+		$return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
+
+		// return
+		return $return;
+	}
+
+
+	/**
 	 * Get the subtree for a root element
 	 *
 	 * @return	string
@@ -834,6 +949,28 @@ class BackendPagesModel
 
 
 	/**
+	 * Get a given template
+	 *
+	 * @return	array
+	 * @param	int $id		The id of the requested template.
+	 */
+	public static function getTemplate($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// fetch data
+		return (array) $db->getRecord('SELECT *
+										FROM pages_templates
+										WHERE id = ?;',
+										$id);
+	}
+
+
+	/**
 	 * Get templates
 	 *
 	 * @return	array
@@ -857,6 +994,7 @@ class BackendPagesModel
 
 			// build template HTML
 			$templates[$key]['html'] = self::buildTemplateHTML($templates[$key]);
+			$templates[$key]['htmlLarge'] = self::buildTemplateHTMLLarge($templates[$key]);
 		}
 
 		// add json
@@ -1036,6 +1174,20 @@ class BackendPagesModel
 
 		// return
 		return $html;
+	}
+
+
+	/**
+	 * Get the possible types for a block
+	 *
+	 * @return	array
+	 */
+	public static function getTypes()
+	{
+		return array('rich_text' => BL::getLabel('RichText'),
+					 'block' => BL::getLabel('Module'),
+					 'widget' => BL::getLabel('ModuleWidget')
+					);
 	}
 
 

@@ -12,33 +12,35 @@
 
 						<div class="options">
 							<p>
-								<label for="path">{$lblPath|ucfirst}</label>
-								{$txtPath} {$txtPathError}
-								{* @todo add label *}
-								<span class="helpTxt">e.g.: core/layout/templates/home.tpl</span>
+								<label for="path">{$lblFileName|ucfirst}</label>
+								<small><code>core/layout/templates/</code></small>{$txtFile} {$txtFileError}
 							</p>
 							<p>
 								<label for="label">{$lblLabel|ucfirst}</label>
 								{$txtLabel} {$txtLabelError}
 							</p>
 							<p>
+								<label for="num_blocks">{$lblNumberOfBlocks|ucfirst}</label>
+								{$ddmNumBlocks} {$ddmNumBlocksError}
+							</p>
+						</div>
+						{* Don't change this ID *}
+						<div id="metaData" class="options">
+							{iteration:names}
+							<p>
+								<label for="name{$names.i}">{$lblName|ucfirst} {$names.i}</label>
+								{$names.txtName} {$names.ddmType}
+								{$names.txtNameError} {$names.ddmTypeError}
+							</p>
+							{/iteration:names}
+						</div>
+						<div class="options">
+							<p>
 								<label for="format">{$lblLayout|ucfirst}</label>
 								{$txtFormat} {$txtFormatError}
 								{* @todo add label *}
 								<span class="helpTxt">e.g. [0,1],[2,none]</span>
 							</p>
-						</div>
-						<div class="options">
-							<p>
-								<label for="num_blocks">{$lblNumberOfBlocks|ucfirst}</label>
-								{$ddmNumBlocks} {$ddmNumBlocksError}
-							</p>
-							{iteration:names}
-							<p class="blockName">
-								<label for="name{$names.i}">{$lblName|ucfirst} {$names.i}</label>
-								{$names.txtName} {$names.txtNameError}
-							</p>
-							{/iteration:names}
 						</div>
 						<div class="options">
 							<div class="spacing">
@@ -51,9 +53,20 @@
 					</div>
 
 					<div class="fullwidthOptions">
+						{option:deleteAllowed}
+						<a href="{$var|geturl:'delete_template'}&amp;id={$template['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
+						</a>
+						{/option:deleteAllowed}
 						<div class="buttonHolderRight">
 							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEditTemplate|ucfirst}" />
 						</div>
+					</div>
+
+					<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+						<p>
+							{$msgConfirmDeleteTemplate|sprintf:{$template['label']}}
+						</p>
 					</div>
 				{/form:edit}
 			</div>

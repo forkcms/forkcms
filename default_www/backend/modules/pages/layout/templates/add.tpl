@@ -22,16 +22,17 @@
 		<td id="contentHolder">
 			<div class="inner" id="leftColumn">
 				{form:add}
-				
+					{$hidTemplateId}
+
 					<div class="pageTitle">
 						<h2>{$lblAdd|ucfirst}</h2>
 					</div>
-				
+
 					{$txtTitle} {$txtTitleError}
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="{$SITE_URL}">{$SITE_URL}/<span id="generatedUrl"></span></a></span>
+								<span><a href="{$SITE_URL}">{$SITE_URL}<span id="generatedUrl">/</span></a></span>
 							</p>
 						</div>
 					</div>
@@ -53,23 +54,25 @@
 												<div id="block-{$blocks.index}" class="contentBlock">
 													<div class="contentTitle selected hover">
 														<table border="0" cellpadding="0" cellspacing="0">
-															<tbody><tr>
-																<td class="numbering">{$blocks.index}</td>
-																<td>
-																	<div class="oneLiner">
-																		<p><span class="blockName">{$blocks.name}</span></p>
-																		<p>{$blocks.ddmExtraId}</p>
-																	</div>
-																</td>
-															</tr>
-														</tbody></table>
+															<tbody>
+																<tr>
+																	<td>
+																		<div class="oneLiner">
+																			<p><span class="blockName">{$blocks.name}</span></p>
+																			{* don't remove this class *}
+																			<p class="linkedExtra">
+																				{* this will store the selected extra *}
+																				{$blocks.hidExtraId}
+																			</p>
+																		</div>
+																	</td>
+																</tr>
+															</tbody>
+														</table>
 													</div>
 													<div class="editContent">
 														<fieldset id="blockContentHTML-{$blocks.index}">
 															{$blocks.txtHTML}
-														</fieldset>
-														<fieldset id="blockContentExtra-{$blocks.index}">
-															<p>&nbsp;</p>
 														</fieldset>
 													</div>
 												</div>
@@ -244,17 +247,64 @@
 							</div>
 						</div>
 						<div id="tabTemplate">
-							<ul class="inputList" id="templateList">
-							{iteration:templates}
-								<li>
-									<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
-									<label for="template{$templates.id}">{$templates.label}</label>
-									<div class="templateVisual current">
-										{$templates.html}
-									</div>
-								</li>
-							{/iteration:templates}
-							</ul>
+							<div class="buttonHolderRight">
+								<a id="changeTemplate" href="#" class="button icon iconEdit">
+									<span><span><span>{$lblEditTemplate|ucfirst}</span></span></span>
+								</a>
+							</div>
+
+							<div id="templateVisualLarge">
+								{$templatehtmlLarge}
+							</div>
+
+							{*
+								Dialog to select the content (editor, module or widget).
+								Do not change the ID!
+							 *}
+							<div id="chooseExtra" title="{$lblChooseContent|ucfirst}" style="display: none;">
+								<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
+								<div class="options">
+									<p>{$msgWhichContent}</p>
+									<p id="extraWarningAlreadyBlock" class="warning">
+										{$msgAlreadyBlock}
+									</p>
+									<p>
+										<label for="extraType">{$lblType|ucfirst}</label>
+										{$ddmExtraType}
+									</p>
+									<p id="extraModuleHolder" style="display: none;">
+										<label for="extraModule">{$msgWhichModule}</label>
+										<select id="extraModule">
+											<option value="-1">-</option>
+										</select>
+									</p>
+									<p id="extraExtraIdHolder" style="display: none;">
+										<label for="extraExtraId">{$msgWhichWidget}</label>
+										<select id="extraExtraId">
+											<option value="-1">-</option>
+										</select>
+									</p>
+								</div>
+							</div>
+
+							{*
+								Dialog to select another template.
+								Do not change the ID!
+							 *}
+							<div id="chooseTemplate" title="{$msgChooseANewTemplate}" style="display: none;">
+								<ul class="inputList" id="templateList">
+								{iteration:templates}
+									<li style="float: left; width: 155px;">
+										<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
+										<label for="template{$templates.id}">{$templates.label}</label>
+										<div class="templateVisual current">
+											{$templates.html}
+										</div>
+									</li>
+								{/iteration:templates}
+								</ul>
+							</div>
+
 						</div>
 						<div id="tabTags">
 							<div class="box boxLevel2">
@@ -279,11 +329,17 @@
 </table>
 
 <script type="text/javascript">
+	// all the possible templates
 	var templates = {};
 	{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
 
-	var extraData = {};
-	{iteration:extras}extraData[{$extras.id}] = {$extras.json}; {/iteration:extras}
+	// the data for the extra's
+	var extrasData = {};
+	{option:extrasData}extrasData = {$extrasData};{/option:extrasData}
+
+	// the extra's, but in a way we can access them based on their ID
+	var extrasById = {};
+	{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
 </script>
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

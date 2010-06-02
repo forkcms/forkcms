@@ -2,7 +2,7 @@
 
 /**
  * BackendPagesEdit
- * This is the edit-action, it will display a form to create a new pages item
+ * This is the edit-action, it will display a form to update an item
  *
  * @package		backend
  * @subpackage	pages
@@ -47,6 +47,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// call parent, this will probably edit some general CSS/JS or other required files
 		parent::execute();
 
+		// load record
+		$this->loadData();
+
 		// add js
 		$this->header->addJavascript('jstree/jquery.tree.js');
 		$this->header->addJavascript('jstree/lib/jquery.cookie.js');
@@ -55,14 +58,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
-		// load record
-		$this->loadData();
-
-		// get data
+		// get the templates
 		$this->templates = BackendPagesModel::getTemplates();
 
-		// get extras
-		$this->extras = BackendPagesModel::getExtrasData();
+		// set the default template as checked
+		$this->templates[$this->record['template_id']]['checked'] = true;
+
+		// get the extras
+		$this->extras = BackendPagesModel::getExtras();
 
 		// get maximum number of blocks
 		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
@@ -127,19 +130,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// get default template id
 		$defaultTemplateId = BackendModel::getSetting('core', 'default_template', 1);
 
-		// init var
-		$templatesForDropdown = array();
-
-		// build values
-		foreach($this->templates as $templateId => $row)
-		{
-			// set value
-			$templatesForDropdown[$templateId] = $row['label'];
-
-			// set checked
-			if($templateId == $this->record['template_id']) $this->templates[$templateId]['checked'] = true;
-		}
-
 		// create form
 		$this->frm = new BackendForm('edit');
 
@@ -148,7 +138,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
-		$this->frm->addDropdown('template_id', $templatesForDropdown, $this->record['template_id']);
+		$this->frm->addHidden('template_id', $this->record['template_id']);
 		$this->frm->addRadiobutton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), $this->record['hidden']);
 		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));
 
@@ -159,22 +149,19 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
 		{
 			// init var
-			$selectedExtra = null;
 			$html = null;
+			$selectedExtra = null;
 
 			// reset data, if it is available
 			if(isset($this->blocksContent[$i]))
 			{
-				$selectedExtra = $this->blocksContent[$i]['extra_id'];
 				$html = $this->blocksContent[$i]['html'];
+				$selectedExtra = $this->blocksContent[$i]['extra_id'];
 			}
 
 			// create elements
-			$this->blocks[$i]['formElements']['ddmExtraId'] = $this->frm->addDropdown('block_extra_id_'. $i, $this->extras['dropdown'], $selectedExtra);
+			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_'. $i, $selectedExtra);
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, $html);
-
-			// set types
-			foreach($this->extras['types'] as $value => $type) $this->frm->getField('block_extra_id_'. $i)->setOptionAttributes($value, array('rel' => $type));
 		}
 
 		// page info
@@ -186,6 +173,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+		// extra
+		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
 	}
 
 
@@ -238,7 +228,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assignArray($this->record, 'record');
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
-		$this->tpl->assign('extras', $this->extras['data']);
+		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
+		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
 
 		// init var
 		$showDelete = true;
@@ -320,6 +311,9 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = $this->record['sequence'];
 
+				// set navigation title
+				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];
+
 				// insert page, store the id, we need it when building the blocks
 				$revisionId = BackendPagesModel::update($page);
 
@@ -339,7 +333,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					$html = null;
 
 					// extra-type is HTML
-					if($extraId == 'html')
+					if($extraId == 'html' || $extraId == '-1')
 					{
 						// reset vars
 						$extraId = null;
@@ -350,7 +344,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					else
 					{
 						// type of block
-						if($this->extras['types'][$extraId] == 'block')
+						if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
 						{
 							// set error
 							if($hasBlock) $this->frm->getField('block_extra_id_'. $i)->addError('Can\'t add 2 blocks');
@@ -370,11 +364,11 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					$block['created_on'] = BackendModel::getUTCDate();
 					$block['edited_on'] = BackendModel::getUTCDate();
 
-					// edit block
+					// add block
 					$blocks[] = $block;
 				}
 
-				// insert the blocks
+				// update the blocks
 				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
 				// save tags
@@ -384,7 +378,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::buildCache();
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&hilight=id-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);
 			}
 		}
 	}
