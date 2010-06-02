@@ -1,31 +1,6 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANGUAGE}" lang="{$LANGUAGE}">
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+{include:file='{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
 
-	<title>{$pageTitle}</title>
-	<meta http-equiv="content-language" content="{$LANGUAGE}" />
-
-	<link rel="shortcut icon" href="/favicon.ico" />
-
-	<meta name="generator" content="Fork CMS" />
-	<meta name="description" content="{$metaDescription}" />
-	<meta name="keywords" content="{$metaKeywords}" />
-	{$metaCustom}
-
-	{*  Stylesheets *}
-	{iteration:cssFiles}
-		{option:!cssFiles.condition}<link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" />{/option:!cssFiles.condition}
-		{option:cssFiles.condition}<!--[if {$cssFiles.condition}]><link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" /><![endif]-->{/option:cssFiles.condition}
-	{/iteration:cssFiles}
-
-	{* Javascript *}
-	{iteration:javascriptFiles}
-		<script type="text/javascript" src="{$javascriptFiles.file}"></script>
-	{/iteration:javascriptFiles}
-</head>
-
-<body class="{$LANGUAGE} frontend">
+<body id="home" class="{$LANGUAGE} frontend">
 	<div id="container">
 
 		<div id="header">
@@ -39,10 +14,10 @@
 			</div>
 
 			<div id="content">
+
+				<!-- {include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'} -->
 				
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
-				
-				{option:!hideContentTitle}<h2>{$pageDatatitle}</h2>{/option:!hideContentTitle}
+				{option:!hideContentTitle}<h2 class="pageTitle">{$pageDatatitle}</h2>{/option:!hideContentTitle}
 
 				{* Block 0 *}
 				{option:blockAIsHTML}{$blockA}{/option:blockAIsHTML}

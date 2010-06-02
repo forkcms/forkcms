@@ -6,13 +6,10 @@
 
 <div id="blog" class="detail">
 	<div class="article">
-		<h1>
-			{$blogArticle['title']}
-		</h1>
-		<p class="date">
-			{$blogArticle['publish_on']|date:'j F Y':{$LANGUAGE}}
-		</p>
-
+		<div class="heading">
+			<h1>{$blogArticle['title']}</h1>
+			<p class="date">{$blogArticle['publish_on']|date:'j F Y':{$LANGUAGE}}</p>
+		</div>
 		<div class="content">
 			{$blogArticle['text']}
 		</div>
@@ -68,9 +65,9 @@
 	<div id="commentForm">
 		<h3 id="{$actReact}">{$lblReact|ucfirst}</h3>
 
-		{option:commentIsInModeration}<div class="messsage warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
-		{option:commentIsSpam}<div class="messsage error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
-		{option:commentIsAdded}<div class="messsage success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
+		{option:commentIsInModeration}<div class="message notice"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
+		{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
+		{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
 
 		{form:react}
 			<p>
@@ -80,10 +77,6 @@
 			<p>
 				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtEmail} {$txtEmailError}
-			</p>
-			<p>
-				<label for="website">{$lblWebsite|ucfirst}</label>
-				{$txtWebsite} {$txtWebsiteError}
 			</p>
 			<p>
 				<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>

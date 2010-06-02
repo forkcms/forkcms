@@ -6,7 +6,7 @@
 <div id="contactForm">
 	{option:contactHasFormError}<div class="message error"><p>{$errFormError}</p></div>{/option:contactHasFormError}
 	{option:contactHasError}<div class="message error"><p>{$errContactErrorWhileSending}</p></div>{/option:contactHasError}
-	{option:contactIsSuccess}<div class="message error"><p>{$msgContactMessageSent}</p></div>{/option:contactIsSuccess}
+	{option:contactIsSuccess}<div class="message success"><p>{$msgContactMessageSent}</p></div>{/option:contactIsSuccess}
 
 	{option:!contactHideForm}
 	{form:contact}

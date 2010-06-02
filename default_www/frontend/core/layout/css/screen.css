@@ -1,10 +1,10 @@
 /*
 
-	Stylesheet for <Default onsite CSS>
-	
+	Stylesheet for <Fork default theme>
+
 	Media:      screen, projection
 	Copyright:  Netlash <http://www.netlash.com>
-	author:     name <email@netlash.com>
+	author:     Johan Ronsse <johan@netlash.com>
 
 */
 
@@ -20,19 +20,6 @@ input, select, textarea { font-size: 100%; vertical-align: middle; }
 table { border-collapse: collapse; border-spacing: 0; empty-cells: show; }
 th { text-align: left; }
 a:focus { overflow: hidden; }
-
-/*
-	General purpose classes
-	Quick 'n dirty; but clean up your mess please.
-*/
-
-.hidden { display: none; }
-.block { display: block; }
-.p0 { padding: 0 !important; }
-.noBorder { border: none !important; }
-.floatLeft { float: left; }
-.floatRight { float: right; }
-.inline { display: inline !important; }
 
 /*
 	Clearfix
@@ -51,23 +38,23 @@ a:focus { overflow: hidden; }
 */
 
 body {
-	background: #F0F0F0;
-	font: 300 13px Arial, sans-serif;
-	line-height: 1.5; /* Safari 2.0.4 */
+	font-family: Georgia, serif;
+	font-size: 13px;
+	line-height: 1.5;
 	color: #333;
 }
 
 /* Headings */
 h1, h2, h3, h4 {
 	font-weight: 700;
-	line-height: 1.1;
-	font-family: Helvetica, Arial, sans-serif;
+	line-height: 1.2;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	margin: 0;
 }
 
 h1, h2 {
 	font-size: 19px;
-	padding: 8px 0 2px 0;
-	margin: 0 0 12px 0;
+	padding: 0 0 19px;
 }
 
 h3 {
@@ -107,11 +94,11 @@ abbr, acronym {
 	.content ol ul {
 		padding-bottom: 0;
 	}
-	
+
 	.content ol ol {
 		padding-bottom: 0;
 	}
-	
+
 	.content ul ol {
 		padding: 0 0 0 28px;
 	}
@@ -201,178 +188,11 @@ a:active {
 }
 
 /*
-	MODULE: Photo album
-*/
-
-/* @todo */
-
-.galleryAlbum {
-	padding: 0 0 20px 0;
-}
-
-.galleryAlbum ul {
-	clear: both;
-	padding-left: 0;
-}
-
-.photo {
-	float: left;
-	padding: 7px 7px 21px;
-	background: #FFF;
-	border: 1px solid #CCC;
-	margin: 0 12px 12px 0;
-	text-align: center;
-	list-style: none;
-}
-
-.photo p {
-	padding: 0;
-}
-
-.photo p a {
-	text-decoration: none;
-}
-
-#gallery div.galleryAlbum {
-	float: left;
-	overflow: hidden;
-	border: 1px solid #DDD;
-	padding: 0;
-	margin: 0 0 20px;
-	padding: 10px;
-}
-
-#gallery div.galleryAlbum .albumPreview {
-	float: left;
-	width: 120px;
-}
-
-#gallery div.galleryAlbum .albumDescription {
-	float: left;
-	width: 200px;
-	padding-left: 10px;
-}
-
-#galleryImage ul {
-	position: relative;
-	padding: 0 0 10px 0;
-}
-
-#galleryImage ul li {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-#content #galleryImage ul li.previousImage {
-	position: absolute;
-	left: 0;
-	top: 0;
-}
-
-#galleryImage img {
-	max-width: 100%;
-}
-
-#galleryImage ul li.nextImage {
-	position: absolute;
-	right: 0;
-	top: 0;
-}
-
-#galleryImage ul li.currentImage {
-	margin: 0 auto;
-	width: 90px;
-	text-align: center;
-}
-
-#content #galleryImage ul li a {
-	text-decoration: none;
-	padding: 2px 5px;
-	font-size: 11px;
-}
-
-/*
-	MODULE: Login
-*/
-
-.errorReport p {
-	padding: 10px;
-	background: red;
-	color: #FFF;
-	font-weight: bold;
-	margin: 0 0 18px 0;
-}
-
-/*
-	MODULE: Links module
-*/
-
-/*
-	General
-*/
-
-#links table {
-	margin: 0 0 20px;
-	border: none;
-	width: 100%;
-	border-top: 1px solid #CCC;
-}
-
-#links table td,
-#links table td {
-	border: none;
-	border-bottom: 1px solid #CCC;
-	padding: 10px 2px;
-}
-
-/*
-	Category
-*/
-
-#links.category h2, 
-#links.category table td h2 {
-	font-size: 12px;
-	padding: 0;
-}
-
-#links.category td.name {
-	width: 30%;
-}
-
-#links.category td.description {
-	width: 60%;
-}
-
-
-/*
-	MODULE: News
-*/
-
-/*
-	General
-*/
-
-#news .article {
-	background: #EEE;
-	padding: 12px;
-	margin: 0 0 18px 0;
-	border-bottom: 1px solid #EEE;
-}
-
-#news p.date {
-	font-size: 11px;
-	line-height: 1.5;
-	padding: 0 0 9px 0;
-	color: #666;
-}
-
-/*
 	Home
 */
 
 #news.home {
-	
+
 }
 
 /*
@@ -400,23 +220,11 @@ a:active {
 	General
 */
 
-#blog .article {
-	background: #EEE;
-	padding: 12px;
-	margin: 0 0 18px 0;
-	border-bottom: 1px solid #EEE;
-}
 
 #blog p.date {
 	font-size: 11px;
 	line-height: 1.5;
 	padding: 0 0 9px 0;
-	color: #666;
-}
-
-#blog .meta {
-	margin: 0 0 20px 0;
-	border-top: 1px solid #CCC;
 	color: #666;
 }
 
@@ -437,7 +245,7 @@ a:active {
 */
 
 #blog.home {
-	
+
 }
 
 /*
@@ -452,26 +260,7 @@ a:active {
 	Detail
 */
 
-#blog.detail h1 {
-	font-size: 18px;
-	padding: 0;
-}
 
-#blogComments .author {
-	font-size: 11px;
-	font-weight: 700;
-}
-
-	.comment {
-		margin: 0 0 18px 0;
-		border-bottom: 1px solid #DDD;
-		position: relative;
-	}
-	
-	.comment .gravatar {
-		position: absolute;
-		top:0; right:0;
-	}
 
 /*
 	Category
@@ -721,14 +510,32 @@ li.ellipsis span {
 	Header
 */
 
+#header {
+	background: #E2001A;
+	padding: 12px;
+}
+
 #header h1 {
 	font-size: 36px;
 	font-weight: 700;
-	padding: 0;
+	float: left;
 }
 
 #header h1 a {
 	text-decoration: none;
+	color: #FFF;
+	text-transform: uppercase;
+	letter-spacing: -1px;
+	border: none;
+	font-size: 36px;
+}
+
+/*
+	Language
+*/
+
+#language a {
+	color: #FFF;
 }
 
 /*
@@ -756,12 +563,13 @@ li.ellipsis span {
 	padding: 0 0 10px;
 }
 
-/* 
+/*
 	Breadcrumb
 */
 
 #breadcrumb {
 	font-size: 11px;
+	font-family: Arial, sans-serif;
 }
 
 /*
@@ -773,32 +581,9 @@ li.ellipsis span {
 */
 
 #container {
-	width: 920px;
-	padding: 20px;
-	margin: 20px auto;
-	border: 1px solid #CCC;
+	width: 880px;
+	margin: 0 auto;
 	background: #FFF;
-}
-
-/*
-	Topbar
-*/
-
-#topbar {
-	border-bottom: 1px solid #CCC;
-}
-
-/*
-	Header
-*/
-
-#header {
-	padding: 20px 0 30px;
-	position: relative;
-}
-
-#header h1 {
-	float: left;
 }
 
 /*
@@ -806,6 +591,7 @@ li.ellipsis span {
 */
 
 #language {
+	font-family: Arial, sans-serif;
 	float: right;
 	width: 300px;
 	padding-top: 20px;
@@ -850,6 +636,7 @@ li.ellipsis span {
 
 #main {
 	padding: 0 0 60px 0;
+	background: #FFF;
 }
 
 /*
@@ -857,8 +644,10 @@ li.ellipsis span {
 */
 
 #navigation {
-	width: 190px;
+	width: 240px;
+	padding-top: 72px;
 	float: left;
+	font-family: Arial, sans-serif;
 }
 
 #navigation li {
@@ -868,7 +657,7 @@ li.ellipsis span {
 	#navigation li li {
 		padding-left: 10px;
 	}
-	
+
 	#navigation li.selected {
 		font-weight: 700;
 	}
@@ -877,35 +666,42 @@ li.ellipsis span {
 	border-bottom: 1px solid #CCC;
 	display: block;
 	padding: 4px 0;
+	color: #000;
 }
 
 /* Content */
 
 #content {
-	width: 690px;
+	width: 550px;
 	float: left;
 	margin: 0 0 0 40px;
 	min-height: 400px;
 	height: auto !important;
 	height: 400px;
+	padding-top: 20px;
 }
 
 /* Footer */
 
 #footer {
-	border-top: 1px solid #CCC;
+	background: #DDD;
 }
 
 #footer ul {
 	float: right;
-	padding: 10px;
+	padding: 12px;
+	font-family: Arial, sans-serif;
 }
 
 #footer li {
 	float: left;
-	padding: 0 10px;
+	padding: 0 12px 0 0;
 	list-style: none;
 	font-size: 11px;
+}
+
+#footer li a {
+	color: #666;
 }
 
 /*
@@ -916,6 +712,106 @@ li.ellipsis span {
 		Blog
 	*/
 
+	#blog .article {
+		margin: 0 0 40px;
+	}
+
+	#blog .article .heading h1,
+	#blog .article .heading h2 {
+		padding: 0 0 4px;
+	}
+
+		#blog .article .heading h1 a,
+		#blog .article .heading h2 a {
+			border: none;
+			font-size: 24px;
+		}
+
+	#blog .article .heading p {
+		font-family: Arial, sans-serif;
+	}
+
+	#blog .article .meta {
+		font-family: Arial, sans-serif;
+	}
+
 	#commentForm label {
 		display: block;
 	}
+
+	#blog .meta {
+		margin: 0 0 20px 0;
+		color: #808080;
+		padding: 6px;
+		background: #EEE;
+	}
+
+	#blog .meta a {
+		color: #666;
+	}
+
+	#blog .meta ul:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
+	
+	#blog .meta ul {
+		zoom: 1;
+	}
+	
+/*
+	Messages
+*/
+
+.message {
+	padding: 12px;
+	margin: 0 0 12px;
+	background: #FFF;
+}
+
+.message p {
+	padding: 0;
+}
+
+	.notice {
+		background: #FFC;
+	}
+	
+	.success {
+		background: green;
+		color: #FFF;
+	}
+	
+	.error {
+		background: red;
+		color: #FFF;
+	}
+	
+/*
+	Max width for images
+*/
+
+#content img {
+	max-width: 100%;
+	height: auto;
+}
+
+/*
+	Contact
+*/
+
+#contactForm label {
+	display: block;
+	font-family: Arial, sans-serif;
+}
+
+h2.pageTitle {
+	font-size: 30px;
+}
+
+#home h3 {
+	line-height: 1.5;
+}

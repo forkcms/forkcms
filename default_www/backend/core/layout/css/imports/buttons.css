@@ -246,3 +246,12 @@ a.mainButton.focus {
 }
 
 /* end buttons */
+
+/*
+	Delete buttons
+*/
+
+#encloser #container a.iconDelete:link span,
+#encloser #container a.iconDelete:visited span {
+	color: red;
+}

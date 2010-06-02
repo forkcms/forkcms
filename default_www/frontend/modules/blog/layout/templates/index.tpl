@@ -8,20 +8,14 @@
 	{option:blogArticles}
 		{iteration:blogArticles}
 			<div class="article">
-				<h2>
-					<a href="{$blogArticles.full_url}" title="{$blogArticles.title}">
-						{$blogArticles.title}
-					</a>
-				</h2>
-				<p class="date">
-					{$blogArticles.publish_on|date:'j F Y H:i:s':{$LANGUAGE}}
-				</p>
-
+				<div class="heading">
+					<h2><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a></h2>
+					<p class="date">{$lblWrittenOn|ucfirst} {$blogArticles.publish_on|date:'j F Y':{$LANGUAGE}} {$lblOn}  {$blogArticles.publish_on|date:'H:i:s':{$LANGUAGE}}</p>
+				</div>
 				<div class="content">
 					{option:!blogArticles.introduction}{$blogArticles.text}{/option:!blogArticles.introduction}
 					{option:blogArticles.introduction}{$blogArticles.introduction}{/option:blogArticles.introduction}
 				</div>
-
 				<div class="meta">
 					<ul>
 						<!-- Permalink -->
