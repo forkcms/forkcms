@@ -362,6 +362,7 @@ jsBackend.effects = {
 jsBackend.forms = {
 	// init, something like a constructor
 	init: function() { 
+		jsBackend.forms.focusFirstField();
 		jsBackend.forms.datefields();
 		jsBackend.forms.submitWithLinks();
 		jsBackend.forms.tagBoxes();
@@ -452,6 +453,11 @@ jsBackend.forms = {
 								});
 			});
 		}
+	},
+	
+	// set the focus on the first field
+	focusFirstField: function() {
+		console.log($('form input:visible:first').focus());
 	},
 	
 	submitWithLinks: function() {
