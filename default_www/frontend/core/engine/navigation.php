@@ -218,13 +218,27 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file @later	the file should be regenerated
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php')) throw new FrontendException('No key-file (keys_'. $language .'.php) found.');
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php'))
+			{
+				// require BackendPagesModel
+				require_once PATH_WWW .'/backend/core/engine/model.php';
+				require_once PATH_WWW .'/backend/modules/pages/engine/model.php';
+
+				// generate the cache
+				BackendPagesModel::buildCache($language);
+
+				// recall
+				return self::getKeys($language);
+			}
 
 			// init var
 			$keys = array();
 
 			// require file
 			require FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php';
+
+			// validate keys
+			if(empty($keys)) throw new FrontendException('No pages for '. $language .'.');
 
 			// store
 			self::$keys[$language] = $keys;
