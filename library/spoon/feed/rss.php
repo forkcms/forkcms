@@ -875,7 +875,7 @@ class SpoonFeedRSS
 		$description = (string) $XML->channel->description;
 
 		// create instance
-		$RSS = new SpoonRSS($title, $link, $description);
+		$RSS = new SpoonFeedRSS($title, $link, $description);
 
 		// add items
 		foreach($XML->channel->item as $item)

@@ -386,7 +386,7 @@ class SpoonFeedRSSItem
 		$description = (string) $item->description;
 
 		// create instance
-		$rssItem = new SpoonRSSItem($title, $link, $description);
+		$rssItem = new SpoonFeedRSSItem($title, $link, $description);
 
 		// add categories
 		if(isset($item->category))

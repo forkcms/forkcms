@@ -454,7 +454,7 @@ class SpoonFilter
 	 */
 	public static function isFilename($value)
 	{
-		return (bool) preg_match("{^[^\\/\*\?\:\,]+$}", (string) $value);
+		return (bool) preg_match('{^[^\\/\*\?\:\,]+$}', (string) $value);
 	}
 
 
