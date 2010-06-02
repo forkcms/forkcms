@@ -1,0 +1,84 @@
+Locale
+-
+Locale make it possible to translate the website and therefore make it available in all required languages.
+In templates you can use modifiers on each of these items, but make sure you only use this where needed.
+
+
+Backend
+--
+In the backend there are only 3 types of locale
+
+- err:
+	err is short for error. The name of the error must be a describing English camelcased-string.
+	The value can contain a full sentence, make sure you use capitals where needed. The name is a describing camelcased English string.
+	Replace-codes are allowed, see below.
+	
+	eg.: $err['core']['ImagesAllowedExtensions'] = 'Only images with the extension jpg, gif or png are allowed.';
+	usage in templates: {$errImagesAllowedExtensions}
+	usage in PHP: Language::getError('ImagesAllowedExtensions');
+	 
+- lbl:	
+	better known as a "label". A label is a literal translation for a word.
+	The name is a describing camelcased English string. The value should be a word, maximum two words, formating can be done by modifiers, so no capitals please. 
+	Replace-codes are allowed, see below.
+	
+	eg.: $lbl['core']['Title'] = 'title';
+	usage in templates: {$lblTitle|ucfirst}
+	usage in PHP: Language::getLabel('Title');
+
+- msg:
+	msg is short for message. Messages are full sentences, they can contain HTML.
+	The name is a describing camelcased English string.
+	
+	eg: $msg['core']['YourMessagesWasSent'] = 'Your message was sent. We will contact you within two business-days.';
+	usage in templates: {$msgYourMessagesWasSent}
+	usage in PHP: Language::getMessage('YourMessagesWasSent');
+	
+As you can see in the backend it is possible to set locale specific for a module. Therefore you should write all locale in the core module (which is the fallback)
+as general as possible. For example: $msg['core']['NoItems'] = 'No items available'; This is a message that can be used in each module, but for some modules it
+would be nice if the message is more specific, so add: $msg['blog']['NoItems'] = 'You haven\'t wrote any articles yet. <a href="%1$s">Write an article now</a>.';
+
+
+Frontend
+--
+In the backend there are 4 types of locale
+
+- act:
+	act is short for action. An action is used in the URL (aka slug).
+	The name is a describing camelcased English string. The value can only contain characters that are allowed in URL. So no spaces, special characters, ...
+	
+	eg.: $act['category'] = 'categorie';
+	usage in templates: {$actCategory}
+	usage in PHP: Language::getAction('Category');
+
+- err:
+	err is short for error. The name of the error must be a describing English camelcased-string.
+	The value can contain a full sentence, make sure you use capitals where needed. The name is a describing camelcased English string.
+	Replace-codes are allowed, see below.
+	
+	eg.: $err['ImagesAllowedExtensions'] = 'Only images with the extension jpg, gif or png are allowed.';
+	usage in templates: {$errImagesAllowedExtensions}
+	usage in PHP: Language::getError('ImagesAllowedExtensions');
+	 
+- lbl:	
+	better known as a "label". A label is a literal translation for a word.
+	The name is a describing camelcased English string. The value should be a word, maximum two words, formating can be done by modifiers, so no capitals please. 
+	Replace-codes are allowed, see below.
+	
+	eg.: $lbl['Title'] = 'title';
+	usage in templates: {$lblTitle|ucfirst}
+	usage in PHP: Language::getLabel('Title');
+
+- msg:
+	msg is short for message. Messages are full sentences, they can contain HTML.
+	The name is a describing camelcased English string.
+	
+	eg: $msg['YourMessagesWasSent'] = 'Your message was sent. We will contact you within two business-days.';
+	usage in templates: {$msgYourMessagesWasSent}
+	usage in PHP: Language::getMessage('YourMessagesWasSent');
+	
+Replace-codes
+--
+Inside locale you can use replace-codes. These codes are placeholders for variables assigned by a modifier or by PHP-code. Because we want to make a powerfull
+framework you should use placeholders wherin the codes can be moved around without the need of changing any code. So use %<number>$s instead of %s.
+	
