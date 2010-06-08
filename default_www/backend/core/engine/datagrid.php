@@ -136,7 +136,7 @@ class BackendDataGrid extends SpoonDataGrid
 					</a>';
 
 		// add the column to the datagrid
-		parent::addColumn($name, $label, $value, $URL, $title, $image, $sequence);
+		parent::addColumn($name, $label, $value, null, $title, $image, $sequence);
 
 		// set column attributes
 		$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name), 'width' => '10%'));
