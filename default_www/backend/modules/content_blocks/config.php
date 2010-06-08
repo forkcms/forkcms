@@ -1,17 +1,17 @@
 <?php
 
 /**
- * ContentblocksConfig
+ * BackendContentBlocksConfig
  *
- * This is the configuration-object for the contentblocks module
+ * This is the configuration-object for the content_blocks module
  *
  * @package		backend
- * @subpackage	contentblocks
+ * @subpackage	content_blocks
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-final class BackendContentblocksConfig extends BackendBaseConfig
+final class BackendContentBlocksConfig extends BackendBaseConfig
 {
 	/**
 	 * The default action

@@ -300,7 +300,7 @@ class FrontendPage extends FrontendBaseObject
 					$widget = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
 					// content block
-					if($block['extra_module'] == 'contentblocks' && $block['extra_action'] == 'detail')
+					if($block['extra_module'] == 'content_blocks' && $block['extra_action'] == 'detail')
 					{
 						// option (content block)
 						$this->tpl->assign($templateVariable .'IsHTML', true);

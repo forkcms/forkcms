@@ -1,16 +1,17 @@
 <?php
 
 /**
- * BackendContentblocksEdit
+ * BackendContentBlocksEdit
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend
- * @subpackage	contentblocks
+ * @subpackage	content_blocks
  *
+ * @author		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendContentblocksEdit extends BackendBaseActionEdit
+class BackendContentBlocksEdit extends BackendBaseActionEdit
 {
 	/**
 	 * Execute the action
@@ -22,8 +23,8 @@ class BackendContentblocksEdit extends BackendBaseActionEdit
 		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exists
-		if(BackendContentblocksModel::exists($this->id))
+		// does the item exist
+		if(BackendContentBlocksModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -54,23 +55,23 @@ class BackendContentblocksEdit extends BackendBaseActionEdit
 
 	/**
 	 * Get the data
-	 * If a revision-id was specified in the url we load the revision and not the actual data
+	 * If a revision-id was specified in the URL we load the revision and not the most recent data.
 	 *
 	 * @return	void
 	 */
 	private function getData()
 	{
-		// get the record
-		$this->record = (array) BackendContentblocksModel::get($this->id);
+		// fetch record
+		$this->record = BackendContentBlocksModel::get($this->id);
 
-		// is there a revision specified?
+		// specific revision?
 		$revisionToLoad = $this->getParameter('revision', 'int');
 
 		// if this is a valid revision
 		if($revisionToLoad !== null)
 		{
 			// overwrite the current record
-			$this->record = (array) BackendContentblocksModel::getRevision($this->id, $revisionToLoad);
+			$this->record = BackendContentBlocksModel::getRevision($this->id, $revisionToLoad);
 
 			// show warning
 			$this->tpl->assign('usingRevision', true);
@@ -103,7 +104,7 @@ class BackendContentblocksEdit extends BackendBaseActionEdit
 	private function loadRevisions()
 	{
 		// create datagrid
-		$this->dgRevisions = new BackendDataGridDB(BackendContentblocksModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id']));
+		$this->dgRevisions = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id']));
 
 		// hide columns
 		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
@@ -132,6 +133,7 @@ class BackendContentblocksEdit extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
+		// assign fields
 		$this->tpl->assign('id', $this->record['id']);
 		$this->tpl->assign('title', $this->record['title']);
 		$this->tpl->assign('revision_id', $this->record['revision_id']);
@@ -165,7 +167,7 @@ class BackendContentblocksEdit extends BackendBaseActionEdit
 				$values = (array) $this->frm->getValues();
 
 				// insert the item
-				$id = (int) BackendContentblocksModel::update($this->id, $values);
+				$id = (int) BackendContentBlocksModel::update($this->id, $values);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($values['title']) .'&highlight=id-'. $id);

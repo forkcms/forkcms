@@ -1,37 +1,35 @@
 <?php
 
 /**
- * FrontendContentblocksModel
- * In this file we store all generic functions that we will be using in the contentblocks module
+ * FrontendContentBlocksModel
+ * In this file we store all generic functions that we will be using in the content_blocks module
  *
  * @package		frontend
- * @subpackage	contentblocks
+ * @subpackage	content_blocks
  *
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class FrontendContentblocksModel
+class FrontendContentBlocksModel
 {
 	/**
-	 * Get a snippet
+	 * Get an item.
 	 *
 	 * @return	array
-	 * @param	string $id	The id of the snippet to fetch
+	 * @param	string $id			The id of the item to fetch.
 	 */
 	public static function get($id)
 	{
-		// redefine
-		$id = (int) $id;
-
 		// get db
 		$db = FrontendModel::getDB();
 
 		// get data
-		return (array) $db->getRecord('SELECT c.id, c.title, c.content
-										FROM contentblocks AS c
-										WHERE c.id = ? AND c.status = ? AND c.hidden = ? AND c.language = ?;',
-										array($id, 'active', 'N', FRONTEND_LANGUAGE));
+		return (array) $db->getRecord('SELECT i.id, i.title, i.content
+										FROM content_blocks AS i
+										WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?;',
+										array((int) $id, 'active', 'N', FRONTEND_LANGUAGE));
 	}
 }
 

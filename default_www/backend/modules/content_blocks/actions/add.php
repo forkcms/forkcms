@@ -5,7 +5,7 @@
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
- * @subpackage	contentblocks
+ * @subpackage	content_blocks
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>

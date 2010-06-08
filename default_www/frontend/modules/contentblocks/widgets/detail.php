@@ -1,23 +1,24 @@
 <?php
 
 /**
- * FrontendContentblocksDetail
- * This is the detail-action
+ * FrontendContentBlocksWidgetDetail
+ * This is the detail widget.
  *
  * @package		frontend
- * @subpackage	contentblocks
+ * @subpackage	content_blocks
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class FrontendContentblocksWidgetDetail extends FrontendBaseWidget
+class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 {
 	/**
-	 * The snippet
+	 * The item.
 	 *
 	 * @var	array
 	 */
-	private $snippet;
+	private $item;
 
 
 	/**
@@ -46,10 +47,11 @@ class FrontendContentblocksWidgetDetail extends FrontendBaseWidget
 	private function loadData()
 	{
 		// validate id
-		if(!isset($this->data['id'])) throw new FrontendException('SnippetId not available');
+		// @todo davy - uitzoeken wat hiervan de oorzaak mogelijk kan zijn.
+//		if(!isset($this->data['id'])) throw new FrontendException('There is no content block with id: '. $this->data[]    not available');
 
-		// get the snippet
-		$this->snippet = FrontendContentblocksModel::get((int) $this->data['id']);
+		// fetch the item
+		$this->item = FrontendContentBlocksModel::get((int) $this->data['id']);
 	}
 
 
@@ -60,7 +62,7 @@ class FrontendContentblocksWidgetDetail extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		return (!empty($this->snippet['content'])) ? $this->snippet['content'] : '';
+		return (!empty($this->item['content'])) ? $this->item['content'] : '';
 	}
 }
 
