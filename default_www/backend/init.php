@@ -101,6 +101,7 @@ class Init
 		$exceptions['backend'] = BACKEND_CORE_PATH .'/engine/backend.php';
 		$exceptions['backendajaxaction'] = BACKEND_CORE_PATH .'/engine/ajax_action.php';
 		$exceptions['backenddatagriddb'] = BACKEND_CORE_PATH .'/engine/datagrid.php';
+		$exceptions['backenddatagridarray'] = BACKEND_CORE_PATH .'/engine/datagrid.php';
 		$exceptions['backendbaseconfig'] = BACKEND_CORE_PATH .'/engine/base.php';
 		$exceptions['backendbasecronjob'] = BACKEND_CORE_PATH .'/engine/base.php';
 		$exceptions['backendpagesmodel'] = BACKEND_MODULES_PATH .'/pages/engine/model.php';
