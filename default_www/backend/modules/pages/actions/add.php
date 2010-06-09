@@ -171,7 +171,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		if($this->frm->isSubmitted())
 		{
 			// set callback for generating an unique URL
-			$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array($parentId));
+			$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array(0));
 
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
@@ -228,13 +228,16 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				for($i = 0; $i < $this->templates[$page['template_id']]['num_blocks']; $i++)
 				{
 					// get the extra id
-					$extraId = $this->frm->getField('block_extra_id_'. $i)->getValue();
+					$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
+
+					// reset some stuff
+					if($extraId <= 0) $extraId = null;
 
 					// init var
 					$html = null;
 
 					// extra-type is HTML
-					if($extraId == 'html' || $extraId == '-1')
+					if($extraId === null)
 					{
 						// reset vars
 						$extraId = null;

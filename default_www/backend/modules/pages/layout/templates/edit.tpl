@@ -32,7 +32,7 @@
 					<div id="pageUrl">
 						<div class="oneLiner">
 							<p>
-								<span><a href="{$SITE_URL}{$pageUrl}">{$SITE_URL}<span id="generatedUrl">{$pageUrl}</span></a></span>
+								<span><a href="{$SITE_URL}{$pageUrl}">{$SITE_URL}{$seoPageUrl}<span id="generatedUrl">{$pageUrl}</span></a></span>
 							</p>
 						</div>
 					</div>

@@ -272,7 +272,7 @@ class FrontendPage extends FrontendBaseObject
 			if($blockName === null) continue;
 
 			// build templateVariable
-			$templateVariable = 'block'. SpoonFilter::toCamelCase($blockName, ' ');
+			$templateVariable = 'block'. $index;
 
 			// an extra
 			if($block['extra_id'] !== null)
