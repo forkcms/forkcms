@@ -278,7 +278,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
-				// build cache
+				// build the cache
 				BackendPagesModel::buildCache();
 
 				// everything is saved, so redirect to the overview

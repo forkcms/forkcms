@@ -351,8 +351,10 @@ jsBackend.pages.tree = {
 		if(typeof pageID != 'undefined') {
 			// get parents
 			var parents = $('#page-'+ pageID).parents('li');
-			// init array
-			openedIds = ['page-'+ pageID];
+			
+			// init var
+			var openedIds = ['page-'+ pageID];
+
 			// add parents
 			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).attr('id'));
 		}

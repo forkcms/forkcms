@@ -1,4 +1,7 @@
 <?php
+/**
+ * @todo	we should implement a custom exceptionhandler
+ */
 
 /**
  * Init
@@ -161,6 +164,36 @@ class Init
 
 
 	/**
+	 * A custom error-handler so we can handle warnings about undefined labels
+	 *
+	 * @return	bool
+	 * @param	int $errNumber
+	 * @param	string $errString
+	 */
+	public static function errorHandler($errNumber, $errString)
+	{
+		// is this an undefined index?
+		if(mb_substr_count($errString, 'Undefined index:') > 0)
+		{
+			// cleanup
+			$index = trim(str_replace('Undefined index:', '', $errString));
+
+			// get the type
+			$type = mb_substr($index, 0, 3);
+
+			// is the index locale?
+			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$'. $index .'}';
+
+			// return false, so the standard error handler isn't bypassed
+			else return false;
+		}
+
+		// return false, so the standard error handler isn't bypassed
+		else return false;
+	}
+
+
+	/**
 	 * Start session
 	 *
 	 * @return	void
@@ -231,6 +264,9 @@ class Init
 		{
 			error_reporting(E_ALL | E_STRICT);
 			ini_set('display_errors', 'On');
+
+			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
+			set_error_handler('Init::errorHandler');
 		}
 
 		// debugging disabled
