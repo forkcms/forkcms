@@ -5,7 +5,7 @@
 				{form:add}
 					<div class="box">
 						<div class="heading">
-							<h3>{$lblAddContentBlock}</h3>
+							<h3>{$lblContentBlocks|ucfirst}: {$lblAdd}</h3>
 						</div>
 						<div class="content">
 							<fieldset>
@@ -20,7 +20,7 @@
 							</fieldset>
 						</div>
 					</div>
-					
+
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
 							<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
