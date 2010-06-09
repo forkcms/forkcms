@@ -160,7 +160,7 @@ jsBackend.pages.extras = {
 		$('#extraForBlock').val('');
 
 		if($('#templateBlock-'+ selectedBlock).length > 0) {
-			if(typeof extrasById[selectedExtraId] != 'undefined') {
+			if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined') {
 				// set description
 				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html(extrasById[selectedExtraId].human_name);
 				
