@@ -24,7 +24,7 @@ a.button:visited {
 	font-weight: 700;
 	float: left;
 	padding: 0 6px;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+	text-shadow: 1px 1px 1px rgba(255,255,255,0.25);
 	background-repeat: repeat-x;
 	background-position: right -132px;
 	overflow: hidden;
@@ -33,8 +33,8 @@ a.button:visited {
 	border: 1px solid #b0b0b0;
 	
 	/* Gradient */
-	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#dddddd));
-	background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#C5C5C5), color-stop(.0454545,#F7F7F7), color-stop(.9545455,#DDD));
+	background: -moz-linear-gradient(#FFF, #f7f7f7 4.5454545%, #DDD 95.454545%, #C5C5C5);
 
 	/* @inc .rc */
 	border-radius: 4px;
@@ -55,6 +55,7 @@ a.button.focus {
 a.mainButton:link,
 a.mainButton:visited {
 	color: #FFF !important;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
 	border: 1px solid #366EAC;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#8DB7E7), to(#215996), color-stop(.0454545,#5E9CE1), color-stop(.9545455,#2F79CA));
 	background: -moz-linear-gradient(#8DB7E7, #5E9CE1 4.5454545%, #2F79CA 95.454545%, #215996);
@@ -101,6 +102,11 @@ a.icon span {
 	a.iconGoto span {
 		background-position: 0 -465px !important; }
 
+	a.iconOnly:link,
+	a.iconOnly:visited {
+		padding: 0 3px;
+	}
+
 	a.iconOnly span {
 		width: 16px;
 		padding: 0 !important;
@@ -127,6 +133,7 @@ a.icon span {
 	a.linkButton:visited {
 		background: none;
 		color: #085DBD;
+		border: 1px solid transparent !important;
 		font-weight: 400;
 	}
 	
@@ -138,13 +145,9 @@ a.icon span {
 	a.linkButton:hover,
 	a.linkButton:active,
 	a.linkButton:focus {
-		background: rgba(0,0,0,0.15);
+		background: rgba(0,0,0,0.1);
 		color: #FFF !important;
 	}
-
-		a.linkButton span {
-			background: none;
-		}
 
 	/*
 		Disabled buttons

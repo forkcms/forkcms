@@ -56,8 +56,6 @@
 		right: 2px;
 		z-index: 1003;
 	}
-	
-	
 
 /* Form messages */
 
@@ -115,6 +113,10 @@
 		color: #FFF;
 		font-weight: 700;
 		border-bottom: 1px solid #f5abb4;
+	}
+	
+	.errorMessage .iconClose span {
+		background-position: 0 -242px !important; }
 	}
 
 .successMessage {
