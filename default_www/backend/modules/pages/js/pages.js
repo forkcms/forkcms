@@ -98,7 +98,7 @@ jsBackend.pages.extras = {
 		// check if there already blocks linked
 		$('.linkedExtra input:hidden').each(function() {
 			var id = $(this).val();
-			if(id != '' && extrasById[id].type == 'block') hasModules = true;
+			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
 
 		// blocks linked?
