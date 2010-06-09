@@ -20,7 +20,7 @@ textarea {
 	background: #FFF url(/backend/core/layout/images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
 
 	/* @inc .rc */
 	border-radius: 4px;
@@ -85,7 +85,7 @@ textarea.code {
 /* Selects should be left alone (not stylable without troubles) */
 select {
 	/* Nothing */
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
 
 }
 

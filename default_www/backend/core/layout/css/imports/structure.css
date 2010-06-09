@@ -15,12 +15,6 @@ html {
 }
 
 body {
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
-	line-height: 1.4;
-	color: #666;
-	background: #EBF3F9;
-
-	font-size: 12px;
 	position: relative;
 
 	height: 100%;

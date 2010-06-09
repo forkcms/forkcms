@@ -44,7 +44,7 @@ body#login {
 	width: 400px;
 	padding: 24px 48px;
 
-	background: #FFF;
+	background: #FAFAFA;
 	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#FAFAFA));
 	background: -moz-linear-gradient(top, #FFF, #FAFAFA);
 

@@ -10,8 +10,16 @@
 
 */
 
+body {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+	line-height: 1.4;
+	color: #666;
+	background: #EBF3F9;
+
+	font-size: 12px;
+}
+
 h2, h3, h4 {
-	font-family: "Lucida Grande", Verdana, Arial, sans-serif;
 	color: #444;
 	line-height: 1.1;
 }
