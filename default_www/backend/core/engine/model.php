@@ -17,8 +17,7 @@ class BackendModel
 	 *
 	 * @var	array
 	 */
-	private static	$keys = array(),
-					$navigation = array();
+	private static $keys = array(), $navigation = array();
 
 
 	/**
@@ -176,10 +175,10 @@ class BackendModel
 		if(empty($parameters)) $parameters['token'] = 'true';
 
 		// add parameters
-		foreach($parameters as $key => $value) $querystring .= '&'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+		foreach($parameters as $key => $value) $querystring .= '&amp;'. $key .'='. (($urlencode) ? urlencode($value) : $value);
 
 		// add querystring
-		$querystring = '?'. trim($querystring, '&');
+		$querystring = '?'. trim($querystring, '&amp;');
 
 		// build the URL and return it
 		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;
@@ -414,6 +413,21 @@ class BackendModel
 
 		// return
 		return self::$moduleSettings[$module][$key];
+	}
+
+
+	/**
+	 * Fetch the list of available themes
+	 *
+	 * @return array
+	 */
+	public static function getThemes()
+	{
+		// fetch themes
+		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH .'/themes/', false, array('.svn'));
+
+		// create array
+		return array_combine($themes, $themes);
 	}
 
 

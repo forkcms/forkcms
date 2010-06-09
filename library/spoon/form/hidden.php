@@ -47,7 +47,6 @@ class SpoonFormHidden extends SpoonFormAttributes
 	public function __construct($name, $value = null)
 	{
 		// obligated fields
-		$this->attributes['id'] = (string) $name;
 		$this->attributes['name'] = (string) $name;
 
 		// value
@@ -110,8 +109,14 @@ class SpoonFormHidden extends SpoonFormAttributes
 		// start html generation
 		$output = '<input type="hidden" value="'. $this->getValue() .'"';
 
+		// build attributes
+		$attributes = array();
+		if(isset($this->attributes['id'])) $attributes['[id]'] = $this->attributes['id'];
+		$attributes['[name]'] = $this->attributes['name'];
+		$attributes['[value]'] = $this->getValue();
+
 		// add attributes
-		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) .' />';
+		$output .= $this->getAttributesHTML($attributes) .' />';
 
 		// parse hidden field
 		if($template !== null) $template->assign('hid'. SpoonFilter::toCamelCase($this->attributes['name']), $output);

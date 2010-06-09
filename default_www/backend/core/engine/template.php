@@ -151,7 +151,7 @@ class BackendTemplate extends SpoonTemplate
 			}
 
 			// assign special vars
-			$this->assign('authenticatedUserEditUrl', BackendModel::createURLForAction('edit', 'users') .'&id='. BackendAuthentication::getUser()->getUserId());
+			$this->assign('authenticatedUserEditUrl', BackendModel::createURLForAction('edit', 'users', null, array('id' => BackendAuthentication::getUser()->getUserId())));
 		}
 	}
 

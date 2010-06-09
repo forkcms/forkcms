@@ -239,7 +239,7 @@ class BackendBaseAction
 	 */
 	public function redirect($URL)
 	{
-		SpoonHTTP::redirect((string) $URL);
+		SpoonHTTP::redirect(str_replace('&amp;', '&', (string) $URL));
 	}
 
 

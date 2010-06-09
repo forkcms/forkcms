@@ -73,6 +73,16 @@
 
 					<div class="box">
 						<div class="heading">
+							<h3>{$lblThemes|ucfirst}</h3>
+						</div>
+						<div class="content">
+							<p>{$msgThemesText}:</p>
+							{$ddmTheme} {$ddmThemeError}
+						</div>
+					</div>
+
+					<div class="box">
+						<div class="heading">
 							<h3>{$lblDomains|ucfirst}</h3>
 						</div>
 						<div class="content">

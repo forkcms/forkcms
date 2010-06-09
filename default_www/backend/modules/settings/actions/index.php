@@ -80,6 +80,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addText('email', BackendModel::getSetting('core', 'email_'. BL::getWorkingLanguage(), null));
 		$this->frm->addTextarea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
+		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getSetting('core', 'theme', null));
+		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('SelectTheme'));
 		$this->frm->addText('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
 		$this->frm->addText('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
 
@@ -227,6 +229,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setSetting('core', 'fork_api_private_key', $this->frm->getField('fork_api_private_key')->getValue());
 				if($this->needsAkismet) BackendModel::setSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());
 				if($this->needsGoogleMaps) BackendModel::setSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
+				BackendModel::setSetting('core', 'theme', $this->frm->getField('theme')->getValue());
 
 				// before we save the languages, we need to ensure that each language actually exists and may be chosen.
 				$languages = array(SITE_DEFAULT_LANGUAGE);
