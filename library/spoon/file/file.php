@@ -100,7 +100,7 @@ class SpoonFile
 			SpoonFile::delete($destinationPath);
 
 			// throw exception
-			throw new SpoonFileSystemException('The file "'. $sourceURL .'" isn\'t available for download.');
+			throw new SpoonFileException('The file "'. $sourceURL .'" isn\'t available for download.');
 		}
 
 		// return

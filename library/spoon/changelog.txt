@@ -1,3 +1,12 @@
+1.2.1 (xxxx-xx-xx)
+----
+- Template options may now start with an integer. eg {option:404}
+- The WHERE clause in SpoonDatabase::update and SpoonDatabase::delete may now be null instead of an empty string.
+- Added option for headers.sortingIcon in datagrid.tpl - empty <img> elements are no longer shown for default sorting settings.
+- Fixed the sorting problem when setting the sortParameter option in a datagrid.
+- Bugfix: some classes were using non-existing exceptions, fixed this issue.
+
+
 1.2.0 (2010-05-18)
 ----
 - The directory structure has changed for some packages.

@@ -661,11 +661,11 @@ class SpoonDatagrid
 	 */
 	public function getSort()
 	{
-		// sort parameter defined
-		if($this->sortParameter !== null) $sort = $this->sortParameter;
-
 		// default sort
-		else $sort = (isset($_GET['sort'])) ? (string) $_GET['sort'] : null;
+		$sort = ($this->sortParameter !== null) ? $this->sortParameter : null;
+
+		// redefine
+		$sort = (isset($_GET['sort'])) ? (string) $_GET['sort'] : null;
 
 		// retrieve sort
 		return SpoonFilter::getValue($sort, array('asc', 'desc'), 'asc');

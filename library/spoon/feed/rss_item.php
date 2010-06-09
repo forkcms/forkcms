@@ -513,7 +513,7 @@ class SpoonFeedRSSItem
 		$link = (string) $link;
 
 		// validate
-		if(!SpoonFilter::isURL($link)) throw new SpoonRSSException('This ('. $link .') isn\'t a valid comments link.');
+		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid comments link.');
 
 		// set property
 		$this->commentsLink = $link;
@@ -546,7 +546,7 @@ class SpoonFeedRSSItem
 		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .') isn\'t a valid URL for an enclosure.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\'t a valid URL for an enclosure.');
 
 		// create array
 		$enclosure['url'] = $URL;
@@ -571,7 +571,7 @@ class SpoonFeedRSSItem
 		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .') isn\t a valid URL for guid.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\t a valid URL for guid.');
 
 		// create array
 		$guid['url'] = $URL;
@@ -594,7 +594,7 @@ class SpoonFeedRSSItem
 		$link = (string) $link;
 
 		// validate
-		if(!SpoonFilter::isURL($link)) throw new SpoonRSSException('This ('. $link .') isn\'t a valid link.');
+		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid link.');
 
 		// set property
 		$this->link = $link;
@@ -626,7 +626,7 @@ class SpoonFeedRSSItem
 		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonRSSException('This ('. $URL .') isn\'t a valid URL for a source.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\'t a valid URL for a source.');
 
 		// create array
 		$source['name'] = (string) $name;

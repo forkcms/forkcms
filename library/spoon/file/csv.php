@@ -69,10 +69,10 @@ class SpoonFileCSV
 	public static function arrayToString(array $array, array $columns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// validate array
-		if(!empty($array) && !isset($array[0])) throw new SpoonFileCSVException('Invalid array format.');
+		if(!empty($array) && !isset($array[0])) throw new SpoonFileException('Invalid array format.');
 
 		// no columns set means we will use the keys as the column name if they're not integers
-		if(empty($columns) && isset($array[0][0])) throw new SpoonFileCSVException('Provide column names or use strings as array keys.');
+		if(empty($columns) && isset($array[0][0])) throw new SpoonFileException('Provide column names or use strings as array keys.');
 
 		// column names are set
 		if(empty($columns)) $columns = array_keys($array[0]);
@@ -90,7 +90,7 @@ class SpoonFileCSV
 		foreach($array as $row)
 		{
 			// cellcount check
-			if($countCells != count($row)) throw new SpoonFileSystemException('Each row has to have the same number of cells as the first row.');
+			if($countCells != count($row)) throw new SpoonFileException('Each row has to have the same number of cells as the first row.');
 
 			// add this row to the CSV
 			$csv .= $enclosure . implode($enclosure . $delimiter . $enclosure, (array) $row) . $enclosure . PHP_EOL;
@@ -110,7 +110,7 @@ class SpoonFileCSV
 	private static function download($path)
 	{
 		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new SpoonFileCSVException('The file '. $path .' doesn\'t exist.');
+		if(!SpoonFile::exists($path)) throw new SpoonFileException('The file '. $path .' doesn\'t exist.');
 
 		// fetch the filename from the path string
 		$explodedFilename = explode('/', $path);

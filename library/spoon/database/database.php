@@ -147,10 +147,10 @@ class SpoonDatabase
 	 *
 	 * @return	int								The number of affected rows.
 	 * @param	string $table					The table to perform the delete-statement on.
-	 * @param	string $where					The WHERE-clause.
+	 * @param	string[optional] $where			The WHERE-clause.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
-	public function delete($table, $where, $parameters = array())
+	public function delete($table, $where = null, $parameters = array())
 	{
 		// create connection
 		if(!$this->handler) $this->connect();
@@ -1008,17 +1008,16 @@ class SpoonDatabase
 	 * @return	int								The number of affected rows.
 	 * @param	string $table					The table to run the UPDATE-statement on
 	 * @param	array $values					The values to update, use the key(s) as columnnames
-	 * @param	string $where					The WHERE-clause.
+	 * @param	string[optional] $where			The WHERE-clause.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
-	public function update($table, array $values, $where, $parameters = array())
+	public function update($table, array $values, $where = null, $parameters = array())
 	{
 		// create connection
 		if(!$this->handler) $this->connect();
 
 		// init vars
 		$table = (string) $table;
-		$where = (string) $where;
 		$parameters = ($parameters != array()) ? (array) $parameters : array();
 
 		// values check
@@ -1039,7 +1038,7 @@ class SpoonDatabase
 		}
 
 		// add where clause
-		if($where != '') $query .= ' WHERE '. $where;
+		if($where != '') $query .= ' WHERE '. (string) $where;
 
 		// finalize query
 		$query .= ';';
