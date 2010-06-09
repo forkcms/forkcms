@@ -52,6 +52,10 @@ body {
 			height: 100%;
 		}
 	}
+	
+	/*
+		@todo #main background is not shown in Opera on dashboard
+	*/
 
 #contentHolder {
 	height: 100%;

@@ -73,7 +73,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$defaultDomains = array(str_replace(array('http://', 'www.', 'https://'), '', SITE_URL));
 
 		// create form
-		$this->frm = new BackendForm('generalsettings');
+		$this->frm = new BackendForm('generalSettings');
 
 		// create elements
 		$this->frm->addText('site_title', BackendModel::getSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
@@ -81,7 +81,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addTextarea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getSetting('core', 'theme', null));
-		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('SelectTheme'));
+		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('DeveloperTheme'));
 		$this->frm->addText('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
 		$this->frm->addText('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
 

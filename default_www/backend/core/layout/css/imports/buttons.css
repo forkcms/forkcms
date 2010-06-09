@@ -28,9 +28,9 @@ a.button:visited {
 	background-repeat: repeat-x;
 	background-position: right -132px;
 	overflow: hidden;
-	background: #E1E1E1;
+	background: #EEE;
 	
-	border: 1px solid #b0b0b0;
+	border: 1px solid #B0B0B0;
 	
 	/* Gradient */
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#C5C5C5), color-stop(.0454545,#F7F7F7), color-stop(.9545455,#DDD));
@@ -48,8 +48,8 @@ a.button:focus,
 a.button.focus {
 	background: #FFF;
 	/* Gradient */
-	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f1f1f1));
-	background: -moz-linear-gradient(top, #ffffff, #f1f1f1);
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#C5C5C5), to(#FFF), color-stop(.0454545,#DDD), color-stop(.9545455,#F7F7F7));
+	background: -moz-linear-gradient(#C5C5C5, #DDD 4.5454545%, #f7f7f7 95.454545%, #FFF);
 }
 
 a.mainButton:link,
@@ -67,7 +67,7 @@ a.mainButton:hover,
 a.mainButton:active,
 a.mainButton:focus,
 a.mainButton.focus {
-	*background: #73B5FF;
+	background: #73B5FF;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#215996), to(#8DB7E7), color-stop(.0454545,#2F79CA), color-stop(.9545455,#5E9CE1));
 	background: -moz-linear-gradient(#8DB7E7, #5E9CE1 4.5454545%, #2F79CA 95.454545%, #215996);
 }

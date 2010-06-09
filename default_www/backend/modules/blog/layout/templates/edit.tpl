@@ -144,32 +144,9 @@
 										<div id="authors" class="box">
 											<div class="heading">
 												<h4>{$lblAuthor|ucfirst}</h4>
-
-												{*
-													@later
-													Johan, this is realy complicated, can't we find a beter way to do this?
-												<div class="buttonHolderRight">
-													<a href="#" id="editAuthor" class="button icon iconEdit iconOnly">
-														<span>Edit</span>
-													</a>
-												</div>
-												 *}
 											</div>
-
 											<div class="options">
 												{$ddmUserId} {$ddmUserIdError}
-												{*
-												<ul>
-													<li>
-														<div class="avatarAndNickName">
-															<a href="#">
-																<img src="images/avatars/fun/mushimushi.png" width="24" height="24" alt="Mushimush2">
-																<span>Bram_ (Bram Vanderhaeghe)</span>
-															</a>
-														</div>
-													</li>
-												</ul>
-												*}
 											</div>
 										</div>
 

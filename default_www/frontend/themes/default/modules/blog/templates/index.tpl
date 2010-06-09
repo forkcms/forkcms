@@ -3,8 +3,6 @@
 	- {$blogArticles}: contains an array with all posts, each element contains data about the post
 *}
 
-<h1>CUSTOM THEME</h1>
-
 <div id="blog" class="index">
 	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItems}</p></div>{/option:!blogArticles}
 	{option:blogArticles}

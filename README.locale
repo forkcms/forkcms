@@ -28,6 +28,7 @@ In the backend there are only 3 types of locale
 
 - msg:
 	msg is short for message. Messages are full sentences, they can contain HTML.
+	(@todo bijzetten dat leestekens in de message moeten e.g. semicolon en punt op einde zin)
 	The name is a describing camelcased English string.
 	
 	eg: $msg['core']['YourMessagesWasSent'] = 'Your message was sent. We will contact you within two business-days.';

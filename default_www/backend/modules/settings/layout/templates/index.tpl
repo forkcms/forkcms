@@ -6,7 +6,7 @@
 					<h2>{$lblGeneralSettings|ucfirst}</h2>
 				</div>
 
-				{form:generalsettings}
+				{form:generalSettings}
 					{option:warnings}
 						<div class="generalMessage infoMessage content">
 							<p><strong>{$msgConfigurationError}</strong></p>
@@ -76,7 +76,7 @@
 							<h3>{$lblThemes|ucfirst}</h3>
 						</div>
 						<div class="content">
-							<p>{$msgThemesText}:</p>
+							<p>{$msgThemesText}</p>
 							{$ddmTheme} {$ddmThemeError}
 						</div>
 					</div>
@@ -86,7 +86,7 @@
 							<h3>{$lblDomains|ucfirst}</h3>
 						</div>
 						<div class="content">
-							<p>{$msgDomainsText}:</p>
+							<p>{$msgDomainsText}</p>
 							{$txtSiteDomains} {$txtSiteDomainsError}
 						</div>
 					</div>
@@ -137,7 +137,7 @@
 							<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 						</div>
 					</div>
-				{/form:generalsettings}
+				{/form:generalSettings}
 			</div>
 		</td>
 	</tr>

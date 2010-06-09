@@ -47,9 +47,3 @@ img {
 #debugnotify {
 	color: red;
 }
-
-/*
-	Pages
-*/
-#tabTemplate table { width: 100%; }
-#tabTemplate table td { border: 1px dotted #F00; }

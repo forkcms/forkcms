@@ -1,30 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{$LANGUAGE}" lang="{$LANGUAGE}">
-<head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
-	<title>{$pageTitle}</title>
-	<meta http-equiv="content-language" content="{$LANGUAGE}" />
-
-	<link rel="shortcut icon" href="/favicon.ico" />
-
-	<meta name="generator" content="Fork CMS" />
-	<meta name="description" content="{$metaDescription}" />
-	<meta name="keywords" content="{$metaKeywords}" />
-	{$metaCustom}
-
-	{*  Stylesheets *}
-	{iteration:cssFiles}
-		{option:!cssFiles.condition}<link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" />{/option:!cssFiles.condition}
-		{option:cssFiles.condition}<!--[if {$cssFiles.condition}]><link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" /><![endif]-->{/option:cssFiles.condition}
-	{/iteration:cssFiles}
-
-	{* Javascript *}
-	{iteration:javascriptFiles}
-		<script type="text/javascript" src="{$javascriptFiles.file}"></script>
-	{/iteration:javascriptFiles}
-</head>
-
+{include:file='{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
 <body class="{$LANGUAGE} frontend">
 	<div id="container">
 
@@ -34,30 +8,27 @@
 		</div>
 
 		<div id="main">
-			<div id="navigation">
-				{$var|getnavigation}
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.
+			<div id="sidebar">
+				<div id="navigation">
+					{$var|getnavigation}
+				</div>
+				
+				{* Block 1 *}
+				{option:block1IsHTML}{$block1}{/option:block1IsHTML}
+				{option:!block1IsHTML}{include:file='{$block1}'}{/option:!block1IsHTML}
 
 			</div>
-			
 
 			<div id="content">
-				
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
-				
-				{option:!hideContentTitle}<h2>{$pageDatatitle}</h2>{/option:!hideContentTitle}
-
 				{* Block 0 *}
-				{option:blockAIsHTML}{$blockA}{/option:blockAIsHTML}
-				{option:!blockAIsHTML}{include:file='{$blockA}'}{/option:!blockAIsHTML}
+				{option:block0IsHTML}{$block0}{/option:block0IsHTML}
+				{option:!block0IsHTML}{include:file='{$block0}'}{/option:!block0IsHTML}
 
-				{* Block 1 *}
-				{option:blockBIsHTML}{$blockB}{/option:blockBIsHTML}
-				{option:!blockBIsHTML}{include:file='{$blockB}'}{/option:!blockBIsHTML}
-
-				{* Block 2 *}
-				{option:blockCIsHTML}{$blockC}{/option:blockCIsHTML}
-				{option:!blockCIsHTML}{include:file='{$blockC}'}{/option:!blockCIsHTML}
+				<div id="homeCTA">
+					{* Block 2 *}
+					{option:block2IsHTML}{$block2}{/option:block2IsHTML}
+					{option:!block2IsHTML}{include:file='{$block2}'}{/option:!block2IsHTML}
+				</div>
 			</div>
 		</div>
 

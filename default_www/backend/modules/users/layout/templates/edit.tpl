@@ -12,11 +12,9 @@
 						<tr>
 							<td>
 								<div class="avatar av48">
-									<div class="avOverlay">&nbsp;</div>
 									{option:record['settings']['avatar']}
-										<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record['settings']['avatar']}" width="52" height="52" alt="" />
+										<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record['settings']['avatar']}" width="48" height="48" alt="" />
 									{/option:record['settings']['avatar']}
-									<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/48x48/{$authenticatedUserAvatar}" width="48" height="48" alt="{$authenticatedUserNickname}" />
 								</div>
 							</td>
 							<td>

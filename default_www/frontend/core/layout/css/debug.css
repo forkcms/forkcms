@@ -13,12 +13,6 @@ img {
 	-moz-force-broken-image-icon: 1;
 }
 
-#navigation ul li ul { margin-left: 10px; }
-ul li.selected { font-weight: bold; }
-ul li.selected ul li a { font-weight: normal; }
-
-div.widget { background-color: #F2F2F2; padding: 5px; }
-
 /* Debug stuff */
 #console { position: fixed; height: 200px; width: 100%; bottom: 0; left: 0; overflow: auto; background-color: #000;  }
 	#console pre { background: none; margin: 7px; padding: 0; font: 300 11px Monaco, sans-serif; color: #FFF; }

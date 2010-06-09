@@ -311,7 +311,7 @@ class BackendPagesModel
 			$row = str_replace(array('[',']'), '', $row);
 
 			// add start html
-			$html .= '<table border="0" cellpadding="2" cellspacing="2">'."\n";
+			$html .= '<table border="0" cellpadding="0" cellspacing="0">'."\n";
 			$html .= '	<tbody>'."\n";
 
 			// split into cells
@@ -335,13 +335,13 @@ class BackendPagesModel
 				else
 				{
 					$html .= '		<td id="templateBlock-'. $index .'">
-										<h3 class="templateBlockTitle">'. $title .'</h3>
+										<h4 class="templateBlockTitle">'. $title .'</h4>
 										<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getLabel(SpoonFilter::toCamelCase($type))) .'</span></p>
-										<p>
-											<a href="#chooseExtra" class="button icon iconEdit chooseExtra" rel="'. $index .'">
+										<div class="buttonHolder">
+											<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" rel="'. $index .'">
 												<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
 											</a>
-										</p>
+										</div>
 									</td>'."\n";
 				}
 			}

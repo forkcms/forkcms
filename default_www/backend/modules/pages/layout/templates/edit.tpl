@@ -52,14 +52,14 @@
 										<td id="leftColumn">
 											<div id="editContent">
 												{iteration:blocks}
-												<div id="block-{$blocks.index}" class="contentBlock">
-													<div class="contentTitle selected hover">
+												<div id="block-{$blocks.index}" class="box contentBlock">
+													<div class="contentTitle">
 														<table border="0" cellpadding="0" cellspacing="0">
 															<tbody>
 																<tr>
 																	<td>
 																		<div class="oneLiner">
-																			<p><span class="blockName">{$blocks.name}</span></p>
+																			<h3><span class="blockName">{$blocks.name}</span></h3>
 																			{* don't remove this class *}
 																			<p class="linkedExtra">
 																				{* this will store the selected extra *}
@@ -278,10 +278,14 @@
 							</div>
 						</div>
 						<div id="tabTemplate">
-							<div class="buttonHolderRight">
-								<a id="changeTemplate" href="#" class="button icon iconEdit">
-									<span>{$lblEditTemplate|ucfirst}</span>
-								</a>
+							
+							<div class="pageTitle">
+								<h2>Template: {$templatelabel}</h2>
+								<div class="buttonHolderRight">
+									<a id="changeTemplate" href="#" class="button icon iconEdit">
+										<span>{$lblEditTemplate|ucfirst}</span>
+									</a>
+								</div>
 							</div>
 
 							<div id="templateVisualLarge">
@@ -357,7 +361,7 @@
 						</div>
 						{/option:showDelete}
 						<div class="buttonHolderRight">
-							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 						</div>
 					</div>
 				{/form:edit}

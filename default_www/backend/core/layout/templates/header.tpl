@@ -37,7 +37,6 @@
 											<tr>
 												<td>
 													<div class="avatar av24">
-														<div class="avOverlay">&nbsp;</div>
 														<a href="{$authenticatedUserEditUrl}">
 															<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/32x32/{$authenticatedUserAvatar}" width="24" height="24" alt="{$authenticatedUserNickname}" />
 														</a>

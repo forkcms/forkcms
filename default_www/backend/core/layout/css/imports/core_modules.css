@@ -136,13 +136,23 @@
 	}
 
 		.contentTitle {
+
 			background: #E4E4E4;
-			font-weight: 700;
-			padding: 5px 10px;
-			display: block;
-			font-size: 11px;
-			font-family: "Lucida Grande";
+			background: url(/backend/core/layout/images/sprites/th.gif) repeat-x 0 -97px;
+			border: 1px solid #D7D7D7;
 			border-bottom: none;
+
+			border-color: #BDBDBD;
+			padding: 6px 12px;
+
+			/* @inc .topRc */
+			border-top-left-radius: 4px;
+			-webkit-border-top-left-radius: 4px;
+			-moz-border-radius-topleft: 4px;
+			border-top-right-radius: 4px;
+			-webkit-border-top-right-radius: 4px;
+			-moz-border-radius-topright: 4px;
+
 		}
 
 			.contentType {
@@ -191,6 +201,44 @@
 				font-family: Helvetica, Arial, sans-serif;
 				font-weight: 700;
 			}
+
+/*
+	Pages
+	Template tab
+*/
+
+#templateVisualLarge table {
+	width: 100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;
+}
+
+	#templateVisualLarge td {
+		text-align: center;
+		border: 1px dotted #666;
+		border-bottom: none;
+		vertical-align: middle;
+		min-height: 86px;
+		height: auto !important;
+		height: 86px;
+		padding: 12px;
+	}
+
+	#templateVisualLarge table:last-child td {
+		border-bottom: 1px dotted #666;
+	}
+
+	#templateVisualLarge .buttonHolder {
+		width: 24px;
+		margin: 0 auto;
+	}
+
+	#templateVisualLarge h4,
+	#templateVisualLarge p {
+		margin: 0;
+		padding: 0 0 4px;
+	}
 
 	/*
 		Index
@@ -408,3 +456,28 @@
 	#locale.index #value { width: 340px; }
 	#locale.index #name { width: 260px; }
 	#locale.index select { width: 140px; }
+	
+
+/*
+	TinyMCE expand/non expand
+*/
+
+/*
+	@todo write JS for this
+	Don't show tinymce toolbars unless the field has focus
+*/
+
+.mceEditor tr.mceFirst,
+.mceEditor tr.mceLast {
+  display: none;
+}
+
+.mceEditor tr.mceFirst td ,
+.mceEditor tr.mceLast td {
+  border: 0px !important;
+}
+
+.mceEditor.expanded tr.mceFirst,
+.mceEditor.expanded tr.mceLast {
+  display: block;
+}
