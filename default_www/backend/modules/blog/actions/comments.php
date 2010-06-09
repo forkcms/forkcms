@@ -31,6 +31,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 	 */
 	public static function addPostData($text, $title, $URL)
 	{
+		// @todo davy - refactor this method
 		// redefine
 		$text = (string) $text;
 		$title = (string) $title;
@@ -69,49 +70,6 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 
 	/**
-	 * Fetch the html for the two buttons
-	 *
-	 * @return	string
-	 * @param	string $type	The status of the comment.
-	 * @param	int $id			The id of the comment.
-	 */
-	public static function getCommentActionsHTML($type, $id)
-	{
-		// published
-		if($type == 'published')
-		{
-			// build html
-			$HTML = '<div clas="buttonHolder">
-						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'moderation', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToModeration')) .'<span></span></span>
-						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'spam', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToSpam')) .'</span></span></span>
-					</div>';
-		}
-
-		// moderation
-		elseif($type == 'moderation')
-		{
-			// build html
-			$HTML = '<div clas="buttonHolder">
-						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'published', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToPublished')) .'</span></span></span>
-						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'spam', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToSpam')) .'</span></span></span>
-					</div>';
-		}
-
-		// spam
-		else
-		{
-			// build html
-			$HTML = '<div clas="buttonHolder">
-						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'published', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToPublished')) .'</span></span></span>
-						<a href="'. BackendModel::createURLForAction('mass_comment_action', null, null, array('from' => $type, 'action' => 'moderation', 'id[]' => $id)) .'" class="button"><span><span><span>'. ucfirst(BL::getLabel('MoveToModeration')) .'</span></span></span>
-					</div>';
-		}
-
-		return $HTML;
-	}
-
-
-	/**
 	 * Loads the datagrids
 	 *
 	 * @return void
@@ -135,11 +93,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add the multicheckbox column
 		$this->dgPublished->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->dgPublished->setColumnsSequence('checkbox');
-		$this->dgPublished->addColumn('move');
 
 		// assign column functions
 		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
-		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('published', '[id]'), 'move', true);
 		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
 		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
 
@@ -168,11 +124,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add the multicheckbox column
 		$this->dgModeration->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->dgModeration->setColumnsSequence('checkbox');
-		$this->dgModeration->addColumn('move');
 
 		// assign column functions
 		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
-		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('moderation', '[id]'), 'move', true);
 		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
 		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
 
@@ -203,11 +157,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add the multicheckbox column
 		$this->dgSpam->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->dgSpam->setColumnsSequence('checkbox');
-		$this->dgSpam->addColumn('move');
 
 		// assign column functions
 		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
-		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'getCommentActionsHTML'), array('spam', '[id]'), 'move', true);
 		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
 		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
 
