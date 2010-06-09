@@ -32,7 +32,7 @@
 						'			<a href="#" id="addButton-'+ id +'" class="button icon iconAdd disabledButton';
 			if(options.showIconOnly) html += ' iconOnly';
 			html +=		'">'+
-						'				<span><span><span>'+ options.addLabel +'</span></span></span>'+
+						'				<span>'+ options.addLabel +'</span>'+
 						'			</a>'+
 						'		</div>'+
 						'	</div>'+

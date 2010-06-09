@@ -17,7 +17,7 @@
 input[type="text"],
 input[type="password"],
 textarea {
-	background: #FFF url(/backend/core/layout/images//ds.png) repeat-x;
+	background: #FFF url(/backend/core/layout/images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
 	font-family: "Lucida Grande", Verdana, Arial, sans-serif;

@@ -56,7 +56,7 @@
 
 /* Interaction Cues
 ----------------------------------*/
-.ui-state-highlight, .ui-widget-content .ui-state-highlight {border: 1px solid #fed22f; background: #ffe45c url(images/ui-bg_highlight-soft_75_ffe45c_1x100.png) 50% top repeat-x; color: #363636; }
+.ui-state-highlight, .ui-widget-content .ui-state-highlight {border: 1px solid #2244BB; background: #2244BB; color: #FFF; }
 .ui-state-highlight a, .ui-widget-content .ui-state-highlight a { color: #363636; }
 .ui-state-error, .ui-widget-content .ui-state-error { border: 1px solid #a60000; background: #DE3636;
 background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#FF2626));

@@ -8,7 +8,7 @@
 		<div class="oneLiner">
 			<p>{$msgBlogCommentsToModerate|sprintf:{$numCommentsToModerate}}</p>
 			<div class="buttonHolder">
-				<a href="{$var|geturl:'comments':'blog'}#tabModeration" class="button"><span><span><span>{$lblModerate|ucfirst}</span></span></span></a>
+				<a href="{$var|geturl:'comments':'blog'}#tabModeration" class="button"><span>{$lblModerate|ucfirst}</span></a>
 			</div>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 
 	<div class="footer">
 		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'comments':'blog'}" class="button"><span><span><span>{$lblAllComments|ucfirst}</span></span></span></a>
+			<a href="{$var|geturl:'comments':'blog'}" class="button"><span>{$lblAllComments|ucfirst}</span></a>
 		</div>
 	</div>
 </div>

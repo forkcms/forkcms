@@ -7,7 +7,7 @@
 					<h2>{$lblTemplates|ucfirst}</h2>
 					<div class="buttonHolderRight">
 						<a href="{$var|geturl:'add_template'}" class="button icon iconAdd" title="{$lblAddTemplate|ucfirst}">
-							<span><span><span>{$lblAddTemplate|ucfirst}</span></span></span>
+							<span>{$lblAddTemplate|ucfirst}</span>
 						</a>
 					</div>
 				</div>

@@ -49,7 +49,7 @@
 													<div class="collapseBox" id="summary">
 														<div class="collapseBoxHeading">
 															<div class="buttonHolderSingle">
-																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
+																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span>Expand</span></a>
 															</div>
 
 															<h4><a href="#summary .options" class="toggleDiv">{$lblSummary|ucfirst}</a></h4>
@@ -69,21 +69,16 @@
 									<td id="sidebar">
 										<div id="publishOptions" class="box">
 											<div class="heading">
-												<h3>{$lblPublish|ucfirst}</h3>
+												<h3>{$lblStatus|ucfirst}</h3>
 											</div>
 
+											{option:usingDraft}
 											<div class="options">
 												<div class="buttonHolder">
-													<!-- @todo style this @johan @yoni -->
-
-													{option:usingDraft}
-													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span><span><span>{$lblPreview|ucfirst}</span></span></span></a>
-													<br /><br />
-													{/option:usingDraft}
-
-													<a href="#" id="saveAsDraft" class="button"><span><span><span>{$lblSaveAsDraft|ucfirst}</span></span></span></a>
+													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
 												</div>
 											</div>
+											{/option:usingDraft}
 
 											<div class="options">
 												<p class="status">{$lblStatus|ucfirst}: <strong>{$status}</strong></p>
@@ -114,7 +109,7 @@
 															<td><p>&nbsp;</p></td>
 															<td>
 																<div class="buttonHolderRight">
-																	<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblPublish|ucfirst}" />
+																	<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 																</div>
 															</td>
 														</tr>
@@ -127,7 +122,7 @@
 											<div class="heading">
 												<h4>{$lblCategory|ucfirst}</h4>
 												<div class="buttonHolderRight">
-													<a href="#newCategory" class="toggleDiv button icon iconAdd iconOnly"><span><span><span>{$lblAddCategory|ucfirst}</span></span></span></a>
+													<a href="#newCategory" class="toggleDiv button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>
 												</div>
 											</div>
 											<div class="options">
@@ -140,7 +135,7 @@
 														<span id="newCategoryError" class="formError">{$errAddingCategoryFailed}</span>
 													</p>
 													<div class="buttonHolder">
-														<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span><span><span>{$lblAddCategory|ucfirst}</span></span></span></a>
+														<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>
 													</div>
 												</div>
 											</div>
@@ -155,7 +150,7 @@
 													Johan, this is realy complicated, can't we find a beter way to do this?
 												<div class="buttonHolderRight">
 													<a href="#" id="editAuthor" class="button icon iconEdit iconOnly">
-														<span><span><span>Edit</span></span></span>
+														<span>Edit</span>
 													</a>
 												</div>
 												 *}
@@ -297,7 +292,7 @@
 
 					<div class="fullwidthOptions">
 						<a href="{$var|geturl:'delete'}&amp;id={$blog['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
+							<span>{$lblDelete|ucfirst}</span>
 						</a>
 						<div class="buttonHolderRight">
 							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />

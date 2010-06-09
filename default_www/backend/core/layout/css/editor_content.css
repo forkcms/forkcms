@@ -9,3 +9,8 @@ body {
 	width: auto;
 	background: #FFF;
 }
+
+img {
+	max-width: 100%;
+	height: auto;
+}

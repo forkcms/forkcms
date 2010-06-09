@@ -172,7 +172,7 @@
 					<div class="fullwidthOptions">
 						{option:deleteAllowed}
 						<a href="{$var|geturl:'delete'}&id={$record['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
+							<span>{$lblDelete|ucfirst}</span>
 						</a>
 						{/option:deleteAllowed}
 

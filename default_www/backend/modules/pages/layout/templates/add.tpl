@@ -7,8 +7,8 @@
 					<td id="treeHolder">
 						<div id="treeOptions">
 							<div class="buttonHolder">
-								<a href="{$var|geturl:'index'}" class="button icon iconBack iconOnly"><span><span><span>{$lblBack|ucfirst}</span></span></span></a>
-								<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+								<a href="{$var|geturl:'index'}" class="button icon iconBack iconOnly"><span>{$lblBack|ucfirst}</span></a>
+								<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
 							</div>
 						</div>
 						<div id="tree">
@@ -88,7 +88,7 @@
 												<div class="options">
 													<div class="buttonHolder">
 														<a href="#" class="button icon iconZoom previewButton" target="_blank">
-															<span><span><span>{$lblPreview|ucfirst}</span></span></span>
+															<span>{$lblPreview|ucfirst}</span>
 														</a>
 													</div>
 												</div>
@@ -124,7 +124,7 @@
 													<h4>{$lblTemplate|ucfirst}: {$templatelabel}</h4>
 													<div class="buttonHolderRight">
 														<a href="#tabTemplate" class="tabSelect button icon iconEdit iconOnly">
-															<span><span><span>{$lblEdit|ucfirst}</span></span></span>
+															<span>{$lblEdit|ucfirst}</span>
 														</a>
 													</div>
 												</div>
@@ -249,7 +249,7 @@
 						<div id="tabTemplate">
 							<div class="buttonHolderRight">
 								<a id="changeTemplate" href="#" class="button icon iconEdit">
-									<span><span><span>{$lblEditTemplate|ucfirst}</span></span></span>
+									<span>{$lblEditTemplate|ucfirst}</span>
 								</a>
 							</div>
 

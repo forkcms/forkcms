@@ -86,11 +86,6 @@
 	height: 128px;
 }
 
-.av24 .avOverlay { background: url(/backend/core/layout/images/avatars/av24_overlay.png) no-repeat; }
-.av48 .avOverlay { background: url(/backend/core/layout/images/avatars/av48_overlay.png) no-repeat; }
-.av96 .avOverlay { background: url(/backend/core/layout/images/avatars/av96_overlay.png) no-repeat; }
-.av128 .avOverlay { background: url(/backend/core/layout/images/avatars/av128_overlay.png) no-repeat; }
-
 /* Datagrid specific */
 
 .datagridAvatar .avatar {

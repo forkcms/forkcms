@@ -7,7 +7,7 @@
 				<div class="pageTitle">
 					<h2>{$lblTranslations|ucfirst}</h2>
 					<div class="buttonHolderRight">
-						<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span><span><span>{$lblAddTranslation|ucfirst}</span></span></span></a>
+						<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span>{$lblAddTranslation|ucfirst}</span></a>
 					</div>
 				</div>
 
@@ -111,7 +111,7 @@
 					<div class="tableHeading">
 						<h3>{$lblTranslations|ucfirst}</h3>
 						<div class="buttonHolderRight">
-							<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span><span><span>{$lblAdd|ucfirst}</span></span></span></a>
+							<a href="{$var|geturl:'add'}&language={$language}&application={$application}&module={$module}&type={$type}&name={$name}&value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
 						</div>
 					</div>
 					<table border="0" cellspacing="0" cellpadding="0" class="datagrid">

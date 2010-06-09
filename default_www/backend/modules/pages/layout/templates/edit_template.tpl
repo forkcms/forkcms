@@ -55,7 +55,7 @@
 					<div class="fullwidthOptions">
 						{option:deleteAllowed}
 						<a href="{$var|geturl:'delete_template'}&amp;id={$template['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-							<span><span><span>{$lblDelete|ucfirst}</span></span></span>
+							<span>{$lblDelete|ucfirst}</span>
 						</a>
 						{/option:deleteAllowed}
 						<div class="buttonHolderRight">

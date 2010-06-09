@@ -73,7 +73,7 @@ class BackendDataGrid extends SpoonDataGrid
 		{
 			// rebuild value, it should have special markup
 			$value = '<a href="'. $URL .'" class="button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton">
-						<span><span><span>'. $value .'</span></span></span>
+						<span>'. $value .'</span>
 					</a>';
 
 			// reset URL
@@ -84,7 +84,7 @@ class BackendDataGrid extends SpoonDataGrid
 		{
 			// rebuild value, it should have special markup
 			$value = '<a href="'. $URL .'" class="button icon'. SpoonFilter::toCamelCase($name) .'">
-						<span><span><span>'. $value .'</span></span></span>
+						<span>'. $value .'</span>
 					</a>';
 
 			// reset URL
@@ -132,7 +132,7 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// rebuild value
 		$value = '<a href="'. $URL .'"'. $attributes .'>
-						<span><span><span>'. $value .'</span></span></span>
+						<span>'. $value .'</span>
 					</a>';
 
 		// add the column to the datagrid
@@ -263,7 +263,7 @@ class BackendDataGrid extends SpoonDataGrid
 				<p>
 					'. $actionDropDown->parse() .'
 				</p>
-				<div class="buttonHolder"><a href="#" class="submitButton button" id="massActionButton"><span><span><span>'. ucfirst(BL::getLabel('Execute')) .'</span></span></span></a></div>';
+				<div class="buttonHolder"><a href="#" class="submitButton button" id="massActionButton"><span>'. ucfirst(BL::getLabel('Execute')) .'</span></a></div>';
 
 		// assign parsed html
 		$this->tpl->assign('massAction', $HTML);

@@ -462,7 +462,7 @@ jsBackend.forms = {
 	
 	submitWithLinks: function() {
 		// the html for the button that will replace the input[submit]
-		var replaceHTML = '<a class="{class}" href="#"><span><span><span>{label}</span></span></span></a>';
+		var replaceHTML = '<a class="{class}" href="#"><span>{label}</span></a>';
 		
 		// are there any forms that should be submitted with a link?
 		if($('form.submitWithLink').length > 0) {
@@ -596,7 +596,7 @@ jsBackend.messages = {
 		var html = '<div id="'+ uniqueId +'" class="formMessage '+ type +'Message" style="display: none;">'+
 					'	<p>'+ content +'</p>'+
 					'	<div class="buttonHolderRight">'+
-					'		<a class="button icon linkButton iconClose iconOnly" href="#"><span><span><span>X</span></span></span></a>'+
+					'		<a class="button icon linkButton iconClose iconOnly" href="#"><span>X</span></a>'+
 					'	</div>'+
 					'</div>';
 		

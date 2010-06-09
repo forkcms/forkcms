@@ -21,6 +21,8 @@
 	position: relative;
 	background: #E9F0F7;
 	border: 1px solid #B8BCC9;
+
+	/* Gradient */
 	background: -webkit-gradient(linear, left top, left bottom, from(#EFF5FD), to(#E9F0F7));
 	background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
 

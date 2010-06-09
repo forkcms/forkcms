@@ -4,12 +4,17 @@
 	- {$blogComments}: contains an array with the comments for the post, each element contains data about the comment.
 *}
 
+<h1>Hello CUSTOM I AM</h1>
+
 <div id="blog" class="detail">
 	<div class="article">
-		<div class="heading">
-			<h1>{$blogArticle['title']}</h1>
-			<p class="date">{$blogArticle['publish_on']|date:'j F Y':{$LANGUAGE}}</p>
-		</div>
+		<h1>
+			{$blogArticle['title']}
+		</h1>
+		<p class="date">
+			{$blogArticle['publish_on']|date:'j F Y':{$LANGUAGE}}
+		</p>
+
 		<div class="content">
 			{$blogArticle['text']}
 		</div>
@@ -65,7 +70,7 @@
 	<div id="commentForm">
 		<h3 id="{$actReact}">{$lblReact|ucfirst}</h3>
 
-		{option:commentIsInModeration}<div class="message notice"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
+		{option:commentIsInModeration}<div class="message warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
 		{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
 		{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
 
@@ -77,6 +82,10 @@
 			<p>
 				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtEmail} {$txtEmailError}
+			</p>
+			<p>
+				<label for="website">{$lblWebsite|ucfirst}</label>
+				{$txtWebsite} {$txtWebsiteError}
 			</p>
 			<p>
 				<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>

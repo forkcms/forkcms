@@ -6,7 +6,7 @@
 				<div class="pageTitle">
 					<h2>{$lblBlog|ucfirst}: {$lblCategories}</h2>
 					<div class="buttonHolderRight">
-						<a href="{$var|geturl:'add_category'}" class="button icon iconAdd"><span><span><span>{$lblAddCategory|ucfirst}</span></span></span></a>
+						<a href="{$var|geturl:'add_category'}" class="button icon iconAdd"><span>{$lblAddCategory|ucfirst}</span></a>
 					</div>
 				</div>
 				

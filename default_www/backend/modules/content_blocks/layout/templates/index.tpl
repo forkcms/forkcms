@@ -6,7 +6,7 @@
 					<h2>{$lblContentBlocks|ucfirst}</h2>
 					<div class="buttonHolderRight">
 						<a href="{$var|geturl:'add'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
-							<span><span><span>{$lblAdd|ucfirst}</span></span></span>
+							<span>{$lblAdd|ucfirst}</span>
 						</a>
 					</div>
 				</div>

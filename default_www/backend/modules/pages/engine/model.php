@@ -339,7 +339,7 @@ class BackendPagesModel
 										<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getLabel(SpoonFilter::toCamelCase($type))) .'</span></p>
 										<p>
 											<a href="#chooseExtra" class="button icon iconEdit chooseExtra" rel="'. $index .'">
-												<span><span><span>'. ucfirst(BL::getLabel('Edit')) .'</span></span></span>
+												<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
 											</a>
 										</p>
 									</td>'."\n";

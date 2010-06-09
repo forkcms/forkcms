@@ -2,19 +2,14 @@
 
     Buttons
     Styles for the buttons
-    
+
     @package      backend
     @subpackage   core
-    
+
     @author       Johan Ronsse <johan@netlash.com>
     @since        2.0
 
 */
-
-a.button,
-a.button span {
-	background-image: url(/backend/core/layout/images/sprites/fork_buttons.png);
-}
 
 a.button:link,
 a.button:visited {
@@ -24,208 +19,146 @@ a.button:visited {
 	text-decoration: none;
 	border: none;
 	color: #3A3A3A !important;
-	font-family: "Lucida Grande";
+	font-family: "Lucida Grande", Arial, sans-serif;
 	font-size: 11px;
 	font-weight: 700;
 	float: left;
+	padding: 0 6px;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.25);
+	background-repeat: repeat-x;
+	background-position: right -132px;
+	overflow: hidden;
+	background: #E1E1E1;
+	
+	border: 1px solid #b0b0b0;
+	
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#dddddd));
+	background: -moz-linear-gradient(top, #EFF5FD, #E9F0F7);
 
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
-
-	padding: 0 6px 0 0;
-	background-repeat: repeat-x;
-	background-position: right -132px;
-	overflow: hidden;
 }
 
 a.button:hover,
 a.button:active,
 a.button:focus,
 a.button.focus {
-	background-position: right -154px;
+	background: #FFF;
+	/* Gradient */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#f1f1f1));
+	background: -moz-linear-gradient(top, #ffffff, #f1f1f1);
 }
 
 a.mainButton:link,
 a.mainButton:visited {
-	background-position: right -88px;
 	color: #FFF !important;
+	border: 1px solid #366EAC;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#8DB7E7), to(#215996), color-stop(.0454545,#5E9CE1), color-stop(.9545455,#2F79CA));
+	background: -moz-linear-gradient(#8DB7E7, #5E9CE1 4.5454545%, #2F79CA 95.454545%, #215996);
 }
+
 
 a.mainButton:hover,
 a.mainButton:active,
 a.mainButton:focus,
 a.mainButton.focus {
-	background-position: right -110px;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#215996), to(#8DB7E7), color-stop(.0454545,#2F79CA), color-stop(.9545455,#5E9CE1));
+	background: -moz-linear-gradient(#8DB7E7, #5E9CE1 4.5454545%, #2F79CA 95.454545%, #215996);
 }
 
-	a.button:link span,
-	a.button:visited span {
-		background-position: 0 -44px;
+a.icon span {
+	padding: 0 0 0 18px !important;
+	display: block;
+	background-image: url(/backend/core/layout/images/sprites/fork_icons.png);
+	background-repeat: no-repeat;
+}
+
+	a.iconAdd span {
+		background-position: 0 0 !important; }
+	a.iconEdit span {
+		background-position: 0 -22px !important; }
+	a.iconDelete span {
+		background-position: 0 -44px !important; }
+	a.iconBack span {
+		background-position: 0 -66px !important; }
+	a.mainButton.iconBack span {
+		background-position: 0 -88px !important; }
+	a.iconCollapsed span {
+		background-position: 0 -110px !important; }
+	a.iconExpanded span {
+		background-position: 0 -132px !important; }
+	a.iconZoom span {
+		background-position: 0 -154px !important; }
+	a.iconSettings span {
+		background-position: 0 -176px !important; }
+	a.iconClose span {
+		background-position: 0 -220px !important; }
+	a.iconCloseI span {
+		background-position: 0 -242px !important; }
+	a.iconGoto span {
+		background-position: 0 -465px !important; }
+
+	a.iconOnly span {
+		width: 16px;
+		padding: 0 !important;
+		text-indent: -9000px;
+		overflow: hidden;
+	}
+
+	a.iconLink span {
+		width: 16px;
+		height: 22px;
+		padding: 0 !important;
+		text-indent: -9000px;
+		overflow: hidden;
 		display: block;
-		padding: 0 0 0 6px;
+		background-image: url(/backend/core/layout/images/sprites/fork_icons.png);
+		background-repeat: no-repeat;
 	}
 
-	a.button:hover span,
-	a.button:active span,
-	a.button:focus span {
-		background-position: 0 -66px;
-		display: block;
-		padding: 0 0 0 6px;
+	/*
+		Button that looks like a link
+	*/
+
+	a.linkButton:link,
+	a.linkButton:visited {
+		background: none;
+		color: #085DBD;
+		font-weight: 400;
 	}
-
-		a.mainButton:link span,
-		a.mainButton:visited span {
-			background-position: 0 0;
-		}
-
-		a.mainButton:hover span,
-		a.mainButton:active span,
-		a.mainButton:focus span,
-		a.mainButton.focus span {
-			background-position: 0 -22px;
-		}
-
-	a.button:link span span,
-	a.button:visited span span {
-		background-position: 0 -220px;
-		display: block;
-		padding: 0;
-	}
-
-	a.button:hover span span,
-	a.button:active span span,
-	a.button:focus span span {
-		background-position: 0 -242px;
-	}
-
-		a.mainButton:link span span,
-		a.mainButton:visited span span {
-			background-position: 0 -176px;
-		}
-
-		a.mainButton:hover span span,
-		a.mainButton:active span span,
-		a.mainButton:focus span span,
-		a.mainButton.focus span span {
-			background-position: 0 -198px;
-		}
-
-		/*
-			Icons
-		*/
-
-		a.icon:link,
-		a.icon:visited {
-			padding: 0 4px 0 0;
-		}
-
-		a.icon:link span,
-		a.icon:visited span {
-			padding: 0 0 0 4px;
-		}
-
-			a.icon:link span span,
-			a.icon:visited span span {
-				padding: 0 3px 0 0;
-			}
-
-			a.iconOnly:link span span,
-			a.iconOnly:visited span span {
-				padding: 0;
-			}
-
-		a.icon span span span {
-			padding: 0 0 0 18px !important;
-			display: block;
-			background-image: url(/backend/core/layout/images/sprites/fork_icons.png);
-			background-repeat: no-repeat;
-		}
-
-		a.iconAdd span span span {
-			background-position: 0 0 !important; }
-		a.iconEdit span span span {
-			background-position: 0 -22px !important; }
-		a.iconDelete span span span {
-			background-position: 0 -44px !important; }
-		a.iconBack span span span {
-			background-position: 0 -66px !important; }
-		a.mainButton.iconBack span span span {
-			background-position: 0 -88px !important; }
-		a.iconCollapsed span span span {
-			background-position: 0 -110px !important; }
-		a.iconExpanded span span span {
-			background-position: 0 -132px !important; }
-		a.iconZoom span span span {
-			background-position: 0 -154px !important; }
-		a.iconSettings span span span {
-			background-position: 0 -176px !important; }
-		a.iconClose span span span {
-			background-position: 0 -220px !important; }
-		a.iconCloseI span span span {
-			background-position: 0 -242px !important; }
-		a.iconGoto span span span {
-			background-position: 0 -465px !important; }
-
-		a.iconOnly span span span {
-			width: 16px;
-			padding: 0 !important;
-			text-indent: -9000px;
-			overflow: hidden;
-		}
-
-		a.iconLink span span span {
-			width: 16px;
-			height: 22px;
-			padding: 0 !important;
-			text-indent: -9000px;
-			overflow: hidden;
-			display: block;
-			background-image: url(/backend/core/layout/images/sprites/fork_icons.png);
-			background-repeat: no-repeat;
-		}
-
-		/*
-			Button that looks like a link
-		*/
-
-		a.linkButton:link,
-		a.linkButton:visited {
-			background: none;
+	
+		#encloser #container a.linkButton:link span,
+		#encloser #container a.linkButton:visited span {
 			color: #085DBD;
-			font-weight: 400;
-		}
-		
-			#encloser #container a.linkButton:link span,
-			#encloser #container a.linkButton:visited span {
-				color: #085DBD;
-			}
-
-		a.linkButton:hover,
-		a.linkButton:active,
-		a.linkButton:focus {
-			background: rgba(0,0,0,0.15);
-			color: #FFF !important;
 		}
 
-			a.linkButton span {
-				background: none;
-			}
+	a.linkButton:hover,
+	a.linkButton:active,
+	a.linkButton:focus {
+		background: rgba(0,0,0,0.15);
+		color: #FFF !important;
+	}
 
-		/*
-			Disabled buttons
-		*/
-
-		a.disabledButton:link,
-		a.disabledButton:visited,
-		a.disabledButton:hover,
-		a.disabledButton:active,
-		a.disabledButton:focus,
-		a.disabledButton.focus {
-			opacity: 0.5;
-			cursor: default;
+		a.linkButton span {
+			background: none;
 		}
+
+	/*
+		Disabled buttons
+	*/
+
+	a.disabledButton:link,
+	a.disabledButton:visited,
+	a.disabledButton:hover,
+	a.disabledButton:active,
+	a.disabledButton:focus,
+	a.disabledButton.focus {
+		opacity: 0.5;
+		cursor: default;
+	}
 
 /* Button positioning */
 
@@ -254,4 +187,16 @@ a.mainButton.focus {
 #encloser #container a.iconDelete:link span,
 #encloser #container a.iconDelete:visited span {
 	color: red;
+}
+
+/*
+	jQuery Ui
+*/
+
+.ui-icon-closethick {
+	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat 0 -220px;
+}
+
+.ui-state-hover .ui-icon-closethick {
+	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat 0 -242px;
 }

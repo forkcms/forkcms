@@ -48,7 +48,7 @@
 													<div class="collapseBox" id="summary">
 														<div class="collapseBoxHeading">
 															<div class="buttonHolderSingle">
-																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span><span><span>Expand</span></span></span></a>
+																<a href="#summary .options" class="toggleDiv button icon iconExpanded iconOnly"><span>Expand</span></a>
 															</div>
 
 															<h4><a href="#summary .options" class="toggleDiv">{$lblSummary|ucfirst}</a></h4>
@@ -75,11 +75,11 @@
 												<div class="buttonHolder">
 
 													{option:usingDraft}
-													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span><span><span>{$lblPreview|ucfirst}</span></span></span></a>
+													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
 													<br /><br />
 													{/option:usingDraft}
 
-													<a href="#" id="saveAsDraft" class="button mainButton"><span><span><span>{$lblSaveAsDraft|ucfirst}</span></span></span></a>
+													<a href="#" id="saveAsDraft" class="button"><span>{$lblSaveAsDraft|ucfirst}</span></a>
 												</div>
 											</div>
 
@@ -112,7 +112,7 @@
 															<td><p>&nbsp;</p></td>
 															<td>
 																<div class="buttonHolderRight">
-																	<input id="save" class="inputButton button" type="submit" name="save" value="{$lblPublish|ucfirst}" />
+																	<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblPublish|ucfirst}" />
 																</div>
 															</td>
 														</tr>
@@ -125,7 +125,7 @@
 											<div class="heading">
 												<h4>{$lblCategory|ucfirst}</h4>
 												<div class="buttonHolderRight">
-													<a href="#newCategory" class="toggleDiv button icon iconAdd iconOnly"><span><span><span>{$lblAddCategory|ucfirst}</span></span></span></a>
+													<a href="#newCategory" class="toggleDiv button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>
 												</div>
 											</div>
 											<div class="options">
@@ -138,7 +138,7 @@
 														<span id="newCategoryError" class="formError">{$errAddingCategoryFailed}</span>
 													</p>
 													<div class="buttonHolder">
-														<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span><span><span>{$lblAddCategory|ucfirst}</span></span></span></a>
+														<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>
 													</div>
 												</div>
 											</div>
