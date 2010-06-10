@@ -168,6 +168,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				// build user-array
 				$user = array();
 				$user['id'] = $this->id;
+				$user['group_id'] = $this->frm->getField('group')->getValue();
 				$user['username'] = $this->frm->getField('username')->getValue(true);
 				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $user['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
 
