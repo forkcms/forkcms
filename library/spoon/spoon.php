@@ -40,6 +40,13 @@ if(!defined('SPOON_DEBUG_MESSAGE')) define('SPOON_DEBUG_MESSAGE', 'There seems t
 if(!defined('SPOON_DEBUG_EMAIL')) define('SPOON_DEBUG_EMAIL', '');
 
 /**
+ * If an exception occures, you can hook into the process that handles this exception
+ * and add your own logic. The callback may be a function or static method. If you wish
+ * to use a static method define this constant in this way: 'MyClass::myMethod'
+ */
+if(!defined('SPOON_EXCEPTION_CALLBACK')) define('SPOON_EXCEPTION_CALLBACK', '');
+
+/**
  * Default charset that will be used when a charset needs to be provided to use for
  * certain functions/methods.
  */

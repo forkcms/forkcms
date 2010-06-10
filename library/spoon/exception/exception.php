@@ -362,11 +362,49 @@ function exceptionHandler($exception)
 		$output = str_replace($exception->getObfuscate(), '***', $output);
 	}
 
-	// debugging enabled (show output)
-	if(SPOON_DEBUG) echo $output;
+	// custom callback?
+	if(SPOON_EXCEPTION_CALLBACK != '')
+	{
+		// function
+		if(!strpos(SPOON_EXCEPTION_CALLBACK, '::'))
+		{
+			// function actually has been defined
+			if(function_exists(SPOON_EXCEPTION_CALLBACK))
+			{
+				call_user_func_array(SPOON_EXCEPTION_CALLBACK, array($exception, $output));
+			}
 
-	// debugging disabled
-	else echo SPOON_DEBUG_MESSAGE;
+			// something went wrong
+			else exit('The function stored in SPOON_EXCEPTION_CALLBACK ('. SPOON_EXCEPTION_CALLBACK .') could not be found.');
+		}
+
+		// method
+		else
+		{
+			// method
+			$method = explode('::', SPOON_EXCEPTION_CALLBACK);
+
+			// 2 parameters and exists
+			if(count($method) == 2 && method_exists($method[0], $method[1]))
+			{
+				call_user_func_array(array($method[0], $method[1]), array($exception, $output));
+			}
+
+			// something went wrong
+			else exit('The method stored in SPOON_EXCEPTION_CALLBACK ('. SPOON_EXCEPTION_CALLBACK .') cound not be found.');
+		}
+
+	}
+
+	// default exception handling
+	else
+	{
+		// debugging enabled (show output)
+		if(SPOON_DEBUG) echo $output;
+
+		// debugging disabled
+		else echo SPOON_DEBUG_MESSAGE;
+	}
 
 	// mail it?
 	if(SPOON_DEBUG_EMAIL != '')
