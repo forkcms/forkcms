@@ -614,6 +614,9 @@ class FrontendBaseBlock
 			$pagination['next_url'] = $URL;
 		}
 
+		// multiple pages
+		$pagination['multiple_pages'] = ($pagination['num_pages'] == 1) ? false : true;
+
 		// assign pagination
 		$this->tpl->assign('pagination', $pagination);
 	}
