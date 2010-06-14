@@ -533,13 +533,18 @@ class BackendDataGridDB extends BackendDataGrid
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $query					The query to retrieve the data.
-	 * @param	array[optional] $parameters		The parameters to be used inside the query.
+	 * @param	string $query						The query to retrieve the data.
+	 * @param	array[optional] $parameters			The parameters to be used inside the query.
+	 * @param	string[optional] $resultsQuery		The optional count query, used to calculate the number of results.
+	 * @param	array[optional] $resultsParameters 	Theh parameters to be used inside the results query.
 	 */
-	public function __construct($query, $parameters = array())
+	public function __construct($query, $parameters = array(), $resultsQuery = null, $resultsParameters = array())
 	{
+		// results query?
+		$results = ($resultsQuery !== null) ? array($resultsQuery, $resultsParameters) : null;
+
 		// create a new source-object
-		$source = new SpoonDataGridSourceDB(BackendModel::getDB(), array($query, (array) $parameters));
+		$source = new SpoonDataGridSourceDB(BackendModel::getDB(), array($query, (array) $parameters), $results);
 
 		// call the parent, as in create a new datagrid with the created source
 		parent::__construct($source);
