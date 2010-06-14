@@ -316,9 +316,9 @@ class FrontendBlogModel
 										FROM blog_posts AS bp
 										INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
 										INNER JOIN meta AS m ON bp.meta_id = m.id
-										WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bp.revision_id = ? AND m.url = ?
+										WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.revision_id = ? AND m.url = ?
 										LIMIT 1;',
-										array('draft', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i') .':00', $draft, $URL));
+										array('draft', FRONTEND_LANGUAGE, 'N', $draft, $URL));
 	}
 
 
