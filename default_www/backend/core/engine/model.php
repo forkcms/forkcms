@@ -395,7 +395,7 @@ class BackendModel
 	 * Get a certain module-setting
 	 *
 	 * @return	mixed
-	 * @param	string $module					The module wherin the setting is stored.
+	 * @param	string $module					The module in which the setting is stored.
 	 * @param	string $key						The name of the setting.
 	 * @param	mixed[optional] $defaultValue	The value to store if the setting isn't present.
 	 */
