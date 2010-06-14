@@ -56,6 +56,7 @@ $navigation['settings'] = array('url' => null, 'label' => 'Settings');
 $navigation['settings']['children']['settings'] = array('url' => 'settings/index', 'label' => 'General');
 $navigation['settings']['children']['labels'] = array('url' => 'settings/labels', 'label' => 'Translations');
 $navigation['settings']['children']['modules'] = array('url' => null, 'label' => 'Modules');
+$navigation['settings']['children']['modules']['children'][] = array('url' => 'pages/settings', 'label' => 'Pages');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'blog/settings', 'label' => 'Blog');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'news/settings', 'label' => 'News');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'location/settings', 'label' => 'Location');

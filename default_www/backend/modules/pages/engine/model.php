@@ -1081,46 +1081,50 @@ class BackendPagesModel
 		$html .= '	</ul>'."\n";
 		$html .= '</div>'."\n";
 
-
-		// are there any meta pages
-		if(isset($navigation['meta'][0]) && !empty($navigation['meta'][0]))
+		// only show meta if needed
+		if(BackendModel::getSetting('pages', 'has_meta_navigation', false))
 		{
-			// meta pages
-			$html .= '<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
-
-			$html .= '<div class="clearfix">'."\n";
-			$html .= '	<ul>'."\n";
-
-			// loop the items
-			foreach($navigation['meta'][0] as $page)
+			// are there any meta pages
+			if(isset($navigation['meta'][0]) && !empty($navigation['meta'][0]))
 			{
-				// start
-				$html .= '		<li id="page-'. $page['page_id'] .'" rel="'. $page['tree_type'] .'">'."\n";
+				// meta pages
+				$html .= '<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
 
-				// insert link
-				$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'"><ins>&#160;</ins>'. $page['navigation_title'] .'</a>'."\n";
+				$html .= '<div class="clearfix">'."\n";
+				$html .= '	<ul>'."\n";
 
-				// insert subtree
-				$html .= self::getSubTree($navigation, $page['page_id']);
+				// loop the items
+				foreach($navigation['meta'][0] as $page)
+				{
+					// start
+					$html .= '		<li id="page-'. $page['page_id'] .'" rel="'. $page['tree_type'] .'">'."\n";
+
+					// insert link
+					$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => $page['page_id'])) .'"><ins>&#160;</ins>'. $page['navigation_title'] .'</a>'."\n";
+
+					// insert subtree
+					$html .= self::getSubTree($navigation, $page['page_id']);
+
+					// end
+					$html .= '		</li>'."\n";
+				}
 
 				// end
-				$html .= '		</li>'."\n";
+				$html .= '	</ul>'."\n";
+				$html .= '</div>'."\n";
 			}
-
-			// end
-			$html .= '	</ul>'."\n";
-			$html .= '</div>'."\n";
 		}
 
 		// footer pages
 		$html .= '<h4>'. ucfirst(BL::getLabel('Footer')) .'</h4>'."\n";
 
+		// start
+		$html .= '<div class="clearfix">'."\n";
+		$html .= '	<ul>'."\n";
+
 		// are there any footer pages
 		if(isset($navigation['footer'][0]) && !empty($navigation['footer'][0]))
 		{
-			// start
-			$html .= '<div class="clearfix">'."\n";
-			$html .= '	<ul>'."\n";
 
 			// loop the items
 			foreach($navigation['footer'][0] as $page)
@@ -1134,12 +1138,11 @@ class BackendPagesModel
 				// end
 				$html .= '		</li>'."\n";
 			}
-
-			// end
-			// end
-			$html .= '	</ul>'."\n";
-			$html .= '</div>'."\n";
 		}
+
+		// end
+		$html .= '	</ul>'."\n";
+		$html .= '</div>'."\n";
 
 		// are there any root pages
 		if(isset($navigation['root'][0]) && !empty($navigation['root'][0]))
