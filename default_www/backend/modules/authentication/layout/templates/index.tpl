@@ -1,19 +1,16 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
 <body id="login">
-
 	{include:file='{$BACKEND_MODULES_PATH}/{$MODULE}/layout/templates/ie6.tpl'}
-
 	{option:debug}<div id="debugnotify">WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
-
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
 				{option:hasError}
-				<div id="loginError">
-					<div class="errorMessage singleMessage">
-						<p>{$errInvalidUsernamePasswordCombination}</p>
+					<div id="loginError">
+						<div class="errorMessage singleMessage">
+							<p>{$errInvalidUsernamePasswordCombination}</p>
+						</div>
 					</div>
-				</div>
 				{/option:hasError}
 
 				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
@@ -36,17 +33,16 @@
 								</p>
 							</div>
 							<p class="spacing">
-								<input id="login" class="inputButton button mainButton" type="submit" name="login" value="{$lblSignIn|ucfirst}" />
+								<input name="login" type="submit" value="{$lblSignIn|ucfirst}" class="inputButton button mainButton" />
 							</p>
 						</div>
 					{/form:authenticationIndex}
 
-						<ul id="loginNav">
-							<li><a href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
-							<li><a href="http://docs.fork-cms.be">{$lblDeveloper|ucfirst}</a></li>
-							<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" rel="forgotPasswordHolder">{$msgForgotPassword}</a></li>
-						</ul>
-					</div>
+					<ul id="loginNav">
+						<li><a href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
+						<li><a href="http://docs.fork-cms.be">{$lblDeveloper|ucfirst}</a></li>
+						<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" rel="forgotPasswordHolder">{$msgForgotPassword}</a></li>
+					</ul>
 				</div>
 				<div id="forgotPasswordHolder" class="balloon {option:!showForm}balloonNoMessage{/option:!showForm}"{option:!showForm} style="display: none;"{/option:!showForm}>
 					<div id="forgotPasswordBox">
@@ -76,11 +72,11 @@
 							</div>
 							{/option:hasForgotpasswordError}
 
-							{option:isForgotpasswordSuccess}
+							{option:isForgotPasswordSuccess}
 							<div class="successMessage singleMessage">
 								<p>{$msgLoginFormForgotPasswordSuccess}</p>
 							</div>
-							{/option:isForgotpasswordSuccess}
+							{/option:isForgotPasswordSuccess}
 						{/form:forgotPassword}
 					</div>
 				</div>
@@ -94,6 +90,5 @@
 			if(!utils.cookies.isEnabled()) $('#noCookies').show();
 		});
 	</script>
-
 </body>
 </html>

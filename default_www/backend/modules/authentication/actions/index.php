@@ -17,8 +17,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	 *
 	 * @var	BackendForm
 	 */
-	private $frm,
-			$frmForgotPassword;
+	private $frm, $frmForgotPassword;
 
 
 	/**
@@ -77,7 +76,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
-			// shorten fields
+			// redefine fields
 			$txtUsername = $this->frm->getField('backend_username');
 			$txtPassword = $this->frm->getField('backend_password');
 
@@ -86,9 +85,9 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			$txtPassword->isFilled(BL::getError('PasswordIsRequired'));
 
 			// all fields are ok?
-			if($txtUsername->isFilled() && $txtPassword->isFilled())
+			if($txtUsername->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue())
 			{
-				// try to login the user	@todo	Davy, don't login the user before the formtoken is validated
+				// try to login the user
 				if(!BackendAuthentication::loginUser($txtUsername->getValue(), $txtPassword->getValue()))
 				{
 					// add error
@@ -139,7 +138,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$user->setSetting('reset_password_timestamp', time());
 
 				// variables to parse in the e-mail
-				$variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('reset_password', null, null, array('email' => $email, 'key' => $key));
+				$variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('reset_password') .'&email='. $email .'&key='. $key;
 
 				// send e-mail to user
 				BackendMailer::addEmail(BL::getMessage('ResetYourPassword'), BACKEND_MODULE_PATH .'/layout/templates/mails/reset_password.tpl', $variables, $email);
@@ -148,7 +147,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$_POST['backend_email'] = '';
 
 				// show success message
-				$this->tpl->assign('isForgotpasswordSuccess', true);
+				$this->tpl->assign('isForgotPasswordSuccess', true);
 
 				// show form
 				$this->tpl->assign('showForm', true);
