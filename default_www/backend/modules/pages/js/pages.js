@@ -132,6 +132,7 @@ jsBackend.pages.extras = {
 		} else {
 			// set type
 			$('#extraType').val('html');
+			$('#extraExtraId').val('');
 			
 			// populate the modules
 			jsBackend.pages.extras.populateExtraModules();
@@ -156,6 +157,9 @@ jsBackend.pages.extras = {
 		// store
 		$('#block_extra_id_'+ selectedBlock).val(selectedExtraId);
 
+		console.log(selectedBlock);
+		console.log(selectedExtraId);
+		
 		// empty the extraForBlock
 		$('#extraForBlock').val('');
 
