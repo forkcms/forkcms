@@ -1,85 +1,173 @@
-Locale
--
-Locale make it possible to translate the website and therefore make it available in all required languages.
-In templates you can use modifiers on each of these items, but make sure you only use this where needed.
+Locale allows you to translate your website in a simple way.
+
+
+Frontend
+--
+Locale is not module specific in the frontend. Keep this in mind when choosing a name for a label, to make sure it can be reused.
+
+
+- act (action):
+	An action is used in the URL. It may not contain any special characters or spaces and describes the action, mostly used in
+	a module.
+	
+	Examples:
+	/nl/blog/[detail]/my-post
+	/nl/blog/[rss]
+	
+	Example:
+	- Category = categorie
+	
+	Usage:
+	in templates: {$actCategory}
+	in frontend PHP: FrontendLanguage::getAction('Category');
+	
+	Note: In Fork CMS an URL of a page may not be in the list of defined actions. You can't have a page with URL 'detail' when this action
+	already exists in the locale.
+	
+	
+- err (error):
+	The name of the error should be a descriptive camelcased string in English. The value can contain a full sentence and make sure
+	you use capitals where needed. Errors differ with messages in that way that they're only used for actual error messages. You choose
+	whether or not to start an error with a capital letter, but keep in mind that it is meant to be used in the way it was originally 
+	defined. HTML is allowed within error values.
+	
+	Correct examples:
+	InvalidEmail: This e-mail address is invalid.
+	RequiredField: This field is required.
+	
+	Incorrect errors:
+	Email: e-mail (this should be a label, not an error)
+	NewsletterSuccess: Thanks for subscribing to our newsletter. (this should be a message, not an error)
+	
+	Usage:
+	in templates: {$errInvalidEmail}
+	in frontend PHP: FrontendLanguage::getError('InvalidEmail');
+	
+	
+- lbl (label):	
+	A label is a literal translation for a word or a few words. The name is a describing camelcased English string. The value 
+	should be one or a few words. Formatting should be done using modifiers, so don't use capitals. Unless ofcourse, the label is an 
+	abbreviation such as RSS. If your label is too long, you should consider, moving it to a message.
+	
+	Correct examples:
+	Name: naam
+	Archive: archief
+	RSS: RSS
+	Email: e-mail
+	Language: taal
+	
+	Incorrect examples:
+	MinutesAgo: %1$s minutes ago (this should be a message)
+	JanuaryShort: jan (not a literal translation, should be a message)
+	
+	Usage:
+	in templates: {$lblTitle|ucfirst}
+	in frontend PHP: FrontendLanguage::getLabel('Title');
+	
+
+- msg (message):
+	Messages can be compared with errors, except that they contain general or success messages. They may contain HTML and their name
+	is a descriptive English string. You are supposed to use them in the way that they are defined. Formatting should be done inside the
+	message, not by modifiers.
+	
+	Correct examples:
+	JanuaryShort: jan
+	NewsletterSuccess: Bedankt voor je inschrijving.
+	WebdesignNetlash: <a href="http://www.netlash.com">Netlash webdesign & grafisch ontwerp</a>
+	
+	Incorrect examples:
+	Email: e-mail (this should be a label, not a message)
+	InvalidEmail: Ongeldig e-mailadres (this should be an error, not a message);
+	
+	Usage:
+	in templates: {$msgNewsletterSuccess}
+	in frontend PHP: FrontendLanguage::getMessage('NewsletterSuccess');
+
 
 
 Backend
 --
 In the backend there are only 3 types of locale
 
-- err:
-	err is short for error. The name of the error must be a describing English camelcased-string.
-	The value can contain a full sentence, make sure you use capitals where needed. The name is a describing camelcased English string.
-	Replace-codes are allowed, see below.
+- err (error):
+	The name of the error should be a descriptive camelcased string in English. The value can contain a full sentence and make sure
+	you use capitals where needed. Errors differ with messages in that way that they're only used for actual error messages. You choose
+	whether or not to start an error with a capital letter, but keep in mind that it is meant to be used in the way it was originally 
+	defined. HTML is allowed within error values. Always think about general errors vs module specific errors.
 	
-	eg.: $err['core']['ImagesAllowedExtensions'] = 'Only images with the extension jpg, gif or png are allowed.';
-	usage in templates: {$errImagesAllowedExtensions}
-	usage in PHP: Language::getError('ImagesAllowedExtensions');
+	Core examples:
+	InvalidEmail: This e-mail address is invalid.
+	RequiredField: This field is required.
+	
+	Module specific examples:
+	Users - InvalidUsername: A username may not contain special characters. Only alphanumeric characters are allowed.
+	Blog - NoAkismetKey: No akismet key was provided. Please insert one in the field below.
+	
+	Usage:
+	in templates: {$errFieldIsRequired}
+	in backend PHP: BackendLanguage::getError('FieldIsRequired');
+	
 	 
-- lbl:	
-	better known as a "label". A label is a literal translation for a word.
-	The name is a describing camelcased English string. The value should be a word, maximum two words, formating can be done by modifiers, so no capitals please. 
-	Replace-codes are allowed, see below.
+- lbl (label):	
+	A label is a literal translation for a word or a few words. The name is a describing camelcased English string. The value 
+	should be one or a few words. Formatting should be done using modifiers, so don't use capitals. Unless ofcourse, the label is an 
+	abbreviation such as RSS. If your label is too long, you should consider, moving it to a message. You can also specify module specific
+	labels. In this case, no literal translation is needed. This is used to easily overrule existing labels.
 	
-	eg.: $lbl['core']['Title'] = 'title';
-	usage in templates: {$lblTitle|ucfirst}
-	usage in PHP: Language::getLabel('Title');
+	Correct examples:
+	Name: naam
+	Archive: archief
+	RSS: RSS
+	Email: e-mail
+	Language: taal
+	
+	Incorrect examples:
+	MinutesAgo: %1$s minutes ago (this should be a message)
+	JanuaryShort: jan (not a literal translation, should be a message)
+	
+	Module specific examples:
+	Pages - Add: add page
+	Users - Add: add user
+	
+	Usage:
+	in templates: {$lblTitle|ucfirst}
+	in backend PHP: BackendLanguage::getLabel('Title');	
+	
+	
+- msg (message):
+	Messages can be compared with errors, except that they contain general or success messages. They may contain HTML and their name
+	is a descriptive English string. You are supposed to use them in the way that they are defined. Formatting should be done inside the
+	message, not by modifiers. You can also specific module specific messages.
+	
+	Correct examples:
+	JanuaryShort: jan
+	NewsletterSuccess: Bedankt voor je inschrijving.
+	WebdesignNetlash: <a href="http://www.netlash.com">Netlash webdesign & grafisch ontwerp</a>
+	
+	Incorrect examples:
+	Email: e-mail (this should be a label, not a message)
+	InvalidEmail: Ongeldig e-mailadres (this should be an error, not a message);
+	
+	Module specific examples:
+	Users - Added: The user has been added.
+	Blog - Edited: The message has been edited.
+	
+	Usage:
+	in templates: {$msgNewsletterSuccess}
+	in frontend PHP: FrontendLanguage::getMessage('NewsletterSuccess');
 
-- msg:
-	msg is short for message. Messages are full sentences, they can contain HTML.
-	(@todo bijzetten dat leestekens in de message moeten e.g. semicolon en punt op einde zin)
-	The name is a describing camelcased English string.
 	
-	eg: $msg['core']['YourMessagesWasSent'] = 'Your message was sent. We will contact you within two business-days.';
-	usage in templates: {$msgYourMessagesWasSent}
-	usage in PHP: Language::getMessage('YourMessagesWasSent');
-	
-As you can see in the backend it is possible to set locale specific for a module. Therefore you should write all locale in the core module (which is the fallback)
-as general as possible. For example: $msg['core']['NoItems'] = 'No items available'; This is a message that can be used in each module, but for some modules it
-would be nice if the message is more specific, so add: $msg['blog']['NoItems'] = 'You haven\'t wrote any articles yet. <a href="%1$s">Write an article now</a>.';
-
-
-Frontend
---
-In the backend there are 4 types of locale
-
-- act:
-	act is short for action. An action is used in the URL (aka slug).
-	The name is a describing camelcased English string. The value can only contain characters that are allowed in URL. So no spaces, special characters, ...
-	
-	eg.: $act['category'] = 'categorie';
-	usage in templates: {$actCategory}
-	usage in PHP: Language::getAction('Category');
-
-- err:
-	err is short for error. The name of the error must be a describing English camelcased-string.
-	The value can contain a full sentence, make sure you use capitals where needed. The name is a describing camelcased English string.
-	Replace-codes are allowed, see below.
-	
-	eg.: $err['ImagesAllowedExtensions'] = 'Only images with the extension jpg, gif or png are allowed.';
-	usage in templates: {$errImagesAllowedExtensions}
-	usage in PHP: Language::getError('ImagesAllowedExtensions');
-	 
-- lbl:	
-	better known as a "label". A label is a literal translation for a word.
-	The name is a describing camelcased English string. The value should be a word, maximum two words, formating can be done by modifiers, so no capitals please. 
-	Replace-codes are allowed, see below.
-	
-	eg.: $lbl['Title'] = 'title';
-	usage in templates: {$lblTitle|ucfirst}
-	usage in PHP: Language::getLabel('Title');
-
-- msg:
-	msg is short for message. Messages are full sentences, they can contain HTML.
-	The name is a describing camelcased English string.
-	
-	eg: $msg['YourMessagesWasSent'] = 'Your message was sent. We will contact you within two business-days.';
-	usage in templates: {$msgYourMessagesWasSent}
-	usage in PHP: Language::getMessage('YourMessagesWasSent');
 	
 Replace-codes
 --
-Inside locale you can use replace-codes. These codes are placeholders for variables assigned by a modifier or by PHP-code. Because we want to make a powerfull
-framework you should use placeholders wherin the codes can be moved around without the need of changing any code. So use %<number>$s instead of %s.
-	
+In some cases you might have a message/error that contains some variable piece.
+eg. $msgBlogNumComments => 'This blogpost has %1$s comments'
+
+The %1$s will be replaced by the number of comments if you use the following template code and assume $numComments exists.
+{$msgBlogNumComments|sprintf:{$numComments}}
+
+If you have more than 1 variable in your string:
+eg. $msgMyAnimals => 'I have %1$s horses, %2$s dogs and %3$s cats';
+
+Template code:
+{$msgMyAnimals|sprintf:{$numHorses}:{$numDogs}:{$numCats}}
