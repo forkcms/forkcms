@@ -429,7 +429,7 @@ class FrontendTemplateModifiers
 		if($var == 0) return '';
 
 		// return
-		return '<abbr title="'. SpoonDate::getDate('d/m/Y H:i:s', $var, FRONTEND_LANGUAGE) .'">'. SpoonDate::getTimeAgo($var) .'</abbr>';
+		return '<abbr title="'. SpoonDate::getDate('d/m/Y H:i:s', $var, FRONTEND_LANGUAGE) .'">'. SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) .'</abbr>';
 	}
 
 
