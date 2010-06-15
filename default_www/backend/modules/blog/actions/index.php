@@ -100,7 +100,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setMassAction($ddmMassAction);
 
 		// add edit column
-		$this->dgPosts->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
+		$this->dgPosts->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
 	}
 
 
