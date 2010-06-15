@@ -94,6 +94,14 @@ class SpoonForm
 
 
 	/**
+	 * Locale for invalid tokens
+	 *
+	 * @var	string
+	 */
+	private $tokenError = 'Invalid token';
+
+
+	/**
 	 * Should we use a token?
 	 *
 	 * @var	bool
@@ -1043,6 +1051,18 @@ class SpoonForm
 
 
 	/**
+	 * Sets a custom error message when the token turns out to be invalid.
+	 *
+	 * @return	void
+	 * @param	string $error		The message to be displayed in case a token is invalid.
+	 */
+	public function setTokenError($error)
+	{
+		$this->tokenError = (string) $error;
+	}
+
+
+	/**
 	 * Should we use a form token?
 	 *
 	 * @return	void
@@ -1071,13 +1091,13 @@ class SpoonForm
         	if($this->getUseToken())
         	{
         		// token not available?
-        		if(!SpoonSession::exists('form_token')) $errors .= 'invalid token';
+        		if(!SpoonSession::exists('form_token')) $errors .= $this->tokenError;
 
         		// token was found
         		else
         		{
         			// compare tokens
-        			if($this->getField('form_token')->getValue() != SpoonSession::get('form_token')) $errors .= 'invalid token';
+        			if($this->getField('form_token')->getValue() != SpoonSession::get('form_token')) $errors .= $this->tokenError;
         		}
         	}
 

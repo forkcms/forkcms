@@ -103,25 +103,13 @@ class SpoonFilter
 	public static function arraySortKeys(array $array, $start = 0)
 	{
 		// has no elements
-		if(count($array) == 0) throw new SpoonFilterException('The array needs to contain at least one element.');
+		if(empty($array)) throw new SpoonFilterException('The array needs to contain at least one element.');
 
 		// elements found (reindex)
 		ksort($array);
 
-		// init var
-		$i = (int) $start;
-
-		// elements found
-		foreach($array as $value)
-		{
-			// key & value
-			$newArray[$i] = $value;
-
-			// update counter
-			$i++;
-		}
-
-		return $newArray;
+		// new array
+		return array_values($array);
 	}
 
 
@@ -364,7 +352,7 @@ class SpoonFilter
 	 */
 	public static function isAlphabetical($value)
 	{
-		return (bool) ctype_alpha((string) $value);
+		return ctype_alpha((string) $value);
 	}
 
 
@@ -376,7 +364,7 @@ class SpoonFilter
 	 */
 	public static function isAlphaNumeric($value)
 	{
-		return (bool) ctype_alnum((string) $value);
+		return ctype_alnum((string) $value);
 	}
 
 
@@ -402,7 +390,7 @@ class SpoonFilter
 	 */
 	public static function isBool($value)
 	{
-		return (bool) (filter_var((string) $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null) ? false : true;
+		return (filter_var((string) $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) !== null);
 	}
 
 
@@ -414,7 +402,7 @@ class SpoonFilter
 	 */
 	public static function isDigital($value)
 	{
-		return (bool) ctype_digit((string) $value);
+		return ctype_digit((string) $value);
 	}
 
 
@@ -438,11 +426,7 @@ class SpoonFilter
 	 */
 	public static function isEven($value)
 	{
-		// even number
-		if(((int) $value % 2) == 0) return true;
-
-		// odd number
-		return false;
+		return (((int) $value % 2) == 0);
 	}
 
 
@@ -454,19 +438,19 @@ class SpoonFilter
 	 */
 	public static function isFilename($value)
 	{
-		return (bool) preg_match("{^[^\\/\*\?\:\,]+$}", (string) $value);
+		return (bool) preg_match('/^[^\\/\*\?\:\,]+$/', (string) $value);
 	}
 
 
 	/**
-	 * Checks the value for numbers 0-9 with a dot or comma and an optional minus sign (in the beginning only).
+	 * Checks if the value is a valid floating point number.
 	 *
 	 * @return	bool			true if the value is a valid float, false if not.
 	 * @param	string $value	The value to validate.
 	 */
 	public static function isFloat($value)
 	{
-		return (bool) preg_match("/^-?([0-9]*[\.|,]?[0-9]+)$/", (string) $value);
+		return ((string) (float) $value == (string) $value);
 	}
 
 
@@ -479,7 +463,7 @@ class SpoonFilter
 	 */
 	public static function isGreaterThan($minimum, $value)
 	{
-		return (bool) ((int) $value > (int) $minimum);
+		return ((int) $value > (int) $minimum);
 	}
 
 
@@ -491,7 +475,7 @@ class SpoonFilter
 	 */
 	public static function isInteger($value)
 	{
-		return (bool) preg_match("/^-?[0-9]+$/", (string) $value);
+		return ((string) (int) $value == (string) $value);
 	}
 
 
@@ -507,14 +491,15 @@ class SpoonFilter
 		if(!isset($_SERVER['HTTP_REFERER'])) return true;
 		if(!isset($_SERVER['HTTP_HOST'])) return true;
 
-		// redefine hostname & domains
-		$hostname = str_replace('www.', '', $_SERVER['HTTP_HOST']);
-		$domains = ($domains === null) ? (array) $hostname : (array) $domains;
+		// get own & referrer host names
+		$referrer = parse_url($_SERVER['HTTP_REFERER']);
+		$referrer = $referrer['host'];
+		$hostname = $_SERVER['HTTP_HOST'];
 
-		// redefine referer
-		$referrer = str_replace(array('http://', 'https://', 'www.'), '', $_SERVER['HTTP_REFERER']);
-		$slashPosition = strpos($referrer, '/');
-		if($slashPosition !== false) $referrer = mb_substr($referrer, 0, $slashPosition, SPOON_CHARSET);
+		// redefine hostname & domains
+		if(strpos($referrer, 'www.') === 0) $referrer = substr($referrer, 4);
+		if(strpos($hostname, 'www.') === 0) $hostname = substr($hostname, 4);
+		$domains = ($domains === null) ? (array) $hostname : (array) $domains;
 
 		// internal?
 		return in_array($referrer, $domains);
@@ -542,7 +527,7 @@ class SpoonFilter
 	 */
 	public static function isMaximum($maximum, $value)
 	{
-		return (bool) ((int) $value <= (int) $maximum);
+		return ((int) $value <= (int) $maximum);
 	}
 
 
@@ -560,7 +545,7 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// execute & return
-		return (bool) (mb_strlen((string) $value, $charset) <= (int) $maximum);
+		return (mb_strlen((string) $value, $charset) <= (int) $maximum);
 	}
 
 
@@ -573,7 +558,7 @@ class SpoonFilter
 	 */
 	public static function isMinimum($minimum, $value)
 	{
-		return (bool) ((int) $value >= (int) $minimum);
+		return ((int) $value >= (int) $minimum);
 	}
 
 
@@ -591,7 +576,7 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// execute & return
-		return (bool) (mb_strlen((string) $value, $charset) >= (int) $minimum);
+		return (mb_strlen((string) $value, $charset) >= (int) $minimum);
 	}
 
 
@@ -628,7 +613,7 @@ class SpoonFilter
 	 */
 	public static function isSmallerThan($maximum, $value)
 	{
-		return (bool) ((int) $value < (int) $maximum);
+		return ((int) $value < (int) $maximum);
 	}
 
 
@@ -640,7 +625,7 @@ class SpoonFilter
 	 */
 	public static function isString($value)
 	{
-		return (bool) preg_match("/^[^\x-\x1F]+$/", (string) $value);
+		return (bool) preg_match('/^[^\x-\x1F]+$/', (string) $value);
 	}
 
 
@@ -652,7 +637,7 @@ class SpoonFilter
 	 */
 	public static function isURL($value)
 	{
-		return (filter_var((string) $value, FILTER_VALIDATE_URL) !== false) ? true : false;
+		return (filter_var((string) $value, FILTER_VALIDATE_URL) !== false);
 	}
 
 
@@ -672,8 +657,7 @@ class SpoonFilter
 		if(!self::isValidRegexp($regexp)) throw new SpoonFilterException('The provided regex pattern "'. $regexp .'" is not valid');
 
 		// validate
-		if(@preg_match($regexp, (string) $value)) return true;
-		return false;
+		return (bool) (@preg_match($regexp, (string) $value));
 	}
 
 
@@ -690,7 +674,7 @@ class SpoonFilter
 		$dummy = 'spoon is growing every day';
 
 		// validate
-		return (@preg_match($regexp, $dummy) === false) ? false : true;
+		return (@preg_match($regexp, $dummy) !== false);
 	}
 
 

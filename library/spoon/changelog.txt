@@ -5,6 +5,15 @@
 - Added option for headers.sortingIcon in datagrid.tpl - empty <img> elements are no longer shown for default sorting settings.
 - Fixed the sorting problem when setting the sortParameter option in a datagrid.
 - Bugfix: some classes were using non-existing exceptions, fixed this issue.
+- Rewrote a few methods in SpoonFilter for consistency and performance reasons.
+- Bugfix: when providing a template to SpoonTemplate::display a few extra checks are performed.
+- Bugfix: multiple forms on the same page would produce ambiguous id's resulting in 'invalid' markup.
+- Feature: a callback mechanism for exceptions has been added. New constant 'SPOON_EXCEPTION_CALLBACK'.
+- Feature: you can now overwrite the token error message in SpoonForm.
+- Bugfix: add FOLLOW_LOCATION to SpoonFile::download cURL call so rewrites pose no problem.
+- Bugfix: fixed SpoonFilter::isFloat and SpoonFilter::isInteger to work on every float and int instead of relying on regexes.
+- Rewrote some small snippets of code to improve performance.
+- Bugfix: rewrote SpoonFilter::isInternalReferrer to use PHP's internal parse_url function.
 
 
 1.2.0 (2010-05-18)
@@ -38,6 +47,7 @@
 - Fixed an issue in SpoonFilter::toCamelCase concerning words with uppercase characters in it. eg SpOoN LiBrarY.
 - SpoonFilter::getValue() now accepts arrays for the first argument, as well as 'array' for the returnType argument.
 - Added SpoonFilter::arrayMapRecursive(), a way to map multi-dimensional arrays with one or more functions.
+
 
 1.1.5 (2010-02-07)
 ----

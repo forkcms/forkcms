@@ -72,7 +72,8 @@ class SpoonFile
 
 		$options = array(CURLOPT_URL => $sourceURL,
 						 CURLOPT_FILE => $fileHandle,
-						 CURLOPT_HEADER => false);
+						 CURLOPT_HEADER => false,
+						 CURLOPT_FOLLOWLOCATION => true);
 
 		// init curl
 		$curl = curl_init();

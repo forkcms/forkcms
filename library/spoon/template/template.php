@@ -289,15 +289,17 @@ class SpoonTemplate
 	 */
 	public function display($template)
 	{
+		// redefine
+		$template = (string) $template;
+
 		// validate name
 		if(trim($template) == '' || !SpoonFile::exists($template)) throw new SpoonTemplateException('Please provide an existing template.');
-		if(!SpoonFile::exists($template)) throw new SpoonTemplateException('The file ('. $template .') does not exist.');
 
 		// compiled name
 		$compileName = $this->getCompileName((string) $template);
 
 		// compiled if needed
-		if(!SpoonFile::exists($this->compileDirectory .'/'. $compileName) || $this->forceCompile)
+		if($this->forceCompile || !SpoonFile::exists($this->compileDirectory .'/'. $compileName))
 		{
 			// create compiler
 			$compiler = new SpoonTemplateCompiler((string) $template, $this->variables);
@@ -362,7 +364,7 @@ class SpoonTemplate
 	private function getCompileName($template, $path = null)
 	{
 		// redefine template
-		if(mb_substr($template, 0, 1, SPOON_CHARSET) != '/' && $path !== null) $template = $path .'/'. $template;
+		if($path !== null && mb_substr($template, 0, 1, SPOON_CHARSET) != '/') $template = $path .'/'. $template;
 
 		// return the correct full path
 		return md5(realpath($template)) .'_'. basename($template) .'.php';

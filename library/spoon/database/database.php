@@ -162,7 +162,7 @@ class SpoonDatabase
 		$query = ($where != '') ? $query .' WHERE '. (string) $where .';' : $query .';';
 
 		// set parameters
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -228,7 +228,7 @@ class SpoonDatabase
 
 		// init vars
 		$query = (string) $query;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -279,7 +279,7 @@ class SpoonDatabase
 
 		// init vars
 		$query = (string) $query;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -400,7 +400,7 @@ class SpoonDatabase
 
 		// init vars
 		$query = (string) $query;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -454,7 +454,7 @@ class SpoonDatabase
 
 		// init vars
 		$query = (string) $query;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -558,7 +558,7 @@ class SpoonDatabase
 
 		// init vars
 		$query = (string) $query;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -616,7 +616,7 @@ class SpoonDatabase
 
 		// init vars
 		$query = (string) $query;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -712,7 +712,7 @@ class SpoonDatabase
 
 		// init vars
 		$query = (string) $query;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// create statement
 		$statement = $this->handler->prepare($query);
@@ -799,11 +799,11 @@ class SpoonDatabase
 				for($t = 0; $t < $numFields; $t++)
 				{
 					// add parameter marker
-					$query .= '?';
-
-					// add comma, unless this is the last
-					if($t != ($numFields - 1)) $query .= ', ';
+					$query .= '?, ';
 				}
+
+				// remove trailing comma
+				if($numFields) $query = substr($query, 0, -2);
 
 				// add closing brackets
 				if($i != $numRecords) $query .= '), ';
@@ -832,11 +832,11 @@ class SpoonDatabase
 			for($i = 0; $i < count($aValues); $i++)
 			{
 				// add parameter marker
-				$query .= '?';
-
-				// add comma, unless this is the last
-				if($i != ($numFields - 1)) $query .= ', ';
+				$query .= '?, ';
 			}
+
+			// remove trailing comma
+			if($numFields) $query = substr($query, 0, -2);
 
 			// end query
 			$query .= ');';
@@ -1018,7 +1018,7 @@ class SpoonDatabase
 
 		// init vars
 		$table = (string) $table;
-		$parameters = ($parameters != array()) ? (array) $parameters : array();
+		$parameters = (array) $parameters;
 
 		// values check
 		if(count($values) == 0) throw new SpoonDatabaseException('No values provided.', 0, $this->password);
@@ -1031,11 +1031,13 @@ class SpoonDatabase
 		// loop values
 		foreach($values as $key => $value)
 		{
-			$query .= $key .' = ?';
-			if($i != $iValues) $query .= ', ';
+			$query .= $key .' = ?, ';
 			$aTmpParameters[] = $value;
 			$i++;
 		}
+
+		// remove trailing comma
+		if($iValues) $query = substr($query, 0, -2);
 
 		// add where clause
 		if($where != '') $query .= ' WHERE '. (string) $where;

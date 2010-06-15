@@ -336,7 +336,7 @@ class SpoonTemplateCompiler
 	private function parseCache($content)
 	{
 		// regex pattern
-		$pattern = "/\{cache:([a-z0-9_\.\{\$\}]+)\}.*?\{\/cache:\\1\}/is";
+		$pattern = '/\{cache:([a-z0-9_\.\{\$\}]+)\}.*?\{\/cache:\\1\}/is';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -378,7 +378,7 @@ class SpoonTemplateCompiler
 	private function parseCycle($content, $iteration)
 	{
 		// regex pattern
-		$pattern = "|\{cycle((:\'[a-z0-9\-_\<\/\>\"\=\;\:\s]+\')+)\}|is";
+		$pattern = '/\{cycle((:\'[a-z0-9\-_\<\/\>\"\=\;\:\s]+\')+)\}/is';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -436,7 +436,7 @@ class SpoonTemplateCompiler
 					$iterationPattern = str_replace(array('.', '[', ']', "'"), array('\.', '\[', '\]', "\'"), $iteration);
 
 					// match current iteration
-					preg_match_all('|{iteration:'. $iterationPattern .'}.*{/iteration:'. $iterationPattern .'}|ismU', $content, $iterations);
+					preg_match_all('/\{iteration:'. $iterationPattern .'\}.*\{\/iteration:'. $iterationPattern .'\}/ismU', $content, $iterations);
 
 					// loop mathes
 					foreach($iterations as $block)
@@ -507,7 +507,7 @@ class SpoonTemplateCompiler
 	private function parseIncludes($content)
 	{
 		// regex pattern
-		$pattern = "|\{include:file='([a-z0-9\-_\.:\{\$\}\/]+)'\}|is";
+		$pattern = '/\{include:file=\'([a-z0-9\-_\.:\{\$\}\/]+)\'\}/is';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -636,7 +636,7 @@ class SpoonTemplateCompiler
 	private function parseOptions($content)
 	{
 		// regex pattern
-		$pattern = "/\{option:((\!)?[a-z0-9\-_\[\]\']+(\.([a-z0-9\-_\[\]\'])+)?)}.*?\{\/option:\\1\}/is";
+		$pattern = '/\{option:((\!)?[a-z0-9\-_\[\]\']+(\.([a-z0-9\-_\[\]\'])+)?)}.*?\{\/option:\\1\}/is';
 
 		// init vars
 		$options = array();
@@ -1013,7 +1013,7 @@ class SpoonTemplateCompiler
 	 */
 	private function stripCode($content)
 	{
-		return $content = preg_replace("/\<\?(php)?(.*)\?\>/siU", '', $content);
+		return $content = preg_replace('/\<\?(php)?(.*)\?\>/siU', '', $content);
 	}
 
 
@@ -1025,7 +1025,7 @@ class SpoonTemplateCompiler
 	 */
 	private function stripComments($content)
 	{
-		return $content = preg_replace("/\{\*(.+?)\*\}/s", '', $content);
+		return $content = preg_replace('/\{\*(.+?)\*\}/s', '', $content);
 	}
 }
 
