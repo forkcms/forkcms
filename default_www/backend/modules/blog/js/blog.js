@@ -92,10 +92,12 @@ jsBackend.blog.category = {
 	},
 	// when a key is pressed
 	keyPress: function(evt) {
-		if(evt.which == 13) { 
+		if(evt.which == 13) {
+			// stop the default action
 			evt.preventDefault();
 			evt.stopPropagation();
 			
+			// add the category
 			jsBackend.blog.category.add(evt); 
 		}
 		if($(this).val().length > 0) $('#newCategoryButton').removeClass('disabledButton');

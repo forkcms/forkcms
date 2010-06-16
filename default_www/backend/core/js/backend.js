@@ -515,6 +515,25 @@ jsBackend.layout = {
 		
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.datagrid();
+		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
+	},
+	// datafilter layout fixes
+	dataFilter: function() {
+		// add last child and first child for IE
+		$('.datafilter tbody td:first-child').addClass('firstChild')
+		$('.datafilter tbody td:last-child').addClass('lastChild')
+
+		// init var
+		var tallest = 0;
+		
+		// loop group
+		$('.datafilter tbody .options').each(function() {
+			// taller?
+			if($(this).height() > tallest) tallest = $(this).height();
+		});
+		
+		// set new height
+		$('.datafilter tbody .options').height(tallest);
 	},
 	// datagrid layout
 	datagrid: function() {
