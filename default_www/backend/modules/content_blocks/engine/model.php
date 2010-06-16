@@ -14,7 +14,9 @@
 class BackendContentBlocksModel
 {
 	// overview of the items
-	const QRY_BROWSE = 'SELECT i.id, i.title FROM content_blocks AS i WHERE i.status = ?;';
+	const QRY_BROWSE = 'SELECT i.id, i.title
+						FROM content_blocks AS i
+						WHERE i.status = ?;';
 
 
 	// overview of the revisions for an item
@@ -32,11 +34,8 @@ class BackendContentBlocksModel
 	 */
 	public static function delete($id)
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// delete all records
-		$db->delete('content_blocks', 'id = ?', (int) $id);
+		BackendModel::getDB(true)->delete('content_blocks', 'id = ?', (int) $id);
 	}
 
 
@@ -102,15 +101,16 @@ class BackendContentBlocksModel
 	 */
 	public static function getRevision($id, $revisionId)
 	{
-		// get db
-		$db = BackendModel::getDB();
+		// redefine
+		$id = (int) $id;
+		$revisionId = (int) $revisionId;
 
 		// get record and return it
-		return (array) $db->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
-										FROM content_blocks AS i
-										WHERE i.id = ? AND i.revision_id = ?
-										LIMIT 1;',
-										array((int) $id, (int) $revisionId));
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+															FROM content_blocks AS i
+															WHERE i.id = ? AND i.revision_id = ?
+															LIMIT 1;',
+															array($id, $revisionId));
 	}
 
 
@@ -194,7 +194,7 @@ class BackendContentBlocksModel
 		$rowsToKeep = (int) BackendModel::getSetting('content_blocks', 'maximum_number_of_revisions', 20);
 
 		// get revision-ids for items to keep
-		$revisionIdsToKeep = (array) $db->getColumn('SELECT ci.revision_id
+		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id
 														FROM content_blocks AS i
 														WHERE i.id = ? AND i.status = ?
 														ORDER BY i.edited_on DESC

@@ -13,7 +13,7 @@
 class BackendModel
 {
 	/**
-	 * The keys an structural data for pages
+	 * The keys and structural data for pages
 	 *
 	 * @var	array
 	 */
@@ -59,11 +59,11 @@ class BackendModel
 			// remove last chunk
 			array_pop($chunks);
 
-			// join together
+			// join together, and increment the last one
 			$string = implode('-', $chunks ) .'-'. ((int) $last + 1);
 		}
 
-		// not numeric
+		// not numeric, so add -2
 		else $string .= '-2';
 
 		// return
@@ -83,30 +83,30 @@ class BackendModel
 		$akismetModules = BackendSettingsModel::getModulesThatRequireAkismet();
 		$googleMapsModules = BackendSettingsModel::getModulesThatRequireGoogleMaps();
 
-		// akismet key
+		// check if the akismet key is available if there are modules that require it
 		if(!empty($akismetModules) && BackendModel::getSetting('core', 'akismet_key', null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => BL::getError('AkismetKey'));
 		}
 
-		// google maps key
+		// check if the google maps key is available if there are modules that require it
 		if(!empty($googleMapsModules) && BackendModel::getSetting('core', 'google_maps_key', null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => BL::getError('GoogleMapsKey'));
 		}
 
-		// fork API keys
+		// check if the fork API keys are available
 		if(BackendModel::getSetting('core', 'fork_api_private_key') == '' || BackendModel::getSetting('core', 'fork_api_public_key') == '')
 		{
 			$warnings[] = array('message' => BL::getError('ForkAPIKeys'));
 		}
 
-		// debug
+		// check if debug-mode is active
 		if(SPOON_DEBUG) $warnings[] = array('message' => BL::getError('DebugModeIsActive'));
 
-		// robots.txt
+		// try to validate robots.txt
 		if(SpoonFile::exists(PATH_WWW .'/robots.txt'))
 		{
 			// get content
@@ -343,12 +343,9 @@ class BackendModel
 		// validate cache
 		if(empty(self::$modules) || !isset(self::$modules['active']) || !isset(self::$modules['all']))
 		{
-			// get db
-			$db = self::getDB();
-
 			// get all modules
-			$modules = (array) $db->getPairs('SELECT m.name, m.active
-												FROM modules AS m');
+			$modules = (array) self::getDB()->getPairs('SELECT m.name, m.active
+														FROM modules AS m');
 
 			// loop
 			foreach($modules as $module => $active)
@@ -441,12 +438,9 @@ class BackendModel
 		// are the values available
 		if(empty(self::$moduleSettings))
 		{
-			// get db
-			$db = self::getDB();
-
 			// get all settings
-			$moduleSettings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
-														FROM modules_settings AS ms;');
+			$moduleSettings = (array) self::getDB()->retrieve('SELECT ms.module, ms.name, ms.value
+																FROM modules_settings AS ms;');
 
 			// loop and store settings in the cache
 			foreach($moduleSettings as $setting)
@@ -748,9 +742,6 @@ class BackendModel
 			self::setSetting('core', 'ping_services', $pingServices);
 		}
 
-		// require SpoonXMLRPCClient
-		require_once 'spoon/xmlrpc/client.php'; // @todo davy - is deze niet overbodig geworden met de autoloader?
-
 		// loop services
 		foreach($pingServices['services'] as $service)
 		{
@@ -826,14 +817,11 @@ class BackendModel
 		$key = (string) $key;
 		$valueToStore = serialize($value);
 
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// store
-		$db->execute('INSERT INTO modules_settings(module, name, value)
-						VALUES(?, ?, ?)
-						ON DUPLICATE KEY UPDATE value = ?;',
-						array($module, $key, $valueToStore, $valueToStore));
+		BackendModel::getDB(true)->execute('INSERT INTO modules_settings(module, name, value)
+											VALUES(?, ?, ?)
+											ON DUPLICATE KEY UPDATE value = ?;',
+											array($module, $key, $valueToStore, $valueToStore));
 
 		// cache it
 		self::$moduleSettings[$module][$key] = $value;

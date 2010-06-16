@@ -73,7 +73,7 @@ class BackendSettingsModel
 	 */
 	public static function getWarnings()
 	{
-			// init vars
+		// init vars
 		$warnings = array();
 		$activeModules = BackendModel::getModules(true);
 

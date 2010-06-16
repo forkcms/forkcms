@@ -14,11 +14,11 @@
  */
 class BackendTagsModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT t.id, t.tag, t.number AS num_tags
-									FROM tags AS t
-									LEFT OUTER JOIN modules_tags AS mt ON mt.tag_id = t.id
-									WHERE t.language = ?
-									GROUP BY t.id';
+	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.tag, i.number AS num_tags
+									FROM tags AS i
+									LEFT OUTER JOIN modules_tags AS mt ON mt.tag_id = i.id
+									WHERE i.language = ?
+									GROUP BY i.id';
 
 
 	/**
@@ -45,21 +45,18 @@ class BackendTagsModel
 	 * Check if a tag exists
 	 *
 	 * @return	bool
-	 * @param	int $id		The id to check for existence
+	 * @param	int $id		The id to check for existence.
 	 */
 	public static function exists($id)
 	{
 		// redefine
 		$id = (int) $id;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// exists?
-		return $db->getNumRows('SELECT id
-								FROM tags
-								WHERE id = ?;',
-								$id);
+		return BackendModel::getDB()->getNumRows('SELECT i.id
+													FROM tags AS i
+													WHERE i.id = ?;',
+													$id);
 	}
 
 
@@ -74,14 +71,11 @@ class BackendTagsModel
 		// redefine
 		$id = (int) $id;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// make the call
-		return (array) $db->getRecord('SELECT t.tag AS name
-										FROM tags AS t
-										WHERE t.id = ?;',
-										$id);
+		return (array) BackendModel::getDB()->getRecord('SELECT i.tag AS name
+															FROM tags AS i
+															WHERE i.id = ?;',
+															$id);
 	}
 
 
@@ -98,16 +92,13 @@ class BackendTagsModel
 		$query = (string) $query;
 		$limit = (int) $limit;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// make the call
-		return (array) $db->retrieve('SELECT t.tag AS name, t.tag AS value
-										FROM tags AS t
-										WHERE t.tag LIKE ?
-										ORDER BY t.tag ASC
-										LIMIT ?;',
-										array($query .'%', $limit));
+		return (array) BackendModel::getDB()->retrieve('SELECT i.tag AS name, i.tag AS value
+														FROM tags AS i
+														WHERE i.tag LIKE ?
+														ORDER BY i.tag ASC
+														LIMIT ?;',
+														array($query .'%', $limit));
 	}
 
 
@@ -128,16 +119,13 @@ class BackendTagsModel
 		$type = (string) SpoonFilter::getValue($type, array('string', 'array'), 'string');
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// fetch tags
-		$tags = (array) $db->getColumn('SELECT t.tag
-										FROM tags AS t
-										INNER JOIN modules_tags AS mt ON t.id = mt.tag_id
-										WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?
-										ORDER BY tag ASC;',
-										array($module, $otherId, $language));
+		$tags = (array) BackendModel::getDB()->getColumn('SELECT i.tag
+															FROM tags AS i
+															INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
+															WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
+															ORDER BY i.tag ASC;',
+															array($module, $otherId, $language));
 
 		// return as an imploded string
 		if($type == 'string') return implode(',', $tags);
@@ -167,9 +155,10 @@ class BackendTagsModel
 		if($id === null)
 		{
 			// get number of tags with the specified url
-			$number = (int) $db->getNumRows('SELECT t.id
-												FROM tags AS t
-												WHERE t.url = ? AND t.language = ?;', array($URL, $language));
+			$number = (int) $db->getNumRows('SELECT i.id
+												FROM tags AS i
+												WHERE i.url = ? AND i.language = ?;',
+												array($URL, $language));
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -189,10 +178,10 @@ class BackendTagsModel
 			$id = (int) $id;
 
 			// get number of tags with the specified url
-			$number = (int) $db->getNumRows('SELECT t.id
-												FROM tags AS t
-												WHERE t.url = ? AND t.id != ? AND t.language = ?;',
-												array($URL, $id, $language));
+			$number = (int) $db->getNumRows('SELECT i.id
+												FROM tags AS i
+												WHERE i.url = ? AND i.language = ? AND i.id != ?;',
+												array($URL, $language, $id));
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -223,9 +212,6 @@ class BackendTagsModel
 		$tag = (string) $tag;
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// build record
 		$record['language'] = $language;
 		$record['tag'] = $tag;
@@ -233,7 +219,7 @@ class BackendTagsModel
 		$record['url'] = self::getURL($tag);
 
 		// insert
-		return (int) $db->insert('tags', $record);
+		return (int) BackendModel::getDB(true)->insert('tags', $record);
 	}
 
 
@@ -241,7 +227,7 @@ class BackendTagsModel
 	 * Save the tags
 	 *
 	 * @return	void
-	 * @param	int $otherId				The if of the item to tag.
+	 * @param	int $otherId				The id of the item to tag.
 	 * @param	mixed $tags					The tags for the item.
 	 * @param	string $module				The module wherin the item is located.
 	 * @param	string[optional] $language	The language wherin the tags will be inserted, if not provided the workinglanguage will be used.
@@ -261,10 +247,10 @@ class BackendTagsModel
 		$db = BackendModel::getDB(true);
 
 		// get current tags for item
-		$currentTags = (array) $db->getPairs('SELECT t.tag, t.id
-												FROM tags AS t
-												INNER JOIN modules_tags AS mt ON t.id = mt.tag_id
-												WHERE mt.module = ? AND mt.other_id = ? AND t.language = ?;',
+		$currentTags = (array) $db->getPairs('SELECT i.tag, i.id
+												FROM tags AS i
+												INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
+												WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?;',
 												array($module, $otherId, $language));
 
 		// remove old links
@@ -287,9 +273,10 @@ class BackendTagsModel
 			}
 
 			// get tag ids
-			$tagsAndIds = (array) $db->getPairs('SELECT t.tag, t.id
-													FROM tags AS t
-													WHERE t.tag IN("'. implode('", "', $tags) .'") AND t.language = ?;', $language);
+			$tagsAndIds = (array) $db->getPairs('SELECT i.tag, i.id
+													FROM tags AS i
+													WHERE i.tag IN("'. implode('", "', $tags) .'") AND i.language = ?;',
+													$language);
 
 			// loop again and create tags that don't exist already
 			foreach($tags as $tag)
@@ -343,11 +330,8 @@ class BackendTagsModel
 	 */
 	public static function updateTag($tag)
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// insert
-		$db->update('tags', $tag, 'id = ?', $tag['id']);
+		BackendModel::getDB(true)->update('tags', $tag, 'id = ?', $tag['id']);
 	}
 }
 

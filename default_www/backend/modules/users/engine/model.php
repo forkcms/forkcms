@@ -13,9 +13,9 @@
 class BackendUsersModel
 {
 	// overview of the active users
-	const QRY_BROWSE = 'SELECT u.id
-						FROM users AS u
-						WHERE u.deleted = ?;';
+	const QRY_BROWSE = 'SELECT i.id
+						FROM users AS i
+						WHERE i.deleted = ?;';
 
 
 	/**
@@ -29,11 +29,8 @@ class BackendUsersModel
 		// redefine
 		$id = (int) $id;
 
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// update the user
-		$db->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', $id);
+		BackendModel::getDB(true)->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', $id);
 	}
 
 
@@ -48,11 +45,8 @@ class BackendUsersModel
 		// redefine
 		$id = (int) $id;
 
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// delete the settings
-		$db->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $id);
+		BackendModel::getDB(true)->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $id);
 	}
 
 
@@ -73,15 +67,15 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// if the user should also be active, there should be at least one row to return true
-		if($active) return ($db->getNumRows('SELECT u.id
-												FROM users AS u
-												WHERE u.id = ? AND u.deleted = ?;',
+		if($active) return ($db->getNumRows('SELECT i.id
+												FROM users AS i
+												WHERE i.id = ? AND i.deleted = ?;',
 												array($id, 'N')) == 1);
 
 		// fallback, this doesn't hold the active nor deleted status in account
-		return ($db->getNumRows('SELECT u.id
-									FROM users AS u
-									WHERE u.id = ?;',
+		return ($db->getNumRows('SELECT i.id
+									FROM users AS i
+									WHERE i.id = ?;',
 									array($id)) >= 1);
 	}
 
@@ -97,15 +91,12 @@ class BackendUsersModel
 		// redefine
 		$email = (string) $email;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// check if the user is present in our database
-		return ($db->getNumRows('SELECT u.id
-									FROM users AS u
-									INNER JOIN users_settings AS us ON u.id = us.user_id
-									WHERE u.active = ? AND u.deleted = ? AND us.name = ? AND us.value = ?;',
-									array('Y', 'N', 'email', serialize($email))) > 0);
+		return (BackendModel::getDB()->getNumRows('SELECT i.id
+													FROM users AS i
+													INNER JOIN users_settings AS s ON i.id = s.user_id
+													WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value = ?;',
+													array('Y', 'N', 'email', serialize($email))) > 0);
 	}
 
 
@@ -127,15 +118,15 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// userid specified?
-		if($id !== null) return (bool) ($db->getNumRows('SELECT u.id
-															FROM users AS u
-															WHERE u.id != ? AND u.username = ?;',
+		if($id !== null) return (bool) ($db->getNumRows('SELECT i.id
+															FROM users AS i
+															WHERE i.id != ? AND i.username = ?;',
 															array($id, $username)) >= 1);
 
 		// no user to ignore
-		return (bool) ($db->getNumRows('SELECT u.id
-										FROM users AS u
-										WHERE u.username = ?;',
+		return (bool) ($db->getNumRows('SELECT i.id
+										FROM users AS i
+										WHERE i.username = ?;',
 										array($username)) >= 1);
 	}
 
@@ -155,19 +146,19 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// get general user data
-		$user = (array) $db->getRecord('SELECT u.id, u.username, u.active, u.group_id
-										FROM users AS u
-										WHERE u.id = ?;',
+		$user = (array) $db->getRecord('SELECT i.id, i.username, i.active, i.group_id
+										FROM users AS i
+										WHERE i.id = ?;',
 										array($id));
 
 		// get user-settings
-		$user['settings'] = (array) $db->getPairs('SELECT us.name, us.value
-													FROM users_settings AS us
-													WHERE us.user_id = ?;',
+		$user['settings'] = (array) $db->getPairs('SELECT s.name, s.value
+													FROM users_settings AS s
+													WHERE s.user_id = ?;',
 													array($id));
 
 		// loop settings and unserialize them
-		foreach($user['settings'] as $key => $value) $user['settings'][$key] = unserialize($value);
+		foreach($user['settings'] as $key => &$value) $value = unserialize($value);
 
 		// return
 		return $user;
@@ -201,12 +192,9 @@ class BackendUsersModel
 	 */
 	public static function getGroups()
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// return
-		return (array) $db->getPairs('SELECT g.id, g.name
-										FROM groups AS g');
+		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
+														FROM groups AS i');
 	}
 
 
@@ -221,17 +209,14 @@ class BackendUsersModel
 		// redefine
 		$email = (string) $email;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// get user-settings
-		$userId = $db->getVar('SELECT user_id
-								FROM users_settings AS us
-								WHERE us.value = ?;',
-								array(serialize($email)));
+		$userId = BackendModel::getDB()->getVar('SELECT i.user_id
+													FROM users_settings AS i
+													WHERE i.value = ?;',
+													array(serialize($email)));
 
-		// return
-		return (int) $userId;
+		// userId or false on error
+		return ($userId == 0) ? false : (int) $userId;
 	}
 
 
@@ -243,13 +228,14 @@ class BackendUsersModel
 	 */
 	public static function getIdByUsername($username)
 	{
-		// get db
-		$db = BackendModel::getDB();
+		// redefine
+		$username = (string) $username;
 
 		// get user-settings
-		$userId = $db->getVar('SELECT u.id
-								FROM users AS u
-								WHERE u.username = ?;', (string) $username);
+		$userId = BackendModel::getDB()->getVar('SELECT i.id
+													FROM users AS i
+													WHERE i.username = ?;',
+													array($username));
 
 		// userId or false on error
 		return ($userId == 0) ? false : (int) $userId;
@@ -283,13 +269,11 @@ class BackendUsersModel
 	 */
 	public static function getUsers()
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// get general user data and return
-		return (array) $db->getPairs('SELECT u.id, u.username
-										FROM users AS u;',
-										null, 'id'); // @todo davy - dit moet nog alfabetisch gesorteerd worden
+		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.username
+														FROM users AS i
+														ORDER BY i.username;',
+														null, 'id');
 	}
 
 
@@ -367,11 +351,8 @@ class BackendUsersModel
 		$userId = $user->getUserId();
 		$key = $user->getSetting('password_key');
 
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// update user
-		$db->update('users', array('password' => BackendAuthentication::getEncryptedString($password, $key)), 'id = ?', $userId);
+		BackendModel::getDB(true)->update('users', array('password' => BackendAuthentication::getEncryptedString($password, $key)), 'id = ?', $userId);
 
 		// remove the user settings linked to the resetting of passwords
 		self::deleteResetPasswordSettings($userId);

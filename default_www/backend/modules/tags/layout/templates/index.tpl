@@ -7,7 +7,7 @@
 				</div>
 
 				{option:datagrid}
-					<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="tags">
+					<form action="{$var|geturl:'mass_action'}" method="get" class="forkForms submitWithLink" id="tagsForm">
 						<div class="datagridHolder">
 							{$datagrid}
 						</div>
