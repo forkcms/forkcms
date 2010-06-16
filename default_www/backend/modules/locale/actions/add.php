@@ -149,7 +149,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 			// module should be 'core' for any other application than backend
 			if($this->frm->getField('application')->getValue() != 'backend' && $this->frm->getField('module')->getValue() != 'core')
 			{
-				$this->frm->getField('module')->setError(BL::getError('ModuleHasToBeCore', 'locale'));
+				$this->frm->getField('module')->setError(BL::getError('ModuleHasToBeCore'));
 			}
 
 			// no errors?

@@ -105,6 +105,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->tpl->assign($this->filter);
 
 		// assign id, name
+		$this->tpl->assign('name', $this->record['name']);
 		$this->tpl->assign('id', $this->record['id']);
 	}
 

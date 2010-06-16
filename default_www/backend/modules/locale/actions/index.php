@@ -2,7 +2,7 @@
 
 /**
  * BackendLocaleIndex
- * This is the index-action, it will display the overview of language labels
+ * This is the index-action, it will display the overview of locale items.
  *
  * @package		backend
  * @subpackage	locale
@@ -69,8 +69,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
 		// wherin we allow the query to be in the actionfile itself
 		$query = 'SELECT l.id, l.language, l.application, l.module, l.type, l.name, l.value
-						FROM locale AS l
-						WHERE 1';
+					FROM locale AS l
+					WHERE 1';
 
 		// add language
 		if($this->filter['language'] !== null)
@@ -119,7 +119,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Load the datagrids
+	 * Load the datagrid
 	 *
 	 * @return void
 	 */
@@ -141,10 +141,10 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('language', 'application', 'module', 'type', 'name', 'value'), 'name');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&id=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
 		// add the multicheckbox column
-		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
+		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->datagrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown
@@ -155,7 +155,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'truncate'), array('[value]', 30), 'value', true);
 
 		// add columns
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&amp;id=[id]', BL::getLabel('Edit'));
 	}
 
 

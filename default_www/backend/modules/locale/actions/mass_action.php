@@ -2,10 +2,10 @@
 
 /**
  * BackendLocaleMassAction
- * This action is used to update one or more locale items.
+ * This action is used to delete one or more locale items.
  *
  * @package		backend
- * @subpackage	blog
+ * @subpackage	locale
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
@@ -37,7 +37,7 @@ class BackendLocaleMassAction extends BackendBaseAction
 		$action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
 		// no id's provided
-		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&error=no-selection');
 
 		// at least one id
 		else
@@ -50,7 +50,7 @@ class BackendLocaleMassAction extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report='. $action);
+		$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=deleted');
 	}
 
 
