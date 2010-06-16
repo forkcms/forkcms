@@ -211,7 +211,7 @@ class BackendModel
 		for($i = 0; $i < $length; $i++) $tmp .= ($consonants[rand(0, $consonantsCount - 1)] . $vowels[rand(0, $vowelsCount - 1)]);
 
 		// reformat the pass
-		for ($i = 0; $i < $length; $i++)
+		for($i = 0; $i < $length; $i++)
 		{
 			if(rand(0, 1) == 1) $pass .= strtoupper(substr($tmp, $i, 1));
 			else $pass .= substr($tmp, $i, 1);

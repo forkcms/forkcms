@@ -877,7 +877,7 @@ class SpoonFilter
 		$newValue = '';
 
 		// loop charachtesr
-		for ($i = 0; $i < mb_strlen($value, $charset); $i++)
+		for($i = 0; $i < mb_strlen($value, $charset); $i++)
 		{
 			// valid character (so add to new string)
 			if(in_array(mb_substr($value, $i, 1, $charset), $characters)) $newValue .= mb_substr($value, $i, 1, $charset);

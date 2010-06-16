@@ -465,10 +465,7 @@ class BackendMeta
 			// add parameters set by user
 			if(!empty($this->callback['parameters']))
 			{
-				foreach($this->callback['parameters'] as $parameter)
-				{
-					$parameters[] = $parameter;
-				}
+				foreach($this->callback['parameters'] as $parameter) $parameters[] = $parameter;
 			}
 
 			// get the real url

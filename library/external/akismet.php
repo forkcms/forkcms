@@ -444,7 +444,7 @@ class Akismet
 		$aParameters['comment_content'] = $content;
 
 		// add other parameters
-		foreach ($others as $key => $value) $aParameters[$key] = $value;
+		foreach($others as $key => $value) $aParameters[$key] = $value;
 
 		// make the call
 		$response = $this->doCall('submit-ham', $aParameters);
@@ -502,7 +502,7 @@ class Akismet
 		$aParameters['comment_content'] = $content;
 
 		// add other parameters
-		foreach ($others as $key => $value) $aParameters[$key] = $value;
+		foreach($others as $key => $value) $aParameters[$key] = $value;
 
 		// make the call
 		$response = $this->doCall('submit-spam', $aParameters);

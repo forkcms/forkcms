@@ -1,39 +1,235 @@
-  ["APPLICATION"] => string(7) "backend"
-  ["NAMED_APPLICATION"] => string(7) "private"
-  ["SPOON_DEBUG"] => bool(true)
-  ["SPOON_DEBUG_EMAIL"] => string(0) ""
-  ["SPOON_DEBUG_MESSAGE"] => string(15) "Internal error."
-  ["SPOON_CHARSET"] => string(5) "utf-8"
-  ["FORK_VERSION"] => string(5) "2.0.0"
-  ["SITE_DOMAIN"] => string(12) "forkng.local"
-  ["SITE_DEFAULT_TITLE"] => string(7) "Fork NG"
-  ["SITE_URL"] => string(19) "http://forkng.local"
-  ["SITE_MULTILANGUAGE"] => bool(true)
-  ["PATH_WWW"] => string(42) "/Users/tijs/Sites/forkng.local/default_www"
-  ["PATH_LIBRARY"] => string(38) "/Users/tijs/Sites/forkng.local/library"
-  ["SITE_TITLE_SEPERATOR"] => string(3) " - "
-  ["SITE_RSS_GENERATOR"] => string(8) "Fork CMS"
-  ["SITE_DEFAULT_LANGUAGE"] => string(2) "nl"
-  ["BACKEND_PATH"] => string(50) "/Users/tijs/Sites/forkng.local/default_www/backend"
-  ["BACKEND_CACHE_PATH"] => string(56) "/Users/tijs/Sites/forkng.local/default_www/backend/cache"
-  ["BACKEND_CORE_PATH"] => string(55) "/Users/tijs/Sites/forkng.local/default_www/backend/core"
-  ["BACKEND_MODULES_PATH"] => string(58) "/Users/tijs/Sites/forkng.local/default_www/backend/modules"
-  ["FRONTEND_PATH"] => string(51) "/Users/tijs/Sites/forkng.local/default_www/frontend"
-  ["FRONTEND_CACHE_PATH"] => string(57) "/Users/tijs/Sites/forkng.local/default_www/frontend/cache"
-  ["FRONTEND_CORE_PATH"] => string(56) "/Users/tijs/Sites/forkng.local/default_www/frontend/core"
-  ["FRONTEND_MODULES_PATH"] => string(59) "/Users/tijs/Sites/forkng.local/default_www/frontend/modules"
-  ["FRONTEND_FILES_PATH"] => string(57) "/Users/tijs/Sites/forkng.local/default_www/frontend/files"
-  ["BACKEND_CORE_URL"] => string(13) "/backend/core"
-  ["BACKEND_CACHE_URL"] => string(14) "/backend/cache"
-  ["FRONTEND_FILES_URL"] => string(15) "/frontend/files"
-  ["SPOON_VERSION"] => string(5) "1.2.0"
-  ["SPOON_EXCEPTION_CALLBACK"] => string(0) ""
-  ["SPOON_AUTOLOADER"] => bool(true)
-  ["BACKEND_MODULE_PATH"] => string(73) "/Users/tijs/Sites/forkng.local/default_www/backend/modules/authentication"
-		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
-		$this->assign('MODULE', $this->URL->getModule());
-		$this->assign('ACTION', $this->URL->getAction());
-			$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
-			$this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('interface_language'));
-		$this->assign('SITE_TITLE', BackendModel::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
-		$this->assign('THEME', BackendModel::getSetting('core', 'theme', 'default'));
+Constants are values that won't change inside a page-execution.
+
+
+The constants below are available in the backend.
+
+- ACTION
+	In this constant the current action will be stored.
+
+	Usage:
+	in templates: {$ACTION}
+	in backend PHP: $this->URL->getAction();
+
+
+- APPLICATION
+	The name of the current application, this will always be "backend".
+
+	Usage:
+	in templates: {$APPLICATION}
+	in backend PHP: APPLICATION
+
+
+- BACKEND_CACHE_PATH
+	The path where the cache-folder is located, eg: /home/fork/default_www/backend/core
+
+	Usage:
+	in templates: {$BACKEND_CACHE_PATH}
+	in backend PHP: BACKEND_CACHE_PATH
+
+
+- BACKEND_CACHE_URL
+	The absolute URL to the cache folder, eg: /backend/cache 
+
+	Usage:
+	in templates: {$BACKEND_CACHE_URL}
+	in backend PHP: BACKEND_CACHE_URL
+
+
+- BACKEND_CORE_PATH
+	The path to the core-folder, eg: /home/fork/default_www/backend/core
+
+	Usage:
+	in templates: {$BACKEND_CORE_PATH}
+	in backend PHP: BACKEND_CORE_PATH
+
+
+- BACKEND_CORE_URL
+	The absolute URL to the core-folder, eg: /backend/core
+
+	Usage:
+	in templates: {$BACKEND_CORE_URL}
+	in backend PHP: BACKEND_CORE_URL
+
+
+- BACKEND_MODULES_PATH
+	The path to the modules-folder, eg: /home/fork/default_www/backend/modules
+
+	Usage:
+	in templates: {$BACKEND_MODULES_PATH}
+	in backend PHP: BACKEND_MODULES_PATH
+
+
+- BACKEND_MODULE_PATH
+	The path to the current module-folder, eg: /home/fork/default_www/backend/modules/blog
+	
+	Usage:
+	in templates: {$BACKEND_MODULE_PATH}
+	in backend PHP: BACKEND_MODULE_PATH
+
+
+- BACKEND_PATH
+	The path to the backend, eg: /home/fork/default_www/backend
+
+	Usage:
+	in templates: {$BACKEND_PATH}
+	in backend PHP: BACKEND_PATH
+
+
+- FORK_VERSION
+	The current version of Fork, eg: 2.0.0
+
+	Usage:
+	in templates: {$FORK_VERSION}
+	in backend PHP: FORK_VERSION
+
+
+- FRONTEND_CACHE_PATH
+	The path to the frontend cache-folder, eg: /home/fork/default_www/frontend/cache
+
+	Usage:
+	in templates: {$FRONTEND_CACHE_PATH}
+	in backend PHP: FRONTEND_CACHE_PATH
+
+
+- FRONTEND_CORE_PATH
+	The path to the frontend core-folder, eg: /home/fork/default_www/frontend/core
+
+	Usage:
+	in templates: {$FRONTEND_CORE_PATH}
+	in backend PHP: FRONTEND_CORE_PATH
+
+
+- FRONTEND_FILES_PATH
+	The path to the frontend files-folder, in this folder you can store files that are uploaded by a user, eg: /home/fork/default_www/frontend/files
+
+	Usage:
+	in templates: {$FRONTEND_FILES_PATH}
+	in backend PHP: FRONTEND_FILES_PATH
+
+
+- FRONTEND_FILES_URL
+	Absolute url to the fronten files-folder, eg: /frontend/files
+
+	Usage:
+	in templates: {$FRONTEND_FILES_URL}
+	in backend PHP: FRONTEND_FILES_URL
+
+
+- FRONTEND_MODULES_PATH
+	Path to the frontend modules folder, eg: /home/fork/default_www/frontend/modules
+
+	Usage:
+	in templates: {$FRONTEND_MODULES_PATH}
+	in backend PHP: FRONTEND_MODULES_PATH
+
+
+- FRONTEND_PATH
+	Path to the frontend, eg: /home/fork/default_www/frontend
+
+	Usage:
+	in templates: {$FRONTEND_PATH}
+	in backend PHP: FRONTEND_PATH
+
+
+- INTERFACE_LANGUAGE
+	The interface language for the current authenticated user, eg: nl
+
+	Usage:
+	in templates: {$INTERFACE_LANGUAGE}
+	in backend PHP: BackendAuthentication::getUser()->getSetting('interface_language');
+
+
+- LANGUAGE
+	The current language the user is working on, eg: nl
+
+	Usage:
+	in templates: {$LANGUAGE}
+	in backend PHP: BackendLanguage::getWorkingLanguage();
+
+
+- MODULE
+	The current module, eg: blog
+
+	Usage:
+	in templates: {$MODULE}
+	in backend PHP: $this->URL->getModule();
+
+
+- NAMED_APPLICATION
+	The name the user used for the application, eg: private
+
+	Usage:
+	in templates: {$NAMED_APPLICATION}
+	in backend PHP: NAMED_APPLICATION;
+
+
+- PATH_LIBRARY
+	Path to the library, eg: /home/fork/library
+
+	Usage:
+	in templates: {$PATH_LIBRARY}
+	in backend PHP: PATH_LIBRARY
+
+
+- PATH_WWW
+	Path to the folder that has to be used as document-root, eg: /home/fork/default_www
+
+	Usage:
+	in templates: {$PATH_WWW}
+	in backend PHP: PATH_WWW
+
+
+- SITE_DEFAULT_LANGUAGE
+	The default language for the site, eg: nl
+
+	Usage:
+	in templates: {$SITE_DEFAULT_LANGUAGE}
+	in backend PHP: SITE_DEFAULT_LANGUAGE
+
+
+- SITE_DEFAULT_TITLE
+	The default title for the site, can be used as fallback. eg: Fork NG
+
+	Usage:
+	in templates: {$SITE_DEFAULT_TITLE}
+	in backend PHP: SITE_DEFAULT_TITLE
+
+
+- SITE_DOMAIN
+	The primary domain for the site, eg: forkng.local
+
+	Usage:
+	in templates: {$SITE_DOMAIN}
+	in backend PHP: SITE_DOMAIN
+
+
+- SITE_MULTILANGUAGE
+	Is the site available in multiple languages?, eg: true
+
+	Usage:
+	in templates: {$SITE_MULTILANGUAGE}
+	in backend PHP: SITE_MULTILANGUAGE
+
+
+- SITE_TITLE
+	The title for the site, configured by the user, eg: Fork NG
+
+	Usage:
+	in templates: {$SITE_TITLE}
+	in backend PHP: BackendModel::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+
+
+- SITE_URL
+	The full URL for the site, eg: http://fork-cms.be
+
+	Usage:
+	in templates: {$SITE_URL}
+	in backend PHP: SITE_URL
+
+
+- THEME
+	The theme that is currently in use, eg: default
+
+	Usage:
+	in templates: {$THEME}
+	in backend PHP: BackendModel::getSetting('core', 'theme', 'default'));

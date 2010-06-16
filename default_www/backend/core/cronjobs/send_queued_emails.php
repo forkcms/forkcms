@@ -33,7 +33,7 @@ class BackendCoreCronjobSendQueuedEmails extends BackendBaseCronjob
 		}
 
 		// remove busy file
-//		$this->clearBusyFile();
+		$this->clearBusyFile();
 	}
 }
 

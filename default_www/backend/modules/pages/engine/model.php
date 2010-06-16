@@ -944,14 +944,14 @@ class BackendPagesModel
 																array('Y'), 'id');
 
 		// loop templates to unserialize the data
-		foreach($templates as $key => $row)
+		foreach($templates as $key => &$row)
 		{
 			// unserialize
-			$templates[$key]['data'] = unserialize($row['data']);
+			$row['data'] = unserialize($row['data']);
 
 			// build template HTML
-			$templates[$key]['html'] = self::buildTemplateHTML($templates[$key]);
-			$templates[$key]['htmlLarge'] = self::buildTemplateHTMLLarge($templates[$key]);
+			$row['html'] = self::buildTemplateHTML($templates[$key]);
+			$row['htmlLarge'] = self::buildTemplateHTMLLarge($templates[$key]);
 		}
 
 		// add json
