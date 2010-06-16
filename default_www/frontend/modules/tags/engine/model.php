@@ -60,7 +60,7 @@ class FrontendTagsModel
 		$return = array();
 
 		// get tags
-		$linkedTags = (array) $db->retrieve('SELECT t.tag AS name, t.url
+		$linkedTags = (array) $db->getRecords('SELECT t.tag AS name, t.url
 												FROM modules_tags AS mt
 												INNER JOIN tags AS t ON mt.tag_id = t.id
 												WHERE mt.module = ? AND mt.other_id = ?;',
@@ -126,7 +126,7 @@ class FrontendTagsModel
 		$return = array();
 
 		// get tags
-		$linkedTags = (array) $db->retrieve('SELECT mt.other_id, t.tag AS name, t.url
+		$linkedTags = (array) $db->getRecords('SELECT mt.other_id, t.tag AS name, t.url
 												FROM modules_tags AS mt
 												INNER JOIN tags AS t ON mt.tag_id = t.id
 												WHERE mt.module = ? AND mt.other_id IN('. implode(', ', $otherIds) .');',

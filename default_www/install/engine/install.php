@@ -349,7 +349,7 @@ class Installer
 				$db = new SpoonDatabase('mysql', $this->frm->getField('database_host')->getValue(), $this->frm->getField('database_username')->getValue(), $this->frm->getField('database_password')->getValue(), $this->frm->getField('database_name')->getValue());
 
 				// try to get the modules
-				$modules = $db->retrieve('SELECT * FROM modules');
+				$modules = $db->getRecords('SELECT * FROM modules');
 
 				// no modules found, they should load the dump
 				if(empty($modules)) throw new Exception('empty');
@@ -422,7 +422,7 @@ class Installer
 								SpoonSession::get('database_name'));
 
 		// get all modules
-		$modules = $db->retrieve('SELECT name AS value, name AS label
+		$modules = $db->getRecords('SELECT name AS value, name AS label
 										FROM modules
 										ORDER BY name', null, 'value');
 

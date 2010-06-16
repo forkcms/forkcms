@@ -331,15 +331,15 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// return the comments (order by id, this is faster then on date, the higher the id, the more recent
-		$return = (array) $db->retrieve('SELECT bc.id, bc.author, bc.text, UNIX_TIMESTAMP(bc.created_on) AS created_in,
-											bp.title, bp.language, m.url
-										FROM blog_comments AS bc
-										INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
-										INNER JOIN meta AS m ON bp.meta_id = m.id
-										WHERE bc.status = ? AND bp.status = ?
-										ORDER BY bc.id DESC
-										LIMIT ?;',
-										array($status, 'active', $limit));
+		$return = (array) $db->getRecords('SELECT bc.id, bc.author, bc.text, UNIX_TIMESTAMP(bc.created_on) AS created_in,
+												bp.title, bp.language, m.url
+											FROM blog_comments AS bc
+											INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
+											INNER JOIN meta AS m ON bp.meta_id = m.id
+											WHERE bc.status = ? AND bp.status = ?
+											ORDER BY bc.id DESC
+											LIMIT ?;',
+											array($status, 'active', $limit));
 
 		// loop entries
 		foreach($return as $key => $row)

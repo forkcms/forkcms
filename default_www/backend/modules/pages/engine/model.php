@@ -43,10 +43,10 @@ class BackendPagesModel
 		$levels = self::getTree(array(0), null, 1, $language);
 
 		// get extras
-		$extras = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.module, i.action
-															FROM pages_extras AS i
-															WHERE i.type = ?;',
-															array('block'), 'id');
+		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
+																FROM pages_extras AS i
+																WHERE i.type = ?;',
+																array('block'), 'id');
 
 		// init vars
 		$keys = array();
@@ -585,12 +585,12 @@ class BackendPagesModel
 		$language = BackendLanguage::getWorkingLanguage();
 
 		// get page (active version)
-		return (array) BackendModel::getDB()->retrieve('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
-														FROM pages_blocks AS b
-														INNER JOIN pages AS i ON b.revision_id = i.revision_id
-														WHERE i.id = ? AND i.language = ? AND i.status = ?
-														ORDER BY i.id ASC;',
-														array($id, $language, 'active'));
+		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
+															FROM pages_blocks AS b
+															INNER JOIN pages AS i ON b.revision_id = i.revision_id
+															WHERE i.id = ? AND i.language = ? AND i.status = ?
+															ORDER BY i.id ASC;',
+															array($id, $language, 'active'));
 	}
 
 
@@ -609,11 +609,11 @@ class BackendPagesModel
 		$language = BackendLanguage::getWorkingLanguage();
 
 		// get page (active version)
-		return (array) BackendModel::getDB()->retrieve('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
-														FROM pages_blocks AS pb
-														INNER JOIN pages AS i ON b.revision_id = i.revision_id
-														WHERE i.id = ? AND i.revision_id = ? AND i.language = ?;',
-														array($id, $revisionId, $language));
+		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
+															FROM pages_blocks AS pb
+															INNER JOIN pages AS i ON b.revision_id = i.revision_id
+															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?;',
+															array($id, $revisionId, $language));
 	}
 
 
@@ -625,12 +625,12 @@ class BackendPagesModel
 	public static function getExtras()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.module, i.type, i.label, i.data
-															FROM pages_extras AS i
-															INNER JOIN modules AS m ON i.module = m.name
-															WHERE m.active = ?
-															ORDER BY i.module, i.sequence;',
-															array('Y'), 'id');
+		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
+																FROM pages_extras AS i
+																INNER JOIN modules AS m ON i.module = m.name
+																WHERE m.active = ?
+																ORDER BY i.module, i.sequence;',
+																array('Y'), 'id');
 
 		// loop extras
 		foreach($extras as &$row)
@@ -662,12 +662,12 @@ class BackendPagesModel
 	public static function getExtrasData()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->retrieve('SELECT i.id, pe.module, i.type, i.label, i.data
-															FROM pages_extras AS i
-															INNER JOIN modules AS m ON i.module = m.name
-															WHERE m.active = ?
-															ORDER BY i.module, i.sequence;',
-															array('Y'));
+		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, pe.module, i.type, i.label, i.data
+																FROM pages_extras AS i
+																INNER JOIN modules AS m ON i.module = m.name
+																WHERE m.active = ?
+																ORDER BY i.module, i.sequence;',
+																array('Y'));
 
 		// build array
 		$values = array();
@@ -938,7 +938,7 @@ class BackendPagesModel
 	public static function getTemplates()
 	{
 		// get templates
-		$templates = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.label, i.path, i.num_blocks, i.is_default, i.data
+		$templates = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.is_default, i.data
 																FROM pages_templates AS i
 																WHERE i.active = ?;',
 																array('Y'), 'id');
@@ -978,7 +978,7 @@ class BackendPagesModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// get data
-		$data[$level] = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
+		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
 																		i.extra_ids,
 																		m.url
 																	FROM pages AS i

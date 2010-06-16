@@ -69,10 +69,10 @@ class FrontendModel
 			$db = self::getDB();
 
 			// fetch settings
-			$settings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
-												FROM modules_settings AS ms
-												INNER JOIN modules AS m ON ms.module = m.name
-												WHERE m.active = ?;', 'Y');
+			$settings = (array) $db->getRecords('SELECT ms.module, ms.name, ms.value
+													FROM modules_settings AS ms
+													INNER JOIN modules AS m ON ms.module = m.name
+													WHERE m.active = ?;', 'Y');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -104,8 +104,8 @@ class FrontendModel
 			$db = self::getDB();
 
 			// fetch settings
-			$settings = (array) $db->retrieve('SELECT ms.module, ms.name, ms.value
-												FROM modules_settings AS ms;');
+			$settings = (array) $db->getRecords('SELECT ms.module, ms.name, ms.value
+													FROM modules_settings AS ms;');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -156,12 +156,12 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->retrieve('SELECT pb.extra_id, pb.html,
-													pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-													FROM pages_blocks AS pb
-													LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
-													WHERE pb.revision_id = ? AND pb.status = ?;',
-													array($record['revision_id'], 'active'));
+		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
+														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
+														FROM pages_blocks AS pb
+														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
+														WHERE pb.revision_id = ? AND pb.status = ?;',
+														array($record['revision_id'], 'active'));
 
 		// loop blocks
 		foreach($record['blocks'] as $index => $row)
