@@ -1,9 +1,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-
 			<div class="inner">
-				
 				<div class="pageTitle">
 					<h2>{$lblTags|ucfirst}</h2>
 				</div>
@@ -15,7 +13,7 @@
 						</div>
 					</form>
 				{/option:datagrid}
-				{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+				{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
 			</div>
 		</td>
 	</tr>

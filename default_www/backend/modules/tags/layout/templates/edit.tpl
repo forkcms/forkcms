@@ -17,7 +17,7 @@
 
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
-							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+							<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
 						</div>
 					</div>
 				{/form:edit}

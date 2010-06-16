@@ -51,7 +51,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('tag', BackendModel::createURLForAction('edit') .'&id=[id]');
+		$this->datagrid->setColumnURL('tag', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
 		// add the multicheckbox column
 		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
@@ -62,7 +62,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
 	}
 
 
