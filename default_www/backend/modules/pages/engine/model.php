@@ -662,7 +662,7 @@ class BackendPagesModel
 	public static function getExtrasData()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, pe.module, i.type, i.label, i.data
+		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
 																FROM pages_extras AS i
 																INNER JOIN modules AS m ON i.module = m.name
 																WHERE m.active = ?
