@@ -48,8 +48,8 @@
 						<a class="button linkButton icon iconClose iconOnly toggleBalloon" href="#" rel="forgotPasswordHolder"><span>X</span></a>
 
 						<div class="balloonTop">&nbsp;</div>
-
-						<p>{$msgForgotPasswordHelp}</p>
+						
+						<p>{$msgHelpForgotPassword}</p>
 						{form:forgotPassword}
 							<div class="oneLiner">
 								<p><label for="backendEmail">{$lblEmail|ucfirst}</label></p>
