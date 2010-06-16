@@ -45,7 +45,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGridDB(BackendUsersModel::QRY_BROWSE, array('N'));
 
 		// add column
-		$this->datagrid->addColumn('nickname', null, null, BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('edit'));
+		$this->datagrid->addColumn('nickname', null, null, BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('edit'));
 
 		// show the user's nickname
 		$this->datagrid->setColumnFunction(array('BackendUser', 'getSettingByUserId'), array('[id]', 'nickname'), 'nickname', false);
@@ -54,7 +54,7 @@ class BackendUsersIndex extends BackendBaseActionIndex
 		$this->datagrid->setHeaderLabels(array('nickname' => ucfirst(BL::getLabel('Nickname'))));
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]');
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 	}
 
 

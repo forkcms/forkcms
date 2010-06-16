@@ -2,7 +2,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 	<td id="contentHolder">
 			<div class="inner">
-
 				<div class="pageTitle">
 					<h2>{$lblUsers|ucfirst}: {$msgEditWithItem|sprintf:{$record['username']}}</h2>
 				</div>
@@ -96,11 +95,11 @@
 										{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
 									</p>
 									<p>
-										<label for="date_format">{$lblDateFormat|ucfirst}</label>
+										<label for="dateFormat">{$lblDateFormat|ucfirst}</label>
 										{$ddmDateFormat} {$ddmDateFormatError}
 									</p>
 									<p>
-										<label for="time_format">{$lblTimeFormat|ucfirst}</label>
+										<label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
 										{$ddmTimeFormat} {$ddmTimeFormatError}
 									</p>
 								</div>
@@ -108,9 +107,7 @@
 						</div>
 
 						<div id="tabPassword">
-
 							<div class="subtleBox">
-
 								<div class="heading">
 									<h3>{$lblChangePassword|ucfirst}</h3>
 								</div>
@@ -118,28 +115,26 @@
 									<p>
 										<label for="newPassword">{$lblPassword|ucfirst}</label>
 										{$txtNewPassword} {$txtNewPasswordError}
-
-										<table id="passwordStrengthMeter" class="passwordStrength" rel="newPassword" cellspacing="0">
-											<tr>
-												<td class="strength" id="passwordStrength">
-													<p class="strength none">/</p>
-													<p class="strength weak" style="background: red;">{$lblWeak|ucfirst}</p>
-													<p class="strength ok" style="background: orange;">{$lblOK|ucfirst}</p>
-													<p class="strength strong" style="background: green;">{$lblStrong|ucfirst}</p>
-												</td>
-												<td>
-													<p class="helpTxt">{$msgHelpStrongPassword}</p>
-												</td>
-											</tr>
-										</table>
 									</p>
+									<table id="passwordStrengthMeter" class="passwordStrength" rel="newPassword" cellspacing="0">
+										<tr>
+											<td class="strength" id="passwordStrength">
+												<p class="strength none">/</p>
+												<p class="strength weak" style="background: red;">{$lblWeak|ucfirst}</p>
+												<p class="strength ok" style="background: orange;">{$lblOK|ucfirst}</p>
+												<p class="strength strong" style="background: green;">{$lblStrong|ucfirst}</p>
+											</td>
+											<td>
+												<p class="helpTxt">{$msgHelpStrongPassword}</p>
+											</td>
+										</tr>
+									</table>
 									<p>
 										<label for="confirmPassword">{$lblConfirmPassword|ucfirst}</label>
 										{$txtConfirmPassword} {$txtConfirmPasswordError}
 									</p>
 								</div>
 							</div>
-
 						</div>
 
 						<div id="tabPermissions">
@@ -153,17 +148,15 @@
 										<li>
 											{$chkActive}
 											<label for="active">{$msgEnableUser}</label>
-											 {$chkActiveError}
+											{$chkActiveError}
 										</li>
 									</ul>
-
 									<p>
 										<label for="group">{$lblGroup|ucfirst}</label>
 										{$ddmGroup} {$ddmGroupError}
 									</p>
 								</div>
 							</div>
-
 						</div>
 					</div>
 
@@ -175,7 +168,7 @@
 						{/option:deleteAllowed}
 
 						<div class="buttonHolderRight">
-							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+							<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
 						</div>
 					</div>
 
