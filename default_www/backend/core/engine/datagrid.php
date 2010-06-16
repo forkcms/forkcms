@@ -100,7 +100,7 @@ class BackendDataGrid extends SpoonDataGrid
 		{
 			// add special attributes for actions we know
 			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),
-													'width' => '10%'));
+													'style' => 'width: 10%;'));
 		}
 
 		// set header attributes
@@ -139,7 +139,8 @@ class BackendDataGrid extends SpoonDataGrid
 		parent::addColumn($name, $label, $value, null, $title, $image, $sequence);
 
 		// set column attributes
-		$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name), 'width' => '10%'));
+		$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),
+												'style' => 'width: 10%;'));
 
 		// set header attributes
 		$this->setColumnHeaderAttributes($name, array('class' => $name));
@@ -659,11 +660,11 @@ class BackendDataGridFunctions
 		// build html
 		$html = '<div class="datagridAvatar">' . "\n";
 		$html .= '	<div class="avatar av24">' . "\n";
-		$html .= '		<a href="'. BackendModel::createURLForAction('edit', 'users') . '&id='. $id .'">'."\n";
+		$html .= '		<a href="'. BackendModel::createURLForAction('edit', 'users') . '&amp;id='. $id .'">'."\n";
 		$html .= '			<img src="'. FRONTEND_FILES_URL .'/backend_users/avatars/32x32/'. $avatar .'" width="24" height="24" alt="'. $nickname .'" />'."\n";
 		$html .= '		</a>'."\n";
 		$html .= '	</div>';
-		$html .= '	<p><a href="'. BackendModel::createURLForAction('edit', 'users') . '&id='. $id .'">' . $nickname . '</a></p>' . "\n";
+		$html .= '	<p><a href="'. BackendModel::createURLForAction('edit', 'users') . '&amp;id='. $id .'">' . $nickname . '</a></p>' . "\n";
 		$html .= '</div>';
 
 		// return

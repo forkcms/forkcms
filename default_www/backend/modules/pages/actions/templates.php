@@ -48,10 +48,10 @@ class BackendPagesTemplates extends BackendBaseActionIndex
 		$this->datagrid->setHeaderLabels(array('label' => ucfirst(BL::getLabel('Title'))));
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('label', BackendModel::createURLForAction('edit_template') .'&id=[id]');
+		$this->datagrid->setColumnURL('label', BackendModel::createURLForAction('edit_template') .'&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_template') .'&id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_template') .'&amp;id=[id]', BL::getLabel('Edit'));
 	}
 
 

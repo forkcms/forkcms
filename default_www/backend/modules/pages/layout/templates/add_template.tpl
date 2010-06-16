@@ -1,7 +1,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-
 			<div class="inner">
 				{form:add}
 					<div class="box horizontal">
@@ -10,7 +9,7 @@
 						</div>
 						<div class="options">
 							<p>
-								<label for="path">{$lblFileName|ucfirst}</label>
+								<label for="file">{$lblFileName|ucfirst}</label>
 								<small><code>core/layout/templates/</code></small>{$txtFile} {$txtFileError}
 							</p>
 							<p>
@@ -18,7 +17,7 @@
 								{$txtLabel} {$txtLabelError}
 							</p>
 							<p>
-								<label for="num_blocks">{$lblNumberOfBlocks|ucfirst}</label>
+								<label for="numBlocks">{$lblNumberOfBlocks|ucfirst}</label>
 								{$ddmNumBlocks} {$ddmNumBlocksError}
 							</p>
 						</div>
@@ -52,7 +51,7 @@
 
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
-							<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddTemplate|ucfirst}" />
+							<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddTemplate|ucfirst}" />
 						</div>
 					</div>
 				{/form:add}

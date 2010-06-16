@@ -13,19 +13,19 @@
 							<td id="user">
 								<ul>
 									{option:debug}
-									<li>
-										<div id="debugnotify">{$lblDebugMode|ucfirst}</div>
-									</li>
+										<li>
+											<div id="debugnotify">{$lblDebugMode|ucfirst}</div>
+										</li>
 									{/option:debug}
 									{option:workingLanguages}
-									<li>
-										{$lblWorkingLanguage|ucfirst}:
-										<select id="workingLanguage">
-											{iteration:workingLanguages}
-												<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label|ucfirst}</option>
-											{/iteration:workingLanguages}
-										</select>
-									</li>
+										<li>
+											{$lblWorkingLanguage|ucfirst}:
+											<select id="workingLanguage">
+												{iteration:workingLanguages}
+													<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label|ucfirst}</option>
+												{/iteration:workingLanguages}
+											</select>
+										</li>
 									{/option:workingLanguages}
 									<li class="settings">
 										<a href="{$var|geturl:'index':'settings'}" class="icon iconSettings">

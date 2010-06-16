@@ -256,6 +256,7 @@ class BackendPagesModel
 			// add start html
 			$html .= '<table border="0" cellpadding="2" cellspacing="2">'."\n";
 			$html .= '	<tbody>'."\n";
+			$html .= '		<tr>'."\n";
 
 			// split into cells
 			$cells = explode(',', $row);
@@ -278,6 +279,7 @@ class BackendPagesModel
 			}
 
 			// end html
+			$html .= '		</tr>'."\n";
 			$html .= '	</tbody>'."\n";
 			$html .= '</table>'."\n";
 		}
@@ -313,6 +315,7 @@ class BackendPagesModel
 			// add start html
 			$html .= '<table border="0" cellpadding="0" cellspacing="0">'."\n";
 			$html .= '	<tbody>'."\n";
+			$html .= '		<tr>'."\n";
 
 			// split into cells
 			$cells = explode(',', $row);
@@ -347,6 +350,7 @@ class BackendPagesModel
 			}
 
 			// end html
+			$html .= '		</tr>'."\n";
 			$html .= '	</tbody>'."\n";
 			$html .= '</table>'."\n";
 		}

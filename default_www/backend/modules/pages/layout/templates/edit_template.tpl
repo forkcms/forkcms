@@ -1,18 +1,15 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-
 			<div class="inner">
 				{form:edit}
 					<div class="box horizontal">
-
 						<div class="heading">
 							<h3>{$lblEditTemplate|ucfirst}</h3>
 						</div>
-
 						<div class="options">
 							<p>
-								<label for="path">{$lblFileName|ucfirst}</label>
+								<label for="file">{$lblFileName|ucfirst}</label>
 								<small><code>core/layout/templates/</code></small>{$txtFile} {$txtFileError}
 							</p>
 							<p>
@@ -20,7 +17,7 @@
 								{$txtLabel} {$txtLabelError}
 							</p>
 							<p>
-								<label for="num_blocks">{$lblNumberOfBlocks|ucfirst}</label>
+								<label for="numBlocks">{$lblNumberOfBlocks|ucfirst}</label>
 								{$ddmNumBlocks} {$ddmNumBlocksError}
 							</p>
 						</div>
@@ -38,8 +35,7 @@
 							<p>
 								<label for="format">{$lblLayout|ucfirst}</label>
 								{$txtFormat} {$txtFormatError}
-								{* @todo add label *}
-								<span class="helpTxt">e.g. [0,1],[2,none]</span>
+								<span class="helpTxt">e.g. [0,1],[2,none]</span>{* @todo add label *}
 							</p>
 						</div>
 						<div class="options">
@@ -54,19 +50,17 @@
 
 					<div class="fullwidthOptions">
 						{option:deleteAllowed}
-						<a href="{$var|geturl:'delete_template'}&amp;id={$template['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-							<span>{$lblDelete|ucfirst}</span>
-						</a>
+							<a href="{$var|geturl:'delete_template'}&amp;id={$template['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+								<span>{$lblDelete|ucfirst}</span>
+							</a>
 						{/option:deleteAllowed}
 						<div class="buttonHolderRight">
-							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEditTemplate|ucfirst}" />
+							<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEditTemplate|ucfirst}" />
 						</div>
 					</div>
 
 					<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-						<p>
-							{$msgConfirmDeleteTemplate|sprintf:{$template['label']}}
-						</p>
+						<p>{$msgConfirmDeleteTemplate|sprintf:{$template['label']}}</p>
 					</div>
 				{/form:edit}
 			</div>

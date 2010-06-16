@@ -2,7 +2,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
 			<div class="inner">
-
 				<div class="pageTitle">
 					<h2>{$lblTemplates|ucfirst}</h2>
 					<div class="buttonHolderRight">
@@ -14,7 +13,7 @@
 
 				<div class="datagridHolder">
 					{option:datagrid}{$datagrid}{/option:datagrid}
-					{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+					{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
 				</div>
 			</div>
 		</td>

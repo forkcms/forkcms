@@ -1,6 +1,6 @@
 <table border="0" cellspacing="0" cellpadding="0" id="modulesHolder">
 	<tr>
-		<td id="subnavigation" width="164">
+		<td id="subnavigation" style="width: 164px;">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td id="moduleHolder">

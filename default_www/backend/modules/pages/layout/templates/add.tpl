@@ -1,7 +1,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 <table border="0" cellspacing="0" cellpadding="0" id="pagesHolder">
 	<tr>
-		<td id="pagesTree" width="264">
+		<td id="pagesTree" style="width: 264px;">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td id="treeHolder">
@@ -48,34 +48,34 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tbody>
 									<tr>
-										<td id="leftColumn">
+										<td>
 											<div id="editContent">
 												{iteration:blocks}
-												<div id="block-{$blocks.index}" class="contentBlock">
-													<div class="contentTitle">
-														<table border="0" cellpadding="0" cellspacing="0">
-															<tbody>
-																<tr>
-																	<td>
-																		<div class="oneLiner">
-																			<p><span class="blockName">{$blocks.name}</span></p>
-																			{* don't remove this class *}
-																			<p class="linkedExtra">
-																				{* this will store the selected extra *}
-																				{$blocks.hidExtraId}
-																			</p>
-																		</div>
-																	</td>
-																</tr>
-															</tbody>
-														</table>
+													<div id="block-{$blocks.index}" class="contentBlock">
+														<div class="contentTitle">
+															<table border="0" cellpadding="0" cellspacing="0">
+																<tbody>
+																	<tr>
+																		<td>
+																			<div class="oneLiner">
+																				<p><span class="blockName">{$blocks.name}</span></p>
+																				{* don't remove this class *}
+																				<p class="linkedExtra">
+																					{* this will store the selected extra *}
+																					{$blocks.hidExtraId}
+																				</p>
+																			</div>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<div class="editContent">
+															<fieldset id="blockContentHTML-{$blocks.index}">
+																{$blocks.txtHTML}
+															</fieldset>
+														</div>
 													</div>
-													<div class="editContent">
-														<fieldset id="blockContentHTML-{$blocks.index}">
-															{$blocks.txtHTML}
-														</fieldset>
-													</div>
-												</div>
 												{/iteration:blocks}
 											</div>
 										</td>
@@ -96,10 +96,9 @@
 												<div class="options">
 													<ul class="inputList">
 														{iteration:hidden}
-														<li>
-															{$hidden.rbtHidden}
-															<label for="{$hidden.id}">{$hidden.label}</label>
-														</li>
+															<li>
+																{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label}</label>
+															</li>
 														{/iteration:hidden}
 													</ul>
 												</div>
@@ -129,21 +128,21 @@
 													</div>
 												</div>
 												<div class="options">
-													<!-- [A,B],[C,D,0],[E,E,0] -->
 													<div id="templateVisual" class="templateVisual current">
 														{$templatehtml}
 													</div>
 
 													<table id="templateDetails" class="infoGrid" border="0" cellpadding="0" cellspacing="0">
 														<tbody>
-														{iteration:blocks}
-															<tr>
-																<th class="numbering">{$blocks.index}</th>
-																<td class="blockName">{$blocks.name}</td>
-															</tr>
-														{/iteration:blocks}
-													</tbody>
-												</table>
+															{iteration:blocks}
+																<tr>
+																	<th class="numbering">{$blocks.index}</th>
+																	<td class="blockName">{$blocks.name}</td>
+																</tr>
+															{/iteration:blocks}
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</td>
 									</tr>
@@ -157,7 +156,7 @@
 								</div>
 								<div class="options">
 									<p>
-										<label for="meta_pagetitle_overwrite">{$lblPageTitle|ucfirst}</label>
+										<label for="pageTitleOverwrite">{$lblPageTitle|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpPageTitle}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -167,7 +166,7 @@
 										</li>
 									</ul>
 									<p>
-										<label for="navigation_title_overwrite">{$lblNavigationTitle|ucfirst}</label>
+										<label for="navigationTitleOverwrite">{$lblNavigationTitle|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpNavigationTitle}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -202,7 +201,7 @@
 								</div>
 								<div class="options">
 									<p>
-										<label for="meta_description_overwrite">{$lblMetaDescription|ucfirst}</label>
+										<label for="metaDescriptionOverwrite">{$lblMetaDescription|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaDescription}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -212,7 +211,7 @@
 										</li>
 									</ul>
 									<p>
-										<label for="meta_keywords_overwrite">{$lblMetaKeywords|ucfirst}</label>
+										<label for="metaKeywordsOverwrite">{$lblMetaKeywords|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -222,7 +221,7 @@
 										</li>
 									</ul>
 									<p>
-										<label for="meta_custom">{$lblMetaCustom|ucfirst}</label>
+										<label for="metaCustom">{$lblMetaCustom|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaCustom}</span>
 										{$txtMetaCustom} {$txtMetaCustomError}
 									</p>
@@ -234,7 +233,7 @@
 									<h3>{$lblURL}</h3>
 								</div>
 								<div class="options">
-									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>
+									<label for="urlOverwrite">{$lblCustomURL|ucfirst}</label>
 									<span class="helpTxt">{$msgHelpMetaURL}</span>
 
 									<ul class="inputList checkboxTextFieldCombo">
@@ -319,7 +318,7 @@
 					</div>
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
-							<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+							<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
 						</div>
 					</div>
 				{/form:add}
@@ -329,17 +328,18 @@
 </table>
 
 <script type="text/javascript">
-	// all the possible templates
-	var templates = {};
-	{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
+	//<![CDATA[
+		// all the possible templates
+		var templates = {};
+		{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
 
-	// the data for the extra's
-	var extrasData = {};
-	{option:extrasData}extrasData = {$extrasData};{/option:extrasData}
+		// the data for the extra's
+		var extrasData = {};
+		{option:extrasData}extrasData = {$extrasData};{/option:extrasData}
 
-	// the extra's, but in a way we can access them based on their ID
-	var extrasById = {};
-	{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+		// the extra's, but in a way we can access them based on their ID
+		var extrasById = {};
+		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+	//]]>
 </script>
-
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

@@ -1,7 +1,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 <table border="0" cellspacing="0" cellpadding="0" id="pagesHolder">
 	<tr>
-		<td id="pagesTree" width="264">
+		<td id="pagesTree" style="width: 264px;">
 			<table border="0" cellspacing="0" cellpadding="0">
 				<tr>
 					<td id="treeHolder">
@@ -49,34 +49,33 @@
 							<table border="0" cellpadding="0" cellspacing="0" width="100%">
 								<tbody>
 									<tr>
-										<td id="leftColumn">
+										<td>
 											<div id="editContent">
 												{iteration:blocks}
-												<div id="block-{$blocks.index}" class="box contentBlock">
-													<div class="contentTitle">
-														<table border="0" cellpadding="0" cellspacing="0">
-															<tbody>
-																<tr>
-																	<td>
-																		<div class="oneLiner">
-																			<h3><span class="blockName">{$blocks.name}</span></h3>
-																			{* don't remove this class *}
-																			<p class="linkedExtra">
-																				{* this will store the selected extra *}
-																				{$blocks.hidExtraId}
-																			</p>
-																		</div>
-																	</td>
-																</tr>
-															</tbody>
-														</table>
+													<div id="block-{$blocks.index}" class="box contentBlock">
+														<div class="contentTitle">
+															<table border="0" cellpadding="0" cellspacing="0">
+																<tbody>
+																	<tr>
+																		<td>
+																			<div class="oneLiner">
+																				<h3><span class="blockName">{$blocks.name}</span></h3>
+																				{* don't remove this class *}
+																				<p class="linkedExtra">
+																					{$blocks.hidExtraId}
+																				</p>
+																			</div>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+														<div class="editContent">
+															<fieldset id="blockContentHTML-{$blocks.index}">
+																{$blocks.txtHTML}
+															</fieldset>
+														</div>
 													</div>
-													<div class="editContent">
-														<fieldset id="blockContentHTML-{$blocks.index}">
-															{$blocks.txtHTML}
-														</fieldset>
-													</div>
-												</div>
 												{/iteration:blocks}
 											</div>
 										</td>
@@ -104,10 +103,9 @@
 												<div class="options">
 													<ul class="inputList">
 														{iteration:hidden}
-														<li>
-															{$hidden.rbtHidden}
-															<label for="{$hidden.id}">{$hidden.label}</label>
-														</li>
+															<li>
+																{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label}</label>
+															</li>
 														{/iteration:hidden}
 													</ul>
 												</div>
@@ -137,21 +135,20 @@
 													</div>
 												</div>
 												<div class="options">
-													<!-- [A,B],[C,D,0],[E,E,0] -->
 													<div id="templateVisual" class="templateVisual current">
 														{$templatehtml}
 													</div>
-
 													<table id="templateDetails" class="infoGrid" border="0" cellpadding="0" cellspacing="0">
 														<tbody>
-														{iteration:blocks}
-															<tr>
-																<th class="numbering">{$blocks.index}</th>
-																<td class="blockName">{$blocks.name}</td>
-															</tr>
-														{/iteration:blocks}
-													</tbody>
-												</table>
+															{iteration:blocks}
+																<tr>
+																	<th class="numbering">{$blocks.index}</th>
+																	<td class="blockName">{$blocks.name}</td>
+																</tr>
+															{/iteration:blocks}
+														</tbody>
+													</table>
+												</div>
 											</div>
 										</td>
 									</tr>
@@ -174,7 +171,7 @@
 								<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
 									<tr>
 										<td>
-											{$msgNoRevisions}
+											<p>{$msgNoRevisions}</p>
 										</td>
 									</tr>
 								</table>
@@ -188,7 +185,7 @@
 								</div>
 								<div class="options">
 									<p>
-										<label for="meta_pagetitle_overwrite">{$lblPageTitle|ucfirst}</label>
+										<label for="pageTitleOverwrite">{$lblPageTitle|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpPageTitle}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -198,7 +195,7 @@
 										</li>
 									</ul>
 									<p>
-										<label for="navigation_title_overwrite">{$lblNavigationTitle|ucfirst}</label>
+										<label for="navigationTitleOverwrite">{$lblNavigationTitle|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpNavigationTitle}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -219,8 +216,7 @@
 										<p class="helpTxt">{$msgHelpNoFollow}</p>
 										<ul class="inputList">
 											<li>
-												{$chkNoFollow}
-												<label for="noFollow">{$msgActivateNoFollow|ucfirst}</label>
+												{$chkNoFollow} <label for="noFollow">{$msgActivateNoFollow|ucfirst}</label>
 											</li>
 										</ul>
 									</fieldset>
@@ -233,7 +229,7 @@
 								</div>
 								<div class="options">
 									<p>
-										<label for="meta_description_overwrite">{$lblMetaDescription|ucfirst}</label>
+										<label for="metaDescriptionOverwrite">{$lblMetaDescription|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaDescription}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -243,7 +239,7 @@
 										</li>
 									</ul>
 									<p>
-										<label for="meta_keywords_overwrite">{$lblMetaKeywords|ucfirst}</label>
+										<label for="metaKeywordsOverwrite">{$lblMetaKeywords|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -253,7 +249,7 @@
 										</li>
 									</ul>
 									<p>
-										<label for="meta_custom">{$lblMetaCustom|ucfirst}</label>
+										<label for="metaCustom">{$lblMetaCustom|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaCustom}</span>
 										{$txtMetaCustom} {$txtMetaCustomError}
 									</p>
@@ -265,7 +261,7 @@
 									<h3>{$lblURL}</h3>
 								</div>
 								<div class="options">
-									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>
+									<label for="urlOverwrite">{$lblCustomURL|ucfirst}</label>
 									<span class="helpTxt">{$msgHelpMetaURL}</span>
 
 									<ul class="inputList checkboxTextFieldCombo">
@@ -278,7 +274,7 @@
 							</div>
 						</div>
 						<div id="tabTemplate">
-							
+
 							<div class="pageTitle">
 								<h2>Template: {$templatelabel}</h2>
 								<div class="buttonHolderRight">
@@ -325,15 +321,15 @@
 							 *}
 							<div id="chooseTemplate" title="{$msgChooseANewTemplate}" style="display: none;">
 								<ul class="inputList" id="templateList">
-								{iteration:templates}
-									<li style="float: left; width: 155px;">
-										<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
-										<label for="template{$templates.id}">{$templates.label}</label>
-										<div class="templateVisual current">
-											{$templates.html}
-										</div>
-									</li>
-								{/iteration:templates}
+									{iteration:templates}
+										<li style="float: left; width: 155px;">
+											<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
+											<label for="template{$templates.id}">{$templates.label}</label>
+											<div class="templateVisual current">
+												{$templates.html}
+											</div>
+										</li>
+									{/iteration:templates}
 								</ul>
 							</div>
 
@@ -351,17 +347,18 @@
 					</div>
 					<div class="fullwidthOptions">
 						{option:showDelete}
-						<a href="{$var|geturl:'delete'}&id={$recordid}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-							<span>{$lblDelete|ucfirst}</span>
-						</a>
-						<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-							<p>
-								{$msgConfirmDelete|sprintf:{$recordtitle}}
-							</p>
-						</div>
+							<a href="{$var|geturl:'delete'}&id={$recordid}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+								<span>{$lblDelete|ucfirst}</span>
+							</a>
+							<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+								<p>
+									{$msgConfirmDelete|sprintf:{$recordtitle}}
+								</p>
+							</div>
 						{/option:showDelete}
+
 						<div class="buttonHolderRight">
-							<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+							<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 						</div>
 					</div>
 				{/form:edit}
@@ -371,23 +368,24 @@
 </table>
 
 <script type="text/javascript">
-	// the ID of the page
-	var pageID = {$recordid};
+	//<![CDATA[
+		// the ID of the page
+		var pageID = {$recordid};
 
-	// all the possible templates
-	var templates = {};
-	{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
+		// all the possible templates
+		var templates = {};
+		{iteration:templates}templates[{$templates.id}] = {$templates.json};{/iteration:templates}
 
-	// the data for the extra's
-	var extrasData = {};
-	{option:extrasData}extrasData = {$extrasData};{/option:extrasData}
+		// the data for the extra's
+		var extrasData = {};
+		{option:extrasData}extrasData = {$extrasData};{/option:extrasData}
 
-	// the extra's, but in a way we can access them based on their ID
-	var extrasById = {};
-	{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
+		// the extra's, but in a way we can access them based on their ID
+		var extrasById = {};
+		{option:extrasById}extrasById = {$extrasById};{/option:extrasById}
 
-	// fix selected state in the tree
-	$('#page-'+ pageID).addClass('selected');
+		// fix selected state in the tree
+		$('#page-'+ pageID).addClass('selected');
+	//]]>
 </script>
-
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

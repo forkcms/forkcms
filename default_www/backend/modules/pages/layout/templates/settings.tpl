@@ -11,7 +11,6 @@
 						<div class="heading">
 							<h3>{$lblHasMetaNavigation|ucfirst}</h3>
 						</div>
-
 						<div class="options">
 							<p>{$msgHelpMetaNavigation}:</p>
 							<ul class="inputList p0">
