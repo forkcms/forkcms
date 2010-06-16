@@ -85,10 +85,10 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setSortParameter('desc');
 
 		// set colum URLs
-		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&id=[id]');
+		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
 		// add the multicheckbox column
-		$this->dgPosts->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
+		$this->dgPosts->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->dgPosts->setColumnsSequence('checkbox');
 
 		// set column functions
@@ -130,7 +130,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setSortParameter('desc');
 
 		// set colum URLs
-		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&id=[id]&draft=[revision_id]');
+		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]');
 
 		// add the fake multicheckbox column
 		$this->dgDrafts->addColumn('checkbox', '', '');
@@ -141,7 +141,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgDrafts->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]&draft=[revision_id]', BL::getLabel('Edit'));
+		$this->dgDrafts->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]', BL::getLabel('Edit'));
 	}
 
 
@@ -168,7 +168,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgRecent->setPaging(false);
 
 		// set colum URLs
-		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') .'&id=[id]');
+		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
 		// add the fake multicheckbox column
 		$this->dgRecent->addColumn('checkbox', '', '');
@@ -179,7 +179,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgRecent->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
+		$this->dgRecent->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
 	}
 
 

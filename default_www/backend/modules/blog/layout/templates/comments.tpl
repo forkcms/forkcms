@@ -1,13 +1,11 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
-
 			<div class="inner">
-				
 				<div class="pageTitle">
 					<h2>{$lblBlog|ucfirst}: {$lblComments}</h2>
 				</div>
-				
+
 				<div id="tabs" class="tabs">
 					<ul>
 						<li><a href="#tabPublished">{$lblPublishedComments|ucfirst} ({$numPublished})</a></li>
@@ -18,8 +16,8 @@
 					<div id="tabPublished">
 						{option:dgPublished}
 							<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsPublished">
-								<input type="hidden" name="from" value="published" />
 								<div class="datagridHolder">
+									<input type="hidden" name="from" value="published" />
 									{$dgPublished}
 								</div>
 							</form>

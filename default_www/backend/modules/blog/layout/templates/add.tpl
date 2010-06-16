@@ -2,7 +2,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
 		<td id="contentHolder">
 			<div class="inner">
-
 				<div class="pageTitle">
 					<h2>{$lblBlog|ucfirst}: {$lblAdd}</h2>
 				</div>
@@ -28,10 +27,8 @@
 						<div id="tabContent">
 							<table border="0" cellspacing="0" cellpadding="0" width="100%">
 								<tr>
-
-									{* Left side *}
 									<td id="leftColumn">
-										<div id="publishOptions" class="box">
+										<div class="box">
 											<div class="heading headingRTE">
 												<h3>{$lblMainContent|ucfirst}</h3>
 											</div>
@@ -39,9 +36,7 @@
 												{$txtText} {$txtTextError}
 											</div>
 										</div>
-
 										<br />
-
 										<table border="0" cellspacing="0" cellpadding="0" id="advancedOptions">
 											<tr>
 												<td>
@@ -64,7 +59,6 @@
 										</table>
 									</td>
 
-									{* Right side *}
 									<td id="sidebar">
 										<div id="publishOptions" class="box">
 											<div class="heading">
@@ -73,12 +67,10 @@
 
 											<div class="options">
 												<div class="buttonHolder">
-
 													{option:usingDraft}
-													<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
-													<br /><br />
+														<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
+														<br /><br />
 													{/option:usingDraft}
-
 													<a href="#" id="saveAsDraft" class="button"><span>{$lblSaveAsDraft|ucfirst}</span></a>
 												</div>
 											</div>
@@ -184,7 +176,7 @@
 								</div>
 								<div class="options">
 									<p>
-										<label for="meta_description_overwrite">{$lblMetaDescription|ucfirst}</label>
+										<label for="metaDescriptionOverwrite">{$lblMetaDescription|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaDescription}</span>
 									</p>
 									<ul class="inputList checkboxTextFieldCombo">
@@ -193,21 +185,18 @@
 											{$txtMetaDescription} {$txtMetaDescriptionError}
 										</li>
 									</ul>
-
 									<p>
-										<label for="meta_keywords_overwrite">{$lblMetaKeywords|ucfirst}</label>
+										<label for="metaKeywordsOverwrite">{$lblMetaKeywords|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 									</p>
-
 									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkMetaKeywordsOverwrite}
 											{$txtMetaKeywords} {$txtMetaKeywordsError}
 										</li>
 									</ul>
-
 									<div class="textareaHolder">
-										<label for="meta_custom">{$lblMetaCustom|ucfirst}</label>
+										<label for="metaCustom">{$lblMetaCustom|ucfirst}</label>
 										<span class="helpTxt">{$msgHelpMetaCustom}</span>
 										{$txtMetaCustom} {$txtMetaCustomError}
 									</div>
@@ -219,17 +208,14 @@
 									<h3>{$lblURL|uppercase}</h3>
 								</div>
 								<div class="options">
-
-									<label for="url_overwrite">{$lblCustomURL|ucfirst}</label>
+									<label for="urlOverwrite">{$lblCustomURL|ucfirst}</label>
 									<span class="helpTxt">{$msgHelpMetaURL}</span>
-
 									<ul class="inputList checkboxTextFieldCombo">
 										<li>
 											{$chkUrlOverwrite}
 											<span id="urlFirstPart">{$blogUrl}/</span>{$txtUrl} {$txtUrlError}
 										</li>
 									</ul>
-
 								</div>
 							</div>
 						</div>
@@ -237,7 +223,7 @@
 
 					<div class="fullwidthOptions">
 						<div class="buttonHolderRight">
-							<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
+							<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
 						</div>
 					</div>
 				{/form:add}

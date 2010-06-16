@@ -11,7 +11,6 @@
 						<div class="heading">
 							<h3>{$lblSpamFilter|ucfirst}</h3>
 						</div>
-
 						<div class="options">
 							<p>{$msgHelpSpamFilter}:</p>
 							<ul class="inputList p0">
@@ -24,7 +23,6 @@
 						<div class="heading">
 							<h3>{$lblComments|ucfirst}</h3>
 						</div>
-
 						<div class="options">
 							<ul class="inputList p0">
 								<li>{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label></li>
@@ -36,7 +34,6 @@
 						<div class="heading">
 							<h3>{$lblModeration|ucfirst}</h3>
 						</div>
-
 						<div class="options">
 							<ul class="inputList p0">
 								<li>{$chkModeration} <label for="moderation">{$lblAllowModeration|ucfirst}</label></li>
@@ -48,7 +45,6 @@
 						<div class="heading">
 							<h3>{$lblSEO}</h3>
 						</div>
-
 						<div class="options">
 							<p>{$msgHelpPingServices}:</p>
 							<ul class="inputList p0">

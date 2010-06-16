@@ -13,35 +13,35 @@
  */
 class BackendBlogModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT p.id, p.user_id, p.title, UNIX_TIMESTAMP(p.publish_on) AS publish_on, num_comments AS comments
-								FROM blog_posts AS p
-								WHERE p.status = ?';
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT c.id, c.name
-											FROM blog_categories AS c
-											WHERE c.language = ?';
-	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT bc.id, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.author, bc.text,
-											bp.id AS post_id, bp.title AS post_title, m.url AS post_url
-											FROM blog_comments AS bc
-											INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
-											INNER JOIN meta AS m ON bp.meta_id = m.id
-											WHERE bc.status = ?
-											GROUP BY bc.id';
-	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT p.id, p.user_id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on, num_comments AS comments
-													FROM blog_posts AS p
-													WHERE p.status = ? AND p.user_id = ?';
-	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT p.id, p.user_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on, num_comments AS comments
-										FROM blog_posts AS p
-										WHERE p.status = ?
-										ORDER BY p.edited_on DESC
+	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.user_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.num_comments AS comments
+								FROM blog_posts AS i
+								WHERE i.status = ?';
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
+											FROM blog_categories AS i
+											WHERE i.language = ?';
+	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+											p.id AS post_id, p.title AS post_title, m.url AS post_url
+											FROM blog_comments AS i
+											INNER JOIN blog_posts AS p ON i.post_id = p.id
+											INNER JOIN meta AS m ON p.meta_id = m.id
+											WHERE i.status = ?
+											GROUP BY i.id';
+	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
+										FROM blog_posts AS i
+										WHERE i.status = ? AND i.user_id = ?';
+	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT i.id, i.user_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
+										FROM blog_posts AS i
+										WHERE i.status = ?
+										ORDER BY i.edited_on DESC
 										LIMIT 4';
-	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
-											FROM blog_posts AS p
-											WHERE p.status = ? AND p.id = ?
-											ORDER BY p.edited_on DESC';
-	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT p.id, p.revision_id, p.title, UNIX_TIMESTAMP(p.edited_on) AS edited_on
-													FROM blog_posts AS p
-													WHERE p.status = ? AND p.id = ? AND p.user_id = ?
-													ORDER BY p.edited_on DESC';
+	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+											FROM blog_posts AS i
+											WHERE i.status = ? AND i.id = ?
+											ORDER BY i.edited_on DESC';
+	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+													FROM blog_posts AS i
+													WHERE i.status = ? AND i.id = ? AND i.user_id = ?
+													ORDER BY i.edited_on DESC';
 
 
 	/**
@@ -88,7 +88,7 @@ class BackendBlogModel
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
 
 		// delete blogpost records
-		$db->execute('DELETE p, m FROM blog_posts AS p INNER JOIN meta AS m WHERE m.id = p.meta_id AND p.id IN('. implode(',', $ids) .');');
+		$db->execute('DELETE FROM blog_posts WHERE id IN('. implode(',', $ids) .');');
 		$db->execute('DELETE FROM blog_comments WHERE post_id IN('. implode(',', $ids) .');');
 	}
 
@@ -130,9 +130,9 @@ class BackendBlogModel
 		$db = BackendModel::getDB(true);
 
 		// get blogpost ids
-		$postIds = (array) $db->getColumn('SELECT post_id
-											FROM blog_comments
-											WHERE id IN('. implode(',', $ids) .');');
+		$postIds = (array) $db->getColumn('SELECT i.post_id
+											FROM blog_comments AS i
+											WHERE i.id IN('. implode(',', $ids) .');');
 
 		// update record
 		$db->execute('DELETE FROM blog_comments
@@ -152,17 +152,11 @@ class BackendBlogModel
 	 */
 	public static function exists($id)
 	{
-		// redefine
-		$id = (int) $id;
-
-		// get db
-		$db = BackendModel::getDB();
-
 		// exists?
-		return $db->getNumRows('SELECT id
-								FROM blog_posts
-								WHERE id = ?;',
-								$id);
+		return BackendModel::getDB()->getNumRows('SELECT i.id
+													FROM blog_posts AS i
+													WHERE i.id = ?;',
+													(int) $id);
 	}
 
 
@@ -174,13 +168,10 @@ class BackendBlogModel
 	 */
 	public static function existsCategory($id)
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// exists?
-		return $db->getNumRows('SELECT id
-								FROM blog_categories
-								WHERE id = ?;', (int) $id);
+		return BackendModel::getDB()->getNumRows('SELECT id AS i
+													FROM blog_categories AS i
+													WHERE i.id = ?;', (int) $id);
 	}
 
 
@@ -195,17 +186,14 @@ class BackendBlogModel
 		// redefine
 		$id = (int) $id;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// get record and return it
-		return (array) $db->getRecord('SELECT p.*, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on,
-										m.url
-										FROM blog_posts AS p
-										INNER JOIN meta AS m ON m.id = p.meta_id
-										WHERE p.id = ? AND p.status = ?
-										LIMIT 1;',
-										array($id, 'active'));
+		return (array) $db = BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
+																m.url
+																FROM blog_posts AS i
+																INNER JOIN meta AS m ON m.id = i.meta_id
+																WHERE i.id = ? AND i.status = ?
+																LIMIT 1;',
+																array($id, 'active'));
 	}
 
 
@@ -216,12 +204,9 @@ class BackendBlogModel
 	 */
 	public static function getCategories()
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// get records and return them
-		$categories = (array) $db->getPairs('SELECT c.id, c.name
-											FROM blog_categories AS c;');
+		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
+																FROM blog_categories AS i;');
 
 		// no categories?
 		if(empty($categories))
@@ -254,13 +239,10 @@ class BackendBlogModel
 	 */
 	public static function getCategory($id)
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// get record and return it
-		return (array) $db->getRecord('SELECT *
-										FROM blog_categories
-										WHERE id = ?;', (int) $id);
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*
+															FROM blog_categories AS i
+															WHERE i.id = ?;', (int) $id);
 	}
 
 
@@ -277,14 +259,11 @@ class BackendBlogModel
 		$name = (string) $name;
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// exists?
-		return (int) $db->getVar('SELECT bc.id
-									FROM blog_categories AS bc
-									WHERE bc.name = ? AND bc.language = ?;',
-									array($name, $language));
+		return (int) BackendModel::getDB()->getVar('SELECT i.id
+													FROM blog_categories AS i
+													WHERE i.name = ? AND i.language = ?;',
+													array($name, $language));
 	}
 
 
@@ -301,16 +280,13 @@ class BackendBlogModel
 		$id = (int) $id;
 		$draftId = (int) $draftId;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// get record and return it
-		return (array) $db->getRecord('SELECT p.*, UNIX_TIMESTAMP(p.publish_on) AS publish_on, UNIX_TIMESTAMP(p.created_on) AS created_on, UNIX_TIMESTAMP(p.edited_on) AS edited_on,
-										m.url
-										FROM blog_posts AS p
-										INNER JOIN meta AS m ON m.id = p.meta_id
-										WHERE p.id = ? AND p.revision_id = ?;',
-										array($id, $draftId));
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
+														m.url
+														FROM blog_posts AS i
+														INNER JOIN meta AS m ON m.id = i.meta_id
+														WHERE i.id = ? AND i.revision_id = ?;',
+														array($id, $draftId));
 	}
 
 
@@ -327,28 +303,22 @@ class BackendBlogModel
 		$status = (string) $status;
 		$limit = (int) $limit;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// return the comments (order by id, this is faster then on date, the higher the id, the more recent
-		$return = (array) $db->getRecords('SELECT bc.id, bc.author, bc.text, UNIX_TIMESTAMP(bc.created_on) AS created_in,
-												bp.title, bp.language, m.url
-											FROM blog_comments AS bc
-											INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
-											INNER JOIN meta AS m ON bp.meta_id = m.id
-											WHERE bc.status = ? AND bp.status = ?
-											ORDER BY bc.id DESC
-											LIMIT ?;',
-											array($status, 'active', $limit));
+		$return = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.created_on) AS created_in,
+																	p.title, p.language, m.url
+																FROM blog_comments AS i
+																INNER JOIN blog_posts AS p ON i.post_id = p.id
+																INNER JOIN meta AS m ON p.meta_id = m.id
+																WHERE i.status = ? AND p.status = ?
+																ORDER BY i.id DESC
+																LIMIT ?;',
+																array($status, 'active', $limit));
 
 		// loop entries
-		foreach($return as $key => $row)
+		foreach($return as $key => &$row)
 		{
-			// get link to page
-			$link = BackendModel::getURLForBlock('blog', 'detail', $row['language']);
-
 			// add full url
-			$return[$key]['full_url'] = $link .'/'. $row['url'];
+			$row['full_url'] = BackendModel::getURLForBlock('blog', 'detail', $row['language']) .'/'. $row['url'];
 		}
 
 		// return
@@ -363,11 +333,8 @@ class BackendBlogModel
 	 */
 	public static function getMaximumId()
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// return
-		return (int) $db->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1;');
+		return (int) BackendModel::getDB()->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1;');
 	}
 
 
@@ -384,18 +351,12 @@ class BackendBlogModel
 		$id = (int) $id;
 		$revisionId = (int) $revisionId;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// get record and return it
-		return (array) $db->getRecord('SELECT p.*,
-									   UNIX_TIMESTAMP(p.publish_on) AS publish_on,
-									   UNIX_TIMESTAMP(p.created_on) AS created_on,
-									   UNIX_TIMESTAMP(p.edited_on) AS edited_on,
-									   m.url
-									   FROM blog_posts AS p
-									   INNER JOIN meta AS m ON m.id = p.meta_id
-									   WHERE p.id = ? AND p.revision_id = ?;', array($id, $revisionId));
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
+															FROM blog_posts AS i
+															INNER JOIN meta AS m ON m.id = i.meta_id
+															WHERE i.id = ? AND i.revision_id = ?;',
+															array($id, $revisionId));
 	}
 
 
@@ -406,13 +367,10 @@ class BackendBlogModel
 	 */
 	public static function getCommentStatusCount()
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// return
-		return (array) $db->getPairs('SELECT bc.status, COUNT(bc.id)
-										FROM blog_comments AS bc
-										GROUP BY bc.status;');
+		return (array) BackendModel::getDB()->getPairs('SELECT i.status, COUNT(i.id)
+															FROM blog_comments AS i
+															GROUP BY i.status;');
 	}
 
 
@@ -434,10 +392,11 @@ class BackendBlogModel
 		if($itemId === null)
 		{
 			// get number of categories with this URL
-			$number = (int) $db->getNumRows('SELECT p.id
-												FROM blog_posts AS p
-												INNER JOIN meta AS m ON p.meta_id = m.id
-												WHERE p.language = ? AND m.url = ?;', array(BL::getWorkingLanguage(), $URL));
+			$number = (int) $db->getNumRows('SELECT i.id
+												FROM blog_posts AS i
+												INNER JOIN meta AS m ON i.meta_id = m.id
+												WHERE i.language = ? AND m.url = ?;',
+												array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
 			if($number != 0)
@@ -454,10 +413,11 @@ class BackendBlogModel
 		else
 		{
 			// get number of items with this URL
-			$number = (int) $db->getNumRows('SELECT p.id
-												FROM blog_posts AS p
-												INNER JOIN meta AS m ON p.meta_id = m.id
-												WHERE p.language = ? AND m.url = ? AND p.id != ?;', array(BL::getWorkingLanguage(), $URL, $itemId));
+			$number = (int) $db->getNumRows('SELECT i.id
+												FROM blog_posts AS i
+												INNER JOIN meta AS m ON i.meta_id = m.id
+												WHERE i.language = ? AND m.url = ? AND i.id != ?;',
+												array(BL::getWorkingLanguage(), $URL, $itemId));
 
 			// already exists
 			if($number != 0)
@@ -493,7 +453,10 @@ class BackendBlogModel
 		if($categoryId === null)
 		{
 			// get number of categories with this URL
-			$number = (int) $db->getNumRows('SELECT c.id FROM blog_categories AS c WHERE c.language = ? AND c.url = ?;', array(BL::getWorkingLanguage(), $URL));
+			$number = (int) $db->getNumRows('SELECT i.id
+												FROM blog_categories AS i
+												WHERE i.language = ? AND i.url = ?;',
+												array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
 			if($number != 0)
@@ -510,7 +473,10 @@ class BackendBlogModel
 		else
 		{
 			// get number of items with this URL
-			$number = (int) $db->getNumRows('SELECT c.id FROM blog_categories AS c WHERE c.language = ? AND c.url = ? AND c.id != ?;', array(BL::getWorkingLanguage(), $URL, $categoryId));
+			$number = (int) $db->getNumRows('SELECT i.id
+												FROM blog_categories AS i
+												WHERE i.language = ? AND i.url = ? AND i.id != ?;',
+												array(BL::getWorkingLanguage(), $URL, $categoryId));
 
 			// already exists
 			if($number != 0)
@@ -560,11 +526,8 @@ class BackendBlogModel
 	 */
 	public static function insertCategory(array $item)
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// create category
-		return $db->insert('blog_categories', $item);
+		return BackendModel::getDB(true)->insert('blog_categories', $item);
 	}
 
 
@@ -620,10 +583,10 @@ class BackendBlogModel
 		$db = BackendModel::getDB(true);
 
 		// get counts
-		$commentCounts = (array) $db->getPairs('SELECT bc.post_id, COUNT(bc.id) AS comment_count
-												FROM blog_comments AS bc
-												WHERE bc.status = ? AND bc.post_id IN('. implode(',', $uniqueIds) .')
-												GROUP BY bc.post_id;',
+		$commentCounts = (array) $db->getPairs('SELECT i.post_id, COUNT(i.id) AS comment_count
+												FROM blog_comments AS i
+												WHERE i.status = ? AND i.post_id IN('. implode(',', $uniqueIds) .')
+												GROUP BY i.post_id;',
 												array('published'));
 
 		// loop posts
@@ -678,10 +641,10 @@ class BackendBlogModel
 		$rowsToKeep = (int) BackendModel::getSetting('blog', 'maximum_number_of_revisions', 5);
 
 		// get revision-ids for items to keep
-		$revisionIdsToKeep = (array) $db->getColumn('SELECT p.revision_id
-													 FROM blog_posts AS p
-													 WHERE p.id = ? AND p.status = ?
-													 ORDER BY p.edited_on DESC
+		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id
+													 FROM blog_posts AS i
+													 WHERE i.id = ? AND i.status = ?
+													 ORDER BY i.edited_on DESC
 													 LIMIT ?;',
 													 array($id, 'archived', $rowsToKeep));
 
@@ -702,11 +665,8 @@ class BackendBlogModel
 	 */
 	public static function updateCategory($id, array $item)
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// update category
-		$db->update('blog_categories', $item, 'id = ?', (int) $id);
+		BackendModel::getDB(true)->update('blog_categories', $item, 'id = ?', (int) $id);
 	}
 
 
@@ -724,9 +684,9 @@ class BackendBlogModel
 
 		// @later	if the new status is spam, we should submit it to Akismet!
 		// get blogpost ids
-		$postIds = (array) $db->getColumn('SELECT post_id
-											FROM blog_comments
-											WHERE id IN('. implode(',', $ids) .');');
+		$postIds = (array) $db->getColumn('SELECT i.post_id
+											FROM blog_comments AS i
+											WHERE i.id IN('. implode(',', $ids) .');');
 
 		// update record
 		$db->execute('UPDATE blog_comments

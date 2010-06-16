@@ -1,10 +1,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
-
 		<td id="contentHolder">
-
 			<div class="inner">
-
 				<div class="pageTitle">
 					<h2>{$lblBlog|ucfirst}: {$lblArticles}</h2>
 					<div class="buttonHolderRight">
@@ -34,8 +31,9 @@
 
 				{option:dgPosts}
 				<form action="{$var|geturl:'mass_post_action'}" method="get" class="forkForms submitWithLink" id="posts">
-					<input type="hidden" name="from" value="posts" />
 					<div class="datagridHolder">
+						<input type="hidden" name="from" value="posts" />
+
 						<div class="tableHeading">
 							<h3>{$lblPublishedPosts|ucfirst}</h3>
 						</div>
@@ -44,11 +42,8 @@
 				</form>
 				{/option:dgPosts}
 
-				{option:!dgPosts}
-				<p>{$msgNoItems}</p>
-				{/option:!dgPosts}
+				{option:!dgPosts}<p>{$msgNoItems}</p>{/option:!dgPosts}
 			</div>
-
 		</td>
 	</tr>
 </table>
