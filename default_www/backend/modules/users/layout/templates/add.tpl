@@ -1,6 +1,6 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
-	<td id="contentHolder">
+		<td id="contentHolder">
 			<div class="inner">
 				<div class="pageTitle">
 					<h2>{$lblUsers|ucfirst}: {$lblAdd}</h2>
@@ -16,7 +16,7 @@
 						<div id="tabSettings">
 							<div class="subtleBox">
 								<div class="heading">
-									<h3>{$lblCredentials|ucfirst}</h3>
+									<h3>{$lblLoginCredentials|ucfirst}</h3>
 								</div>
 								<div class="options labelWidthLong horizontal">
 									<p>
@@ -107,7 +107,7 @@
 									<ul class="inputList">
 										<li>
 											{$chkActive}
-											<label for="active">{$msgEnableUser}</label>
+											<label for="active">{$msgHelpActive}</label>
 											 {$chkActiveError}
 										</li>
 									</ul>

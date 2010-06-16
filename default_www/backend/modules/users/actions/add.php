@@ -89,16 +89,19 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			if($this->frm->getField('username')->isFilled(BL::getError('UsernameIsRequired')))
 			{
 				// only a-z (no spaces) are allowed
-				if($this->frm->getField('username')->isAlphaNumeric('{$errOnlyAlphaNumericChars|ucfirst}'))
+				if($this->frm->getField('username')->isAlphaNumeric(BL::getError('AlphaNumericCharactersOnly')))
 				{
 					// username already exists
-					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue())) $this->frm->getField('username')->addError('{$errUsernameAlreadyExists}');
+					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue())) $this->frm->getField('username')->addError(BL::getError('UsernameAlreadyExists'));
 
 					// username doesn't exist
 					else
 					{
-						// some usernames are blacklisted, so don't allow them
-						if(in_array($this->frm->getField('username')->getValue(), array('root', 'god', 'netlash'))) $this->frm->getField('username')->addError('{$errUsernameNotAllowed}');
+						/*
+						 * Some usernames are blacklisted, so we don't allow them. Dieter has asked to be added
+						 * to the blacklist, because he's little bitch.
+						 */
+						if(in_array($this->frm->getField('username')->getValue(), array('admin', 'administrator', 'dieter', 'god', 'netlash', 'root', 'sudo'))) $this->frm->getField('username')->addError(BL::getError('UsernameNotAllowed'));
 					}
 				}
 			}
@@ -109,7 +112,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			$this->frm->getField('nickname')->isFilled(BL::getError('NicknameIsRequired'));
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
-			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			$this->frm->getField('interface_language')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
 			if($this->frm->getField('password')->isFilled())
@@ -121,10 +124,10 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			if($this->frm->getField('avatar')->isFilled())
 			{
 				// correct extension
-				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed')))
+				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('JPGAndGIFOnly')))
 				{
 					// correct mimetype?
-					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg'), BL::getError('OnlyJPGAndGifAreAllowed'));
+					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg'), BL::getError('JPGAndGIFOnly'));
 				}
 			}
 
@@ -142,7 +145,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 
 				// build user-array
-				$user['username'] = $this->frm->getField('username')->getValue(true);
+				$user['username'] = $this->frm->getField('username')->getValue();
 				$user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $settings['password_key']);
 				$user['group_id'] = $this->frm->getField('group')->getValue();
 
