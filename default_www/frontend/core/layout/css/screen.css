@@ -10,5 +10,38 @@
 
 /*
 	Nothing yet
-	@todo
+	@todo basic layout
 */
+
+body {
+	font-family: Arial, sans-serif;
+	line-height: 1.5;
+	color: #000;
+	font-size: 13px;
+}
+
+#container {
+	width: 960px;
+	margin: 0 auto;
+	position: relative;
+}
+
+	#navigation {
+		width: 240px;
+		float: left;
+	}
+	
+	#content {
+		width: 600px;
+		float: left;
+	}
+	
+	#footer {
+		clear: both;
+	}
+	
+	#language {
+		position: absolute;
+		right: 0;
+		top: 0;
+	}

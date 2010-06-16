@@ -205,7 +205,3 @@ a.icon span {
 .ui-icon-closethick {
 	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat 0 -220px;
 }
-
-.ui-state-hover .ui-icon-closethick {
-	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat 0 -242px;
-}

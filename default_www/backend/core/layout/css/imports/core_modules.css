@@ -154,6 +154,14 @@
 			-moz-border-radius-topright: 4px;
 
 		}
+		
+		.box:target .contentTitle {
+			background: #000;
+		}
+
+			.box:target .contentTitle h3 {
+				color: #FFF;
+			}
 
 			.contentType {
 				background: #666;

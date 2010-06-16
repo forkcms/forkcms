@@ -487,36 +487,21 @@
 }
 
 .templateVisual td {
-	background: #fff;
+	background: #FFF;
 	text-align: center;
-	border: 1px dotted #666;
+	border: 1px solid #AAA;
 	font-weight: 700;
 	color: #000;
-	font-family: Helvetica, Arial, sans-serif;
+	font-size: 10px;
+	line-height: 1.2;
 }
 
 	.templateVisual td a {
 		display: block;
 		padding: 6px 3px;
-		color: #2244BB;
-	}
-
-	.templateVisual td.selected a {
-		color: #FFF;
-	}
-
-	.templateVisual td a:hover {
+		color: #000;
 		display: block;
-		background: #EEE;
-		color: #FFF;
-		background: #1a57ad;
-		background: -webkit-gradient(linear, left top, left bottom, from(#5C93D5), to(#1A57AD));
-		background: -moz-linear-gradient(top, #5C93D5, #1A57AD);
 	}
-
-		.templateVisual td.hover {
-			border-style: solid;
-		}
 
 	.templateVisual td:empty {
 		background: #EEE url(/backend/core/layout/images/na.png) repeat;

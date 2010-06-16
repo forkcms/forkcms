@@ -254,7 +254,7 @@ class BackendPagesModel
 			$row = str_replace(array('[',']'), '', $row);
 
 			// add start html
-			$html .= '<table border="0" cellpadding="2" cellspacing="2">'."\n";
+			$html .= '<table border="0" cellpadding="0" cellspacing="0">'."\n";
 			$html .= '	<tbody>'."\n";
 			$html .= '		<tr>'."\n";
 
@@ -272,7 +272,7 @@ class BackendPagesModel
 				$index = ($exists) ? $cell : '';
 
 				// does the cell need content
-				if(!$exists) $html .= '		<td> </td>'."\n";
+				if(!$exists) $html .= '		<td></td>'."\n";
 
 				// the cell need a name
 				else $html .= '		<td><a href="#block-'. $index .'" title="'. $title .'">'. $title .'</a></td>'."\n";

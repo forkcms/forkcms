@@ -82,7 +82,7 @@
 										<td id="sidebar">
 											<div id="publishOptions" class="box">
 												<div class="heading">
-													<h3>{$lblPublish|ucfirst}</h3>
+													<h3>{$lblStatus|ucfirst}</h3>
 												</div>
 												<!-- @later
 												<div class="options">
@@ -93,6 +93,16 @@
 													</div>
 												</div>
 												 -->
+												 <div class="options">
+ 													<ul class="inputList">
+ 														{iteration:hidden}
+ 														<li>
+ 															{$hidden.rbtHidden}
+ 															<label for="{$hidden.id}">{$hidden.label}</label>
+ 														</li>
+ 														{/iteration:hidden}
+ 													</ul>
+ 												</div>
 												<div class="options">
 													<div class="buttonHolder">
 														<a href="{$SITE_URL}{$pageUrl}" class="button icon iconZoom previewButton" target="_blank">
@@ -113,7 +123,7 @@
 													<table border="0" cellpadding="0" cellspacing="0">
 														<tbody>
 															<tr>
-																<td><p>{$lblLastSave|ucfirst}: {$recordedited_on|date:'H:i'}</p></td>
+																<td><p>{$lblLastSave|ucfirst}: <abbr title="{$recordedited_on|date:'j F Y H:i'}">{$recordedited_on|date:'H:i'}</abbr></p></td>
 																<td>
 																	<div class="buttonHolderRight">
 																		<input id="save" class="inputButton button" type="submit" name="save" value="{$lblSave|ucfirst}" />
@@ -319,7 +329,7 @@
 								Dialog to select another template.
 								Do not change the ID!
 							 *}
-							<div id="chooseTemplate" title="{$msgChooseANewTemplate}" style="display: none;">
+							<div id="chooseTemplate" title="{$lblChooseTemplate|ucfirst}" style="display: none;">
 								<ul class="inputList" id="templateList">
 									{iteration:templates}
 										<li style="float: left; width: 155px;">

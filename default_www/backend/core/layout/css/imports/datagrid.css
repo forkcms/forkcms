@@ -196,11 +196,11 @@
 	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -193px;
 }
 
-.datagrid th a.sortedDesc {
+.datagrid th a.sortedAsc {
 	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -215px;
 }
 
-.datagrid th a.sortedAsc {
+.datagrid th a.sortedDesc {
 	background: url(/backend/core/layout/images/sprites/th.gif) no-repeat right -237px;
 }
 

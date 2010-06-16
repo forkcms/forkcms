@@ -26,7 +26,7 @@
 ----------------------------------*/
 
 /* states and images */
-.ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; }
+.ui-icon { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; width: 24px; height: 24px;}
 
 /* Misc visuals
 ----------------------------------*/
@@ -82,8 +82,10 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; }
 
 /* Overlays */
-.ui-widget-overlay { background: #666666 url(images/ui-bg_diagonals-thick_20_666666_40x40.png) 50% 50% repeat; opacity: .50;filter:Alpha(Opacity=50); }
-.ui-widget-shadow { margin: -5px 0 0 -5px; padding: 5px; background: #000000 url(images/ui-bg_flat_10_000000_40x100.png) 50% 50% repeat-x; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; }/* Accordion
+.ui-widget-overlay { background: #666; opacity: .50; filter:Alpha(Opacity=50); }
+.ui-widget-shadow { background: #000; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+
+/* Accordion
 ----------------------------------*/
 .ui-accordion .ui-accordion-header { cursor: pointer; position: relative; margin-top: 1px; zoom: 1; }
 .ui-accordion .ui-accordion-li-fix { display: inline; }
@@ -162,11 +164,10 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 }/* Dialog
 ----------------------------------*/
 .ui-dialog { position: relative; padding: .2em; width: 300px; background: white;}
-.ui-dialog .ui-dialog-titlebar { padding: .5em .3em .3em 1em; position: relative; font-weight: 700; color: #000;}
+.ui-dialog .ui-dialog-titlebar { padding: 6px; position: relative; font-weight: 700; color: #000; background: #EEE; }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 0 .2em; } 
-.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: .3em; top: 50%; width: 19px; margin: -10px 0 0 0; padding: 1px; height: 18px; }
-.ui-dialog .ui-dialog-titlebar-close span { display: block; margin: 1px; }
-.ui-dialog .ui-dialog-titlebar-close:hover, .ui-dialog .ui-dialog-titlebar-close:focus { padding: 0; }
+.ui-dialog .ui-dialog-titlebar-close { position: absolute; right: 4px; top: 4px; width: 24px; margin: 0; padding: 0; height: 24px; }
+.ui-dialog-titlebar .ui-state-hover { border: none !important; }
 .ui-dialog .ui-dialog-content { border: 0; padding: .5em 1em; background: none; overflow: auto; zoom: 1; }
 .ui-dialog .ui-dialog-buttonpane { text-align: left; border-width: 1px 0 0 0; background-image: none; margin: .5em 0 0 0; padding: .3em 1em .5em .4em; }
 .ui-dialog .ui-dialog-buttonpane button { float: right; margin: .5em .4em .5em 0; cursor: pointer; padding: .2em .6em .3em .6em; line-height: 1.4em; width:auto; overflow:visible; }

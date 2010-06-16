@@ -246,10 +246,14 @@
 							</div>
 						</div>
 						<div id="tabTemplate">
-							<div class="buttonHolderRight">
-								<a id="changeTemplate" href="#" class="button icon iconEdit">
-									<span>{$lblEditTemplate|ucfirst}</span>
-								</a>
+
+							<div class="pageTitle">
+								<h2>Template: {$templatelabel}</h2>
+								<div class="buttonHolderRight">
+									<a id="changeTemplate" href="#" class="button icon iconEdit">
+										<span>{$lblEditTemplate|ucfirst}</span>
+									</a>
+								</div>
 							</div>
 
 							<div id="templateVisualLarge">
@@ -290,7 +294,7 @@
 								Dialog to select another template.
 								Do not change the ID!
 							 *}
-							<div id="chooseTemplate" title="{$msgChooseANewTemplate}" style="display: none;">
+							<div id="chooseTemplate" title="{$lblChooseTemplate|ucfirst}" style="display: none;">
 								<ul class="inputList" id="templateList">
 								{iteration:templates}
 									<li style="float: left; width: 155px;">
