@@ -150,17 +150,17 @@ class SpoonSession
 	 * @param	string $key		The key for the variable.
 	 * @param	mixed $value	The value to store.
 	 */
-    public static function set($key, $value)
-    {
-    	// start session if needed
-    	if(!session_id()) self::start();
+	public static function set($key, $value)
+	{
+		// start session if needed
+		if(!session_id()) self::start();
 
-    	// set key
-    	$_SESSION[(string) $key] = $value;
-    }
+		// set key
+		$_SESSION[(string) $key] = $value;
+	}
 
 
-    /**
+	/**
 	 * Starts the session.
 	 *
 	 * @return void

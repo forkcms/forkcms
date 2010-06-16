@@ -401,7 +401,7 @@ class BackendBlogModel
 			// already exists
 			if($number != 0)
 			{
-				// add  number
+				// add number
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
@@ -422,7 +422,7 @@ class BackendBlogModel
 			// already exists
 			if($number != 0)
 			{
-				// add  number
+				// add number
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
@@ -461,7 +461,7 @@ class BackendBlogModel
 			// already exists
 			if($number != 0)
 			{
-				// add  number
+				// add number
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
@@ -481,7 +481,7 @@ class BackendBlogModel
 			// already exists
 			if($number != 0)
 			{
-				// add  number
+				// add number
 				$URL = BackendModel::addNumber($URL);
 
 				// try again

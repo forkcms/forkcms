@@ -1,14 +1,14 @@
 {*
-  Below a list of globally availble options & variables.
+	Below a list of globally availble options & variables.
 
-  Variables:
-  - {$summary} / table summary
-  - {$caption} / table caption
-  - {$paging} / output of the paging class
-  - {$numColumns} / number of visible columns
+	Variables:
+	- {$summary} / table summary
+	- {$caption} / table caption
+	- {$paging} / output of the paging class
+	- {$numColumns} / number of visible columns
 
-  Options:
-  - paging / whether pagination is enabled
+	Options:
+	- paging / whether pagination is enabled
 *}
 
 

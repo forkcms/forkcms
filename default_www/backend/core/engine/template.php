@@ -4,8 +4,8 @@
  * BackendTemplate, this is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
- *	- it will map some modifiers
- *  - it will assign a lot of constants
+ * 	- it will map some modifiers
+ * 	- it will assign a lot of constants
  * 	- ...
  *
  * @package		backend
@@ -358,7 +358,7 @@ class BackendTemplateModifiers
 {
 	/**
 	 * Dumps the data
-	 *  syntax: {$var|dump}
+	 * 	syntax: {$var|dump}
 	 *
 	 * @return	string
 	 * @param	string $var		The variable to dump.
@@ -371,7 +371,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a date
-	 *  syntac: {$var|formatDate}
+	 * 	syntax: {$var|formatDate}
 	 *
 	 * @return	string
 	 * @param	int $var	The UNIX-timestamp to format
@@ -388,7 +388,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a datetime
-	 *  syntac: {$var|formatDateTime}
+	 * 	syntax: {$var|formatDateTime}
 	 *
 	 * @return	string
 	 * @param	int $var	The UNIX-timestamp to format
@@ -405,7 +405,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a date
-	 *  syntac: {$var|formatDate}
+	 * 	syntac: {$var|formatDate}
 	 *
 	 * @return	string
 	 * @param	int $var	The UNIX-timestamp to format
@@ -443,7 +443,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Convert a var into main-navigation-html
-	 *  syntax: {$var|getmainnavigation}
+	 * 	syntax: {$var|getmainnavigation}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
@@ -456,14 +456,14 @@ class BackendTemplateModifiers
 
 	/**
 	 * Convert a var into navigation-html
-	 *  syntax: {$var|getnavigation:startdepth[:maximumdepth]}
+	 * 	syntax: {$var|getnavigation:startdepth[:maximumdepth]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
 	 */
 	public static function getNavigation($var = null)
 	{
-		return  Spoon::getObjectReference('navigation')->getNavigation();
+		return Spoon::getObjectReference('navigation')->getNavigation();
 	}
 
 
@@ -483,7 +483,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Truncate a string
-	 *  syntax: {$var|truncate:<max-length>[:<append-hellip>]}
+	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
 	 * @param	string $var					A placeholder var, will be replaced with the generated HTML.

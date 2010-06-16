@@ -69,7 +69,7 @@ jsBackend.pages.extras = {
 													// close dialog
 													$(this).dialog('close');
 												},
-						   '{$lblCancel|ucfirst}': function() {
+							'{$lblCancel|ucfirst}': function() {
 														// close the dialog
 														$(this).dialog('close'); 
 													}

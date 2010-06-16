@@ -894,7 +894,7 @@ class BackendBaseCronjob
 			if($counter > 9)
 			{
 				// build class name
-				$className = 'Backend'. SpoonFilter::toCamelCase($this->getModule()  .'_cronjob_'. $this->getAction());
+				$className = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_cronjob_'. $this->getAction());
 
 				// notify user
 				throw new BackendException('Cronjob ('. $className .') is still busy after 10 runs, check it out!');

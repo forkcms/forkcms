@@ -32,8 +32,8 @@ jsBackend.balloons = {
 			{
 				// position
 				$(this).css('position', 'absolute')
-					   .css('top', linkedElement.offset().top + linkedElement.height() + 10)
-					   .css('left', linkedElement.offset().left - 30);
+						.css('top', linkedElement.offset().top + linkedElement.height() + 10)
+						.css('left', linkedElement.offset().left - 30);
 			}
 		});
 	
@@ -73,8 +73,8 @@ jsBackend.balloons = {
 	position: function(clickedElement, element) {
 		// position
 		element.css('position', 'absolute')
-				   .css('top', clickedElement.offset().top + clickedElement.height() + 10)
-				   .css('left', clickedElement.offset().left - 30);
+				.css('top', clickedElement.offset().top + clickedElement.height() + 10)
+				.css('left', clickedElement.offset().left - 30);
 	},
 	// end
 	eof: true
@@ -134,7 +134,7 @@ jsBackend.controls = {
 																	// goto link
 																	window.location = url;
 																},
-										   '{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
+											'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
 										 },
 								open: function(evt) { 
 											 // set focus on first button
@@ -665,7 +665,7 @@ jsBackend.tooltip = {
 	init: function() {
 		if($('.help').length > 0) { 
 			$('.help').tooltip({ effect: 'fade' })
-					  .dynamic(); 
+						.dynamic(); 
 		}
 	},
 	

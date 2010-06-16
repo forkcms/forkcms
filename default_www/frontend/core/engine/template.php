@@ -4,8 +4,8 @@
  * FrontendTemplate, this is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
- *	- it will map some modifiers
- *  - it will assign a lot of constants
+ * 	- it will map some modifiers
+ * 	- it will assign a lot of constants
  * 	- ...
  *
  * @package		frontend
@@ -256,7 +256,7 @@ class FrontendTemplateModifiers
 {
 	/**
 	 * Formats plain text as HTML, links will be detected, paragraphs will be inserted
-	 *  syntax: {$var|cleanupPlainText}
+	 * 	syntax: {$var|cleanupPlainText}
 	 *
 	 * @return	string
 	 * @param	string $var		The text to cleanup.
@@ -287,7 +287,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Dumps the data
-	 *  syntax: {$var|dump}
+	 * 	syntax: {$var|dump}
 	 *
 	 * @return	string
 	 * @param	string $var		The variable to dump.
@@ -415,7 +415,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Formats a timestamp as a string that indicates the time ago
-	 *  syntax: {$var|timeAgo}
+	 * 	syntax: {$var|timeAgo}
 	 *
 	 * @return	string
 	 * @param	string $var		A UNIX-timestamp that will be formated as a time-ago-string.
@@ -435,7 +435,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Truncate a string
-	 *  syntax: {$var|truncate:<max-length>[:<append-hellip>]}
+	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
 	 * @param	string $var
@@ -470,7 +470,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the value for a user-setting
-	 *  syntax {$var|userSetting:<setting>[:<userId>]}
+	 * 	syntax {$var|userSetting:<setting>[:<userId>]}
 	 *
 	 * @return	string
 	 * @param	string $var

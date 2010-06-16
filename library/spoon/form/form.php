@@ -1082,24 +1082,24 @@ class SpoonForm
 	public function validate()
 	{
 		// not parsed
-        if(!$this->validated)
-        {
-        	// define errors
-        	$errors = '';
+		if(!$this->validated)
+		{
+			// define errors
+			$errors = '';
 
-        	// if we use tokens, we validate them here
-        	if($this->getUseToken())
-        	{
-        		// token not available?
-        		if(!SpoonSession::exists('form_token')) $errors .= $this->tokenError;
+			// if we use tokens, we validate them here
+			if($this->getUseToken())
+			{
+				// token not available?
+				if(!SpoonSession::exists('form_token')) $errors .= $this->tokenError;
 
-        		// token was found
-        		else
-        		{
-        			// compare tokens
-        			if($this->getField('form_token')->getValue() != SpoonSession::get('form_token')) $errors .= $this->tokenError;
-        		}
-        	}
+				// token was found
+				else
+				{
+					// compare tokens
+					if($this->getField('form_token')->getValue() != SpoonSession::get('form_token')) $errors .= $this->tokenError;
+				}
+			}
 
 			// loop objects
 			foreach($this->objects as $oElement)
@@ -1111,12 +1111,12 @@ class SpoonForm
 			// affect correct status
 			if(trim($errors) != '') $this->correct = false;
 
-            // main form errors?
-            if(trim($this->getErrors()) != '') $this->correct = false;
+			// main form errors?
+			if(trim($this->getErrors()) != '') $this->correct = false;
 
-            // update parsed status
-            $this->validated = true;
-        }
+			// update parsed status
+			$this->validated = true;
+		}
 	}
 }
 

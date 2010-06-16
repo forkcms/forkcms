@@ -129,7 +129,7 @@ class SpoonFormButton extends SpoonFormAttributes
 	 */
 	public function setType($type = 'submit')
 	{
-		$this->type = SpoonFilter::getValue($type,  array('button', 'reset', 'submit'), 'submit');
+		$this->type = SpoonFilter::getValue($type, array('button', 'reset', 'submit'), 'submit');
 	}
 }
 

@@ -1,7 +1,7 @@
 (function($) {
 	$.fn.tagBox = function(options) {
 		// define defaults
-		var defaults =  {
+		var defaults = {
 			splitChar: ',',
 			emptyMessage: '',
 			addLabel: 'add',
@@ -42,10 +42,10 @@
 			
 			// hide current element
 			$(this).css('visibility', 'hidden')
-				   .css('position', 'absolute')
-				   .css('top', '-9000px')
-				   .css('left', '-9000px')
-				   .attr('tabindex', '-1');
+					.css('position', 'absolute')
+					.css('top', '-9000px')
+					.css('left', '-9000px')
+					.attr('tabindex', '-1');
 			
 			// prepend html
 			$(this).before(html);
@@ -220,7 +220,7 @@
 (function($) {
 	$.fn.doMeta = function(options) {
 		// define defaults
-		var defaults =  {};
+		var defaults = {};
 		
 		// extend options
 		var options = $.extend(defaults, options);

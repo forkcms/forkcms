@@ -45,7 +45,7 @@ class BackendLocaleModel
 		$value .= ' * @author		Backend' ."\n";
 		$value .= ' * @generated	'. date('Y-m-d H:i:s') ."\n";
 		$value .= ' */' ."\n";
-		$value .=  "\n";
+		$value .= "\n";
 
 		// loop types
 		foreach($types as $type)
@@ -54,7 +54,7 @@ class BackendLocaleModel
 			$modules = array('core');
 
 			// continue output
-			$value .=  "\n";
+			$value .= "\n";
 			$value .= '// init var'. "\n";
 			$value .= '$'. $type .' = array();' ."\n";
 			$value .= '$'. $type .'[\'core\'] = array();' ."\n";
@@ -68,7 +68,7 @@ class BackendLocaleModel
 					// new module
 					if(!in_array($item['module'], $modules))
 					{
-						$value  .= '$'. $type .'[\''. $item['module'] .'\'] = array();'. "\n";
+						$value .= '$'. $type .'[\''. $item['module'] .'\'] = array();'. "\n";
 						$modules[] = $item['module'];
 					}
 
@@ -83,7 +83,7 @@ class BackendLocaleModel
 		}
 
 		// close php
-		$value .=  "\n";
+		$value .= "\n";
 		$value .= '?>';
 
 		// store

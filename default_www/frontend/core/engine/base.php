@@ -338,7 +338,7 @@ class FrontendBaseBlock
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
 	 */
-	public function addCSSFile($file, $overwritePath = false, $media = 'screen',  $condition = null, $minify = true)
+	public function addCSSFile($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
 	{
 		// redefine
 		$file = (string) $file;

@@ -135,7 +135,7 @@ class FrontendURL
 	 */
 	public function getParameter($index, $type = 'string')
 	{
-		// does the index exists and isn't this parameter  empty
+		// does the index exists and isn't this parameter empty
 		if(isset($this->parameters[$index]) && $this->parameters[$index] != '')
 		{
 			// parameter exists
@@ -201,7 +201,7 @@ class FrontendURL
 				if(isset($getChunks[0]))
 				{
 					// reset in $_GET
-					$_GET[$getChunks[0]] =  (isset($getChunks[1])) ? (string) $getChunks[1] : '';
+					$_GET[$getChunks[0]] = (isset($getChunks[1])) ? (string) $getChunks[1] : '';
 
 					// add into parameters
 					if(isset($getChunks[1])) $this->parameters[(string) $getChunks[0]] = (string) $getChunks[1];

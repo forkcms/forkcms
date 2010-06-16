@@ -204,7 +204,7 @@ function exceptionHandler($exception)
 							<!-- variables -->
 							<tr>
 								<td style="background-color: #EEEEEE; border: 1px solid #B2B2B2;">
-									<h1  style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">'. $name .' &raquo; Variables</h1>
+									<h1 style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">'. $name .' &raquo; Variables</h1>
 									<table width="550px;">'."\n";
 
 		// $_GET has items

@@ -103,7 +103,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// add name
 		if($this->filter['name'] !== null)
 		{
-			$query .= ' AND l.name LIKE  ?';
+			$query .= ' AND l.name LIKE ?';
 			$parameters[] = '%'. $this->filter['name'] .'%';
 		}
 

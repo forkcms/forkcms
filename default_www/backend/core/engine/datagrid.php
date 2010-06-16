@@ -399,7 +399,7 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 			elseif($currentPage == $numPages)
 			{
 				// 1 2 3 4 5 6 7 8 9 10 11 12 [13]
-				$items[$numPages -  $limit - 1] = '...';
+				$items[$numPages - $limit - 1] = '...';
 				for($i = ($numPages - $limit); $i <= $numPages; $i++) $items[$i] = $i;
 			}
 

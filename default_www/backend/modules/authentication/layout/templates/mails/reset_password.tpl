@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-  "http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -11,30 +10,30 @@
 			margin: 0;
 			padding: 0;
 		}
-		
+
 		body {
 			font-size: 12px;
 			font-family: "Lucida Grande", Arial, sans-serif;
 			line-height: 1.5;
 		}
-		
+
 		p {
 			padding: 0 0 12px;
 			margin: 0;
 		}
-		
+
 		h3 {
 			font-size: 18px;
 			font-weight: 700;
 			color: #000;
 		}
-		
+
 		.datagrid {
 			margin: 0 0 12px;
 			border-collapse: collapse;
 			width: 100%;
 		}
-		
+
 			.datagrid td,
 			.datagrid th {
 				padding: 6px;
@@ -46,7 +45,7 @@
 			.datagrid .code {
 				font-family: Menlo, Monaco, "Courier New", Courier, monospace;
 			}
-		
+
 		/*
 			Default link behavior
 		*/
@@ -54,16 +53,16 @@
 		a {
 			color: #2244BB;
 		}
-		
+
 		#footer {
 			color: #666;
 			font-size: 11px;
 		}
-		
+
 		#footer a {
 			color: #333;
 		}
-		
+
 	</style>
 </head>
 <body>
@@ -89,7 +88,7 @@
 						</td>
 					</tr>
 				</table>
-				
+
 			</td>
 		</tr>
 	</table>

@@ -48,7 +48,7 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 	{
 		// validate id
 		// @todo davy - uitzoeken wat hiervan de oorzaak mogelijk kan zijn.
-//		if(!isset($this->data['id'])) throw new FrontendException('There is no content block with id: '. $this->data[]    not available');
+//		if(!isset($this->data['id'])) throw new FrontendException('There is no content block with id: '. $this->data[] not available');
 
 		// fetch the item
 		$this->item = FrontendContentBlocksModel::get((int) $this->data['id']);

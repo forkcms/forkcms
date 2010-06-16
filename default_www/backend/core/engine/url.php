@@ -139,7 +139,7 @@ class BackendURL
 				$getChunks = explode('=', $getParameter, 2);
 
 				// store in the real GET
-				if(isset($getChunks[0])) $_GET[$getChunks[0]] =  (isset($getChunks[1])) ? (string) $getChunks[1] : '';
+				if(isset($getChunks[0])) $_GET[$getChunks[0]] = (isset($getChunks[1])) ? (string) $getChunks[1] : '';
 			}
 		}
 

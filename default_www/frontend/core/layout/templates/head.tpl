@@ -13,7 +13,7 @@
 	<meta name="keywords" content="{$metaKeywords}" />
 	{$metaCustom}
 
-	{*  Stylesheets *}
+	{* Stylesheets *}
 	{iteration:cssFiles}
 		{option:!cssFiles.condition}<link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" />{/option:!cssFiles.condition}
 		{option:cssFiles.condition}<!--[if {$cssFiles.condition}]><link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" /><![endif]-->{/option:cssFiles.condition}

@@ -70,7 +70,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 					require_once $pathName .'/widgets/'. $widget;
 
 					// build classname
-					$className = 'Backend'. SpoonFilter::toCamelCase($module)  .'Widget'. SpoonFilter::toCamelCase(str_replace('.php', '', $widget));
+					$className = 'Backend'. SpoonFilter::toCamelCase($module) .'Widget'. SpoonFilter::toCamelCase(str_replace('.php', '', $widget));
 
 					// validate if the class exists
 					if(!class_exists($className)) throw new BackendException('The widgetfile is present, but the classname should be: '. $className .'.');
