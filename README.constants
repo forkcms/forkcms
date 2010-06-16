@@ -1,0 +1,39 @@
+  ["APPLICATION"] => string(7) "backend"
+  ["NAMED_APPLICATION"] => string(7) "private"
+  ["SPOON_DEBUG"] => bool(true)
+  ["SPOON_DEBUG_EMAIL"] => string(0) ""
+  ["SPOON_DEBUG_MESSAGE"] => string(15) "Internal error."
+  ["SPOON_CHARSET"] => string(5) "utf-8"
+  ["FORK_VERSION"] => string(5) "2.0.0"
+  ["SITE_DOMAIN"] => string(12) "forkng.local"
+  ["SITE_DEFAULT_TITLE"] => string(7) "Fork NG"
+  ["SITE_URL"] => string(19) "http://forkng.local"
+  ["SITE_MULTILANGUAGE"] => bool(true)
+  ["PATH_WWW"] => string(42) "/Users/tijs/Sites/forkng.local/default_www"
+  ["PATH_LIBRARY"] => string(38) "/Users/tijs/Sites/forkng.local/library"
+  ["SITE_TITLE_SEPERATOR"] => string(3) " - "
+  ["SITE_RSS_GENERATOR"] => string(8) "Fork CMS"
+  ["SITE_DEFAULT_LANGUAGE"] => string(2) "nl"
+  ["BACKEND_PATH"] => string(50) "/Users/tijs/Sites/forkng.local/default_www/backend"
+  ["BACKEND_CACHE_PATH"] => string(56) "/Users/tijs/Sites/forkng.local/default_www/backend/cache"
+  ["BACKEND_CORE_PATH"] => string(55) "/Users/tijs/Sites/forkng.local/default_www/backend/core"
+  ["BACKEND_MODULES_PATH"] => string(58) "/Users/tijs/Sites/forkng.local/default_www/backend/modules"
+  ["FRONTEND_PATH"] => string(51) "/Users/tijs/Sites/forkng.local/default_www/frontend"
+  ["FRONTEND_CACHE_PATH"] => string(57) "/Users/tijs/Sites/forkng.local/default_www/frontend/cache"
+  ["FRONTEND_CORE_PATH"] => string(56) "/Users/tijs/Sites/forkng.local/default_www/frontend/core"
+  ["FRONTEND_MODULES_PATH"] => string(59) "/Users/tijs/Sites/forkng.local/default_www/frontend/modules"
+  ["FRONTEND_FILES_PATH"] => string(57) "/Users/tijs/Sites/forkng.local/default_www/frontend/files"
+  ["BACKEND_CORE_URL"] => string(13) "/backend/core"
+  ["BACKEND_CACHE_URL"] => string(14) "/backend/cache"
+  ["FRONTEND_FILES_URL"] => string(15) "/frontend/files"
+  ["SPOON_VERSION"] => string(5) "1.2.0"
+  ["SPOON_EXCEPTION_CALLBACK"] => string(0) ""
+  ["SPOON_AUTOLOADER"] => bool(true)
+  ["BACKEND_MODULE_PATH"] => string(73) "/Users/tijs/Sites/forkng.local/default_www/backend/modules/authentication"
+		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
+		$this->assign('MODULE', $this->URL->getModule());
+		$this->assign('ACTION', $this->URL->getAction());
+			$this->assign('SECRET_KEY', BackendAuthentication::getUser()->getSecretKey());
+			$this->assign('INTERFACE_LANGUAGE', (string) BackendAuthentication::getUser()->getSetting('interface_language'));
+		$this->assign('SITE_TITLE', BackendModel::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+		$this->assign('THEME', BackendModel::getSetting('core', 'theme', 'default'));
