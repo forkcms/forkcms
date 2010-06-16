@@ -15,7 +15,7 @@
 					{$datagrid}
 				</div>
 				{/option:datagrid}
-				{option:!datagrid}{$msgNoItems}{/option:!datagrid}
+				{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
 			</div>
 		</td>
 	</tr>

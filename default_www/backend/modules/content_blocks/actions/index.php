@@ -51,10 +51,10 @@ class BackendContentBlocksIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('title'));
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') .'&id=[id]');
+		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
 	}
 
 

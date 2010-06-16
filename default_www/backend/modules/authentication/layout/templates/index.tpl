@@ -14,7 +14,6 @@
 				{/option:hasError}
 
 				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
-
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>
 					</div>
@@ -26,7 +25,6 @@
 									<label for="backendUsername">{$lblUsername|ucfirst}</label>
 									{$txtBackendUsername} {$txtBackendUsernameError}
 								</p>
-
 								<p>
 									<label for="backendPassword">{$lblPassword|ucfirst}</label>
 									{$txtBackendPassword} {$txtBackendPasswordError}
@@ -50,6 +48,7 @@
 						<a class="button linkButton icon iconClose iconOnly toggleBalloon" href="#" rel="forgotPasswordHolder"><span>X</span></a>
 
 						<div class="balloonTop">&nbsp;</div>
+
 						<p>{$msgForgotPasswordHelp}</p>
 						{form:forgotPassword}
 							<div class="oneLiner">
@@ -86,9 +85,9 @@
 		</tr>
 	</table>
 	<script type="text/javascript">
-		$(document).ready(function() {
-			if(!utils.cookies.isEnabled()) $('#noCookies').show();
-		});
+		//<![CDATA[
+			$(document).ready(function() { if(!utils.cookies.isEnabled()) $('#noCookies').show(); });
+		//]]>
 	</script>
 </body>
 </html>

@@ -100,9 +100,9 @@
 							<div class="datagridHolder">
 								<table border="0" cellspacing="0" cellpadding="0" class="datagrid dynamicStriping">
 									<tr>
-										<th class="title" width="20%"><span>{$lblName|ucfirst}</span></th>
-										<th width="40%"><span>{$lblAPIKey|ucfirst}</span></th>
-										<th width="60%"><span>{$lblAPIURL|ucfirst}</span></th>
+										<th class="title" style="width: 20%;"><span>{$lblName|ucfirst}</span></th>
+										<th style="width: 40%;"><span>{$lblAPIKey|ucfirst}</span></th>
+										<th style="width: 60%;"><span>{$lblAPIURL|ucfirst}</span></th>
 									</tr>
 									<tr>
 										<td class="title">Fork public key</td>
