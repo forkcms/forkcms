@@ -14,6 +14,7 @@
 - Bugfix: fixed SpoonFilter::isFloat and SpoonFilter::isInteger to work on every float and int instead of relying on regexes.
 - Rewrote some small snippets of code to improve performance.
 - Bugfix: rewrote SpoonFilter::isInternalReferrer to use PHP's internal parse_url function.
+- Bugfix: createThumbnail had been missing from SpoonFormImage.
 
 
 1.2.0 (2010-05-18)

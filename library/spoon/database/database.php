@@ -406,14 +406,14 @@ class SpoonDatabase
 		$statement = $this->handler->prepare($query);
 
 		// validate statement
-	if($statement === false)
-	{
+		if($statement === false)
+		{
 			// get error
 			$errorInfo = $this->handler->errorInfo();
 
 			// throw exceptions
 			throw new SpoonDatabaseException($errorInfo[2]);
-	}
+		}
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -460,14 +460,14 @@ class SpoonDatabase
 		$statement = $this->handler->prepare($query);
 
 		// validate statement
-	if($statement === false)
-	{
+		if($statement === false)
+		{
 			// get error
 			$errorInfo = $this->handler->errorInfo();
 
 			// throw exceptions
 			throw new SpoonDatabaseException($errorInfo[2]);
-	}
+		}
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -564,14 +564,14 @@ class SpoonDatabase
 		$statement = $this->handler->prepare($query);
 
 		// validate statement
-	if($statement === false)
-	{
+		if($statement === false)
+		{
 			// get error
 			$errorInfo = $this->handler->errorInfo();
 
 			// throw exceptions
 			throw new SpoonDatabaseException($errorInfo[2]);
-	}
+		}
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -622,14 +622,14 @@ class SpoonDatabase
 		$statement = $this->handler->prepare($query);
 
 		// validate statement
-	if($statement === false)
-	{
+		if($statement === false)
+		{
 			// get error
 			$errorInfo = $this->handler->errorInfo();
 
 			// throw exceptions
 			throw new SpoonDatabaseException($errorInfo[2]);
-	}
+		}
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -718,14 +718,14 @@ class SpoonDatabase
 		$statement = $this->handler->prepare($query);
 
 		// validate statement
-	if($statement === false)
-	{
+		if($statement === false)
+		{
 			// get error
 			$errorInfo = $this->handler->errorInfo();
 
 			// throw exceptions
 			throw new SpoonDatabaseException($errorInfo[2]);
-	}
+		}
 
 		// has parameters
 		foreach($parameters as $label => $value)
@@ -849,14 +849,14 @@ class SpoonDatabase
 		$statement = $this->handler->prepare($query);
 
 		// validate statement
-	if($statement === false)
-	{
+		if($statement === false)
+		{
 			// get error
 			$errorInfo = $this->handler->errorInfo();
 
 			// throw exceptions
 			throw new SpoonDatabaseException($errorInfo[2]);
-	}
+		}
 
 		// execute statement
 		$statement->execute((array) $parameters);
@@ -1053,13 +1053,13 @@ class SpoonDatabase
 
 		// validate statement
 		if($statement === false)
-	{
+		{
 			// get error
 			$errorInfo = $this->handler->errorInfo();
 
 			// throw exceptions
 			throw new SpoonDatabaseException($errorInfo[2]);
-	}
+		}
 
 		// has parameters
 		foreach($parameters as $label => $value)

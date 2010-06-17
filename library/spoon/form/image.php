@@ -30,6 +30,26 @@
 class SpoonFormImage extends SpoonFormFile
 {
 	/**
+	 * Creates a thumbnail from this field
+	 *
+	 * @return	void
+	 * @param	string $filename
+	 * @param	int[optional] $width
+	 * @param	int[optional] $height
+	 * @param	bool[optional] $allowEnlargement
+	 * @param	bool[optional] $forceOriginalAspectRatio
+	 * @param	int[optional] $quality
+	 */
+	public function createThumbnail($filename, $width = null, $height = null, $allowEnlargement = false, $forceOriginalAspectRatio = true, $quality = 100)
+	{
+		$thumbnail = new SpoonThumbnail($this->getTempFileName(), $width, $height, true);
+		$thumbnail->setAllowEnlargement($allowEnlargement);
+		$thumbnail->setForceOriginalAspectRatio($forceOriginalAspectRatio);
+		$thumbnail->parseToFile($filename, $quality);
+	}
+	
+	
+	/**
 	 * Retrieve the extension of the uploaded file (based on the MIME-type).
 	 *
 	 * @return	string
