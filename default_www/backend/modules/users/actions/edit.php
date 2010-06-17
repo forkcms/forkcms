@@ -125,16 +125,19 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			if($this->frm->getField('username')->isFilled(BL::getError('UsernameIsRequired')))
 			{
 				// only a-z (no spaces) are allowed
-				if($this->frm->getField('username')->isAlphaNumeric('{$errOnlyAlphaNumericChars}'))
+				if($this->frm->getField('username')->isAlphaNumeric(BL::getError('AlphaNumericCharactersOnly')))
 				{
 					// username already exists
-					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue(), $this->id)) $this->frm->getField('username')->addError('{$errUsernameAlreadyExists}');
+					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue(), $this->id)) $this->frm->getField('username')->addError(BL::getError('UsernameAlreadyExists'));
 
 					// username doesn't exist
 					else
 					{
-						// some usernames are blacklisted, so don't allow them
-						if(in_array($this->frm->getField('username')->getValue(), array('root', 'god', 'netlash'))) $this->frm->getField('username')->addError('{$errUsernameNotAllowed}');
+						/*
+						 * Some usernames are blacklisted, so we don't allow them. Dieter has asked to be added
+						 * to the blacklist, because he's little bitch.
+						 */
+						if(in_array($this->frm->getField('username')->getValue(), array('admin', 'administrator', 'dieter', 'god', 'netlash', 'root', 'sudo'))) $this->frm->getField('username')->addError(BL::getError('UsernameIsNotAllowed'));
 					}
 				}
 			}
@@ -143,7 +146,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
-			$this->frm->getField('interface_language')->isFilled(BL::getError('InterfaceLanguageIsRequired'));
+			$this->frm->getField('interface_language')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
 			if($this->frm->getField('new_password')->isFilled())
@@ -155,10 +158,10 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			if($this->frm->getField('avatar')->isFilled())
 			{
 				// correct extension
-				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('OnlyJPGAndGifAreAllowed')))
+				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('JPGAndGIFOnly')))
 				{
 					// correct mimetype?
-					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg'), BL::getError('OnlyJPGAndGifAreAllowed'));
+					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg'), BL::getError('JPGAndGIFOnly'));
 				}
 			}
 
@@ -196,26 +199,14 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					// add into settings to update
 					$settings['avatar'] = $filename;
 
-					// move to new location
-					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename);
-
 					// resize (128x128)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename, 128, 128);
-					$thumbnail->setForceOriginalAspectRatio(false);
-					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $filename);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename, 64, 64);
-					$thumbnail->setForceOriginalAspectRatio(false);
-					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $filename);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $filename, 32, 32);
-					$thumbnail->setForceOriginalAspectRatio(false);
-					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename, 32, 32, true, false, 100);
 				}
 
 				// datetime formats
@@ -227,7 +218,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edit&var='. $user['username'] .'&highlight=userid-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. $user['username'] .'&highlight=userid-'. $user['id']);
 			}
 		}
 	}

@@ -101,7 +101,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 						 * Some usernames are blacklisted, so we don't allow them. Dieter has asked to be added
 						 * to the blacklist, because he's little bitch.
 						 */
-						if(in_array($this->frm->getField('username')->getValue(), array('admin', 'administrator', 'dieter', 'god', 'netlash', 'root', 'sudo'))) $this->frm->getField('username')->addError(BL::getError('UsernameNotAllowed'));
+						if(in_array($this->frm->getField('username')->getValue(), array('admin', 'administrator', 'dieter', 'god', 'netlash', 'root', 'sudo'))) $this->frm->getField('username')->addError(BL::getError('UsernameIsNotAllowed'));
 					}
 				}
 			}
@@ -156,31 +156,19 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// create new filename
-					$fileName = rand(0,3) .'_'. $user['id'] .'.'. $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) .'_'. $user['id'] .'.'. $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
-					$settings['avatar'] = $fileName;
-
-					// move to new location
-					$this->frm->getField('avatar')->moveFile(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName);
+					$settings['avatar'] = $filename;
 
 					// resize (128x128)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 128, 128);
-					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->setForceOriginalAspectRatio(false);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $fileName);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 64, 64);
-					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->setForceOriginalAspectRatio(false);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $fileName);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$thumbnail = new SpoonThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $fileName, 32, 32);
-					$thumbnail->setAllowEnlargement(true);
-					$thumbnail->setForceOriginalAspectRatio(false);
-					$thumbnail->parseToFile(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $fileName);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename, 32, 32, true, false, 100);
 				}
 
 				// update settings (in this case the avatar)

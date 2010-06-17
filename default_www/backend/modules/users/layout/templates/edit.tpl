@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
 <div class="pageTitle">
-	<h2>{$lblUsers|ucfirst}: {$msgEditWithItem|sprintf:{$record['username']}}</h2>
+	<h2>{$lblUsers|ucfirst}: {$msgEditUser|sprintf:{$record['username']}}</h2>
 </div>
 
 {form:edit}
@@ -44,7 +44,7 @@
 		<div id="tabSettings">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>{$lblCredentials|ucfirst}</h3>
+					<h3>{$lblLoginCredentials|ucfirst}</h3>
 				</div>
 				<div class="options horizontal labelWidthLong">
 					<p>
@@ -146,7 +146,7 @@
 					<ul class="inputList">
 						<li>
 							{$chkActive}
-							<label for="active">{$msgEnableUser}</label>
+							<label for="active">{$msgHelpActive}</label>
 							{$chkActiveError}
 						</li>
 					</ul>
@@ -161,13 +161,13 @@
 
 	<div class="fullwidthOptions">
 		{option:deleteAllowed}
-		<a href="{$var|geturl:'delete'}&id={$record['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
-			<span>{$lblDelete|ucfirst}</span>
-		</a>
+			<a href="{$var|geturl:'delete'}&amp;id={$record['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+				<span>{$lblDelete|ucfirst}</span>
+			</a>
 		{/option:deleteAllowed}
 
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
 

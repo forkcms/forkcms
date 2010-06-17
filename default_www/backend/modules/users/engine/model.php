@@ -2,12 +2,13 @@
 
 /**
  * BackendUserModel
- * In this file we store all generic functions that we will be using in the UsersModule
+ * In this file we store all generic functions that we will be using in the users module.
  *
  * @package		backend
  * @subpackage	users
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendUsersModel
@@ -19,18 +20,14 @@ class BackendUsersModel
 
 
 	/**
-	 * Mark the user as deleted and reset the active-status
+	 * Mark the user as deleted and deactivate his account.
 	 *
 	 * @return	void
 	 * @param	int $id		The userId to delete.
 	 */
 	public static function delete($id)
 	{
-		// redefine
-		$id = (int) $id;
-
-		// update the user
-		BackendModel::getDB(true)->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', $id);
+		BackendModel::getDB(true)->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', (int) $id);
 	}
 
 
@@ -42,16 +39,12 @@ class BackendUsersModel
 	 */
 	public static function deleteResetPasswordSettings($id)
 	{
-		// redefine
-		$id = (int) $id;
-
-		// delete the settings
-		BackendModel::getDB(true)->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", $id);
+		BackendModel::getDB(true)->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", (int) $id);
 	}
 
 
 	/**
-	 * Does the user exist
+	 * Does the user exist.
 	 *
 	 * @return	bool
 	 * @param	int $id						The userId to check for existance.
@@ -72,7 +65,7 @@ class BackendUsersModel
 												WHERE i.id = ? AND i.deleted = ?;',
 												array($id, 'N')) == 1);
 
-		// fallback, this doesn't hold the active nor deleted status in account
+		// fallback, this doesn't take the active nor deleted status in account
 		return ($db->getNumRows('SELECT i.id
 									FROM users AS i
 									WHERE i.id = ?;',
@@ -81,7 +74,7 @@ class BackendUsersModel
 
 
 	/**
-	 * Does the user with a given emailadress exist
+	 * Does the user with a given emailadress exist.
 	 *
 	 * @return	bool
 	 * @param	string $email	The email to check for existance.
@@ -102,10 +95,10 @@ class BackendUsersModel
 
 	/**
 	 * Does a username already exist?
-	 * If you specify a userId, the username with the given id will be ignored
+	 * If you specify a userId, the username with the given id will be ignored.
 	 *
 	 * @return	bool
-	 * @param	string $username		The username to check for existance.
+	 * @param	string $username		The username to check for.
 	 * @param	int[optional] $id		The userId to be ignored.
 	 */
 	public static function existsUsername($username, $id = null)
@@ -166,7 +159,7 @@ class BackendUsersModel
 
 
 	/**
-	 * Fetch the list of date formats with examples of the formats.
+	 * Fetch the list of date formats including examples of these formats.
 	 *
 	 * @return	array
 	 */
@@ -192,7 +185,6 @@ class BackendUsersModel
 	 */
 	public static function getGroups()
 	{
-		// return
 		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
 														FROM groups AS i');
 	}
@@ -228,14 +220,11 @@ class BackendUsersModel
 	 */
 	public static function getIdByUsername($username)
 	{
-		// redefine
-		$username = (string) $username;
-
 		// get user-settings
 		$userId = BackendModel::getDB()->getVar('SELECT i.id
 													FROM users AS i
 													WHERE i.username = ?;',
-													array($username));
+													array((string) $username));
 
 		// userId or false on error
 		return ($userId == 0) ? false : (int) $userId;
@@ -243,7 +232,7 @@ class BackendUsersModel
 
 
 	/**
-	 * Fetch the list of time formats with examples of the formats.
+	 * Fetch the list of time formats including examples of these formats.
 	 *
 	 * @return	array
 	 */
@@ -269,7 +258,6 @@ class BackendUsersModel
 	 */
 	public static function getUsers()
 	{
-		// get general user data and return
 		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.username
 														FROM users AS i
 														ORDER BY i.username;',
@@ -278,7 +266,7 @@ class BackendUsersModel
 
 
 	/**
-	 * Add a new user
+	 * Add a new user.
 	 *
 	 * @return	int
 	 * @param	array $user			The userdata.
@@ -344,15 +332,12 @@ class BackendUsersModel
 	 */
 	public static function updatePassword(BackendUser $user, $password)
 	{
-		// redefine
-		$password = (string) $password;
-
 		// fetch user info
 		$userId = $user->getUserId();
 		$key = $user->getSetting('password_key');
 
 		// update user
-		BackendModel::getDB(true)->update('users', array('password' => BackendAuthentication::getEncryptedString($password, $key)), 'id = ?', $userId);
+		BackendModel::getDB(true)->update('users', array('password' => BackendAuthentication::getEncryptedString((string) $password, $key)), 'id = ?', $userId);
 
 		// remove the user settings linked to the resetting of passwords
 		self::deleteResetPasswordSettings($userId);

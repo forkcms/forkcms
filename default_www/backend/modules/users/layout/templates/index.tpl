@@ -9,7 +9,6 @@
 </div>
 <div class="datagridHolder">
 	{option:datagrid}{$datagrid}{/option:datagrid}
-	{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
 </div>
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
