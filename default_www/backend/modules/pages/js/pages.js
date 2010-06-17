@@ -157,8 +157,8 @@ jsBackend.pages.extras = {
 		// store
 		$('#block_extra_id_'+ selectedBlock).val(selectedExtraId);
 
-		console.log(selectedBlock);
-		console.log(selectedExtraId);
+		//console.log(selectedBlock);
+		//console.log(selectedExtraId);
 		
 		// empty the extraForBlock
 		$('#extraForBlock').val('');

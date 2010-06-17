@@ -1,6 +1,5 @@
-					</div>
 				</div>
-			</td>
-		</tr>
-	</table>
-</body>
+			</div>
+		</td>
+	</tr>
+</table>
