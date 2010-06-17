@@ -1,4 +1,14 @@
-/* "Fake" includes that have to stay consistent */
+/*
+
+	"Fake" includes that have to stay consistent
+    
+	@package      backend
+	@subpackage   core
+    
+	@author       Johan Ronsse <johan@netlash.com>
+	@since        2.0
+
+*/
 
 /* Rounded corners on all sides */
 .rc {

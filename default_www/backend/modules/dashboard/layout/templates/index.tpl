@@ -1,5 +1,8 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:file='{$BACKEND_MODULES_PATH}/dashboard/layout/templates/structure_start.tpl'}
+
 <div id="dashboardWidgets">
+
 	<div id="wip" class="content">
 		<p>Welcome to Fork NG. What you are seeing is a work in progress. Report any bugs in the <a href="http://projects.netlash.com/public/index.php/projects/369">Fork NG</a> project in ActiveCollab.</p>
 	</div>
@@ -22,4 +25,6 @@
 	{/iteration:rightColumn}
 	</div>
 </div>
+
+{include:file='{$BACKEND_MODULES_PATH}/dashboard/layout/templates/structure_end.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

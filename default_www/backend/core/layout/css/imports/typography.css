@@ -11,25 +11,20 @@
 */
 
 body {
+	font-size: 12px;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
 	line-height: 1.4;
 	color: #666;
 	background: #EBF3F9;
-
-	font-size: 12px;
-}
-
-h2, h3, h4 {
-	color: #444;
-	line-height: 1.1;
 }
 
 h1 {
-	font-size: 17px;
+	color: #000;
 }
 
-h2 {
+h1, h2 {
 	font-size: 21px;
+	padding: 0 0 12px;
 }
 
 	h2 input {
@@ -37,9 +32,14 @@ h2 {
 		font-weight: 700;
 	}
 
+h2, h3, h4 {
+	color: #444;
+	line-height: 1.1;
+}
+
 h3 {
-	font-size: 15px;
-	padding: 5px 0 8px;
+	font-size: 13px;
+	padding: 0 0 12px;
 }
 
 h4 {

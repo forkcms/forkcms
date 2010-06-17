@@ -1,3 +1,15 @@
+/*
+
+	Default stylesheet TinyMCE
+    
+	@package      backend
+	@subpackage   core
+    
+	@author       Johan Ronsse <johan@netlash.com>
+	@since        2.0
+
+*/
+
 html {
 	height: auto;
 	width: auto;
@@ -8,6 +20,7 @@ body {
 	height: auto;
 	width: auto;
 	background: #FFF;
+	background: #FFF url(/backend/core/layout/images/ds.png) repeat-x;
 }
 
 img {

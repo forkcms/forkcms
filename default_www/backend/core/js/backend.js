@@ -91,7 +91,6 @@ jsBackend.controls = {
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
 		jsBackend.controls.bindTableCheckbox();
-		jsBackend.controls.bindToggleDiv();
 	},
 	// bind a checkbox textfield combo
 	bindCheckboxTextfieldCombo: function() {

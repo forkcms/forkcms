@@ -1,56 +1,53 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/sidebar.tpl'}
-		<td id="contentHolder">
-			<div class="inner">
-				<div class="pageTitle">
-					<h2>{$lblBlog|ucfirst}: {$lblComments}</h2>
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+
+<div class="pageTitle">
+	<h2>{$lblBlog|ucfirst}: {$lblComments}</h2>
+</div>
+
+<div id="tabs" class="tabs">
+	<ul>
+		<li><a href="#tabPublished">{$lblPublishedComments|ucfirst} ({$numPublished})</a></li>
+		<li><a href="#tabModeration">{$lblWaitingForModeration|ucfirst} ({$numModeration})</a></li>
+		<li><a href="#tabSpam">{$lblSpam|ucfirst} ({$numSpam})</a></li>
+	</ul>
+
+	<div id="tabPublished">
+		{option:dgPublished}
+			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsPublished">
+				<div class="datagridHolder">
+					<input type="hidden" name="from" value="published" />
+					{$dgPublished}
 				</div>
+			</form>
+		{/option:dgPublished}
+		{option:!dgPublished}{$msgNoItems}{/option:!dgPublished}
+	</div>
 
-				<div id="tabs" class="tabs">
-					<ul>
-						<li><a href="#tabPublished">{$lblPublishedComments|ucfirst} ({$numPublished})</a></li>
-						<li><a href="#tabModeration">{$lblWaitingForModeration|ucfirst} ({$numModeration})</a></li>
-						<li><a href="#tabSpam">{$lblSpam|ucfirst} ({$numSpam})</a></li>
-					</ul>
-
-					<div id="tabPublished">
-						{option:dgPublished}
-							<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsPublished">
-								<div class="datagridHolder">
-									<input type="hidden" name="from" value="published" />
-									{$dgPublished}
-								</div>
-							</form>
-						{/option:dgPublished}
-						{option:!dgPublished}{$msgNoItems}{/option:!dgPublished}
-					</div>
-
-					<div id="tabModeration">
-						{option:dgModeration}
-							<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
-								<input type="hidden" name="from" value="moderation" />
-								<div class="datagridHolder">
-									{$dgModeration}
-								</div>
-							</form>
-						{/option:dgModeration}
-						{option:!dgModeration}{$msgNoItems}{/option:!dgModeration}
-					</div>
-
-					<div id="tabSpam">
-						{option:dgSpam}
-							<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsSpam">
-								<input type="hidden" name="from" value="spam" />
-								<div class="datagridHolder">
-									{$dgSpam}
-								</div>
-							</form>
-						{/option:dgSpam}
-						{option:!dgSpam}{$msgNoItems}{/option:!dgSpam}
-					</div>
+	<div id="tabModeration">
+		{option:dgModeration}
+			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
+				<input type="hidden" name="from" value="moderation" />
+				<div class="datagridHolder">
+					{$dgModeration}
 				</div>
-			</div>
-		</td>
-	</tr>
-</table>
+			</form>
+		{/option:dgModeration}
+		{option:!dgModeration}{$msgNoItems}{/option:!dgModeration}
+	</div>
+
+	<div id="tabSpam">
+		{option:dgSpam}
+			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsSpam">
+				<input type="hidden" name="from" value="spam" />
+				<div class="datagridHolder">
+					{$dgSpam}
+				</div>
+			</form>
+		{/option:dgSpam}
+		{option:!dgSpam}{$msgNoItems}{/option:!dgSpam}
+	</div>
+</div>
+
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

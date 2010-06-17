@@ -69,3 +69,15 @@ abbr.help {
 	.oneLiner .tooltip p {
 		line-height: 16px;
 	}
+
+/*
+	Positioning
+	Depends on where the tooltip occurs
+*/
+
+.oneLiner .help {
+	float: left;
+	margin-left: 3px;
+	position: relative;
+	top: 1px;
+}

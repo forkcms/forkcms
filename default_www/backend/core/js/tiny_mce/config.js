@@ -27,8 +27,8 @@ tinyMCE.init({
 	content_css: '/frontend/core/layout/css/screen.css{option:THEME}, /frontend/themes/{$THEME}/core/css/screen.css{/option:THEME}, /backend/core/layout/css/editor_content.css',
 
 	// theme options
-	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code,|,fullscreen',
-	theme_advanced_buttons2: 'table,|,image,|,formatselect,|,bramus_cssextras_classes,bramus_cssextras_ids',
+	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code,|,fullscreen,|,tinyautosave',
+	theme_advanced_buttons2: 'table,|,image,|,formatselect,|,bramus_cssextras_classes',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,
 	theme_advanced_blockformats : "p,h1,h2,h3,h4,blockquote,code",

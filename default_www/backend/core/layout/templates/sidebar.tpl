@@ -1,4 +1,4 @@
-<table border="0" cellspacing="0" cellpadding="0" id="modulesHolder">
+<table border="0" cellspacing="0" cellpadding="0" id="mainHolder">
 	<tr>
 		<td id="subnavigation" style="width: 164px;">
 			<table border="0" cellspacing="0" cellpadding="0">

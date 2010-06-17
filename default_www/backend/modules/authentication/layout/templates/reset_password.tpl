@@ -1,6 +1,10 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
 <body id="login">
+
+	{include:file='{$BACKEND_MODULES_PATH}/{$MODULE}/layout/templates/ie6.tpl'}
+
 	{option:debug}<div id="debugnotify">WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
+	
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
@@ -30,4 +34,5 @@
 			</div>
 		</tr>
 	</table>
+
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

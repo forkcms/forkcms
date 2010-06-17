@@ -12,5 +12,5 @@
 	</ul>
 </div>
 
-<!-- Site wide HTML -->
+{* Site wide HTML *}
 {$siteWideHTML}

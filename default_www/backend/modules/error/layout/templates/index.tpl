@@ -1,10 +1,14 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-<body>
-	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
-	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
-		<tr>
-			<td>
-				<div>
-					<h2>{$title}</h2>
-					<p>{$message}</p>
+<body id="{$bodyID}" class="{$bodyClass}">
+
+<table border="0" cellspacing="0" cellpadding="0" class="centerItem">
+	<tr>
+		<td>
+			<div class="formMessage errorMessage">
+				<p>{$message}</p>
+			</div>
+		</td>
+	</tr>
+</table>
+
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

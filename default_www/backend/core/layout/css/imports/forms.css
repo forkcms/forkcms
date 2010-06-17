@@ -12,25 +12,30 @@
 
 /* Modify input[type="text"] and textareas */
 
-.inputText,
-.inputPassword,
-input[type="text"],
-input[type="password"],
+.inputText, .inputPassword,
+input[type="text"], input[type="password"],
 textarea {
+	font-size: 12px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+
 	background: #FFF url(/backend/core/layout/images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
-	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
 
-	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 
-	/* Transition */
 	-webkit-transition: background-color 0.28s linear;
 
 }
+
+	textarea.inputEditor {
+		/* Reset border-radius for tinyMCE textareas */
+		border-radius: 0;
+		-webkit-border-radius: 0;
+		-moz-border-radius: 0;
+	}
 
 /* Disabled fields */
 input.inputText[disabled="disabled"],
@@ -40,37 +45,26 @@ input.disabled {
 	color: #666 !important;
 }
 
-.inputText,
-input[type="text"],
-.inputPassword,
-input[type="password"] {
+.inputText, input[type="text"],
+.inputPassword, input[type="password"] {
 	padding: 3px 2px;
 	color: #333;
 }
 
 	/* Fix alignment in Chrome/Saf */
 	@media screen and (-webkit-min-device-pixel-ratio:0) {
-		.inputText,
 		input[type="text"],
-		.inputPassword,
 		input[type="password"] {
 			height: 14px;
 		}
 	}
 
-	.inputText:focus,
-	input[type="text"]:focus,
-	.inputPassword:focus,
-	input[type="password"]:focus,
-	textarea:focus,
-	.inputText.focus,
-	input[type="text"].focus,
-	.inputPassword.focus,
-	input[type="password"].focus,
-	textarea.focus {
-		color: #000;
-		border-color: #666 #999 #999 #AAA;
-	}
+.inputText:focus, input[type="text"]:focus, .inputText.focus, input[type="text"].focus,
+.inputPassword:focus, input[type="password"]:focus, .inputPassword.focus, input[type="password"].focus,
+textarea:focus, textarea.focus {
+	color: #000;
+	border-color: #666 #999 #999 #AAA;
+}
 
 /*
 	Inputs with a .code class get a monospaced font
@@ -86,7 +80,6 @@ textarea.code {
 select {
 	/* Nothing */
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
-
 }
 
 /* Input type file should be left alone */
@@ -105,17 +98,10 @@ input[type="submit"] {
 	/*
 		Focus outline; Mozilla specific since Safari implements this right
 	*/
+
 	@-moz-document url-prefix() {
 
-		.inputText,
-		.inputPassword {
-			height: 14px;
-			line-height: 14px;
-		}
-
-		.inputText:focus,
 		input[type="text"]:focus,
-		.inputPassword:focus,
 		input[type="password"]:focus,
 		textarea:focus {
 			outline: 2px solid #C2DEFF;
@@ -178,38 +164,6 @@ input[type="submit"] {
 	border-bottom: 1px solid #E2E2E2;
 }
 
-/*
-	The Magic One Liner
-	----
-	General method to wrap form and other elements on one line
-	Gets cleared see clearing section of this css file
-*/
-
-.oneLiner p,
-.oneLiner .buttonHolder,
-.oneLiner .floater {
-	float: left;
-	margin-right: 4px;
-}
-
-	.oneLiner p {
-		padding-bottom: 0;
-		line-height: 22px;
-		/* Same height as button height */
-	}
-
-	.oneLiner .help {
-		position: relative;
-		top: 4px;
-		left: 2px;
-		display: block;
-	}
-	
-	.oneLiner select {
-		margin-top: 1px;
-		margin-right: 3px;
-	}
-
 label {
 	font-weight: 700;
 	color: #4A4A4A;
@@ -227,10 +181,6 @@ label {
 
 .forkForms p label {
 	display: block;
-}
-
-.forkForms textarea {
-	width: 90%;
 }
 
 .forkForms .horizontal textarea {
@@ -279,12 +229,26 @@ label {
 .forkForms p:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 .forkForms p { zoom: 1; }
 
-fieldset.visiblefieldset {
-	padding: 16px;
-	margin: 0 0 16px;
-	border: 1px solid #DDD;
+/*
+	The Magic One Liner
+	----
+	General method to wrap form and other elements on one line
+	Gets cleared see clearing section of this css file
+*/
+
+.oneLiner p,
+.oneLiner .buttonHolder {
+	float: left;
+	margin-right: 4px;
 }
 
-fieldset legend {
-	display:none;
-}
+	.oneLiner p {
+		padding-bottom: 0;
+		line-height: 22px;
+		/* Same height as button height */
+	}
+
+	.oneLiner select {
+		margin-top: 1px;
+		margin-right: 3px;
+	}

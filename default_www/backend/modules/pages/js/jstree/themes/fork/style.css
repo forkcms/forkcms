@@ -1,4 +1,16 @@
-/* TREE LAYOUT */
+/*
+
+    Tree layout
+    Based on basic tree skin
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
 .tree ul {
 	margin: 0;
 	padding: 0;
@@ -165,14 +177,19 @@
 /* DEFAULT, HOVER, CLICKED, LOADING STATES */
 .tree-fork li a:hover,
 .tree-fork li a.active,
-.tree-fork li a.focus,
+.tree-fork li a.focus {
+	background: #eee;
+	/* @inc .rc */
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+
 .tree-fork li span,
 .tree-fork li.selected > a {
-	
-	background: #1A57AD;
+	background: #1a57ad;
 	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
 	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
-
 
 	/* @inc .rc */
 	-webkit-border-radius: 4px;
@@ -184,7 +201,7 @@
 .tree-fork li a.clicked,
 .tree-fork li a.clicked:hover,
 .tree-fork li span.clicked {
-	background: #3875D7;
+	background: #666;
 	
 	/* @inc .rc */
 	-webkit-border-radius: 4px;

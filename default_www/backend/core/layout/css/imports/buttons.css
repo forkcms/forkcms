@@ -62,14 +62,13 @@ a.mainButton:visited {
 	background: -moz-linear-gradient(#8DB7E7, #5E9CE1 4.5454545%, #2F79CA 95.454545%, #215996);
 }
 
-
 a.mainButton:hover,
 a.mainButton:active,
 a.mainButton:focus,
 a.mainButton.focus {
-	background: #73B5FF;
+	background: red;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#215996), to(#8DB7E7), color-stop(.0454545,#2F79CA), color-stop(.9545455,#5E9CE1));
-	background: -moz-linear-gradient(#8DB7E7, #5E9CE1 4.5454545%, #2F79CA 95.454545%, #215996);
+	background: -moz-linear-gradient(#215996, #2F79CA 4.5454545%, #5E9CE1 95.454545%, #8DB7E7);
 }
 
 a.button span {
