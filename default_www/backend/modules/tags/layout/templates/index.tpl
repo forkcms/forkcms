@@ -15,4 +15,4 @@
 {option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/foot.tpl'}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

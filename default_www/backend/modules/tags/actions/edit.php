@@ -8,6 +8,7 @@
  * @subpackage	tags
  *
  * @author 		Dave Lens <dave@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendTagsEdit extends BackendBaseActionEdit
@@ -22,7 +23,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 
-		// does the item exists
+		// does the item exist
 		if(BackendTagsModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
@@ -37,7 +38,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 			// validate the form
 			$this->validateForm();
 
-			// parse the datagrid
+			// parse the page
 			$this->parse();
 
 			// display the page

@@ -42,7 +42,7 @@ class BackendTagsModel
 
 
 	/**
-	 * Check if a tag exists
+	 * Check if a tag exists.
 	 *
 	 * @return	bool
 	 * @param	int $id		The id to check for existence.
@@ -61,21 +61,17 @@ class BackendTagsModel
 
 
 	/**
-	 * Get tag record
+	 * Get tag record.
 	 *
 	 * @return	array
 	 * @param	int $id		The id of the record to get.
 	 */
 	public static function get($id)
 	{
-		// redefine
-		$id = (int) $id;
-
-		// make the call
 		return (array) BackendModel::getDB()->getRecord('SELECT i.tag AS name
 															FROM tags AS i
 															WHERE i.id = ?;',
-															$id);
+															array((int) $id));
 	}
 
 
@@ -88,17 +84,12 @@ class BackendTagsModel
 	 */
 	public static function getStartsWith($query, $limit = 10)
 	{
-		// redefine
-		$query = (string) $query;
-		$limit = (int) $limit;
-
-		// make the call
 		return (array) BackendModel::getDB()->getRecords('SELECT i.tag AS name, i.tag AS value
 															FROM tags AS i
 															WHERE i.tag LIKE ?
 															ORDER BY i.tag ASC
 															LIMIT ?;',
-															array($query .'%', $limit));
+															array((string) $query .'%', (int) $limit));
 	}
 
 
@@ -194,7 +185,6 @@ class BackendTagsModel
 			}
 		}
 
-		// return
 		return $URL;
 	}
 
@@ -330,7 +320,6 @@ class BackendTagsModel
 	 */
 	public static function updateTag($tag)
 	{
-		// insert
 		BackendModel::getDB(true)->update('tags', $tag, 'id = ?', $tag['id']);
 	}
 }

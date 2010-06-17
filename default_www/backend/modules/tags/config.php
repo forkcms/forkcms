@@ -2,7 +2,7 @@
 
 /**
  * TagsConfig
- * This is the configuration-object for the Tags module
+ * This is the configuration-object for the tags module
  *
  * @package		backend
  * @subpackage	tags
