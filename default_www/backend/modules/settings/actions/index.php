@@ -1,5 +1,4 @@
 <?php
-// @todo	a way to configure the mail-server stuff.
 
 /**
  * BackendSettingsIndex
@@ -81,7 +80,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addTextarea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getSetting('core', 'theme', null));
-		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('DeveloperTheme'));
+		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('NoTheme'));
 		$this->frm->addText('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
 		$this->frm->addText('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
 

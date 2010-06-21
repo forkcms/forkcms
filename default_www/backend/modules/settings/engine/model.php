@@ -2,7 +2,7 @@
 
 /**
  * BackendSettingsModel
- * In this file we store all generic functions that we will be using in the SettingsModule
+ * In this file we store all generic functions that we will be using in the settings module.
  *
  *
  * @package		backend
@@ -35,7 +35,6 @@ class BackendSettingsModel
 			if($setting) $modules[] = $module;
 		}
 
-		// final list
 		return $modules;
 	}
 
@@ -61,7 +60,6 @@ class BackendSettingsModel
 			if($setting) $modules[] = $module;
 		}
 
-		// final list
 		return $modules;
 	}
 

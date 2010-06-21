@@ -28,7 +28,7 @@
 
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblEmailWebmaster|ucfirst}</h3>
+			<h3>{$lblWebmasterEmail|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<p class="p0">
@@ -43,7 +43,7 @@
 			<h3>{$lblLanguages|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<p>{$msgLanguagesText}:</p>
+			<p>{$msgHelpLanguages}:</p>
 
 			<ul class="inputList">
 				{iteration:activeLanguages}
@@ -51,7 +51,7 @@
 				{/iteration:activeLanguages}
 			</ul>
 
-			<p>{$msgRedirectLanguagesText}:</p>
+			<p>{$msgHelpRedirectLanguages}:</p>
 			<ul class="inputList">
 				{iteration:redirectLanguages}
 					<li>{$redirectLanguages.chkRedirectLanguages} <label for="{$redirectLanguages.id}">{$redirectLanguages.label|ucfirst}{option:redirectLanguages.default} ({$lblDefault}){/option:redirectLanguages.default}</label></li>
@@ -65,7 +65,7 @@
 			<h3>{$lblScripts|ucfirst}</h3>
 		</div>
 		<div class="options last">
-			<p>{$msgScriptsText}</p>
+			<p>{$msgHelpScripts}</p>
 			{$txtSiteWideHtml} {$txtSiteWideHtmlError}
 		</div>
 	</div>
@@ -75,7 +75,7 @@
 			<h3>{$lblThemes|ucfirst}</h3>
 		</div>
 		<div class="content">
-			<p>{$msgThemesText}</p>
+			<p>{$msgHelpThemes}</p>
 			{$ddmTheme} {$ddmThemeError}
 		</div>
 	</div>
@@ -85,7 +85,7 @@
 			<h3>{$lblDomains|ucfirst}</h3>
 		</div>
 		<div class="content">
-			<p>{$msgDomainsText}</p>
+			<p>{$msgHelpDomains}</p>
 			{$txtSiteDomains} {$txtSiteDomainsError}
 		</div>
 	</div>
@@ -95,7 +95,7 @@
 			<h3>{$lblAPIKeys|ucfirst}</h3>
 		</div>
 		<div class="content">
-			<p>{$msgApiKeysText}:</p>
+			<p>{$msgHelpAPIKeys}</p>
 			<div class="datagridHolder">
 				<table border="0" cellspacing="0" cellpadding="0" class="datagrid dynamicStriping">
 					<tr>

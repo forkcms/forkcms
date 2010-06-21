@@ -7,6 +7,7 @@
  * @subpackage	settings
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendSettingsWidgetAnalyse extends BackendBaseWidget
@@ -40,35 +41,10 @@ class BackendSettingsWidgetAnalyse extends BackendBaseWidget
 	private function parse()
 	{
 		// init vars
-		$warnings = array();
-		$activeModules = BackendModel::getModules(true);
-
-		// add warnings
-		$warnings = array_merge($warnings, BackendModel::checkSettings());
-
-		// loop active modules
-		foreach($activeModules as $module)
-		{
-			// model class
-			$class = 'Backend'. ucfirst($module) .'Model';
-
-			// model file exists
-			if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php'))
-			{
-				// require class
-				require_once BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php';
-			}
-
-			// method exists
-			if(method_exists($class, 'checkSettings'))
-			{
-				// add possible warnings
-				$warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));
-			}
-		}
+		$warnings = BackendSettingsModel::getWarnings();
 
 		// assign warnings
-		$this->tpl->assign('warnings', $warnings);
+		if(!empty($warnings)) $this->tpl->assign('warnings', $warnings);
 	}
 }
 
