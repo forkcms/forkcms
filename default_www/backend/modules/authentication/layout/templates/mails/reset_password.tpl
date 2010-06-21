@@ -73,16 +73,16 @@
 					<tr>
 						<td>
 
-							<h3>{$msgResetYourPassword}</h3>
+							<h3>{$lblResetYourPassword|ucfirst}</h3>
 
 							<div id="content">
-								<p>{$lblDear},</p>
+								<p>{$lblDear|ucfirst},</p>
 								<p>{$msgResetYourPasswordMailContent}</p>
 								<p><a href="{$resetLink}">{$resetLink}</a></p>
 							</div>
 
 							<div id="footer">
-								<p><strong>{$lblSentFromForkCMS}.</strong></p>
+								<p><strong>Fork CMS</strong></p>
 							</div>
 
 						</td>

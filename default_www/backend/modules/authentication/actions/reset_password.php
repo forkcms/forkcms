@@ -150,10 +150,10 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 				if($newPassword->getValue() !== $newPasswordRepeated->getValue())
 				{
 					// add error
-					$this->frm->addError(BL::getError('PasswordsDoNotMatch'));
+					$this->frm->addError(BL::getError('PasswordsDontMatch'));
 
 					// show error
-					$this->tpl->assign('error', BL::getError('PasswordsDoNotMatch'));
+					$this->tpl->assign('error', BL::getError('PasswordsDontMatch'));
 				}
 			}
 
@@ -171,7 +171,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 				}
 
 				// redirect to the login form
-				$this->redirect(BackendModel::createUrlForAction('index', 'dashboard', null, array('reset' => 'success')));
+				$this->redirect(BackendModel::createUrlForAction('index', 'dashboard', null, array('password_reset' => 'success')));
 			}
 		}
 	}

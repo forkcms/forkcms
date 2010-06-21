@@ -4,12 +4,12 @@
 	{include:file='{$BACKEND_MODULES_PATH}/{$MODULE}/layout/templates/ie6.tpl'}
 
 	{option:debug}<div id="debugnotify">WARNING: This Fork is<br /> in debug mode</div>{/option:debug}
-	
+
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
 				<div id="loginBox">
-					<p>{$msgResetPasswordFormHelp}</p>
+					<p>{$msgHelpResetPassword}</p>
 					{form:authenticationResetPassword}
 							{option:error}
 							<div class="errorMessage singleMessage">
@@ -18,20 +18,20 @@
 							{/option:error}
 
 							<p>
-								<label for="backendPassword">{$lblNewPassword|ucfirst}</label>
+								<label for="backendNewPassword">{$lblNewPassword|ucfirst}</label>
 								{$txtBackendNewPassword} {$txtBackendNewPasswordError}
 							</p>
 
 							<p>
-								<label for="backendPasswordRepeated">{$lblRepeatPassword|ucfirst}</label>
+								<label for="backendNewPasswordRepeated">{$lblRepeatPassword|ucfirst}</label>
 								{$txtBackendNewPasswordRepeated} {$txtBackendNewPasswordRepeatedError}
 							</p>
 							<p>
-								<input id="resetPassword" class="inputButton button mainButton" type="submit" name="reset" value="{$msgResetPasswordAndSignIn|ucfirst}" />
+								<input id="resetPassword" class="inputButton button mainButton" type="submit" name="reset" value="{$lblResetAndSignIn|ucfirst}" />
 							</p>
 					{/form:authenticationResetPassword}
-				</td>
-			</div>
+				</div>
+			</td>
 		</tr>
 	</table>
 
