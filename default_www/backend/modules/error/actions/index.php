@@ -9,6 +9,7 @@
  * @subpackage	error
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendErrorIndex extends BackendBaseActionIndex
@@ -44,8 +45,8 @@ class BackendErrorIndex extends BackendBaseActionIndex
 		// set correct headers
 		switch($errorType)
 		{
-			case 'not-allowed-module':
-			case 'not-allowed-action':
+			case 'module-not-allowed':
+			case 'action-not-allowed':
 				SpoonHTTP::setHeadersByCode(403);
 			break;
 		}
@@ -70,12 +71,8 @@ class BackendErrorIndex extends BackendBaseActionIndex
 			}
 		}
 
-		// build the labelname
-		$labelName = SpoonFilter::toCamelCase($errorType, '-');
-
 		// assign the correct message into the template
-		$this->tpl->assign('title', BackendLanguage::getMessage($labelName .'Title'));
-		$this->tpl->assign('message', BackendLanguage::getMessage($labelName .'Message'));
+		$this->tpl->assign('message', BackendLanguage::getError(SpoonFilter::toCamelCase($errorType, '-')));
 	}
 }
 
