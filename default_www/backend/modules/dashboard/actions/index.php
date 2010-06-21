@@ -108,16 +108,16 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Parse
+	 * Parse the page with its widgets.
 	 *
 	 * @return	void
 	 */
 	private function parse()
 	{
 		// show report
-		if($this->getParameter('reset') == 'success')
+		if($this->getParameter('password_reset') == 'success')
 		{
-			$this->tpl->assign('reportMessage', BL::getMessage('ResetSuccess', 'core'));
+			$this->tpl->assign('reportMessage', BL::getMessage('PasswordResetSuccess', 'core'));
 			$this->tpl->assign('report', true);
 		}
 
