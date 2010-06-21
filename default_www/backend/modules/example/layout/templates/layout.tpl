@@ -1,12 +1,13 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
-<div id="test" style="padding: 20px;">
+<div id="test">
 
 	<h1>h1 Layout test</h1>
-	<h2>h2 Layout test</h1>
-	<h3>h3 Layout test</h1>
+	<h2>h2 Layout test</h2>
+	<h3>h3 Layout test</h3>
 
-	<form class="forkForms">
+	<form class="forkForms"action="#">
 		<p>
 			<label>Naam</label>
 			<input type="text" class="inputText" value="Johan Ronsse" />
@@ -32,10 +33,11 @@
 			</select>
 		</p>
 		<div>
-			<textarea class="inputEditor"></textarea>
+			<textarea class="inputEditor" rows="5" cols="62"></textarea>
 		</div>
 	</form>
 
 </div>
 
+{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
