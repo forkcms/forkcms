@@ -1,17 +1,16 @@
 <?php
 
 /**
- * BackendExampleLayout
- * This is the layout-action (default), it will display the example page.
+ * BackendExampleIndex
+ * This is the index-action (default), it will display the example page.
  *
  * @package		backend
  * @subpackage	example
  *
  * @author 		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class BackendExampleLayout extends BackendBaseActionIndex
+class BackendExampleIndex extends BackendBaseActionIndex
 {
 	/**
 	 * Execute the action

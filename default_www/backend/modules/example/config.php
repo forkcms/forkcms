@@ -17,7 +17,7 @@ final class BackendExampleConfig extends BackendBaseConfig
 	 *
 	 * @var	string
 	 */
-	protected $defaultAction = 'layout';
+	protected $defaultAction = 'index';
 
 
 	/**
