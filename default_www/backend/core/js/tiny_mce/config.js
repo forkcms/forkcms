@@ -44,6 +44,9 @@ tinyMCE.init({
 	// image manager
 	imagemanager_handle: 'image',
 	
+	// file lists
+	external_link_list_url: '/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js',	
+	
 	// paste
 	paste_auto_cleanup_on_paste : true,
 	paste_strip_class_attributes: 'mso',
