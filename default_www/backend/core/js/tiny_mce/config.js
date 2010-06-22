@@ -20,8 +20,9 @@ tinyMCE.init({
 	plugins: 'tabfocus,inlinepopups,paste,contextmenu,media,fullscreen,table,filemanager,imagemanager,bramus_cssextras',
 
 	// plugin options
+	tab_focus: ':prev,:next',
 	tabfocus_elements: ':prev,:next',
-
+	
 	// layout options
 	body_class: 'content',
 	content_css: '/frontend/core/layout/css/screen.css{option:THEME}, /frontend/themes/{$THEME}/core/css/screen.css{/option:THEME}, /backend/core/layout/css/editor_content.css',
