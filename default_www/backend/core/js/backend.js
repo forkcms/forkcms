@@ -64,6 +64,9 @@ jsBackend.balloons = {
 				
 				// show
 				$('#'+ rel).fadeIn(500);
+
+				// set focus on first visible field
+				if($('#'+ rel +' form input:visible:first').length > 0) $('#'+ rel +' form input:visible:first').focus();
 				
 				// bind resize
 				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ rel)) });
