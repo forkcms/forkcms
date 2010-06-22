@@ -1018,10 +1018,10 @@ class BackendPagesModel
 			// build template HTML
 			$row['html'] = self::buildTemplateHTML($templates[$key]);
 			$row['htmlLarge'] = self::buildTemplateHTMLLarge($templates[$key]);
-		}
 
-		// add json
-		foreach($templates as $key => $row)	$templates[$key]['json'] = json_encode($row);
+			// add all data as json
+			$row['json'] = json_encode($row);
+		}
 
 		// return
 		return (array) $templates;

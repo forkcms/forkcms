@@ -10,10 +10,10 @@ jsBackend.pages = {
 			// load stuff for the page
 			jsBackend.pages.template.init();
 			jsBackend.pages.extras.init();
-
-			// manage templates
-			jsBackend.pages.manageTemplates.init();
 		}
+
+		// manage templates
+		jsBackend.pages.manageTemplates.init();
 		
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
