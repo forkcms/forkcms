@@ -205,6 +205,7 @@ class BackendTemplate extends SpoonTemplate
 
 		// theme
 		$this->assign('THEME', BackendModel::getSetting('core', 'theme', 'default'));
+		$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme', 'default'));
 	}
 
 

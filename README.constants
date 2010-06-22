@@ -1,5 +1,185 @@
 Constants are values that won't change inside a page-execution.
 
+The constants below are available in the frontend.
+
+- APPLICATION
+	The name of the current application, this will always be "frontend".
+
+	Usage:
+	in templates: {$APPLICATION}
+	in frontend PHP: APPLICATION
+
+
+- FORK_VERSION
+	The current version of Fork, eg: 2.0.0
+
+	Usage:
+	in templates: {$FORK_VERSION}
+	in frontend PHP: FORK_VERSION
+
+
+- FRONTEND_CACHE_PATH
+	The path to the frontend cache-folder, eg: /home/fork/default_www/frontend/cache
+
+	Usage:
+	in templates: {$FRONTEND_CACHE_PATH}
+	in frontend PHP: FRONTEND_CACHE_PATH
+
+
+- FRONTEND_CACHE_URL
+	The url to the frontend cache-folder, eg: /frontend/cache
+
+	Usage:
+	in templates: {$FRONTEND_CACHE_URL}
+	in frontend PHP: FRONTEND_CACHE_URL
+
+
+- FRONTEND_CORE_PATH
+	The path to the frontend core-folder, eg: /home/fork/default_www/frontend/core
+
+	Usage:
+	in templates: {$FRONTEND_CORE_PATH}
+	in frontend PHP: FRONTEND_CORE_PATH
+
+
+- FRONTEND_CORE_URL
+	The url to the frontend core-folder, eg: /frontend/core
+
+	Usage:
+	in templates: {$FRONTEND_CORE_URL}
+	in frontend PHP: FRONTEND_CORE_URL
+
+
+- FRONTEND_FILES_PATH
+	The path to the frontend files-folder, in this folder you can store files that are uploaded by a user, eg: /home/fork/default_www/frontend/files
+
+	Usage:
+	in templates: {$FRONTEND_FILES_PATH}
+	in frontend PHP: FRONTEND_FILES_PATH
+
+
+- FRONTEND_FILES_URL
+	Absolute url to the frontend files-folder, eg: /frontend/files
+
+	Usage:
+	in templates: {$FRONTEND_FILES_URL}
+	in frontend PHP: FRONTEND_FILES_URL
+
+
+- FRONTEND_MODULES_PATH
+	Path to the frontend modules folder, eg: /home/fork/default_www/frontend/modules
+
+	Usage:
+	in templates: {$FRONTEND_MODULES_PATH}
+	in frontend PHP: FRONTEND_MODULES_PATH
+
+
+- FRONTEND_PATH
+	Path to the frontend, eg: /home/fork/default_www/frontend
+
+	Usage:
+	in templates: {$FRONTEND_PATH}
+	in frontend PHP: FRONTEND_PATH
+
+
+- LANGUAGE
+	The current language the user is working on, eg: nl
+
+	Usage:
+	in templates: {$LANGUAGE}
+	in frontend PHP: FRONTEND_LANGUAGE;
+
+
+- LAST_MODIFIED_TIME
+	A UNIX-timestamp representing the time the installation was last modified
+
+
+- PATH_LIBRARY
+	Path to the library, eg: /home/fork/library
+
+	Usage:
+	in templates: {$PATH_LIBRARY}
+	in frontend PHP: PATH_LIBRARY
+
+
+- PATH_WWW
+	Path to the folder that has to be used as document-root, eg: /home/fork/default_www
+
+	Usage:
+	in templates: {$PATH_WWW}
+	in frontend PHP: PATH_WWW
+
+
+- SITE_DEFAULT_LANGUAGE
+	The default language for the site, eg: nl
+
+	Usage:
+	in templates: {$SITE_DEFAULT_LANGUAGE}
+	in frontend PHP: SITE_DEFAULT_LANGUAGE
+
+
+- SITE_DEFAULT_TITLE
+	The default title for the site, can be used as fallback. eg: Fork NG
+
+	Usage:
+	in templates: {$SITE_DEFAULT_TITLE}
+	in frontend PHP: SITE_DEFAULT_TITLE
+
+
+- SITE_DOMAIN
+	The primary domain for the site, eg: forkng.local
+
+	Usage:
+	in templates: {$SITE_DOMAIN}
+	in frontend PHP: SITE_DOMAIN
+
+
+- SITE_MULTILANGUAGE
+	Is the site available in multiple languages?, eg: true
+
+	Usage:
+	in templates: {$SITE_MULTILANGUAGE}
+	in frontend PHP: SITE_MULTILANGUAGE
+
+
+- SITE_TITLE
+	The title for the site, configured by the user, eg: Fork NG
+
+	Usage:
+	in templates: {$SITE_TITLE}
+	in frontend PHP: FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+
+
+- SITE_URL
+	The full URL for the site, eg: http://fork-cms.be
+
+	Usage:
+	in templates: {$SITE_URL}
+	in frontend PHP: SITE_URL
+
+
+- THEME
+	The theme that is currently in use, eg: default
+
+	Usage:
+	in templates: {$THEME}
+	in frontend PHP: FrontendModel::getModuleSetting('core', 'theme', 'default');
+
+
+- THEME_PATH
+	The path to the theme that is currently in use, eg: /home/fork/default_www/frontend/themes/default
+
+	Usage:
+	in templates: {$THEME_PATH}
+	in frontend PHP: FRONTEND_PATH . '/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default');
+
+- THEME_URL
+	The url to the theme that is currently in use, eg: /frontend/themes/default
+
+	Usage:
+	in templates: {$THEME_URL}
+	in frontend PHP: '/frontent/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default');
+
 
 The constants below are available in the backend.
 
@@ -233,3 +413,11 @@ The constants below are available in the backend.
 	Usage:
 	in templates: {$THEME}
 	in backend PHP: BackendModel::getSetting('core', 'theme', 'default'));
+
+- THEME_PATH
+	The path to the theme that is currently in use, eg: /home/fork/default_www/frontend/themes/default
+
+	Usage:
+	in templates: {$THEME_PATH}
+	in backend PHP: FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme', 'default');
+	
