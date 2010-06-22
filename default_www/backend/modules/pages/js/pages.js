@@ -395,6 +395,12 @@ jsBackend.pages.tree = {
 	beforeMove: function(node, refNode, type, tree) {
 		// get pageID that has to be moved
 		var currentPageID = $(node).attr('id').replace('page-', '');
+
+		// home is a special item
+		if($(refNode).attr('id').replace('page-', '') == '1') {
+			if(type == 'before') return false;
+			if(type == 'after') return false;
+		}
 		
 		// init var
 		var result = false;
