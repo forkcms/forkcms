@@ -4,7 +4,7 @@
 {form:addCategory}
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblAddCategory|ucfirst}</h3>
+			<h3>{$lblBlog|ucfirst}: {$lblAddCategory}</h3>
 		</div>
 		<div class="options">
 			<label for="name">{$lblName|ucfirst}</label>
@@ -14,7 +14,7 @@
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="add" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="addCategory" value="{$lblAddCategory|ucfirst}" />
 		</div>
 	</div>
 {/form:addCategory}

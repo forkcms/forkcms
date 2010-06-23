@@ -7,6 +7,7 @@
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendBlogWidgetComments extends BackendBaseWidget
@@ -74,7 +75,7 @@ class BackendBlogWidgetComments extends BackendBaseWidget
 		$this->tpl->assign('blogComments', $this->comments);
 
 		// any comments to moderate?
-		if(isset($this->numCommentStatus['moderation']) && (int) $this->numCommentStatus['moderation'] > 0) $this->tpl->assign('numCommentsToModerate', $this->numCommentStatus['moderation']);
+		if(isset($this->numCommentStatus['moderation']) && (int) $this->numCommentStatus['moderation'] > 0) $this->tpl->assign('blogNumCommentsToModerate', $this->numCommentStatus['moderation']);
 	}
 }
 

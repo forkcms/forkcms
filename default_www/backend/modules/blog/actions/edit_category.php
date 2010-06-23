@@ -8,6 +8,7 @@
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendBlogEditCategory extends BackendBaseActionEdit
@@ -122,7 +123,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 				BackendBlogModel::updateCategory($this->id, $category);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited&var='. urlencode($category['name']));
+				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($category['name']));
 			}
 		}
 	}

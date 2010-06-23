@@ -1,18 +1,18 @@
 <div class="box" id="widgetBlogComments">
 	<div class="heading">
-		<h3><a href="{$var|geturl:'comments':'blog'}">{$msgBlogLatestComments|ucfirst}</a></h3>
+		<h3><a href="{$var|geturl:'comments':'blog'}">{$lblLatestComments|ucfirst}</a></h3>
 	</div>
 
-	{option:numCommentsToModerate}
+	{option:blogNumCommentsToModerate}
 	<div class="moderate">
 		<div class="oneLiner">
-			<p>{$msgBlogCommentsToModerate|sprintf:{$numCommentsToModerate}}</p>
+			<p>{$msgCommentsToModerate|sprintf:{$blogNumCommentsToModerate}}</p>
 			<div class="buttonHolder">
 				<a href="{$var|geturl:'comments':'blog'}#tabModeration" class="button"><span>{$lblModerate|ucfirst}</span></a>
 			</div>
 		</div>
 	</div>
-	{/option:numCommentsToModerate}
+	{/option:blogNumCommentsToModerate}
 
 	{option:blogComments}
 	<div class="datagridHolder">
@@ -35,7 +35,7 @@
 			<tbody>
 				<tr>
 					<td>
-						{$msgNoComments}
+						{$msgNoPublishedComments}
 					</td>
 				</tr>
 			</tbody>

@@ -8,6 +8,7 @@
  * @subpackage	blog
  *
  * @author 		Dave Lens <dave@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendBlogMassPostAction extends BackendBaseAction
@@ -26,7 +27,7 @@ class BackendBlogMassPostAction extends BackendBaseAction
 		$action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
 		// no id's provided
-		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') .'&error=no-items-selected');
+		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') .'&error=no-selection');
 
 		// at least one id
 		else
@@ -39,7 +40,7 @@ class BackendBlogMassPostAction extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('index') .'&report='. $action);
+		$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted');
 	}
 }
 

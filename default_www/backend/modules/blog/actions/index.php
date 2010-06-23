@@ -56,7 +56,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// drafts
 		$this->loadDatagridDrafts();
 
-		// the most recent blogposts
+		// the most recent blogposts, only shown when we have more than 1 page in total
 		if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDatagridRecentPosts();
 	}
 
@@ -71,14 +71,11 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// create datagrid
 		$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE, array('active'));
 
-		// set headers values
-		$headers['user_id'] = ucfirst(BL::getLabel('Author'));
-		$headers['title'] = ucfirst(BL::getLabel('Title'));
-		$headers['publish_on'] = ucfirst(BL::getLabel('PublishedOn'));
-		$headers['comments'] = ucfirst(BL::getLabel('Comments'));
-
 		// set headers
-		$this->dgPosts->setHeaderLabels($headers);
+		$this->dgPosts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')),
+												'title' => ucfirst(BL::getLabel('Title')),
+												'publish_on' => ucfirst(BL::getLabel('PublishedOn')),
+												'comments' => ucfirst(BL::getLabel('Comments'))));
 
 		// sorting columns
 		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'user_id', 'comments'), 'publish_on');
@@ -105,7 +102,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Loads the datagrid with all the posts
+	 * Loads the datagrid with all the drafts
 	 *
 	 * @return	void
 	 */
@@ -114,14 +111,11 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// create datagrid
 		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId()));
 
-		// set headers values
-		$headers['user_id'] = ucfirst(BL::getLabel('Author'));
-		$headers['title'] = ucfirst(BL::getLabel('Title'));
-		$headers['edited_on'] = ucfirst(BL::getLabel('EditedOn'));
-		$headers['comments'] = ucfirst(BL::getLabel('Comments'));
-
 		// set headers
-		$this->dgDrafts->setHeaderLabels($headers);
+		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')),
+												'title' => ucfirst(BL::getLabel('Title')),
+												'edited_on' => ucfirst(BL::getLabel('EditedOn')),
+												'comments' => ucfirst(BL::getLabel('Comments'))));
 
 		$this->dgDrafts->setColumnsHidden(array('revision_id'));
 
@@ -146,7 +140,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Loads the datagrid with all the posts
+	 * Loads the datagrid with the most recent posts.
 	 *
 	 * @return	void
 	 */
@@ -155,14 +149,11 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// create datagrid
 		$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active'));
 
-		// set headers values
-		$headers['user_id'] = ucfirst(BL::getLabel('Author'));
-		$headers['title'] = ucfirst(BL::getLabel('Title'));
-		$headers['edited_on'] = ucfirst(BL::getLabel('EditedOn'));
-		$headers['comments'] = ucfirst(BL::getLabel('Comments'));
-
 		// set headers
-		$this->dgRecent->setHeaderLabels($headers);
+		$this->dgRecent->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')),
+												'title' => ucfirst(BL::getLabel('Title')),
+												'edited_on' => ucfirst(BL::getLabel('EditedOn')),
+												'comments' => ucfirst(BL::getLabel('Comments'))));
 
 		// set paging
 		$this->dgRecent->setPaging(false);

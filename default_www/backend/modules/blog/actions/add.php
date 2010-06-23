@@ -13,21 +13,6 @@
  */
 class BackendBlogAdd extends BackendBaseActionAdd
 {
-	/**
-	 * The categories
-	 *
-	 * @var	array
-	 */
-	private $categories = array();
-
-
-	/**
-	 * The users
-	 *
-	 * @var	array
-	 */
-	private $users = array();
-
 
 	/**
 	 * Execute the action
@@ -38,12 +23,6 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// get categories
-		$this->categories = BackendBlogModel::getCategories();
-
-		// get users
-		$this->users = BackendUsersModel::getUsers();
 
 		// load the form
 		$this->loadForm();
@@ -82,8 +61,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addCheckbox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
-		$this->frm->addDropdown('category_id', $this->categories, $defaultCategoryId);
-		$this->frm->addDropdown('user_id', $this->users, BackendAuthentication::getUser()->getUserId());
+		$this->frm->addDropdown('category_id', BackendBlogModel::getCategories(), $defaultCategoryId);
+		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
 		$this->frm->addText('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
@@ -104,7 +83,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		parent::parse();
 
 		// parse additional variables
-		$this->tpl->assign('blogUrl', SITE_URL . BackendModel::getURLForBlock('blog', 'detail'));
+		$this->tpl->assign('detailURL', SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail'));
 	}
 
 
@@ -124,20 +103,11 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// shorten fields
-			$txtTitle = $this->frm->getField('title');
-			$txtIntroduction = $this->frm->getField('introduction');
-			$txtText = $this->frm->getField('text');
-			$txtPublishDate = $this->frm->getField('publish_on_date');
-			$txtPublishTime = $this->frm->getField('publish_on_time');
-			$ddmUserId = $this->frm->getField('user_id');
-			$ddmCategoryId = $this->frm->getField('category_id');
-			$rbtHidden = $this->frm->getField('hidden');
-			$chkAllowComments = $this->frm->getField('allow_comments');
-
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('text')->isFilled(BL::getError('TextIsRequired'));
+			$this->frm->getField('text')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('publish_on_date')->isValid(BL::getError('DateIsInvalid'));
+			$this->frm->getField('publish_on_time')->isValid(BL::getError('TimeIsInvalid'));
 
 			// validate meta
 			$this->meta->validate();
@@ -148,18 +118,18 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				// build item
 				$item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
 				$item['meta_id'] = $this->meta->save();
-				$item['category_id'] = $ddmCategoryId->getValue();
-				$item['user_id'] = $ddmUserId->getValue();
+				$item['category_id'] = $this->frm->getField('category_id')->getValue();
+				$item['user_id'] = $this->frm->getField('user_id')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['title'] = $txtTitle->getValue();
-				$item['introduction'] = $txtIntroduction->getValue();
-				$item['text'] = $txtText->getValue();
+				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['introduction'] = $this->frm->getField('introduction')->getValue();
+				$item['text'] = $this->frm->getField('text')->getValue();
 				$item['status'] = 'active';
-				$item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($txtPublishDate, $txtPublishTime));
+				$item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('publish_on_date'), $this->frm->getField('publish_on_time')));
 				$item['created_on'] = BackendModel::getUTCDate();
 				$item['edited_on'] = BackendModel::getUTCDate();
-				$item['hidden'] = $rbtHidden->getValue();
-				$item['allow_comments'] = $chkAllowComments->getChecked() ? 'Y' : 'N';
+				$item['hidden'] = $this->frm->getField('hidden')->getValue();
+				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;
 				$item['status'] = $status;
 

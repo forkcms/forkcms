@@ -11,7 +11,7 @@
 	<div id="pageUrl">
 		<div class="oneLiner">
 			<p>
-				<span><a href="{$blogUrl}">{$blogUrl}/<span id="generatedUrl"></span></a></span>
+				<span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span>
 			</p>
 		</div>
 	</div>
@@ -63,16 +63,6 @@
 							</div>
 
 							<div class="options">
-								<div class="buttonHolder">
-									{option:usingDraft}
-										<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
-										<br /><br />
-									{/option:usingDraft}
-									<a href="#" id="saveAsDraft" class="button"><span>{$lblSaveAsDraft|ucfirst}</span></a>
-								</div>
-							</div>
-
-							<div class="options">
 								<ul class="inputList">
 									{iteration:hidden}
 									<li>
@@ -86,11 +76,11 @@
 							<div class="options">
 								<p>
 									<label for="publishOnDate">{$lblPublishOn|ucfirst}:</label>
-									{$txtPublishOnDate}
+									{$txtPublishOnDate} {$txtPublishOnDateError}
 								</p>
 								<p>
 									<label for="publishOnTime">{$lblAt}</label>
-									{$txtPublishOnTime}
+									{$txtPublishOnTime} {$txtPublishOnTimeError}
 								</p>
 							</div>
 
@@ -210,7 +200,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
-							<span id="urlFirstPart">{$blogUrl}/</span>{$txtUrl} {$txtUrlError}
+							<span id="urlFirstPart">{$detailURL}/</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
 				</div>

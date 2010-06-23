@@ -34,14 +34,14 @@
 		<input type="hidden" name="from" value="posts" />
 
 		<div class="tableHeading">
-			<h3>{$lblPublishedPosts|ucfirst}</h3>
+			<h3>{$lblPublishedArticles|ucfirst}</h3>
 		</div>
 		{$dgPosts}
 	</div>
 </form>
 {/option:dgPosts}
 
-{option:!dgPosts}<p>{$msgNoItems}</p>{/option:!dgPosts}
+{option:!dgPosts}<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>{/option:!dgPosts}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

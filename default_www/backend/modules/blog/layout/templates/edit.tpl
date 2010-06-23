@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
 <div class="pageTitle">
-	<h2>{$lblBlog|ucfirst}: {$msgEditWithItem|sprintf:{$blog['title']}}</h2>
+	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item['title']}}</h2>
 </div>
 
 {form:edit}
@@ -11,7 +11,7 @@
 	<div id="pageUrl">
 		<div class="oneLiner">
 			<p>
-				<span><a href="{$blogUrl}/{$blog['url']}">{$blogUrl}/<span id="generatedUrl">{$blog['url']}</span></a></span>
+				<span><a href="{$detailURL}/{$item['url']}">{$detailURL}/<span id="generatedUrl">{$item['url']}</span></a></span>
 			</p>
 		</div>
 	</div>
@@ -66,7 +66,7 @@
 							{option:usingDraft}
 							<div class="options">
 								<div class="buttonHolder">
-									<a href="{$blogUrl}/{$blog['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
+									<a href="{$detailURL}/{$item['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
 								</div>
 							</div>
 							{/option:usingDraft}
@@ -87,10 +87,14 @@
 							</div>
 
 							<div class="options">
-								<dl>
-									<dt><label for="publishOnDate">{$lblPublishOn|ucfirst}:</label></dt>
-									<dd>{$txtPublishOnDate} <label for="publishOnTime">{$lblAt}</label> {$txtPublishOnTime}</dd>
-								</dl>
+								<p>
+									<label for="publishOnDate">{$lblPublishOn|ucfirst}:</label>
+									{$txtPublishOnDate} {$txtPublishOnDateError}
+								</p>
+								<p>
+									<label for="publishOnTime">{$lblAt}</label>
+									{$txtPublishOnTime} {$txtPublishOnTimeError}
+								</p>
 							</div>
 
 							<div class="footer">
@@ -244,7 +248,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
-							<span id="urlFirstPart">{$blogUrl}/</span>{$txtUrl} {$txtUrlError}
+							<span id="urlFirstPart">{$detailURL}/</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
 				</div>
@@ -253,7 +257,7 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		<a href="{$var|geturl:'delete'}&amp;id={$blog['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
 		<div class="buttonHolderRight">
@@ -263,7 +267,7 @@
 
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 		<p>
-			{$msgConfirmDelete|sprintf:{$blog['title']}}
+			{$msgConfirmDelete|sprintf:{$item['title']}}
 		</p>
 	</div>
 {/form:edit}

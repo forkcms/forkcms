@@ -8,6 +8,7 @@
  * @subpackage	blog
  *
  * @author 		Dave Lens <dave@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendBlogDelete extends BackendBaseActionDelete

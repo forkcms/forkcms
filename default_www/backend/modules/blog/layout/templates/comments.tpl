@@ -21,7 +21,7 @@
 				</div>
 			</form>
 		{/option:dgPublished}
-		{option:!dgPublished}{$msgNoItems}{/option:!dgPublished}
+		{option:!dgPublished}{$msgNoComments}{/option:!dgPublished}
 	</div>
 
 	<div id="tabModeration">
@@ -33,7 +33,7 @@
 				</div>
 			</form>
 		{/option:dgModeration}
-		{option:!dgModeration}{$msgNoItems}{/option:!dgModeration}
+		{option:!dgModeration}{$msgNoComments}{/option:!dgModeration}
 	</div>
 
 	<div id="tabSpam">
@@ -45,7 +45,7 @@
 				</div>
 			</form>
 		{/option:dgSpam}
-		{option:!dgSpam}{$msgNoItems}{/option:!dgSpam}
+		{option:!dgSpam}{$msgNoComments}{/option:!dgSpam}
 	</div>
 </div>
 

@@ -29,28 +29,28 @@ class BackendBlogMassCommentAction extends BackendBaseAction
 		$action = SpoonFilter::getGetValue('action', array('published', 'moderation', 'spam', 'delete'), 'spam');
 
 		// no id's provided
-		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') .'&error=no-items-selected');
+		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('comments') .'&error=no-comments-selected');
 
 		// at least one id
 		else
 		{
 			// redefine id's
-			$aIds = (array) $_GET['id'];
+			$ids = (array) $_GET['id'];
 
 			// delete comment(s)
-			if($action == 'delete') BackendBlogModel::deleteComments($aIds);
+			if($action == 'delete') BackendBlogModel::deleteComments($ids);
 
 			// other actions (status updates)
-			else BackendBlogModel::updateCommentStatuses($aIds, $action);
+			else BackendBlogModel::updateCommentStatuses($ids, $action);
+
+			// define report
+			$report = (count($ids) > 1) ? 'comments-' : 'comment-';
 
 			// init var
-			if($action == 'published') $report = 'published_moved';
-			if($action == 'moderation') $report = 'moderation_moved';
-			if($action == 'spam') $report = 'spam_moved';
-			if($action == 'delete') $report = 'delete_moved';
-
-			// multiple items?
-			if(count($aIds) > 1) $report .= '_multiple';
+			if($action == 'published') $report .= 'moved-published';
+			if($action == 'moderation') $report .= 'moved-moderation';
+			if($action == 'spam') $report .= 'moved-spam';
+			if($action == 'delete') $report .= 'deleted';
 
 			// redirect
 			$this->redirect(BackendModel::createURLForAction('comments') .'&report='. $report .'#tab'. ucfirst($from));

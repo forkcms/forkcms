@@ -13,7 +13,7 @@
 		<div class="options">
 			<p>{$msgHelpSpamFilter}:</p>
 			<ul class="inputList p0">
-				<li>{$chkSpamfilter} <label for="spamfilter">{$lblCheckCommentsForSpam|ucfirst}</label></li>
+				<li>{$chkSpamfilter} <label for="spamfilter">{$lblFilterCommentsForSpam|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>
@@ -35,7 +35,7 @@
 		</div>
 		<div class="options">
 			<ul class="inputList p0">
-				<li>{$chkModeration} <label for="moderation">{$lblAllowModeration|ucfirst}</label></li>
+				<li>{$chkModeration} <label for="moderation">{$lblEnableModeration|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>

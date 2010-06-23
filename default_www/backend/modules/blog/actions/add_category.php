@@ -47,7 +47,7 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addCategory');
 
 		// create elements
-		$this->frm->addText('name');
+		$this->frm->addText('name', null, 255);
 	}
 
 
@@ -80,7 +80,7 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 				$id = BackendBlogModel::insertCategory($category);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=added&var='. urlencode($category['name']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('categories') .'&report=added-category&var='. urlencode($category['name']) .'&highlight=id-'. $id);
 			}
 		}
 	}

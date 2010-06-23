@@ -4,7 +4,7 @@
 {form:editCategory}
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblEditCategory|ucfirst}</h3>
+			<h3>{$lblBlog|ucfirst}: {$msgEditCategory|sprintf:{$name}}</h3>
 		</div>
 		<div class="options">
 			<label for="name">{$lblCategory|ucfirst}</label>
@@ -14,7 +14,7 @@
 
 	<div class="fullwidthOptions">
 		{option:deleteAllowed}
-			<a href="{$var|geturl:'delete_category'}&id={$id}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete_category'}&amp;id={$id}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
@@ -24,7 +24,7 @@
 			</div>
 		{/option:deleteAllowed}
 		<div class="buttonHolderRight">
-			<input id="edit" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
 {/form:editCategory}
