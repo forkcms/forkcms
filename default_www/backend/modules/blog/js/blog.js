@@ -79,6 +79,11 @@ jsBackend.blog.category = {
 				if(data.code != 200 && jsBackend.debug) { alert(data.message); }
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
+				
+				console.log(XMLHttpRequest);
+				console.log(textStatus);
+				console.log(errorThrown);
+				
 				// show box again
 				$('#newCategoryError').show();
 				

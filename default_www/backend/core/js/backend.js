@@ -16,6 +16,10 @@ jsBackend = {
 		//jsBackend.tableSequenceByDragAndDrop.init();
 	},
 	
+	fixAjax: function() {
+		
+	},
+	
 	// end
 	eof: true
 }	
@@ -94,6 +98,7 @@ jsBackend.controls = {
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
 		jsBackend.controls.bindTableCheckbox();
+		jsBackend.controls.bindToggleDiv();
 	},
 	// bind a checkbox textfield combo
 	bindCheckboxTextfieldCombo: function() {
@@ -465,7 +470,7 @@ jsBackend.forms = {
 	submitWithLinks: function() {
 		// the html for the button that will replace the input[submit]
 		var replaceHTML = '<a class="{class}" href="#"><span>{label}</span></a>';
-		
+
 		// are there any forms that should be submitted with a link?
 		if($('form.submitWithLink').length > 0) {
 			$('form.submitWithLink').each(function() {
@@ -501,7 +506,7 @@ jsBackend.forms = {
 	
 	tagBoxes: function() {
 		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
-		if($('#leftColumn input.tagBox').length > 0) { $('#leftColumn input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
+		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
 	},
 	
 	// end

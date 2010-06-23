@@ -322,7 +322,6 @@
 			</div>
 		</div>
 	</div>
-
 </div>
 <div class="fullwidthOptions">
 	{option:showDelete}
