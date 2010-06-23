@@ -47,6 +47,7 @@ class SpoonFormHidden extends SpoonFormAttributes
 	public function __construct($name, $value = null)
 	{
 		// obligated fields
+		$this->attributes['id'] = SpoonFilter::toCamelCase((string) $name, '_', true);
 		$this->attributes['name'] = (string) $name;
 
 		// value

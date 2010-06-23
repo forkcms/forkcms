@@ -131,6 +131,7 @@ class SpoonForm
 		// required field
 		$this->setName($name);
 		$this->add(new SpoonFormHidden('form', $this->name));
+		$this->objects['form']->setAttribute('id', SpoonFilter::toCamelCase('form_'. $this->name));
 
 		// optional fields
 		$this->setAction($action);
