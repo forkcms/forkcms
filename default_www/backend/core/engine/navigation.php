@@ -356,22 +356,22 @@ class BackendNavigation
 			if(isset($level['children']))
 			{
 				// loop second level
-				foreach($level['children'] as $module => $level)
+				foreach($level['children'] as $module => $child)
 				{
 					// init var
 					$selected = false;
 
 					// url and selected_for_actions are available?
-					if($level['url'] != '' && isset($level['selected_for_actions']))
+					if($child['url'] != '' && isset($child['selected_for_actions']))
 					{
 						// split url into chunks
-						$chunks = (array) explode('/', $level['url']);
+						$chunks = (array) explode('/', $child['url']);
 
 						// validate the chunks, and check if the module from the URL is the same as the active one
 						if(isset($chunks[0]) && $chunks[0] == $activeModule)
 						{
 							// loop actions wherefor this item should be selected
-							foreach((array) $level['selected_for_actions'] as $action)
+							foreach((array) $child['selected_for_actions'] as $action)
 							{
 								// is the current URL is the same as the one for the sub-action?
 								if($activeURL == $activeModule .'/'. $action)
@@ -387,7 +387,7 @@ class BackendNavigation
 					}
 
 					// add all keys if the URL is found
-					if($level['url'] == $activeURL || $module == $activeModule || $selected)
+					if($child['url'] == $activeURL || $module == $activeModule || $selected)
 					{
 						// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
 						if(isset($actions[$activeModule]['actions'][$activeAction]) && $actions[$activeModule]['actions'][$activeAction] == 'settings')
@@ -404,13 +404,13 @@ class BackendNavigation
 					}
 
 					// has children?
-					if(isset($level['children']))
+					if(isset($child['children']))
 					{
 						// loop third level
-						foreach($level['children'] as $level)
+						foreach($child['children'] as $subChild)
 						{
 							// URL found?
-							if($level['url'] == $activeURL || $module == $activeModule)
+							if($subChild['url'] == $activeURL || $module == $activeModule)
 							{
 								// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
 								if(isset($actions[$activeModule]['actions'][$activeAction]) && $actions[$activeModule]['actions'][$activeAction] == 'settings')
