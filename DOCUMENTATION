@@ -1,0 +1,505 @@
+# Fork developer documentation
+
+## Table of contents
+
+* Get up and running: how to install Fork CMS
+* Working with translations
+* Building your first custom module
+* Designing themes <small style="background: #FFC;">designer</small>
+  * Templates <small style="background: #FFC;"**>designer</small>
+  * Template modifiers <small style="background: #FFC;">designer</small>
+* Designing backend modules <small style="background: #FFC;"**>designer</small>
+* Available constants
+
+---
+
+## Get up and running: how to install Fork CMS
+
+Make sure you meet the minimum requirements:
+
+* PHP 5.2
+* MySQL 5.1
+* curl installed and enabled
+* GD2 installed and enabled
+* mb\_string installed and enabled
+* PDO installed and enabled
+
+### Installation
+
+How to install Fork:
+
+#### 1. Upload it.
+
+default\_www should be the document\_root of your vhost.
+
+#### 2. Create a database (remember the credentials).
+
+#### 3. Import default.sql into the database you created in step 2.
+
+(All steps below will be done by the installer when it is finished)
+
+#### 4. Navigate into the folder called library.
+
+* Rename globals\_backend.example.php to globals\_backend.php.
+* Rename globals\_frontend.example.php to globals\_frontend.php.
+* Rename globals.example.php to globals.php.
+
+#### 5. Open globals.php with your favorite texteditor.
+
+* replace <database-name> with the name of the database you created in step 2.
+* replace <database-hostname> with the hostname of your databaseserver (in most cases this is 127.0.0.1).
+* replace <database-username> with the username for the database created in step 2.
+* replace <database-password> with the password for the database created in step 2.
+* replace <domain-without-http> with the domain (without http://) for the site (eg: www.netlash.com).
+* replace <default-title>  with the title for the website, after install you can edit the title in the backend.
+* replace <path-of-document-root> with the real path of the document\_root (eg: /home/netlash/default\_www). 
+
+#### 6. Move the file (see attachment) nl.php to /default_www/backend/cache/locale
+#### 7. Open your browser and enter <your-host>/private
+
+* login (l: tijs, p: internet)
+* navigate to Modules - Vertalingen (<your-host>/private/nl/locale/index)
+* edit one item for application 'backend'.
+* edit one item for application 'frontend'.
+* navigate to Pagina's
+* click 'Home' in the tree to edit the homepage, save the page.
+
+#### 8. Point your browser to <your-host>, you should see the homepage!
+#### 9. Have fun.
+
+### Pushing your site live
+
+When you're done developing:
+
+1. Edit /library/globals.php and change the value for 'SPOON_DEBUG' from true to false.
+2. Edit /default_www/robots.txt and change 'Disallow: /' to 'Disallow: /private/'.
+
+### Remarks
+
+The following folders need write permissions:
+
+* /default_www/backend/cache/*
+* /default_www/frontend/cache/*
+
+---
+
+## Working with translations
+
+The Translations module allows you to translate your website in a simple way. This section documents how to use it.
+
+### Tutorial
+
+Let's say you're maintaining a single language website. Here's an excerpt of the template code of the contact form:
+
+	<p>
+		<label for="author">Name</label>
+		{$txtAuthor} {$txtAuthorError}
+	</p>
+
+Now you're tasked with making a Dutch version of the website. *Name* in the current template is hardcoded. Change it to <code>{$lblName}</code>.
+
+	<p>
+		<label for="author">{$lblName|ucfirst}</label>
+		{$txtAuthor} {$txtAuthorError}
+	</p>
+
+Now, when you add a translation for *Name* to the locale module using the right settings, you can specify a translation in English (Name) and Dutch (Naam).
+
+What are the right settings? Read on!
+
+### Translation types
+
+There are 4 different translation types: action, error, label and message.
+
+#### lbl (label):
+
+A label is a **literal translation** of one word or a word group (Not a full sentence, use messsages for sentences).
+
+Name: should be a descriptive camelcased string in English.
+Value: should contain one word or a word group
+
+HTML is not allowed within messages.
+
+Don't use capitals: formatting (e.g. uppercase, ucfirst) should be done using modifiers in te template. You should, of course, ise capitals when the translation is an abbreviation such as RSS.
+
+Correct examples:
+
+* Name: naam
+* Archive: archief
+* RSS: RSS
+* Email: e-mail
+* Language: taal
+
+Incorrect examples:
+
+* MinutesAgo: %1$s minutes ago (this should be a message)
+* JanuaryShort: jan (not a literal translation, should be a message)
+
+Usage:
+
+* in templates: {$lblTitle|ucfirst}
+* in frontend PHP: FrontendLanguage::getLabel('Title');
+
+#### msg (message):
+
+Messages should be used for all **full sentences**. If the sentence is an error, use the error translation type (err) instead.
+
+Name: should be a descriptive camelcased string in English.
+Value: should contain a full formatted sentence with punctuation
+
+HTML is allowed within messages.
+
+Note: unlike labels, formatting should be done inside the message, not by modifiers. A full sentence starts with a capital letter; a message does too.
+
+Correct examples:
+
+* NewsletterSuccess: Bedankt voor je inschrijving.
+* JanuaryShort: jan
+  * This is a short message, why not a label? Because it's not a literal translation.
+* WebdesignNetlash: <a href="http://www.netlash.com">Netlash webdesign & grafisch ontwerp</a>
+
+Incorrect examples:
+
+* Email: e-mail 
+  * What's wrong? This should be a label, not a message
+* InvalidEmail: Ongeldig e-mailadres
+  * What's wrong? This should be an error, not a message
+
+Usage:
+
+* in templates: {$msgNewsletterSuccess}
+* in frontend PHP: FrontendLanguage::getMessage('NewsletterSuccess');
+
+#### act (action):
+
+Name: should be a descriptive camelcased string in English. Most likely a single word (e.g. Archive)
+Value: should contain the literal translation. (e.g. archief/archive)
+
+An action should only be used to build clean URLs. It cannot contain any special characters or spaces and describes. It describes the current module action (e.g. "add", "edit"). This is an example Fork URL:
+
+* English: http://mysite.be/en/blog/archive/
+* Dutch: http://mysite.be/nl/blog/archief/
+
+Let's deconstruct the URL:
+
+* **http://mysite.be**: the domain
+* **/nl**: the current languag; depends on what language the page is requested in
+* **/blog**: the current page name; this is the name given to the page in the Pages module
+* **/index**: the current module action; this depends on the "act" translation
+
+Usage:
+
+* In templates: {$actCategory}
+* In frontend PHP: FrontendLanguage::getAction('Category');
+
+Please note: it's not possible for a page's URL to be the same as one of the existing actions translations. E.g. you can't set a page's URL to 'detail' when the translation for the action 'detail' already exists in the translations module.
+
+#### err (error):
+
+Name: should be a descriptive camelcased string in English.
+Value: should contain a full sentence.
+
+What’s the difference between the Error translation type (err) and the message translation type (msg)? We use this system to group together errors, since they're a special type of message. Errors are often very similar (e.g. "Please enter a name. Please enter your e-mail.") so they are easier to translate when grouped together.
+
+HTML is allowed within error values.
+
+Correct examples:
+
+* InvalidEmail: This e-mail address is invalid.
+* RequiredField: This field is required.
+
+Incorrect errors:
+
+* RequiredField: This field is required 
+  * What's wrong? Errors are full sentcences. Punctuation marks (e.g. periods and colons) are part of the translation.
+* Email: e-mail 
+  * What's wrong? This should be a label, not an error
+* NewsletterSuccess: Thanks for subscribing to our newsletter.
+  * What's wrong? This is not an error, should be a message.
+
+Usage:
+
+* in templates: {$errInvalidEmail}
+* in frontend PHP: FrontendLanguage::getError('InvalidEmail');
+
+### Backend translations
+
+Translating the backend works the same as translating the frontend.
+
+A few optimizations were made to make your life a little bit easier.
+
+#### Module specific translations
+
+When adding a backend translation for a custom module, choose the module from the dropdown.
+
+A set of commonly translations is available from the Core module (e.g. "add"). When your custom module requires a new translation, add it as a module translation.
+
+Module specific message examples:
+
+* Users - InvalidUsername: A username may not contain special characters. Only alphanumeric characters are allowed.
+* Blog - NoAkismetKey: No akismet key was provided. Please enter one in the field below.
+
+Labels: 
+
+* Pages - Add: add page
+* Users - Add: add user
+
+Notice that in this last example "Add" translates as "Add page" when in the pages module and "add user" in the users module. When adding a translation for a custom module that already exists in the core module, your translation will override it.
+
+Note: Backend URLs are automatically generated so you'll never have to add "act" translations for the backend. The backend application only has 3 translation types: lbl, msg and err.
+
+#### Replace codes
+
+In some cases you might have a message/error that contains some variable piece.
+
+	$msgBlogNumComments => 'This blogpost has %1$s comments'
+
+The %1$s will be replaced by the number of comments if you use the following template code and assume $numComments exists.
+
+	{$msgBlogNumComments|sprintf:{$numComments}}
+
+If you have more than 1 variable in your string:
+
+	$msgMyAnimals => 'I have %1$s horses, %2$s dogs and %3$s cats';
+
+Template code:
+
+	{$msgMyAnimals|sprintf:{$numHorses}:{$numDogs}:{$numCats}}
+
+---
+
+## Building your first custom module
+
+@todo section on how to build a custom module
+
+---
+
+## Designing themes
+
+@todo section on how to add a new theme, how to modify existing themes
+
+### Templates
+
+@todo section on how templates work
+
+### Template modifiers
+
+@todo improve this section on template modifiers
+
+These are the available template modifiers:
+
+* createhtmllinks
+* date
+* htmlentities
+* lowercase
+* ltrim
+* nl2br
+* repeat
+* rtrim
+* shuffle
+* sprintf
+* stripslashes
+* substring
+* trim
+* ucfirst
+* ucwords
+* uppercase
+
+Documentation: search for "List of default modifiers" [here](http://tutorials.spoon-library.be/details/templates-part-3)
+
+### Global
+
+You can use template modifiers anywhere.
+
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>Modifier</th>
+		<th>Description</th>
+		<th>Syntax</th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<td>dump</td>
+		<td>dumps the variable</td>
+		<td><code>{$var|dump}</code></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>truncate</td>
+		<td>Truncate a string</td>
+		<td>{$var|truncate:&lt;length&gt;[:usehellip]}</td>
+		<td>useHellip: possible values: true, false</td>
+	</tr>
+</table>
+
+### Frontend
+
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>Modifier</th>
+		<th>Description</th>
+		<th>Syntax</th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<td>cleanupplaintext</td>
+		<td>Formats plain text as HTML, links will be detected, paragraphs will be inserted</td>
+		<td><code>{$var|cleanupplainText}</code></td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>getnavigation</td>
+		<td>Get the navigation html</td>
+		<td><code>{$var|getnavigation[:&#x27;&lt;type&gt;&#x27;][:&lt;parentId&gt;][:&lt;depth&gt;][:&#x27;&lt;excludeIds-splitted-by-dash&gt;&#x27;]}</code></td>
+		<td>available types: page, footer</td>
+	</tr>
+	<tr>
+		<td>timeago</td>
+		<td>Formats a timestamp as a string that indicates the time ago</td>
+		<td>{$var|timeago}</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>truncate</td>
+		<td>Truncate a string</td>
+		<td>{$var|truncate:&lt;length&gt;[:useHellip]}</length>
+		<td>useHellip: possible values: true, false</td>
+	</td>
+	<tr>
+		<td>usersetting</td>
+		<td>Get the value for a backend user-setting</td>
+		<td>syntax {$var|userSetting:&#x27;&lt;setting&gt;&#x27;[:&lt;userId&gt;]}</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+
+### Backend
+
+<table border="0" cellspacing="0" cellpadding="0">
+	<tr>
+		<th>Modifier</th>
+		<th>Description</th>
+		<th>Syntax</th>
+		<th>&nbsp;</th>
+	</tr>
+	<tr>
+		<td>geturl</td>
+		<td>Convert a var into a URL</td>
+		<td>{$var|geturl:&#x27;&lt;action&gt;&#x27;[:&#x27;&lt;module&gt;&#x27;]}</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>getmainnavigation:</td>
+		<td>Convert a var into main-navigation-html</td>
+		<td>{$var|getmainnavigation}</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>getnavigation</td>
+		<td>Convert a var into navigation-html</td>
+		<td>{$var|getnavigation:'startdepth'[:'maximumdepth']}</td>
+		<td>&nbsp;</td>
+	</tr>
+	<tr>
+		<td>rand</td>
+		<td>Random number between two values</td>
+		<td>syntax: {$var|rand:1:3}</td>
+		<td>&nbsp;</td>
+	</tr>
+</table>
+
+---
+
+## Designing backend modules
+
+@todo section on designing backend modules
+
+---
+
+## Available constants
+
+As the name suggests, the value of a constant cannot change during the execution of the script.
+
+In templates, use curly brackets ({}) and a dollar sign ($) to use a constant. E.g. let's say you want to link an image from the core/images folder of your theme.
+
+	<img src="{$THEME_PATH}/core/images/logo.gif" />
+
+In PHP, use the constant itself.
+
+### Global constants
+
+* **FORK_VERSION**: The current version of Fork, eg: 2.0.0
+* **APPLICATION**: The name of the current application, this will be "frontend" in the frontend by default, and "backend" in the backend.
+* **LAST\_MODIFIED\_TIME**: A UNIX-timestamp representing the time the installation was last modified
+
+* **SITE\_DEFAULT\_LANGUAGE**: The default language for the site, eg: nl
+* **SITE\_MULTILANGUAGE**: Is the site available in multiple languages?, eg: true
+* **SITE\_DEFAULT\_TITLE**: The default title for the site, can be used as fallback. eg: Fork NG
+* **SITE\_TITLE** The title for the site, configured by the user, eg: Fork NG
+  * Usage in templates: {$SITE\_TITLE}
+  * Usage in frontend PHP: FrontendModel::getModuleSetting('core', 'site\_title\_'. FRONTEND\_LANGUAGE, SITE\_DEFAULT_TITLE);
+  * Usage in backend PHP: BackendModel::getSetting('core', 'site\_title\_'. BackendLanguage::getWorkingLanguage(), SITE\_DEFAULT\_TITLE);
+* **SITE\_URL**: The full URL for the site, eg: http://fork-cms.be
+
+* **PATH\_LIBRARY**: Path to the library, eg: /home/fork/library
+* **PATH\_WWW**: Path to the folder that has to be used as document-root, eg: /home/fork/default\_www
+
+* **THEME**: The theme that is currently in use, eg: default
+  * Usage in templates: {$THEME}
+  * Usage in backend PHP: BackendModel::getSetting('core', 'theme', 'default'));
+  * Usage in frontend PHP: FrontendModel::getModuleSetting('core', 'theme', 'default');
+* **THEME\_PATH**: The path to the theme that is currently in use, eg: /home/fork/default\_www/frontend/themes/default
+  * Usage in templates: {$THEME\_PATH}
+  * Usage in frontend PHP: FRONTEND_PATH . '/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default');
+  * Usage in backend PHP: FRONTEND\_PATH . '/themes/'. BackendModel::getSetting('core', 'theme', 'default');
+
+* **LANGUAGE**: The current language the user is working in, eg: nl
+  * Usage in templates: {$LANGUAGE}
+  * Usage in frontend PHP: @todo aanvullen
+  * Usage in backend PHP: BackendLanguage::getWorkingLanguage();
+
+### Frontend constants
+
+* **FRONTEND\_CACHE\_PATH**: The path to the frontend cache-folder, eg: /home/fork/default\_www/frontend/cache
+* **FRONTEND\_CACHE\_URL**: The url to the frontend cache-folder, eg: /frontend/cache
+* **FRONTEND\_CORE\_PATH**: The path to the frontend core-folder, eg: /home/fork/default\_www/frontend/core
+* **FRONTEND\_CORE\_URL**: The url to the frontend core-folder, eg: /frontend/core
+* **FRONTEND\_FILES\_PATH**: The path to the frontend files-folder, in this folder you can store files that are uploaded by a user, eg: /home/fork/default\_www/frontend/files
+* **FRONTEND\_FILES\_URL**: Absolute url to the frontend files-folder, eg: /frontend/files
+* **FRONTEND\_MODULES\_PATH**: Path to the frontend modules folder, eg: /home/fork/default\_www/frontend/modules
+* **FRONTEND\_PATH**: Path to the frontend, eg: /home/fork/default\_www/frontend
+* **LANGUAGE**: The current language the user is working on, eg: nl
+* **SITE\_DOMAIN**: The primary domain for the site, eg: forkng.local
+* **THEME_URL**: The url to the theme that is currently in use, eg: /frontend/themes/default
+  * Usage in templates: {$THEME\_URL}
+  * Usage in frontend PHP: '/frontend/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default');
+
+### Backend constants
+
+* **ACTION**: In this constant the current action will be stored.
+  * Usage in templates: {$ACTION}
+  * Usage in backend PHP: $this->URL->getAction();
+
+* **BACKEND\_CACHE\_PATH**: The path where the cache-folder is located, eg: /home/fork/default\_www/backend/core
+* **BACKEND\_CACHE\_URL**: The absolute URL to the cache folder, eg: /backend/cache
+* **BACKEND\_CORE_PATH**: The path to the core-folder, eg: /home/fork/default\_www/backend/core
+* **BACKEND\_CORE_URL**: The absolute URL to the core-folder, eg: /backend/core
+* **BACKEND\_MODULES_PATH**: The path to the modules-folder, eg: /home/fork/default\_www/backend/modules
+* **BACKEND\_MODULE_PATH**: The path to the current module-folder, eg: /home/fork/default\_www/backend/modules/blog
+* **BACKEND\_PATH**: The path to the backend, eg: /home/fork/default\_www/backend
+
+* **FRONTEND\_CACHE\_PATH**: The path to the frontend cache-folder, eg: /home/fork/default\_www/frontend/cache
+* **FRONTEND\_CORE\_PATH**: The path to the frontend core-folder, eg: /home/fork/default\_www/frontend/core
+* **FRONTEND\_FILES\_PATH**: The path to the frontend files-folder, in this folder you can store files that are uploaded by a user, eg: /home/fork/default\_www/frontend/files
+* **FRONTEND\_FILES\_URL**: Absolute url to the fronten files-folder, eg: /frontend/files
+* **FRONTEND\_MODULES\_PATH**: Path to the frontend modules folder, eg: /home/fork/default\_www/frontend/modules
+* **FRONTEND\_PATH**: Path to the frontend, eg: /home/fork/default\_www/frontend
+
+* **INTERFACE\_LANGUAGE**: The interface language for the current authenticated user, eg: nl
+  * Usage in templates: {$INTERFACE\_LANGUAGE}
+  * Usage in backend PHP: BackendAuthentication::getUser()->getSetting('interface_language');
+
+* **MODULE**: The current module, eg: blog
+  * Usage in templates: {$MODULE}
+  * Usage in backend PHP: $this->URL->getModule();
+* **NAMED\_APPLICATION**: The name the user used for the application, eg: private
