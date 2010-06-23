@@ -47,12 +47,6 @@
 # /default_www/frontend/files/backend_users/avatars/source/
 /default_www/frontend/files/backend_users/avatars/source/*.jpg
 
-# /default_www/frontend/files/userfiles/files/
-/default_www/frontend/files/userfiles/files/*
-
-# /default_www/frontend/files/userfiles/images/
-/default_www/frontend/files/userfiles/images/*
-
 # /default_www/install/cache/
 /default_www/install/cache/*.php
 
