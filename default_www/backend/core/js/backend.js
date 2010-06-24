@@ -116,6 +116,7 @@ jsBackend.controls = {
 		jsBackend.controls.bindCheckboxTextfieldCombo();
 		jsBackend.controls.bindConfirm();
 		jsBackend.controls.bindFullWidthSwitch();
+		jsBackend.controls.bindMassAction();
 		jsBackend.controls.bindMassCheckbox();
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
@@ -185,6 +186,7 @@ jsBackend.controls = {
 			$('#'+ id).dialog('open');
 		});
 	},
+
 	// toggle between full width and sidebar-layout
 	bindFullWidthSwitch: function() {
 		$('#fullwidthSwitch a').toggle(function(evt) {
@@ -212,6 +214,80 @@ jsBackend.controls = {
 		
 		
 	},
+	
+	// bind confirm message
+	bindMassAction: function() {
+		// set disabled
+		$('.tableOptions .massAction select').addClass('disabled').attr('disabled', 'disabled');
+		$('.tableOptions .massAction .submitButton').addClass('disabledButton').attr('disabled', 'disabled');
+		
+		// hook change events
+		$('table input:checkbox').change(function(evt) {
+			// get parent table
+			var table = $($(this).parents('table.datagrid'));
+
+			// any item checked?
+			if(table.find('input:checkbox:checked').length > 0) {
+				table.find('.massAction select').removeClass('disabled').attr('disabled', '');
+				table.find('.massAction .submitButton').removeClass('disabledButton').attr('disabled', '');
+			}
+			else {
+				table.find('.massAction select').addClass('disabled').attr('disabled', 'disabled');
+				table.find('.massAction .submitButton').addClass('disabledButton').attr('disabled', 'disabled');
+			}
+		});
+		
+		// initialize
+		$('.tableOptions .massAction option').each(function() {
+			// get id
+			var id = $(this).attr('rel');
+			
+			// initialize
+			$('#'+ id).dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
+								buttons: { '{$lblOK|ucfirst}': function() {
+																	// close dialog
+																	$(this).dialog('close');
+
+																	// submit the form
+																	$($('*[rel='+ $(this).attr('id')  +']').parents('form')).submit();
+																},
+											'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
+										 },
+								open: function(evt) { 
+											 // set focus on first button
+											 if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); } 
+										 }
+							 });
+
+		});
+
+		// hijack the form
+		$('.tableOptions .massAction .submitButton').live('click', function(evt) {
+			// prevent default
+			evt.preventDefault();
+
+			// get the selected element
+			if($(this).parents('.massAction').find('select[name=action] option:selected').length > 0) {
+				var element = $(this).parents('.massAction').find('select[name=action] option:selected')
+				
+				// if the rel-attribute exists we should show the dialog
+				if(typeof element.attr('rel') != 'undefined') {
+					// get id
+					var id = element.attr('rel')
+					
+					// open dialog
+					$('#'+ id).dialog('open');
+				}
+				
+				// no confirm
+				else $($(this).parents('form')).submit();
+			}
+			
+			// no confirm
+			else $($(this).parents('form')).submit();
+		});
+	},	
+	
 	// check all checkboxes with one checkbox in the tableheader
 	bindMassCheckbox: function() {
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt) {
@@ -314,6 +390,7 @@ jsBackend.controls = {
 	bindTableCheckbox: function() {
 		// set classes
 		$('tr td input:checkbox:checked').each(function() { $($(this).parents().filter('tr')[0]).addClass('selected'); });
+		
 		// bind change-events
 		$('tr td input:checkbox').live('change', function(evt) {
 			if($(this).is(':checked')) $($(this).parents().filter('tr')[0]).addClass('selected');

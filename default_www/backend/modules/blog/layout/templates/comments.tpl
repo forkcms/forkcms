@@ -14,7 +14,7 @@
 
 	<div id="tabPublished">
 		{option:dgPublished}
-			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsPublished">
+			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsPublished">
 				<div class="datagridHolder">
 					<input type="hidden" name="from" value="published" />
 					{$dgPublished}
@@ -26,9 +26,9 @@
 
 	<div id="tabModeration">
 		{option:dgModeration}
-			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsModeration">
-				<input type="hidden" name="from" value="moderation" />
+			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsModeration">
 				<div class="datagridHolder">
+					<input type="hidden" name="from" value="moderation" />
 					{$dgModeration}
 				</div>
 			</form>
@@ -38,9 +38,9 @@
 
 	<div id="tabSpam">
 		{option:dgSpam}
-			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms submitWithLink" id="commentsSpam">
-				<input type="hidden" name="from" value="spam" />
+			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsSpam">
 				<div class="datagridHolder">
+					<input type="hidden" name="from" value="spam" />
 					{$dgSpam}
 				</div>
 			</form>
@@ -48,6 +48,14 @@
 		{option:!dgSpam}{$msgNoComments}{/option:!dgSpam}
 	</div>
 </div>
+
+<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+	<p>{$msgConfirmMassDelete}</p>
+</div>
+<div id="confirmSpam" title="{$lblSpam|ucfirst}?" style="display: none;">
+	<p>{$msgConfirmMassSpam}</p>
+</div>
+
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

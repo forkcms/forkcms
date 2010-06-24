@@ -98,6 +98,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('moderation' => BL::getLabel('MoveToModeration'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'spam');
+		$ddmMassAction->setAttribute('id', 'actionPublished');
+		$ddmMassAction->setOptionAttributes('delete', array('rel' => 'confirmDelete'));
+		$ddmMassAction->setOptionAttributes('spam', array('rel' => 'confirmSpam'));
 		$this->dgPublished->setMassAction($ddmMassAction);
 
 		// datagrid for the comments that are awaiting moderation
@@ -129,6 +132,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::getLabel('MoveToPublished'), 'spam' => BL::getLabel('MoveToSpam'), 'delete' => BL::getLabel('Delete')), 'published');
+		$ddmMassAction->setAttribute('id', 'actionModeration');
+		$ddmMassAction->setOptionAttributes('delete', array('rel' => 'confirmDelete'));
+		$ddmMassAction->setOptionAttributes('spam', array('rel' => 'confirmSpam'));
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		/*
@@ -162,6 +168,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::getLabel('MoveToPublished'), 'moderation' => BL::getLabel('MoveToModeration'), 'delete' => BL::getLabel('Delete')), 'published');
+		$ddmMassAction->setAttribute('id', 'actionSpam');
+		$ddmMassAction->setOptionAttributes('delete', array('rel' => 'confirmDelete'));
+		$ddmMassAction->setOptionAttributes('spam', array('rel' => 'confirmSpam'));
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 
