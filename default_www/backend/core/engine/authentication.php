@@ -146,6 +146,7 @@ class BackendAuthentication
 			$activeModules = (array) $db->getColumn('SELECT m.name
 														FROM modules AS m
 														WHERE m.active = ?;', 'Y');
+
 			// add always allowed
 			foreach($alwaysAllowed as $allowedModule => $actions) $activeModules[] = $allowedModule;
 
