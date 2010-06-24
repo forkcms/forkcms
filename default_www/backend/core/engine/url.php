@@ -119,30 +119,6 @@ class BackendURL
 		// store the querystring local, so we don't alter it.
 		$queryString = $this->getQueryString();
 
-		// fix GET-parameters
-		$getChunksFromUrl = explode('?', $queryString);
-
-		// are there GET-parameters
-		if(isset($getChunksFromUrl[1]))
-		{
-			// remove from querystring
-			$queryString = str_replace('?'. $getChunksFromUrl[1], '', $this->getQueryString());
-
-			// @todo tijs - GET doesnt need to read because its already in the GET array by default
-			// get key-value pairs
-			$get = explode('&', $getChunksFromUrl[1]);
-
-			// loop pairs
-			foreach($get as $getParameter)
-			{
-				// get key and value
-				$getChunks = explode('=', $getParameter, 2);
-
-				// store in the real GET
-				if(isset($getChunks[0])) $_GET[$getChunks[0]] = (isset($getChunks[1])) ? (string) $getChunks[1] : '';
-			}
-		}
-
 		// find the position of ? (which seperates real URL and GET-parameters)
 		$positionQuestionMark = strpos($queryString, '?');
 
@@ -159,7 +135,7 @@ class BackendURL
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
 
 		// get the requested action, index will be our default action
-		$action = (isset($chunks[3]) && $chunks[3] != '') ? $chunks[3] : 'index';
+		$action = (isset($chunks[3]) && $chunks[3] != '') ? $chunks[3] : 'index'; // @later we should fetch the real defaultAction from the module config.
 
 		// check if this is a request for a JS-file
 		$isJS = (isset($chunks[1]) && $chunks[1] == 'js.php');
@@ -194,7 +170,7 @@ class BackendURL
 				if(!BackendAuthentication::isAllowedModule($module))
 				{
 					// the user doesn't have access, redirect to error page
-					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-module&querystring='. urlencode('/'. $this->getQueryString()));
+					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=module-not-allowed&querystring='. urlencode('/'. $this->getQueryString()));
 				}
 
 				// we have access
@@ -204,7 +180,7 @@ class BackendURL
 					if(!BackendAuthentication::isAllowedAction($action, $module))
 					{
 						// the user hasn't access, redirect to error page
-						SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=not-allowed-action&querystring='. urlencode('/'. $this->getQueryString()));
+						SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=action-not-allowed&querystring='. urlencode('/'. $this->getQueryString()));
 					}
 
 					// let's do it

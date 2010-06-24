@@ -174,11 +174,21 @@ class BackendModel
 		// add at least one parameter
 		if(empty($parameters)) $parameters['token'] = 'true';
 
-		// add parameters
-		foreach($parameters as $key => $value) $querystring .= '&amp;'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+		// init counter
+		$i = 1;
 
-		// add querystring
-		$querystring = '?'. trim($querystring, '&amp;');
+		// add parameters
+		foreach($parameters as $key => $value)
+		{
+			// first element
+			if($i == 1) $querystring .= '?'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+
+			// other elements
+			else $querystring .= '&amp;'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+
+			// update counter
+			$i++;
+		}
 
 		// build the URL and return it
 		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;
