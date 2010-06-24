@@ -665,7 +665,7 @@ class SpoonDatagrid
 		$sort = ($this->sortParameter !== null) ? $this->sortParameter : null;
 
 		// redefine
-		$sort = (isset($_GET['sort'])) ? (string) $_GET['sort'] : null;
+		$sort = (isset($_GET['sort'])) ? (string) $_GET['sort'] : $sort;
 
 		// retrieve sort
 		return SpoonFilter::getValue($sort, array('asc', 'desc'), 'asc');
