@@ -55,9 +55,16 @@ tinyMCE.init({
 	
 	setup: function(editor) {
 		// add the correct class when the editor becomes active
-		editor.onActivate.add(function(editor) { $(editor.getContainer()).addClass('expanded');	});
+		editor.onActivate.add(function(editor) { 
+			
+			alert('MA JONG');
+			
+			$(editor.getContainer()).addClass('expanded');
+		});
 		
 		// remove the class when the editor isn't active
-		editor.onDeactivate.add(function(editor) { $(editor.getContainer()).removeClass('expanded'); });
+		editor.onDeactivate.add(function(editor) { 
+			$(editor.getContainer()).removeClass('expanded');
+		});
 	}
 });

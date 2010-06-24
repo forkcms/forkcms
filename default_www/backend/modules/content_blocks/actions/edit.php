@@ -91,7 +91,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
-		$this->frm->addEditor('content', $this->record['content']);
+		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addCheckbox('hidden', ($this->record['hidden'] == 'N'));
 	}
 
@@ -158,7 +158,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('content')->isFilled(BL::getError('ContentIsRequired'));
+			$this->frm->getField('text')->isFilled(BL::getError('ContentIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
