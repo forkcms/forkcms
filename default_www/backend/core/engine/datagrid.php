@@ -260,7 +260,7 @@ class BackendDataGrid extends SpoonDataGrid
 	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
 		// buid HTML
-		$HTML = '<p><label>'. ucfirst(BL::getLabel('WithSelected')) .'</label></p>
+		$HTML = '<p><label for="action">'. ucfirst(BL::getLabel('WithSelected')) .'</label></p>
 				<p>
 					'. $actionDropDown->parse() .'
 				</p>

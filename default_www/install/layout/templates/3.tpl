@@ -36,7 +36,7 @@
 								<h3>Fork API</h3>
 								<p>The Fork API provides your website with extra services.</p>
 								<p>
-									<label for="apiEmail">Email*</label>
+									<label for="apiEmail">Email<abbr title="Required">*</abbr></label>
 									{$txtApiEmail} {$txtApiEmailError}
 								</p>
 							</div>

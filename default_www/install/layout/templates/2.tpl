@@ -27,7 +27,7 @@
 							<div class="horizontal">
 								<h3>Filesystem configuration</h3>
 								<p>
-									<label for="spoonPath">Default domain*</label>
+									<label for="spoonPath">Default domain<abbr title="Required">*</abbr></label>
 									{$txtSpoonPath} {$txtSpoonPathError}
 									<span class="helpTxt">Correct the path to the folder containing Spoon if needed.</span>
 								</p>
@@ -47,20 +47,20 @@
 								<p>The database will store all the data for this site. <strong>Make sure the database already exists on the server and you remember the credentials.</strong>. You should import the <em>default.sql</em>-file in that database.</p>
 
 								<p>
-									<label for="databaseHost">Host*</label>
+									<label for="databaseHost">Host<abbr title="Required">*</abbr></label>
 									{$txtDatabaseHost} {$txtDatabaseHostError}
 									<span class="helpTxt">If you're not sure what you should enter here, leave the default setting or check with your hosting provider.</span>
 								</p>
 								<p>
-									<label for="databaseName">Database name*</label>
+									<label for="databaseName">Database name<abbr title="Required">*</abbr></label>
 									{$txtDatabaseName} {$txtDatabaseNameError}
 								</p>
 								<p>
-									<label for="databaseUsername">Username*</label>
+									<label for="databaseUsername">Username<abbr title="Required">*</abbr></label>
 									{$txtDatabaseUsername} {$txtDatabaseUsernameError}
 								</p>
 								<p>
-									<label for="databasePassword">Password*</label>
+									<label for="databasePassword">Password<abbr title="Required">*</abbr></label>
 									{$txtDatabasePassword} {$txtDatabasePasswordError}
 								</p>
 							</div>
@@ -70,11 +70,11 @@
 								<p>These values are just default. They can be alltered in the settings-menu.</p>
 
 								<p>
-									<label for="siteDomain">Default domain*</label>
+									<label for="siteDomain">Default domain<abbr title="Required">*</abbr></label>
 									{$txtSiteDomain} {$txtSiteDomainError}
 								</p>
 								<p>
-									<label for="siteTitle">Default title*</label>
+									<label for="siteTitle">Default title<abbr title="Required">*</abbr></label>
 									{$txtSiteTitle} {$txtSiteTitleError}
 								</p>
 							</div>

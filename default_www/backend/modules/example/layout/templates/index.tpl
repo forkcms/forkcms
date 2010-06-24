@@ -8,24 +8,24 @@
 
 	<form class="forkForms">
 		<p>
-			<label>Naam</label>
-			<input type="text" class="inputText" value="Johan Ronsse" />
+			<label for="e1">Naam</label>
+			<input type="text" class="inputText" value="Johan Ronsse" id="e1" />
 		</p>
 		<p>
-			<label>Wachtwoord</label>
-			<input type="password" class="inputPassword" value="adassdk" />
+			<label for="e2">Wachtwoord</label>
+			<input type="password" class="inputPassword" value="adassdk" id="e2" />
 		</p>
 		<p>
-			<label>Code</label>
-			<input type="text" class="inputText code" value="d41d8cd98f00b204e9800998ecf8427e" />
+			<label for="e3">Code</label>
+			<input type="text" class="inputText code" value="d41d8cd98f00b204e9800998ecf8427e" id="e3" />
 		</p>
 		<p>
-			<label>Bestand*</label>
-			<input type="file" />
+			<label for="e4">Bestand<abbr title="{$lblRequired|ucfirst}">*</abbr></label>
+			<input type="file" id="e4" />
 		</p>
 		<p>
-			<label>Combo box*</label>
-			<select>
+			<label for="e5">Combo box<abbr title="{$lblRequired|ucfirst}">*</abbr></label>
+			<select id="e5">
 				<option>Optie 1</option>
 				<option>Optie 2</option>
 				<option>Optie 3</option>
