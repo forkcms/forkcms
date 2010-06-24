@@ -67,6 +67,19 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 
 
 	/**
+	 * Parse the action into the template
+	 *
+	 * @return	void
+	 */
+	public function parse()
+	{
+		// parse the form
+		$this->frm->parse($this->tpl);
+		$this->frmForgotPassword->parse($this->tpl);
+	}
+
+
+	/**
 	 * Validate the forms
 	 *
 	 * @return	void
@@ -161,19 +174,6 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			}
 		}
 
-	}
-
-
-	/**
-	 * Parse the action into the template
-	 *
-	 * @return	void
-	 */
-	public function parse()
-	{
-		// parse the form
-		$this->frm->parse($this->tpl);
-		$this->frmForgotPassword->parse($this->tpl);
 	}
 }
 
