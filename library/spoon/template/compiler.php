@@ -484,8 +484,8 @@ class SpoonTemplateCompiler
 					$replace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersHTML(); ?>>' ."\n<div>\n";
 					$replace[0] .= $this->forms[$name]->getField('form')->parse();
 
-					// if the form should use tokens, we add it here
-					if($this->forms[$name]->getUseToken()) $replace[0] .= "\n". '<?php echo $this->variables[\'hidFormToken\']; ?>';
+					// form tokens were used
+					if($this->forms[$name]->getUseToken()) $replace[0] .= "\n". '<input type="hidden" name="form_token" id="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getValue(); ?>" />';
 
 					// close form & replace it
 					$replace[1] = "\n</div>\n</form>";

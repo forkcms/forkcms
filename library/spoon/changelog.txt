@@ -15,6 +15,7 @@
 - Rewrote some small snippets of code to improve performance.
 - Bugfix: rewrote SpoonFilter::isInternalReferrer to use PHP's internal parse_url function.
 - Bugfix: createThumbnail had been missing from SpoonFormImage.
+- Bugfix: form tokens are now working when you have more than one form on your page.
 
 
 1.2.0 (2010-05-18)

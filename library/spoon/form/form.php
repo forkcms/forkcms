@@ -131,7 +131,7 @@ class SpoonForm
 		// required field
 		$this->setName($name);
 		$this->add(new SpoonFormHidden('form', $this->name));
-		$this->objects['form']->setAttribute('id', SpoonFilter::toCamelCase('form_'. $this->name));
+		$this->objects['form']->setAttribute('id', SpoonFilter::toCamelCase('form_'. $this->name, '_', true));
 
 		// optional fields
 		$this->setAction($action);
@@ -143,6 +143,7 @@ class SpoonForm
 		{
 			// add a hidden field
 			$this->add(new SpoonFormHidden('form_token', $this->getToken()));
+			$this->objects['form_token']->setAttribute('id', SpoonFilter::toCamelCase('form_token_'. $this->name, '_', true));
 		}
 	}
 
@@ -971,7 +972,11 @@ class SpoonForm
 	public function parse(SpoonTemplate $template)
 	{
 		// loop objects
-		foreach($this->objects as $name => $object) $object->parse($template);
+		foreach($this->objects as $name => $object)
+		{
+			// not excluded
+			if(!in_array($name, array('form', 'form_token'))) $object->parse($template);
+		}
 
 		// parse form tag
 		$template->addForm($this);
