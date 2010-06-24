@@ -139,7 +139,7 @@ class BackendAction
 	public function loadConfig()
 	{
 		// build path to the module and define it. This is a constant because we can use this in templates.
-		define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH .'/'. $this->getModule());
+		if(!defined('BACKEND_MODULE_PATH')) define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH .'/'. $this->getModule());
 
 		// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
 		if(!SpoonFile::exists(BACKEND_MODULE_PATH .'/config.php')) throw new BackendException('The configfile for the module ('. $this->getModule() .') can\'t be found.');
