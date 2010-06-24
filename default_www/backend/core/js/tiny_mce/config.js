@@ -56,9 +56,6 @@ tinyMCE.init({
 	setup: function(editor) {
 		// add the correct class when the editor becomes active
 		editor.onActivate.add(function(editor) { 
-			
-			alert('MA JONG');
-			
 			$(editor.getContainer()).addClass('expanded');
 		});
 		
