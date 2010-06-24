@@ -3,7 +3,7 @@
 
 {form:edit}
 	<div class="pageTitle">
-		<h2>{$lblContentBlocks|ucfirst}: {$msgEditWithItem|sprintf:{$title}}</h2>
+		<h2>{$lblContentBlocks|ucfirst}: {$msgEditContentBlock|sprintf:{$title}}</h2>
 	</div>
 
 	<div class="tabs">
@@ -22,7 +22,7 @@
 					<label for="text">{$lblContent|ucfirst}</label>
 					{$txtText} {$txtTextError}
 				</p>
-				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
+				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite}</label></p>
 			</fieldset>
 		</div>
 
@@ -58,7 +58,7 @@
 		</a>
 
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblEdit|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
 

@@ -69,7 +69,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('text')->isFilled(BL::getError('ContentIsRequired'));
+			$this->frm->getField('text')->isFilled(BL::getError('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

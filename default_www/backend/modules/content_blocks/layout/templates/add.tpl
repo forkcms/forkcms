@@ -16,7 +16,7 @@
 					<label for="text">{$lblContent|ucfirst}</label>
 					{$txtText} {$txtTextError}
 				</p>
-				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$msgVisibleOnSite}</label></p>
+				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite}</label></p>
 			</fieldset>
 		</div>
 	</div>

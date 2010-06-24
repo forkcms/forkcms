@@ -36,6 +36,9 @@ class BackendContentBlocksModel
 	{
 		// delete all records
 		BackendModel::getDB(true)->delete('content_blocks', 'id = ?', (int) $id);
+
+		// @todo tijs - wat moet er gebeuren met content_blocks die al dan niet gelinkt zijn aan items bij pagina's?
+		// @todo tijs - de nodige extra's moeten toch verwijderd worden, niet?
 	}
 
 

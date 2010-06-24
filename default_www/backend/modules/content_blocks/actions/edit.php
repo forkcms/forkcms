@@ -113,7 +113,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('title' => BL::getLabel('Title'), 'edited_on' => BL::getLabel('LastEditedOn')));
+		$this->dgRevisions->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
 
 		// set column-functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
@@ -158,7 +158,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 
 			// validate fields
 			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('text')->isFilled(BL::getError('ContentIsRequired'));
+			$this->frm->getField('text')->isFilled(BL::getError('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
