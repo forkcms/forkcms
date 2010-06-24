@@ -272,7 +272,7 @@ class FrontendPage extends FrontendBaseObject
 			if($blockName === null) continue;
 
 			// build templateVariable
-			$templateVariable = 'block'. $index;
+			$templateVariable = 'block'. ($index + 1);
 
 			// an extra
 			if($block['extra_id'] !== null)

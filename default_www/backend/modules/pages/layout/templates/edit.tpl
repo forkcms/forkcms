@@ -137,7 +137,7 @@
 		<div class="datagridHolder">
 			<div class="tableHeading">
 				<div class="oneLiner">
-					<h3 class="floater">{$lblRevisions|ucfirst}</h3>
+					<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
 					<abbr class="help">(?)</abbr>
 					<div class="tooltip" style="display: none;">
 						<p>{$msgHelpRevisions}</p>
@@ -207,7 +207,7 @@
 			</div>
 			<div class="options">
 				<p>
-					<label for="metaDescriptionOverwrite">{$lblMetaDescription|ucfirst}</label>
+					<label for="metaDescriptionOverwrite">{$lblDescription|ucfirst}</label>
 					<span class="helpTxt">{$msgHelpMetaDescription}</span>
 				</p>
 				<ul class="inputList checkboxTextFieldCombo">
@@ -217,7 +217,7 @@
 					</li>
 				</ul>
 				<p>
-					<label for="metaKeywordsOverwrite">{$lblMetaKeywords|ucfirst}</label>
+					<label for="metaKeywordsOverwrite">{$lblKeywords|ucfirst}</label>
 					<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 				</p>
 				<ul class="inputList checkboxTextFieldCombo">
@@ -227,7 +227,7 @@
 					</li>
 				</ul>
 				<p>
-					<label for="metaCustom">{$lblMetaCustom|ucfirst}</label>
+					<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
 					<span class="helpTxt">{$msgHelpMetaCustom}</span>
 					{$txtMetaCustom} {$txtMetaCustomError}
 				</p>

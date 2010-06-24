@@ -5,7 +5,7 @@
 	<h2>{$lblRecentlyEdited|ucfirst}</h2>
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd">
-			<span>{$msgAddPage}</span>
+			<span>{$lblAdd|ucfirst}</span>
 		</a>
 	</div>
 </div>

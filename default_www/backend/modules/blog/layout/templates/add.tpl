@@ -162,7 +162,7 @@
 				</div>
 				<div class="options">
 					<p>
-						<label for="metaDescriptionOverwrite">{$lblMetaDescription|ucfirst}</label>
+						<label for="metaDescriptionOverwrite">{$lblDescription|ucfirst}</label>
 						<span class="helpTxt">{$msgHelpMetaDescription}</span>
 					</p>
 					<ul class="inputList checkboxTextFieldCombo">
@@ -172,7 +172,7 @@
 						</li>
 					</ul>
 					<p>
-						<label for="metaKeywordsOverwrite">{$lblMetaKeywords|ucfirst}</label>
+						<label for="metaKeywordsOverwrite">{$lblKeywords|ucfirst}</label>
 						<span class="helpTxt">{$msgHelpMetaKeywords}</span>
 					</p>
 					<ul class="inputList checkboxTextFieldCombo">
@@ -182,7 +182,7 @@
 						</li>
 					</ul>
 					<div class="textareaHolder">
-						<label for="metaCustom">{$lblMetaCustom|ucfirst}</label>
+						<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
 						<span class="helpTxt">{$msgHelpMetaCustom}</span>
 						{$txtMetaCustom} {$txtMetaCustomError}
 					</div>

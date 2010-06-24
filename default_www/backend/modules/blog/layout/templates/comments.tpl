@@ -7,7 +7,7 @@
 
 <div id="tabs" class="tabs">
 	<ul>
-		<li><a href="#tabPublished">{$lblPublishedComments|ucfirst} ({$numPublished})</a></li>
+		<li><a href="#tabPublished">{$lblPublished|ucfirst} ({$numPublished})</a></li>
 		<li><a href="#tabModeration">{$lblWaitingForModeration|ucfirst} ({$numModeration})</a></li>
 		<li><a href="#tabSpam">{$lblSpam|ucfirst} ({$numSpam})</a></li>
 	</ul>

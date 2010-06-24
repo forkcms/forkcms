@@ -9,7 +9,7 @@
 	<div class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li class="notImportant"><a href="#tabRevisions">{$lblRevisions|ucfirst}</a></li>
+			<li class="notImportant"><a href="#tabRevisions">{$lblPreviousVersions|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
@@ -30,7 +30,7 @@
 			<div class="datagridHolder">
 				<div class="tableHeading">
 					<div class="oneLiner">
-						<h3 class="floater">{$lblRevisions|ucfirst}</h3>
+						<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
 						<abbr class="help">(?)</abbr>
 						<div class="balloon balloonAlt" style="display: none;">
 							<p>{$msgHelpRevisions}</p>
