@@ -16,7 +16,7 @@ $navigation['pages'] = array('url' => 'pages/index', 'selected_for_actions' => a
 
 $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
-$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Posts');
+$navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Articles');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/categories', 'selected_for_actions' => array('add_category', 'edit_category'), 'label' => 'Categories');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/comments', 'label' => 'Comments');
 $navigation['modules']['children']['events'] = array('url' => 'events/index', 'label' => 'Events');
