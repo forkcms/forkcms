@@ -1376,11 +1376,14 @@ class BackendPagesModel
 	 */
 	public static function insertTemplate(array $template)
 	{
+		// get db
+		$db = BackendModel::getDB(true);
+
 		// default?
 		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'));
 
 		// insert
-		$return = (int) BackendModel::getDB(true)->insert('pages_templates', $template);
+		$return = (int) $db->insert('pages_templates', $template);
 
 		// update setting for maximum blocks
 		self::setMaximumBlocks();

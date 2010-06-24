@@ -55,29 +55,28 @@
 			
 			// bind autocomplete if needed
 			if(options.autoCompleteUrl != '') {
-				$('#addValue-'+ id).autocomplete(options.autoCompleteUrl, { 
-					minChars: 1,
-					dataType: 'json',
-					width: $('#addValue-'+ id).width(),
-					parse: function(json) {
-							// init vars
-							var parsed = [];
-							
-							// validate json
-							if(json.code != 200) return parsed;
-							
-							// only process if we have results
-							if(json.data.length > 0) {
-								// loop data
-								for(i in json.data) {
-									parsed[parsed.length] = { data: [json.data[i].name], value: json.data[i].value, result: json.data[i].name };
+				$('#addValue-'+ id).autocomplete({
+						delay: 200,
+						minLength: 2,
+						source: function(request, response) {
+							$.ajax({ url: options.autoCompleteUrl, type: 'GET',
+								data: 'term=' + request.term,
+								success: function(data, textStatus) {
+									// init var
+									var realData = [];
+
+									// alert the user
+									if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+									if(data.code == 200) {
+										for(var i in data.data) realData.push({ label: data.data[i].name, value: data.data[i].name });
+									}
+									
+									// set response
+									response(realData);
 								}
-							}
-							
-							// return data
-							return parsed;
+							});
 						}
-				});
+					});
 			}
 			
 			// bind keypress on value-field

@@ -125,7 +125,6 @@ class BackendBaseAction
 		$this->header->addJavascript('jquery/jquery.js', 'core');
 		$this->header->addJavascript('jquery/jquery.ui.js', 'core');
 		$this->header->addJavascript('jquery/jquery.tools.js', 'core');
-		$this->header->addJavascript('jquery/jquery.autocomplete.js', 'core');
 		$this->header->addJavascript('jquery/jquery.backend.js', 'core');
 
 		// add items that always need to be loaded

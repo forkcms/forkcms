@@ -24,14 +24,13 @@ class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction
 		parent::execute();
 
 		// get parameters
-		$query = SpoonFilter::getGetValue('q', null, '');
-		$limit = SpoonFilter::getGetValue('limit', null, 10, 'int');
+		$term = SpoonFilter::getGetValue('term', null, '');
 
 		// validate
-		if($query == '') $this->output(self::BAD_REQUEST, null, 'Query is missing.');
+		if($term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
 
 		// get tags
-		$tags = BackendTagsModel::getStartsWith($query, $limit);
+		$tags = BackendTagsModel::getStartsWith($term);
 
 		// output
 		$this->output(self::OK, $tags);

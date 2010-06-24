@@ -127,7 +127,6 @@
 								<div class="oneLiner">
 									<p>
 										<input id="newCategoryValue" class="inputTextfield dontSubmit" type="text" name="new_category" />
-										<span id="newCategoryError" class="formError">{$errAddingCategoryFailed}</span>
 									</p>
 									<div class="buttonHolder">
 										<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>

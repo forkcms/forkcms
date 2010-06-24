@@ -162,6 +162,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			// create elements
 			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_'. $i, $selectedExtra);
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, $html);
+
+			$this->frm->getField('block_extra_id_'. $i)->setAttribute('class', 'block_extra_id');
 		}
 
 		// page info
@@ -326,9 +328,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// loop blocks in template
 				for($i = 0; $i < $this->templates[$page['template_id']]['num_blocks']; $i++)
 				{
-					// get the extra id
-					$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
-
 					// get the extra id
 					$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
 

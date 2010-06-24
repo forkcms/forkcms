@@ -14,10 +14,32 @@ jsBackend = {
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
 		//jsBackend.tableSequenceByDragAndDrop.init();
+
+		jsBackend.initAjax();
 	},
 	
-	fixAjax: function() {
+	initAjax: function() {
+		// set defaults for AJAX
+		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });
 		
+		// global error handler
+		$(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions) {
+			// check if a custom errorhandler is used
+			if(typeof ajaxOptions.error == 'undefined') {
+				// init var
+				var textStatus = '{$errSomethingWentWrong}';
+				
+				// get real message
+				if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
+				
+				// show message
+				jsBackend.messages.add('error', textStatus);
+			}
+		});
+		
+		// spinner stuff
+		$(document).ajaxStart(function() { $('#ajaxSpinner').show(); });
+		$(document).ajaxStop(function() { $('#ajaxSpinner').hide(); });
 	},
 	
 	// end

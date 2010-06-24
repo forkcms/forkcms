@@ -79,17 +79,15 @@ class BackendTagsModel
 	 * Get tags that start with the given string
 	 *
 	 * @return	array
-	 * @param	string $query			The searchstring.
-	 * @param	int[optional] $limit	The maximum number of items to retrieve.
+	 * @param	string $term	The searchstring.
 	 */
-	public static function getStartsWith($query, $limit = 10)
+	public static function getStartsWith($term)
 	{
 		return (array) BackendModel::getDB()->getRecords('SELECT i.tag AS name, i.tag AS value
 															FROM tags AS i
 															WHERE i.tag LIKE ?
-															ORDER BY i.tag ASC
-															LIMIT ?;',
-															array((string) $query .'%', (int) $limit));
+															ORDER BY i.tag ASC;',
+															array((string) $term .'%'));
 	}
 
 

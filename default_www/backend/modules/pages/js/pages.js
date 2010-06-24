@@ -39,6 +39,9 @@ jsBackend.pages.extras = {
 	
 	// load initial data, or initialize the dialogs
 	load: function() {
+		// set correct
+		$('input.block_extra_id').each(function() { jsBackend.pages.extras.changeExtra($(this).val(), $(this).attr('id').replace('blockExtraId', '')); })
+		
 		// initialize the modal for choosing an extra
 		if($('#chooseExtra').length > 0) {
 			$('#chooseExtra').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
@@ -155,11 +158,8 @@ jsBackend.pages.extras = {
 		if(selectedBlock == '') return false;
 
 		// store
-		$('#block_extra_id_'+ selectedBlock).val(selectedExtraId);
+		$('#blockExtraId'+ selectedBlock).val(selectedExtraId);
 
-		//console.log(selectedBlock);
-		//console.log(selectedExtraId);
-		
 		// empty the extraForBlock
 		$('#extraForBlock').val('');
 
@@ -406,8 +406,7 @@ jsBackend.pages.tree = {
 		var result = false;
 		
 		// make the call
-		$.ajax({ type: 'POST', dataType: 'json', 
-				 async: false, // important that this isn't asynchronous
+		$.ajax({ async: false, // important that this isn't asynchronous
 				 url: '/backend/ajax.php?module=pages&action=get_info&language={$LANGUAGE}',
 				 data: 'id=' + currentPageID,
 				 error: function(XMLHttpRequest, textStatus, errorThrown) {
@@ -444,12 +443,8 @@ jsBackend.pages.tree = {
 		var droppedOnPageID = $(refNode).attr('id').replace('page-', '');
 
 		// make the call
-		$.ajax({ type: 'POST', dataType: 'json', 
-				 url: '/backend/ajax.php?module=pages&action=move&language={$LANGUAGE}',
+		$.ajax({ url: '/backend/ajax.php?module=pages&action=move&language={$LANGUAGE}',
 				 data: 'id=' + currentPageID + '&dropped_on='+ droppedOnPageID +'&type='+ type,
-				 error: function(XMLHttpRequest, textStatus, errorThrown) {
-					if(jsBackend.debug) alert(textStatus);
-				 },
 				 success: function(json, textStatus) {
 					 if(json.code != 200) {
 						 if(jsBackend.debug) alert(textStatus);

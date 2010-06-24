@@ -42,8 +42,7 @@ jsBackend.blog.category = {
 		var name = $('#newCategoryValue').val();
 		
 		// make the call
-		$.ajax({cache: false, type: 'POST', dataType: 'json', 
-			url: url,
+		$.ajax({ url: url,
 			data: 'category_name=' + name,
 			success: function(data, textStatus) {
 				if(data.code == 200) {
@@ -77,21 +76,6 @@ jsBackend.blog.category = {
 				
 				// alert the user
 				if(data.code != 200 && jsBackend.debug) { alert(data.message); }
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				
-				console.log(XMLHttpRequest);
-				console.log(textStatus);
-				console.log(errorThrown);
-				
-				// show box again
-				$('#newCategoryError').show();
-				
-				// show message
-				jsBackend.messages.add('error', textStatus);
-				
-				// alert the user
-				if(jsBackend.debug) alert(textStatus);
 			}
 		});
 	},

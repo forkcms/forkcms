@@ -21,8 +21,6 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
-		$this->output(self::ERROR, null, 'ARF');
-
 		// get parameters
 		$categoryName = trim(SpoonFilter::getPostValue('category_name', null, '', 'string'));
 
