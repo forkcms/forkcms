@@ -5,7 +5,7 @@
 		{option:formError}jsBackend.messages.add('error', "{$errFormError|addslashes}");{/option:formError}
 
 		{option:usingRevision}jsBackend.messages.add('notice', "{$msgUsingARevision|addslashes}");{/option:usingRevision}
-		{option:usingDraft}jsBackend.messages.add('notice', "{$|addslashes}");{/option:usingDraft}
+		{option:usingDraft}jsBackend.messages.add('notice', "{$msgUsingADraft|addslashes}");{/option:usingDraft}
 
 		{option:report}jsBackend.messages.add('success', "{$reportMessage|addslashes}");{/option:report}
 
