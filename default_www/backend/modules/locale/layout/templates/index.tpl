@@ -42,9 +42,7 @@
 							<div class="options">
 								<div class="oneLiner">
 									<p>
-										<label for="name">
-											{$lblName|ucfirst}
-										</label>
+										<label for="name">{$lblName|ucfirst}</label>
 									</p>
 									<p>
 										<abbr class="help">(?)</abbr>

@@ -8,7 +8,7 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="name">{$lblName|ucfirst}</label>
+				<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtName} {$txtNameError}
 			</p>
 		</div>

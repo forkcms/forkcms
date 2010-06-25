@@ -9,12 +9,12 @@
 		<div class="options">
 			<div class="horizontal">
 				<p>
-					<label for="name">{$lblReferenceCode|ucfirst}</label>
+					<label for="name">{$lblReferenceCode|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtName} {$txtNameError}
 					<span class="helpTxt">{$msgHelpAddName}</span>
 				</p>
 				<p>
-					<label for="value">{$lblTranslation|ucfirst}</label>
+					<label for="value">{$lblTranslation|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtValue} {$txtValueError}
 					<span class="helpTxt">{$msgHelpAddValue}</span>
 				</p>

@@ -48,7 +48,7 @@
 				</div>
 				<div class="options horizontal labelWidthLong">
 					<p>
-						<label for="username">{$lblUsername|ucfirst}</label>
+						<label for="username">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtUsername} {$txtUsernameError}
 					</p>
 				</div>
@@ -60,19 +60,19 @@
 				</div>
 				<div class="options horizontal labelWidthLong">
 					<p>
-						<label for="name">{$lblName|ucfirst}</label>
+						<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtName} {$txtNameError}
 					</p>
 					<p>
-						<label for="surname">{$lblSurname|ucfirst}</label>
+						<label for="surname">{$lblSurname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtSurname} {$txtSurnameError}
 					</p>
 					<p>
-						<label for="email">{$lblEmail|ucfirst}</label>
+						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
 					<p>
-						<label for="nickname">{$lblNickname|ucfirst}</label>
+						<label for="nickname">{$lblNickname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtNickname} {$txtNicknameError}
 						<span class="helpTxt">{$msgHelpNickname}</span>
 					</p>

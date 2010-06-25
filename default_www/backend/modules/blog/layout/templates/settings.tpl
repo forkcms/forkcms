@@ -54,7 +54,7 @@
 				<h3>{$lblRSSFeed}</h3>
 			</div>
 			<div class="options">
-				<label for="rssTitle">{$lblTitle|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
+				<label for="rssTitle">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 				{$txtRssTitle} {$txtRssTitleError}
 				<span class="helpTxt">{$msgHelpRSSTitle}</span>
 			</div>

@@ -107,7 +107,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getnavigation'));
 
 		// convert var into navigation, syntax {$var|getmainnavigation}
-		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getmaintavigation'));
+		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getmainnavigation'));
 
 		// rand
 		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));

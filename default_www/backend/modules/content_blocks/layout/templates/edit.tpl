@@ -15,7 +15,7 @@
 		<div id="tabContent">
 			<fieldset>
 				<p>
-					<label for="title">{$lblTitle|ucfirst}</label>
+					<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtTitle} {$txtTitleError}
 				</p>
 				<p>

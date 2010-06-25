@@ -144,6 +144,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 
 			// required fields
 			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frm->getField('nickname')->isFilled(BL::getError('NicknameIsRequired'));
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
 			$this->frm->getField('interface_language')->isFilled(BL::getError('FieldIsRequired'));

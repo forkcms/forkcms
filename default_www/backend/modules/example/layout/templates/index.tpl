@@ -20,11 +20,11 @@
 			<input type="text" class="inputText code" value="d41d8cd98f00b204e9800998ecf8427e" id="e3" />
 		</p>
 		<p>
-			<label for="e4">Bestand<abbr title="{$lblRequired|ucfirst}">*</abbr></label>
+			<label for="e4">Bestand<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 			<input type="file" id="e4" />
 		</p>
 		<p>
-			<label for="e5">Combo box<abbr title="{$lblRequired|ucfirst}">*</abbr></label>
+			<label for="e5">Combo box<abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 			<select id="e5">
 				<option>Optie 1</option>
 				<option>Optie 2</option>

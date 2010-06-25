@@ -13,17 +13,17 @@
 		<div class="horizontal">
 			<div class="options">
 				<p>
-					<label for="author">{$lblName|ucfirst}<abbr title=" {$lblRequired}">*</abbr></label>
+					<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtAuthor} {$txtAuthorError}
 				</p>
 				<p>
-					<label for="email">{$lblEmail|ucfirst}<abbr title=" {$lblRequired}">*</abbr></label>
+					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtEmail} {$txtEmailError}
 				</p>
 			</div>
 			<div class="options">
 				<p>
-					<label for="message">{$lblMessage|ucfirst}<abbr title=" {$lblRequired}">*</abbr></label>
+					<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtMessage} {$txtMessageError}
 				</p>
 			</div>

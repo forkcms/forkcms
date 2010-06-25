@@ -20,7 +20,7 @@
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
 			<li><a href="#tabRevisions">{$lblPreviousVersions|ucfirst}</a></li>
-			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
+			<li><a href="#tabPermissions">{$lblComments|ucfirst}</a></li>
 			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		</ul>
 
@@ -32,7 +32,7 @@
 						{* Main content *}
 						<div class="box">
 							<div class="heading headingRTE">
-								<h3>{$lblMainContent|ucfirst}</h3>
+								<h3>{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
 							</div>
 							<div class="optionsRTE">
 								{$txtText} {$txtTextError}
