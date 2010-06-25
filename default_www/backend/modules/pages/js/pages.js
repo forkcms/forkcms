@@ -304,21 +304,6 @@ jsBackend.pages.template = {
 			i++;
 		});
 
-		var i = 0;
-		$('#templateDetails tr').each(function() {
-			// hide if needed
-			if(i >= current.num_blocks) $(this).hide();
-			
-			// show the navigation and set the name
-			else {
-				$(this).show();
-				$('.blockName', this).html(current.data.names[i]);
-			}
-
-			// increment
-			i++;
-		});
-		
 		// set HTML for the viual representation of the template
 		$('#templateVisual').html(current.html);
 		$('#templateVisualLarge').html(current.htmlLarge);

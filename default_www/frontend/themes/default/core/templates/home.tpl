@@ -12,22 +12,21 @@
 				<div id="navigation">
 					{$var|getnavigation}
 				</div>
-				
+
+				{* Block 2 *}
+				{option:block2IsHTML}{$block2}{/option:block2IsHTML}
+				{option:!block2IsHTML}{include:file='{$block2}'}{/option:!block2IsHTML}
+			</div>
+
+			<div id="content">
 				{* Block 1 *}
 				{option:block1IsHTML}{$block1}{/option:block1IsHTML}
 				{option:!block1IsHTML}{include:file='{$block1}'}{/option:!block1IsHTML}
 
-			</div>
-
-			<div id="content">
-				{* Block 0 *}
-				{option:block0IsHTML}{$block0}{/option:block0IsHTML}
-				{option:!block0IsHTML}{include:file='{$block0}'}{/option:!block0IsHTML}
-
 				<div id="homeCTA">
-					{* Block 2 *}
-					{option:block2IsHTML}{$block2}{/option:block2IsHTML}
-					{option:!block2IsHTML}{include:file='{$block2}'}{/option:!block2IsHTML}
+					{* Block 3 *}
+					{option:block3IsHTML}{$block3}{/option:block3IsHTML}
+					{option:!block3IsHTML}{include:file='{$block3}'}{/option:!block3IsHTML}
 				</div>
 			</div>
 		</div>

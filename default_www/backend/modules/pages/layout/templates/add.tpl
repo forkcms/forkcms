@@ -109,17 +109,6 @@
 									<div id="templateVisual" class="templateVisual current">
 										{$templatehtml}
 									</div>
-
-									<table id="templateDetails" class="infoGrid" border="0" cellpadding="0" cellspacing="0">
-										<tbody>
-											{iteration:blocks}
-												<tr>
-													<th class="numbering">{$blocks.index}</th>
-													<td class="blockName">{$blocks.name}</td>
-												</tr>
-											{/iteration:blocks}
-										</tbody>
-									</table>
 								</div>
 							</div>
 						</td>
