@@ -107,29 +107,29 @@ class FrontendTemplate extends SpoonTemplate
 	private function mapCustomModifiers()
 	{
 		// URL for a specific pageId
-		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
+		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'geturl'));
 
 		// URL for a specific block
-		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'getURLForBlock'));
+		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'geturlforblock'));
 
 		// convert var into navigation
-		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
+		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getnavigation'));
 
 		// rand
 		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'rand'));
 
 		// string
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
-		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
+		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupplaintext'));
 
 		// dates
-		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
+		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeago'));
 
 		// users
-		$this->mapModifier('userSetting', array('FrontendTemplateModifiers', 'userSetting')); // @todo davy - dit moet nog lowercase worden.
+		$this->mapModifier('userSetting', array('FrontendTemplateModifiers', 'usersetting')); // @todo davy - dit moet nog lowercase worden.
 
 		// highlight
-		$this->mapModifier('highlight', array('FrontendTemplateModifiers', 'highlightCode'));
+		$this->mapModifier('highlight', array('FrontendTemplateModifiers', 'highlightcode'));
 
 		// debug stuff
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));

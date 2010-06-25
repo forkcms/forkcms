@@ -101,13 +101,13 @@ class BackendTemplate extends SpoonTemplate
 	private function mapCustomModifiers()
 	{
 		// convert var into an URL, syntax {$var|geturl:<pageId>}
-		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
+		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'geturl'));
 
 		// convert var into navigation, syntax {$var|getnavigation:<startdepth>:<enddepth>}
-		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
+		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getnavigation'));
 
 		// convert var into navigation, syntax {$var|getmainnavigation}
-		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
+		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getmaintavigation'));
 
 		// rand
 		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));
@@ -119,9 +119,9 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));
 
 		// dates
-		$this->mapModifier('formatDate', array('BackendTemplateModifiers', 'formatDate'));
-		$this->mapModifier('formatTime', array('BackendTemplateModifiers', 'formatTime'));
-		$this->mapModifier('formatDateTime', array('BackendTemplateModifiers', 'formatDateTime'));
+		$this->mapModifier('formatDate', array('BackendTemplateModifiers', 'formatdate'));
+		$this->mapModifier('formatTime', array('BackendTemplateModifiers', 'formattime'));
+		$this->mapModifier('formatDateTime', array('BackendTemplateModifiers', 'formatdatetime'));
 	}
 
 
@@ -372,7 +372,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a date
-	 * 	syntax: {$var|formatDate}
+	 * 	syntax: {$var|formatdate}
 	 *
 	 * @return	string
 	 * @param	int $var	The UNIX-timestamp to format
@@ -389,7 +389,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a datetime
-	 * 	syntax: {$var|formatDateTime}
+	 * 	syntax: {$var|formatdatetime}
 	 *
 	 * @return	string
 	 * @param	int $var	The UNIX-timestamp to format
@@ -406,7 +406,7 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a UNIX-timestamp as a date
-	 * 	syntac: {$var|formatDate}
+	 * 	syntac: {$var|formatdate}
 	 *
 	 * @return	string
 	 * @param	int $var	The UNIX-timestamp to format
