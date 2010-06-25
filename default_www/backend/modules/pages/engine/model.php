@@ -402,7 +402,7 @@ class BackendPagesModel
 				{
 					$html .= '		<td id="templateBlock-'. $index .'">
 										<h4 class="templateBlockTitle">'. $title .'</h4>
-										<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getLabel(SpoonFilter::toCamelCase($type))) .'</span></p>
+										<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getMessage(SpoonFilter::toCamelCase($type))) .'</span></p>
 										<div class="buttonHolder">
 											<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" rel="'. $index .'">
 												<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
@@ -1207,9 +1207,9 @@ class BackendPagesModel
 	 */
 	public static function getTypes()
 	{
-		return array('rich_text' => BL::getLabel('RichText'),
+		return array('rich_text' => BL::getLabel('Editor'),
 					 'block' => BL::getLabel('Module'),
-					 'widget' => BL::getLabel('ModuleWidget')
+					 'widget' => BL::getLabel('Widget')
 					);
 	}
 

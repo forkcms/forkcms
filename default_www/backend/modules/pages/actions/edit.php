@@ -8,6 +8,7 @@
  * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendPagesEdit extends BackendBaseActionEdit
@@ -17,8 +18,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 *
 	 * @var	array
 	 */
-	private $blocks = array(),
-			$blocksContent = array();
+	private $blocks = array(), $blocksContent = array();
 
 
 	/**
@@ -68,10 +68,10 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->extras = BackendPagesModel::getExtras();
 
 		// get maximum number of blocks
-		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maximumNumberOfBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
+		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
 
 		// load the form
 		$this->loadForm();
@@ -114,8 +114,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::getLabel('UseThisVersion'));
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array(	'user_id' => ucfirst(BL::getLabel('By')),
-													'edited_on' => ucfirst(BL::getLabel('Date'))));
+		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('Date'))));
 
 	}
 
@@ -163,6 +162,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_'. $i, $selectedExtra);
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, $html);
 
+			// add class
 			$this->frm->getField('block_extra_id_'. $i)->setAttribute('class', 'block_extra_id');
 		}
 
@@ -227,7 +227,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	protected function parse()
 	{
 		// parse some variables
-		$this->tpl->assignArray($this->record, 'record');
+		$this->tpl->assignArray($this->record, 'record'); // @todo rommel opkuisen...
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
@@ -253,8 +253,8 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$URL = BackendPagesModel::getFullURL($this->record['id']);
 
 		// assign full URL
-		$this->tpl->assign('pageUrl', $URL);
-		$this->tpl->assign('seoPageUrl', str_replace($this->meta->getURL(), '', $URL));
+		$this->tpl->assign('itemURL', $URL);
+		$this->tpl->assign('URL', str_replace($this->meta->getURL(), '', $URL));
 
 		// parse datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);

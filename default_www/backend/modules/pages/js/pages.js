@@ -172,7 +172,7 @@ jsBackend.pages.extras = {
 				$('#block-'+ selectedBlock).hide();
 			} else {
 				// set description
-				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html('{$lblRichText|ucfirst}');
+				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html('{$lblEditor|ucfirst}');
 
 				// show block
 				$('#block-'+ selectedBlock).show();

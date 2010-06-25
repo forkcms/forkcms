@@ -5,7 +5,7 @@
 	{$hidTemplateId}
 
 	<div class="pageTitle">
-		<h2>{$lblAdd|ucfirst}</h2>
+		<h2>{$lblPages|ucfirst}: {$lblAdd}</h2>
 	</div>
 
 	<div id="tabs" class="tabs">
@@ -107,7 +107,7 @@
 								</div>
 								<div class="options">
 									<div id="templateVisual" class="templateVisual current">
-										{$templatehtml}
+										&nbsp;
 									</div>
 								</div>
 							</div>
@@ -224,7 +224,7 @@
 			</div>
 
 			<div id="templateVisualLarge">
-				{$templatehtmlLarge}
+				&nbsp;
 			</div>
 
 			{*
@@ -234,7 +234,7 @@
 			<div id="chooseExtra" title="{$lblChooseContent|ucfirst}" style="display: none;">
 				<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
 				<div class="options">
-					<p>{$msgWhichContent}</p>
+					<p>{$msgHelpBlockContent}</p>
 					<p id="extraWarningAlreadyBlock" class="warning">
 						{$msgAlreadyBlock}
 					</p>
@@ -243,13 +243,13 @@
 						{$ddmExtraType}
 					</p>
 					<p id="extraModuleHolder" style="display: none;">
-						<label for="extraModule">{$msgWhichModule}</label>
+						<label for="extraModule">{$lblWhichModule|ucfirst}</label>
 						<select id="extraModule">
 							<option value="-1">-</option>
 						</select>
 					</p>
 					<p id="extraExtraIdHolder" style="display: none;">
-						<label for="extraExtraId">{$msgWhichWidget}</label>
+						<label for="extraExtraId">{$lblWhichWidget|ucfirst}</label>
 						<select id="extraExtraId">
 							<option value="-1">-</option>
 						</select>
@@ -261,7 +261,7 @@
 				Dialog to select another template.
 				Do not change the ID!
 			 *}
-			<div id="chooseTemplate" title="{$lblChooseTemplate|ucfirst}" style="display: none;">
+			<div id="chooseTemplate" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
 				<ul class="inputList" id="templateList">
 				{iteration:templates}
 					<li style="float: left; width: 155px;">

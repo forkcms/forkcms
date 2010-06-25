@@ -7,7 +7,7 @@
 <div id="tabs" class="tabs">
 	<ul>
 		<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-		<li><a href="#tabVersions">{$lblVersions|ucfirst}</a></li>
+		<li><a href="#tabVersions">{$lblPreviousVersions|ucfirst}</a></li>
 		<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
 		<li><a href="#tabTemplate">{$lblTemplate|ucfirst}</a></li>
 		<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
@@ -19,7 +19,7 @@
 			<label for="title">{$lblTitle|ucfirst}</label>
 			{$txtTitle} {$txtTitleError}
 			<span class="oneLiner">
-				<span><a href="{$SITE_URL}{$pageUrl}">{$SITE_URL}{$seoPageUrl}<span id="generatedUrl">{$pageUrl}</span></a></span>
+				<span><a href="{$SITE_URL}{$itemURL}">{$SITE_URL}{$URL}<span id="generatedUrl">{$itemURL}</span></a></span>
 			</span>
 		</p>
 
@@ -72,7 +72,7 @@
 							 -->
 							<div class="options">
 								<div class="buttonHolder">
-									<a href="{$SITE_URL}{$pageUrl}" class="button icon iconZoom previewButton" target="_blank">
+									<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton" target="_blank">
 										<span>{$lblView|ucfirst}</span>
 									</a>
 								</div>
@@ -91,7 +91,7 @@
 								<table border="0" cellpadding="0" cellspacing="0">
 									<tbody>
 										<tr>
-											<td><p>{$lblLastSave|ucfirst}: <abbr title="{$recordedited_on|date:'j F Y H:i'}">{$recordedited_on|date:'H:i'}</abbr></p></td>
+											<td><p>{$lblLastSaved|ucfirst}: <abbr title="{$recordedited_on|date:'j F Y H:i'}">{$recordedited_on|date:'H:i'}</abbr></p></td>
 											<td>
 												<div class="buttonHolderRight">
 													<input id="save" class="inputButton button" type="submit" name="save" value="{$lblSave|ucfirst}" />
@@ -114,7 +114,7 @@
 							</div>
 							<div class="options">
 								<div id="templateVisual" class="templateVisual current">
-									{$templatehtml}
+									&nbsp;
 								</div>
 							</div>
 						</div>
@@ -235,7 +235,7 @@
 				<ul class="inputList checkboxTextFieldCombo">
 					<li>
 						{$chkUrlOverwrite}
-						<span id="urlFirstPart">{$SITE_URL}{$seoPageUrl}</span>{$txtUrl} {$txtUrlError}
+						<span id="urlFirstPart">{$SITE_URL}{$URL}</span>{$txtUrl} {$txtUrlError}
 					</li>
 				</ul>
 			</div>
