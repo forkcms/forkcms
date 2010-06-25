@@ -62,7 +62,7 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		return (!empty($this->item['content'])) ? $this->item['content'] : '';
+		return (!empty($this->item['text'])) ? $this->item['text'] : '';
 	}
 }
 

@@ -113,7 +113,7 @@
 				<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
 			</div>
 		</div>
-		<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>
+		<p>{$msgNoItems|sprintf:{$addUrl}}</p>
 	</div>
 {/option:!datagrid}
 

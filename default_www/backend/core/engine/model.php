@@ -836,6 +836,110 @@ class BackendModel
 		// cache it
 		self::$moduleSettings[$module][$key] = $value;
 	}
+
+
+	/**
+	 * Submit ham, this call is intended for the marking of false positives, things that were incorrectly marked as spam.
+	 *
+	 * @return	bool						If everything went fine true will be returned, otherwise an exception will be triggered.
+	 * @param	string $userIp				IP address of the comment submitter.
+	 * @param	string $userAgent			User agent information.
+	 * @param	string[optional] $content	The content that was submitted.
+	 * @param	string[optional] $author	Submitted name with the comment
+	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $url		Commenter URL.
+	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
+	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
+	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 */
+	public static function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
+	{
+		// get some settings
+		$akismetKey = self::getSetting('core', 'akismet_key');
+
+		// invalid key, so we can't detect spam
+		if($akismetKey === '') return false;
+
+		// require the class
+		require_once PATH_LIBRARY .'/external/akismet.php';
+
+		// create new instance
+		$akismet = new Akismet($akismetKey, SITE_URL);
+
+		// set properties
+		$akismet->setTimeOut(10);
+		$akismet->setUserAgent('Fork CMS/2.0');
+
+		// try it to decide it the item is spam
+		try
+		{
+			// check with Akismet if the item is spam
+			return $akismet->submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null);
+		}
+
+		// catch exceptions
+		catch(Exception $e)
+		{
+			// in debug mode we want to see exceptions, otherwise the fallback will be triggered
+			if(SPOON_DEBUG) throw $e;
+		}
+
+		// when everything fails
+		return false;
+	}
+
+
+	/**
+	 * Submit spam, his call is for submitting comments that weren't marked as spam but should have been.
+	 *
+	 * @return	bool						If everything went fine true will be returned, otherwise an exception will be triggered.
+	 * @param	string $userIp				IP address of the comment submitter.
+	 * @param	string $userAgent			User agent information.
+	 * @param	string[optional] $content	The content that was submitted.
+	 * @param	string[optional] $author	Submitted name with the comment
+	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $url		Commenter URL.
+	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
+	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
+	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 */
+	public static function submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
+	{
+		// get some settings
+		$akismetKey = self::getSetting('core', 'akismet_key');
+
+		// invalid key, so we can't detect spam
+		if($akismetKey === '') return false;
+
+		// require the class
+		require_once PATH_LIBRARY .'/external/akismet.php';
+
+		// create new instance
+		$akismet = new Akismet($akismetKey, SITE_URL);
+
+		// set properties
+		$akismet->setTimeOut(10);
+		$akismet->setUserAgent('Fork CMS/2.0');
+
+		// try it to decide it the item is spam
+		try
+		{
+			// check with Akismet if the item is spam
+			return $akismet->submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null);
+		}
+
+		// catch exceptions
+		catch(Exception $e)
+		{
+			// in debug mode we want to see exceptions, otherwise the fallback will be triggered
+			if(SPOON_DEBUG) throw $e;
+		}
+
+		// when everything fails
+		return false;
+	}
 }
 
 ?>

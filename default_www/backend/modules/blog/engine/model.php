@@ -268,6 +268,20 @@ class BackendBlogModel
 
 
 	/**
+	 * Get multiple comments at once
+	 *
+	 * @return	array
+	 * @param	array $ids	The id(s) of the comment(s).
+	 */
+	public static function getComments(array $ids)
+	{
+		return (array) BackendModel::getDB()->retrieve('SELECT *
+														FROM blog_comments AS i
+														WHERE i.id IN ('. implode(',', $ids) .');');
+	}
+
+
+	/**
 	 * Get a draft
 	 *
 	 * @return	array

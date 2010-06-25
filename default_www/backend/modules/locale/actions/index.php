@@ -204,6 +204,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->tpl->assign('order', (string) $this->datagrid->getOrder());
 		$this->tpl->assign('sort', (string) $this->datagrid->getSort());
 
+		$this->tpl->assign('addUrl', BackendModel::createURLForAction('add', null, null, $this->filter));
+
 		// parse filter
 		$this->tpl->assign($this->filter);
 	}

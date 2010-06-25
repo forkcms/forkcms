@@ -54,14 +54,40 @@ tinyMCE.init({
 	paste_remove_styles: true,
 	
 	setup: function(editor) {
-		// add the correct class when the editor becomes active
-		editor.onActivate.add(function(editor) { 
-			$(editor.getContainer()).addClass('expanded');
-		});
-		
-		// remove the class when the editor isn't active
-		editor.onDeactivate.add(function(editor) { 
-			$(editor.getContainer()).removeClass('expanded');
-		});
+		/**
+		 * It seems like onActivate isn't called when their is just a single instance.
+		 * Our workaround is real ugly, we watch each event and add the class on the container,
+		 * see: http://tinymce.moxiecode.com/punbb/viewtopic.php?id=12249
+		 */
+		// only one instance?
+		if($('.inputEditor').length == 1) {
+			// init var
+			var added = false;
+			
+			// hook all events
+			editor.onEvent.add(function(editor, evt) {
+				// class added before?
+				if(!added) {
+					// add class
+					$(editor.getContainer()).addClass('expanded');
+					
+					// reset var
+					added = true;
+				}
+			});
+		}
+
+		// multiple instance, we can rely on onActivate
+		else
+		{
+			// add the correct class when the editor becomes active
+			editor.onActivate.add(function(editor, otherEditor) {
+				$(editor.getContainer()).addClass('expanded');
+			});
+			// remove the class when the editor isn't active
+			editor.onDeactivate.add(function(editor, otherEditor) { 
+				$(editor.getContainer()).removeClass('expanded');
+			});
+		}
 	}
 });
