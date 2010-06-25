@@ -709,7 +709,7 @@ class BackendPagesModel
 
 			// build name
 			$name = ucfirst(BL::getLabel($row['label']));
-			if(isset($row['data']['extra_label'])) $name .= ' '. $row['data']['extra_label'];
+			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 
 			// add human readable name
 			$row['human_name'] = BackendLanguage::getLabel(SpoonFilter::toCamelCase($row['type'])) .': '. $name;
@@ -749,7 +749,7 @@ class BackendPagesModel
 
 			// build name
 			$name = ucfirst(BL::getLabel($row['label']));
-			if(isset($row['data']['extra_label'])) $name .= ' '. $row['data']['extra_label'];
+			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 
 			$moduleName = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module'])));
 
