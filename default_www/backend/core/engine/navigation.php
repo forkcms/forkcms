@@ -144,6 +144,9 @@ class BackendNavigation
 							// selected state - does the child URL match 'module/action' or is the action present in the selected_for_actions array?
 							$childSelected = (bool) ($child['url'] == $activeURL) || (isset($child['selected_for_actions']) && in_array($activeAction, $child['selected_for_actions']));
 
+							// check if we should hide this action from the menu
+							if(isset($child['hide']) && $child['hide'] == true) continue;
+							
 							if($childSelected) $subHTML .= '<li class="selected">'."\n";
 							else $subHTML .= '<li>'."\n";
 
