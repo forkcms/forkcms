@@ -90,7 +90,7 @@ jsBackend.pages.extras = {
 		var blockId = $(this).attr('rel');
 
 		// get selected extra id
-		var selectedExtraId = $('#block_extra_id_'+ blockId).val();
+		var selectedExtraId = $('#blockExtraId'+ blockId).val();
 		
 		// populate the hidden field, so we know for which block we are changing
 		$('#extraForBlock').val(blockId);

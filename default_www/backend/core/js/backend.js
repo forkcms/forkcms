@@ -15,6 +15,7 @@ jsBackend = {
 		jsBackend.tooltip.init();
 		//jsBackend.tableSequenceByDragAndDrop.init();
 
+		// init stuff
 		jsBackend.initAjax();
 	},
 	

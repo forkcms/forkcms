@@ -157,11 +157,6 @@ class BackendBaseAction
 			// camelcase the string
 			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), array('-', '_'));
 
-			/*
-			 @todo tijs		Controleren of onderstaande OK is
-			 @todo davy		Controleren of onderstaande OK is
-			*/
-
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BackendLanguage::getMessage($messageName), $var));
 			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
@@ -179,9 +174,6 @@ class BackendBaseAction
 			// if we have data to use it will be passed as the var parameter
 			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BackendLanguage::getError($errorName), $var));
 			else $this->tpl->assign('errorMessage', BackendLanguage::getError($errorName));
-
-			// show the error and the errormessage
-			//$this->tpl->assign('errorMessage', BackendLanguage::getError(SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'))));
 		}
 	}
 

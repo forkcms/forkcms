@@ -266,7 +266,7 @@ class Init
 			ini_set('display_errors', 'On');
 
 			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
-			set_error_handler('Init::errorHandler');
+			set_error_handler(array('Init', 'errorHandler'));
 		}
 
 		// debugging disabled
