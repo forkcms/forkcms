@@ -66,8 +66,11 @@ jsBackend.pages.extras = {
 		if($('#chooseTemplate').length > 0) {
 			$('#chooseTemplate').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, width: 500,
 				buttons: { '{$lblOK|ucfirst}': function() {
-													// change the template for real
-													jsBackend.pages.template.changeTemplate();
+													if($('#templateList input:radio:checked').val() != $('#templateId').val())
+													{
+														// change the template for real
+														jsBackend.pages.template.changeTemplate();
+													}
 				
 													// close dialog
 													$(this).dialog('close');
@@ -111,10 +114,13 @@ jsBackend.pages.extras = {
 			
 			// disable blocks
 			$('#extraType option[value="block"]').attr('disabled', 'disabled');
+		} else {
+			// hide warning
+			$('#extraWarningAlreadyBlock').hide();
+
+			// enable blocks
+			$('#extraType option[value="block"]').attr('disabled', '');
 		}
-		
-		// hide warning
-		else $('#extraWarningAlreadyBlock').hide();
 		
 		// any extra selected before? And if so, does the extra still exists?
 		if(typeof extrasById[selectedExtraId] != 'undefined') {
@@ -307,6 +313,7 @@ jsBackend.pages.template = {
 		// set HTML for the viual representation of the template
 		$('#templateVisual').html(current.html);
 		$('#templateVisualLarge').html(current.htmlLarge);
+		$('#templateId').val(selected);
 		
 		// loop blocks and set extra's, to initialize the page
 		$('.contentBlock').each(function() {

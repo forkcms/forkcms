@@ -29,7 +29,7 @@
 						<td>
 							<div id="editContent">
 								{iteration:blocks}
-								<div id="block-{$blocks.index}" class="box contentBlock">
+									<div id="block-{$blocks.index}" class="box contentBlock">
 										<div class="heading">
 											<table border="0" cellpadding="0" cellspacing="0">
 												<tbody>
@@ -48,7 +48,7 @@
 												</tbody>
 											</table>
 										</div>
-										<div class="editContent">
+										<div class="optionsRTE">
 											<fieldset id="blockContentHTML-{$blocks.index}">
 												{$blocks.txtHTML}
 											</fieldset>
@@ -154,8 +154,7 @@
 						<p class="helpTxt">{$msgHelpNoFollow}</p>
 						<ul class="inputList">
 							<li>
-								{$chkNoFollow}
-								<label for="noFollow">{$msgActivateNoFollow|ucfirst}</label>
+								{$chkNoFollow} <label for="noFollow">{$msgActivateNoFollow|ucfirst}</label>
 							</li>
 						</ul>
 					</fieldset>
