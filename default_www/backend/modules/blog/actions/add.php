@@ -82,8 +82,12 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		// call parent
 		parent::parse();
 
+		// get url
+		$url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+		$url404 = BackendModel::getURL(404);
+
 		// parse additional variables
-		$this->tpl->assign('detailURL', SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail'));
+		if($url404 != $url) $this->tpl->assign('detailURL', SITE_URL . $url);
 	}
 
 

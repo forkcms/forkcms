@@ -10,9 +10,8 @@
 
 	<div id="pageUrl">
 		<div class="oneLiner">
-			<p>
-				<span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span>
-			</p>
+			{option:detailURL}<p><span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span></p>{/option:detailURL}
+			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}	{* @todo @davy: check label *}
 		</div>
 	</div>
 
