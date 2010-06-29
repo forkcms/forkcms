@@ -142,10 +142,10 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));
 
 		// get maximum number of blocks
-		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
+		for($i = 0; $i < $maxNumBlocks; $i++)
 		{
 			// init var
 			$html = null;
@@ -275,7 +275,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		if($this->frm->isSubmitted())
 		{
 			// set callback for generating an unique URL
-			$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id']));
+			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id']));
 
 			// cleanup the submitted fields, ignore fields that were edited by hackers
 			$this->frm->cleanupFields();

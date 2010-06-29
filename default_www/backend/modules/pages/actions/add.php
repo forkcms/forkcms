@@ -8,6 +8,7 @@
  * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendPagesAdd extends BackendBaseActionAdd
@@ -67,10 +68,10 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->extras = BackendPagesModel::getExtras();
 
 		// get maximum number of blocks
-		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maximumNumberOfBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
+		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
 
 		// load the form
 		$this->loadForm();
@@ -109,10 +110,10 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addCheckbox('no_follow');
 
 		// get maximum number of blocks
-		$maximumNumberOfBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getSetting('core', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maximumNumberOfBlocks; $i++)
+		for($i = 0; $i < $maxNumBlocks; $i++)
 		{
 			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_'. $i);
 			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, '');
