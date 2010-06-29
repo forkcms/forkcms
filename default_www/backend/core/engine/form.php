@@ -392,7 +392,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 * @param	bool[optional] $HTML			Will this element contain HTML?
 	 */
-	public function addText($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
+	public function addText($name, $value = null, $maxlength = 255, $class = null, $classError = null, $HTML = false)
 	{
 		// redefine
 		$name = (string) $name;
