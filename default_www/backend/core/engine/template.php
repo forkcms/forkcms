@@ -119,9 +119,9 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));
 
 		// dates
-		$this->mapModifier('formatDate', array('BackendTemplateModifiers', 'formatdate'));
-		$this->mapModifier('formatTime', array('BackendTemplateModifiers', 'formattime'));
-		$this->mapModifier('formatDateTime', array('BackendTemplateModifiers', 'formatdatetime'));
+		$this->mapModifier('formatdate', array('BackendTemplateModifiers', 'formatdate'));
+		$this->mapModifier('formattime', array('BackendTemplateModifiers', 'formattime'));
+		$this->mapModifier('formatdateTime', array('BackendTemplateModifiers', 'formatdatetime'));
 	}
 
 
