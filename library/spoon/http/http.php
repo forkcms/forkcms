@@ -30,34 +30,6 @@
 class SpoonHTTP
 {
 	/**
-	 * Redirect the browser with an optional delay and stop script execution.
-	 *
-	 * @return	void
-	 * @param	string $URL				The URL to redirect to.
-	 * @param	int[optional] $code		The redirect code.
-	 * @param	int[optional] $delay	A delay, expressed in seconds.
-	 */
-	public static function redirect($URL, $code = 302, $delay = null)
-	{
-		// redefine url
-		$URL = (string) $URL;
-		$code = SpoonFilter::getValue($code, array(301, 302), 302, 'int');
-
-		// redirect headers
-		self::setHeadersByCode($code);
-
-		// delay execution
-		if($delay !== null) sleep((int) $delay);
-
-		// redirect
-		self::setHeaders("Location: $URL");
-
-		// stop execution
-		exit;
-	}
-
-
-	/**
 	 * Get content from an URL.
 	 *
 	 * @return	string			The content.
@@ -129,6 +101,34 @@ class SpoonHTTP
 	private static function isSent()
 	{
 		return headers_sent();
+	}
+
+
+	/**
+	 * Redirect the browser with an optional delay and stop script execution.
+	 *
+	 * @return	void
+	 * @param	string $URL				The URL or page to redirect to.
+	 * @param	int[optional] $code		The redirect code. Only 301 (moved permanently) and 302 (found) are allowed.
+	 * @param	int[optional] $delay	A delay, expressed in seconds.
+	 */
+	public static function redirect($URL, $code = 302, $delay = null)
+	{
+		// redefine url
+		$URL = (string) $URL;
+		$code = SpoonFilter::getValue($code, array(301, 302), 302, 'int');
+
+		// redirect headers
+		self::setHeadersByCode($code);
+
+		// delay execution
+		if($delay !== null) sleep((int) $delay);
+
+		// redirect
+		self::setHeaders("Location: $URL");
+
+		// stop execution
+		exit;
 	}
 
 

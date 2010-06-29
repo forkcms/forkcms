@@ -16,6 +16,7 @@
 - Bugfix: rewrote SpoonFilter::isInternalReferrer to use PHP's internal parse_url function.
 - Bugfix: createThumbnail had been missing from SpoonFormImage.
 - Bugfix: form tokens are now working when you have more than one form on your page.
+- Feature: SpoonFilter::arrayMapRecursive() now has an optional third parameter $allowedKeys, which allows you to map callback to specified array keys only.
 
 
 1.2.0 (2010-05-18)
