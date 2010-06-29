@@ -11,7 +11,7 @@
 	<div id="pageUrl">
 		<div class="oneLiner">
 			{option:detailURL}<p><span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span></p>{/option:detailURL}
-			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}	{* @todo @davy: check label *}
+			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
 		</div>
 	</div>
 
@@ -113,6 +113,7 @@
 								<div class="oneLiner">
 									<p>
 										<input id="newCategoryValue" class="inputTextfield dontSubmit" type="text" name="new_category" />
+										<span id="newCategoryError" class="formError">{$errAddingCategoryFailed}</span>
 									</p>
 									<div class="buttonHolder">
 										<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>
