@@ -610,7 +610,7 @@ class BackendPagesModel
 
 
 		// get page (active version)
-		$return = (array) BackendModel::getDB()->getRecord('SELECT *, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+		$return = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM pages AS i
 															WHERE i.id = ? AND i.language = ? AND i.status = ?;',
 															array($id, $language, 'active'));
@@ -676,10 +676,37 @@ class BackendPagesModel
 
 		// get page (active version)
 		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
-															FROM pages_blocks AS pb
+															FROM pages_blocks AS b
 															INNER JOIN pages AS i ON b.revision_id = i.revision_id
 															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?;',
 															array($id, $revisionId, $language));
+	}
+
+
+	/**
+	 * Get all items by a given tag id
+	 *
+	 * @return	array
+	 * @param	int	$tagId	The id of the tag.
+	 */
+	public static function getByTag($tagId)
+	{
+		// redefine
+		$tagId = (int) $tagId;
+
+		// get the items
+		$items = (array) BackendModel::getDB()->getRecords('SELECT i.id AS url, i.title AS name, mt.module
+															FROM modules_tags AS mt
+															INNER JOIN tags AS t ON mt.tag_id = t.id
+															INNER JOIN pages AS i ON mt.other_id = i.id
+															WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?;',
+															array('pages', $tagId, 'active'));
+
+		// loop items
+		foreach($items as &$row) $row['url'] = BackendModel::createURLForAction('edit', 'pages', null, array('id' => $row['url']));
+
+		// return
+		return $items;
 	}
 
 

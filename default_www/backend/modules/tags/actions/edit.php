@@ -14,6 +14,14 @@
 class BackendTagsEdit extends BackendBaseActionEdit
 {
 	/**
+	 * Datagrid with the articles linked to the current tag
+	 *
+	 * @var	BackendDataGridArray
+	 */
+	protected $dgUsage;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -31,6 +39,9 @@ class BackendTagsEdit extends BackendBaseActionEdit
 
 			// get all data for the item we want to edit
 			$this->getData();
+
+			// load the datagrid
+			$this->loadDatagrid();
 
 			// load the form
 			$this->loadForm();
@@ -62,6 +73,71 @@ class BackendTagsEdit extends BackendBaseActionEdit
 
 
 	/**
+	 * Load the datagrid
+	 *
+	 * @return	void
+	 */
+	private function loadDatagrid()
+	{
+		// init var
+		$items = array();
+
+		// get active modules
+		$modules = BackendModel::getModules();
+
+		// loop active modules
+		foreach($modules as $module)
+		{
+			// check if their is a model-file
+			if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php'))
+			{
+				// require the model-file
+				require_once BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php';
+
+				// build class name
+				$className = SpoonFilter::toCamelCase('backend_'. $module .'_model');
+
+				// check if the getByTag-method is available
+				if(method_exists($className, 'getByTag'))
+				{
+					// make the call and get the item
+					$moduleItems = (array) call_user_func_array(array($className, 'getByTag'), $this->id);
+
+					// loop items
+					foreach($moduleItems as $row)
+					{
+						// check if needed fields are available
+						if(isset($row['url'], $row['name'], $row['module']))
+						{
+							// add
+							$items[] = array('module' => ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
+						}
+					}
+				}
+			}
+		}
+
+		// create datagrid
+		$this->dgUsage = new BackendDataGridArray($items);
+
+		// disable paging
+		$this->dgUsage->setPaging(false);
+
+		// hide columns
+		$this->dgUsage->setColumnsHidden(array('url'));
+
+		// set headers
+		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Title')), 'module' => ucfirst(BL::getLabel('Module')), 'url' => ''));
+
+		// set url
+		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::getLabel('Edit')));
+
+		// add use column
+		$this->dgUsage->addColumn('edit', null, ucfirst(BL::getLabel('Edit')), '[url]', BL::getLabel('Edit'));
+	}
+
+
+	/**
 	 * Load the form
 	 *
 	 * @return	void
@@ -89,6 +165,9 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		// assign id, name
 		$this->tpl->assign('id', $this->id);
 		$this->tpl->assign('name', $this->record['name']);
+
+		// assign usage-datagrid
+		$this->tpl->assign('usage', ($this->dgUsage->getNumResults() != 0) ? $this->dgUsage->getContent() : false);
 	}
 
 

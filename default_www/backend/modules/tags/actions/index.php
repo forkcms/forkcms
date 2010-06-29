@@ -60,6 +60,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction->setOptionAttributes('delete', array('rel' => 'confirmDelete'));
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// add column

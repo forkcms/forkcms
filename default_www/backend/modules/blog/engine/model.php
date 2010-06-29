@@ -198,6 +198,33 @@ class BackendBlogModel
 
 
 	/**
+	 * Get all items by a given tag id
+	 *
+	 * @return	array
+	 * @param	int	$tagId	The id of the tag.
+	 */
+	public static function getByTag($tagId)
+	{
+		// redefine
+		$tagId = (int) $tagId;
+
+		// get the items
+		$items = (array) BackendModel::getDB()->getRecords('SELECT i.id AS url, i.title AS name, mt.module
+															FROM modules_tags AS mt
+															INNER JOIN tags AS t ON mt.tag_id = t.id
+															INNER JOIN blog_posts AS i ON mt.other_id = i.id
+															WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?;',
+															array('blog', $tagId, 'active'));
+
+		// loop items
+		foreach($items as &$row) $row['url'] = BackendModel::createURLForAction('edit', 'blog', null, array('id' => $row['url']));
+
+		// return
+		return $items;
+	}
+
+
+	/**
 	 * Get all categories
 	 *
 	 * @return	array

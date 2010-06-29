@@ -14,5 +14,9 @@
 {/option:datagrid}
 {option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
 
+<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+	<p>{$msgConfirmMassDelete}</p>
+</div>
+
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
