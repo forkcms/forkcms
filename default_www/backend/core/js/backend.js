@@ -155,24 +155,26 @@ jsBackend.controls = {
 			// get id
 			var id = $(this).attr('rel');
 			var url = $(this).attr('href');
-			
-			// initialize
-			$('#'+ id).dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
-								buttons: { '{$lblOK|ucfirst}': function() {
-																	// close dialog
-																	$(this).dialog('close');
-																	
-																	// goto link
-																	window.location = url;
-																},
-											'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
-										 },
-								open: function(evt) { 
-											 // set focus on first button
-											 if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); } 
-										 }
-							 });
 
+			if(id != '' && url != '')
+			{
+				// initialize
+				$('#'+ id).dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
+									buttons: { '{$lblOK|ucfirst}': function() {
+																		// close dialog
+																		$(this).dialog('close');
+																		
+																		// goto link
+																		window.location = url;
+																	},
+												'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
+											 },
+									open: function(evt) { 
+												 // set focus on first button
+												 if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); } 
+											 }
+								 });
+			}
 		});
 
 		// bind clicks
@@ -184,7 +186,7 @@ jsBackend.controls = {
 			var id = $(this).attr('rel');
 			
 			// bind
-			$('#'+ id).dialog('open');
+			if(id != '') $('#'+ id).dialog('open');
 		});
 	},
 

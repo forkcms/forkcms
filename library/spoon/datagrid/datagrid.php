@@ -70,7 +70,7 @@ class SpoonDatagrid
 	 *
 	 * @var	array
 	 */
-	private $columns = array();
+	protected $columns = array();
 
 
 	/**
@@ -196,7 +196,7 @@ class SpoonDatagrid
 	 *
 	 * @var	SpoonDatagridSource
 	 */
-	private $source;
+	protected $source;
 
 
 	/**

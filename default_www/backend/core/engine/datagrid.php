@@ -208,6 +208,47 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
+	 * Set a custom column confirm message.
+	 *
+	 * @return	void
+	 * @param	string $column
+	 * @param	string $message
+	 * @param	string[optional] $custom
+	 */
+	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
+	{
+		// has results
+		if($this->source->getNumResults() > 0)
+		{
+			// column doesnt exist
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no confirm message/script can be added.');
+
+			// exists
+			else
+			{
+				// generate id
+				$id = 'confirm-'. (string) $uniqueId;
+
+				// set title if there wasn't one provided
+				if($title === null) $title = ucfirst(BL::getLabel('Delete') .'?');
+
+				// grab current value
+				$value = $this->columns[$column]->getValue();
+
+				// add class for confirmation
+				$value = str_replace('class="', 'rel="'. $id .'" class="askConfirmation ', $value);
+
+				// append message
+				$value .= '<div id="'. $id .'" title="'. $title .'" style="display: none;"><p>'. $message .'</p></div>';
+
+				// reset value
+				$this->columns[$column]->setValue($value);
+			}
+		}
+	}
+
+
+	/**
 	 * Sets the column function to be executed for every row
 	 *
 	 * @return	void
