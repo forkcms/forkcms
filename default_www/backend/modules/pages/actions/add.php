@@ -171,7 +171,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		if($this->frm->isSubmitted())
 		{
 			// set callback for generating an unique URL
-			$this->meta->setUrlCallback('BackendPagesModel', 'getURL', array(0));
+			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0));
 
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
@@ -190,7 +190,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 
 				// build page record
 				$page = array();
-				$page['id'] = BackendPagesModel::getMaximumMenuId() + 1;
+				$page['id'] = BackendPagesModel::getMaximumPageId() + 1;
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $parentId;
 				$page['template_id'] = (int) $this->frm->getField('template_id')->getValue();

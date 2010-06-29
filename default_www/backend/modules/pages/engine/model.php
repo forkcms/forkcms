@@ -847,7 +847,7 @@ class BackendPagesModel
 	 * @return	int
 	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
-	public static function getMaximumMenuId($language = null)
+	public static function getMaximumPageId($language = null)
 	{
 		// redefine
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
