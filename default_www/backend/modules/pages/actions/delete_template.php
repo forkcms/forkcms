@@ -42,8 +42,8 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 		}
 
 		// page is deleted, so redirect to the overview
-		if($success) $this->redirect(BackendModel::createURLForAction('templates') .'&report=deleted&var='. urlencode($template['label']));
-		else $this->redirect(BackendModel::createURLForAction('edit') .'&error=delete');
+		if($success) $this->redirect(BackendModel::createURLForAction('templates') .'&report=deleted-template&var='. urlencode($template['label']));
+		else $this->redirect(BackendModel::createURLForAction('templates') .'&error=delete-template');
 	}
 }
 

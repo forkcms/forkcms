@@ -65,8 +65,8 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// determine if deleting is allowed
 		$deleteAllowed = true;
 		if($this->record['is_default'] == 'Y') $deleteAllowed = false;
-		if(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
-		// @todo	check if the template is used
+		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
+		elseif(BackendPagesModel::isTemplateInUse($this->id)) $deleteAllowed = false;
 
 		// assign
 		$this->tpl->assign('deleteAllowed', $deleteAllowed);
@@ -163,7 +163,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				BackendPagesModel::updateTemplate($this->id, $template);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited&var='. urlencode($template['label']));
+				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited-template&var='. urlencode($template['label']));
 			}
 		}
 	}

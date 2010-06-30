@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
 <div class="pageTitle">
-	<h2>{$lblModuleSettings|ucfirst}: {$lblBlog|ucfirst}</h2>
+	<h2>{$lblModuleSettings|ucfirst}: {$lblBlog}</h2>
 </div>
 
 {form:settings}
@@ -15,7 +15,7 @@
 			{$ddmOverviewNumberOfItems} {$ddmOverviewNumberOfItemsError}
 		</div>
 		<div class="options">
-			<label for="recentArticlesNumberOfItems">{$msgNumberOfItemsInRecentArticlesWidget|ucfirst}</label>
+			<label for="recentArticlesNumberOfItems">{$msgNumItemsInRecentArticles|ucfirst}</label>
 			{$ddmRecentArticlesNumberOfItems} {$ddmRecentArticlesNumberOfItemsError}
 		</div>
 	</div>

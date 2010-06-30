@@ -531,7 +531,7 @@ class BackendPagesModel
 		// get all templates
 		$templates = self::getTemplates();
 
-		// we can't delete a template that doesn't exists
+		// we can't delete a template that doesn't exist
 		if(!isset($templates[$id])) return false;
 
 		// we can't delete the last template
@@ -546,10 +546,13 @@ class BackendPagesModel
 		// we can't delete templates that are still in use
 		if($db->getNumRows('SELECT i.template_id
 							FROM pages AS i
-							WHERE i.template_id = ?', $id) > 0) return false;
+							WHERE i.template_id = ? AND i.status = ?', array((int) $id, 'active')) > 0) return false;
 
 		// delete
 		$db->delete('pages_templates', 'id = ?', $id);
+
+		// @todo tijs - alle versies van pagina's die niet 'active' zijn moeten verwijderd worden als de template_id gelijk is aan $id
+		// ps: zoals je hierboven kan zien, kan een template niet verwijderd worden als er nog active pagina's aan gekoppeld zijn.
 
 		// return
 		return true;
@@ -1437,6 +1440,20 @@ class BackendPagesModel
 			// create the cachefile
 			self::buildCache($language);
 		}
+	}
+
+
+	/**
+	 * Is the provided template id in use by active versions of pages?
+	 *
+	 * @return	bool
+	 * @param	int $templateId
+	 */
+	public static function isTemplateInUse($templateId)
+	{
+		return (bool) BackendModel::getDB(false)->getNumRows('SELECT i.template_id
+																FROM pages AS i
+																WHERE i.template_id = ? AND i.status = ?', array((int) $templateId, 'active'));
 	}
 
 

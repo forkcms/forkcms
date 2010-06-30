@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
 <div class="pageTitle">
-	<h2>{$lblModuleSettings|ucfirst}: {$lblPages|ucfirst}</h2>
+	<h2>{$lblModuleSettings|ucfirst}: {$lblPages}</h2>
 </div>
 
 {form:settings}
@@ -11,9 +11,9 @@
 			<h3>{$lblHasMetaNavigation|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<p>{$msgHelpMetaNavigation}:</p>
+			<p>{$msgHelpMetaNavigation}</p>
 			<ul class="inputList p0">
-				<li>{$chkHasMetaNavigation} <label for="has_meta_navigation">{$msgHasMetaNavigation|ucfirst}</label></li>
+				<li>{$chkHasMetaNavigation} <label for="hasMetaNavigation">{$msgHasMetaNavigation|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>

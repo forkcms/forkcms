@@ -122,7 +122,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				BackendPagesModel::insertTemplate($template);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('templates') .'&report=added&var='. urlencode($template['label']));
+				$this->redirect(BackendModel::createURLForAction('templates') .'&report=added-template&var='. urlencode($template['label']));
 			}
 		}
 	}
