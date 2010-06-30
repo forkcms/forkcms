@@ -8,12 +8,12 @@
 {form:settings}
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblHasMetaNavigation|ucfirst}</h3>
+			<h3>{$lblMetaNavigation|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<p>{$msgHelpMetaNavigation}</p>
 			<ul class="inputList p0">
-				<li>{$chkHasMetaNavigation} <label for="hasMetaNavigation">{$msgHasMetaNavigation|ucfirst}</label></li>
+				<li>{$chkHasMetaNavigation} <label for="hasMetaNavigation">{$msgMetaNavigation|ucfirst}</label></li> {* @todo naam v/h veld stinkt *}
 			</ul>
 		</div>
 	</div>

@@ -448,7 +448,7 @@ jsBackend.pages.tree = {
 						 $.tree.rollback(rollback);
 					 } else {
 						 // show message
-						 jsBackend.messages.add('success', '{$msgPageIsMoved}');
+						 jsBackend.messages.add('success', '{$msgPageIsMoved|addslashes}'.replace('%1$s', 'tet')); // @todo tijs - 'tet' moet uiteraard de naam van de pagina worden.	
 					 }
 				 }
 		});

@@ -90,7 +90,7 @@
 				</div>
 				<div class="options horizontal labelWidthLong">
 					<p>
-						<label for="interfaceLanguage">{$lblInterfaceLanguage|ucfirst}</label>
+						<label for="interfaceLanguage">{$lblLanguage|ucfirst}</label>
 						{$ddmInterfaceLanguage} {$ddmInterfaceLanguageError}
 					</p>
 					<p>
