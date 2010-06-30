@@ -13,14 +13,6 @@
 class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 {
 	/**
-	 * The recent comments
-	 *
-	 * @var	array
-	 */
-	private $recentComments;
-
-
-	/**
 	 * Execute the extra
 	 *
 	 * @return	void
@@ -33,23 +25,8 @@ class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 		// load template
 		$this->loadTemplate();
 
-		// load the data
-		$this->getData();
-
 		// parse
 		$this->parse();
-	}
-
-
-	/**
-	 * Load the data
-	 *
-	 * @return	void
-	 */
-	private function getData()
-	{
-		// get recent comments
-		$this->recentComments = FrontendBlogModel::getRecentComments(5);
 	}
 
 
@@ -61,7 +38,7 @@ class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign comments
-		$this->tpl->assign('recentComments', $this->recentComments);
+		$this->tpl->assign('widgetBlogRecentComments', FrontendBlogModel::getRecentComments(5));
 	}
 }
 

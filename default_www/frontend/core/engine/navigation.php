@@ -114,11 +114,17 @@ class FrontendNavigation extends FrontendBaseObject
 			// has children?
 			if(isset($navigation[$type][$page['page_id']]))
 			{
+				// start sub list
+				$HTML .= '<ul>'."\n";
+
 				// home is a special item, it should live on the same depth
 				if($page['page_id'] == 1) $depthCounter--;
 
 				// add children
 				$HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter);
+
+				// end sub lust
+				$HTML .= '</ul>'."\n";
 			}
 
 			// end HTML

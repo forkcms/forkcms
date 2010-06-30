@@ -1,8 +1,8 @@
 <?php
 
 /**
- * FrontendBlogCategory
- * This is the category-action
+ * FrontendBlogArchive
+ * This is the archive-action
  *
  * @package		frontend
  * @subpackage	blog
@@ -10,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendBlogCategory extends FrontendBaseBlock
+class FrontendBlogArchive extends FrontendBaseBlock
 {
 	/**
 	 * The articles
@@ -21,11 +21,11 @@ class FrontendBlogCategory extends FrontendBaseBlock
 
 
 	/**
-	 * The requested category
+	 * The dates for the archive
 	 *
-	 * @var	array
+	 * @var	int
 	 */
-	private $category;
+	private $startDate, $endDate;
 
 
 	/**
@@ -35,6 +35,14 @@ class FrontendBlogCategory extends FrontendBaseBlock
 	 * @var	array
 	 */
 	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
+
+
+	/**
+	 * The requested year and month
+	 *
+	 * @var	int
+	 */
+	private $year, $month;
 
 
 	/**
@@ -65,13 +73,12 @@ class FrontendBlogCategory extends FrontendBaseBlock
 	 */
 	private function getData()
 	{
-		// get categories
-		$categories = FrontendBlogModel::getAllCategories();
-		$possibleCategories = array();
-		foreach($categories as $category) $possibleCategories[$category['url']] = $category['id'];
+		// get parameters
+		$this->year = $this->URL->getParameter(1, 'int');
+		$this->month = $this->URL->getParameter(2, 'int');
 
-		// requested category
-		$requestedCategory = SpoonFilter::getValue($this->URL->getParameter(1, 'string'), array_keys($possibleCategories), 'false');
+		// validate parameters
+		if($this->year == 0 || $this->month === 0) $this->redirect(FrontendNavigation::getURL(404));
 
 		// requested page
 		$requestedPage = $this->URL->getParameter('page', 'int');
@@ -79,17 +86,29 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		// no page given
 		if($requestedPage === null) $requestedPage = 1;
 
-		// set category
-		$this->category = $categories[$possibleCategories[$requestedCategory]];
+		// rebuild url
+		$url = $this->year;
+		if($this->month !== null) $url .'/'. $this->month;
 
-		// validate category
-		if($requestedCategory == 'false') $this->redirect(FrontendNavigation::getURL(404));
+		// build timestamp
+		if($this->month !== null)
+		{
+			$this->startDate = gmmktime(00, 00, 00, $this->month, 01, $this->year);
+			$this->endDate = gmmktime(23, 59, 59, $this->month, gmdate('t', $this->startDate), $this->year);
+		}
+
+		// year
+		else
+		{
+			$this->startDate = gmmktime(00, 00, 00, 01, 01, $this->year);
+			$this->endDate = gmmktime(23, 59, 59, 12, 31, $this->year);
+		}
 
 		// set URL
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $requestedCategory;
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'archive') .'/'. $url;
 
 		// populate count fields in pagination
-		$this->pagination['num_items'] = FrontendBlogModel::getAllForCategoryCount($requestedCategory);
+		$this->pagination['num_items'] = FrontendBlogModel::getAllForDateRangeCount($this->startDate, $this->endDate);
 		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
 		// redirect if the request page doesn't exists
@@ -100,7 +119,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
 		// get articles
-		$this->articles = FrontendBlogModel::getAllForCategory($requestedCategory, $this->pagination['limit'], $this->pagination['offset']);
+		$this->articles = FrontendBlogModel::getAllForDateRange($this->startDate, $this->endDate, $this->pagination['limit'], $this->pagination['offset']);
 	}
 
 
@@ -119,15 +138,17 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
 
 		// add into breadcrumb
-		$this->breadcrumb->addElement(ucfirst(FL::getLabel('Category')));
-		$this->breadcrumb->addElement($this->category['label']);
+		$this->breadcrumb->addElement(ucfirst(FL::getLabel('Archive')));
+		$this->breadcrumb->addElement($this->year);
+		if($this->month !== null) $this->breadcrumb->addElement(SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true));
 
 		// set pageTitle
-		$this->header->setPageTitle(ucfirst(FL::getLabel('Category')));
-		$this->header->setPageTitle($this->category['label']);
+		$this->header->setPageTitle(ucfirst(FL::getLabel('Archive')));
+		$this->header->setPageTitle($this->year);
+		if($this->month !== null) $this->header->setPageTitle(SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true));
 
 		// assign category
-		$this->tpl->assign('blogCategory', $this->category);
+		$this->tpl->assign('blogArchive', array('start_date' => $this->startDate, 'end_date' => $this->endDate, 'year' => $this->year, 'month' => $this->month));
 
 		// assign articles
 		$this->tpl->assign('blogArticles', $this->articles);

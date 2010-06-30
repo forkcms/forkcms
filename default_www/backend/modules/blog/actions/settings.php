@@ -102,8 +102,8 @@ class BackendBlogSettings extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set our settings
-				BackendModel::setSetting($this->URL->getModule(), 'overview_number_of_items', (bool) $this->frm->getField('overview_number_of_items')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'recent_articles_number_of_items', (bool) $this->frm->getField('recent_articles_number_of_items')->getValue());
+				BackendModel::setSetting($this->URL->getModule(), 'overview_number_of_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
+				BackendModel::setSetting($this->URL->getModule(), 'recent_articles_number_of_items', (int) $this->frm->getField('recent_articles_number_of_items')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'moderation', (bool) $this->frm->getField('moderation')->getValue());

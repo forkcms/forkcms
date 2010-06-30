@@ -8,7 +8,7 @@
 			<div class="pagination">
 				<ul class="clearfix">
 					<li class="previousPage">
-						{option:pagination['show_previous']}<a href="{$pagination['previous_url']}" rel="previous nofollow" title="{$lblPreviousPage|ucfirst}">{/option:pagination['show_previous']}
+						{option:pagination['show_previous']}<a href="{$pagination['previous_url']}" rel="prev nofollow" title="{$lblPreviousPage|ucfirst}">{/option:pagination['show_previous']}
 						{option:!pagination['show_previous']}<span>{/option:!pagination['show_previous']}
 							&lt; {$lblPreviousPage|ucfirst}
 						{option:!pagination['show_previous']}</span>{/option:!pagination['show_previous']}

@@ -4,10 +4,13 @@
 	- {$blogArticles}: contains an array with all posts, each element contains data about the post
 *}
 
-<div id="blog" class="index">
-	<h2>{$blogCategory['label']}</h2>
+<div id="blog" class="archive">
+	<h2>
+		{option:blogArchive['month']}{$blogArchive['start_date']|date:'F Y':{$LANGUAGE}}{/option:blogArchive['month']}
+		{option:!blogArchive['month']}{$blogArchive['start_date']|date:'Y':{$LANGUAGE}}{/option:!blogArchive['month']}
+	</h2>
 
-	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItemsInCategory|sprintf:{$blogCategory['label']}}</p></div>{/option:!blogArticles}
+	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItemsInArchive}</p></div>{/option:!blogArticles}
 	{option:blogArticles}
 		<table class="datagrid" width="100%">
 			<thead>

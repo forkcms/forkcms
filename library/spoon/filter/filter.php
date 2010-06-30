@@ -787,8 +787,8 @@ class SpoonFilter
 		$string = strip_tags($string, $exceptions);
 
 		// remove multiple with a single one
-		$string = preg_replace("/\n\s/", PHP_EOL, $string);
-		$string = preg_replace("/\n{2,}/", PHP_EOL, $string);
+		$string = preg_replace('/\n\s/', PHP_EOL, $string);
+		$string = preg_replace('/\n{2,}/', PHP_EOL, $string);
 
 		// for each linebreak, table row or- paragraph end we want an additional linebreak at the end
 		if($preserveParagraphLinebreaks)

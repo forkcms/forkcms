@@ -2,6 +2,7 @@
 	variables that are available:
 	- {$blogArticle}: contains data about the post
 	- {$blogComments}: contains an array with the comments for the post, each element contains data about the comment.
+	- {$blogNavigation}: contains an array with data for previous and next post
 *}
 
 <div id="blog" class="detail">
@@ -37,11 +38,23 @@
 		</div>
 	</div>
 
+	<div class="navigation">
+		<ul>
+			{option:blogNavigation['previous']}
+				<li><a href="{$blogNavigation['previous']['url']}" rel="prev">← <small>{$lblGoto|ucfirst} </small>{$blogNavigation['previous']['title']}</a></li>
+			{/option:blogNavigation['previous']}
+			{option:blogNavigation['next']}
+				<li><a href="{$blogNavigation['next']['url']}" rel="next"><small>{$lblGoto|ucfirst} </small>{$blogNavigation['next']['title']} →</a></li>
+			{/option:blogNavigation['next']}
+		</ul>
+	</div>
+
 	{option:blogComments}
 	<div id="comments">
 		<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
 
 		{iteration:blogComments}
+		{* Remark: Do not alter the id! It is used as anchor *}
 		<div id="{$actComment}-{$blogComments.id}" class="comment">
 			<div class="commentAuthor">
 				<p>
@@ -63,6 +76,7 @@
 
 	{option:blogArticle['allow_comments']}
 	<div id="commentForm">
+		{* Remark: Do not alter the id! It is used as anchor *}
 		<h3 id="{$actReact}">{$lblReact|ucfirst}</h3>
 
 		{option:commentIsInModeration}<div class="message notice"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}

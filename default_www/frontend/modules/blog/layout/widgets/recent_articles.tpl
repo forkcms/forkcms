@@ -1,42 +1,42 @@
 {*
 	variables that are available:
-	- {$blogRecentArticles}: contains an array with all posts, each element contains data about the post
+	- {$widgetBlogRecentArticles}: contains an array with all posts, each element contains data about the post
 *}
 
-{option:blogRecentArticles}
-<div id="blog" class="recentArticles">
-		{iteration:blogRecentArticles}
+{option:widgetBlogRecentArticles}
+<div class="widget widgetBlogRecentArticles">
+		{iteration:widgetBlogRecentArticles}
 			<div class="article">
 				<div class="heading">
-					<h2><a href="{$blogRecentArticles.full_url}" title="{$blogRecentArticles.title}">{$blogRecentArticles.title}</a></h2>
-					<p class="date">{$lblWrittenOn|ucfirst} {$blogRecentArticles.publish_on|date:'j F Y':{$LANGUAGE}} {$lblOn} {$blogRecentArticles.publish_on|date:'H:i:s':{$LANGUAGE}}</p>
+					<h2><a href="{$widgetBlogRecentArticles.full_url}" title="{$widgetBlogRecentArticles.title}">{$widgetBlogRecentArticles.title}</a></h2>
+					<p class="date">{$lblWrittenOn|ucfirst} {$widgetBlogRecentArticles.publish_on|date:'j F Y':{$LANGUAGE}} {$lblOn} {$widgetBlogRecentArticles.publish_on|date:'H:i:s':{$LANGUAGE}}</p>
 				</div>
 				<div class="content">
-					{option:!blogRecentArticles.introduction}{$blogRecentArticles.text}{/option:!blogRecentArticles.introduction}
-					{option:blogRecentArticles.introduction}{$blogRecentArticles.introduction}{/option:blogRecentArticles.introduction}
+					{option:!widgetBlogRecentArticles.introduction}{$widgetBlogRecentArticles.text}{/option:!widgetBlogRecentArticles.introduction}
+					{option:widgetBlogRecentArticles.introduction}{$widgetBlogRecentArticles.introduction}{/option:widgetBlogRecentArticles.introduction}
 				</div>
 				<div class="meta">
 					<ul>
 						<!-- Permalink -->
-						<li><a href="{$blogRecentArticles.full_url}" title="{$blogRecentArticles.title}">{$blogRecentArticles.title}</a> {$msgWroteBy|sprintf:{$blogRecentArticles.user_id|userSetting:'nickname'}}</li>
+						<li><a href="{$widgetBlogRecentArticles.full_url}" title="{$widgetBlogRecentArticles.title}">{$widgetBlogRecentArticles.title}</a> {$msgWroteBy|sprintf:{$widgetBlogRecentArticles.user_id|userSetting:'nickname'}}</li>
 
 						<!-- Category -->
-						<li>{$lblCategory|ucfirst}: <a href="{$blogRecentArticles.category_full_url}" title="{$blogRecentArticles.category_name}">{$blogRecentArticles.category_name}</a></li>
+						<li>{$lblCategory|ucfirst}: <a href="{$widgetBlogRecentArticles.category_full_url}" title="{$widgetBlogRecentArticles.category_name}">{$widgetBlogRecentArticles.category_name}</a></li>
 
-						{option:blogRecentArticles.tags}
+						{option:widgetBlogRecentArticles.tags}
 						<!-- Tags -->
-						<li>{$lblTags|ucfirst}: {iteration:blogRecentArticles.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:blogRecentArticles.tags}</li>
-						{/option:blogRecentArticles.tags}
+						<li>{$lblTags|ucfirst}: {iteration:widgetBlogRecentArticles.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:widgetBlogRecentArticles.tags}</li>
+						{/option:widgetBlogRecentArticles.tags}
 
 						<!-- Comments -->
-						{option:!blogRecentArticles.comments}<li><a href="{$blogRecentArticles.full_url}#{$actReact}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogRecentArticles.comments}
-						{option:blogRecentArticles.comments}
-							{option:blogRecentArticles.comments_multiple}<li><a href="{$blogRecentArticles.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogRecentArticles.comments_count}}</a></li>{/option:blogRecentArticles.comments_multiple}
-							{option:!blogRecentArticles.comments_multiple}<li><a href="{$blogRecentArticles.full_url}#{$actComments}">{$msgBlogOneComment}</a></li>{/option:!blogRecentArticles.comments_multiple}
-						{/option:blogRecentArticles.comments}
+						{option:!widgetBlogRecentArticles.comments}<li><a href="{$widgetBlogRecentArticles.full_url}#{$actReact}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!widgetBlogRecentArticles.comments}
+						{option:widgetBlogRecentArticles.comments}
+							{option:widgetBlogRecentArticles.comments_multiple}<li><a href="{$widgetBlogRecentArticles.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$widgetBlogRecentArticles.comments_count}}</a></li>{/option:widgetBlogRecentArticles.comments_multiple}
+							{option:!widgetBlogRecentArticles.comments_multiple}<li><a href="{$widgetBlogRecentArticles.full_url}#{$actComments}">{$msgBlogOneComment}</a></li>{/option:!widgetBlogRecentArticles.comments_multiple}
+						{/option:widgetBlogRecentArticles.comments}
 					</ul>
 				</div>
 			</div>
-		{/iteration:blogRecentArticles}
-	{/option:blogRecentArticles}
+		{/iteration:widgetBlogRecentArticles}
+	{/option:widgetBlogRecentArticles}
 </div>

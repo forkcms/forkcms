@@ -1,8 +1,8 @@
 <?php
 
 /**
- * FrontendBlogWidgetRecentArticles
- * This is a widget with recent blog-articles
+ * FrontendBlogWidgetArchive
+ * This is a widget with the link to the archive
  *
  * @package		frontend
  * @subpackage	blog
@@ -10,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendBlogWidgetRecentArticles extends FrontendBaseWidget
+class FrontendBlogWidgetArchive extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
@@ -37,8 +37,8 @@ class FrontendBlogWidgetRecentArticles extends FrontendBaseWidget
 	 */
 	private function parse()
 	{
-		// assign comments
-		$this->tpl->assign('widgetBlogRecentArticles', FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_number_of_items', 5)));
+		// get the numbers
+		$this->tpl->assign('widgetBlogArchive', FrontendBlogModel::getArchiveNumbers());
 	}
 }
 
