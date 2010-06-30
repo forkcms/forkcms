@@ -607,8 +607,8 @@ jsBackend.forms = {
 	},
 	
 	tagBoxes: function() {
-		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
-		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
+		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
+		if($('#leftColumn input.tagBox, #tabTags input.tagBox').length > 0) { $('#leftColumn input.tagBox, #tabTags input.tagBox').tagBox({ emptyMessage: '{$msgNoTags}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}', showIconOnly: false }); }
 	},
 	
 	// end

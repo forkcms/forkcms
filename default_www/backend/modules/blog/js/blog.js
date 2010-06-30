@@ -68,7 +68,7 @@ jsBackend.blog.category = {
 					$('#newCategory').slideUp();
 					
 					// show message
-					jsBackend.messages.add('success', "{$msgCategoryAdded}");
+					jsBackend.messages.add('success', "{$msgAddedCategory|addslashes}".replace('%1$s', name));
 				} else {
 					// show message
 					jsBackend.messages.add('error', textStatus);

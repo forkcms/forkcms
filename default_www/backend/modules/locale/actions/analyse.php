@@ -207,6 +207,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 					// get matches
 					preg_match_all('/(BackendLanguage|BL)::get(Label|Error|Message)\(\'(.*)\'(.*)?\)/iU', $content, $matches);
+					// @todo tijs - we moeten ook rekening houden met het feit dat je $this->URL->getModule() kan gebruiken om de huidige module mee te geven.
 
 					// any matches?
 					if(isset($matches[3]))
@@ -250,7 +251,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 					$matches = array();
 
 					// get matches
-					preg_match_all('/\{\$(act|err|lbl|msg)([a-z-_]*)(\|.*)?\}/iU', $content, $matches);
+					preg_match_all('/\{\$(act|err|lbl|msg)([A-Z][a-zA-Z_]*)(\|.*)?\}/U', $content, $matches);
 
 					// any matches?
 					if(isset($matches[2]))
@@ -291,6 +292,8 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 		// init var
 		$nonExisting = array();
+
+//		Spoon::dump($used);
 
 		// check if the locale is present in the current language
 		foreach($used as $type => $items)
@@ -338,7 +341,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 						// not specific
 						else
 						{
-							// if the label isn't found add it to the list
+							// if the label isn't found, check in the specific module
 							if(BL::getLabel($key) == '{$'. $type .'Locale'. $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => 'core', 'type' => $type, 'name' => $key);
 						}
 					break;

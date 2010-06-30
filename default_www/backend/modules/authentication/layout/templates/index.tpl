@@ -51,7 +51,7 @@
 						<a class="button linkButton icon iconClose iconOnly toggleBalloon" href="#" rel="forgotPasswordHolder"><span>X</span></a>
 
 						<div class="balloonTop">&nbsp;</div>
-						
+
 						<p>{$msgHelpForgotPassword}</p>
 						{form:forgotPassword}
 							<div class="oneLiner">
@@ -63,21 +63,15 @@
 							</div>
 
 							{option:txtBackendEmailError}
-							<div class="errorMessage singleMessage">
-								<p>{$txtBackendEmailError}</p>
-							</div>
+								<div class="errorMessage singleMessage">
+									<p>{$txtBackendEmailError}</p>
+								</div>
 							{/option:txtBackendEmailError}
 
-							{option:hasForgotpasswordError}
-							<div class="errorMessage singleMessage">
-								<p>{$msgLoginFormForgotPasswordError}</p>
-							</div>
-							{/option:hasForgotpasswordError}
-
 							{option:isForgotPasswordSuccess}
-							<div class="successMessage singleMessage">
-								<p>{$msgLoginFormForgotPasswordSuccess}</p>
-							</div>
+								<div class="successMessage singleMessage">
+									<p>{$msgLoginFormForgotPasswordSuccess}</p>
+								</div>
 							{/option:isForgotPasswordSuccess}
 						{/form:forgotPassword}
 					</div>

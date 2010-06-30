@@ -41,7 +41,7 @@
 		<ul class="inputList checkboxTextFieldCombo">
 			<li>
 				{$chkUrlOverwrite}
-				<span id="urlFirstPart">{$detailURL}/</span>{$txtUrl} {$txtUrlError}
+				{option:detailURL}<span id="urlFirstPart">{$detailURL}/</span>{/option:detailURL}{$txtUrl} {$txtUrlError}
 			</li>
 		</ul>
 	</div>

@@ -5,13 +5,13 @@
 	<h2>{$lblTranslations|ucfirst}</h2>
 </div>
 
-<div class="datagridHolder">
+<!-- <div class="datagridHolder">
 	<div class="tableHeading">
 		<h3>{$lblFrontend|ucfirst}</h3>
 	</div>
 	{option:dgFrontend}{$dgFrontend}{/option:dgFrontend}
 	{option:!dgFrontend}<p>{$msgLocaleNoItemsAnalyse}</p>{/option:!dgFrontend}
-</div>
+</div> -->
 
 <div class="datagridHolder">
 	<div class="tableHeading">

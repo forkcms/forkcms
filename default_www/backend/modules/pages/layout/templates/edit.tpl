@@ -269,7 +269,7 @@
 				<div class="options">
 					<p>{$msgHelpBlockContent}</p>
 					<p id="extraWarningAlreadyBlock" class="warning">
-						{$msgAlreadyBlock}
+						{$msgModuleBlockAlreadyLinked}
 					</p>
 					<p>
 						<label for="extraType">{$lblType|ucfirst}</label>

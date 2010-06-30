@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>Fork CMS - {$msgResetYourPassword}</title>
+	<title>Fork CMS - {$msgResetYourPasswordMailSubject}</title>
 	<style type="text/css" media="screen">
 		html, body {
 			height: 100%;

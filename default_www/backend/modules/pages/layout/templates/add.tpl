@@ -235,7 +235,7 @@
 				<div class="options">
 					<p>{$msgHelpBlockContent}</p>
 					<p id="extraWarningAlreadyBlock" class="warning">
-						{$msgAlreadyBlock} <!-- @todo slecht label. -->
+						{$msgModuleBlockAlreadyLinked}
 					</p>
 					<p>
 						<label for="extraType">{$lblType|ucfirst}</label>
