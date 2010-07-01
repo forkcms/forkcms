@@ -90,6 +90,9 @@ class BackendBlogModel
 		// delete blogpost records
 		$db->execute('DELETE FROM blog_posts WHERE id IN('. implode(',', $ids) .');');
 		$db->execute('DELETE FROM blog_comments WHERE post_id IN('. implode(',', $ids) .');');
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
 	}
 
 
@@ -115,6 +118,9 @@ class BackendBlogModel
 
 		// update category for the posts that might be in this category
 		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', $defaultCategoryId);
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
 	}
 
 
@@ -141,6 +147,9 @@ class BackendBlogModel
 
 		// recalculate the comment count
 		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
 	}
 
 
@@ -554,6 +563,9 @@ class BackendBlogModel
 		// insert and return the insertId
 		$db->insert('blog_posts', $item);
 
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
+
 		// return the new id
 		return $newId;
 	}
@@ -568,7 +580,13 @@ class BackendBlogModel
 	public static function insertCategory(array $item)
 	{
 		// create category
-		return BackendModel::getDB(true)->insert('blog_categories', $item);
+		$return = BackendModel::getDB(true)->insert('blog_categories', $item);
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
+
+		// return
+		return $return;
 	}
 
 
@@ -692,6 +710,9 @@ class BackendBlogModel
 		// delete other revisions
 		if(!empty($revisionIdsToKeep)) $db->delete('blog_posts', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
 
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
+
 		// return the id
 		return $id;
 	}
@@ -707,7 +728,13 @@ class BackendBlogModel
 	public static function updateCategory($id, array $item)
 	{
 		// update category
-		BackendModel::getDB(true)->update('blog_categories', $item, 'id = ?', (int) $id);
+		$return = BackendModel::getDB(true)->update('blog_categories', $item, 'id = ?', (int) $id);
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
+
+		// return
+		return $return;
 	}
 
 
@@ -737,6 +764,9 @@ class BackendBlogModel
 
 		// recalculate the comment count
 		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog');
 	}
 }
 

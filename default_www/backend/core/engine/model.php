@@ -694,6 +694,32 @@ class BackendModel
 
 
 	/**
+	 * Invalidate cache
+	 *
+	 * @return	void
+	 * @param	string[optional] $module	A specific module to clear the cache for.
+	 */
+	public static function invalidateFrontendCache($module = null)
+	{
+		// redefine
+		$module = ($module !== null) ? (string) $module : null;
+
+		// get cache path
+		$path = FRONTEND_CACHE_PATH .'/cached_templates';
+
+		// build regular expresion
+		$regexp = '/(.*)_cache\.tpl/i';
+		if($module !== null) $regexp = '/'. $module .'(.*)_cache\.tpl/i';
+
+		// get files to delete
+		$files = SpoonFile::getList($path, $regexp);
+
+		// delete files
+		foreach($files as $file) SpoonFile::delete($path .'/'. $file);
+	}
+
+
+	/**
 	 * Ping the known webservices
 	 *
 	 * @return	bool								If everything went fine true will be returned, otherwise false
