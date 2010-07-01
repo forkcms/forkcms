@@ -1483,7 +1483,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// array
-			if(is_array($columns)) call_user_method_array('setColumnsSequence', $this, $columns);
+			if(is_array($columns)) call_user_func_array(array($this, 'setColumnsSequence'), $columns);
 
 			// multiple arguments
 			else
