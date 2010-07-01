@@ -688,6 +688,17 @@ class SpoonDatagrid
 
 
 	/**
+	 * Retrieve the datagrid source object.
+	 *
+	 * @return	SpoonDatagridSource
+	 */
+	public function getSource()
+	{
+		return $this->source;
+	}
+
+
+	/**
 	 * Fetch the template instance
 	 *
 	 * @return	SpoonTemplate
