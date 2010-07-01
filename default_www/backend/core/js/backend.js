@@ -335,6 +335,7 @@ jsBackend.controls = {
 	},
 	// check a string for passwordstrength
 	checkPassword: function(string) {
+		
 		// init vars
 		var score = 0;
 		var uniqueChars = [];
@@ -343,7 +344,11 @@ jsBackend.controls = {
 		if(string.length <= 4) return 'none';
 
 		// loop chars and add unique chars
-		for(var i in string) if(uniqueChars.indexOf(string.charAt(i)) == -1) uniqueChars.push(string.charAt(i));
+		for(var i = 0; i<string.length; i++) {
+			if(uniqueChars.indexOf(string.charAt(i)) == -1) {
+				uniqueChars.push(string.charAt(i));
+			}
+		}
 		
 		// less then 3 unique chars is just week
 		if(uniqueChars.length < 3) return 'weak';
@@ -362,7 +367,7 @@ jsBackend.controls = {
 		
 		// special char?
 		if(string.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)) score++;
-
+		
 		// strong password
 		if(score >= 4) return 'strong';
 		

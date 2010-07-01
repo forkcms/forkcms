@@ -53,15 +53,16 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		// redefine
 		$files = (array) unserialize((string) $files);
 
+		// no files
+		if(empty($files)) return '';
+
 		// start
 		$return = '<ul>'."\n";
-		$return .= '	<li>';
 
-		// build return value
-		$return .= str_replace(PATH_WWW, '', implode('</li>'."\n\t".'<li>', $files));
+		// loop files
+		foreach($files as $file) $return .= '<li><code>'. str_replace(PATH_WWW, '', $file) .'</code></li>'."\n";
 
 		// end
-		$return .= '	</li>';
 		$return .= '</ul>';
 
 		// cleanup
@@ -232,7 +233,6 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 					// get matches
 					preg_match_all('/(BackendLanguage|BL)::get(Label|Error|Message)\(\'(.*)\'(.*)?\)/iU', $content, $matches);
-					// @todo tijs - we moeten ook rekening houden met het feit dat je $this->URL->getModule() kan gebruiken om de huidige module mee te geven.
 
 					// any matches?
 					if(isset($matches[3]))
@@ -245,20 +245,64 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 							if($matches[2][$key] == 'Error') $type = 'err';
 							if($matches[2][$key] == 'Message') $type = 'msg';
 
-							// loop modules
-							foreach($modules as $module)
+							// specific module?
+							if($matches[4][$key] != '')
 							{
-								// determine if this is a module specific locale
-								if(substr($match, 0, mb_strlen($module)) == SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module))
+								// try to grab the module
+								$specificModule = $matches[4][$key];
+								$specificModule = trim(str_replace(array(',', '\''), '', $specificModule));
+
+								// not core?
+								if($specificModule != 'core')
 								{
-									// cleanup
-									$match = str_replace(SpoonFilter::toCamelCase($module), '', $match);
+									// dynamic module
+									if($specificModule == '$this->URL->getModule(')
+									{
+										// init var
+										$count = 0;
+
+										// replace
+										$modulePath = str_replace(BACKEND_MODULES_PATH, '', $file, $count);
+
+										// validate
+										if($count == 1)
+										{
+											// split into chunks
+											$chunks = (array) explode('/', trim($modulePath, '/'));
+
+											// set specific module
+											if(isset($chunks[0])) $specificModule = $chunks[0];
+
+											// skip
+											else continue;
+										}
+									}
 
 									// init if needed
 									if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
 
 									// add module
-									$used[$type][$match]['module_specific'][] = $module;
+									$used[$type][$match]['module_specific'][] = $specificModule;
+								}
+							}
+
+							else
+							{
+								// loop modules
+								foreach($modules as $module)
+								{
+									// determine if this is a module specific locale
+									if(substr($match, 0, mb_strlen($module)) == SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module))
+									{
+										// cleanup
+										$match = str_replace(SpoonFilter::toCamelCase($module), '', $match);
+
+										// init if needed
+										if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array(), 'module_specific' => array());
+
+										// add module
+										$used[$type][$match]['module_specific'][] = $module;
+									}
 								}
 							}
 
@@ -336,7 +380,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 							foreach($data['module_specific'] as $module)
 							{
 								// if the error isn't found add it to the list
-								if(BL::getError($key, $module) == '{$'. $type .'Locale'. $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::getError($key, $module), '{$'. $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -344,7 +388,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 						else
 						{
 							// if the error isn't found add it to the list
-							if(BL::getError($key) == '{$'. $type .'Locale'. $key .'}')
+							if(substr_count(BL::getError($key), '{$'. $type) > 0)
 							{
 								// init var
 								$exists = false;
@@ -384,7 +428,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 							foreach($data['module_specific'] as $module)
 							{
 								// if the label isn't found add it to the list
-								if(BL::getLabel($key, $module) == '{$'. $type .'Locale'. $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::getLabel($key, $module), '{$'. $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -392,7 +436,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 						else
 						{
 							// if the label isn't found, check in the specific module
-							if(BL::getLabel($key) == '{$'. $type .'Locale'. $key .'}')
+							if(substr_count(BL::getLabel($key), '{$'. $type) > 0)
 							{
 								// init var
 								$exists = false;
@@ -432,7 +476,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 							foreach($data['module_specific'] as $module)
 							{
 								// if the message isn't found add it to the list
-								if(BL::getMessage($key, $module) == '{$'. $type .'Locale'. $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::getMessage($key, $module), '{$'. $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -440,7 +484,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 						else
 						{
 							// if the message isn't found add it to the list
-							if(BL::getMessage($key) == '{$'. $type .'Locale'. $key .'}')
+							if(substr_count(BL::getMessage($key), '{$'. $type) > 0)
 							{
 								// init var
 								$exists = false;
@@ -580,6 +624,9 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 		// init var
 		$nonExisting = array();
+
+		// set language
+		FrontendLanguage::setLocale(BL::getWorkingLanguage());
 
 		// check if the locale is present in the current language
 		foreach($used as $type => $items)
