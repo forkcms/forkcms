@@ -93,6 +93,10 @@
 				{$txtEmail} {$txtEmailError}
 			</p>
 			<p>
+				<label for="website">{$lblWebsite|ucfirst}</label>
+				{$txtWebsite} {$txtWebsiteError}
+			</p>
+			<p>
 				<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtText} {$txtTextError}
 			</p>
