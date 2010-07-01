@@ -127,7 +127,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		$this->dgUsage->setColumnsHidden(array('url'));
 
 		// set headers
-		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Title')), 'module' => ucfirst(BL::getLabel('Module')), 'url' => ''));
+		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Title')), 'url' => ''));
 
 		// set url
 		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::getLabel('Edit')));

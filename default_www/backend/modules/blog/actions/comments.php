@@ -79,7 +79,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setPagingLimit(30);
 
 		// header labels
-		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
+		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'text' => ucfirst(BL::getLabel('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgPublished->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
@@ -113,7 +113,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setPagingLimit(30);
 
 		// header labels
-		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
+		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'text' => ucfirst(BL::getLabel('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgModeration->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
@@ -149,7 +149,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setPagingLimit(30);
 
 		// header labels
-		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'author' => ucfirst(BL::getLabel('Author')), 'text' => ucfirst(BL::getLabel('Comment'))));
+		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'text' => ucfirst(BL::getLabel('Comment'))));
 
 		// add the multicheckbox column
 		$this->dgSpam->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');

@@ -375,7 +375,7 @@ class FrontendBlogModel
 			if(!empty($row['months']))
 			{
 				// sort months
-				krsort($row['months']);
+				ksort($row['months']);
 			}
 		}
 

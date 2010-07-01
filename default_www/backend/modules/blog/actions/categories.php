@@ -43,9 +43,6 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		// create datagrid
 		$this->datagrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
 
-		// header labels
-		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Category'))));
-
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('name'), 'name');
 

@@ -100,11 +100,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// create datagrid
 		$this->dgRevisions = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_REVISIONS, array($this->id, 'archive', BL::getWorkingLanguage()));
 
+		// hide columns
+		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+
 		// disable paging
 		$this->dgRevisions->setPaging(false);
 
-		// hide columns
-		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+		// set headers
+		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
 
 		// set functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
@@ -112,10 +115,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// add edit column
 		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::getLabel('UseThisVersion'));
-
-		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('Date'))));
-
 	}
 
 

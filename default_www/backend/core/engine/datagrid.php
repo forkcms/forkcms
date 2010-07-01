@@ -45,7 +45,14 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setSortingOptions();
 
 		// add classes on headers
-		foreach($this->getColumns() as $column) $this->setColumnHeaderAttributes($column, array('class' => $column));
+		foreach($this->getColumns() as $column)
+		{
+			// set class
+			$this->setColumnHeaderAttributes($column, array('class' => $column));
+
+			// set default label
+			$this->setHeaderLabels(array($column => ucfirst(BL::getLabel(SpoonFilter::toCamelCase($column)))));
+		}
 
 		// set paging class
 		$this->setPagingClass('BackendDatagridPaging');

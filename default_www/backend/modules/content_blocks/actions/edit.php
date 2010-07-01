@@ -113,7 +113,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+		$this->dgRevisions->setHeaderLabels(array('edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
 
 		// set column-functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);

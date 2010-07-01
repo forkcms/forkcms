@@ -73,7 +73,7 @@ class BackendPagesIndex extends BackendBaseActionIndex
 
 		// set headers
 		$this->datagrid->setHeaderLabels(array(	'user_id' => ucfirst(BL::getLabel('By')),
-												'edited_on' => ucfirst(BL::getLabel('Date')),
+												'edited_on' => ucfirst(BL::getLabel('LastEditedOn')),
 												'title' => ucfirst(BL::getLabel('Page'))));
 	}
 

@@ -134,9 +134,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// overrule default URL
 		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value']), false));
 
-		// header labels
-		$this->datagrid->setHeaderLabels(array('language' => ucfirst(BL::getLabel('Language')), 'application' => ucfirst(BL::getLabel('Application')), 'module' => ucfirst(BL::getLabel('Module')), 'type' => ucfirst(BL::getLabel('Type')), 'name' => ucfirst(BL::getLabel('Name')), 'value' => ucfirst(BL::getLabel('Value'))));
-
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('language', 'application', 'module', 'type', 'name', 'value'), 'name');
 

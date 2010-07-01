@@ -24,7 +24,7 @@ class BackendPagesModel
 									FROM pages AS i
 									WHERE i.id = ? AND i.status = ? AND i.language = ?
 									ORDER BY i.edited_on DESC;';
-	const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label
+	const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
 									FROM pages_templates AS i';
 
 

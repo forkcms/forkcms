@@ -4,6 +4,8 @@
  * FrontendBlogArchive
  * This is the archive-action
  *
+ * @later	shouldn't we redirect /nl/blog/archief/2008/01 to /nl/blog/archief/2008/01 (duplicate content)
+ *
  * @package		frontend
  * @subpackage	blog
  *
@@ -88,13 +90,13 @@ class FrontendBlogArchive extends FrontendBaseBlock
 
 		// rebuild url
 		$url = $this->year;
-		if($this->month !== null) $url .'/'. $this->month;
 
 		// build timestamp
 		if($this->month !== null)
 		{
 			$this->startDate = gmmktime(00, 00, 00, $this->month, 01, $this->year);
 			$this->endDate = gmmktime(23, 59, 59, $this->month, gmdate('t', $this->startDate), $this->year);
+			$url .= '/'. $this->month;
 		}
 
 		// year

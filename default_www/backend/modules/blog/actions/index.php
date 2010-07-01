@@ -72,10 +72,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE, array('active'));
 
 		// set headers
-		$this->dgPosts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')),
-												'title' => ucfirst(BL::getLabel('Title')),
-												'publish_on' => ucfirst(BL::getLabel('PublishedOn')),
-												'comments' => ucfirst(BL::getLabel('Comments'))));
+		$this->dgPosts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')), 'publish_on' => ucfirst(BL::getLabel('PublishedOn'))));
 
 		// sorting columns
 		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'user_id', 'comments'), 'publish_on');
@@ -112,11 +109,9 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId()));
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')),
-												'title' => ucfirst(BL::getLabel('Title')),
-												'edited_on' => ucfirst(BL::getLabel('EditedOn')),
-												'comments' => ucfirst(BL::getLabel('Comments'))));
+		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author'))));
 
+		// hide columns
 		$this->dgDrafts->setColumnsHidden(array('revision_id'));
 
 		// sorting columns
@@ -150,10 +145,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active'));
 
 		// set headers
-		$this->dgRecent->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')),
-												'title' => ucfirst(BL::getLabel('Title')),
-												'edited_on' => ucfirst(BL::getLabel('EditedOn')),
-												'comments' => ucfirst(BL::getLabel('Comments'))));
+		$this->dgRecent->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author'))));
 
 		// set paging
 		$this->dgRecent->setPaging(false);

@@ -126,7 +126,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setPaging(false);
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+		$this->dgDrafts->setHeaderLabels(array('edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
 
 		// set column-functions
 		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
@@ -184,10 +184,11 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
 
 		// set column-functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
+		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 
 		// add use column
 		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&id=[id]&revision=[revision_id]', BL::getLabel('UseThisVersion'));
