@@ -4,6 +4,7 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
+	<meta name="robots" content="noindex, nofollow" />
 
 	<title>{$SITE_TITLE} - Fork CMS</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
