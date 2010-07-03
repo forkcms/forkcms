@@ -134,13 +134,17 @@ class SpoonFile
 		$filename = ($lowercase) ? strtolower((string) $filename) : (string) $filename;
 
 		// fetch extension
-		$aExtension = explode('.', $filename);
+		$chunks = (array) explode('.', $filename);
 
 		// count the chunks
-		$count = count($aExtension);
+		$count = count($chunks);
 
 		// has an extension
-		if($count != 0) return $aExtension[$count - 1];
+		if($count != 0)
+		{
+			// extension can only have alphanumeric chars
+			if(SpoonFilter::isAlphaNumeric($chunks[$count - 1])) return $chunks[$count - 1];
+		}
 
 		// no extension
 		return '';

@@ -216,7 +216,7 @@ class FrontendURL
 		if(!SITE_MULTILANGUAGE)
 		{
 			// set language id
-			$language = SITE_DEFAULT_LANGUAGE;
+			$language = FrontendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
 		}
 
 		// multiple languages

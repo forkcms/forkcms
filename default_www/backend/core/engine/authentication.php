@@ -124,6 +124,9 @@ class BackendAuthentication
 	 */
 	public static function isAllowedAction($action, $module)
 	{
+		// GOD's rule them all!
+		if(self::getUser()->isGod()) return true;
+
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
 		$alwaysAllowed = array(	'dashboard' => array('index' => 7),
 								'error' => array('index' => 7),
@@ -186,6 +189,9 @@ class BackendAuthentication
 	 */
 	public static function isAllowedModule($module)
 	{
+		// GOD's rule them all!
+		if(self::getUser()->isGod()) return true;
+
 		// always allowed modules (yep, hardcoded, because, we don't want other people to fuck up)
 		$alwaysAllowed = array('error', 'authentication');
 
