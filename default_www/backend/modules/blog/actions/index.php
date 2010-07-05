@@ -81,17 +81,9 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// set colum URLs
 		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
-		// add the multicheckbox column
-		$this->dgPosts->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
-		$this->dgPosts->setColumnsSequence('checkbox');
-
 		// set column functions
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[publish_on]'), 'publish_on', true);
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
-
-		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
-		$this->dgPosts->setMassAction($ddmMassAction);
 
 		// add edit column
 		$this->dgPosts->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
@@ -121,10 +113,6 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// set colum URLs
 		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]');
 
-		// add the fake multicheckbox column
-		$this->dgDrafts->addColumn('checkbox', '', '');
-		$this->dgDrafts->setColumnsSequence('checkbox');
-
 		// set column functions
 		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
@@ -152,10 +140,6 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 		// set colum URLs
 		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
-
-		// add the fake multicheckbox column
-		$this->dgRecent->addColumn('checkbox', '', '');
-		$this->dgRecent->setColumnsSequence('checkbox');
 
 		// set column functions
 		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);

@@ -29,16 +29,12 @@
 {/option:dgDrafts}
 
 {option:dgPosts}
-<form action="{$var|geturl:'mass_post_action'}" method="get" class="forkForms submitWithLink" id="posts">
 	<div class="datagridHolder">
-		<input type="hidden" name="from" value="posts" />
-
 		<div class="tableHeading">
 			<h3>{$lblPublishedArticles|ucfirst}</h3>
 		</div>
 		{$dgPosts}
 	</div>
-</form>
 {/option:dgPosts}
 
 {option:!dgPosts}<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>{/option:!dgPosts}
