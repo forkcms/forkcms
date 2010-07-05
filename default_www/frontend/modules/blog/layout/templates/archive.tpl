@@ -10,7 +10,6 @@
 		{option:!blogArchive['month']}{$blogArchive['start_date']|date:'Y':{$LANGUAGE}}{/option:!blogArchive['month']}
 	</h2>
 
-	{option:!blogArticles}<div class="message warning"><p>{$msgBlogNoItemsInArchive}</p></div>{/option:!blogArticles}
 	{option:blogArticles}
 		<table class="datagrid" width="100%">
 			<thead>
