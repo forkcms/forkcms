@@ -6,12 +6,12 @@ jsFrontend = {
 	
 	// init, something like a constructor
 	init: function() {
-		jsFrontend.gravatar.init();
-
 		// init stuff
 		jsFrontend.initAjax();
+		jsFrontend.gravatar.init();
 	},
 	
+	// init
 	initAjax: function() {
 		// set defaults for AJAX
 		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });

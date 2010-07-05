@@ -79,7 +79,7 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
 
 		// start HTML, only when parentId is different from 1, the first level below home should be on the same level as home
-		if($parentId != 1) $HTML .= '<ul>' . "\n";
+		$HTML .= '<ul>' . "\n";
 
 		// loop elements
 		foreach($navigation[$type][$parentId] as $page)
@@ -114,17 +114,11 @@ class FrontendNavigation extends FrontendBaseObject
 			// has children?
 			if(isset($navigation[$type][$page['page_id']]))
 			{
-				// start sub list
-				$HTML .= '<ul>'."\n";
-
 				// home is a special item, it should live on the same depth
 				if($page['page_id'] == 1) $depthCounter--;
 
 				// add children
 				$HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter);
-
-				// end sub lust
-				$HTML .= '</ul>'."\n";
 			}
 
 			// end HTML
@@ -132,7 +126,7 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// end HTML, only when parentId is different from 1, the first level below home should be on the same level.
-		if($parentId != 1) $HTML .= '</ul>';
+		$HTML .= '</ul>';
 
 		// return
 		return $HTML;

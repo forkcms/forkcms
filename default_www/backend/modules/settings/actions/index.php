@@ -76,11 +76,27 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 		// create elements
 		$this->frm->addText('site_title', BackendModel::getSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
-		$this->frm->addText('email', BackendModel::getSetting('core', 'email_'. BL::getWorkingLanguage(), null));
 		$this->frm->addTextarea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
+
+		$mailerFrom = BackendModel::getSetting('core', 'om');
+		$this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
+		$this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
+		$mailerTo = BackendModel::getSetting('core', 'mailer_to');
+		$this->frm->addText('mailer_to_name', (isset($mailerTo['name'])) ? $mailerTo['name'] : '');
+		$this->frm->addText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '');
+		$mailerReplyTo = BackendModel::getSetting('core', 'mailer_reply_to');
+		$this->frm->addText('mailer_reply_to_name', (isset($mailerReplyTo['name'])) ? $mailerReplyTo['name'] : '');
+		$this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
+
+		$this->frm->addText('smtp_server', BackendModel::getSetting('core', 'smtp_server', ''));
+		$this->frm->addText('smtp_port', BackendModel::getSetting('core', 'smtp_port', 25));
+		$this->frm->addText('smtp_username', BackendModel::getSetting('core', 'smtp_username', ''));
+		$this->frm->addText('smtp_password', BackendModel::getSetting('core', 'smtp_password', ''));
+
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getSetting('core', 'theme', null));
 		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('NoTheme'));
+
 		$this->frm->addText('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
 		$this->frm->addText('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
 
@@ -174,7 +190,20 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		{
 			// validate required fields
 			$this->frm->getField('site_title')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
+
+			// mailer stuff
+			$this->frm->getField('mailer_from_name')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('mailer_from_email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frm->getField('mailer_to_name')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('mailer_to_email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frm->getField('mailer_reply_to_name')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('mailer_reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
+
+			// SMTP-server
+			$this->frm->getField('smtp_server')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('smtp_port')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('smtp_username')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('smtp_password')->isFilled(BL::getError('FieldIsRequired'));
 
 			// akismet key may be filled in
 			if($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled())
@@ -222,8 +251,17 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			{
 				// save general settings
 				BackendModel::setSetting('core', 'site_title_'. BL::getWorkingLanguage(), $this->frm->getField('site_title')->getValue());
-				BackendModel::setSetting('core', 'email_'. BL::getWorkingLanguage(), $this->frm->getField('email')->getValue());
 				BackendModel::setSetting('core', 'site_wide_html', $this->frm->getField('site_wide_html')->getValue());
+
+				BackendModel::setSetting('core', 'mailer_from', array('name' => $this->frm->getField('mailer_from_name')->getValue(), 'email' => $this->frm->getField('mailer_from_email')->getValue()));
+				BackendModel::setSetting('core', 'mailer_to', array('name' => $this->frm->getField('mailer_to_name')->getValue(), 'email' => $this->frm->getField('mailer_to_email')->getValue()));
+				BackendModel::setSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
+
+				BackendModel::setSetting('core', 'smtp_server', $this->frm->getField('smtp_server')->getValue());
+				BackendModel::setSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
+				BackendModel::setSetting('core', 'smtp_username', $this->frm->getField('smtp_username')->getValue());
+				BackendModel::setSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
+
 				BackendModel::setSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
 				BackendModel::setSetting('core', 'fork_api_private_key', $this->frm->getField('fork_api_private_key')->getValue());
 				if($this->needsAkismet) BackendModel::setSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());

@@ -99,7 +99,7 @@
 							<div class="box" id="template">
 								<div class="heading">
 									{* Do not change the ID! *}
-									<h4>{$lblTemplate|ucfirst}: <span id="templateLabel">&nsbp;</span></h4>
+									<h4>{$lblTemplate|ucfirst}: <span id="templateLabel">&nbsp;</span></h4>
 									<div class="buttonHolderRight">
 										<a href="#tabTemplate" class="tabSelect button icon iconEdit iconOnly">
 											<span>{$lblEdit|ucfirst}</span>

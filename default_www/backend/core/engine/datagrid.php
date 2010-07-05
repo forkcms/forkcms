@@ -380,17 +380,11 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 	 */
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{
-		// current page
-		$currentPage = ceil($offset / $numPerPage) + 1;
-
-		// number of pages
-		$numPages = ceil($numResults / $numPerPage);
+		// if there is just one page we don't need paging
+		if($numResults < $numPerPage) return '';
 
 		// load template
 		$tpl = new SpoonTemplate();
-
-		// if there is just one page we don't want to see any paging, so return an empty string
-		if($numPages == 1) return '';
 
 		// compile directory
 		if($compileDirectory !== null) $tpl->setCompileDirectory($compileDirectory);
@@ -399,137 +393,122 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		// force compiling
 		$tpl->setForceCompile((bool) $debug);
 
-		// previous URL
-		if($currentPage > 1)
+		// init vars
+		$pagination = null;
+		$showFirstPages = false;
+		$showLastPages = false;
+
+		// current page
+		$currentPage = ceil($offset / $numPerPage) + 1;
+
+		// number of pages
+		$numPages = ceil($numResults / $numPerPage);
+
+		// populate count fields
+		$pagination['num_pages'] = $numPages;
+		$pagination['current_page'] = $currentPage;
+
+		// as long as we are below page 7 we should show all pages starting from 1
+		if($currentPage < 8)
 		{
-			// label & URL
-			$previousURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $URL);
-			$tpl->assign('previousURL', $previousURL);
+			// init vars
+			$pagesStart = 1;
+			$pagesEnd = ($numPages >= 8) ? 8 : $numPages;
+
+			// show last pages
+			if($numPages > 8) $showLastPages = true;
 		}
 
-		// next URL
-		if($currentPage < $numPages)
+		// as long as we are 7 pages from the end we should show all pages till the end
+		elseif($currentPage >= ($numPages - 8))
 		{
-			// label & URL
-			$nextURL = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $URL);
-			$tpl->assign('nextURL', $nextURL);
+			// init vars
+			$pagesStart = ($numPages - 7);
+			$pagesEnd = $numPages;
+
+			// show first pages
+			$showFirstPages = true;
 		}
 
-		$tpl->assign('previousLabel', BL::getLabel('PreviousPage'));
-		$tpl->assign('nextLabel', BL::getLabel('NextPage'));
-
-		// limit
-		$limit = 7;
-		$breakpoint = 4;
-		$items = array();
-
-		/**
-		 * Less than or 7 pages. We know all the keys, and we put them in the array
-		 * that we will use to generate the actual pagination.
-		 */
-		if($numPages <= $limit)
-		{
-			for($i = 1; $i <= $numPages; $i++) $items[$i] = $i;
-		}
-
-		// more than 7 pages
+		// page 7
 		else
 		{
-			// first page
-			if($currentPage == 1)
-			{
-				// [1] 2 3 4 5 6 7 8 9 10 11 12 13
-				for($i = 1; $i <= $limit; $i++) $items[$i] = $i;
-				$items[$limit + 1] = '...';
-			}
-
-			// last page
-			elseif($currentPage == $numPages)
-			{
-				// 1 2 3 4 5 6 7 8 9 10 11 12 [13]
-				$items[$numPages - $limit - 1] = '...';
-				for($i = ($numPages - $limit); $i <= $numPages; $i++) $items[$i] = $i;
-			}
-
-			// other page
-			else
-			{
-				// 1 2 3 [4] 5 6 7 8 9 10 11 12 13
-
-				// define min & max
-				$min = $currentPage - $breakpoint + 1;
-				$max = $currentPage + $breakpoint - 1;
-
-				// minimum doesnt exist
-				while($min <= 0)
-				{
-					$min++;
-					$max++;
-				}
-
-				// maximum doesnt exist
-				while($max > $numPages)
-				{
-					$min--;
-					$max--;
-				}
-
-				// create the list
-				if($min != 1) $items[$min - 1] = '...';
-				for($i = $min; $i <= $max; $i++) $items[$i] = $i;
-				if($max != $numPages) $items[$max + 1] = '...';
-			}
+			// init vars
+			$pagesStart = $currentPage - 2;
+			$pagesEnd = $currentPage + 2;
+			$showFirstPages = true;
+			$showLastPages = true;
 		}
 
-		// init var
-		$pages = array();
-
-		// loop pages
-		foreach($items as $item)
+		// show previous
+		if($currentPage > 1)
 		{
-			// counter
-			if(!isset($i)) $i = 0;
-
-			// base details
-			$pages[$i]['page'] = false;
-			$pages[$i]['currentPage'] = false;
-			$pages[$i]['otherPage'] = false;
-			$pages[$i]['noPage'] = false;
-			$pages[$i]['url'] = '';
-			$pages[$i]['pageNumber'] = $item;
-
-			// hellips
-			if($item == '...') $pages[$i]['noPage'] = true;
-
-			// regular page
-			else
-			{
-				// show page
-				$pages[$i]['page'] = true;
-
-				// current page ?
-				if($item == $currentPage) $pages[$i]['currentPage'] = true;
-
-				// other page
-				else
-				{
-					// show the page
-					$pages[$i]['otherPage'] = true;
-
-					// URL to this page
-					$pages[$i]['url'] = str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $item) - $numPerPage), $order, $sort), $URL);
-				}
-			}
-
-			// update counter
-			$i++;
+			// set
+			$pagination['show_previous'] = true;
+			$pagination['previous_url'] = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset - $numPerPage), $order, $sort), $URL);
 		}
 
-		// first key needs to be zero
-		$pages = SpoonFilter::arraySortKeys($pages);
+		// show first pages?
+		if($showFirstPages)
+		{
+			// init var
+			$pagesFirstStart = 1;
+			$pagesFirstEnd = 2;
 
-		// assign pages
-		$tpl->assign('pages', $pages);
+			// loop pages
+			for($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++)
+			{
+				// add
+				$pagination['first'][] = array('url' => str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $i) - $numPerPage), $order, $sort), $URL),
+												'label' => $i);
+			}
+		}
+
+		// build array
+		for($i = $pagesStart; $i <= $pagesEnd; $i++)
+		{
+			// init var
+			$current = ($i == $currentPage);
+
+			// add
+			$pagination['pages'][] = array('url' => str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $i) - $numPerPage), $order, $sort), $URL),
+											'label' => $i, 'current' => $current);
+		}
+
+		// show last pages?
+		if($showLastPages)
+		{
+			// init var
+			$pagesLastStart = $numPages - 1;
+			$pagesLastEnd = $numPages;
+
+			// loop pages
+			for($i = $pagesLastStart; $i <= $pagesLastEnd; $i++)
+			{
+				// add
+				$pagination['last'][] = array('url' => str_replace(array('[offset]', '[order]', '[sort]'), array((($numPerPage * $i) - $numPerPage), $order, $sort), $URL),
+												'label' => $i);
+			}
+		}
+
+		// show next
+		if($currentPage < $numPages)
+		{
+			// set
+			$pagination['show_next'] = true;
+			$pagination['next_url'] = str_replace(array('[offset]', '[order]', '[sort]'), array(($offset + $numPerPage), $order, $sort), $URL);
+		}
+
+		// multiple pages
+		$pagination['multiple_pages'] = ($numPages == 1) ? false : true;
+
+		// assign pagination
+		$tpl->assign('pagination', $pagination);
+
+		// assign labels
+		$tpl->assign('previousLabel', BL::getLabel('PreviousPage'));
+		$tpl->assign('nextLabel', BL::getLabel('NextPage'));
+		$tpl->assign('goToLabel', BL::getLabel('GoToPage'));
 
 		// cough it up
 		return $tpl->getContent(BACKEND_CORE_PATH .'/layout/templates/datagrid_paging.tpl');

@@ -12,7 +12,7 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="blogger">{$lblFile}</label>
+				<label for="blogger">{$lblFile|ucfirst}</label>
 				{$fileBlogger} {$fileBloggerError}
 				<span class="helpTxt">{$msgHelpBlogger}</span>
 			</p>

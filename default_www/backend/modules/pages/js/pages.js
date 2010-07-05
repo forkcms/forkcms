@@ -385,6 +385,12 @@ jsBackend.pages.tree = {
 
 		// create tree
 		$('#tree div').tree(options);
+		
+		// layout fix for the tree
+		$('.tree li.open').each(function() {
+			// if the so-called open-element doesn't have any childs we should replace the open-class.
+			if($(this).find('ul').length == 0) $(this).removeClass('open').addClass('leaf');
+		});
 	},
 	
 	// before an item will be moved we have to do some checks

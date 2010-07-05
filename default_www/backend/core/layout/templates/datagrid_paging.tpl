@@ -1,60 +1,45 @@
-<ul>
-	<li class="previousPage">
-		{option:previousURL}<a href="{$previousURL}" rel="prev" title="{$previousLabel}">{/option:previousURL}
-		{option:!previousURL}<span>{/option:!previousURL}
-			{$previousLabel}
-		{option:previousURL}</a>{/option:previousURL}
-		{option:!previousURL}</span>{/option:!previousURL}
-	</li>
-
-	{option:pagesfirst}
-		{iteration:pagesfirst}
-			<li>
-				<a href="{$pagesfirst.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$pagesfirst.pageNumber}">
-					{$pagesfirst.label}
-				</a>
+{option:pagination}
+	{* there is more than 1 page *}
+	{option:pagination['multiple_pages']}
+		<ul class="clearfix">
+			<li class="previousPage">
+				{option:pagination['show_previous']}<a href="{$pagination['previous_url']}" rel="prev nofollow" title="{$previousLabel}">{/option:pagination['show_previous']}
+				{option:!pagination['show_previous']}<span>{/option:!pagination['show_previous']}
+					{$previousLabel}
+				{option:!pagination['show_previous']}</span>{/option:!pagination['show_previous']}
+				{option:pagination['show_previous']}</a>{/option:pagination['show_previous']}
 			</li>
-		{/iteration:pagesfirst}
-		<li class="ellipsis"><span>&hellip;</span></li>
-	{/option:pagesfirst}
 
-	{* list of pages *}
-	{iteration:pages}
-		{option:pages.page}
-			{option:pages.currentPage}
-				<li class="selected">
-					<span>
-						{$pages.pageNumber}
-					</span>
-				</li>
-			{/option:pages.currentPage}
-			{option:pages.otherPage}
-				<li>
-					<a href="{$pages.url}" rel="nofollow" title="{$lblGoToPage} {$pages.pageNumber}">
-						{$pages.pageNumber}
-					</a>
-				</li>
-			{/option:pages.otherPage}
-		{/option:pages.page}
-		{option:pages.noPage}<li>&hellip;</li>{/option:pages.noPage}
-	{/iteration:pages}
+			{option:pagination['first']}
+				{iteration:pagination['first']}<li><a href="{$paginationFirst.url}" rel="nofollow" title="{$goToLabel|ucfirst} {$paginationFirst.label}">{$paginationFirst.label}</a></li>{/iteration:pagination['first']}
+				<li class="ellipsis"><span>&hellip;</span></li>
+			{/option:pagination['first']}
 
-	{option:pageslast}
-		<li class="ellipsis"><span>&hellip;</span></li>
-		{iteration:pageslast}
-			<li>
-				<a href="{$paginationLast.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationLast.label}">
-					{$paginationLast.label}
-				</a>
+			{iteration:pagination['pages']}
+				{option:paginationPages.current}
+					<li class="selected">
+						<span>{$paginationPages.label}</span>
+					</li>
+				{/option:paginationPages.current}
+				{option:!paginationPages.current}
+					<li>
+						<a href="{$paginationPages.url}" rel="nofollow" title="{$goToLabel|ucfirst} {$paginationPages.label}">{$paginationPages.label}</a>
+					</li>
+				{/option:!paginationPages.current}
+			{/iteration:pagination['pages']}
+
+			{option:pagination['last']}
+				<li class="ellipsis"><span>&hellip;</span></li>
+				{iteration:pagination['last']}<li><a href="{$paginationLast.url}" rel="nofollow" title="{$goToLabel|ucfirst} {$paginationLast.label}">{$paginationLast.label}</a></li>{/iteration:pagination['last']}
+			{/option:pagination['last']}
+
+			<li class="nextPage">
+				{option:pagination['show_next']}<a href="{$pagination['next_url']}" rel="next nofollow" title="{$nextLabel}">{/option:pagination['show_next']}
+				{option:!pagination['show_next']}<span>{/option:!pagination['show_next']}
+					{$nextLabel}
+				{option:!pagination['show_next']}</span>{/option:!pagination['show_next']}
+				{option:pagination['show_next']}</a>{/option:pagination['show_next']}
 			</li>
-		{/iteration:pageslast}
-	{/option:pageslast}
-
-	<li class="nextPage">
-		{option:nextURL}<a href="{$nextURL}" rel="next" title="{$nextLabel}">{/option:nextURL}
-			{option:!nextURL}<span>{/option:!nextURL}
-			{$nextLabel}
-		{option:nextURL}</a>{/option:nextURL}
-		{option:!nextURL}</span>{/option:!nextURL}
-	</li>
-</ul>
+		</ul>
+	{/option:pagination['multiple_pages']}
+{/option:pagination}

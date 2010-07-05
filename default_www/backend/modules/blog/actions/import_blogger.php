@@ -426,7 +426,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// XML provided?
-			if($this->frm->getField('blogger')->isFilled()) $this->frm->getField('blogger')->isAllowedExtension(array('xml'), BL::getError('OnlyXMLallowed'));
+			if($this->frm->getField('blogger')->isFilled()) $this->frm->getField('blogger')->isAllowedExtension(array('xml'), BL::getError('XMLFilesOnly'));
 
 			// no file
 			else $this->frm->getField('blogger')->addError(BL::getError('FieldIsRequired'));

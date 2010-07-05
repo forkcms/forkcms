@@ -37,12 +37,12 @@ class FrontendMailer
 		$replyTo = FrontendModel::getModuleSetting('core', 'mailer_reply_to');
 
 		// set recipient/sender headers
-		$email['to_email'] = (empty($toEmail)) ? (string) $to[0] : $toEmail;
-		$email['to_name'] = (empty($toName)) ? (string) $to[1] : $toName;
-		$email['from_email'] = (empty($fromEmail)) ? (string) $from[0] : $fromEmail;
-		$email['from_name'] = (empty($fromName)) ? (string) $from[1] : $fromName;
-		$email['reply_to_email'] = (empty($replyToEmail)) ? (string) $replyTo[0] : $replyToEmail;
-		$email['reply_to_name'] = (empty($replyToName)) ? (string) $replyTo[1] : $replyToName;
+		$email['to_email'] = (empty($toEmail)) ? (string) $to['email'] : $toEmail;
+		$email['to_name'] = (empty($toName)) ? (string) $to['name'] : $toName;
+		$email['from_email'] = (empty($fromEmail)) ? (string) $from['email'] : $fromEmail;
+		$email['from_name'] = (empty($fromName)) ? (string) $from['name'] : $fromName;
+		$email['reply_to_email'] = (empty($replyToEmail)) ? (string) $replyTo['email'] : $replyToEmail;
+		$email['reply_to_name'] = (empty($replyToName)) ? (string) $replyTo['name'] : $replyToName;
 
 		// validate
 		if(!empty($email['to_email']) && !SpoonFilter::isEmail($email['to_email'])) throw new FrontendException('Invalid e-mail address for recipient.');

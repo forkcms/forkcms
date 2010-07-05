@@ -6,6 +6,8 @@ jsBackend = {
 	
 	// init, something like a constructor
 	init: function() {
+		// init stuff
+		jsBackend.initAjax();
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
 		jsBackend.forms.init();
@@ -14,11 +16,9 @@ jsBackend = {
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
 		//jsBackend.tableSequenceByDragAndDrop.init();
-
-		// init stuff
-		jsBackend.initAjax();
 	},
 	
+	// init ajax
 	initAjax: function() {
 		// set defaults for AJAX
 		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });
