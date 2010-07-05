@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FrontendBlogRss
+ * FrontendBlogRSS
  * This is the RSS-feed
  *
  * @package		frontend
@@ -10,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendBlogRss extends FrontendBaseBlock
+class FrontendBlogRSS extends FrontendBaseBlock
 {
 	/**
 	 * The articles

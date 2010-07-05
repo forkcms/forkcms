@@ -8,6 +8,7 @@
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class FrontendBlogDetail extends FrontendBaseBlock
@@ -90,7 +91,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// get data
 			$this->record = FrontendBlogModel::getDraft($this->URL->getParameter(1), $this->URL->getParameter('draft', 'int'));
 
-			// add no-index into meta-custom, so the draft don't get accidentally indexed
+			// add no-index to meta-custom, so the draft won't get accidentally indexed
 			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
 		}
 
@@ -127,7 +128,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new FrontendForm('react');
+		$this->frm = new FrontendForm('comment');
+		$this->frm->setAction($this->frm->getAction() .'#'. FL::getAction('Comment'));
 
 		// init vars
 		$author = (SpoonCookie::exists('comment_author')) ? SpoonCookie::get('comment_author') : null;
@@ -234,7 +236,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$author = $this->frm->getField('author')->getValue();
 				$email = $this->frm->getField('email')->getValue();
 				$website = $this->frm->getField('website')->getValue();
-				if($website == '' || $website == 'http://') $website = null;
+				if($website == '' || $website == 'http://') $website = null; // @todo die website validatie trekt nog op niet veel.
 				$text = $this->frm->getField('text')->getValue();
 
 				// build array
@@ -266,11 +268,11 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				}
 
 				// insert comment
-				$commentId = FrontendBlogModel::addComment($comment);
+				$commentId = FrontendBlogModel::addComment($comment); // @todo waarom niet insert[comment] zoals overal gedaan is?
 
 				// append a parameter to the URL so we can show moderation
-				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('React');
-				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('React');
+				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
+				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
 				if($comment['status'] == 'published') $redirectLink .= '?comment=true#'. FL::getAction('Comment') .'-'. $commentId;
 
 				// store author-data in cookies
@@ -283,7 +285,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				}
 				catch(Exception $e)
 				{
-					// settings cookies isn't allowed, because this isn't a real problem we ignore the exception
+					// settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
 				}
 
 				// redirect

@@ -2,6 +2,7 @@
 	variables that are available:
 	- {$blogArticle}: contains data about the post
 	- {$blogComments}: contains an array with the comments for the post, each element contains data about the comment.
+	- {$blogCommentsCount}: contains a variable with the number of comments for this blog post.
 	- {$blogNavigation}: contains an array with data for previous and next post
 *}
 
@@ -18,7 +19,7 @@
 		<div class="meta">
 			<ul>
 				<!-- Permalink -->
-				<li><a href="{$blogArticle['full_url']}" title="{$blogArticle['title']}">{$blogArticle['title']}</a> {$msgWroteBy|sprintf:{$blogArticle['user_id']|userSetting:'nickname'}}</li>
+				<li><a href="{$blogArticle['full_url']}" title="{$blogArticle['title']}">{$blogArticle['title']}</a> {$msgWrittenBy|sprintf:{$blogArticle['user_id']|userSetting:'nickname'}}</li>
 
 				<!-- Category -->
 				<li>{$lblCategory|ucfirst}: <a href="{$blogArticle['category_full_url']}" title="{$blogArticle['category_name']}">{$blogArticle['category_name']}</a></li>
@@ -29,7 +30,7 @@
 				{/option:blogArticle['tags']}
 
 				<!-- Comments -->
-				{option:!blogComments}<li><a href="{$blogArticle['full_url']}#{$actReact}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogComments}
+				{option:!blogComments}<li><a href="{$blogArticle['full_url']}#{$actComment}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogComments}
 				{option:blogComments}
 					{option:blogCommentsMultiple}<li><a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogCommentsCount}}</a></li>{/option:blogCommentsMultiple}
 					{option:!blogCommentsMultiple}<li><a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogOneComment}</a></li>{/option:!blogCommentsMultiple}
@@ -41,10 +42,10 @@
 	<div class="navigation">
 		<ul>
 			{option:blogNavigation['previous']}
-				<li><a href="{$blogNavigation['previous']['url']}" rel="prev">← <small>{$lblGoto|ucfirst} </small>{$blogNavigation['previous']['title']}</a></li>
+				<li><a href="{$blogNavigation['previous']['url']}" rel="prev">← <small>{$lblGoTo|ucfirst} </small>{$blogNavigation['previous']['title']}</a></li>
 			{/option:blogNavigation['previous']}
 			{option:blogNavigation['next']}
-				<li><a href="{$blogNavigation['next']['url']}" rel="next"><small>{$lblGoto|ucfirst} </small>{$blogNavigation['next']['title']} →</a></li>
+				<li><a href="{$blogNavigation['next']['url']}" rel="next"><small>{$lblGoTo|ucfirst} </small>{$blogNavigation['next']['title']} →</a></li>
 			{/option:blogNavigation['next']}
 		</ul>
 	</div>
@@ -54,7 +55,7 @@
 		<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
 
 		{iteration:blogComments}
-		{* Remark: Do not alter the id! It is used as anchor *}
+		{* Remark: Do not alter the id! It is used as an anchor *}
 		<div id="{$actComment}-{$blogComments.id}" class="comment">
 			<div class="commentAuthor">
 				<p>
@@ -77,13 +78,13 @@
 	{option:blogArticle['allow_comments']}
 	<div id="commentForm">
 		{* Remark: Do not alter the id! It is used as anchor *}
-		<h3 id="{$actReact}">{$lblReact|ucfirst}</h3>
+		<h3 id="{$actComment}">{$msgComment|ucfirst}</h3>
 
 		{option:commentIsInModeration}<div class="message notice"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
 		{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
 		{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
 
-		{form:react}
+		{form:comment}
 			<p>
 				<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtAuthor} {$txtAuthorError}
@@ -102,9 +103,9 @@
 			</p>
 
 			<p>
-				<input id="react" class="inputButton button mainButton" type="submit" name="react" value="{$lblReact|ucfirst}" />
+				<input id="comment" class="inputButton button mainButton" type="submit" name="comment" value="{$msgComment|ucfirst}" />
 			</p>
-		{/form:react}
+		{/form:comment}
 	</div>
 	{/option:blogArticle['allow_comments']}
 

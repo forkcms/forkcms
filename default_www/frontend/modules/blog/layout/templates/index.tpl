@@ -19,7 +19,7 @@
 				<div class="meta">
 					<ul>
 						<!-- Permalink -->
-						<li><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a> {$msgWroteBy|sprintf:{$blogArticles.user_id|userSetting:'nickname'}}</li>
+						<li><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a> {$msgWrittenBy|sprintf:{$blogArticles.user_id|userSetting:'nickname'}}</li>
 
 						<!-- Category -->
 						<li>{$lblCategory|ucfirst}: <a href="{$blogArticles.category_full_url}" title="{$blogArticles.category_name}">{$blogArticles.category_name}</a></li>
@@ -30,7 +30,7 @@
 						{/option:blogArticles.tags}
 
 						<!-- Comments -->
-						{option:!blogArticles.comments}<li><a href="{$blogArticles.full_url}#{$actReact}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogArticles.comments}
+						{option:!blogArticles.comments}<li><a href="{$blogArticles.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a></li>{/option:!blogArticles.comments}
 						{option:blogArticles.comments}
 							{option:blogArticles.comments_multiple}<li><a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogArticles.comments_count}}</a></li>{/option:blogArticles.comments_multiple}
 							{option:!blogArticles.comments_multiple}<li><a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogOneComment}</a></li>{/option:!blogArticles.comments_multiple}

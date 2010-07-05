@@ -8,6 +8,7 @@
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class FrontendBlogCategory extends FrontendBaseBlock
@@ -17,7 +18,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $articles;
+	private $items;
 
 
 	/**
@@ -79,11 +80,11 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		// no page given
 		if($requestedPage === null) $requestedPage = 1;
 
-		// set category
-		$this->category = $categories[$possibleCategories[$requestedCategory]];
-
 		// validate category
 		if($requestedCategory == 'false') $this->redirect(FrontendNavigation::getURL(404));
+
+		// set category
+		$this->category = $categories[$possibleCategories[$requestedCategory]];
 
 		// set URL
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $requestedCategory;
@@ -100,7 +101,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
 		// get articles
-		$this->articles = FrontendBlogModel::getAllForCategory($requestedCategory, $this->pagination['limit'], $this->pagination['offset']);
+		$this->items = FrontendBlogModel::getAllForCategory($requestedCategory, $this->pagination['limit'], $this->pagination['offset']);
 	}
 
 
@@ -130,7 +131,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->tpl->assign('blogCategory', $this->category);
 
 		// assign articles
-		$this->tpl->assign('blogArticles', $this->articles);
+		$this->tpl->assign('blogArticles', $this->items);
 
 		// parse the pagination
 		$this->parsePagination();

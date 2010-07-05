@@ -8,6 +8,7 @@
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class FrontendBlogIndex extends FrontendBaseBlock
@@ -26,7 +27,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	protected $pagination = array('limit' => 20, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
+	protected $pagination = array('limit' => 10, 'offset' => 0, 'requested_page' => 1, 'num_items' => null, 'num_pages' => null);
 
 
 	/**
@@ -65,7 +66,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 
 		// set url
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog');
-		$this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_number_of_items', 20);
+		$this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_number_of_items', 10);
 
 		// populate count fields in pagination
 		$this->pagination['num_items'] = FrontendBlogModel::getAllCount();
@@ -82,7 +83,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
 		// get articles
-		$this->articles = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
+		$this->items = FrontendBlogModel::getAll($this->pagination['limit'], $this->pagination['offset']);
 	}
 
 
@@ -101,7 +102,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
 
 		// assign articles
-		$this->tpl->assign('blogArticles', $this->articles);
+		$this->tpl->assign('blogArticles', $this->items);
 
 		// parse the pagination
 		$this->parsePagination();
