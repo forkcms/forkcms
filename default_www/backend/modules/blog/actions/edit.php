@@ -160,7 +160,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
-		$this->frm->addTime('publish_on_time', BackendModel::getUTCDate('H:i', $this->record['publish_on']));
+		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
 
 		// meta object
 		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
