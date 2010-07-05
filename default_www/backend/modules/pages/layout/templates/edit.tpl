@@ -5,7 +5,7 @@
 	{$hidTemplateId}
 
 	<div class="pageTitle">
-		<h2>{$lblPages|ucfirst}: {$lblAdd}</h2>
+		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 	</div>
 
 	<div id="tabs" class="tabs">
