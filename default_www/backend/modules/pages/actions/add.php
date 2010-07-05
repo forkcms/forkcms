@@ -55,11 +55,28 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// add css
 		$this->header->addCSS('/backend/modules/pages/js/jstree/themes/fork/style.css', null, true);
 
-		// get the default template
-		$defaultTemplateId = BackendModel::getSetting('core', 'default_template', 1);
-
 		// get the templates
 		$this->templates = BackendPagesModel::getTemplates();
+
+		// init var
+		$defaultTemplateId = false;
+
+		// loop templates
+		foreach($this->templates as $template)
+		{
+			// check if this is the default template
+			if($template['is_default'] == 'Y')
+			{
+				// set variable
+				$defaultTemplateId = $template['id'];
+
+				// stop loop
+				break;
+			}
+		}
+
+		// @todo	tijs	fallback
+		if($defaultTemplateId === false) throw new BackendException('No default template');
 
 		// set the default template as checked
 		$this->templates[$defaultTemplateId]['checked'] = true;
