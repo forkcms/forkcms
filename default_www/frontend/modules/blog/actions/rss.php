@@ -8,6 +8,7 @@
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class FrontendBlogRSS extends FrontendBaseBlock
@@ -17,7 +18,7 @@ class FrontendBlogRSS extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $articles;
+	private $items;
 
 
 	/**
@@ -54,7 +55,7 @@ class FrontendBlogRSS extends FrontendBaseBlock
 	private function getData()
 	{
 		// get articles
-		$this->articles = FrontendBlogModel::getAll(30);
+		$this->items = FrontendBlogModel::getAll(30);
 
 		// get settings
 		$this->settings = FrontendModel::getModuleSettings('blog');
@@ -77,41 +78,44 @@ class FrontendBlogRSS extends FrontendBaseBlock
 		$rss = new FrontendRSS($title, $link, $description);
 
 		// loop articles
-		foreach($this->articles as $item)
+		foreach($this->items as $item)
 		{
 			// init vars
 			$title = $item['title'];
 			$link = $item['full_url'];
 			$description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];;
 
-			// @todo davy - dit moet in een setting komen of je dit al dan niet wil tonen in je rss feed.
-			// append meta
-			$description .= '<div class="meta">'."\n";
-			$description .= '	<p><a href="'. $link .'" title="'. $title .'">'. $title .'</a> ' . sprintf(FL::getMessage('WroteBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
-			$description .= ' '. FL::getLabel('In') .' <a href="'. $item['category_full_url'] .'" title="'. $item['category_name'] .'">'. $item['category_name'] .'</a>.</p>'."\n";
-
-			// any tags
-			if(isset($item['tags']))
+			// meta is wanted
+			if(FrontendModel::getModuleSetting('blog', 'rss_meta_'. FRONTEND_LANGUAGE, true))
 			{
-				// append tags-paragraph
-				$description .= '	<p>'. ucfirst(FL::getLabel('Tags')) .': ';
-				$first = true;
+				// append meta
+				$description .= '<div class="meta">'."\n";
+				$description .= '	<p><a href="'. $link .'" title="'. $title .'">'. $title .'</a> ' . sprintf(FL::getMessage('WrittenBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
+				$description .= ' '. FL::getLabel('In') .' <a href="'. $item['category_full_url'] .'" title="'. $item['category_name'] .'">'. $item['category_name'] .'</a>.</p>'."\n";
 
-				// loop tags
-				foreach($item['tags'] as $tag)
+				// any tags
+				if(isset($item['tags']))
 				{
-					// prepend separator
-					if(!$first) $description .= ', ';
+					// append tags-paragraph
+					$description .= '	<p>'. ucfirst(FL::getLabel('Tags')) .': ';
+					$first = true;
 
-					// add
-					$description .= '<a href="'. $tag['full_url'] .'" rel="tag" title="'. $tag['name'] .'">'. $tag['name'] .'</a>';
+					// loop tags
+					foreach($item['tags'] as $tag)
+					{
+						// prepend separator
+						if(!$first) $description .= ', ';
 
-					// reset
-					$first = false;
+						// add
+						$description .= '<a href="'. $tag['full_url'] .'" rel="tag" title="'. $tag['name'] .'">'. $tag['name'] .'</a>';
+
+						// reset
+						$first = false;
+					}
+
+					// end
+					$description .= '.</p>'."\n";
 				}
-
-				// end
-				$description .= '.</p>'."\n";
 			}
 
 			// end HTML

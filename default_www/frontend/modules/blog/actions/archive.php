@@ -19,7 +19,7 @@ class FrontendBlogArchive extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $articles;
+	private $items;
 
 
 	/**
@@ -79,6 +79,7 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		$this->year = $this->URL->getParameter(1, 'int');
 		$this->month = $this->URL->getParameter(2, 'int');
 
+		// @todo tijs - dus ik kan geen archief bekijken zonder een jaar OF maand op te geven?
 		// validate parameters
 		if($this->year == 0 || $this->month === 0) $this->redirect(FrontendNavigation::getURL(404));
 
@@ -121,7 +122,7 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
 		// get articles
-		$this->articles = FrontendBlogModel::getAllForDateRange($this->startDate, $this->endDate, $this->pagination['limit'], $this->pagination['offset']);
+		$this->items = FrontendBlogModel::getAllForDateRange($this->startDate, $this->endDate, $this->pagination['limit'], $this->pagination['offset']);
 	}
 
 
@@ -152,8 +153,8 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		// assign category
 		$this->tpl->assign('blogArchive', array('start_date' => $this->startDate, 'end_date' => $this->endDate, 'year' => $this->year, 'month' => $this->month));
 
-		// assign articles
-		$this->tpl->assign('blogArticles', $this->articles);
+		// assign items
+		$this->tpl->assign('blogArticles', $this->items);
 
 		// parse the pagination
 		$this->parsePagination();

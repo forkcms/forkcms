@@ -268,7 +268,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				}
 
 				// insert comment
-				$commentId = FrontendBlogModel::addComment($comment); // @todo waarom niet insert[comment] zoals overal gedaan is?
+				$commentId = FrontendBlogModel::insertComment($comment);
 
 				// append a parameter to the URL so we can show moderation
 				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');

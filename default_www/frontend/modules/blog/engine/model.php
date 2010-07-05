@@ -15,31 +15,6 @@
 class FrontendBlogModel
 {
 	/**
-	 * Add a comment
-	 *
-	 * @return	int
-	 * @param	array $comment	The comment to add.
-	 */
-	public static function addComment(array $comment)
-	{
-		// get db
-		$db = FrontendModel::getDB(true);
-
-		// insert comment
-		$insertId = (int) $db->insert('blog_comments', $comment);
-
-		// increment comment_count
-		$db->execute('UPDATE blog_posts
-						SET num_comments = num_comments + 1
-						WHERE id = ?;',
-						$comment['post_id']);
-
-		// return comment id
-		return $insertId;
-	}
-
-
-	/**
 	 * Get an item
 	 *
 	 * @return	array
@@ -47,10 +22,6 @@ class FrontendBlogModel
 	 */
 	public static function get($URL)
 	{
-		// redefine
-		$URL = (string) $URL;
-
-		// get the blogposts
 		return (array) FrontendModel::getDB()->getRecord('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text,
 															bc.name AS category_name, bc.url AS category_url,
 															UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
@@ -64,7 +35,7 @@ class FrontendBlogModel
 															INNER JOIN meta AS m ON bp.meta_id = m.id
 															WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND m.url = ?
 															LIMIT 1;',
-															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $URL));
+															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $URL));
 	}
 
 
@@ -77,10 +48,6 @@ class FrontendBlogModel
 	 */
 	public static function getAll($limit = 10, $offset = 0)
 	{
-		// redefine
-		$limit = (int) $limit;
-		$offset = (int) $offset;
-
 		// get the blogposts
 		$items = (array) FrontendModel::getDB()->getRecords('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,
 																bc.name AS category_name, bc.url AS category_url,
@@ -92,7 +59,7 @@ class FrontendBlogModel
 																WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ?
 																ORDER BY bp.publish_on DESC
 																LIMIT ?, ?;',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $offset, $limit), 'id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (int) $offset, (int) $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
@@ -168,11 +135,6 @@ class FrontendBlogModel
 	 */
 	public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
 	{
-		// redefine
-		$categoryURL = (string) $categoryURL;
-		$limit = (int) $limit;
-		$offset = (int) $offset;
-
 		// get the blogposts
 		$items = (array) FrontendModel::getDB()->getRecords('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,
 																bc.name AS category_name, bc.url AS category_url,
@@ -184,7 +146,7 @@ class FrontendBlogModel
 																WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bc.url = ?
 																ORDER BY bp.publish_on DESC
 																LIMIT ?, ?;',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $categoryURL, $offset, $limit), 'id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL, (int) $offset, (int) $limit), 'id');
 
 		// no results?
 		if(empty($items)) return array();
@@ -228,18 +190,15 @@ class FrontendBlogModel
 	 */
 	public static function getAllForCategoryCount($categoryURL)
 	{
-		// redefine
-		$categoryURL = (string) $categoryURL;
-
-		// return the number of items
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(bp.id) AS count
 														FROM blog_posts AS bp
 														INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
 														WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bc.url = ?;',
-														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $categoryURL));
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL));
 	}
 
 
+	// @todo tijs - phpdoc vergeten?
 	public static function getAllForDateRange($start, $end, $limit = 10, $offset = 0)
 	{
 		// redefine
@@ -392,16 +351,13 @@ class FrontendBlogModel
 	 */
 	public static function getComments($id)
 	{
-		// redefine
-		$id = (int) $id;
-
 		// get the comments
 		$comments = (array) FrontendModel::getDB()->getRecords('SELECT bc.id, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.text, bc.data,
 																bc.author, bc.email, bc.website
 																FROM blog_comments AS bc
 																WHERE bc.post_id = ? AND bc.status = ?
 																ORDER BY bc.created_on ASC;',
-																array($id, 'published'));
+																array((int) $id, 'published'));
 
 		// loop comments
 		foreach($comments as &$row) $row['gravatar_id'] = md5($row['email']);
@@ -420,11 +376,6 @@ class FrontendBlogModel
 	 */
 	public static function getDraft($URL, $draft)
 	{
-		// redefine
-		$URL = (string) $URL;
-		$draft = (int) $draft;
-
-		// get the item
 		return (array) FrontendModel::getDB()->getRecord('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text,
 															bc.name AS category_name, bc.url AS category_url,
 															UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
@@ -438,7 +389,7 @@ class FrontendBlogModel
 															INNER JOIN meta AS m ON bp.meta_id = m.id
 															WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.revision_id = ? AND m.url = ?
 															LIMIT 1;',
-															array('draft', FRONTEND_LANGUAGE, 'N', $draft, $URL));
+															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
 	}
 
 
@@ -570,6 +521,31 @@ class FrontendBlogModel
 
 
 	/**
+	 * Inserts a new comment
+	 *
+	 * @return	int
+	 * @param	array $comment	The comment to add.
+	 */
+	public static function insertComment(array $comment)
+	{
+		// get db
+		$db = FrontendModel::getDB(true);
+
+		// insert comment
+		$insertId = (int) $db->insert('blog_comments', $comment);
+
+		// increment comment_count
+		$db->execute('UPDATE blog_posts
+						SET num_comments = num_comments + 1
+						WHERE id = ?;',
+						$comment['post_id']);
+
+		// return comment id
+		return $insertId;
+	}
+
+
+	/**
 	 * Get moderation status for an author
 	 *
 	 * @return	bool
@@ -578,15 +554,11 @@ class FrontendBlogModel
 	 */
 	public static function isModerated($author, $email)
 	{
-		// redefine
-		$author = (string) $author;
-		$email = (string) $email;
-
-		// does the author has a moderated comment before?
+		// does the author has a moderated comment?
 		return (bool) (FrontendModel::getDB()->getNumRows('SELECT bc.author, bc.email
 															FROM blog_comments AS bc
 															WHERE bc.status = ? AND bc.author = ? AND bc.email = ?;',
-															array('published', $author, $email)) > 0);
+															array('published', (string) $author, (string) $email)) > 0);
 	}
 }
 

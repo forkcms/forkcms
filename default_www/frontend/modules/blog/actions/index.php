@@ -18,7 +18,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $articles;
+	private $items;
 
 
 	/**

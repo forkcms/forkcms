@@ -76,37 +76,36 @@
 	{/option:blogComments}
 
 	{option:blogArticle['allow_comments']}
-	<div id="commentForm">
-		{* Remark: Do not alter the id! It is used as anchor *}
-		<h3 id="{$actComment}">{$msgComment|ucfirst}</h3>
+		<div id="commentForm">
+			{* Remark: Do not alter the id! It is used as anchor *}
+			<h3 id="{$actComment}">{$msgComment|ucfirst}</h3>
 
-		{option:commentIsInModeration}<div class="message notice"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
-		{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
-		{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
+			{option:commentIsInModeration}<div class="message notice"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
+			{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
+			{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
 
-		{form:comment}
-			<p>
-				<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				{$txtAuthor} {$txtAuthorError}
-			</p>
-			<p>
-				<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				{$txtEmail} {$txtEmailError}
-			</p>
-			<p>
-				<label for="website">{$lblWebsite|ucfirst}</label>
-				{$txtWebsite} {$txtWebsiteError}
-			</p>
-			<p>
-				<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-				{$txtText} {$txtTextError}
-			</p>
+			{form:comment}
+				<p>
+					<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					{$txtAuthor} {$txtAuthorError}
+				</p>
+				<p>
+					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					{$txtEmail} {$txtEmailError}
+				</p>
+				<p>
+					<label for="website">{$lblWebsite|ucfirst}</label>
+					{$txtWebsite} {$txtWebsiteError}
+				</p>
+				<p>
+					<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					{$txtText} {$txtTextError}
+				</p>
 
-			<p>
-				<input id="comment" class="inputButton button mainButton" type="submit" name="comment" value="{$msgComment|ucfirst}" />
-			</p>
-		{/form:comment}
-	</div>
+				<p>
+					<input id="comment" class="inputButton button mainButton" type="submit" name="comment" value="{$msgComment|ucfirst}" />
+				</p>
+			{/form:comment}
+		</div>
 	{/option:blogArticle['allow_comments']}
-
 </div>
