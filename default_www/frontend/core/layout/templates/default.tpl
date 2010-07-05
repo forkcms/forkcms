@@ -18,17 +18,17 @@
 
 				{option:!hideContentTitle}<h2 class="pageTitle">{$pageDatatitle}</h2>{/option:!hideContentTitle}
 
-				{* Block 0 *}
-				{option:blockAIsHTML}{$blockA}{/option:blockAIsHTML}
-				{option:!blockAIsHTML}{include:file='{$blockA}'}{/option:!blockAIsHTML}
-
 				{* Block 1 *}
-				{option:blockBIsHTML}{$blockB}{/option:blockBIsHTML}
-				{option:!blockBIsHTML}{include:file='{$blockB}'}{/option:!blockBIsHTML}
+				{option:block1IsHTML}{$block1}{/option:block1IsHTML}
+				{option:!block1IsHTML}{include:file='{$block1}'}{/option:!block1IsHTML}
 
 				{* Block 2 *}
-				{option:blockCIsHTML}{$blockC}{/option:blockCIsHTML}
-				{option:!blockCIsHTML}{include:file='{$blockC}'}{/option:!blockCIsHTML}
+				{option:block2IsHTML}{$block2}{/option:block2IsHTML}
+				{option:!block2IsHTML}{include:file='{$block2}'}{/option:!block2IsHTML}
+
+				{* Block 3 *}
+				{option:block3IsHTML}{$block3}{/option:block3IsHTML}
+				{option:!block3IsHTML}{include:file='{$block3}'}{/option:!block3IsHTML}
 			</div>
 		</div>
 
