@@ -294,7 +294,7 @@ jsBackend.pages.template = {
 		// get current template
 		var current = templates[selected];
 		var i = 0;
-
+		
 		// hide unneeded blocks
 		$('.contentBlock').each(function() {
 			// hide if needed
@@ -314,6 +314,7 @@ jsBackend.pages.template = {
 		$('#templateVisual').html(current.html);
 		$('#templateVisualLarge').html(current.htmlLarge);
 		$('#templateId').val(selected);
+		$('#templateLabel, #tabTemplateLabel').html(current.label);
 		
 		// loop blocks and set extra's, to initialize the page
 		$('.contentBlock').each(function() {
@@ -451,7 +452,7 @@ jsBackend.pages.tree = {
 						 $.tree.rollback(rollback);
 					 } else {
 						 // show message
-						 jsBackend.messages.add('success', '{$msgPageIsMoved|addslashes}'.replace('%1$s', 'tet')); // @todo tijs - 'tet' moet uiteraard de naam van de pagina worden.	
+						 jsBackend.messages.add('success', '{$msgPageIsMoved|addslashes}'.replace('%1$s', json.data.title));	
 					 }
 				 }
 		});

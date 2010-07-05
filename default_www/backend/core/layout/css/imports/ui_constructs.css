@@ -179,9 +179,8 @@
 		border-bottom: none;
 	}
 
-	.options p:last-child {
+	.options p:last-child, .options p.lastChild {
 		padding-bottom: 0;
-		/* @todo JS selector for IE */
 	}
 
 .box .moderate {

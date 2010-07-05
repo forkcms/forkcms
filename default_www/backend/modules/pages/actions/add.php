@@ -75,8 +75,15 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			}
 		}
 
-		// @todo	tijs	fallback
-		if($defaultTemplateId === false) throw new BackendException('No default template');
+		// fallback
+		if($defaultTemplateId === false)
+		{
+			// get first key
+			$keys = array_keys($this->templates);
+
+			// set the first items as default if no template was set as default.
+			$defaultTemplateId = $this->templates[$keys[0]]['id'];
+		}
 
 		// set the default template as checked
 		$this->templates[$defaultTemplateId]['checked'] = true;

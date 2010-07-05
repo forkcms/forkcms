@@ -47,7 +47,7 @@ class BackendPagesSettings extends BackendBaseActionEdit
 		$this->frm = new BackendForm('settings');
 
 		// add fields for meta navigation
-		$this->frm->addCheckbox('has_meta_navigation', BackendModel::getSetting('pages', 'has_meta_navigation', false));
+		$this->frm->addCheckbox('meta_navigation', BackendModel::getSetting('pages', 'meta_navigation', false));
 	}
 
 
@@ -65,7 +65,7 @@ class BackendPagesSettings extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set our settings
-				BackendModel::setSetting('pages', 'has_meta_navigation', (bool) $this->frm->getField('has_meta_navigation')->getValue());
+				BackendModel::setSetting('pages', 'meta_navigation', (bool) $this->frm->getField('meta_navigation')->getValue());
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');

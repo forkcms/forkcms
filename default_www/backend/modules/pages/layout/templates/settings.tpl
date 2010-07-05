@@ -13,7 +13,7 @@
 		<div class="options">
 			<p>{$msgHelpMetaNavigation}</p>
 			<ul class="inputList p0">
-				<li>{$chkHasMetaNavigation} <label for="hasMetaNavigation">{$msgMetaNavigation|ucfirst}</label></li> {* @todo naam v/h veld stinkt *}
+				<li>{$chkMetaNavigation} <label for="metaNavigation">{$msgMetaNavigation|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>

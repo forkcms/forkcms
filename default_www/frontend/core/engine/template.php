@@ -126,7 +126,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeago'));
 
 		// users
-		$this->mapModifier('userSetting', array('FrontendTemplateModifiers', 'usersetting')); // @todo davy - dit moet nog lowercase worden.
+		$this->mapModifier('usersetting', array('FrontendTemplateModifiers', 'usersetting'));
 
 		// highlight
 		$this->mapModifier('highlight', array('FrontendTemplateModifiers', 'highlightcode'));
@@ -266,7 +266,7 @@ class FrontendTemplateModifiers
 	 * @return	string
 	 * @param	string $var		The text to cleanup.
 	 */
-	public static function cleanupPlainText($var) // @todo tijs - zou het nuttig zijn om deze in spoon te propppen (davy)
+	public static function cleanupPlainText($var)
 	{
 		// redefine
 		$var = (string) $var;

@@ -1,6 +1,5 @@
 <div id="headerHolder">
-	{* @todo put "Bezoek website" in label *}
-	<h1><a href="/">{$SITE_TITLE} <span>Bezoek website →</span></a></h1>
+	<h1><a href="/">{$SITE_TITLE} <span>{$lblVisitWebsite|ucfirst} →</span></a></h1>
 	<table cellspacing="0" cellpadding="0" id="header">
 		<tr>
 			<td id="navigation">

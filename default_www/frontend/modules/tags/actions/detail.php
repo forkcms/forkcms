@@ -21,7 +21,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 
 
 	/**
-	 * The blogpost
+	 * The ?
 	 *
 	 * @var	array
 	 */

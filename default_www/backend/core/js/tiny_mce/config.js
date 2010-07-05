@@ -4,7 +4,7 @@ tinyMCE.init({
 	editor_selector: 'inputEditor',
 	
 	// layout
-	theme: 'advanced',	// @todo	should be based on user-setting
+	theme: 'advanced',
 	dialog_type: 'modal',
 	width: '100%',
 	button_tile_map: true,
@@ -28,7 +28,7 @@ tinyMCE.init({
 	content_css: '/frontend/core/layout/css/screen.css{option:THEME}, /frontend/themes/{$THEME}/core/css/screen.css{/option:THEME}, /backend/core/layout/css/editor_content.css',
 
 	// theme options
-	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code,|,fullscreen,|,tinyautosave',
+	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code,|,fullscreen',
 	theme_advanced_buttons2: 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,

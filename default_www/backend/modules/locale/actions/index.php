@@ -161,9 +161,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	/**
 	 * Load the form
 	 *
-	 * @todo	davy: velden opkuisen
-	 * @todo	davy: testen wat dit geeft als je met speciale karaketers in de URL werkt. (urlencode nodig?)
-	 *
 	 * @return	void
 	 */
 	private function loadForm()

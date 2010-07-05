@@ -546,13 +546,25 @@ class BackendPagesModel
 		// we can't delete templates that are still in use
 		if($db->getNumRows('SELECT i.template_id
 							FROM pages AS i
-							WHERE i.template_id = ? AND i.status = ?', array((int) $id, 'active')) > 0) return false;
+							WHERE i.template_id = ? AND i.status = ?',
+							array($id, 'active')) > 0) return false;
 
 		// delete
 		$db->delete('pages_templates', 'id = ?', $id);
 
-		// @todo tijs - alle versies van pagina's die niet 'active' zijn moeten verwijderd worden als de template_id gelijk is aan $id
-		// ps: zoals je hierboven kan zien, kan een template niet verwijderd worden als er nog active pagina's aan gekoppeld zijn.
+		// get all non-active pages that use this template
+		$ids = (array) $db->getColumn('SELECT i.revision_id
+										FROM pages AS i
+										WHERE i.template_id = ? AND i.status != ?',
+										array($id, 'active'));
+
+		// any items
+		if(!empty($ids))
+		{
+			// delete those pages and the linked blocks
+			$db->delete('pages', 'revision_id IN('. implode(',', $ids) .')');
+			$db->delete('pages_blocks', 'revision_id IN('. implode(',', $ids) .')');
+		}
 
 		// return
 		return true;

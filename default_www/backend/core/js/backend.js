@@ -630,6 +630,10 @@ jsBackend.layout = {
 		jsBackend.layout.showBrowserWarning();
 		jsBackend.layout.datagrid();
 		if($('.datafilter').length > 0) jsBackend.layout.dataFilter();
+		
+		// fix last childs
+		$('.options p:last').addClass('lastChild');
+		
 	},
 	// datafilter layout fixes
 	dataFilter: function() {

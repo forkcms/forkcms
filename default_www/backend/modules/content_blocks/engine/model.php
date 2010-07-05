@@ -40,12 +40,18 @@ class BackendContentBlocksModel
 		// get db
 		$db = BackendModel::getDB(true);
 
+		// get extra id for this content block
+		$extraId = (int) $db->getVar('SELECT id
+										FROM pages_extras
+										WHERE module = ? AND type = ? AND sequence = ?;',
+										array('content_blocks', 'widget', '200'. $id));
+
+		// update blocks with this item linked
+		$db->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $extraId);
+
 		// delete all records
 		$db->delete('content_blocks', 'id = ?', $id);
-		$db->delete('pages_extras', 'module = ? AND type = ? AND sequence = ?', array('content_blocks', 'widget', '200'. $id));
-
-		// @todo tijs - wat moet er gebeuren met content_blocks die al dan niet gelinkt zijn aan items bij pagina's?
-		// @todo tijs - de nodige extra's moeten toch verwijderd worden, niet?
+		$db->delete('pages_extras', 'id = ?', $extraId);
 	}
 
 

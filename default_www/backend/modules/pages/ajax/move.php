@@ -38,7 +38,7 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 		BackendPagesModel::buildCache();
 
 		// output
-		if($success) $this->output(self::OK, null, 'page moved');
+		if($success) $this->output(self::OK, BackendPagesModel::get($id), 'page moved');
 		else $this->output(self::ERROR, null, 'page not moved');
 	}
 }

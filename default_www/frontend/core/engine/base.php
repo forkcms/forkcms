@@ -466,9 +466,6 @@ class FrontendBaseBlock
 		// redefine
 		else $template = (string) $template;
 
-		// check if the file exists
-		if(!SpoonFile::exists($template)) throw new FrontendException('The template ('. $template .') doesn\'t exist.'); // @todo tijs - is deze check wel nodig?
-
 		// set properties
 		$this->setOverwrite($overwrite);
 		$this->setTemplatePath($template);

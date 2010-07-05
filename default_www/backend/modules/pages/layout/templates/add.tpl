@@ -98,7 +98,8 @@
 
 							<div class="box" id="template">
 								<div class="heading">
-									<h4>{$lblTemplate|ucfirst}: {$templatelabel}</h4>
+									{* Do not change the ID! *}
+									<h4>{$lblTemplate|ucfirst}: <span id="templateLabel">&nsbp;</span></h4>
 									<div class="buttonHolderRight">
 										<a href="#tabTemplate" class="tabSelect button icon iconEdit iconOnly">
 											<span>{$lblEdit|ucfirst}</span>
@@ -212,9 +213,9 @@
 			</div>
 		</div>
 		<div id="tabTemplate">
-
 			<div class="pageTitle">
-				<h2>Template: {$templatelabel}</h2>
+				{* Do not change the ID! *}
+				<h2>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h2>
 				<div class="buttonHolderRight">
 					<a id="changeTemplate" href="#" class="button icon iconEdit">
 						<span>{$lblEditTemplate|ucfirst}</span>

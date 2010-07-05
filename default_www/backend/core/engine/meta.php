@@ -1,7 +1,5 @@
 <?php
 
-// @todo davy - refactoring van de interne variabelen (in de methods)
-
 /**
  * BackendMeta
  * This class represents a META-object
@@ -392,6 +390,8 @@ class BackendMeta
 	 * Set the callback to calculate an unique URL
 	 * REMARK: this method has to be public and static
 	 * REMARK: if you specify arguments they will be appended
+	 *
+	 * @todo	use callback, instead of stupid vars...
 	 *
 	 * @return	void
 	 * @param	string $className				Name of the class to use.
