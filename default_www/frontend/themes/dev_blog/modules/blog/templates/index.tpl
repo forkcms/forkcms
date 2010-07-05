@@ -25,7 +25,7 @@
 				<div class="meta">
 					<ul>
 						<!-- Permalink -->
-						<li><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a> {$msgWroteBy|sprintf:{$blogArticles.user_id|userSetting:'nickname'}}</li>
+						<li><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a> {$msgWroteBy|sprintf:{$blogArticles.user_id|usersetting:'nickname'}}</li>
 
 						<!-- Category -->
 						<li>{$lblCategory|ucfirst}: <a href="{$blogArticles.category_full_url}" title="{$blogArticles.category_name}">{$blogArticles.category_name}</a></li>

@@ -17,12 +17,13 @@
 					{option:block3IsHTML}{$block3}{/option:block3IsHTML}
 					{option:!block3IsHTML}{include:file='{$block3}'}{/option:!block3IsHTML}
 
-					{* @todo *}
+					{* @todo ... No mailmotor for now.
 					<form action="home_submit" method="post" class="forkForms">
 						<p><input type="text" class="inputText" /></p>
 						<p><a class="button" href="#">{$lblSubscribe|ucfirst}</a></p>
 					</form>
 					<p>Alternatively, subscribe to the <a href="#">RSS feed</a>.</p>
+					*}
 				</div>
 			</div>
 		</div>

@@ -18,7 +18,7 @@
 				<div class="meta">
 					<ul>
 						<!-- Permalink -->
-						<li><a href="{$widgetBlogRecentArticles.full_url}" title="{$widgetBlogRecentArticles.title}">{$widgetBlogRecentArticles.title}</a> {$msgWroteBy|sprintf:{$widgetBlogRecentArticles.user_id|userSetting:'nickname'}}</li>
+						<li><a href="{$widgetBlogRecentArticles.full_url}" title="{$widgetBlogRecentArticles.title}">{$widgetBlogRecentArticles.title}</a> {$msgWroteBy|sprintf:{$widgetBlogRecentArticles.user_id|usersetting:'nickname'}}</li>
 
 						<!-- Category -->
 						<li>{$lblCategory|ucfirst}: <a href="{$widgetBlogRecentArticles.category_full_url}" title="{$widgetBlogRecentArticles.category_name}">{$widgetBlogRecentArticles.category_name}</a></li>

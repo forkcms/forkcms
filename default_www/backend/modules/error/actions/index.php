@@ -3,7 +3,7 @@
 /**
  * BackendErrorIndex
  * This is the index-action (default), it will display an error depending on a given parameters
- * @todo	if the session is expired their should be a redirect to the login form instead of the forbidden messages.
+ * @later	if the session is expired their should be a redirect to the login form instead of the forbidden messages.
  *
  * @package		backend
  * @subpackage	error

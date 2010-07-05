@@ -22,7 +22,7 @@
 		<div class="meta">
 			<ul>
 				<!-- Permalink -->
-				<li><a href="{$blogArticle['full_url']}" title="{$blogArticle['title']}">{$blogArticle['title']}</a> {$msgWroteBy|sprintf:{$blogArticle['user_id']|userSetting:'nickname'}}</li>
+				<li><a href="{$blogArticle['full_url']}" title="{$blogArticle['title']}">{$blogArticle['title']}</a> {$msgWroteBy|sprintf:{$blogArticle['user_id']|usersetting:'nickname'}}</li>
 
 				<!-- Category -->
 				<li>{$lblCategory|ucfirst}: <a href="{$blogArticle['category_full_url']}" title="{$blogArticle['category_name']}">{$blogArticle['category_name']}</a></li>

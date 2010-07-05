@@ -391,8 +391,6 @@ class BackendMeta
 	 * REMARK: this method has to be public and static
 	 * REMARK: if you specify arguments they will be appended
 	 *
-	 * @todo	use callback, instead of stupid vars...
-	 *
 	 * @return	void
 	 * @param	string $className				Name of the class to use.
 	 * @param	string $methodName				Name of the method to use.

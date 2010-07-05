@@ -6,7 +6,7 @@ require_once 'init.php';
 // initialize components
 new Init(APPLICATION);
 
-// create website
+// create frontend
 new Frontend();
 
 ?>

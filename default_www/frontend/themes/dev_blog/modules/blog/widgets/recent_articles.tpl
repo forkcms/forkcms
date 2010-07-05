@@ -11,7 +11,7 @@
 					<h2><a href="{$blogRecentArticles.full_url}" title="{$blogRecentArticles.title}">{$blogRecentArticles.title}</a></h2>
 					<ul>
 						<li>
-							{$msgPublishedBy|sprintf:{$blogRecentArticles.user_id|userSetting:'nickname'}},
+							{$msgPublishedBy|sprintf:{$blogRecentArticles.user_id|usersetting:'nickname'}},
 							{$blogRecentArticles.publish_on|date:'l F jS Y':{$LANGUAGE}},
 							{$blogRecentArticles.publish_on|date:'H:i':{$LANGUAGE}}
 						</li>

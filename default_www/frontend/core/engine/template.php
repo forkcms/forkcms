@@ -475,7 +475,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the value for a user-setting
-	 * 	syntax {$var|userSetting:<setting>[:<userId>]}
+	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
 	 *
 	 * @return	string
 	 * @param	string $var

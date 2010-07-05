@@ -1,7 +1,4 @@
 <?php
-/**
- * @todo	we should implement a custom exceptionhandler
- */
 
 /**
  * Init
@@ -27,7 +24,7 @@ class Init
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $type	The type of init to load, possible values are: backend, backend_ajax, backend_js.
+	 * @param	string $type	The type of init to load, possible values are: backend, backend_ajax, backend_cronjob, backend_js.
 	 */
 	public function __construct($type)
 	{
@@ -50,7 +47,7 @@ class Init
 		// set a default timezone if no one was set by PHP.ini
 		if(ini_get('date.timezone') == '') date_default_timezone_set('Europe/Brussels');
 
-		/*
+		/**
 		 * At first we enable the error reporting. Later on it will be disabled based on the
 		 * value of SPOON_DEBUG, but for now it's required to see possible errors while trying
 		 * to include the globals file(s).
@@ -194,6 +191,84 @@ class Init
 
 
 	/**
+	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in AJAX-actions
+	 *
+	 * @return	void
+	 * @param	object $exception	The exception that was thrown.
+	 * @param	string $output		The output that should be mailed.
+	 */
+	public static function exceptionAJAXHandler($exception, $output)
+	{
+		// set headers
+		SpoonHTTP::setHeaders('content-type: application/json');
+
+		// create response array
+		$response = array('code' => ($exception->getCode() != 0) ? $exception->getCode() : 500, 'message' => $exception->getMessage());
+
+		// output to the browser
+		echo json_encode($response);
+
+		// stop script execution
+		exit;
+	}
+
+
+	/**
+	 * This method will be called by the Spoon Exceptionhandler
+	 *
+	 * @return	void
+	 * @param	object $exception	The exception that was thrown.
+	 * @param	string $output		The output that should be mailed.
+	 */
+	public static function exceptionHandler($exception, $output)
+	{
+		// mail it?
+		if(SPOON_DEBUG_EMAIL != '')
+		{
+			// e-mail headers
+			$headers = "MIME-Version: 1.0\n";
+			$headers .= "Content-type: text/html; charset=iso-8859-15\n";
+			$headers .= "X-Priority: 3\n";
+			$headers .= "X-MSMail-Priority: Normal\n";
+			$headers .= "X-Mailer: SpoonLibrary Webmail\n";
+			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
+
+			// send email
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);
+		}
+
+		// build HTML for nice error
+		$html = '<html><body>Something went wrong.</body></html>';
+
+		// output
+		echo $html;
+
+		// stop script execution
+		exit;
+	}
+
+
+	/**
+	 * This method will be called by the Spoon Exceptionhandler and is specific for exceptions thrown in JS-files parsed through PHP
+	 *
+	 * @return	void
+	 * @param	object $exception	The exception that was thrown.
+	 * @param	string $output		The output that should be mailed.
+	 */
+	public static function exceptionJSHandler($exception, $output)
+	{
+		// set correct headers
+		SpoonHTTP::setHeaders('content-type: application/javascript');
+
+		// output
+		echo '// '. $exception->getMessage();
+
+		// stop script execution
+		exit;
+	}
+
+
+	/**
 	 * Start session
 	 *
 	 * @return	void
@@ -262,7 +337,10 @@ class Init
 		// debugging enabled
 		if(SPOON_DEBUG)
 		{
+			// set error reporting as high as possible
 			error_reporting(E_ALL | E_STRICT);
+
+			// show errors on the screen
 			ini_set('display_errors', 'On');
 
 			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
@@ -272,19 +350,39 @@ class Init
 		// debugging disabled
 		else
 		{
+			// set error reporting as low as possible
 			error_reporting(0);
+
+			// don't show error on the screen
 			ini_set('display_errors', 'Off');
+
+			// add callback for the spoon exceptionhandler
+			switch($this->type)
+			{
+				case 'backend_ajax':
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionAJAXHandler');
+				break;
+
+				case 'backend_js':
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionJSHandler');
+					break;
+
+				default:
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionHandler');
+				break;
+			}
 		}
 	}
 
 
 	/**
-	 * Set includepath
+	 * Set include path
 	 *
 	 * @return	void
 	 */
 	private function setIncludePath()
 	{
+		// prepend the libary and document_root to the existing include path
 		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . PATH_WWW . PATH_SEPARATOR . get_include_path());
 	}
 }
