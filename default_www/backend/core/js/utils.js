@@ -6,6 +6,34 @@ utils = {
 	eof: true
 }
 
+
+/**
+ * Object that contains some function related to arrays
+ * 
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ */
+utils.array = {
+	/**
+	 * is the given value present in the array
+	 * 
+	 * @return	bool
+	 */
+	inArray: function(needle, array) {
+		// loop values
+		for(var i in array) {
+			if(array[i] == needle) return true;
+		}
+
+		// fallback
+		return false;
+	},
+	// end
+	eof: true
+}
+
+
+
+
 /**
  * Object that contains some function related to cookies
  * 

@@ -355,6 +355,9 @@ jsBackend.pages.tree = {
 			for(var i = 0; i < parents.length; i++) openedIds.push($(parents[i]).attr('id'));
 		}
 
+		// add home if needed
+		if(!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
+		
 		var options = { ui: { theme_name: 'fork' },
 						opened: openedIds,
 						rules: { multiple: false, multitree: 'all', drag_copy: false },
