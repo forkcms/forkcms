@@ -613,7 +613,7 @@ class BackendModel
 		$year = gmdate('Y', $date->getTimestamp());
 		$month = gmdate('m', $date->getTimestamp());
 		$day = gmdate('j', $date->getTimestamp());
-		
+
 		// time object was given
 		if($time !== null)
 		{
@@ -628,7 +628,7 @@ class BackendModel
 			$minute = 0;
 		}
 
-		return mktime($hour, $minute, 0, $month, $day, $year);
+		return gmmktime($hour, $minute, 0, $month, $day, $year);
 	}
 
 
