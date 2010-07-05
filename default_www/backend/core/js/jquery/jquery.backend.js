@@ -215,7 +215,6 @@
 	};
 })(jQuery);
 
-
 (function($) {
 	$.fn.doMeta = function(options) {
 		// define defaults
@@ -226,11 +225,46 @@
 	
 		// loop all elements
 		return this.each(function() {
+			// init var
+			var element = $(this);
+			
 			// initialize
 			calculateMeta(null, $(this));
 			
 			// bind keypress
 			$(this).bind('keyup', calculateMeta);
+			
+			// bind change on the checkboxes
+			if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0) {
+				$('#pageTitleOverwrite').change(function(evt) { 
+					if(!$(this).is(':checked')) {
+						$('#pageTitle').val(element.val());
+					}
+				});
+			}
+			if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0) {
+				$('#navigationTitleOverwrite').change(function(evt) { 
+					if(!$(this).is(':checked')) {
+						$('#navigationTitle').val(element.val());
+					}
+				});
+			}
+			$('#metaDescriptionOverwrite').change(function(evt) { 
+				if(!$(this).is(':checked')) {
+					$('#metaDescription').val(element.val());
+				}
+			});
+			$('#metaKeywordsOverwrite').change(function(evt) { 
+				if(!$(this).is(':checked')) {
+					$('#metaKeywords').val(element.val());
+				}
+			});
+			$('#urlOverwrite').change(function(evt) { 
+				if(!$(this).is(':checked')) {
+					$('#url').val(utils.string.urlise(element.val())); 
+					$('#generatedUrl').html(utils.string.urlise(element.val())); 
+				}
+			});
 
 			// calculate meta
 			function calculateMeta(evt, element) {
