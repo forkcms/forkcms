@@ -68,6 +68,12 @@
 				{$txtFeedburnerUrl} {$txtFeedburnerUrlError}
 				<span class="helpTxt">{$msgHelpFeedburnerURL}</span>
 			</div>
+			<div class="options">
+				<p>{$msgHelpMeta}:</p>
+				<ul class="inputList p0">
+					<li>{$chkRssMeta}<label for="rssMeta">{$lblMetaInformation|ucfirst}</label></li>
+				</ul>
+			</div>
 		</div>
 	</div>
 

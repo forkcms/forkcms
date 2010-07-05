@@ -63,6 +63,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm->addCheckbox('ping_services', BackendModel::getSetting($this->URL->getModule(), 'ping_services', false));
 
 		// add fields for RSS
+		$this->frm->addCheckbox('rss_meta', BackendModel::getSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), true));
 		$this->frm->addText('rss_title', BackendModel::getSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage()));
 		$this->frm->addTextarea('rss_description', BackendModel::getSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage()));
 		$this->frm->addText('feedburner_url', BackendModel::getSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage()));
@@ -110,6 +111,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				BackendModel::setSetting($this->URL->getModule(), 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
+				BackendModel::setSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
 				if($feedburner !== null) BackendModel::setSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
 
 				// redirect to the settings page
