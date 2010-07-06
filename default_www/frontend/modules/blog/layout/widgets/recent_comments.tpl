@@ -13,7 +13,7 @@
 				<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="24" height="24" alt="{$widgetBlogRecentComments.author}" class="replaceWithGravatar" rel="{$widgetBlogRecentComments.gravatar_id}" />
 				{$widgetBlogRecentComments.author}
 			{option:widgetBlogRecentComments.website}</a>{/option:widgetBlogRecentComments.website}
-			{$msgCommentedOn} <a href="{$widgetBlogRecentComments.full_url}">{$widgetBlogRecentComments.post_title}</a>
+			{$lblCommentedOn} <a href="{$widgetBlogRecentComments.full_url}">{$widgetBlogRecentComments.post_title}</a>
 			<small>{$widgetBlogRecentComments.created_on|timeago}</small>
 		</li>
 		{/iteration:widgetBlogRecentComments}

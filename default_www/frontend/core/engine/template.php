@@ -107,29 +107,29 @@ class FrontendTemplate extends SpoonTemplate
 	private function mapCustomModifiers()
 	{
 		// URL for a specific pageId
-		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'geturl'));
+		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
 
 		// URL for a specific block
-		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'geturlforblock'));
+		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'getURLForBlock'));
 
 		// convert var into navigation
-		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getnavigation'));
+		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 
 		// rand
 		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'rand'));
 
 		// string
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
-		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupplaintext'));
+		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
 
 		// dates
-		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeago'));
+		$this->mapModifier('timeago', array('FrontendTemplateModifiers', 'timeAgo'));
 
 		// users
-		$this->mapModifier('usersetting', array('FrontendTemplateModifiers', 'usersetting'));
+		$this->mapModifier('usersetting', array('FrontendTemplateModifiers', 'userSetting'));
 
 		// highlight
-		$this->mapModifier('highlight', array('FrontendTemplateModifiers', 'highlightcode'));
+		$this->mapModifier('highlight', array('FrontendTemplateModifiers', 'highlightCode'));
 
 		// debug stuff
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));

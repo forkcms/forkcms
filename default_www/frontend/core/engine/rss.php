@@ -75,7 +75,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		$author = (string) $author;
 
 		// add fake-emailaddress
-		if(substr_count($author, '@') == 0) $author = SpoonFilter::urlise($author) .'@example.com ('. $author .')';
+		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) .'@example.com ('. $author .')';
 
 		// set author
 		parent::setAuthor($author);
