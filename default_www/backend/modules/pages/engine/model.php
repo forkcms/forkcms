@@ -1623,8 +1623,8 @@ class BackendPagesModel
 		$db = BackendModel::getDB(true);
 
 		// update old revisions
-		if($page['status'] != 'draft') $db->update('pages', array('status' => 'archive'), 'id = ?', (int) $page['id']);
-		else $db->delete('pages', 'id = ? AND user_id = ? AND status = ?', array((int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft'));
+		if($page['status'] != 'draft') $db->update('pages', array('status' => 'archive'), 'id = ? AND language = ?', array((int) $page['id'], BL::getWorkingLanguage()));
+		else $db->delete('pages', 'id = ? AND user_id = ? AND status = ? AND language = ?', array((int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', BL::getWorkingLanguage()));
 
 		// insert
 		$id = (int) $db->insert('pages', $page);
