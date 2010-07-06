@@ -10,7 +10,7 @@
 		<h3>{$lblFrontend|ucfirst}</h3>
 	</div>
 	{option:dgFrontend}{$dgFrontend}{/option:dgFrontend}
-	{option:!dgFrontend}<p>{$msgLocaleNoItemsAnalyse}</p>{/option:!dgFrontend}
+	{option:!dgFrontend}<p>{$msgNoItemsAnalyse}</p>{/option:!dgFrontend}
 </div>
 
 <div class="datagridHolder">
@@ -18,7 +18,7 @@
 		<h3>{$lblBackend|ucfirst}</h3>
 	</div>
 	{option:dgBackend}{$dgBackend}{/option:dgBackend}
-	{option:!dgBackend}<p>{$msgLocaleNoItemsAnalyse}</p>{/option:!dgBackend}
+	{option:!dgBackend}<p>{$msgNoItemsAnalyse}</p>{/option:!dgBackend}
 </div>
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
