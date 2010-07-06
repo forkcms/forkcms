@@ -239,6 +239,46 @@ class BackendModel
 
 
 	/**
+	 * Fetch the list of long date formats including examples of these formats.
+	 *
+	 * @return	array
+	 */
+	public static function getDateFormatsLong()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach((array) BackendModel::getSetting('core', 'date_formats_long') as $format)
+		{
+			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+		}
+
+		return $possibleFormats;
+	}
+
+
+	/**
+	 * Fetch the list of short date formats including examples of these formats.
+	 *
+	 * @return	array
+	 */
+	public static function getDateFormatsShort()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach((array) BackendModel::getSetting('core', 'date_formats_short') as $format)
+		{
+			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+		}
+
+		return $possibleFormats;
+	}
+
+
+	/**
 	 * Get (or create and get) a database-connection
 	 * If the database wasn't stored in the reference before we will create it and add it
 	 *
@@ -435,6 +475,26 @@ class BackendModel
 
 		// create array
 		return array_combine($themes, $themes);
+	}
+
+
+	/**
+	 * Fetch the list of time formats including examples of these formats.
+	 *
+	 * @return	array
+	 */
+	public static function getTimeFormats()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach(BackendModel::getSetting('core', 'time_formats') as $format)
+		{
+			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+		}
+
+		return $possibleFormats;
 	}
 
 

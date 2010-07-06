@@ -9,7 +9,7 @@
 			<div class="article">
 				<div class="heading">
 					<h2><a href="{$widgetBlogRecentArticles.full_url}" title="{$widgetBlogRecentArticles.title}">{$widgetBlogRecentArticles.title}</a></h2>
-					<p class="date">{$lblWrittenOn|ucfirst} {$widgetBlogRecentArticles.publish_on|date:'j F Y':{$LANGUAGE}} {$lblOn} {$widgetBlogRecentArticles.publish_on|date:'H:i:s':{$LANGUAGE}}</p>
+					<p class="date">{$lblWrittenOn|ucfirst} {$widgetBlogRecentArticles.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} {$lblOn} {$widgetBlogRecentArticles.publish_on|date:{$timeFormat}:{$LANGUAGE}}</p>
 				</div>
 				<div class="content">
 					{option:!widgetBlogRecentArticles.introduction}{$widgetBlogRecentArticles.text}{/option:!widgetBlogRecentArticles.introduction}

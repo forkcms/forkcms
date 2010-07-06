@@ -10,7 +10,7 @@
 	<div class="article">
 		<div class="heading">
 			<h1>{$blogArticle['title']}</h1>
-			<p class="date">{$blogArticle['publish_on']|date:'j F Y':{$LANGUAGE}}</p>
+			<p class="date">{$blogArticle['publish_on']|date:{$dateFormatLong}:{$LANGUAGE}}</p>
 		</div>
 		<div class="content">
 			{$blogArticle['text']}

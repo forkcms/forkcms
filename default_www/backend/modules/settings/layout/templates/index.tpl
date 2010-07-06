@@ -34,11 +34,11 @@
 			<h4>{$lblFrom|ucfirst}</h4>
 			<p>{$msgHelpEmailFrom}</p>
 			<p>
-				<label for="mailer_from_name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="mailerFromName">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtMailerFromName} {$txtMailerFromNameError}
 			</p>
 			<p>
-				<label for="mailer_from_email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="mailerFromEmail">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtMailerFromEmail} {$txtMailerFromEmailError}
 			</p>
 		</div>
@@ -46,24 +46,23 @@
 			<h4>{$lblTo|ucfirst}</h4>
 			<p>{$msgHelpEmailTo}</p>
 			<p>
-				<label for="mailer_to_name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="mailerToName">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtMailerToName} {$txtMailerToNameError}
 			</p>
 			<p>
-				<label for="mailer_to_email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="mailerToEmail">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtMailerToEmail} {$txtMailerToEmailError}
 			</p>
 		</div>
 		<div class="options">
 			<h4>{$lblReplyTo|ucfirst}</h4>
 			<p>
-				<label for="mailer_reply_to_name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="mailerReplyToName">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtMailerReplyToName} {$txtMailerReplyToNameError}
 			</p>
 			<p>
-				<label for="mailer_reply_to_email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="mailerReplyToEmail">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtMailerReplyToEmail} {$txtMailerReplyToEmailError}
-
 			</p>
 		</div>
 	</div>
@@ -74,16 +73,16 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="smtp_server">{$lblServer|ucfirst} &amp; {$lblPort}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="smtpServer">{$lblServer|ucfirst} &amp; {$lblPort}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtSmtpServer}:{$txtSmtpPort} {$txtSmtpServerError} {$txtSmtpPortError}
 				<span class="helpTxt">{$msgHelpSMTPServer}</span>
 			</p>
 			<p>
-				<label for="smtp_username">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="smtpUsername">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtSmtpUsername} {$txtSmtpUsernameError}
 			</p>
 			<p>
-				<label for="smtp_password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="smtpPassword">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 				{$txtSmtpPassword} {$txtSmtpPasswordError}
 			</p>
 		</div>
@@ -133,11 +132,24 @@
 
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblDomains|ucfirst}</h3>
+			<h3>{$lblDateAndTime|ucfirst}</h3>
 		</div>
-		<div class="content">
-			<p>{$msgHelpDomains}</p>
-			{$txtSiteDomains} {$txtSiteDomainsError}
+		<div class="options">
+			<p>
+				<label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
+				{$ddmTimeFormat} {$ddmTimeFormatError}
+				<span class="helpTxt">{$msgHelpTimeFormat}</span>
+			</p>
+			<p>
+				<label for="dateFormatShort">{$lblShortDateFormat|ucfirst}</label>
+				{$ddmDateFormatShort} {$ddmDateFormatShortError}
+				<span class="helpTxt">{$msgHelpDateFormatShort}</span>
+			</p>
+			<p>
+				<label for="dateFormatLong">{$lblLongDateFormat|ucfirst}</label>
+				{$ddmDateFormatLong} {$ddmDateFormatLongError}
+				<span class="helpTxt">{$msgHelpDateFormatLong}</span>
+			</p>
 		</div>
 	</div>
 

@@ -71,6 +71,9 @@ class FrontendTemplate extends SpoonTemplate
 		// parse locale
 		$this->parseLocale();
 
+		// parse date/time formats
+		$this->parseDateTimeFormats();
+
 		// parse vars
 		$this->parseVars();
 
@@ -163,6 +166,7 @@ class FrontendTemplate extends SpoonTemplate
 
 		// aliases
 		$this->assign('LANGUAGE', FRONTEND_LANGUAGE);
+		$this->assign('is'. strtoupper(FRONTEND_LANGUAGE), true);
 
 		// settings
 		$this->assign('SITE_TITLE', FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
@@ -171,6 +175,22 @@ class FrontendTemplate extends SpoonTemplate
 		$this->assign('THEME', FrontendModel::getModuleSetting('core', 'theme', 'default'));
 		$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default'));
 		$this->assign('THEME_URL', '/frontend/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default'));
+	}
+
+
+	/**
+	 * Parses the general date and time formats
+	 *
+	 * @return	void
+	 */
+	private function parseDateTimeFormats()
+	{
+		// time format
+		$this->assign('timeFormat', FrontendModel::getModuleSetting('core', 'time_format'));
+
+		// date formats (short & long)
+		$this->assign('dateFormatShort', FrontendModel::getModuleSetting('core', 'date_format_short'));
+		$this->assign('dateFormatLong', FrontendModel::getModuleSetting('core', 'date_format_long'));
 	}
 
 
@@ -434,7 +454,7 @@ class FrontendTemplateModifiers
 		if($var == 0) return '';
 
 		// return
-		return '<abbr title="'. SpoonDate::getDate('d/m/Y H:i:s', $var, FRONTEND_LANGUAGE) .'">'. SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) .'</abbr>';
+		return '<abbr title="'. SpoonDate::getDate(FrontendModel::getModuleSetting('core', 'date_format_long') .', '. FrontendModel::getModuleSetting('core', 'time_format'), $var, FRONTEND_LANGUAGE) .'">'. SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) .'</abbr>';
 	}
 
 

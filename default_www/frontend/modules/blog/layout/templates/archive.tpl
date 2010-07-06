@@ -22,7 +22,7 @@
 			<tbody>
 				{iteration:blogArticles}
 					<tr>
-						<td class="date">{$blogArticles.publish_on|date:'j F Y':{$LANGUAGE}}</td>
+						<td class="date">{$blogArticles.publish_on|date:{$dateFormatShort}:{$LANGUAGE}}</td>
 						<td class="title"><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a></td>
 						<td class="comments">
 						<!-- Comments -->
@@ -36,7 +36,6 @@
 				{/iteration:blogArticles}
 			</tbody>
 		</table>
-
 		{include:file='{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl'}
 	{/option:blogArticles}
 </div>

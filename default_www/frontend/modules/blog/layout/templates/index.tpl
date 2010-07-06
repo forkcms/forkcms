@@ -10,7 +10,7 @@
 			<div class="article">
 				<div class="heading">
 					<h2><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a></h2>
-					<p class="date">{$lblWrittenOn|ucfirst} {$blogArticles.publish_on|date:'j F Y':{$LANGUAGE}} {$lblOn} {$blogArticles.publish_on|date:'H:i:s':{$LANGUAGE}}</p>
+					<p class="date">{$lblWrittenOn|ucfirst} {$blogArticles.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} {$lblOn} {$blogArticles.publish_on|date:{$timeFormat}:{$LANGUAGE}}</p>
 				</div>
 				<div class="content">
 					{option:!blogArticles.introduction}{$blogArticles.text}{/option:!blogArticles.introduction}
