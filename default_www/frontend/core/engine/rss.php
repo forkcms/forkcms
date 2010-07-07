@@ -186,10 +186,10 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 			$replaceLinks = array();
 
 			// loop old links
-			foreach($matches[1] as $link)
+			foreach($matches[1] as $i => $link)
 			{
-				$searchLinks[] = $link;
-				$replaceLinks[] = FrontendModel::addURLParameters($link, $this->utm);
+				$searchLinks[] = $matches[0][$i];
+				$replaceLinks[] = 'href="'. FrontendModel::addURLParameters($link, $this->utm) .'"';
 			}
 
 			// replace

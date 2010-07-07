@@ -35,6 +35,7 @@ class FrontendMailer
 		$to = FrontendModel::getModuleSetting('core', 'mailer_to');
 		$from = FrontendModel::getModuleSetting('core', 'mailer_from');
 		$replyTo = FrontendModel::getModuleSetting('core', 'mailer_reply_to');
+		$utm = array('utm_source' => 'mail', 'utm_medium' => 'email', 'utm_campaign' => SpoonFilter::urlise($subject));
 
 		// set recipient/sender headers
 		$email['to_email'] = (empty($toEmail)) ? (string) $to['email'] : $toEmail;
@@ -53,6 +54,30 @@ class FrontendMailer
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
 		$email['html'] = self::getTemplateContent($template, $variables);
 		$email['created_on'] = FrontendModel::getUTCDate();
+
+		// init var
+		$matches = array();
+
+		// match links
+		preg_match_all('/href="(http:\/\/(.*))"/iU', $email['html'], $matches);
+
+		// any links?
+		if(isset($matches[0]) && !empty($matches[0]))
+		{
+			// init vars
+			$searchLinks = array();
+			$replaceLinks = array();
+
+			// loop old links
+			foreach($matches[1] as $i => $link)
+			{
+				$searchLinks[] = $matches[0][$i];
+				$replaceLinks[] = 'href="'. FrontendModel::addURLParameters($link, $utm) .'"';
+			}
+
+			// replace
+			$email['html'] = str_replace($searchLinks, $replaceLinks, $email['html']);
+		}
 
 		// set send date
 		if($queue)
