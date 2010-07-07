@@ -134,7 +134,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// init vars
 		$author = (SpoonCookie::exists('comment_author')) ? SpoonCookie::get('comment_author') : null;
 		$email = (SpoonCookie::exists('comment_email')) ? SpoonCookie::get('comment_email') : null;
-		$website = (SpoonCookie::exists('comment_website')) ? SpoonCookie::get('comment_website') : null;
+		$website = (SpoonCookie::exists('comment_website')) ? SpoonCookie::get('comment_website') : 'http://';
 
 		// create elements
 		$this->frm->addText('author', $author);
