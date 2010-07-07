@@ -22,25 +22,25 @@ class FrontendBlogModel
 	 */
 	public static function get($URL)
 	{
-		return (array) FrontendModel::getDB()->getRecord('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text,
-															bc.name AS category_name, bc.url AS category_url,
-															UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
-															bp.allow_comments,
+		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.language, i.title, i.introduction, i.text,
+															c.name AS category_name, c.url AS category_url,
+															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+															i.allow_comments,
 															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 															m.url
-															FROM blog_posts AS bp
-															INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
-															INNER JOIN meta AS m ON bp.meta_id = m.id
-															WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND m.url = ?
+															FROM blog_posts AS i
+															INNER JOIN blog_categories AS c ON i.category_id = c.id
+															INNER JOIN meta AS m ON i.meta_id = m.id
+															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
 															LIMIT 1;',
 															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $URL));
 	}
 
 
 	/**
-	 * Get all blogposts (at least a chunk)
+	 * Get all items (at least a chunk)
 	 *
 	 * @return	array
 	 * @param	int[optional] $limit		The number of items to get.
@@ -48,16 +48,16 @@ class FrontendBlogModel
 	 */
 	public static function getAll($limit = 10, $offset = 0)
 	{
-		// get the blogposts
-		$items = (array) FrontendModel::getDB()->getRecords('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,
-																bc.name AS category_name, bc.url AS category_url,
-																UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
+		// get the item
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
+																c.name AS category_name, c.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 																m.url
-																FROM blog_posts AS bp
-																INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
-																INNER JOIN meta AS m ON bp.meta_id = m.id
-																WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ?
-																ORDER BY bp.publish_on DESC
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
+																ORDER BY i.publish_on DESC
 																LIMIT ?, ?;',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (int) $offset, (int) $limit), 'id');
 
@@ -66,7 +66,7 @@ class FrontendBlogModel
 
 		// init var
 		$postIds = array();
-		$blogLink = FrontendNavigation::getURLForBlock('blog', 'detail');
+		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
 
 		// loop
@@ -76,7 +76,7 @@ class FrontendBlogModel
 			$postIds[] = (int) $row['id'];
 
 			// URLs
-			$items[$key]['full_url'] = $blogLink .'/'. $row['url'];
+			$items[$key]['full_url'] = $link .'/'. $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink .'/'. $row['category_url'];
 
 			// comments
@@ -96,37 +96,37 @@ class FrontendBlogModel
 
 
 	/**
-	 * Get all categories used in blog
+	 * Get all categories used
 	 *
 	 * @return	array
 	 */
 	public static function getAllCategories()
 	{
-		return (array) FrontendModel::getDB()->getRecords('SELECT bc.id, bc.name AS label, bc.url, COUNT(bc.id) AS total
-															FROM blog_categories AS bc
-															INNER JOIN blog_posts AS bp ON bc.id = bp.category_id AND bc.language = bp.language
-															WHERE bc.language = ? AND bp.status = ? AND bp.hidden = ? AND bp.publish_on <= ?
-															GROUP BY bc.id;',
+		return (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.name AS label, c.url, COUNT(c.id) AS total
+															FROM blog_categories AS c
+															INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
+															WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
+															GROUP BY c.id;',
 															array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'), 'id');
 	}
 
 
 	/**
-	 * Get the number of blog posts
+	 * Get the number of items
 	 *
 	 * @return	int
 	 */
 	public static function getAllCount()
 	{
-		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(bp.id) AS count
-														FROM blog_posts AS bp
-														WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ?;',
+		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
+														FROM blog_posts AS i
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?;',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'), 'id');
 	}
 
 
 	/**
-	 * Get all blogposts (at least a chunk)
+	 * Get all items in a category (at least a chunk)
 	 *
 	 * @return	array
 	 * @param	string $categoryURL		The URL of the category to retrieve the posts for.
@@ -135,16 +135,16 @@ class FrontendBlogModel
 	 */
 	public static function getAllForCategory($categoryURL, $limit = 10, $offset = 0)
 	{
-		// get the blogposts
-		$items = (array) FrontendModel::getDB()->getRecords('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,
-																bc.name AS category_name, bc.url AS category_url,
-																UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
+		// get the items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
+																c.name AS category_name, c.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 																m.url
-																FROM blog_posts AS bp
-																INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
-																INNER JOIN meta AS m ON bp.meta_id = m.id
-																WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bc.url = ?
-																ORDER BY bp.publish_on DESC
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?
+																ORDER BY i.publish_on DESC
 																LIMIT ?, ?;',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL, (int) $offset, (int) $limit), 'id');
 
@@ -153,7 +153,7 @@ class FrontendBlogModel
 
 		// init var
 		$postIds = array();
-		$blogLink = FrontendNavigation::getURLForBlock('blog', 'detail');
+		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 		$categoryLink = FrontendNavigation::getURLForBlock('blog', 'category');
 
 		// loop
@@ -163,7 +163,7 @@ class FrontendBlogModel
 			$postIds[] = (int) $row['id'];
 
 			// URLs
-			$items[$key]['full_url'] = $blogLink .'/'. $row['url'];
+			$items[$key]['full_url'] = $link .'/'. $row['url'];
 			$items[$key]['category_full_url'] = $categoryLink .'/'. $row['category_url'];
 
 			// comments
@@ -183,22 +183,30 @@ class FrontendBlogModel
 
 
 	/**
-	 * Get the number of blog post in a given category
+	 * Get the number of items in a given category
 	 *
 	 * @return	int
 	 * @param	string $URL		The URL for the category.
 	 */
 	public static function getAllForCategoryCount($categoryURL)
 	{
-		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(bp.id) AS count
-														FROM blog_posts AS bp
-														INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
-														WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ? AND bc.url = ?;',
+		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
+														FROM blog_posts AS i
+														INNER JOIN blog_categories AS c ON i.category_id = c.id
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?;',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL));
 	}
 
 
-	// @todo tijs - phpdoc vergeten?
+	/**
+	 * Get all items between a start and end-date
+	 *
+	 * @return	array
+	 * @param	int $start				The start date as a UNIX-timestamp.
+	 * @param	int $end				The end date as a UNIX-timestamp.
+	 * @param	int[optional] $limit	The number of items to get.
+	 * @param	int[optional] $offset	The offset.
+	 */
 	public static function getAllForDateRange($start, $end, $limit = 10, $offset = 0)
 	{
 		// redefine
@@ -207,16 +215,16 @@ class FrontendBlogModel
 		$limit = (int) $limit;
 		$offset = (int) $offset;
 
-		// get the blogposts
-		$items = (array) FrontendModel::getDB()->getRecords('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text, bp.num_comments AS comments_count,
-																bc.name AS category_name, bc.url AS category_url,
-																UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
+		// get the items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.language, i.title, i.introduction, i.text, i.num_comments AS comments_count,
+																c.name AS category_name, c.url AS category_url,
+																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 																m.url
-																FROM blog_posts AS bp
-																INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
-																INNER JOIN meta AS m ON bp.meta_id = m.id
-																WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on BETWEEN ? AND ?
-																ORDER BY bp.publish_on DESC
+																FROM blog_posts AS i
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
+																ORDER BY i.publish_on DESC
 																LIMIT ?, ?;',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'id');
 
@@ -225,7 +233,7 @@ class FrontendBlogModel
 
 		// init var
 		$postIds = array();
-		$blogLink = FrontendNavigation::getURLForBlock('blog', 'detail');
+		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 
 		// loop
 		foreach($items as $key => $row)
@@ -234,7 +242,7 @@ class FrontendBlogModel
 			$postIds[] = (int) $row['id'];
 
 			// URLs
-			$items[$key]['full_url'] = $blogLink .'/'. $row['url'];
+			$items[$key]['full_url'] = $link .'/'. $row['url'];
 
 			// comments
 			if($row['comments_count'] > 0) $items[$key]['comments'] = true;
@@ -262,27 +270,27 @@ class FrontendBlogModel
 		$end = (int) $end;
 
 		// return the number of items
-		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(bp.id) AS count
-														FROM blog_posts AS bp
-														INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
-														WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on BETWEEN ? AND ?;',
+		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
+														FROM blog_posts AS i
+														INNER JOIN blog_categories AS c ON i.category_id = c.id
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?;',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i:s', $start), FrontendModel::getUTCDate('Y-m-d H:i:s', $end)));
 
 	}
 
 
 	/**
-	 * Get the statistics for the blog
+	 * Get the statistics for the archive
 	 *
 	 * @return	array
 	 */
 	public static function getArchiveNumbers()
 	{
 		// grab stats
-		$numbers = FrontendModel::getDB()->getPairs('SELECT DATE_FORMAT(bp.publish_on, "%Y%m") AS month, COUNT(bp.id)
-													FROM blog_posts AS bp
-													INNER JOIN meta AS m ON bp.meta_id = m.id
-													WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ?
+		$numbers = FrontendModel::getDB()->getPairs('SELECT DATE_FORMAT(i.publish_on, "%Y%m") AS month, COUNT(i.id)
+													FROM blog_posts AS i
+													INNER JOIN meta AS m ON i.meta_id = m.id
+													WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 													GROUP BY month;',
 													array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
 
@@ -347,16 +355,16 @@ class FrontendBlogModel
 	 * Get the comments for an item
 	 *
 	 * @return	array
-	 * @param	int $id		The ID of the blogpost to get the comments for.
+	 * @param	int $id		The ID of the item to get the comments for.
 	 */
 	public static function getComments($id)
 	{
 		// get the comments
-		$comments = (array) FrontendModel::getDB()->getRecords('SELECT bc.id, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.text, bc.data,
-																bc.author, bc.email, bc.website
-																FROM blog_comments AS bc
-																WHERE bc.post_id = ? AND bc.status = ?
-																ORDER BY bc.created_on ASC;',
+		$comments = (array) FrontendModel::getDB()->getRecords('SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
+																c.author, c.email, c.website
+																FROM blog_comments AS c
+																WHERE c.post_id = ? AND c.status = ?
+																ORDER BY c.created_on ASC;',
 																array((int) $id, 'published'));
 
 		// loop comments
@@ -376,18 +384,18 @@ class FrontendBlogModel
 	 */
 	public static function getDraft($URL, $draft)
 	{
-		return (array) FrontendModel::getDB()->getRecord('SELECT bp.id, bp.language, bp.title, bp.introduction, bp.text,
-															bc.name AS category_name, bc.url AS category_url,
-															UNIX_TIMESTAMP(bp.publish_on) AS publish_on, bp.user_id,
-															bp.allow_comments,
+		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.language, i.title, i.introduction, i.text,
+															c.name AS category_name, c.url AS category_url,
+															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+															i.allow_comments,
 															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 															m.url
-															FROM blog_posts AS bp
-															INNER JOIN blog_categories AS bc ON bp.category_id = bc.id
-															INNER JOIN meta AS m ON bp.meta_id = m.id
-															WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.revision_id = ? AND m.url = ?
+															FROM blog_posts AS i
+															INNER JOIN blog_categories AS c ON i.category_id = c.id
+															INNER JOIN meta AS m ON i.meta_id = m.id
+															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.revision_id = ? AND m.url = ?
 															LIMIT 1;',
 															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
 	}
@@ -402,13 +410,12 @@ class FrontendBlogModel
 	public static function getForTags(array $ids)
 	{
 		// fetch items
-		$items = (array) FrontendModel::getDB()->getRecords('SELECT p.title, m.url
-															FROM blog_posts AS p
-															INNER JOIN meta AS m ON m.id = p.meta_id
-															WHERE p.status = ? AND
-															p.hidden = ? AND
-															p.id IN ('. implode(',', $ids) .')
-															ORDER BY p.publish_on DESC;', array('active', 'N'));
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.title, m.url
+															FROM blog_posts AS i
+															INNER JOIN meta AS m ON m.id = i.meta_id
+															WHERE i.status = ? AND i.hidden = ? AND i.id IN ('. implode(',', $ids) .')
+															ORDER BY i.publish_on DESC;',
+															array('active', 'N'));
 
 		// has items
 		if(!empty($items))
@@ -452,20 +459,20 @@ class FrontendBlogModel
 		$return = array();
 
 		// get previous post
-		$return['previous'] = $db->getRecord('SELECT bp.id, bp.title, m.url
-											FROM blog_posts AS bp
-											INNER JOIN meta AS m ON bp.meta_id = m.id
-											WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on < ? AND bp.id != ?
-											ORDER BY bp.publish_on DESC
+		$return['previous'] = $db->getRecord('SELECT i.id, i.title, m.url
+											FROM blog_posts AS i
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on < ? AND i.id != ?
+											ORDER BY i.publish_on DESC
 											LIMIT 1;',
 											array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i:s', $date), $id));
 
 		// get next post
-		$return['next'] = $db->getRecord('SELECT bp.id, bp.title, m.url
-											FROM blog_posts AS bp
-											INNER JOIN meta AS m ON bp.meta_id = m.id
-											WHERE bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on > ? AND bp.publish_on <= ?
-											ORDER BY bp.publish_on ASC
+		$return['next'] = $db->getRecord('SELECT i.id, i.title, m.url
+											FROM blog_posts AS i
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on > ? AND i.publish_on <= ?
+											ORDER BY i.publish_on ASC
 											LIMIT 1;',
 											array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i:s', $date), FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
 
@@ -489,14 +496,14 @@ class FrontendBlogModel
 		$return = array();
 
 		// get comments
-		$comments = (array) FrontendModel::getDB()->getRecords('SELECT bc.id, bc.author, bc.website, bc.email, UNIX_TIMESTAMP(bc.created_on) AS created_on, bc.text,
-																bp.id AS post_id, bp.title AS post_title,
+		$comments = (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
+																i.id AS post_id, i.title AS post_title,
 																m.url AS post_url
-																FROM blog_comments AS bc
-																INNER JOIN blog_posts AS bp ON bc.post_id = bp.id
-																INNER JOIN meta AS m ON bp.meta_id = m.id
-																WHERE bc.status = ? AND bp.status = ? AND bp.language = ? AND bp.hidden = ? AND bp.publish_on <= ?
-																ORDER BY bc.created_on DESC
+																FROM blog_comments AS c
+																INNER JOIN blog_posts AS i ON c.post_id = i.id
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
+																ORDER BY c.created_on DESC
 																LIMIT ?;',
 																array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit));
 
@@ -555,9 +562,9 @@ class FrontendBlogModel
 	public static function isModerated($author, $email)
 	{
 		// does the author has a moderated comment?
-		return (bool) (FrontendModel::getDB()->getNumRows('SELECT bc.author, bc.email
-															FROM blog_comments AS bc
-															WHERE bc.status = ? AND bc.author = ? AND bc.email = ?;',
+		return (bool) (FrontendModel::getDB()->getNumRows('SELECT c.author, c.email
+															FROM blog_comments AS c
+															WHERE c.status = ? AND c.author = ? AND c.email = ?;',
 															array('published', (string) $author, (string) $email)) > 0);
 	}
 }

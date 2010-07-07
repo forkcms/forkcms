@@ -236,7 +236,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$author = $this->frm->getField('author')->getValue();
 				$email = $this->frm->getField('email')->getValue();
 				$website = $this->frm->getField('website')->getValue();
-				if($website == '' || $website == 'http://') $website = null; // @todo die website validatie trekt nog op niet veel.
+				if(trim($website) == '' || $website == 'http://') $website = null;
 				$text = $this->frm->getField('text')->getValue();
 
 				// build array

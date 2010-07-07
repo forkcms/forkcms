@@ -4,7 +4,7 @@
  * FrontendBlogArchive
  * This is the archive-action
  *
- * @later	shouldn't we redirect /nl/blog/archief/2008/01 to /nl/blog/archief/2008/01 (duplicate content)
+ * @later	shouldn't we redirect /nl/blog/archief/2008/1 to /nl/blog/archief/2008/01 (duplicate content)
  *
  * @package		frontend
  * @subpackage	blog
@@ -76,10 +76,18 @@ class FrontendBlogArchive extends FrontendBaseBlock
 	private function getData()
 	{
 		// get parameters
-		$this->year = $this->URL->getParameter(1, 'int');
-		$this->month = $this->URL->getParameter(2, 'int');
+		$this->year = $this->URL->getParameter(1);
+		$this->month = $this->URL->getParameter(2);
 
-		// @todo tijs - dus ik kan geen archief bekijken zonder een jaar OF maand op te geven?
+		// redirect /2010/6 to /2010/06 to avoid duplicate content
+		if($this->month !== null && mb_strlen($this->month) != 2) $this->redirect(FrontendNavigation::getURLForBlock('blog', 'archive') .'/'. $this->year .'/'. str_pad($this->month, 2, '0', STR_PAD_LEFT), 301);
+		if(mb_strlen($this->year) != 4) $this->redirect(FrontendNavigation::getURL(404));
+
+		// redefine
+		$this->year = (int) $this->year;
+		if($this->month !== null) $this->month = (int) $this->month;
+
+
 		// validate parameters
 		if($this->year == 0 || $this->month === 0) $this->redirect(FrontendNavigation::getURL(404));
 

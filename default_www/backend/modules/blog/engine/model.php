@@ -750,7 +750,6 @@ class BackendBlogModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// @later	if the new status is spam, we should submit it to Akismet!
 		// get blogpost ids
 		$postIds = (array) $db->getColumn('SELECT i.post_id
 											FROM blog_comments AS i
