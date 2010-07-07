@@ -60,7 +60,7 @@
 	$mcFileManagerConfig['upload.exclude_file_pattern'] = '';
 	$mcFileManagerConfig['upload.invalid_file_name_msg'] = '';
 	$mcFileManagerConfig['upload.extensions'] = "*";
-	$mcFileManagerConfig['upload.multiple_upload'] = true;
+	$mcFileManagerConfig['upload.multiple_upload'] = false;
 	$mcFileManagerConfig['upload.chunk_size'] = '1mb';
 	$mcFileManagerConfig['upload.allow_export'] = "maxsize,multiple_upload,chunk_size,overwrite,extensions";
 	$mcFileManagerConfig['upload.allow_override'] = "*";

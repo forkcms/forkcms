@@ -68,6 +68,9 @@ jsBackend.pages.extras = {
 				buttons: { '{$lblOK|ucfirst}': function() {
 													if($('#templateList input:radio:checked').val() != $('#templateId').val())
 													{
+														// empty extra's
+														$('.block_extra_id').val('');
+														
 														// change the template for real
 														jsBackend.pages.template.changeTemplate();
 													}

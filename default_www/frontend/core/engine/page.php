@@ -260,7 +260,7 @@ class FrontendPage extends FrontendBaseObject
 		$this->templatePath = FRONTEND_PATH .'/'. $this->record['template_path'];
 
 		// assign content
-		$this->tpl->assignArray($this->record, 'pageData');
+		$this->tpl->assign('page', $this->record);
 
 		// loop blocks
 		foreach($this->record['blocks'] as $index => $block)

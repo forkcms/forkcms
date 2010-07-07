@@ -25,18 +25,40 @@ body {
 	margin: 0 auto;
 	position: relative;
 }
-
 	#navigation {
-		width: 240px;
+		border-bottom: 1px solid #666;
+		height: 40px;
+	}
+
+	#navigation li {
 		float: left;
+		list-style: none;
+		padding: 5px 10px;
+	}
+
+	#main {
+		clear: both;
 	}
 	
-	#content {
-		width: 600px;
-		float: left;
-	}
+		#subnavigation {
+			width: 200px;
+			float: left;
+		}
+		
+		
+		#content {
+			width: 550px;
+			float: left;
+		}
+		
+		#sidebar {
+			width: 200px;
+			float: left;
+		}
+
 	
 	#footer {
+		padding-top: 20px;
 		clear: both;
 	}
 	
@@ -45,3 +67,5 @@ body {
 		right: 0;
 		top: 0;
 	}
+	
+	li.selected { font-weight: 900; }

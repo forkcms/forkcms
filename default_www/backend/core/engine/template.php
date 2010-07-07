@@ -204,8 +204,11 @@ class BackendTemplate extends SpoonTemplate
 		$this->assign('SITE_TITLE', BackendModel::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
 
 		// theme
-		$this->assign('THEME', BackendModel::getSetting('core', 'theme', 'default'));
-		$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme', 'default'));
+		if(BackendModel::getSetting('core', 'theme') !== null)
+		{
+			$this->assign('THEME', BackendModel::getSetting('core', 'theme'));
+			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme'));
+		}
 	}
 
 

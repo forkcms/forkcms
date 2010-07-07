@@ -86,7 +86,7 @@
 	$mcImageManagerConfig['upload.autoresize_jpeg_quality'] = 75; // Force max width/height, IM will rescale uploaded images.
 	$mcImageManagerConfig['upload.max_width'] = "800"; // Only if force_width_height is true
 	$mcImageManagerConfig['upload.max_height'] = "600"; // Only if force_width_height is true
-	$mcImageManagerConfig['upload.multiple_upload'] = true;
+	$mcImageManagerConfig['upload.multiple_upload'] = false;
 	$mcImageManagerConfig['upload.chunk_size'] = '1mb';
 	$mcImageManagerConfig['upload.format'] = "";
 	$mcImageManagerConfig['upload.allow_export'] = "maxsize,multiple_upload,chunk_size,overwrite,extensions";

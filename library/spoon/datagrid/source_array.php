@@ -75,7 +75,14 @@ class SpoonDatagridSourceArray extends SpoonDatagridSource
 	 */
 	public function getColumns()
 	{
-		if($this->numResults != 0) return array_keys($this->data[0]);
+		if($this->numResults != 0)
+		{
+			// get the keys for the rows
+			$rowKeys = array_keys($this->data);
+
+			// return the keys from the first row
+			return array_keys($this->data[$rowKeys[0]]);
+		}
 	}
 
 
