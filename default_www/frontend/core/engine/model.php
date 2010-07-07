@@ -20,6 +20,32 @@ class FrontendModel
 
 
 	/**
+	 * Add parameters to an URL
+	 *
+	 * @return	string
+	 * @param	string $URL			The URL to append the parameters too.
+	 * @param	array $parameters	The parameters as key-value-pairs
+	 */
+	public static function addURLParameters($URL, array $parameters)
+	{
+		// redefine
+		$URL = (string) $URL;
+
+		// no parameters means no appending
+		if(empty($parameters)) return $URL;
+
+		// build querystring
+		$queryString = http_build_query($parameters, null, '&amp;');
+
+		// already GET parameters?
+		if(mb_strpos($URL, '?') !== false) return $URL .= '&'. $queryString;
+
+		// no GET-parameters defined before
+		else return $URL .= '?'. $queryString;
+	}
+
+
+	/**
 	 * Get (or create and get) a database-connection
 	 * @later split the write and read connection
 	 *

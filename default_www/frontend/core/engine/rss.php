@@ -22,6 +22,9 @@ class FrontendRSS extends SpoonFeedRSS
 	 */
 	public function __construct($title, $link, $description, array $items = array())
 	{
+		// add UTM-parameters
+		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title)));
+
 		// call the parent
 		parent::__construct($title, $link, $description, $items);
 
@@ -46,6 +49,14 @@ class FrontendRSS extends SpoonFeedRSS
 class FrontendRSSItem extends SpoonFeedRSSItem
 {
 	/**
+	 * Initial values for UTM-parameters
+	 *
+	 * @var	array
+	 */
+	private $utm = array('utm_source' => 'feed', 'utm_medium' => 'rss');
+
+
+	/**
 	 * Default constructor.
 	 *
 	 * @return	void
@@ -55,8 +66,11 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 */
 	public function __construct($title, $link, $description)
 	{
+		// set UTM-campaign
+		$this->utm['utm_campaign'] = SpoonFilter::urlise($title);
+
 		// call parent
-		parent::__construct($title, $link, $description);
+		parent::__construct($title, FrontendModel::addURLParameters($link, $this->utm), $description);
 
 		// set some properties
 		$this->setGuid($link, true);
@@ -91,12 +105,8 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 */
 	public function setDescription($description)
 	{
-		// replace URLs and images
-		$search = array('href="/', 'src="/');
-		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
-
-		// replace links to files
-		$description = str_replace($search, $replace, $description);
+		// process links
+		$description = $this->processLinks($description);
 
 		// call parent
 		parent::setDescription($description);
@@ -141,6 +151,53 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 
 		// call parent
 		parent::setLink($link);
+	}
+
+
+	/**
+	 * Process links, will prepend SITE_URL if needed and append UTM-parameters
+	 *
+	 * @return	string
+	 * @param	string $content		The content to process.
+	 */
+	public function processLinks($content)
+	{
+		// redefine
+		$content = (string) $content;
+
+		// replace URLs and images
+		$search = array('href="/', 'src="/');
+		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
+
+		// replace links to files
+		$content = str_replace($search, $replace, $content);
+
+		// init var
+		$matches = array();
+
+		// match links
+		preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
+
+		// any links?
+		if(isset($matches[1]) && !empty($matches[1]))
+		{
+			// init vars
+			$searchLinks = array();
+			$replaceLinks = array();
+
+			// loop old links
+			foreach($matches[1] as $link)
+			{
+				$searchLinks[] = $link;
+				$replaceLinks[] = FrontendModel::addURLParameters($link, $this->utm);
+			}
+
+			// replace
+			$content = str_replace($searchLinks, $replaceLinks, $content);
+		}
+
+		// return
+		return $content;
 	}
 }
 

@@ -317,7 +317,7 @@ class SpoonFeedRSS
 	 *
 	 * @return	string	A string that represents the fully build XML.
 	 */
-	private function buildXML()
+	protected function buildXML()
 	{
 		// sort if needed
 		if($this->getSorting()) $this->sort();
