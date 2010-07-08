@@ -722,7 +722,6 @@ class BackendModel
 		$password = BackendModel::generatePassword(6);
 
 		// build settings-array
-		$settings['email'] = SpoonSession::get('admin_email');
 		$settings['password_key'] = uniqid();
 		$settings['avatar'] = 'no-avatar.gif';
 		$settings['name'] = 'Super';
@@ -734,7 +733,7 @@ class BackendModel
 		$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 
 		// build user-array
-		$user['username'] = 'admin';
+		$user['email'] = SpoonSession::get('admin_email');
 		$user['password'] = BackendAuthentication::getEncryptedString($password, $settings['password_key']);
 		$user['group_id'] = 1;
 
@@ -744,7 +743,7 @@ class BackendModel
 		// build HTML for the message
 		$message = '<p>A new user is created for you, point your browser to <a href="'. SITE_URL .'/private">'. SITE_URL .'/private</a> and use the credentials below.</p>'."\n";
 		$message .= '<ul>'."\n";
-		$message .= '	<li><strong>username</strong>: '. $user['username'] .'</li>'."\n";
+		$message .= '	<li><strong>login</strong>: '. $user['email'] .'</li>'."\n";
 		$message .= '	<li><strong>password</strong>: '. $password .'</li>'."\n";
 		$message .= '</ul>';
 

@@ -55,7 +55,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		$this->frm = new BackendForm();
 
 		// create elements and add to the form
-		$this->frm->addText('backend_username');
+		$this->frm->addText('backend_email');
 		$this->frm->addPassword('backend_password');
 
 		// create form for forgot password
@@ -90,18 +90,18 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		if($this->frm->isSubmitted())
 		{
 			// redefine fields
-			$txtUsername = $this->frm->getField('backend_username');
+			$txtEmail = $this->frm->getField('backend_email');
 			$txtPassword = $this->frm->getField('backend_password');
 
 			// required fields
-			$txtUsername->isFilled(BL::getError('UsernameIsRequired'));
+			$txtEmail->isFilled(BL::getError('EmailIsRequired'));
 			$txtPassword->isFilled(BL::getError('PasswordIsRequired'));
 
 			// all fields are ok?
-			if($txtUsername->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue())
+			if($txtEmail->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue())
 			{
 				// try to login the user
-				if(!BackendAuthentication::loginUser($txtUsername->getValue(), $txtPassword->getValue()))
+				if(!BackendAuthentication::loginUser($txtEmail->getValue(), $txtPassword->getValue()))
 				{
 					// add error
 					$this->frm->addError('invalid login');

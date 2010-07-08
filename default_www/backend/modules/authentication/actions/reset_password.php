@@ -164,7 +164,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 				BackendUsersModel::updatePassword($this->user, $newPassword->getValue());
 
 				// attempt to login the user
-				if(!BackendAuthentication::loginUser($this->user->getUsername(), $newPassword->getValue()))
+				if(!BackendAuthentication::loginUser($this->user->getEmail(), $newPassword->getValue()))
 				{
 					// redirect to the login form with an error
 					$this->redirect(BackendModel::createURLForAction('index', null, null, array('login' => 'failed')));

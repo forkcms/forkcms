@@ -20,7 +20,7 @@ class BackendContentBlocksModel
 
 
 	// overview of the revisions for an item
-	const QRY_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+	const QRY_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 									FROM content_blocks AS i
 									WHERE i.status = ? AND i.id = ?
 									ORDER BY i.edited_on DESC;';

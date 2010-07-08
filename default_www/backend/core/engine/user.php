@@ -78,11 +78,11 @@ class BackendUser
 
 
 	/**
-	 * The username
+	 * The email
 	 *
 	 * @var	string
 	 */
-	private $username;
+	private $email;
 
 
 	/**
@@ -197,13 +197,13 @@ class BackendUser
 
 
 	/**
-	 * Get username
+	 * Get email
 	 *
 	 * @return	string
 	 */
-	public function getUsername()
+	public function getEmail()
 	{
-		return $this->username;
+		return $this->email;
 	}
 
 
@@ -244,7 +244,7 @@ class BackendUser
 		$db = BackendModel::getDB();
 
 		// get user-data
-		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.username, u.is_god,
+		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.email, u.is_god,
 											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
 											FROM users AS u
 											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
@@ -258,7 +258,7 @@ class BackendUser
 		// set properties
 		$this->setUserId($userData['id']);
 		$this->setGroupId($userData['group_id']);
-		$this->setUsername($userData['username']);
+		$this->setEmail($userData['email']);
 		$this->setSessionId($userData['session_id']);
 		$this->setSecretKey($userData['secret_key']);
 		$this->setLastloggedInDate($userData['date']);
@@ -276,6 +276,18 @@ class BackendUser
 
 		// nickname available?
 		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] .' '. $this->settings['surname']);
+	}
+
+
+	/**
+	 * Set email
+	 *
+	 * @return	void
+	 * @param	string $value	The email to set.
+	 */
+	private function setEmail($value)
+	{
+		$this->email = (string) $value;
 	}
 
 
@@ -363,18 +375,6 @@ class BackendUser
 	private function setUserId($value)
 	{
 		$this->userId = (int) $value;
-	}
-
-
-	/**
-	 * Set username
-	 *
-	 * @return	void
-	 * @param	string $value	The username to set.
-	 */
-	private function setUsername($value)
-	{
-		$this->username = (string) $value;
 	}
 }
 

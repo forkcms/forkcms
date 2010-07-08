@@ -70,8 +70,9 @@ class SpoonDate
 	 * @return	string							String containing a sentence like 'x minutes ago'
 	 * @param	int $timestamp					Timestamp you want to make a sentence of.
 	 * @param	string[optional] $language		Language to use, check SpoonLocale::getAvailableLanguages().
+	 * @param	string[optional] $format		The format to return if the time passed is greather then a week
 	 */
-	public static function getTimeAgo($timestamp, $language = 'en')
+	public static function getTimeAgo($timestamp, $language = 'en', $format = null)
 	{
 		// init vars
 		$timestamp = (int) $timestamp;
@@ -86,18 +87,21 @@ class SpoonDate
 
 		// calculate years ago
 		$yearsAgo = floor($secondsBetween / (365.242199 * 24 * 60 * 60));
-		if($yearsAgo > 1) return sprintf($locale['time']['YearsAgo'], $yearsAgo);
-		if($yearsAgo == 1) return $locale['time']['YearAgo'];
+		if($yearsAgo > 1 && $format === null) return sprintf($locale['time']['YearsAgo'], $yearsAgo);
+		if($yearsAgo == 1 && $format === null) return $locale['time']['YearAgo'];
+		if($yearsAgo >= 1 && $format !== null) return self::getDate($format, $timestamp, $language);
 
 		// calculate months ago
 		$monthsAgo = floor($secondsBetween / ((365.242199/12) * 24 * 60 * 60));
-		if($monthsAgo > 1) return sprintf($locale['time']['MonthsAgo'], $monthsAgo);
-		if($monthsAgo == 1) return $locale['time']['MonthAgo'];
+		if($monthsAgo > 1 && $format === null) return sprintf($locale['time']['MonthsAgo'], $monthsAgo);
+		if($monthsAgo == 1 && $format === null) return $locale['time']['MonthAgo'];
+		if($monthsAgo >= 1 && $format !== null) return self::getDate($format, $timestamp, $language);
 
 		// calculate weeks ago
 		$weeksAgo = floor($secondsBetween / (7 * 24 * 60 * 60));
-		if($weeksAgo > 1) return sprintf($locale['time']['WeeksAgo'], $weeksAgo);
-		if($weeksAgo == 1) return $locale['time']['WeekAgo'];
+		if($weeksAgo > 1 && $format === null) return sprintf($locale['time']['WeeksAgo'], $weeksAgo);
+		if($weeksAgo == 1 && $format === null) return $locale['time']['WeekAgo'];
+		if($weeksAgo >= 1 && $format !== null) return self::getDate($format, $timestamp, $language);
 
 		// calculate days ago
 		$daysAgo = floor($secondsBetween / (24 * 60 * 60));

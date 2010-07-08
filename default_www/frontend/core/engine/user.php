@@ -37,11 +37,11 @@ class FrontendUser
 
 
 	/**
-	 * The username
+	 * The email
 	 *
 	 * @var	string
 	 */
-	private $userName;
+	private $email;
 
 
 	/**
@@ -114,13 +114,13 @@ class FrontendUser
 
 
 	/**
-	 * Get username
+	 * Get email
 	 *
 	 * @return	string
 	 */
-	public function getUsername()
+	public function getEmail()
 	{
-		return $this->userName;
+		return $this->email;
 	}
 
 
@@ -139,7 +139,7 @@ class FrontendUser
 		$db = FrontendModel::getDB();
 
 		// get user-data
-		$userData = (array) $db->getRecord('SELECT u.id, u.username
+		$userData = (array) $db->getRecord('SELECT u.id, u.email
 											FROM users AS u
 											WHERE u.id = ? AND u.active = ? AND u.deleted = ?
 											LIMIT 1;',
@@ -150,7 +150,7 @@ class FrontendUser
 
 		// set properties
 		$this->setUserId($userData['id']);
-		$this->setUsername($userData['username']);
+		$this->setEmail($userData['email']);
 
 		// get settings
 		$settings = (array) $db->getPairs('SELECT us.name, us.value
@@ -176,14 +176,14 @@ class FrontendUser
 
 
 	/**
-	 * Set username
+	 * Set email
 	 *
 	 * @return	void
 	 * @param	string $value
 	 */
-	private function setUsername($value)
+	private function setEmail($value)
 	{
-		$this->userName = (string) $value;
+		$this->email = (string) $value;
 	}
 }
 

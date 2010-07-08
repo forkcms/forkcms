@@ -13,7 +13,7 @@
  */
 class BackendBlogModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.user_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.num_comments AS comments
+	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 								FROM blog_posts AS i
 								WHERE i.status = ?';
 	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
@@ -34,7 +34,7 @@ class BackendBlogModel
 										WHERE i.status = ?
 										ORDER BY i.edited_on DESC
 										LIMIT 4';
-	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.user_id, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 											FROM blog_posts AS i
 											WHERE i.status = ? AND i.id = ?
 											ORDER BY i.edited_on DESC';

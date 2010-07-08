@@ -63,11 +63,10 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// create elements
-		$this->frm->addText('username', $this->record['username'], 75);
+		$this->frm->addText('email', $this->record['email'], 255);
 		$this->frm->addPassword('new_password', null, 75);
 		$this->frm->addPassword('confirm_password', null, 75);
 		$this->frm->addText('nickname', $this->record['settings']['nickname'], 20);
-		$this->frm->addText('email', $this->record['settings']['email'], 255);
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
@@ -121,24 +120,14 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// username is present
-			if($this->frm->getField('username')->isFilled(BL::getError('UsernameIsRequired')))
+			// email is present
+			if($this->frm->getField('email')->isFilled(BL::getError('EmailIsRequired')))
 			{
-				// only a-z (no spaces) are allowed
-				if($this->frm->getField('username')->isAlphaNumeric(BL::getError('AlphaNumericCharactersOnly')))
+				// is this an email-address
+				if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
 				{
-					// username already exists
-					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue(), $this->id)) $this->frm->getField('username')->addError(BL::getError('UsernameAlreadyExists'));
-
-					// username doesn't exist
-					else
-					{
-						/*
-						 * Some usernames are blacklisted, so we don't allow them. Dieter has asked to be added
-						 * to the blacklist, because he's little bitch.
-						 */
-						if(in_array($this->frm->getField('username')->getValue(), array('admin', 'administrator', 'dieter', 'god', 'netlash', 'root', 'sudo'))) $this->frm->getField('username')->addError(BL::getError('UsernameIsNotAllowed'));
-					}
+					// email already exists
+					if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id)) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
 				}
 			}
 
@@ -173,14 +162,14 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$user = array();
 				$user['id'] = $this->id;
 				$user['group_id'] = $this->frm->getField('group')->getValue();
-				$user['username'] = $this->frm->getField('username')->getValue(true);
+				$user['email'] = $this->frm->getField('email')->getValue(true);
 				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $user['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
 
 				// update password (only if filled in)
 				if($this->frm->getField('new_password')->isFilled()) $user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('new_password')->getValue(), $this->record['settings']['password_key']);
 
 				// build settings-array
-				$settings = $this->frm->getValues(array('username', 'password'));
+				$settings = $this->frm->getValues(array('email', 'password'));
 
 				// is there a file given
 				if($this->frm->getField('avatar')->isFilled())
@@ -219,7 +208,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. $user['username'] .'&highlight=userid-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. $settings['nickname'] .'&highlight=userid-'. $user['id']);
 			}
 		}
 	}

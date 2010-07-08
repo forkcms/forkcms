@@ -8,19 +8,19 @@
 {form:add}
 	<div id="tabs" class="tabs">
 		<ul>
-			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
+			<li><a href="#tabProfile">{$lblProfile|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 		</ul>
 
-		<div id="tabSettings">
+		<div id="tabProfile">
 			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblLoginCredentials|ucfirst}</h3>
 				</div>
 				<div class="options labelWidthLong horizontal">
 					<p>
-						<label for="username">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtUsername} {$txtUsernameError}
+						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						{$txtEmail} {$txtEmailError}
 					</p>
 					<p>
 						<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
@@ -58,10 +58,6 @@
 					<p>
 						<label for="surname">{$lblSurname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtSurname} {$txtSurnameError}
-					</p>
-					<p>
-						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtEmail} {$txtEmailError}
 					</p>
 					<p>
 						<label for="nickname">{$lblNickname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>

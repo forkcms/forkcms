@@ -52,11 +52,10 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$defaultGroupId = BackendModel::getSetting('users', 'default_group', $groupIds[0]);
 
 		// create elements
-		$this->frm->addText('username', null, 75);
+		$this->frm->addText('email', null, 255);
 		$this->frm->addPassword('password', null, 75);
 		$this->frm->addPassword('confirm_password', null, 75);
 		$this->frm->addText('nickname', null, 75);
-		$this->frm->addText('email', null, 255);
 		$this->frm->addText('name', null, 255);
 		$this->frm->addText('surname', null, 255);
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
@@ -85,30 +84,19 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
-			// username is present
-			if($this->frm->getField('username')->isFilled(BL::getError('UsernameIsRequired')))
+			// email is present
+			if($this->frm->getField('email')->isFilled(BL::getError('EmailIsRequired')))
 			{
-				// only a-z (no spaces) are allowed
-				if($this->frm->getField('username')->isAlphaNumeric(BL::getError('AlphaNumericCharactersOnly')))
+				// is this an email-address
+				if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
 				{
-					// username already exists
-					if(BackendUsersModel::existsUsername($this->frm->getField('username')->getValue())) $this->frm->getField('username')->addError(BL::getError('UsernameAlreadyExists'));
-
-					// username doesn't exist
-					else
-					{
-						/*
-						 * Some usernames are blacklisted, so we don't allow them. Dieter has asked to be added
-						 * to the blacklist, because he's little bitch.
-						 */
-						if(in_array($this->frm->getField('username')->getValue(), array('admin', 'administrator', 'dieter', 'god', 'netlash', 'root', 'sudo'))) $this->frm->getField('username')->addError(BL::getError('UsernameIsNotAllowed'));
-					}
+					// email already exists
+					if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
 				}
 			}
 
 			// required fields
 			$this->frm->getField('password')->isFilled(BL::getError('PasswordIsRequired'));
-			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
 			$this->frm->getField('nickname')->isFilled(BL::getError('NicknameIsRequired'));
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
@@ -135,7 +123,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build settings-array
-				$settings = $this->frm->getValues(array('username', 'password'));
+				$settings = $this->frm->getValues(array('email', 'password'));
 				$settings['password_key'] = uniqid();
 				$settings['avatar'] = 'no-avatar.gif';
 
@@ -145,7 +133,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 
 				// build user-array
-				$user['username'] = $this->frm->getField('username')->getValue();
+				$user['email'] = $this->frm->getField('email')->getValue();
 				$user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('password')->getValue(true), $settings['password_key']);
 				$user['group_id'] = $this->frm->getField('group')->getValue();
 
@@ -175,7 +163,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. $user['username'] .'&highlight=userid-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. $settings['nickname'] .'&highlight=userid-'. $user['id']);
 			}
 		}
 	}

@@ -11,7 +11,7 @@
 				{option:hasError}
 					<div id="loginError">
 						<div class="errorMessage singleMessage">
-							<p>{$errInvalidUsernamePasswordCombination}</p>
+							<p>{$errInvalidEmailPasswordCombination}</p>
 						</div>
 					</div>
 				{/option:hasError}
@@ -25,8 +25,8 @@
 						<div class="horizontal">
 							<div id="loginFields">
 								<p>
-									<label for="backendUsername">{$lblUsername|ucfirst}</label>
-									{$txtBackendUsername} {$txtBackendUsernameError}
+									<label for="backendEmail">{$lblEmail|ucfirst}</label>
+									{$txtBackendEmail} {$txtBackendEmailError}
 								</p>
 								<p>
 									<label for="backendPassword">{$lblPassword|ucfirst}</label>

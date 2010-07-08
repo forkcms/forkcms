@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
 <div class="pageTitle">
-	<h2>{$lblUsers|ucfirst}: {$msgEditUser|sprintf:{$record['username']}}</h2>
+	<h2>{$lblUsers|ucfirst}: {$msgEditUser|sprintf:{$record['settings']['nickname']}}</h2>
 </div>
 
 {form:edit}
@@ -27,7 +27,7 @@
 					</tr>
 					<tr>
 						<th>{$lblEmail|ucfirst}:</th>
-						<td>{$record['settings']['email']}</td>
+						<td>{$record['email']}</td>
 					</tr>
 				</table>
 			</td>
@@ -36,29 +36,22 @@
 
 	<div id="tabs" class="tabs">
 		<ul>
-			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
+			<li><a href="#tabProfile">{$lblProfile|ucfirst}</a></li>
 			<li><a href="#tabPassword">{$lblPassword|ucfirst}</a></li>
+			<li><a href="#tabInterface">{$lblInterface|ucfirst}</a></li>
 			<li><a href="#tabPermissions">{$lblPermissions|ucfirst}</a></li>
 		</ul>
 
-		<div id="tabSettings">
-			<div class="subtleBox">
-				<div class="heading">
-					<h3>{$lblLoginCredentials|ucfirst}</h3>
-				</div>
-				<div class="options horizontal labelWidthLong">
-					<p>
-						<label for="username">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtUsername} {$txtUsernameError}
-					</p>
-				</div>
-			</div>
-
+		<div id="tabProfile">
 			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblPersonalInformation|ucfirst}</h3>
 				</div>
 				<div class="options horizontal labelWidthLong">
+					<p>
+						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						{$txtEmail} {$txtEmailError}
+					</p>
 					<p>
 						<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtName} {$txtNameError}
@@ -66,10 +59,6 @@
 					<p>
 						<label for="surname">{$lblSurname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtSurname} {$txtSurnameError}
-					</p>
-					<p>
-						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtEmail} {$txtEmailError}
 					</p>
 					<p>
 						<label for="nickname">{$lblNickname|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
@@ -83,7 +72,9 @@
 					</p>
 				</div>
 			</div>
+		</div>
 
+		<div id="tabInterface">
 			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblInterfacePreferences|ucfirst}</h3>

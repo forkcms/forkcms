@@ -87,6 +87,7 @@ class FrontendHeader extends FrontendBaseObject
 
 		// add default javascript-files
 		$this->addJavascript('/frontend/core/js/jquery/jquery.js', false);
+		$this->addJavascript('/frontend/core/js/jquery/jquery.ui.js', false);
 		$this->addJavascript('/frontend/core/js/frontend.js', true);
 		$this->addJavascript('/frontend/core/js/utils.js', true);
 	}
@@ -514,7 +515,8 @@ class FrontendHeader extends FrontendBaseObject
 		if(!empty($existingJavascriptFiles))
 		{
 			// some files should be cached, even if we don't want cached (mostly libraries)
-			$ignoreCache = array('/frontend/core/js/jquery/jquery.js');
+			$ignoreCache = array('/frontend/core/js/jquery/jquery.js',
+									'/frontend/core/js/jquery/jquery.ui.js');
 
 			// loop the JS-files
 			foreach($existingJavascriptFiles as $file)

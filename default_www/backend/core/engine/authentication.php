@@ -53,21 +53,21 @@ class BackendAuthentication
 
 
 	/**
-	 * Returns the encrypted password for a user by giving a username/password
+	 * Returns the encrypted password for a user by giving a email/password
 	 * Returns false if no user was found for this user/pass combination
 	 *
 	 * @return	string
-	 * @param	string $username	The username.
+	 * @param	string $email		The email.
 	 * @param	string $password	The password.
 	 */
-	public static function getEncryptedPassword($username, $password)
+	public static function getEncryptedPassword($email, $password)
 	{
 		// redefine
-		$username = (string) $username;
+		$email = (string) $email;
 		$password = (string) $password;
 
-		// fetch user ID by username
-		$userId = BackendUsersModel::getIdByUsername($username);
+		// fetch user ID by email
+		$userId = BackendUsersModel::getIdByEmail($email);
 
 		// check if a user ID was found, return false if no user exists
 		if($userId === false) return false;
@@ -319,10 +319,10 @@ class BackendAuthentication
 		// fetch the encrypted password
 		$passwordEncrypted = BackendAuthentication::getEncryptedPassword($login, $password);
 
-		// check in database (is the user active and not deleted, are the username and password correct?)
+		// check in database (is the user active and not deleted, are the email and password correct?)
 		$userId = (int) $db->getVar('SELECT u.id
 										FROM users AS u
-										WHERE u.username = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
+										WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
 										LIMIT 1;',
 										array($login, $passwordEncrypted, 'Y', 'N'));
 

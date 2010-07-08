@@ -80,8 +80,8 @@ class ForkAPI
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string[optional] $login		The login (username) that has to be used for authenticating
-	 * @param	string[optional] $apiKey	The API-key that has to be used for authentication (see http://bit.ly/account)
+	 * @param	string[optional] $publicKey		The public-key of the keypair
+	 * @param	string[optional] $privateKey	The private-key of the keypair
 	 */
 	public function __construct($publicKey = null, $privateKey = null)
 	{

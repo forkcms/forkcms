@@ -74,37 +74,17 @@ class BackendUsersModel
 
 
 	/**
-	 * Does the user with a given emailadress exist.
+	 * Does a email already exist?
+	 * If you specify a userId, the email with the given id will be ignored.
 	 *
 	 * @return	bool
-	 * @param	string $email	The email to check for existance.
+	 * @param	string $email		The email to check for.
+	 * @param	int[optional] $id	The userId to be ignored.
 	 */
-	public static function existsEmail($email)
+	public static function existsEmail($email, $id = null)
 	{
 		// redefine
 		$email = (string) $email;
-
-		// check if the user is present in our database
-		return (BackendModel::getDB()->getNumRows('SELECT i.id
-													FROM users AS i
-													INNER JOIN users_settings AS s ON i.id = s.user_id
-													WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value = ?;',
-													array('Y', 'N', 'email', serialize($email))) > 0);
-	}
-
-
-	/**
-	 * Does a username already exist?
-	 * If you specify a userId, the username with the given id will be ignored.
-	 *
-	 * @return	bool
-	 * @param	string $username		The username to check for.
-	 * @param	int[optional] $id		The userId to be ignored.
-	 */
-	public static function existsUsername($username, $id = null)
-	{
-		// redefine
-		$username = (string) $username;
 		$id = ($id !== null) ? (int) $id : null;
 
 		// get db
@@ -113,14 +93,14 @@ class BackendUsersModel
 		// userid specified?
 		if($id !== null) return (bool) ($db->getNumRows('SELECT i.id
 															FROM users AS i
-															WHERE i.id != ? AND i.username = ?;',
-															array($id, $username)) >= 1);
+															WHERE i.id != ? AND i.email = ?;',
+															array($id, $email)) >= 1);
 
 		// no user to ignore
 		return (bool) ($db->getNumRows('SELECT i.id
 										FROM users AS i
-										WHERE i.username = ?;',
-										array($username)) >= 1);
+										WHERE i.email = ?;',
+										array($email)) >= 1);
 	}
 
 
@@ -139,7 +119,7 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// get general user data
-		$user = (array) $db->getRecord('SELECT i.id, i.username, i.active, i.group_id
+		$user = (array) $db->getRecord('SELECT i.id, i.email, i.active, i.group_id
 										FROM users AS i
 										WHERE i.id = ?;',
 										array($id));
@@ -191,40 +171,18 @@ class BackendUsersModel
 
 
 	/**
-	 * Get the user ID linked to a given user e-mail address
+	 * Get the user ID linked to a given email
 	 *
 	 * @return	int
 	 * @param	string $email	The email for the user.
 	 */
 	public static function getIdByEmail($email)
 	{
-		// redefine
-		$email = (string) $email;
-
-		// get user-settings
-		$userId = BackendModel::getDB()->getVar('SELECT i.user_id
-													FROM users_settings AS i
-													WHERE i.value = ?;',
-													array(serialize($email)));
-
-		// userId or false on error
-		return ($userId == 0) ? false : (int) $userId;
-	}
-
-
-	/**
-	 * Get the user ID linked to a given username
-	 *
-	 * @return	int
-	 * @param	string $username	The username for the user.
-	 */
-	public static function getIdByUsername($username)
-	{
 		// get user-settings
 		$userId = BackendModel::getDB()->getVar('SELECT i.id
 													FROM users AS i
-													WHERE i.username = ?;',
-													array((string) $username));
+													WHERE i.email = ?;',
+													array((string) $email));
 
 		// userId or false on error
 		return ($userId == 0) ? false : (int) $userId;
@@ -258,9 +216,9 @@ class BackendUsersModel
 	 */
 	public static function getUsers()
 	{
-		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.username
+		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.email
 														FROM users AS i
-														ORDER BY i.username;',
+														ORDER BY i.email;',
 														null, 'id');
 	}
 

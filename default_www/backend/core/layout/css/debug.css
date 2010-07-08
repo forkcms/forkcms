@@ -47,3 +47,7 @@ img {
 #debugnotify {
 	color: red;
 }
+
+th.publish_on, th.edited_on { width: 170px; }
+th.user_id { width: 170px; }
+th.comments { width: 100px; }
