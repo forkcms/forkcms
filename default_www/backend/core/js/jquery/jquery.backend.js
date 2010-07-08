@@ -295,3 +295,103 @@
 		});
 	};
 })(jQuery);
+
+(function($) {
+	$.fn.inlineTextEdit = function(options) {
+		// define defaults
+		var defaults = {
+			saveUrl: null,
+			current: {},
+			extraParams: {},
+			inputClasses: 'inputText',
+			allowEmpty: false
+		};
+		
+		// extend options
+		var options = $.extend(defaults, options);
+	
+		// loop all elements
+		return this.each(function() {
+			// bind events
+			$(this).bind('click focus', createElement);
+			$(this).hover(function() { $(this).addClass('inlineEditHover'); }, function() { $(this).removeClass('inlineEditHover'); });
+			
+			// create an element
+			function createElement() {
+				// grab current value
+				options.current.value = $(this).html();
+				if($(this).attr('rel') != '') options.current.extraParams = eval('('+ $(this).attr('rel') +')');
+				
+				// add class
+				$(this).addClass('inlineEditing');
+				
+				// remove events
+				$(this).unbind('click').unbind('focus');
+				
+				// set html
+				$(this).html('<input type="text" class="'+ options.inputClasses +'" value="'+ options.current.value +'" />');
+				
+				// store element
+				options.current.element = $($(this).find('input')[0]);
+				
+				// set focus
+				options.current.element.select();
+				
+				// bind events
+				options.current.element.bind('blur', saveElement);
+				options.current.element.keyup(function(evt) {
+					// handle escape
+					if(evt.which == 27) {
+						// reset
+						options.current.element.val(options.current.value);
+						
+						// destroy
+						destroyElement();
+					}
+					
+					// save when someone presses enter
+					if(evt.which == 13) saveElement();
+				});
+			}
+			
+			// destroy the element
+			function destroyElement() {
+				// get parent
+				var parent = options.current.element.parent();
+				
+				// set HTML and rebind events
+				parent.html(options.current.element.val())
+						.bind('click focus', createElement);
+				
+				// add class
+				parent.removeClass('inlineEditing');
+			}
+			
+			// save the element
+			function saveElement() {
+				// if the new value is empty and that isn't allowed, we restore the original value
+				if(!options.allowEmpty && options.current.element.val() == '') {
+					options.current.element.val(options.current.value);
+				}
+				
+				// is the value different from the original value
+				if(options.current.element.val() != options.current.value)
+				{
+					// add element to the params
+					options.current.extraParams['value'] = options.current.element.val(); 
+
+					// make the call
+					$.ajax({ url: options.saveUrl, data: options.current.extraParams,
+						success: function(data, textStatus) { 
+							// destroy the element
+							destroyElement();
+						},
+					});
+				}
+				
+				// destroy the element 
+				else destroyElement()
+			}
+		});
+	};
+})(jQuery);

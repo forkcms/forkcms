@@ -51,3 +51,8 @@ img {
 th.publish_on, th.edited_on { width: 170px; }
 th.user_id { width: 170px; }
 th.comments { width: 100px; }
+
+td.inlineEditHover { 
+	background: #1A57AD url('../images/sprites/fork_icons.png') no-repeat 4px -18px !important;
+	padding-left: 22px;
+}

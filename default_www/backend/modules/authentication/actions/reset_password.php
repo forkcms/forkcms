@@ -84,6 +84,9 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		// create elements and add to the form
 		$this->frm->addPassword('backend_new_password');
 		$this->frm->addPassword('backend_new_password_repeated');
+
+		$this->frm->getField('backend_new_password')->setAttributes(array('autocomplete' => 'off'));
+		$this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
 	}
 
 

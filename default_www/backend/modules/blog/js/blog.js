@@ -25,6 +25,18 @@ jsBackend.blog.category = {
 			$('#newCategoryValue').bind('keyup', jsBackend.blog.category.keyPress);
 			$('#newCategoryButton').bind('click', jsBackend.blog.category.add);
 		}
+		
+		if($('.datagrid td.name').length > 0) {
+			// split url to buil the ajax-url
+			var chunks = document.location.pathname.split('/');
+
+			// buil ajax-url
+			var url = '/backend/ajax.php?module=' + chunks[3] + '&action=edit_category&language=' + chunks[2];
+
+			// bind 
+			$('.datagrid td.name').inlineTextEdit({ saveUrl: url });
+		}
+		
 	},
 	// add new category
 	add: function(evt) {
