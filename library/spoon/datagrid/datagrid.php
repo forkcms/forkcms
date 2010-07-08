@@ -917,7 +917,7 @@ class SpoonDatagrid
 				}
 
 				// fetch column attributes
-				$columnAttributes = $this->getHtmlAttributes($column->getAttributes());
+				$columnAttributes = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($column->getAttributes()));
 
 				// visible & iteration
 				if(!$column->getHidden())
