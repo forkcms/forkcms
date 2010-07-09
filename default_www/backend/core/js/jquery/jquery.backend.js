@@ -316,8 +316,11 @@
 			// add wrapper and tooltip
 			$(this).html('<span>'+ $(this).html() +'</span><span style="display: none;" class="inlineEditTooltip">'+ options.tooltip +'</span>');
 			
+			// grab element
+			var element = $($(this).find('span')[0]);
+			
 			// bind events
-			$(this).bind('click focus', createElement);
+			element.bind('click focus', createElement);
 			$(this).hover(function() { 
 							$(this).addClass('inlineEditHover');
 							$($(this).find('span')[1]).show();
@@ -329,11 +332,11 @@
 			
 			// create an element
 			function createElement() {
-				var element = $($(this).find('span')[0]);
-				
 				// grab current value
 				options.current.value = element.html();
-				if(element.attr('rel') != '') options.current.extraParams = eval('('+ $(this).attr('rel') +')');
+				
+				// grab extra params
+				if($(this).parent().attr('rel') != '') options.current.extraParams = eval('('+ $(this).parent().attr('rel') +')');
 				
 				// add class
 				element.addClass('inlineEditing');
