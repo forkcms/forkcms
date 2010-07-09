@@ -52,7 +52,15 @@ th.publish_on, th.edited_on { width: 170px; }
 th.user_id { width: 170px; }
 th.comments { width: 100px; }
 
-td.inlineEditHover { 
-	background: #1A57AD url('../images/sprites/fork_icons.png') no-repeat 4px -18px !important;
-	padding-left: 22px;
+.inlineEditTooltip {
+	margin-left: 7px;
+	padding: 1px 4px 0;
+	font-size: 10px;
+	color: #808080;
+	background-color: #EEE;
+	border: 1px solid #BABABA;
+	
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
 }

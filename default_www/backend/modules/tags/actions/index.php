@@ -4,6 +4,8 @@
  * BackendTagsIndex
  * This is the index-action, it will display the overview of tags
  *
+ * @todo	add inline-editing
+ *
  * @package		backend
  * @subpackage	tags
  *

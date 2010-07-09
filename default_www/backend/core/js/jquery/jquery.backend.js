@@ -304,7 +304,8 @@
 			current: {},
 			extraParams: {},
 			inputClasses: 'inputText',
-			allowEmpty: false
+			allowEmpty: false,
+			tooltip: 'click to edit'
 		};
 		
 		// extend options
@@ -312,27 +313,39 @@
 	
 		// loop all elements
 		return this.each(function() {
+			// add wrapper and tooltip
+			$(this).html('<span>'+ $(this).html() +'</span><span style="display: none;" class="inlineEditTooltip">'+ options.tooltip +'</span>');
+			
 			// bind events
 			$(this).bind('click focus', createElement);
-			$(this).hover(function() { $(this).addClass('inlineEditHover'); }, function() { $(this).removeClass('inlineEditHover'); });
+			$(this).hover(function() { 
+							$(this).addClass('inlineEditHover');
+							$($(this).find('span')[1]).show();
+						}, 
+						function() { 
+							$(this).removeClass('inlineEditHover'); 
+							$($(this).find('span')[1]).hide();
+						});
 			
 			// create an element
 			function createElement() {
+				var element = $($(this).find('span')[0]);
+				
 				// grab current value
-				options.current.value = $(this).html();
-				if($(this).attr('rel') != '') options.current.extraParams = eval('('+ $(this).attr('rel') +')');
+				options.current.value = element.html();
+				if(element.attr('rel') != '') options.current.extraParams = eval('('+ $(this).attr('rel') +')');
 				
 				// add class
-				$(this).addClass('inlineEditing');
+				element.addClass('inlineEditing');
 				
 				// remove events
-				$(this).unbind('click').unbind('focus');
+				element.unbind('click').unbind('focus');
 				
 				// set html
-				$(this).html('<input type="text" class="'+ options.inputClasses +'" value="'+ options.current.value +'" />');
+				element.html('<input type="text" class="'+ options.inputClasses +'" value="'+ options.current.value +'" />');
 				
 				// store element
-				options.current.element = $($(this).find('input')[0]);
+				options.current.element = $(element.find('input')[0]);
 				
 				// set focus
 				options.current.element.select();

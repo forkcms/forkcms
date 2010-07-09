@@ -27,14 +27,11 @@ jsBackend.blog.category = {
 		}
 		
 		if($('.datagrid td.name').length > 0) {
-			// split url to buil the ajax-url
-			var chunks = document.location.pathname.split('/');
-
 			// buil ajax-url
-			var url = '/backend/ajax.php?module=' + chunks[3] + '&action=edit_category&language=' + chunks[2];
+			var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=edit_category&language=' + jsBackend.current.language;
 
 			// bind 
-			$('.datagrid td.name').inlineTextEdit({ saveUrl: url });
+			$('.datagrid td.name').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
 		}
 		
 	},
@@ -46,10 +43,9 @@ jsBackend.blog.category = {
 		// validate
 		if($('#newCategoryValue').val().length == 0) return false;
 		
-		// split url to buil the ajax-url
-		var chunks = document.location.pathname.split('/');
 		// buil ajax-url
-		var url = '/backend/ajax.php?module=' + chunks[3] + '&action=add_category&language=' + chunks[2];
+		var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=add_category&language=' + jsBackend.current.language;
+
 		// init var
 		var name = $('#newCategoryValue').val();
 		

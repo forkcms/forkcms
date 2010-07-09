@@ -3,9 +3,18 @@ if(!jsBackend) { var jsBackend = new Object(); }
 jsBackend = {
 	// datamembers
 	debug: true,
+	current: { module: null, action: null, language: null },
 	
 	// init, something like a constructor
 	init: function() {
+		// get url and split into chunks
+		var chunks = document.location.pathname.split('/');
+
+		// set some properties
+		jsBackend.current.module = chunks[3];
+		jsBackend.current.action = chunks[4];
+		jsBackend.current.language = chunks[2];
+		
 		// init stuff
 		jsBackend.initAjax();
 		jsBackend.balloons.init();
@@ -801,10 +810,8 @@ jsBackend.tableSequenceByDragAndDrop = {
 				placeholder: 'dragAndDropPlaceholder',
 				forcePlaceholderSize: true,
 				stop: function(event, ui) {
-					// split url to buil the ajax-url
-					var chunks = document.location.pathname.split('/');
 					// buil ajax-url
-					var url = '/backend/ajax.php?module=' + chunks[3] + '&action=sequence&language=' + chunks[2];
+					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
 					// init var
 					var rowIds = $(this).sortable('toArray');
 					var newIdSequence = new Array();
