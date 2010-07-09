@@ -159,6 +159,9 @@ class BackendUsersAdd extends BackendBaseActionAdd
 					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename, 32, 32, true, false, 100);
 				}
 
+				Spoon::dump($user, false);
+				Spoon::dump($settings);
+
 				// update settings (in this case the avatar)
 				BackendUsersModel::update($user, $settings);
 
