@@ -11,6 +11,14 @@ class ModuleInstaller
 
 
 	/**
+	 * The active languages
+	 *
+	 * @var	array
+	 */
+	protected $languages = array();
+
+
+	/**
 	 * Inserts a new module
 	 */
 	protected function addModule($name, $description = null)

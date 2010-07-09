@@ -1607,7 +1607,7 @@ class BackendPagesModel
 																		array('Y'));
 
 		// store
-		BackendModel::setSetting('core', 'template_max_blocks', $maximumNumberOfBlocks);
+		BackendModel::setSetting('pages', 'template_max_blocks', $maximumNumberOfBlocks);
 	}
 
 
