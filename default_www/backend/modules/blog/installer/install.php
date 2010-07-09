@@ -41,7 +41,6 @@ class BlogInstall extends ModuleInstaller
 			$this->setSetting('blog', 'rss_description_'. $language, '');
 		}
 
-
 		// module rights
 		$this->setModuleRights(1, 'blog');
 

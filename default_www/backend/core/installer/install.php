@@ -29,9 +29,9 @@ class ModuleInstaller
 	protected function setActionRights($groupId, $module, $action, $level = 7)
 	{
 		// action doesn't exist
-		if(!$this->db->getNumRows('SELECT id FROM groups_rights_actions WHERE group_id = ? AND module = ? AND action = ?;', array((int) $groupId, (string) $module, (string) $action, (int) $level)))
+		if(!$this->db->getNumRows('SELECT id FROM groups_rights_actions WHERE group_id = ? AND module = ? AND action = ?;', array((int) $groupId, (string) $module, (string) $action)))
 		{
-			$this->db->insert('groups_rights_actions', array('group_id' => (int) $groupId, 'module' => (string) $module, 'action' => (string) $action, (int) $level));
+			$this->db->insert('groups_rights_actions', array('group_id' => (int) $groupId, 'module' => (string) $module, 'action' => (string) $action, 'level' => (int) $level));
 		}
 	}
 
