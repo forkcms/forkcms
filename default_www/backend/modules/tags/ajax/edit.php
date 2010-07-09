@@ -1,0 +1,46 @@
+<?php
+
+/**
+ * BackendTagsAjaxEdit
+ *
+ * @package		backend
+ * @subpackage	tags
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
+class BackendTagsAjaxEdit extends BackendBaseAJAXAction
+{
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// get parameters
+		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
+		$tag = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
+
+		// validate
+		if($id == 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($tag == '') $this->output(self::BAD_REQUEST, null, BL::getError('NameIsRequired'));
+
+		// build array
+		$item = array();
+		$item['id'] = $id;
+		$item['tag'] = SpoonFilter::htmlspecialchars($tag);
+		$item['url'] = BackendTagsModel::getURL($item['tag'], $id);
+
+		// update
+		BackendTagsModel::updateTag($item);
+
+		// output
+		$this->output(self::OK, $item, vsprintf(BL::getMessage('Edited'), array($item['tag'])));
+	}
+}
+
+?>

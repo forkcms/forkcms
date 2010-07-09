@@ -4,8 +4,6 @@
  * BackendTagsIndex
  * This is the index-action, it will display the overview of tags
  *
- * @todo	add inline-editing
- *
  * @package		backend
  * @subpackage	tags
  *
@@ -53,9 +51,6 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
 		$this->datagrid->setSortParameter('desc');
 
-		// set colum URLs
-		$this->datagrid->setColumnURL('tag', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
-
 		// add the multicheckbox column
 		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
 		$this->datagrid->setColumnsSequence('checkbox');
@@ -67,6 +62,9 @@ class BackendTagsIndex extends BackendBaseActionIndex
 
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
+
+		// add attributes, so the inline editing has all the needed data
+		$this->datagrid->setColumnAttributes('tag', array('rel' => '{id:[id]}'));
 	}
 
 

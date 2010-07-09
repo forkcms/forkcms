@@ -35,7 +35,7 @@ class BackendBlogAjaxAddCategory extends BackendBaseAJAXAction
 
 		// build array
 		$category = array();
-		$category['name'] = $categoryName;
+		$category['name'] = SpoonFilter::htmlspecialchars($categoryName);
 		$category['language'] = BL::getWorkingLanguage();
 		$category['url'] = BackendBlogModel::getURLForCategory($category['name']);
 

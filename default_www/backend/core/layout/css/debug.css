@@ -48,9 +48,12 @@ img {
 	color: red;
 }
 
-th.publish_on, th.edited_on { width: 170px; }
-th.user_id { width: 170px; }
-th.comments { width: 100px; }
+th.publish_on, th.edited_on, th.date { width: 170px; }
+th.user_id, th.author { width: 170px; }
+th.comments { width: 70px; }
+	td.comments { text-align: right; }
+th.num_tags { width: 70px; }
+	td.num_tags { text-align: right; }
 
 .inlineEditTooltip {
 	margin-left: 7px;

@@ -46,17 +46,14 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('name'), 'name');
 
-		// set colum URLs
-//		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_category') .'&amp;id=[id]');
-
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::getLabel('Edit'));
 
 		// disable paging
 		$this->datagrid->setPaging(false);
 
+		// add attributes, so the inline editing has all the needed data
 		$this->datagrid->setColumnAttributes('name', array('rel' => '{id:[id]}'));
-
 	}
 
 
