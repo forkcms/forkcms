@@ -3,13 +3,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 
 	<title>Installer - Fork CMS</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/install/layout/css/installer.css" />
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
+	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
 	<table border="0" cellspacing="0" cellpadding="0" id="installHolder">
@@ -27,29 +29,29 @@
 							<div class="horizontal">
 								<h3>Filesystem configuration</h3>
 								<p>
-									<label for="spoonPath">Default domain<abbr title="Required">*</abbr></label>
-									{$txtSpoonPath} {$txtSpoonPathError}
-									<span class="helpTxt">Correct the path to the folder containing Spoon if needed.</span>
+									<label for="pathLibrary">Library path<abbr title="Required">*</abbr></label>
+									{$txtPathLibrary} {$txtPathLibraryError}
+									<span class="helpTxt">Correct the path to the library folder if needed.</span>
 								</p>
 							</div>
 
 							<div class="horizontal">
 								<h3>Debug configuration</h3>
 								<p>
-									<label for="debugEmail">Debug email-address</label>
+									<label for="debugEmail">Debug email address<abbr title="Required">*</abbr></label>
 									{$txtDebugEmail} {$txtDebugEmailError}
-									<span class="helpTxt">When an error occurs a mail will be send to this emailaddress. This will be usefull when the site is on the production server.</span>
+									<span class="helpTxt">When an error occures an email will be send to this address.</span>
 								</p>
 							</div>
 
 							<div class="horizontal">
 								<h3>Database configuration</h3>
-								<p>The database will store all the data for this site. <strong>Make sure the database already exists on the server and you remember the credentials.</strong>. You should import the <em>default.sql</em>-file in that database.</p>
-
+								<p>Make sure the database already exists.</p>
+								{option:databaseError}<p><span class="formError">{$databaseError}</span></p>{/option:databaseError}
 								<p>
-									<label for="databaseHost">Host<abbr title="Required">*</abbr></label>
-									{$txtDatabaseHost} {$txtDatabaseHostError}
-									<span class="helpTxt">If you're not sure what you should enter here, leave the default setting or check with your hosting provider.</span>
+									<label for="databaseHostname">Hostname<abbr title="Required">*</abbr></label>
+									{$txtDatabaseHostname} {$txtDatabaseHostnameError}
+									<span class="helpTxt">If you are not sure, use the default setting or check with your hosting provider.</span>
 								</p>
 								<p>
 									<label for="databaseName">Database name<abbr title="Required">*</abbr></label>
@@ -68,7 +70,6 @@
 							<div class="horizontal">
 								<h3>Site configuration</h3>
 								<p>These values are just default. They can be alltered in the settings-menu.</p>
-
 								<p>
 									<label for="siteDomain">Default domain<abbr title="Required">*</abbr></label>
 									{$txtSiteDomain} {$txtSiteDomainError}
@@ -81,19 +82,41 @@
 
 							<div class="horizontal">
 								<h3>Languages configuration</h3>
-								<p>Will your site be available in multiple languages or just one? If you want to alter this setting later on: all URL's will change, so choose wisely.</p>
-								{$rbtMultilanguageError}
+								<p>Will your site be available in multiple languages or just one? Changing this setting in a later stage, will have an influence on your URLs</p>
 
-								<ul class="inputList">
-									{iteration:multilanguage}
-									<li><label for="{$multilanguage.id}">{$multilanguage.rbtMultilanguage} {$multilanguage.label}</label></li>
-									{/iteration:multilanguage}
-								</ul>
+								<div>
+									{iteration:languageType}
+										{$languageType.rbtLanguageType} <label for="{$languageType.id}">{$languageType.label}</label><br />
+										{option:languageType.multiple}
+											<p id="multipleLanguages" class="hidden" style="margin-left: 25px;">
+												{iteration:multipleLanguages}
+													{$multipleLanguages.chkMultipleLanguages} <label for="{$multipleLanguages.id}">{$multipleLanguages.label}</label><br />
+												{/iteration:multipleLanguages}
+											</p>
+										{/option:languageType.multiple}
+										{option:languageType.single}
+											<p id="singleLanguages" class="hidden" style="margin-left: 25px;">
+												{iteration:singleLanguages}
+													{$singleLanguages.rbtSingleLanguages} <label for="{$singleLanguages.id}">{$singleLanguages.label}</label><br />
+												{/iteration:singleLanguages}
+											</p>
+										{/option:languageType.single}
+									{/iteration:languageType}
+								</div>
+
+								<p style="margin-top: 20px;">
+									What is the default language, we should use for the website?<br />
+									{option:rbtDefaultLanguageError}<span class="formError">{$rbtDefaultLanguageError}</span>{/option:rbtDefaultLanguageError}
+									{iteration:defaultLanguage}
+										{$defaultLanguage.rbtDefaultLanguage} <label for="{$defaultLanguage.id}">{$defaultLanguage.label}</label><br />
+									{/iteration:defaultLanguage}
+								</p>
 							</div>
 
 							<div>
 								<p class="spacing">
-									<input id="installer" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
+									<a href="index.php?step=1">Previous</a>
+									<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
 								</p>
 							</div>
 						</div>

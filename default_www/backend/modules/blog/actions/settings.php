@@ -47,8 +47,8 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm = new BackendForm('settings');
 
 		// add fields for pagination
-		$this->frm->addDropdown('overview_number_of_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getSetting($this->URL->getModule(), 'overview_number_of_items', 20));
-		$this->frm->addDropdown('recent_articles_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getSetting($this->URL->getModule(), 'recent_articles_number_of_items', 5));
+		$this->frm->addDropdown('overview_number_of_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getSetting($this->URL->getModule(), 'overview_num_items', 10));
+		$this->frm->addDropdown('recent_articles_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getSetting($this->URL->getModule(), 'recent_articles_num_items', 5));
 
 		// add fields for spam
 		$this->frm->addCheckbox('spamfilter', BackendModel::getSetting($this->URL->getModule(), 'spamfilter', false));
@@ -103,8 +103,8 @@ class BackendBlogSettings extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set our settings
-				BackendModel::setSetting($this->URL->getModule(), 'overview_number_of_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'recent_articles_number_of_items', (int) $this->frm->getField('recent_articles_number_of_items')->getValue());
+				BackendModel::setSetting($this->URL->getModule(), 'overview_num_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
+				BackendModel::setSetting($this->URL->getModule(), 'recent_articles_num_items', (int) $this->frm->getField('recent_articles_number_of_items')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'moderation', (bool) $this->frm->getField('moderation')->getValue());

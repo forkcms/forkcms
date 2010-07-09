@@ -6,6 +6,7 @@
  * @package		installer
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class Installer
@@ -39,6 +40,9 @@ class Installer
 		// get step
 		$step = SpoonFilter::getGetValue('step', array(1, 2, 3, 4), 1, 'int');
 
+		// go to step 1 if your requirements were not ok
+		if($step != 1 && !$this->checkRequirements()) $step = 1;
+
 		// in step 1 we don't know where Spoon is located so we cant use the template-engine
 		if($step != 1)
 		{
@@ -46,7 +50,7 @@ class Installer
 			$this->tpl = new SpoonTemplate();
 
 			// set some options
-			$this->tpl->setCompileDirectory(WWW_PATH .'/install/cache');
+			$this->tpl->setCompileDirectory(PATH_WWW .'/install/cache');
 			$this->tpl->setForceCompile(SPOON_DEBUG);
 		}
 
@@ -74,7 +78,66 @@ class Installer
 		if($this->frm !== null && $this->tpl !== null) $this->frm->parse($this->tpl);
 
 		// show the template
-		if($this->tpl !== null) $this->tpl->display(WWW_PATH .'/install/layout/templates/'. $step .'.tpl');
+		if($this->tpl !== null) $this->tpl->display(PATH_WWW .'/install/layout/templates/'. $step .'.tpl');
+	}
+
+
+	private function checkRequirements()
+	{
+		// check the PHP version. At this moment we require at least 5.2
+		$version = (int) str_replace('.', '', PHP_VERSION);
+		if($version < 520) return false;
+
+		// check if cURL is loaded
+		if(!extension_loaded('curl')) return false;
+
+		// check if SimpleXML is loaded
+		if(!extension_loaded('SimpleXML')) return false;
+
+		// check if SPL is loaded
+		if(!extension_loaded('SPL')) return false;
+
+		// check if PDO is loaded
+		if(!extension_loaded('PDO')) return false;
+
+		// check if mbstring is loaded
+		if(!extension_loaded('mbstring')) return false;
+
+		// check if iconv is loaded
+		if(!extension_loaded('iconv')) return false;
+
+		// check if GD is loaded and the correct version is installed
+		if(!extension_loaded('gd') && function_exists('gd_info')) return false;
+
+		// check if the backend-cache-directory is writable
+		if(!is_writable(PATH_WWW .'/backend/cache/')) return false;
+
+		// check if the frontend-cache-directory is writable
+		if(!is_writable(PATH_WWW .'/frontend/cache/')) return false;
+
+		// check if the frontend-files-directory is writable
+		if(!is_writable(PATH_WWW .'/frontend/files/')) return false;
+
+		// check if the library-directory is writable
+		if(!is_writable(PATH_LIBRARY)) return false;
+
+		// check if the installer-directory is writable
+		if(!is_writable(PATH_WWW .'/install')) return false;
+
+		// does the globals.example.php file exist
+		if(!file_exists(PATH_LIBRARY .'/globals.example.php') || !is_readable(PATH_LIBRARY .'/globals.example.php')) return false;
+		// @todo davy - extra checks voor inhoud van de file
+
+		// does the globals_backend.example.php file exist
+		if(!file_exists(PATH_LIBRARY .'/globals_backend.example.php') || !is_readable(PATH_LIBRARY .'/globals_backend.example.php')) return false;
+		// @todo davy - extra checks voor inhoud van de file
+
+		// does the globals_frontend.example.php file exist
+		if(!file_exists(PATH_LIBRARY .'/globals_frontend.example.php') || !is_readable(PATH_LIBRARY .'/globals_frontend.example.php')) return false;
+		// @todo davy - extra checks voor inhoud van de file
+
+		// every check was passed
+		return true;
 	}
 
 
@@ -91,10 +154,10 @@ class Installer
 
 		// init
 		$variables['error'] = '';
-		$variables['WWW_PATH'] = WWW_PATH;
-		$variables['SPOON_PATH'] = SPOON_PATH;
+		$variables['PATH_WWW'] = PATH_WWW;
+		$variables['PATH_LIBRARY'] = PATH_LIBRARY;
 
-		// check PHP version
+		// check the PHP version. At this moment we require at least 5.2
 		$version = (int) str_replace('.', '', PHP_VERSION);
 		if($version >= 520)
 		{
@@ -200,7 +263,7 @@ class Installer
 		}
 
 		// check if the backend-cache-directory is writable
-		if(is_writable(WWW_PATH .'/backend/cache/'))
+		if(is_writable(PATH_WWW .'/backend/cache/'))
 		{
 			$variables['fileSystemBackendCache'] = 'ok';
 			$variables['fileSystemBackendCacheStatus'] = 'ok';
@@ -213,7 +276,7 @@ class Installer
 		}
 
 		// check if the frontend-cache-directory is writable
-		if(is_writable(WWW_PATH .'/frontend/cache/'))
+		if(is_writable(PATH_WWW .'/frontend/cache/'))
 		{
 			$variables['fileSystemFrontendCache'] = 'ok';
 			$variables['fileSystemFrontendCacheStatus'] = 'ok';
@@ -226,7 +289,7 @@ class Installer
 		}
 
 		// check if the frontend-files-directory is writable
-		if(is_writable(WWW_PATH .'/frontend/files/'))
+		if(is_writable(PATH_WWW .'/frontend/files/'))
 		{
 			$variables['fileSystemFrontendFiles'] = 'ok';
 			$variables['fileSystemFrontendFilesStatus'] = 'ok';
@@ -238,8 +301,8 @@ class Installer
 			$hasError = true;
 		}
 
-		// check if the Spoon-directory is writable
-		if(is_writable(SPOON_PATH))
+		// check if the library-directory is writable
+		if(is_writable(PATH_LIBRARY))
 		{
 			$variables['fileSystemLibrary'] = 'ok';
 			$variables['fileSystemLibraryStatus'] = 'ok';
@@ -252,7 +315,7 @@ class Installer
 		}
 
 		// check if the installer-directory is writable
-		if(is_writable(WWW_PATH .'/install'))
+		if(is_writable(PATH_WWW .'/install'))
 		{
 			$variables['fileSystemInstaller'] = 'ok';
 			$variables['fileSystemInstallerStatus'] = 'ok';
@@ -264,12 +327,57 @@ class Installer
 			$hasError = true;
 		}
 
-		// any errors?
+		// does the globals.example.php file exist
+		if(file_exists(PATH_LIBRARY .'/globals.example.php') && is_readable(PATH_LIBRARY .'/globals.example.php'))
+		{
+			// @todo davy - deze file moet worden ingelezen, er moet gecontroleerd worden of de nodige constanten beschikbaar zijn.
+			$variables['fileSystemGlobals'] = 'ok';
+			$variables['fileSystemGlobalsStatus'] = 'ok';
+		}
+		else
+		{
+			$variables['fileSystemGlobals'] = 'nok';
+			$variables['fileSystemGlobalsStatus'] = 'not ok';
+			$hasError = true;
+		}
+
+		// does the globals_backend.example.php file exist
+		if(file_exists(PATH_LIBRARY .'/globals_backend.example.php') && is_readable(PATH_LIBRARY .'/globals_backend.example.php'))
+		{
+			// @todo davy - deze file moet worden ingelezen, er moet gecontroleerd worden of de nodige constanten beschikbaar zijn.
+			$variables['fileSystemGlobalsBackend'] = 'ok';
+			$variables['fileSystemGlobalsBackendStatus'] = 'ok';
+		}
+		else
+		{
+			$variables['fileSystemGlobalsBackend'] = 'nok';
+			$variables['fileSystemGlobalsBackendStatus'] = 'not ok';
+			$hasError = true;
+		}
+
+		// does the globals_frontend.example.php file exist
+		if(file_exists(PATH_LIBRARY .'/globals_frontend.example.php') && is_readable(PATH_LIBRARY .'/globals_frontend.example.php'))
+		{
+			// @todo davy - deze file moet worden ingelezen, er moet gecontroleerd worden of de nodige constanten beschikbaar zijn.
+			$variables['fileSystemGlobalsFrontend'] = 'ok';
+			$variables['fileSystemGlobalsFrontendStatus'] = 'ok';
+		}
+		else
+		{
+			$variables['fileSystemGlobalsFrontend'] = 'nok';
+			$variables['fileSystemGlobalsFrontendStatus'] = 'not ok';
+			$hasError = true;
+		}
+
+		// has errors
 		if($hasError)
 		{
-			// addign the variable
+			// assign the variable
 			$variables['error'] = '<div class="message errorMessage singleMessage"><p>Fix the items below that are marked as <em>Not ok</em>.</p></div><br />';
+			$variables['nextButton'] = '&nbsp;';
 		}
+
+		// no errors detected
 		else
 		{
 			// get values
@@ -277,11 +385,14 @@ class Installer
 			$stepValue = SpoonFilter::getPostValue('step', array(1, 2), 'N');
 
 			// is the form submitted?
-			if($buttonValue != 'N' && $stepValue != 'N') SpoonHTTP::redirect('/install/index.php?step=2');
+			if($buttonValue != 'N' && $stepValue != 'N') SpoonHTTP::redirect('index.php?step=2');
+
+			// button
+			$variables['nextButton'] = '<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />';
 		}
 
-		// build template (I know this is wierd)
-		$tpl = SpoonFile::getContent(WWW_PATH .'/install/layout/templates/1.tpl');
+		// build 'template'
+		$tpl = SpoonFile::getContent(PATH_WWW .'/install/layout/templates/1.tpl');
 
 		// build the search & replace array
 		$search = array_keys($variables);
@@ -309,92 +420,173 @@ class Installer
 	private function doStep2()
 	{
 		// init var (I know this is somewhat Netlash specific)
-		$projectName = isset($_SERVER['HTTP_HOST']) ? str_replace(array('.svn.be', '.indevelopment.be', '.local'), '', $_SERVER['HTTP_HOST']) : '';
+		$project = isset($_SERVER['HTTP_HOST']) ? str_replace(array('.svn.be', '.indevelopment.be', '.local'), '', $_SERVER['HTTP_HOST']) : '';
+		$domain = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : null;
 
 		// create the form
 		$this->frm = new SpoonForm('step2');
 
-		// create elements
-		$this->frm->addText('spoon_path', SPOON_PATH);
+		// path to library
+		$this->frm->addText('path_library', SpoonSession::exists('path_library') ? SpoonSession::get('path_library') : PATH_LIBRARY);
 
-		$this->frm->addText('debug_email', '');
+		// debug email
+		$this->frm->addText('debug_email', SpoonSession::exists('spoon_debug_email') ? SpoonSession::get('spoon_debug_email') : null);
 
-		$this->frm->addText('database_host', '127.0.0.1');
-		$this->frm->addText('database_name', $projectName);
-		$this->frm->addText('database_username', $projectName);
-		$this->frm->addText('database_password', '');
+		// database configuration
+		$this->frm->addText('database_hostname', SpoonSession::exists('database_hostname') ? SpoonSession::get('database_hostname') : 'localhost');
+		$this->frm->addText('database_name', SpoonSession::exists('database_name') ? SpoonSession::get('database_name') : $project);
+		$this->frm->addText('database_username', (SpoonSession::exists('database_username') ? SpoonSession::get('database_username') : $project), 255, 'inputText', 'inputTextError', true);
+		$this->frm->addPassword('database_password', (SpoonSession::exists('database_password') ? SpoonSession::get('database_password') : null), 255, 'inputPassword', 'inputPasswordError', true);
 
-		$this->frm->addText('site_domain', (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : '');
-		$this->frm->addText('site_title', $projectName);
+		// default domain
+		$this->frm->addText('site_domain', SpoonSession::exists('site_domain') ? SpoonSession::get('site_domain') : $domain);
+		$this->frm->addText('site_title', SpoonSession::exists('site_title') ? SpoonSession::get('site_title') : $project);
 
-		$this->frm->addRadiobutton('multilanguage', array(array('value' => 'Y', 'label' => 'Multiple languages'),
-													array('value' => 'N', 'label' => 'Just one language')), 'Y');
+		// multiple or single language
+		$this->frm->addRadiobutton('languageType',	array(array('value' => 'multiple', 'label' => 'Multiple languages', 'variables' => array('multiple' => true)),
+													array('value' => 'single', 'label' => 'Just one language', 'variables' => array('single' => true))), 'multiple');
+
+
+
+		// multiple languages
+		$this->frm->addMultiCheckbox('multipleLanguages', array(array('value' => 'en', 'label' => 'English'),
+																array('value' => 'fr', 'label' => 'French'),
+																array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('languages') ? SpoonSession::get('languages') : 'nl'));
+
+
+		// single languages
+		$this->frm->addRadiobutton('singleLanguages', array(array('value' => 'en', 'label' => 'English'),
+															array('value' => 'fr', 'label' => 'French'),
+															array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('site_default_language') ? SpoonSession::get('site_default_language') : 'nl'));
+
+		// default language
+		$this->frm->addRadiobutton('defaultLanguage', array(array('value' => 'en', 'label' => 'English'),
+															array('value' => 'fr', 'label' => 'French'),
+															array('value' => 'nl', 'label' => 'Dutch')), (SpoonSession::exists('site_default_language') ? SpoonSession::get('site_default_language') : 'nl'));
+
 
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
-			// validate
-			if($this->frm->getField('debug_email')->isFilled()) $this->frm->getField('debug_email')->isEmail('This is an invalid email-address.');
-			$this->frm->getField('spoon_path')->isFilled('This field is required.');
-			$this->frm->getField('database_host')->isFilled('This field is required.');
+			// path to library
+			if($this->frm->getField('path_library')->isFilled('This field is required'))
+			{
+				if(!SpoonFile::exists($this->frm->getField('path_library')->getValue() .'/spoon/spoon.php')) $this->frm->getField('path_library')->setError('Spoon was not found in your library directory.');
+			}
+
+			// debug email address
+			if($this->frm->getField('debug_email')->isFilled('This field is required.')) $this->frm->getField('debug_email')->isEmail('This is an invalid email address');
+
+			// database settings
+			$this->frm->getField('database_hostname')->isFilled('This field is required.');
 			$this->frm->getField('database_name')->isFilled('This field is required.');
 			$this->frm->getField('database_username')->isFilled('This field is required.');
 			$this->frm->getField('database_password')->isFilled('This field is required.');
+
+			// default domain
 			$this->frm->getField('site_domain')->isFilled('This field is required.');
+
+			// default title
 			$this->frm->getField('site_title')->isFilled('This field is required.');
 
-			try
+			// multiple languages
+			if($this->frm->getField('languageType')->getValue() == 'multiple')
 			{
-				// create db-instance
-				$db = new SpoonDatabase('mysql', $this->frm->getField('database_host')->getValue(), $this->frm->getField('database_username')->getValue(), $this->frm->getField('database_password')->getValue(), $this->frm->getField('database_name')->getValue());
+				// list of languages
+				$languages = $this->frm->getField('multipleLanguages')->getValue();
 
-				// try to get the modules
-				$modules = $db->getRecords('SELECT * FROM modules');
-
-				// no modules found, they should load the dump
-				if(empty($modules)) throw new Exception('empty');
+				// default language
+				if(!in_array($this->frm->getField('defaultLanguage')->getValue(), $languages)) $this->frm->getField('defaultLanguage')->setError('Your default language needs to be in the list of languages you chose.');
 			}
 
-			// catch exceptions
+			// single language
+			else
+			{
+				// list of languages
+				$languages = (array) $this->frm->getField('singleLanguages')->getValue();
+
+				// default language
+				if(!in_array($this->frm->getField('defaultLanguage')->getValue(), $languages)) $this->frm->getField('defaultLanguage')->setError('Your default language needs to be in the list of languages you chose.');
+			}
+
+
+			/*
+			 * Test the database connection details.
+			 */
+			try
+			{
+				// create instance
+				$db = new SpoonDatabase('mysql', $this->frm->getField('database_hostname')->getValue(), $this->frm->getField('database_username')->getValue(), $this->frm->getField('database_password')->getValue(), $this->frm->getField('database_name')->getValue());
+
+				// attempt to create table
+				$db->execute('DROP TABLE IF EXISTS `test`;
+								CREATE TABLE IF NOT EXISTS `test` (
+								  `id` int(11) NOT NULL
+									) ENGINE=MyISAM DEFAULT CHARSET=latin1;');
+
+				// drop table
+				$db->drop('test');
+			}
+
+			/*
+			 * Catch possible exceptions
+			 */
 			catch(Exception $e)
 			{
-				// add error
-				$this->frm->getField('database_name')->addError('Invalid database. Check the credentials and/or if you imported the default.sql-file.');
+				// add errors
+				$this->frm->addError('Problem with database credentials');
+
+				// show error
+				$this->tpl->assign('databaseError', $e->getMessage());
 			}
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build variables
-				$variables['<spoon-debug-email>'] = $this->frm->getField('debug_email')->getValue(true);
-				$variables['<database-name>'] = $this->frm->getField('database_name')->getValue(true);
-				$variables['<database-hostname>'] = $this->frm->getField('database_host')->getValue(true);
-				$variables['<database-username>'] = $this->frm->getField('database_username')->getValue(true);
-				$variables['<database-password>'] = $this->frm->getField('database_password')->getValue(true);
-				$variables['<default-domain>'] = $this->frm->getField('site_domain')->getValue(true);
-				$variables['<default-title>'] = $this->frm->getField('site_title')->getValue(true);
-				$variables['<multilanguage>'] = ($this->frm->getField('multilanguage')->getValue() == 'Y') ? 'true' : 'false';
-				$variables['<path-of-document-root>'] = WWW_PATH;
+				$variables['<spoon-debug-email>'] = $this->frm->getField('debug_email')->getValue();
+				$variables['<database-name>'] = $this->frm->getField('database_name')->getValue();
+				$variables['<database-hostname>'] = $this->frm->getField('database_hostname')->getValue();
+				$variables['<database-username>'] = addslashes($this->frm->getField('database_username')->getValue());
+				$variables['<database-password>'] = addslashes($this->frm->getField('database_password')->getValue());
+				$variables['<site-domain>'] = $this->frm->getField('site_domain')->getValue();
+				$variables['<site-default-title>'] = $this->frm->getField('site_title')->getValue();
+				$variables['\'<site-multilanguage>\''] = ($this->frm->getField('languageType')->getValue() == 'multiple') ? 'true' : 'false';
+				$variables['<path-www>'] = rtrim($this->frm->getField('path_library')->getValue(), '/');
+				$variables['<site-default-language>'] = $this->frm->getField('defaultLanguage')->getValue();
 
 				// store some values in the session
-				SpoonSession::set('database_hostname', $this->frm->getField('database_host')->getValue(true));
-				SpoonSession::set('database_name', $this->frm->getField('database_name')->getValue(true));
-				SpoonSession::set('database_username', $this->frm->getField('database_username')->getValue(true));
-				SpoonSession::set('database_password', $this->frm->getField('database_password')->getValue(true));
-				SpoonSession::set('site_domain', $this->frm->getField('site_domain')->getValue(true));
-				SpoonSession::set('site_title', $this->frm->getField('site_title')->getValue(true));
+				SpoonSession::set('path_library', $this->frm->getField('path_library')->getValue());
+				SpoonSession::set('spoon_debug_email', $this->frm->getField('debug_email')->getValue());
+				SpoonSession::set('database_hostname', $this->frm->getField('database_hostname')->getValue());
+				SpoonSession::set('database_name', $this->frm->getField('database_name')->getValue());
+				SpoonSession::set('database_username', $this->frm->getField('database_username')->getValue());
+				SpoonSession::set('database_password', $this->frm->getField('database_password')->getValue());
+				SpoonSession::set('site_domain', $this->frm->getField('site_domain')->getValue());
+				SpoonSession::set('site_title', $this->frm->getField('site_title')->getValue());
+				SpoonSession::set('languages', $languages);
+				SpoonSession::set('site_default_language', $this->frm->getField('defaultLanguage')->getvalue());
 
-				// grab content
-				$globalsContent = SpoonFile::getContent(SPOON_PATH .'/globals.example.php');
+				// globals files
+				$configurationFiles = array('globals.example.php' => 'globals.php',
+											'globals_frontend.example.php' => 'globals_frontend.php',
+											'globals_backend.example.php' => 'globals_backend.php');
 
-				// assign the variables
-				$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
+				// loop files
+				foreach($configurationFiles as $sourceFilename => $destinationFilename)
+				{
+					// grab content
+					$globalsContent = SpoonFile::getContent(PATH_LIBRARY .'/'. $sourceFilename);
 
-				// write the file
-				SpoonFile::setContent(SPOON_PATH .'/globals.php', $globalsContent);
+					// assign the variables
+					$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
+
+					// write the file
+					SpoonFile::setContent(PATH_LIBRARY .'/'. $destinationFilename, $globalsContent);
+				}
 
 				// redirect
-				SpoonHTTP::redirect('/install/index.php?step=3');
+				SpoonHTTP::redirect('index.php?step=3');
 			}
 		}
 	}
@@ -407,116 +599,95 @@ class Installer
 	 */
 	private function doStep3()
 	{
-		// validate
-		if(!SpoonSession::exists('database_name')) SpoonHTTP::redirect('/install/index.php?step=2');
-		if(!SpoonSession::exists('database_hostname')) SpoonHTTP::redirect('/install/index.php?step=2');
-		if(!SpoonSession::exists('database_username')) SpoonHTTP::redirect('/install/index.php?step=2');
-		if(!SpoonSession::exists('database_password')) SpoonHTTP::redirect('/install/index.php?step=2');
-		if(!SpoonSession::exists('site_domain')) SpoonHTTP::redirect('/install/index.php?step=2');
+		// required session variables exist
+		if(!SpoonSession::exists('database_hostname', 'database_username', 'database_password', 'database_name', 'site_domain')) SpoonHTTP::redirect('index.php?step=2');
 
-		// create db connection
-		$db = new SpoonDatabase('mysql',
-								SpoonSession::get('database_hostname'),
-								SpoonSession::get('database_username'),
-								SpoonSession::get('database_password'),
-								SpoonSession::get('database_name'));
+		// fetch modules
+		$tmpModules = SpoonDirectory::getList(PATH_WWW .'/backend/modules', false, null, '/^[a-z0-9_]+$/i');
 
-		// get all modules
-		$modules = $db->getRecords('SELECT name AS value, name AS label
-										FROM modules
-										ORDER BY name', null, 'value');
+		// required modules
+		$checkedModules = array('authentication', 'contact', 'content_blocks', 'core', 'dashboard', 'error', 'example', 'locale', 'pages', 'settings', 'sitemap', 'tags', 'users');
 
-		// define modules that are always checked
-		$alwaysChecked = array('core', 'contact', 'locale', 'pages', 'settings', 'sitemap', 'users');
+		// manually add core to the modules
+		$modules[] = array('value' => 'core', 'label' => 'Core', 'attributes' => array('disabled' => 'disabled', 'checked' => 'checked'));
 
-		// disable alwayschecked items
-		foreach($alwaysChecked as $key) $modules[$key]['attributes'] = array('disabled' => 'disabled');
+		// build modules
+		foreach($tmpModules as $tmpModule)
+		{
+			// define module
+			$module = array('value' => $tmpModule, 'label' => SpoonFilter::toCamelCase($tmpModule));
+
+			// always rquired
+			if(in_array($tmpModule, $checkedModules)) $module['attributes'] = array('disabled' => 'disabled', 'checked' => 'checked');
+
+			// add module
+			$modules[] = $module;
+		}
 
 		// create the form
 		$this->frm = new SpoonForm('step3');
 
-		// create elements
-		$this->frm->addMultiCheckbox('modules', $modules, $alwaysChecked);
+		// modules checkbox
+		$this->frm->addMultiCheckbox('modules', $modules, $checkedModules);
 
+		// api email address
 		$this->frm->addText('api_email');
 
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
 			// validate
-			$this->frm->getField('api_email')->isFilled('Field is required.');
+			if($this->frm->getField('api_email')->isFilled('Field is required.')) $this->frm->getField('api_email')->isEmail('No valid email address.');
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// require the API
-				require_once 'external/fork_api.php';
-
-				// create new instance
-				$api = new ForkAPI();
-
-				// get the keys
-				$keys = $api->coreRequestKeys(SpoonSession::get('site_domain'), $this->frm->getField('api_email')->getValue());
-
-				$this->storeSetting('core', 'fork_api_public_key', $keys['public']);
-				$this->storeSetting('core', 'fork_api_private_key', $keys['private']);
-
-				// define some constants
-				define('DB_TYPE', 'mysql');
-				define('DB_HOSTNAME', SpoonSession::get('database_hostname'));
-				define('DB_USERNAME', SpoonSession::get('database_username'));
-				define('DB_PASSWORD', SpoonSession::get('database_password'));
-				define('DB_DATABASE', SpoonSession::get('database_name'));
-				define('BACKEND_CACHE_PATH', WWW_PATH .'/backend/cache');
-				define('FRONTEND_CACHE_PATH', WWW_PATH .'/frontend/cache');
-				define('SITE_URL', 'http://'. SpoonSession::get('site_domain'));
-
-				// get checked modules
-				$checkedModules = (array) $this->frm->getField('modules')->getValue();
-				$checkedModules = array_merge($checkedModules, $alwaysChecked);
-
-				// store in session
-				SpoonSession::set('admin_email', $this->frm->getField('api_email')->getValue());
-				SpoonSession::set('modules', $checkedModules);
-
-				// update
-				$db->update('modules', array('active' => 'N'), 'name NOT IN("'. implode('","', $checkedModules) .'")');
-
-				// loop checked modules
+				// loop required modules
 				foreach($checkedModules as $module)
 				{
-					// build the path
-					$modulePath = WWW_PATH .'/backend/modules/'. $module;
+					// not already in the list
+					if(!in_array($module, $_POST['modules'])) $_POST['modules'][] = $module;
+				}
 
-					// core is a special module
-					if($module == 'core') $modulePath = WWW_PATH .'/backend/core';
+				// database instance
+				$db = new SpoonDatabase('mysql', SpoonSession::get('database_hostname'), SpoonSession::get('database_username'), SpoonSession::get('database_password'), SpoonSession::get('database_name'));
 
-					// check if the model file exists
-					if(SpoonFile::exists($modulePath .'/engine/model.php'))
+				/**
+				 * First we need to install the core. All the linked modules, settings and or sql tables are
+				 * being installed.
+				 */
+				require_once PATH_WWW .'/backend/core/installer/install.php';
+
+				// install the core
+				$install = new CoreInstall($db, SpoonSession::get('languages'), array('default_language' => SpoonSession::get('site_default_language'), 'spoon_debug_email' => SpoonSession::get('spoon_debug_email'), 'api_email' => $this->frm->getField('api_email')->getValue(), 'site_domain' => SpoonSession::get('site_domain'), 'site_title' => SpoonSession::get('site_title')));
+
+				// define modules
+				$modules = $this->frm->getField('modules')->getValue();
+				sort($modules);
+
+				// loop all modules
+				foreach($modules as $module)
+				{
+					// skip core
+					if($module == 'core') continue;
+
+					// install exists
+					if(SpoonFile::exists(PATH_WWW .'/backend/modules/'. $module .'/installer/install.php'))
 					{
-						// require
-						require_once $modulePath .'/engine/model.php';
+						// load file
+						require_once PATH_WWW .'/backend/modules/'. $module .'/installer/install.php';
 
-						// build class name
-						$className = SpoonFilter::toCamelCase('backend_'. $module .'_model');
+						// class name
+						$class = SpoonFilter::toCamelCase($module) .'Install';
 
-						// core is a special module
-						if($module == 'core') $className = 'BackendModel';
-
-						// check if the install method exists
-						if(method_exists($className, 'install'))
-						{
-							// call the method
-							$messages[$module] = call_user_func(array($className, 'install'));
-						}
+						// execute installer
+						$install = new $class($db, SpoonSession::get('languages'));
 					}
 				}
 
-				// store the messages
-				SpoonSession::set('messages', serialize($messages));
+				// @todo davy - mssn is het geen slecht idee om locale te genereren.
 
-				// redirect
-				SpoonHTTP::redirect('/install/index.php?step=4');
+				Spoon::dump('fork cms werd volledig geinstalleerd.');
 			}
 		}
 	}
@@ -529,6 +700,7 @@ class Installer
 	 */
 	private function doStep4()
 	{
+		Spoon::dump('hihi...');
 		// validate
 		if(!SpoonSession::exists('messages')) SpoonHTTP::redirect('/install/index.php?step=2');
 
@@ -547,6 +719,8 @@ class Installer
 
 		// assign
 		$this->tpl->assign('items', $items);
+
+		// @todo installed.txt nog in de juiste map plaatsen.
 	}
 
 
@@ -557,11 +731,13 @@ class Installer
 	 */
 	private function init()
 	{
+		// @todo tijs - waarom geen glob gebruikt? http://be.php.net/glob
+
 		// get the www path
-		define('WWW_PATH', realpath(str_replace('/install/engine/install.php', '', __FILE__)));
+		define('PATH_WWW', realpath(str_replace('/install/engine/install.php', '', __FILE__)));
 
 		// calculate the homefolder
-		$homeFolder = realpath(WWW_PATH .'/..');
+		$homeFolder = realpath(PATH_WWW .'/..');
 
 		// attempt to open directory
 		$directory = @opendir($homeFolder);
@@ -587,8 +763,10 @@ class Installer
 						// try to get the version
 						preg_match('/SPOON_VERSION\',\s\'(.*)\'/', $fileContent, $matches);
 
+						// no matches
 						if(!isset($matches[1])) continue;
 
+						// matches found
 						else
 						{
 							// get the version
@@ -598,7 +776,7 @@ class Installer
 							if($version <= 120)
 							{
 								// set Spoon path
-								define('SPOON_PATH', $homeFolder .'/'. $folder);
+								define('PATH_LIBRARY', $homeFolder .'/'. $folder);
 
 								// stop looking arround
 								break;
@@ -613,18 +791,18 @@ class Installer
 		@closedir($directory);
 
 		// validate
-		if(!defined('SPOON_PATH'))
+		if(!defined('PATH_LIBRARY'))
 		{
-			echo 'Can\'t find Spoon. Make sure their is a folder containing spoon on the same level as the document_root';
+			echo 'Can\'t find Spoon. Make sure their is a folder containing spoon on the same level as the document_root'; // @todo tijs - die foutmelding klopt toch niet echt?
 			exit;
 		}
 
 		// store in variables
-		$this->variables['WWW_PATH'] = WWW_PATH;
-		$this->variables['SPOON_PATH'] = SPOON_PATH;
+		$this->variables['PATH_WWW'] = PATH_WWW;
+		$this->variables['PATH_LIBRARY'] = PATH_LIBRARY;
 
 		// set include path
-		set_include_path(SPOON_PATH . PATH_SEPARATOR . get_include_path());
+		set_include_path(PATH_LIBRARY . PATH_SEPARATOR . get_include_path());
 
 		// define some constants
 		define('SPOON_DEBUG', true);
@@ -639,6 +817,13 @@ class Installer
 		if($version < 120)
 		{
 			echo 'Can\'t find Spoon. Make sure their is a folder containing spoon on the same level as the document_root';
+			exit;
+		}
+
+		// already installed
+		if(file_exists(PATH_WWW .'/install/installed.txt'))
+		{
+			echo 'Fork CMS has already been installed.';
 			exit;
 		}
 	}

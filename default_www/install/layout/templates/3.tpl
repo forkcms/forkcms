@@ -3,13 +3,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 
 	<title>Installer - Fork CMS</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/install/layout/css/installer.css" />
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
+	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
 	<table border="0" cellspacing="0" cellpadding="0" id="installHolder">
@@ -27,7 +29,7 @@
 								<p><span class="helpTxt">Enable the modules that will be used.</span></p>
 								<ul>
 									{iteration:modules}
-									<li><label for="{$modules.id}">{$modules.chkModules} {$modules.label}</li>
+										<li>{$modules.chkModules} <label for="{$modules.id}">{$modules.label}</label></li>
 									{/iteration:modules}
 								</ul>
 							</div>
@@ -43,7 +45,7 @@
 
 							<div>
 								<p class="spacing">
-									<input id="installer" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
+									<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
 								</p>
 							</div>
 						</div>

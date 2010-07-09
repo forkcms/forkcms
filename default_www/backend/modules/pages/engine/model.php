@@ -1630,7 +1630,7 @@ class BackendPagesModel
 		$id = (int) $db->insert('pages', $page);
 
 		// how many revisions should we keep
-		$rowsToKeep = (int) BackendModel::getSetting('pages', 'maximum_number_of_revisions', 20);
+		$rowsToKeep = (int) BackendModel::getSetting('pages', 'max_num_revisions', 20);
 
 		// get revision-ids for items to keep
 		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id

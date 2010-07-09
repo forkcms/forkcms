@@ -41,7 +41,7 @@ body#installer {
 	position: relative;
 
 	border: 1px solid #C3C3C3;
-	width: 400px;
+	width: 500px;
 	padding: 24px 48px;
 
 	background: #FFF;
@@ -66,9 +66,7 @@ body#installer {
 
 	z-index: 3;
 	font-size: 11px;
-
 }
-
 
 #installerError .errorMessage a {
 	white-space: nowrap;
@@ -90,7 +88,6 @@ body#installer {
 		#installerBox #installerNav a:focus {
 			color: #000;
 		}
-
 
 	#installerNav li {
 		font-size: 11px;
@@ -145,6 +142,7 @@ body#installer {
 			color: #4f6d2c;
 			background: #d6efb8;
 		}
+		
 		span.nok {
 			color: #FFF;
 			padding: 3px;
@@ -154,3 +152,6 @@ body#installer {
 			background: -moz-linear-gradient(top, #DE3636, #FF2626);
 		}
 		
+.inputText {
+	width: 300px;
+}

@@ -697,7 +697,7 @@ class BackendBlogModel
 		$db->insert('blog_posts', $item);
 
 		// how many revisions should we keep
-		$rowsToKeep = (int) BackendModel::getSetting('blog', 'maximum_number_of_revisions', 5);
+		$rowsToKeep = (int) BackendModel::getSetting('blog', 'max_num_revisions', 20);
 
 		// get revision-ids for items to keep
 		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id

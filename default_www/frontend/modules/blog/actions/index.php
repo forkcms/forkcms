@@ -66,7 +66,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 
 		// set url
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog');
-		$this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_number_of_items', 10);
+		$this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_num_items', 10);
 
 		// populate count fields in pagination
 		$this->pagination['num_items'] = FrontendBlogModel::getAllCount();

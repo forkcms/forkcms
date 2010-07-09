@@ -38,7 +38,7 @@ class FrontendBlogWidgetRecentArticles extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign comments
-		$this->tpl->assign('widgetBlogRecentArticles', FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_number_of_items', 5)));
+		$this->tpl->assign('widgetBlogRecentArticles', FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_num_items', 5)));
 	}
 }
 

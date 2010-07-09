@@ -3,13 +3,15 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1">
+	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
 
 	<title>Installer - Fork CMS</title>
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="/install/layout/css/installer.css" />
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
+	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
 	<table border="0" cellspacing="0" cellpadding="0" id="installHolder">
