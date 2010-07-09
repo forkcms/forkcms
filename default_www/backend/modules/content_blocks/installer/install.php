@@ -10,7 +10,7 @@ class ContentBlocksInstall extends ModuleInstaller
 		// load install.sql
 		$this->importSQL(PATH_WWW .'/backend/modules/content_blocks/installer/install.sql');
 
-		// add 'blog' as a module
+		// add 'content_blocks' as a module
 		$this->addModule('content_blocks', 'The content blocks module.');
 
 		// general settings

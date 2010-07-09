@@ -663,25 +663,30 @@ class Installer
 
 				// define modules
 				$modules = $this->frm->getField('modules')->getValue();
-				sort($modules);
 
-				// loop all modules
-				foreach($modules as $module)
+				// modules were selected
+				if(!empty($modules))
 				{
-					// skip core
-					if($module == 'core') continue;
+					sort($modules);
 
-					// install exists
-					if(SpoonFile::exists(PATH_WWW .'/backend/modules/'. $module .'/installer/install.php'))
+					// loop all modules
+					foreach($modules as $module)
 					{
-						// load file
-						require_once PATH_WWW .'/backend/modules/'. $module .'/installer/install.php';
+						// skip core
+						if($module == 'core') continue;
 
-						// class name
-						$class = SpoonFilter::toCamelCase($module) .'Install';
+						// install exists
+						if(SpoonFile::exists(PATH_WWW .'/backend/modules/'. $module .'/installer/install.php'))
+						{
+							// load file
+							require_once PATH_WWW .'/backend/modules/'. $module .'/installer/install.php';
 
-						// execute installer
-						$install = new $class($db, SpoonSession::get('languages'));
+							// class name
+							$class = SpoonFilter::toCamelCase($module) .'Install';
+
+							// execute installer
+							$install = new $class($db, SpoonSession::get('languages'));
+						}
 					}
 				}
 

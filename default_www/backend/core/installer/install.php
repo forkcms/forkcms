@@ -26,6 +26,12 @@ class ModuleInstaller
 	}
 
 
+	protected function getSetting($module, $name)
+	{
+		return unserialize($this->db->getVar('SELECT value FROM modules_settings WHERE module = ? AND name = ?;', array((string) $module, (string) $name)));
+	}
+
+
 	protected function setActionRights($groupId, $module, $action, $level = 7)
 	{
 		// action doesn't exist
@@ -53,7 +59,10 @@ class ModuleInstaller
 	protected function importSQL($filename)
 	{
 		// load the file content and execute it
-		$this->db->execute(SpoonFile::getContent($filename));
+		$content = trim(SpoonFile::getContent($filename));
+
+		// file actually has content
+		if(!empty($content)) $this->db->execute(SpoonFile::getContent($filename));
 	}
 
 

@@ -22,6 +22,7 @@ class BlogInstall extends ModuleInstaller
 		$this->setSetting('blog', 'ping_services', true);
 		$this->setSetting('blog', 'overview_num_items', 10);
 		$this->setSetting('blog', 'recent_articles_num_items', 5);
+		$this->setSetting('blog', 'max_num_revisions', 20);
 
 		// loop languages
 		foreach($languages as $language)

@@ -17,6 +17,16 @@ class LocaleInstall extends ModuleInstaller
 		$this->setSetting('locale', 'languages', array('de', 'en', 'es', 'fr', 'nl'));
 		$this->setSetting('locale', 'requires_akismet', false);
 		$this->setSetting('locale', 'requires_google_maps', false);
+
+		// module rights
+		$this->setModuleRights(1, 'locale');
+
+		// action rights
+		$this->setActionRights(1, 'locale', 'add');
+		$this->setActionRights(1, 'locale', 'analyse');
+		$this->setActionRights(1, 'locale', 'edit');
+		$this->setActionRights(1, 'locale', 'index');
+		$this->setActionRights(1, 'locale', 'mass_action');
 	}
 }
 
