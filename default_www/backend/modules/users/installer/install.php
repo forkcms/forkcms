@@ -41,21 +41,26 @@ class UsersInstall extends ModuleInstaller
 		{
 			// build settings
 			$settings = array();
-			$settings['nickname'] = 'Fork CMS';
-			$settings['name'] = 'Fork';
-			$settings['surname'] = 'CMS';
-			$settings['interface_language'] = 'nl';
-			$settings['date_format'] = 'j F Y';
-			$settings['time_format'] = 'H:i';
-			$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
-			$settings['password_key'] = uniqid();
-			$settings['avatar'] = 'no-avatar.gif';
+			$settings['nickname'] = serialize('Fork CMS');
+			$settings['name'] = serialize('Fork');
+			$settings['surname'] = serialize('CMS');
+			$settings['interface_language'] = serialize('nl');
+			$settings['date_format'] = serialize('j F Y');
+			$settings['time_format'] = serialize('H:i');
+			$settings['datetime_format'] = serialize($settings['date_format'] .' '. $settings['time_format']);
+			$settings['password_key'] = serialize(uniqid());
+			$settings['avatar'] = serialize('no-avatar.gif');
+
+
+			// @todo davy - slaag mij hard
+			$emailBlub = $this->getSetting('core', 'mailer_from');
+
 
 			// build user
 			$user = array();
 			$user['group_id'] = $this->getSetting('users', 'default_group');
-			$user['email'] = $this->getSetting('core', 'api_email');
-			$user['password'] = sha1(md5($settings['password_key']) . md5('fork'));
+			$user['email'] = $emailBlub['email'];
+			$user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5('fork'));
 			$user['active'] = 'Y';
 			$user['deleted'] = 'N';
 			$user['is_god'] = 'Y';

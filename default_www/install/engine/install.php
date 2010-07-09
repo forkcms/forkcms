@@ -552,7 +552,7 @@ class Installer
 				$variables['<site-domain>'] = $this->frm->getField('site_domain')->getValue();
 				$variables['<site-default-title>'] = $this->frm->getField('site_title')->getValue();
 				$variables['\'<site-multilanguage>\''] = ($this->frm->getField('languageType')->getValue() == 'multiple') ? 'true' : 'false';
-				$variables['<path-www>'] = rtrim($this->frm->getField('path_library')->getValue(), '/');
+				$variables['<path-www>'] = realpath(__FILE__ .'/../../..');
 				$variables['<site-default-language>'] = $this->frm->getField('defaultLanguage')->getValue();
 
 				// store some values in the session
@@ -606,7 +606,8 @@ class Installer
 		$tmpModules = SpoonDirectory::getList(PATH_WWW .'/backend/modules', false, null, '/^[a-z0-9_]+$/i');
 
 		// required modules
-		$checkedModules = array('authentication', 'contact', 'content_blocks', 'core', 'dashboard', 'error', 'example', 'locale', 'pages', 'settings', 'sitemap', 'tags', 'users');
+		$alwaysCheckedModules = array('core', 'locale', 'users', 'authentication', 'dashboard', 'error', 'example', 'settings',
+										'pages', 'contact', 'content_blocks', 'tags');
 
 		// manually add core to the modules
 		$modules[] = array('value' => 'core', 'label' => 'Core', 'attributes' => array('disabled' => 'disabled', 'checked' => 'checked'));
@@ -618,7 +619,7 @@ class Installer
 			$module = array('value' => $tmpModule, 'label' => SpoonFilter::toCamelCase($tmpModule));
 
 			// always rquired
-			if(in_array($tmpModule, $checkedModules)) $module['attributes'] = array('disabled' => 'disabled', 'checked' => 'checked');
+			if(in_array($tmpModule, $alwaysCheckedModules)) $module['attributes'] = array('disabled' => 'disabled', 'checked' => 'checked');
 
 			// add module
 			$modules[] = $module;
@@ -628,7 +629,7 @@ class Installer
 		$this->frm = new SpoonForm('step3');
 
 		// modules checkbox
-		$this->frm->addMultiCheckbox('modules', $modules, $checkedModules);
+		$this->frm->addMultiCheckbox('modules', $modules, $alwaysCheckedModules);
 
 		// api email address
 		$this->frm->addText('api_email');
@@ -642,12 +643,11 @@ class Installer
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// loop required modules
-				foreach($checkedModules as $module)
-				{
-					// not already in the list
-					if(!in_array($module, $_POST['modules'])) $_POST['modules'][] = $module;
-				}
+				// @todo slaag mij (davy)
+				if(!isset($_POST['modules'])) $_POST['modules'] = array();
+
+				// modules to install?
+				$modulesToInstall = array_merge($alwaysCheckedModules, (array) $this->frm->getField('modules')->getValue());
 
 				// database instance
 				$db = new SpoonDatabase('mysql', SpoonSession::get('database_hostname'), SpoonSession::get('database_username'), SpoonSession::get('database_password'), SpoonSession::get('database_name'));
@@ -661,16 +661,11 @@ class Installer
 				// install the core
 				$install = new CoreInstall($db, SpoonSession::get('languages'), array('default_language' => SpoonSession::get('site_default_language'), 'spoon_debug_email' => SpoonSession::get('spoon_debug_email'), 'api_email' => $this->frm->getField('api_email')->getValue(), 'site_domain' => SpoonSession::get('site_domain'), 'site_title' => SpoonSession::get('site_title')));
 
-				// define modules
-				$modules = $this->frm->getField('modules')->getValue();
-
 				// modules were selected
-				if(!empty($modules))
+				if(!empty($modulesToInstall))
 				{
-					sort($modules);
-
 					// loop all modules
-					foreach($modules as $module)
+					foreach($modulesToInstall as $module)
 					{
 						// skip core
 						if($module == 'core') continue;
@@ -686,6 +681,8 @@ class Installer
 
 							// execute installer
 							$install = new $class($db, SpoonSession::get('languages'));
+
+							Spoon::dump($module, false);
 						}
 					}
 				}
@@ -737,6 +734,10 @@ class Installer
 	private function init()
 	{
 		// @todo tijs - waarom geen glob gebruikt? http://be.php.net/glob
+
+		// @todo davy - van zodra de PATH_LIBRARY in de session zit, moet ge die gebruiken
+
+		// @todo davy - in de init zou hij het nieuwe pad naar library moeten gebruiken
 
 		// get the www path
 		define('PATH_WWW', realpath(str_replace('/install/engine/install.php', '', __FILE__)));
