@@ -169,7 +169,13 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				if($this->frm->getField('new_password')->isFilled()) $user['password'] = BackendAuthentication::getEncryptedString($this->frm->getField('new_password')->getValue(), $this->record['settings']['password_key']);
 
 				// build settings-array
-				$settings = $this->frm->getValues(array('email', 'password'));
+				$settings['nickname'] = $this->frm->getField('nickname')->getValue();
+				$settings['name'] = $this->frm->getField('name')->getValue();
+				$settings['surname'] = $this->frm->getField('surname')->getValue();
+				$settings['interface_language'] = $this->frm->getField('interface_language')->getValue();
+				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
+				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
+				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 
 				// is there a file given
 				if($this->frm->getField('avatar')->isFilled())
@@ -198,11 +204,6 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					// resize (32x32)
 					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename, 32, 32, true, false, 100);
 				}
-
-				// datetime formats
-				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
-				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
-				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 
 				// save changes
 				BackendUsersModel::update($user, $settings);

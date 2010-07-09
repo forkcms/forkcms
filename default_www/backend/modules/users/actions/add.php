@@ -123,14 +123,15 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build settings-array
-				$settings = $this->frm->getValues(array('email', 'password'));
-				$settings['password_key'] = uniqid();
-				$settings['avatar'] = 'no-avatar.gif';
-
-				// datetime formats
+				$settings['nickname'] = $this->frm->getField('nickname')->getValue();
+				$settings['name'] = $this->frm->getField('name')->getValue();
+				$settings['surname'] = $this->frm->getField('surname')->getValue();
+				$settings['interface_language'] = $this->frm->getField('interface_language')->getValue();
 				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
 				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
 				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
+				$settings['password_key'] = uniqid();
+				$settings['avatar'] = 'no-avatar.gif';
 
 				// build user-array
 				$user['email'] = $this->frm->getField('email')->getValue();
@@ -158,9 +159,6 @@ class BackendUsersAdd extends BackendBaseActionAdd
 					// resize (32x32)
 					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename, 32, 32, true, false, 100);
 				}
-
-				Spoon::dump($user, false);
-				Spoon::dump($settings);
 
 				// update settings (in this case the avatar)
 				BackendUsersModel::update($user, $settings);
