@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * ContactInstall
+ * Installer for the contact module
+ *
+ * @package		installer
+ * @subpackage	contact
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class ContactInstall extends ModuleInstaller
 {
-	public function __construct(SpoonDatabase $db, array $languages)
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-
 		// add 'contact' as a module
 		$this->addModule('contact', 'The contact module.');
 

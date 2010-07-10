@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * TagsInstall
+ * Installer for the tags module
+ *
+ * @package		installer
+ * @subpackage	tags
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class TagsInstall extends ModuleInstaller
 {
-	public function __construct(SpoonDatabase $db, array $languages)
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-
 		// load install.sql
 		$this->importSQL(PATH_WWW .'/backend/modules/tags/installer/install.sql');
 

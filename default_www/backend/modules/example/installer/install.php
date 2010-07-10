@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * ExampleInstall
+ * Installer for the example module
+ *
+ * @package		installer
+ * @subpackage	example
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class ExampleInstall extends ModuleInstaller
 {
-	public function __construct(SpoonDatabase $db, array $languages)
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-
 		// add 'example' as a module
 		$this->addModule('example', 'The example module, used as a reference.');
 

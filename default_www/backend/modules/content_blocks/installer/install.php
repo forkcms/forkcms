@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * ContentBlocksInstall
+ * Installer for the content blocks module
+ *
+ * @package		installer
+ * @subpackage	content_blocks
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class ContentBlocksInstall extends ModuleInstaller
 {
-	public function __construct(SpoonDatabase $db, array $languages)
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-
 		// load install.sql
 		$this->importSQL(PATH_WWW .'/backend/modules/content_blocks/installer/install.sql');
 

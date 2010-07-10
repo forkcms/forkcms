@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * UsersInstall
+ * Installer for the contact module
+ *
+ * @package		installer
+ * @subpackage	users
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class UsersInstall extends ModuleInstaller
 {
-	public function __construct(SpoonDatabase $db, array $languages)
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-
 		// load install.sql
 		$this->importSQL(PATH_WWW .'/backend/modules/users/installer/install.sql');
 
@@ -34,10 +47,15 @@ class UsersInstall extends ModuleInstaller
 	}
 
 
-	protected function addUser()
+	/**
+	 * Add a GOD-user
+	 *
+	 * @return	void
+	 */
+	private function addUser()
 	{
 		// no god user already exists
-		if(!$this->db->getNumRows('SELECT id FROM users WHERE is_god = ? AND deleted = ? AND active = ?;', array('Y', 'N', 'Y')))
+		if($this->getDB()->getNumRows('SELECT id FROM users WHERE is_god = ? AND deleted = ? AND active = ?;', array('Y', 'N', 'Y')) == 0)
 		{
 			// build settings
 			$settings = array();
@@ -51,10 +69,8 @@ class UsersInstall extends ModuleInstaller
 			$settings['password_key'] = serialize(uniqid());
 			$settings['avatar'] = serialize('no-avatar.gif');
 
-
-			// @todo davy - slaag mij hard
+			// @todo davy - slaag mij hard	use getVariable('...
 			$emailBlub = $this->getSetting('core', 'mailer_from');
-
 
 			// build user
 			$user = array();
@@ -66,13 +82,13 @@ class UsersInstall extends ModuleInstaller
 			$user['is_god'] = 'Y';
 
 			// insert user
-			$user['id'] = $this->db->insert('users', $user);
+			$user['id'] = $this->getDB()->insert('users', $user);
 
 			// loop settings
 			foreach($settings as $name => $value)
 			{
 				// insert user settings
-				$this->db->insert('users_settings', array('user_id' => $user['id'], 'name' => $name, 'value' => $value));
+				$this->getDB()->insert('users_settings', array('user_id' => $user['id'], 'name' => $name, 'value' => $value));
 			}
 		}
 	}

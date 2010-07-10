@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * DashboardInstall
+ * Installer for the dashboard module
+ *
+ * @package		installer
+ * @subpackage	dashboard
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class DashboardInstall extends ModuleInstaller
 {
-	public function __construct(SpoonDatabase $db, array $languages)
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-
 		// add 'dashboard' as a module
 		$this->addModule('dashboard', 'The dashboard containing module specific widgets.');
 

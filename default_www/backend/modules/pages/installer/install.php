@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * PagesInstall
+ * Installer for the pages module
+ *
+ * @package		installer
+ * @subpackage	pages
+ *
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class PagesInstall extends ModuleInstaller
 {
 	/**
@@ -9,29 +19,30 @@ class PagesInstall extends ModuleInstaller
 	 * @param	SpoonDatabase $db
 	 * @param	array $languages
 	 */
-	public function __construct(SpoonDatabase $db, array $languages)
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-		$this->languages = $languages;
-
 		// load install.sql
 		$this->importSQL(PATH_WWW .'/backend/modules/pages/installer/install.sql');
 
 		// add 'pages' as a module
 		$this->addModule('pages', 'The module to manage your pages and website structure.');
 
-		// set rights
-		$this->setRights();
-
 		// import data
 		$this->importData();
+
+		// set rights
+		$this->setRights();
 
 		// set settings
 		$this->setSettings();
 	}
 
 
+	/**
+	 * Import the data
+	 *
+	 * @return	void
+	 */
 	private function importData()
 	{
 		// insert templates
@@ -41,22 +52,29 @@ class PagesInstall extends ModuleInstaller
 		$this->insertPages();
 	}
 
+
+	/**
+	 * Insert the pages
+	 *
+	 * @return	void
+	 */
 	private function insertPages()
 	{
 		// loop languages
-		foreach($this->languages as $language)
+		foreach($this->getLanguages() as $language)
 		{
-			if($this->db->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(1, $language)) == 0)
+			// check if the page doesn't exists
+			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(1, $language)) == 0)
 			{
 				// insert meta
-				$metaID = $this->db->insert('meta', array('keywords' => 'home', 'keywords_overwrite' => 'N',
+				$metaID = $this->getDB()->insert('meta', array('keywords' => 'home', 'keywords_overwrite' => 'N',
 															'description' => 'home', 'description_overwrite' => 'N',
 															'title' => 'home', 'title_overwrite' => 'N',
 															'url' => 'home', 'url_overwrite' => 'N',
 															'custom' => null));
 
 				// insert home	@todo	which user should be default?
-				$revisionID = $this->db->insert('pages', array('id' => 1,
+				$revisionID = $this->getDB()->insert('pages', array('id' => 1,
 																'user_id' => 1,
 																'parent_id' => 0,
 																'template_id' => 1,
@@ -83,12 +101,12 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->db->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(1));
+				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(1));
 
 				// insert blocks
 				for($i = 1; $i <= $numberOfBlocks; $i++)
 				{
-					$this->db->insert('pages_blocks', array('id' => $i,
+					$this->getDB()->insert('pages_blocks', array('id' => $i,
 															'revision_id' => $revisionID,
 															'extra_id' => null,
 															'html' => '',
@@ -99,17 +117,17 @@ class PagesInstall extends ModuleInstaller
 				}
 			}
 
-			if($this->db->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(2, $language)) == 0)
+			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(2, $language)) == 0)
 			{
 				// insert meta
-				$metaID = $this->db->insert('meta', array('keywords' => 'sitemap', 'keywords_overwrite' => 'N',
+				$metaID = $this->getDB()->insert('meta', array('keywords' => 'sitemap', 'keywords_overwrite' => 'N',
 															'description' => 'sitemap', 'description_overwrite' => 'N',
 															'title' => 'sitemap', 'title_overwrite' => 'N',
 															'url' => 'sitemap', 'url_overwrite' => 'N',
 															'custom' => null));
 
 				// insert sitemap	@todo	which user should be default? add widget with sitemap
-				$revisionID = $this->db->insert('pages', array('id' => 2,
+				$revisionID = $this->getDB()->insert('pages', array('id' => 2,
 																'user_id' => 1,
 																'parent_id' => 0,
 																'template_id' => 2,
@@ -136,12 +154,12 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->db->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
+				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
 
 				// insert blocks
 				for($i = 1; $i <= $numberOfBlocks; $i++)
 				{
-					$this->db->insert('pages_blocks', array('id' => $i,
+					$this->getDB()->insert('pages_blocks', array('id' => $i,
 															'revision_id' => $revisionID,
 															'extra_id' => null,
 															'html' => '',
@@ -152,17 +170,17 @@ class PagesInstall extends ModuleInstaller
 				}
 			}
 
-			if($this->db->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(3, $language)) == 0)
+			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(3, $language)) == 0)
 			{
 				// insert meta
-				$metaID = $this->db->insert('meta', array('keywords' => 'sitemap', 'keywords_overwrite' => 'N',
+				$metaID = $this->getDB()->insert('meta', array('keywords' => 'sitemap', 'keywords_overwrite' => 'N',
 															'description' => 'sitemap', 'description_overwrite' => 'N',
 															'title' => 'sitemap', 'title_overwrite' => 'N',
 															'url' => 'sitemap', 'url_overwrite' => 'N',
 															'custom' => null));
 
 				// insert disclaimer	@todo	which user should be default? add widget with sitemap
-				$revisionID = $this->db->insert('pages', array('id' => 3,
+				$revisionID = $this->getDB()->insert('pages', array('id' => 3,
 																'user_id' => 1,
 																'parent_id' => 0,
 																'template_id' => 2,
@@ -189,12 +207,12 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->db->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
+				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
 
 				// insert blocks
 				for($i = 1; $i <= $numberOfBlocks; $i++)
 				{
-					$this->db->insert('pages_blocks', array('id' => $i,
+					$this->getDB()->insert('pages_blocks', array('id' => $i,
 															'revision_id' => $revisionID,
 															'extra_id' => null,
 															'html' => '',
@@ -205,17 +223,17 @@ class PagesInstall extends ModuleInstaller
 				}
 			}
 
-			if($this->db->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(404, $language)) == 0)
+			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(404, $language)) == 0)
 			{
 							// insert meta
-				$metaID = $this->db->insert('meta', array('keywords' => '404', 'keywords_overwrite' => 'N',
+				$metaID = $this->getDB()->insert('meta', array('keywords' => '404', 'keywords_overwrite' => 'N',
 															'description' => '404', 'description_overwrite' => 'N',
 															'title' => '404', 'title_overwrite' => 'N',
 															'url' => '404', 'url_overwrite' => 'N',
 															'custom' => null));
 
 				// insert disclaimer	@todo	which user should be default? add widget with sitemap
-				$revisionID = $this->db->insert('pages', array('id' => 404,
+				$revisionID = $this->getDB()->insert('pages', array('id' => 404,
 																'user_id' => 1,
 																'parent_id' => 0,
 																'template_id' => 2,
@@ -242,12 +260,12 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->db->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
+				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
 
 				// insert blocks
 				for($i = 1; $i <= $numberOfBlocks; $i++)
 				{
-					$this->db->insert('pages_blocks', array('id' => $i,
+					$this->getDB()->insert('pages_blocks', array('id' => $i,
 															'revision_id' => $revisionID,
 															'extra_id' => null,
 															'html' => '',
@@ -271,7 +289,7 @@ class PagesInstall extends ModuleInstaller
 		// insert home template
 		try
 		{
-			$this->db->insert('pages_templates', array('id' => 1, 'label' => 'home', 'path' => 'core/layout/templates/home.tpl', 'num_blocks' => 3, 'active' => 'Y', 'is_default' => 'N', 'data' => 'a:3:{s:6:"format";s:14:"[1,0],[2,none]";s:5:"names";a:3:{i:0;s:12:"Main Content";i:1;s:7:"Sidebar";i:2;s:10:"Newsletter";}s:5:"types";a:3:{i:0;s:9:"rich_text";i:1;s:9:"rich_text";i:2;s:9:"rich_text";}}'));
+			$this->getDB()->insert('pages_templates', array('id' => 1, 'label' => 'home', 'path' => 'core/layout/templates/home.tpl', 'num_blocks' => 3, 'active' => 'Y', 'is_default' => 'N', 'data' => 'a:3:{s:6:"format";s:14:"[1,0],[2,none]";s:5:"names";a:3:{i:0;s:12:"Main Content";i:1;s:7:"Sidebar";i:2;s:10:"Newsletter";}s:5:"types";a:3:{i:0;s:9:"rich_text";i:1;s:9:"rich_text";i:2;s:9:"rich_text";}}'));
 		}
 		catch(Exception $e)
 		{
@@ -280,7 +298,7 @@ class PagesInstall extends ModuleInstaller
 
 		try
 		{
-			$this->db->insert('pages_templates', array('id' => 2, 'label' => 'default', 'path' => 'core/layout/templates/default.tpl', 'num_blocks' => 3, 'active' => 'Y', 'is_default' => 'Y', 'data' => 'a:3:{s:6:"format";s:14:"[0,1],[none,2]";s:5:"names";a:3:{i:0;s:7:"Content";i:1;s:14:"Zijbalk blok 1";i:2;s:14:"Zijbalk blok 2";}s:5:"types";a:3:{i:0;s:9:"rich_text";i:1;s:9:"rich_text";i:2;s:9:"rich_text";}}'));
+			$this->getDB()->insert('pages_templates', array('id' => 2, 'label' => 'default', 'path' => 'core/layout/templates/default.tpl', 'num_blocks' => 3, 'active' => 'Y', 'is_default' => 'Y', 'data' => 'a:3:{s:6:"format";s:14:"[0,1],[none,2]";s:5:"names";a:3:{i:0;s:7:"Content";i:1;s:14:"Zijbalk blok 1";i:2;s:14:"Zijbalk blok 2";}s:5:"types";a:3:{i:0;s:9:"rich_text";i:1;s:9:"rich_text";i:2;s:9:"rich_text";}}'));
 		}
 		catch(Exception $e)
 		{
@@ -325,20 +343,12 @@ class PagesInstall extends ModuleInstaller
 	private function setSettings()
 	{
 		// general settings
-		$this->setSetting('pages', 'template_max_blocks', (int) $this->db->getVar('SELECT MAX(num_blocks) FROM pages_templates;'));
+		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'));
 		$this->setSetting('pages', 'has_meta_navigation', true);
 		$this->setSetting('pages', 'requires_akismet', false);
 		$this->setSetting('pages', 'requires_google_maps', false);
-		$this->setSetting('pages', 'default_template', (int) $this->db->getVar('SELECT id FROM pages_templates WHERE is_default = ?;', array('Y')));
+		$this->setSetting('pages', 'default_template', (int) $this->getDB()->getVar('SELECT id FROM pages_templates WHERE is_default = ?;', array('Y')));
 	}
-
-
-
-	private function insertLocale()
-	{
-	}
-
-
 }
 
 ?>

@@ -1,12 +1,25 @@
 <?php
 
+/**
+ * BlogInstall
+ * Installer for the blog module
+ *
+ * @package		installer
+ * @subpackage	blog
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
+ */
 class BlogInstall extends ModuleInstaller
 {
-	public function __construct(SpoonDatabase $db, array $languages)
+	/**
+	 * Install the module
+	 *
+	 * @return	void
+	 */
+	protected function execute()
 	{
-		// set database instance
-		$this->db = $db;
-
 		// load install.sql
 		$this->importSQL(PATH_WWW .'/backend/modules/blog/installer/install.sql');
 
@@ -25,7 +38,7 @@ class BlogInstall extends ModuleInstaller
 		$this->setSetting('blog', 'max_num_revisions', 20);
 
 		// loop languages
-		foreach($languages as $language)
+		foreach($this->getLanguages() as $language)
 		{
 			// add default category
 			$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
@@ -61,9 +74,17 @@ class BlogInstall extends ModuleInstaller
 	}
 
 
+	/**
+	 * Add the default category for a language
+	 *
+	 * @return	int
+	 * @param	string $language
+	 * @param	string $name
+	 * @param	string $url
+	 */
 	private function addCategory($language, $name, $url)
 	{
-		return (int) $this->db->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
+		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
 	}
 }
 
