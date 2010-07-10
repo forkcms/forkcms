@@ -173,10 +173,10 @@ class PagesInstall extends ModuleInstaller
 			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(3, $language)) == 0)
 			{
 				// insert meta
-				$metaID = $this->getDB()->insert('meta', array('keywords' => 'sitemap', 'keywords_overwrite' => 'N',
-															'description' => 'sitemap', 'description_overwrite' => 'N',
-															'title' => 'sitemap', 'title_overwrite' => 'N',
-															'url' => 'sitemap', 'url_overwrite' => 'N',
+				$metaID = $this->getDB()->insert('meta', array('keywords' => 'disclaimer', 'keywords_overwrite' => 'N',
+															'description' => 'disclaimer', 'description_overwrite' => 'N',
+															'title' => 'disclaimer', 'title_overwrite' => 'N',
+															'url' => 'disclaimer', 'url_overwrite' => 'N',
 															'custom' => null));
 
 				// insert disclaimer	@todo	which user should be default? add widget with sitemap

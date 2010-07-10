@@ -12,12 +12,11 @@
 		</div>
 
 		<div id="navigation">
-			{$var|getnavigation:'page':1:1}
+			{$var|getnavigation:'page':0:1}
 		</div>
 
 		<div id="main">
 			<div id="subnavigation">
-				{$var|getnavigation:'page':{$page['id']}}
 			</div>
 
 			<div id="content" class="content">
