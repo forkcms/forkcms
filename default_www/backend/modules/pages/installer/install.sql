@@ -60,7 +60,6 @@ CREATE TABLE IF NOT EXISTS `pages_templates` (
   `path` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'Filename for the template.',
   `num_blocks` int(11) NOT NULL default '1' COMMENT 'The number of blocks used in the template.',
   `active` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'Y' COMMENT 'Is this template active (as in: will it be used).',
-  `is_default` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N' COMMENT 'Is this the default template.',
   `data` text collate utf8_unicode_ci COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible templates' AUTO_INCREMENT=1 ;

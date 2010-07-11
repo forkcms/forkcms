@@ -64,7 +64,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 		// determine if deleting is allowed
 		$deleteAllowed = true;
-		if($this->record['is_default'] == 'Y') $deleteAllowed = false;
+		if($this->record['id'] == BackendModel::getSetting('pages', 'default_template')) $deleteAllowed = false;
 		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
 		elseif(BackendPagesModel::isTemplateInUse($this->id)) $deleteAllowed = false;
 
@@ -89,7 +89,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm->addDropdown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
 		$this->frm->addText('format', $this->record['data']['format']);
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addCheckbox('default', ($this->record['is_default'] == 'Y'));
+		$this->frm->addCheckbox('default', ($this->record['id'] == BackendModel::getSetting('pages', 'default_template')));
 
 		// init vars
 		$names = array();
@@ -146,7 +146,6 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$template['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
 				$template['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
 				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$template['is_default'] = ($this->frm->getField('default')->getChecked()) ? 'Y' : 'N';
 				$template['data']['format'] = $this->frm->getField('format')->getValue();
 
 				// loop fields
@@ -161,6 +160,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 				// insert the item
 				BackendPagesModel::updateTemplate($this->id, $template);
+
+				// set default template
+				if($this->frm->getField('default')->getChecked()) BackendModel::setSetting('pages', 'default_template', $this->id);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited-template&var='. urlencode($template['label']));

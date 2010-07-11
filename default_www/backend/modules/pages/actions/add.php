@@ -59,21 +59,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->templates = BackendPagesModel::getTemplates();
 
 		// init var
-		$defaultTemplateId = false;
-
-		// loop templates
-		foreach($this->templates as $template)
-		{
-			// check if this is the default template
-			if($template['is_default'] == 'Y')
-			{
-				// set variable
-				$defaultTemplateId = $template['id'];
-
-				// stop loop
-				break;
-			}
-		}
+		$defaultTemplateId = BackendModel::getSetting('pages', 'default_template', false);
 
 		// fallback
 		if($defaultTemplateId === false)

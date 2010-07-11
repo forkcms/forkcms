@@ -538,7 +538,7 @@ class BackendPagesModel
 		if(count($templates) == 1) return false;
 
 		// we can't delete the default template
-		if($templates[$id]['is_default'] == 'Y') return false;
+		if($id == BackendModel::getSetting('pages', 'default_template')) return false;
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -1046,7 +1046,7 @@ class BackendPagesModel
 	public static function getTemplates()
 	{
 		// get templates
-		$templates = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.is_default, i.data
+		$templates = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
 																FROM pages_templates AS i
 																WHERE i.active = ?;',
 																array('Y'), 'id');
@@ -1418,14 +1418,8 @@ class BackendPagesModel
 	 */
 	public static function insertTemplate(array $template)
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
-		// default?
-		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'));
-
 		// insert
-		$return = (int) $db->insert('pages_templates', $template);
+		$return = (int) BackendModel::getDB(true)->insert('pages_templates', $template);
 
 		// update setting for maximum blocks
 		self::setMaximumBlocks();
@@ -1691,7 +1685,7 @@ class BackendPagesModel
 		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// update old revisions
-		$db->update('pages_blocks', array('status' => 'archive'), 'id = ?', $blocks[0]['id']);
+		$db->update('pages_blocks', array('status' => 'archive'), 'revision_id = ?', $blocks[0]['revision_id']);
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
@@ -1707,14 +1701,8 @@ class BackendPagesModel
 	 */
 	public static function updateTemplate($id, array $template)
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
-		// update old revisions
-		if($template['is_default'] == 'Y') $db->update('pages_templates', array('is_default' => 'N'), '');
-
 		// update item
-		$db->update('pages_templates', $template, 'id = ?', (int) $id);
+		BackendModel::getDB(true)->update('pages_templates', $template, 'id = ?', (int) $id);
 
 		// update setting for maximum blocks
 		self::setMaximumBlocks();

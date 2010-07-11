@@ -182,7 +182,7 @@ class ModuleInstaller
 	 */
 	protected function insertExtra(array $item)
 	{
-		return (int) $this->getDB()->insert('pages_extra', $item);
+		return (int) $this->getDB()->insert('pages_extras', $item);
 	}
 
 

@@ -105,7 +105,6 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$template['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
 				$template['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
 				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$template['is_default'] = ($this->frm->getField('default')->getChecked()) ? 'Y' : 'N';
 				$template['data']['format'] = $this->frm->getField('format')->getValue();
 
 				// loop fields
@@ -119,7 +118,10 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$template['data'] = serialize($template['data']);
 
 				// insert the item
-				BackendPagesModel::insertTemplate($template);
+				$id = BackendPagesModel::insertTemplate($template);
+
+				// set default template
+				if($this->frm->getField('default')->getChecked()) BackendModel::setSetting('pages', 'default_template', $id);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') .'&report=added-template&var='. urlencode($template['label']));

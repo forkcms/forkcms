@@ -1,16 +1,16 @@
 <?php
 
 /**
- * FrontendSitemapIndex
- * This is the index-action
+ * FrontendPagesWidgetSitemap
+ * This is a widget wherin the sitemap lives
  *
  * @package		frontend
- * @subpackage	sitemap
+ * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendSitemapIndex extends FrontendBaseBlock
+class FrontendPagesWidgetSitemap extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
@@ -19,6 +19,9 @@ class FrontendSitemapIndex extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
+		// call parent
+		parent::execute();
+
 		// load template
 		$this->loadTemplate();
 	}

@@ -1,16 +1,16 @@
 <?php
 
 /**
- * FrontendSitemapConfig
+ * FrontendPagesConfig
  * This is the configuration-object
  *
  * @package		frontend
- * @subpackage	sitemap
+ * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-final class FrontendSitemapConfig extends FrontendBaseConfig
+final class FrontendPagesConfig extends FrontendBaseConfig
 {
 	/**
 	 * The default action
