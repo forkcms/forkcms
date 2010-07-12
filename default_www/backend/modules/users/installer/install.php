@@ -76,7 +76,7 @@ class UsersInstall extends ModuleInstaller
 			$settings['interface_language'] = serialize('nl');
 			$settings['date_format'] = serialize('j F Y');
 			$settings['time_format'] = serialize('H:i');
-			$settings['datetime_format'] = serialize($settings['date_format'] .' '. $settings['time_format']);
+			$settings['datetime_format'] = serialize(unserialize($settings['date_format']) .' '. unserialize($settings['time_format']));
 			$settings['password_key'] = serialize(uniqid());
 			$settings['avatar'] = serialize('god.jpg');
 
