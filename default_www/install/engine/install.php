@@ -652,6 +652,9 @@ class Installer
 				// database instance
 				$db = new SpoonDatabase('mysql', SpoonSession::get('database_hostname'), SpoonSession::get('database_username'), SpoonSession::get('database_password'), SpoonSession::get('database_name'));
 
+				// utf8 compliance & MySQL-timezone
+				$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00";');
+
 				/**
 				 * First we need to install the core. All the linked modules, settings and or sql tables are
 				 * being installed.

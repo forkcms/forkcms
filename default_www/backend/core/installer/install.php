@@ -352,7 +352,7 @@ class CoreInstall extends ModuleInstaller
 	private function setSettings()
 	{
 		// languages settings
-		$this->setSetting('core', 'languages', array('de', 'en', 'es', 'fr', 'nl'));	// @todo	Davy, ik denk dat en/fr/nl wel voldoen voor nu
+		$this->setSetting('core', 'languages', $this->getLanguages());
 		$this->setSetting('core', 'active_languages', $this->getLanguages());
 		$this->setSetting('core', 'redirect_languages', $this->getLanguages());
 		$this->setSetting('core', 'default_language', $this->getVariable('default_language'));
@@ -388,7 +388,7 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'smpt_username', 'bugs@fork-cms.be');
 		$this->setSetting('core', 'smpt_password', 'Jishaik6');
 
-		// ping services	// @davy, de value moet opgehaald worden via de Fork API (er is een method voor)
+		// ping services	// @todo davy, de value moet opgehaald worden via de Fork API (er is een method voor)
 		$this->setSetting('core', 'ping_services', array('services' => array(array('url' => 'http://rpc.weblogs.com/RPC2', 'port' => 80, 'type' => 'extended'),
 																		array('url' => 'http://rpc.pingomatic.com/RPC2', 'port' => 80, 'type' => 'extended'),
 																		array('url' => 'http://blogsearch.google.com/ping/RPC2', 'port' => 80, 'type' => 'extended')),
