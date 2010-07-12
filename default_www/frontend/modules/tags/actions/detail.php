@@ -1,6 +1,6 @@
 <?php
 
-// @todo davy - volledig herwerken
+// @later davy - code herwerken
 
 /**
  * FrontendTagsDetail
@@ -15,9 +15,9 @@
  */
 class FrontendTagsDetail extends FrontendBaseBlock
 {
-	private $id; // @todo moet deze een property zijn?
+	private $id;
 
-	private $modules = array(); // @todo moet deze een property zijn?
+	private $modules = array();
 
 
 	/**
@@ -25,7 +25,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $record = array(); // @todo is deze nodig ?
+	private $record = array();
 
 
 	/**
@@ -66,7 +66,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		$this->id = FrontendTagsModel::getIdByURL($this->URL->getParameter(1));
 
 		// fetch modules
-		$this->modules = FrontendTagsModel::getModulesForTag($this->id);// @todo steekt url hier ineens in.
+		$this->modules = FrontendTagsModel::getModulesForTag($this->id);
 
 		require_once FRONTEND_PATH .'/modules/blog/engine/model.php';
 

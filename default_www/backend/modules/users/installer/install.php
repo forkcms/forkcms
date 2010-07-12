@@ -80,7 +80,7 @@ class UsersInstall extends ModuleInstaller
 			$settings['password_key'] = serialize(uniqid());
 			$settings['avatar'] = serialize('god.jpg');
 
-			// @todo davy - slaag mij hard	use getVariable('...
+			// @later davy - dit moet uit getVariable komen
 			$emailBlub = $this->getSetting('core', 'mailer_from');
 
 			// build user

@@ -201,15 +201,12 @@ class Installer
 
 		// does the globals.example.php file exist
 		if(!file_exists(PATH_LIBRARY .'/globals.example.php') || !is_readable(PATH_LIBRARY .'/globals.example.php')) return false;
-		// @todo davy - extra checks voor inhoud van de file
 
 		// does the globals_backend.example.php file exist
 		if(!file_exists(PATH_LIBRARY .'/globals_backend.example.php') || !is_readable(PATH_LIBRARY .'/globals_backend.example.php')) return false;
-		// @todo davy - extra checks voor inhoud van de file
 
 		// does the globals_frontend.example.php file exist
 		if(!file_exists(PATH_LIBRARY .'/globals_frontend.example.php') || !is_readable(PATH_LIBRARY .'/globals_frontend.example.php')) return false;
-		// @todo davy - extra checks voor inhoud van de file
 
 		// every check was passed
 		return true;
@@ -405,7 +402,6 @@ class Installer
 		// does the globals.example.php file exist
 		if(file_exists(PATH_LIBRARY .'/globals.example.php') && is_readable(PATH_LIBRARY .'/globals.example.php'))
 		{
-			// @todo davy - deze file moet worden ingelezen, er moet gecontroleerd worden of de nodige constanten beschikbaar zijn.
 			$variables['fileSystemGlobals'] = 'ok';
 			$variables['fileSystemGlobalsStatus'] = 'ok';
 		}
@@ -419,7 +415,6 @@ class Installer
 		// does the globals_backend.example.php file exist
 		if(file_exists(PATH_LIBRARY .'/globals_backend.example.php') && is_readable(PATH_LIBRARY .'/globals_backend.example.php'))
 		{
-			// @todo davy - deze file moet worden ingelezen, er moet gecontroleerd worden of de nodige constanten beschikbaar zijn.
 			$variables['fileSystemGlobalsBackend'] = 'ok';
 			$variables['fileSystemGlobalsBackendStatus'] = 'ok';
 		}
@@ -433,7 +428,6 @@ class Installer
 		// does the globals_frontend.example.php file exist
 		if(file_exists(PATH_LIBRARY .'/globals_frontend.example.php') && is_readable(PATH_LIBRARY .'/globals_frontend.example.php'))
 		{
-			// @todo davy - deze file moet worden ingelezen, er moet gecontroleerd worden of de nodige constanten beschikbaar zijn.
 			$variables['fileSystemGlobalsFrontend'] = 'ok';
 			$variables['fileSystemGlobalsFrontendStatus'] = 'ok';
 		}
@@ -732,7 +726,7 @@ class Installer
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// @todo vuiligheid
+				// @later dit moet proper opgelost worden.
 				SpoonSession::set('password', $this->frm->getField('password')->getValue());
 
 				// nasty shit
@@ -778,7 +772,7 @@ class Installer
 						if(SpoonFile::exists(PATH_WWW .'/backend/modules/'. $module .'/installer/install.php'))
 						{
 							// init var
-							$variables = array(); // @todo davy ...
+							$variables = array(); // @later variabelen meegeven, moet op een andere manier gebeuren.
 							if($module == 'users') $variables['password'] = $this->frm->getField('password')->getValue();
 
 							// load file
@@ -794,7 +788,6 @@ class Installer
 				}
 
 				// generate locale
-				// @todo generate locale files for frontend/backend
 				foreach(SpoonSession::get('languages') as $language)
 				{
 					$this->buildCache($db, $language, 'frontend');
@@ -837,11 +830,11 @@ class Installer
 	 */
 	private function init()
 	{
-		// @todo tijs - waarom geen glob gebruikt? http://be.php.net/glob
+		// @later tijs - waarom geen glob gebruikt? http://be.php.net/glob
 
-		// @todo davy - van zodra de PATH_LIBRARY in de session zit, moet ge die gebruiken
+		// @later davy - van zodra de PATH_LIBRARY in de session zit, moet ge die gebruiken
 
-		// @todo davy - in de init zou hij het nieuwe pad naar library moeten gebruiken
+		// @later davy - in de init zou hij het nieuwe pad naar library moeten gebruiken
 
 		// get the www path
 		define('PATH_WWW', realpath(str_replace('/install/engine/install.php', '', __FILE__)));
@@ -903,7 +896,7 @@ class Installer
 		// validate
 		if(!defined('PATH_LIBRARY'))
 		{
-			echo 'Can\'t find Spoon. Make sure their is a folder containing spoon on the same level as the document_root'; // @todo tijs - die foutmelding klopt toch niet echt?
+			echo 'We are unable to find the spoon directory. Make sure it exists in your library folder';
 			exit;
 		}
 

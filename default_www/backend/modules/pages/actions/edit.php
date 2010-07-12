@@ -229,7 +229,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	protected function parse()
 	{
 		// parse some variables
-		$this->tpl->assignArray($this->record, 'record'); // @todo @davy rommel opkuisen...
+		$this->tpl->assignArray($this->record, 'record'); // @later davy - de variabelen moeten de richtlijnen volgen
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
