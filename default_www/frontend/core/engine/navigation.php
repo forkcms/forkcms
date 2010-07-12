@@ -306,11 +306,12 @@ class FrontendNavigation extends FrontendBaseObject
 	public static function getPageId($URL, $language = null)
 	{
 		// redefine
-		$URL = (string) $URL;
+		$URL = trim((string) $URL, '/');
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// get menu items array
 		$keys = self::getKeys($language);
+
 
 		// get key
 		$key = array_search($URL, $keys);

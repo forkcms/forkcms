@@ -117,6 +117,7 @@ class FrontendTemplate extends SpoonTemplate
 
 		// convert var into navigation
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
+		$this->mapModifier('getsubnavigation', array('FrontendTemplateModifiers', 'getSubNavigation'));
 
 		// rand
 		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'rand'));
@@ -352,6 +353,51 @@ class FrontendTemplateModifiers
 		return $var;
 	}
 
+
+	/**
+	 * Get the subnavigation html
+	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:<excludeIds-splitted-by-dash>]}
+	 *
+	 * @return	string
+	 * @param	string[optional] $var
+	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer
+	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build
+	 * @param	int[optional] $startDepth		The depth to strat from
+	 * @param	int[optional] $endDepth			The maximum depth that has to be build
+	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -)
+	 */
+	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
+	{
+		// build excludeIds
+		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
+
+		// get info about the given page
+		$pageInfo = FrontendNavigation::getPageInfo($pageId);
+
+		// validate page info
+		if($pageInfo === false) return '';
+
+		// split URL into chunks
+		$chunks = (array) explode('/', $pageInfo['full_url']);
+
+		// init var
+		$parentURL = '';
+
+		// build url
+		for($i = 0; $i < $startDepth - 1; $i++) $parentURL .= $chunks[$i] .'/';
+
+		// get parent ID
+		$parentID = FrontendNavigation::getPageId($parentURL);
+
+		// get HTML
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds);
+
+		// return the var
+		if($return != '') return $return;
+
+		// fallback
+		return $var;
+	}
 
 	/**
 	 * Get the URL for a given pageId & language

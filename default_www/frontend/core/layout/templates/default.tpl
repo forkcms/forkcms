@@ -17,6 +17,7 @@
 
 		<div id="main">
 			<div id="subnavigation">
+				{$var|getsubnavigation:'page':{$page['id']}:2}
 			</div>
 
 			<div id="content" class="content">
