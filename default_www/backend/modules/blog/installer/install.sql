@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS `blog_categories`;
 CREATE TABLE IF NOT EXISTS `blog_categories` (
   `id` int(11) NOT NULL auto_increment,
   `language` varchar(5) collate utf8_unicode_ci NOT NULL,
@@ -8,7 +7,6 @@ CREATE TABLE IF NOT EXISTS `blog_categories` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
-DROP TABLE IF EXISTS `blog_comments`;
 CREATE TABLE IF NOT EXISTS `blog_comments` (
   `id` int(11) NOT NULL auto_increment,
   `post_id` int(11) NOT NULL,
@@ -25,7 +23,6 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
-DROP TABLE IF EXISTS `blog_posts`;
 CREATE TABLE IF NOT EXISTS `blog_posts` (
   `id` int(11) NOT NULL COMMENT 'The real post id',
   `revision_id` int(11) NOT NULL auto_increment,

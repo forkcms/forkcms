@@ -606,7 +606,7 @@ class Installer
 		$tmpModules = SpoonDirectory::getList(PATH_WWW .'/backend/modules', false, null, '/^[a-z0-9_]+$/i');
 
 		// required modules
-		$alwaysCheckedModules = array('core', 'locale', 'users', 'authentication', 'dashboard', 'error', 'example', 'settings',
+		$alwaysCheckedModules = array('core', 'locale', 'users', 'authentication', 'dashboard', 'example', 'settings',
 										'pages', 'contact', 'content_blocks', 'tags');
 
 		// manually add core to the modules

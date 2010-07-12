@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS `emails`;
 CREATE TABLE IF NOT EXISTS `emails` (
   `id` int(11) NOT NULL auto_increment,
   `to_email` varchar(255) collate utf8_unicode_ci NOT NULL,
@@ -16,7 +15,6 @@ CREATE TABLE IF NOT EXISTS `emails` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
-DROP TABLE IF EXISTS `meta`;
 CREATE TABLE IF NOT EXISTS `meta` (
   `id` int(11) NOT NULL auto_increment,
   `keywords` varchar(255) collate utf8_unicode_ci NOT NULL,
@@ -33,7 +31,6 @@ CREATE TABLE IF NOT EXISTS `meta` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
 
 
-DROP TABLE IF EXISTS `modules`;
 CREATE TABLE IF NOT EXISTS `modules` (
   `name` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'unique module name',
   `description` text collate utf8_unicode_ci,
@@ -42,7 +39,6 @@ CREATE TABLE IF NOT EXISTS `modules` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `modules_settings`;
 CREATE TABLE IF NOT EXISTS `modules_settings` (
   `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
   `name` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
@@ -51,7 +47,6 @@ CREATE TABLE IF NOT EXISTS `modules_settings` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
-DROP TABLE IF EXISTS `modules_tags`;
 CREATE TABLE IF NOT EXISTS `modules_tags` (
   `module` varchar(255) collate utf8_unicode_ci NOT NULL,
   `tag_id` int(11) NOT NULL,
@@ -60,6 +55,7 @@ CREATE TABLE IF NOT EXISTS `modules_tags` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+DROP TABLE IF EXISTS `timezones`;
 CREATE TABLE IF NOT EXISTS `timezones` (
   `id` int(11) NOT NULL auto_increment,
   `timezone` varchar(255) collate utf8_unicode_ci NOT NULL,
@@ -523,7 +519,6 @@ INSERT INTO `timezones` (`id`, `timezone`) VALUES
 (453, 'Pacific/Yap');
 
 
-DROP TABLE IF EXISTS `groups`;
 CREATE TABLE IF NOT EXISTS `groups` (
   `id` int(11) NOT NULL auto_increment,
   `name` varchar(255) collate utf8_unicode_ci NOT NULL,
@@ -533,10 +528,9 @@ CREATE TABLE IF NOT EXISTS `groups` (
 
 
 INSERT INTO `groups` (`id`, `name`, `parameters`) VALUES
-(1, 'admin', NULL);
+(1, 'admin', NULL) ON DUPLICATE KEY UPDATE id=1;
 
 
-DROP TABLE IF EXISTS `groups_rights_actions`;
 CREATE TABLE IF NOT EXISTS `groups_rights_actions` (
   `id` int(11) NOT NULL auto_increment,
   `group_id` int(11) NOT NULL,
@@ -547,8 +541,6 @@ CREATE TABLE IF NOT EXISTS `groups_rights_actions` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
-
-DROP TABLE IF EXISTS `groups_rights_modules`;
 CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
   `id` int(11) NOT NULL auto_increment,
   `group_id` int(11) NOT NULL,

@@ -1,4 +1,3 @@
-DROP TABLE IF EXISTS `locale`;
 CREATE TABLE IF NOT EXISTS `locale` (
   `id` int(11) NOT NULL auto_increment,
   `user_id` int(11) NOT NULL,
