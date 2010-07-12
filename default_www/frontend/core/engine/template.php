@@ -389,8 +389,17 @@ class FrontendTemplateModifiers
 		// get parent ID
 		$parentID = FrontendNavigation::getPageId($parentURL);
 
-		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds);
+		try
+		{
+			// get HTML
+			$return = (string) FrontendNavigation::getNavigationHtml($type, $parentID, $endDepth, $excludeIds);
+		}
+
+		// catch exceptions
+		catch(Exception $e)
+		{
+			return '';
+		}
 
 		// return the var
 		if($return != '') return $return;
