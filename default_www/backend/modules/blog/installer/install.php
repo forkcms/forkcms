@@ -92,6 +92,47 @@ class BlogInstall extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'index');
 		$this->setActionRights(1, 'blog', 'mass_comment_action');
 		$this->setActionRights(1, 'blog', 'settings');
+
+		// add extra's
+		$this->insertExtra(array('module' => 'blog',
+									'type' => 'block',
+									'label' => 'Blog',
+									'action' => null,
+									'data' => null,
+									'hidden' => 'N',
+									'sequence' => 1000));
+
+		$this->insertExtra(array('module' => 'blog',
+									'type' => 'widget',
+									'label' => 'RecentComments',
+									'action' => 'recent_comments',
+									'data' => null,
+									'hidden' => 'N',
+									'sequence' => 1001));
+
+		$this->insertExtra(array('module' => 'blog',
+									'type' => 'widget',
+									'label' => 'Categories',
+									'action' => 'categories',
+									'data' => null,
+									'hidden' => 'N',
+									'sequence' => 1002));
+
+		$this->insertExtra(array('module' => 'blog',
+									'type' => 'widget',
+									'label' => 'Archive',
+									'action' => 'archive',
+									'data' => null,
+									'hidden' => 'N',
+									'sequence' => 1003));
+
+		$this->insertExtra(array('module' => 'blog',
+									'type' => 'widget',
+									'label' => 'RecentArticles',
+									'action' => 'recent_articles',
+									'data' => null,
+									'hidden' => 'N',
+									'sequence' => 1004));
 	}
 
 
