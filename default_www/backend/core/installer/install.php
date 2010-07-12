@@ -312,15 +312,45 @@ class CoreInstall extends ModuleInstaller
 		if($this->getVariable('api_email') === null) throw new SpoonException('Not all required variables were provided.');
 		if($this->getVariable('site_title') === null) throw new SpoonException('Not all required variables were provided.');
 
-
 		// import SQL
 		$this->importSQL(PATH_WWW .'/backend/core/installer/install.sql');
 
-		// add 'core' as a module
+		// add core modules
 		$this->addModule('core', 'The Fork CMS core module.');
+		$this->addModule('authentication', 'The module to manage authentication');
+		$this->addModule('dashboard', 'The dashboard containing module specific widgets.');
+		$this->addModule('error', 'The error module, used for displaying errors.');
 
-		// insert module specific settings.
+		// set rights
+		$this->setRights();
 
+		// set settings
+		$this->setSettings();
+	}
+
+
+	/**
+	 * Set the rights
+	 *
+	 * @return	void
+	 */
+	private function setRights()
+	{
+		// module rights
+		$this->setModuleRights(1, 'dashboard');
+
+		// action rights
+		$this->setActionRights(1, 'dashboard', 'index');
+	}
+
+
+	/**
+	 * Store the settings
+	 *
+	 * @return	void
+	 */
+	private function setSettings()
+	{
 		// languages settings
 		$this->setSetting('core', 'languages', array('de', 'en', 'es', 'fr', 'nl'));	// @todo	Davy, ik denk dat en/fr/nl wel voldoen voor nu
 		$this->setSetting('core', 'active_languages', $this->getLanguages());
@@ -351,6 +381,7 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'mailer_from', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
 		$this->setSetting('core', 'mailer_to', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
 		$this->setSetting('core', 'mailer_reply_to', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
+
 		// @todo davy - deze settings moeten opgevraagd worden in de installer
 		$this->setSetting('core', 'smtp_server', 'mail.fork-cms.be');
 		$this->setSetting('core', 'smtp_port', 587);
@@ -383,6 +414,10 @@ class CoreInstall extends ModuleInstaller
 		// ap settings
 		$this->setSetting('core', 'fork_api_public_key', $keys['public']);
 		$this->setSetting('core', 'fork_api_private_key', $keys['private']);
+
+		// general settings
+		$this->setSetting('dashboard', 'requires_akismet', false);
+		$this->setSetting('dashboard', 'requires_google_maps', false);
 	}
 }
 
