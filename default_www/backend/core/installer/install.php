@@ -402,8 +402,8 @@ class CoreInstall extends ModuleInstaller
 		// stmp settings
 		$this->setSetting('core', 'smtp_server', $this->getVariable('smtp_server'));
 		$this->setSetting('core', 'smtp_port', $this->getVariable('smtp_port'));
-		$this->setSetting('core', 'smpt_username', $this->getVariable('smtp_username'));
-		$this->setSetting('core', 'smpt_password', $this->getVariable('smtp_password'));
+		$this->setSetting('core', 'smtp_username', $this->getVariable('smtp_username'));
+		$this->setSetting('core', 'smtp_password', $this->getVariable('smtp_password'));
 
 		// language specific
 		foreach($this->getLanguages() as $language)
