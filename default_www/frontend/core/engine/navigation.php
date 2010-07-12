@@ -184,6 +184,9 @@ class FrontendNavigation extends FrontendBaseObject
 		// loop links
 		foreach($navigation['footer'][0] as $id => $data)
 		{
+			// skip hidden pages
+			if($data['hidden']) continue;
+
 			// build temp array
 			$temp = array();
 			$temp['id'] = $id;
