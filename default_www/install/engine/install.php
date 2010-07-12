@@ -752,10 +752,10 @@ class Installer
 													'api_email' => $this->frm->getField('api_email')->getValue(),
 													'site_domain' => SpoonSession::get('site_domain'),
 													'site_title' => SpoonSession::get('site_title'),
-													'smtp_server' => $this->frm->getField('smtp_server'),
-													'smtp_port' => $this->frm->getField('smtp_port'),
-													'smtp_username' => $this->frm->getField('smtp_username'),
-													'smtp_password' => $this->frm->getField('smtp_password')));
+													'smtp_server' => $this->frm->getField('smtp_server')->getValue(),
+													'smtp_port' => $this->frm->getField('smtp_port')->getValue(),
+													'smtp_username' => $this->frm->getField('smtp_username')->getValue(),
+													'smtp_password' => $this->frm->getField('smtp_password')->getValue()));
 
 				// modules were selected
 				if(!empty($modulesToInstall))
