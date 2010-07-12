@@ -22,24 +22,17 @@
 						<h2>Finished</h2>
 					</div>
 
-					<form action="#" method="post" id="step4" class="forkForms">
-						<div>
-							<div class="horizontal">
-								<p>Nice, everything is installed!</p>
-							</div>
-
-							{iteration:items}
-							<div>
-								<h3>{$items.name}</h3>
-								{iteration:items.messages}
-								<div class="{$messages.type}">
-									{$messages.message}
-								</div>
-								{/iteration:items.messages}
-							</div>
-							{/iteration:items}
+					<div>
+						<div class="horizontal">
+							<p>Nice, everything is installed!</p>
 						</div>
-					</form>
+
+						<p>
+							You can <a href="/private">login</a> using these credentials:<br />
+							username: {$username}<br />
+							password: {$password}
+						</p>
+					</div>
 					<ul id="installerNav">
 						<li><a href="http://userguide.fork-cms.be">Gebruikersgids</a></li>
 						<li><a href="http://docs.fork-cms.be">Developer</a></li>

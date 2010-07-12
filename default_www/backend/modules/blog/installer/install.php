@@ -40,14 +40,35 @@ class BlogInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// add default category
-			$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+			// fetch current categoryId
+			$currentCategoryId = $this->getCategory($language);
+
+			// no category exists
+			if($currentCategoryId == 0)
+			{
+				// add default category
+				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+
+				// insert default category setting
+				$this->setSetting('blog', 'default_category_'. $language, $defaultCategoryId, true);
+			}
+
+			// category exists
+			else
+			{
+				// current default categoryId
+				$currentDefaultCategoryId = $this->getSetting('blog', 'default_category_'. $language);
+
+				// does not exist
+				if(!$this->existsCategory($language, $currentDefaultCategoryId))
+				{
+					// insert default category setting
+					$this->setSetting('blog', 'default_category_'. $language, $currentCategoryId, true);
+				}
+			}
 
 			// feedburner URL
 			$this->setSetting('blog', 'feedburner_url_'. $language, '');
-
-			// insert default category
-			$this->setSetting('blog', 'default_category_'. $language, $defaultCategoryId);
 
 			// RSS settings
 			$this->setSetting('blog', 'rss_meta_'. $language, true);
@@ -85,6 +106,31 @@ class BlogInstall extends ModuleInstaller
 	private function addCategory($language, $name, $url)
 	{
 		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
+	}
+
+
+	/**
+	 * Does the category with this id exist within this language.
+	 *
+	 * @return	bool
+	 * @param	string $language
+	 * @param	int $id
+	 */
+	private function existsCategory($language, $id)
+	{
+		return (bool) $this->getDB()->getNumRows('SELECT id FROM blog_categories WHERE id = ? AND language = ?;', array((int) $id, (string) $language));
+	}
+
+
+	/**
+ 	 * Fetch the id of the first category in this language we come across
+ 	 *
+ 	 * @return	int
+ 	 * @param	string $language
+	 */
+	private function getCategory($language)
+	{
+		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?;', (string) $language);
 	}
 }
 

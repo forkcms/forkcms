@@ -36,10 +36,30 @@
 
 							<div class="horizontal">
 								<h3>Fork API</h3>
-								<p>The Fork API provides your website with extra services.</p>
 								<p>
 									<label for="apiEmail">Email<abbr title="Required">*</abbr></label>
 									{$txtApiEmail} {$txtApiEmailError}
+								</p>
+							</div>
+
+							<div class="horizontal">
+								<h3>STMP settings</h3>
+								<p>These settings are used to send mail.</p>
+								<p>
+									<label for="smtpServer">Server<abbr title="Required">*</abbr></label>
+									{$txtSmtpServer} {$txtSmtpServerError}
+								</p>
+								<p>
+									<label for="smtpPort">Port<abbr title="Required">*</abbr></label>
+									{$txtSmtpPort} {$txtSmtpPortError}
+								</p>
+								<p>
+									<label for="smtpUsername">Username<abbr title="Required">*</abbr></label>
+									{$txtSmtpUsername} {$txtSmtpUsernameError}
+								</p>
+								<p>
+									<label for="smtpPassword">Password<abbr title="Required">*</abbr></label>
+									{$txtSmtpPassword} {$txtSmtpPasswordError}
 								</p>
 							</div>
 

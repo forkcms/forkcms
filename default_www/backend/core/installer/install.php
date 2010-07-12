@@ -261,14 +261,16 @@ class ModuleInstaller
 	 * @return	void
 	 * @param	string $module				The module wherefore the setting will be set.
 	 * @param	string $name				The name of the setting.
-	 * @param	mixed[optional] $value		The value.
+	 * @param	mixed[optional] $value		The optional value.
+	 * @param	bool[optional] $overwrite	Overwrite no matter what.
 	 */
-	protected function setSetting($module, $name, $value = null)
+	protected function setSetting($module, $name, $value = null, $overwrite = false)
 	{
 		// redefine
 		$module = (string) $module;
 		$name = (string) $name;
 		$value = serialize($value);
+		$overwrite = (bool) $overwrite;
 
 		// doens't already exist
 		if($this->getDB()->getNumRows('SELECT name
@@ -280,6 +282,14 @@ class ModuleInstaller
 			$this->getDB()->insert('modules_settings', array('module' => $module,
 																'name' => $name,
 																'value' => $value));
+		}
+
+		// overwrite
+		elseif($overwrite)
+		{
+			// insert setting
+			$this->getDB()->execute("INSERT INTO modules_settings (module, name, value) VALUES (?, ?, ?)
+									ON DUPLICATE KEY UPDATE value = ?;", array($module, $name, $value, $value));
 		}
 	}
 }
@@ -382,11 +392,11 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'mailer_to', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
 		$this->setSetting('core', 'mailer_reply_to', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
 
-		// @todo davy - deze settings moeten opgevraagd worden in de installer
-		$this->setSetting('core', 'smtp_server', 'mail.fork-cms.be');
-		$this->setSetting('core', 'smtp_port', 587);
-		$this->setSetting('core', 'smpt_username', 'bugs@fork-cms.be');
-		$this->setSetting('core', 'smpt_password', 'Jishaik6');
+		// stmp settings
+		$this->setSetting('core', 'smtp_server', $this->getVariable('smtp_server'));
+		$this->setSetting('core', 'smtp_port', $this->getVariable('smtp_port'));
+		$this->setSetting('core', 'smpt_username', $this->getVariable('smtp_username'));
+		$this->setSetting('core', 'smpt_password', $this->getVariable('smtp_password'));
 
 		// language specific
 		foreach($this->getLanguages() as $language)
@@ -414,7 +424,7 @@ class CoreInstall extends ModuleInstaller
 		$api->setPrivateKey($keys['private']);
 
 		// get services
-		$servicess = (array) $api->pingGetServices();
+		$services = (array) $api->pingGetServices();
 
 		// set services
 		if(!empty($services)) $this->setSetting('core', 'ping_services', array('services' => $services, 'date' => time()));

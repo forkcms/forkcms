@@ -98,10 +98,10 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(1));
+				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(1));
 
 				// insert blocks
-				for($i = 1; $i <= $numberOfBlocks; $i++)
+				for($i = 1; $i <= $numBlocks; $i++)
 				{
 					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
 																	'extra_id' => null, 'html' => '',
@@ -136,10 +136,10 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
+				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
 
 				// insert blocks
-				for($i = 1; $i <= $numberOfBlocks; $i++)
+				for($i = 1; $i <= $numBlocks; $i++)
 				{
 					$extraId = null;
 					if($i == 2) $extraId = $sitemapID;
@@ -177,10 +177,10 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
+				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
 
 				// insert blocks
-				for($i = 1; $i <= $numberOfBlocks; $i++)
+				for($i = 1; $i <= $numBlocks; $i++)
 				{
 					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
 															'extra_id' => null, 'html' => '',
@@ -189,7 +189,7 @@ class PagesInstall extends ModuleInstaller
 				}
 			}
 
-			// check if the 404 page doesn't exists
+			// check if the 404 page doesn't exist
 			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(404, $language)) == 0)
 			{
 							// insert meta
@@ -200,7 +200,7 @@ class PagesInstall extends ModuleInstaller
 																'custom' => null
 															));
 
-				// insert disclaimer	@todo	which user should be default? add widget with sitemap
+				// insert disclaimer
 				$revisionID = $this->getDB()->insert('pages', array('id' => 404, 'user_id' => $this->getDefaultUserID(), 'parent_id' => 0, 'template_id' => 2, 'type' => 'root',
 																	'meta_id' => $metaID,
 																	'language' => $language,
@@ -216,10 +216,10 @@ class PagesInstall extends ModuleInstaller
 																));
 
 				// get number of blocks to insert
-				$numberOfBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
+				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
 
 				// insert blocks
-				for($i = 1; $i <= $numberOfBlocks; $i++)
+				for($i = 1; $i <= $numBlocks; $i++)
 				{
 					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
 															'extra_id' => null, 'html' => '',

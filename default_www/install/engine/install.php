@@ -606,7 +606,7 @@ class Installer
 		$tmpModules = SpoonDirectory::getList(PATH_WWW .'/backend/modules', false, null, '/^[a-z0-9_]+$/i');
 
 		// required modules
-		$alwaysCheckedModules = array('core', 'locale', 'users', 'authentication', 'dashboard', 'example', 'settings',
+		$alwaysCheckedModules = array('core', 'locale', 'users', 'authentication', 'dashboard', 'error', 'example', 'settings',
 										'pages', 'contact', 'content_blocks', 'tags');
 
 		// manually add core to the modules
@@ -634,16 +634,26 @@ class Installer
 		// api email address
 		$this->frm->addText('api_email');
 
+		// smtp settings
+		$this->frm->addText('smtp_server');
+		$this->frm->addText('smtp_port');
+		$this->frm->addText('smtp_username');
+		$this->frm->addText('smtp_password');
+
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
 			// validate
 			if($this->frm->getField('api_email')->isFilled('Field is required.')) $this->frm->getField('api_email')->isEmail('No valid email address.');
+			$this->frm->getField('smtp_server')->isFilled('Field is required.');
+			$this->frm->getField('smtp_port')->isFilled('Field is required.');
+			$this->frm->getField('smtp_username')->isFilled('Field is required.');
+			$this->frm->getField('smtp_password')->isFilled('Field is required.');
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// @todo slaag mij (davy)
+				// nasty shit
 				if(!isset($_POST['modules'])) $_POST['modules'] = array();
 
 				// modules to install?
@@ -662,7 +672,16 @@ class Installer
 				require_once PATH_WWW .'/backend/core/installer/install.php';
 
 				// install the core
-				$install = new CoreInstall($db, SpoonSession::get('languages'), array('default_language' => SpoonSession::get('site_default_language'), 'spoon_debug_email' => SpoonSession::get('spoon_debug_email'), 'api_email' => $this->frm->getField('api_email')->getValue(), 'site_domain' => SpoonSession::get('site_domain'), 'site_title' => SpoonSession::get('site_title')));
+				$install = new CoreInstall($db, SpoonSession::get('languages'),
+											array('default_language' => SpoonSession::get('site_default_language'),
+													'spoon_debug_email' => SpoonSession::get('spoon_debug_email'),
+													'api_email' => $this->frm->getField('api_email')->getValue(),
+													'site_domain' => SpoonSession::get('site_domain'),
+													'site_title' => SpoonSession::get('site_title'),
+													'smtp_server' => $this->frm->getField('smtp_server'),
+													'smtp_port' => $this->frm->getField('smtp_port'),
+													'smtp_username' => $this->frm->getField('smtp_username'),
+													'smtp_password' => $this->frm->getField('smtp_password')));
 
 				// modules were selected
 				if(!empty($modulesToInstall))
@@ -684,15 +703,18 @@ class Installer
 
 							// execute installer
 							$install = new $class($db, SpoonSession::get('languages'));
-
-							Spoon::dump($module, false);
 						}
 					}
 				}
 
-				// @todo davy - mssn is het geen slecht idee om locale te genereren.
+				// generate locale
+				// @todo generate locale files for frontend/backend
 
-				Spoon::dump('fork cms werd volledig geinstalleerd.');
+				// update installation status
+				SpoonSession::set('installed', true);
+
+				// go to step 4
+				SpoonHTTP::redirect('index.php?step=4');
 			}
 		}
 	}
@@ -705,27 +727,15 @@ class Installer
 	 */
 	private function doStep4()
 	{
-		Spoon::dump('hihi...');
 		// validate
-		if(!SpoonSession::exists('messages')) SpoonHTTP::redirect('/install/index.php?step=2');
+		if(!SpoonSession::exists('installed')) SpoonHTTP::redirect('index.php?step=2');
 
-		// get messages
-		$storedMessages = (array) unserialize(SpoonSession::get('messages'));
+		// assign variables
+		$this->tpl->assign('username', SpoonSession::get('spoon_debug_email'));
+		$this->tpl->assign('password', 'fork');
 
-		// init var
-		$items = array();
-
-		// loop messages
-		foreach($storedMessages as $module => $messages)
-		{
-			// any messages?
-			if(!empty($messages)) $items[] = array('name' => $module, 'messages' => $messages);
-		}
-
-		// assign
-		$this->tpl->assign('items', $items);
-
-		// @todo installed.txt nog in de juiste map plaatsen.
+		// write file
+		SpoonFile::setContent(PATH_WWW .'/install/installed.txt', 'installation complete '. date('Y-m-d H:i:s'));
 	}
 
 
