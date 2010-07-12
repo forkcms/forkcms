@@ -87,7 +87,7 @@ class UsersInstall extends ModuleInstaller
 			$user = array();
 			$user['group_id'] = $this->getSetting('users', 'default_group');
 			$user['email'] = $emailBlub['email'];
-			$user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5('fork'));
+			$user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5($this->getVariable('password')));
 			$user['active'] = 'Y';
 			$user['deleted'] = 'N';
 			$user['is_god'] = 'Y';

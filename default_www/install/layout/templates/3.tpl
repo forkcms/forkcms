@@ -43,6 +43,14 @@
 							</div>
 
 							<div class="horizontal">
+								<h3>Password</h3>
+								<p>
+									<label for="password">Password<abbr title="Required">*</abbr></label>
+									{$txtPassword} {$txtPasswordError}
+								</p>
+							</div>
+
+							<div class="horizontal">
 								<h3>STMP settings</h3>
 								<p>These settings are used to send mail.</p>
 								<p>
