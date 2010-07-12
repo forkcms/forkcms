@@ -170,7 +170,14 @@ class ModuleInstaller
 		$content = trim(SpoonFile::getContent($filename));
 
 		// file actually has content
-		if(!empty($content)) $this->getDB()->execute(SpoonFile::getContent($filename));
+		if(!empty($content))
+		{
+			// some version of PHP can't handle multiple statements at once, so split them
+			$queries = explode(";\n", $content);
+
+			// loop queries and execute them
+			foreach($queries as $query) $this->getDB()->execute($query);
+		}
 	}
 
 

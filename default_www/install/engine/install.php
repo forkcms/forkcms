@@ -588,13 +588,11 @@ class Installer
 				$db = new SpoonDatabase('mysql', $this->frm->getField('database_hostname')->getValue(), $this->frm->getField('database_username')->getValue(), $this->frm->getField('database_password')->getValue(), $this->frm->getField('database_name')->getValue());
 
 				// attempt to create table
-				$db->execute('DROP TABLE IF EXISTS `test`;
-								CREATE TABLE IF NOT EXISTS `test` (
-								  `id` int(11) NOT NULL
-									) ENGINE=MyISAM DEFAULT CHARSET=latin1;');
+				$db->execute('DROP TABLE IF EXISTS testtable;');
+				$db->execute('CREATE TABLE IF NOT EXISTS testtable (id int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1;');
 
 				// drop table
-				$db->drop('test');
+				$db->drop('testtable');
 			}
 
 			/*
