@@ -32,6 +32,11 @@
 							username: {$username}<br />
 							password: {$password}
 						</p>
+
+						<p>
+							Eens ingelogd moet je een item van de module vertalingen (backend/frontend) bewerken en opslaan. Vanaf dan
+							zijn je locale items gecached en zal je het cms zien zoals het hoort.
+						</p>
 					</div>
 					<ul id="installerNav">
 						<li><a href="http://userguide.fork-cms.be">Gebruikersgids</a></li>
