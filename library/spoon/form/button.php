@@ -109,7 +109,7 @@ class SpoonFormButton extends SpoonFormAttributes
 	public function parse(SpoonTemplate $template = null)
 	{
 		// start element
-		$output = '<input type="'. $this->type .'" value="'. $this->value .'"';
+		$output = '<input type="'. $this->type .'" value="'. SpoonFilter::htmlspecialchars($this->value) .'"';
 
 		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) .' />';

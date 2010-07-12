@@ -301,7 +301,7 @@ class SpoonFormTextarea extends SpoonFormInput
 		$output .= '>';
 
 		// add value
-		$output .= $this->getValue();
+		$output .= str_replace(array('"', '<', '>'), array('&quot;', '&lt;', '&gt;'), $this->getValue());
 
 		// end tag
 		$output .= '</textarea>';
