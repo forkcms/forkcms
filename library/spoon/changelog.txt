@@ -1,4 +1,4 @@
-1.2.1 (xxxx-xx-xx)
+1.2.1 (2010-07-12)
 ----
 - Template options may now start with an integer. eg {option:404}
 - The WHERE clause in SpoonDatabase::update and SpoonDatabase::delete may now be null instead of an empty string.
@@ -17,6 +17,8 @@
 - Bugfix: createThumbnail had been missing from SpoonFormImage.
 - Bugfix: form tokens are now working when you have more than one form on your page.
 - Feature: SpoonFilter::arrayMapRecursive() now has an optional third parameter $allowedKeys, which allows you to map callback to specified array keys only.
+- Bugfix: Custom keys didn't work correctly for SpoonDatagridSourceArray, they do now.
+- htmlspecialchars now uses ENT_NOQUOTES by default instead of ENT_QUOTES
 
 
 1.2.0 (2010-05-18)

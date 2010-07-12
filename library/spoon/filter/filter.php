@@ -75,29 +75,29 @@ class SpoonFilter
 			// convert to array
 			if(!is_array($allowedKeys)) $allowedKeys = (array) $allowedKeys;
 		}
-		
+
 		// declare our result array
 		$results = array();
 
 		// loop the array
 		foreach($array as $key => $value)
-		{				
+		{
 			// if $value is an array, we make this stuff recursive
 			if(is_array($value)) $results[$key] = self::arrayMapRecursive($callback, $value, $allowedKeys);
 
 			// $value is no array
 			else
-			{	
+			{
 				// the current active key is not in the list of allowed keys
 				if(!empty($allowedKeys) && !in_array($key, $allowedKeys))
 				{
 					// just store the exact value in the new result set
 					$results[$key] = $value;
-					
+
 					// proceed to next key in the foreach
 					continue;
 				}
-						
+
 				// more than 1 function given, so apply them all
 				if(is_array($callback)) $results[$key] = call_user_func_array($callback, $value);
 

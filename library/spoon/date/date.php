@@ -70,7 +70,7 @@ class SpoonDate
 	 * @return	string							String containing a sentence like 'x minutes ago'
 	 * @param	int $timestamp					Timestamp you want to make a sentence of.
 	 * @param	string[optional] $language		Language to use, check SpoonLocale::getAvailableLanguages().
-	 * @param	string[optional] $format		The format to return if the time passed is greather then a week
+	 * @param	string[optional] $format		The format to return if the time passed is greather then a week.
 	 */
 	public static function getTimeAgo($timestamp, $language = 'en', $format = null)
 	{
