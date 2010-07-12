@@ -388,12 +388,6 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'smpt_username', 'bugs@fork-cms.be');
 		$this->setSetting('core', 'smpt_password', 'Jishaik6');
 
-		// ping services	// @todo davy, de value moet opgehaald worden via de Fork API (er is een method voor)
-		$this->setSetting('core', 'ping_services', array('services' => array(array('url' => 'http://rpc.weblogs.com/RPC2', 'port' => 80, 'type' => 'extended'),
-																		array('url' => 'http://rpc.pingomatic.com/RPC2', 'port' => 80, 'type' => 'extended'),
-																		array('url' => 'http://blogsearch.google.com/ping/RPC2', 'port' => 80, 'type' => 'extended')),
-														'date' => 1275485024));
-
 		// language specific
 		foreach($this->getLanguages() as $language)
 		{
@@ -414,6 +408,16 @@ class CoreInstall extends ModuleInstaller
 		// ap settings
 		$this->setSetting('core', 'fork_api_public_key', $keys['public']);
 		$this->setSetting('core', 'fork_api_private_key', $keys['private']);
+
+		// set keys
+		$api->setPublicKey($keys['public']);
+		$api->setPrivateKey($keys['private']);
+
+		// get services
+		$servicess = (array) $api->pingGetServices();
+
+		// set services
+		if(!empty($services)) $this->setSetting('core', 'ping_services', array('services' => $services, 'date' => time()));
 
 		// general settings
 		$this->setSetting('dashboard', 'requires_akismet', false);

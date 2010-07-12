@@ -232,7 +232,7 @@ class ForkAPI
 	 * @return	void
 	 * @param	string $key
 	 */
-	private function setPublicKey($key)
+	public function setPublicKey($key)
 	{
 		$this->publicKey = (string) $key;
 	}
@@ -244,7 +244,7 @@ class ForkAPI
 	 * @return	void
 	 * @param	string $key
 	 */
-	private function setPrivateKey($key)
+	public function setPrivateKey($key)
 	{
 		$this->privateKey = (string) $key;
 	}
