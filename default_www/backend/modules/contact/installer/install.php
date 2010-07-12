@@ -20,6 +20,9 @@ class ContactInstall extends ModuleInstaller
 	 */
 	protected function execute()
 	{
+		// load install.sql
+		$this->importSQL(PATH_WWW .'/backend/modules/contact/installer/install.sql');
+
 		// add 'contact' as a module
 		$this->addModule('contact', 'The contact module.');
 
