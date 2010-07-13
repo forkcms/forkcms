@@ -927,7 +927,7 @@ class SpoonDatabase
 		$driver = (string) $driver;
 
 		// validate backend
-		if(!in_array($driver, PDO::getAvailableDrivers())) throw new SpoonDatabaseException('The driver "'. (string) $driver .'" is not supported. Only '. implode(', ', PDO::getAvailableDrivers()) .' are supported');
+		if(!in_array($driver, PDO::getAvailableDrivers())) throw new SpoonDatabaseException('The PDO database driver "'. (string) $driver .'" is not found. Only '. implode(', ', PDO::getAvailableDrivers()) .' are currently installed.');
 
 		// set property
 		$this->driver = $driver;
