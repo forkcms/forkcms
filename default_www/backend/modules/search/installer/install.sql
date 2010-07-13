@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `search_synonyms` (
 
 INSERT INTO `locale` (`user_id`, `language`, `application`, `module`, `type`, `name`, `value`, `edited_on`) VALUES
 (1, 'nl', 'backend', 'search', 'lbl', 'SearchedOn', 'gezocht op', '2010-07-08 13:53:39'),
-(1, 'nl', 'backend', 'search', 'lbl', 'Term', 'zoekterm', '2010-07-08 13:51:31'),
+(1, 'nl', 'backend', 'search', 'lbl', 'SearchTerm', 'zoekterm', '2010-07-08 13:51:31'),
 (1, 'nl', 'backend', 'search', 'lbl', 'IP', 'IP', '2010-07-08 13:51:41'),
 (1, 'nl', 'backend', 'search', 'lbl', 'Referrer', 'referrer', '2010-07-08 13:51:58'),
 (1, 'nl', 'backend', 'search', 'lbl', 'AddSynonym', 'synoniem toevoegen', '2010-07-08 13:55:46'),

@@ -12,10 +12,10 @@
 				<td id="leftColumn">
 					<div class="box">
 						<div class="heading">
-							<h3>{$lblTerm|ucfirst}</h3>
+							<h3>{$lblSearchTerm|ucfirst}</h3>
 						</div>
 						<div class="options">
-							<label for="term">{$lblTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							<label for="term">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtTerm} {$txtTermError}
 						</div>
 					</div>
