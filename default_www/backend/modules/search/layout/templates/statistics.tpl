@@ -14,7 +14,7 @@
 </div>
 {/option:datagrid}
 
-{option:!datagrid}<p>{$msgNoStatistics}</p>{/option:!datagrid}
+{option:!datagrid}<p>{$msgSearchNoStatistics}</p>{/option:!datagrid}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

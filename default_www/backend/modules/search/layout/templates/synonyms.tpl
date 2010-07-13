@@ -19,7 +19,7 @@
 </div>
 {/option:datagrid}
 
-{option:!datagrid}<p>{$msgNoSynonyms|sprintf:{$var|geturl:'add'}}</p>{/option:!datagrid}
+{option:!datagrid}<p>{$msgSearchNoSynonyms|sprintf:{$var|geturl:'add'}}</p>{/option:!datagrid}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

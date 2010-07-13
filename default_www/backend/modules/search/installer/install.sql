@@ -61,7 +61,8 @@ INSERT INTO `locale` (`user_id`, `language`, `application`, `module`, `type`, `n
 (1, 'nl', 'frontend', 'core', 'lbl', 'SearchTerm', 'zoekterm', '2010-07-08 13:42:04'),
 (1, 'nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken', '2010-07-08 13:42:24'),
 (1, 'nl', 'frontend', 'core', 'err', 'TermIsRequired', 'Gelieve uw zoekterm in te vullen', '2010-07-08 13:44:09'),
-(1, 'nl', 'backend', 'core', 'msg', 'NoSynonyms', 'Er zijn nog geen synoniemen', '2010-07-08 13:48:25'),
+(1, 'nl', 'backend', 'core', 'msg', 'SearchNoSynonyms', 'Er zijn nog geen synoniemen', '2010-07-08 13:48:25'),
+(1, 'nl', 'backend', 'core', 'msg', 'SearchNoStatistics', 'Er zijn nog geen statistieken', '2010-07-08 13:48:25'),
 (1, 'nl', 'backend', 'core', 'lbl', 'DeleteSynonym', 'synoniem verwijderen', '2010-07-08 13:48:42'),
 (1, 'nl', 'backend', 'core', 'lbl', 'Search', 'zoeken', '2010-07-08 13:50:05'),
 (1, 'nl', 'backend', 'core', 'lbl', 'Synonyms', 'synoniemen', '2010-07-08 13:54:30');
