@@ -688,67 +688,7 @@ class BackendModel
 			$minute = 0;
 		}
 
-		return gmmktime($hour, $minute, 0, $month, $day, $year);
-	}
-
-
-	/**
-	 * This method will install the core
-	 *
-	 * @return	void
-	 */
-	public static function install()
-	{
-		// require
-		require_once WWW_PATH .'/backend/core/engine/authentication.php';
-		require_once WWW_PATH .'/backend/core/engine/language.php';
-		require_once WWW_PATH .'/backend/modules/locale/engine/model.php';
-		require_once WWW_PATH .'/backend/modules/users/engine/model.php';
-
-		// get all languages
-		$languages = BackendLanguage::getLocaleLanguages();
-
-		// loop the languages
-		foreach(array_keys($languages) as $language)
-		{
-			// generate cache file for backend
-			BackendLocaleModel::buildCache($language, 'backend');
-
-			// generate cache file for frontend
-			BackendLocaleModel::buildCache($language, 'frontend');
-		}
-
-		// create a random password for the new user
-		$password = BackendModel::generatePassword(6);
-
-		// build settings-array
-		$settings['password_key'] = uniqid();
-		$settings['avatar'] = 'no-avatar.gif';
-		$settings['name'] = 'Super';
-		$settings['surname'] = 'User';
-
-		// datetime formats
-		$settings['date_format'] = 'd/m/Y';
-		$settings['time_format'] = 'H:i:s';
-		$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
-
-		// build user-array
-		$user['email'] = SpoonSession::get('admin_email');
-		$user['password'] = BackendAuthentication::getEncryptedString($password, $settings['password_key']);
-		$user['group_id'] = 1;
-
-		// save changes
-		$userId = (int) BackendUsersModel::insert($user, $settings);
-
-		// build HTML for the message
-		$message = '<p>A new user is created for you, point your browser to <a href="'. SITE_URL .'/private">'. SITE_URL .'/private</a> and use the credentials below.</p>'."\n";
-		$message .= '<ul>'."\n";
-		$message .= '	<li><strong>login</strong>: '. $user['email'] .'</li>'."\n";
-		$message .= '	<li><strong>password</strong>: '. $password .'</li>'."\n";
-		$message .= '</ul>';
-
-		// return a message
-		return array(array('message' => $message, 'type' => 'success'));
+		return mktime($hour, $minute, 0, $month, $day, $year);
 	}
 
 

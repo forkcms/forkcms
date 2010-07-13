@@ -1431,25 +1431,6 @@ class BackendPagesModel
 
 
 	/**
-	 * This method is used by installer
-	 *
-	 * @return	void
-	 */
-	public static function install()
-	{
-		// get all languages
-		$languages = BackendLanguage::getLocaleLanguages();
-
-		// loop the languages
-		foreach(array_keys($languages) as $language)
-		{
-			// create the cachefile
-			self::buildCache($language);
-		}
-	}
-
-
-	/**
 	 * Is the provided template id in use by active versions of pages?
 	 *
 	 * @return	bool
