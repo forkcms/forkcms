@@ -3,7 +3,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 jsBackend.search = {
 	init: function() {
 		// synonyms box
-		if($('input.synonymBox').length > 0) { $('input.synonymBox').tagBox({ emptyMessage: '{$msgNoSynonyms}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteSynonym|ucfirst}', autoCompleteUrl: '', showIconOnly: false }); }
+		if($('input.synonymBox').length > 0) { $('input.synonymBox').tagBox({ emptyMessage: '{$msgSearchNoSynonyms}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteSynonym|ucfirst}', autoCompleteUrl: '', showIconOnly: false }); }
 		
 		// settings enable/disable
 		$('ul#searchModules > li > input[type=checkbox]').change(function()
