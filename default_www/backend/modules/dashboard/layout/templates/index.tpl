@@ -4,7 +4,7 @@
 <div id="dashboardWidgets">
 
 	<div id="wip" class="content">
-		<p>Welcome to Fork NG. What you are seeing is a work in progress. Report any bugs in the <a href="http://projects.netlash.com/public/index.php/projects/369">Fork NG</a> project in ActiveCollab.</p>
+		<p>Welcome to Fork NG. What you are seeing is a work in progress.</p>
 	</div>
 
 	<div class="leftColumn">
