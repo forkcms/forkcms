@@ -75,8 +75,8 @@ class BackendPagesModel
 				$temp['page_id'] = (int) $pageID;
 				$temp['url'] = $page['url'];
 				$temp['full_url'] = $keys[$pageID];
-				$temp['title'] = $page['title'];
-				$temp['navigation_title'] = $page['navigation_title'];
+				$temp['title'] = addslashes($page['title']);
+				$temp['navigation_title'] = addslashes($page['navigation_title']);
 				$temp['has_extra'] = (bool) ($page['has_extra'] == 'Y');
 				$temp['no_follow'] = (bool) ($page['no_follow'] == 'Y');
 				$temp['hidden'] = (bool) ($page['hidden'] == 'Y');
