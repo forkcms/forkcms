@@ -408,6 +408,7 @@ class FrontendTemplateModifiers
 		return $var;
 	}
 
+	
 	/**
 	 * Get the URL for a given pageId & language
 	 * 	syntax: {$var|geturl:404}

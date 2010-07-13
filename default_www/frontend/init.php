@@ -123,6 +123,52 @@ class Init
 
 		// file check in core
 		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
+
+		// check if module file exists
+		else
+		{
+			// we'll need the original class name again, with the uppercases
+			$className = func_get_arg(0);
+
+			// split in parts
+			if(preg_match_all('/[A-Z][a-z0-9]*/', $className, $parts))
+			{
+				// the real matches
+				$parts = $parts[0];
+
+				// doublecheck that we are looking for a frontend class
+				$root = array_shift($parts);
+				if(strtolower($root) == 'frontend')
+				{
+					foreach($parts as $i => $part)
+					{
+						// skip the first
+						if($i == 0) continue;
+
+						// action
+						$action = strtolower(implode('_', $parts));
+
+						// module
+						$module = '';
+						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) .'_';
+
+						// fix action & module
+						$action = str_replace($module, '', $action);
+						$module = substr($module, 0, -1);
+
+						// file to be loaded
+						$pathToLoad = FRONTEND_PATH .'/modules/'. $module .'/engine/'. $action .'.php';
+
+						// if it exists, load it!
+						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
+						{
+							require_once $pathToLoad;
+							break;;
+						}
+					}
+				}
+			}
+		}
 	}
 
 

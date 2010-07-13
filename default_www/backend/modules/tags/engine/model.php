@@ -297,6 +297,9 @@ class BackendTagsModel
 			if(!empty($rowsToInsert)) $db->insert('modules_tags', $rowsToInsert);
 		}
 
+		// add to search index
+		if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex($module, (int) $otherId, array('tags' => implode(' ', (array) $tags)));
+
 		// decrement number
 		foreach($currentTags as $tag => $tagId)
 		{

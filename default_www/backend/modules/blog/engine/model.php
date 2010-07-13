@@ -88,8 +88,8 @@ class BackendBlogModel
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
 
 		// delete blogpost records
-		$db->execute('DELETE FROM blog_posts WHERE id IN('. implode(',', $ids) .');');
-		$db->execute('DELETE FROM blog_comments WHERE post_id IN('. implode(',', $ids) .');');
+		$db->delete('blog_posts', 'id IN('. implode(',', $ids) .');');
+		$db->delete('blog_comments', 'post_id IN('. implode(',', $ids) .');');
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog');
@@ -141,8 +141,7 @@ class BackendBlogModel
 											WHERE i.id IN('. implode(',', $ids) .');');
 
 		// update record
-		$db->execute('DELETE FROM blog_comments
-						WHERE id IN('. implode(',', $ids) .');');
+		$db->delete('blog_comments', 'id IN('. implode(',', $ids) .');');
 
 
 		// recalculate the comment count

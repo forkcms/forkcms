@@ -29,14 +29,17 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get all data for the user we want to edit
+			// get all data for the item we want to edit
 			$this->record = (array) BackendBlogModel::get($this->id);
 
 			// reset some data
 			if(empty($this->record)) $this->record['title'] = '';
 
-			// delete user
+			// delete item
 			BackendBlogModel::delete($this->id);
+
+			// delete search indexes
+			if(method_exists('BackendSearchModel', 'removeIndex')) BackendSearchModel::removeIndex('blog', $this->id);
 
 			// user was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));

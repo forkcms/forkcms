@@ -279,6 +279,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// save the tags
 					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
+					// edit search index
+					if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex('blog', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+
 					// ping
 					if(BackendModel::getSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .'/'. $this->meta->getURL());
 

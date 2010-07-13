@@ -8,6 +8,11 @@ jsFrontend = {
 	init: function() {
 		// init stuff
 		jsFrontend.initAjax();
+		
+		// init search
+		if($('input[name=q]').length > 0) jsFrontend.search.init();
+
+		// init gravatar
 		jsFrontend.gravatar.init();
 	},
 	
@@ -43,6 +48,44 @@ jsFrontend.gravatar = {
 		});
 	},
 	
+	// end
+	eof: true
+}
+
+jsFrontend.search = {
+	// init, something like a constructor
+	init: function() {
+		// split url to buil the ajax-url
+		var chunks = document.location.pathname.split('/');
+		
+		// max results
+		var limit = 50;
+
+		// ajax call!
+		$('input[name=q]').autocomplete({
+			delay: 200,
+			minLength: 3,
+			source: function(request, response) {
+				$.ajax({ url: '/frontend/ajax.php?module=search&action=autocomplete&language=' + chunks[1],
+					type: 'GET',
+					data: 'term=' + request.term + '&language=' + chunks[1] + '&limit=' + limit,
+					success: function(data, textStatus) {
+						// init var
+						var realData = [];
+						// alert the user
+						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
+						if(data.code == 200) {
+							for(var i in data.data) realData.push({ label: data.data[i].term, value: data.data[i].term });
+						}
+
+						// set response
+						response(realData);
+					}
+				});
+			}
+		});
+	},
+
 	// end
 	eof: true
 }

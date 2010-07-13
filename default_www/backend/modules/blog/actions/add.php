@@ -146,6 +146,9 @@ class BackendBlogAdd extends BackendBaseActionAdd
 					// save the tags
 					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
+					// add search index
+					if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('blog', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+
 					// ping
 					if(BackendModel::getSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
 

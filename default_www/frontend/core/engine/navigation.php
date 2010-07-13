@@ -315,7 +315,6 @@ class FrontendNavigation extends FrontendBaseObject
 		// get menu items array
 		$keys = self::getKeys($language);
 
-
 		// get key
 		$key = array_search($URL, $keys);
 

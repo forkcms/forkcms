@@ -206,6 +206,21 @@ class ModuleInstaller
 
 
 	/**
+	 * Make a module searchable
+	 *
+	 * @return	void
+	 * @param	string $module						The module to make searchable.
+	 * @param	bool[optional] $searchable			Enable/disable search for this module by default?
+	 * @param	int[optional] $weight				Set default search weight for this module.
+	 */
+	protected function makeSearchable($module, $searchable = true, $weight = 1)
+	{
+		$this->getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
+										ON DUPLICATE KEY UPDATE searchable = ?, weight = ?', array((string) $module, $searchable ? 'Y' : 'N', (int) $weight, $searchable ? 'Y' : 'N', (int) $weight));
+	}
+
+
+	/**
 	 * Set the rights for an action
 	 *
 	 * @return	void

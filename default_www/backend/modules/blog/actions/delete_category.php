@@ -28,10 +28,10 @@ class BackendBlogDeleteCategory extends BackendBaseActionDelete
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get all data for the user we want to edit
+			// get all data for the item we want to edit
 			$this->record = (array) BackendBlogModel::getCategory($this->id);
 
-			// delete user
+			// delete item
 			BackendBlogModel::deleteCategory($this->id);
 
 			// user was deleted, so redirect

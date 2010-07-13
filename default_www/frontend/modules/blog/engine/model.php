@@ -567,6 +567,40 @@ class FrontendBlogModel
 															WHERE c.status = ? AND c.author = ? AND c.email = ?;',
 															array('published', (string) $author, (string) $email)) > 0);
 	}
+
+
+	/**
+	 * Parse the search results for this module
+	 *
+	 * Note: a module's search function should always:
+	 * 		- accept an array of entry id's
+	 * 		- return only the entries that are allowed to be displayed, with their array's index being the entry's id
+	 *
+	 *
+	 * @return	array
+	 * @param	array $ids		The ids of the found results.
+	 */
+	public static function search(array $ids)
+	{
+		// get db
+		$db = FrontendModel::getDB();
+
+		// get items
+		$items = (array) $db->retrieve('SELECT bp.id, bp.title, bp.introduction, bp.text, m.url
+										FROM blog_posts AS bp
+										INNER JOIN meta AS m ON bp.meta_id = m.id
+										WHERE bp.status = ? AND bp.hidden = ? AND bp.language = ? AND bp.publish_on <= ? AND bp.id IN ('. implode(',', $ids) .');',
+										array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') .':00'), 'id');
+
+		// prepare items for search
+		foreach($items as &$item)
+		{
+			$item['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $item['url'];
+		}
+
+		// return
+		return $items;
+	}
 }
 
 ?>

@@ -286,6 +286,11 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				// insert the blocks
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
+				// add search index
+				$text = '';
+				foreach($blocks as $block) $text .= ' '. $block['html']; // @todo: good way?
+				if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text));
+
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
