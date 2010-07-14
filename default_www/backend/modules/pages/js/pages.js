@@ -123,6 +123,9 @@ jsBackend.pages.extras = {
 
 			// enable blocks
 			$('#extraType option[value="block"]').attr('disabled', '');
+			
+			// home can't have any modules linked!
+			if(typeof pageID != 'undefined' && pageID == 1) $('#extraType option[value="block"]').attr('disabled', 'disabled');
 		}
 		
 		// any extra selected before? And if so, does the extra still exists?

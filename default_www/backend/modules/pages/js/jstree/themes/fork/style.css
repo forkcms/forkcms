@@ -239,10 +239,10 @@
 	opacity: 0.7;
 }
 #jstree-dragged.tree-fork ins {
-	background: url('icons.png') -16px -32px no-repeat;
+	background: url('icons.gif') -16px -32px no-repeat;
 }
 #jstree-dragged.tree-fork ins.forbidden {
-	background: url('icons.png') -16px -16px no-repeat;
+	background: url('icons.gif') -16px -16px no-repeat;
 }
 
 

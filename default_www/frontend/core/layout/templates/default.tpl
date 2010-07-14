@@ -6,8 +6,7 @@
 		<div id="header">
 			<h1><a href="/">{$siteTitle}</a></h1>
 
-			<!-- {include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'} -->
-
+			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
 			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
 		</div>
 

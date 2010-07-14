@@ -25,7 +25,7 @@ tinyMCE.init({
 	
 	// layout options
 	body_class: 'content',
-	content_css: '/frontend/core/layout/css/screen.css{option:THEME}, /frontend/themes/{$THEME}/core/css/screen.css{/option:THEME}, /backend/core/layout/css/editor_content.css',
+	content_css: '/frontend/core/layout/css/screen.css{option:THEME_HAS_CSS}, /frontend/themes/{$THEME}/core/css/screen.css{/option:THEME_HAS_CSS}, /backend/core/layout/css/editor_content.css',
 
 	// theme options
 	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code,|,fullscreen',

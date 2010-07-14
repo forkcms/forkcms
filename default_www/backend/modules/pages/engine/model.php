@@ -279,7 +279,8 @@ class BackendPagesModel
 			}
 
 			// add
-			$tinyMCELinkListString .= '	["'. $title .'", "/'. $language .'/'. $URL .'"]';
+			if(SITE_MULTILANGUAGE) $tinyMCELinkListString .= '	["'. $title .'", "/'. $language .'/'. $URL .'"]';
+			else $tinyMCELinkListString .= '	["'. $title .'", "/'. $URL .'"]';
 
 			// reset
 			$first = false;

@@ -353,8 +353,11 @@ class BackendPagesEdit extends BackendBaseActionEdit
 						// type of block
 						if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
 						{
+							// home can't have blocks
+							if($this->record['id'] == 1) throw new BackendException('Home can\'t have any blocks.');
+
 							// set error
-							if($hasBlock) $this->frm->getField('block_extra_id_'. $i)->addError('Can\'t add 2 blocks');
+							if($hasBlock) throw new BackendException('Can\'t add 2 blocks');
 
 							// reset var
 							$hasBlock = true;

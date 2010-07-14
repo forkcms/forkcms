@@ -208,6 +208,7 @@ class BackendTemplate extends SpoonTemplate
 		{
 			$this->assign('THEME', BackendModel::getSetting('core', 'theme'));
 			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme'));
+			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme') .'/core/css/screen.css')));
 		}
 	}
 
