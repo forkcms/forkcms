@@ -17,7 +17,7 @@ final class BackendSearchConfig extends BackendBaseConfig
 	 *
 	 * @var	string
 	 */
-	protected $defaultAction = 'index';
+	protected $defaultAction = 'statistics';
 
 
 	/**

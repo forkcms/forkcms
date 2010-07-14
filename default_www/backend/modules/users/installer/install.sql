@@ -27,15 +27,3 @@ CREATE TABLE IF NOT EXISTS `users_settings` (
   `value` text collate utf8_unicode_ci NOT NULL COMMENT 'serialized value',
   PRIMARY KEY  (`user_id`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-INSERT INTO `locale` (`user_id`, `language`, `application`, `module`, `type`, `name`, `value`, `edited_on`) VALUES
-(1, 'nl', 'backend', 'users', 'lbl', 'Add', 'gebruiker toevoegen', '2010-06-16 13:40:50'),
-(1, 'nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.', '2010-06-16 13:53:04'),
-(1, 'nl', 'backend', 'users', 'msg', 'HelpActive', 'Geef deze account toegang tot het CMS.', '2010-06-16 14:50:29'),
-(1, 'nl', 'backend', 'users', 'msg', 'EditUser', 'bewerk gebruiker "%1$s"', '2010-06-17 09:52:17'),
-(1, 'nl', 'backend', 'users', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?', '2010-06-17 11:52:50'),
-(1, 'nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.', '2010-06-17 12:12:09'),
-(1, 'nl', 'backend', 'users', 'msg', 'Edited', 'De instellingen voor "%1$s" werden opgeslagen.', '2010-06-23 14:03:37'),
-(1, 'nl', 'backend', 'users', 'msg', 'Added', 'De gebruiker "%1$s" werd toegevoegd.', '2010-06-17 12:34:16'),
-(1, 'nl', 'backend', 'users', 'msg', 'Deleted', 'De gebruiker "%1$s" werd verwijderd.', '2010-06-17 12:35:12');

@@ -63,30 +63,3 @@ CREATE TABLE IF NOT EXISTS `pages_templates` (
   `data` text collate utf8_unicode_ci COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible templates' AUTO_INCREMENT=1 ;
-
-
-INSERT INTO `locale` (`user_id`, `language`, `application`, `module`, `type`, `name`, `value`, `edited_on`) VALUES
-(1, 'nl', 'backend', 'pages', 'err', 'CantBeMoved', 'Pagina kan niet verplaatst worden.', '2010-06-30 13:19:25'),
-(1, 'nl', 'backend', 'pages', 'err', 'DeleteTemplate', 'Je kan deze template niet verwijderen.', '2010-06-30 09:03:02'),
-(1, 'nl', 'backend', 'pages', 'lbl', 'Add', 'pagina toevoegen', '2010-06-25 09:21:29'),
-(1, 'nl', 'backend', 'pages', 'lbl', 'Footer', 'navigatie onderaan', '2010-06-30 12:25:15'),
-(1, 'nl', 'backend', 'pages', 'lbl', 'MainNavigation', 'Hoofdnavigatie', '2010-06-25 09:23:29'),
-(1, 'nl', 'backend', 'pages', 'lbl', 'Meta', 'metanavigatie', '2010-06-30 12:27:31'),
-(1, 'nl', 'backend', 'pages', 'lbl', 'Root', 'losse pagina''s', '2010-06-25 09:25:01'),
-(1, 'nl', 'backend', 'pages', 'msg', 'Added', 'De pagina "%1$s" werd toegevoegd.', '2010-06-29 14:26:06'),
-(1, 'nl', 'backend', 'pages', 'msg', 'AddedTemplate', 'De template "%1$s" werd toegevoegd.', '2010-06-30 07:40:37'),
-(1, 'nl', 'backend', 'pages', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de pagina "%1$s" wil verwijderen?', '2010-06-30 12:47:19'),
-(1, 'nl', 'backend', 'pages', 'msg', 'ConfirmDeleteTemplate', 'Ben je zeker dat je de template "%1$s" wil verwijderen?', '2010-06-30 08:20:20'),
-(1, 'nl', 'backend', 'pages', 'msg', 'Deleted', 'De pagina "%1$s" werd verwijderd.', '2010-06-29 14:24:09'),
-(1, 'nl', 'backend', 'pages', 'msg', 'DeletedTemplate', 'De template "%1$s" werd verwijderd.', '2010-06-30 09:04:02'),
-(1, 'nl', 'backend', 'pages', 'msg', 'Edited', 'De pagina "%1$s" werd opgeslagen.', '2010-06-30 12:10:03'),
-(1, 'nl', 'backend', 'pages', 'msg', 'HelpBlockContent', 'Welk soort inhoud wil je hier tonen?', '2010-06-30 12:22:17'),
-(1, 'nl', 'backend', 'pages', 'msg', 'HelpMetaNavigation', 'Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.', '2010-06-30 13:29:05'),
-(1, 'nl', 'backend', 'pages', 'msg', 'HelpNavigationTitle', 'De titel die in het menu getoond wordt.', '2010-06-30 12:16:51'),
-(1, 'nl', 'backend', 'pages', 'msg', 'HelpNoFollow', 'Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.', '2010-06-25 11:21:12'),
-(1, 'nl', 'backend', 'pages', 'msg', 'HelpPageTitle', 'De titel die in het browservenster staat (<code>&lt;title&gt;</code>).', '2010-06-30 12:16:02'),
-(1, 'nl', 'backend', 'pages', 'msg', 'HelpTemplateFormat', 'e.g. [0,1],[2,none]', '2010-06-30 07:50:46'),
-(1, 'nl', 'backend', 'pages', 'msg', 'MetaNavigation', 'Metanavigatie inschakelen voor deze website.', '2010-06-30 14:28:09'),
-(1, 'nl', 'backend', 'pages', 'msg', 'ModuleBlockAlreadyLinked', 'Er werd reeds een module gekoppeld aan deze pagina.', '2010-06-30 13:32:44'),
-(1, 'nl', 'backend', 'pages', 'msg', 'PageIsMoved', 'De pagina "%1$s" werd verplaatst.', '2010-06-30 12:45:33'),
-(1, 'nl', 'backend', 'pages', 'msg', 'RichText', 'Editor', '2010-06-25 13:09:49');

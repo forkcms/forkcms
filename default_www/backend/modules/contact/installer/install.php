@@ -20,15 +20,17 @@ class ContactInstall extends ModuleInstaller
 	 */
 	protected function execute()
 	{
-		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/contact/installer/install.sql');
-
 		// add 'contact' as a module
 		$this->addModule('contact', 'The contact module.');
 
 		// general settings
 		$this->setSetting('contact', 'requires_akismet', false);
 		$this->setSetting('contact', 'requires_google_maps', false);
+
+		// insert locale
+		$this->insertLocale('nl', 'frontend', 'core', 'err', 'ContactErrorWhileSending', 'Er ging iets mis tijdens het verzenden, probeer later opnieuw.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
 	}
 }
 

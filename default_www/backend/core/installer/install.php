@@ -107,11 +107,20 @@ class ModuleInstaller
 	 */
 	protected function getDefaultUserID()
 	{
-		return (int) $this->getDB()->getVar('SELECT id
-												FROM users
-												WHERE is_god = ? AND active =? AND deleted = ?
-												ORDER BY id ASC;',
-												array('Y', 'Y', 'N'));
+		try
+		{
+			return (int) $this->getDB()->getVar('SELECT id
+													FROM users
+													WHERE is_god = ? AND active =? AND deleted = ?
+													ORDER BY id ASC;',
+													array('Y', 'Y', 'N'));
+		}
+
+		// catch exceptions
+		catch(Exception $e)
+		{
+			return 1;
+		}
 	}
 
 
@@ -190,6 +199,41 @@ class ModuleInstaller
 	protected function insertExtra(array $item)
 	{
 		return (int) $this->getDB()->insert('pages_extras', $item);
+	}
+
+
+	protected function insertLocale($language, $application, $module, $type, $name, $value)
+	{
+		// redefine
+		$language = (string) $language;
+		$application = SpoonFilter::getValue($application, array('frontend', 'backend'), '');
+		$module = (string) $module;
+		$type = SpoonFilter::getValue($type, array('act', 'err', 'lbl', 'msg'), '');
+		$name = (string) $name;
+		$value = (string) $value;
+
+		// validate
+		if($application == '') throw new Exception('Invalid application. Possible values are: backend, frontend.');
+		if($type == '') throw new Exception('Invalid type. Possible values are: act, err, lbl, msg.');
+
+		// check if the label already exists
+		if($this->getDB()->getNumRows('SELECT i.id
+										FROM locale AS i
+										WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?;',
+										array($language, $application, $module, $type, $name)) == 0)
+		{
+			// insert
+			$this->db->insert('locale', array('user_id' => $this->getDefaultUserID(),
+												'language' => $language,
+												'application' => $application,
+												'module' => $module,
+												'type' => $type,
+												'name' => $name,
+												'value' => $value,
+												'edited_on' => gmdate('Y-m-d H:i:s')));
+		}
+
+
 	}
 
 

@@ -51,6 +51,31 @@ class SearchInstall extends ModuleInstaller
 
 		// make 'pages' searchable
 		$this->makeSearchable('pages');
+
+		// insert locale
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht');
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'TermIsRequired', 'De zoekterm is verplicht');
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'TermExists', 'Synoniemen voor deze zoekterm bestaan reeds');
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'WeightNotNumeric', 'Het gewicht moet numeriek zijn');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'AddSynonym', 'synoniem toevoegen');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'DeleteSynonym', 'synoniem verwijderen');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'EditSynonym', 'synoniem bewerken');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'IP', 'IP');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'SearchedOn', 'gezocht op');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'Synonym', 'synoniem');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'Synonyms', 'synoniemen');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'Term', 'term');
+		$this->insertLocale('nl', 'backend', 'search', 'msg', 'ConfirmDeleteSynonym', 'Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?');
+		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoStatistics', 'Er zijn nog geen statistieken.');
+		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoSynonyms', 'Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Search', 'zoeken');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Synonyms', 'synoniemen');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchTerm', 'zoekterm');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er werden geen resultaten gevonden.');
+
+
 	}
 }
 

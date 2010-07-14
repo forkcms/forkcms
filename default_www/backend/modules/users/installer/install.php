@@ -42,6 +42,17 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
 
+		// insert locale
+		$this->insertLocale('nl', 'backend', 'users', 'lbl', 'Add', 'gebruiker toevoegen');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Added', 'De gebruiker "%1$s" werd toegevoegd.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Deleted', 'De gebruiker "%1$s" werd verwijderd.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Edited', 'De instellingen voor "%1$s" werden opgeslagen.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'EditUser', 'bewerk gebruiker "%1$s"');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Geef deze account toegang tot het CMS.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.');
+		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
+
 		// add default user
 		$this->addUser();
 	}

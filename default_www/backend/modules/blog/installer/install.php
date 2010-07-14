@@ -136,6 +136,30 @@ class BlogInstall extends ModuleInstaller
 									'data' => null,
 									'hidden' => 'N',
 									'sequence' => 1004));
+
+
+		// insert locale
+		$this->insertLocale('nl', 'backend', 'blog', 'err', 'RSSDescription', 'Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>');
+		$this->insertLocale('nl', 'backend', 'blog', 'lbl', 'Add', 'artikel toevoegen');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Added', 'Het artikel "%1$s" werd toegevoegd.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'CommentOnWithURL', 'Reactie op: <a href="%1$s">%2$s</a>');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het artikel "%1$s" wil verwijderen?');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Deleted', 'De geselecteerde artikels werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditArticle', 'bewerk artikel "%1$s"');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Edited', 'Het artikel "%1$s" werd opgeslagen.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpMeta', 'Toon de meta informatie van deze blogpost in de RSS feed (categorie, tags, ...)');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpPingServices', 'Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NoItems', 'Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Aantal items in recente artikels widget');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoComments', 'Reageer als eerste');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNumberOfComments', 'Al %1$s reacties');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogOneComment', 'Al 1 reactie');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentIsAdded', 'Je reactie werd toegevoegd.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentInModeration', 'Je reactie wacht op goedkeuring.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentIsSpam', 'Je reactie werd gemarkeerd als spam.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoItems', 'Er zijn nog geen blogposts.');
 	}
 
 

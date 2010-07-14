@@ -39,6 +39,14 @@ class ContentBlocksInstall extends ModuleInstaller
 		$this->setActionRights(1, 'content_blocks', 'delete');
 		$this->setActionRights(1, 'content_blocks', 'edit');
 		$this->setActionRights(1, 'content_blocks', 'index');
+
+		// insert locale
+		$this->insertLocale('nl', 'backend', 'content_blocks', 'lbl', 'Add', 'Inhoudsblok toevoegen');
+		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'EditContentBlock', 'bewerk inhoudsblok "%1$s"');
+		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?');
+		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'Added', 'Het inhoudsblok "%1$s" werd toegevoegd.');
+		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'Edited', 'Het inhoudsblok "%1$s" werd opgeslagen.');
+		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'Deleted', 'Het inhoudsblok "%1$s" werd verwijderd.');
 	}
 }
 

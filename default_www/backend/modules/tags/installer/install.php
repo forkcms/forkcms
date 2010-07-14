@@ -38,6 +38,14 @@ class TagsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'tags', 'edit');
 		$this->setActionRights(1, 'tags', 'index');
 		$this->setActionRights(1, 'tags', 'mass_action');
+
+		// insert locale
+		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Edited', 'De tag "%1$s" werd opgeslagen.');
+		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'EditTag', 'bewerk tag "%1$s"');
+		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Deleted', 'De geselecteerde tag(s) werd(en) verwijderd.');
+		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'NoItems', 'Er zijn geen tags.');
+		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NonExisting', 'Deze tag bestaat niet.');
+		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NoSelection', 'Er waren geen tags geselecteerd.');
 	}
 }
 
