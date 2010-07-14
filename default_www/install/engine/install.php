@@ -174,6 +174,10 @@ class Installer
 
 		// check if PDO is loaded
 		if(!extension_loaded('PDO')) return false;
+		else
+		{
+			if(!in_array('mysql', PDO::getAvailableDrivers())) return false;
+		}
 
 		// check if mbstring is loaded
 		if(!extension_loaded('mbstring')) return false;
@@ -287,6 +291,17 @@ class Installer
 		{
 			$variables['extensionPDO'] = 'ok';
 			$variables['extensionPDOStatus'] = 'ok';
+
+			if(in_array('mysql', PDO::getAvailableDrivers()))
+			{
+				$variables['extensionPDOMySQL'] = 'ok';
+				$variables['extensionPDOMySQLStatus'] = 'ok';
+			}
+			else
+			{
+				$variables['extensionPDOMySQL'] = 'nok';
+				$variables['extensionPDOMySQLStatus'] = 'nok';
+			}
 		}
 		else
 		{
@@ -332,6 +347,29 @@ class Installer
 			$variables['extensionGD2'] = 'nok';
 			$variables['extensionGD2Status'] = 'not ok';
 			$hasError = true;
+		}
+
+		// check if Safe Mode is enabled
+		if(ini_get('safe_mode') == '')
+		{
+			$variables['settingsSafeMode'] = 'ok';
+			$variables['settingsSafeModeStatus'] = 'ok';
+		}
+		else
+		{
+			$variables['settingsSafeMode'] = 'nok';
+			$variables['settingsSafeModeStatus'] = 'not ok';
+		}
+
+		if(ini_get('open_basedir') == '')
+		{
+			$variables['settingsOpenBasedir'] = 'ok';
+			$variables['settingsOpenBasedirStatus'] = 'ok';
+		}
+		else
+		{
+			$variables['settingsOpenBasedir'] = 'nok';
+			$variables['settingsOpenBasedirStatus'] = 'not ok';
 		}
 
 		// check if the backend-cache-directory is writable

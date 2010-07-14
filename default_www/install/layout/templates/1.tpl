@@ -61,6 +61,12 @@
 									same functions to issue queries and fetch data. More information can be found on: <a href="http://php.net/pdo">http://php.net/pdo</a>.
 								</p>
 
+								<h4>PDO MySQL driver: <span class="{$extensionPDOMySQL}">{$extensionPDOMySQLStatus}</span></h4>
+								<p>
+									PDO_MYSQL is a driver that implements the PHP Data Objects (PDO) interface to enable access from PHP to MySQL databases.
+									More information can be found on: <a href="http://www.php.net/manual/en/ref.pdo-mysql.php">http://www.php.net/manual/en/ref.pdo-mysql.php</a>.
+								</p>
+
 								<h4>mb_string: <span class="{$extensionMBString}">{$extensionMBStringStatus}</span></h4>
 								<p>
 									mbstring provides multibyte specific string functions that help you deal with multibyte encodings in PHP. In addition to
@@ -79,6 +85,18 @@
 								<p>
 									PHP is not limited to creating just HTML output. It can also be used to create and manipulate image files in a variety of
 									different image formats. More information can be found on: <a href="http://php.net/gd">http://php.net/gd</a>.
+								</p>
+							</div>
+
+							<div>
+								<h3>Settings</h3>
+								<h4>Safe Mode: <span class="{$settingsSafeMode}">{$settingsSafeModeStatus}</span></h4>
+								<p>
+									<strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.
+								</p>
+								<h4>Open Basedir: <span class="{$settingsOpenBasedir}">{$settingsOpenBasedirStatus}</span></h4>
+								<p>
+									For forward compability we highly recommend you not to use open_basedir.
 								</p>
 							</div>
 
