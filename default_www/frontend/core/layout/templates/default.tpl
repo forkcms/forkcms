@@ -16,7 +16,7 @@
 
 		<div id="main">
 			<div id="subnavigation">
-				{$var|getsubnavigation:'page':{$page['id']}:2}
+				{$var|getsubnavigation:'page':{$page['id']}:1}
 			</div>
 
 			<div id="content" class="content">

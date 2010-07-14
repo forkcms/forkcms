@@ -10,7 +10,7 @@
 
 		<div id="main">
 			<div id="navigation">
-				{$var|getnavigation}
+				{$var|getnavigation:'page':0:1}
 			</div>
 
 			<div id="content">
