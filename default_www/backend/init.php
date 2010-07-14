@@ -29,7 +29,7 @@ class Init
 	public function __construct($type)
 	{
 		// init vars
-		$allowedTypes = array('backend', 'backend_ajax', 'backend_js', 'backend_cronjob');
+		$allowedTypes = array('backend', 'backend_direct', 'backend_ajax', 'backend_js', 'backend_cronjob');
 		$type = (string) $type;
 
 		// check if this is a valid type
@@ -356,6 +356,7 @@ class Init
 	{
 		switch($this->type)
 		{
+			case 'backend_direct':
 			case 'backend_ajax':
 			case 'backend_cronjob':
 			case 'backend_js':
