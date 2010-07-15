@@ -44,9 +44,6 @@ class BackendContentBlocksIndex extends BackendBaseActionIndex
 		// create datagrid
 		$this->datagrid = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE, array('active'));
 
-		// set headers
-		$this->datagrid->setHeaderLabels(array('title' => ucfirst(BL::getLabel('Title'))));
-
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('title'));
 
