@@ -462,6 +462,9 @@ class SpoonDatagrid
 			// exists
 			return $this->columns[$column];
 		}
+
+		// fallback
+		return new SpoonDatagridColumn($column);
 	}
 
 

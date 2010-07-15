@@ -1,4 +1,4 @@
-1.2.1 (2010-07-12)
+1.2.1 (2010-07-13)
 ----
 - Template options may now start with an integer. eg {option:404}
 - The WHERE clause in SpoonDatabase::update and SpoonDatabase::delete may now be null instead of an empty string.
@@ -19,6 +19,9 @@
 - Feature: SpoonFilter::arrayMapRecursive() now has an optional third parameter $allowedKeys, which allows you to map callback to specified array keys only.
 - Bugfix: Custom keys didn't work correctly for SpoonDatagridSourceArray, they do now.
 - htmlspecialchars now uses ENT_NOQUOTES by default instead of ENT_QUOTES
+- Bugfix: SpoonDatagrid::getColumn no longer triggers an exception when the datagrid contains no results.
+- Bugfix: SpoonDropdown::isFilled will no longer equal true when allowExternalData is disabled and the value is not found in the initial
+  list of values. (thx to Dieter Vanden Eynde)
 
 
 1.2.0 (2010-05-18)

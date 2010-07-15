@@ -181,7 +181,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	public function getValue()
 	{
 		// default value
-		$aValues = array();
+		$values = array();
 
 		// submitted by post (may be empty)
 		if($this->isSubmitted())
@@ -196,19 +196,19 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 				foreach($data[$this->name] as $item)
 				{
 					// external data is allowed
-					if($this->allowExternalData) $aValues[] = $item;
+					if($this->allowExternalData) $values[] = $item;
 
 					// external data is NOT allowed
 					else
 					{
 						// item exists
-						if(isset($this->values[(string) $item])) $aValues[] = $item;
+						if(isset($this->values[(string) $item])) $values[] = $item;
 					}
 				}
 			}
 		}
 
-		return $aValues;
+		return $values;
 	}
 
 
@@ -224,7 +224,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 		$data = $this->getMethod(true);
 
 		// value submitted & is an array
-		if(isset($data[$this->name]) && is_array($data[$this->attributes['name']]))
+		if(isset($data[$this->name]) && is_array($data[$this->name]))
 		{
 			// loop the elements until you can find one that is allowed
 			foreach($data[$this->name] as $value)

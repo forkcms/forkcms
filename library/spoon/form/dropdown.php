@@ -342,6 +342,10 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			}
 		}
 
+		// form was submitted, but the field was not
+		elseif($this->isSubmitted()) return null;
+
+		// return calculated values
 		return $values;
 	}
 
@@ -354,42 +358,22 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 */
 	public function isFilled($error = null)
 	{
-		// post/get data
-		$data = $this->getMethod(true);
-
-		// default error
-		$hasError = false;
-
-		// value not submitted
-		if(!isset($data[$this->attributes['name']])) $hasError = true;
-
-		// value submitted
-		else
+		// form submitted
+		if($this->isSubmitted())
 		{
-			// multiple
-			if(!$this->single)
+			// something went wrong
+			if($this->getValue() === null)
 			{
-				// has to be an array with at least one item in it
-				if(is_array($data[$this->attributes['name']]) && count($data[$this->attributes['name']]) != 0) $hasError = false;
-				else $hasError = true;
+				if($error !== null) $this->setError($error);
+				return false;
 			}
 
-			// single
-			else
-			{
-				// empty value
-				if(trim((string) $data[$this->attributes['name']]) == '') $hasError = true;
-			}
+			// no problems
+			return true;
 		}
 
-		// has error
-		if($hasError)
-		{
-			if($error !== null) $this->setError($error);
-			return false;
-		}
-
-		return true;
+		// not submitted
+		return false;
 	}
 
 
