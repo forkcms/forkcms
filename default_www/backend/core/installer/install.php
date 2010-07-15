@@ -443,8 +443,8 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'active_languages', $this->getLanguages());
 		$this->setSetting('core', 'redirect_languages', $this->getLanguages());
 		$this->setSetting('core', 'default_language', $this->getVariable('default_language'));
-		$this->setSetting('core', 'interface_languages', array('nl'));
-		$this->setSetting('core', 'default_interface_language', 'nl');
+		$this->setSetting('core', 'interface_languages', array('nl', 'en'));
+		$this->setSetting('core', 'default_interface_language', 'en');
 
 		// other settings
 		$this->setSetting('core', 'theme');
