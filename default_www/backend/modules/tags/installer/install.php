@@ -39,13 +39,21 @@ class TagsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'tags', 'index');
 		$this->setActionRights(1, 'tags', 'mass_action');
 
-		// insert locale
+		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Edited', 'De tag "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'EditTag', 'bewerk tag "%1$s"');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Deleted', 'De geselecteerde tag(s) werd(en) verwijderd.');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'NoItems', 'Er zijn geen tags.');
 		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NonExisting', 'Deze tag bestaat niet.');
 		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NoSelection', 'Er waren geen tags geselecteerd.');
+
+		// insert locale (en)
+		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Edited', 'The tag "%1$s" was saved.');
+		$this->insertLocale('en', 'backend', 'tags', 'msg', 'EditTag', 'edit tag "%1$s"');
+		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Deleted', 'The selected tag(s) was/were deleted.');
+		$this->insertLocale('en', 'backend', 'tags', 'msg', 'NoItems', 'There are no tags.');
+		$this->insertLocale('en', 'backend', 'tags', 'err', 'NonExisting', 'This tag doesn\'t exist.');
+		$this->insertLocale('en', 'backend', 'tags', 'err', 'NoSelection', 'No tags were selected.');
 	}
 }
 

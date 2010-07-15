@@ -42,7 +42,7 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
 
-		// insert locale
+		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'users', 'lbl', 'Add', 'gebruiker toevoegen');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Added', 'De gebruiker "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?');
@@ -52,6 +52,17 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Geef deze account toegang tot het CMS.');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.');
 		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
+
+		// insert locale (en)
+		$this->insertLocale('nl', 'backend', 'users', 'lbl', 'Add', 'add user');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Added', 'The user "%1$s" was added.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the user "%1$s"?');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Deleted', 'The user "%1$s" was deleted.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Edited', 'The settings for "%1$s" were saved.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'EditUser', 'edit user "%1$s"');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passowrds consist of a combination of capitals, small letters, digits and special characters.');
+		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
 
 		// add default user
 		$this->addUser();
