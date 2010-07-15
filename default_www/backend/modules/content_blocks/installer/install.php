@@ -40,13 +40,21 @@ class ContentBlocksInstall extends ModuleInstaller
 		$this->setActionRights(1, 'content_blocks', 'edit');
 		$this->setActionRights(1, 'content_blocks', 'index');
 
-		// insert locale
-		$this->insertLocale('nl', 'backend', 'content_blocks', 'lbl', 'Add', 'Inhoudsblok toevoegen');
+		// insert locale (nl)
+		$this->insertLocale('nl', 'backend', 'content_blocks', 'lbl', 'Add', 'inhoudsblok toevoegen');
 		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'EditContentBlock', 'bewerk inhoudsblok "%1$s"');
 		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?');
 		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'Added', 'Het inhoudsblok "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'Edited', 'Het inhoudsblok "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'content_blocks', 'msg', 'Deleted', 'Het inhoudsblok "%1$s" werd verwijderd.');
+
+		// insert locale (en)
+		$this->insertLocale('en', 'backend', 'content_blocks', 'lbl', 'Add', 'add content block');
+		$this->insertLocale('en', 'backend', 'content_blocks', 'msg', 'EditContentBlock', 'edit content block "%1$s"');
+		$this->insertLocale('en', 'backend', 'content_blocks', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the content block "%1$s"?');
+		$this->insertLocale('en', 'backend', 'content_blocks', 'msg', 'Added', 'The content block "%1$s" was added.');
+		$this->insertLocale('en', 'backend', 'content_blocks', 'msg', 'Edited', 'The content block "%1$s" was saved.');
+		$this->insertLocale('en', 'backend', 'content_blocks', 'msg', 'Deleted', 'The content block "%1$s" was deleted.');
 	}
 }
 

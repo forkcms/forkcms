@@ -138,7 +138,7 @@ class BlogInstall extends ModuleInstaller
 									'sequence' => 1004));
 
 
-		// insert locale
+		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'blog', 'err', 'RSSDescription', 'Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>');
 		$this->insertLocale('nl', 'backend', 'blog', 'lbl', 'Add', 'artikel toevoegen');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Added', 'Het artikel "%1$s" werd toegevoegd.');
@@ -160,6 +160,29 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentInModeration', 'Je reactie wacht op goedkeuring.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentIsSpam', 'Je reactie werd gemarkeerd als spam.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoItems', 'Er zijn nog geen blogposts.');
+
+		// insert locale (en)
+		$this->insertLocale('en', 'backend', 'blog', 'err', 'RSSDescription', 'Blog RSS description is not yet provided. <a href="%1$s">Configure</a>');
+		$this->insertLocale('en', 'backend', 'blog', 'lbl', 'Add', 'add article');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Added', 'The article "%1$s" was added.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'CommentOnWithURL', 'Comment on: <a href="%1$s">%2$s</a>');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the article "%1$s"?');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Deleted', 'The selected articles were deleted.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditArticle', 'edit article "%1$s"');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Edited', 'The article "%1$s" was saved.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpMeta', 'Show the meta information for this blogpost in the RSS feed (category, tags, ...)');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpPingServices', 'Let various blogservices know when you\'ve posted a new article.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Enable the built-in spamfilter (Akismet) to help avoid spam comments.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NoItems', 'There are no articles yet. <a href="%1$s">Write the first article</a>.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Number of articles in the recent articles widget');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoComments', 'Be the first to comment');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNumberOfComments', '%1$s comments');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogOneComment', '1 comment already');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogCommentIsAdded', 'Your comment was added.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogCommentInModeration', 'Your comment is awaiting moderation.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogCommentIsSpam', 'Your comment was marked as spam.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoItems', 'There are no articles yet.');
 	}
 
 

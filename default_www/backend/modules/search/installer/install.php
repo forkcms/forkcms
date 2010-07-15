@@ -52,11 +52,11 @@ class SearchInstall extends ModuleInstaller
 		// make 'pages' searchable
 		$this->makeSearchable('pages');
 
-		// insert locale
-		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht');
-		$this->insertLocale('nl', 'backend', 'search', 'err', 'TermIsRequired', 'De zoekterm is verplicht');
-		$this->insertLocale('nl', 'backend', 'search', 'err', 'TermExists', 'Synoniemen voor deze zoekterm bestaan reeds');
-		$this->insertLocale('nl', 'backend', 'search', 'err', 'WeightNotNumeric', 'Het gewicht moet numeriek zijn');
+		// insert locale (nl)
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht.');
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'TermIsRequired', 'De zoekterm is verplicht.');
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'TermExists', 'Synoniemen voor deze zoekterm bestaan reeds.');
+		$this->insertLocale('nl', 'backend', 'search', 'err', 'WeightNotNumeric', 'Het gewicht moet numeriek zijn.');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'AddSynonym', 'synoniem toevoegen');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'DeleteSynonym', 'synoniem verwijderen');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'EditSynonym', 'synoniem bewerken');
@@ -73,9 +73,30 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Synonyms', 'synoniemen');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchTerm', 'zoekterm');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er werden geen resultaten gevonden.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er zijn geen resultaten.');
 
-
+		// insert locale (en)
+		$this->insertLocale('en', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synonyms are required.');
+		$this->insertLocale('en', 'backend', 'search', 'err', 'TermIsRequired', 'The searchterm is required.');
+		$this->insertLocale('en', 'backend', 'search', 'err', 'TermExists', 'Synonyms for this searchterm already exist.');
+		$this->insertLocale('en', 'backend', 'search', 'err', 'WeightNotNumeric', 'Het gewicht moet numeriek zijn');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'AddSynonym', 'add synonym');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'DeleteSynonym', 'delete synonym');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'EditSynonym', 'edit synonym');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'IP', 'IP');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'SearchedOn', 'searched on');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'Synonym', 'synonym');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'Synonyms', 'synonyms');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'Term', 'term');
+		$this->insertLocale('en', 'backend', 'search', 'msg', 'ConfirmDeleteSynonym', 'Are you sure you want to delete the synonyms for the searchterm "%1$s"?');
+		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoStatistics', 'There are no statistics yet.');
+		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonyms', 'There are no synonyms yet.. <a href="%1$s">Add the first synonym</a>.');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Search', 'search');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Synonyms', 'synonyms');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Search', 'search');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchTerm', 'searchterm');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SearchNoItems', 'There were no results.');
 	}
 }
 
