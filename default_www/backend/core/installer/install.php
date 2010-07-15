@@ -202,6 +202,17 @@ class ModuleInstaller
 	}
 
 
+	/**
+	 * Inserts a new locale item
+	 *
+	 * @return	void
+	 * @param	string $language
+	 * @param	string $application
+	 * @param	string $module
+	 * @param	string $type
+	 * @param	string $name
+	 * @param	string $value
+	 */
 	protected function insertLocale($language, $application, $module, $type, $name, $value)
 	{
 		// redefine
@@ -243,7 +254,7 @@ class ModuleInstaller
 	 * @return	int
 	 * @param	array $item		The meta item
 	 */
-	protected function insertMeta($item)
+	protected function insertMeta(array $item)
 	{
 		return (int) $this->getDB()->insert('meta', $item);
 	}
