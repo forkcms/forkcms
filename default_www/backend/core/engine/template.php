@@ -121,7 +121,7 @@ class BackendTemplate extends SpoonTemplate
 		// dates
 		$this->mapModifier('formatdate', array('BackendTemplateModifiers', 'formatdate'));
 		$this->mapModifier('formattime', array('BackendTemplateModifiers', 'formattime'));
-		$this->mapModifier('formatdateTime', array('BackendTemplateModifiers', 'formatdatetime'));
+		$this->mapModifier('formatdatetime', array('BackendTemplateModifiers', 'formatdatetime'));
 	}
 
 
@@ -333,15 +333,16 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseVars()
 	{
-		// asign a placeholder var
+		// assign a placeholder var
 		$this->assign('var', '');
 
 		// assign body ID
 		$this->assign('bodyID', SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));
 
 		// build classes
-		$bodyClass = SpoonFilter::toCamelCase($this->URL->getAction(), '_', true);
+		$bodyClass = SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true);
 
+		// special occasions
 		if($bodyClass == 'add' || $bodyClass == 'edit') $bodyClass .= ' addEdit';
 
 		// assign
