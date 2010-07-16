@@ -275,9 +275,6 @@ jsBackend.controls = {
 
 		// hijack the form
 		$('.tableOptions .massAction .submitButton').live('click', function(evt) {
-			// prevent default
-			evt.preventDefault();
-
 			// get the selected element
 			if($(this).parents('.massAction').find('select[name=action] option:selected').length > 0) {
 				var element = $(this).parents('.massAction').find('select[name=action] option:selected')
@@ -606,7 +603,12 @@ jsBackend.forms = {
 					// add onclick event for button (button can't have the name submit)
 					$('form#'+ formId + ' a.submitButton').bind('click', function(evt) {
 						evt.preventDefault();
-						$('form#'+ formId).submit();
+						
+						// is the button disabled?
+						if($(this).attr('disabled') == 'disabled') return false;
+						
+						// 
+						else $('form#'+ formId).submit();
 					});
 
 					// dont submit the form on certain elements
