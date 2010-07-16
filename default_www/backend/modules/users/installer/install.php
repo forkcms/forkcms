@@ -95,7 +95,7 @@ class UsersInstall extends ModuleInstaller
 			$settings['nickname'] = serialize('Fork CMS');
 			$settings['name'] = serialize('Fork');
 			$settings['surname'] = serialize('CMS');
-			$settings['interface_language'] = serialize('nl');
+			$settings['interface_language'] = serialize('en');
 			$settings['date_format'] = serialize('j F Y');
 			$settings['time_format'] = serialize('H:i');
 			$settings['datetime_format'] = serialize(unserialize($settings['date_format']) .' '. unserialize($settings['time_format']));

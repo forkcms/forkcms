@@ -4,8 +4,8 @@
 <div class="pageTitle">
 	<h2>{$lblSearch|ucfirst}: {$lblSynonyms}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add_synonym'}" class="button icon iconAdd" title="{$lblAdd|ucfirst}">
-			<span>{$lblAdd|ucfirst}</span>
+		<a href="{$var|geturl:'add_synonym'}" class="button icon iconAdd" title="{$lblAddSynonym|ucfirst}">
+			<span>{$lblAddSynonym|ucfirst}</span>
 		</a>
 	</div>
 </div>
@@ -19,7 +19,7 @@
 </div>
 {/option:datagrid}
 
-{option:!datagrid}<p>{$msgNoSynonyms|sprintf:{$var|geturl:'add'}}</p>{/option:!datagrid}
+{option:!datagrid}<p>{$msgNoSynonyms|sprintf:{$var|geturl:'add_synonym'}}</p>{/option:!datagrid}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

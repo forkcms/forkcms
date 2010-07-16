@@ -68,6 +68,7 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'ConfirmDeleteSynonym', 'Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoStatistics', 'Er zijn nog geen statistieken.');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoSynonyms', 'Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.');
+		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoSynonymsBox', 'Er zijn nog geen synoniemen.');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Search', 'zoeken');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Synonyms', 'synoniemen');
@@ -90,7 +91,8 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'Term', 'term');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'ConfirmDeleteSynonym', 'Are you sure you want to delete the synonyms for the searchterm "%1$s"?');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoStatistics', 'There are no statistics yet.');
-		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonyms', 'There are no synonyms yet.. <a href="%1$s">Add the first synonym</a>.');
+		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonyms', 'There are no synonyms yet. <a href="%1$s">Add the first synonym</a>.');
+		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonymsBox', 'There are no synonyms yet.');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Search', 'search');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Synonyms', 'synonyms');

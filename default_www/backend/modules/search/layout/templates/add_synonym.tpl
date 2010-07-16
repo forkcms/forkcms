@@ -38,7 +38,7 @@
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAdd|ucfirst}" />
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddSynonym|ucfirst}" />
 		</div>
 	</div>
 {/form:addItem}

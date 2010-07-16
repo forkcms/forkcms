@@ -138,6 +138,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Archived', 'gearchiveerd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Articles', 'artikels');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'At', 'om');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Authentication', 'authenticatie');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Author', 'auteur');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Avatar', 'avatar');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Back', 'terug');
@@ -185,6 +186,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EditTemplate', 'template wijzigen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Email', 'e-mail');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EnableModeration', 'moderatie inschakelen');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Error', 'error');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Example', 'voorbeeld');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Execute', 'uitvoeren');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ExtraMetaTags', 'extra metatags');
@@ -444,6 +446,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Archived', 'archived');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Articles', 'articles');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'At', 'at');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Authentication', 'authentication');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Author', 'author');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Avatar', 'avatar');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Back', 'back');
@@ -491,6 +494,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EditTemplate', 'edit template');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Email', 'e-mail');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EnableModeration', 'enable moderation');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Error', 'error');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Example', 'example');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Execute', 'execute');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ExtraMetaTags', 'extra metatags');
