@@ -439,7 +439,7 @@ jsBackend.pages.tree = {
 		// get current and new URL
 		var currentPageURL = window.location.pathname + window.location.search; 
 		var newPageURL = $(node).find('a').attr('href');
-		
+
 		// only redirect if destination isn't the current one.
 		if(typeof newPageURL != 'undefined' && newPageURL != currentPageURL) window.location = newPageURL;
 	},
@@ -456,10 +456,10 @@ jsBackend.pages.tree = {
 				 success: function(json, textStatus) {
 					 if(json.code != 200) {
 						 if(jsBackend.debug) alert(textStatus);
-						 
+
 						 // show message
-						 jsBackend.messages.add('error', '{$errCantBeMoved}');
-						 
+						 jsBackend.messages.add('error', '{$errCantBeMoved|addslashes}');
+
 						 // rollback
 						 $.tree.rollback(rollback);
 					 } else {

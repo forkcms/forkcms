@@ -216,10 +216,16 @@ class BackendUsersModel
 	 */
 	public static function getUsers()
 	{
-		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.email
-														FROM users AS i
-														ORDER BY i.email;',
-														null, 'id');
+		$return = (array) BackendModel::getDB()->getPairs('SELECT i.id, s.value
+															FROM users AS i
+															INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?;',
+															array('nickname'), 'id');
+
+		// unserialize
+		foreach($return as $id => &$value) $value = unserialize($value);
+
+		// return
+		return $return;
 	}
 
 

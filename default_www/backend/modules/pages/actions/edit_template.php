@@ -4,6 +4,8 @@
  * BackendPagesEditTemplate
  * This is the edit-action, it will display a form to edit an item
  *
+ *	@todo	If template is in use, you shouldn't be able to edit the number of blocks.
+ *
  * @package		backend
  * @subpackage	pages
  *
@@ -68,6 +70,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
 		elseif(BackendPagesModel::isTemplateInUse($this->id)) $deleteAllowed = false;
 
+		// assign option
+		if($template['num_blocks']) $this->tpl->assign('inUse', true);
+
 		// assign
 		$this->tpl->assign('deleteAllowed', $deleteAllowed);
 	}
@@ -87,6 +92,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm->addText('label', $this->record['label']);
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
 		$this->frm->addDropdown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
+		if(BackendPagesModel::isTemplateInUse($this->id)) $this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
 		$this->frm->addText('format', $this->record['data']['format']);
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addCheckbox('default', ($this->record['id'] == BackendModel::getSetting('pages', 'default_template')));
@@ -148,8 +154,10 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 				$template['data']['format'] = $this->frm->getField('format')->getValue();
 
+				if(BackendPagesModel::isTemplateInUse($this->id)) $template['num_blocks'] = $this->record['num_blocks'];
+
 				// loop fields
-				for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
+				for($i = 1; $i <= $template['num_blocks']->getValue(); $i++)
 				{
 					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
 					$template['data']['types'][] = $this->frm->getField('type_'. $i)->getValue();

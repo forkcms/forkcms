@@ -18,6 +18,7 @@
 			<p>
 				<label for="numBlocks">{$lblNumberOfBlocks|ucfirst}</label>
 				{$ddmNumBlocks} {$ddmNumBlocksError}
+				{option:inUse}{* @todo add a message here if the template is in use. *}{/option:inUse}
 			</p>
 		</div>
 		{* Don't change this ID *}
