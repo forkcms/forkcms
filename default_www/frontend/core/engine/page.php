@@ -173,6 +173,9 @@ class FrontendPage extends FrontendBaseObject
 
 			// an decent extra provided?
 			if($block['extra_type'] == 'block') $redirect = false;
+
+			// a widget provided
+			if($block['extra_type'] == 'widget') $redirect = false;
 		}
 
 		// should we redirect?
