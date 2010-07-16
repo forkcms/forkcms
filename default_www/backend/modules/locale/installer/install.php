@@ -619,7 +619,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Value', 'value');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'View', 'view');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'VisibleOnSite', 'visible on site');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'VisitWebsite', 'bezoek website');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'VisitWebsite', 'visit website');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WaitingForModeration', 'waiting for moderation');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weak', 'weak');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mail webmaster');
@@ -645,7 +645,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ConfirmDelete', 'Are you sure you want to delete the item "%1$s"?');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ConfirmDeleteCategory', 'Are you sure you want to delete the category "%1$s"?');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ConfirmMassDelete', 'Are your sure you want to delete this/these item(s)?');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'ConfirmMassSpam', 're your sure you want to mark this/these item(s) as spam?');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'ConfirmMassSpam', 'Are your sure you want to mark this/these item(s) as spam?');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'DE', 'German');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'Deleted', 'The item was deleted.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'DeletedCategory', 'The category "%1$s" was deleted.');
