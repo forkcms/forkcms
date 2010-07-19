@@ -523,18 +523,7 @@
 
 .fullwidthOptions {
 	font-family: "Lucida grande", Arial, sans-serif;
-	background: #EAEAEA;
-	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EAEAEA));
-	background: -moz-linear-gradient(top, #DDD, #EAEAEA);
-	border: 1px solid #DDD;
-	padding: 6px;
 	margin-top: 12px;
-
-	/* @inc .rc */
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-
 }
 
 	.collapseBox .fullwidthOptions {
@@ -591,15 +580,15 @@
 */
 
 .pageTitle {
-	border-bottom: 1px solid #CCC;
 	margin: 0 0 12px;
 	padding: 6px 0 6px;
+	border-bottom: 1px solid #DDD;
 }
 
 .pageTitle h2 {
 	font-size: 14px;
 	float: left;
-	padding: 0;
+	padding: 2px 0 0;
 	margin: 0;
 	line-height: 22px;
 }

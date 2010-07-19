@@ -106,6 +106,55 @@ body {
 		#user .avatar {
 			margin-right: 4px;
 		}
+		
+		#user li {
+			position: relative;
+		}
+		
+		#user ul ul {
+			position: absolute;
+			right: 0;
+			top: 24px;
+			width: 180px;
+		}
+		
+			#user ul ul {
+				border: 1px solid #DDD;
+				padding: 0;
+			}
+			
+			#user #account li {
+				float: none;
+				border: none;
+				border-bottom: 1px solid #DDD;
+				background: #FFF;
+				margin: 0;
+				padding: 0;
+			}
+			
+			#user #account .arrow {
+				font-size: 8px;
+				font-family: Courier;
+			}
+			
+				#user ul ul li a {
+					display: block;
+					background: #F1F5FA;
+					padding: 1px 6px;
+					margin: 1px 0;
+				}
+
+					#user ul ul li td a {
+						padding: 0;
+					}
+					
+					#user ul ul li table {
+						margin: 6px;
+					}
+			
+			#user ul ul li:last-child {
+				border: none;
+			}
 
 #header td {
 	vertical-align: middle;
@@ -130,32 +179,6 @@ body {
 	#headerHolder h1 a:active,
 	#headerHolder h1 a:focus {
 		color: #001A77;
-	}
-
-	#headerHolder h1 a:link span,
-	#headerHolder h1 a:visited span {
-		font-size: 11px;
-		font-weight: 400;
-		background: #C0C7CC;
-		background: rgba(0,0,0,0.18);
-		color: #FFF;
-		padding: 1px 6px;
-		border: 1px solid #AEB5B9;
-		border-color: rgba(0,0,0,0.09);
-
-		/* @inc .rc */
-		border-radius: 4px;
-		-webkit-border-radius: 4px;
-		-moz-border-radius: 4px;
-
-		text-shadow: 1px 1px 1px rgba(0,0,0,0.45);
-	}
-
-	#headerHolder h1 a:hover span,
-	#headerHolder h1 a:active span,
-	#headerHolder h1 a:focus span {
-		background: rgba(0,0,0,0.36);
-		border: 1px solid rgba(0,0,0,0.18);
 	}
 
 /*

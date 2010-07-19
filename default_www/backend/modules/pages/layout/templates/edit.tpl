@@ -11,10 +11,12 @@
 	<div id="tabs" class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
-			<li><a href="#tabVersions">{$lblPreviousVersions|ucfirst}</a></li>
-			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
-			<li><a href="#tabTemplate">{$lblTemplate|ucfirst}</a></li>
+			<!-- Reverse order after content tab [floatRight] -->
+			<li><a href="#tabSettings">{$lblSettings|ucfirst}</a></li>
 			<li><a href="#tabTags">{$lblTags|ucfirst}</a></li>
+			<li><a href="#tabTemplate">{$lblTemplate|ucfirst}</a></li>
+			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
+			<li><a href="#tabVersions">{$lblPreviousVersions|ucfirst}</a></li>
 		</ul>
 
 		<div id="tabContent">
@@ -62,50 +64,6 @@
 							</div>
 						</td>
 						<td id="sidebar">
-							<div id="publishOptions" class="box">
-								<div class="heading">
-									<h3>{$lblStatus|ucfirst}</h3>
-								</div>
-								<!-- @later
-								<div class="options">
-									<div class="buttonHolder">
-										<a href="#" class="button icon iconZoom previewButton" target="_blank">
-											<span>{$lblPreview|ucfirst}</span>
-										</a>
-									</div>
-								</div>
-								 -->
-								<div class="options">
-									<div class="buttonHolder">
-										<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton" target="_blank">
-											<span>{$lblView|ucfirst}</span>
-										</a>
-									</div>
-								</div>
-								 <div class="options">
-										<ul class="inputList">
-											{iteration:hidden}
-											<li>
-												{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label}</label>
-											</li>
-											{/iteration:hidden}
-										</ul>
-									</div>
-								<div class="footer">
-									<table border="0" cellpadding="0" cellspacing="0">
-										<tbody>
-											<tr>
-												<td><p>{$lblLastSaved|ucfirst}: <abbr title="{$recordedited_on|date:'j F Y H:i'}">{$recordedited_on|date:'H:i'}</abbr></p></td>
-												<td>
-													<div class="buttonHolderRight">
-														<input id="save" class="inputButton button" type="submit" name="save" value="{$lblSave|ucfirst}" />
-													</div>
-												</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
 
 							<div class="box" id="template">
 								<div class="heading">
@@ -129,7 +87,7 @@
 			</table>
 		</div>
 		<div id="tabVersions">
-			<div class="datagridHolder">
+			{option:revisions}<div class="datagridHolder">{/option:revisions}
 				<div class="tableHeading">
 					<div class="oneLiner">
 						<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
@@ -141,18 +99,12 @@
 				</div>
 				{option:revisions}{$revisions}{/option:revisions}
 				{option:!revisions}
-				<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
-					<tr>
-						<td>
-							<p>{$msgNoRevisions}</p>
-						</td>
-					</tr>
-				</table>
+					<p>{$msgNoRevisions}</p>
 				{/option:!revisions}
-			</div>
+			{option:revisions}</div>{/option:revisions}
 		</div>
 		<div id="tabSEO">
-			<div class="box boxLevel2">
+			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblTitles|ucfirst}</h3>
 				</div>
@@ -180,7 +132,7 @@
 				</div>
 			</div>
 
-			<div id="seoNofollow" class="box boxLevel2">
+			<div id="seoNofollow" class="subtleBox">
 				<div class="heading">
 					<h3>Nofollow</h3>
 				</div>
@@ -196,7 +148,7 @@
 				</div>
 			</div>
 
-			<div id="seoMeta" class="box boxLevel2">
+			<div id="seoMeta" class="subtleBox">
 				<div class="heading">
 					<h3>{$lblMetaInformation|ucfirst}</h3>
 				</div>
@@ -229,7 +181,7 @@
 				</div>
 			</div>
 
-			<div class="box boxLevel2">
+			<div class="subtleBox">
 				<div class="heading">
 					<h3>{$lblURL}</h3>
 				</div>
@@ -312,7 +264,7 @@
 
 		</div>
 		<div id="tabTags">
-			<div class="box boxLevel2">
+			<div class="subtleBox">
 				<div class="heading">
 					<h3>Tags</h3>
 				</div>
@@ -320,6 +272,16 @@
 					{$txtTags} {$txtTagsError}
 				</div>
 			</div>
+		</div>
+		<div id="tabSettings">
+
+			<ul class="inputList">
+				{iteration:hidden}
+				<li>
+					{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label}</label>
+				</li>
+				{/iteration:hidden}
+			</ul>
 		</div>
 	</div>
 	<div class="fullwidthOptions">
@@ -336,6 +298,9 @@
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+			<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton" target="_blank">
+				<span>{$lblView|ucfirst}</span>
+			</a>
 		</div>
 	</div>
 {/form:edit}

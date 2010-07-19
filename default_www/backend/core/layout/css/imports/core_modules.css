@@ -131,8 +131,13 @@
 	General
 */
 
-#pagesPageTitle span {
+#pagesPageTitle label {
+	padding: 0 0 4px;
+}
+
+#pagesPageTitle span a {
 	font-size: 11px;
+	color: #666;
 }
 
 #editContent {
@@ -232,19 +237,19 @@
 			Table widths
 		*/
 
-		#pages.index .datagrid .user_id {
+		#pages.pagesIndex .datagrid .user_id {
 			width: 20%;
 		}
 
-		#pages.index .datagrid .date {
+		#pages.pagesIndex .datagrid .date {
 			width: 20%;
 		}
 
-		#pages.index .datagrid .title {
+		#pages.pagesIndex .datagrid .title {
 			width: 40%;
 		}
 
-		#pages.index .datagrid .action {
+		#pages.pagesIndex .datagrid .action {
 			width: 20%;
 		}
 
@@ -256,26 +261,35 @@
 			Tab SEO
 		*/
 
-		#pages.addEdit #tabSEO #pageTitle {
+		#pages.pagesAddEdit #tabSEO #pageTitle {
 			width: 340px;
 		}
 
-		#pages.addEdit #tabSEO #navigationTitle {
+		#pages.pagesAddEdit #tabSEO #navigationTitle {
 			width: 160px;
 		}
 
-		#pages.addEdit #tabSEO #metaDescription {
+		#pages.pagesAddEdit #tabSEO #metaDescription {
 			width: 480px;
 		}
 
-		#pages.addEdit #tabSEO #metaKeywords {
+		#pages.pagesAddEdit #tabSEO #metaKeywords {
 			width: 480px;
 		}
 
-		#pages.addEdit #tabSEO #url {
+		#pages.pagesAddEdit #tabSEO #url {
 			width: 340px;
 		}
-		
+
+		/* Less important tabs go on the right side */
+
+		#pages.pagesAddEdit #contentHolder .ui-tabs-nav li { float: right; }
+		#pages.pagesAddEdit #contentHolder .ui-tabs-nav li:first-child { float: left; }
+
+		#pages.pagesAddEdit #contentHolder .ui-tabs-nav li:nth-child(2) {
+			margin-right: 0;
+		}
+
 	/*
 		editTemplate
 	*/
@@ -314,31 +328,34 @@
 		Add/edit
 	*/
 
-	#blog.addEdit #categoryId { width: 170px; }
-	#blog.addEdit #addValue-tags { width: 120px; }
-	#blog.addEdit #newCategoryValue { width: 120px; }
-	
+	#blog.blogAddEdit #categoryId { width: 170px; }
+	#blog.blogAddEdit #addValue-tags { width: 120px; }
+	#blog.blogAddEdit #newCategoryValue { width: 120px; }
+
+	#blog.blogAddEdit #publishOnDate { width: 100px; }
+	#blog.blogAddEdit #publishOnTime { width: 40px; }
+
 		/*
 			Tab SEO
 		*/
 
-		#blog.addEdit #tabSEO #pageTitle {
+		#blog.blogAddEdit #tabSEO #pageTitle {
 			width: 340px;
 		}
 
-		#blog.addEdit #tabSEO #navigationTitle {
+		#blog.blogAddEdit #tabSEO #navigationTitle {
 			width: 160px;
 		}
 
-		#blog.addEdit #tabSEO #metaDescription {
+		#blog.blogAddEdit #tabSEO #metaDescription {
 			width: 480px;
 		}
 
-		#blog.addEdit #tabSEO #metaKeywords {
+		#blog.blogAddEdit #tabSEO #metaKeywords {
 			width: 480px;
 		}
 
-		#blog.addEdit #tabSEO #url {
+		#blog.blogAddEdit #tabSEO #url {
 			width: 340px;
 		}
 
@@ -346,11 +363,11 @@
 		Settings
 	*/
 
-	#blog.settings #feedburnerUrl {
+	#blog.blogAddEdit #feedburnerUrl {
 		width: 320px;
 	}
 
-	#blog.settings #rssDescription {
+	#blog.blogAddEdit #rssDescription {
 		padding: 3px;
 	}
 
@@ -371,15 +388,15 @@
 	*/
 
 	/* User info */
-	#users.addEdit .settingsUserInfo {
+	#users.usersAddEdit .settingsUserInfo {
 		margin: 0 0 14px;
 	}
 
-	#users.addEdit .settingsUserInfo td {
+	#users.usersAddEdit .settingsUserInfo td {
 		vertical-align: middle;
 	}
 
-	#users.addEdit  .settingsUserInfo .infoGrid {
+	#users.usersAddEdit  .settingsUserInfo .infoGrid {
 		margin: 0 0 0 12px;
 	}
 
@@ -391,24 +408,12 @@
 		Index
 	*/
 
-	#settings.index #siteTitle {
+	#settings.settingsIndex #siteTitle {
 		width: 320px;
 	}
 
-	#settings.index #webmasterEmail {
+	#settings.settingsIndex #webmasterEmail {
 		width: 300px;
-	}
-
-/*
-	Example
-*/
-
-	/*
-		Layout
-	*/
-	
-	#example.layout #test {
-		
 	}
 
 /*
@@ -419,7 +424,7 @@
 		Index
 	*/
 
-	#tags.index .datagrid td.tag a {
+	#tags.tagsIndex .datagrid td.tag a {
 		font-size: 11px;
 		font-weight: 700;
 	}
@@ -432,27 +437,31 @@
 		Add/edit
 	*/
 
-	#locale.addEdit select {
+	#locale.localeAddEdit select {
 		font-size: 11px;
 	}
 
-	#locale.addEdit #value { width: 590px; }
-	#locale.addEdit #name { width: 260px; }
-	#locale.addEdit select { width: 140px; }
+	#locale.localeAddEdit #value { width: 590px; }
+	#locale.localeAddEdit #name { width: 260px; }
+	#locale.localeAddEdit select { width: 140px; }
 
 	/*
 		Index
 	*/
 
-	#locale.index #filter select,
-	#locale.index #filter input {
+	#locale.localeIndex #filter select,
+	#locale.localeIndex #filter input {
 		font-size: 11px;
 	}
 
-	#locale.index #value { width: 340px; }
-	#locale.index #name { width: 260px; }
-	#locale.index select { width: 140px; }
-	
+	#locale.localeIndex #value { width: 340px; }
+	#locale.localeIndex #name { width: 260px; }
+	#locale.localeIndex select { width: 140px; }
+
+	#locale.localeIndex .datafilter .help {
+		top: 5px;
+		margin-left: 0;
+	}
 
 /*
 	TinyMCE expand/non expand

@@ -226,8 +226,10 @@ label {
 .forkForms abbr { cursor: help; }
 
 .forkForms .block{ display: block !important; }
-.forkForms p:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
-.forkForms p { zoom: 1; }
+.forkForms p:after,
+.forkForms .inputList:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.forkForms p,
+.forkForms .inputList { zoom: 1; }
 
 /*
 	The Magic One Liner

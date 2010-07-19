@@ -71,10 +71,6 @@
 							{/option:usingDraft}
 
 							<div class="options">
-								<p class="status">{$lblStatus|ucfirst}: <strong>{$status}</strong></p>
-							</div>
-
-							<div class="options">
 								<ul class="inputList">
 									{iteration:hidden}
 									<li>
@@ -86,72 +82,38 @@
 							</div>
 
 							<div class="options">
-								<p>
-									<label for="publishOnDate">{$lblPublishOn|ucfirst}:</label>
-									{$txtPublishOnDate} {$txtPublishOnDateError}
-								</p>
-								<p>
-									<label for="publishOnTime">{$lblAt}</label>
-									{$txtPublishOnTime} {$txtPublishOnTimeError}
-								</p>
-							</div>
-
-							<div class="footer">
-								<table border="0" cellpadding="0" cellspacing="0">
-									<tbody>
-										<tr>
-											<td><p>&nbsp;</p></td>
-											<td>
-												<div class="buttonHolderRight">
-													<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
-												</div>
-											</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</div>
-
-						<div id="category" class="box">
-							<div class="heading">
-								<h4>{$lblCategory|ucfirst}</h4>
-								<div class="buttonHolderRight">
-									<a href="#newCategory" class="toggleDiv button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>
-								</div>
-							</div>
-							<div class="options">
-								{$ddmCategoryId} {$ddmCategoryIdError}
-							</div>
-							<div id="newCategory" class="options hidden">
 								<div class="oneLiner">
 									<p>
-										<input id="newCategoryValue" class="inputTextfield dontSubmit" type="text" name="new_category" />
+										<label for="publishOnDate">{$lblPublishOn|ucfirst}:</label>
+										{$txtPublishOnDate} {$txtPublishOnDateError}
 									</p>
-									<div class="buttonHolder">
-										<a href="#" id="newCategoryButton" class="button icon iconAdd iconOnly"><span>{$lblAddCategory|ucfirst}</span></a>
-									</div>
+									<p>
+										<label for="publishOnTime">{$lblAt}</label>
+										{$txtPublishOnTime} {$txtPublishOnTimeError}
+									</p>
 								</div>
 							</div>
+
 						</div>
 
-						<div id="authors" class="box">
+						<div class="box" id="articleMeta">
 							<div class="heading">
-								<h4>{$lblAuthor|ucfirst}</h4>
+								<h3>{$lblMeta|ucfirst}</h3>
 							</div>
 							<div class="options">
+								<label for="newCategoryValue">{$lblCategory|ucfirst}</label>
+								{$ddmCategoryId} {$ddmCategoryIdError}
+							</div>
+							<div class="options">
+								<label for="userId">{$lblAuthor|ucfirst}</label>
 								{$ddmUserId} {$ddmUserIdError}
 							</div>
-						</div>
-
-						<div id="tagBox" class="box">
-							<div class="heading">
-								<h4>{$lblTags|ucfirst}</h4>
-							</div>
-
 							<div class="options">
+								<label for="addValue-tags">{$lblTags|ucfirst}</label>
 								{$txtTags} {$txtTagsError}
 							</div>
 						</div>
+
 					</td>
 				</tr>
 			</table>

@@ -3,10 +3,6 @@
 
 <div id="dashboardWidgets">
 
-	<div id="wip" class="content">
-		<p>Welcome to Fork NG. What you are seeing is a work in progress.</p>
-	</div>
-
 	<div class="leftColumn">
 	{iteration:leftColumn}
 		{include:file='{$leftColumn.template}'}
