@@ -241,7 +241,8 @@ class BackendBlogModel
 	{
 		// get records and return them
 		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
-																FROM blog_categories AS i;');
+																FROM blog_categories AS i
+																WHERE i.language = ?;', BL::getWorkingLanguage());
 
 		// no categories?
 		if(empty($categories))
