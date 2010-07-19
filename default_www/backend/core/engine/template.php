@@ -343,7 +343,7 @@ class BackendTemplate extends SpoonTemplate
 		$bodyClass = SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true);
 
 		// special occasions
-		if($bodyClass == 'add' || $bodyClass == 'edit') $bodyClass .= ' addEdit';
+		if($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit') $bodyClass .= $this->URL->getModule() .'AddEdit';
 
 		// assign
 		$this->assign('bodyClass', $bodyClass);
