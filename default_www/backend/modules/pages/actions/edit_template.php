@@ -70,9 +70,6 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
 		elseif(BackendPagesModel::isTemplateInUse($this->id)) $deleteAllowed = false;
 
-		// assign option
-		if($template['num_blocks']) $this->tpl->assign('inUse', true);
-
 		// assign
 		$this->tpl->assign('deleteAllowed', $deleteAllowed);
 	}
