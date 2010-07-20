@@ -28,7 +28,7 @@
 							</select>
 						</li>
 					{/option:workingLanguages}
-					
+
 					{* @todo move this to the real javascript *}
 					<script type="text/javascript" charset="utf-8">
 						$(document).ready(function() {
@@ -37,9 +37,8 @@
 								$('#ddAccount').toggle();
 							});
 						});
-						
 					</script>
-					
+
 					<li id="account">
 						<a href="#ddAccount" id="openAccountDropdown">
 							<div class="avatar av24">
@@ -50,8 +49,8 @@
 						</a>
 						<ul class="hidden" id="ddAccount">
 							<li><a href="{$authenticatedUserEditUrl}">Edit profile</a></li>
-							<li><a href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
-							<li><a href="https://github.com/forkcms/forkcms/wikis">{$lblDeveloper|ucfirst}</a></li>
+							<li><a target="_blank" href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
+							<li><a target="_blank" href="https://github.com/forkcms/forkcms/wikis">{$lblDeveloper|ucfirst}</a></li>
 							<li><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a></li>
 						</ul>
 					</li>

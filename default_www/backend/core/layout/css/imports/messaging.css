@@ -172,6 +172,30 @@
 	padding: 12px;
 }
 
+#messaging .loadingMessage {
+	font-weight: 700;
+	margin: 0 0 10px;
+	color: #FFF;
+	font-weight: 700;
+	background: #4d8fd8;
+	background: -webkit-gradient(linear, left top, left bottom, from(#5c9be0), to(#307acb));
+	background: -moz-linear-gradient(top, #5c9be0, #307acb);
+	border: 1px solid #366eac;
+
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+	padding: 6px 12px;
+}
+
+	#messaging .loadingMessage p {
+		background: url(../../images/big_spinner.gif) no-repeat center center;
+		min-height: 32px;
+		padding: 16px 0;
+	}
+
 .singleMessage {
 	padding: 0;
 }

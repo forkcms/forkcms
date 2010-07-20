@@ -104,8 +104,24 @@ a.icon span {
 		background-position: 0 -220px !important; }
 	a.iconCloseI span {
 		background-position: 0 -242px !important; }
+	a.iconUsers span {
+		background-position: 0 -264px !important; }
+	a.iconExport span {
+		background-position: 0 -374px !important; }
+	a.iconImport span {
+		background-position: 0 -396px !important; }
+	a.iconStats span {
+		background-position: 0 -420px !important; }
 	a.iconGoto span {
 		background-position: 0 -465px !important; }
+	a.iconMailAdd span {
+		background-position: 0 -513px !important; }
+	a.iconFolderAdd span {
+		background-position: 0 -536px !important; }
+	a.iconFolderEdit span {
+		background-position: 0 -560px !important; }
+	a.iconRefresh span {
+		background-position: 0 -583px !important; }
 
 	a.iconOnly:link,
 	a.iconOnly:visited {

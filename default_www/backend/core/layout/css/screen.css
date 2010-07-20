@@ -41,6 +41,7 @@
 		@import url("imports/general_purpose_classes.css");
 		@import url("imports/clearfix.css");
 		@import url("imports/avatars.css");
+		@import url("imports/wizard.css");
 
 		/* Misc */
 		@import url("imports/misc.css");

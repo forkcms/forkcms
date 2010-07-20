@@ -67,6 +67,20 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 .ui-priority-primary, .ui-widget-content .ui-priority-primary { font-weight: bold; }
 .ui-priority-secondary, .ui-widget-content .ui-priority-secondary { opacity: .7; filter:Alpha(Opacity=70); font-weight: normal; }
 
+/* Icons
+----------------------------------*/
+.ui-icon-circle-triangle-e, .ui-icon-circle-triangle-s, .ui-icon-circle-triangle-w, .ui-icon-circle-triangle-n, .ui-icon-circle-arrow-e, .ui-icon-circle-arrow-s, .ui-icon-circle-arrow-w, .ui-icon-circle-arrow-n { display: block; text-indent: -99999px; overflow: hidden; background-repeat: no-repeat; width: 16px; height: 16px; margin: 0 !important; float: none !important; background-image: url('images/ui-icons_666666_256x240.png'); }
+
+/* positioning */
+.ui-icon-circle-triangle-e { background-position: -48px -192px; }
+.ui-icon-circle-triangle-s { background-position: -64px -192px; }
+.ui-icon-circle-triangle-w { background-position: -80px -192px; }
+.ui-icon-circle-triangle-n { background-position: -96px -192px; }
+.ui-icon-circle-arrow-e { background-position: -112px -192px; }
+.ui-icon-circle-arrow-s { background-position: -128px -192px; }
+.ui-icon-circle-arrow-w { background-position: -144px -192px; }
+.ui-icon-circle-arrow-n { background-position: -160px -192px; }
+
 /* Misc visuals
 ----------------------------------*/
 
@@ -96,7 +110,7 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 .ui-accordion .ui-accordion-content-active { display: block; }/* Datepicker
 ----------------------------------*/
 .ui-autocomplete { position: absolute; cursor: default; }	
-.ui-autocomplete-loading { background: white url('images/ui-anim_basic_16x16.gif') right center no-repeat; }
+.ui-autocomplete-loading { background: white url(images/ui-anim_basic_16x16.gif) right center no-repeat; }
 
 .ui-datepicker {
 	width: 17em; padding: .2em .2em 0;
@@ -113,7 +127,7 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 .ui-datepicker .ui-datepicker-next { right:2px; }
 .ui-datepicker .ui-datepicker-prev-hover { left:1px; }
 .ui-datepicker .ui-datepicker-next-hover { right:1px; }
-.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 50%; margin-left: -8px; top: 50%; margin-top: -8px;  }
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span { display: block; position: absolute; left: 3px; top: 3px; }
 .ui-datepicker .ui-datepicker-title { margin: 0 2.3em; line-height: 1.8em; text-align: center; font-weight: 700;}
 .ui-datepicker .ui-datepicker-title select { float:left; font-size:1em; margin:1px 0; }
 .ui-datepicker select.ui-datepicker-month-year {width: 100%;}
@@ -284,7 +298,6 @@ div.tabs ul li.selected {
 	border: 1px solid #a2abb7;
 	border-bottom-color: #FFF;
 	color: #3a3a3a;
-	
 }
 
 /*
@@ -293,6 +306,7 @@ div.tabs ul li.selected {
 #ui-datepicker-div {
 	background: #FFF;
 	border: 1px solid #AAA;
+	z-index: 99 !important;
 }
 
 /*

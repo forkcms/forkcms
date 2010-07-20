@@ -54,7 +54,7 @@ body {
 	}
 
 	/*
-		@todo @johan #main background is not shown in Opera on dashboard
+		@todo #main background is not shown in Opera on dashboard
 	*/
 
 #contentHolder {
@@ -352,6 +352,8 @@ body {
 
 #subnavigation li a {
 	text-decoration: none;
+	width: 115px;
+	overflow: hidden;
 }
 
 #subnavigation ul {
@@ -403,6 +405,11 @@ body {
 	font-weight: 700;
 }
 
+#subnavigation li li a {
+	width: 104px;
+	overflow: hidden;
+}
+
 #subnavigation li.selected li a:link,
 #subnavigation li.selected li a:visited {
 	font-weight: 300;
@@ -423,6 +430,13 @@ body {
 }
 
 #subnavigation li:last-child a {
+	border: none;
+}
+
+#subnavigation li:last-child li a {
+	border-bottom: 1px solid #FFF;
+}
+#subnavigation li:last-child li:last-child a {
 	border: none;
 }
 

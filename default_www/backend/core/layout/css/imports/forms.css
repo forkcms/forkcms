@@ -254,3 +254,6 @@ label {
 		margin-top: 1px;
 		margin-right: 3px;
 	}
+	
+	.oneLiner label,
+	.oneLiner p.label { float: left; line-height: 20px; padding: 2px 4px 2px 0;}
