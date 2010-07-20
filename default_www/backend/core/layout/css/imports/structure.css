@@ -235,6 +235,10 @@ body {
 	Navigation
 */
 
+#navigation {
+	min-width: 400px;
+}
+
 	#navigation ul {
 		position: relative;
 		right: 1px;

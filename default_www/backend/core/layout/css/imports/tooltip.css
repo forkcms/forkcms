@@ -33,6 +33,13 @@ abbr.help {
 		margin-left: -2px;
 	}
 
+	/* In datagrids */
+	
+	.datagrid th .help {
+		top: 5px;
+		margin-left: 0;
+	}
+
 /*
 	Tooltip
 */

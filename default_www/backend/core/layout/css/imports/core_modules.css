@@ -126,6 +126,10 @@
 	#pagesTree #tree .tree {
 		margin: 6px 6px 12px;
 	}
+	
+	#pages.pagesSettings .inputList {
+		padding-top: 12px;
+	}
 
 /*
 	General
@@ -414,6 +418,10 @@
 
 	#settings.settingsIndex #webmasterEmail {
 		width: 300px;
+	}
+	
+	#settings.settingsIndex #smtpPort {
+		width: 40px;
 	}
 
 /*

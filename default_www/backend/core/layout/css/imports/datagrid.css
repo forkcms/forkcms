@@ -234,8 +234,10 @@
 	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
 }
 
-	.datagrid tbody tr:hover td,
-	.datagrid tbody tr.selected td,
+	.datagrid tr:hover td,
+	.datagrid tr.selected td,
+	.datagrid tr.selected td label,
+	.datagrid tr:hover td label,
 	#encloser #container .datagrid tbody tr:hover td a.linkButton span {
 		color: #FFF;
 	}

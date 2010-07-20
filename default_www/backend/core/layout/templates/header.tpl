@@ -34,7 +34,7 @@
 						$(document).ready(function() {
 							$('#openAccountDropdown').click(function(e) {
 								e.preventDefault();
-								$('#ddAccount').slideToggle('fast');
+								$('#ddAccount').toggle();
 							});
 						});
 						

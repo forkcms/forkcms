@@ -12,7 +12,7 @@
 		</div>
 		<div class="options">
 			<p>{$msgHelpMetaNavigation}</p>
-			<ul class="inputList p0">
+			<ul class="inputList">
 				<li>{$chkMetaNavigation} <label for="metaNavigation">{$msgMetaNavigation|ucfirst}</label></li>
 			</ul>
 		</div>
