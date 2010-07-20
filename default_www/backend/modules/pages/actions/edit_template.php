@@ -154,7 +154,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if(BackendPagesModel::isTemplateInUse($this->id)) $template['num_blocks'] = $this->record['num_blocks'];
 
 				// loop fields
-				for($i = 1; $i <= $template['num_blocks']->getValue(); $i++)
+				for($i = 1; $i <= $template['num_blocks']; $i++)
 				{
 					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
 					$template['data']['types'][] = $this->frm->getField('type_'. $i)->getValue();
