@@ -476,11 +476,6 @@
   display: none;
 }
 
-.mceEditor tr.mceFirst td ,
-.mceEditor tr.mceLast td {
-  border: 0px !important;
-}
-
 .mceEditor.expanded tr.mceFirst,
 .mceEditor.expanded tr.mceLast {
   display: block;

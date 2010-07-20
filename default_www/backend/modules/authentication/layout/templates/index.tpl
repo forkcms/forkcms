@@ -40,8 +40,6 @@
 					{/form:authenticationIndex}
 
 					<ul id="loginNav">
-						<li><a href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
-						<li><a href="http://docs.fork-cms.be">{$lblDeveloper|ucfirst}</a></li>
 						<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" rel="forgotPasswordHolder">{$msgForgotPassword}</a></li>
 					</ul>
 				</div>

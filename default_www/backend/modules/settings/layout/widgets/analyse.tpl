@@ -10,7 +10,5 @@
 				{/iteration:warnings}
 			</ul>
 		</div>
-		<div class="footer">
-		</div>
 	</div>
 {/option:warnings}

@@ -1,9 +1,17 @@
 /*
-	Login specific CSS
+
+    Login screen CSS
+    
+    @package      backend
+    @subpackage   authentication
+    
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
 */
 
 body#login {
-	background: url(/backend/core/layout/images//fork.png) no-repeat bottom center;
+	background: url(/backend/core/layout/images/fork.png) no-repeat bottom center;
 }
 
 #login #debugnotify {
@@ -63,12 +71,9 @@ body#login {
 }
 
 #loginError .errorMessage {
-
 	z-index: 3;
 	font-size: 11px;
-
 }
-
 
 #loginError .errorMessage a {
 	white-space: nowrap;
@@ -130,6 +135,10 @@ body#login {
 			display: block;
 			width: 110px;
 		}
+		
+		#loginFields input {
+			width: 180px;
+		}
 
 		#loginBox .horizontal .formError {
 			padding-left: 110px;
@@ -185,3 +194,5 @@ body#login {
 				#forgotPasswordBox #backendEmail {
 					width: 160px;
 				}
+				
+				

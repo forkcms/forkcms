@@ -88,7 +88,7 @@
 
 						<div class="box" id="articleMeta">
 							<div class="heading">
-								<h3>{$lblMeta|ucfirst}</h3>
+								<h3>{$lblMetaData|ucfirst}</h3>
 							</div>
 							<div class="options">
 								<label for="newCategoryValue">{$lblCategory|ucfirst}</label>

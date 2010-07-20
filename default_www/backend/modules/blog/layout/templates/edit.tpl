@@ -11,7 +11,7 @@
 	<div id="pageUrl">
 		<div class="oneLiner">
 			{option:detailURL}<p><span><a href="{$detailURL}/{$item['url']}">{$detailURL}/<span id="generatedUrl">{$item['url']}</span></a></span></p>{/option:detailURL}
-			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
+			{option:!detailURL}<p>{$errNoModuleLinked}</p>{/option:!detailURL}
 		</div>
 	</div>
 
@@ -98,7 +98,7 @@
 
 						<div class="box" id="articleMeta">
 							<div class="heading">
-								<h3>{$lblMeta|ucfirst}</h3>
+								<h3>{$lblMetaData|ucfirst}</h3>
 							</div>
 							<div class="options">
 								<label for="newCategoryValue">{$lblCategory|ucfirst}</label>
