@@ -8,6 +8,11 @@
 		<h2>{$lblPages|ucfirst}: {$lblAdd}</h2>
 	</div>
 
+	<p id="pagesPageTitle">
+		<label for="title">{$lblTitle|ucfirst}</label>
+		{$txtTitle} {$txtTitleError}
+	</p>
+
 	<div id="tabs" class="tabs">
 		<ul>
 			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
@@ -19,69 +24,35 @@
 		</ul>
 
 		<div id="tabContent">
-
-			<p id="pagesPageTitle">
-				<label for="title">{$lblTitle|ucfirst}</label>
-				{$txtTitle} {$txtTitleError}
-			</p>
-
-			<table border="0" cellpadding="0" cellspacing="0" width="100%">
-				<tbody>
-					<tr>
-						<td>
-							<div id="editContent">
-								{iteration:blocks}
-									<div id="block-{$blocks.index}" class="box contentBlock">
-										<div class="heading">
-											<table border="0" cellpadding="0" cellspacing="0">
-												<tbody>
-													<tr>
-														<td>
-															<div class="oneLiner">
-																<h3><span class="blockName">{$blocks.name}</span></h3>
-																{* don't remove this class *}
-																<p class="linkedExtra">
-																	{* this will store the selected extra *}
-																	{$blocks.hidExtraId}
-																</p>
-															</div>
-														</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<div class="optionsRTE">
-											<fieldset id="blockContentHTML-{$blocks.index}">
-												{$blocks.txtHTML}
-											</fieldset>
-										</div>
-									</div>
-								{/iteration:blocks}
-							</div>
-						</td>
-						<td id="sidebar">
-
-
-							<div class="box" id="template">
-								<div class="heading">
-									{* Do not change the ID! *}
-									<h4>{$lblTemplate|ucfirst}: <span id="templateLabel">&nbsp;</span></h4>
-									<div class="buttonHolderRight">
-										<a href="#tabTemplate" class="tabSelect button icon iconEdit iconOnly">
-											<span>{$lblEdit|ucfirst}</span>
-										</a>
-									</div>
-								</div>
-								<div class="options">
-									<div id="templateVisual" class="templateVisual current">
-										&nbsp;
-									</div>
-								</div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div id="editContent">
+				{iteration:blocks}
+					<div id="block-{$blocks.index}" class="box contentBlock">
+						<div class="heading">
+							<table border="0" cellpadding="0" cellspacing="0">
+								<tbody>
+									<tr>
+										<td>
+											<div class="oneLiner">
+												<h3><span class="blockName">{$blocks.name}</span></h3>
+												{* don't remove this class *}
+												<p class="linkedExtra">
+													{* this will store the selected extra *}
+													{$blocks.hidExtraId}
+												</p>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="optionsRTE">
+							<fieldset id="blockContentHTML-{$blocks.index}">
+								{$blocks.txtHTML}
+							</fieldset>
+						</div>
+					</div>
+				{/iteration:blocks}
+			</div>
 		</div>
 		<div id="tabSEO">
 			<div class="subtleBox">
