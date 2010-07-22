@@ -1,16 +1,26 @@
 $(document).ready(function(){
 	
-	// default statussen nog goedzetten.
-	if($('#languageTypeMultiple').is(':checked')) $('#multipleLanguages').show();
-	if($('#languageTypeSingle').is(':checked')) $('#singleLanguages').show();
+	/*
+	 * Step 1 - requirements
+	 */ 
+	$('a.toggleInformation').bind('click', function()
+	{
+		$('#requirementsInformation').toggle('slow');
+	});
+	
+	/*
+	 * Step 3 - general settings (modules, languages, ...)
+	 */
+	if($('#languageTypeMultiple').is(':checked')) $('#languages').show();
+	if($('#languageTypeSingle').is(':checked')) $('#language').show();
 	
 	// multiple languages
 	$('#languageTypeMultiple').bind('click', function()
 	{
 		if($('#languageTypeMultiple').is(':checked'))
 		{
-			$('#multipleLanguages').show();
-			$('#singleLanguages').hide();
+			$('#languages').show();
+			$('#language').hide();
 		}
 	});
 	
@@ -19,8 +29,8 @@ $(document).ready(function(){
 	{
 		if($('#languageTypeSingle').is(':checked'))
 		{
-			$('#multipleLanguages').hide();
-			$('#singleLanguages').show();
+			$('#languages').hide();
+			$('#language').show();
 		}
 	});
 });

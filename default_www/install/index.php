@@ -1,9 +1,12 @@
 <?php
 
-// require the installer class
-require_once 'engine/install.php';
+// start session
+session_start();
 
-// new instance
+// require the installer class
+require_once 'engine/installer.php';
+
+// run instance
 new Installer();
 
 ?>

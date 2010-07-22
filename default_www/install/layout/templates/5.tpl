@@ -19,41 +19,19 @@
 			<td>
 				<div id="installerBox" >
 					<div id="installerBoxTop">
-						<h2>Database-configuration</h2>
+						<h2>Installation complete</h2>
 					</div>
 
-					{form:step2}
-						{option:formError}<div style="color: red;">{$formError}</div>{/option:formError}
-						<div>
-							<div class="horizontal">
-								<h3>Database details</h3>
-								<p>Make sure this database already exists.</p>
-								<p>
-									<label for="hostname">Hostname<abbr title="Required">*</abbr></label>
-									{$txtHostname} {$txtHostnameError}
-								</p>
-								<p>
-									<label for="database">Database<abbr title="Required">*</abbr></label>
-									{$txtDatabase} {$txtDatabaseError}
-								</p>
-								<p>
-									<label for="username">Username<abbr title="Required">*</abbr></label>
-									{$txtUsername} {$txtUsernameError}
-								</p>
-								<p>
-									<label for="password">Password<abbr title="Required">*</abbr></label>
-									{$txtPassword} {$txtPasswordError}
-								</p>
-							</div>
-
-							<div>
-								<p class="spacing">
-									<a href="index.php?step=1">Previous</a>
-									<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
-								</p>
-							</div>
+					<div>
+						<div class="horizontal">
+							<h3>Installation complete</h3>
+							<p>
+								The installation has been completed. You can now <a href="../private/">login</a> using these credentials:<br />
+								E-mail: {$email}<br />
+								Password: {$password}
+							</p>
 						</div>
-					{/form:step2}
+					</div>
 					<ul id="installerNav">
 						<li><a href="http://userguide.fork-cms.be">Userguide</a></li>
 						<li><a href="http://docs.fork-cms.be">Developer</a></li>

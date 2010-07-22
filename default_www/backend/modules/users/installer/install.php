@@ -54,15 +54,15 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
 
 		// insert locale (en)
-		$this->insertLocale('nl', 'backend', 'users', 'lbl', 'Add', 'add user');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Added', 'The user "%1$s" was added.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the user "%1$s"?');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Deleted', 'The user "%1$s" was deleted.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Edited', 'The settings for "%1$s" were saved.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'EditUser', 'edit user "%1$s"');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passowrds consist of a combination of capitals, small letters, digits and special characters.');
-		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
+		$this->insertLocale('en', 'backend', 'users', 'lbl', 'Add', 'add user');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'Added', 'The user "%1$s" was added.');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the user "%1$s"?');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'Deleted', 'The user "%1$s" was deleted.');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'Edited', 'The settings for "%1$s" were saved.');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'EditUser', 'edit user "%1$s"');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passowrds consist of a combination of capitals, small letters, digits and special characters.');
+		$this->insertLocale('en', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
 
 		// add default user
 		$this->addUser();
@@ -102,13 +102,10 @@ class UsersInstall extends ModuleInstaller
 			$settings['password_key'] = serialize(uniqid());
 			$settings['avatar'] = serialize('god.jpg');
 
-			// @later davy - dit moet uit getVariable komen
-			$emailBlub = $this->getSetting('core', 'mailer_from');
-
 			// build user
 			$user = array();
 			$user['group_id'] = $this->getSetting('users', 'default_group');
-			$user['email'] = $emailBlub['email'];
+			$user['email'] = $this->getVariable('email');
 			$user['password'] = sha1(md5(unserialize($settings['password_key'])) . md5($this->getVariable('password')));
 			$user['active'] = 'Y';
 			$user['deleted'] = 'N';

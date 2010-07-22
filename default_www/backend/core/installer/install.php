@@ -392,6 +392,8 @@ class CoreInstall extends ModuleInstaller
 	 */
 	protected function execute()
 	{
+		// @todo davy - smtp moeten we niet langer meegeven, default mail gebruiken.
+
 		// validate variables
 		if($this->getVariable('default_language') === null) throw new SpoonException('Not all required variables were provided.');
 		if($this->getVariable('site_domain') === null) throw new SpoonException('Not all required variables were provided.');

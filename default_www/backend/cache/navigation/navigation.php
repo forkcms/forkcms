@@ -15,13 +15,13 @@ $navigation['dashboard'] = array('url' => 'dashboard/index', 'label' => 'Dashboa
 $navigation['pages'] = array('url' => 'pages/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Pages');
 
 $navigation['modules'] = array('url' => null, 'label' => 'Modules');
+$navigation['modules']['children']['content_blocks'] = array('url' => 'content_blocks/index', 'label' => 'ContentBlocks');
+$navigation['modules']['children']['tags'] = array('url' => 'tags/index', 'label' => 'Tags');
+$navigation['modules']['children']['locale'] = array('url' => 'locale/index', 'label' => 'Translations');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Articles');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/categories', 'selected_for_actions' => array('add_category', 'edit_category'), 'label' => 'Categories');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/comments', 'label' => 'Comments');
-$navigation['modules']['children']['content_blocks'] = array('url' => 'content_blocks/index', 'label' => 'ContentBlocks');
-$navigation['modules']['children']['tags'] = array('url' => 'tags/index', 'label' => 'Tags');
-$navigation['modules']['children']['locale'] = array('url' => 'locale/index', 'label' => 'Translations');
 $navigation['modules']['children']['search'] = array('url' => null, 'label' => 'Search');
 $navigation['modules']['children']['search']['children'][] = array('url' => 'search/statistics', 'label' => 'Statistics');
 $navigation['modules']['children']['search']['children'][] = array('url' => 'search/synonyms', 'selected_for_actions' => array('add_synonym', 'edit_synonym'), 'label' => 'Synonyms');

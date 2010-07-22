@@ -354,23 +354,13 @@ class Init
 	 */
 	private function requireGlobals()
 	{
-		switch($this->type)
-		{
-			case 'backend_direct':
-			case 'backend_ajax':
-			case 'backend_cronjob':
-			case 'backend_js':
-				require_once '../../library/globals.php';
-				require_once '../../library/globals_backend.php';
-				require_once '../../library/globals_frontend.php';
-			break;
+		// fetch config
+		require_once 'config.php';
 
-			// default
-			default:
-				require_once '../library/globals.php';
-				require_once '../library/globals_backend.php';
-				require_once '../library/globals_frontend.php';
-		}
+		// load the globals
+		require_once INIT_PATH_LIBRARY .'/globals.php';
+		require_once INIT_PATH_LIBRARY .'/globals_backend.php';
+		require_once INIT_PATH_LIBRARY .'/globals_frontend.php';
 	}
 
 
