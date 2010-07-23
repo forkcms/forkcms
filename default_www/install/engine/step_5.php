@@ -132,7 +132,7 @@ class InstallerStep5 extends InstallerStep
 		$variables['<database-password>'] = addslashes(SpoonSession::get('db_password'));
 		$variables['<site-domain>'] = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'forkng.local';
 		$variables['<site-default-title>'] = 'Fork CMS';
-		$variables['\'<site-multilanguage>\''] = SpoonSession::get('multiple_languages');
+		$variables['\'<site-multilanguage>\''] = SpoonSession::get('multiple_languages') ? 'true' : 'false';
 		$variables['<path-www>'] = PATH_WWW;
 		$variables['<path-library>'] = PATH_LIBRARY;
 		$variables['<site-default-language>'] = SpoonSession::get('default_language');

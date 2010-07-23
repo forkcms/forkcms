@@ -69,18 +69,6 @@ class InstallerStep
 
 
 	/**
-	 * Fetch a module setting
-	 *
-	 * @return	mixed
-	 * @param	string $module
-	 * @param	string $name
-	 */
-	private function getSetting($module, $name)
-	{
-	}
-
-
-	/**
 	 * Loads spoon library
 	 *
 	 * @return	void
@@ -100,19 +88,6 @@ class InstallerStep
 	protected function parseForm()
 	{
 		if($this->step > 1) $this->frm->parse($this->tpl);
-	}
-
-
-	/**
-	 * Stores a module setting
-	 *
-	 * @return	void
-	 * @param	string $module
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 */
-	private function setSetting($module, $name, $value = null)
-	{
 	}
 }
 

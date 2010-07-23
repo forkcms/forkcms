@@ -129,7 +129,7 @@
 									<p>This file is used to create the global backend configuration file.</p>
 									<h4>{$PATH_LIBRARY}/globals_frontend.example.php <span class="{$fileSystemGlobalsFrontend}">{$fileSystemGlobalsFrontendStatus}</span></h4>
 									<p>This file is used to create the global frontend configuration file.</p>
-									<h4>{$PATH_LIBRARY} <span class="{$filesystemPathLibrary}">{$filesystemPathLibrarySTatus}</span></h4>
+									<h4>{$PATH_LIBRARY} <span class="{$filesystemPathLibrary}">{$filesystemPathLibraryStatus}</span></h4>
 									<p>This directory is used to store your configuration files. The installer tries to find this directory automatically.</p>
 								</div>
 							</div>

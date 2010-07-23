@@ -66,8 +66,11 @@ class InstallerStep1 extends InstallerStep
 	 */
 	public static function checkRequirements(array &$variables = null, &$errors = false)
 	{
+		// define step
+		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5'))) ? (int) $_GET['step'] : 1;
+
 		// define constants
-		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants();
+		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants($step);
 
 		// init variables
 		$variables['error'] = '';
@@ -381,13 +384,23 @@ class InstallerStep1 extends InstallerStep
 	 *
 	 * @return	void
 	 */
-	private static function defineConstants()
+	private static function defineConstants($step)
 	{
-		// init var
-		$pathLibrary = (isset($_SESSION['path_library'])) ? $_SESSION['path_library'] : '';
+		// init library path
+		$pathLibrary = '';
+
+		// define step
+		if($step != 1) $pathLibrary = (isset($_SESSION['path_library'])) ? $_SESSION['path_library'] : '';
 
 		// guess the path to the library
-		if($pathLibrary == '') self::guessLibraryPath(realpath($_SERVER['DOCUMENT_ROOT'] .'/..'), $pathLibrary);
+		if($pathLibrary == '')
+		{
+			// guess the path
+			self::guessLibraryPath(realpath($_SERVER['DOCUMENT_ROOT'] .'/..'), $pathLibrary);
+
+			// add it to the session
+			$_SESSION['path_library'] = $pathLibrary;
+		}
 
 		// define constants
 		if(!defined('PATH_WWW')) define('PATH_WWW', realpath(str_replace('/index.php', '/..', realpath($_SERVER['SCRIPT_FILENAME']))));
