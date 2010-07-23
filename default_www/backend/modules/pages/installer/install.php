@@ -124,7 +124,7 @@ class PagesInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// check if the homepage doesn't exists
+			// check if the homepage doesn't exist
 			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(1, $language)) == 0)
 			{
 				// insert meta
@@ -162,7 +162,7 @@ class PagesInstall extends ModuleInstaller
 				}
 			}
 
-			// check if the sitemap page doesn't exists
+			// check if the sitemap page doesn't exist
 			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(2, $language)) == 0)
 			{
 				// insert meta
@@ -203,7 +203,7 @@ class PagesInstall extends ModuleInstaller
 				}
 			}
 
-			// check if the disclaimerpage doesn't exists
+		// check if the disclaimerpage doesn't exist
 			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(3, $language)) == 0)
 			{
 				// insert meta
@@ -219,6 +219,44 @@ class PagesInstall extends ModuleInstaller
 																	'meta_id' => $metaID, 'language' => $language,
 																	'title' => 'disclaimer',
 																	'navigation_title' => 'disclaimer', 'navigation_title_overwrite' => 'N',
+																	'hidden' => 'N', 'status' => 'active',
+																	'publish_on' => gmdate('Y-m-d H:i:s'), 'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s'),
+																	'data' => null,
+																	'allow_move' => 'N', 'allow_children' => 'Y', 'allow_edit' => 'Y', 'allow_delete' => 'N',
+																	'no_follow' => 'Y',
+																	'sequence' => 2,
+																	'has_extra' => 'N', 'extra_ids' => null
+																));
+
+				// get number of blocks to insert
+				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
+
+				// insert blocks
+				for($i = 1; $i <= $numBlocks; $i++)
+				{
+					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
+															'extra_id' => null, 'html' => '',
+															'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s')
+															));
+				}
+			}
+
+			// check if the about page doesn't exist
+			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(4, $language)) == 0)
+			{
+				// insert meta
+				$metaID = $this->getDB()->insert('meta', array('keywords' => 'about', 'keywords_overwrite' => 'N',
+																'description' => 'about', 'description_overwrite' => 'N',
+																'title' => 'about', 'title_overwrite' => 'N',
+																'url' => 'about', 'url_overwrite' => 'N',
+																'custom' => null
+															));
+
+				// insert about
+				$revisionID = $this->getDB()->insert('pages', array('id' => 4, 'user_id' => $this->getDefaultUserID(), 'parent_id' => 0, 'template_id' => 2, 'type' => 'meta',
+																	'meta_id' => $metaID, 'language' => $language,
+																	'title' => 'about',
+																	'navigation_title' => 'about', 'navigation_title_overwrite' => 'N',
 																	'hidden' => 'N', 'status' => 'active',
 																	'publish_on' => gmdate('Y-m-d H:i:s'), 'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s'),
 																	'data' => null,
