@@ -19,12 +19,6 @@
 			<td>
 				<div id="installerBox" >
 					<div id="installerBoxTop">
-						<ul>
-							<li>Requirements</li>
-							<li>Database</li>
-							<li>Settings</li>
-							<li>Login</li>
-						</ul>
 						<h2>Requirements</h2>
 					</div>
 
