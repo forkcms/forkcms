@@ -577,7 +577,7 @@ jsBackend.forms = {
 	
 	// set the focus on the first field
 	focusFirstField: function() {
-		$('form input:visible:first').focus();
+		$('form input:visible:not(.noFocus):first').focus();
 	},
 	
 	submitWithLinks: function() {
