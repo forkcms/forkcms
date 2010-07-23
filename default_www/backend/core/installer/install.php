@@ -198,7 +198,12 @@ class ModuleInstaller
 	 */
 	protected function insertExtra(array $item)
 	{
-		return (int) $this->getDB()->insert('pages_extras', $item);
+		// doesn't already exist
+		if($this->getDB()->getNumRows('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?;', array($item['module'], $item['type'], $item['label'])) == 0)
+		{
+			// insert extra and return id
+			return (int) $this->getDB()->insert('pages_extras', $item);
+		}
 	}
 
 
