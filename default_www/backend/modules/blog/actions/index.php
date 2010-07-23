@@ -69,7 +69,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	private function loadDatagridAllPosts()
 	{
 		// create datagrid
-		$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE, array('active'));
+		$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE, array('active', BL::getWorkingLanguage()));
 
 		// set headers
 		$this->dgPosts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')), 'publish_on' => ucfirst(BL::getLabel('PublishedOn'))));
@@ -98,7 +98,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	private function loadDatagridDrafts()
 	{
 		// create datagrid
-		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId()));
+		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
 
 		// set headers
 		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author'))));
@@ -130,7 +130,7 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	private function loadDatagridRecentPosts()
 	{
 		// create datagrid
-		$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active'));
+		$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active', BL::getWorkingLanguage()));
 
 		// set headers
 		$this->dgRecent->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author'))));

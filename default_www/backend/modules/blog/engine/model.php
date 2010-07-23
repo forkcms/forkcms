@@ -15,7 +15,7 @@ class BackendBlogModel
 {
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 								FROM blog_posts AS i
-								WHERE i.status = ?';
+								WHERE i.status = ? AND i.language = ?';
 	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
 											FROM blog_categories AS i
 											WHERE i.language = ?';
@@ -28,19 +28,19 @@ class BackendBlogModel
 											GROUP BY i.id';
 	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
 										FROM blog_posts AS i
-										WHERE i.status = ? AND i.user_id = ?';
-	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT i.id, i.user_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
+										WHERE i.status = ? AND i.user_id = ? AND i.language = ?';
+	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
 										FROM blog_posts AS i
-										WHERE i.status = ?
+										WHERE i.status = ? AND i.language = ?
 										ORDER BY i.edited_on DESC
 										LIMIT 4';
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 											FROM blog_posts AS i
-											WHERE i.status = ? AND i.id = ?
+											WHERE i.status = ? AND i.id = ? AND i.language = ?
 											ORDER BY i.edited_on DESC';
 	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 													FROM blog_posts AS i
-													WHERE i.status = ? AND i.id = ? AND i.user_id = ?
+													WHERE i.status = ? AND i.id = ? AND i.user_id = ? AND i.language = ?
 													ORDER BY i.edited_on DESC';
 
 

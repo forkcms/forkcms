@@ -117,7 +117,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	private function loadDrafts()
 	{
 		// create datagrid
-		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS, array('draft', $this->record['id'], BackendAuthentication::getUser()->getUserId()));
+		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS, array('draft', $this->record['id'], BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
 
 		// hide columns
 		$this->dgDrafts->setColumnsHidden(array('id', 'revision_id'));
@@ -175,7 +175,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	private function loadRevisions()
 	{
 		// create datagrid
-		$this->dgRevisions = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_REVISIONS, array('archived', $this->record['id']));
+		$this->dgRevisions = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_REVISIONS, array('archived', $this->record['id'], BL::getWorkingLanguage()));
 
 		// hide columns
 		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
