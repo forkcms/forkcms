@@ -449,12 +449,12 @@ class CoreInstall extends ModuleInstaller
 	private function setSettings()
 	{
 		// languages settings
-		$this->setSetting('core', 'languages', $this->getLanguages());
-		$this->setSetting('core', 'active_languages', $this->getLanguages());
-		$this->setSetting('core', 'redirect_languages', $this->getLanguages());
-		$this->setSetting('core', 'default_language', $this->getVariable('default_language'));
-		$this->setSetting('core', 'interface_languages', array('nl', 'en'));
-		$this->setSetting('core', 'default_interface_language', 'en');
+		$this->setSetting('core', 'languages', $this->getLanguages(), true);
+		$this->setSetting('core', 'active_languages', $this->getLanguages(), true);
+		$this->setSetting('core', 'redirect_languages', $this->getLanguages(), true);
+		$this->setSetting('core', 'default_language', $this->getVariable('default_language'), true);
+		$this->setSetting('core', 'interface_languages', array('nl', 'en'), true);
+		$this->setSetting('core', 'default_interface_language', 'en', true);
 
 		// other settings
 		$this->setSetting('core', 'theme');
