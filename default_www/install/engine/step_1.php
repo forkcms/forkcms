@@ -395,6 +395,8 @@ class InstallerStep1 extends InstallerStep
 		// guess the path to the library
 		if($pathLibrary == '')
 		{
+			var_dump($_SERVER['DOCUMENT_ROOT'] .'/..');
+
 			// guess the path
 			self::guessLibraryPath(realpath($_SERVER['DOCUMENT_ROOT'] .'/..'), $pathLibrary);
 
@@ -434,7 +436,7 @@ class InstallerStep1 extends InstallerStep
 			}
 
 			// directory
-			elseif(is_dir($filename))
+			elseif(is_dir($filename) && substr($filename, -4) != '.svn')
 			{
 				// new location
 				self::guessLibraryPath($filename, $library);
