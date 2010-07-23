@@ -395,10 +395,8 @@ class InstallerStep1 extends InstallerStep
 		// guess the path to the library
 		if($pathLibrary == '')
 		{
-			var_dump($_SERVER['DOCUMENT_ROOT'] .'/..');
-
 			// guess the path
-			self::guessLibraryPath(realpath($_SERVER['DOCUMENT_ROOT'] .'/..'), $pathLibrary);
+			self::guessLibraryPath(realpath(str_replace('/install/index.php', '', $_SERVER['SCRIPT_FILENAME'])) .'/..', $pathLibrary);
 
 			// add it to the session
 			$_SESSION['path_library'] = $pathLibrary;
