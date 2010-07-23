@@ -183,6 +183,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Edit', 'wijzigen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EditedOn', 'bewerkt op');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Editor', 'editor');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EditProfile', 'bewerk profiel');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EditTemplate', 'template wijzigen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Email', 'e-mail');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EnableModeration', 'moderatie inschakelen');
@@ -493,6 +494,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Edit', 'edit');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EditedOn', 'edited on');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Editor', 'editor');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EditProfile', 'edit profile');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EditTemplate', 'edit template');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Email', 'e-mail');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EnableModeration', 'enable moderation');

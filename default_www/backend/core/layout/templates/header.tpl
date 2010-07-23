@@ -48,7 +48,7 @@
 							<span class="arrow">&#x25BC;</span>
 						</a>
 						<ul class="hidden" id="ddAccount">
-							<li><a href="{$authenticatedUserEditUrl}">Edit profile</a></li>
+							<li><a href="{$authenticatedUserEditUrl}">{$lblEditProfile|ucfirst}</a></li>
 							<li><a target="_blank" href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
 							<li><a target="_blank" href="https://github.com/forkcms/forkcms/wikis">{$lblDeveloper|ucfirst}</a></li>
 							<li><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a></li>
