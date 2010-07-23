@@ -17,7 +17,6 @@ $navigation['pages'] = array('url' => 'pages/index', 'selected_for_actions' => a
 $navigation['modules'] = array('url' => null, 'label' => 'Modules');
 $navigation['modules']['children']['content_blocks'] = array('url' => 'content_blocks/index', 'label' => 'ContentBlocks');
 $navigation['modules']['children']['tags'] = array('url' => 'tags/index', 'label' => 'Tags');
-$navigation['modules']['children']['locale'] = array('url' => 'locale/index', 'label' => 'Translations');
 $navigation['modules']['children']['blog'] = array('url' => null, 'label' => 'Blog');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/index', 'selected_for_actions' => array('add', 'edit'), 'label' => 'Articles');
 $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/categories', 'selected_for_actions' => array('add_category', 'edit_category'), 'label' => 'Categories');
@@ -34,5 +33,6 @@ $navigation['settings']['children']['modules']['children'][] = array('url' => 'b
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'search/settings', 'label' => 'Search');
 $navigation['settings']['children']['users'] = array('url' => 'users/index', 'label' => 'Users');
 $navigation['settings']['children']['templates'] = array('url' => 'pages/templates', 'label' => 'Templates', 'selected_for_actions' => array('add_template', 'edit_template'));
+$navigation['settings']['children']['locale'] = array('url' => 'locale/index', 'label' => 'Translations', 'selected_for_actions' => array('add', 'edit'));
 
 ?>
