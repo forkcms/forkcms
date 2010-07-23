@@ -1145,17 +1145,16 @@ class BackendPagesModel
 		$html .= '</div>'."\n";
 
 		// only show meta if needed
-		if(BackendModel::getSetting('pages', 'has_meta_navigation', false))
+		if(BackendModel::getSetting('pages', 'meta_navigation', false))
 		{
+			// meta pages
+			$html .= '<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
+			$html .= '<div class="clearfix">'."\n";
+			$html .= '	<ul>'."\n";
+
 			// are there any meta pages
 			if(isset($navigation['meta'][0]) && !empty($navigation['meta'][0]))
 			{
-				// meta pages
-				$html .= '<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
-
-				$html .= '<div class="clearfix">'."\n";
-				$html .= '	<ul>'."\n";
-
 				// loop the items
 				foreach($navigation['meta'][0] as $page)
 				{
@@ -1171,11 +1170,11 @@ class BackendPagesModel
 					// end
 					$html .= '		</li>'."\n";
 				}
-
-				// end
-				$html .= '	</ul>'."\n";
-				$html .= '</div>'."\n";
 			}
+
+			// end
+			$html .= '	</ul>'."\n";
+			$html .= '</div>'."\n";
 		}
 
 		// footer pages
