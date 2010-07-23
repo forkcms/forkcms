@@ -355,7 +355,7 @@ class Init
 	private function requireGlobals()
 	{
 		// fetch config
-		require_once 'config.php';
+		require_once dirname(__FILE__) .'/config.php';
 
 		// load the globals
 		require_once INIT_PATH_LIBRARY .'/globals.php';
