@@ -104,7 +104,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 	private function loadRevisions()
 	{
 		// create datagrid
-		$this->dgRevisions = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id']));
+		$this->dgRevisions = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE_REVISIONS, array('archived', $this->record['id'], BL::getWorkingLanguage()));
 
 		// hide columns
 		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));

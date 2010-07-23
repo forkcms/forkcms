@@ -16,13 +16,13 @@ class BackendContentBlocksModel
 	// overview of the items
 	const QRY_BROWSE = 'SELECT i.id, i.title
 						FROM content_blocks AS i
-						WHERE i.status = ?;';
+						WHERE i.status = ? AND i.language = ?;';
 
 
 	// overview of the revisions for an item
 	const QRY_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 									FROM content_blocks AS i
-									WHERE i.status = ? AND i.id = ?
+									WHERE i.status = ? AND i.id = ? AND i.language = ?
 									ORDER BY i.edited_on DESC;';
 
 

@@ -42,7 +42,7 @@ class BackendContentBlocksIndex extends BackendBaseActionIndex
 	private function loadDatagrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE, array('active'));
+		$this->datagrid = new BackendDataGridDB(BackendContentBlocksModel::QRY_BROWSE, array('active', BL::getWorkingLanguage()));
 
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('title'));
