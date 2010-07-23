@@ -54,17 +54,17 @@
 						{form:forgotPassword}
 							<div class="oneLiner">
 								<p><label for="backendEmail">{$lblEmail|ucfirst}</label></p>
-								<p>{$txtBackendEmail}</p>
+								<p>{$txtBackendEmailForgot}</p>
 								<p>
 									<input id="send" type="submit" name="send" value="{$lblSend|ucfirst}" />
 								</p>
 							</div>
 
-							{option:txtBackendEmailError}
+							{option:txtBackendEmailForgotError}
 								<div class="errorMessage singleMessage">
-									<p>{$txtBackendEmailError}</p>
+									<p>{$txtBackendEmailForgotError}</p>
 								</div>
-							{/option:txtBackendEmailError}
+							{/option:txtBackendEmailForgotError}
 
 							{option:isForgotPasswordSuccess}
 								<div class="successMessage singleMessage">
