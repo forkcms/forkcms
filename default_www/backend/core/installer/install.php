@@ -68,13 +68,16 @@ class ModuleInstaller
 	{
 		// redefine
 		$name = (string) $name;
-		$description = (string) $description;
 
-		// insert or update
-		$this->getDB()->execute('INSERT INTO modules(name, description, active)
-									VALUES(:name, :description, :active)
-									ON DUPLICATE KEY UPDATE description = :description, active = :active',
-									array('name' => $name, 'description' => (($description) ? $description : null), 'active' => 'Y'));
+		// module already exists
+		if($this->getDB()->getNumRows('SELECT module FROM modules WHERE name = ?;', $name) != 0)
+		{
+			// activate and update description
+			$this->getDB()->update('modules', array('description' => $description, 'active' => 'Y'), 'name = ?', $name);
+		}
+
+		// insert module
+		else $this->getDB()->insert('modules', array('name' => $name, 'description' => $description, 'active' => 'Y'));
 	}
 
 
