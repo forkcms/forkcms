@@ -15,7 +15,7 @@
  */
 class BackendPagesModel
 {
-	const QRY_BROWSE_RECENT = 'SELECT i.id, i.user_id, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.title
+	const QRY_BROWSE_RECENT = 'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 								FROM pages AS i
 								WHERE i.status = ? AND i.language = ?
 								ORDER BY i.edited_on DESC
