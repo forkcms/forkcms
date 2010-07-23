@@ -105,7 +105,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NameIsRequired', 'Gelieve een naam in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NicknameIsRequired', 'Gelieve een publicatienaam in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoCommentsSelected', 'Er waren geen reacties geselecteerd.');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoModuleLinked', 'Er is nog geen module gekoppeld.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoModuleLinked', 'Kan de URL niet genereren. Zorg dat deze module aan een pagina hangt.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NonExisting', 'Dit item bestaat niet.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoSelection', 'Er waren geen items geselecteerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'PasswordIsRequired', 'Gelieve een wachtwoord in te geven.');
@@ -220,6 +220,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LongDateFormat', 'lange datumformaat');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MainContent', 'hoofdinhoud');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Meta', 'meta');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MetaData', 'metadata');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MetaInformation', 'meta-informatie');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MetaNavigation', 'metanavigatie');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Moderate', 'modereer');
@@ -278,7 +279,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Server', 'server');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Settings', 'instellingen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ShortDateFormat', 'korte datumformaat');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SignIn', 'Log in');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SignIn', 'aanmelden');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SignOut', 'afmelden');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Sitemap', 'sitemap');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SMTP', 'SMTP');
@@ -320,7 +321,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Weak', 'zwak');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mailadres webmaster');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebsiteTitle', 'titel website');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebsiteWorkingLanguage', 'werktaal website');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WorkingLanguage', 'werktaal');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Weight', 'gewicht');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichModule', 'welke module');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichWidget', 'welke widget');
@@ -414,7 +415,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NameIsRequired', 'Please provide a name.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NicknameIsRequired', 'Please provide a publication name.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NoCommentsSelected', 'No comments were selected.');
-		$this->insertLocale('en', 'backend', 'core', 'err', 'NoModuleLinked', 'No module linked yet.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'NoModuleLinked', 'Cannot generate URL. Create a page that has this module attached to it.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NonExisting', 'This item doesn\'t exist.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NoSelection', 'No items were selected.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'PasswordIsRequired', 'Please provide a password.');
@@ -529,6 +530,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LongDateFormat', 'long date format');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MainContent', 'main content');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Meta', 'meta');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MetaData', 'metadata');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MetaInformation', 'meta information');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MetaNavigation', 'meta navigation');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Moderate', 'moderate');
@@ -629,7 +631,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weak', 'weak');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mail webmaster');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebsiteTitle', 'website title');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebsiteWorkingLanguage', 'website working language');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WorkingLanguage', 'editing language');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weight', 'weight');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichModule', 'which module');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichWidget', 'which widget');
