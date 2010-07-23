@@ -70,7 +70,7 @@ class ModuleInstaller
 		$name = (string) $name;
 
 		// module already exists
-		if($this->getDB()->getNumRows('SELECT module FROM modules WHERE name = ?;', $name) != 0)
+		if($this->getDB()->getNumRows('SELECT name FROM modules WHERE name = ?;', $name) != 0)
 		{
 			// activate and update description
 			$this->getDB()->update('modules', array('description' => $description, 'active' => 'Y'), 'name = ?', $name);
