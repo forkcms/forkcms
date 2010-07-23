@@ -73,16 +73,16 @@
 		</div>
 		<div class="options">
 			<p>
-				<label for="smtpServer">{$lblServer|ucfirst} &amp; {$lblPort}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="smtpServer">{$lblServer|ucfirst} &amp; {$lblPort}</label>
 				{$txtSmtpServer}:{$txtSmtpPort} {$txtSmtpServerError} {$txtSmtpPortError}
 				<span class="helpTxt">{$msgHelpSMTPServer}</span>
 			</p>
 			<p>
-				<label for="smtpUsername">{$lblUsername|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="smtpUsername">{$lblUsername|ucfirst}</label>
 				{$txtSmtpUsername} {$txtSmtpUsernameError}
 			</p>
 			<p>
-				<label for="smtpPassword">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<label for="smtpPassword">{$lblPassword|ucfirst}</label>
 				{$txtSmtpPassword} {$txtSmtpPasswordError}
 			</p>
 		</div>

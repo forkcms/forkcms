@@ -208,12 +208,6 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$this->frm->getField('mailer_reply_to_name')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('mailer_reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
 
-			// SMTP-server
-			$this->frm->getField('smtp_server')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('smtp_port')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('smtp_username')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('smtp_password')->isFilled(BL::getError('FieldIsRequired'));
-
 			// date & time
 			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format_short')->isFilled(BL::getError('FieldIsRequired'));
