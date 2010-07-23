@@ -321,6 +321,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mailadres webmaster');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebsiteTitle', 'titel website');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebsiteWorkingLanguage', 'werktaal website');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Weight', 'gewicht');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichModule', 'welke module');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichWidget', 'welke widget');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Widget', 'widget');
@@ -629,6 +630,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mail webmaster');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebsiteTitle', 'website title');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebsiteWorkingLanguage', 'website working language');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weight', 'weight');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichModule', 'which module');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichWidget', 'which widget');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Widget', 'widget');

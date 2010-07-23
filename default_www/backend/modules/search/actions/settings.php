@@ -58,6 +58,8 @@ class BackendSearchSettings extends BackendBaseActionEdit
 	 */
 	private function loadForm()
 	{
+		// @todo matthias - dit stuk code kan volgens mij een stuk simpeler, moeten we samen eens bekijken. (Davy)
+
 		// init settings form
 		$this->frm = new BackendForm('settings');
 

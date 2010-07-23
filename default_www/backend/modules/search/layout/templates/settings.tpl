@@ -18,19 +18,16 @@
 
 	<div class="box">
 		<div class="heading">
-			<h3>Module weight</h3>
+			<h3>{$lblModuleWeight|ucfirst}</h3>
 		</div>
-		
+
 		<div class="options" id="searchModules">
 
-			{* @todo label *}
-			<p>Define the importance of each module in search results here.</p>
-
+			<p>{$msgHelpWeightGeneral}</p>
 			<div class="datagridHolder">
 				<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
 					<tr>
-						{* @todo label *}
-						<th style="width: 30%;"><span>Include in search results?</span></th>
+						<th style="width: 30%;"><span>{$msgIncludeInSearch}</span></th>
 						<th><span>{$lblModule|ucfirst}</span></th>
 						<th>
 							<span>
@@ -38,19 +35,18 @@
 									<p>{$lblWeight|ucfirst}</p>
 									<abbr class="help">(?)</abbr>
 									<div class="tooltip" style="display: none;">
-										{* @todo label *}
-										<p>The default weight is 1. If you want to give search results from a specific module more importance, increase the weight. E.g. if pages has weight "3" then they are 3 times as likely to show up higher in search results.</p>
+										<p>{$msgHelpWeight}</p>
 									</div>
 								</div>
 							</span>
 						</th>
 					</tr>
 					{iteration:modules}
-					<tr class="{cycle:odd:even}">
-						<td><div class="checkboxHolder">{$modules.chk}</div></td>
-						<td><label for="{$modules.id}">{$modules.label}</label></td>
-						<td>{$modules.txt} {option:modules.txtError}<span class="formError">{$modules.txtError}</span>{/option:modules.txtError}</td>
-					</tr>
+						<tr class="{cycle:odd:even}">
+							<td><div class="checkboxHolder">{$modules.chk}</div></td>
+							<td><label for="{$modules.id}">{$modules.label}</label></td>
+							<td>{$modules.txt} {option:modules.txtError}<span class="formError">{$modules.txtError}</span>{/option:modules.txtError}</td>
+						</tr>
 					{/iteration:modules}
 				</table>
 			</div>
