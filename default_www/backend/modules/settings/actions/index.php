@@ -94,7 +94,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addText('smtp_server', BackendModel::getSetting('core', 'smtp_server', ''));
 		$this->frm->addText('smtp_port', BackendModel::getSetting('core', 'smtp_port', 25));
 		$this->frm->addText('smtp_username', BackendModel::getSetting('core', 'smtp_username', ''));
-		$this->frm->addText('smtp_password', BackendModel::getSetting('core', 'smtp_password', ''));
+		$this->frm->addPassword('smtp_password', BackendModel::getSetting('core', 'smtp_password', ''));
 
 		// theme
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getSetting('core', 'theme', null));
