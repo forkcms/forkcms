@@ -1,9 +1,25 @@
 /*
-	Login specific CSS
+
+    Installer CSS
+    
+    @package      backend
+    @subpackage   installer
+    
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
 */
 
+#installHolder {
+	width: 500px;
+	margin: 20px auto;
+	padding: 20px;
+	border: 1px solid #DDD;
+}
+
 body#installer {
-	background: url(/backend/core/layout/images//fork.png) no-repeat bottom center;
+	background: #FFF;
+	height: auto;
 }
 
 #installer #debugnotify {

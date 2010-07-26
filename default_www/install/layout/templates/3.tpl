@@ -14,71 +14,60 @@
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
-	<table border="0" cellspacing="0" cellpadding="0" id="installHolder">
-		<tr>
-			<td>
-				<div id="installerBox" >
-					<div id="installerBoxTop">
-						<h2>Settings</h2>
+
+	<div id="installHolder">
+		<h2>Settings</h2>
+		{form:step3}
+			{option:formError}<div style="color: red;">{$formError}</div>{/option:formError}
+			<div>
+				<div class="horizontal">
+					<h3>Modules</h3>
+					<p>Make a selection of all the modules you want to install.</p>
+					<p>
+						{iteration:modules}
+							<label for="{$modules.id}">{$modules.chkModules} {$modules.label}</label><br />
+						{/iteration:modules}
+					</p>
+
+					<h3>Languages</h3>
+					<p>
+						Will your site be available in multiple languages or just one? Changing this setting in a later stage, will have an influence on your URLs
+					</p>
+
+					<div>
+						{iteration:languageType}
+							{$languageType.rbtLanguageType} <label for="{$languageType.id}">{$languageType.label}</label><br />
+							{option:languageType.multiple}
+								<p id="languages" class="hidden" style="margin-left: 25px;">
+									{iteration:languages}
+										{$languages.chkLanguages} <label for="{$languages.id}">{$languages.label}</label><br />
+									{/iteration:languages}
+								</p>
+							{/option:languageType.multiple}
+							{option:languageType.single}
+								<p id="language" class="hidden" style="margin-left: 25px;">
+									{$ddmLanguage} {$ddmLanguageError}
+								</p>
+							{/option:languageType.single}
+						{/iteration:languageType}
 					</div>
 
-					{form:step3}
-						{option:formError}<div style="color: red;">{$formError}</div>{/option:formError}
-						<div>
-							<div class="horizontal">
-								<h3>Modules</h3>
-								<p>Make a selection of all the modules you want to install.</p>
-								<p>
-									{iteration:modules}
-										<label for="{$modules.id}">{$modules.chkModules} {$modules.label}</label><br />
-									{/iteration:modules}
-								</p>
+					<p style="margin-top: 20px;">
+						What is the default language, we should use for the website?<br />
+						{$ddmDefaultLanguage} {$ddmDefaultLanguageError}
+					</p>
 
-								<h3>Languages</h3>
-								<p>
-									Will your site be available in multiple languages or just one? Changing this setting in a later stage, will have an influence on your URLs
-								</p>
-
-								<div>
-									{iteration:languageType}
-										{$languageType.rbtLanguageType} <label for="{$languageType.id}">{$languageType.label}</label><br />
-										{option:languageType.multiple}
-											<p id="languages" class="hidden" style="margin-left: 25px;">
-												{iteration:languages}
-													{$languages.chkLanguages} <label for="{$languages.id}">{$languages.label}</label><br />
-												{/iteration:languages}
-											</p>
-										{/option:languageType.multiple}
-										{option:languageType.single}
-											<p id="language" class="hidden" style="margin-left: 25px;">
-												{$ddmLanguage} {$ddmLanguageError}
-											</p>
-										{/option:languageType.single}
-									{/iteration:languageType}
-								</div>
-
-								<p style="margin-top: 20px;">
-									What is the default language, we should use for the website?<br />
-									{$ddmDefaultLanguage} {$ddmDefaultLanguageError}
-								</p>
-
-							</div>
-
-							<div>
-								<p class="spacing">
-									<a href="index.php?step=2">Previous</a>
-									<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
-								</p>
-							</div>
-						</div>
-					{/form:step3}
-					<ul id="installerNav">
-						<li><a href="http://userguide.fork-cms.be">Userguide</a></li>
-						<li><a href="http://docs.fork-cms.be">Developer</a></li>
-					</ul>
 				</div>
-			</td>
-		</tr>
-	</table>
+
+				<div>
+					<p class="spacing">
+						<a href="index.php?step=2">Previous</a>
+						<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
+					</p>
+				</div>
+			</div>
+		{/form:step3}
+	</div>
+
 </body>
 </html>

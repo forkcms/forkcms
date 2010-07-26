@@ -14,31 +14,22 @@
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
-	<table border="0" cellspacing="0" cellpadding="0" id="installHolder">
-		<tr>
-			<td>
-				<div id="installerBox" >
-					<div id="installerBoxTop">
-						<h2>Installation complete</h2>
-					</div>
 
-					<div>
-						<div class="horizontal">
-							<h3>Installation complete</h3>
-							<p>
-								The installation has been completed. You can now <a href="../private/">login</a> using these credentials:<br />
-								E-mail: {$email}<br />
-								Password: {$password}
-							</p>
-						</div>
-					</div>
-					<ul id="installerNav">
-						<li><a href="http://userguide.fork-cms.be">Userguide</a></li>
-						<li><a href="http://docs.fork-cms.be">Developer</a></li>
-					</ul>
-				</div>
-			</td>
-		</tr>
-	</table>
+	<div id="installHolder">
+
+		<h2>Installation complete</h2>
+		<p>The installation has been completed. You can now <a href="../private/">log in</a> using these credentials:</p>
+		<table border="0" cellspacing="0" cellpadding="0" class="infoGrid">
+			<tr>
+				<th>Email</th>
+				<td>{$email}</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>{$password}</td>
+			</tr>
+		</table>
+	</div>
+
 </body>
 </html>

@@ -5,7 +5,7 @@ $(document).ready(function(){
 	 */ 
 	$('a.toggleInformation').bind('click', function()
 	{
-		$('#requirementsInformation').toggle('slow');
+		$('#requirementsInformation').toggle();
 	});
 	
 	/*

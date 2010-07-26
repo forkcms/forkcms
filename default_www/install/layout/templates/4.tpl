@@ -14,44 +14,36 @@
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
-	<table border="0" cellspacing="0" cellpadding="0" id="installHolder">
-		<tr>
-			<td>
-				<div id="installerBox" >
-					<div id="installerBoxTop">
-						<h2>Login</h2>
-					</div>
 
-					{form:step4}
-						<div>
-							<div class="horizontal">
-								<h3>Login credentials</h3>
-								<p>Below you can provide your e-mailaddress and password you wish to use to log in.</p>
-								<p>
-									<label for="email">E-mail <abbr title="Required">*</abbr></label>
-									{$txtEmail} {$txtEmailError}
-								</p>
-								<p>
-									<label for="password">Password <abbr title="Required">*</abbr></label>
-									{$txtPassword} {$txtPasswordError}
-								</p>
-							</div>
+	<div id="installHolder">
 
-							<div>
-								<p class="spacing">
-									<a href="index.php?step=3">Previous</a>
-									<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish" />
-								</p>
-							</div>
-						</div>
-					{/form:step4}
-					<ul id="installerNav">
-						<li><a href="http://userguide.fork-cms.be">Userguide</a></li>
-						<li><a href="http://docs.fork-cms.be">Developer</a></li>
-					</ul>
+		<h2>Login</h2>
+
+		{form:step4}
+			<div>
+				<div class="horizontal">
+					<h3>Login credentials</h3>
+					<p>Below you can provide your e-mailaddress and password you wish to use to log in.</p>
+					<p>
+						<label for="email">E-mail <abbr title="Required">*</abbr></label>
+						{$txtEmail} {$txtEmailError}
+					</p>
+					<p>
+						<label for="password">Password <abbr title="Required">*</abbr></label>
+						{$txtPassword} {$txtPasswordError}
+					</p>
 				</div>
-			</td>
-		</tr>
-	</table>
+
+				<div>
+					<p class="spacing">
+						<a href="index.php?step=3">Previous</a>
+						<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish" />
+					</p>
+				</div>
+			</div>
+		{/form:step4}
+
+	</div>
+
 </body>
 </html>

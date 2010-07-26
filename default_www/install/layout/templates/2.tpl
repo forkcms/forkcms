@@ -14,53 +14,41 @@
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
-	<table border="0" cellspacing="0" cellpadding="0" id="installHolder">
-		<tr>
-			<td>
-				<div id="installerBox" >
-					<div id="installerBoxTop">
-						<h2>Database-configuration</h2>
-					</div>
 
-					{form:step2}
-						{option:formError}<div style="color: red;">{$formError}</div>{/option:formError}
-						<div>
-							<div class="horizontal">
-								<h3>Database details</h3>
-								<p>Make sure this database already exists.</p>
-								<p>
-									<label for="hostname">Hostname<abbr title="Required">*</abbr></label>
-									{$txtHostname} {$txtHostnameError}
-								</p>
-								<p>
-									<label for="database">Database<abbr title="Required">*</abbr></label>
-									{$txtDatabase} {$txtDatabaseError}
-								</p>
-								<p>
-									<label for="username">Username<abbr title="Required">*</abbr></label>
-									{$txtUsername} {$txtUsernameError}
-								</p>
-								<p>
-									<label for="password">Password<abbr title="Required">*</abbr></label>
-									{$txtPassword} {$txtPasswordError}
-								</p>
-							</div>
+	<div id="installHolder">
 
-							<div>
-								<p class="spacing">
-									<a href="index.php?step=1">Previous</a>
-									<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
-								</p>
-							</div>
-						</div>
-					{/form:step2}
-					<ul id="installerNav">
-						<li><a href="http://userguide.fork-cms.be">Userguide</a></li>
-						<li><a href="http://docs.fork-cms.be">Developer</a></li>
-					</ul>
-				</div>
-			</td>
-		</tr>
-	</table>
+		<h2>Database-configuration</h2>
+
+		{form:step2}
+			{option:formError}<div style="color: red;">{$formError}</div>{/option:formError}
+			<div class="horizontal">
+				<h3>Database details</h3>
+				<p>Make sure this database already exists.</p>
+				<p>
+					<label for="hostname">Hostname<abbr title="Required">*</abbr></label>
+					{$txtHostname} {$txtHostnameError}
+				</p>
+				<p>
+					<label for="database">Database<abbr title="Required">*</abbr></label>
+					{$txtDatabase} {$txtDatabaseError}
+				</p>
+				<p>
+					<label for="username">Username<abbr title="Required">*</abbr></label>
+					{$txtUsername} {$txtUsernameError}
+				</p>
+				<p>
+					<label for="password">Password<abbr title="Required">*</abbr></label>
+					{$txtPassword} {$txtPasswordError}
+				</p>
+			</div>
+
+			<p class="spacing">
+				<a href="index.php?step=1">Previous</a>
+				<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
+			</p>
+		{/form:step2}
+
+	</div>
+
 </body>
 </html>
