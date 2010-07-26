@@ -89,7 +89,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = $this->getParameter('language');
+		$this->filter['language'] = ($this->getParameter('language') !== null) ? $this->getParameter('language') : BL::getInterfaceLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
 		$this->filter['type'] = $this->getParameter('type');
