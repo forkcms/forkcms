@@ -153,25 +153,29 @@ class BackendMailer
 												WHERE e.id = ?;',
 												array($id));
 
-		// get settings
-		$SMTPServer = BackendModel::getSetting('core', 'smtp_server');
-		$SMTPPort = BackendModel::getSetting('core', 'smtp_port', 25);
-		$SMTPUsername = BackendModel::getSetting('core', 'smtp_username');
-		$SMTPPassword = BackendModel::getSetting('core', 'smtp_password');
-
-		// require SpoonEmail
-		require_once 'spoon/email/email.php';
+		// mailer type
+		$mailerType = BackendModel::getSetting('core', 'mailer_type', 'mail');
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
 		$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH .'/templates');
 
-		// set authentication if needed
-		if($SMTPUsername !== null && $SMTPPassword !== null)
+		// send via SMTP
+		if($mailerType == 'smtp')
 		{
-			// set server and connect with SMTP
-			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-			$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+			// get settings
+			$SMTPServer = BackendModel::getSetting('core', 'smtp_server');
+			$SMTPPort = BackendModel::getSetting('core', 'smtp_port', 25);
+			$SMTPUsername = BackendModel::getSetting('core', 'smtp_username');
+			$SMTPPassword = BackendModel::getSetting('core', 'smtp_password');
+
+			// set authentication if needed
+			if($SMTPUsername !== null && $SMTPPassword !== null)
+			{
+				// set server and connect with SMTP
+				$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+				$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+			}
 		}
 
 		// set some properties
