@@ -272,6 +272,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setSetting('core', 'site_wide_html', $this->frm->getField('site_wide_html')->getValue());
 
 				// e-mail settings
+				BackendModel::setSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
 				BackendModel::setSetting('core', 'mailer_from', array('name' => $this->frm->getField('mailer_from_name')->getValue(), 'email' => $this->frm->getField('mailer_from_email')->getValue()));
 				BackendModel::setSetting('core', 'mailer_to', array('name' => $this->frm->getField('mailer_to_name')->getValue(), 'email' => $this->frm->getField('mailer_to_email')->getValue()));
 				BackendModel::setSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
