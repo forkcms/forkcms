@@ -64,7 +64,8 @@ class InstallerStep
 
 			// create form
 			$this->frm = new SpoonForm('step'. $step, 'index.php?step='. $step);
-			$this->frm->setParameter('class', 'forkForms');
+			$this->frm->setParameter('class', 'forkForms submitWithLink');
+			$this->frm->setParameter('id', 'installForm');
 		}
 	}
 

@@ -10,31 +10,34 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="layout/css/installer.css" />
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
+
 	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../backend/core/js/backend.js"></script>
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
 
 	<div id="installHolder">
 
-		<h2>Fork CMS installation</h2>
+		<h2>Install Fork CMS</h2>
 
-		<form action="index.php" method="get" id="step1" class="forkForms">
+		<form action="index.php" method="get" id="step1" class="forkForms submitWithLink">
 			<div>
 				<input type="hidden" name="step" value="2" />
 				<div class="horizontal">
 
 					<div class="{$requirementsStatusOK}">
-						<p style="color: green;">
-							Your server meets the minimum requirements to run Fork CMS. <a href="#" class="toggleInformation">More information...</a>
-						</p>
-						<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Start installation" />
+						<p>Hooray! Your server meets the requirements to run Fork CMS.</p>
+						<div class="buttonHolder">
+							<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Start installation" />
+						</div>
 					</div>
 
+
 					<div class="{$requirementsStatusError}">
-						<p style="color: red;">
-							Your server doesn't meet the minimum requirements to run Fork CMS. <a href="#" class="toggleInformation">More information...</a>
-						</p>
+						<div class="formMessage errorMessage">
+							<p>Your server doesn't meet the minimum requirements to run Fork CMS. <a href="#" class="toggleInformation">More information...</a></p>
+						</div>
 					</div>
 
 					<div id="requirementsInformation" class="hidden">

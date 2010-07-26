@@ -10,37 +10,34 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="layout/css/installer.css" />
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
+
 	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="../backend/core/js/backend.js"></script>
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
 
 	<div id="installHolder">
 
-		<h2>Login</h2>
+		<h2>Your login info</h2>
 
 		{form:step4}
-			<div>
-				<div class="horizontal">
-					<h3>Login credentials</h3>
-					<p>Below you can provide your e-mailaddress and password you wish to use to log in.</p>
-					<p>
-						<label for="email">E-mail <abbr title="Required">*</abbr></label>
-						{$txtEmail} {$txtEmailError}
-					</p>
-					<p>
-						<label for="password">Password <abbr title="Required">*</abbr></label>
-						{$txtPassword} {$txtPasswordError}
-					</p>
-				</div>
-
-				<div>
-					<p class="spacing">
-						<a href="index.php?step=3">Previous</a>
-						<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish" />
-					</p>
-				</div>
+			<div class="horizontal">
+				<p>Enter the e-mailaddress and password you'd like to use to log in.</p>
+				<p>
+					<label for="email">E-mail <abbr title="Required field">*</abbr></label>
+					{$txtEmail} {$txtEmailError}
+				</p>
+				<p>
+					<label for="password">Password <abbr title="Required field">*</abbr></label>
+					{$txtPassword} {$txtPasswordError}
+				</p>
 			</div>
+
+			<p class="spacing buttonHolder">
+				<a href="index.php?step=3" class="button">Previous</a>
+				<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish" />
+			</p>
 		{/form:step4}
 
 	</div>
