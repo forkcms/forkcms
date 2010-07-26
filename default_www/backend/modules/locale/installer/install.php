@@ -82,7 +82,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AkismetKey', 'Akismet API-key werd nog niet geconfigureerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AlphaNumericCharactersOnly', 'Enkel alfanumerieke karakters zijn toegestaan.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'BrowserNotSupported', '<p>Je gebruikt een verouderde browser die niet ondersteund wordt door Fork CMS. Gebruik een van de volgende goeie alternatieven:</p><ul><li><a href="http://www.microsoft.com/windows/products/winfamily/ie/default.mspx">Internet Explorer *</a>: update naar de nieuwe versie van Internet Explorer.</li><li><a href="http://www.firefox.com/">Firefox</a>: een zeer goeie browser met veel gratis extensies.</li><li><a href="http://www.opera.com/">Opera:</a> Snel en met vele functionaliteiten.</li></ul>');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'CookiesNotEnabled', 'Om Fork CMS te gebruiken moet cookies geactiveerd zijn in uw browser. Activeer cookies en vernieuw deze pagina.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'CookiesNotEnabled', 'Om Fork CMS te gebruiken moeten cookies geactiveerd zijn in uw browser. Activeer cookies en vernieuw deze pagina.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'DateIsInvalid', 'Ongeldige datum.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'DebugModeIsActive', 'Debug-mode is nog actief.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EmailAlreadyExists', 'Dit e-mailadres is al in gebruik.');
