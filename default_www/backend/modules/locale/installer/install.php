@@ -276,6 +276,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SaveDraft', 'kladversie opslaan');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Scripts', 'scripts');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Send', 'verzenden');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SendingEmails', 'e-mails versturen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SEO', 'SEO');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Server', 'server');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Settings', 'instellingen');
@@ -587,6 +588,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SaveDraft', 'save draft');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Scripts', 'scripts');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Send', 'send');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SendingEmails', 'sending e-mails');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SEO', 'SEO');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Server', 'server');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Settings', 'settings');

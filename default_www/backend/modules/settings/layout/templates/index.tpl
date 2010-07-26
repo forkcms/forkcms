@@ -31,6 +31,13 @@
 			<h3>{$lblEmail|ucfirst}</h3>
 		</div>
 		<div class="options">
+			<h4>{$lblSendingEmails|ucfirst}</h4>
+			<p>{$msgHelpSendingEmails}</p>
+			<p>
+				<label for="emailMethod">{$ddmMailerType} {$ddmMailerTypeError}</label>
+			</p>
+		</div>
+		<div class="options">
 			<h4>{$lblFrom|ucfirst}</h4>
 			<p>{$msgHelpEmailFrom}</p>
 			<p>

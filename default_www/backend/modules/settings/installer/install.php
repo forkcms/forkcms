@@ -45,6 +45,7 @@ class SettingsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpEmailWebmaster', 'Stuur notificaties van het CMS naar dit e-mailadres.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpLanguages', 'Duid aan welke talen toegankelijk zijn voor bezoekers');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpRedirectLanguages', 'Duid aan in welke talen mensen op basis van hun browser mogen terechtkomen.');
+		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpSendingEmails', 'Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken, aangezien e-mails hierdoor minder snel in de spamfilter zullen terechtkomen.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpScripts', 'Plaats hier code die op elke pagina geladen moet worden. (bvb. Google Analytics).');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpThemes', 'Duid aan welk thema je wil gebruiken.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpTimeFormat', 'Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.');
@@ -58,6 +59,7 @@ class SettingsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpEmailWebmaster', 'Send CMS notifications to this e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpLanguages', 'Select the languages that are accessible for visitors.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpRedirectLanguages', 'Select the languages that people may automatically be redirect to by their browser.');
+		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpSendingEmails', 'You can send emails in 2 ways. By using PHP\'s built-in mail method or via SMTP. We advice you to use SMTP, since this ensures that e-mails are less frequently marked as spam.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpScripts', 'Reserved for a piece of code, that needs to be loaded on every page. (eg. Google Analytics)');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpThemes', 'Select the theme you wish to use.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpTimeFormat', 'This format is used to display dates on the website.');

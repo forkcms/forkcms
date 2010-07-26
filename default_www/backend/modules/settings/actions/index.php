@@ -80,6 +80,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
 
 		// email settings
+		$mailerType = BackendModel::getSetting('core', 'mailer_type', 'mail');
+		$this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
 		$mailerFrom = BackendModel::getSetting('core', 'mailer_from');
 		$this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
 		$this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
@@ -212,6 +214,14 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format_short')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format_long')->isFilled(BL::getError('FieldIsRequired'));
+
+			// SMTP type was chosen
+			if($this->frm->getField('mailer_type')->getValue() == 'smtp')
+			{
+				// server & port are required
+				$this->frm->getField('smtp_server')->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('smtp_port')->isFilled(BL::getError('FieldIsRequired'));
+			}
 
 			// akismet key may be filled in
 			if($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled())
