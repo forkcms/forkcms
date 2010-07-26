@@ -186,12 +186,14 @@ a.icon span {
 
 /* Button positioning */
 
-.buttonHolder .button {
+.buttonHolder .button:link,
+.buttonHolder .button:visited {
 	float: left;
 	margin-right: 8px;
 }
 
-.buttonHolderRight .button {
+.buttonHolderRight .button:link,
+.buttonHolderRight .button:visited {
 	float: right;
 	margin-left: 8px;
 }

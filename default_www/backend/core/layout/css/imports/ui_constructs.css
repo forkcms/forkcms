@@ -179,7 +179,7 @@
 		border-bottom: none;
 	}
 
-	.options p:last-child, .options p.lastChild {
+	.box .options p:last-child, .box .options p.lastChild {
 		padding-bottom: 0;
 	}
 
@@ -299,8 +299,7 @@
 
 #templateList li {
 	float: left;
-	margin: 0 12px 24px 0;
-	min-height: 130px;
+	margin: 0 0 6px;
 }
 
 #templateList label {

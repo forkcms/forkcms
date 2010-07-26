@@ -6,6 +6,10 @@
 
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
+		<div class="buttonHolderRight">
+			<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
+			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
+		</div>
 	</div>
 
 	<p id="pagesPageTitle">
@@ -190,9 +194,9 @@
 				Dialog to select the content (editor, module or widget).
 				Do not change the ID!
 			 *}
-			<div id="chooseExtra" title="{$lblChooseContent|ucfirst}" style="display: none;">
+			<div id="chooseExtra" title="{$lblChooseContent|ucfirst}" style="display: none;" class="forkForms">
 				<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
-				<div class="options">
+				<div class="options horizontal">
 					<p>{$msgHelpBlockContent}</p>
 					<p id="extraWarningAlreadyBlock" class="warning">
 						{$msgModuleBlockAlreadyLinked}
@@ -220,10 +224,10 @@
 				Dialog to select another template.
 				Do not change the ID!
 			 *}
-			<div id="chooseTemplate" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
+			<div id="chooseTemplate" class="forkForms" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
 				<ul class="inputList" id="templateList">
 				{iteration:templates}
-					<li style="float: left; width: 155px;">
+					<li>
 						<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
 						<label for="template{$templates.id}">{$templates.label}</label>
 						<div class="templateVisual current">

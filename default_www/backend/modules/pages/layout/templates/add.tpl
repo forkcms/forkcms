@@ -6,6 +6,9 @@
 
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblAdd}</h2>
+		<div class="buttonHolderRight">
+			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
+		</div>
 	</div>
 
 	<p id="pagesPageTitle">

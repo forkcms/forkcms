@@ -44,7 +44,7 @@ jsBackend.pages.extras = {
 		
 		// initialize the modal for choosing an extra
 		if($('#chooseExtra').length > 0) {
-			$('#chooseExtra').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
+			$('#chooseExtra').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, width: 500,
 				buttons: { '{$lblOK|ucfirst}': function() {
 											// change the extra for real
 											jsBackend.pages.extras.changeExtra();
