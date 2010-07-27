@@ -353,7 +353,7 @@
 		.pagination li span {
 			background: none;
 			border-color: transparent;
-			color: #AAA;
+			color: #666;
 		}
 
 		.pagination li.selected span {
