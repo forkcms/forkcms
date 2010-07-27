@@ -323,7 +323,6 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Weak', 'zwak');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mailadres webmaster');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebsiteTitle', 'titel website');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WorkingLanguage', 'werktaal');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Weight', 'gewicht');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichModule', 'welke module');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichWidget', 'welke widget');
@@ -381,6 +380,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoRevisions', 'Er zijn nog geen vorige versies.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoTags', 'Je hebt nog geen tags ingegeven.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoUsage', 'Nog niet gebruikt.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NowEditing', 'je bewerkt nu');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'PasswordResetSuccess', 'Je wachtwoord werd gewijzigd.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'ResetYourPasswordMailContent', 'Reset je wachtwoord door op de link hieronder te klikken. Indien je niet hier niet om gevraagd hebt hoef je geen actie te ondernemen.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'ResetYourPasswordMailSubject', 'Wijzig je wachtwoord');
@@ -635,7 +635,6 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weak', 'weak');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mail webmaster');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebsiteTitle', 'website title');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WorkingLanguage', 'editing language');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weight', 'weight');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichModule', 'which module');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichWidget', 'which widget');
@@ -693,6 +692,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoRevisions', 'There are no previous versions yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoTags', 'You didn\'t use tags yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoUsage', 'Not yet used.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'NowEditing', 'now editing');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'PasswordResetSuccess', 'Your password has been changed.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ResetYourPasswordMailContent', 'Reset your password by clicking the link below. If you didn\'t ask for this, you may just ignore this message.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ResetYourPasswordMailSubject', 'Change your password');

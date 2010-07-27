@@ -20,7 +20,7 @@
 					{/option:debug}
 					{option:workingLanguages}
 						<li>
-							{$lblWorkingLanguage|ucfirst}:
+							{$msgNowEditing}:
 							<select id="workingLanguage">
 								{iteration:workingLanguages}
 									<option{option:workingLanguages.selected} selected="selected"{/option:workingLanguages.selected} value="{$workingLanguages.abbr}">{$workingLanguages.label|ucfirst}</option>
