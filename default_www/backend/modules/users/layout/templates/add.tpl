@@ -15,7 +15,7 @@
 		<div id="tabProfile">
 			<div class="subtleBox">
 				<div class="heading">
-					<h3>{$lblLoginCredentials|ucfirst}</h3>
+					<h3>{$lblLoginDetails|ucfirst}</h3>
 				</div>
 				<div class="options labelWidthLong horizontal">
 					<p>

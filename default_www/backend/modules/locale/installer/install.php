@@ -217,7 +217,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Layout', 'layout');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Loading', 'loading');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Locale', 'locale');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LoginCredentials', 'login gegevens');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LoginDetails', 'login gegevens');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LongDateFormat', 'lange datumformaat');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MainContent', 'hoofdinhoud');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Meta', 'meta');
@@ -529,7 +529,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Layout', 'layout');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Loading', 'loading');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Locale', 'locale');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LoginCredentials', 'login credentials');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LoginDetails', 'login details');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LongDateFormat', 'long date format');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MainContent', 'main content');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Meta', 'meta');
