@@ -109,21 +109,27 @@
 						<h3>Required permissions and/or files</h3>
 						<h4>{$PATH_WWW}/backend/cache/* <span class="{$fileSystemBackendCache}">{$fileSystemBackendCacheStatus}</span></h4>
 						<p>In this location all files created by the backend will be stored.</p>
+						<h4>{$PATH_WWW}/backend/* <span class="{$fileSystemBackend}">{$fileSystemBackendStatus}</span></h4>
+						<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 						<h4>{$PATH_WWW}/frontend/cache/* <span class="{$fileSystemFrontendCache}">{$fileSystemFrontendCacheStatus}</span></h4>
 						<p>In this location all files created by the frontend will be stored.</p>
 						<h4>{$PATH_WWW}/frontend/files/* <span class="{$fileSystemFrontendFiles}">{$fileSystemFrontendFilesStatus}</span></h4>
 						<p>In this location all files uploaded by the user/modules will be stored.</p>
+						<h4>{$PATH_WWW}/frontend/* <span class="{$fileSystemFrontend}">{$fileSystemFrontendStatus}</span></h4>
+						<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 						<h4>{$PATH_LIBRARY} <span class="{$fileSystemLibrary}">{$fileSystemLibraryStatus}</span></h4>
 						<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 						<h4>{$PATH_WWW}/install <span class="{$fileSystemInstaller}">{$fileSystemInstallerStatus}</span></h4>
 						<p>This location must be writable for the installer.</p>
+						<h4>{$PATH_LIBRARY}/config.example.php <span class="{$fileSystemConfig}">{$fileSystemConfigStatus}</span></h4>
+						<p>This file is used to create the application config file.</p>
 						<h4>{$PATH_LIBRARY}/globals.example.php <span class="{$fileSystemGlobals}">{$fileSystemGlobalsStatus}</span></h4>
 						<p>This file is used to create the global configuration file.</p>
 						<h4>{$PATH_LIBRARY}/globals_backend.example.php <span class="{$fileSystemGlobalsBackend}">{$fileSystemGlobalsBackendStatus}</span></h4>
 						<p>This file is used to create the global backend configuration file.</p>
 						<h4>{$PATH_LIBRARY}/globals_frontend.example.php <span class="{$fileSystemGlobalsFrontend}">{$fileSystemGlobalsFrontendStatus}</span></h4>
 						<p>This file is used to create the global frontend configuration file.</p>
-						<h4>{$PATH_LIBRARY} <span class="{$filesystemPathLibrary}">{$filesystemPathLibraryStatus}</span></h4>
+						<h4>{$PATH_LIBRARY} <span class="{$filesystemPathLibrary}">{$fileSystemPathLibraryStatus}</span></h4>
 						<p>This directory is used to store your configuration files. The installer tries to find this directory automatically.</p>
 					</div>
 				</div>
