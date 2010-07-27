@@ -3,8 +3,9 @@ $(document).ready(function(){
 	/*
 	 * Step 1 - requirements
 	 */ 
-	$('a.toggleInformation').bind('click', function()
+	$('a.toggleInformation').bind('click', function(evt)
 	{
+		evt.preventDefault();
 		$('#requirementsInformation').toggle();
 	});
 	
