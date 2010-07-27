@@ -61,6 +61,7 @@ class InstallerStep
 			// create template
 			$this->tpl = new SpoonTemplate();
 			$this->tpl->setForceCompile(true);
+			$this->tpl->setCompileDirectory(dirname(__FILE__) .'/../cache/');
 
 			// create form
 			$this->frm = new SpoonForm('step'. $step, 'index.php?step='. $step);
