@@ -66,7 +66,7 @@
 			{option:revisions}<div class="datagridHolder">{/option:revisions}
 				<div class="tableHeading">
 					<div class="oneLiner">
-						<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
+						<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
 						<abbr class="help">(?)</abbr>
 						<div class="tooltip" style="display: none;">
 							<p>{$msgHelpRevisions}</p>

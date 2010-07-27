@@ -32,7 +32,7 @@
 ----------------------------------*/
 
 /* Overlays */
-.ui-widget-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.ui-widget-overlay { position: fixed; *position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden;}
 
 /*
 * jQuery UI CSS Framework
@@ -96,8 +96,8 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 .ui-corner-all { -moz-border-radius: 4px; -webkit-border-radius: 4px; }
 
 /* Overlays */
-.ui-widget-overlay { background: #666; opacity: .50; filter:Alpha(Opacity=50); }
-.ui-widget-shadow { background: #000; opacity: .20;filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; }
+.ui-widget-overlay { background: #92A5D1; opacity: .50; filter:Alpha(Opacity=50); }
+.ui-widget-shadow { background: #000; opacity: .20; filter:Alpha(Opacity=20); -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; }
 
 /* Accordion
 ----------------------------------*/
@@ -118,7 +118,6 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 	box-shadow: 0 2px 6px #AAA;
 	-webkit-box-shadow: 0 2px 6px #AAA;
 	-moz-box-shadow: #AAA 0 2px 6px;
-	
 }
 .ui-datepicker .ui-datepicker-header { position:relative; padding:.2em 0; }
 .ui-datepicker .ui-datepicker-prev, .ui-datepicker .ui-datepicker-next { position:absolute; top: 2px; width: 1.8em; height: 1.8em; }

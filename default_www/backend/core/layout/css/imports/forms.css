@@ -237,12 +237,14 @@ label {
 */
 
 .oneLiner p,
-.oneLiner .buttonHolder {
+.oneLiner .buttonHolder,
+.oneLiner .oneLinerElement {
 	float: left;
 	margin-right: 4px;
 }
 
-	.oneLiner p {
+	.oneLiner p,
+	.oneLiner .oneLinerElement {
 		padding-bottom: 0;
 		line-height: 22px;
 		/* Same height as button height */

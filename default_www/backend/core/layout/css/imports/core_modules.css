@@ -380,6 +380,14 @@
 	#users.usersAddEdit  .settingsUserInfo .infoGrid {
 		margin: 0 0 0 12px;
 	}
+	
+		#users.usersAddEdit .settingsUserInfo .infoGrid th {
+			white-space: nowrap;
+		}
+		
+		#users.usersAddEdit #email {
+			width: 240px;
+		}
 
 /*
 	Settings

@@ -19,10 +19,14 @@
 	border: none;
 }
 
-	.datagridHolder .tableHeading h3 {
+	.tableHeading h3 {
 		font-size: 13px;
 		float: left;
 		padding: 0 0 4px;
+	}
+	
+	.tableHeading .oneLiner h3 + abbr.help {
+		top: 5px;
 	}
 
 	.datagridHolder .tableHeading .buttonHolderRight {
