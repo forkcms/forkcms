@@ -16,7 +16,6 @@
 			<div id="content">
 				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
 
-
 				{option:!hideContentTitle}<h2 class="pageTitle">{$page['title']}</h2>{/option:!hideContentTitle}
 
 				{* Block 1 *}
