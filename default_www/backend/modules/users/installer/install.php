@@ -61,7 +61,7 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'Edited', 'The settings for "%1$s" were saved.');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'EditUser', 'edit user "%1$s"');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passowrds consist of a combination of capitals, small letters, digits and special characters.');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passwords consist of a combination of capitals, digits, lowercase and special characters.');
 		$this->insertLocale('en', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
 
 		// add default user
