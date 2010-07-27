@@ -1,0 +1,33 @@
+/*
+
+	Conditional comments for PROJECT
+	Browser: Internet Explorer 7
+	
+	Media:      screen, projection
+	Copyright:  Netlash <http://www.netlash.com>
+	author:     Thomas Deceuninck <thomasdeceuninck@netlash.com>
+
+*/
+
+.clearfix,
+#header,
+#navigation,
+#main,
+#content,
+#subnavigation,
+#contentWrapper,
+#mainContent,
+#footerWrapper,
+#footer {
+	zoom: 1; /*height: 1%;*/
+}
+
+/* sticky footer fix */
+#container {
+	display: table;
+	height: 100%;
+}
+
+#subnavigation ul li {
+	width: 156px;
+}
