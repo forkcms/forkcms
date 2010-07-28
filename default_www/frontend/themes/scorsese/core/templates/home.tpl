@@ -1,29 +1,28 @@
-{include:file='{$THEME_URL}/core/templates/head.tpl'}
+{include:file='{$THEME_PATH}/core/templates/head.tpl'}
 
 <body id="home" class="{$LANGUAGE}">
 
 	<div id="container">
+		<div id="top">
+
+			<div id="metaNavigation">
+				{$var|getnavigation:'meta':0:1}
+			</div>
+
+			{include:file='{$THEME_PATH}/core/templates/languages.tpl'}
+
+			<form action="#" method="get">
+				<fieldset>
+					<input type="text" name="q" id="q" class="inputText" value="" />
+					<input type="submit" name="search" value="Search" class="inputSubmit" />
+				</fieldset>
+			</form>
+		</div>
+
 		<div id="header">
 			<div id="logo">
 				<h2><a href="/">{$siteTitle}</a></h2>
 			</div>
-
-			<div id="top">
-
-				<div id="metaNavigation">
-					{$var|getnavigation:'meta':0:1}
-				</div>
-
-				{include:file='{$THEME_URL}/layout/templates/languages.tpl'}
-
-				<form action="#" method="get">
-					<fieldset>
-						<input type="text" name="q" id="q" class="inputText" value="" />
-						<input type="submit" name="search" value="Search" class="inputSubmit" />
-					</fieldset>
-				</form>
-			</div>
-
 			<div id="navigation">
 				<ul>
 					<li><a href="#" title="Home">Home</a></li>
@@ -37,12 +36,14 @@
 
 		<div id="main">
 			<div id="intro">
-				<div class="imageWrapper floatLeft">
-					<img src="{$THEME_URL}/core/images/img-intro.jpg" alt="On Shutter Island set" title="On Shutter Island set" />
-					<span>Taken at the set of Shutter Island. Martin directing</span>
+				<div class="inner">
+					<div class="imageWrapper floatLeft">
+						<img src="{$THEME_URL}/core/images/img-intro.jpg" alt="On Shutter Island set" title="On Shutter Island set" />
+						<span>Taken at the set of Shutter Island. Martin directing</span>
+					</div>
+					<p class="content highLight">Martin C. Scorsese is an American film director, screenwriter, producer, actor, and film historian.</p>
+					<p class="content">Welcome to <strong>scorcese</strong>. Consult <a href="#" title="about">about</a> to learn about Martin Scorsese: his biography, his life, what inspired him to be a filmmaker. See the complete <a href="#" title="filmography">filmography</a> or stay up to date by following the <a href="#" title="blog">blog</a> (there&#180;s an <a href="#" title="RSS feed">RSS feed</a> too!). Lastly if you have any questions, look at our contact form. Have fun.</p>
 				</div>
-				<p class="content highLight">Martin C. Scorsese is an American film director, screenwriter, producer, actor, and film historian.</p>
-				<p class="content">Welcome to <strong>scorcese</strong>. Consult <a href="#" title="about">about</a> to learn about Martin Scorsese: his biography, his life, what inspired him to be a filmmaker. See the complete <a href="#" title="filmography">filmography</a> or stay up to date by following the <a href="#" title="blog">blog</a> (there&#180;s an <a href="#" title="RSS feed">RSS feed</a> too!). Lastly if you have any questions, look at our contact form. Have fun.</p>
 			</div>
 
 			<div id="content">
@@ -83,11 +84,10 @@
 
 			</div>
 		</div>
-
+		
 	</div>
 
-
-	{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+	{include:file='{$THEME_PATH}/core/templates/footer.tpl'}
 
 	<!-- {option:!hideContentTitle}<h2 class="pageTitle">{$page['title']}</h2>{/option:!hideContentTitle} -->
 

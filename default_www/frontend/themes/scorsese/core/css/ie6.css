@@ -10,16 +10,18 @@
 */
 
 .clearfix,
+#top,
 #header,
 #navigation,
 #main,
+#intro,
 #content,
 #subnavigation,
 #contentWrapper,
 #mainContent,
 #footerWrapper,
 #footer {
-	zoom: 1; /*height: 1%;*/
+	zoom: 1;
 }
 
 /* sticky footer fix */

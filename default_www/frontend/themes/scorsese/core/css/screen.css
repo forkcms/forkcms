@@ -26,6 +26,7 @@ a:focus { overflow: hidden; }
 */
 
 .clearfix:after,
+#top:after,
 #header:after,
 #navigation:after,
 #main:after,
@@ -52,11 +53,9 @@ body {
 	font-size: 14px;
 	line-height: 1.5;
 	color: #555;
-	background: #FFF url(../images/bg-body.png) repeat-x 0 0;
 }
 
 #home {
-	background: #FFF url(../images/bg-body-home.png) repeat-x 0 0;
 }
 
 html, body {
@@ -201,6 +200,8 @@ a:active {
 */
 
 #container {
+	width: 890px;
+	margin: 0 auto;
 	position: relative;
 	min-height: 100%; /* sticky footer */
 }
@@ -209,40 +210,39 @@ a:active {
 
 	/* Header */
 	#header {
-		padding-top: 88px;
-		padding-bottom: 29px;
-		width: 890px;
-		margin: 0 auto;
-		position: relative;
 	}
 
 	#top {
-		position: absolute;
-		top: 24px;
-		right: 0;
-		width: 890px;
-		margin: 0 auto;
+		padding: 12px 0;
+		margin: 0 0 24px;
+		border-bottom: 1px solid #CCC;
 	}
 	
 		#metaNavigation {
 			float: left;
 		}
-		
+
 			#metaNavigation li {
 				float: left;
-				border-right: 1px solid #AAA;
-				margin-right: 6px;
-				padding: 2px 6px 2px 0;
-				font-size: 12px;
+				font-size: 11px;
+				border-right: 1px solid #C1C1C1;
+				padding: 3px 9px 3px 0;
+				margin: 0 9px 0 0;
+			}
+			
+			#metaNavigation li a {
+				display: block;
+				float: left;
+				border: none;
 			}
 			
 			#metaNavigation li.selected a {
 				color: #000;
+				border-bottom: none;
 			}
-			
+
 			#metaNavigation li:last-child {
 				border: none;
-				padding-right: 0;
 			}
 
 		#language {
@@ -261,7 +261,6 @@ a:active {
 					font-weight: 700;
 					text-transform: uppercase;
 					padding: 3px 3px 2px 3px;
-					border-bottom: none;
 				}
 
 				/* link states */
@@ -269,6 +268,7 @@ a:active {
 				#language a:visited {
 					color: #0F57B9;
 					background: none;
+					border: none;
 				}
 
 				#language a:hover,
@@ -312,7 +312,7 @@ a:active {
 		height: 100%;
 		display: block;
 		overflow: hidden;
-		border-bottom: none;
+		border: none;
 	}
 
 	/* Navigation */
@@ -368,14 +368,10 @@ a:active {
 
 	#topContent {
 		padding-left: 216px;
-		width: 674px;
-		margin: 0 auto;
 	}
 
 	#content {
 		padding-top: 20px;
-		width: 890px;
-		margin: 0 auto;
 	}
 
 		/* subnav */
@@ -474,13 +470,6 @@ a:active {
 
 				.sideBlock a {
 					font-weight: 700;
-					border-bottom: none;
-				}
-				
-				.sideBlock a:hover,
-				.sideBlock a:active,
-				.sideBlock a:focus {
-					border-bottom: 1px solid #0f57b9;
 				}
 
 				#sideContent .firstChild {
@@ -494,6 +483,7 @@ a:active {
 
 		/* Home */
 		#home #main {
+			padding-top: 24px;
 			padding-bottom: 75px;
 		}
 
@@ -502,7 +492,7 @@ a:active {
 			width: 100%;
 			border-top: 1px solid #000;
 		}
-		
+
 			#intro .inner {
 				width: 890px;
 				margin: 0 auto;
@@ -568,7 +558,7 @@ a:active {
 				font-family: Arial, sans-serif;
 				font-size: 18px;
 				font-weight: 700;
-				border-bottom: none;
+				border: none;
 			}
 
 			.article .date {
@@ -581,7 +571,7 @@ a:active {
 
 			.article .meta {
 				font-size: 12px;
-				color: #999;
+				color: #999999;
 				padding-top: 12px;
 			}
 
@@ -778,6 +768,7 @@ input.inputText {
 	border-radius: 2px;
 }
 
+.inputText:focus,
 input[type="submit"]:hover,
 input[type="submit"]:focus {
 	border-color: #6BA1CB;
@@ -787,11 +778,6 @@ input[type="submit"]:focus {
 	box-shadow: 0 0 3px #6BA1CB;
 	-webkit-box-shadow: 0 0 3px #6BA1CB;
 	-moz-box-shadow: #6BA1CB 0 0 3px;
-}
-
-input:focus,
-textarea:focus {
-
 }
 
 /* General classes */
