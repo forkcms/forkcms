@@ -59,7 +59,7 @@ class SettingsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpEmailWebmaster', 'Send CMS notifications to this e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpLanguages', 'Select the languages that are accessible for visitors.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpRedirectLanguages', 'Select the languages that people may automatically be redirect to by their browser.');
-		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpSendingEmails', 'You can send emails in 2 ways. By using PHP\'s built-in mail method or via SMTP. We advice you to use SMTP, since this ensures that e-mails are less frequently marked as spam.');
+		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpSendingEmails', 'You can send emails in 2 ways. By using PHP\'s built-in mail method or via SMTP. We advice you to use SMTP, since this ensures that e-mails are less frequently marked as spam.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpScripts', 'Reserved for a piece of code, that needs to be loaded on every page. (eg. Google Analytics)');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpThemes', 'Select the theme you wish to use.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpTimeFormat', 'This format is used to display dates on the website.');

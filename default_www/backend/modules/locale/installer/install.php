@@ -588,7 +588,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SaveDraft', 'save draft');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Scripts', 'scripts');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Send', 'send');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SendingEmails', 'sending e-mails');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SendingEmails', 'sending e-mails');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SEO', 'SEO');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Server', 'server');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Settings', 'settings');
