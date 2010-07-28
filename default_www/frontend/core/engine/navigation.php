@@ -481,17 +481,23 @@ class FrontendNavigation extends FrontendBaseObject
 		// get pages
 		$pages = (array) $this->URL->getPages();
 
-		// loop pages
-		while(!empty($pages))
+		// no pages, means we're at the homepage
+		if(empty($pages)) self::$selectedPageIds[] = 1;
+
+		else
 		{
-			// get page id
-			$pageId = self::getPageId((string) implode('/', $pages));
+			// loop pages
+			while(!empty($pages))
+			{
+				// get page id
+				$pageId = self::getPageId((string) implode('/', $pages));
 
-			// add pageId into selected items
-			if($pageId !== false) self::$selectedPageIds[] = $pageId;
+				// add pageId into selected items
+				if($pageId !== false) self::$selectedPageIds[] = $pageId;
 
-			// remove last element
-			array_pop($pages);
+				// remove last element
+				array_pop($pages);
+			}
 		}
 	}
 }

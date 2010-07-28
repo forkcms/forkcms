@@ -66,7 +66,7 @@ class InstallerStep1 extends InstallerStep
 	 * @param	bool $requirement
  	 * @param	array[optional] $variables
 	 */
-	public function checkRequirement($variable, $requirement, array &$variables = null)
+	public static function checkRequirement($variable, $requirement, array &$variables = null)
 	{
 		// requirement satisfied
 		if($requirement)
