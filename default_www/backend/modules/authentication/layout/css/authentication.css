@@ -21,7 +21,7 @@ body#login {
 	right: 0;
 	left: 0;
 	font-size: 11px;
-	font-family: "Menlo", "Courier New", "Courier", Arial, sans-serif;
+	font-family: "Menlo", Monaco, "Courier New", "Courier", monospace;
 	font-style: italic;
 	color: #666;
 }
