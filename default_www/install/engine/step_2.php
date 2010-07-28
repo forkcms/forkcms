@@ -41,6 +41,8 @@ class InstallerStep2 extends InstallerStep
 	 */
 	private function loadForm()
 	{
+		// @todo tijs - goeie defaults kiezen (localhost, db: forkng username: forkng... op basis van de url)
+
 		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : null);
 		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : null);
 		$this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : null);
