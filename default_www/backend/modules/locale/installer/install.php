@@ -673,7 +673,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpEmailFrom', 'E-mails sent from the CMS use these settings.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpEmailTo', 'Notifications from the CMS are sent here.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpFeedburnerURL', 'eg. http://feeds.feedburner.com/your-website');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpForgotPassword', 'Below fill in your e-mail. You will receive an e-mail containing instructions on how to get a new password.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpForgotPassword', 'Below enter your e-mail. You will receive an e-mail containing instructions on how to get a new password.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaCustom', 'Add some extra, custom made metatags.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaDescription', 'Briefly summarize the content. This summary is shown in the results of search engines.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaKeywords', 'Choose a number of wellthought terms that describe the content.');
