@@ -92,13 +92,13 @@ class FrontendNavigation extends FrontendBaseObject
 			if(in_array($page['page_id'], $excludedIds)) continue;
 
 			// if the item is in the selected page it should get an selected class
-			if(in_array($page['page_id'], self::$selectedPageIds)) $HTML .= '	<li class="'. $defaultSelectedClass .'">'."\n";
+			if(in_array($page['page_id'], self::$selectedPageIds)) $HTML .= '<li class="'. $defaultSelectedClass .'">'."\n";
 
 			// just start the html
-			else $HTML .= '	<li>'."\n";
+			else $HTML .= '<li>'."\n";
 
 			// add link
-			$HTML .= '		<a href="'. FrontendNavigation::getURL($page['page_id']) .'" title="'. $page['title'] .'"';
+			$HTML .= '<a href="'. FrontendNavigation::getURL($page['page_id']) .'" title="'. $page['title'] .'"';
 
 			// add nofollow attribute if needed
 			if($page['no_follow']) $HTML .= ' rel="nofollow"';
@@ -136,12 +136,14 @@ class FrontendNavigation extends FrontendBaseObject
 			}
 
 			// because home is a special item the li was already closed, so for all other elements we end the HTML
-			$HTML .= '	</li>'."\n";
+			$HTML .= '</li>'."\n";
 		}
 
-		// end HTML, only when parentId is different from 1, the first level below home should be on the same level.
-//		if($parentId != 1) $HTML .= '</ul>';
+		// end HTML
 		$HTML .= '</ul>';
+
+		// remove invalid nesting
+		$HTML = str_replace("</ul></li>\n</ul>", '</ul>', $HTML);
 
 		// return
 		return $HTML;
