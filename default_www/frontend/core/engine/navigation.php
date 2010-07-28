@@ -78,8 +78,9 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t available in the navigation.');
 		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
 
+
 		// start HTML, only when parentId is different from 1, the first level below home should be on the same level as home
-		if($parentId != 1) 	$HTML .= '<ul>' . "\n";
+		$HTML .= '<ul>' . "\n";
 
 		// loop elements
 		foreach($navigation[$type][$parentId] as $page)
@@ -111,25 +112,36 @@ class FrontendNavigation extends FrontendBaseObject
 			// end link
 			$HTML .= '</a>'."\n";
 
-			// because home is a special item we should close the li before appending the childs
-			if($page['page_id'] == 1) $HTML .= '</li>';
-
 			// has children?
 			if(isset($navigation[$type][$page['page_id']]))
 			{
 				// home is a special item, it should live on the same depth
-				if($page['page_id'] == 1) $depthCounter--;
+				if($page['page_id'] == 1)
+				{
+					// decrement
+					$depthCounter--;
+
+					// because home is on the same level as all page directly below it, we should end the li-tag
+					$HTML .= '</li>'."\n";
+
+					// add the children
+					$HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter);
+
+					// remove invalid nesting
+					$HTML = str_replace("</li>\n<ul>", '</li>', $HTML);
+				}
 
 				// add children
-				$HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter);
+				else $HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter);
 			}
 
 			// because home is a special item the li was already closed, so for all other elements we end the HTML
-			if($page['page_id'] != 0) $HTML .= '	</li>'."\n";
+			$HTML .= '	</li>'."\n";
 		}
 
 		// end HTML, only when parentId is different from 1, the first level below home should be on the same level.
-		if($parentId != 1) $HTML .= '</ul>';
+//		if($parentId != 1) $HTML .= '</ul>';
+		$HTML .= '</ul>';
 
 		// return
 		return $HTML;

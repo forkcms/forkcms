@@ -499,22 +499,31 @@ class CoreInstall extends ModuleInstaller
 		// create new instance
 		$api = new ForkAPI();
 
-		// get the keys
-		$keys = $api->coreRequestKeys($this->getVariable('site_domain'), $this->getVariable('api_email'));
+		try
+		{
+			// get the keys
+			$keys = $api->coreRequestKeys($this->getVariable('site_domain'), $this->getVariable('api_email'));
 
-		// ap settings
-		$this->setSetting('core', 'fork_api_public_key', $keys['public']);
-		$this->setSetting('core', 'fork_api_private_key', $keys['private']);
+			// ap settings
+			$this->setSetting('core', 'fork_api_public_key', $keys['public']);
+			$this->setSetting('core', 'fork_api_private_key', $keys['private']);
 
-		// set keys
-		$api->setPublicKey($keys['public']);
-		$api->setPrivateKey($keys['private']);
+			// set keys
+			$api->setPublicKey($keys['public']);
+			$api->setPrivateKey($keys['private']);
 
-		// get services
-		$services = (array) $api->pingGetServices();
+			// get services
+			$services = (array) $api->pingGetServices();
 
-		// set services
-		if(!empty($services)) $this->setSetting('core', 'ping_services', array('services' => $services, 'date' => time()));
+			// set services
+			if(!empty($services)) $this->setSetting('core', 'ping_services', array('services' => $services, 'date' => time()));
+		}
+
+		// catch exceptions
+		catch(Exception $e)
+		{
+			// we don't need those keys.
+		}
 
 		// general settings
 		$this->setSetting('dashboard', 'requires_akismet', false);
