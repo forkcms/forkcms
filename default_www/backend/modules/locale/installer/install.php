@@ -243,6 +243,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NoTheme', 'geen thema');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NumberOfBlocks', 'aantal blokken');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'OK', 'OK');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Overview', 'overzicht');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Page', 'pagina');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Pages', 'pagina\'s');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PageTitle', 'paginatitel');
@@ -555,6 +556,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NoTheme', 'no theme');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NumberOfBlocks', 'number of blocks');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'OK', 'OK');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Overview', 'overview');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Page', 'page');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Pages', 'pages');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PageTitle', 'pagetitle');
