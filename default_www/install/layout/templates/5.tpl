@@ -18,7 +18,7 @@
 	<div id="installHolder">
 
 		<h2>Installation complete</h2>
-		<p>The installation has been completed. You can now <a href="../private/">log in</a> using these credentials:</p>
+		<p>Fork CMS is installed! You can now <a href="../private/">log in</a> using these credentials:</p>
 		<table border="0" cellspacing="0" cellpadding="0" class="infoGrid">
 			<tr>
 				<th>Email</th>
