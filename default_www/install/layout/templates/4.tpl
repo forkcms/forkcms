@@ -23,7 +23,7 @@
 
 		{form:step4}
 			<div class="horizontal">
-				<p>Enter the e-mailaddress and password you'd like to use to log in.</p>
+				<p>Enter the e-mail address and password you'd like to use to log in.</p>
 				<p>
 					<label for="email">E-mail <abbr title="Required field">*</abbr></label>
 					{$txtEmail} {$txtEmailError}
