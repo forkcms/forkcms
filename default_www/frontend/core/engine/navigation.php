@@ -55,7 +55,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	string[optional] $HTML			The already build HTML.
 	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
 	 */
-	private static function createHTML($type = 'page', $parentId = 0, $depth = null, $excludedIds = array(), $HTML = '', $depthCounter = 1)
+	private static function createHTML($type = 'page', $parentId = 0, $depth = null, $excludedIds = array(), $HTML = '', $depthCounter = 1, $noFirstChild = false)
 	{
 		// redefine
 		$type = (string) $type;
@@ -64,12 +64,15 @@ class FrontendNavigation extends FrontendBaseObject
 		$excludedIds = (array) $excludedIds;
 		$HTML = (string) $HTML;
 		$depthCounter = (int) $depthCounter;
+		$noFirstChild = (bool) $noFirstChild;
 
 		// if the depthCounter exceeds the required depth return the generated HTML, we have the build the required HTML.
 		if($depth !== null && $depthCounter > $depth) return $HTML;
 
 		// init vars
 		$defaultSelectedClass = 'selected';
+		$firstChildClass = 'firstChild';
+		$lastChildClass = 'lastChild';
 
 		// fetch navigation
 		$navigation = self::getNavigation();
@@ -78,6 +81,11 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
 		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
 
+		// init some vars
+		$first = true;
+		$last = false;
+		$count = count($navigation[$type][$parentId]);
+		$i = 1;
 
 		// start HTML, only when parentId is different from 1, the first level below home should be on the same level as home
 		$HTML .= '<ul>' . "\n";
@@ -88,14 +96,33 @@ class FrontendNavigation extends FrontendBaseObject
 			// not hidden
 			if($page['hidden']) continue;
 
+			// calculate last
+			$last = ($count == $i);
+
 			// some ids should be excluded
 			if(in_array($page['page_id'], $excludedIds)) continue;
 
 			// if the item is in the selected page it should get an selected class
-			if(in_array($page['page_id'], self::$selectedPageIds)) $HTML .= '<li class="'. $defaultSelectedClass .'">'."\n";
+			if(in_array($page['page_id'], self::$selectedPageIds))
+			{
+				if($first && $last && !$noFirstChild) $HTML .= '<li class="'. $defaultSelectedClass .' '. $firstChildClass .' '. $lastChildClass .'">'."\n";
+				elseif($first && !$noFirstChild) $HTML .= '<li class="'. $defaultSelectedClass .' '. $firstChildClass .'">'."\n";
+				elseif($last) $HTML .= '<li class="'. $defaultSelectedClass .' '. $lastChildClass .'">'."\n";
+				else $HTML .= '<li class="'. $defaultSelectedClass .'">'."\n";
+			}
 
 			// just start the html
-			else $HTML .= '<li>'."\n";
+			else
+			{
+				if($first && $last && !$noFirstChild) $HTML .= '<li class="'. $firstChildClass .' '. $lastChildClass .'">'."\n";
+				elseif($first && !$noFirstChild) $HTML .= '<li class="'. $firstChildClass .'">'."\n";
+				elseif($last) $HTML .= '<li class="'. $lastChildClass .'">'."\n";
+				else $HTML .= '<li>'."\n";
+			}
+
+			// reset first and counter
+			$first = false;
+			$i++;
 
 			// add link
 			$HTML .= '<a href="'. FrontendNavigation::getURL($page['page_id']) .'" title="'. $page['title'] .'"';
@@ -125,7 +152,7 @@ class FrontendNavigation extends FrontendBaseObject
 					$HTML .= '</li>'."\n";
 
 					// add the children
-					$HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter);
+					$HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter, true);
 
 					// remove invalid nesting
 					$HTML = str_replace("</li>\n<ul>", '</li>', $HTML);
