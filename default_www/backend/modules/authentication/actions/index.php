@@ -65,7 +65,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	private function load()
 	{
 		// create the login form
-		$this->frm = new BackendForm();
+		$this->frm = new BackendForm(null, null, 'post', true, false);
 
 		// create elements and add to the form
 		$this->frm->addText('backend_email');
