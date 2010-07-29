@@ -229,7 +229,7 @@ jsBackend.pages.extras = {
 		// any items?
 		if(typeof extrasData[selectedModule] != 'undefined' && typeof extrasData[selectedModule]['items'][selectedType] != 'undefined') {
 			
-			if(extrasData[selectedModule]['items'][selectedType].length == 1) {
+			if(extrasData[selectedModule]['items'][selectedType].length == 1 && selectedType == 'block') {
 				$('#extraExtraId').append('<option selected="selected" value="'+ extrasData[selectedModule]['items'][selectedType][0].id +'">'+ extrasData[selectedModule]['items'][selectedType][0].label +'</option>');
 			}
 			
