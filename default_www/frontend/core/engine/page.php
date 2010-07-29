@@ -302,7 +302,6 @@ class FrontendPage extends FrontendBaseObject
 					// create new instance
 					$widget = new FrontendBlockWidget($block['extra_module'], $block['extra_action'], $block['extra_data']);
 
-					// @todo davy - document decently
 					// fetch data (if available)
 					$data = $widget->execute();
 
