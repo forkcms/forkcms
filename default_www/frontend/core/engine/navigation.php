@@ -77,6 +77,9 @@ class FrontendNavigation extends FrontendBaseObject
 		// fetch navigation
 		$navigation = self::getNavigation();
 
+		// meta-navigation is requested but meta isn't enabled
+		if($type == 'meta' && !FrontendModel::getModuleSetting('pages', 'meta_navigation', true)) return '';
+
 		// validate
 		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
 		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');

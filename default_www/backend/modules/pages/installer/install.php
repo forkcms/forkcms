@@ -394,7 +394,7 @@ class PagesInstall extends ModuleInstaller
 	{
 		// general settings
 		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'));
-		$this->setSetting('pages', 'has_meta_navigation', true);
+		$this->setSetting('pages', 'meta_navigation', true);
 		$this->setSetting('pages', 'requires_akismet', false);
 		$this->setSetting('pages', 'requires_google_maps', false);
 		$this->setSetting('pages', 'default_template', 2);
