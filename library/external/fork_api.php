@@ -369,6 +369,41 @@ class ForkAPI
 		// return
 		return $return;
 	}
+
+
+// statistics methods
+	/**
+	 * Get the search engines
+	 *
+	 * @return	array
+	 */
+	public function statisticsGetSearchEngines()
+	{
+		// make the call
+		$response = $this->doCall('statistics.getSearchEngines');
+
+		// init var
+		$return = array();
+
+		// validate response
+		if(!isset($response->search_engines->engine)) throw new ForkAPIException('Invalid XML-response.');
+
+		// loop services
+		foreach($response->search_engines->engine as $engine)
+		{
+			// init var
+			$urls = array();
+
+			// loop urls
+			foreach($engine->urls->url as $url) $urls[] = (string) $url;
+
+			// add to return
+			$return[] = array('name' => (string) $engine->name, 'splitchar' => (string) $engine->splitchar, 'urls' => $urls);
+		}
+
+		// return
+		return $return;
+	}
 }
 
 
