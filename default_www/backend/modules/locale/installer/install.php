@@ -211,6 +211,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Label', 'label');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Language', 'taal');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Languages', 'talen');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LastEdited', 'laatst bewerkt');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LastEditedOn', 'laatst bewerkt op');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LastSaved', 'laatst opgeslagen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LatestComments', 'laatste reacties');
@@ -375,6 +376,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpSMTPServer', 'Mailserver die wordt gebruikt voor het versturen van e-mails.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'LoginFormForgotPasswordSuccess', '<strong>Mail sent.</strong> Please check your inbox!');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NL', 'Nederlands');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoAkismetKey', 'Om de spamfilter te activeren moet je een Akismet-key <a href="%1$s">ingeven</a>.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoComments', 'Er zijn geen reacties in deze categorie.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoItems', 'Er zijn geen items.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoPublishedComments', 'Er zijn geen gepubliceerde reacties.');
@@ -524,6 +526,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Label', 'label');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Language', 'language');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Languages', 'languages');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LastEdited', 'last edited');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LastEditedOn', 'last edited on');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LastSaved', 'last saved');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LatestComments', 'latest comments');
@@ -688,6 +691,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpSMTPServer', 'Mailserver that should be used for sending e-mails.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'LoginFormForgotPasswordSuccess', '<strong>Mail sent.</strong> Please check your inbox!');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NL', 'Dutch');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoAkismetKey', 'If you want to enable the spam-protection you should <a href="%1$s">configure</a> an Akismet-key.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoComments', 'There are no comments in this category.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoItems', 'There are no items');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoPublishedComments', 'There are no published comments.');

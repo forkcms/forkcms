@@ -381,10 +381,18 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				// update the blocks
 				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
-				// add search index
-				$text = '';
-				foreach($blocks as $block) $text .= ' '. $block['html']; // @todo: good way?
-				if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text));
+				// check if the method exists
+				if(method_exists('BackendSearchModel', 'editIndex'))
+				{
+					// init var
+					$text = '';
+
+					// build search-text
+					foreach($blocks as $block) $text .= ' '. $block['html'];
+
+					// add
+					BackendSearchModel::editIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text));
+				}
 
 				// save tags
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());

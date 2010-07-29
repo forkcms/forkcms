@@ -4,8 +4,6 @@
  * BackendPagesEditTemplate
  * This is the edit-action, it will display a form to edit an item
  *
- *	@todo	If template is in use, you shouldn't be able to edit the number of blocks.
- *
  * @package		backend
  * @subpackage	pages
  *
@@ -68,7 +66,12 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$deleteAllowed = true;
 		if($this->record['id'] == BackendModel::getSetting('pages', 'default_template')) $deleteAllowed = false;
 		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
-		elseif(BackendPagesModel::isTemplateInUse($this->id)) $deleteAllowed = false;
+		elseif(BackendPagesModel::isTemplateInUse($this->id))
+		{
+			// show that the template is used
+			$this->tpl->assign('inUse', true);
+			$deleteAllowed = false;
+		}
 
 		// assign
 		$this->tpl->assign('deleteAllowed', $deleteAllowed);
