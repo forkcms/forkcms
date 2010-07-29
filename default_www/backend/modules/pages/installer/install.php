@@ -112,6 +112,10 @@ class PagesInstall extends ModuleInstaller
 	 */
 	private function insertPagesAndExtras()
 	{
+		// @todo insert contact page
+
+		// @todo insert extra for contact page
+
 		// insert extras
 		$sitemapID = $this->insertExtra(array('module' => 'pages',
 												'type' => 'widget',
@@ -203,7 +207,7 @@ class PagesInstall extends ModuleInstaller
 				}
 			}
 
-		// check if the disclaimerpage doesn't exist
+			// check if the disclaimerpage doesn't exist
 			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(3, $language)) == 0)
 			{
 				// insert meta
