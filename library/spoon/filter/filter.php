@@ -732,7 +732,7 @@ class SpoonFilter
 		$pattern = '/(((http|ftp|https):\/{2})?(([0-9a-z_-]+\.)+('. implode('|', self::$tlds) .')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu';
 
 		// get matches
-		$value = preg_replace_callback($pattern, 'SpoonFilter::replaceURLsCallback', $value);
+		$value = preg_replace_callback($pattern, array('SpoonFilter', 'replaceURLsCallback'), $value);
 
 		// add noFollow-attribute
 		if($noFollow) $value = str_replace('<a href=', '<a rel="nofollow" href=', $value);

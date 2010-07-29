@@ -53,6 +53,13 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		// add fields for spam
 		$this->frm->addCheckbox('spamfilter', BackendModel::getSetting($this->URL->getModule(), 'spamfilter', false));
 
+		// no Akismet-key, so we can't enable SPAM-filtering
+		if(BackendModel::getSetting('core', 'akismet_key') === null)
+		{
+			$this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
+			$this->tpl->assign('noAkismetKey', true);
+		}
+
 		// add fields for comments
 		$this->frm->addCheckbox('allow_comments', BackendModel::getSetting($this->URL->getModule(), 'allow_comments', false));
 
@@ -113,6 +120,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				BackendModel::setSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
 				if($feedburner !== null) BackendModel::setSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
+				if(BackendModel::getSetting('core', 'akismet_key') === null) BackendModel::setSetting($this->URL->getModule(), 'spamfilter', false);
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');

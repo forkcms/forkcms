@@ -30,7 +30,10 @@
 				<li>{$chkModeration} <label for="moderation">{$lblEnableModeration|ucfirst}</label></li>
 				<li>
 					{$chkSpamfilter} <label for="spamfilter">{$lblFilterCommentsForSpam|ucfirst}</label>
-					<span class="helpTxt">{$msgHelpSpamFilter}</span>
+					<span class="helpTxt">
+						{$msgHelpSpamFilter}
+						{option:noAkismetKey}<span class="infoMessage"><br />{$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}</span>{/option:noAkismetKey}
+					</span>
 				</li>
 			</ul>
 		</div>
