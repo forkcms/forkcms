@@ -75,7 +75,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$navigation = self::getNavigation();
 
 		// validate
-		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t available in the navigation.');
+		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
 		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
 
 

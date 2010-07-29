@@ -125,6 +125,7 @@ jsBackend.controls = {
 	init: function() { 
 		jsBackend.controls.bindCheckboxTextfieldCombo();
 		jsBackend.controls.bindConfirm();
+		jsBackend.controls.bindFakeDropdown();
 		jsBackend.controls.bindFullWidthSwitch();
 		jsBackend.controls.bindMassAction();
 		jsBackend.controls.bindMassCheckbox();
@@ -199,32 +200,86 @@ jsBackend.controls = {
 		});
 	},
 
-	// toggle between full width and sidebar-layout
-	bindFullWidthSwitch: function() {
-		$('#fullwidthSwitch a').toggle(function(evt) {
+	bindFakeDropdown: function() {
+		$('.fakeDropdown').bind('click', function(evt) {
 			// prevent default behaviour
 			evt.preventDefault();
 			
-			// add class
-			$(this).parent().addClass('collapsed')
-
-			// toggle
-			$('#subnavigation, #pagesTree').fadeOut(250);
+			// stop it
+			evt.stopPropagation();
 			
-			
-		}, function(evt) {
-			// Stuff to do every *even* time the element is clicked;
-			evt.preventDefault();
+			// get id
+			var id = $(this).attr('href');
 
-			// remove class
-			$(this).parent().removeClass('collapsed')
-			
-			// toggle
-			$('#subnavigation, #pagesTree').fadeIn(500);
+			if($(id).is(':visible')) {
+				// remove events
+				$('body').unbind('click')
+				$('body').unbind('keyup');
 
-		});
+				// remove class
+				$(this).parent().removeClass('selected');
+				
+				// hide
+				$(id).hide('blind', {}, 'fast');
+			} else {
+				// bind escape
+				$('body').bind('keyup', function(evt) {
+					if(evt.keyCode == 27) {
+						// unbind event
+						$('body').unbind('keyup');
+
+						// remove class
+						$(this).parent().removeClass('selected');
+
+						// hide
+						$(id).hide('blind', {}, 'fast');
+					}
+				});
+				
+				// bind click outside
+				$('body').bind('click', function(evt) {
+					// unbind event
+					$('body').unbind('click');
+
+					// remove class
+					$(this).parent().removeClass('selected');
+
+					// hide
+					$(id).hide('blind', {}, 'fast');
+				});
+
+				// add class
+				$(this).parent().addClass('selected');
+
+				// show
+				$(id).show('blind', {}, 'fast');
+			}
+		})
+	},
+	
+	// toggle between full width and sidebar-layout
+	bindFullWidthSwitch: function() {
+		$('#fullwidthSwitch a').toggle(
+				function(evt) {
+					// prevent default behaviour
+					evt.preventDefault();
+					
+					// add class
+					$(this).parent().addClass('collapsed')
 		
+					// toggle
+					$('#subnavigation, #pagesTree').fadeOut(250);
+					
+				}, function(evt) {
+					// Stuff to do every *even* time the element is clicked;
+					evt.preventDefault();
 		
+					// remove class
+					$(this).parent().removeClass('collapsed')
+					
+					// toggle
+					$('#subnavigation, #pagesTree').fadeIn(500);
+				});
 	},
 	
 	// bind confirm message

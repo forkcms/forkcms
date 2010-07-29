@@ -18,6 +18,7 @@
 							<div id="debugnotify">{$lblDebugMode|ucfirst}</div>
 						</li>
 					{/option:debug}
+
 					{option:workingLanguages}
 						<li>
 							{$msgNowEditing}:
@@ -29,18 +30,8 @@
 						</li>
 					{/option:workingLanguages}
 
-					{* @todo move this to the real javascript *}
-					<script type="text/javascript" charset="utf-8">
-						$(document).ready(function() {
-							$('#openAccountDropdown').click(function(e) {
-								e.preventDefault();
-								$('#ddAccount').toggle();
-							});
-						});
-					</script>
-
 					<li id="account">
-						<a href="#ddAccount" id="openAccountDropdown">
+						<a href="#ddAccount" id="openAccountDropdown" class="fakeDropdown">
 							<div class="avatar av24">
 								<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/32x32/{$authenticatedUserAvatar}" width="24" height="24" alt="{$authenticatedUserNickname}" />
 							</div>
