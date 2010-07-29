@@ -485,10 +485,14 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'smtp_username', $this->getVariable('smtp_username'));
 		$this->setSetting('core', 'smtp_password', $this->getVariable('smtp_password'));
 
+		// default titles
+		$siteTitles = array('nl' => 'Mijn website', 'fr' => 'Mon site web', 'en' => 'My website');
+
 		// language specific
 		foreach($this->getLanguages() as $language)
 		{
-			$this->setSetting('core', 'site_title_'. $language, $this->getVariable('site_title'));
+			// set title
+			$this->setSetting('core', 'site_title_'. $language, (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title'));
 		}
 
 		/*
