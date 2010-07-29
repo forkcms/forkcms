@@ -300,124 +300,135 @@ class BackendPagesModel
 	 * @return	string
 	 * @param	array $template		The template data.
 	 */
-	public static function buildTemplateHTML($template)
+	public static function buildTemplateHTML($template, $large = false)
 	{
 		// validate
 		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
 
 		// init var
-		$html = '';
+		$table = array();
 
 		// split into rows
 		$rows = explode('],[', $template['data']['format']);
 
 		// loop rows
-		foreach($rows as $row)
+		foreach($rows as $i => $row)
 		{
 			// cleanup
 			$row = str_replace(array('[',']'), '', $row);
 
-			// add start html
-			$html .= '<table border="0" cellpadding="0" cellspacing="0">'."\n";
-			$html .= '	<tbody>'."\n";
-			$html .= '		<tr>'."\n";
-
-			// split into cells
-			$cells = explode(',', $row);
-
-			// loop cells
-			foreach($cells as $cell)
-			{
-				// decide selected state
-				$exists = (isset($template['data']['names'][$cell]));
-
-				// get title & index
-				$title = ($exists) ? $template['data']['names'][$cell] : '';
-				$index = ($exists) ? $cell : '';
-
-				// does the cell need content
-				if(!$exists) $html .= '		<td></td>'."\n";
-
-				// the cell need a name
-				else $html .= '		<td><a href="#block-'. $index .'" title="'. $title .'">'. $title .'</a></td>'."\n";
-			}
-
-			// end html
-			$html .= '		</tr>'."\n";
-			$html .= '	</tbody>'."\n";
-			$html .= '</table>'."\n";
+			// build table
+			$table[$i] = (array) explode(',', $row);
 		}
 
-		// return html
-		return $html;
-	}
-
-
-	/**
-	 * Build HTML for a template (visual representation)
-	 *
-	 * @return	string
-	 * @param	array $template		The template data.
-	 */
-	public static function buildTemplateHTMLLarge($template)
-	{
-		// validate
-		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
+		// add start html
+		$html = '<table border="0" cellpadding="0" cellspacing="0">'."\n";
+		$html .= '	<tbody>'."\n";
 
 		// init var
-		$html = '';
-
-		// split into rows
-		$rows = explode('],[', $template['data']['format']);
+		$rows = count($table);
+		$cells = count($table[0]);
 
 		// loop rows
-		foreach($rows as $row)
+		for($y = 0; $y < $rows; $y++)
 		{
-			// cleanup
-			$row = str_replace(array('[',']'), '', $row);
-
-			// add start html
-			$html .= '<table border="0" cellpadding="0" cellspacing="0">'."\n";
-			$html .= '	<tbody>'."\n";
+			// start row
 			$html .= '		<tr>'."\n";
 
-			// split into cells
-			$cells = explode(',', $row);
-
 			// loop cells
-			foreach($cells as $cell)
+			for($x = 0; $x < $cells; $x++)
 			{
+				// skip if needed
+				if(!isset($table[$y][$x])) continue;
+
+				// get value
+				$value = $table[$y][$x];
+
+				// init var
+				$colspan = 1;
+
+				// reset items in the same collumn
+				while($x + $colspan < $cells && $table[$y][$x + $colspan] === $value) $table[$y][$x + $colspan++] = null;
+
+				// init var
+				$rowspan = 1;
+				$rowMatches = true;
+
+				// loop while the rows match
+				while($rowMatches && $y + $rowspan < $rows)
+				{
+					// loop columns inside spanned columns
+					for($i = 0; $i < $colspan; $i++)
+					{
+						// check value
+						if($table[$y + $rowspan][$x + $i] !== $value)
+						{
+							// no match, so stop
+							$rowMatches = false;
+							break;
+						}
+					}
+
+					// any rowmatches?
+					if($rowMatches)
+					{
+						// loop columns and reset value
+						for($i = 0; $i < $colspan; $i++) $table[$y + $rowspan][$x + $i] = null;
+
+						// increment
+						$rowspan++;
+					}
+				}
+
 				// decide selected state
-				$exists = (isset($template['data']['names'][$cell]));
+				$exists = (isset($template['data']['names'][$value]));
 
 				// get title & index
-				$title = ($exists) ? $template['data']['names'][$cell] : '';
-				$type = ($exists) ? $template['data']['types'][$cell] : '';
-				$index = ($exists) ? $cell : '';
+				$title = ($exists) ? $template['data']['names'][$value] : '';
+				$type = ($exists) ? $template['data']['types'][$value] : '';
+				$index = ($exists) ? $value : '';
 
-				// does the cell need content
-				if(!$exists) $html .= '		<td> </td>'."\n";
+				// start cell
+				$html .= '<td';
+
+				// add rowspan if needed
+				if($rowspan > 1) $html .= ' rowspan="'. $rowspan .'"';
+
+				// add colspan if needed
+				if($colspan > 1) $html .= ' colspan="'. $colspan .'"';
+
+				// does the cell need content?
+				if(!$exists) $html .= ' class="empty">&nbsp;</td>'."\n";
 
 				// the cell need a name
 				else
 				{
-					$html .= '		<td id="templateBlock-'. $index .'">
-										<h4 class="templateBlockTitle">'. $title .'</h4>
-										<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getMessage(SpoonFilter::toCamelCase($type))) .'</span></p>
-										<div class="buttonHolder">
-											<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" rel="'. $index .'">
-												<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
-											</a>
-										</div>
-									</td>'."\n";
+					// large visual?
+					if($large)
+					{
+						$html .= ' id="templateBlock-'. $index .'">
+									<h4 class="templateBlockTitle">'. $title .'</h4>
+									<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getMessage(SpoonFilter::toCamelCase($type))) .'</span></p>
+									<div class="buttonHolder">
+										<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" rel="'. $index .'">
+											<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
+										</a>
+									</div>
+								</td>'."\n";
+					}
+
+					// just regular
+					else $html .= '><a href="#block-'. $index .'" title="'. $title .'">'. $title .'</a></td>'."\n";
 				}
 			}
 
-			// end html
+			// end row
 			$html .= '		</tr>'."\n";
-			$html .= '	</tbody>'."\n";
-			$html .= '</table>'."\n";
 		}
+
+		// end html
+		$html .= '	</tbody>'."\n";
+		$html .= '</table>'."\n";
 
 		// return html
 		return $html;
@@ -1060,7 +1071,7 @@ class BackendPagesModel
 
 			// build template HTML
 			$row['html'] = self::buildTemplateHTML($templates[$key]);
-			$row['htmlLarge'] = self::buildTemplateHTMLLarge($templates[$key]);
+			$row['htmlLarge'] = self::buildTemplateHTML($templates[$key], true);
 
 			// add all data as json
 			$row['json'] = json_encode($row);

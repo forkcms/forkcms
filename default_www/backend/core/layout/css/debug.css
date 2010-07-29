@@ -67,3 +67,8 @@ th.num_tags { width: 70px; }
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
+
+#templateList li { float: none; }
+
+.templateVisual td a { border: none; }
+.templateVisual td { border: 1px solid #AAA; }
