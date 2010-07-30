@@ -298,7 +298,8 @@ class BackendPagesModel
 	 * Build HTML for a template (visual representation)
 	 *
 	 * @return	string
-	 * @param	array $template		The template data.
+	 * @param	array $template			The template data.
+	 * @param	bool[optional] $large	@todo tijs - wer zijn we mee bezig?
 	 */
 	public static function buildTemplateHTML($template, $large = false)
 	{
