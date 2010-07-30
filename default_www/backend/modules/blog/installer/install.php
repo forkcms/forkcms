@@ -21,7 +21,7 @@ class BlogInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/blog/installer/install.sql');
+		$this->importSQL(PATH_WWW .'/backend/modules/blog/installer/data/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('blog', 'The blog module.');
@@ -74,6 +74,10 @@ class BlogInstall extends ModuleInstaller
 			$this->setSetting('blog', 'rss_meta_'. $language, true);
 			$this->setSetting('blog', 'rss_title_'. $language, 'RSS');
 			$this->setSetting('blog', 'rss_description_'. $language, '');
+
+			// @todo voeg 2 blogposts toe, tenzij er al minstens 1 blogpost is in deze taal.
+
+			// @todo voeg 2 comments toe voor die voorbeeldblogposts. Uiteraard enkel als de blogposts geinsert werden...
 		}
 
 		// make module searchable
