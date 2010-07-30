@@ -54,7 +54,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm->addCheckbox('spamfilter', BackendModel::getSetting($this->URL->getModule(), 'spamfilter', false));
 
 		// no Akismet-key, so we can't enable SPAM-filtering
-		if(BackendModel::getSetting('core', 'akismet_key') === null)
+		if(BackendModel::getSetting('core', 'akismet_key') == '')
 		{
 			$this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
 			$this->tpl->assign('noAkismetKey', true);
