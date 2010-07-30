@@ -13,7 +13,7 @@
 class PagesInstall extends ModuleInstaller
 {
 	/**
-	 * Default constructor
+	 * Class constructor.
 	 *
 	 * @return	void
 	 * @param	SpoonDatabase $db
@@ -22,7 +22,7 @@ class PagesInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/pages/installer/install.sql');
+		$this->importSQL(PATH_WWW .'/backend/modules/pages/installer/data/install.sql');
 
 		// add 'pages' as a module
 		$this->addModule('pages', 'The module to manage your pages and website structure.');
