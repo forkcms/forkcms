@@ -1,4 +1,4 @@
-1.2.1 (2010-07-13)
+1.2.1 (xxxx-xx-xx)
 ----
 - Template options may now start with an integer. eg {option:404}
 - The WHERE clause in SpoonDatabase::update and SpoonDatabase::delete may now be null instead of an empty string.
