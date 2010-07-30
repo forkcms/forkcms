@@ -400,7 +400,7 @@ class CoreInstall extends ModuleInstaller
 	 */
 	protected function execute()
 	{
-		// @todo davy - smtp moeten we niet langer meegeven, default mail gebruiken.
+		// @todo davy - scorcese als default theme
 
 		// validate variables
 		if($this->getVariable('default_language') === null) throw new SpoonException('Not all required variables were provided.');
