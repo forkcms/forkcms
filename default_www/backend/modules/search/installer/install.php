@@ -60,20 +60,6 @@ class SearchInstall extends ModuleInstaller
 		// make 'pages' searchable
 		$this->makeSearchable('pages');
 
-		// define required constants used by backend classes
-		define('FRONTEND_CACHE_PATH', PATH_WWW .'/frontend/cache');
-		define('DB_TYPE', 'mysql');
-		define('DB_HOSTNAME', 'localhost');
-		define('DB_USERNAME', 'root');
-		define('DB_PASSWORD', 'n8gu9jjq');
-		define('DB_DATABASE', 'forkng');
-
-		// include backend model & language class, pages model, search model
-		include_once PATH_WWW .'/backend/core/engine/model.php';
-		include_once PATH_WWW .'/backend/core/engine/language.php';
-		include_once PATH_WWW .'/backend/modules/pages/engine/model.php';
-		include_once PATH_WWW .'/backend/modules/search/engine/model.php';
-
 		// get existing menu items
 		$menu = $this->getDB()->retrieve('SELECT m.id, m.revision_id, m.language, m.title FROM pages AS m WHERE m.status = ?', array('active'));
 
