@@ -335,6 +335,7 @@ class BackendTemplate extends SpoonTemplate
 	{
 		// assign a placeholder var
 		$this->assign('var', '');
+		$this->assign('timestamp', time());
 
 		// assign body ID
 		$this->assign('bodyID', SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));

@@ -15,6 +15,7 @@ tinyMCE.init({
 	// processing
 	relative_urls: false,
 	entity_encoding: 'raw',
+	extended_valid_elements : 'iframe[src|width|height|name|align]',
 
 	// plugings
 	plugins: 'tabfocus,inlinepopups,paste,contextmenu,media,fullscreen,table,filemanager,imagemanager,bramus_cssextras,dextrose_videoembed',
@@ -45,7 +46,7 @@ tinyMCE.init({
 	imagemanager_handle: 'image',
 	
 	// file lists
-	external_link_list_url: '/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js',	
+	external_link_list_url: '/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js?{$timestamp}',	
 	
 	// paste
 	paste_auto_cleanup_on_paste : true,

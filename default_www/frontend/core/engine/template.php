@@ -268,6 +268,7 @@ class FrontendTemplate extends SpoonTemplate
 	{
 		// assign a placeholder var
 		$this->assign('var', '');
+		$this->assign('timestamp', time());
 	}
 }
 
@@ -408,7 +409,7 @@ class FrontendTemplateModifiers
 		return $var;
 	}
 
-	
+
 	/**
 	 * Get the URL for a given pageId & language
 	 * 	syntax: {$var|geturl:404}
