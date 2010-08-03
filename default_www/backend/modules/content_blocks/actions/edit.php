@@ -169,11 +169,16 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				// get values
 				$values = (array) $this->frm->getValues();
 
+				// build item
+				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['text'] = $this->frm->getField('text')->getValue();
+				$item['hidden'] = $this->frm->getField('hidden')->getValue();
+
 				// insert the item
-				$id = (int) BackendContentBlocksModel::update($this->id, $values);
+				$id = (int) BackendContentBlocksModel::update($this->id, $item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($values['title']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=id-'. $id);
 			}
 		}
 	}
