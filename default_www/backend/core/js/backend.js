@@ -332,6 +332,9 @@ jsBackend.controls = {
 		$('.tableOptions .massAction .submitButton').live('click', function(evt) {
 			// get the selected element
 			if($(this).parents('.massAction').find('select[name=action] option:selected').length > 0) {
+				// prevent default action
+				evt.preventDefault();
+				
 				var element = $(this).parents('.massAction').find('select[name=action] option:selected')
 				
 				// if the rel-attribute exists we should show the dialog
