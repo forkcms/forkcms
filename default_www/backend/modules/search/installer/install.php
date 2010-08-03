@@ -49,8 +49,46 @@ class SearchInstall extends ModuleInstaller
 									'hidden' => 'N',
 									'sequence' => 3000));
 
+		$this->insertExtra(array('module' => 'search',
+									'type' => 'widget',
+									'label' => 'SearchForm',
+									'action' => 'form',
+									'data' => null,
+									'hidden' => 'N',
+									'sequence' => 3001));
+
 		// make 'pages' searchable
 		$this->makeSearchable('pages');
+
+		// define required constants used by backend classes
+		define('FRONTEND_CACHE_PATH', PATH_WWW .'/frontend/cache');
+		define('DB_TYPE', 'mysql');
+		define('DB_HOSTNAME', 'localhost');
+		define('DB_USERNAME', 'root');
+		define('DB_PASSWORD', 'n8gu9jjq');
+		define('DB_DATABASE', 'forkng');
+
+		// include backend model & language class, pages model, search model
+		include_once PATH_WWW .'/backend/core/engine/model.php';
+		include_once PATH_WWW .'/backend/core/engine/language.php';
+		include_once PATH_WWW .'/backend/modules/pages/engine/model.php';
+		include_once PATH_WWW .'/backend/modules/search/engine/model.php';
+
+		// get existing menu items
+		$menu = $this->getDB()->retrieve('SELECT m.id, m.revision_id, m.language, m.title FROM pages AS m WHERE m.status = ?', array('active'));
+
+		// loop menu items
+		foreach($menu as $id => $page)
+		{
+			// get blocks
+			$blocks = $this->getDB()->getColumn('SELECT mb.html FROM pages_blocks AS mb WHERE mb.revision_id = ?', array($page['revision_id']));
+
+			// merge blocks content
+			$text = implode(' ', $blocks);
+
+			// add page to search index
+			BackendSearchModel::addIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text), $page['language']);
+		}
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht.');
@@ -75,6 +113,7 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoSynonymsBox', 'Er zijn nog geen synoniemen.');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Search', 'zoeken');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SearchForm', 'zoekformulier');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Synonyms', 'synoniemen');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchTerm', 'zoekterm');
@@ -103,6 +142,7 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonymsBox', 'There are no synonyms yet.');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Search', 'search');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SearchForm', 'search form');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Synonyms', 'synonyms');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Search', 'search');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchTerm', 'searchterm');

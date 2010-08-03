@@ -37,9 +37,6 @@ class BackendSearchModel
 		// no fields?
 		if (empty($fields)) return;
 
-		// clear cache
-		self::clearCache();
-
 		// set language
 		if (!$language) $language = BL::getWorkingLanguage();
 
@@ -55,24 +52,9 @@ class BackendSearchModel
 			// insert in db
 			$db->insert('search_index', array('module' => (String) $module, 'other_id' => (int) $otherId, 'language' => (String) $language, 'field' => (String) $field, 'value' => $value, 'active' => 'Y'));
 		}
-	}
 
-
-	/**
-	 * Clear search cache
-	 *
-	 * @return void
-	 */
-	public static function clearCache()
-	{
-		// create template
-		$tpl = new SpoonTemplate();
-
-		// set cache directory
-		$tpl->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates/search');
-
-		// clear cache
-		$tpl->clearCache();
+		// invalidate the cache for search
+		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
 	}
 
 
@@ -84,11 +66,11 @@ class BackendSearchModel
 	 */
 	public static function deleteSynonym($id)
 	{
-		// clear cache
-		self::clearCache();
-
 		// delete synonym
 		BackendModel::getDB(true)->delete('search_synonyms', 'id = ?', array((int) $id));
+
+		// invalidate the cache for search
+		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
 	}
 
 
@@ -107,9 +89,6 @@ class BackendSearchModel
 
 		// no fields?
 		if (empty($fields)) return;
-
-		// clear cache
-		self::clearCache();
 
 		// set language
 		if (!$language) $language = BL::getWorkingLanguage();
@@ -137,6 +116,9 @@ class BackendSearchModel
 				$db->insert('search_index', array('module' => (String) $module, 'other_id' => (int) $otherId, 'language' => (String) $language, 'field' => (String) $field, 'value' => $value, 'active' => 'Y'));
 			}
 		}
+
+		// invalidate the cache for search
+		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
 	}
 
 
@@ -209,12 +191,12 @@ class BackendSearchModel
 	 */
 	public static function insertModuleSettings($module, $searchable, $weight)
 	{
-		// clear cache
-		self::clearCache();
-
 		// insert or update
 		BackendModel::getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
 											ON DUPLICATE KEY UPDATE searchable = ?, weight = ?', array($module['module'], $searchable, $weight, $searchable, $weight));
+
+		// invalidate the cache for search
+		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
 	}
 
 
@@ -226,11 +208,11 @@ class BackendSearchModel
 	 */
 	public static function insertSynonym($item)
 	{
-		// clear cache
-		self::clearCache();
-
 		// insert into db
 		BackendModel::getDB(true)->insert('search_synonyms', $item);
+
+		// invalidate the cache for search
+		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
 	}
 
 
@@ -242,10 +224,11 @@ class BackendSearchModel
 	 */
 	public static function updateSynonym($id, $item)
 	{
-		// clear cache
-		self::clearCache();
-
+		// update
 		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($id));
+
+		// invalidate the cache for search
+		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
 	}
 
 
@@ -261,14 +244,14 @@ class BackendSearchModel
 		// module active?
 		if(!in_array('search', BackendModel::getModules(true))) return;
 
-		// clear cache
-		self::clearCache();
-
 		// set language
 		if(!$language) $language = BL::getWorkingLanguage();
 
 		// delete indexes
 		BackendModel::getDB(true)->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((String) $module, (int) $otherId, (String) $language));
+
+		// invalidate the cache for search
+		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
 	}
 }
 

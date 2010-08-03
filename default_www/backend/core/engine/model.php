@@ -698,17 +698,26 @@ class BackendModel
 	 * @return	void
 	 * @param	string[optional] $module	A specific module to clear the cache for.
 	 */
-	public static function invalidateFrontendCache($module = null)
+	public static function invalidateFrontendCache($module = null, $language = null)
 	{
 		// redefine
 		$module = ($module !== null) ? (string) $module : null;
+		$language = ($language !== null) ? (string) $language : null;
 
 		// get cache path
 		$path = FRONTEND_CACHE_PATH .'/cached_templates';
 
 		// build regular expresion
-		$regexp = '/(.*)_cache\.tpl/i';
-		if($module !== null) $regexp = '/'. $module .'(.*)_cache\.tpl/i';
+		if($module !== null)
+		{
+			if($language !== null) $regexp = '/'. '(.*)'. $module .'(.*)_cache\.tpl/i';
+			else $regexp = '/'. $language .'_'. $module .'(.*)_cache\.tpl/i';
+		}
+		else
+		{
+			if($language !== null) $regexp = '/(.*)_cache\.tpl/i';
+			else $regexp = '/'. $language .'_(.*)_cache\.tpl/i';
+		}
 
 		// get files to delete
 		$files = SpoonFile::getList($path, $regexp);

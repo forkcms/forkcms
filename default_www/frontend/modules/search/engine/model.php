@@ -174,18 +174,37 @@ class FrontendSearchModel
 	 * @param	string $language			The language to search in.
 	 * @param	int $limit					Limit resultset.
 	 */
-	public static function getStartsWith($term, $language, $limit = 50)
+	public static function getStartsWith($term, $language = '', $limit = 50)
 	{
-		return FrontendModel::getDB(false)->retrieve('SELECT s1.term, s1.num_results
-														FROM search_statistics AS s1
-														INNER JOIN
-														(
-															SELECT term, MAX(id) as id, language
-															FROM search_statistics
-															WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
-															GROUP BY term
-														) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-														LIMIT ?', array((string) $term .'%', $language, $limit));
+		// language given
+		if($language)
+		{
+			return FrontendModel::getDB(false)->retrieve('SELECT s1.term, s1.num_results
+															FROM search_statistics AS s1
+															INNER JOIN
+															(
+																SELECT term, MAX(id) as id, language
+																FROM search_statistics
+																WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
+																GROUP BY term
+															) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+															LIMIT ?', array((string) $term .'%', $language, $limit));
+		}
+
+		// no language given
+		else
+		{
+			return FrontendModel::getDB(false)->retrieve('SELECT s1.term, s1.num_results
+															FROM search_statistics AS s1
+															INNER JOIN
+															(
+																SELECT term, MAX(id) as id, language
+																FROM search_statistics
+																WHERE term LIKE ? AND num_results IS NOT NULL
+																GROUP BY term
+															) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+															LIMIT ?', array((string) $term .'%', $limit));
+		}
 	}
 
 

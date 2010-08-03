@@ -672,11 +672,11 @@ class BackendPagesModel
 	 * @return	array
 	 * @param	int $id		The Id of the page to get the blocks for.
 	 */
-	public static function getBlocks($id)
+	public static function getBlocks($id, $language = null)
 	{
 		// redefine
 		$id = (int) $id;
-		$language = BackendLanguage::getWorkingLanguage();
+		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get page (active version)
 		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on

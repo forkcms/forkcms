@@ -66,7 +66,7 @@ jsFrontend.search = {
 			delay: 200,
 			minLength: 3,
 			source: function(request, response) {
-				$.ajax({ url: '/frontend/ajax.php?module=search&action=autocomplete&language=' + chunks[1],
+				$.ajax({ url: '/frontend/ajax.php?module=search&action=autocomplete',
 					type: 'GET',
 					data: 'term=' + request.term + '&language=' + chunks[1] + '&limit=' + limit,
 					success: function(data, textStatus) {

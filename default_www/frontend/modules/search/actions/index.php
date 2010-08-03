@@ -86,15 +86,15 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		if($this->requestedPage === null) $this->requestedPage = 1;
 
 		// cache name
-		$cacheName = 'searchTermCache'. md5($this->term) . '_'. $this->requestedPage;
+		$cacheName = FRONTEND_LANGUAGE .'_searchTermCache_'. md5($this->term) . '_'. $this->requestedPage;
 
 		// assign cache
 		$this->tpl->assign('cacheName', $cacheName);
 
 		// set cache directory
-		$this->tpl->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates/search');
+		$this->tpl->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
 
-		// we will cache this result for 15minutes
+		// we will cache this result for 15 minutes
 		$this->tpl->cache($cacheName, SPOON_DEBUG ? 10 : (15 * 60));
 
 		// if the widget isn't cached, assign the variables

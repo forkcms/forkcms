@@ -92,7 +92,7 @@ class BackendBlogModel
 		$db->delete('blog_comments', 'post_id IN('. implode(',', $ids) .');');
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 	}
 
 
@@ -120,7 +120,7 @@ class BackendBlogModel
 		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', $defaultCategoryId);
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 	}
 
 
@@ -148,7 +148,7 @@ class BackendBlogModel
 		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 	}
 
 
@@ -564,7 +564,7 @@ class BackendBlogModel
 		$db->insert('blog_posts', $item);
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 
 		// return the new id
 		return $newId;
@@ -583,7 +583,7 @@ class BackendBlogModel
 		$return = BackendModel::getDB(true)->insert('blog_categories', $item);
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 
 		// return
 		return $return;
@@ -711,7 +711,7 @@ class BackendBlogModel
 		if(!empty($revisionIdsToKeep)) $db->delete('blog_posts', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 
 		// return the id
 		return $id;
@@ -731,7 +731,7 @@ class BackendBlogModel
 		$return = BackendModel::getDB(true)->update('blog_categories', $item, 'id = ?', (int) $id);
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 
 		// return
 		return $return;
@@ -765,7 +765,7 @@ class BackendBlogModel
 		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
 
 		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog');
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 	}
 }
 
