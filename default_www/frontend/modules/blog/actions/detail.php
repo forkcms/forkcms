@@ -217,6 +217,16 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
+			// does the key exists?
+			if(SpoonSession::exists('blog_comment_'. $this->record['id']))
+			{
+				// calculate difference
+				$diff = time() - (int) SpoonSession::get('blog_comment_'. $this->record['id']);
+
+				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
+				if($diff < 10 && $diff != 0) $this->frm->getField('text')->addError(FL::err('CommentTimeout'));
+			}
+
 			// validate required fields
 			$this->frm->getField('author')->isFilled(FL::err('AuthorIsRequired'));
 			$this->frm->getField('email')->isEmail(FL::err('EmailIsRequired'));
@@ -277,6 +287,9 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
 				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
 				if($comment['status'] == 'published') $redirectLink .= '?comment=true#'. FL::getAction('Comment') .'-'. $commentId;
+
+				// store timestamp in session so we can block excesive usage
+				SpoonSession::set('blog_comment_'. $this->record['id'], time());
 
 				// store author-data in cookies
 				try

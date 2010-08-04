@@ -721,6 +721,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Detail', 'detail');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Rss', 'rss');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'AuthorIsRequired', 'Auteur is een verplicht veld.');
+		$this->insertLocale('nl', 'frontend', 'core', 'err', 'CommentTimeout', 'Slow down cowboy, er moeten wat tijd tussen iedere reactie zijn.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'EmailIsInvalid', 'Gelieve een geldig emailadres in te geven.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'EmailIsRequired', 'E-mail is een verplicht veld.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'FormError', 'Er ging iets mis, kijk de gemarkeerde velden na.');
@@ -762,6 +763,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Detail', 'detail');
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Rss', 'rss');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'AuthorIsRequired', 'Author is a required field.');
+		$this->insertLocale('en', 'frontend', 'core', 'err', 'CommentTimeout', 'Slow down cowboy, there should be some time between the comments.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'EmailIsInvalid', 'Please provide a valid e-email.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'EmailIsRequired', 'E-mail is a required field.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'FormError', 'Something went wrong, please check the marked fields.');
