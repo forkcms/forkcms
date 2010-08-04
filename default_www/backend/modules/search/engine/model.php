@@ -28,6 +28,7 @@ class BackendSearchModel
 	 * @param	string $module				The module wherin will be searched.
 	 * @param	int $otherId				The id of the record.
 	 * @param 	array $fields				A key/value pair of fields to index.
+	 * @param	string[optional] $language	The frontend language for this entry;
 	 */
 	public static function addIndex($module, $otherId, array $fields, $language = null)
 	{
@@ -47,10 +48,10 @@ class BackendSearchModel
 		foreach($fields as $field => $value)
 		{
 			// reformat value
-			$value = strip_tags((String) $value);
+			$value = strip_tags((string) $value);
 
 			// insert in db
-			$db->insert('search_index', array('module' => (String) $module, 'other_id' => (int) $otherId, 'language' => (String) $language, 'field' => (String) $field, 'value' => $value, 'active' => 'Y'));
+			$db->insert('search_index', array('module' => (string) $module, 'other_id' => (int) $otherId, 'language' => (string) $language, 'field' => (string) $field, 'value' => $value, 'active' => 'Y'));
 		}
 
 		// invalidate the cache for search
@@ -78,9 +79,10 @@ class BackendSearchModel
 	 * Edit an index
 	 *
 	 * @return	void
-	 * @param	string $module			The module wherin will be searched.
-	 * @param	int $otherId			The id of the record.
-	 * @param 	array $fields			A key/value pair of fields to index.
+	 * @param	string $module				The module wherin will be searched.
+	 * @param	int $otherId				The id of the record.
+	 * @param 	array $fields				A key/value pair of fields to index.
+	 * @param	string[optional] $language	The frontend language for this entry;
 	 */
 	public static function editIndex($module, $otherId, array $fields, $language = null)
 	{
@@ -100,20 +102,20 @@ class BackendSearchModel
 		foreach($fields as $field => $value)
 		{
 			// reformat value
-			$value = strip_tags((String) $value);
+			$value = strip_tags((string) $value);
 
 			// field already exists
-			if((bool) $db->getVar('SELECT COUNT(module) FROM search_index WHERE module = ? AND other_id = ? AND language = ? AND field = ?' , array((String) $module, (int) $otherId, (String) $language, (String) $field)))
+			if((bool) $db->getVar('SELECT COUNT(module) FROM search_index WHERE module = ? AND other_id = ? AND language = ? AND field = ?' , array((string) $module, (int) $otherId, (string) $language, (string) $field)))
 			{
 				// update in db
-				$db->update('search_index', array('value' => $value, 'active' => 'Y'), 'module = ? AND other_id = ? AND language = ? AND field = ?' , array((String) $module, (int) $otherId, (String) $language, (String) $field));
+				$db->update('search_index', array('value' => $value, 'active' => 'Y'), 'module = ? AND other_id = ? AND language = ? AND field = ?' , array((string) $module, (int) $otherId, (string) $language, (string) $field));
 			}
 
 			// new field
 			else
 			{
 				// insert in db
-				$db->insert('search_index', array('module' => (String) $module, 'other_id' => (int) $otherId, 'language' => (String) $language, 'field' => (String) $field, 'value' => $value, 'active' => 'Y'));
+				$db->insert('search_index', array('module' => (string) $module, 'other_id' => (int) $otherId, 'language' => (string) $language, 'field' => (string) $field, 'value' => $value, 'active' => 'Y'));
 			}
 		}
 
@@ -248,7 +250,7 @@ class BackendSearchModel
 		if(!$language) $language = BL::getWorkingLanguage();
 
 		// delete indexes
-		BackendModel::getDB(true)->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((String) $module, (int) $otherId, (String) $language));
+		BackendModel::getDB(true)->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((string) $module, (int) $otherId, (string) $language));
 
 		// invalidate the cache for search
 		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());

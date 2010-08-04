@@ -60,20 +60,24 @@ class SearchInstall extends ModuleInstaller
 		// make 'pages' searchable
 		$this->makeSearchable('pages');
 
+		// get db instance
+		$db = $this->getDB();
+
 		// get existing menu items
-		$menu = $this->getDB()->retrieve('SELECT m.id, m.revision_id, m.language, m.title FROM pages AS m WHERE m.status = ?', array('active'));
+		$menu = $db->retrieve('SELECT m.id, m.revision_id, m.language, m.title FROM pages AS m WHERE m.status = ?', array('active'));
 
 		// loop menu items
 		foreach($menu as $id => $page)
 		{
 			// get blocks
-			$blocks = $this->getDB()->getColumn('SELECT mb.html FROM pages_blocks AS mb WHERE mb.revision_id = ?', array($page['revision_id']));
+			$blocks = $db->getColumn('SELECT mb.html FROM pages_blocks AS mb WHERE mb.revision_id = ?', array($page['revision_id']));
 
 			// merge blocks content
-			$text = implode(' ', $blocks);
+			$text = strip_tags(implode(' ', $blocks));
 
 			// add page to search index
-			BackendSearchModel::addIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text), $page['language']);
+			$db->insert('search_index', array('module' => (string) 'pages', 'other_id' => (int) $page['id'], 'language' => (string) $page['language'], 'field' => 'title', 'value' => $page['title'], 'active' => 'Y'));
+			$db->insert('search_index', array('module' => (string) 'pages', 'other_id' => (int) $page['id'], 'language' => (string) $page['language'], 'field' => 'text', 'value' => $text, 'active' => 'Y'));
 		}
 
 		// insert locale (nl)

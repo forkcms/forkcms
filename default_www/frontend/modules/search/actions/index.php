@@ -32,7 +32,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	/**
 	 * The search term
 	 *
-	 * @var String
+	 * @var string
 	 */
 	private $term = '';
 

@@ -53,7 +53,7 @@ class SettingsInstall extends ModuleInstaller
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'ConfigurationError', 'Some settings are not yet configured.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpAPIKeys', 'Access codes for webservices.');
-		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpDateFormatLong', 'Format that\s used on overview and detail pages.');
+		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpDateFormatLong', 'Format that\'s used on overview and detail pages.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpDateFormatShort', 'This format is mostly used in table overviews.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpDomains', 'Enter the domains on which this website can be reached. (Split domains with linebreaks.)');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpEmailWebmaster', 'Send CMS notifications to this e-mailaddress.');

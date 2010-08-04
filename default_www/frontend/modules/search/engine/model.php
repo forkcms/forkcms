@@ -321,9 +321,9 @@ class FrontendSearchModel
 	 * Deactivate an index (no longer has to be searched)
 	 *
 	 * @return	void
-	 * @param	String $module		The module we're deleting an item from.
+	 * @param	string $module		The module we're deleting an item from.
 	 * @param	array $otherIds		An array of other_id's for this module.
-	 * @param	boolean $active		Set the index to active?
+	 * @param	bool $active		Set the index to active?
 	 */
 	public static function statusIndex($module, array $otherIds, $active = true)
 	{
