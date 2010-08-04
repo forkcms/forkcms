@@ -75,44 +75,44 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm = new BackendForm('generalSettings');
 
 		// general settings
-		$this->frm->addText('site_title', BackendModel::getSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
-		$this->frm->addTextarea('site_wide_html', BackendModel::getSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
-		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
+		$this->frm->addText('site_title', BackendModel::getModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+		$this->frm->addTextarea('site_wide_html', BackendModel::getModuleSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
+		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getModuleSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
 
 		// email settings
-		$mailerType = BackendModel::getSetting('core', 'mailer_type', 'mail');
+		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
 		$this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
-		$mailerFrom = BackendModel::getSetting('core', 'mailer_from');
+		$mailerFrom = BackendModel::getModuleSetting('core', 'mailer_from');
 		$this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
 		$this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
-		$mailerTo = BackendModel::getSetting('core', 'mailer_to');
+		$mailerTo = BackendModel::getModuleSetting('core', 'mailer_to');
 		$this->frm->addText('mailer_to_name', (isset($mailerTo['name'])) ? $mailerTo['name'] : '');
 		$this->frm->addText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '');
-		$mailerReplyTo = BackendModel::getSetting('core', 'mailer_reply_to');
+		$mailerReplyTo = BackendModel::getModuleSetting('core', 'mailer_reply_to');
 		$this->frm->addText('mailer_reply_to_name', (isset($mailerReplyTo['name'])) ? $mailerReplyTo['name'] : '');
 		$this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
 
 		// smtp settings
-		$this->frm->addText('smtp_server', BackendModel::getSetting('core', 'smtp_server', ''));
-		$this->frm->addText('smtp_port', BackendModel::getSetting('core', 'smtp_port', 25));
-		$this->frm->addText('smtp_username', BackendModel::getSetting('core', 'smtp_username', ''));
-		$this->frm->addPassword('smtp_password', BackendModel::getSetting('core', 'smtp_password', ''));
+		$this->frm->addText('smtp_server', BackendModel::getModuleSetting('core', 'smtp_server', ''));
+		$this->frm->addText('smtp_port', BackendModel::getModuleSetting('core', 'smtp_port', 25));
+		$this->frm->addText('smtp_username', BackendModel::getModuleSetting('core', 'smtp_username', ''));
+		$this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('core', 'smtp_password', ''));
 
 		// theme
-		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getSetting('core', 'theme', null));
+		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', null));
 		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('NoTheme'));
 
 		// api keys
-		$this->frm->addText('fork_api_public_key', BackendModel::getSetting('core', 'fork_api_public_key', null));
-		$this->frm->addText('fork_api_private_key', BackendModel::getSetting('core', 'fork_api_private_key', null));
+		$this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('core', 'fork_api_public_key', null));
+		$this->frm->addText('fork_api_private_key', BackendModel::getModuleSetting('core', 'fork_api_private_key', null));
 
 		// date & time formats
-		$this->frm->addDropdown('time_format', BackendModel::getTimeFormats(), BackendModel::getSetting('core', 'time_format'));
-		$this->frm->addDropdown('date_format_short', BackendModel::getDateFormatsShort(), BackendModel::getSetting('core', 'date_format_short'));
-		$this->frm->addDropdown('date_format_long', BackendModel::getDateFormatsLong(), BackendModel::getSetting('core', 'date_format_long'));
+		$this->frm->addDropdown('time_format', BackendModel::getTimeFormats(), BackendModel::getModuleSetting('core', 'time_format'));
+		$this->frm->addDropdown('date_format_short', BackendModel::getDateFormatsShort(), BackendModel::getModuleSetting('core', 'date_format_short'));
+		$this->frm->addDropdown('date_format_long', BackendModel::getDateFormatsLong(), BackendModel::getModuleSetting('core', 'date_format_long'));
 
 		// create a list of the languages
-		foreach(BackendModel::getSetting('core', 'languages', array('nl')) as $abbreviation)
+		foreach(BackendModel::getModuleSetting('core', 'languages', array('nl')) as $abbreviation)
 		{
 			// is this the default language
 			$defaultLanguage = ($abbreviation == SITE_DEFAULT_LANGUAGE) ? true : false;
@@ -146,12 +146,12 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		}
 
 		// create multilanguage checkbox
-		$this->frm->addMultiCheckbox('active_languages', $activeLanguages, BackendModel::getSetting('core', 'active_languages', array(SITE_MULTILANGUAGE)));
-		$this->frm->addMultiCheckbox('redirect_languages', $redirectLanguages, BackendModel::getSetting('core', 'redirect_languages', array(SITE_MULTILANGUAGE)));
+		$this->frm->addMultiCheckbox('active_languages', $activeLanguages, BackendModel::getModuleSetting('core', 'active_languages', array(SITE_MULTILANGUAGE)));
+		$this->frm->addMultiCheckbox('redirect_languages', $redirectLanguages, BackendModel::getModuleSetting('core', 'redirect_languages', array(SITE_MULTILANGUAGE)));
 
 		// api keys are not required for every module
-		if($this->needsAkismet) $this->frm->addText('akismet_key', BackendModel::getSetting('core', 'akismet_key', null));
-		if($this->needsGoogleMaps) $this->frm->addText('google_maps_key', BackendModel::getSetting('core', 'google_maps_key', null));
+		if($this->needsAkismet) $this->frm->addText('akismet_key', BackendModel::getModuleSetting('core', 'akismet_key', null));
+		if($this->needsGoogleMaps) $this->frm->addText('google_maps_key', BackendModel::getModuleSetting('core', 'google_maps_key', null));
 	}
 
 
@@ -227,7 +227,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			if($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled())
 			{
 				// key has changed
-				if($this->frm->getField('akismet_key')->getValue() != BackendModel::getSetting('core', 'akismet_key', null))
+				if($this->frm->getField('akismet_key')->getValue() != BackendModel::getModuleSetting('core', 'akismet_key', null))
 				{
 					 // load akismet
 					 require_once PATH_LIBRARY .'/external/akismet.php';

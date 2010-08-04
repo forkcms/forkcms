@@ -551,7 +551,7 @@ class BackendPagesModel
 		if(count($templates) == 1) return false;
 
 		// we can't delete the default template
-		if($id == BackendModel::getSetting('pages', 'default_template')) return false;
+		if($id == BackendModel::getModuleSetting('pages', 'default_template')) return false;
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -1157,7 +1157,7 @@ class BackendPagesModel
 		$html .= '</div>'."\n";
 
 		// only show meta if needed
-		if(BackendModel::getSetting('pages', 'meta_navigation', false))
+		if(BackendModel::getModuleSetting('pages', 'meta_navigation', false))
 		{
 			// meta pages
 			$html .= '<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
@@ -1617,7 +1617,7 @@ class BackendPagesModel
 		$id = (int) $db->insert('pages', $page);
 
 		// how many revisions should we keep
-		$rowsToKeep = (int) BackendModel::getSetting('pages', 'max_num_revisions', 20);
+		$rowsToKeep = (int) BackendModel::getModuleSetting('pages', 'max_num_revisions', 20);
 
 		// get revision-ids for items to keep
 		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id

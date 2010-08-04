@@ -46,7 +46,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default category id
-		$defaultCategoryId = BackendModel::getSetting('blog', 'default_category_'. BL::getWorkingLanguage());
+		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage());
 
 		// create form
 		$this->frm = new BackendForm('add');
@@ -60,7 +60,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('text');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
-		$this->frm->addCheckbox('allow_comments', BackendModel::getSetting('blog', 'allow_comments', false));
+		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('blog', 'allow_comments', false));
 		$this->frm->addDropdown('category_id', BackendBlogModel::getCategories(), $defaultCategoryId);
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
 		$this->frm->addText('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
@@ -150,7 +150,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 					if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('blog', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
-					if(BackendModel::getSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
+					if(BackendModel::getModuleSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=id-'. $id);

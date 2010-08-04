@@ -283,7 +283,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex('blog', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
-					if(BackendModel::getSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .'/'. $this->meta->getURL());
+					if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .'/'. $this->meta->getURL());
 
 					// everything is saved, so redirect to the overview
 					$this->redirect(BackendModel::createURLForAction('edit') .'&report=edited&var='. urlencode($item['title']) .'&id='. $this->id);

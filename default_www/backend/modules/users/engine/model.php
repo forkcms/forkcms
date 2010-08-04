@@ -149,7 +149,7 @@ class BackendUsersModel
 		$possibleFormats = array();
 
 		// loop available formats
-		foreach((array) BackendModel::getSetting('users', 'date_formats') as $format)
+		foreach((array) BackendModel::getModuleSetting('users', 'date_formats') as $format)
 		{
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
@@ -200,7 +200,7 @@ class BackendUsersModel
 		$possibleFormats = array();
 
 		// loop available formats
-		foreach(BackendModel::getSetting('users', 'time_formats') as $format)
+		foreach(BackendModel::getModuleSetting('users', 'time_formats') as $format)
 		{
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}

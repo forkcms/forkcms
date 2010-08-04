@@ -84,21 +84,21 @@ class BackendModel
 		$googleMapsModules = BackendSettingsModel::getModulesThatRequireGoogleMaps();
 
 		// check if the akismet key is available if there are modules that require it
-		if(!empty($akismetModules) && BackendModel::getSetting('core', 'akismet_key', null) == '')
+		if(!empty($akismetModules) && self::getModuleSetting('core', 'akismet_key', null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => BL::getError('AkismetKey'));
 		}
 
 		// check if the google maps key is available if there are modules that require it
-		if(!empty($googleMapsModules) && BackendModel::getSetting('core', 'google_maps_key', null) == '')
+		if(!empty($googleMapsModules) && self::getModuleSetting('core', 'google_maps_key', null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => BL::getError('GoogleMapsKey'));
 		}
 
 		// check if the fork API keys are available
-		if(BackendModel::getSetting('core', 'fork_api_private_key') == '' || BackendModel::getSetting('core', 'fork_api_public_key') == '')
+		if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
 		{
 			$warnings[] = array('message' => BL::getError('ForkAPIKeys'));
 		}
@@ -249,7 +249,7 @@ class BackendModel
 		$possibleFormats = array();
 
 		// loop available formats
-		foreach((array) BackendModel::getSetting('core', 'date_formats_long') as $format)
+		foreach((array) self::getModuleSetting('core', 'date_formats_long') as $format)
 		{
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
@@ -269,7 +269,7 @@ class BackendModel
 		$possibleFormats = array();
 
 		// loop available formats
-		foreach((array) BackendModel::getSetting('core', 'date_formats_short') as $format)
+		foreach((array) self::getModuleSetting('core', 'date_formats_short') as $format)
 		{
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
@@ -446,7 +446,7 @@ class BackendModel
 	 * @param	string $key						The name of the setting.
 	 * @param	mixed[optional] $defaultValue	The value to store if the setting isn't present.
 	 */
-	public static function getSetting($module, $key, $defaultValue = null)
+	public static function getModuleSetting($module, $key, $defaultValue = null)
 	{
 		// are the values available
 		if(empty(self::$moduleSettings)) self::getModuleSettings();
@@ -460,41 +460,6 @@ class BackendModel
 
 		// return
 		return self::$moduleSettings[$module][$key];
-	}
-
-
-	/**
-	 * Fetch the list of available themes
-	 *
-	 * @return array
-	 */
-	public static function getThemes()
-	{
-		// fetch themes
-		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH .'/themes/', false, array('.svn'));
-
-		// create array
-		return array_combine($themes, $themes);
-	}
-
-
-	/**
-	 * Fetch the list of time formats including examples of these formats.
-	 *
-	 * @return	array
-	 */
-	public static function getTimeFormats()
-	{
-		// init var
-		$possibleFormats = array();
-
-		// loop available formats
-		foreach(BackendModel::getSetting('core', 'time_formats') as $format)
-		{
-			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
-		}
-
-		return $possibleFormats;
 	}
 
 
@@ -528,6 +493,41 @@ class BackendModel
 
 		// return
 		return self::$moduleSettings;
+	}
+
+
+	/**
+	 * Fetch the list of available themes
+	 *
+	 * @return array
+	 */
+	public static function getThemes()
+	{
+		// fetch themes
+		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH .'/themes/', false, array('.svn'));
+
+		// create array
+		return array_combine($themes, $themes);
+	}
+
+
+	/**
+	 * Fetch the list of time formats including examples of these formats.
+	 *
+	 * @return	array
+	 */
+	public static function getTimeFormats()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach(self::getModuleSetting('core', 'time_formats') as $format)
+		{
+			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
+		}
+
+		return $possibleFormats;
 	}
 
 
@@ -862,7 +862,7 @@ class BackendModel
 		$valueToStore = serialize($value);
 
 		// store
-		BackendModel::getDB(true)->execute('INSERT INTO modules_settings(module, name, value)
+		self::getDB(true)->execute('INSERT INTO modules_settings(module, name, value)
 											VALUES(?, ?, ?)
 											ON DUPLICATE KEY UPDATE value = ?;',
 											array($module, $key, $valueToStore, $valueToStore));

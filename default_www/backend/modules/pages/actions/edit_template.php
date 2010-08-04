@@ -64,7 +64,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 		// determine if deleting is allowed
 		$deleteAllowed = true;
-		if($this->record['id'] == BackendModel::getSetting('pages', 'default_template')) $deleteAllowed = false;
+		if($this->record['id'] == BackendModel::getModuleSetting('pages', 'default_template')) $deleteAllowed = false;
 		elseif(count(BackendPagesModel::getTemplates()) == 1) $deleteAllowed = false;
 		elseif(BackendPagesModel::isTemplateInUse($this->id))
 		{
@@ -95,7 +95,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		if(BackendPagesModel::isTemplateInUse($this->id)) $this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
 		$this->frm->addText('format', $this->record['data']['format']);
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addCheckbox('default', ($this->record['id'] == BackendModel::getSetting('pages', 'default_template')));
+		$this->frm->addCheckbox('default', ($this->record['id'] == BackendModel::getModuleSetting('pages', 'default_template')));
 
 		// init vars
 		$names = array();

@@ -55,14 +55,14 @@ class BackendBlogModel
 		$warnings = array();
 
 		// blog rss title
-		if(BackendModel::getSetting('blog', 'rss_title_'. BL::getWorkingLanguage(), null) == '')
+		if(BackendModel::getModuleSetting('blog', 'rss_title_'. BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => sprintf(BL::getError('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
 		}
 
 		// blog rss description
-		if(BackendModel::getSetting('blog', 'rss_description_'. BL::getWorkingLanguage(), null) == '')
+		if(BackendModel::getModuleSetting('blog', 'rss_description_'. BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => sprintf(BL::getError('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
@@ -114,7 +114,7 @@ class BackendBlogModel
 		$db->delete('blog_categories', 'id = ?', $id);
 
 		// default category
-		$defaultCategoryId = BackendModel::getSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null);
+		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null);
 
 		// update category for the posts that might be in this category
 		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', $defaultCategoryId);
@@ -697,7 +697,7 @@ class BackendBlogModel
 		$db->insert('blog_posts', $item);
 
 		// how many revisions should we keep
-		$rowsToKeep = (int) BackendModel::getSetting('blog', 'max_num_revisions', 20);
+		$rowsToKeep = (int) BackendModel::getModuleSetting('blog', 'max_num_revisions', 20);
 
 		// get revision-ids for items to keep
 		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id

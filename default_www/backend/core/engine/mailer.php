@@ -34,9 +34,9 @@ class BackendMailer
 		$template = (string) $template;
 
 		// set defaults
-		$to = BackendModel::getSetting('core', 'mailer_to');
-		$from = BackendModel::getSetting('core', 'mailer_from');
-		$replyTo = BackendModel::getSetting('core', 'mailer_reply_to');
+		$to = BackendModel::getModuleSetting('core', 'mailer_to');
+		$from = BackendModel::getModuleSetting('core', 'mailer_from');
+		$replyTo = BackendModel::getModuleSetting('core', 'mailer_reply_to');
 
 		// set recipient/sender headers
 		$email['to_email'] = (empty($toEmail)) ? (string) $to['email'] : $toEmail;
@@ -154,7 +154,7 @@ class BackendMailer
 												array($id));
 
 		// mailer type
-		$mailerType = BackendModel::getSetting('core', 'mailer_type', 'mail');
+		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
@@ -164,10 +164,10 @@ class BackendMailer
 		if($mailerType == 'smtp')
 		{
 			// get settings
-			$SMTPServer = BackendModel::getSetting('core', 'smtp_server');
-			$SMTPPort = BackendModel::getSetting('core', 'smtp_port', 25);
-			$SMTPUsername = BackendModel::getSetting('core', 'smtp_username');
-			$SMTPPassword = BackendModel::getSetting('core', 'smtp_password');
+			$SMTPServer = BackendModel::getModuleSetting('core', 'smtp_server');
+			$SMTPPort = BackendModel::getModuleSetting('core', 'smtp_port', 25);
+			$SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
+			$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
 
 			// set authentication if needed
 			if($SMTPUsername !== null && $SMTPPassword !== null)

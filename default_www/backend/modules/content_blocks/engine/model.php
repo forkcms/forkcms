@@ -207,7 +207,7 @@ class BackendContentBlocksModel
 		$db->insert('content_blocks', $values);
 
 		// how many revisions should we keep
-		$rowsToKeep = (int) BackendModel::getSetting('content_blocks', 'max_num_revisions', 20);
+		$rowsToKeep = (int) BackendModel::getModuleSetting('content_blocks', 'max_num_revisions', 20);
 
 		// get revision-ids for items to keep
 		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id

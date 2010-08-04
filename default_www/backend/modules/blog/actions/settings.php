@@ -47,33 +47,33 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm = new BackendForm('settings');
 
 		// add fields for pagination
-		$this->frm->addDropdown('overview_number_of_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getSetting($this->URL->getModule(), 'overview_num_items', 10));
-		$this->frm->addDropdown('recent_articles_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getSetting($this->URL->getModule(), 'recent_articles_num_items', 5));
+		$this->frm->addDropdown('overview_number_of_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 10));
+		$this->frm->addDropdown('recent_articles_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getModuleSetting($this->URL->getModule(), 'recent_articles_num_items', 5));
 
 		// add fields for spam
-		$this->frm->addCheckbox('spamfilter', BackendModel::getSetting($this->URL->getModule(), 'spamfilter', false));
+		$this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
 
 		// no Akismet-key, so we can't enable SPAM-filtering
-		if(BackendModel::getSetting('core', 'akismet_key') == '')
+		if(BackendModel::getModuleSetting('core', 'akismet_key') == '')
 		{
 			$this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
 			$this->tpl->assign('noAkismetKey', true);
 		}
 
 		// add fields for comments
-		$this->frm->addCheckbox('allow_comments', BackendModel::getSetting($this->URL->getModule(), 'allow_comments', false));
+		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting($this->URL->getModule(), 'allow_comments', false));
 
 		// add fields for comments
-		$this->frm->addCheckbox('moderation', BackendModel::getSetting($this->URL->getModule(), 'moderation', false));
+		$this->frm->addCheckbox('moderation', BackendModel::getModuleSetting($this->URL->getModule(), 'moderation', false));
 
 		// add fields for SEO
-		$this->frm->addCheckbox('ping_services', BackendModel::getSetting($this->URL->getModule(), 'ping_services', false));
+		$this->frm->addCheckbox('ping_services', BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false));
 
 		// add fields for RSS
-		$this->frm->addCheckbox('rss_meta', BackendModel::getSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), true));
-		$this->frm->addText('rss_title', BackendModel::getSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage()));
-		$this->frm->addTextarea('rss_description', BackendModel::getSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage()));
-		$this->frm->addText('feedburner_url', BackendModel::getSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage()));
+		$this->frm->addCheckbox('rss_meta', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), true));
+		$this->frm->addText('rss_title', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage()));
+		$this->frm->addTextarea('rss_description', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage()));
+		$this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage()));
 	}
 
 
@@ -120,7 +120,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				BackendModel::setSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
 				BackendModel::setSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
 				if($feedburner !== null) BackendModel::setSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
-				if(BackendModel::getSetting('core', 'akismet_key') === null) BackendModel::setSetting($this->URL->getModule(), 'spamfilter', false);
+				if(BackendModel::getModuleSetting('core', 'akismet_key') === null) BackendModel::setSetting($this->URL->getModule(), 'spamfilter', false);
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');

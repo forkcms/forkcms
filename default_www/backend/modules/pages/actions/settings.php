@@ -47,7 +47,7 @@ class BackendPagesSettings extends BackendBaseActionEdit
 		$this->frm = new BackendForm('settings');
 
 		// add fields for meta navigation
-		$this->frm->addCheckbox('meta_navigation', BackendModel::getSetting('pages', 'meta_navigation', false));
+		$this->frm->addCheckbox('meta_navigation', BackendModel::getModuleSetting('pages', 'meta_navigation', false));
 	}
 
 

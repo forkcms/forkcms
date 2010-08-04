@@ -68,7 +68,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->extras = BackendPagesModel::getExtras();
 
 		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getSetting('pages', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
@@ -129,7 +129,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// get default template id
-		$defaultTemplateId = BackendModel::getSetting('pages', 'default_template', 1);
+		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
 
 		// create form
 		$this->frm = new BackendForm('edit');
@@ -144,7 +144,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));
 
 		// get maximum number of blocks
-		$maxNumBlocks = BackendModel::getSetting('pages', 'template_max_blocks', 5);
+		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
 
 		// build blocks array
 		for($i = 0; $i < $maxNumBlocks; $i++)

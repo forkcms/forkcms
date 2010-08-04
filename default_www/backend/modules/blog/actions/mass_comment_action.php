@@ -44,7 +44,7 @@ class BackendBlogMassCommentAction extends BackendBaseAction
 			elseif($action == 'spam')
 			{
 				// is the spamfilter active?
-				if(BackendModel::getSetting($this->URL->getModule(), 'spamfilter', false))
+				if(BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false))
 				{
 					// get data
 					$comments = BackendBlogModel::getComments($ids);
@@ -85,7 +85,7 @@ class BackendBlogMassCommentAction extends BackendBaseAction
 				if($action == 'published')
 				{
 					// is the spamfilter active?
-					if(BackendModel::getSetting($this->URL->getModule(), 'spamfilter', false))
+					if(BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false))
 					{
 						// get data
 						$comments = BackendBlogModel::getComments($ids);

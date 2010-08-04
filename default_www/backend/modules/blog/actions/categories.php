@@ -49,6 +49,9 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::getLabel('Edit'));
 
+		// row function
+		$this->datagrid->setRowFunction()
+
 		// disable paging
 		$this->datagrid->setPaging(false);
 

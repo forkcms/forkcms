@@ -156,7 +156,7 @@ class BackendJavascript
 		if(BackendAuthentication::isLoggedIn()) $language = BackendAuthentication::getUser()->getSetting('interface_language');
 
 		// unknown user (fallback to default language)
-		else $language = BackendModel::getSetting('core', 'default_interface_language');
+		else $language = BackendModel::getModuleSetting('core', 'default_interface_language');
 
 		// set the locale (we need this for the labels)
 		BackendLanguage::setLocale($language);

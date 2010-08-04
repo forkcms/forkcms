@@ -67,7 +67,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 		$this->settings = BackendSearchModel::getModuleSettings();
 
 		// add field for pagination
-		$this->frm->addDropdown('overview_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getSetting($this->URL->getModule(), 'overview_num_items', 20));
+		$this->frm->addDropdown('overview_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 20));
 
 		// modules that, no matter what, can not be searched
 		$disallowedModules = array('search');

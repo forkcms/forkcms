@@ -57,7 +57,7 @@ class BackendLanguage
 		if(empty(self::$activeLanguages))
 		{
 			// grab from settings
-			$activeLanguages = (array) BackendModel::getSetting('core', 'active_languages');
+			$activeLanguages = (array) BackendModel::getModuleSetting('core', 'active_languages');
 
 			// store in cache
 			self::$activeLanguages = $activeLanguages;
@@ -131,7 +131,7 @@ class BackendLanguage
 	public static function getInterfaceLanguages()
 	{
 		// grab from settings
-		$languages = BackendModel::getSetting('core', 'interface_languages', array('nl'));
+		$languages = BackendModel::getModuleSetting('core', 'interface_languages', array('nl'));
 
 		// init var
 		$return = array();
@@ -195,7 +195,7 @@ class BackendLanguage
 	public static function getLocaleLanguages()
 	{
 		// grab from settings
-		$languages = (array) BackendModel::getSetting('locale', 'languages');
+		$languages = (array) BackendModel::getModuleSetting('locale', 'languages');
 
 		// init var
 		$return = array();
@@ -270,7 +270,7 @@ class BackendLanguage
 	public static function getWorkingLanguages()
 	{
 		// get languages
-		$languages = BackendModel::getSetting('core', 'languages', array('nl'));
+		$languages = BackendModel::getModuleSetting('core', 'languages', array('nl'));
 
 		// init var
 		$return = array();

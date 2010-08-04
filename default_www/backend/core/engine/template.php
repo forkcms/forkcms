@@ -201,14 +201,14 @@ class BackendTemplate extends SpoonTemplate
 		}
 
 		// assign some variable constants (such as site-title)
-		$this->assign('SITE_TITLE', BackendModel::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+		$this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
 
 		// theme
-		if(BackendModel::getSetting('core', 'theme') !== null)
+		if(BackendModel::getModuleSetting('core', 'theme') !== null)
 		{
-			$this->assign('THEME', BackendModel::getSetting('core', 'theme'));
-			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme'));
-			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/'. BackendModel::getSetting('core', 'theme') .'/core/css/screen.css')));
+			$this->assign('THEME', BackendModel::getModuleSetting('core', 'theme'));
+			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. BackendModel::getModuleSetting('core', 'theme'));
+			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/'. BackendModel::getModuleSetting('core', 'theme') .'/core/css/screen.css')));
 		}
 	}
 

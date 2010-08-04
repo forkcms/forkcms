@@ -29,7 +29,7 @@ class BackendSettingsModel
 		foreach($activeModules as $module)
 		{
 			// fetch setting
-			$setting = BackendModel::getSetting($module, 'requires_akismet', false);
+			$setting = BackendModel::getModuleSetting($module, 'requires_akismet', false);
 
 			// add to the list
 			if($setting) $modules[] = $module;
@@ -54,7 +54,7 @@ class BackendSettingsModel
 		foreach($activeModules as $module)
 		{
 			// fetch setting
-			$setting = BackendModel::getSetting($module, 'requires_google_maps', false);
+			$setting = BackendModel::getModuleSetting($module, 'requires_google_maps', false);
 
 			// add to the list
 			if($setting) $modules[] = $module;

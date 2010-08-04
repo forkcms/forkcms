@@ -49,7 +49,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 
 		$groups = BackendUsersModel::getGroups();
 		$groupIds = array_keys($groups);
-		$defaultGroupId = BackendModel::getSetting('users', 'default_group', $groupIds[0]);
+		$defaultGroupId = BackendModel::getModuleSetting('users', 'default_group', $groupIds[0]);
 
 		// create elements
 		$this->frm->addText('email', null, 255);
