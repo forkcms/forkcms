@@ -655,7 +655,7 @@ class SpoonFilter
 	 */
 	public static function isURL($value)
 	{
-		return (filter_var((string) $value, FILTER_VALIDATE_URL) !== false);
+		return (bool) preg_match('/(((http|ftp|https):\/{2})?(([0-9a-z_-]+\.)+('. implode('|', self::$tlds) .')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu', (string) $value);
 	}
 
 

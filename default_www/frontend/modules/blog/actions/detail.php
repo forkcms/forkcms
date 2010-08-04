@@ -223,7 +223,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			$this->frm->getField('text')->isFilled(FL::err('MessageIsRequired'));
 
 			// validate optional fields
-			if($this->frm->getField('website')->isFilled()) $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
+			if($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://')
+			{
+				$var = $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
+			}
 
 			// no errors?
 			if($this->frm->isCorrect())
