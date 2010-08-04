@@ -6,6 +6,63 @@ utils = {
 	eof: true
 }
 
+
+/**
+ * Object that contains some function related to arrays
+ * 
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ */
+utils.array = {
+	/**
+	 * is the given value present in the array
+	 * 
+	 * @return	bool
+	 */
+	inArray: function(needle, array) {
+		// loop values
+		for(var i in array) {
+			if(array[i] == needle) return true;
+		}
+
+		// fallback
+		return false;
+	},
+	// end
+	eof: true
+}
+
+
+
+
+/**
+ * Object that contains some function related to cookies
+ * 
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ */
+utils.cookies = {
+	/**
+	 * Are cookies enabled?
+	 * 
+	 * @return	bool
+	 */
+	isEnabled: function() {
+		// try to grab the property
+		var cookiesEnabled = (navigator.cookieEnabled) ? true : false;
+		
+		// unknown property?
+		if(typeof navigator.cookieEanbled == 'undefined' && !cookiesEnabled) {
+			// try to set a cookie
+			document.cookie = 'testcookie';
+			cookiesEnabled = (document.cookie.indexOf('testcookie') != -1);
+		}
+		
+		// return
+		return cookiesEnabled;
+	},
+	// end
+	eof: true
+}
+
 /**
  * Object that contains some functions related to forms
  * 
@@ -67,8 +124,27 @@ utils.form = {
  * Object that contains some functions related to strings
  * 
  * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 utils.string = {
+	/**
+	 * Encode the string as HTML
+	 * 
+	 * @return	string
+	 * @param	string value
+	 */
+	htmlEncode: function(value) {
+		return $('<div/>').text(value).html(); 
+	},
+	/**
+	 * Decode the string as HTML
+	 * 
+	 * @return	string
+	 * @param	string value
+	 */
+	htmlDecode: function(value) {
+		return $('<div/>').html(value).text();
+	},
 	/**
 	 * Replace all occurences of one string into a string
 	 * 

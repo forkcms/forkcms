@@ -124,8 +124,27 @@ utils.form = {
  * Object that contains some functions related to strings
  * 
  * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 utils.string = {
+	/**
+	 * Encode the string as HTML
+	 * 
+	 * @return	string
+	 * @param	string value
+	 */
+	htmlEncode: function(value) {
+		return $('<div/>').text(value).html(); 
+	},
+	/**
+	 * Decode the string as HTML
+	 * 
+	 * @return	string
+	 * @param	string value
+	 */
+	htmlDecode: function(value) {
+		return $('<div/>').html(value).text();
+	},
 	/**
 	 * Replace all occurences of one string into a string
 	 * 
