@@ -73,6 +73,8 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('name', $this->record['name']);
+		$this->frm->addCheckbox('is_default', (BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) == $this->id));
+		if((BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) == $this->id)) $this->frm->getField('is_default')->setAttribute('disabled', 'disabled');
 	}
 
 
@@ -121,6 +123,13 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 
 				// upate the item
 				BackendBlogModel::updateCategory($this->id, $category);
+
+				// it isn't the default category but it should be.
+				if(BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) != $this->id && $this->frm->getField('is_default')->getChecked())
+				{
+					// store
+					BackendModel::setModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), $this->id);
+				}
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($category['name']));

@@ -268,41 +268,41 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			if($this->frm->isCorrect())
 			{
 				// general settings
-				BackendModel::setSetting('core', 'site_title_'. BL::getWorkingLanguage(), $this->frm->getField('site_title')->getValue());
-				BackendModel::setSetting('core', 'site_wide_html', $this->frm->getField('site_wide_html')->getValue());
+				BackendModel::setModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), $this->frm->getField('site_title')->getValue());
+				BackendModel::setModuleSetting('core', 'site_wide_html', $this->frm->getField('site_wide_html')->getValue());
 
 				// e-mail settings
-				BackendModel::setSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
-				BackendModel::setSetting('core', 'mailer_from', array('name' => $this->frm->getField('mailer_from_name')->getValue(), 'email' => $this->frm->getField('mailer_from_email')->getValue()));
-				BackendModel::setSetting('core', 'mailer_to', array('name' => $this->frm->getField('mailer_to_name')->getValue(), 'email' => $this->frm->getField('mailer_to_email')->getValue()));
-				BackendModel::setSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
+				BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
+				BackendModel::setModuleSetting('core', 'mailer_from', array('name' => $this->frm->getField('mailer_from_name')->getValue(), 'email' => $this->frm->getField('mailer_from_email')->getValue()));
+				BackendModel::setModuleSetting('core', 'mailer_to', array('name' => $this->frm->getField('mailer_to_name')->getValue(), 'email' => $this->frm->getField('mailer_to_email')->getValue()));
+				BackendModel::setModuleSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
 
 				// smtp settings
-				BackendModel::setSetting('core', 'smtp_server', $this->frm->getField('smtp_server')->getValue());
-				BackendModel::setSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
-				BackendModel::setSetting('core', 'smtp_username', $this->frm->getField('smtp_username')->getValue());
-				BackendModel::setSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
+				BackendModel::setModuleSetting('core', 'smtp_server', $this->frm->getField('smtp_server')->getValue());
+				BackendModel::setModuleSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
+				BackendModel::setModuleSetting('core', 'smtp_username', $this->frm->getField('smtp_username')->getValue());
+				BackendModel::setModuleSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
 
 				// api keys
-				BackendModel::setSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
-				BackendModel::setSetting('core', 'fork_api_private_key', $this->frm->getField('fork_api_private_key')->getValue());
-				if($this->needsAkismet) BackendModel::setSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());
-				if($this->needsGoogleMaps) BackendModel::setSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
+				BackendModel::setModuleSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
+				BackendModel::setModuleSetting('core', 'fork_api_private_key', $this->frm->getField('fork_api_private_key')->getValue());
+				if($this->needsAkismet) BackendModel::setModuleSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());
+				if($this->needsGoogleMaps) BackendModel::setModuleSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
 
 				// theme
-				BackendModel::setSetting('core', 'theme', $this->frm->getField('theme')->getValue());
+				BackendModel::setModuleSetting('core', 'theme', $this->frm->getField('theme')->getValue());
 
 				// date & time formats
-				BackendModel::setSetting('core', 'time_format', $this->frm->getField('time_format')->getValue());
-				BackendModel::setSetting('core', 'date_format_short', $this->frm->getField('date_format_short')->getValue());
-				BackendModel::setSetting('core', 'date_format_long', $this->frm->getField('date_format_long')->getValue());
+				BackendModel::setModuleSetting('core', 'time_format', $this->frm->getField('time_format')->getValue());
+				BackendModel::setModuleSetting('core', 'date_format_short', $this->frm->getField('date_format_short')->getValue());
+				BackendModel::setModuleSetting('core', 'date_format_long', $this->frm->getField('date_format_long')->getValue());
 
 				// before we save the languages, we need to ensure that each language actually exists and may be chosen.
 				$languages = array(SITE_DEFAULT_LANGUAGE);
 
 				// save active languages
-				BackendModel::setSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('active_languages')->getValue())));
-				BackendModel::setSetting('core', 'redirect_languages', array_unique(array_merge($languages, $this->frm->getField('redirect_languages')->getValue())));
+				BackendModel::setModuleSetting('core', 'active_languages', array_unique(array_merge($languages, $this->frm->getField('active_languages')->getValue())));
+				BackendModel::setModuleSetting('core', 'redirect_languages', array_unique(array_merge($languages, $this->frm->getField('redirect_languages')->getValue())));
 
 				// domains may not contain www, http or https. Therefor we must loop and create the list of domains.
 				$siteDomains = array();
@@ -322,7 +322,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				}
 
 				// save domains
-				BackendModel::setSetting('core', 'site_domains', $siteDomains);
+				BackendModel::setModuleSetting('core', 'site_domains', $siteDomains);
 
 				// assign report
 				$this->tpl->assign('report', true);

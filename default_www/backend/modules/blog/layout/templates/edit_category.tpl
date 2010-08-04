@@ -7,8 +7,14 @@
 			<h3>{$lblBlog|ucfirst}: {$msgEditCategory|sprintf:{$name}}</h3>
 		</div>
 		<div class="options">
-			<label for="name">{$lblCategory|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-			{$txtName} {$txtNameError}
+			<p>
+				<label for="name">{$lblCategory|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtName} {$txtNameError}
+			</p>
+
+			<ul class="inputList">
+				<li><label for="isDefault">{$lblDefault}</label> {$chkIsDefault} {$chkIsDefaultError}</li>
+			</ul>
 		</div>
 	</div>
 

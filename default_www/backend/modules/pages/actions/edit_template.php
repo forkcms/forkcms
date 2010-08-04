@@ -170,7 +170,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				BackendPagesModel::updateTemplate($this->id, $template);
 
 				// set default template
-				if($this->frm->getField('default')->getChecked()) BackendModel::setSetting('pages', 'default_template', $this->id);
+				if($this->frm->getField('default')->getChecked()) BackendModel::setModuleSetting('pages', 'default_template', $this->id);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited-template&var='. urlencode($template['label']));

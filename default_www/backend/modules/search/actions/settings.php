@@ -139,7 +139,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set our settings
-				BackendModel::setSetting($this->URL->getModule(), 'overview_num_items', $this->frm->getField('overview_num_items')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items', $this->frm->getField('overview_num_items')->getValue());
 
 				// module search
 				foreach((array) $this->modules as $module)

@@ -292,7 +292,7 @@ class BackendBlogModel
 			$id = self::insertCategory($category);
 
 			// store in settings
-			BackendModel::setSetting('blog', 'default_category_'. BL::getWorkingLanguage(), $id);
+			BackendModel::setModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), $id);
 
 			// recall
 			return self::getCategories();

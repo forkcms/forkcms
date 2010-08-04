@@ -110,17 +110,17 @@ class BackendBlogSettings extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set our settings
-				BackendModel::setSetting($this->URL->getModule(), 'overview_num_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'recent_articles_num_items', (int) $this->frm->getField('recent_articles_number_of_items')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'moderation', (bool) $this->frm->getField('moderation')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
-				BackendModel::setSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
-				if($feedburner !== null) BackendModel::setSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
-				if(BackendModel::getModuleSetting('core', 'akismet_key') === null) BackendModel::setSetting($this->URL->getModule(), 'spamfilter', false);
+				BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'recent_articles_num_items', (int) $this->frm->getField('recent_articles_number_of_items')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'moderation', (bool) $this->frm->getField('moderation')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
+				if($feedburner !== null) BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
+				if(BackendModel::getModuleSetting('core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
 
 				// redirect to the settings page
 				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');

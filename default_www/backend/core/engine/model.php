@@ -456,7 +456,7 @@ class BackendModel
 		$key = (string) $key;
 
 		// if the value isn't present we should set a defaultvalue
-		if(!isset(self::$moduleSettings[$module][$key])) self::setSetting($module, $key, $defaultValue);
+		if(!isset(self::$moduleSettings[$module][$key])) self::setModuleSetting($module, $key, $defaultValue);
 
 		// return
 		return self::$moduleSettings[$module][$key];
@@ -783,7 +783,7 @@ class BackendModel
 			}
 
 			// store the services
-			self::setSetting('core', 'ping_services', $pingServices);
+			self::setModuleSetting('core', 'ping_services', $pingServices);
 		}
 
 		// loop services
@@ -854,7 +854,7 @@ class BackendModel
 	 * @param	string $key			The name of the setting.
 	 * @param	string $value		The value to store.
 	 */
-	public static function setSetting($module, $key, $value)
+	public static function setModuleSetting($module, $key, $value)
 	{
 		// redefine
 		$module = (string) $module;
