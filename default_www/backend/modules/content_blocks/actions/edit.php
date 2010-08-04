@@ -166,9 +166,6 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// get values
-				$values = (array) $this->frm->getValues();
-
 				// build item
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
