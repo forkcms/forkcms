@@ -19,7 +19,6 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	 */
 	public function execute()
 	{
-		Spoon::dump(BackendPagesModel::get(1, 'nl'));
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
 
