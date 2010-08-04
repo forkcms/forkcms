@@ -23,4 +23,7 @@
 	{iteration:javascriptFiles}
 		<script type="text/javascript" src="{$javascriptFiles.file}"></script>
 	{/iteration:javascriptFiles}
+
+	{* Site wide HTML *}
+	{$siteWideHTMLHead}
 </head>

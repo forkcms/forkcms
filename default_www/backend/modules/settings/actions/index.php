@@ -76,7 +76,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 		// general settings
 		$this->frm->addText('site_title', BackendModel::getModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
-		$this->frm->addTextarea('site_wide_html', BackendModel::getModuleSetting('core', 'site_wide_html', null), 'textarea code', 'textareaError code', true);
+		$this->frm->addTextarea('site_wide_html_head', BackendModel::getModuleSetting('core', 'site_wide_html_head', null), 'textarea code', 'textareaError code', true);
+		$this->frm->addTextarea('site_wide_html_foot', BackendModel::getModuleSetting('core', 'site_wide_html_foot', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getModuleSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
 
 		// email settings
@@ -269,7 +270,8 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			{
 				// general settings
 				BackendModel::setModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), $this->frm->getField('site_title')->getValue());
-				BackendModel::setModuleSetting('core', 'site_wide_html', $this->frm->getField('site_wide_html')->getValue());
+				BackendModel::setModuleSetting('core', 'site_wide_html_head', $this->frm->getField('site_wide_html_head')->getValue());
+				BackendModel::setModuleSetting('core', 'site_wide_html_foot', $this->frm->getField('site_wide_html_foot')->getValue());
 
 				// e-mail settings
 				BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());

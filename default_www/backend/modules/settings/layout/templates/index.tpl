@@ -122,8 +122,11 @@
 			<h3>{$lblScripts|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<p>{$msgHelpScripts}</p>
-			{$txtSiteWideHtml} {$txtSiteWideHtmlError}
+			<p>{$msgHelpScriptsHead}</p>
+			{$txtSiteWideHtmlHead} {$txtSiteWideHtmlHeadError}
+
+			<p>{$msgHelpScriptsFoot}</p>
+			{$txtSiteWideHtmlFoot} {$txtSiteWideHtmlFootError}
 		</div>
 	</div>
 

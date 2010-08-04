@@ -15,4 +15,4 @@
 </div>
 
 {* Site wide HTML *}
-{$siteWideHTML}
+{$siteWideHTMLFoot}
