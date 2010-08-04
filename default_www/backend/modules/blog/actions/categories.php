@@ -49,6 +49,9 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::getLabel('Edit'));
 
+		// row function
+		$this->datagrid->setRowFunction(array('BackendBlogCategories', 'setDefault'), array('[id]'));
+
 		// disable paging
 		$this->datagrid->setPaging(false);
 
@@ -65,6 +68,30 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	private function parse()
 	{
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+	}
+
+
+	/**
+	 * Set class on row with the default class
+	 *
+	 * @return	array
+	 * @param	int $id
+	 * @param	array $rowAttributes
+	 */
+	public static function setDefault($id, $rowAttributes)
+	{
+		// is this the default category?
+		if(BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) == $id)
+		{
+			// class already defined?
+			if(isset($rowAttributes['class'])) $rowAttributes['class'] .= ' isDefault';
+
+			// set class
+			else $rowAttributes['class'] = 'isDefault';
+
+			// return
+			return $rowAttributes;
+		}
 	}
 }
 

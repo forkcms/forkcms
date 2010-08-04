@@ -72,3 +72,5 @@ th.num_tags { width: 70px; }
 
 .templateVisual td a { border: none; }
 .templateVisual td { border: 1px solid #AAA; }
+
+tr.isDefault td.name { font-weight: 900; }

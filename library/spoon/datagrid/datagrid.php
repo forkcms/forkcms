@@ -146,6 +146,22 @@ class SpoonDatagrid
 
 
 	/**
+	 * Array of row functions
+	 *
+	 * @var	array
+	 */
+	private $rowFunctions = array();
+
+
+	/**
+	 * Temporary output of the parsed row functions
+	 *
+	 * @var	string
+	 */
+	private $rowFunctionsParsed = array();
+
+
+	/**
 	 * Default sorting column
 	 *
 	 * @var	string
@@ -821,11 +837,30 @@ class SpoonDatagrid
 			// parse column functions
 			$record = $this->parseColumnFunctions($record);
 
+			// parse custom row functions
+			$this->parseRowFunctions($record, $this->attributes['row']);
+
 			// reset row
 			$row = array('attributes' => '', 'oddAttributes' => '', 'evenAttributes' => '', 'columns' => array());
 
 			// row attributes
 			$row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
+
+			// add custom row functions
+			if(!empty($this->rowFunctionsParsed))
+			{
+				// reset attributes
+				$row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->rowFunctionsParsed));
+
+				// clear for the next row
+				$this->rowFunctionsParsed = array();
+			}
+
+			else
+			{
+				// row attributes
+				$row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
+			}
 
 			// odd row attributes (reversed since the first $i = 0)
 			if(!SpoonFilter::isOdd($i)) $row['oddAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_odd']));
@@ -976,6 +1011,8 @@ class SpoonDatagrid
 		// loop functions
 		foreach($this->columnFunctions as $function)
 		{
+			// @todo	Davy, waarom gebruik je niet altijd call_user_func_array, Matthias begrijpt dat niet zo goed...
+
 			// no arguments given
 			if($function['arguments'] == null) $value = call_user_func($function['function']);
 
@@ -1290,6 +1327,66 @@ class SpoonDatagrid
 		}
 
 		return $array;
+	}
+
+
+	/**
+	 * Parses the column functions.
+	 *
+	 * @return	void
+	 * @param	array $record
+	 */
+	private function parseRowFunctions($record, $rowAttributes)
+	{
+		// store old error reporting settings
+		$currentErrorReporting = ini_get('error_reporting');
+
+		// ignore warnings and notices
+		error_reporting(E_WARNING | E_NOTICE);
+
+		// loop functions
+		foreach($this->rowFunctions as $function)
+		{
+			// @todo	Davy, waarom gebruik je niet altijd call_user_func_array, Matthias begrijpt dat niet zo goed...
+
+			// no arguments given
+			if($function['arguments'] == null) $value = call_user_func($function['function'], $rowAttributes);
+
+			// array
+			elseif(is_array($function['arguments']))
+			{
+				// replace arguments
+				$function['arguments'] = str_replace($record['labels'], $record['values'], $function['arguments']);
+				$function['arguments'][] = $rowAttributes;
+
+				// execute function
+				$value = call_user_func_array($function['function'], $function['arguments']);
+			}
+
+			// no null/array
+			else $value = call_user_func($function['function'], str_replace($record['labels'], $record['values'], $function['arguments']), $rowAttributes);
+
+			/**
+			 * Now that we have the return value we have to write the the
+			 * custom row function cache. If overwrite was enabled, we're
+			 * overwriting this, else we're adding to it!
+			 */
+			if($function['overwrite']) $this->rowFunctionsParsed = $value;
+			else
+			{
+				// loop return values
+				foreach((array) $value as $key => $value)
+				{
+					if(isset($this->rowFunctionsParsed[$key])) $this->rowFunctionsParsed[$key] .= ' '. $value;
+					else $this->rowFunctionsParsed[$key] = $value;
+				}
+			}
+		}
+
+		// restore error reporting
+		error_reporting($currentErrorReporting);
+
+		return $record;
 	}
 
 
@@ -1742,6 +1839,42 @@ class SpoonDatagrid
 	public function setRowAttributes(array $attributes)
 	{
 		foreach($attributes as $key => $value) $this->attributes['row'][(string) $key] = (string) $value;
+	}
+
+
+	/**
+	 * Sets the row function to be executed for every row.
+	 *
+	 * @return	void
+	 * @param	mixed $function
+	 * @param	mixed[optional] $arguments
+	 * @param	bool[optional] $overwrite
+	 */
+	public function setRowFunction($function, $arguments = null, $overwrite = false)
+	{
+		// has results
+		if($this->source->getNumResults() > 0)
+		{
+			// regular function
+			if(!is_array($function))
+			{
+				// function checks
+				if(!function_exists((string) $function)) throw new SpoonDatagridException('The function "'. (string) $function .'" doesn\'t exist.');
+			}
+
+			// class method
+			else
+			{
+				// method checks
+				if(count($function) != 2) throw new SpoonDatagridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
+
+				// method doesn't exist
+				elseif(!method_exists($function[0], $function[1])) throw new SpoonDatagridException('The method '. (string) $function[0] .'::'. (string) $function[1] .' does not exist.');
+			}
+
+			// add to function stack
+			$this->rowFunctions[] = array('function' => $function, 'arguments' => $arguments, 'overwrite' => (bool) $overwrite);
+		}
 	}
 
 
