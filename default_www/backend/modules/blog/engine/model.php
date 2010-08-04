@@ -9,6 +9,7 @@
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBlogModel
@@ -177,9 +178,24 @@ class BackendBlogModel
 	public static function existsCategory($id)
 	{
 		// exists?
-		return BackendModel::getDB()->getNumRows('SELECT id AS i
-													FROM blog_categories AS i
-													WHERE i.id = ?;', (int) $id);
+		return (bool) (BackendModel::getDB()->getNumRows('SELECT id AS i
+															FROM blog_categories AS i
+															WHERE i.id = ?;', (int) $id) > 0);
+	}
+
+
+	/**
+	 * Checks if a comment exists
+	 *
+	 * @return	int
+	 * @param	int $id		The id of the comment to check for existence.
+	 */
+	public static function existsComment($id)
+	{
+		// exists?
+		return (bool) (BackendModel::getDB()->getNumRows('SELECT id AS i
+															FROM blog_comments AS i
+															WHERE i.id = ?;', (int) $id) > 0);
 	}
 
 
@@ -202,6 +218,26 @@ class BackendBlogModel
 																WHERE i.id = ? AND i.status = ?
 																LIMIT 1;',
 																array($id, 'active'));
+	}
+
+
+	/**
+	 * Get all data for a given id
+	 *
+	 * @return	array
+	 * @param	int $id		The Id of the comment to fetch?
+	 */
+	public static function getComment($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get record and return it
+		return (array) $db = BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on
+																FROM blog_comments AS i
+																WHERE i.id = ?
+																LIMIT 1;',
+																array($id));
 	}
 
 
@@ -735,6 +771,20 @@ class BackendBlogModel
 
 		// return
 		return $return;
+	}
+
+
+	/**
+	 * Update an existing comment
+	 *
+	 * @return	int
+	 * @param	int $id			The id of the comment to update.
+	 * @param	array $item		The new data.
+	 */
+	public static function updateComment($id, array $item)
+	{
+		// update category
+		return BackendModel::getDB(true)->update('blog_comments', $item, 'id = ?', (int) $id);
 	}
 
 

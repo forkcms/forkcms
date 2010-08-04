@@ -81,6 +81,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AddingCategoryFailed', 'Er ging iets mis.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AkismetKey', 'Akismet API-key werd nog niet geconfigureerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AlphaNumericCharactersOnly', 'Enkel alfanumerieke karakters zijn toegestaan.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'AuthorIsRequired', 'Gelieve een auteur in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'BrowserNotSupported', '<p>Je gebruikt een verouderde browser die niet ondersteund wordt door Fork CMS. Gebruik een van de volgende goeie alternatieven:</p><ul><li><a href="http://www.microsoft.com/windows/products/winfamily/ie/default.mspx">Internet Explorer *</a>: update naar de nieuwe versie van Internet Explorer.</li><li><a href="http://www.firefox.com/">Firefox</a>: een zeer goeie browser met veel gratis extensies.</li><li><a href="http://www.opera.com/">Opera:</a> Snel en met vele functionaliteiten.</li></ul>');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'CookiesNotEnabled', 'Om Fork CMS te gebruiken moeten cookies geactiveerd zijn in uw browser. Activeer cookies en vernieuw deze pagina.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'DateIsInvalid', 'Ongeldige datum.');
@@ -301,6 +302,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Template', 'template');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Templates', 'templates');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Text', 'tekst');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Themes', 'thema\'s');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'TimeFormat', 'formaat tijd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Title', 'titel');
@@ -324,6 +326,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WaitingForModeration', 'wachten op moderatie');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Weak', 'zwak');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mailadres webmaster');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Website', 'website');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WebsiteTitle', 'titel website');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Weight', 'gewicht');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichModule', 'welke module');
@@ -396,6 +399,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AddingCategoryFailed', 'Something went wrong.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AkismetKey', 'Akismet API-key is not yet configured.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AlphaNumericCharactersOnly', 'Only alphanumeric characters are allowed.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'AuthorIsRequired', 'Please provide an author.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'BrowserNotSupported', '<p>You\'re using an outdated browser, which is not supported by Fork CMS. Use one of the following alterntives::</p><ul><li><a href="http://www.microsoft.com/windows/products/winfamily/ie/default.mspx">Internet Explorer *</a>: update to the latest version of Internet Explorer.</li><li><a href="http://www.firefox.com/">Firefox</a>: a very decent browser with a lot of free extensions.</li><li><a href="http://www.opera.com/">Opera:</a> Quick with quite some functionality.</li></ul>');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'CookiesNotEnabled', 'You need to enable cookies in order to use Fork CMS. Activate cookies and refresh this page.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'DateIsInvalid', 'Invalid date.');
@@ -616,6 +620,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Template', 'template');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Templates', 'templates');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Text', 'text');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Themes', 'themes');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'TimeFormat', 'time format');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Title', 'title');
@@ -639,6 +644,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WaitingForModeration', 'waiting for moderation');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weak', 'weak');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebmasterEmail', 'e-mail webmaster');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Website', 'website');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WebsiteTitle', 'website title');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Weight', 'weight');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichModule', 'which module');

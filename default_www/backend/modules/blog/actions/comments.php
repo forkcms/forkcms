@@ -93,6 +93,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// sorting
 		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');
 
+		// add column
+		$this->dgPublished->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::getLabel('Edit'));
+
 		// hide columns
 		$this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
 
@@ -126,6 +129,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 		// sorting
 		$this->dgModeration->setSortingColumns(array('created_on', 'text'), 'text');
+
+		// add column
+		$this->dgModeration->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::getLabel('Edit'));
 
 		// hide columns
 		$this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');

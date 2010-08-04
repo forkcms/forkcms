@@ -737,20 +737,20 @@ class BackendModel
 	public static function ping($pageOrFeedURL = null, $category = null)
 	{
 		// redefine
-		$siteTitle = self::getSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+		$siteTitle = self::getModuleSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
 		$siteURL = SITE_URL;
 		$pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
 		$category = ($category !== null) ? (string) $category : null;
 
 		// get ping services
-		$pingServices = self::getSetting('core', 'ping_services', null);
+		$pingServices = self::getModuleSetting('core', 'ping_services', null);
 
 		// no ping services available or older then one 30 days
 		if($pingServices === null || $pingServices['date'] < (time() - (30 * 24 * 60 * 60)))
 		{
 			// get ForkAPI-keys
-			$publicKey = self::getSetting('core', 'fork_api_public_key', '');
-			$privateKey = self::getSetting('core', 'fork_api_private_key', '');
+			$publicKey = self::getModuleSetting('core', 'fork_api_public_key', '');
+			$privateKey = self::getModuleSetting('core', 'fork_api_private_key', '');
 
 			// validate keys
 			if($publicKey == '' || $privateKey == '') return false;
@@ -890,7 +890,7 @@ class BackendModel
 	public static function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
 		// get some settings
-		$akismetKey = self::getSetting('core', 'akismet_key');
+		$akismetKey = self::getModuleSetting('core', 'akismet_key');
 
 		// invalid key, so we can't detect spam
 		if($akismetKey === '') return false;
@@ -942,7 +942,7 @@ class BackendModel
 	public static function submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
 		// get some settings
-		$akismetKey = self::getSetting('core', 'akismet_key');
+		$akismetKey = self::getModuleSetting('core', 'akismet_key');
 
 		// invalid key, so we can't detect spam
 		if($akismetKey === '') return false;
