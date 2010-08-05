@@ -18,15 +18,23 @@
 	<div id="installHolder">
 
 		<h2>Installation complete</h2>
-		<p>Fork CMS is installed! You can now <a href="../private/">log in</a> using these credentials:</p>
+		<p>Fork CMS is installed! You can now <a href="../private/">log in</a> using these credentials.</p>
+		<p>For future reference:</p>
 		<table border="0" cellspacing="0" cellpadding="0" class="infoGrid">
+			<tr>
+				<th>CMS</th>
+				<td><a href="../private/">http://{$url}/private/</a></td>
+			</tr>
 			<tr>
 				<th>Email</th>
 				<td>{$email}</td>
 			</tr>
 			<tr>
 				<th>Password</th>
-				<td>{$password}</td>
+				<td>
+					<span id="plainPassword" class="hidden">{$password}</span>
+					<input type="button" id="showPassword" name="showPassword" value="show password" />
+				</td>
 			</tr>
 		</table>
 	</div>

@@ -32,6 +32,23 @@
 					<label for="password">Password <abbr title="Required field">*</abbr></label>
 					{$txtPassword} {$txtPasswordError}
 				</p>
+				<table id="passwordStrengthMeter" class="passwordStrength" rel="password" cellspacing="0">
+					<tr>
+						<td class="strength" id="passwordStrength">
+							<p class="strength none">/</p>
+							<p class="strength weak" style="background: red;">Weak</p>
+							<p class="strength ok" style="background: orange;">OK</p>
+							<p class="strength strong" style="background: green;">Strong</p>
+						</td>
+						<td>
+							<p class="helpTxt">Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
+						</td>
+					</tr>
+				</table>
+				<p>
+					<label for="confirm">Confirm <abbr title="Required field">*</abbr></label>
+					{$txtConfirm} {$txtConfirmError}
+				</p>
 			</div>
 
 			<p class="spacing buttonHolder">

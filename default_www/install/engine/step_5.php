@@ -285,6 +285,7 @@ class InstallerStep5 extends InstallerStep
 	private function showSuccess()
 	{
 		// assign variables
+		$this->tpl->assign('url', (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'forkng.local');
 		$this->tpl->assign('email', SpoonSession::get('email'));
 		$this->tpl->assign('password', SpoonSession::get('password'));
 	}

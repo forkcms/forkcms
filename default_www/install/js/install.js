@@ -12,9 +12,13 @@ $(document).ready(function(){
 	/*
 	 * Step 3 - general settings (modules, languages, ...)
 	 */
-	if($('#languageTypeMultiple').is(':checked')) $('#languages').show();
+	if($('#languageTypeMultiple').is(':checked'))
+	{
+		$('#languages').show();
+		$('#defaultLanguageContainer').show();
+	}
 	if($('#languageTypeSingle').is(':checked')) $('#language').show();
-	
+
 	// multiple languages
 	$('#languageTypeMultiple').bind('click', function()
 	{
@@ -22,6 +26,7 @@ $(document).ready(function(){
 		{
 			$('#languages').show();
 			$('#language').hide();
+			$('#defaultLanguageContainer').show();
 		}
 	});
 	
@@ -32,6 +37,17 @@ $(document).ready(function(){
 		{
 			$('#languages').hide();
 			$('#language').show();
+			$('#defaultLanguageContainer').hide();
 		}
+	});
+	
+	
+	/*
+	 * Step 5 - confirmation
+	 */
+	$('#showPassword').bind('click', function(evt)
+	{
+		evt.preventDefault();
+		$(this).hide(); $('#plainPassword').show();
 	});
 });

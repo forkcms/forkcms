@@ -53,9 +53,10 @@
 						{/iteration:languageType}
 					</ul>
 
-					<p>What is the default language we should use for the website?</p>
-					<p>{$ddmDefaultLanguage} {$ddmDefaultLanguageError}</p>
-
+					<div id="defaultLanguageContainer" class="hidden">
+						<p>What is the default language we should use for the website?</p>
+						<p>{$ddmDefaultLanguage} {$ddmDefaultLanguageError}</p>
+					</div>
 				</div>
 
 				<div class="fullwidthOptions">

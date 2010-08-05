@@ -133,9 +133,6 @@ class InstallerStep3 extends InstallerStep
 			{
 				// list of languages
 				$languages = (array) $this->frm->getField('language')->getValue();
-
-				// default language
-				if(!in_array($this->frm->getField('default_language')->getValue(), $languages)) $this->frm->getField('default_language')->setError('Your default language needs to be the same as your selected language.');
 			}
 
 			// all valid
@@ -144,8 +141,12 @@ class InstallerStep3 extends InstallerStep
 				// set modules
 				SpoonSession::set('modules', $this->frm->getField('modules')->getValue());
 
+				// get default language
+				if($this->frm->getField('languageType')->getValue() == 'multiple') $defaultLanguage = $this->frm->getField('default_language')->getValue();
+				else $defaultLanguage = $this->frm->getField('language')->getValue();
+
 				// set languages
-				SpoonSession::set('default_language', $this->frm->getField('default_language')->getValue());
+				SpoonSession::set('default_language', $defaultLanguage);
 				SpoonSession::set('multiple_languages', ($this->frm->getField('languageType')->getValue() == 'multiple') ? true : false);
 				SpoonSession::set('languages', ($this->frm->getField('languageType')->getValue() == 'multiple') ? $this->frm->getField('languages')->getValue() : array($this->frm->getField('language')->getValue()));
 
