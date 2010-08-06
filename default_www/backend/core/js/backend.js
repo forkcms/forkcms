@@ -2,7 +2,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 jsBackend = {
 	// datamembers
-	debug: true,
+	debug: {option:SPOON_DEBUG}true{/option:SPOON_DEBUG}{option:!SPOON_DEBUG}false{/option:!SPOON_DEBUG},
 	current: { module: null, action: null, language: null },
 	
 	// init, something like a constructor
@@ -24,7 +24,7 @@ jsBackend = {
 		jsBackend.messages.init();
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
-		//jsBackend.tableSequenceByDragAndDrop.init();
+		// jsBackend.tableSequenceByDragAndDrop.init();
 	},
 	
 	// init ajax
@@ -34,6 +34,10 @@ jsBackend = {
 		
 		// global error handler
 		$(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions) {
+			
+			// 403 means we aren't authenticated anymore, so reload the page
+			if(XMLHttpRequest.status == 403) window.location.reload()
+			
 			// check if a custom errorhandler is used
 			if(typeof ajaxOptions.error == 'undefined') {
 				// init var
@@ -81,7 +85,7 @@ jsBackend.balloons = {
 		// get linked balloon
 		var rel = clickedElement.attr('rel');
 
-		// rel available? 
+		// rel available?
 		if(rel != '') {
 			// hide if already visible
 			if($('#'+ rel).is(':visible')) {
@@ -171,10 +175,12 @@ jsBackend.controls = {
 				// initialize
 				$('#'+ id).dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
 									buttons: { '{$lblOK|ucfirst}': function() {
-																		// close dialog
+																		// close
+																		// dialog
 																		$(this).dialog('close');
 																		
-																		// goto link
+																		// goto
+																		// link
 																		window.location = url;
 																	},
 												'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
@@ -312,10 +318,12 @@ jsBackend.controls = {
 			// initialize
 			$('#'+ id).dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, 
 								buttons: { '{$lblOK|ucfirst}': function() {
-																	// close dialog
+																	// close
+																	// dialog
 																	$(this).dialog('close');
 
-																	// submit the form
+																	// submit
+																	// the form
 																	$($('*[rel='+ $(this).attr('id')  +']').parents('form')).submit();
 																},
 											'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
@@ -518,7 +526,8 @@ jsBackend.effects = {
 		jsBackend.effects.bindHighlight();
 	},
 	
-	// when the mouse is moved, all items with a class "fadeOutAfterMouseMove" will fade away
+	// when the mouse is moved, all items with a class "fadeOutAfterMouseMove"
+	// will fade away
 	bindFadeOutAfterMouseMove: function() {
 		$(document.body).bind('mousemove', function(evt) { $('.fadeOutAfterMouseMove').fadeOut(2500); });		
 	},
@@ -527,7 +536,8 @@ jsBackend.effects = {
 	bindHighlight: function() {
 		if(typeof highlightId != 'undefined') {
 			var selector = highlightId;
-			// if the element is a table-row we should highlight all cells in that row
+			// if the element is a table-row we should highlight all cells in
+			// that row
 			if($(highlightId)[0].tagName.toLowerCase == 'tr') { selector += ' td'; } 
 			$(selector).effect('highlight', null, 5000);
 		}		
@@ -658,7 +668,8 @@ jsBackend.forms = {
 								.attr('tabindex', -1); 
 					});
 
-					// add onclick event for button (button can't have the name submit)
+					// add onclick event for button (button can't have the name
+					// submit)
 					$('form#'+ formId + ' a.submitButton').bind('click', function(evt) {
 						evt.preventDefault();
 						
