@@ -128,17 +128,27 @@ class BackendURL
 		// split into chunks, a Backend URL will always look like /<lang>/<module>/<action>(?GET)
 		$chunks = (array) explode('/', trim($processedQueryString, '/'));
 
+		// check if this is a request for a JS-file
+		$isJS = (isset($chunks[1]) && $chunks[1] == 'js.php');
+
 		// get the language, this will always be in front
-		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], BackendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE) : SITE_DEFAULT_LANGUAGE;
+		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], BackendLanguage::getActiveLanguages(), '') : '';
+
+		// no language provided?
+		if($language == '' && !$isJS)
+		{
+			// remove first element
+			array_shift($chunks);
+
+			// redirect to login
+			SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. SITE_DEFAULT_LANGUAGE .'/'. implode('/', $chunks));
+		}
 
 		// get the module, null will be the default
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
 
 		// get the requested action, index will be our default action
 		$action = (isset($chunks[3]) && $chunks[3] != '') ? $chunks[3] : 'index'; // @later we should fetch the real defaultAction from the module config.
-
-		// check if this is a request for a JS-file
-		$isJS = (isset($chunks[1]) && $chunks[1] == 'js.php');
 
 		// if it is an request for a JS-file we only need the module
 		if($isJS)
