@@ -355,12 +355,29 @@ class Init
 	private function requireGlobals()
 	{
 		// fetch config
-		require_once dirname(__FILE__) .'/config.php';
+		$installed[] = @include_once dirname(__FILE__) .'/cache/config/config.php';
 
 		// load the globals
-		require_once INIT_PATH_LIBRARY .'/globals.php';
-		require_once INIT_PATH_LIBRARY .'/globals_backend.php';
-		require_once INIT_PATH_LIBRARY .'/globals_frontend.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals_backend.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals_frontend.php';
+
+		// something could not be loaded
+		if(in_array(false, $installed))
+		{
+			// installation folder
+			$installer = dirname(dirname(__FILE__)) .'/install';
+
+			// Fork has not yet been installed
+			if(file_exists($installer) && is_dir($installer) && !file_exists($installer .'/installed.txt'))
+			{
+				// redirect to installer
+				header('Location: /install');
+			}
+
+			// we can nog load configuration file, however we can not run installer
+			exit('Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and rerun the installer.');
+		}
 	}
 
 

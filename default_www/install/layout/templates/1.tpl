@@ -109,14 +109,10 @@
 						<h3>Required permissions and/or files</h3>
 						<h4>{$PATH_WWW}/backend/cache/* <span class="{$fileSystemBackendCache}">{$fileSystemBackendCacheStatus}</span></h4>
 						<p>In this location all files created by the backend will be stored. This location must be writable.</p>
-						<h4>{$PATH_WWW}/backend/* <span class="{$fileSystemBackend}">{$fileSystemBackendStatus}</span></h4>
-						<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 						<h4>{$PATH_WWW}/frontend/cache/* <span class="{$fileSystemFrontendCache}">{$fileSystemFrontendCacheStatus}</span></h4>
 						<p>In this location all files created by the frontend will be stored. This location must be writable.</p>
 						<h4>{$PATH_WWW}/frontend/files/* <span class="{$fileSystemFrontendFiles}">{$fileSystemFrontendFilesStatus}</span></h4>
 						<p>In this location all files uploaded by the user/modules will be stored. This location must be writable.</p>
-						<h4>{$PATH_WWW}/frontend/* <span class="{$fileSystemFrontend}">{$fileSystemFrontendStatus}</span></h4>
-						<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 						<h4>{$PATH_LIBRARY} <span class="{$fileSystemLibrary}">{$fileSystemLibraryStatus}</span></h4>
 						<p>This location must be writable for the installer, afterwards this folder only needs to be readable.</p>
 						<h4>{$PATH_WWW}/install <span class="{$fileSystemInstaller}">{$fileSystemInstallerStatus}</span></h4>

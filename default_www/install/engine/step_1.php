@@ -182,17 +182,11 @@ class InstallerStep1 extends InstallerStep
 		// check if the backend-cache-directory is writable
 		self::checkRequirement('fileSystemBackendCache', is_writable(PATH_WWW .'/backend/cache/'), $variables);
 
-		// check if the backend-directory is writable
-		self::checkRequirement('fileSystemBackend', is_writable(PATH_WWW .'/backend/'), $variables);
-
 		// check if the frontend-cache-directory is writable
 		self::checkRequirement('fileSystemFrontendCache', is_writable(PATH_WWW .'/frontend/cache/'), $variables);
 
 		// check if the frontend-files-directory is writable
 		self::checkRequirement('fileSystemFrontendFiles', is_writable(PATH_WWW .'/frontend/files/'), $variables);
-
-		// check if the frontend-directory is writable
-		self::checkRequirement('fileSystemFrontend', is_writable(PATH_WWW .'/frontend/'), $variables);
 
 		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', is_writable(PATH_LIBRARY), $variables);

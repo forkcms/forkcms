@@ -162,8 +162,8 @@ class InstallerStep5 extends InstallerStep
 		$globalsContent = str_replace(array_keys($variables), array_values($variables), $globalsContent);
 
 		// write the file
-		SpoonFile::setContent(PATH_WWW .'/backend/config.php', $globalsContent);
-		SpoonFile::setContent(PATH_WWW .'/frontend/config.php', $globalsContent);
+		SpoonFile::setContent(PATH_WWW .'/backend/cache/config/config.php', $globalsContent);
+		SpoonFile::setContent(PATH_WWW .'/frontend/cache/config/config.php', $globalsContent);
 	}
 
 
