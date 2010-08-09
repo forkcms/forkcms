@@ -128,8 +128,8 @@ input[type="submit"] {
 	padding: 0 0 4px 24px;
 }
 
-	.forkForms .inputList li li {
-		padding-left: 0;
+	.forkForms .inputList li ul {
+		padding-bottom: 0;
 	}
 
 .forkForms .horizontal .inputList label {
@@ -254,6 +254,12 @@ label {
 		margin-top: 1px;
 		margin-right: 3px;
 	}
-	
+
 	.oneLiner label,
 	.oneLiner p.label { float: left; line-height: 20px; padding: 2px 4px 2px 0;}
+
+	.oneLiner input.inputText, 
+	.oneLiner input.inputPassword,
+	.oneLiner input[type="text"], 
+	.oneLiner input[type="password"],
+	.oneLiner input.inputDatefieldRange { float: left; }

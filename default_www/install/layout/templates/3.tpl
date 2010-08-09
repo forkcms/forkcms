@@ -37,18 +37,19 @@
 
 					<ul class="inputList">
 						{iteration:languageType}
-							<li>{$languageType.rbtLanguageType} <label for="{$languageType.id}">{$languageType.label}</label></li>
+							<li>{$languageType.rbtLanguageType} <label for="{$languageType.id}">{$languageType.label}</label>
 							{option:languageType.multiple}
-								<ul id="languages" class="hidden inputList" style="margin-left: 24px;">
+								<ul id="languages" class="hidden inputList">
 									{iteration:languages}
 										<li>{$languages.chkLanguages} <label for="{$languages.id}">{$languages.label}</label></li>
 									{/iteration:languages}
 								</ul>
 							{/option:languageType.multiple}
+							</li>
 							{option:languageType.single}
-								<p id="language" class="hidden" style="margin-left: 24px;">
+								<li id="languageSingle" class="hidden">
 									{$ddmLanguage} {$ddmLanguageError}
-								</p>
+								</li>
 							{/option:languageType.single}
 						{/iteration:languageType}
 					</ul>
