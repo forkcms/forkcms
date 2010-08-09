@@ -13,4 +13,4 @@
 </div>
 
 {* Site wide HTML *}
-{$siteWideHTMLFoot}
+{$siteHTMLFooter}

@@ -26,7 +26,7 @@ class FrontendFooter extends FrontendBaseObject
 		$this->tpl->assign('footerLinks', $footerLinks);
 
 		// assign site wide html
-		$this->tpl->assign('siteWideHTMLFoot', (string) FrontendModel::getModuleSetting('core', 'site_wide_html_foot', null));
+		$this->tpl->assign('siteHTMLFooter', (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null));
 	}
 }
 

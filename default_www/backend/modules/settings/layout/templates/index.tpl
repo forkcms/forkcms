@@ -123,10 +123,10 @@
 		</div>
 		<div class="options">
 			<p>{$msgHelpScriptsHead}</p>
-			{$txtSiteWideHtmlHead} {$txtSiteWideHtmlHeadError}
+			{$txtSiteHtmlHeader} {$txtSiteHtmlHeaderError}
 
 			<p>{$msgHelpScriptsFoot}</p>
-			{$txtSiteWideHtmlFoot} {$txtSiteWideHtmlFootError}
+			{$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
 		</div>
 	</div>
 

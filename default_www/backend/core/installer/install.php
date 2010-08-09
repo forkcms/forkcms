@@ -464,7 +464,8 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'google_maps_keky', '');
 		$this->setSetting('core', 'max_num_revisions', 20);
 		$this->setSetting('core', 'site_domains', array($this->getVariable('site_domain')));
-		$this->setSetting('core', 'site_wide_html', '');
+		$this->setSetting('core', 'site_html_header', '');
+		$this->setSetting('core', 'site_html_footer', '');
 
 		// date & time
 		$this->setSetting('core', 'date_format_short', 'j.n.Y');

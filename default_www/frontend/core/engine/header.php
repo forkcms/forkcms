@@ -544,7 +544,7 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 
 		// assign site wide html
-		$this->tpl->assign('siteWideHTMLHead', (string) FrontendModel::getModuleSetting('core', 'site_wide_html_head', null));
+		$this->tpl->assign('siteHTMLHeader', (string) FrontendModel::getModuleSetting('core', 'site_html_header', null));
 	}
 
 
