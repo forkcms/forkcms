@@ -20,9 +20,6 @@ class SettingsInstall extends ModuleInstaller
 	 */
 	protected function execute()
 	{
-		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/settings/installer/install.sql');
-
 		// add 'settings' as a module
 		$this->addModule('settings', 'The module to manage your settings.');
 
