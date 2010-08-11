@@ -53,7 +53,7 @@
 
 			<p class="spacing buttonHolder">
 				<a href="index.php?step=3" class="button">Previous</a>
-				<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish" />
+				<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish installation" />
 			</p>
 		{/form:step4}
 
