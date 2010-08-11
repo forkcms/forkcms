@@ -132,6 +132,17 @@
 
 	<div class="box">
 		<div class="heading">
+			<h3>Facebook</h3>
+		</div>
+		<div class="options">
+			<p>{$msgHelpFacebookAdminIds}</p>
+			{* @todo	A comma-separated list of either Facebook user IDs or a Facebook Platform application ID that administers this page. *}
+			{$txtFacebookAdminIds} {$txtFacebookAdminIdsError}
+		</div>
+	</div>
+
+	<div class="box">
+		<div class="heading">
 			<h3>{$lblThemes|ucfirst}</h3>
 		</div>
 		<div class="content">

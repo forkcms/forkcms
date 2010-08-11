@@ -155,6 +155,36 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_'. FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
+		// build Facebook Open Graph-data
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			// default image
+			$image = SITE_URL .'/facebook.png';
+
+			// try to get an image in the content
+			$matches = array();
+			preg_match('|<img.*src="(.*)".*/>|iU', $this->record['text'], $matches);
+
+			// found an image?
+			if(isset($matches[1]))
+			{
+				$image = $matches[1];
+				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
+			}
+
+			$meta = '<!-- openGraph meta-data -->'."\n";
+			$meta .= '<meta property="og:title" content="'. $this->record['title'] .'" />'."\n";
+			$meta .= '<meta property="og:type" content="article" />'."\n";
+			$meta .= '<meta property="og:image" content="'. $image .'" />'."\n";
+			$meta .= '<meta property="og:url" content="'. SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $this->record['url'] .'" />'."\n";
+			$meta .= '<meta property="og:site_name" content="'. FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) .'" />'."\n";
+			$meta .= '<meta property="fb:admins" content="'. FrontendModel::getModuleSetting('core', 'facebook_admin_ids') .'" />'."\n";
+			$meta .= '<meta property="og:description" content="'. $this->record['title'] .'" />'."\n";
+
+			// add
+			$this->header->addMetaCustom($meta);
+		}
+
 		// add RSS-feed into the metaCustom
 		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
 

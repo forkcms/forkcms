@@ -12,7 +12,7 @@
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
 
 	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="../backend/core/js/backend.js"></script>
+	<script type="text/javascript" src="js/backend.js"></script>
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">

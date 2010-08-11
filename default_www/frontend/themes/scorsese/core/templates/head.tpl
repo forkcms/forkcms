@@ -25,5 +25,5 @@
 	{/iteration:javascriptFiles}
 
 	{* Site wide HTML *}
-	{$siteWideHTMLHead}
+	{$siteHTMLHeader}
 </head>

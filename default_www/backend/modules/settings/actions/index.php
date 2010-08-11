@@ -80,6 +80,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addTextarea('site_html_footer', BackendModel::getModuleSetting('core', 'site_html_footer', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getModuleSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
 
+		// facebook settings
+		$this->frm->addText('facebook_admin_ids', BackendModel::getModuleSetting('core', 'facebook_admin_ids', null));
+
 		// email settings
 		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
 		$this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
@@ -272,6 +275,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), $this->frm->getField('site_title')->getValue());
 				BackendModel::setModuleSetting('core', 'site_html_header', $this->frm->getField('site_html_header')->getValue());
 				BackendModel::setModuleSetting('core', 'site_html_footer', $this->frm->getField('site_html_footer')->getValue());
+
+				// facebook settings
+				BackendModel::setModuleSetting('core', 'facebook_admin_ids', ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField('facebook_admin_ids')->getValue() : null);
 
 				// e-mail settings
 				BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
