@@ -24,7 +24,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if(BackendBlogModel::existsCategory($this->id))
+		if($this->id !== null && BackendBlogModel::existsCategory($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

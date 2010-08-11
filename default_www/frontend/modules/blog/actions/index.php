@@ -59,10 +59,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 	private function getData()
 	{
 		// requested page
-		$requestedPage = $this->URL->getParameter('page', 'int');
-
-		// no page given
-		if($requestedPage === null) $requestedPage = 1;
+		$requestedPage = $this->URL->getParameter('page', 'int', 1);
 
 		// set url
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog');

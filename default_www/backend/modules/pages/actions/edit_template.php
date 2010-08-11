@@ -51,7 +51,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// validate id
-		if(!BackendPagesModel::existsTemplate($this->id)) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
+		if($this->id === null || !BackendPagesModel::existsTemplate($this->id)) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
 
 		// get the record
 		$this->record = BackendPagesModel::getTemplate($this->id);

@@ -23,7 +23,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if(BackendSearchModel::existsSynonymById($this->id))
+		if($this->id !== null && BackendSearchModel::existsSynonymById($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

@@ -28,6 +28,9 @@ class BackendPagesDelete extends BackendBaseActionDelete
 		// get parameters
 		$id = $this->getParameter('id', 'int');
 
+		// validate
+		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=delete');
+
 		// get page (we need the title)
 		$page = BackendPagesModel::get($id);
 

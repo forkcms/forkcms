@@ -28,6 +28,9 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 		// get parameters
 		$id = $this->getParameter('id', 'int');
 
+		// validate
+		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=delete-template');
+
 		// get template (we need the title)
 		$template = BackendPagesModel::getTemplate($id);
 

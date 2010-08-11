@@ -212,7 +212,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = $this->getParameter('language');
+		$this->filter['language'] = ($this->getParameter('language') != '') ? $this->getParameter('language') : BL::getInterfaceLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
 		$this->filter['type'] = $this->getParameter('type');

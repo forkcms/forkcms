@@ -24,7 +24,7 @@ class BackendBlogDelete extends BackendBaseActionDelete
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if(BackendBlogModel::exists($this->id))
+		if($this->id !== null && BackendBlogModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

@@ -80,10 +80,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	private function display()
 	{
 		// requested page
-		$this->requestedPage = $this->URL->getParameter('page', 'int');
-
-		// no page given
-		if($this->requestedPage === null) $this->requestedPage = 1;
+		$this->requestedPage = $this->URL->getParameter('page', 'int', 1);
 
 		// cache name
 		$cacheName = FRONTEND_LANGUAGE .'_searchTermCache_'. md5($this->term) . '_'. $this->requestedPage;

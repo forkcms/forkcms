@@ -87,15 +87,11 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		$this->year = (int) $this->year;
 		if($this->month !== null) $this->month = (int) $this->month;
 
-
 		// validate parameters
 		if($this->year == 0 || $this->month === 0) $this->redirect(FrontendNavigation::getURL(404));
 
 		// requested page
-		$requestedPage = $this->URL->getParameter('page', 'int');
-
-		// no page given
-		if($requestedPage === null) $requestedPage = 1;
+		$requestedPage = $this->URL->getParameter('page', 'int', 1);
 
 		// rebuild url
 		$url = $this->year;

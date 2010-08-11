@@ -32,7 +32,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if(BackendTagsModel::exists($this->id))
+		if($this->id !== null && BackendTagsModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

@@ -23,7 +23,7 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if(BackendBlogModel::existsComment($this->id))
+		if($this->id !== null && BackendBlogModel::existsComment($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

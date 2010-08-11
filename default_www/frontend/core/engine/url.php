@@ -132,8 +132,9 @@ class FrontendURL
 	 * @return	mixed
 	 * @param	mixed $index				The index of the parameter
 	 * @param	string[optional] $type		The return type, possible values are: bool, boolean, int, integer, float, double, string, array
+	 * @param	mixed $return				The value that should be returned if the key is not available
 	 */
-	public function getParameter($index, $type = 'string')
+	public function getParameter($index, $type = 'string', $return = null)
 	{
 		// does the index exists and isn't this parameter empty
 		if(isset($this->parameters[$index]) && $this->parameters[$index] != '')
@@ -143,7 +144,7 @@ class FrontendURL
 		}
 
 		// fallback
-		return null;
+		return $return;
 	}
 
 

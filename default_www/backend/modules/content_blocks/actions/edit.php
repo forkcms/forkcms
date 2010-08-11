@@ -24,7 +24,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if(BackendContentBlocksModel::exists($this->id))
+		if($this->id !== null && BackendContentBlocksModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();

@@ -31,7 +31,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exists
-		if(BackendLocaleModel::exists($this->id))
+		if($this->id !== null && BackendLocaleModel::exists($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -117,7 +117,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = $this->getParameter('language');
+		$this->filter['language'] = ($this->getParameter('language') != '') ? $this->getParameter('language') : BL::getInterfaceLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
 		$this->filter['type'] = $this->getParameter('type');

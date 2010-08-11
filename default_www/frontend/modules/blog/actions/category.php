@@ -75,10 +75,7 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$requestedCategory = SpoonFilter::getValue($this->URL->getParameter(1, 'string'), array_keys($possibleCategories), 'false');
 
 		// requested page
-		$requestedPage = $this->URL->getParameter('page', 'int');
-
-		// no page given
-		if($requestedPage === null) $requestedPage = 1;
+		$requestedPage = $this->URL->getParameter('page', 'int', 1);
 
 		// validate category
 		if($requestedCategory == 'false') $this->redirect(FrontendNavigation::getURL(404));

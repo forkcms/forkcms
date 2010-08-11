@@ -31,10 +31,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		if(BackendAuthentication::getUser()->isAuthenticated())
 		{
 			// get the redirect-URL from the URL
-			$redirectURL = $this->getParameter('querystring');
-
-			// if there isn't a redirect URL we will redirect to the dashboard
-			if($redirectURL === null) $redirectURL = BackendModel::createUrlForAction(null, 'dashboard');
+			$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard'));
 
 			// redirect to the correct URL (URL the user was looking for or fallback)
 			$this->redirect($redirectURL);
@@ -128,10 +125,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			if($this->frm->isCorrect())
 			{
 				// get the redirect-URL from the URL
-				$redirectURL = $this->getParameter('querystring');
-
-				// if there isn't a redirect URL we will redirect to the dashboard
-				if($redirectURL === null) $redirectURL = BackendModel::createUrlForAction(null, 'dashboard');
+				$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard'));
 
 				// redirect to the correct URL (URL the user was looking for or fallback)
 				$this->redirect($redirectURL);
