@@ -84,9 +84,9 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		$remove = SpoonFilter::getGetValue('remove', array('session_token', 'table_id'), null);
 
 		// something has to be removed before proceeding
-		if(isset($remove))
+		if(!empty($remove))
 		{
-			// the session token and all other parameters have te be removed
+			// the session token has te be removed
 			if($remove == 'session_token')
 			{
 				// remove all parameters from the module settings
