@@ -593,7 +593,7 @@ jsBackend.forms = {
 									monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
 									nextText: '{$lblNext}',
 									prevText: '{$lblPrevious}',
-									minDate: new Date(data[2].split('-')[0], parseInt(data[2].split('-')[1]) - 1, data[2].split('-')[2]),
+									minDate: new Date(parseInt(data[2].split('-')[0], 10), parseInt(data[2].split('-')[1], 10) - 1, parseInt(data[2].split('-')[2], 10)),
 									showAnim: 'slideDown'
 								});
 			});
@@ -614,7 +614,7 @@ jsBackend.forms = {
 									monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
 									nextText: '{$lblNext}',
 									prevText: '{$lblPrevious}',
-									maxDate: new Date(data[2].split('-')[0], parseInt(data[2].split('-')[1]) -1, data[2].split('-')[2]),
+									maxDate: new Date(parseInt(data[2].split('-')[0], 10), parseInt(data[2].split('-')[1], 10) -1, parseInt(data[2].split('-')[2], 10)),
 									showAnim: 'slideDown'
 								});
 			});
@@ -635,8 +635,8 @@ jsBackend.forms = {
 									monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
 									nextText: '{$lblNext}',
 									prevText: '{$lblPrevious}',
-									minDate: new Date(data[2].split('-')[0], parseInt(data[2].split('-')[1]) - 1, data[2].split('-')[2]),
-									maxDate: new Date(data[3].split('-')[0], parseInt(data[3].split('-')[1]) - 1, data[3].split('-')[2]),
+									minDate: new Date(parseInt(data[2].split('-')[0], 10), parseInt(data[2].split('-')[1], 10) - 1, parseInt(data[2].split('-')[2], 10), 0, 0, 0, 0),
+									maxDate: new Date(parseInt(data[3].split('-')[0], 10), parseInt(data[3].split('-')[1], 10) - 1, parseInt(data[3].split('-')[2], 10), 23, 59, 59),
 									showAnim: 'slideDown'
 								});
 			});
