@@ -107,6 +107,11 @@
 	#pages.pagesSettings .inputList {
 		padding-top: 12px;
 	}
+	
+	#pages.pagesEditTemplate #format {
+		width: 400px;
+		font-family: Menlo, Monaco, "Courier New", Courier, monospace;
+	}
 
 /*
 	General

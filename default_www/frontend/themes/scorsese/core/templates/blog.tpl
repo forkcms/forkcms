@@ -11,9 +11,9 @@
 
 			{include:file='{$THEME_PATH}/core/templates/languages.tpl'}
 
-			{* Block 4: search *}
-			{option:block4IsHTML}{$block4}{/option:block4IsHTML}
-			{option:!block4IsHTML}{include:file='{$block4}'}{/option:!block4IsHTML}
+			{* Block 5: search *}
+			{option:block5IsHTML}{$block5}{/option:block5IsHTML}
+			{option:!block5IsHTML}{include:file='{$block5}'}{/option:!block5IsHTML}
 		</div>
 
 		<div id="header">
@@ -59,6 +59,14 @@
 						</div>
 						{/option:block3IsHTML}
 						{option:!block3IsHTML}{include:file='{$block3}'}{/option:!block3IsHTML}
+
+						{* Block 4 *}
+						{option:block4IsHTML}
+						<div class="sideBlock">
+							{$block4}
+						</div>
+						{/option:block4IsHTML}
+						{option:!block4IsHTML}{include:file='{$block4}'}{/option:!block4IsHTML}
 
 					</div>
 				</div>

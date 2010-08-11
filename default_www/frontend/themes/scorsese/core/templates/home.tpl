@@ -11,12 +11,9 @@
 
 			{include:file='{$THEME_PATH}/core/templates/languages.tpl'}
 
-			<form action="#" method="get">
-				<fieldset>
-					<input type="text" name="q" id="q" class="inputText" value="" />
-					<input type="submit" name="search" value="Search" class="inputSubmit" />
-				</fieldset>
-			</form>
+			{* Block 6: search *}
+			{option:block6IsHTML}{$block6}{/option:block6IsHTML}
+			{option:!block6IsHTML}{include:file='{$block6}'}{/option:!block6IsHTML}
 		</div>
 
 		<div id="header">
