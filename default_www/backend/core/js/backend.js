@@ -713,7 +713,6 @@ jsBackend.layout = {
 
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
-
 	},
 	// datafilter layout fixes
 	dataFilter: function() {

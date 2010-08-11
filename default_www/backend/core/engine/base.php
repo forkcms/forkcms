@@ -208,9 +208,9 @@ class BackendBaseAction
 	 * @return	mixed
 	 * @param	string $key					The name of the parameter.
 	 * @param	string[optional] $type		The return-type, possible values are: bool, boolean, int, integer, float, double, string, array
-	 * @param	mixed $return				The value that should be returned if the key is not available
+	 * @param	mixed $defaultValue			The value that should be returned if the key is not available
 	 */
-	public function getParameter($key, $type = 'string', $return = null)
+	public function getParameter($key, $type = 'string', $defaultValue = null)
 	{
 		// redefine key
 		$key = (string) $key;
@@ -219,7 +219,7 @@ class BackendBaseAction
 		if(isset($this->parameters[$key]) && $this->parameters[$key] != '') return SpoonFilter::getValue($this->parameters[$key], null, null, $type);
 
 		// no such parameter
-		return $return;
+		return $defaultValue;
 	}
 
 
