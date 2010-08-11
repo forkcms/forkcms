@@ -186,7 +186,8 @@ class FrontendModel
 														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
 														FROM pages_blocks AS pb
 														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
-														WHERE pb.revision_id = ? AND pb.status = ?;',
+														WHERE pb.revision_id = ? AND pb.status = ?
+														ORDER BY pb.id;',
 														array($record['revision_id'], 'active'));
 
 		// loop blocks

@@ -8,12 +8,12 @@
 	@author       Johan Ronsse <johan@netlash.com>
 	@since        2.0
 
+	@todo @johan: check me
 */
 
 /*
 	Console
 */
-
 #console {
 	position: fixed;
 	height: 200px;
@@ -74,3 +74,10 @@ th.num_tags { width: 70px; }
 .templateVisual td { border: 1px solid #AAA; }
 
 tr.isDefault td.name { font-weight: 900; }
+
+.multipleTextWrapper .multipleTextList { padding-bottom: 12px; }
+.multipleTextWrapper label { font-size: 11px; }
+.multipleTextWrapper ul { padding: 4px 0 0; }
+.multipleTextWrapper li { margin: 0 4px 4px 0; }
+.multipleTextWrapper ul, .multipleTextWrapper li { zoom: 1; }
+.multipleTextWrapper ul:after, .multipleTextWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }

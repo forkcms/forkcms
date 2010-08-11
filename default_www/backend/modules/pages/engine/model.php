@@ -683,7 +683,7 @@ class BackendPagesModel
 															FROM pages_blocks AS b
 															INNER JOIN pages AS i ON b.revision_id = i.revision_id
 															WHERE i.id = ? AND i.language = ? AND i.status = ?
-															ORDER BY i.id ASC;',
+															ORDER BY b.id ASC;',
 															array($id, $language, 'active'));
 	}
 
@@ -706,7 +706,8 @@ class BackendPagesModel
 		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
 															FROM pages_blocks AS b
 															INNER JOIN pages AS i ON b.revision_id = i.revision_id
-															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?;',
+															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
+															ORDER BY b.id ASC;',
 															array($id, $revisionId, $language));
 	}
 
