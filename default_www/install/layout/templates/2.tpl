@@ -27,6 +27,7 @@
 				<p>
 					<label for="hostname">Hostname<abbr title="Required field">*</abbr></label>
 					{$txtHostname} {$txtHostnameError}
+					<span class="helpTxt">If you are working locally, your hostname is probably <strong>localhost</strong>.</span>
 				</p>
 				<p>
 					<label for="database">Database<abbr title="Required field">*</abbr></label>
