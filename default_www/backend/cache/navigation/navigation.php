@@ -24,9 +24,16 @@ $navigation['modules']['children']['blog']['children'][] = array('url' => 'blog/
 $navigation['modules']['children']['search'] = array('url' => null, 'label' => 'Search');
 $navigation['modules']['children']['search']['children'][] = array('url' => 'search/statistics', 'label' => 'Statistics');
 $navigation['modules']['children']['search']['children'][] = array('url' => 'search/synonyms', 'selected_for_actions' => array('add_synonym', 'edit_synonym'), 'label' => 'Synonyms');
+$navigation['marketing'] = array('url' => 'analytics/index', 'selected_for_actions' => array('loading'), 'label' => 'Marketing');
+$navigation['marketing']['children']['analytics'] = array('url' => 'analytics/index', 'label' => 'Analytics');
+$navigation['marketing']['children']['analytics']['children'][] = array('url' => 'analytics/content', 'selected_for_actions' => array('add_landing_page'), 'label' => 'Content');
+$navigation['marketing']['children']['analytics']['children'][] = array('url' => 'analytics/all_pages', 'label' => 'AllPages');
+$navigation['marketing']['children']['analytics']['children'][] = array('url' => 'analytics/exit_pages', 'label' => 'ExitPages');
+$navigation['marketing']['children']['analytics']['children'][] = array('url' => 'analytics/landing_pages', 'selected_for_actions' => array('add_landing_page'), 'label' => 'LandingPages');
 $navigation['settings'] = array('url' => null, 'label' => 'Settings');
 $navigation['settings']['children']['settings'] = array('url' => 'settings/index', 'label' => 'General');
 $navigation['settings']['children']['modules'] = array('url' => null, 'label' => 'Modules');
+$navigation['settings']['children']['modules']['children'][] = array('url' => 'analytics/settings', 'label' => 'Analytics');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'pages/settings', 'label' => 'Pages');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'blog/settings', 'label' => 'Blog');
 $navigation['settings']['children']['modules']['children'][] = array('url' => 'search/settings', 'label' => 'Search');

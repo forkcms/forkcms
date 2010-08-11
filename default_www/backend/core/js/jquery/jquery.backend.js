@@ -197,7 +197,7 @@
 						success: function(data, textStatus) { 
 							// destroy the element
 							destroyElement();
-						},
+						}
 					});
 				}
 				

@@ -1,0 +1,137 @@
+/*
+
+    Analytics
+
+    @package      backend
+    @subpackage   analytics
+
+    @author       Yoni De Beule <yoni@netlash.com>
+
+*/
+
+/* Width of the Analytics detail */
+
+.inner {
+	min-width: 1019px;
+}
+
+/* Hide header links */
+
+.box .box h3 a, .box .box h4 a, .datagridHolder .tableHeading h3 a {
+	color: #000 !important;
+	border: 0; 
+}
+
+/* Analytics top data */
+
+.analyticsColWrapper { width: 973px; padding: 4px 10px; margin: 0 auto; }
+.analyticsColWrapper:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+	.analyticsCol {
+		float: left;
+		width: 324px;
+	}
+	
+		.analyticsCol strong {
+			font-size: 16px;
+			font-weight: 700;
+		}
+		
+		.analyticsCol a {
+			font-size: 11px;
+			font-weight: 700;
+			border: 0;
+			color: #0077cc; /* I'm changing the link color to match the Google Analytics layout */
+			border: none;
+		}
+
+		.analyticsCol a:link,
+		.analyticsCol a:visited {
+			color: #0077cc;
+		}
+
+		.analyticsCol a:hover,
+		.analyticsCol a:active {
+			color: #001a77;
+		}
+
+		.analyticsCol small {
+			color: #999;
+			font-size: 11px;
+		}
+
+/* Analytics icon buttons */
+
+	.boxLevel2 .heading a.linkButton {
+		height: 18px;
+		line-height: 18px;
+		margin-right: 1px;
+	}
+
+		.boxLevel2 .heading a.linkButton span {
+			margin-top: -2px;
+			padding-top: 2px !important;
+		}
+
+/* Analytics containers */
+
+.analyticsGraphWrapper { width: 993px; margin: 0 auto; }
+.analyticsGraphWrapper:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+	.analyticsLeftCol {
+		float: left;
+		width: 492px;
+		padding-right: 10px;
+	}
+
+	.analyticsRightCol {
+		float: left;
+		width: 491px;
+	}
+
+		a.analyticsBacklink {
+			float: left;
+			border: 0;
+			color: #999;
+			padding-top: 8px;
+			line-height: 16px;
+			font-size: 11px;
+		}
+
+/* Datagrid holders */
+
+#analyticsDatagridLeftCol {
+	width: 504px;
+	float: left;
+	margin-right: 5px;
+}
+
+#analyticsDatagridLeftCol .datagrid th a, #analyticsDatagridLeftCol .datagrid th span {
+	white-space: nowrap;
+}
+
+#analyticsDatagridRightCol {
+	width: 504px;
+	float: left;
+	margin-left: 5px;
+}
+
+#analyticsDatagridRightCol .datagrid th a, #analyticsDatagridRightCol .datagrid th span {
+	white-space: nowrap;
+}
+
+.box .options .datagridHolder:last-child, .box .content .datagridHolder:last-child {
+	margin: 0;
+}
+
+/* Settings page */
+
+.box .box .datagrid {
+	border-top: 0;
+}
+
+/* URL Input */
+
+.bigInput input {
+	width: 320px;
+}
