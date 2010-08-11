@@ -32,10 +32,11 @@ class SpoonHTTP
 	/**
 	 * Get content from an URL.
 	 *
-	 * @return	string			The content.
-	 * @param	string $URL		The URL of the webpage that should be retrieved.
+	 * @return	string							The content.
+	 * @param	string $URL						The URL of the webpage that should be retrieved.
+	 * @param	array[optional] $cURLOptions	Extra options to be passed on with the cURL-request
 	 */
-	public static function getContent($URL)
+	public static function getContent($URL, array $cURLoptions = null)
 	{
 		// check if curl is available
 		if(!function_exists('curl_init')) throw new SpoonFileException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
@@ -46,6 +47,13 @@ class SpoonHTTP
 		$options[CURLOPT_FOLLOWLOCATION] = true;
 		$options[CURLOPT_RETURNTRANSFER] = true;
 		$options[CURLOPT_TIMEOUT] = 10;
+
+		// any extra options provided?
+		if($cURLoptions !== null)
+		{
+			// loop the extra options
+			foreach($cURLoptions as $key => $value) $options[$key] = $value;
+		}
 
 		// init
 		$curl = curl_init();

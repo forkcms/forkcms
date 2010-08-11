@@ -1335,8 +1335,9 @@ class SpoonDatagrid
 	 *
 	 * @return	void
 	 * @param	array $record
+	 * @param	array[optional] $rowAttributes
 	 */
-	private function parseRowFunctions($record, $rowAttributes)
+	private function parseRowFunctions($record, array $rowAttributes = null)
 	{
 		// store old error reporting settings
 		$currentErrorReporting = ini_get('error_reporting');
