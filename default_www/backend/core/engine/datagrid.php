@@ -344,18 +344,14 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @return	void
 	 * @param	string $column					The name of the column to set the tooltop for.
 	 * @param	string $message					The key for the message (will be parsed through BackendLanguage::getMessage).
-	 * @param 	array[optional] $arguments		Arguments that should be parsed in the message.
 	 */
-	public function setTooltip($column, $message, array $arguments = null)
+	public function setTooltip($column, $message)
 	{
 		// get the column
 		$instance = $this->getColumn($column);
 
 		// build the value for the tooltip
 		$value = BL::getMessage($message);
-
-		// parse the arguments
-		if($arguments !== null) $value = vsprintf($value, $arguments);
 
 		// reset the label
 		$instance->setLabel($instance->getLabel() .'<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">'. $value .'</span>');
