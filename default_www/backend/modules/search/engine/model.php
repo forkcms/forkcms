@@ -104,19 +104,9 @@ class BackendSearchModel
 			// reformat value
 			$value = strip_tags((string) $value);
 
-			// field already exists
-			if((bool) $db->getVar('SELECT COUNT(module) FROM search_index WHERE module = ? AND other_id = ? AND language = ? AND field = ?' , array((string) $module, (int) $otherId, (string) $language, (string) $field)))
-			{
-				// update in db
-				$db->update('search_index', array('value' => $value, 'active' => 'Y'), 'module = ? AND other_id = ? AND language = ? AND field = ?' , array((string) $module, (int) $otherId, (string) $language, (string) $field));
-			}
-
-			// new field
-			else
-			{
-				// insert in db
-				$db->insert('search_index', array('module' => (string) $module, 'other_id' => (int) $otherId, 'language' => (string) $language, 'field' => (string) $field, 'value' => $value, 'active' => 'Y'));
-			}
+			// update search index
+			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
+							ON DUPLICATE KEY UPDATE value = ?, active = ?', array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y'));
 		}
 
 		// invalidate the cache for search

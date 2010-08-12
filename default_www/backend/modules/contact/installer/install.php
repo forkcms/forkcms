@@ -28,13 +28,7 @@ class ContactInstall extends ModuleInstaller
 		$this->setSetting('contact', 'requires_google_maps', false);
 
 		// add extra's
-		$this->insertExtra(array('module' => 'contact',
-									'type' => 'block',
-									'label' => 'Contact',
-									'action' => null,
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 2));
+		$this->insertExtra('contact', 'block', 'Contact', null, null, 'N', 2);
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'ContactErrorWhileSending', 'Er ging iets mis tijdens het verzenden, probeer later opnieuw.');

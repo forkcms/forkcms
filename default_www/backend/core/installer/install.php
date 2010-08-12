@@ -69,15 +69,20 @@ class ModuleInstaller
 		// redefine
 		$name = (string) $name;
 
-		// module already exists
-		if($this->getDB()->getNumRows('SELECT name FROM modules WHERE name = ?;', $name) != 0)
+		// module does not yet exists
+		if($this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?;', $name) == 0)
 		{
-			// activate and update description
-			$this->getDB()->update('modules', array('description' => $description, 'active' => 'Y'), 'name = ?', $name);
+			// build item
+			$item = array('name' => $name,
+							'description' => $description,
+							'active' => 'Y');
+
+			// insert module
+			$this->getDB()->insert('modules', $item);
 		}
 
-		// insert module
-		else $this->getDB()->insert('modules', array('name' => $name, 'description' => $description, 'active' => 'Y'));
+		// activate and update description
+		else $this->getDB()->update('modules', array('description' => $description, 'active' => 'Y'), 'name = ?', $name);
 	}
 
 
@@ -112,10 +117,11 @@ class ModuleInstaller
 	{
 		try
 		{
+			// fetch default user id
 			return (int) $this->getDB()->getVar('SELECT id
 													FROM users
 													WHERE is_god = ? AND active =? AND deleted = ?
-													ORDER BY id ASC;',
+													ORDER BY id ASC',
 													array('Y', 'Y', 'N'));
 		}
 
@@ -149,7 +155,7 @@ class ModuleInstaller
 	{
 		return unserialize($this->getDB()->getVar('SELECT value
 													FROM modules_settings
-													WHERE module = ? AND name = ?;',
+													WHERE module = ? AND name = ?',
 													array((string) $module, (string) $name)));
 	}
 
@@ -185,7 +191,7 @@ class ModuleInstaller
 		if(!empty($content))
 		{
 			// some version of PHP can't handle multiple statements at once, so split them
-			$queries = explode(";\n", $content);
+			$queries = explode(";\n", $content); // @todo: matthias is hier niet mee akkoord, maar weet niet meteen een betere work-around die niet vuil is
 
 			// loop queries and execute them
 			foreach($queries as $query) $this->getDB()->execute($query);
@@ -197,12 +203,46 @@ class ModuleInstaller
 	 * Insert an extra
 	 *
 	 * @return	int
-	 * @param	array $extra	The extra
+	 * @param	string $module
+	 * @param	string $type
+	 * @param	string $label
+	 * @param	string $action
+	 * @param	string[optional] $data
+	 * @param	bool[optional] $hidden
+	 * @param	int[optional] $sequence
 	 */
-	protected function insertExtra(array $item)
+	protected function insertExtra($module, $type, $label, $action = null, $data = null, $hidden = false, $sequence = null)
 	{
+		// no sequence set
+		if(is_null($sequence))
+		{
+			// set next sequence number for this module
+			$sequence = $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages_extras WHERE module = ?', array((string) $module));
+
+			// this is the first extra for this module: generate new 1000-series
+			if(is_null($sequence)) $sequence = $sequence = $this->getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM pages_extras');
+		}
+
+		// redefine
+		$module = (string) $module;
+		$type = (string) $type;
+		$label = (string) $label;
+		$action = !is_null($action) ? (string) $action : null;
+		$data = !is_null($data) ? (string) $data : null;
+		$hidden = $hidden && $hidden !== 'N' ? 'Y' : 'N';
+		$sequence = (int) $sequence;
+
+		// build item
+		$item = array('module' => $module,
+						'type' => $type,
+						'label' => $label,
+						'action' => $action,
+						'data' => $data,
+						'hidden' => $hidden,
+						'sequence' => $sequence);
+
 		// doesn't already exist
-		if($this->getDB()->getNumRows('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?;', array($item['module'], $item['type'], $item['label'])) == 0)
+		if($this->getDB()->getNumRows('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label'])) == 0)
 		{
 			// insert extra and return id
 			return (int) $this->getDB()->insert('pages_extras', $item);
@@ -238,7 +278,7 @@ class ModuleInstaller
 		// check if the label already exists
 		if($this->getDB()->getNumRows('SELECT i.id
 										FROM locale AS i
-										WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?;',
+										WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?',
 										array($language, $application, $module, $type, $name)) == 0)
 		{
 			// insert
@@ -260,11 +300,143 @@ class ModuleInstaller
 	 * Insert a meta item
 	 *
 	 * @return	int
-	 * @param	array $item		The meta item
+	 * @param	string $keywords
+	 * @param	string $description
+	 * @param	string $title
+	 * @param	string $url
+	 * @param	bool[optional] $keywordsOverwrite
+	 * @param	bool[optional] $descriptionOverwrite
+	 * @param	bool[optional] $titleOverwrite
+	 * @param	bool[optional] $urlOverwrite
+	 * @param	string[optional] $custom
 	 */
-	protected function insertMeta(array $item)
+	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null)
 	{
+		// redefine
+		$keywords = (string) $keywords;
+		$keywordsOverwrite = $keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N';
+		$description = (string) $description;
+		$descriptionOverwrite = $titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N';
+		$title = (string) $title;
+		$titleOverwrite = $titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N';
+		$url = (string) $url;
+		$urlOverwrite = $urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N';
+		$custom = !is_null($custom) ? (string) $custom : null;
+
+		// build item
+		$item = array('keywords' => $keywords,
+						'keywords_overwrite' => $keywordsOverwrite,
+						'description' => $description,
+						'description_overwrite' => $descriptionOverwrite,
+						'title' => $title,
+						'title_overwrite' => $titleOverwrite,
+						'url' => $url,
+						'url_overwrite' => $urlOverwrite,
+						'custom' => $custom);
+
+		// insert meta and return id
 		return (int) $this->getDB()->insert('meta', $item);
+	}
+
+
+
+
+	/**
+	 * Insert a page
+	 *
+	 * @return	void
+	 * @param	array $revision
+	 * @param	array[optional] $meta
+	 * @param	array[optional] $block
+	 */
+	protected function insertPage(array $revision, array $meta = null, array $block = null)
+	{
+		// redefine
+		$revision = (array) $revision;
+		$meta = (array) $meta;
+
+		// build revision
+		if(!isset($revision['language'])) throw new SpoonException('language is required for installing pages');
+		if(!isset($revision['title'])) throw new SpoonException('title is required for installing pages');
+		if(!isset($revision['id'])) $revision['id'] = (int) $this->getDB()->getVar('SELECT MAX(id) + 1 FROM pages WHERE language = ?', array($revision['language']));
+		if(!$revision['id']) $revision['id'] = 1;
+		if(!isset($revision['user_id'])) $revision['user_id'] = $this->getDefaultUserID();
+		if(!isset($revision['parent_id'])) $revision['parent_id'] = 0;
+		if(!isset($revision['template_id'])) $revision['template_id'] = 2;
+		if(!isset($revision['type'])) $revision['type'] = 'page';
+		if(!isset($revision['navigation_title'])) $revision['navigation_title'] = $revision['title'];
+		if(!isset($revision['navigation_title_overwrite'])) $revision['navigation_title_overwrite'] = 'N';
+		if(!isset($revision['hidden'])) $revision['hidden'] = 'N';
+		if(!isset($revision['status'])) $revision['status'] = 'active';
+		if(!isset($revision['publish_on'])) $revision['publish_on'] = gmdate('Y-m-d H:i:s');
+		if(!isset($revision['created_on'])) $revision['created_on'] = gmdate('Y-m-d H:i:s');
+		if(!isset($revision['edited_on'])) $revision['edited_on'] = gmdate('Y-m-d H:i:s');
+		if(!isset($revision['data'])) $revision['data'] = null;
+		if(!isset($revision['allow_move'])) $revision['allow_move'] = 'Y';
+		if(!isset($revision['allow_children'])) $revision['allow_children'] = 'Y';
+		if(!isset($revision['allow_edit'])) $revision['allow_edit'] = 'Y';
+		if(!isset($revision['allow_delete'])) $revision['allow_delete'] = 'Y';
+		if(!isset($revision['no_follow'])) $revision['no_follow'] = 'N';
+		if(!isset($revision['sequence'])) $revision['sequence'] = (int) $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?', array($revision['language'], $revision['parent_id'], $revision['type']));
+		if(!isset($revision['extra_ids'])) $revision['extra_ids'] = null;
+		if(!isset($revision['has_extra'])) $revision['has_extra'] = $revision['extra_ids'] ? 'N' : 'Y';
+
+		// meta needs to be inserted
+		if(!isset($revision['meta_id']))
+		{
+			// build meta
+			if(!isset($meta['keywords'])) $meta['keywords'] = $revision['title'];
+			if(!isset($meta['keywords_overwrite'])) $meta['keywords_overwrite'] = false;
+			if(!isset($meta['description'])) $meta['description'] = $revision['title'];
+			if(!isset($meta['description_overwrite'])) $meta['description_overwrite'] = false;
+			if(!isset($meta['title'])) $meta['title'] = $revision['title'];
+			if(!isset($meta['title_overwrite'])) $meta['title_overwrite'] = false;
+			if(!isset($meta['url'])) $meta['url'] = SpoonFilter::urlise($revision['title']);
+			if(!isset($meta['url_overwrite'])) $meta['url_overwrite'] = false;
+			if(!isset($meta['custom'])) $meta['custom'] = null;
+
+			// insert meta
+			$revision['meta_id'] = $this->insertMeta($meta['keywords'], $meta['description'], $meta['title'], $meta['url'], $meta['keywords_overwrite'], $meta['description_overwrite'], $meta['title_overwrite'], $meta['url_overwrite'], $meta['custom']);
+		}
+
+		// insert page
+		$revision['revision_id'] = $this->getDB()->insert('pages', $revision);
+
+		// get number of blocks to insert
+		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE active = ?;', array('Y'));
+
+		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
+		$blocks = array();
+
+		for($i = 0; $i < $numBlocks; $i++)
+		{
+			// get block
+			$block = @func_get_arg($i + 2);
+			if($block === false) $block = array();
+			else $block = (array) $block;
+
+			// build block
+			if(!isset($block['id'])) $block['id'] = $i;
+			if(!isset($block['revision_id'])) $block['revision_id'] = $revision['revision_id'];
+			if(!isset($block['status'])) $block['status'] = 'active';
+			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
+			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
+			if(!isset($block['extra_id'])) $block['extra_id'] = null;
+			else $revision['extra_ids'] = trim($revision['extra_ids'] .','. $block['extra_id'], ',');
+			if(!isset($block['html'])) $block['html'] = '';
+			elseif(SpoonFile::exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
+
+			// insert block
+			$this->getDB()->insert('pages_blocks', $block);
+		}
+
+		// blocks added
+		if($revision['extra_ids'] && $revision['has_extra'] == 'N')
+		{
+			// update page
+			$revision['has_extra'] = 'Y';
+			$this->getDB()->update('pages', $revision, 'revision_id = ?', array($revision['revision_id']));
+		}
 	}
 
 
@@ -278,8 +450,14 @@ class ModuleInstaller
 	 */
 	protected function makeSearchable($module, $searchable = true, $weight = 1)
 	{
-		$this->getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
-										ON DUPLICATE KEY UPDATE searchable = ?, weight = ?', array((string) $module, $searchable ? 'Y' : 'N', (int) $weight, $searchable ? 'Y' : 'N', (int) $weight));
+		// redefine
+		$module = (string) $module;
+		$searchable = $searchable && $searchable !== 'N' ? 'Y' : 'N';
+		$weight = (int) $weight;
+
+		// make module searchable
+		$this->getDB()->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
+									ON DUPLICATE KEY UPDATE searchable = ?, weight = ?', array($module, $searchable, $weight, $searchable, $weight));
 	}
 
 
@@ -301,16 +479,19 @@ class ModuleInstaller
 		$level = (int) $level;
 
 		// action doesn't exist
-		if($this->getDB()->getNumRows('SELECT id
-										FROM groups_rights_actions
-										WHERE group_id = ? AND module = ? AND action = ?;',
-										array($groupId, $module,$action)) == 0)
+		if($this->getDB()->getVar('SELECT COUNT(id)
+									FROM groups_rights_actions
+									WHERE group_id = ? AND module = ? AND action = ?',
+									array($groupId, $module, $action)) == 0)
 		{
+			// build item
+			$item = array('group_id' => $groupId,
+							'module' => $module,
+							'action' => $action,
+							'level' => $level);
+
 			// insert
-			$this->getDB()->insert('groups_rights_actions', array('group_id' => $groupId,
-																'module' => $module,
-																'action' => $action,
-																'level' => $level));
+			$this->getDB()->insert('groups_rights_actions', $item);
 		}
 	}
 
@@ -329,13 +510,17 @@ class ModuleInstaller
 		$module = (string) $module;
 
 		// module doesn't exist
-		if($this->getDB()->getNumRows('SELECT id
-										FROM groups_rights_modules
-										WHERE group_id = ? AND module = ?;',
-										array((int) $groupId, (string) $module)) == 0)
+		if($this->getDB()->getVar('SELECT COUNT(id)
+									FROM groups_rights_modules
+									WHERE group_id = ? AND module = ?',
+									array((int) $groupId, (string) $module)) == 0)
 		{
-			$this->getDB()->insert('groups_rights_modules', array('group_id' => $groupId,
-																'module' => $module));
+			// build item
+			$item = array('group_id' => $groupId,
+							'module' => $module);
+
+			// insert
+			$this->getDB()->insert('groups_rights_modules', $item);
 		}
 	}
 
@@ -358,23 +543,26 @@ class ModuleInstaller
 		$overwrite = (bool) $overwrite;
 
 		// doens't already exist
-		if($this->getDB()->getNumRows('SELECT name
-										FROM modules_settings
-										WHERE module = ? AND name = ?;',
-										array($module, $name)) == 0)
+		if($this->getDB()->getVar('SELECT COUNT(name)
+									FROM modules_settings
+									WHERE module = ? AND name = ?;',
+									array($module, $name)) == 0)
 		{
+			// build item
+			$item = array('module' => $module,
+							'name' => $name,
+							'value' => $value);
+
 			// insert setting
-			$this->getDB()->insert('modules_settings', array('module' => $module,
-																'name' => $name,
-																'value' => $value));
+			$this->getDB()->insert('modules_settings', $item);
 		}
 
 		// overwrite
 		elseif($overwrite)
 		{
 			// insert setting
-			$this->getDB()->execute("INSERT INTO modules_settings (module, name, value) VALUES (?, ?, ?)
-									ON DUPLICATE KEY UPDATE value = ?;", array($module, $name, $value, $value));
+			$this->getDB()->execute('INSERT INTO modules_settings (module, name, value) VALUES (?, ?, ?)
+										ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
 		}
 	}
 }

@@ -34,7 +34,8 @@
 				<th>Password</th>
 				<td>
 					<span id="plainPassword" class="hidden">{$password}</span>
-					<input type="button" id="showPassword" name="showPassword" value="show password" />
+					<span id="fakePassword">********</span>
+					<input type="checkbox" id="showPassword" name="showPassword" /> <label for="showPassword">show password</label>
 				</td>
 			</tr>
 		</table>

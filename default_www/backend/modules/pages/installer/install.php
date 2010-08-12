@@ -107,8 +107,6 @@ class PagesInstall extends ModuleInstaller
 		// insert pages
 		$this->insertPagesAndExtras();
 	}
-
-
 	/**
 	 * Insert the pages
 	 *
@@ -120,210 +118,75 @@ class PagesInstall extends ModuleInstaller
 
 		// @todo insert extra for contact page
 
-		// insert extras
-		$sitemapID = $this->insertExtra(array('module' => 'pages',
-												'type' => 'widget',
-												'label' => 'Sitemap',
-												'action' => 'sitemap',
-												'data' => null,
-												'hidden' => 'N',
-												'sequence' => 1));
+		// insert extra
+		$sitemapID = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
 			// check if the homepage doesn't exist
-			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(1, $language)) == 0)
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(1, $language)) == 0)
 			{
-				// insert meta
-				$metaID = $this->getDB()->insert('meta', array('keywords' => 'Home', 'keywords_overwrite' => 'N',
-																'description' => 'Home', 'description_overwrite' => 'N',
-																'title' => 'Home', 'title_overwrite' => 'N',
-																'url' => 'home', 'url_overwrite' => 'N',
-																'custom' => null
-															));
-
-				// insert home
-				$revisionID = $this->getDB()->insert('pages', array('id' => 1, 'user_id' => $this->getDefaultUserID(), 'parent_id' => 0, 'template_id' => 1, 'type' => 'page',
-																	'meta_id' => $metaID, 'language' => $language,
-																	'title' => 'Home',
-																	'navigation_title' => 'home', 'navigation_title_overwrite' => 'N',
-																	'hidden' => 'N', 'status' => 'active',
-																	'publish_on' => gmdate('Y-m-d H:i:s'), 'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s'),
-																	'data' => null,
-																	'allow_move' => 'N', 'allow_children' => 'Y', 'allow_edit' => 'Y', 'allow_delete' => 'N',
-																	'no_follow' => 'N',
-																	'sequence' => 1,
-																	'has_extra' => 'N', 'extra_ids' => null
-																));
-
-				// get number of blocks to insert
-				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(1));
-
-				// insert blocks
-				for($i = 1; $i <= $numBlocks; $i++)
-				{
-					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
-																	'extra_id' => null, 'html' => '',
-																	'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s')
-																));
-				}
+				// insert homepage
+				$this->insertPage(array('id' => 1,
+										'template_id' => 1,
+										'title' => 'Home',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'));
 			}
 
 			// check if the sitemap page doesn't exist
-			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(2, $language)) == 0)
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(2, $language)) == 0)
 			{
-				// insert meta
-				$metaID = $this->getDB()->insert('meta', array('keywords' => 'Sitemap', 'keywords_overwrite' => 'N',
-																'description' => 'Sitemap', 'description_overwrite' => 'N',
-																'title' => 'Sitemap', 'title_overwrite' => 'N',
-																'url' => 'sitemap', 'url_overwrite' => 'N',
-																'custom' => null
-															));
-
-				// insert sitemap	@todo	add widget with sitemap
-				$revisionID = $this->getDB()->insert('pages', array('id' => 2, 'user_id' => $this->getDefaultUserID(), 'parent_id' => 0, 'template_id' => 2, 'type' => 'footer',
-																	'meta_id' => $metaID, 'language' => $language,
-																	'title' => 'Sitemap',
-																	'navigation_title' => 'Sitemap', 'navigation_title_overwrite' => 'N',
-																	'hidden' => 'N', 'status' => 'active',
-																	'publish_on' => gmdate('Y-m-d H:i:s'), 'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s'),
-																	'data' => null,
-																	'allow_move' => 'N', 'allow_children' => 'Y', 'allow_edit' => 'Y', 'allow_delete' => 'N',
-																	'no_follow' => 'Y',
-																	'sequence' => 1,
-																	'has_extra' => 'N', 'extra_ids' => $sitemapID
-																));
-
-				// get number of blocks to insert
-				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
-
-				// insert blocks
-				for($i = 1; $i <= $numBlocks; $i++)
-				{
-					$extraId = null;
-					if($i == 2) $extraId = $sitemapID;
-
-					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
-															'extra_id' => $extraId, 'html' => '',
-															'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s')
-															));
-				}
+				// insert sitemap
+				$this->insertPage(array('id' => 2,
+										'title' => 'Sitemap',
+										'type' => 'footer',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+									null,
+									array('extra_id' => $sitemapID));
 			}
 
 			// check if the disclaimerpage doesn't exist
-			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(3, $language)) == 0)
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(3, $language)) == 0)
 			{
-				// insert meta
-				$metaID = $this->getDB()->insert('meta', array('keywords' => 'Disclaimer', 'keywords_overwrite' => 'N',
-																'description' => 'Disclaimer', 'description_overwrite' => 'N',
-																'title' => 'Disclaimer', 'title_overwrite' => 'N',
-																'url' => 'disclaimer', 'url_overwrite' => 'N',
-																'custom' => null
-															));
-
 				// insert disclaimer
-				$revisionID = $this->getDB()->insert('pages', array('id' => 3, 'user_id' => $this->getDefaultUserID(), 'parent_id' => 0, 'template_id' => 2, 'type' => 'footer',
-																	'meta_id' => $metaID, 'language' => $language,
-																	'title' => 'Disclaimer',
-																	'navigation_title' => 'Disclaimer', 'navigation_title_overwrite' => 'N',
-																	'hidden' => 'N', 'status' => 'active',
-																	'publish_on' => gmdate('Y-m-d H:i:s'), 'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s'),
-																	'data' => null,
-																	'allow_move' => 'N', 'allow_children' => 'Y', 'allow_edit' => 'Y', 'allow_delete' => 'N',
-																	'no_follow' => 'Y',
-																	'sequence' => 2,
-																	'has_extra' => 'N', 'extra_ids' => null
-																));
-
-				// get number of blocks to insert
-				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
-
-				// insert blocks
-				for($i = 1; $i <= $numBlocks; $i++)
-				{
-					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
-															'extra_id' => null, 'html' => '',
-															'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s')
-															));
-				}
+				$this->insertPage(array('id' => 3,
+										'title' => 'Disclaimer',
+										'type' => 'footer',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
 			}
 
 			// check if the about page doesn't exist
-			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(4, $language)) == 0)
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(4, $language)) == 0)
 			{
-				// insert meta
-				$metaID = $this->getDB()->insert('meta', array('keywords' => 'About', 'keywords_overwrite' => 'N',
-																'description' => 'About', 'description_overwrite' => 'N',
-																'title' => 'About', 'title_overwrite' => 'N',
-																'url' => 'about', 'url_overwrite' => 'N',
-																'custom' => null
-															));
-
 				// insert about
-				$revisionID = $this->getDB()->insert('pages', array('id' => 4, 'user_id' => $this->getDefaultUserID(), 'parent_id' => 0, 'template_id' => 2, 'type' => 'meta',
-																	'meta_id' => $metaID, 'language' => $language,
-																	'title' => 'About',
-																	'navigation_title' => 'About', 'navigation_title_overwrite' => 'N',
-																	'hidden' => 'N', 'status' => 'active',
-																	'publish_on' => gmdate('Y-m-d H:i:s'), 'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s'),
-																	'data' => null,
-																	'allow_move' => 'N', 'allow_children' => 'Y', 'allow_edit' => 'Y', 'allow_delete' => 'N',
-																	'no_follow' => 'Y',
-																	'sequence' => 2,
-																	'has_extra' => 'N', 'extra_ids' => null
-																));
-
-				// get number of blocks to insert
-				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
-
-				// insert blocks
-				for($i = 1; $i <= $numBlocks; $i++)
-				{
-					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
-															'extra_id' => null, 'html' => '',
-															'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s')
-															));
-				}
+				$this->insertPage(array('id' => 4,
+										'title' => 'About',
+										'type' => 'meta',
+										'language' => $language,
+										'allow_move' => 'N'));
 			}
 
 			// check if the 404 page doesn't exist
-			if($this->getDB()->getNumRows('SELECT id FROM pages WHERE id = ? AND language = ?;', array(404, $language)) == 0)
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(404, $language)) == 0)
 			{
-							// insert meta
-				$metaID = $this->getDB()->insert('meta', array('keywords' => '404', 'keywords_overwrite' => 'N',
-																'description' => '404', 'description_overwrite' => 'N',
-																'title' => '404', 'title_overwrite' => 'N',
-																'url' => '404', 'url_overwrite' => 'N',
-																'custom' => null
-															));
-
 				// insert disclaimer
-				$revisionID = $this->getDB()->insert('pages', array('id' => 404, 'user_id' => $this->getDefaultUserID(), 'parent_id' => 0, 'template_id' => 2, 'type' => 'root',
-																	'meta_id' => $metaID,
-																	'language' => $language,
-																	'title' => '404',
-																	'navigation_title' => '404', 'navigation_title_overwrite' => 'N',
-																	'hidden' => 'N', 'status' => 'active',
-																	'publish_on' => gmdate('Y-m-d H:i:s'), 'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s'),
-																	'data' => null,
-																	'allow_move' => 'N', 'allow_children' => 'Y', 'allow_edit' => 'Y', 'allow_delete' => 'N',
-																	'no_follow' => 'Y',
-																	'sequence' => 2,
-																	'has_extra' => 'N', 'extra_ids' => null
-																));
-
-				// get number of blocks to insert
-				$numBlocks = $this->getDB()->getVar('SELECT num_blocks FROM pages_templates WHERE id = ?;', array(2));
-
-				// insert blocks
-				for($i = 1; $i <= $numBlocks; $i++)
-				{
-					$this->getDB()->insert('pages_blocks', array('id' => $i, 'revision_id' => $revisionID, 'status' => 'active',
-															'extra_id' => null, 'html' => '',
-															'created_on' => gmdate('Y-m-d H:i:s'), 'edited_on' => gmdate('Y-m-d H:i:s')
-															));
-				}
+				$this->insertPage(array('id' => '404',
+										'title' => '404',
+										'type' => 'root',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'));
 			}
 		}
 	}

@@ -41,44 +41,29 @@ class SearchInstall extends ModuleInstaller
 		$this->setActionRights(1, 'search', 'synonyms');
 
 		// add extra's
-		$this->insertExtra(array('module' => 'search',
-									'type' => 'block',
-									'label' => 'Search',
-									'action' => null,
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 3000));
+		$searchBlock = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
+		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
-		$this->insertExtra(array('module' => 'search',
-									'type' => 'widget',
-									'label' => 'SearchForm',
-									'action' => 'form',
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 3001));
-
-		// make 'pages' searchable
-		$this->makeSearchable('pages');
-
-		// get db instance
-		$db = $this->getDB();
-
-		// get existing menu items
-		$menu = $db->retrieve('SELECT m.id, m.revision_id, m.language, m.title FROM pages AS m WHERE m.status = ?', array('active'));
-
-		// loop menu items
-		foreach($menu as $id => $page)
+		// loop languages
+		foreach($this->getLanguages() as $language)
 		{
-			// get blocks
-			$blocks = $db->getColumn('SELECT mb.html FROM pages_blocks AS mb WHERE mb.revision_id = ?', array($page['revision_id']));
-
-			// merge blocks content
-			$text = strip_tags(implode(' ', $blocks));
-
-			// add page to search index
-			$db->insert('search_index', array('module' => (string) 'pages', 'other_id' => (int) $page['id'], 'language' => (string) $page['language'], 'field' => 'title', 'value' => $page['title'], 'active' => 'Y'));
-			$db->insert('search_index', array('module' => (string) 'pages', 'other_id' => (int) $page['id'], 'language' => (string) $page['language'], 'field' => 'text', 'value' => $text, 'active' => 'Y'));
+			// check if the Search page doesn't exist
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(5, $language)) == 0) // @todo: dit moet eigenlijk zoeken op 'bestaat pagina met dit block al' ipv op id (ok, da klopt nu wel door de search order enzo, maar als er ooit ene tussenkomt, of deze pagina wordt ooit verwijderd en er wordt een neiuwe taal geinstalleerd, dan wordt search opnieuw geinstalleerd voor andere talen ook)
+			{
+				// insert disclaimer
+				$this->insertPage(array('id' => 5,
+										'title' => 'Search',
+										'type' => 'root',
+										'language' => $language,
+										'allow_move' => 'Y',
+										'allow_delete' => 'Y'),
+									null,
+									array('extra_id' => $searchBlock));
+			}
 		}
+
+		// activate search on 'pages'
+		$this->searchPages();
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht.');
@@ -137,6 +122,40 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Search', 'search');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchTerm', 'searchterm');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SearchNoItems', 'There were no results.');
+	}
+
+
+	/**
+	 * Activate search on pages
+	 *
+	 * @return	void
+	 */
+	private function searchPages()
+	{
+		// make 'pages' searchable
+		$this->makeSearchable('pages');
+
+		// get db instance
+		$db = $this->getDB();
+
+		// get existing menu items
+		$menu = $db->retrieve('SELECT id, revision_id, language, title FROM pages WHERE status = ?', array('active'));
+
+		// loop menu items
+		foreach($menu as $id => $page)
+		{
+			// get blocks
+			$blocks = $db->getColumn('SELECT html FROM pages_blocks WHERE revision_id = ?', array($page['revision_id']));
+
+			// merge blocks content
+			$text = strip_tags(implode(' ', $blocks));
+
+			// add page to search index
+			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
+							ON DUPLICATE KEY UPDATE value = ?, active = ?', array('pages', (int) $page['id'], (string) $page['language'], 'title', $page['title'], 'Y', $page['title'], 'Y'));
+			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
+							ON DUPLICATE KEY UPDATE value = ?, active = ?', array('pages', (int) $page['id'], (string) $page['language'], 'text', $text, 'Y', $text, 'Y'));
+		}
 	}
 }
 

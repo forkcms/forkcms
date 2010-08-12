@@ -1,5 +1,5 @@
-$(document).ready(function(){
-	
+$(document).ready(function()
+{
 	/*
 	 * Step 1 - requirements
 	 */ 
@@ -8,6 +8,7 @@ $(document).ready(function(){
 		evt.preventDefault();
 		$('#requirementsInformation').toggle();
 	});
+	
 	
 	/*
 	 * Step 3 - general settings (modules, languages, ...)
@@ -45,9 +46,22 @@ $(document).ready(function(){
 	/*
 	 * Step 5 - confirmation
 	 */
-	$('#showPassword').bind('click', function(evt)
+	$('#showPassword').bind('change', function(evt)
 	{
 		evt.preventDefault();
-		$(this).hide(); $('#plainPassword').show();
+		
+		// show password
+		if($(this).is(':checked'))
+		{
+			$('#plainPassword').show();
+			$('#fakePassword').hide();
+		}
+		
+		// hide password
+		else
+		{
+			$('#plainPassword').hide();
+			$('#fakePassword').show();
+		}
 	});
 });

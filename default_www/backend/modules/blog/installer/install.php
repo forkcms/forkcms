@@ -101,45 +101,11 @@ class BlogInstall extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'settings');
 
 		// add extra's
-		$this->insertExtra(array('module' => 'blog',
-									'type' => 'block',
-									'label' => 'Blog',
-									'action' => null,
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 1000));
-
-		$this->insertExtra(array('module' => 'blog',
-									'type' => 'widget',
-									'label' => 'RecentComments',
-									'action' => 'recent_comments',
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 1001));
-
-		$this->insertExtra(array('module' => 'blog',
-									'type' => 'widget',
-									'label' => 'Categories',
-									'action' => 'categories',
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 1002));
-
-		$this->insertExtra(array('module' => 'blog',
-									'type' => 'widget',
-									'label' => 'Archive',
-									'action' => 'archive',
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 1003));
-
-		$this->insertExtra(array('module' => 'blog',
-									'type' => 'widget',
-									'label' => 'RecentArticles',
-									'action' => 'recent_articles',
-									'data' => null,
-									'hidden' => 'N',
-									'sequence' => 1004));
+		$this->insertExtra('blog', 'block', 'Blog', null, null, 'N', 1000);
+		$this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
+		$this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
+		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
+		$this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N',1004);
 
 
 		// insert locale (nl)
