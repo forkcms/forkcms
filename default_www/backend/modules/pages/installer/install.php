@@ -107,6 +107,8 @@ class PagesInstall extends ModuleInstaller
 		// insert pages
 		$this->insertPagesAndExtras();
 	}
+
+
 	/**
 	 * Insert the pages
 	 *
@@ -114,10 +116,6 @@ class PagesInstall extends ModuleInstaller
 	 */
 	private function insertPagesAndExtras()
 	{
-		// @todo insert contact page
-
-		// @todo insert extra for contact page
-
 		// insert extra
 		$sitemapID = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
 

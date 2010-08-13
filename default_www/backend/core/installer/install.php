@@ -120,7 +120,7 @@ class ModuleInstaller
 			// fetch default user id
 			return (int) $this->getDB()->getVar('SELECT id
 													FROM users
-													WHERE is_god = ? AND active =? AND deleted = ?
+													WHERE is_god = ? AND active = ? AND deleted = ?
 													ORDER BY id ASC',
 													array('Y', 'Y', 'N'));
 		}

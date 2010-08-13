@@ -27,18 +27,22 @@ class ContactInstall extends ModuleInstaller
 		$this->setSetting('contact', 'requires_akismet', false);
 		$this->setSetting('contact', 'requires_google_maps', false);
 
-		// add extra's
-		$this->insertExtra('contact', 'block', 'Contact', null, null, 'N', 2);
+		// add extra
+		$contactID = $this->insertExtra('contact', 'block', 'Contact', null, null, 'N', 6);
 
-		// insert locale (nl)
-		$this->insertLocale('nl', 'frontend', 'core', 'err', 'ContactErrorWhileSending', 'Er ging iets mis tijdens het verzenden, probeer later opnieuw.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
-
-		// insert locale (en)
-		$this->insertLocale('en', 'frontend', 'core', 'err', 'ContactErrorWhileSending', 'Something went wrong while trying to send, please try again later.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Your e-mail was sent.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contact form.');
+		// loop languages
+		foreach($this->getLanguages() as $language)
+		{
+			// insert contact page
+			$this->insertPage(array('id' => 6,
+									'title' => 'Contact',
+									'type' => 'footer',
+									'language' => $language,
+									'allow_move' => 'Y',
+									'allow_delete' => 'Y'),
+								null,
+								array('extra_id' => $contactID));
+		}
 	}
 }
 

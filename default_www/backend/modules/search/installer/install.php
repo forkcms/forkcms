@@ -86,13 +86,6 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoStatistics', 'Er zijn nog geen statistieken.');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoSynonyms', 'Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoSynonymsBox', 'Er zijn nog geen synoniemen.');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Search', 'zoeken');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SearchForm', 'zoekformulier');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Synonyms', 'synoniemen');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchTerm', 'zoekterm');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er zijn geen resultaten.');
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synonyms are required.');
@@ -115,13 +108,6 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoStatistics', 'There are no statistics yet.');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonyms', 'There are no synonyms yet. <a href="%1$s">Add the first synonym</a>.');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonymsBox', 'There are no synonyms yet.');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Referrer', 'referrer');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Search', 'search');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SearchForm', 'search form');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Synonyms', 'synonyms');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Search', 'search');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchTerm', 'searchterm');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SearchNoItems', 'There were no results.');
 	}
 
 
