@@ -73,12 +73,8 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'AddSynonym', 'synoniem toevoegen');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'DeleteSynonym', 'synoniem verwijderen');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'EditSynonym', 'synoniem bewerken');
-		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'IP', 'IP');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'ModuleWeight', 'module gewicht');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'SearchedOn', 'gezocht op');
-		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'Synonym', 'synoniem');
-		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'Synonyms', 'synoniemen');
-		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'Term', 'term');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'ConfirmDeleteSynonym', 'Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'HelpWeight', 'Het standaard gewicht is 1. Als je zoekresultaten van een specifieke module belangrijker vindt, verhoog dan het gewicht. vb.  als pagina\'s gewicht "3" heeft dan zullen resultaten van deze module 3 keer meer kans hebben om voor te komen in de zoekresultaten.');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'HelpWeightGeneral', 'Definieer de belangrijkheid van iedere module in de zoekresultaten.');
@@ -95,12 +91,8 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'AddSynonym', 'add synonym');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'DeleteSynonym', 'delete synonym');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'EditSynonym', 'edit synonym');
-		$this->insertLocale('en', 'backend', 'search', 'lbl', 'IP', 'IP');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'ModuleWeight', 'module weight');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'SearchedOn', 'searched on');
-		$this->insertLocale('en', 'backend', 'search', 'lbl', 'Synonym', 'synonym');
-		$this->insertLocale('en', 'backend', 'search', 'lbl', 'Synonyms', 'synonyms');
-		$this->insertLocale('en', 'backend', 'search', 'lbl', 'Term', 'term');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'ConfirmDeleteSynonym', 'Are you sure you want to delete the synonyms for the searchterm "%1$s"?');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'HelpWeight', 'The default weight is 1. If you want to give search results from a specific module more importance, increase the weight. E.g. if pages has weight "3" then they are 3 times as likely to show up higher in search results.');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'HelpWeightGeneral', 'Define the importance of each module in search results here.');

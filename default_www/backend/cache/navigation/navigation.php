@@ -41,25 +41,4 @@ $navigation['settings']['children']['users'] = array('url' => 'users/index', 'la
 $navigation['settings']['children']['templates'] = array('url' => 'pages/templates', 'label' => 'Templates', 'selected_for_actions' => array('add_template', 'edit_template'));
 $navigation['settings']['children']['locale'] = array('url' => 'locale/index', 'label' => 'Translations', 'selected_for_actions' => array('add', 'edit'));
 
-/*
-@todo tijs - het onderstaande formaat, weet ik niet goed hoe dat nu mogelijk is. Bespreek dit met mij (Davy)
-dashboard
-pagina's
-modules
-- blog
->>> Articles
->>> Categories
->>> Comments
-- content blocks
-instellingen
-- General
-- Modules
->>> Blog
->>> Pages
->>> Kakamodule
-- Templates
-- Email
-- Themes
-*/
-
 ?>

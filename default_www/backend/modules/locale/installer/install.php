@@ -223,6 +223,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Import', 'importeer');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Interface', 'interface');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'InterfacePreferences', 'voorkeuren interface');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'IP', 'IP');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ItemsPerPage', 'items per pagina');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Keyword', 'zoekwoord');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Keywords', 'sleutelwoorden');
@@ -325,10 +326,12 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Strong', 'sterk');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Summary', 'samenvatting');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Surname', 'achternaam');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Synonym', 'synoniem');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Synonyms', 'synoniemen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Template', 'template');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Templates', 'templates');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Term', 'term');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Text', 'tekst');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Themes', 'thema\'s');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Till', 'tot');
@@ -566,6 +569,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Import', 'import');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Interface', 'interface');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'InterfacePreferences', 'interface preferences');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'IP', 'IP');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ItemsPerPage', 'items per page');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Keyword', 'keyword');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Keywords', 'keywords');
@@ -668,10 +672,12 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Strong', 'strong');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Summary', 'summary');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Surname', 'surname');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Synonym', 'synonym');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Synonyms', 'synonyms');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Template', 'template');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Templates', 'templates');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Term', 'term');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Text', 'text');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Themes', 'themes');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Till', 'till');
