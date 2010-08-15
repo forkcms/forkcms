@@ -1,6 +1,17 @@
 <?php
 
-// de basis voor alle stappen
+/**
+ * InstallerStep
+ * The base-class for all installer-steps
+ *
+ * @package		installer
+ * @subpackage	install
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
+ * @since		2.0
+ */
 class InstallerStep
 {
 	/**

@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * InstallerStep1
+ * Step 1 of the Fork installer
+ *
+ * @package		installer
+ * @subpackage	install
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
+ * @since		2.0
+ */
 class InstallerStep1 extends InstallerStep
 {
 	/**
@@ -180,19 +192,19 @@ class InstallerStep1 extends InstallerStep
 		 */
 
 		// check if the backend-cache-directory is writable
-		self::checkRequirement('fileSystemBackendCache', is_writable(PATH_WWW .'/backend/cache/'), $variables);
+		self::checkRequirement('fileSystemBackendCache', self::isWritable(PATH_WWW .'/backend/cache/'), $variables);
 
 		// check if the frontend-cache-directory is writable
-		self::checkRequirement('fileSystemFrontendCache', is_writable(PATH_WWW .'/frontend/cache/'), $variables);
+		self::checkRequirement('fileSystemFrontendCache', self::isWritable(PATH_WWW .'/frontend/cache/'), $variables);
 
 		// check if the frontend-files-directory is writable
-		self::checkRequirement('fileSystemFrontendFiles', is_writable(PATH_WWW .'/frontend/files/'), $variables);
+		self::checkRequirement('fileSystemFrontendFiles', self::isWritable(PATH_WWW .'/frontend/files/'), $variables);
 
 		// check if the library-directory is writable
-		self::checkRequirement('fileSystemLibrary', is_writable(PATH_LIBRARY), $variables);
+		self::checkRequirement('fileSystemLibrary', self::isWritable(PATH_LIBRARY), $variables);
 
 		// check if the installer-directory is writable
-		self::checkRequirement('fileSystemInstaller', is_writable(PATH_WWW .'/install'), $variables);
+		self::checkRequirement('fileSystemInstaller', self::isWritable(PATH_WWW .'/install'), $variables);
 
 		// does the config.example.php file exist
 		self::checkRequirement('fileSystemConfig', file_exists(PATH_LIBRARY .'/config.example.php') && is_readable(PATH_LIBRARY .'/config.example.php'), $variables);
@@ -231,14 +243,14 @@ class InstallerStep1 extends InstallerStep
 		if($pathLibrary == '')
 		{
 			// guess the path
-			self::guessLibraryPath(realpath(str_replace('/install/index.php', '', $_SERVER['SCRIPT_FILENAME'])) .'/..', $pathLibrary);
+			self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $pathLibrary);
 
 			// add it to the session
 			$_SESSION['path_library'] = $pathLibrary;
 		}
 
 		// define constants
-		if(!defined('PATH_WWW')) define('PATH_WWW', realpath(str_replace('/index.php', '/..', realpath($_SERVER['SCRIPT_FILENAME']))));
+		if(!defined('PATH_WWW')) define('PATH_WWW', dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME']))));
 		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', $pathLibrary);
 
 		// update session
@@ -286,6 +298,36 @@ class InstallerStep1 extends InstallerStep
 	public static function isAllowed()
 	{
 		return true;
+	}
+
+
+	/**
+	 * Check if a directory is writable.
+	 * The default is_writable function has problems due to Windows ACLs "bug"
+	 *
+	 * @return	bool
+	 * @param	string $path
+	 */
+	private static function isWritable($path)
+	{
+		// redefine argument
+		$path = (string) $path;
+
+		// create temporary file
+		$file = tempnam($path, 'isWritable');
+
+		// file has been created
+		if($file !== false)
+		{
+			// remove temporary file
+			@unlink($file);
+
+			// file could not be created = writable
+			return true;
+		}
+
+		// file could not be created = not writable
+		return false;
 	}
 }
 

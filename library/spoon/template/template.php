@@ -229,7 +229,7 @@ class SpoonTemplate
 	public function compile($path, $template)
 	{
 		// redefine template
-		if(mb_substr($template, 0, 1, SPOON_CHARSET) != '/') $template = $path .'/'. $template;
+		if(realpath($path .'/'. $template) !== false) $template = $path .'/'. $template;
 
 		// create object
 		$compiler = new SpoonTemplateCompiler($template, $this->variables);
@@ -364,7 +364,7 @@ class SpoonTemplate
 	private function getCompileName($template, $path = null)
 	{
 		// redefine template
-		if($path !== null && mb_substr($template, 0, 1, SPOON_CHARSET) != '/') $template = $path .'/'. $template;
+		if($path !== null && realpath($path .'/'. $template) !== false) $template = $path .'/'. $template;
 
 		// return the correct full path
 		return md5(realpath($template)) .'_'. basename($template) .'.php';

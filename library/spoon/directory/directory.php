@@ -362,6 +362,36 @@ class SpoonDirectory
 
 
 	/**
+	 * Check if a directory is writable.
+	 * The default is_writable function has problems due to Windows ACLs "bug"
+	 *
+	 * @return	bool
+	 * @param	string $path
+	 */
+	private static function isWritable($path)
+	{
+		// redefine argument
+		$path = (string) $path;
+
+		// create temporary file
+		$file = tempnam($path, 'isWritable');
+
+		// file has been created
+		if($file !== false)
+		{
+			// remove temporary file
+			SpoonFile::delete($file);
+
+			// file could not be created = writable
+			return true;
+		}
+
+		// file could not be created = not writable
+		return false;
+	}
+
+
+	/**
 	 * Move/rename a directory/file.
 	 *
 	 * @return	bool						True if the directory was moved or renamed, false if not.

@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * InstallerStep3
+ * Step 3 of the Fork installer
+ *
+ * @package		installer
+ * @subpackage	install
+ *
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
+ * @since		2.0
+ */
 class InstallerStep3 extends InstallerStep
 {
 	/**
