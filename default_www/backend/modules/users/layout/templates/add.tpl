@@ -100,11 +100,8 @@
 				</div>
 				<div class="options last horizontal">
 					<ul class="inputList">
-						<li>
-							{$chkActive}
-							<label for="active">{$msgHelpActive}</label>
-							 {$chkActiveError}
-						</li>
+						<li>{$chkActive} <label for="active">{$msgHelpActive}</label> {$chkActiveError}</li>
+						<li>{$chkApiAccess} <label for="active">{$msgHelpAPIAccess}</label> {$chkApiAccess}</li>
 					</ul>
 					<p>
 						<label for="group">{$lblGroup|ucfirst}</label>

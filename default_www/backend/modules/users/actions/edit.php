@@ -73,6 +73,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $user->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $user->getSetting('time_format'));
 		$this->frm->addImage('avatar');
+		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addDropdown('group', BackendUsersModel::getGroups(), $this->record['group_id']);
 
@@ -176,6 +177,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
 				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
 				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
+				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
 				// is there a file given
 				if($this->frm->getField('avatar')->isFilled())

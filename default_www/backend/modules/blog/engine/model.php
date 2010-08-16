@@ -222,6 +222,46 @@ class BackendBlogModel
 
 
 	/**
+	 * Get the comments
+	 *
+	 * @return	array
+	 * @param	string[optional] $status	The type of comments to get.
+	 * @param	int[optional] $limit		The maximum number of items to retrieve.
+	 * @param	int[optional] $offset		The offset.
+	 */
+	public static function getAllCommentsForStatus($status, $limit = 30, $offset = 0)
+	{
+		// redefine
+		if($status !== null) $status = (string) $status;
+		$limit = (int) $limit;
+		$offset = (int) $offset;
+
+		// no status passed
+		if($status === null)
+		{
+			return (array) BackendModel::getDB()->retrieve('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+															p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
+															FROM blog_comments AS i
+															INNER JOIN blog_posts AS p ON i.post_id = p.id
+															INNER JOIN meta AS m ON p.meta_id = m.id
+															GROUP BY i.id
+															LIMIT ?, ?;',
+															array($offset, $limit));
+		}
+
+		return (array) BackendModel::getDB()->retrieve('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
+														p.id AS post_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
+														FROM blog_comments AS i
+														INNER JOIN blog_posts AS p ON i.post_id = p.id
+														INNER JOIN meta AS m ON p.meta_id = m.id
+														WHERE i.status = ?
+														GROUP BY i.id
+														LIMIT ?, ?;',
+														array($status, $offset, $limit));
+	}
+
+
+	/**
 	 * Get all data for a given id
 	 *
 	 * @return	array

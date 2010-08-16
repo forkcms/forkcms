@@ -91,9 +91,10 @@ class BackendUser
 	 * @return	void
 	 * @param	int $userId
 	 */
-	public function __construct($userId = null)
+	public function __construct($userId = null, $email = null)
 	{
 		if($userId !== null) $this->loadUser((int) $userId);
+		if($email !== null) $this->loadUserByEmail($email);
 	}
 
 
@@ -278,6 +279,56 @@ class BackendUser
 		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] .' '. $this->settings['surname']);
 	}
 
+
+	/**
+	 * Load a user by his emailadress
+	 *
+	 * @return	void
+	 * @param	string $email		The email of the user to load.
+	 */
+	public function loadUserByEmail($email)
+	{
+		// redefine
+		$email = (string) $email;
+
+		// get database instance
+		$db = BackendModel::getDB();
+
+		// get user-data
+		$userData = (array) $db->getRecord('SELECT u.id, u.group_id, u.email, u.is_god,
+											us.session_id, us.secret_key, UNIX_TIMESTAMP(us.date) AS date
+											FROM users AS u
+											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
+											WHERE u.email = ?
+											LIMIT 1;',
+											array(SpoonSession::getSessionId(), $email));
+
+		// if there is no data we have to destroy this object, I know this isn't a realistic situation
+		if(empty($userData)) throw new BackendException('user ('. $email .') can\'t be loaded.');
+
+		// set properties
+		$this->setUserId($userData['id']);
+		$this->setGroupId($userData['group_id']);
+		$this->setEmail($userData['email']);
+		$this->setSessionId($userData['session_id']);
+		$this->setSecretKey($userData['secret_key']);
+		$this->setLastloggedInDate($userData['date']);
+		$this->isAuthenticated = true;
+		$this->isGod = ($userData['is_god'] == 'Y');
+
+		// get settings
+		$settings = (array) $db->getPairs('SELECT us.name, us.value
+											FROM users_settings AS us
+											INNER JOIN users AS u ON us.user_id = u.id
+											WHERE u.email = ?;',
+											array($email));
+
+		// loop settings and store them in the object
+		foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
+
+		// nickname available?
+		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] .' '. $this->settings['surname']);
+	}
 
 	/**
 	 * Set email

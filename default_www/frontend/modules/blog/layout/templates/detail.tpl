@@ -54,7 +54,7 @@
 
 		{iteration:blogComments}
 		{* Remark: Do not alter the id! It is used as an anchor *}
-		<div id="{$actComment}-{$blogComments.id}" class="comment">
+		<div id="comment-{$blogComments.id}" class="comment">
 			<div class="commentAuthor">
 				<p>
 					{$lblBy|ucfirst}

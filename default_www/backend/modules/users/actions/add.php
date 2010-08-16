@@ -63,6 +63,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', true);
+		$this->frm->addCheckbox('api_access', false);
 		$this->frm->addDropdown('group', $groups, $defaultGroupId);
 
 		// disable autocomplete
@@ -132,6 +133,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
 				$settings['password_key'] = uniqid();
 				$settings['avatar'] = 'no-avatar.gif';
+				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
 				// build user-array
 				$user['email'] = $this->frm->getField('email')->getValue();

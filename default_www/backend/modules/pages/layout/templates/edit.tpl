@@ -53,7 +53,10 @@
 								</tbody>
 							</table>
 						</div>
+
 						<div class="optionsRTE">
+							<fieldset id="blockContentModulde-{$blocks.index}">MODULE</fieldset>
+							<fieldset id="blockContentModulde-{$blocks.index}">WIDGET</fieldset>
 							<fieldset id="blockContentHTML-{$blocks.index}">
 								{$blocks.txtHTML}
 							</fieldset>

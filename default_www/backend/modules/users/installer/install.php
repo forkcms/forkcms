@@ -50,6 +50,7 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Edited', 'De instellingen voor "%1$s" werden opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'EditUser', 'bewerk gebruiker "%1$s"');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Geef deze account toegang tot het CMS.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Geef deze account toegang tot de API.');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.');
 		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
 
@@ -61,6 +62,7 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'Edited', 'The settings for "%1$s" were saved.');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'EditUser', 'edit user "%1$s"');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Enable API access for this account.');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passwords consist of a combination of capitals, digits, lowercase and special characters.');
 		$this->insertLocale('en', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
 

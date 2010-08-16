@@ -82,7 +82,7 @@ class BackendAuthentication
 
 
 	/**
-	 * Returns a string encrypted like sha1(md5(uniqid($salt)).md5($string))
+	 * Returns a string encrypted like sha1(md5($salt).md5($string))
 	 * 	The salt is an optional extra string you can put in
 	 *
 	 * @return	string
