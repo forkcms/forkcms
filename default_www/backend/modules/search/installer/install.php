@@ -41,24 +41,24 @@ class SearchInstall extends ModuleInstaller
 		$this->setActionRights(1, 'search', 'synonyms');
 
 		// add extra's
-		$searchBlock = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
+		$searchID = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// check if the Search page doesn't exist
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(5, $language)) == 0) // @todo: dit moet eigenlijk zoeken op 'bestaat pagina met dit block al' ipv op id (ok, da klopt nu wel door de search order enzo, maar als er ooit ene tussenkomt, of deze pagina wordt ooit verwijderd en er wordt een neiuwe taal geinstalleerd, dan wordt search opnieuw geinstalleerd voor andere talen ook)
+			// check if a page for blog already exists in this language
+			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+												FROM pages AS p
+												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+												WHERE b.extra_id = ? AND p.language = ?', array($searchID, $language)) == 0)
 			{
-				// insert disclaimer
-				$this->insertPage(array('id' => 5,
-										'title' => 'Search',
+				// insert search
+				$this->insertPage(array('title' => 'Search',
 										'type' => 'root',
-										'language' => $language,
-										'allow_move' => 'Y',
-										'allow_delete' => 'Y'),
+										'language' => $language),
 									null,
-									array('extra_id' => $searchBlock));
+									array('extra_id' => $searchID));
 			}
 		}
 

@@ -33,15 +33,19 @@ class ContactInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// insert contact page
-			$this->insertPage(array('id' => 6,
-									'title' => 'Contact',
-									'type' => 'footer',
-									'language' => $language,
-									'allow_move' => 'Y',
-									'allow_delete' => 'Y'),
-								null,
-								array('extra_id' => $contactID));
+			// check if a page for contact already exists in this language
+			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+												FROM pages AS p
+												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+												WHERE b.extra_id = ? AND p.language = ?', array($contactID, $language)) == 0)
+			{
+				// insert contact page
+				$this->insertPage(array('title' => 'Contact',
+										'type' => 'footer',
+										'language' => $language),
+									null,
+									array('extra_id' => $contactID));
+			}
 		}
 	}
 }

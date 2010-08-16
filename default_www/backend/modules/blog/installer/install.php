@@ -37,6 +37,34 @@ class BlogInstall extends ModuleInstaller
 		$this->setSetting('blog', 'recent_articles_num_items', 5);
 		$this->setSetting('blog', 'max_num_revisions', 20);
 
+		// make module searchable
+		$this->makeSearchable('blog');
+
+		// module rights
+		$this->setModuleRights(1, 'blog');
+
+		// action rights
+		$this->setActionRights(1, 'blog', 'add_category');
+		$this->setActionRights(1, 'blog', 'add');
+		$this->setActionRights(1, 'blog', 'categories');
+		$this->setActionRights(1, 'blog', 'comments');
+		$this->setActionRights(1, 'blog', 'delete_category');
+		$this->setActionRights(1, 'blog', 'delete');
+		$this->setActionRights(1, 'blog', 'edit_category');
+		$this->setActionRights(1, 'blog', 'edit');
+		$this->setActionRights(1, 'blog', 'import_blogger');
+		$this->setActionRights(1, 'blog', 'index');
+		$this->setActionRights(1, 'blog', 'mass_comment_action');
+		$this->setActionRights(1, 'blog', 'settings');
+
+		// add extra's
+		$blogID = $this->insertExtra('blog', 'block', 'Blog', null, null, 'N', 1000);
+		$this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
+		$this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
+		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
+		$this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N',1004);
+
+
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
@@ -75,37 +103,27 @@ class BlogInstall extends ModuleInstaller
 			$this->setSetting('blog', 'rss_title_'. $language, 'RSS');
 			$this->setSetting('blog', 'rss_description_'. $language, '');
 
-			// @todo voeg 2 blogposts toe, tenzij er al minstens 1 blogpost is in deze taal.
 
-			// @todo voeg 2 comments toe voor die voorbeeldblogposts. Uiteraard enkel als de blogposts geinsert werden...
+			// check if a page for blog already exists in this language
+			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+												FROM pages AS p
+												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+												WHERE b.extra_id = ? AND p.language = ?', array($blogID, $language)) == 0)
+			{
+				// insert page
+				$this->insertPage(array('title' => 'Blog',
+										'language' => $language),
+									null,
+									array('extra_id' => $blogID));
+			}
+
+			// check if example data should be installed
+			if($this->installExample())
+			{
+				// install example data
+				$this->installExampleData($language);
+			}
 		}
-
-		// make module searchable
-		$this->makeSearchable('blog');
-
-		// module rights
-		$this->setModuleRights(1, 'blog');
-
-		// action rights
-		$this->setActionRights(1, 'blog', 'add_category');
-		$this->setActionRights(1, 'blog', 'add');
-		$this->setActionRights(1, 'blog', 'categories');
-		$this->setActionRights(1, 'blog', 'comments');
-		$this->setActionRights(1, 'blog', 'delete_category');
-		$this->setActionRights(1, 'blog', 'delete');
-		$this->setActionRights(1, 'blog', 'edit_category');
-		$this->setActionRights(1, 'blog', 'edit');
-		$this->setActionRights(1, 'blog', 'import_blogger');
-		$this->setActionRights(1, 'blog', 'index');
-		$this->setActionRights(1, 'blog', 'mass_comment_action');
-		$this->setActionRights(1, 'blog', 'settings');
-
-		// add extra's
-		$this->insertExtra('blog', 'block', 'Blog', null, null, 'N', 1000);
-		$this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
-		$this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
-		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
-		$this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N',1004);
 
 
 		// insert locale (nl)
@@ -196,6 +214,90 @@ class BlogInstall extends ModuleInstaller
 	private function getCategory($language)
 	{
 		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?;', (string) $language);
+	}
+
+
+	/**
+	 * Install example data
+	 *
+	 * @return	void
+	 * @param	string $language
+	 */
+	private function installExampleData($language)
+	{
+		// get db instance
+		$db = $this->getDB();
+
+		// check if blogposts already exist in this language
+		if((int) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)) == 0)
+		{
+			// insert sample blogpost 1
+			$postID = $db->insert('blog_posts', array('id' => 1,
+											'category_id' => $this->getSetting('blog', 'default_category_'. $language),
+											'user_id' => $this->getDefaultUserID(),
+											'meta_id' => $this->insertMeta('Introducing', 'Introducing', 'Introducing', 'introducing'),
+											'language' => $language,
+											'title' => 'Introducing',
+											'introduction' => '',
+											'text' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample1.txt'),
+											'status' => 'active',
+											'publish_on' => gmdate('Y-m-d H:i:00'),
+											'created_on' => gmdate('Y-m-d H:i:00'),
+											'edited_on' => gmdate('Y-m-d H:i:00'),
+											'hidden' => 'N',
+											'allow_comments' => 'Y',
+											'num_comments' => '3'));
+
+			// insert sample blogpost 2
+			$db->insert('blog_posts', array('id' => 2,
+											'category_id' => $this->getSetting('blog', 'default_category_'. $language),
+											'user_id' => $this->getDefaultUserID(),
+											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
+											'language' => $language,
+											'title' => 'Lorem ipsum',
+											'introduction' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample2_intro.txt'),
+											'text' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample2.txt'),
+											'status' => 'active',
+											'publish_on' => gmdate('Y-m-d H:i:00'),
+											'created_on' => gmdate('Y-m-d H:i:00'),
+											'edited_on' => gmdate('Y-m-d H:i:00'),
+											'hidden' => 'N',
+											'allow_comments' => 'Y',
+											'num_comments' => '0'));
+
+			// insert example comment 1
+			$db->insert('blog_comments', array('post_id' => $postID,
+												'created_on' => gmdate('Y-m-d H:i:00'),
+												'author' => 'Matthias Mullie',
+												'email' => 'matthias@spoon-library.com',
+												'website' => 'http://www.anantasoft.com',
+												'text' => 'cool!',
+												'type' => 'comment',
+												'status' => 'published',
+												'data' => null));
+
+			// insert example comment 2
+			$db->insert('blog_comments', array('post_id' => $postID,
+												'created_on' => gmdate('Y-m-d H:i:00'),
+												'author' => 'Davy Hellemans',
+												'email' => 'davy@spoon-library.com',
+												'website' => 'http://www.spoon-library.com',
+												'text' => 'awesome!',
+												'type' => 'comment',
+												'status' => 'published',
+												'data' => null));
+
+			// insert example comment 3
+			$db->insert('blog_comments', array('post_id' => $postID,
+												'created_on' => gmdate('Y-m-d H:i:00'),
+												'author' => 'Tijs Verkoyen',
+												'email' => 'tijs@spoon-library.com',
+												'website' => 'http://www.sumocoders.com',
+												'text' => 'wicked!',
+												'type' => 'comment',
+												'status' => 'published',
+												'data' => null));
+		}
 	}
 }
 

@@ -215,7 +215,7 @@ class InstallerStep5 extends InstallerStep
 		require_once PATH_WWW .'/backend/core/installer/install.php';
 
 		// install the core
-		$install = new CoreInstall($this->db, SpoonSession::get('languages'),
+		$install = new CoreInstall($this->db, SpoonSession::get('languages'), SpoonSession::get('example_data'),
 									array('default_language' => SpoonSession::get('default_language'),
 											'spoon_debug_email' => SpoonSession::get('email'),
 											'api_email' => SpoonSession::get('email'),
@@ -249,7 +249,7 @@ class InstallerStep5 extends InstallerStep
 				$class = SpoonFilter::toCamelCase($module) .'Install';
 
 				// execute installer
-				$install = new $class($this->db, SpoonSession::get('languages'), $variables);
+				$install = new $class($this->db, SpoonSession::get('languages'), SpoonSession::get('example_data'), $variables);
 			}
 		}
 
@@ -271,7 +271,7 @@ class InstallerStep5 extends InstallerStep
 					$class = SpoonFilter::toCamelCase($module) .'Install';
 
 					// execute installer
-					$install = new $class($this->db, SpoonSession::get('languages'), $variables);
+					$install = new $class($this->db, SpoonSession::get('languages'), SpoonSession::get('example_data'), $variables);
 				}
 			}
 		}

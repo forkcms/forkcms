@@ -44,13 +44,15 @@ class ModuleInstaller
 	 * @return	void
 	 * @param	SpoonDatabase $db	The database-connection.
 	 * @param	array $languages	The selected languages
+	 * @param	bool $example		Should example data be installed
 	 * @param	array $variables	The passed variables
 	 */
-	public function __construct(SpoonDatabase $db, array $languages, array $variables = array())
+	public function __construct(SpoonDatabase $db, array $languages, $example = false, array $variables = array())
 	{
 		// set DB
 		$this->db = $db;
 		$this->languages = $languages;
+		$this->example = (bool) $example;
 		$this->variables = $variables;
 
 		// call the execute method
@@ -243,11 +245,14 @@ class ModuleInstaller
 						'sequence' => $sequence);
 
 		// doesn't already exist
-		if($this->getDB()->getNumRows('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label'])) == 0)
+		if($this->getDB()->getVar('SELECT COUNT(id) FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label'])) == 0)
 		{
 			// insert extra and return id
 			return (int) $this->getDB()->insert('pages_extras', $item);
 		}
+
+		// return id
+		else return (int) $this->getDB()->getVar('SELECT id FORM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label']));
 	}
 
 
@@ -292,8 +297,6 @@ class ModuleInstaller
 												'value' => $value,
 												'edited_on' => gmdate('Y-m-d H:i:s')));
 		}
-
-
 	}
 
 
@@ -340,8 +343,6 @@ class ModuleInstaller
 	}
 
 
-
-
 	/**
 	 * Insert a page
 	 *
@@ -362,9 +363,9 @@ class ModuleInstaller
 		if(!isset($revision['id'])) $revision['id'] = (int) $this->getDB()->getVar('SELECT MAX(id) + 1 FROM pages WHERE language = ?', array($revision['language']));
 		if(!$revision['id']) $revision['id'] = 1;
 		if(!isset($revision['user_id'])) $revision['user_id'] = $this->getDefaultUserID();
-		if(!isset($revision['parent_id'])) $revision['parent_id'] = 0;
 		if(!isset($revision['template_id'])) $revision['template_id'] = 2;
 		if(!isset($revision['type'])) $revision['type'] = 'page';
+		if(!isset($revision['parent_id'])) $revision['parent_id'] = ($revision['type'] == 'page' ? 1 : 0);
 		if(!isset($revision['navigation_title'])) $revision['navigation_title'] = $revision['title'];
 		if(!isset($revision['navigation_title_overwrite'])) $revision['navigation_title_overwrite'] = 'N';
 		if(!isset($revision['hidden'])) $revision['hidden'] = 'N';
@@ -380,7 +381,7 @@ class ModuleInstaller
 		if(!isset($revision['no_follow'])) $revision['no_follow'] = 'N';
 		if(!isset($revision['sequence'])) $revision['sequence'] = (int) $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages WHERE language = ? AND parent_id = ? AND type = ?', array($revision['language'], $revision['parent_id'], $revision['type']));
 		if(!isset($revision['extra_ids'])) $revision['extra_ids'] = null;
-		if(!isset($revision['has_extra'])) $revision['has_extra'] = $revision['extra_ids'] ? 'N' : 'Y';
+		if(!isset($revision['has_extra'])) $revision['has_extra'] = $revision['extra_ids'] ? 'Y' : 'N';
 
 		// meta needs to be inserted
 		if(!isset($revision['meta_id']))
@@ -438,6 +439,20 @@ class ModuleInstaller
 			$revision['has_extra'] = 'Y';
 			$this->getDB()->update('pages', $revision, 'revision_id = ?', array($revision['revision_id']));
 		}
+
+		// return page id
+		return $revision['id'];
+	}
+
+
+	/**
+	 * Should example data be installed
+	 *
+	 * @return	bool
+	 */
+	protected function installExample()
+	{
+		return $this->example;
 	}
 
 

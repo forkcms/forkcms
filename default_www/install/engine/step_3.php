@@ -94,6 +94,9 @@ class InstallerStep3 extends InstallerStep
 
 		// single languages
 		$this->frm->addDropdown('default_language', array('en' => 'English', 'fr' => 'French', 'nl' => 'Dutch'), (SpoonSession::exists('default_language') ? SpoonSession::get('default_language') : 'nl'));
+
+		// example data
+		$this->frm->addCheckbox('example_data', (SpoonSession::exists('example_data') ? SpoonSession::get('example_data') : false));
 	}
 
 
@@ -161,6 +164,7 @@ class InstallerStep3 extends InstallerStep
 				SpoonSession::set('default_language', $defaultLanguage);
 				SpoonSession::set('multiple_languages', ($this->frm->getField('languageType')->getValue() == 'multiple') ? true : false);
 				SpoonSession::set('languages', ($this->frm->getField('languageType')->getValue() == 'multiple') ? $this->frm->getField('languages')->getValue() : array($this->frm->getField('language')->getValue()));
+				SpoonSession::set('example_data', $this->frm->getField('example_data')->getChecked());
 
 				// redirect
 				SpoonHTTP::redirect('index.php?step=4');

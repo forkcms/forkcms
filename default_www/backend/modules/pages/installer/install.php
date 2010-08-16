@@ -122,62 +122,44 @@ class PagesInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// check if the homepage doesn't exist
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(1, $language)) == 0)
+			// check if pages already exist for this language
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)) == 0)
 			{
 				// insert homepage
 				$this->insertPage(array('id' => 1,
+										'parent_id' => 0,
 										'template_id' => 1,
 										'title' => 'Home',
 										'language' => $language,
 										'allow_move' => 'N',
 										'allow_delete' => 'N'));
-			}
 
-			// check if the sitemap page doesn't exist
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(2, $language)) == 0)
-			{
 				// insert sitemap
 				$this->insertPage(array('id' => 2,
 										'title' => 'Sitemap',
 										'type' => 'footer',
-										'language' => $language,
-										'allow_move' => 'N',
-										'allow_delete' => 'N'),
+										'language' => $language),
 									null,
 									array('extra_id' => $sitemapID));
-			}
 
-			// check if the disclaimerpage doesn't exist
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(3, $language)) == 0)
-			{
 				// insert disclaimer
 				$this->insertPage(array('id' => 3,
 										'title' => 'Disclaimer',
 										'type' => 'footer',
-										'language' => $language,
-										'allow_move' => 'N',
-										'allow_delete' => 'N'),
+										'language' => $language),
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
-			}
 
-			// check if the about page doesn't exist
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(4, $language)) == 0)
-			{
 				// insert about
 				$this->insertPage(array('id' => 4,
 										'title' => 'About',
 										'type' => 'meta',
 										'language' => $language,
-										'allow_move' => 'N'));
-			}
+										'allow_move' => 'N',
+										'allow_delete' => 'N'));
 
-			// check if the 404 page doesn't exist
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE id = ? AND language = ?', array(404, $language)) == 0)
-			{
-				// insert disclaimer
-				$this->insertPage(array('id' => '404',
+				// insert 404
+				$this->insertPage(array('id' => 404,
 										'title' => '404',
 										'type' => 'root',
 										'language' => $language,
@@ -185,6 +167,36 @@ class PagesInstall extends ModuleInstaller
 										'allow_delete' => 'N'),
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'));
+
+				// check if example data should be installed
+				if($this->installExample())
+				{
+					// insert sample page 1
+					$this->insertPage(array('title' => 'Lorem ipsum',
+											'language' => $language),
+										null,
+										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1.txt'));
+
+					// insert sample page 2
+					$parentId = $this->insertPage(array('title' => 'dolor sit',
+														'language' => $language),
+													null,
+													array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample2.txt'));
+
+					// insert sample page 3
+					$this->insertPage(array('title' => 'amet consectetur',
+											'language' => $language,
+											'parent_id' => $parentId),
+										null,
+										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3.txt'));
+
+					// insert sample page 4
+					$this->insertPage(array('title' => 'adipiscing elit',
+											'language' => $language,
+											'parent_id' => $parentId),
+										null,
+										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample4.txt'));
+				}
 			}
 		}
 	}

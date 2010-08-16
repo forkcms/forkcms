@@ -31,9 +31,7 @@
 					</ul>
 
 					<h3>Languages</h3>
-					<p>
-						Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.
-					</p>
+					<p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
 
 					<ul class="inputList">
 						{iteration:languageType}
@@ -57,6 +55,12 @@
 					<div id="defaultLanguageContainer" class="hidden">
 						<p>What is the default language we should use for the website?</p>
 						<p>{$ddmDefaultLanguage} {$ddmDefaultLanguageError}</p>
+					</div>
+
+					<h3>Example data</h3>
+					<p>If you are new to Fork CMS, you might prefer to have an example website set up.</p>
+					<div class="inputList">
+						{$chkExampleData} <label for="exampleData">Install example data</label>
 					</div>
 				</div>
 
