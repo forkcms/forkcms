@@ -18,21 +18,24 @@ class BackendCoreAPI
 	 * @return	array
 	 * @param	array $args		The parameters provided.
 	 */
-	public static function getAPIKey($arguments)
+	public static function getAPIKey($email, $password)
 	{
 		// get variables
-		$email = SpoonFilter::getValue($arguments['email'], null, '');
-		$password = SpoonFilter::getValue($arguments['password'], null, '');
+		$email = (string) $email;
+		$password = (string) $password;
 
 		// validate
-		if($email == '') API::output(API::BAD_REQUEST, 'No email-parameter provided.');
-		if($password == '') API::output(API::BAD_REQUEST, 'No password-parameter provided.');
+		if($email == '') API::output(API::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+		if($password == '') API::output(API::BAD_REQUEST, array('message' => 'No password-parameter provided.'));
 
 		// load user
 		$user = new BackendUser(null, $email);
 
+		// validate password
+		if(!BackendAuthentication::loginUser($email, $password)) API::output(API::FORBIDDEN, array('message' => 'User isn\'t allowed to use the API.'));
+
 		// does the user have access?
-		if($user->getSetting('api_access', false) == false) API::output(API::FORBIDDEN, 'Uses isn\'t allowed to use the API.');
+		if($user->getSetting('api_access', false) == false) API::output(API::FORBIDDEN, array('message' => 'User isn\'t allowed to use the API.'));
 
 		// create the key if needed
 		if($user->getSetting('api_key', null) == null) $user->setSetting('api_key', uniqid());

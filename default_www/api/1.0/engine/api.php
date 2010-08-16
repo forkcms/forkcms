@@ -241,6 +241,10 @@ class API
 		$nonce = SpoonFilter::getGetValue('nonce', null, '');
 		$secret = SpoonFilter::getGetValue('secret', null, '');
 
+		if($email == '') $email = SpoonFilter::getPostValue('email', null, '');
+		if($nonce == '') $nonce = SpoonFilter::getPostValue('nonce', null, '');
+		if($secret == '') $secret = SpoonFilter::getPostValue('secret', null, '');
+
 		// check if needed elements are available
 		if($email == '') self::output(self::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
 		if($nonce == '') self::output(self::BAD_REQUEST, array('message' => 'No nonce-parameter provided.'));
