@@ -161,17 +161,14 @@ changeExtra: function(selectedExtraId, selectedBlock)
 		{
 			// set description
 			$('#templateBlock-' + selectedBlock + ' .templateBlockCurrentType').html(extrasById[selectedExtraId].human_name);
-			console.log(selectedBlock);
 			// hide block
-			$('#blockContentHTML-' + selectedBlock).hide();
+			$('#block-' + selectedBlock).hide();
 		} else
 		{
 			// set description
 			$('#templateBlock-' + selectedBlock + ' .templateBlockCurrentType').html('{$lblEditor|ucfirst}');
 			// show block
-			$('#blockContentHTML-' + selectedBlock).show();
-			$('#blockContentModule-' + selectedBlock).hide();
-			$('#blockContentWidget-' + selectedBlock).hide();
+			$('#block-' + selectedBlock).show();
 		}
 	}
 },
