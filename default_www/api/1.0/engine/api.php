@@ -261,7 +261,7 @@ class API
 		$apiKey = $user->getSetting('api_key');
 
 		// no API-access
-		if(!$apiAccess) self::output(self::FORBIDDEN, array('message' => 'You are not authorized to access this method.'));
+		if(!$apiAccess) self::output(self::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
 
 		// create hash
 		$hash = BackendAuthentication::getEncryptedString($email.$apiKey, $nonce);

@@ -32,10 +32,10 @@ class BackendCoreAPI
 		$user = new BackendUser(null, $email);
 
 		// validate password
-		if(!BackendAuthentication::loginUser($email, $password)) API::output(API::FORBIDDEN, array('message' => 'User isn\'t allowed to use the API.'));
+		if(!BackendAuthentication::loginUser($email, $password)) API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
 
 		// does the user have access?
-		if($user->getSetting('api_access', false) == false) API::output(API::FORBIDDEN, array('message' => 'User isn\'t allowed to use the API.'));
+		if($user->getSetting('api_access', false) == false) API::output(API::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
 
 		// create the key if needed
 		if($user->getSetting('api_key', null) == null) $user->setSetting('api_key', uniqid());
