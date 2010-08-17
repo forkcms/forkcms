@@ -53,8 +53,23 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="optionsRTE">
-							<fieldset id="blockContentHTML-{$blocks.index}">
+
+						<div id="blockContentModule-{$blocks.index}" class="options">
+							{* do not alter markup *}
+							<p class="oneLiner">
+								<span class="oneLinerElement"></span>
+								<a href="#" class="button" target="_blank">{$lblEditModuleContent|ucfirst}</a>
+							</p>
+						</div>
+						<div id="blockContentWidget-{$blocks.index}" class="options">
+							{* do not alter markup *}
+							<p class="oneLiner">
+								<span class="oneLinerElement"></span>
+								<a href="#" class="button" target="_blank">{$lblEdit|ucfirst}</a>
+							</p>
+						</div>
+						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
+							<fieldset>
 								{$blocks.txtHTML}
 							</fieldset>
 						</div>
@@ -175,7 +190,6 @@
 			</div>
 		</div>
 		<div id="tabTemplate">
-
 			<div class="pageTitle">
 				{* Do not change the ID! *}
 				<h2>{$lblTemplate|ucfirst}: <span id="tabTemplateLabel">&nbsp;</span></h2>
@@ -198,7 +212,7 @@
 				<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
 				<div class="options horizontal">
 					<p>{$msgHelpBlockContent}</p>
-					<p id="extraWarningAlreadyBlock" class="warning">
+					<p id="extraWarningAlreadyBlock" class="infoMessage">
 						{$msgModuleBlockAlreadyLinked}
 					</p>
 					<p>
@@ -250,7 +264,6 @@
 			</div>
 		</div>
 		<div id="tabSettings">
-
 			<ul class="inputList">
 				{iteration:hidden}
 				<li>

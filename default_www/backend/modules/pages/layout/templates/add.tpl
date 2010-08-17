@@ -48,8 +48,23 @@
 								</tbody>
 							</table>
 						</div>
-						<div class="optionsRTE">
-							<fieldset id="blockContentHTML-{$blocks.index}">
+
+						<div id="blockContentModule-{$blocks.index}" class="options">
+							{* do not alter markup *}
+							<p class="oneLiner">
+								<span class="oneLinerElement"></span>
+								<a href="#" class="button" target="_blank">{$lblEditModuleContent|ucfirst}</a>
+							</p>
+						</div>
+						<div id="blockContentWidget-{$blocks.index}" class="options">
+							{* do not alter markup *}
+							<p class="oneLiner">
+								<span class="oneLinerElement"></span>
+								<a href="#" class="button" target="_blank">{$lblEdit|ucfirst}</a>
+							</p>
+						</div>
+						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
+							<fieldset>
 								{$blocks.txtHTML}
 							</fieldset>
 						</div>
@@ -171,11 +186,11 @@
 				Dialog to select the content (editor, module or widget).
 				Do not change the ID!
 			 *}
-			<div id="chooseExtra" title="{$lblChooseContent|ucfirst}" style="display: none;">
+			<div id="chooseExtra" title="{$lblChooseContent|ucfirst}" style="display: none;" class="forkForms">
 				<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
-				<div class="options">
+				<div class="options horizontal">
 					<p>{$msgHelpBlockContent}</p>
-					<p id="extraWarningAlreadyBlock" class="warning">
+					<p id="extraWarningAlreadyBlock" class="infoMessage">
 						{$msgModuleBlockAlreadyLinked}
 					</p>
 					<p>
@@ -201,10 +216,10 @@
 				Dialog to select another template.
 				Do not change the ID!
 			 *}
-			<div id="chooseTemplate" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
+			<div id="chooseTemplate" class="forkForms" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
 				<ul class="inputList" id="templateList">
 				{iteration:templates}
-					<li style="float: left; width: 155px;">
+					<li>
 						<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
 						<label for="template{$templates.id}">{$templates.label}</label>
 						<div class="templateVisual current">
@@ -227,12 +242,12 @@
 			</div>
 		</div>
 		<div id="tabSettings">
-			<ul>
-			{iteration:hidden}
+			<ul class="inputList">
+				{iteration:hidden}
 				<li>
 					{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label}</label>
 				</li>
-			{/iteration:hidden}
+				{/iteration:hidden}
 			</ul>
 		</div>
 	</div>

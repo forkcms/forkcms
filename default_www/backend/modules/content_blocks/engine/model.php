@@ -161,7 +161,7 @@ class BackendContentBlocksModel
 		$extra['type'] = 'widget';
 		$extra['label'] = 'ContentBlocks';
 		$extra['action'] = 'detail';
-		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $newId));
+		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $newId, 'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $id));
 		$extra['hidden'] = 'N';
 		$extra['sequence'] = '200'. $newId;
 
@@ -221,7 +221,7 @@ class BackendContentBlocksModel
 		if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
 
 		// build array
-		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $id));
+		$extra['data'] = serialize(array('extra_label' => $values['title'], 'id' => $id, 'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $id));
 
 		// update extra
 		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('content_blocks', 'widget', '200'. $id));

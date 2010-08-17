@@ -769,6 +769,7 @@ class BackendPagesModel
 
 			// add human readable name
 			$row['human_name'] = BackendLanguage::getLabel(SpoonFilter::toCamelCase($row['type'])) .': '. $name;
+			$row['message'] = sprintf(BackendLanguage::getMessage(SpoonFilter::toCamelCase($row['type'] . '_attached'), 'pages'), $name);
 		}
 
 		// return
