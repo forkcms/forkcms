@@ -34,7 +34,10 @@ jsBackend.users.controls = {
 	
 	// calculate the nickname
 	calculateNick: function() {
-		return utils.string.trim(utils.string.trim($('#name').val()) +' '+ utils.string.trim($('#surname').val()));
+		var maxLength = parseInt($('#nickname').attr('maxlength')); 
+		if(maxLength == 0) maxLength = 255;
+		
+		return utils.string.trim(utils.string.trim($('#name').val()) +' '+ utils.string.trim($('#surname').val())).substring(0, maxLength);
 	},
 	
 	// end

@@ -66,7 +66,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addText('email', $this->record['email'], 255);
 		$this->frm->addPassword('new_password', null, 75);
 		$this->frm->addPassword('confirm_password', null, 75);
-		$this->frm->addText('nickname', $this->record['settings']['nickname'], 20);
+		$this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);

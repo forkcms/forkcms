@@ -55,7 +55,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addText('email', null, 255);
 		$this->frm->addPassword('password', null, 75);
 		$this->frm->addPassword('confirm_password', null, 75);
-		$this->frm->addText('nickname', null, 75);
+		$this->frm->addText('nickname', null, 24);
 		$this->frm->addText('name', null, 255);
 		$this->frm->addText('surname', null, 255);
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
