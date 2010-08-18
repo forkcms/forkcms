@@ -29,7 +29,16 @@ class BackendCoreAPI
 		if($password == '') API::output(API::BAD_REQUEST, array('message' => 'No password-parameter provided.'));
 
 		// load user
-		$user = new BackendUser(null, $email);
+		try
+		{
+			$user = new BackendUser(null, $email);
+		}
+
+		// catch exceptions
+		catch(Exception $e)
+		{
+			API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+		}
 
 		// validate password
 		if(!BackendAuthentication::loginUser($email, $password)) API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));

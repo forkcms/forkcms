@@ -126,7 +126,11 @@ class API
 		catch(Exception $e)
 		{
 			// if we are debugging we should see the exceptions
-			if(SPOON_DEBUG) throw $e;
+			if(SPOON_DEBUG)
+			{
+				if(isset($parameters['debug']) && $parameters['debug'] == 'false') {}
+				else throw $e;
+			}
 
 			// output
 			self::output(500, array('message' => $e->getMessage()));
