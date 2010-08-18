@@ -155,6 +155,7 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoExitPages', 'There are no exit pages yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoKeywords', 'There are no keywords yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoLandingPages', 'There are no landing pages yet.');
+		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoPages', 'There are ni statistics for any pages.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoReferrers', 'There are no referrers yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'PagesHaveBeenViewedTimes', 'Pages on this site have been viewed %1$s times.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'RefreshedTrafficSources', 'The traffic sources have been refreshed.');

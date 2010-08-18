@@ -361,7 +361,7 @@ class BackendModel
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
 			{
 				// regenerate cache
-				BackendPagesModel::buildCache();
+				BackendPagesModel::buildCache($language);
 			}
 
 			// init var

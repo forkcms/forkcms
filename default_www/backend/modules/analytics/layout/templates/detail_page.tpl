@@ -15,7 +15,7 @@
 				<p><strong>{$visits} </strong><a href="{$googleContentDetailURL}">{$lblVisits|ucfirst}</a></p>
 			</div>
 			<div class="analyticsCol">
-				<p><strong>{$pagesPerVisit} </strong><a href="{$googleContentDetailURL}">{$lblPagesPerVisit|ucfirst}</a> <small>({$pagesPerVisitDifference}%)</small></p>
+				<p><strong>{$pagesPerVisit} </strong><a href="{$googleContentDetailURL}">{$lblAnalyticsPagesPerVisit|ucfirst}</a> <small>({$pagesPerVisitDifference}%)</small></p>
 				<p><strong>{$timeOnPage} </strong><a href="{$googleContentDetailURL}">{$lblAverageTimeOnPage|ucfirst}</a> <small>({$timeOnPageDifference}%)</small></p>
 			</div>
 			<div class="analyticsCol">

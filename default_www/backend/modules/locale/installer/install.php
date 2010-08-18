@@ -273,6 +273,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Pagination', 'paginering');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Password', 'wachtwoord');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PerDay', 'per dag');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PerVisit', 'per bezoek');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Permissions', 'rechten');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PersonalInformation', 'persoonlijke gegevens');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PingBlogServices', 'ping blogservices');
@@ -620,6 +621,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Pagination', 'pagination');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Password', 'password');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PerDay', 'per day');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PerVisit', 'per visit');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Permissions', 'permissions');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PersonalInformation', 'personal information');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PingBlogServices', 'ping blogservices');
