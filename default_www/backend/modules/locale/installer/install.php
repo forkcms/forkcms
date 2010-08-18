@@ -801,6 +801,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Archive', 'archief');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'By', 'door');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Category', 'categorie');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Categories', 'categorieën');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Comment', 'reactie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'CommentedOn', 'reageerde op');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Comments', 'reacties');
@@ -849,6 +850,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Archive', 'archive');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'By', 'by');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Category', 'category');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Categories', 'categories');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Comment', 'comment');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'CommentedOn', 'commented on');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Comments', 'comments');

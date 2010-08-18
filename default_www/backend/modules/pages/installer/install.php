@@ -112,8 +112,11 @@ class PagesInstall extends ModuleInstaller
 		// insert templates
 		$this->insertTemplates();
 
-		// insert pages
-		$this->insertPagesAndExtras();
+		// install scorsese if needed
+		if($this->installExample()) $this->installScorsese();
+
+		// insert required pages
+		else $this->insertPagesAndExtras();
 	}
 
 
@@ -133,77 +136,55 @@ class PagesInstall extends ModuleInstaller
 			// check if pages already exist for this language
 			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)) == 0)
 			{
-				// insert homepage
-				$this->insertPage(array('id' => 1,
-										'parent_id' => 0,
-										'template_id' => 1,
-										'title' => 'Home',
-										'language' => $language,
-										'allow_move' => 'N',
-										'allow_delete' => 'N'));
-
-				// insert sitemap
-				$this->insertPage(array('id' => 2,
-										'title' => 'Sitemap',
-										'type' => 'footer',
-										'language' => $language),
-									null,
-									array('extra_id' => $sitemapID));
-
-				// insert disclaimer
-				$this->insertPage(array('id' => 3,
-										'title' => 'Disclaimer',
-										'type' => 'footer',
-										'language' => $language),
-									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
-
-				// insert about
-				$this->insertPage(array('id' => 4,
-										'title' => 'About',
-										'type' => 'meta',
-										'language' => $language,
-										'allow_move' => 'N',
-										'allow_delete' => 'N'));
-
-				// insert 404
-				$this->insertPage(array('id' => 404,
-										'title' => '404',
-										'type' => 'root',
-										'language' => $language,
-										'allow_move' => 'N',
-										'allow_delete' => 'N'),
-									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'));
-
 				// check if example data should be installed
 				if($this->installExample())
 				{
-					// insert sample page 1
-					$this->insertPage(array('title' => 'Lorem ipsum',
+				}
+
+				else
+				{
+					// insert homepage
+					$this->insertPage(array('id' => 1,
+											'parent_id' => 0,
+											'template_id' => 1,
+											'title' => 'Home',
+											'language' => $language,
+											'allow_move' => 'N',
+											'allow_delete' => 'N'));
+
+					// insert sitemap
+					$this->insertPage(array('id' => 2,
+											'title' => 'Sitemap',
+											'type' => 'footer',
 											'language' => $language),
 										null,
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1.txt'));
+										array('extra_id' => $sitemapID));
 
-					// insert sample page 2
-					$parentId = $this->insertPage(array('title' => 'dolor sit',
-														'language' => $language),
-													null,
-													array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample2.txt'));
-
-					// insert sample page 3
-					$this->insertPage(array('title' => 'amet consectetur',
-											'language' => $language,
-											'parent_id' => $parentId),
+					// insert disclaimer
+					$this->insertPage(array('id' => 3,
+											'title' => 'Disclaimer',
+											'type' => 'footer',
+											'language' => $language),
 										null,
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3.txt'));
+										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
 
-					// insert sample page 4
-					$this->insertPage(array('title' => 'adipiscing elit',
+					// insert about
+					$this->insertPage(array('id' => 4,
+											'title' => 'About',
+											'type' => 'meta',
 											'language' => $language,
-											'parent_id' => $parentId),
+											'allow_move' => 'N',
+											'allow_delete' => 'N'));
+
+					// insert 404
+					$this->insertPage(array('id' => 404,
+											'title' => '404',
+											'type' => 'root',
+											'language' => $language,
+											'allow_move' => 'N',
+											'allow_delete' => 'N'),
 										null,
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample4.txt'));
+										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'));
 				}
 			}
 		}
@@ -234,6 +215,168 @@ class PagesInstall extends ModuleInstaller
 		catch(Exception $e)
 		{
 			if(substr_count($e->getMessage(), 'Duplicate entry') == 0) throw $e;
+		}
+
+		// recalculate num_blocks
+		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'), true);
+	}
+
+	/**
+	 * Install Scorsese
+	 *
+	 * @return	void
+	 */
+	private function installScorsese()
+	{
+		// set theme
+		$this->setSetting('core', 'theme', 'scorsese', true);
+
+		// insert/get extra ids
+		$extras['blog_block'] = $this->insertExtra('blog', 'block', 'Blog', null, null, 'N', 1000);
+		$extras['blog_widget_recent_comments'] = $this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
+		$extras['blog_widget_categories'] = $this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
+		$extras['blog_widget_archive'] = $this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
+		$extras['blog_widget_recent_articles'] = $this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N', 1004);
+		$extras['blog_widget_latest_articles'] = $this->insertExtra('blog', 'widget', 'LatestArticles', 'latest_articles', null, 'N', 1005);
+		$extras['search_block'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
+		$extras['search_widget_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
+		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
+
+		// build templates
+		$homeTemplate = array(	'label' => 'Scorsese - Home',
+								'path' => 'core/layout/templates/home.tpl',
+								'num_blocks' => 6,
+								'active' => 'Y',
+								'data' => serialize(array(	'format' => '[/,/,/,/,6],[1,1,2,2,2],[1,1,2,2,2],[/,3,3,3,4],[/,3,3,3,5],[/,3,3,3,/]',
+															'names' => array('Picture w/ caption', 'Introduction', 'Blog articles', 'Latest Comments', 'Contact', 'Search'),
+															'default_extras' => array('editor', 'editor', $extras['blog_widget_recent_articles'], $extras['blog_widget_recent_comments'], 'editor', $extras['search_widget_form'])
+														))
+							);
+		$defaultTemplate = 	array('label' => 'Scorsese - Default',
+									'path' => 'core/layout/templates/default.tpl',
+									'num_blocks' => 4,
+									'active' => 'Y',
+								'	data' => serialize(array(	'format' => '[/,/,/,/,4],[/,1,1,1,2],[/,1,1,1,3],[/,1,1,1,/]',
+																'names' => array('Main content', 'Call to action 1', 'Call to action 2', 'Search'),
+																'default_extras' => array('editor', 'editor', 'editor', $extras['search_widget_form'])
+														))
+							);
+		$blogTemplate = 	array('label' => 'Scorsese - Blog',
+									'path' => 'core/layout/templates/blog.tpl',
+									'num_blocks' => 5,
+									'active' => 'Y',
+								'	data' => serialize(array(	'format' => '[/,/,/,/,5],[/,1,1,1,2],[/,1,1,1,2],[/,1,1,1,3],[/,1,1,1,4]',
+																'names' => array('Blog main content', 'Blog widget','Blog widget','Blog widget', 'Search'),
+																'default_extras' => array($extras['blog_block'], $extras['blog_widget_recent_comments'], $extras['blog_widget_categories'], $extras['blog_widget_archive'], $extras['search_widget_form'])
+														))
+							);
+
+		// insert templates
+		$templateIds['home'] = $this->getDB()->insert('pages_templates', $homeTemplate);
+		$templateIds['default'] = $this->getDB()->insert('pages_templates', $defaultTemplate);
+		$templateIds['blog'] = $this->getDB()->insert('pages_templates', $blogTemplate);
+
+		// loop languages
+		foreach($this->getLanguages() as $language)
+		{
+			// check if pages already exist for this language
+			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)) == 0)
+			{
+				// insert homepage
+				$this->insertPage(array('id' => 1,
+										'parent_id' => 0,
+										'template_id' => $templateIds['home'],
+										'title' => 'Home',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_1.txt'),
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt'),
+									array('extra_id' => $extras['blog_widget_recent_articles']),
+									array('extra_id' => $extras['blog_widget_recent_comments']),
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_3.txt'),
+									array('extra_id' => $extras['search_widget_form']));
+
+				// insert sitemap
+				$this->insertPage(array('id' => 2,
+										'template_id' => $templateIds['default'],
+										'title' => 'Sitemap',
+										'type' => 'footer',
+										'language' => $language),
+									null,
+									array('extra_id' => $extras['sitemap_widget_sitemap']),
+									null, null,
+									array('extra_id' => $extras['search_widget_form']));
+
+				// insert disclaimer
+				$this->insertPage(array('id' => 3,
+										'template_id' => $templateIds['default'],
+										'title' => 'Disclaimer',
+										'type' => 'footer',
+										'language' => $language),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'),
+									null, null,
+									array('extra_id' => $extras['search_widget_form']));
+
+				// insert about
+				$this->insertPage(array('id' => 4,
+										'template_id' => $templateIds['default'],
+										'title' => 'About',
+										'type' => 'meta',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+										null,
+										null, null, null,
+										array('extra_id' => $extras['search_widget_form']));
+
+				// insert 404
+				$this->insertPage(array('id' => 404,
+										'template_id' => $templateIds['default'],
+										'title' => '404',
+										'type' => 'root',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
+									null, null,
+									array('extra_id' => $extras['search_widget_form']));
+
+				// insert search
+				$this->insertPage(array('title' => 'Search',
+										'template_id' => $templateIds['default'],
+										'type' => 'root',
+										'language' => $language),
+									null,
+									array('extra_id' => $extras['search_block']),
+									null, null,
+									array('extra_id' => $extras['search_widget_form']));
+
+				// insert blog
+				$this->insertPage(array('title' => 'Blog',
+										'template_id' => $templateIds['blog'],
+										'language' => $language),
+									null,
+									array('extra_id' => $extras['blog_block']),
+									array('extra_id' => $extras['blog_widget_recent_comments']),
+									array('extra_id' => $extras['blog_widget_categories']),
+									array('extra_id' => $extras['blog_widget_archive']),
+									array('extra_id' => $extras['search_widget_form']));
+
+				// insert history-page
+				$title = 'History';
+				if($language == 'nl') $title = 'Geschiedenis';
+
+				$this->insertPage(array('template_id' => $templateIds['default'], 'title' => $title, 'language' => $language),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3_1.txt'),
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3_2.txt'),
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3_3.txt'),
+									array('extra_id' => $extras['search_widget_form']));
+			}
 		}
 	}
 

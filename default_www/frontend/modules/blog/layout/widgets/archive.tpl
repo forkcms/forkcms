@@ -3,9 +3,10 @@
 	- {$widgetBlogArchive}:
 *}
 
-{cache:blogWidgetArchiveCache}
+{cache:{$LANGUAGE}_blogWidgetArchiveCache}
 	{option:widgetBlogArchive}
 	<div class="widget blogArchive">
+		<h3>{$lblArchive|ucfirst}</h3>
 		<ul>
 			{iteration:widgetBlogArchive}
 				<li>
@@ -31,4 +32,4 @@
 		</ul>
 	</div>
 	{/option:widgetBlogArchive}
-{/cache:blogWidgetArchiveCache}
+{/cache:{$LANGUAGE}_blogWidgetArchiveCache}

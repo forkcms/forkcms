@@ -179,7 +179,7 @@ class FrontendModel
 
 		// unserialize page data and template data
 		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
-		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = unserialize($record['template_data']);
+		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
 		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,

@@ -1,0 +1,2 @@
+<p><img src="/frontend/themes/scorsese/core/images/example/chev.jpg" alt="Chevrolet" width="382" /></p>
+<p>Dit is een coole Chevrolet.</p>

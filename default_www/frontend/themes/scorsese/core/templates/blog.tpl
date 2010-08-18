@@ -24,7 +24,7 @@
 				{$var|getnavigation:'page':0:1}
 			</div>
 		</div>
-		
+
 		<div id="main">
 			<div id="topContent">
 				{option:!hideContentTitle}<h1>{$page['title']}</h1>{/option:!hideContentTitle}
@@ -43,34 +43,25 @@
 					</div>
 
 					<div id="sideContent">
-
 						{* Block 2 *}
-						{option:block2IsHTML}
 						<div class="sideBlock firstChild">
-							{$block2}
+							{option:block2IsHTML}{$block2}{/option:block2IsHTML}
+							{option:!block2IsHTML}{include:file='{$block2}'}{/option:!block2IsHTML}
 						</div>
-						{/option:block2IsHTML}
-						{option:!block2IsHTML}{include:file='{$block2}'}{/option:!block2IsHTML}
 
 						{* Block 3 *}
-						{option:block3IsHTML}
 						<div class="sideBlock">
-							{$block3}
+							{option:block3IsHTML}{$block3}{/option:block3IsHTML}
+							{option:!block3IsHTML}{include:file='{$block3}'}{/option:!block3IsHTML}
 						</div>
-						{/option:block3IsHTML}
-						{option:!block3IsHTML}{include:file='{$block3}'}{/option:!block3IsHTML}
 
 						{* Block 4 *}
-						{option:block4IsHTML}
 						<div class="sideBlock">
-							{$block4}
+							{option:block4IsHTML}{$block4}{/option:block4IsHTML}
+							{option:!block4IsHTML}{include:file='{$block4}'}{/option:!block4IsHTML}
 						</div>
-						{/option:block4IsHTML}
-						{option:!block4IsHTML}{include:file='{$block4}'}{/option:!block4IsHTML}
-
 					</div>
 				</div>
-
 			</div>
 		</div>
 

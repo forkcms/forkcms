@@ -518,7 +518,7 @@ class FrontendBlogModel
 		{
 			// add some URLs
 			$row['post_full_url'] = $link .'/'. $row['post_url'];
-			$row['full_url'] = $link .'/'. $row['post_url'] .'#'. FL::getAction('Comment') .'-'. $row['id'];
+			$row['full_url'] = $link .'/'. $row['post_url'] .'#comment-'. $row['id'];
 			$row['gravatar_id'] = md5($row['email']);
 		}
 

@@ -1,0 +1,2 @@
+<h2>Dit is een hoofding</h2>
+<p>Dit is een intro.. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor.</p>

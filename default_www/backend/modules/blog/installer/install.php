@@ -62,7 +62,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
 		$this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
 		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
-		$this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N',1004);
+		$this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N', 1004);
+		$this->insertExtra('blog', 'widget', 'LatestArticles', 'latest_articles', null, 'N', 1005);
 
 
 		// loop languages

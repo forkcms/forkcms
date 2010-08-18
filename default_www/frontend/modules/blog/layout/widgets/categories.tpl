@@ -5,6 +5,7 @@
 
 {option:widgetBlogCategories}
 	<div class="widget blogCategories">
+		<h3>{$lblCategories|ucfirst}</h3>
 		<ul>
 			{iteration:widgetBlogCategories}
 				<li>

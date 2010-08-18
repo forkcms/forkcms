@@ -252,7 +252,7 @@ class ModuleInstaller
 		}
 
 		// return id
-		else return (int) $this->getDB()->getVar('SELECT id FORM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label']));
+		else return (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label']));
 	}
 
 
