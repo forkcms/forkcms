@@ -367,6 +367,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichModule', 'welke module');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WhichWidget', 'welke widget');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Widget', 'widget');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Widgets', 'widgets');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'WithSelected', 'met geselecteerde');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'ActivateNoFollow', 'Activeer <code>rel="nofollow"</code>');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'Added', 'Het item werd toegevoegd.');
@@ -713,6 +714,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichModule', 'which module');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WhichWidget', 'which widget');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Widget', 'widget');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Widgets', 'widgets');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'WithSelected', 'with selected');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ActivateNoFollow', 'Activate <code>rel="nofollow"</code>');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'Added', 'The item was added.');

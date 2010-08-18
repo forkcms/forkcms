@@ -93,25 +93,43 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
 		$this->frm->addDropdown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
 		if(BackendPagesModel::isTemplateInUse($this->id)) $this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
-		$this->frm->addText('format', $this->record['data']['format']);
+		$this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
 		$this->frm->addCheckbox('default', ($this->record['id'] == BackendModel::getModuleSetting('pages', 'default_template')));
 
 		// init vars
 		$names = array();
-		$types = BackendPagesModel::getTypes();
+		$blocks = array();
+		$widgets = array();
+		$extras = BackendPagesModel::getExtras();
+
+		// loop extras to populate the default extras
+		foreach($extras as $item)
+		{
+			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+			if($item['type'] == 'widget')
+			{
+				$widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::getLabel($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
+			}
+		}
+
+		// create array
+		$defaultExtras = array('' => array('editor' =>  BL::getLabel('Editor')),
+								ucfirst(BL::getLabel('Modules')) => $blocks,
+								ucfirst(BL::getLabel('Widgets')) => $widgets);
 
 		// add some fields
 		for($i = 1; $i <= 10; $i++)
 		{
 			// grab values
 			$name = isset($this->record['data']['names'][$i - 1]) ? $this->record['data']['names'][$i - 1] : null;
-			$type = isset($this->record['data']['types'][$i - 1]) ? $this->record['data']['types'][$i - 1] : null;
+			$extra = isset($this->record['data']['default_extras'][$i - 1]) ? $this->record['data']['default_extras'][$i - 1] : null;
 
 			// build array
 			$names[$i]['i'] = $i;
 			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i, $name);
-			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_'. $i, $types, $type);
+			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_'. $i, $defaultExtras, $extra);
 		}
 
 		// assign
@@ -152,7 +170,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$template['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
 				$template['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
 				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$template['data']['format'] = $this->frm->getField('format')->getValue();
+				$template['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
 				if(BackendPagesModel::isTemplateInUse($this->id)) $template['num_blocks'] = $this->record['num_blocks'];
 
@@ -160,7 +178,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				for($i = 1; $i <= $template['num_blocks']; $i++)
 				{
 					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
-					$template['data']['types'][] = $this->frm->getField('type_'. $i)->getValue();
+					$template['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
 				// serialize

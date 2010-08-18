@@ -190,8 +190,8 @@
 				<input type="hidden" id="extraForBlock" name="extraForBlock" value="" />
 				<div class="options horizontal">
 					<p>{$msgHelpBlockContent}</p>
-					<p id="extraWarningAlreadyBlock" class="infoMessage">
-						{$msgModuleBlockAlreadyLinked}
+					<p id="extraWarningAlreadyBlock">
+						<span class="infoMessage">{$msgModuleBlockAlreadyLinked}</span>
 					</p>
 					<p>
 						<label for="extraType">{$lblType|ucfirst}</label>
@@ -217,6 +217,9 @@
 				Do not change the ID!
 			 *}
 			<div id="chooseTemplate" class="forkForms" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
+				<p>
+					<span class="infoMessage">{$msgTemplateChangeWarning}</span>
+				</p>
 				<ul class="inputList" id="templateList">
 				{iteration:templates}
 					<li>

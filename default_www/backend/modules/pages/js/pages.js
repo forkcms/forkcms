@@ -75,6 +75,9 @@ jsBackend.pages.extras = {
 														// empty extra's
 														$('.block_extra_id').val('');
 														
+														// clear content
+														for(var i in tinyMCE.editors) { tinyMCE.editors[i].setContent(''); }
+														
 														// change the template for real
 														jsBackend.pages.template.changeTemplate();
 													}
@@ -321,7 +324,7 @@ jsBackend.pages.template = {
 		// get current template
 		var current = templates[selected];
 		var i = 0;
-		
+
 		// hide unneeded blocks
 		$('.contentBlock').each(function() {
 			// hide if needed
@@ -347,6 +350,13 @@ jsBackend.pages.template = {
 		$('.contentBlock').each(function() {
 			var index = $(this).attr('id').replace('block-', '');
 			var extraId = $('#block_extra_id_'+ index).val();
+
+			// no extra specified, we should grab the default
+			if(typeof current.data.default_extras != 'undefined' && (typeof extraId == 'undefined')) {
+				if(current.data.default_extras[index] != 'editor') { extraId = parseInt(current.data.default_extras[index]); }
+			}
+
+			// change the extra
 			jsBackend.pages.extras.changeExtra(extraId, index);
 		});
 	},

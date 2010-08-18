@@ -463,6 +463,9 @@
 			// bind submit
 			$(this.form).submit(function() { return !blockSubmit; })
 			
+			// remove previous HTML
+			if($('#elementList-'+ id).length > 0){ $('#elementList-'+ id).parent('.multipleTextWrapper').remove(); }
+			
 			// build replace html
 			var html = 	'<div class="multipleTextWrapper">'+
 						'	<div id="elementList-'+ id +'" class="multipleTextList">'+

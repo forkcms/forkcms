@@ -306,6 +306,9 @@ class BackendPagesModel
 		// validate
 		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
 
+		// cleanup
+		$template['data']['format'] = trim(str_replace(array("\n", "\r"), '', $template['data']['format']));
+
 		// init var
 		$table = array();
 
@@ -316,7 +319,7 @@ class BackendPagesModel
 		foreach($rows as $i => $row)
 		{
 			// cleanup
-			$row = str_replace(array('[',']'), '', $row);
+			$row = trim(str_replace(array('[',']'), '', $row));
 
 			// build table
 			$table[$i] = (array) explode(',', $row);
@@ -329,6 +332,7 @@ class BackendPagesModel
 		// init var
 		$rows = count($table);
 		$cells = count($table[0]);
+		$extras = self::getExtras();
 
 		// loop rows
 		for($y = 0; $y < $rows; $y++)
@@ -382,12 +386,14 @@ class BackendPagesModel
 				}
 
 				// decide selected state
-				$exists = (isset($template['data']['names'][$value]));
+				$exists = (isset($template['data']['names'][$value - 1]));
 
 				// get title & index
-				$title = ($exists) ? $template['data']['names'][$value] : '';
-				$type = ($exists) ? $template['data']['types'][$value] : '';
-				$index = ($exists) ? $value : '';
+				$title = ($exists) ? $template['data']['names'][$value - 1] : '';
+				$extra = ($exists && isset($template['data']['default_extras'][$value - 1])) ? $template['data']['default_extras'][$value - 1] : '';
+				$index = ($exists) ? ($value - 1) : '';
+
+				$type = '';
 
 				// start cell
 				$html .= '<td';

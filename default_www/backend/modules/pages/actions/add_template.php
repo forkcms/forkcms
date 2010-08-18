@@ -51,20 +51,38 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		$this->frm->addText('label');
 		$this->frm->addText('file');
 		$this->frm->addDropdown('num_blocks', array_combine(range(1, 10), range(1, 10)), 3);
-		$this->frm->addText('format');
+		$this->frm->addTextarea('format');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('default');
 
 		// init vars
 		$names = array();
-		$types = BackendPagesModel::getTypes();
+		$blocks = array();
+		$widgets = array();
+		$extras = BackendPagesModel::getExtras();
+
+		// loop extras to populate the default extras
+		foreach($extras as $item)
+		{
+			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+			if($item['type'] == 'widget')
+			{
+				$widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::getLabel($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
+			}
+		}
+
+		// create array
+		$defaultExtras = array('' => array('editor' =>  BL::getLabel('Editor')),
+								ucfirst(BL::getLabel('Modules')) => $blocks,
+								ucfirst(BL::getLabel('Widgets')) => $widgets);
 
 		// add some fields
 		for($i = 1; $i <= 10; $i++)
 		{
 			$names[$i]['i'] = $i;
 			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i);
-			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_'. $i, $types);
+			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_'. $i, $defaultExtras);
 		}
 
 		// assign
@@ -105,13 +123,13 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$template['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
 				$template['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
 				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$template['data']['format'] = $this->frm->getField('format')->getValue();
+				$template['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
 				// loop fields
 				for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 				{
 					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
-					$template['data']['types'][] = $this->frm->getField('type_'. $i)->getValue();
+					$template['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
 				// serialize the data
