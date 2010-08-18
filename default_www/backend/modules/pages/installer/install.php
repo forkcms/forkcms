@@ -136,12 +136,8 @@ class PagesInstall extends ModuleInstaller
 			// check if pages already exist for this language
 			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)) == 0)
 			{
-				// check if example data should be installed
-				if($this->installExample())
-				{
-				}
-
-				else
+				// check if default data should be installed
+				if(!$this->installExample())
 				{
 					// insert homepage
 					$this->insertPage(array('id' => 1,

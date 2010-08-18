@@ -405,7 +405,7 @@ class ModuleInstaller
 		$revision['revision_id'] = $this->getDB()->insert('pages', $revision);
 
 		// get number of blocks to insert
-		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE active = ?;', array('Y'));
+		$numBlocks = $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates WHERE active = ?', array('Y'));
 
 		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
 		$blocks = array();
