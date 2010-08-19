@@ -433,17 +433,17 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		{
 			// init vars
 			$pagesStart = 1;
-			$pagesEnd = ($numPages >= 8) ? 8 : $numPages;
+			$pagesEnd = ($numPages >= 7) ? 7 : $numPages;
 
 			// show last pages
 			if($numPages > 8) $showLastPages = true;
 		}
 
 		// as long as we are 7 pages from the end we should show all pages till the end
-		elseif($currentPage >= ($numPages - 8))
+		elseif($currentPage > ($numPages - 7))
 		{
 			// init vars
-			$pagesStart = ($numPages - 7);
+			$pagesStart = ($numPages == 9) ? ($numPages - 6) : ($numPages - 7);
 			$pagesEnd = $numPages;
 
 			// show first pages
