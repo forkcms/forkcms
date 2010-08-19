@@ -123,7 +123,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'PasswordIsRequired', 'Gelieve een wachtwoord in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'PasswordRepeatIsRequired', 'Gelieve het gewenste wachtwoord te herhalen.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'PasswordsDontMatch', 'De wachtwoorden zijn verschillend, probeer het opnieuw.');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'RobotsFileIsNotOK', 'robots.txt is niet correct.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'RobotsFileIsNotOK', 'robots.txt zal zoekmachines blokkeren.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'RSSTitle', 'Blog RSS titel is nog niet ingevuld. <a href="%1$s">Configureer</a>');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'SettingsForkAPIKeys', 'De Fork API-keys zijn niet goed geconfigureerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'SomethingWentWrong', 'Er liep iets fout.');
@@ -144,6 +144,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AllPages', 'alle pagina\'s');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Amount', 'aantal');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Analyse', 'analyse');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Analysis', 'analysi');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Analytics', 'analytics');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'APIKey', 'API key');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'APIKeys', 'API keys');
@@ -471,7 +472,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'PasswordIsRequired', 'Please provide a password.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'PasswordRepeatIsRequired', 'Please repeat the desired password.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'PasswordsDontMatch', 'The passwords differ, please try again.');
-		$this->insertLocale('en', 'backend', 'core', 'err', 'RobotsFileIsNotOK', 'robots.txt is not correct.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'RobotsFileIsNotOK', 'robots.txt will block search-engines.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'RSSTitle', 'Blog RSS title is not configured. <a href="%1$s">Configure</a>');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'SettingsForkAPIKeys', 'The Fork API-keys are not configured.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'SomethingWentWrong', 'Something went wrong.');
@@ -492,6 +493,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllPages', 'all pages');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Amount', 'amount');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Analyse', 'analyse');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Analysis', 'analysis');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Analytics', 'analytics');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'APIKey', 'API key');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'APIKeys', 'API keys');

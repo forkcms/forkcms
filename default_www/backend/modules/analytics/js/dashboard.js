@@ -8,8 +8,6 @@ jsBackend.dashboard = {
 			url: '/backend/ajax.php?module=analytics&action=get_traffic_sources&language=' + jsBackend.current.language,
 			success: function(data, textStatus) {
 				$('#loading').hide();
-				// alert the user
-				if(data.code != 200 && jsBackend.debug) { alert(data.message); }
 			},
 			error: function(XMLHttpRequest, textStatus, errorThrown) {
 				$('#loading').hide();

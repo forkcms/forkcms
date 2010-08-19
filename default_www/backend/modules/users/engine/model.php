@@ -218,8 +218,9 @@ class BackendUsersModel
 	{
 		$return = (array) BackendModel::getDB()->getPairs('SELECT i.id, s.value
 															FROM users AS i
-															INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?;',
-															array('nickname'), 'id');
+															INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
+															WHERE i.active = ? AND i.deleted = ?;',
+															array('nickname', 'Y', 'N'), 'id');
 
 		// unserialize
 		foreach($return as $id => &$value) $value = unserialize($value);

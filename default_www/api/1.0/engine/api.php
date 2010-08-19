@@ -316,6 +316,7 @@ class API
 		$statusCode = (int) $statusCode;
 
 		// build array
+		$JSON = array();
 		$JSON['meta']['status_code'] = $statusCode;
 		$JSON['meta']['status'] = ($statusCode == 200) ? 'ok' : 'error';
 		$JSON['meta']['version'] = FORK_VERSION;

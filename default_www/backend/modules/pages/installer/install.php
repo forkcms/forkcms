@@ -136,52 +136,48 @@ class PagesInstall extends ModuleInstaller
 			// check if pages already exist for this language
 			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)) == 0)
 			{
-				// check if default data should be installed
-				if(!$this->installExample())
-				{
-					// insert homepage
-					$this->insertPage(array('id' => 1,
-											'parent_id' => 0,
-											'template_id' => 1,
-											'title' => 'Home',
-											'language' => $language,
-											'allow_move' => 'N',
-											'allow_delete' => 'N'));
+				// insert homepage
+				$this->insertPage(array('id' => 1,
+										'parent_id' => 0,
+										'template_id' => 1,
+										'title' => 'Home',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'));
 
-					// insert sitemap
-					$this->insertPage(array('id' => 2,
-											'title' => 'Sitemap',
-											'type' => 'footer',
-											'language' => $language),
-										null,
-										array('extra_id' => $sitemapID));
+				// insert sitemap
+				$this->insertPage(array('id' => 2,
+										'title' => 'Sitemap',
+										'type' => 'footer',
+										'language' => $language),
+									null,
+									array('extra_id' => $sitemapID));
 
-					// insert disclaimer
-					$this->insertPage(array('id' => 3,
-											'title' => 'Disclaimer',
-											'type' => 'footer',
-											'language' => $language),
-										null,
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
+				// insert disclaimer
+				$this->insertPage(array('id' => 3,
+										'title' => 'Disclaimer',
+										'type' => 'footer',
+										'language' => $language),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
 
-					// insert about
-					$this->insertPage(array('id' => 4,
-											'title' => 'About',
-											'type' => 'meta',
-											'language' => $language,
-											'allow_move' => 'N',
-											'allow_delete' => 'N'));
+				// insert about
+				$this->insertPage(array('id' => 4,
+										'title' => 'About',
+										'type' => 'meta',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'));
 
-					// insert 404
-					$this->insertPage(array('id' => 404,
-											'title' => '404',
-											'type' => 'root',
-											'language' => $language,
-											'allow_move' => 'N',
-											'allow_delete' => 'N'),
-										null,
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'));
-				}
+				// insert 404
+				$this->insertPage(array('id' => 404,
+										'title' => '404',
+										'type' => 'root',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'));
 			}
 		}
 	}
@@ -217,6 +213,7 @@ class PagesInstall extends ModuleInstaller
 		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'), true);
 	}
 
+
 	/**
 	 * Install Scorsese
 	 *
@@ -237,6 +234,7 @@ class PagesInstall extends ModuleInstaller
 		$extras['search_block'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_widget_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
+		$extras['contact_block'] = $this->insertExtra('contact', 'block', 'Contact', null, null, 'N', 6);
 
 		// build templates
 		$homeTemplate = array(	'label' => 'Scorsese - Home',
@@ -327,6 +325,16 @@ class PagesInstall extends ModuleInstaller
 										null,
 										null, null, null,
 										array('extra_id' => $extras['search_widget_form']));
+
+				// insert contact page
+				$this->insertPage(array('template_id' => $templateIds['default'],
+										'title' => 'Contact',
+										'type' => 'footer',
+										'language' => $language),
+									null,
+									array('extra_id' => $contactID),
+									null, null,
+									array('extra_id' => $extras['contact_block']));
 
 				// insert 404
 				$this->insertPage(array('id' => 404,

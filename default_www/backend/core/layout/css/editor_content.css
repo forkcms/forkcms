@@ -10,6 +10,16 @@
 
 */
 
+body {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
+    height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
+    cursor: text;
+}
+
 html {
 	height: auto;
 	width: auto;

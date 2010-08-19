@@ -202,7 +202,7 @@
 				}
 				
 				// destroy the element
-				else destroyElement()
+				else destroyElement();
 			}
 		});
 	};
@@ -238,7 +238,7 @@
 			var blockSubmit = false;
 
 			// bind submit
-			$(this.form).submit(function() { return !blockSubmit; })
+			$(this.form).submit(function() { return !blockSubmit; });
 			
 			// build replace html
 			var html = 	'<div class="tagsWrapper">'+
@@ -407,7 +407,7 @@
 				// loop elements and trim them from spaces
 				for(var i in chunks) {
 					value = chunks[i].replace(/^\s+|\s+$/g,'');
-					if(value != '') elements.push(value)
+					if(value != '') elements.push(value);
 				}
 				
 				return elements;
@@ -461,7 +461,7 @@
 			var blockSubmit = false;
 
 			// bind submit
-			$(this.form).submit(function() { return !blockSubmit; })
+			$(this.form).submit(function() { return !blockSubmit; });
 			
 			// remove previous HTML
 			if($('#elementList-'+ id).length > 0){ $('#elementList-'+ id).parent('.multipleTextWrapper').remove(); }
@@ -657,7 +657,7 @@
 				// loop elements and trim them from spaces
 				for(var i in chunks) {
 					value = chunks[i].replace(/^\s+|\s+$/g,'');
-					if(value != '') elements.push(value)
+					if(value != '') elements.push(value);
 				}
 				
 				return elements;

@@ -141,9 +141,9 @@ class FrontendUser
 		// get user-data
 		$userData = (array) $db->getRecord('SELECT u.id, u.email
 											FROM users AS u
-											WHERE u.id = ? AND u.active = ? AND u.deleted = ?
+											WHERE u.id = ?
 											LIMIT 1;',
-											array($userId, 'Y', 'N'));
+											array($userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
 		if(empty($userData)) throw new FrontendException('The user ('. $userId .') doesn\'t exist.');

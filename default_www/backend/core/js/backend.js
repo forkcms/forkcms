@@ -36,7 +36,7 @@ jsBackend = {
 		$(document).ajaxError(function(event, XMLHttpRequest, ajaxOptions) {
 
 			// 403 means we aren't authenticated anymore, so reload the page
-			if(XMLHttpRequest.status == 403) window.location.reload()
+			if(XMLHttpRequest.status == 403) window.location.reload();
 
 			// check if a custom errorhandler is used
 			if(typeof ajaxOptions.error == 'undefined') {
@@ -109,7 +109,7 @@ jsBackend.balloons = {
 				if($('#'+ rel +' form input:visible:first').length > 0) $('#'+ rel +' form input:visible:first').focus();
 
 				// bind resize
-				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ rel)) });
+				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ rel)); });
 			}
 		}
 	},
@@ -144,7 +144,7 @@ jsBackend.controls = {
 			// check if needed element exists
 			if($(this).find('input:checkbox').length > 0 && $(this).find('input:text').length > 0) {
 				var checkbox = $($(this).find('input:checkbox')[0]);
-				var textField = $($(this).find('input:text')[0])
+				var textField = $($(this).find('input:text')[0]);
 
 				checkbox.bind('change', function(evt) {
 					var combo = $(this).parents().filter('.checkboxTextFieldCombo');
@@ -219,7 +219,7 @@ jsBackend.controls = {
 
 			if($(id).is(':visible')) {
 				// remove events
-				$('body').unbind('click')
+				$('body').unbind('click');
 				$('body').unbind('keyup');
 
 				// remove class
@@ -271,7 +271,7 @@ jsBackend.controls = {
 					evt.preventDefault();
 
 					// add class
-					$(this).parent().addClass('collapsed')
+					$(this).parent().addClass('collapsed');
 
 					// toggle
 					$('#subnavigation, #pagesTree').fadeOut(250);
@@ -281,7 +281,7 @@ jsBackend.controls = {
 					evt.preventDefault();
 
 					// remove class
-					$(this).parent().removeClass('collapsed')
+					$(this).parent().removeClass('collapsed');
 
 					// toggle
 					$('#subnavigation, #pagesTree').fadeIn(500);
@@ -343,12 +343,12 @@ jsBackend.controls = {
 				// prevent default action
 				evt.preventDefault();
 
-				var element = $(this).parents('.massAction').find('select[name=action] option:selected')
+				var element = $(this).parents('.massAction').find('select[name=action] option:selected');
 
 				// if the rel-attribute exists we should show the dialog
 				if(typeof element.attr('rel') != 'undefined') {
 					// get id
-					var id = element.attr('rel')
+					var id = element.attr('rel');
 
 					// open dialog
 					$('#'+ id).dialog('open');
@@ -508,6 +508,9 @@ jsBackend.controls = {
 			// replace the third element with the new language
 			urlChunks[2] = $(this).val();
 
+			// remove action
+			urlChunks.pop();
+			
 			var url = urlChunks.join('/');
 			if(newChunks.length > 0) url += '?token=true&' + newChunks.join('&');
 
@@ -717,8 +720,8 @@ jsBackend.layout = {
 	// datafilter layout fixes
 	dataFilter: function() {
 		// add last child and first child for IE
-		$('.datafilter tbody td:first-child').addClass('firstChild')
-		$('.datafilter tbody td:last-child').addClass('lastChild')
+		$('.datafilter tbody td:first-child').addClass('firstChild');
+		$('.datafilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;
@@ -741,7 +744,7 @@ jsBackend.layout = {
 
 		// dynamic striping
 		$('.dynamicStriping.datagrid tr:nth-child(2n)').addClass('even');
-		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd')
+		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd');
 	},
 	// if the browser isn't supported show a warning
 	showBrowserWarning: function() {
@@ -750,41 +753,41 @@ jsBackend.layout = {
 		// check firefox
 		if(jQuery.browser.mozilla) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3).replace(/\./g, ''))
+			var version = parseInt(jQuery.browser.version.substr(0,3).replace(/\./g, ''));
 
 			// lower then 3?
-			if(version < 19) showWarning = true;
+			if(version < 19) { showWarning = true; }
 		}
 
 		// check opera
 		if(jQuery.browser.opera) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1))
+			var version = parseInt(jQuery.browser.version.substr(0,1));
 
 			// lower then 9?
-			if(version < 9) showWarning = true;
+			if(version < 9) { showWarning = true; }
 		}
 
 		// check safari, should be webkit when using 1.4
 		if(jQuery.browser.safari) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3))
+			var version = parseInt(jQuery.browser.version.substr(0,3));
 
 			// lower then 9?
-			if(version < 400) showWarning = true;
+			if(version < 400) { showWarning = true; }
 		}
 
 		// check IE
 		if(jQuery.browser.msie) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1))
+			var version = parseInt(jQuery.browser.version.substr(0,1));
 
 			// lower or equal then 6
-			if(version <= 6) showWarning = true;
+			if(version <= 6) { showWarning = true; }
 		}
 
 		// show warning if needed
-		if(showWarning) $('#showBrowserWarning').show();
+		if(showWarning) { $('#showBrowserWarning').show(); }
 	},
 	// end
 	eof: true
