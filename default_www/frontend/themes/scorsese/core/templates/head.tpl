@@ -8,6 +8,7 @@
 
 	<link rel="shortcut icon" href="/favicon.ico" />
 
+	{option:debug}<meta name="robots" content="noindex, nofollow" />{/option:debug}
 	<meta name="generator" content="Fork CMS" />
 	<meta name="description" content="{$metaDescription}" />
 	<meta name="keywords" content="{$metaKeywords}" />
