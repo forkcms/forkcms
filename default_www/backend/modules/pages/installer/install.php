@@ -332,9 +332,9 @@ class PagesInstall extends ModuleInstaller
 										'type' => 'footer',
 										'language' => $language),
 									null,
-									array('extra_id' => $contactID),
+									array('extra_id' => $extras['contact_block']),
 									null, null,
-									array('extra_id' => $extras['contact_block']));
+									array('extra_id' => $extras['search_widget_form']));
 
 				// insert 404
 				$this->insertPage(array('id' => 404,
