@@ -101,13 +101,13 @@ class BackendTemplate extends SpoonTemplate
 	private function mapCustomModifiers()
 	{
 		// convert var into an URL, syntax {$var|geturl:<pageId>}
-		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'geturl'));
+		$this->mapModifier('geturl', array('BackendTemplateModifiers', 'getURL'));
 
 		// convert var into navigation, syntax {$var|getnavigation:<startdepth>:<enddepth>}
-		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getnavigation'));
+		$this->mapModifier('getnavigation', array('BackendTemplateModifiers', 'getNavigation'));
 
 		// convert var into navigation, syntax {$var|getmainnavigation}
-		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getmainnavigation'));
+		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
 
 		// rand
 		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));
@@ -119,9 +119,9 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('dump', array('BackendTemplateModifiers', 'dump'));
 
 		// dates
-		$this->mapModifier('formatdate', array('BackendTemplateModifiers', 'formatdate'));
-		$this->mapModifier('formattime', array('BackendTemplateModifiers', 'formattime'));
-		$this->mapModifier('formatdatetime', array('BackendTemplateModifiers', 'formatdatetime'));
+		$this->mapModifier('formatdate', array('BackendTemplateModifiers', 'formatDate'));
+		$this->mapModifier('formattime', array('BackendTemplateModifiers', 'formatTime'));
+		$this->mapModifier('formatdatetime', array('BackendTemplateModifiers', 'formatDateTime'));
 	}
 
 
@@ -457,7 +457,7 @@ class BackendTemplateModifiers
 	 */
 	public static function getMainNavigation($var = null)
 	{
-		return Spoon::getObjectReference('navigation')->getMainNavigation();
+		return Spoon::getObjectReference('navigation')->getNavigation(1, 1);
 	}
 
 
@@ -470,7 +470,7 @@ class BackendTemplateModifiers
 	 */
 	public static function getNavigation($var = null)
 	{
-		return Spoon::getObjectReference('navigation')->getNavigation();
+		return Spoon::getObjectReference('navigation')->getNavigation(2);
 	}
 
 

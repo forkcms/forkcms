@@ -145,8 +145,8 @@ jsBackend.forms = {
 					});
 
 					// dont submit the form on certain elements
-					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; })
-					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; })
+					$('form#'+ formId + ' .dontSubmit').bind('focus', function() { dontSubmit = true; });
+					$('form#'+ formId + ' .dontSubmit').bind('blur', function() { dontSubmit = false; });
 
 					// hijack the submit event
 					$('form#'+ formId).submit(function(evt) { return !dontSubmit; });
@@ -177,8 +177,8 @@ jsBackend.layout = {
 	// datafilter layout fixes
 	dataFilter: function() {
 		// add last child and first child for IE
-		$('.datafilter tbody td:first-child').addClass('firstChild')
-		$('.datafilter tbody td:last-child').addClass('lastChild')
+		$('.datafilter tbody td:first-child').addClass('firstChild');
+		$('.datafilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;
@@ -201,7 +201,7 @@ jsBackend.layout = {
 
 		// dynamic striping
 		$('.dynamicStriping.datagrid tr:nth-child(2n)').addClass('even');
-		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd')
+		$('.dynamicStriping.datagrid tr:nth-child(2n+1)').addClass('odd');
 	},
 	// if the browser isn't supported show a warning
 	showBrowserWarning: function() {
@@ -210,7 +210,7 @@ jsBackend.layout = {
 		// check firefox
 		if(jQuery.browser.mozilla) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3).replace(/\./g, ''))
+			var version = parseInt(jQuery.browser.version.substr(0,3).replace(/\./g, ''));
 
 			// lower then 3?
 			if(version < 19) showWarning = true;
@@ -219,7 +219,7 @@ jsBackend.layout = {
 		// check opera
 		if(jQuery.browser.opera) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1))
+			var version = parseInt(jQuery.browser.version.substr(0,1));
 
 			// lower then 9?
 			if(version < 9) showWarning = true;
@@ -228,7 +228,7 @@ jsBackend.layout = {
 		// check safari, should be webkit when using 1.4
 		if(jQuery.browser.safari) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3))
+			var version = parseInt(jQuery.browser.version.substr(0,3));
 
 			// lower then 9?
 			if(version < 400) showWarning = true;
@@ -237,7 +237,7 @@ jsBackend.layout = {
 		// check IE
 		if(jQuery.browser.msie) {
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1))
+			var version = parseInt(jQuery.browser.version.substr(0,1));
 
 			// lower or equal then 6
 			if(version <= 6) showWarning = true;

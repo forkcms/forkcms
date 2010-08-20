@@ -139,6 +139,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Add', 'toevoegen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AddCategory', 'categorie toevoegen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AddTemplate', 'template toevoegen');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Advanced', 'geavanceerd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AllComments', 'alle reacties');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AllowComments', 'reacties toestaan');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AllPages', 'alle pagina\'s');
@@ -242,6 +243,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LoginDetails', 'login gegevens');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LongDateFormat', 'lange datumformaat');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MainContent', 'hoofdinhoud');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Marketing', 'marketing');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Meta', 'meta');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MetaData', 'metadata');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MetaInformation', 'meta-informatie');
@@ -488,6 +490,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Add', 'add');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AddCategory', 'add category');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AddTemplate', 'add template');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Advanced', 'addvanced');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllComments', 'all comments');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllowComments', 'allow comments');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllPages', 'all pages');
@@ -591,6 +594,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LoginDetails', 'login details');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LongDateFormat', 'long date format');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MainContent', 'main content');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Marketing', 'marketing');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Meta', 'meta');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MetaData', 'metadata');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MetaInformation', 'meta information');

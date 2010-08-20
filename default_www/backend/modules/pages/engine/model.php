@@ -760,11 +760,17 @@ class BackendPagesModel
 																ORDER BY i.module, i.sequence;',
 																array('Y'), 'id');
 
+		// init var
+		$itemsToRemove = array();
+
 		// loop extras
-		foreach($extras as &$row)
+		foreach($extras as $id => &$row)
 		{
 			// unserialize data
 			$row['data'] = @unserialize($row['data']);
+
+			// remove items that are not for the current language
+			if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) $itemsToRemove[] = $id;
 
 			// set URL if needed
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
@@ -776,6 +782,13 @@ class BackendPagesModel
 			// add human readable name
 			$row['human_name'] = BackendLanguage::getLabel(SpoonFilter::toCamelCase($row['type'])) .': '. $name;
 			$row['message'] = sprintf(BackendLanguage::getMessage(SpoonFilter::toCamelCase($row['type'] . '_attached'), 'pages'), $name);
+		}
+
+		// any items to remove?
+		if(!empty($itemsToRemove))
+		{
+			// loop items
+			foreach($itemsToRemove as $id) unset($extras[$id]);
 		}
 
 		// return
@@ -801,11 +814,17 @@ class BackendPagesModel
 		// build array
 		$values = array();
 
+		// init var
+		$itemsToRemove = array();
+
 		// loop extras
-		foreach($extras as $row)
+		foreach($extras as $id => $row)
 		{
 			// unserialize data
 			$row['data'] = @unserialize($row['data']);
+
+			// remove items that are not for the current language
+			if(isset($row['data']['language']) && $row['data']['language'] != BackendLanguage::getWorkingLanguage()) continue;
 
 			// set URL if needed
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
@@ -814,6 +833,7 @@ class BackendPagesModel
 			$name = ucfirst(BL::getLabel($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 
+			// create modulename
 			$moduleName = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module'])));
 
 			// build array

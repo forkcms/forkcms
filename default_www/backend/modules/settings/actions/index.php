@@ -72,7 +72,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$defaultDomains = array(str_replace(array('http://', 'www.', 'https://'), '', SITE_URL));
 
 		// create form
-		$this->frm = new BackendForm('generalSettings');
+		$this->frm = new BackendForm('settings');
 
 		// general settings
 		$this->frm->addText('site_title', BackendModel::getModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
@@ -82,29 +82,6 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 		// facebook settings
 		$this->frm->addText('facebook_admin_ids', BackendModel::getModuleSetting('core', 'facebook_admin_ids', null));
-
-		// email settings
-		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');
-		$this->frm->addDropdown('mailer_type', array('mail' => 'PHP\'s mail', 'smtp' => 'SMTP'), $mailerType);
-		$mailerFrom = BackendModel::getModuleSetting('core', 'mailer_from');
-		$this->frm->addText('mailer_from_name', (isset($mailerFrom['name'])) ? $mailerFrom['name'] : '');
-		$this->frm->addText('mailer_from_email', (isset($mailerFrom['email'])) ? $mailerFrom['email'] : '');
-		$mailerTo = BackendModel::getModuleSetting('core', 'mailer_to');
-		$this->frm->addText('mailer_to_name', (isset($mailerTo['name'])) ? $mailerTo['name'] : '');
-		$this->frm->addText('mailer_to_email', (isset($mailerTo['email'])) ? $mailerTo['email'] : '');
-		$mailerReplyTo = BackendModel::getModuleSetting('core', 'mailer_reply_to');
-		$this->frm->addText('mailer_reply_to_name', (isset($mailerReplyTo['name'])) ? $mailerReplyTo['name'] : '');
-		$this->frm->addText('mailer_reply_to_email', (isset($mailerReplyTo['email'])) ? $mailerReplyTo['email'] : '');
-
-		// smtp settings
-		$this->frm->addText('smtp_server', BackendModel::getModuleSetting('core', 'smtp_server', ''));
-		$this->frm->addText('smtp_port', BackendModel::getModuleSetting('core', 'smtp_port', 25));
-		$this->frm->addText('smtp_username', BackendModel::getModuleSetting('core', 'smtp_username', ''));
-		$this->frm->addPassword('smtp_password', BackendModel::getModuleSetting('core', 'smtp_password', ''));
-
-		// theme
-		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', null));
-		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('NoTheme'));
 
 		// api keys
 		$this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('core', 'fork_api_public_key', null));
@@ -206,26 +183,10 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			// validate required fields
 			$this->frm->getField('site_title')->isFilled(BL::getError('FieldIsRequired'));
 
-			// mailer stuff
-			$this->frm->getField('mailer_from_name')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('mailer_from_email')->isEmail(BL::getError('EmailIsInvalid'));
-			$this->frm->getField('mailer_to_name')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('mailer_to_email')->isEmail(BL::getError('EmailIsInvalid'));
-			$this->frm->getField('mailer_reply_to_name')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('mailer_reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
-
 			// date & time
 			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format_short')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format_long')->isFilled(BL::getError('FieldIsRequired'));
-
-			// SMTP type was chosen
-			if($this->frm->getField('mailer_type')->getValue() == 'smtp')
-			{
-				// server & port are required
-				$this->frm->getField('smtp_server')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('smtp_port')->isFilled(BL::getError('FieldIsRequired'));
-			}
 
 			// akismet key may be filled in
 			if($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled())
@@ -279,26 +240,11 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				// facebook settings
 				BackendModel::setModuleSetting('core', 'facebook_admin_ids', ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField('facebook_admin_ids')->getValue() : null);
 
-				// e-mail settings
-				BackendModel::setModuleSetting('core', 'mailer_type', $this->frm->getField('mailer_type')->getValue());
-				BackendModel::setModuleSetting('core', 'mailer_from', array('name' => $this->frm->getField('mailer_from_name')->getValue(), 'email' => $this->frm->getField('mailer_from_email')->getValue()));
-				BackendModel::setModuleSetting('core', 'mailer_to', array('name' => $this->frm->getField('mailer_to_name')->getValue(), 'email' => $this->frm->getField('mailer_to_email')->getValue()));
-				BackendModel::setModuleSetting('core', 'mailer_reply_to', array('name' => $this->frm->getField('mailer_reply_to_name')->getValue(), 'email' => $this->frm->getField('mailer_reply_to_email')->getValue()));
-
-				// smtp settings
-				BackendModel::setModuleSetting('core', 'smtp_server', $this->frm->getField('smtp_server')->getValue());
-				BackendModel::setModuleSetting('core', 'smtp_port', $this->frm->getField('smtp_port')->getValue());
-				BackendModel::setModuleSetting('core', 'smtp_username', $this->frm->getField('smtp_username')->getValue());
-				BackendModel::setModuleSetting('core', 'smtp_password', $this->frm->getField('smtp_password')->getValue());
-
 				// api keys
 				BackendModel::setModuleSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
 				BackendModel::setModuleSetting('core', 'fork_api_private_key', $this->frm->getField('fork_api_private_key')->getValue());
 				if($this->needsAkismet) BackendModel::setModuleSetting('core', 'akismet_key', $this->frm->getField('akismet_key')->getValue());
 				if($this->needsGoogleMaps) BackendModel::setModuleSetting('core', 'google_maps_key', $this->frm->getField('google_maps_key')->getValue());
-
-				// theme
-				BackendModel::setModuleSetting('core', 'theme', $this->frm->getField('theme')->getValue());
 
 				// date & time formats
 				BackendModel::setModuleSetting('core', 'time_format', $this->frm->getField('time_format')->getValue());

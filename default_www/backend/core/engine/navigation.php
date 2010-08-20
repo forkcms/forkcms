@@ -54,127 +54,65 @@ class BackendNavigation
 
 
 	/**
-	 * Get the HTML for the navigation
+	 * Build the HTML for an navigation item
 	 *
 	 * @return	string
+	 * @param	string $value
 	 */
-	public function getNavigation()
+	public function buildHTML(array $value, $key, array $selectedKeys = null, $startDepth = 0, $endDepth = null, $currentDepth = 0)
 	{
-		// get selected keys, we need them for the selected state
-		$selectedKeys = (array) $this->getSelectedKeys();
+		// return
+		if($endDepth !== null && $currentDepth >= $endDepth) return '';
 
-		// nothing found: no sidemenu
-		if(!isset($selectedKeys[0]) || !isset($this->navigation[$selectedKeys[0]]['children'])) return;
-
-		// init html
-		$html = '<ul>'."\n";
-
-		// set active URL
-		$activeModule = $this->URL->getModule();
-		$activeAction = $this->URL->getAction();
-		$activeURL = $activeModule .'/'. $activeAction;
-
-		// search parent
-		foreach($this->navigation[$selectedKeys[0]]['children'] as $key => $level)
+		// needed elements are set?
+		if(isset($value['url']) && isset($value['label']))
 		{
-			// undefined URL?
-			if($level['url'] === null && isset($level['children']))
+			// init some vars
+			$selected = (isset($selectedKeys[$currentDepth]) && $selectedKeys[$currentDepth] == $key);
+			$label = ucfirst(BL::getLabel($value['label']));
+			$URL = $value['url'];
+
+			// append extra parameters if needed
+			if(isset($value['data']['parameters']) && !empty($value['data']['parameters'])) $URL .='?'. http_build_query($value['data']['parameters']);
+
+			// start HTML
+			$HTML = '';
+
+			if($currentDepth >= $startDepth - 1)
 			{
-				// loop childs till we find a valid URL
-				foreach($level['children'] as $child)
+				// start li
+				if($selected) $HTML .= '<li class="selected">'."\n";
+				else $HTML .= '<li>'."\n";
+				$HTML .= '	<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $URL .'">'. $label.'</a>'."\n";
+			}
+
+			// children?
+			if($selected && isset($value['children']))
+			{
+				// increment
+				$currentDepth++;
+
+				// end depth not passed or isn't reached
+				if($endDepth === null || $currentDepth < $endDepth)
 				{
-					// break URL into parts
-					$chunks = (array) explode('/', $child['url']);
+					$HTML .= '<ul>'."\n";
 
-					// can't get here!
-					if(!isset($chunks[1])) throw new BackendException('invalid child');
-
-					// check if the action is allowed
-					if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
+					foreach($value['children'] as $subKey => $row)
 					{
-						// reset link
-						$level['url'] = $child['url'];
-
-						// stop searching for an URL
-						break;
+						$HTML .= '	'. $this->buildHTML($row, $subKey, $selectedKeys, $startDepth, $endDepth, $currentDepth);
 					}
+
+					$HTML .= '</ul>'."\n";
 				}
 			}
 
-			// no valid URL, piss off
-			if($level['url'] === null) continue;
-
-			// break URL into parts
-			$chunks = (array) explode('/', $level['url']);
-
-			// set first chunk
-			if(!isset($chunks[1])) $chunks[1] = '';
-
-			// is allowed?
-			if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
+			if($currentDepth >= $startDepth - 1)
 			{
-				// selected state
-				$selected = (bool) ($level['url'] == $activeURL || (isset($selectedKeys[1]) && $key == $selectedKeys[1]));
-
-				// open li-tag
-				if($selected) $html .= '<li class="selected">'."\n";
-				else $html .= '<li>'."\n";
-
-				// add the link
-				$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. ucfirst(BL::getLabel($level['label'], 'core')) .'</a>'."\n";
-
-				// should we go deeper?
-				if($selected && isset($level['children']))
-				{
-					// create list
-					$subHTML = '<ul>'."\n";
-
-					// loop childs
-					foreach($level['children'] as $child)
-					{
-						// break URL into parts
-						$chunks = (array) explode('/', $child['url']);
-
-						// set first chunk
-						if(!isset($chunks[1])) $chunks[1] = '';
-
-						// is allowed?
-						if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
-						{
-							// selected state - does the child URL match 'module/action' or is the action present in the selected_for_actions array?
-							$childSelected = (bool) ($child['url'] == $activeURL) || (isset($child['selected_for_actions']) && in_array($activeAction, $child['selected_for_actions']));
-
-							// check if we should hide this action from the menu
-							if(isset($child['hide']) && $child['hide'] == true) continue;
-							
-							if($childSelected) $subHTML .= '<li class="selected">'."\n";
-							else $subHTML .= '<li>'."\n";
-
-							// add the link
-							$subHTML .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. ucfirst(BL::getLabel($child['label'], 'core')) .'</a>'."\n";
-
-							// end li
-							$subHTML .='</li>'."\n";
-						}
-					}
-
-					// close list
-					$subHTML .= '</ul>' . "\n";
-
-					// add to html
-					$html .= $subHTML;
-				}
-
-				// end li
-				$html .= '</li>'."\n";
+				$HTML .= '</li>'."\n";
 			}
 		}
 
-		// end html
-		$html .= '</ul>'."\n";
-
-		// return the generated html
-		return $html;
+		return $HTML;
 	}
 
 
@@ -182,129 +120,89 @@ class BackendNavigation
 	 * Get the HTML for the navigation
 	 *
 	 * @return	string
+	 * @param	int[optional] $startDepth	The start-depth.
+	 * @param	int[optional] $endDepth		The end-depth.
 	 */
-	public function getMainNavigation()
+	public function getNavigation($startDepth = 1, $endDepth = null)
 	{
-		// some modules shouldn't be showed in the main-navigation
-		$modulesToIgnore = array('settings');
-
-		// get selected keys, we need them for the selected state
-		$selectedKeys = (array) $this->getSelectedKeys();
+		// get selected
+		$selectedKeys = $this->getSelectedKeys();
 
 		// init html
-		$html = '<ul>'."\n";
+		$HTML = '<ul>'."\n";
 
-		// set active URL
-		$activeModule = $this->URL->getModule();
-		$activeAction = $this->URL->getAction();
-		$activeURL = $activeModule .'/'. $activeAction;
-
-		// build and return the HTML
-		foreach($this->navigation as $key => $level)
+		// loop the navigation elements
+		foreach($this->navigation as $key => $value)
 		{
-			// ignore some modules
-			if(in_array($key, $modulesToIgnore)) continue;
-
-			if($key == 'dashboard' || $key == 'pages')
-			{
-				// break URL into parts
-				$chunks = (array) explode('/', $level['url']);
-
-				// set first chunk
-				if(!isset($chunks[1])) $chunks[1] = '';
-
-				// is allowed?
-				if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
-				{
-					// open li-tag
-					if(in_array($key, $selectedKeys, true)) $html .= '<li class="selected">';
-					elseif(($chunks[0] == $activeModule && isset($level['selected_for_actions']) && in_array($activeAction, $level['selected_for_actions']))) $html .= '<li class="selected">';
-					elseif($level['url'] == $activeURL) $html .= '<li class="selected">';
-					else $html .= '<li>';
-
-					// add the link
-					$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $level['url'] .'">'. ucfirst(BL::getLabel($level['label'], 'core')) .'</a>';
-
-					// end li
-					$html .='</li>'."\n";
-				}
-
-				// if the active menu is 'settings', assign the option to set the selected state
-				if(in_array('settings', $selectedKeys, true)) Spoon::getObjectReference('template')->assign('oSettingsSelected', true);
-			}
-
-			// modules is a special one
-			else
-			{
-				if(!isset($level['children'])) continue;
-
-				// loop the childs
-				foreach($level['children'] as $child)
-				{
-					// no URL provided?
-					if($child['url'] === null && isset($child['children']))
-					{
-						// loop all childs till we find a valid one
-						foreach($child['children'] as $subChild)
-						{
-							// break URLs into parts
-							$chunks = (array) explode('/', $subChild['url']);
-
-							// set first chunk
-							if(!isset($chunks[1])) $chunks[1] = '';
-
-							// is allowed?
-							if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
-							{
-								// reset the child URL
-								$child['url'] = $subChild['url'];
-
-								// stop after we found the first one
-								break;
-							}
-						}
-					}
-
-					if($child['url'] == '') continue;
-
-					// break URL into parts
-					$chunks = (array) explode('/', $child['url']);
-
-					// set first chunk
-					if(!isset($chunks[1])) $chunks[1] = '';
-
-					// is allowed?
-					if(BackendAuthentication::isAllowedAction($chunks[1], $chunks[0]))
-					{
-						// open li-tag
-						if(in_array($key, $selectedKeys, true) || $child['url'] == $activeURL)
-						{
-							// settings is in the selected keys stack and the active submenu is modules, so we don't select this list item
-							if(in_array('settings', $selectedKeys, true) && $key == 'modules') $html .= '<li>';
-
-							// this item is selected
-							else $html .= '<li class="selected">';
-						}
-						else $html .= '<li>';
-
-						// add the link
-						$html .= '<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $child['url'] .'">'. $level['label'] .'</a>';
-
-						// end li
-						$html .='</li>'."\n";
-
-						// stop
-						break;
-					}
-				}
-			}
+			// append the generated HTML
+			$HTML .= $this->buildHTML($value, $key, $selectedKeys, $startDepth, $endDepth);
 		}
 
 		// end ul
-		$html .= '</ul>';
+		$HTML .= '</ul>';
 
-		// return
-		return $html;
+		// cleanup
+		$HTML = preg_replace('|<ul>(\s*)</ul>|iUs', '<ul>', $HTML);
+		$HTML = preg_replace('|<ul>(\s*)<ul>|iUs', '<ul>', $HTML);
+		$HTML = preg_replace('|</ul>(\s*)</ul>|iUs', '<ul>', $HTML);
+
+		// return the generated HTML
+		return $HTML;
+	}
+
+
+	/**
+	 * Try to determine the selected state
+	 *
+	 * @return	mixed
+	 * @param	array $value			The value.
+	 * @param	int $key				The key.
+	 * @param	array[optional] $keys	The previous marked keys.
+	 */
+	private function compareURL(array $value, $key, $keys = array())
+	{
+		// create active url
+		$activeURL = $this->URL->getModule() .'/'. $this->URL->getAction();
+
+		// add current key
+		$keys[] = $key;
+
+		// sub action?
+		if(isset($value['selected_for']) && in_array($activeURL, (array) $value['selected_for'])) return $keys;
+
+		// if the URL is available and same as the active one we have what we need.
+		if(isset($value['url']) && $value['url'] == $activeURL)
+		{
+			if(isset($value['children']))
+			{
+				// loop the childs
+				foreach($value['children'] as $key => $value)
+				{
+					// recursive here...
+					$subKeys = $this->compareURL($value, $key, $keys);
+
+					// wrap it up.
+					if(!empty($subKeys)) return $subKeys;
+				}
+			}
+
+			// fallback
+			return $keys;
+		}
+
+		// any children
+		if(isset($value['children']))
+		{
+			// loop the childs
+			foreach($value['children'] as $key => $value)
+			{
+				// recursive here...
+				$subKeys = $this->compareURL($value, $key, $keys);
+
+				// wrap it up.
+				if(!empty($subKeys)) return $subKeys;
+			}
+		}
 	}
 
 
@@ -315,123 +213,14 @@ class BackendNavigation
 	 */
 	private function getSelectedKeys()
 	{
-		// init var
-		$keys = array();
-		$actions = array();
-
-		// build the URL to search for
-		$activeModule = $this->URL->getModule();
-		$activeAction = $this->URL->getAction();
-		$activeURL = $activeModule .'/'. $activeAction;
-
-		// build an array so we can find out what submenu is used
-		foreach($this->navigation as $key => $level)
+		// loop navigation
+		foreach($this->navigation as $key => $value)
 		{
-			if(isset($level['children']))
-			{
-				foreach($level['children'] as $module => $child)
-				{
-					if(isset($child['children']))
-					{
-						foreach($child['children'] as $index => $grandchild)
-						{
-							if(!empty($grandchild['url']))
-							{
-								// split the URL so we know the module/action
-								$explodedURL = explode('/', $grandchild['url']);
+			// get the keys
+			$keys = $this->compareURL($value, $key, array());
 
-								// store the submenu for this module and action
-								$actions[$explodedURL[0]]['actions'][$explodedURL[1]] = $key;
-							}
-						}
-					}
-				}
-			}
-		}
-
-		// loop the first level
-		foreach($this->navigation as $key => $level)
-		{
-			// URL already known?
-			if($level['url'] == $activeURL) $keys[] = $key;
-
-			// has this level any children?
-			if(isset($level['children']))
-			{
-				// loop second level
-				foreach($level['children'] as $module => $child)
-				{
-					// init var
-					$selected = false;
-
-					// url and selected_for_actions are available?
-					if($child['url'] != '' && isset($child['selected_for_actions']))
-					{
-						// split url into chunks
-						$chunks = (array) explode('/', $child['url']);
-
-						// validate the chunks, and check if the module from the URL is the same as the active one
-						if(isset($chunks[0]) && $chunks[0] == $activeModule)
-						{
-							// loop actions wherefor this item should be selected
-							foreach((array) $child['selected_for_actions'] as $action)
-							{
-								// is the current URL is the same as the one for the sub-action?
-								if($activeURL == $activeModule .'/'. $action)
-								{
-									// this items should be selected
-									$selected = true;
-
-									// stop looking, we found it
-									break;
-								}
-							}
-						}
-					}
-
-					// add all keys if the URL is found
-					if($child['url'] == $activeURL || $module == $activeModule || $selected)
-					{
-						// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
-						if(isset($actions[$activeModule]['actions'][$activeAction]) && $actions[$activeModule]['actions'][$activeAction] == 'settings')
-						{
-							$keys[] = 'settings';
-							$keys[] = 'modules';
-						}
-
-						else
-						{
-							$keys[] = $key;
-							$keys[] = $module;
-						}
-					}
-
-					// has children?
-					if(isset($child['children']))
-					{
-						// loop third level
-						foreach($child['children'] as $subChild)
-						{
-							// URL found?
-							if($subChild['url'] == $activeURL || $module == $activeModule)
-							{
-								// if the action is a part of the submenu 'settings', we need to store the settings/modules keys
-								if(isset($actions[$activeModule]['actions'][$activeAction]) && $actions[$activeModule]['actions'][$activeAction] == 'settings')
-								{
-									$keys[] = 'settings';
-									$keys[] = 'modules';
-								}
-
-								else
-								{
-									$keys[] = $key;
-									$keys[] = $module;
-								}
-							}
-						}
-					}
-				}
-			}
+			// stop when we found something
+			if(!empty($keys)) break;
 		}
 
 		// return the selected keys

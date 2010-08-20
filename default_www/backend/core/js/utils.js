@@ -32,8 +32,6 @@ utils.array = {
 }
 
 
-
-
 /**
  * Object that contains some function related to cookies
  * 

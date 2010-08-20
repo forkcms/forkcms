@@ -4,12 +4,6 @@
 		<tr>
 			<td id="navigation">
 				{$var|getmainnavigation}
-				{* @todo move settings into mainnavigation *}
-				<li style="list-style: none;">
-					<a href="{$var|geturl:'index':'settings'}" class="icon iconSettings">
-						{$lblSettings|ucfirst}
-					</a>
-				</li>
 			</td>
 			<td id="user">
 				<ul>

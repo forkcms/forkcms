@@ -44,7 +44,7 @@ jsBackend.pages.extras = {
 			var value = $(this).val();
 			var id = $(this).attr('id').replace('blockExtraId', '');
 			jsBackend.pages.extras.changeExtra(value, id); 
-		})
+		});
 		
 		// initialize the modal for choosing an extra
 		if($('#chooseExtra').length > 0) {

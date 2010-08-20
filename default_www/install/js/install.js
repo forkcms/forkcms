@@ -1,30 +1,20 @@
-$(document).ready(function()
-{
-	/*
-	 * Step 1 - requirements
-	 */ 
-	$('a.toggleInformation').bind('click', function(evt)
-	{
+$(document).ready(function() {
+	// Step 1 - requirements
+	$('a.toggleInformation').bind('click', function(evt) {
 		evt.preventDefault();
 		$('#requirementsInformation').toggle();
 	});
 	
-	
-	/*
-	 * Step 3 - general settings (modules, languages, ...)
-	 */
-	if($('#languageTypeMultiple').is(':checked'))
-	{
+	// Step 3 - general settings (modules, languages, ...)
+	if($('#languageTypeMultiple').is(':checked')) {
 		$('#languages').show();
 		$('#defaultLanguageContainer').show();
 	}
 	if($('#languageTypeSingle').is(':checked')) $('#language').show();
 
 	// multiple languages
-	$('#languageTypeMultiple').bind('click', function()
-	{
-		if($('#languageTypeMultiple').is(':checked'))
-		{
+	$('#languageTypeMultiple').bind('click', function() {
+		if($('#languageTypeMultiple').is(':checked')) {
 			$('#languages').show();
 			$('#language').hide();
 			$('#defaultLanguageContainer').show();
@@ -32,10 +22,8 @@ $(document).ready(function()
 	});
 	
 	// single languages
-	$('#languageTypeSingle').bind('click', function()
-	{
-		if($('#languageTypeSingle').is(':checked'))
-		{
+	$('#languageTypeSingle').bind('click', function() {
+		if($('#languageTypeSingle').is(':checked')) {
 			$('#languages').hide();
 			$('#language').show();
 			$('#defaultLanguageContainer').hide();
@@ -43,23 +31,15 @@ $(document).ready(function()
 	});
 	
 	
-	/*
-	 * Step 5 - confirmation
-	 */
-	$('#showPassword').bind('change', function(evt)
-	{
+	// Step 5 - confirmation
+	$('#showPassword').bind('change', function(evt) {
 		evt.preventDefault();
 		
 		// show password
-		if($(this).is(':checked'))
-		{
+		if($(this).is(':checked')) {
 			$('#plainPassword').show();
 			$('#fakePassword').hide();
-		}
-		
-		// hide password
-		else
-		{
+		} else {
 			$('#plainPassword').hide();
 			$('#fakePassword').show();
 		}

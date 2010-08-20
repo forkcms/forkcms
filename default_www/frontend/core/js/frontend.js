@@ -1,6 +1,5 @@
-if(!jsFrontend) {
-	var jsFrontend = new Object();
-}
+if(!jsFrontend) { var jsFrontend = new Object(); }
+
 jsFrontend = {
 	// datamembers
 	debug: false,

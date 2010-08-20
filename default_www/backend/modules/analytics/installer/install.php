@@ -45,6 +45,8 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'analytics', 'settings');
 
 		// insert locale (nl)
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoReferrers', 'Er zijn nog geen statistieken van verwijzende sites.');
+
 		$this->insertLocale('nl', 'backend', 'analytics', 'err', 'AnalyseNoSessionToken', 'Er is nog geen Google analytics account gekoppeld. <a href="%1$s">Configureer</a>');
 		$this->insertLocale('nl', 'backend', 'analytics', 'err', 'AnalyseNoTableId', 'Er is nog geen analytics website profiel gekoppeld. <a href="%1$s">Configureer</a>');
 		$this->insertLocale('nl', 'backend', 'analytics', 'err', 'NoSessionToken', 'Er is nog geen Google account gekoppeld.');
@@ -104,6 +106,8 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'RemoveProfileLink', 'Verwijder de koppeling met uw Analytics website profiel');
 
 		// insert locale (en)
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoReferrers', 'There are no referrers yet.');
+
 		$this->insertLocale('en', 'backend', 'analytics', 'err', 'AnalyseNoSessionToken', 'There is no link with a Google analytics account yet. <a href="%1$s">Configure</a>');
 		$this->insertLocale('en', 'backend', 'analytics', 'err', 'AnalyseNoTableId', 'There is no link with an analytics website profile yet. <a href="%1$s">Configure</a>');
 		$this->insertLocale('en', 'backend', 'analytics', 'err', 'NoSessionToken', 'There is no link with a Google analytics account yet.');
