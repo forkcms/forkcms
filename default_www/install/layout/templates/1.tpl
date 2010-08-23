@@ -36,11 +36,11 @@
 
 					<div class="{$requirementsStatusError}">
 						<div class="formMessage errorMessage">
-							<p>Your server doesn't meet the minimum requirements to run Fork CMS. <a href="#" class="toggleInformation">More information...</a></p>
+							<p>Your server doesn't meet the minimum requirements to run Fork CMS.</p>
 						</div>
 					</div>
 
-					<div id="requirementsInformation" class="hidden">
+					<div id="requirementsInformation">
 						<h3>PHP version <span class="{$phpVersion}">{$phpVersionStatus}</span></h3>
 						<p>We require at least PHP 5.2</p>
 

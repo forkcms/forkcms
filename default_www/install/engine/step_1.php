@@ -39,10 +39,8 @@ class InstallerStep1 extends InstallerStep
 		// no errors detected
 		else
 		{
-			// button
-			$variables['nextButton'] = '<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />';
-			$variables['requirementsStatusError'] = 'hidden';
-			$variables['requirementsStatusOK'] = '';
+			header('Location: index.php?step=2');
+			exit;
 		}
 
 		// set paths for template
