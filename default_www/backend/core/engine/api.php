@@ -52,6 +52,48 @@ class BackendCoreAPI
 		// return the key
 		return array('api_key' => $user->getSetting('api_key'));
 	}
+
+
+	/**
+	 * Get info about the site
+	 *
+	 * @return	array
+	 * @param	array $args		The parameters provided.
+	 */
+	public static function getInfo()
+	{
+		if(API::authorize())
+		{
+			// init
+			$return = array();
+
+			// get all languages
+			$languages = BackendLanguage::getActiveLanguages();
+			$default = BackendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
+
+			// loop languages
+			foreach($languages as $lang)
+			{
+				// create array
+				$var = array();
+
+				// set attributes
+				$var['lang']['@attributes']['lang'] = $lang;
+				if($lang == $default) $var['lang']['@attributes']['is_default'] = 'true';
+
+				// set attributes
+				$var['lang']['title'] = BackendModel::getModuleSetting('core', 'site_title_'. $lang);
+				$var['lang']['url'] = SITE_URL .'/'. $lang;
+
+				// add
+				$return['languages'][] = $var;
+			}
+
+			// return
+			return $return;
+		}
+	}
+
 }
 
 ?>

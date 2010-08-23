@@ -122,6 +122,31 @@ class BackendBlogAPI
 		}
 	}
 
+
+	/**
+	 * Update the status for multiple comments at once.
+	 *
+	 * @return	void
+	 * @param	array $id		The id/ids of the comment(s) to update.
+	 * @param	string $status	The new status for the comment. Possible values are: published, moderation, spam.
+	 */
+	public static function commentsUpdateStatus($id, $status)
+	{
+		// authorize
+		if(API::authorize())
+		{
+			// redefine
+			if(!is_array($id)) $id = array($id);
+			$status = (string) $status;
+
+			// update statuses
+			BackendBlogModel::updateCommentStatuses($id, $status);
+
+			// return
+			return;
+		}
+	}
+
 }
 
 ?>
