@@ -49,10 +49,7 @@ class FrontendForm extends SpoonForm
 		$useToken = (bool) $useToken;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/'. $this->URL->getQueryString() : (string) $action;
-
-		// append hash
-		if($hash !== null) $action .= '#'. $hash;
+		$action = ($action === null) ? '/'. str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);
@@ -92,10 +89,10 @@ class FrontendForm extends SpoonForm
 	 * Adds a single checkbox.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	bool[optional] $checked
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name of the element.
+	 * @param	bool[optional] $checked			Should the checkbox be checked?
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
 	public function addCheckbox($name, $checked = false, $class = null, $classError = null)
 	{
@@ -112,7 +109,6 @@ class FrontendForm extends SpoonForm
 
 	/**
 	 * Adds a datefield to the form
-	 * a datepicker will be available by default.
 	 *
 	 * @return	SpoonDateField
 	 * @param	string $name					Name of the element
@@ -191,12 +187,12 @@ class FrontendForm extends SpoonForm
 	 * Adds a single dropdown.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	array $values
-	 * @param	string[optional] $selected
-	 * @param	bool[optional] $multipleSelection
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name						Name of the element.
+	 * @param	array $values						Values for the dropdown
+	 * @param	string[optional] $selected			The selected elements.
+	 * @param	bool[optional] $multipleSelection	Is it possible to select multiple items?
+	 * @param	string[optional] $class				Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError		Class(es) that will be applied on the element when an error occurs.
 	 */
 	public function addDropdown($name, array $values, $selected = null, $multipleSelection = false, $class = null, $classError = null)
 	{
@@ -224,9 +220,9 @@ class FrontendForm extends SpoonForm
 	 * Adds a single file field.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					Name of the element.
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
 	public function addFile($name, $class = null, $classError = null)
 	{
@@ -244,9 +240,9 @@ class FrontendForm extends SpoonForm
 	 * Adds a single image field.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name of the element.
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
 	public function addImage($name, $class = null, $classError = null)
 	{
@@ -261,21 +257,21 @@ class FrontendForm extends SpoonForm
 
 
 	/**
-	 * Adds a single multiple checkbox.
+	 * Adds a multiple checkbox.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	array $values
-	 * @param	bool[optional] $checked
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name of the element.
+	 * @param	array $values					The values for the checkboxes.
+	 * @param	bool[optional] $checked			Should the checkboxes be checked?
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
 	public function addMultiCheckbox($name, array $values, $checked = null, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;
 		$values = (array) $values;
-		$checked = ($checked !== null) ? (bool) $checked : null;
+		$checked = ($checked !== null) ? (array) $checked : null;
 		$class = ($class !== null) ? (string) $class : 'inputCheckbox';
 		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
 
@@ -288,12 +284,12 @@ class FrontendForm extends SpoonForm
 	 * Adds a single password field.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	int[optional] $maxlength
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @param	string $name					The name of the field.
+	 * @param	string[optional] $value			The value for the field.
+	 * @param	int[optional] $maxlength		The maximum length for the field.
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
+	 * @param	bool[optional] $HTML			Will the field contain HTML?
 	 */
 	public function addPassword($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
 	{
@@ -314,11 +310,11 @@ class FrontendForm extends SpoonForm
 	 * Adds a single radiobutton.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	array $values
-	 * @param	string[optional] $checked
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name of the element
+	 * @param	array $values					The possible values for the radiobutton
+	 * @param	string[optional] $checked		Should the element be checked?
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
 	public function addRadiobutton($name, array $values, $checked = null, $class = null, $classError = null)
 	{
@@ -338,11 +334,11 @@ class FrontendForm extends SpoonForm
 	 * Adds a single textarea.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @param	string $name					The name of the element.
+	 * @param	string[optional] $value			The value inside the element.
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
+	 * @param	bool[optional] $HTML			Will the element contain HTML?
 	 */
 	public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
 	{
@@ -362,14 +358,14 @@ class FrontendForm extends SpoonForm
 	 * Adds a single textfield.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	int[optional] $maxlength
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @param	string $name					The name of the element.
+	 * @param	string[optional] $value			The value inside the element.
+	 * @param	int[optional] $maxlength		The maximum length for the value.
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
+	 * @param	bool[optional] $HTML			Will this element contain HTML?
 	 */
-	public function addText($name, $value = null, $maxlength = null, $class = null, $classError = null, $HTML = false)
+	public function addText($name, $value = null, $maxlength = 255, $class = null, $classError = null, $HTML = false)
 	{
 		// redefine
 		$name = (string) $name;
@@ -388,10 +384,10 @@ class FrontendForm extends SpoonForm
 	 * Adds a single timefield.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name of the element.
+	 * @param	string[optional] $value			The value inside the element.
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
 	public function addTime($name, $value = null, $class = null, $classError = null)
 	{
