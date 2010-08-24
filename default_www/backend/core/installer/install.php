@@ -607,11 +607,11 @@ class CoreInstall extends ModuleInstaller
 		// @todo davy - scorcese als default theme
 
 		// validate variables
-		if($this->getVariable('default_language') === null) throw new SpoonException('Not all required variables were provided.');
-		if($this->getVariable('site_domain') === null) throw new SpoonException('Not all required variables were provided.');
-		if($this->getVariable('spoon_debug_email') === null) throw new SpoonException('Not all required variables were provided.');
-		if($this->getVariable('api_email') === null) throw new SpoonException('Not all required variables were provided.');
-		if($this->getVariable('site_title') === null) throw new SpoonException('Not all required variables were provided.');
+		if($this->getVariable('default_language') === null) throw new SpoonException('Default language is not provided.');
+		if($this->getVariable('site_domain') === null) throw new SpoonException('Site domain is not provided.');
+		if($this->getVariable('spoon_debug_email') === null) throw new SpoonException('Spoon debug email is not provided.');
+		if($this->getVariable('api_email') === null) throw new SpoonException('API email is not provided.');
+		if($this->getVariable('site_title') === null) throw new SpoonException('Site title is not provided.');
 
 		// import SQL
 		$this->importSQL(PATH_WWW .'/backend/core/installer/install.sql');
