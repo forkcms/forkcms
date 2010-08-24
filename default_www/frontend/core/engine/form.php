@@ -262,7 +262,7 @@ class FrontendForm extends SpoonForm
 	 * @return	void
 	 * @param	string $name					The name of the element.
 	 * @param	array $values					The values for the checkboxes.
-	 * @param	bool[optional] $checked			Should the checkboxes be checked?
+	 * @param	array[optional] $checked			Should the checkboxes be checked?
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
