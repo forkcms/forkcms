@@ -2,20 +2,6 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 jsBackend.dashboard = {
 	init: function() {
-		// make the call to check the status
-		$.ajax({
-			timeout: 5000, 
-			url: '/backend/ajax.php?module=analytics&action=get_traffic_sources&language=' + jsBackend.current.language,
-			success: function(data, textStatus) {
-				$('#loading').hide();
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-				$('#loading').hide();
-				// alert the user
-				if(jsBackend.debug) alert(textStatus);
-			}
-		});
-
 		$('#refreshTrafficSources').bind('click', function () {
 			// disable button
 			$('#refreshTrafficSources').addClass('disabledButton');

@@ -170,7 +170,7 @@ class GoogleAnalytics
 	/**
 	 * Get all website profiles and their account(s).
 	 *
-	 * @return	array
+	 * @return	mixed
 	 * @param	string $sessionToken	The session token to get accounts from.
 	 */
 	public function getAnalyticsAccountList($sessionToken)
@@ -181,8 +181,14 @@ class GoogleAnalytics
 		// catch possible exception
 		catch(Exception $e) { return array(); }
 
+		// unauthorized
+		if($response == 'UNAUTHORIZED') return $response;
+
 		// load with SimpleXML
-		$simpleXML = simplexml_load_string(str_replace(array('dxp:', 'openSearch:', 'ga:'), '', $response));
+		$simpleXML = @simplexml_load_string(str_replace(array('dxp:', 'openSearch:', 'ga:'), '', $response));
+
+		// something went wrong
+		if(!isset($simpleXML->entry)) return 'ERROR';
 
 		// init vars
 		$i = 0;
@@ -210,7 +216,7 @@ class GoogleAnalytics
 		}
 
 		// return the profiles
-		return $profiles;
+		return (array) $profiles;
 	}
 
 

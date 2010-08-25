@@ -38,9 +38,42 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		// parse
 		$this->parse();
 
+		// get data
+		$this->getData();
+
 		// display
 		$this->display();
 	}
+
+
+	/**
+	 * Parse into template
+	 *
+	 * @return	void
+	 */
+	private function getData()
+	{
+		// build url
+		$URL = SITE_URL .'/backend/cronjob.php?module=analytics&action=get_traffic_sources&id=2';
+
+		// set options
+		$options = array();
+		$options[CURLOPT_URL] = $URL;
+		$options[CURLOPT_FOLLOWLOCATION] = true;
+		$options[CURLOPT_RETURNTRANSFER] = true;
+		$options[CURLOPT_TIMEOUT] = 1;
+
+		// init
+		$curl = curl_init();
+
+		// set options
+		curl_setopt_array($curl, $options);
+
+		// execute
+		curl_exec($curl);
+
+		// close
+		curl_close($curl);	}
 
 
 	/**
@@ -92,7 +125,7 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		$timestamp = mktime(0, 0, 0, substr($date, 5, 2), substr($date, 8, 2), substr($date, 0, 4));
 
 		// assign date label
-		$this->tpl->assign('analyticsTrafficSourcesDate', ($date != date('Y-m-d') ? BackendModel::getUTCDate('d/m/Y', $timestamp) : BL::getLabel('Today')));
+		$this->tpl->assign('analyticsTrafficSourcesDate', ($date != date('Y-m-d') ? BackendModel::getUTCDate('d-m', $timestamp) : BL::getLabel('Today')));
 	}
 
 

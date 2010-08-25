@@ -35,7 +35,7 @@ class BackendAnalyticsModel
 	 *
 	 * @var	array
 	 */
-	private static $data = array();
+	private static $data = array(), $dashboardData = array();
 
 
 	/**
@@ -258,6 +258,38 @@ class BackendAnalyticsModel
 
 
 	/**
+	 * Fetch dashboard data grouped by day
+	 *
+	 * @return	array
+	 * @param	array $metrics					The metrics to collect.
+	 * @param	int $startTimestamp				The start timestamp for the cache file.
+	 * @param	int $endTimestamp				The end timestamp for the cache file.
+	 * @param	bool[optional] $forceCache		Should the data be forced from cache.
+	 */
+	public static function getDashboardData(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
+	{
+		return self::getDataFromCacheByType('dashboard_data', $startTimestamp, $endTimestamp);
+	}
+
+
+	/**
+	 * Get dashboard data from the cache
+	 *
+	 * @return	array
+	 * @param	int $startTimestamp		The start timestamp for the cache file.
+	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 */
+	public static function getDashboardDataFromCache($startTimestamp, $endTimestamp)
+	{
+		// doesnt exist in cache - load cache xml file
+		if(!isset(self::$dashboardData) || empty(self::$dashboardData)) self::$dashboardData = self::getCacheFile($startTimestamp, $endTimestamp);
+
+		// return data
+		return self::$dashboardData;
+	}
+
+
+	/**
 	 * Get data from the cache
 	 *
 	 * @return	array
@@ -271,21 +303,6 @@ class BackendAnalyticsModel
 
 		// return data
 		return self::$data;
-	}
-
-
-	/**
-	 * Fetch dashboard data grouped by day
-	 *
-	 * @return	array
-	 * @param	array $metrics					The metrics to collect.
-	 * @param	int $startTimestamp				The start timestamp for the cache file.
-	 * @param	int $endTimestamp				The end timestamp for the cache file.
-	 * @param	bool[optional] $forceCache		Should the data be forced from cache.
-	 */
-	public static function getDashboardData(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
-	{
-		return self::getDataFromCacheByType('dashboard_data', $startTimestamp, $endTimestamp);
 	}
 
 

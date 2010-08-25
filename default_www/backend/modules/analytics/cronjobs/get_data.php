@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsGetData
+ * BackendAnalyticsCronjobGetData
  *
  * @package		backend
  * @subpackage	analytics
@@ -152,7 +152,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			$endTimestamp = mktime(0, 0, 0);
 
 			// get data from cache
-			$data = BackendAnalyticsModel::getDataFromCache($startTimestamp, $endTimestamp);
+			$data = BackendAnalyticsModel::getDashboardDataFromCache($startTimestamp, $endTimestamp);
 
 			// nothing in cache - fetch from google and set cache
 			if(!isset($data['dashboard_data'])) $data['dashboard_data']['entries'] = BackendAnalyticsHelper::getDashboardData($startTimestamp, $endTimestamp);

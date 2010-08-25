@@ -138,32 +138,43 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$ga = BackendAnalyticsHelper::getGoogleAnalyticsInstance();
 
 			// get all possible profiles in this account
-			$this->profiles = (array) $ga->getAnalyticsAccountList($this->sessionToken);
+			$this->profiles = $ga->getAnalyticsAccountList($this->sessionToken);
 
-			// get table id
-			$tableId = SpoonFilter::getGetValue('table_id', null, null);
-
-			// a table id is given in the get parameters
-			if(isset($tableId))
+			// something went wrong using the given session
+			if(!is_array($this->profiles))
 			{
-				// init vars
-				$profiles = array();
+				// remove invalid session token
+				BackendModel::setModuleSetting('analytics', 'session_token', null);
+			}
 
-				// set the table ids as keys
-				foreach($this->profiles as $profile) $profiles[$profile['tableId']] = $profile;
+			// everything went fine
+			else
+			{
+				// get table id
+				$tableId = SpoonFilter::getGetValue('table_id', null, null);
 
-				// correct table id
-				if(isset($profiles[$tableId]))
+				// a table id is given in the get parameters
+				if(isset($tableId))
 				{
-					// save table id and account title
-					$this->tableId = $tableId;
-					$this->accountName = $profiles[$this->tableId]['accountName'];
-					$this->profileTitle = $profiles[$this->tableId]['title'];
+					// init vars
+					$profiles = array();
 
-					// store the table id and account title in the settings
-					BackendModel::setModuleSetting('analytics', 'account_name', $this->accountName);
-					BackendModel::setModuleSetting('analytics', 'table_id', $this->tableId);
-					BackendModel::setModuleSetting('analytics', 'profile_title', $this->profileTitle);
+					// set the table ids as keys
+					foreach($this->profiles as $profile) $profiles[$profile['tableId']] = $profile;
+
+					// correct table id
+					if(isset($profiles[$tableId]))
+					{
+						// save table id and account title
+						$this->tableId = $tableId;
+						$this->accountName = $profiles[$this->tableId]['accountName'];
+						$this->profileTitle = $profiles[$this->tableId]['title'];
+
+						// store the table id and account title in the settings
+						BackendModel::setModuleSetting('analytics', 'account_name', $this->accountName);
+						BackendModel::setModuleSetting('analytics', 'table_id', $this->tableId);
+						BackendModel::setModuleSetting('analytics', 'profile_title', $this->profileTitle);
+					}
 				}
 			}
 		}
