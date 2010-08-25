@@ -389,7 +389,7 @@ class BackendTemplateModifiers
 		$format = BackendAuthentication::getUser()->getSetting('date_format');
 
 		// format the date
-		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getWorkingLanguage());
+		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
 	}
 
 
@@ -406,7 +406,7 @@ class BackendTemplateModifiers
 		$format = BackendAuthentication::getUser()->getSetting('datetime_format');
 
 		// format the date
-		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getWorkingLanguage());
+		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
 	}
 
 
@@ -423,7 +423,7 @@ class BackendTemplateModifiers
 		$format = BackendAuthentication::getUser()->getSetting('time_format');
 
 		// format the date
-		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getWorkingLanguage());
+		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
 	}
 
 
