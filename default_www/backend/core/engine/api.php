@@ -131,18 +131,18 @@ class BackendCoreAPI
 			$default = BackendModel::getModuleSetting('core', 'default_language', SITE_DEFAULT_LANGUAGE);
 
 			// loop languages
-			foreach($languages as $lang)
+			foreach($languages as $language)
 			{
 				// create array
 				$var = array();
 
 				// set attributes
-				$var['lang']['@attributes']['lang'] = $lang;
-				if($lang == $default) $var['lang']['@attributes']['is_default'] = 'true';
+				$var['language']['@attributes']['language'] = $language;
+				if($language == $default) $var['language']['@attributes']['is_default'] = 'true';
 
 				// set attributes
-				$var['lang']['title'] = BackendModel::getModuleSetting('core', 'site_title_'. $lang);
-				$var['lang']['url'] = SITE_URL .'/'. $lang;
+				$var['language']['title'] = BackendModel::getModuleSetting('core', 'site_title_'. $language);
+				$var['language']['url'] = SITE_URL .'/'. $language;
 
 				// add
 				$return['languages'][] = $var;
