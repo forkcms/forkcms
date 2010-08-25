@@ -5,7 +5,7 @@
 	<h2>{$lblGeneralSettings|ucfirst}</h2>
 </div>
 
-{form:settings}
+{form:settingsEmail}
 	<div class="box">
 		<div class="heading">
 			<h3>{$lblEmail|ucfirst}</h3>
@@ -80,7 +80,7 @@
 			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
-{/form:settings}
+{/form:settingsEmail}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

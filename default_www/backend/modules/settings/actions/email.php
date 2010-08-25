@@ -51,7 +51,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('settings');
+		$this->frm = new BackendForm('settingsEmail');
 
 		// email settings
 		$mailerType = BackendModel::getModuleSetting('core', 'mailer_type', 'mail');

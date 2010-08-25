@@ -5,7 +5,7 @@
 	<h2>{$lblGeneralSettings|ucfirst}</h2>
 </div>
 
-{form:settings}
+{form:settingsIndex}
 	{option:warnings}
 		<div class="generalMessage infoMessage content">
 			<p><strong>{$msgConfigurationError}</strong></p>
@@ -145,7 +145,7 @@
 			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
-{/form:settings}
+{/form:settingsIndex}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

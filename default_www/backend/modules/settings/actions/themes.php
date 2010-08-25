@@ -51,7 +51,7 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('settings');
+		$this->frm = new BackendForm('settingsThemes');
 
 		// theme
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', null));

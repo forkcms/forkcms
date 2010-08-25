@@ -72,7 +72,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$defaultDomains = array(str_replace(array('http://', 'www.', 'https://'), '', SITE_URL));
 
 		// create form
-		$this->frm = new BackendForm('settings');
+		$this->frm = new BackendForm('settingsIndex');
 
 		// general settings
 		$this->frm->addText('site_title', BackendModel::getModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
