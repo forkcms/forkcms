@@ -244,16 +244,13 @@ class BackendUsersModel
 
 		// update user
 		$userId = (int) $db->insert('users', $user);
+		$userSettings = array();
 
 		// loop settings
-		foreach($settings as $key => $value)
-		{
-			// insert or update
-			$db->execute('INSERT INTO users_settings(user_id, name, value)
-							VALUES(?, ?, ?)
-							ON DUPLICATE KEY UPDATE value = ?;',
-							array($userId, $key, serialize($value), serialize($value)));
-		}
+		foreach($settings as $key => $value) $userSettings[] = array('user_id' => $userId, 'name' => $key, 'value' => serialize($value));
+
+		// insert all settings at once
+		$db->insert('users_settings', $userSettings);
 
 		// return the new users' id
 		return $userId;

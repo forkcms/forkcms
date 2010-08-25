@@ -270,6 +270,111 @@ class FrontendModel
 
 
 	/**
+	 * Push a notification to Apple's notifications-server
+	 *
+	 * @return	void
+	 * @param	mixed $alert						The message/dictonary to send.
+	 * @param	int[optional] $badge				The number for the badge
+	 * @param	string[optional] $sound				The sound that should be played
+	 * @param 	array[optional] $extraDictionaries	Extra dictionaries
+	 */
+	public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
+	{
+		// get ForkAPI-keys
+		$publicKey = FrontendModel::getModuleSetting('core', 'fork_api_public_key', '');
+		$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+
+		// validate keys
+		if($publicKey != '' && $privateKey != '')
+		{
+			// get all Apple-device tokens
+			$deviceTokens = (array) FrontendModel::getDB()->getColumn('SELECT s.value
+																		FROM users AS i
+																		INNER JOIN users_settings AS s
+																		WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?;',
+																		array('Y', 'N', 'apple_device_token', 'N;'));
+
+			// any devices?
+			if(!empty($deviceTokens))
+			{
+				// init var
+				$tokens = array();
+
+				// loop devices
+				foreach($deviceTokens as $row)
+				{
+					// unserialize
+					$row = unserialize($row);
+
+					// loop and add
+					foreach($row as $item) $tokens[] = $item;
+				}
+
+				// any tokens?
+				if(!empty($tokens))
+				{
+					// require the class
+					require_once PATH_LIBRARY .'/external/fork_api.php';
+
+					// create instance
+					$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+					try
+					{
+						// push
+						$response = $forkAPI->applePush($tokens, $alert, $badge, $sound, $extraDictionaries);
+
+						if(!empty($response))
+						{
+							// get db
+							$db = FrontendModel::getDB(true);
+
+							// loop the failed keys and remove them
+							foreach($response as $deviceToken)
+							{
+								// get setting wherin the token is available
+								$row = $db->getRecord('SELECT i.*
+														FROM users_settings AS i
+														WHERE i.name = ? AND i.value LIKE ?;',
+														array('apple_device_token', '%'. $deviceToken .'%'));
+
+								// any rows?
+								if(!empty($row))
+								{
+									// reset data
+									$data = unserialize($row['value']);
+
+									// loop keys
+									foreach($data as $key => $token)
+									{
+										// match and unset if needed.
+										if($token == $deviceToken) unset($data[$key]);
+									}
+
+									// no more tokens left?
+									if(empty($data)) $db->delete('users_settings', 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
+
+									// save
+									else $db->update('users_settings', array('value' => serialize($data)), 'user_id = ? AND name = ?', array($row['user_id'], $row['name']));
+								}
+							}
+
+						}
+					}
+
+					// catch exceptions
+					catch(Exception $e)
+					{
+						if(SPOON_DEBUG) throw $e;
+					}
+				}
+			}
+		}
+
+	}
+
+
+	/**
 	 * Store a modulesetting
 	 *
 	 * @return	void

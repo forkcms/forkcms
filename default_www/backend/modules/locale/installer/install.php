@@ -490,7 +490,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Add', 'add');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AddCategory', 'add category');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AddTemplate', 'add template');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Advanced', 'addvanced');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Advanced', 'advanced');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllComments', 'all comments');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllowComments', 'allow comments');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllPages', 'all pages');

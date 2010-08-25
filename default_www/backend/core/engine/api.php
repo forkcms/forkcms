@@ -13,10 +13,70 @@
 class BackendCoreAPI
 {
 	/**
-	 * Get the API-key for a user
+	 * Add a device to a user.
+	 *
+	 * @return	void
+	 * @param	string $token	The token of the device.
+	 * @param	string $email	The emailaddress for the user to link the device to.
+	 */
+	public static function appleAdddevice($token, $email)
+	{
+		// authorized?
+		if(API::authorize())
+		{
+			// redefine
+			$token = str_replace(' ', '', (string) $token);
+
+			// validate
+			if($token == '') API::output(API::BAD_REQUEST, array('message' => 'No token-parameter provided.'));
+			if($email == '') API::output(API::BAD_REQUEST, array('message' => 'No email-parameter provided.'));
+
+			// we should tell the ForkAPI that we registered a device
+			$publicKey = BackendModel::getModuleSetting('core', 'fork_api_public_key', '');
+			$privateKey = FrontendModel::getModuleSetting('core', 'fork_api_private_key', '');
+
+			// validate keys
+			if($publicKey == '' || $privateKey == '') API::output(API::BAD_REQUEST, array('message' => 'Invalid key for the Fork API, configer them in the backend.'));
+
+			try
+			{
+				// load user
+				$user = new BackendUser(null, $email);
+
+				// get current tokens
+				$tokens = (array) $user->getSetting('apple_device_token');
+
+				// not already in array?
+				if(!in_array($token, $tokens)) $tokens[] = $token;
+
+				// require the class
+				require_once PATH_LIBRARY .'/external/fork_api.php';
+
+				// create instance
+				$forkAPI = new ForkAPI($publicKey, $privateKey);
+
+				// make the call
+				$forkAPI->appleRegisterDevice($token);
+
+				// store
+				if(!empty($tokens)) $user->setSetting('apple_device_token', $tokens);
+			}
+
+			// catch exceptions
+			catch(Exception $e)
+			{
+				API::output(API::FORBIDDEN, array('message' => 'Can\'t authenticate you.'));
+			}
+		}
+	}
+
+
+	/**
+	 * Get the API-key for a user.
 	 *
 	 * @return	array
-	 * @param	array $args		The parameters provided.
+	 * @param	string $email		The emailaddress for the user.
+	 * @param	string $password	The password for the user.
 	 */
 	public static function getAPIKey($email, $password)
 	{
@@ -55,10 +115,9 @@ class BackendCoreAPI
 
 
 	/**
-	 * Get info about the site
+	 * Get info about the site.
 	 *
 	 * @return	array
-	 * @param	array $args		The parameters provided.
 	 */
 	public static function getInfo()
 	{
@@ -93,7 +152,6 @@ class BackendCoreAPI
 			return $return;
 		}
 	}
-
 }
 
 ?>

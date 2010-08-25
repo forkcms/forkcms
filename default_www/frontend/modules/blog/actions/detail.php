@@ -311,12 +311,15 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				}
 
 				// insert comment
-				$commentId = FrontendBlogModel::insertComment($comment);
+				$comment['id'] = FrontendBlogModel::insertComment($comment);
 
 				// append a parameter to the URL so we can show moderation
 				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
 				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
-				if($comment['status'] == 'published') $redirectLink .= '?comment=true#'. FL::getAction('Comment') .'-'. $commentId;
+				if($comment['status'] == 'published') $redirectLink .= '?comment=true#'. FL::getAction('Comment') .'-'. $comment['id'];
+
+				// notify the admin
+				FrontendBlogModel::notifyAdmin($comment);
 
 				// store timestamp in session so we can block excesive usage
 				SpoonSession::set('blog_comment_'. $this->record['id'], time());

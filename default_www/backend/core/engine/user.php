@@ -171,7 +171,10 @@ class BackendUser
 	 */
 	public static function getSettingByUserId($userId, $setting)
 	{
-		return @unserialize(BackendModel::getDB()->getVar('SELECT value FROM users_settings WHERE user_id = ? AND name = ?;', array((int) $userId, (string) $setting)));
+		return @unserialize(BackendModel::getDB()->getVar('SELECT value
+															FROM users_settings
+															WHERE user_id = ? AND name = ?;',
+															array((int) $userId, (string) $setting)));
 	}
 
 

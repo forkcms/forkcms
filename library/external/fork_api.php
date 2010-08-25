@@ -97,15 +97,15 @@ class ForkAPI
 	 * @param	string $url
 	 * @param	array[optional] $aParameters
 	 */
-	private function doCall($method, $aParameters = array(), $authenticate = true)
+	private function doCall($method, $parameters = array(), $authenticate = true, $usePOST = false)
 	{
 		// redefine
 		$method = (string) $method;
-		$aParameters = (array) $aParameters;
+		$parameters = (array) $parameters;
 		$authenticate = (bool) $authenticate;
 
 		// add required parameters
-		$aParameters['method'] = (string) $method;
+		$queryStringParameters['method'] = (string) $method;
 
 		// authentication stuff
 		if($authenticate)
@@ -118,22 +118,36 @@ class ForkAPI
 			if($publicKey == '' || $privateKey == '') throw new ForkAPIException('This method ('. $method .') requires authentication, provide a public and private key.');
 
 			// add prams
-			$aParameters['public_key'] = $publicKey;
-			$aParameters['nonce'] = time();
-			$aParameters['secret'] = md5($publicKey . $privateKey . $aParameters['nonce']);
+			$queryStringParameters['public_key'] = $publicKey;
+			$queryStringParameters['nonce'] = time();
+			$queryStringParameters['secret'] = md5($publicKey . $privateKey . $queryStringParameters['nonce']);
 		}
 
-		// init var
-		$queryString = '';
+		// build URL
+		$url = self::API_URL .'/'. self::API_VERSION .'/rest.php?'. http_build_query($queryStringParameters);
 
-		// loop parameters and add them to the queryString
-		foreach($aParameters as $key => $value) $queryString .= '&'. $key .'='. urlencode(utf8_encode($value));
+		// use POST?
+		if($usePOST)
+		{
+			// set POST
+			$options[CURLOPT_POST] = true;
 
-		// cleanup querystring
-		$queryString = trim($queryString, '&');
+			// add data if needed
+			if(!empty($parameters)) $options[CURLOPT_POSTFIELDS] = array('data' => json_encode($parameters));
+		}
 
-		// prepend
-		$url = self::API_URL .'/'. self::API_VERSION .'/rest.php?'. $queryString;
+		else
+		{
+			// any data if needed
+			if(!empty($parameters))
+			{
+				// build querystring
+				$queryString = http_build_query(array('data' => json_encode($parameters)));
+
+				// prepend
+				$url .= '&'. $queryString;
+			}
+		}
 
 		// set options
 		$options[CURLOPT_URL] = $url;
@@ -277,7 +291,6 @@ class ForkAPI
 
 
 // core methods
-
 	/**
 	 * Request public private key-pair
 	 *
@@ -310,9 +323,67 @@ class ForkAPI
 	}
 
 
+// apple methods
+	/**
+	 * Push a notification to apple
+	 *
+	 * @return	array								The device tokens that aren't valid.
+	 * @param	string $deviceToken					The device token for the receiver.
+	 * @param	mixed $alert						The message/dictonary to send.
+	 * @param	int[optional] $badge				The number for the badge
+	 * @param	string[optional] $sound				The sound that should be played
+	 * @param 	array[optional] $extraDictionaries	Extra dictionaries
+	 */
+	public function applePush($deviceToken, $alert, $badge = null, $sound = null, array $extraDictionaries = null)
+	{
+		// build parameters
+		$parameters['device_token'] = $deviceToken;
+		$parameters['alert'] = $alert;
+		if($badge !== null) $parameters['badge'] = (int) $badge;
+		if($sound !== null) $parameters['sound'] = (string) $sound;
+		if($extraDictionaries !== null) $parameters['extra_dictionaries'] = $extraDictionaries;
+
+		// make the call
+		$response = $this->doCall('apple.push', $parameters, true, true);
+
+		// validate
+		if(!isset($response->failed_device_tokens)) throw new ForkAPIException('Invalid XML-response.');
+
+		// init var
+		$return = array();
+
+		// available devices?
+		if(isset($response->failed_device_tokens->device))
+		{
+			// loop and add to return
+			foreach($response->failed_device_tokens->device as $device) $return[] = (string) $device['token'];
+		}
+
+		// return
+		return $return;
+	}
+
+
+	/**
+	 * Register a new/old device within the Fork API
+	 *
+	 * @return	bool
+	 * @param	string $deviceToken		The device token to register.
+	 */
+	public function appleRegisterDevice($deviceToken)
+	{
+		// build parameters
+		$parameters['device_token'] = str_replace(' ', '', (string) $deviceToken);
+
+		// make the call
+		$this->doCall('apple.registerDevice', $parameters, true, true);
+
+		// return
+		return true;
+	}
+
 
 // message methods
-
 	/**
 	 * Get messages from the server
 	 *

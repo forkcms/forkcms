@@ -528,6 +528,39 @@ class FrontendBlogModel
 
 
 	/**
+	 * Notify the admin
+	 *
+	 * @return	void
+	 * @param	array $comment	The comment that was submitted.
+	 */
+	public static function notifyAdmin(array $comment)
+	{
+		// don't notify admin in case of spam
+		if($comment['status'] == 'spam') return;
+
+		// build data for pushnotification
+		if($comment['status'] == 'moderation') $alert = array('loc-key' => 'NEW_COMMENT_TO_MODERATE');
+		else $alert = array('loc-key' => 'NEW_COMMENT');
+
+		// get count of unmoderated items
+		$badge = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id)
+														FROM blog_comments AS i
+														WHERE i.status = ?
+														GROUP BY i.status;',
+														array('moderation'));
+
+		// reset if needed
+		if($badge == 0) $badge = null;
+
+		// build data
+		$data = array('data' => array('endpoint' => SITE_URL .'/api/1.0', 'comment_id' => $comment['id']));
+
+		// push it
+		FrontendModel::pushToAppleApp($alert, $badge, null, $data);
+	}
+
+
+	/**
 	 * Inserts a new comment
 	 *
 	 * @return	int
