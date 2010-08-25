@@ -27,9 +27,9 @@
 					{$txtMessage} {$txtMessageError}
 				</p>
 			</div>
-			<div class="options">
+			<div class="spacing">
 				<p>
-					<input id="send" class="inputButton button mainButton" type="submit" name="send" value="{$lblSend|ucfirst}" />
+					<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSend|ucfirst}" />
 				</p>
 			</div>
 		</div>
