@@ -8,7 +8,7 @@
 				</a>
 			</li>
 		{/iteration:footerLinks}
-		<li><a href="http://www.netlash.com" title="Webdesign Netlash">Webdesign Netlash</a></li>
+		<li><a href="http://www.fork-cms.be" title="Fork CMS">Fork CMS</a></li>
 	</ul>
 </div>
 
