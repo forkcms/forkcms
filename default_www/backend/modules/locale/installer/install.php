@@ -750,7 +750,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'EditedCategory', 'The category "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'EN', 'English');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ES', 'Spanish');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'ForgotPassword', 'Fogot password?');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'ForgotPassword', 'Forgot password?');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'FR', 'French');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpAvatar', 'A square picture of your face produces the best results.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpBlogger', 'Select the file that you exported from <a href="http://blogger.com">Blogger</a>.');
