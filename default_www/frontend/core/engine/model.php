@@ -287,7 +287,7 @@ class FrontendModel
 		// validate keys
 		if($publicKey != '' && $privateKey != '')
 		{
-			// get all Apple-device tokens
+			// get all apple-device tokens
 			$deviceTokens = (array) FrontendModel::getDB()->getColumn('SELECT s.value
 																		FROM users AS i
 																		INNER JOIN users_settings AS s
