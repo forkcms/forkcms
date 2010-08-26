@@ -65,7 +65,7 @@
 							{option:usingDraft}
 							<div class="options">
 								<div class="buttonHolder">
-									<a href="{$detailURL}/{$item['url']}?draft={$draftId}" class="button icon iconZoom" target="_blank"><span>{$lblPreview|ucfirst}</span></a>
+									<a href="{$detailURL}/{$item['url']}?draft={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
 								</div>
 							</div>
 							{/option:usingDraft}
@@ -101,7 +101,7 @@
 								<h3>{$lblMetaData|ucfirst}</h3>
 							</div>
 							<div class="options">
-								<label for="newCategoryValue">{$lblCategory|ucfirst}</label>
+								<label for="categoryId">{$lblCategory|ucfirst}</label>
 								{$ddmCategoryId} {$ddmCategoryIdError}
 							</div>
 							<div class="options">
@@ -109,7 +109,7 @@
 								{$ddmUserId} {$ddmUserIdError}
 							</div>
 							<div class="options">
-								<label for="addValue-tags">{$lblTags|ucfirst}</label>
+								<label for="tags">{$lblTags|ucfirst}</label>
 								{$txtTags} {$txtTagsError}
 							</div>
 						</div>

@@ -14,7 +14,7 @@
 			<h4>{$lblSendingEmails|ucfirst}</h4>
 			<p>{$msgHelpSendingEmails}</p>
 			<p>
-				<label for="emailMethod">{$ddmMailerType} {$ddmMailerTypeError}</label>
+				<label for="mailerType">{$ddmMailerType} {$ddmMailerTypeError}</label>
 			</p>
 		</div>
 		<div class="options">

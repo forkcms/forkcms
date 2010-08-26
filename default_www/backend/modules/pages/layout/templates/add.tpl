@@ -53,14 +53,14 @@
 							{* do not alter markup *}
 							<p class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" target="_blank">{$lblEditModuleContent|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
 							</p>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
 							{* do not alter markup *}
 							<p class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" target="_blank">{$lblEdit|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
 							</p>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">

@@ -78,6 +78,7 @@ class BackendNavigation
 			// start HTML
 			$HTML = '';
 
+			// que? let's call this piece magic
 			if($currentDepth >= $startDepth - 1)
 			{
 				// start li
@@ -89,27 +90,25 @@ class BackendNavigation
 			// children?
 			if($selected && isset($value['children']))
 			{
-				// increment
-				$currentDepth++;
-
 				// end depth not passed or isn't reached
 				if($endDepth === null || $currentDepth < $endDepth)
 				{
-					$HTML .= '<ul>'."\n";
+					// start ul if needed
+					if($currentDepth != 0) $HTML .= '<ul>'."\n";
 
+					// loop childs
 					foreach($value['children'] as $subKey => $row)
 					{
-						$HTML .= '	'. $this->buildHTML($row, $subKey, $selectedKeys, $startDepth, $endDepth, $currentDepth);
+						$HTML .= '	'. $this->buildHTML($row, $subKey, $selectedKeys, $startDepth, $endDepth, $currentDepth + 1);
 					}
 
-					$HTML .= '</ul>'."\n";
+					// end ul if needed
+					if($currentDepth != 0) $HTML .= '</ul>'."\n";
 				}
 			}
 
-			if($currentDepth >= $startDepth - 1)
-			{
-				$HTML .= '</li>'."\n";
-			}
+			// end
+			if($currentDepth >= $startDepth - 1) $HTML .= '</li>'."\n";
 		}
 
 		return $HTML;
@@ -123,7 +122,7 @@ class BackendNavigation
 	 * @param	int[optional] $startDepth	The start-depth.
 	 * @param	int[optional] $endDepth		The end-depth.
 	 */
-	public function getNavigation($startDepth = 1, $endDepth = null)
+	public function getNavigation($startDepth = 0, $endDepth = null)
 	{
 		// get selected
 		$selectedKeys = $this->getSelectedKeys();
@@ -142,9 +141,9 @@ class BackendNavigation
 		$HTML .= '</ul>';
 
 		// cleanup
-		$HTML = preg_replace('|<ul>(\s*)</ul>|iUs', '<ul>', $HTML);
-		$HTML = preg_replace('|<ul>(\s*)<ul>|iUs', '<ul>', $HTML);
-		$HTML = preg_replace('|</ul>(\s*)</ul>|iUs', '<ul>', $HTML);
+//		$HTML = preg_replace('|<ul>(\s*)</ul>|iUs', '<ul>', $HTML);
+//		$HTML = preg_replace('|<ul>(\s*)<ul>|iUs', '<ul>', $HTML);
+//		$HTML = preg_replace('|</ul>(\s*)</ul>|iUs', '<ul>', $HTML);
 
 		// return the generated HTML
 		return $HTML;

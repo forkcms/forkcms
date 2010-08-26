@@ -136,6 +136,7 @@ jsBackend.controls = {
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
 		jsBackend.controls.bindTableCheckbox();
+		jsBackend.controls.bindTargetBlank();
 		jsBackend.controls.bindToggleDiv();
 	},
 	// bind a checkbox textfield combo
@@ -477,6 +478,12 @@ jsBackend.controls = {
 			else $($(this).parents().filter('tr')[0]).removeClass('selected');
 		});
 	},
+	
+	// bind target blank
+	bindTargetBlank: function() {
+		$('a.targetBlank').attr('target', '_blank');
+	},
+
 	// togle between the working languages
 	bindWorkingLanguageSelection: function() {
 		$('#workingLanguage').bind('change', function(evt) {

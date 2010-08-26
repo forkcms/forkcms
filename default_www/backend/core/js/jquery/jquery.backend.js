@@ -237,6 +237,9 @@
 			var elements = get();
 			var blockSubmit = false;
 
+			// reset label, so it points to the correct item
+			$('label[for="'+ id +'"]').attr('for', 'addValue-'+ id);
+			
 			// bind submit
 			$(this.form).submit(function() { return !blockSubmit; });
 			

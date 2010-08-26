@@ -58,14 +58,14 @@
 							{* do not alter markup *}
 							<p class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" target="_blank">{$lblEditModuleContent|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
 							</p>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
 							{* do not alter markup *}
 							<p class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" target="_blank">{$lblEdit|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
 							</p>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
@@ -290,7 +290,7 @@
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
-			<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton" target="_blank">
+			<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank">
 				<span>{$lblView|ucfirst}</span>
 			</a>
 		</div>

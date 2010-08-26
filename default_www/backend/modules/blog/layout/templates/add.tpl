@@ -91,7 +91,7 @@
 								<h3>{$lblMetaData|ucfirst}</h3>
 							</div>
 							<div class="options">
-								<label for="newCategoryValue">{$lblCategory|ucfirst}</label>
+								<label for="categoryId">{$lblCategory|ucfirst}</label>
 								{$ddmCategoryId} {$ddmCategoryIdError}
 							</div>
 							<div class="options">
@@ -99,7 +99,7 @@
 								{$ddmUserId} {$ddmUserIdError}
 							</div>
 							<div class="options">
-								<label for="addValue-tags">{$lblTags|ucfirst}</label>
+								<label for="tags">{$lblTags|ucfirst}</label>
 								{$txtTags} {$txtTagsError}
 							</div>
 						</div>
