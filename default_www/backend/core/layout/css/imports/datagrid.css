@@ -292,6 +292,11 @@
 	float: left;
 }
 
+	.tableOptions .massAction label {
+		/* Don't go white */
+		color: #4A4A4A !important;
+	}
+
 .tableOptions .amount {
 	float: right;
 }
