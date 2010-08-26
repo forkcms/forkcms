@@ -184,8 +184,8 @@
 
 #templateVisualLarge table {
 	width: 100%;
-	border-collapse: collapse;
-	border-spacing: 0;
+	border-collapse: separate;
+	border-spacing: 10px;
 	table-layout: fixed;
 }
 
@@ -208,6 +208,13 @@
 		width: 24px;
 		margin: 0 auto;
 	}
+	
+	#templateVisualLarge td:empty,
+	#templateVisualLarge td.empty {
+		background: #EEE url(/backend/core/layout/images/na.png) repeat;
+		border: 1px solid #CCC;
+	}
+	
 
 	#templateVisualLarge h4,
 	#templateVisualLarge p {
