@@ -2,9 +2,9 @@
 
 /**
  * Init
- * This class will initiate the backend-application
+ * This class will initiate the API
  *
- * @package		backend
+ * @package		api
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>

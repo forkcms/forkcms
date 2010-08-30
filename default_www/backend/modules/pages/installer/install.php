@@ -382,6 +382,9 @@ class PagesInstall extends ModuleInstaller
 									array('extra_id' => $extras['search_widget_form']));
 			}
 		}
+
+		// reset blocks
+		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'), true);
 	}
 
 

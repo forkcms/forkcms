@@ -224,7 +224,8 @@
 			removeLabel: 'delete',
 			autoCompleteUrl: '',
 			canAddNew: false,
-			showIconOnly: true
+			showIconOnly: true,
+			multiple: true
 		};
 		
 		// extend options
@@ -349,6 +350,9 @@
 				// init some vars
 				var value = $('#addValue-'+ id).val().replace(/^\s+|\s+$/g, '');
 				var inElements = false;
+				
+				// if multiple arguments aren't allowed, clear before adding
+				if(!options.multiple) elements = [];
 
 				// reset box
 				$('#addValue-'+ id).val('').focus();
