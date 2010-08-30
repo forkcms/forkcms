@@ -45,7 +45,7 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 		$this->loadForm();
 
 		// validate the form
-		$this->validateForm();
+		$this->validate();
 
 		// parse
 		$this->parse();
@@ -99,7 +99,7 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 	 *
 	 * @return	void
 	 */
-	private function validateForm()
+	private function validate()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())

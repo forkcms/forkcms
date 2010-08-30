@@ -159,7 +159,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$this->loadForm();
 
 		// validate the form
-		$this->validateForm();
+		$this->validate();
 
 		// parse
 		$this->parse();
@@ -417,7 +417,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function validateForm()
+	private function validate()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())

@@ -41,7 +41,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 		$this->loadForm();
 
 		// validates the form
-		$this->validateForm();
+		$this->validate();
 
 		// parse
 		$this->parse();
@@ -118,7 +118,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function validateForm()
+	private function validate()
 	{
 		// form is submitted
 		if($this->frm->isSubmitted())

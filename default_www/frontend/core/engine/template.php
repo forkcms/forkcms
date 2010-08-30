@@ -483,7 +483,6 @@ class FrontendTemplateModifiers
 	}
 
 
-
 	/**
  	 * Get a random var between a min and max
  	 *

@@ -61,7 +61,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 		$this->loadForm();
 
 		// validate the form
-		$this->validateForm();
+		$this->validate();
 
 		// parse the error
 		$this->parse();
@@ -133,7 +133,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 	 *
 	 * @return	void
 	 */
-	private function validateForm()
+	private function validate()
 	{
 		// is the form submitted
 		if($this->frm->isSubmitted())

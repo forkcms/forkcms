@@ -46,7 +46,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			$this->loadForm();
 
 			// validate the form
-			$this->validateForm();
+			$this->validate();
 
 			// parse the datagrid
 			$this->parse();
@@ -131,7 +131,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function validateForm()
+	private function validate()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())
