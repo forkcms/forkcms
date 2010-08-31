@@ -1,0 +1,109 @@
+/*
+
+	Name:       IE6 conditional comments for
+	            Winston general module [0.4]
+
+*/
+
+/* Clearfix */
+
+.clearfix {
+	zoom: 1;
+}
+
+/* Fix image rendering */
+
+img {
+	-ms-interpolation-mode: bicubic;
+}
+
+/*
+    
+	Name:       IE6 conditional comments for
+	            Winston avatars module [0.4]
+	Desc:       Styles for the avatars module
+
+*/
+
+.av24 .avOverlay { background: url(../images/av24_overlay.gif) no-repeat; }
+.av48 .avOverlay { background: url(../images/av48_overlay.gif) no-repeat; }
+.av96 .avOverlay { background: url(../images/av96_overlay.gif) no-repeat; }
+.av128 .avOverlay { background: url(../images/av128_overlay.gif) no-repeat; }
+
+/*
+    
+	Name:       IE6 conditional comments for
+	            Winston layout module [0.4]
+	Desc:       Styles for the layout module
+
+*/
+
+/*
+	Grid based column system
+*/
+
+.colsGrid {
+	zoom: 1;
+}
+
+/*
+	Simple column system
+*/
+
+.cols {
+	zoom: 1;
+}
+
+/* Three columns */
+.col-2d3 { width: 66.5%; }
+.col-1d3 { width: 33.2%; }
+
+/*
+	Center anything* horizontally
+	(not really anything, see test_suite layout)
+*/
+
+/* Make sure centred col grids behave as expected */
+.centerHorizontallyInner .colsGrid,
+.centerHorizontallyInner .cols,
+.centerHorizontallyInner .col {
+	float: left;
+	position: relative;
+}
+
+/* Center anything vertically */
+
+.centerVerticallyWrap {
+	position: relative;
+}
+
+.centerVertically[class] {
+	position: absolute;
+	top: 50%;
+}
+
+.centerVerticallyInner {
+	position: relative;
+	top: -50%;
+	float: left;
+}
+
+/*
+
+	Name:       IE6 conditional comments for
+	            Winston buttons module [0.4]
+
+*/
+
+/* Clearfix */
+
+.buttonHolder,
+.buttonHolderRight {
+	zoom: 1;
+}
+
+/* Buttons */
+
+a.button * {
+	background-image: url(../images/button.gif);
+}

@@ -1,0 +1,131 @@
+/*
+	Docs specific
+*/
+
+body {
+	background: #FFF;
+}
+
+#toc {
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	border-right: 1px solid #CCC;
+	overflow-y: auto;
+	background: #FFF;
+}
+
+	#toc div {
+		padding: 30px;
+	}
+
+#container {
+	width: 552px;
+	padding: 40px 0;
+	margin: 0 0 0 320px;
+}
+
+p.intro {
+	font-family: Georgia;
+	font-size: 17px;
+}
+
+h2, h3 {
+	color: #FFF;
+}
+
+.example {
+	padding: 24px 24px 8px;
+	background: #FFF;
+	border: 1px solid #AAA;
+	margin: 0 0 12px;
+	position: relative;
+	/* @inc .rc */
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+
+}
+	.example .ex {
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		font-size: 11px;
+		color: #666;
+	}
+
+	iframe {
+		border: 0;
+	}
+
+	h2, h3 {
+		padding-top: 20px;
+	}
+
+	h2 + h3 {
+		padding-top: 0;
+	}
+	
+	#toc h4 {
+		padding-top: 6px;
+		text-transform: uppercase;
+	}
+
+h1 {
+	background: url(../images/logo_docs.png) no-repeat scroll top left;
+	width: 430px;
+	height: 143px;
+	font-size: 97px;
+	padding: 0;
+	letter-spacing: -5px;
+	text-transform: uppercase;
+	line-height: 1;
+	text-indent: -9000px;
+}
+
+.id1 {
+	padding-left: 24px;
+}
+
+#feedback {
+	text-align: center;
+}
+
+/*
+	Avatar lists
+	general class:
+	.people
+*/
+
+.people li {
+	float: left;
+	padding: 0 10px 0 0;
+}
+
+	.people li div.avatar {
+		margin-left: 9px;
+	}
+
+	.people li p {
+		text-align: center;
+		/* INC .secondaryContent */
+		font-size: 11px;
+		font-family: Arial, sans-serif;
+	}
+
+	.people li a {
+		border: none;
+	}
+	
+	strong {
+		color: #333;
+	}
+	
+	.marked {
+		background: #FFF;
+	}
+	
+	.markedTodo {
+		background: yellow;
+	}
