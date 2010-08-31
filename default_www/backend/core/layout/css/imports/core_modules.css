@@ -95,7 +95,7 @@
 		-moz-border-radius-topright: 4px;
 
 	}
-	
+
 	#pages.index #treeOptions {
 		display: none;
 	}
@@ -103,11 +103,11 @@
 	#pagesTree #tree .tree {
 		margin: 6px 6px 12px;
 	}
-	
+
 	#pages.pagesSettings .inputList {
 		padding-top: 12px;
 	}
-	
+
 	#pages.pagesEditTemplate #format {
 		width: 400px;
 		font-family: Menlo, Monaco, "Courier New", Courier, monospace;
@@ -208,13 +208,13 @@
 		width: 24px;
 		margin: 0 auto;
 	}
-	
+
 	#templateVisualLarge td:empty,
 	#templateVisualLarge td.empty {
 		background: #EEE url(/backend/core/layout/images/na.png) repeat;
 		border: 1px solid #CCC;
 	}
-	
+
 
 	#templateVisualLarge h4,
 	#templateVisualLarge p {
@@ -286,7 +286,7 @@
 	/*
 		editTemplate
 	*/
-	
+
 	#pages.editTemplate #path {
 		width: 340px;
 	}
@@ -392,11 +392,11 @@
 	#users.usersAddEdit  .settingsUserInfo .infoGrid {
 		margin: 0 0 0 12px;
 	}
-	
+
 		#users.usersAddEdit .settingsUserInfo .infoGrid th {
 			white-space: nowrap;
 		}
-		
+
 		#users.usersAddEdit #email {
 			width: 240px;
 		}
@@ -416,7 +416,7 @@
 	#settings.settingsIndex #webmasterEmail {
 		width: 300px;
 	}
-	
+
 	#settings.settingsIndex #smtpPort {
 		width: 40px;
 	}
@@ -500,7 +500,7 @@
 		background: #666;
 		border-color: #666;
 	}
-	
+
 		.box:target .heading h3 {
 			color: #FFF;
 		}

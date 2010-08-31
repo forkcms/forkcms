@@ -187,6 +187,7 @@
 
 .tree-fork li span,
 .tree-fork li.selected > a {
+	/* @inc .selectedBlue */
 	background: #1a57ad;
 	background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
 	background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
@@ -210,7 +211,9 @@
 	color: #FFF;
 }
 
-/* ICONS */
+/*
+	Icons
+*/
 
 /* Basic page */
 .tree-fork ins {
@@ -219,33 +222,39 @@
 }
 
 .tree-fork ul li a.loading ins {
-	background-image: url("throbber.gif") !important;
+	background-image: url('throbber.gif') !important;
 	background-position: 0 0 !important;
 }
+
 .tree-fork li a ins.forbidden {
 	background-position: -16px -16px;
 }
+
 .tree-fork .locked li a ins {
 	background-position: 0 -48px;
 }
+
 .tree-fork li span ins {
 	background-position: -16px 0;
 }
 
-/* dragged item */
+/*
+	Dragged item
+*/
+
 #jstree-dragged {
 	border: 1px dotted #000;
 	background-color: #CCC;
 	opacity: 0.7;
 }
+
 #jstree-dragged.tree-fork ins {
-	background: url('icons.gif') -16px -32px no-repeat;
+	background: url(icons.gif) -16px -32px no-repeat;
 }
+
 #jstree-dragged.tree-fork ins.forbidden {
-	background: url('icons.gif') -16px -16px no-repeat;
+	background: url(icons.gif) -16px -16px no-repeat;
 }
-
-
 
 /* LOCKED */
 /*

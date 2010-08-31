@@ -109,8 +109,6 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 .ui-accordion .ui-accordion-content { padding: 1em 2.2em; border-top: 0; margin-top: -2px; position: relative; top: 1px; margin-bottom: 2px; overflow: auto; display: none; }
 .ui-accordion .ui-accordion-content-active { display: block; }/* Datepicker
 ----------------------------------*/
-.ui-autocomplete { position: absolute; cursor: default; }	
-.ui-autocomplete-loading { background: white url(images/ui-anim_basic_16x16.gif) right center no-repeat; }
 
 .ui-datepicker {
 	width: 17em; padding: .2em .2em 0;
@@ -168,15 +166,15 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 
 /* IE6 IFRAME FIX (taken from datepicker 1.5.3 */
 .ui-datepicker-cover {
-    display: none; /*sorry for IE5*/
-    display/**/: block; /*sorry for IE5*/
-    position: absolute; /*must have*/
-    z-index: -1; /*must have*/
-    filter: mask(); /*must have*/
-    top: -4px; /*must have*/
-    left: -4px; /*must have*/
-    width: 200px; /*must have*/
-    height: 200px; /*must have*/
+	display: none; /*sorry for IE5*/
+	display/**/: block; /*sorry for IE5*/
+	position: absolute; /*must have*/
+	z-index: -1; /*must have*/
+	filter: mask(); /*must have*/
+	top: -4px; /*must have*/
+	left: -4px; /*must have*/
+	width: 200px; /*must have*/
+	height: 200px; /*must have*/
 }/* Dialog
 ----------------------------------*/
 .ui-dialog { position: relative; padding: .2em; width: 300px; background: white;}
@@ -250,8 +248,10 @@ div.tabs ul li.selected {
 	padding: 6px 12px 0;
 	background: #c8c8c8;
 	background: -webkit-gradient(linear, left top, left bottom, from(#dadada), to(#aaa));
+	/* @inc .rcReset */
 	-moz-border-radius: 0;
 	-webkit-border-radius: 0;
+	border-radius: 0;
 }
 
 #tabs.tabsBare .ui-tabs-nav li {
@@ -309,9 +309,55 @@ div.tabs ul li.selected {
 }
 
 /*
-	Autocomplete	@todo	Johan, style (try the tagbox)
- */
-ul.ui-autocomplete {
-	border: 1px solid #cccccc; background: #f6f6f6; padding: 4px;
+	Autocomplete
+*/
+
+.ui-autocomplete {
+	position: absolute;
+	cursor: default;
 }
 
+.ui-autocomplete-loading {
+	background: #FFF url(../../../images/ds_loading.gif) right top no-repeat !important;
+}
+
+.ui-autocomplete {
+	border: 1px solid #CCC;
+	border-color: #888 #BABABA #CCC #BABABA;
+	background: #FFF;
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+	
+	/* @inc .rcReset */
+	-moz-border-radius: 0;
+	-webkit-border-radius: 0;
+	border-radius: 0;
+}
+
+	.ui-autocomplete a {
+		display: block;
+		padding: 2px 3px;
+		color: #000;
+		/* @inc .rcReset */
+		-moz-border-radius: 0;
+		-webkit-border-radius: 0;
+		border-radius: 0;
+		border: none;
+	}
+	
+	.ui-autocomplete li:nth-child(2n) {
+		background: #F1F5FA;
+	}
+	
+	.ui-autocomplete .ui-state-hover {
+		color: #FFF;
+		font-weight: 400;
+		outline: 1px solid #1a57ad;
+		border: none;
+		/* @inc .selectedBlue */
+		background: #1a57ad;
+		background: -webkit-gradient(linear, left top, left bottom, from(#5c93d5), to(#1a57ad));
+		background: -moz-linear-gradient(top, #5c93d5, #1a57ad);
+	}
