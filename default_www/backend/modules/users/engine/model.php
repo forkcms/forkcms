@@ -44,6 +44,28 @@ class BackendUsersModel
 
 
 	/**
+	 * Was a user deleted before
+	 *
+	 * @return	bool
+	 * @param	string $email
+	 */
+	public static function emailDeletedBefore($email)
+	{
+		// redefine
+		$email = (string) $email;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// no user to ignore
+		return (bool) ($db->getNumRows('SELECT i.id
+										FROM users AS i
+										WHERE i.email = ? AND i.deleted = ?;',
+										array($email, 'Y')) >= 1);
+	}
+
+
+	/**
 	 * Does the user exist.
 	 *
 	 * @return	bool
@@ -303,6 +325,42 @@ class BackendUsersModel
 
 		// remove the user settings linked to the resetting of passwords
 		self::deleteResetPasswordSettings($userId);
+	}
+
+
+	/**
+	 * Restores a user
+	 * @later	this method should check if all needed data is present
+	 *
+	 * @return 	bool
+	 * @param	string $email	The emailadress of the user to restore.
+	 */
+	public static function undoDelete($email)
+	{
+		// redefine
+		$email = (string) $email;
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get id
+		$id = $db->getVar('SELECT id
+							FROM users AS i
+							INNER JOIN users_settings AS s ON i.id = s.user_id
+							WHERE i.email = ? AND i.deleted = ?;',
+							array($email, 'Y'));
+
+		// no valid users
+		if($id === null) return false;
+
+		else
+		{
+			// restore
+			$db->update('users', array('active' => 'Y', 'deleted' => 'N'), 'id = ?', (int) $id);
+
+			return true;
+		}
+
 	}
 }
 

@@ -52,7 +52,9 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Geef deze account toegang tot het CMS.');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Geef deze account toegang tot de API.');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.');
+		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Restored', 'De gebruiker "%1$s" werd terug geactiveerd.');
 		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
+		$this->insertLocale('nl', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'Je kan het emailadres van deze gebruiker niet aanpassen.');
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'users', 'lbl', 'Add', 'add user');
@@ -64,7 +66,9 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Enable API access for this account.');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passwords consist of a combination of capitals, digits, lowercase and special characters.');
+		$this->insertLocale('en', 'backend', 'users', 'msg', 'Restored', 'The user "%1$s" is restored.');
 		$this->insertLocale('en', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
+		$this->insertLocale('en', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'You can\'t change the emailaddres of teh GOD-user.');
 
 		// add default user
 		$this->addUser();

@@ -13,6 +13,14 @@
 class BackendUsersEdit extends BackendBaseActionEdit
 {
 	/**
+	 * The user
+	 *
+	 * @var	BackendUser
+	 */
+	private $user;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -57,21 +65,22 @@ class BackendUsersEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// create user object
-		$user = new BackendUser($this->id);
+		$this->user = new BackendUser($this->id);
 
 		// create form
 		$this->frm = new BackendForm('edit');
 
 		// create elements
 		$this->frm->addText('email', $this->record['email'], 255);
+		if($this->user->isGod()) $this->frm->getField('email')->setAttributes(array('disabled' => 'disabled'));
 		$this->frm->addPassword('new_password', null, 75);
 		$this->frm->addPassword('confirm_password', null, 75);
 		$this->frm->addText('nickname', $this->record['settings']['nickname'], 24);
 		$this->frm->addText('name', $this->record['settings']['name'], 255);
 		$this->frm->addText('surname', $this->record['settings']['surname'], 255);
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
-		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $user->getSetting('date_format'));
-		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $user->getSetting('time_format'));
+		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $this->user->getSetting('date_format'));
+		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $this->user->getSetting('time_format'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
@@ -122,18 +131,28 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// email is present
-			if($this->frm->getField('email')->isFilled(BL::getError('EmailIsRequired')))
+			if(!$this->user->isGod())
 			{
-				// is this an email-address
-				if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
+				if($this->frm->getField('email')->isFilled(BL::getError('EmailIsRequired')))
 				{
-					// email already exists
-					if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id)) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
+					// is this an email-address
+					if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
+					{
+						// was this emailaddress deleted before
+						if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(sprintf(BL::getError('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
+
+						else
+						{
+							// email already exists
+							if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id)) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
+						}
+					}
 				}
 			}
 
 			// required fields
-			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
+			if($this->user->isGod() && $this->frm->getField('email')->getValue() != '' && $this->user->getEmail() != $this->frm->getField('email')->getValue()) $this->frm->getField('email')->addError(BL::getError('CantChangeGodsEmail'));
+			if(!$this->user->isGod()) $this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
 			$this->frm->getField('nickname')->isFilled(BL::getError('NicknameIsRequired'));
 			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
 			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
@@ -163,7 +182,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$user = array();
 				$user['id'] = $this->id;
 				$user['group_id'] = $this->frm->getField('group')->getValue();
-				$user['email'] = $this->frm->getField('email')->getValue(true);
+				if(!$this->user->isGod()) $user['email'] = $this->frm->getField('email')->getValue(true);
 				if(BackendAuthentication::getUser()->getUserId() != $this->record['id']) $user['active'] = ($this->frm->getField('active')->isChecked()) ? 'Y' : 'N';
 
 				// update password (only if filled in)

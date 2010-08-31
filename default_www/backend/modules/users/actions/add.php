@@ -91,8 +91,14 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// is this an email-address
 				if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
 				{
-					// email already exists
-					if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
+					// was this emailaddress deleted before
+					if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(sprintf(BL::getError('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
+
+					else
+					{
+						// email already exists
+						if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
+					}
 				}
 			}
 
