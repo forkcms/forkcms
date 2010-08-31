@@ -16,7 +16,7 @@
 </head>
 <body id="installer">
 
-	<div id="installHolder">
+	<div id="installHolder" class="step5">
 
 		<h2>Installation complete</h2>
 		<p>Fork CMS is installed! You can now <a href="../private/">log in</a> using these credentials.</p>

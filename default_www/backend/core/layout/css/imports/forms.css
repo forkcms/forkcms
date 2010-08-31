@@ -12,22 +12,22 @@
 
 /* Modify input[type="text"] and textareas */
 
-.inputText, .inputPassword,
-input[type="text"], input[type="password"],
+.inputText,
+.inputPassword,
 textarea {
 	font-size: 12px;
 	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
 
-	background: #FFF url('/backend/core/layout/images/ds.png') repeat-x;
+	background: #FFF url(/backend/core/layout/images/ds.png) repeat-x;
 	border: 1px solid #BBB;
 	border-color: #888 #BABABA #BABABA #CDCDCD;
 
+	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 
 	-webkit-transition: background-color 0.28s linear;
-
 }
 
 	textarea.inputEditor {
@@ -45,8 +45,8 @@ input.disabled {
 	color: #666 !important;
 }
 
-.inputText, input[type="text"],
-.inputPassword, input[type="password"] {
+.inputText,
+.inputPassword {
 	padding: 3px 2px;
 	color: #333;
 }
@@ -59,9 +59,9 @@ input.disabled {
 		}
 	}
 
-.inputText:focus, input[type="text"]:focus, .inputText.focus, input[type="text"].focus,
-.inputPassword:focus, input[type="password"]:focus, .inputPassword.focus, input[type="password"].focus,
-textarea:focus, textarea.focus {
+.inputText:focus,
+.inputPassword:focus,
+textarea:focus {
 	color: #000;
 	border-color: #666 #999 #999 #AAA;
 }
@@ -106,7 +106,6 @@ input[type="submit"] {
 			-moz-outline-radius: 5px;
 			border-color: #456b99;
 		}
-
 	}
 
 .helpTxt {
@@ -135,23 +134,22 @@ input[type="submit"] {
 .forkForms .horizontal .inputList label {
 	float: none;
 	width: auto;
+	line-height: 21px;
+	padding: 0;
 }
 
 	.forkForms .inputList li .inputRadio,
-	.forkForms .inputList li .inputCheckbox,
-	.forkForms .inputList li input[type="radio"],
-	.forkForms .inputList li input[type="checkbox"] {
+	.forkForms .inputList li .inputCheckbox {
 		position: absolute;
 		left: 0;
-		top: 0;
+		top: 2px;
 	}
 
 	#urlManager ul {
 		margin: 0 0 8px;
 	}
 
-		#urlManager ul .inputText,
-		#urlManager ul input[type="text"] {
+		#urlManager ul .inputText] {
 			font-size: 11px;
 			width: 210px;
 		}
@@ -160,6 +158,14 @@ input[type="submit"] {
 	clear: both;
 	padding: 6px 0;
 	border-bottom: 1px solid #E2E2E2;
+}
+
+.forkForms p {
+	padding: 0 0 12px;
+}
+
+.forkForms .fakeP {
+	padding: 0 0 12px;
 }
 
 label {
@@ -179,25 +185,34 @@ label {
 
 .forkForms p label {
 	display: block;
+	padding: 0 0 2px;
 }
 
 .forkForms .horizontal textarea {
 	width: auto;
 }
 
-.forkForms ul .helpTxt {
-	padding: 0 0 0 24px;
-}
-
-.forkForms .horizontal p label {
+.forkForms .horizontal p label,
+.forkForms .horizontal .fakeP label {
 	display: inline;
+	padding: 0;
 }
-.forkForms .horizontal .helpTxt { display: block; padding: 1px 0 1px 106px; }
 
-.forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 145px; }
+.forkForms .horizontal .helpTxt {
+	display: block;
+	padding: 1px 0 1px 116px;
+}
+
+.forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 155px; }
 
 .forkForms .horizontal label,
-.forkForms .horizontal p.label { float: left; width: 105px; padding-right: 10px; line-height: 17px; padding: 2px 0;}
+.forkForms .horizontal p.label {
+	float: left;
+	width: 115px;
+	padding-right: 10px;
+	line-height: 23px;
+	display: block;
+}
 
 	/* Alternate label widths */
 	
@@ -206,15 +221,13 @@ label {
 		width: 145px;
 	}
 
-#profilePassword .horizontal label { width: 170px; }
-
 .forkForms .horizontal p.label {
 	margin: 0;
 }
 
 .forkForms .spacing,
 .forkForms .horizontal span.formError {
-	padding-left: 105px;
+	padding-left: 115px;
 }
 
 .forkForms .labelWidthLong span.formError  {
@@ -223,10 +236,12 @@ label {
 
 .forkForms abbr { cursor: help; }
 
-.forkForms .block{ display: block !important; }
+.forkForms .fakeP:after,
 .forkForms p:after,
 .forkForms .inputList:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
 .forkForms p,
+.forkForms .fakeP,
 .forkForms .inputList { zoom: 1; }
 
 /*
@@ -263,3 +278,20 @@ label {
 	.oneLiner input[type="text"], 
 	.oneLiner input[type="password"],
 	.oneLiner input.inputDatefieldRange { float: left; }
+	
+/*
+	Item adder
+*/
+
+.horizontal .itemAdder {
+	float: left;
+}
+
+.horizontal .multipleTextWrapper .helpTxt {
+	padding: 0;
+}
+
+.horizontal .itemAdder .formError {
+	clear: both;
+	padding: 0 !important;
+}

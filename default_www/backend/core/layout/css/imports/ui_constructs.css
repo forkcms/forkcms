@@ -179,7 +179,8 @@
 		border-bottom: none;
 	}
 
-	.box .options p:last-child, .box .options p.lastChild {
+	.box .options > div:last-child,
+	.box .options > p:last-child {
 		padding-bottom: 0;
 	}
 

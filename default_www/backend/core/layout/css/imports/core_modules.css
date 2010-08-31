@@ -109,7 +109,10 @@
 	}
 
 	#pages.pagesEditTemplate #format {
-		width: 400px;
+		width: 200px;
+		height: 200px;
+		font-size: 13px;
+		padding: 4px;
 		font-family: Menlo, Monaco, "Courier New", Courier, monospace;
 	}
 

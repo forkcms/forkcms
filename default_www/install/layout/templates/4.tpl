@@ -17,7 +17,7 @@
 </head>
 <body id="installer">
 
-	<div id="installHolder">
+	<div id="installHolder" class="step4">
 
 		<h2>Your login info</h2>
 

@@ -16,7 +16,6 @@ html {
 
 body {
 	position: relative;
-
 	height: 100%;
 	width: 100%;
 }
@@ -24,6 +23,10 @@ body {
 #encloser {
 	width: 100%;
 	height: 100%;
+	/* Fix jQuery UI modal scrollbars problem */
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 #container {
@@ -117,7 +120,8 @@ body {
 			#user #ddAccount {
 				border: 1px solid #DDD;
 				padding: 0;
-
+				border-color: #CCC #BABABA #CCC #BABABA;
+				background: #FFF;
 				/* @inc .boxShadow */
 				box-shadow: 0 2px 6px #AAA;
 				-webkit-box-shadow: 0 2px 6px #AAA;
@@ -157,8 +161,12 @@ body {
 				#user #account li a:hover,
 				#user #account li a:active,
 				#user #account li a:focus {
-					background: #3875D7;
 					color: #FFF;
+					outline: 1px solid #1a57ad;
+					/* @inc .selectedBlue */
+					background: #1A57AD;
+					background: -webkit-gradient(linear, left top, left bottom, from(#5C93D5), to(#1A57AD));
+					background: -moz-linear-gradient(top, #5C93D5, #1A57AD);
 				}
 
 				#openAccountDropdown {

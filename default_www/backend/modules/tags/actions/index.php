@@ -52,7 +52,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortParameter('desc');
 
 		// add the multicheckbox column
-		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></div>', '<div class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></div>');
+		$this->datagrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
 		$this->datagrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown

@@ -6,13 +6,17 @@
 		<div class="heading">
 			<h3>{$lblSearch|ucfirst}: {$lblAddSynonym}</h3>
 		</div>
-		<div class="options">
-			<label for="term">{$lblTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-			{$txtTerm} {$txtTermError}
-		</div>
-		<div class="options">
-			<label for="synonym">{$lblSynonyms|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-			{$txtSynonym} {$txtSynonymError}
+		<div class="options horizontal">
+			<p>
+				<label for="term">{$lblTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtTerm} {$txtTermError}
+			</p>
+			<div class="fakeP">
+				<label for="synonym">{$lblSynonyms|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				<div class="itemAdder">
+					{$txtSynonym} {$txtSynonymError}
+				</div>
+			</div>
 		</div>
 	</div>
 

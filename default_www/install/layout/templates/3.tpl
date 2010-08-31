@@ -17,14 +17,14 @@
 </head>
 <body id="installer">
 
-	<div id="installHolder">
+	<div id="installHolder" class="step3">
 		<h2>Settings</h2>
 		{form:step3}
 			{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}
 				<div class="horizontal">
 					<h3>Modules</h3>
 					<p>Which modules would you like to install?</p>
-					<ul class="inputList">
+					<ul id="moduleList" class="inputList">
 						{iteration:modules}
 							<li>{$modules.chkModules} <label for="{$modules.id}">{$modules.label}</label></li>
 						{/iteration:modules}
@@ -59,9 +59,9 @@
 
 					<h3>Example data</h3>
 					<p>If you are new to Fork CMS, you might prefer to have an example website set up.</p>
-					<div class="inputList">
-						{$chkExampleData} <label for="exampleData">Install example data</label>
-					</div>
+					<ul class="inputList">
+						<li>{$chkExampleData} <label for="exampleData">Install example data</label></li>
+					</ul>
 				</div>
 
 				<div class="fullwidthOptions">

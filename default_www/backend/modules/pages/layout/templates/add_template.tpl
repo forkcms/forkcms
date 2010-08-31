@@ -9,7 +9,8 @@
 		<div class="options">
 			<p>
 				<label for="file">{$lblFilename|ucfirst}</label>
-				<small><code>core/layout/templates/</code></small>{$txtFile} {$txtFileError}
+				{* @todo add translation *}
+				<span class="helpTxt">Put your templates in the core/templates folder of your theme.</span>
 			</p>
 			<p>
 				<label for="label">{$lblLabel|ucfirst}</label>

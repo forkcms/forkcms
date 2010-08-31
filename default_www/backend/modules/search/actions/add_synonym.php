@@ -48,7 +48,7 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
 
 		// create elements
 		$this->frm->addText('term', null, 255);
-		$this->frm->addText('synonym', null, null, 'inputTextfield synonymBox', 'inputTextfieldError synonymBox');
+		$this->frm->addText('synonym', null, null, 'inputText synonymBox', 'inputTextError synonymBox');
 	}
 
 

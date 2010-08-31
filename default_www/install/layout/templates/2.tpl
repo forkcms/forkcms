@@ -17,7 +17,7 @@
 </head>
 <body id="installer">
 
-	<div id="installHolder">
+	<div id="installHolder" class="step2">
 
 		<h2>Database configuration</h2>
 		{form:step2}

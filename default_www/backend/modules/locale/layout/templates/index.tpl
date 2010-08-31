@@ -104,15 +104,13 @@
 </div>
 
 {option:!datagrid}
-	<div class="datagridHolder">
-		<div class="tableHeading">
-			<h3>{$lblTranslations|ucfirst}</h3>
-			<div class="buttonHolderRight">
-				<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			</div>
+	<div class="tableHeading">
+		<h3>{$lblTranslations|ucfirst}</h3>
+		<div class="buttonHolderRight">
+			<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
 		</div>
-		<p>{$msgNoItems|sprintf:{$addUrl}}</p>
 	</div>
+	<p>{$msgNoItems|sprintf:{$addUrl}}</p>
 {/option:!datagrid}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}

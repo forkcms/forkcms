@@ -323,7 +323,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * @return	void
 	 * @param	array $values
 	 */
-	private function setValues(array $values, $defaultClass = 'inputRadiobutton')
+	private function setValues(array $values, $defaultClass = 'inputRadio')
 	{
 		// empty values not allowed
 		if(empty($values)) throw new SpoonFormException('The list with values should not be empty.');

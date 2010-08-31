@@ -43,7 +43,7 @@
 					</tr>
 					{iteration:modules}
 						<tr class="{cycle:odd:even}">
-							<td><div class="checkboxHolder">{$modules.chk}</div></td>
+							<td><span class="checkboxHolder">{$modules.chk}</span></td>
 							<td><label for="{$modules.id}">{$modules.label}</label></td>
 							<td>{$modules.txt} {option:modules.txtError}<span class="formError">{$modules.txtError}</span>{/option:modules.txtError}</td>
 						</tr>

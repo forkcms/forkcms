@@ -17,7 +17,7 @@
 </head>
 <body id="installer">
 
-	<div id="installHolder">
+	<div id="installHolder" class="step1">
 
 		<h2>Install Fork CMS</h2>
 

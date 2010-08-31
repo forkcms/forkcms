@@ -15,6 +15,15 @@
 	border-bottom: 1px solid #BDBDBD;
 }
 
+	.datagridInHorizontalForm {
+		width: 80%;
+		float: left;
+	}
+
+	.box .options > *:last-child .datagridInHorizontalForm {
+		margin: 0;
+	}
+
 .datagridHolderNoDatagrid {
 	border: none;
 }
@@ -242,7 +251,8 @@
 	.datagrid tr.selected td,
 	.datagrid tr.selected td label,
 	.datagrid tr:hover td label,
-	#encloser #container .datagrid tbody tr:hover td a.linkButton span {
+	#encloser #container .datagrid tbody tr:hover td a.linkButton span,
+	#encloser #container .datagrid tbody tr.selected td a.linkButton span {
 		color: #FFF;
 	}
 	
@@ -280,12 +290,7 @@
 }
 
 	.tableOptions:after {
-		/* @inc .clearfix */
-		content: ".";
-		display: block;
-		height: 0;
-		clear: both;
-		visibility: hidden;
+		/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
 	}
 
 .tableOptions .massAction {
@@ -295,6 +300,7 @@
 	.tableOptions .massAction label {
 		/* Don't go white */
 		color: #4A4A4A !important;
+		padding: 2px 0 0;
 	}
 
 .tableOptions .amount {
@@ -335,13 +341,12 @@
 		.pagination li span {
 			float: left;
 			display: block;
-			padding: 1px 3px;
+			padding: 1px 5px;
+			background: #FFF;
 			background: rgba(255,255,255,0.25);
-			border: 1px solid rgba(0,0,0,0.25);
 			text-align: center;
 			color: #3A3A3A;
 			display: block;
-			background: #FFF;
 			background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#FAFAFA));
 			background: -moz-gradient(linear, left top, left bottom, from(#FFF), to(#FAFAFA));
 			border: 1px solid #BFBFBF;
@@ -356,7 +361,8 @@
 		.pagination li a:hover,
 		.pagination li a:active,
 		.pagination li a:focus {
-			border-color: #000;
+			border-color: #888;
+			background: #FFF;
 		}
 
 		.pagination li span {

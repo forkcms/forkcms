@@ -56,17 +56,17 @@
 
 						<div id="blockContentModule-{$blocks.index}" class="options">
 							{* do not alter markup *}
-							<p class="oneLiner">
+							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
 								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
-							</p>
+							</div>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
 							{* do not alter markup *}
-							<p class="oneLiner">
+							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
 								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
-							</p>
+							</div>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
 							<fieldset>

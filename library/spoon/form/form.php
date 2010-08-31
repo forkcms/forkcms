@@ -465,7 +465,7 @@ class SpoonForm
 	 * @param	string[optional] $checked
 	 * @param	string[optional] $class
 	 */
-	public function addRadiobutton($name, array $values, $checked = null, $class = 'inputRadiobutton')
+	public function addRadiobutton($name, array $values, $checked = null, $class = 'inputRadio')
 	{
 		// add element
 		$this->add(new SpoonFormRadiobutton($name, $values, $checked, $class));

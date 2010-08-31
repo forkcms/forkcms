@@ -193,14 +193,14 @@ jsBackend.pages.extras = {
 				$('#blockContentHTML-'+ selectedBlock).hide();
 
 				if(extrasById[selectedExtraId].type == 'block') {
-					$('#blockContentModule-'+ selectedBlock +' p span').html(extrasById[selectedExtraId].message);
-					$('#blockContentModule-'+ selectedBlock +' p a').attr('href', extrasById[selectedExtraId].data.url);
+					$('#blockContentModule-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
+					$('#blockContentModule-'+ selectedBlock +' .oneLiner a').attr('href', extrasById[selectedExtraId].data.url);
 					$('#blockContentModule-'+ selectedBlock).show();
 				}
 				if(extrasById[selectedExtraId].type == 'widget') {
-					$('#blockContentWidget-'+ selectedBlock +' p span').html(extrasById[selectedExtraId].message);
-					if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget-'+ selectedBlock +' p a').hide();
-					else $('#blockContentWidget-'+ selectedBlock +' p a').attr('href', extrasById[selectedExtraId].data.edit_url).show();
+					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
+					if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').hide();
+					else $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').attr('href', extrasById[selectedExtraId].data.edit_url).show();
 					$('#blockContentWidget-'+ selectedBlock).show();
 				}
 				
