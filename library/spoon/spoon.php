@@ -103,7 +103,7 @@ class Spoon
 		$output = ob_get_clean();
 
 		// cleanup the output
-		$output = preg_replace("/\]\=\>\n(\s+)/m", "] => ", $output);
+		$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
 
 		// print
 		echo '<pre>'. htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) .'</pre>';
