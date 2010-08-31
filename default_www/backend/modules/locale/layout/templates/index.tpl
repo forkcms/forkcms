@@ -10,7 +10,7 @@
 
 <div class="datagridHolder">
 	{form:filter}
-		<div class="datafilter">
+		<div class="dataFilter">
 			<table cellspacing="0" cellpadding="0" border="0">
 				<tbody>
 					<tr>

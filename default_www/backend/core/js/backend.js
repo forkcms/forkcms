@@ -723,24 +723,25 @@ jsBackend.layout = {
 
 		// fix last childs
 		$('.options p:last').addClass('lastChild');
+		if($('.dataFilter').length > 0) jsBackend.layout.dataFilter();
 	},
-	// datafilter layout fixes
+	// dataFilter layout fixes
 	dataFilter: function() {
 		// add last child and first child for IE
-		$('.datafilter tbody td:first-child').addClass('firstChild');
-		$('.datafilter tbody td:last-child').addClass('lastChild');
+		$('.dataFilter tbody td:first-child').addClass('firstChild')
+		$('.dataFilter tbody td:last-child').addClass('lastChild')
 
 		// init var
 		var tallest = 0;
 
 		// loop group
-		$('.datafilter tbody .options').each(function() {
+		$('.dataFilter tbody .options').each(function() {
 			// taller?
 			if($(this).height() > tallest) tallest = $(this).height();
 		});
 
 		// set new height
-		$('.datafilter tbody .options').height(tallest);
+		$('.dataFilter tbody .options').height(tallest);
 	},
 	// datagrid layout
 	datagrid: function() {
