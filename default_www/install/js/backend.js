@@ -65,9 +65,7 @@ jsBackend.controls = {
 
 		// loop chars and add unique chars
 		for(var i = 0; i<string.length; i++) {
-			if(uniqueChars.indexOf(string.charAt(i)) == -1) {
-				uniqueChars.push(string.charAt(i));
-			}
+			if($.inArray(string.charAt(i), uniqueChars) == -1) { uniqueChars.push(string.charAt(i)); }
 		}
 
 		// less then 3 unique chars is just week

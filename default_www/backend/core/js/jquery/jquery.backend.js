@@ -423,7 +423,7 @@
 			// remove an item
 			function remove(value) {
 				// get index for element
-				var index = elements.indexOf(value);
+				var index = $.inArray(value, elements);
 				
 				// remove element
 				if(index > -1) elements.splice(index, 1);
@@ -673,7 +673,7 @@
 			// remove an item
 			function remove(value) {
 				// get index for element
-				var index = elements.indexOf(value);
+				var index = $.inArray(value, elements);
 				
 				// remove element
 				if(index > -1) elements.splice(index, 1);

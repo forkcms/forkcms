@@ -96,8 +96,8 @@
 					{$txtWebsite} {$txtWebsiteError}
 				</p>
 				<p>
-					<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtText} {$txtTextError}
+					<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					{$txtMessage} {$txtMessageError}
 				</p>
 
 				<p>

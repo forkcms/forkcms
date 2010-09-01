@@ -140,7 +140,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->frm->addText('author', $author);
 		$this->frm->addText('email', $email);
 		$this->frm->addText('website', $website);
-		$this->frm->addTextarea('text');
+		$this->frm->addTextarea('message');
 	}
 
 
@@ -254,13 +254,13 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$diff = time() - (int) SpoonSession::get('blog_comment_'. $this->record['id']);
 
 				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
-				if($diff < 10 && $diff != 0) $this->frm->getField('text')->addError(FL::err('CommentTimeout'));
+				if($diff < 10 && $diff != 0) $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
 			}
 
 			// validate required fields
 			$this->frm->getField('author')->isFilled(FL::err('AuthorIsRequired'));
 			$this->frm->getField('email')->isEmail(FL::err('EmailIsRequired'));
-			$this->frm->getField('text')->isFilled(FL::err('MessageIsRequired'));
+			$this->frm->getField('message')->isFilled(FL::err('MessageIsRequired'));
 
 			// validate optional fields
 			if($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://')
@@ -280,7 +280,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$email = $this->frm->getField('email')->getValue();
 				$website = $this->frm->getField('website')->getValue();
 				if(trim($website) == '' || $website == 'http://') $website = null;
-				$text = $this->frm->getField('text')->getValue();
+				$text = $this->frm->getField('message')->getValue();
 
 				// build array
 				$comment['post_id'] = $this->record['id'];

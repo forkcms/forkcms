@@ -55,7 +55,7 @@ jsBackend.analytics.chartPieChart = {
 			tooltip: { 
 				formatter: function() {
 					var percentage = String(this.point.percentage);
-					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, percentage.indexOf('.') + 3) + '%)';
+					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, $.inArray('.', percentage) + 3) + '%)';
 				},
 				borderWidth: 2, shadow: false
 			},

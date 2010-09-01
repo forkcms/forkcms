@@ -51,7 +51,7 @@ utils.cookies = {
 		if(typeof navigator.cookieEanbled == 'undefined' && !cookiesEnabled) {
 			// try to set a cookie
 			document.cookie = 'testcookie';
-			cookiesEnabled = (document.cookie.indexOf('testcookie') != -1);
+			cookiesEnabled = ($.inArray('testcookie', document.cookie) != -1);
 		}
 		
 		// return
@@ -204,7 +204,7 @@ utils.string = {
 			else if(value.charAt(i) == '-') url += ' ';
 
 			// only append chars that are allowed
-			else if(allowedChars.indexOf(value.charAt(i)) != -1) url += value.charAt(i);
+			else if($.inArray(value.charAt(i), allowedChars) != -1) url += value.charAt(i);
 		}
 
 		// trim

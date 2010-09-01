@@ -101,7 +101,7 @@
 				<div class="options last horizontal">
 					<ul class="inputList">
 						<li>{$chkActive} <label for="active">{$msgHelpActive}</label> {$chkActiveError}</li>
-						<li>{$chkApiAccess} <label for="api_access">{$msgHelpAPIAccess}</label> {$chkApiAccess}</li>
+						<li>{$chkApiAccess} <label for="api_access">{$msgHelpAPIAccess}</label> {$chkApiAccessError}</li>
 					</ul>
 					<p>
 						<label for="group">{$lblGroup|ucfirst}</label>
