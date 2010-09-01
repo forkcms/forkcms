@@ -41,7 +41,7 @@ class SearchInstall extends ModuleInstaller
 		$this->setActionRights(1, 'search', 'synonyms');
 
 		// add extra's
-		$searchID = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
+		$searchID = $this->insertExtra('search', 'block', 'Search', null, 'a:1:{s:3:"url";s:40:"/private/nl/search/statistics?token=true";}', 'N', 2000);
 		$this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 
 		// loop languages
