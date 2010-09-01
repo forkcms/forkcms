@@ -24,7 +24,7 @@
 				{$var|getnavigation:'page':0:1}
 			</div>
 		</div>
-		
+
 		<div id="main">
 			<div id="topContent">
 				{option:!hideContentTitle}<h1>{$page['title']}</h1>{/option:!hideContentTitle}
@@ -32,7 +32,7 @@
 
 			<div id="content">
 				<div id="subnavigation">
-					{$var|getsubnavigation:'page':{$page['id']}:1}
+					{$var|getsubnavigation:'page':{$page['id']}:2}
 				</div>
 
 				<div id="contentWrapper">

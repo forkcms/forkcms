@@ -667,6 +667,9 @@ class BackendPagesModel
 		$return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
 		$return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
 
+		// unserialize data
+		if($return['data'] !== null) $return['data'] = unserialize($return['data']);
+
 		// return
 		return $return;
 	}
@@ -1304,7 +1307,7 @@ class BackendPagesModel
 	 * @param	int[optional] $id			The id to ignore.
 	 * @param	int[optional] $parentId		The parent for the page to create an url for.
 	 */
-	public static function getURL($URL, $id = null, $parentId = 0)
+	public static function getURL($URL, $id = null, $parentId = 0, $isAction = false)
 	{
 		// redefine
 		$URL = (string) $URL;
@@ -1330,7 +1333,7 @@ class BackendPagesModel
 				$URL = BackendModel::addNumber($URL);
 
 				// recall this method, but with a new URL
-				return self::getURL($URL, null, $parentId);
+				return self::getURL($URL, null, $parentId, $isAction);
 			}
 		}
 
@@ -1351,7 +1354,7 @@ class BackendPagesModel
 				$URL = BackendModel::addNumber($URL);
 
 				// recall this method, but with a new URL
-				return self::getURL($URL, $id, $parentId);
+				return self::getURL($URL, $id, $parentId, $isAction);
 			}
 		}
 
@@ -1362,7 +1365,7 @@ class BackendPagesModel
 		$parentPageInfo = self::get($parentId);
 
 		// does the parent has extra's?
-		if($parentPageInfo['has_extra'] == 'Y')
+		if($parentPageInfo['has_extra'] == 'Y' && !$isAction)
 		{
 			// set locale
 			FrontendLanguage::setLocale(BackendLanguage::getWorkingLanguage());
@@ -1377,7 +1380,7 @@ class BackendPagesModel
 				$URL = BackendModel::addNumber($URL);
 
 				// recall this method, but with a new URL
-				return self::getURL($URL, $id, $parentId);
+				return self::getURL($URL, $id, $parentId, $isAction);
 			}
 		}
 
@@ -1388,7 +1391,7 @@ class BackendPagesModel
 			$URL = BackendModel::addNumber($URL);
 
 			// recall this method, but with a new URL
-			return self::getURL($URL, $id, $parentId);
+			return self::getURL($URL, $id, $parentId, $isAction);
 		}
 
 		// check if it is an appliation
@@ -1398,7 +1401,7 @@ class BackendPagesModel
 			$URL = BackendModel::addNumber($URL);
 
 			// recall this method, but with a new URL
-			return self::getURL($URL, $id, $parentId);
+			return self::getURL($URL, $id, $parentId, $isAction);
 		}
 
 		// return the unique URL!

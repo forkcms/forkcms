@@ -175,11 +175,15 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// tags
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
 
-		// meta
-		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
-
 		// extra
 		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
+
+		// a specific action
+		$isAction = (isset($this->record['data']) && $this->record['data']['is_action'] == true) ? true : false;
+		$this->frm->addCheckbox('is_action', $isAction);
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
 
 
@@ -277,7 +281,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		if($this->frm->isSubmitted())
 		{
 			// set callback for generating an unique URL
-			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id']));
+			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()));
 
 			// cleanup the submitted fields, ignore fields that were edited by hackers
 			$this->frm->cleanupFields();
@@ -314,6 +318,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$page['allow_delete'] = $this->record['allow_delete'];
 				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = $this->record['sequence'];
+				$page['data'] = ($this->frm->getField('is_action')->isChecked()) ? serialize(array('is_action' => true)) : null;
 
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];

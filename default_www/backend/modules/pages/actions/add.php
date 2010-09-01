@@ -18,7 +18,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 	 *
 	 * @var	array
 	 */
-	private $blocks = array();
+	private $blocks = array(), $blocksContent = array();
 
 
 	/**
@@ -139,6 +139,9 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 
+		// a specific action
+		$this->frm->addCheckbox('is_action', false);
+
 		// extra
 		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());
 	}
@@ -182,7 +185,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		if($this->frm->isSubmitted())
 		{
 			// set callback for generating an unique URL
-			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0));
+			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array(0, null, $this->frm->getField('is_action')->getChecked()));
 
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
@@ -222,6 +225,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$page['allow_delete'] = 'Y';
 				$page['no_follow'] = ($this->frm->getField('no_follow')->isChecked()) ? 'Y' : 'N';
 				$page['sequence'] = BackendPagesModel::getMaximumSequence($parentId) + 1;
+				$page['data'] = ($this->frm->getField('is_action')->isChecked()) ? serialize(array('is_action' => true)) : null;
 
 				// set navigation title
 				if($page['navigation_title'] == '') $page['navigation_title'] = $page['title'];

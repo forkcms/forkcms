@@ -32,7 +32,7 @@
 
 			<div id="content">
 				<div id="subnavigation">
-					{$var|getsubnavigation:'page':{$page['id']}:1}
+					{$var|getsubnavigation:'page':{$page['id']}:2}
 				</div>
 
 				<div id="contentWrapper">

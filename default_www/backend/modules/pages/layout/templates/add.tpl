@@ -252,6 +252,9 @@
 				</li>
 				{/iteration:hidden}
 			</ul>
+			<p>
+				<label for="isAction">{$chkIsAction} {$msgIsAction}</label>
+			</p>
 		</div>
 	</div>
 	<div class="fullwidthOptions">
