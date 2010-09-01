@@ -92,6 +92,14 @@ class BackendBlogModel
 		$db->delete('blog_posts', 'id IN('. implode(',', $ids) .');');
 		$db->delete('blog_comments', 'post_id IN('. implode(',', $ids) .');');
 
+		// get used meta ids
+		$metaIds = (array) $db->getColumn('SELECT meta_id
+											FROM blog_posts AS p
+											WHERE id IN('. implode(',', $ids) .');');
+
+		// delete meta
+		if(!empty($metaIds)) $db->delete('meta', 'id IN('. implode(',', $metaIds) .');');
+
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 	}
