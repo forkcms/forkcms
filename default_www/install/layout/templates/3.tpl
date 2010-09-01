@@ -60,7 +60,10 @@
 					<h3>Example data</h3>
 					<p>If you are new to Fork CMS, you might prefer to have an example website set up.</p>
 					<ul class="inputList">
-						<li>{$chkExampleData} <label for="exampleData">Install example data</label></li>
+						<li>
+							{$chkExampleData} <label for="exampleData">Install example data </label>
+							<small>(The blog-module is required and will be installed)</small>
+						</li>
 					</ul>
 				</div>
 

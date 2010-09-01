@@ -153,8 +153,14 @@ class InstallerStep3 extends InstallerStep
 			// all valid
 			if($this->frm->isCorrect())
 			{
+				// get selected modules
+				$modules = $this->frm->getField('modules')->getValue();
+
+				// add blog if example data was checked
+				if($this->frm->getField('example_data')->getChecked() && !in_array('blog', $modules)) $modules[] = 'blog';
+
 				// set modules
-				SpoonSession::set('modules', $this->frm->getField('modules')->getValue());
+				SpoonSession::set('modules', $modules);
 
 				// get default language
 				if($this->frm->getField('languageType')->getValue() == 'multiple') $defaultLanguage = $this->frm->getField('default_language')->getValue();
