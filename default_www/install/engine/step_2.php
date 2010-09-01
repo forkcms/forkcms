@@ -25,7 +25,7 @@ class InstallerStep2 extends InstallerStep
 		$this->loadForm();
 
 		// validate form
-		$this->validate();
+		$this->validateForm();
 
 		// parse form
 		$this->parseForm();
@@ -67,7 +67,7 @@ class InstallerStep2 extends InstallerStep
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// form submitted
 		if($this->frm->isSubmitted())

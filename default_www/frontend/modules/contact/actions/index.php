@@ -34,7 +34,7 @@ class FrontendContactIndex extends FrontendBaseBlock
 		$this->loadForm();
 
 		// validate
-		$this->validate();
+		$this->validateForm();
 
 		// parse
 		$this->parse();
@@ -89,7 +89,7 @@ class FrontendContactIndex extends FrontendBaseBlock
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// is the form submitted
 		if($this->frm->isSubmitted())

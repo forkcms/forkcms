@@ -68,7 +68,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->loadForm();
 
 		// validate form
-		$this->validate();
+		$this->validateForm();
 
 		// parse
 		$this->parse();
@@ -233,7 +233,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// get settings
 		$commentsAllowed = (isset($this->settings['allow_comments']) && $this->settings['allow_comments']);

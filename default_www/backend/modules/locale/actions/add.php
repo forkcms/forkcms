@@ -37,7 +37,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->loadForm();
 
 		// validate the form
-		$this->validate();
+		$this->validateForm();
 
 		// parse the datagrid
 		$this->parse();
@@ -103,7 +103,7 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())

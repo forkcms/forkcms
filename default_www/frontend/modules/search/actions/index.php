@@ -62,7 +62,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->loadForm();
 
 		// validate form
-		$this->validate();
+		$this->validateForm();
 
 		// display
 		$this->display();
@@ -218,7 +218,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// previous search result
 		$previousTerm = SpoonSession::exists('searchTerm') ? SpoonSession::get('searchTerm') : '';

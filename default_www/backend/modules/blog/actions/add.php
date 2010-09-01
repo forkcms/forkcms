@@ -28,7 +28,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->loadForm();
 
 		// validate the form
-		$this->validate();
+		$this->validateForm();
 
 		// parse
 		$this->parse();
@@ -96,7 +96,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())

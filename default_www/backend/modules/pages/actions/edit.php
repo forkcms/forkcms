@@ -80,7 +80,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->loadRevisions();
 
 		// validate the form
-		$this->validate();
+		$this->validateForm();
 
 		// parse
 		$this->parse();
@@ -271,7 +271,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())

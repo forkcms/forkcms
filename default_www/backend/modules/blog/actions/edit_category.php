@@ -36,7 +36,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 			$this->loadForm();
 
 			// validate the form
-			$this->validate();
+			$this->validateForm();
 
 			// parse the datagrid
 			$this->parse();
@@ -102,7 +102,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// is the form submitted?
 		if($this->frm->isSubmitted())

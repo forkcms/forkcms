@@ -30,7 +30,7 @@ class InstallerStep5 extends InstallerStep
 	public function execute()
 	{
 		// validate all previous steps
-		if(!$this->validate()) SpoonHTTP::redirect('index.php?step=1');
+		if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
 
 		// create configuration files
 		$this->createConfigurationFiles();
@@ -306,7 +306,7 @@ class InstallerStep5 extends InstallerStep
 	/**
 	 * Validates the previous steps
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		return (InstallerStep1::isAllowed() && InstallerStep2::isAllowed() && InstallerStep3::isAllowed() && InstallerStep4::isAllowed());
 	}

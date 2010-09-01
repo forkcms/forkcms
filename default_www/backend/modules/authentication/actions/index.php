@@ -44,7 +44,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 		$this->load();
 
 		// validate the form
-		$this->validate();
+		$this->validateForm();
 
 		// parse the error
 		$this->parse();
@@ -94,7 +94,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function validate()
+	private function validateForm()
 	{
 		// is the form submitted
 		if($this->frm->isSubmitted())
