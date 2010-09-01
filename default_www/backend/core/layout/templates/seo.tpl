@@ -23,11 +23,13 @@
 				{$txtMetaKeywords} {$txtMetaKeywordsError}
 			</li>
 		</ul>
-		<div class="textareaHolder">
-			<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
-			<span class="helpTxt">{$msgHelpMetaCustom}</span>
-			{$txtMetaCustom} {$txtMetaCustomError}
-		</div>
+		{option:txtMetaCustom}
+			<div class="textareaHolder">
+				<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
+				<span class="helpTxt">{$msgHelpMetaCustom}</span>
+				{$txtMetaCustom} {$txtMetaCustomError}
+			</div>
+		{/option:txtMetaCustom}
 	</div>
 </div>
 
