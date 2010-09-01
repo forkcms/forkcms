@@ -76,7 +76,7 @@ class BackendDataGrid extends SpoonDataGrid
 	public function addColumn($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
 		// known actions that should have a button
-		if(in_array($name, array('add', 'edit', 'delete')))
+		if(in_array($name, array('add', 'edit', 'delete', 'details', 'details')))
 		{
 			// rebuild value, it should have special markup
 			$value = '<a href="'. $URL .'" class="button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton">
