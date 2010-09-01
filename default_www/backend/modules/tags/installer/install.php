@@ -39,6 +39,28 @@ class TagsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'tags', 'index');
 		$this->setActionRights(1, 'tags', 'mass_action');
 
+		// add extra
+		$tagsID = $this->insertExtra('tags', 'block', 'Tags', null, null, 'N', 3);
+
+		// loop languages
+		foreach($this->getLanguages() as $language)
+		{
+			// check if a page for contact already exists in this language
+			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+												FROM pages AS p
+												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
+												WHERE b.extra_id = ? AND p.language = ?', array($tagsID, $language)) == 0)
+			{
+				// insert contact page
+				$this->insertPage(array('title' => 'Tags',
+										'language' => $language),
+									null,
+									array('extra_id' => $tagsID));
+			}
+		}
+
+
+
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Edited', 'De tag "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'EditTag', 'bewerk tag "%1$s"');
