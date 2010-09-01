@@ -18,6 +18,10 @@
 			<label for="recentArticlesNumberOfItems">{$msgNumItemsInRecentArticles|ucfirst}</label>
 			{$ddmRecentArticlesNumberOfItems} {$ddmRecentArticlesNumberOfItemsError}
 		</div>
+		<div class="options">
+			<label for="recentArticlesNumberOfItems">{$msgNumItemsInLatestArticles|ucfirst}</label>
+			{$ddmLatestArticlesNumberOfItems} {$ddmLatestArticlesNumberOfItemsError}
+		</div>
 	</div>
 
 	<div class="box">

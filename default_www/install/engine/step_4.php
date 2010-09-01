@@ -54,8 +54,8 @@ class InstallerStep4 extends InstallerStep
 	private function loadForm()
 	{
 		$this->frm->addText('email', (SpoonSession::exists('email') ? SpoonSession::get('email') : null));
-		$this->frm->addPassword('password', (SpoonSession::exists('password') ? SpoonSession::get('password') : null), null, 75, 'inputPassword', 'inputPasswordError', true);
-		$this->frm->addPassword('confirm', (SpoonSession::exists('confirm') ? SpoonSession::get('confirm') : null), null, 75, 'inputPassword', 'inputPasswordError', true);
+		$this->frm->addPassword('password', (SpoonSession::exists('password') ? SpoonSession::get('password') : null), null, 'inputPassword', 'inputPasswordError', true);
+		$this->frm->addPassword('confirm', (SpoonSession::exists('confirm') ? SpoonSession::get('confirm') : null), null, 'inputPassword', 'inputPasswordError', true);
 
 		// disable autocomplete
 		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));

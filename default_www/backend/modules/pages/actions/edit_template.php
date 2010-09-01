@@ -91,7 +91,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('label', $this->record['label']);
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
-		$this->frm->addDropdown('num_blocks', array(1 => 1, 2, 3, 4, 5, 6, 7, 8, 9, 10), $this->record['num_blocks']);
+		$this->frm->addDropdown('num_blocks', array_combine(range(1, 20), range(1, 20)), $this->record['num_blocks']);
 		if(BackendPagesModel::isTemplateInUse($this->id)) $this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
 		$this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));

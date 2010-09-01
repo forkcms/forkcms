@@ -49,6 +49,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		// add fields for pagination
 		$this->frm->addDropdown('overview_number_of_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 10));
 		$this->frm->addDropdown('recent_articles_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getModuleSetting($this->URL->getModule(), 'recent_articles_num_items', 5));
+		$this->frm->addDropdown('latest_articles_number_of_items', array_combine(range(1, 10), range(1, 10)), BackendModel::getModuleSetting($this->URL->getModule(), 'latest_articles_num_items', 5));
 
 		// add fields for spam
 		$this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
@@ -112,6 +113,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				// set our settings
 				BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items', (int) $this->frm->getField('overview_number_of_items')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'recent_articles_num_items', (int) $this->frm->getField('recent_articles_number_of_items')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'latest_articles_num_items', (int) $this->frm->getField('latest_articles_number_of_items')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', (bool) $this->frm->getField('spamfilter')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'allow_comments', (bool) $this->frm->getField('allow_comments')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'moderation', (bool) $this->frm->getField('moderation')->getValue());

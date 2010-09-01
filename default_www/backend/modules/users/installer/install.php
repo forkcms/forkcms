@@ -54,6 +54,7 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.');
 		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Restored', 'De gebruiker "%1$s" werd terug geactiveerd.');
 		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
+		$this->insertLocale('nl', 'backend', 'users', 'err', 'EmailWasDeletedBefore', 'Een gebruiker met dit emailadres werd vroeger verwijderd. <a href="%1$s">Activeer deze gebruiker terug</a>.');
 		$this->insertLocale('nl', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'Je kan het emailadres van deze gebruiker niet aanpassen.');
 
 		// insert locale (en)
@@ -67,8 +68,9 @@ class UsersInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Enable API access for this account.');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passwords consist of a combination of capitals, digits, lowercase and special characters.');
 		$this->insertLocale('en', 'backend', 'users', 'msg', 'Restored', 'The user "%1$s" is restored.');
+		$this->insertLocale('en', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'You can\'t change the emailaddres of the GOD-user.');
+		$this->insertLocale('en', 'backend', 'users', 'err', 'EmailWasDeletedBefore', 'A user with this emailaddress was deleted. <a href="%1$s">Restore this user</a>.');
 		$this->insertLocale('en', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
-		$this->insertLocale('en', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'You can\'t change the emailaddres of teh GOD-user.');
 
 		// add default user
 		$this->addUser();

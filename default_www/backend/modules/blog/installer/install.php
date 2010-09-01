@@ -143,6 +143,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NoItems', 'Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInLatestArticles', 'Aantal items in laatste artikels widget');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Aantal items in recente artikels widget');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoComments', 'Reageer als eerste');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNumberOfComments', 'Al %1$s reacties');
@@ -168,6 +169,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Enable the built-in spamfilter (Akismet) to help avoid spam comments.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NoItems', 'There are no articles yet. <a href="%1$s">Write the first article</a>.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInLatestArticles', 'Number of articles in the latest articles widget');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Number of articles in the recent articles widget');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoComments', 'Be the first to comment');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNumberOfComments', '%1$s comments');

@@ -133,7 +133,7 @@ class FrontendContactIndex extends FrontendBaseBlock
 					FrontendMailer::addEmail(FL::getMessage('ContactSubject'), FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $variables, null, null, null, null, $email, $author);
 
 					// redirect
-					$this->redirect(FrontendNavigation::getURLForBlock('contact') .'?sent=true#contactForm');
+					$this->redirect(FrontendNavigation::getURLForBlock('contact') .'?sent=true');
 				}
 				catch(Exception $e)
 				{

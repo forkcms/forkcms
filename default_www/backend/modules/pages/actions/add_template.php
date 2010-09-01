@@ -50,7 +50,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		// create elements
 		$this->frm->addText('label');
 		$this->frm->addText('file');
-		$this->frm->addDropdown('num_blocks', array_combine(range(1, 10), range(1, 10)), 3);
+		$this->frm->addDropdown('num_blocks', array_combine(range(1, 20), range(1, 20)), 3);
 		$this->frm->addTextarea('format');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('default');
