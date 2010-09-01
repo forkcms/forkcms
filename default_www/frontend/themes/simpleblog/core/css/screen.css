@@ -1,0 +1,359 @@
+/*
+
+	Stylesheet for Simpleblog theme (Fork CMS)
+
+	Media:      screen, projection
+	Copyright:  Netlash <http://www.netlash.com>
+	author:     Johan Ronsse <johan@netlash.com>
+
+*/
+
+a img {
+	border: none;
+}
+
+body {
+	font-family: Arial, sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+	background: #F1F5FA;
+}
+
+#container {
+	width: 880px;
+	margin: 20px auto;
+}
+
+#header {
+	border-bottom: 1px solid #CCC;
+	padding: 20px 0;
+}
+
+	#header h1 {
+		margin: 0;
+		font-size: 64px;
+		font-family: "Helvetica Neue", Arial, sans-serif;
+		letter-spacing: -2px;
+	}
+	
+		#header h1 a {
+			text-decoration: none;
+			color: #000;
+		}
+
+	#navigation ul {
+		margin: 0;
+		padding: 0;
+		font-size: 19px;
+	}
+
+		#navigation ul:after {
+			/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+		}
+
+	#navigation li {
+		float: left;
+		list-style: none;
+		padding-right: 5px;
+		font-weight: 700;
+	}
+
+	#navigation li a {
+		line-height: 30px;
+		text-decoration: none;
+		padding: 0 12px;
+		display: block;
+		float: left;
+	}
+
+		#navigation li.selected a {
+			background: #000;
+			color: #FFF;
+			text-decoration: none;
+		}
+
+#main {
+	padding: 20px 0;
+}
+
+	#sidebar {
+		width: 200px;
+		padding-left: 40px;
+		float: left;
+	}
+
+	#content {
+		width: 620px;
+		float: left;
+	}
+
+#footer {
+	padding: 20px 0;
+	color: #808080;
+}
+
+	#footer ul {
+		margin: 0;
+		padding: 0;
+		font-size: 11px;
+	}
+
+	#footer li {
+		display: inline;
+		padding-right: 5px;
+	}
+	
+		#footer a {
+			color: #808080;
+		}
+
+/*
+	Typography
+*/
+
+h1, h2 {
+	line-height: 1.33;
+}
+
+/*
+	Contact form and blog form
+*/
+
+form label {
+	width: 100px;
+	float: left;
+}
+
+form p {
+	clear: both;
+}
+
+	form .spacing,
+	form .formError {
+		padding-left: 100px;
+	}
+
+	textarea {
+		width: 400px;
+	}
+
+/*
+	Buttons
+*/
+
+a.button {
+	background: #EEE;
+	padding: 4px 6px;
+	border: 1px solid #999;
+	color: #000;
+	text-decoration: none;
+}
+
+/*
+	Blog styling
+*/
+
+.article {
+	border-bottom: 1px solid #CCC;
+	margin: 0 0 12px;
+}
+
+.article .heading h3,
+.article .heading h2,
+.article .heading h1 {
+	margin-bottom: 0;
+}
+
+.article .heading p {
+	margin-top: 0;
+	color: #808080;
+}
+
+.article .meta {
+	color: #808080;
+}
+
+#sidebar .widget {
+	border-bottom: 1px solid #CCC;
+	margin: 0 0 12px;
+	padding: 0 0 12px;
+}
+
+	.widget ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.widget li {
+		margin: 0 0 6px;
+	}
+
+		.widget li li {
+			margin: 0 0 0 24px;
+		}
+
+.comment {
+	zoom: 1;
+	border-bottom: 1px solid #A0ACAA;
+	padding: 0 0 6px;
+	margin: 0 0 12px;
+}
+
+.comment:after {
+	/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+}
+
+	.comment .imageHolder {
+		float: left;
+		width: 48px;
+		padding-right: 10px;
+	}
+
+	.comment .commentText {
+		float: left;
+		width: 446px;
+	}
+
+		.comment .author {
+			padding: 0;
+			margin: 0;
+			color: #808080;
+		}
+
+/*
+	Clearfix
+*/
+
+.clearfix {
+	zoom: 1;
+}
+
+.clearfix:after {
+	/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+}
+
+/*
+	Messages
+*/
+
+/* Inline error */
+.formError {
+	color: red;
+	display: block;
+}
+
+/*
+	Block errors
+*/
+
+.formMessage {
+	padding: 6px 12px;
+	border: 1px solid #000;
+	margin: 0 0 12px;
+	background: #FFF;
+}
+
+	.formMessage p {
+		margin: 0;
+	}
+
+.successMessage {
+	background: green;
+	color: white;
+}
+
+	.successMessage a {
+		color: white;
+	}
+
+.errorMessage {
+	background: red;
+	color: white;
+}
+
+	.errorMessage a {
+		color: white;
+	}
+
+/*
+ 	Pattern: pagination
+*/
+
+.paginationWrap {
+	width: 100%;
+	overflow: hidden;
+}
+
+.pagination {
+	float: left;
+	position: relative;
+	left: 50%;
+}
+
+.pagination ul {
+	padding: 18px 0;
+	z-index: 2;
+	overflow: hidden;
+	position: relative;
+	left: -50%;
+}
+
+.pagination li {
+	float: left;
+	list-style: none;
+	margin: 0 5px 0 0;
+	text-decoration: none;
+	padding: 0;
+	line-height: 15px;
+	font-size: 12px;
+	text-align: center;
+}
+
+.pagination li span {
+	float: left;
+	display: block;
+	padding: 4px 5px;
+	color: #CCC;
+	min-width: 12px;
+}
+
+.pagination li.currentPage span {
+	font-weight: 700;
+	color: #000;
+}
+
+.pagination li.selected span {
+	padding: 4px 5px;
+	font-weight: 700;
+	color: #000;
+}
+
+.pagination li a:link,
+.pagination li a:visited {
+	float: left;
+	display: block;
+	padding: 3px 4px;
+	border: 1px solid #CCC;
+	text-decoration: none;
+	min-width: 12px;
+}
+
+li.ellipsis {
+	margin: 0;
+}
+
+li.ellipsis span {
+	color: black;
+}
+
+.pagination li a:hover,
+.pagination li a:active {
+	background: #EEE;
+	border: 1px solid #AAA;
+	color: black;
+}
+
+.nextPage, .previousPage { font-size: 11px !important; }
+.pagination li.nextPage { margin-left: 10px; }
+.pagination li.previousPage { margin-right: 15px; }

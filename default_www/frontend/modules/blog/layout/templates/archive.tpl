@@ -5,9 +5,9 @@
 *}
 
 <div id="blog" class="archive">
-	<h2>
-		{option:blogArchive['month']}{$blogArchive['start_date']|date:'F Y':{$LANGUAGE}}{/option:blogArchive['month']}
-		{option:!blogArchive['month']}{$blogArchive['start_date']|date:'Y':{$LANGUAGE}}{/option:!blogArchive['month']}
+	<h2 class="intro">
+		{option:blogArchive['month']}Archieven {$blogArchive['start_date']|date:'F Y':{$LANGUAGE}}{/option:blogArchive['month']}
+		{option:!blogArchive['month']}Archieven  {$blogArchive['start_date']|date:'Y':{$LANGUAGE}}{/option:!blogArchive['month']}
 	</h2>
 
 	{option:blogArticles}
@@ -15,8 +15,8 @@
 			<thead>
 				<tr>
 					<th width="15%">{$lblDate|ucfirst}</th>
-					<th width="65%">{$lblTitle|ucfirst}</th>
-					<th width="20%">{$lblComments|ucfirst}</th>
+					<th width="55%">{$lblTitle|ucfirst}</th>
+					<th width="30%">{$lblComments|ucfirst}</th>
 				</tr>
 			</thead>
 			<tbody>

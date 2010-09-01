@@ -108,6 +108,7 @@
 		padding-top: 12px;
 	}
 
+	#pages.pagesAddTemplate #format,
 	#pages.pagesEditTemplate #format {
 		width: 200px;
 		height: 200px;

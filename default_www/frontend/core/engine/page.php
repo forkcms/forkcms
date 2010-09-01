@@ -88,6 +88,9 @@ class FrontendPage extends FrontendBaseObject
 		// get pageId for requested URL
 		$this->pageId = FrontendNavigation::getPageId(implode('/', $this->URL->getPages()));
 
+		// @todo tijs; put this in a neater place
+		$this->tpl->assign('page' . $this->pageId, true);
+
 		// make the pageId accessible through a static method
 		self::$currentPageId = $this->pageId;
 

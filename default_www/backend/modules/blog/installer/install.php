@@ -145,6 +145,11 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NoItems', 'Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInLatestArticles', 'Aantal items in laatste artikels widget');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Aantal items in recente artikels widget');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'InTheCategory', 'in de categorie');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'BlogArchive', 'blogarchief');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentArticles', 'recente artikels');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoComments', 'Reageer als eerste');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNumberOfComments', 'Al %1$s reacties');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogOneComment', 'Al 1 reactie');
@@ -171,6 +176,11 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NoItems', 'There are no articles yet. <a href="%1$s">Write the first article</a>.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInLatestArticles', 'Number of articles in the latest articles widget');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Number of articles in the recent articles widget');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'BlogArchive', 'blog archive');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentArticles', 'recent articles');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Wrote', 'wrote');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoComments', 'Be the first to comment');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNumberOfComments', '%1$s comments');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogOneComment', '1 comment already');

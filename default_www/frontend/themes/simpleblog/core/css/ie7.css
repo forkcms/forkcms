@@ -1,0 +1,25 @@
+/*
+
+	Conditional comments for Scorsese theme (Fork CMS)
+	Browser: Internet Explorer 7
+	
+	Media:      screen, projection
+	Copyright:  Netlash <http://www.netlash.com>
+	author:     Thomas Deceuninck <thomasdeceuninck@netlash.com>
+
+*/
+
+.clearfix,
+#top,
+#header,
+#navigation,
+#main,
+#intro,
+#content,
+#subnavigation,
+#contentWrapper,
+#mainContent,
+#footerWrapper,
+#footer {
+	zoom: 1;
+}

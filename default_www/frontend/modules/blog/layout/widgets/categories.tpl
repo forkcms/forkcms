@@ -5,13 +5,12 @@
 
 {option:widgetBlogCategories}
 	<div class="widget blogCategories">
-		<h3>{$lblCategories|ucfirst}</h3>
+		<h4>{$lblCategories|ucfirst}</h4>
 		<ul>
 			{iteration:widgetBlogCategories}
 				<li>
 					<a href="{$widgetBlogCategories.url}">
-						{$widgetBlogCategories.label}
-						<small>({$widgetBlogCategories.total})</small>
+						{$widgetBlogCategories.label} ({$widgetBlogCategories.total})
 					</a>
 				</li>
 			{/iteration:widgetBlogCategories}

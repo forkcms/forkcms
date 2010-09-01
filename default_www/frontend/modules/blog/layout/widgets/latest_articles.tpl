@@ -5,12 +5,10 @@
 
 {option:widgetBlogLatestArticles}
 	<div class="widget widgetBlogLatestArticles">
+		<h4>{$lblRecentArticles|ucfirst}</h4>
 		<ul>
 			{iteration:widgetBlogLatestArticles}
-				<li>
-					<h4><a href="{$widgetBlogLatestArticles.full_url}" title="{$widgetBlogLatestArticles.title}">{$widgetBlogLatestArticles.title}</a></h4>
-					<p class="date">{$lblWrittenOn|ucfirst} {$widgetBlogLatestArticles.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} {$lblOn} {$widgetBlogLatestArticles.publish_on|date:{$timeFormat}:{$LANGUAGE}}</p>
-				</li>
+				<li><a href="{$widgetBlogLatestArticles.full_url}" title="{$widgetBlogLatestArticles.title}">{$widgetBlogLatestArticles.title}</a></li>
 			{/iteration:widgetBlogLatestArticles}
 		</ul>
 	</div>

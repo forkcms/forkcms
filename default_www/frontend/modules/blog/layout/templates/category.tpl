@@ -5,34 +5,31 @@
 *}
 
 <div id="blog" class="index">
-	<h2>{$blogCategory['label']}</h2>
+	<h2 class="intro">{$lblArticlesInCategory|ucfirst} <em>{$blogCategory['label']}</em></h2>
 
 	{option:blogArticles}
-		<table class="datagrid" width="100%">
-			<thead>
-				<tr>
-					<th width="15%">{$lblDate|ucfirst}</th>
-					<th width="65%">{$lblTitle|ucfirst}</th>
-					<th width="20%">{$lblComments|ucfirst}</th>
-				</tr>
-			</thead>
-			<tbody>
-				{iteration:blogArticles}
-					<tr>
-						<td class="date">{$blogArticles.publish_on|date:{$dateFormatShort}:{$LANGUAGE}}</td>
-						<td class="title"><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a></td>
-						<td class="comments">
-						<!-- Comments -->
-							{option:!blogArticles.comments}<a href="{$blogArticles.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogArticles.comments}
-							{option:blogArticles.comments}
-								{option:blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogArticles.comments_count}}</a>{/option:blogArticles.comments_multiple}
-								{option:!blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogArticles.comments_multiple}
-							{/option:blogArticles.comments}
-						</td>
-					</tr>
-				{/iteration:blogArticles}
-			</tbody>
-		</table>
+		{iteration:blogArticles}
+			<div class="article">
+				<div class="heading">
+					<h2><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a></h2>
+					<p class="date">{$blogArticles.publish_on|date:{$dateFormatLong}:{$LANGUAGE}|ucfirst} -
+					{option:!blogArticles.comments}<a href="{$blogArticles.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogArticles.comments}
+					{option:blogArticles.comments}
+						{option:blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogArticles.comments_count}}</a>{/option:blogArticles.comments_multiple}
+						{option:!blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogArticles.comments_multiple}
+					{/option:blogArticles.comments}
+					</p>
+				</div>
+				<div class="content">
+					{option:!blogArticles.introduction}{$blogArticles.text}{/option:!blogArticles.introduction}
+					{option:blogArticles.introduction}{$blogArticles.introduction}{/option:blogArticles.introduction}
+				</div>
+				<p class="meta">
+					{* @todo label 'in de categorie' *}
+					{$msgWrittenBy|ucfirst|sprintf:{$blogArticles.user_id|usersetting:'nickname'}} in de categorie: <a href="{$blogArticles.category_full_url}" title="{$blogArticles.category_name}">{$blogArticles.category_name}</a>. {option:blogArticles.tags}{$lblTags|ucfirst}: {iteration:blogArticles.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:blogArticles.tags}{/option:blogArticles.tags}
+				</p>
+			</div>
+			{/iteration:blogArticles}
 
 		{include:file='{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl'}
 	{/option:blogArticles}

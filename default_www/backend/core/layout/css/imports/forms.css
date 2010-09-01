@@ -142,7 +142,7 @@ input[type="submit"] {
 	.forkForms .inputList li .inputCheckbox {
 		position: absolute;
 		left: 0;
-		top: 2px;
+		top: 0;
 		*top: -1px; /* IE7 */
 	}
 
@@ -196,7 +196,7 @@ label {
 .forkForms .horizontal p label,
 .forkForms .horizontal .fakeP label {
 	display: inline;
-	padding: 0;
+	padding: 0 10px 0 0;
 }
 
 .forkForms .horizontal .helpTxt {
@@ -209,7 +209,7 @@ label {
 .forkForms .horizontal label,
 .forkForms .horizontal p.label {
 	float: left;
-	width: 115px;
+	width: 105px;
 	padding-right: 10px;
 	line-height: 23px;
 	display: block;
@@ -295,4 +295,10 @@ label {
 .horizontal .itemAdder .formError {
 	clear: both;
 	padding: 0 !important;
+}
+
+@-moz-document url-prefix() {
+	input[type="text"], input[type="password"], textarea {
+		overflow: auto !important;
+	}
 }
