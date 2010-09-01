@@ -110,7 +110,8 @@
 			<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
 		</div>
 	</div>
-	<p>{$msgNoItems|sprintf:{$addUrl}}</p>
+	{option:filter}<p>{$msgNoItemsFilter|sprintf:{$addUrl}}</p>{/option:filter}
+	{option:!filter}<p>{$msgNoItems|sprintf:{$addUrl}}</p>{/option:!filter}
 {/option:!datagrid}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}

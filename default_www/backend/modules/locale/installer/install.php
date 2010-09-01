@@ -57,6 +57,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpName', 'De Engelstalige referentie naar de vertaling, bvb. "Add".');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpValue', 'De vertaling zelf, bvb. "toevoegen".');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'NoItems', 'Er zijn nog geen vertalingen. <a href="%1$s">Voeg de eerste vertaling toe</a>.');
+		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'NoItemsFilter', 'Er zijn geen vertalingen voor deze filter. <a href="%1$s">Voeg de eerste vertaling toe</a>.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'NoItemsAnalyse', 'Er werden geen ontbrekende vertalingen gevonden.');
 		// --
 		$this->insertLocale('en', 'backend', 'locale', 'err', 'AlreadyExists', 'This translation already exists.');
@@ -74,6 +75,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'HelpName', 'The english reference for this translation, eg. "Add".');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'HelpValue', 'The translation, eg. "add".');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'NoItems', 'There are no translations yet. <a href="%1$s">Add the first translation</a>.');
+		$this->insertLocale('en', 'backend', 'locale', 'msg', 'NoItemsFilter', 'There are no translations yet for this filter. <a href="%1$s">Add the first translation</a>.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'NoItemsAnalyse', 'No missing translations were found.');
 
 		// insert local for dashboard

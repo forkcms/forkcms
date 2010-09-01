@@ -200,6 +200,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 		$this->tpl->assign('addUrl', BackendModel::createURLForAction('add', null, null, $this->filter));
 
+		// is filtered?
+		if($this->getParameter('form', 'string', '') == 'filter') $this->tpl->assign('filter', true);
+
 		// parse filter
 		$this->tpl->assign($this->filter);
 	}
