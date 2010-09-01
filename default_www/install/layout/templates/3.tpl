@@ -21,7 +21,7 @@
 		<h2>Settings</h2>
 		{form:step3}
 			{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}
-				<div class="horizontal">
+				<div>
 					<h3>Modules</h3>
 					<p>Which modules would you like to install?</p>
 					<ul id="moduleList" class="inputList">
@@ -62,7 +62,7 @@
 					<ul class="inputList">
 						<li>
 							{$chkExampleData} <label for="exampleData">Install example data </label>
-							<small>(The blog-module is required and will be installed)</small>
+							<span class="helpTxt">(The blog-module is required and will be installed)</span>
 						</li>
 					</ul>
 				</div>

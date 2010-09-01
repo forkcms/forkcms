@@ -42,6 +42,7 @@ body {
 	background: #FAFAFA;
 	border: 1px solid #BED7E9;
 	border-width: 0 1px;
+	*height: 100%;
 }
 
 	@-moz-document url-prefix() {
@@ -173,6 +174,8 @@ body {
 					background: #F5F5F5;
 					display: block;
 					border: 1px solid #B0B0B0;
+					zoom: 1;
+					cursor: pointer;
 
 					/* @inc .rc */
 					border-radius: 4px;

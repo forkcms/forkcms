@@ -24,6 +24,9 @@ jsBackend = {
 		jsBackend.messages.init();
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
+		// IE fixes
+		jsBackend.selectors.init();
+		jsBackend.focusfix.init();
 		// jsBackend.tableSequenceByDragAndDrop.init();
 	},
 
@@ -401,7 +404,6 @@ jsBackend.controls = {
 					// show
 					$('#'+ wrapperId +' p.'+ classToShow).show();
 				});
-
 
 			});
 		}
@@ -875,6 +877,50 @@ jsBackend.tooltip = {
 			$('.help').tooltip({ effect: 'fade' })
 						.dynamic();
 		}
+	},
+
+	// end
+	eof: true
+}
+
+jsBackend.selectors = {
+	// init, something like a constructor
+	init: function() {
+
+		// Missing CSS selector support IE6, IE7
+
+		// IE6 and IE7, IE8 as IE7
+		if ($.browser.msie && $.browser.version.substr(0,1)<9) {
+			// Nothing yet
+		}
+
+	},
+
+	// end
+	eof: true
+}
+
+jsBackend.focusfix = {
+	// init, something like a constructor
+	init: function() {
+
+		function focusfix(selector, className) {
+			$(selector).focus(function() {
+				$(this).addClass(className);
+			});
+			// Removes class when focus is lost
+			$(selector).blur(function() {
+				$(this).removeClass(className);
+			});
+		}
+
+		// IE6 & IE7 focus fix
+		if ($.browser.msie && $.browser.version.substr(0,1)<9) {
+			// Apply focusfix
+			focusfix('input.inputText', 'focus');
+			focusfix('textarea', 'focus');
+		}
+
 	},
 
 	// end

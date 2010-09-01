@@ -270,7 +270,7 @@
 			<ul class="inputList">
 				{iteration:hidden}
 				<li>
-					{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label}</label>
+					{$hidden.rbtHidden} <label for="{$hidden.id}">{$hidden.label|ucfirst}</label>
 				</li>
 				{/iteration:hidden}
 			</ul>

@@ -1,10 +1,10 @@
 /*
 
     Installer CSS
-    
+
     @package      backend
     @subpackage   installer
-    
+
     @author       Johan Ronsse <johan@netlash.com>
     @since        2.0
 
@@ -79,7 +79,6 @@ body#installer {
 }
 
 #installerError .errorMessage {
-
 	z-index: 3;
 	font-size: 11px;
 }
@@ -152,13 +151,13 @@ body#installer {
 			padding-bottom: 0;
 			padding-left: 158px;
 		}
-		
+
 		span.ok {
 			padding: 3px;
 			color: #4f6d2c;
 			background: #d6efb8;
 		}
-		
+
 		span.nok {
 			color: #FFF;
 			padding: 3px;
@@ -167,7 +166,7 @@ body#installer {
 			background: -webkit-gradient(linear, left top, left bottom, from(#DE3636), to(#FF2626));
 			background: -moz-linear-gradient(top, #DE3636, #FF2626);
 		}
-		
+
 .inputText {
 	width: 300px;
 }

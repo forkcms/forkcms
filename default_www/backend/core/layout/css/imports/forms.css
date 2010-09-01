@@ -143,6 +143,7 @@ input[type="submit"] {
 		position: absolute;
 		left: 0;
 		top: 2px;
+		*top: -1px; /* IE7 */
 	}
 
 	#urlManager ul {

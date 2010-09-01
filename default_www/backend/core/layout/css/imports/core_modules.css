@@ -188,23 +188,23 @@
 #templateVisualLarge table {
 	width: 100%;
 	border-collapse: separate;
-	border-spacing: 10px;
+	border-spacing: 10px; /* If you change the value "10" change it in model.php of pages module too; for IE7 s*/
 	table-layout: fixed;
+	border: 1px dotted #CCC;
+	background: #FCFCFC;
 }
 
 	#templateVisualLarge td {
 		text-align: center;
 		border: 1px dotted #666;
-		border-bottom: none;
+		background: #FFF;
 		vertical-align: middle;
+		padding: 12px;
+
+		/* Min-height fast hack */
 		min-height: 86px;
 		height: auto !important;
 		height: 86px;
-		padding: 12px;
-	}
-
-	#templateVisualLarge table:last-child td {
-		border-bottom: 1px dotted #666;
 	}
 
 	#templateVisualLarge .buttonHolder {
@@ -212,12 +212,10 @@
 		margin: 0 auto;
 	}
 
-	#templateVisualLarge td:empty,
 	#templateVisualLarge td.empty {
 		background: #EEE url(/backend/core/layout/images/na.png) repeat;
 		border: 1px solid #CCC;
 	}
-
 
 	#templateVisualLarge h4,
 	#templateVisualLarge p {

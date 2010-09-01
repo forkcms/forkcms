@@ -340,7 +340,7 @@ jsBackend.pages.template = {
 			i++;
 		});
 
-		// set HTML for the viual representation of the template
+		// set HTML for the visual representation of the template
 		$('#templateVisual').html(current.html);
 		$('#templateVisualLarge').html(current.htmlLarge);
 		$('#templateId').val(selected);
@@ -360,12 +360,12 @@ jsBackend.pages.template = {
 			jsBackend.pages.extras.changeExtra(extraId, index);
 		});
 	},
-	
+
 	// show the dialog to alter the selected template
 	showTemplateDialog: function(evt) {
 		// prevent the default action
 		evt.preventDefault();
-				
+
 		// open the modal
 		$('#chooseTemplate').dialog('open');
 	},

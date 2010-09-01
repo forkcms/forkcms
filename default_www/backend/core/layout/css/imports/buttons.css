@@ -66,7 +66,7 @@ a.mainButton:hover,
 a.mainButton:active,
 a.mainButton:focus,
 a.mainButton.focus {
-	background: red;
+	background: #215996;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#215996), to(#8DB7E7), color-stop(.0454545,#2F79CA), color-stop(.9545455,#5E9CE1));
 	background: -moz-linear-gradient(#215996, #2F79CA 4.5454545%, #5E9CE1 95.454545%, #8DB7E7);
 }
@@ -126,10 +126,12 @@ a.icon span {
 	a.iconOnly:link,
 	a.iconOnly:visited {
 		padding: 0 3px;
+		width: 16px;
 	}
 
 	a.iconOnly span {
 		width: 16px;
+		display: block;
 		padding: 0 !important;
 		text-indent: -9000px;
 		overflow: hidden;
