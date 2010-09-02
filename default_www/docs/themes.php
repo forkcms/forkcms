@@ -9,32 +9,146 @@
 
 		<div class="cols id1">
 			<div class="col col-8 content">
-				<div class="col-6">
+				<div class="col-8">
 					<h3 id="howitworks">How themes work</h3>
 
 					<p>In order to get the most out of Fork CMS, it's very important to understand theming.</p>
 
-					<p>For every new project, you should create a new theme. It's (pretty much) always easier to modify an existing theme to your needs than to build a new theme from scratch.</p>
+					<p>For every new project, you should create a new theme. It's (pretty much) always easier to modify an existing theme to your needs than to build a new theme from scratch. Fork CMS comes with a default theme called simpleBlog. It's a blog, has pages functionality and a contact form. We'll take this theme as our example from now on.</p>
+
+					<img src="images/simpleblog.jpg" width="552" height="305" alt="Simpleblog" />
 
 					<h3 id="structure">Theme directory structure</h3>
 
-					<p>The themes folder is located in default_www/frontend/themes.</p>
+					<p>The themes folder is located in default_www/frontend/themes. On a fresh Fork install, this folder will contain just one theme: SimpleBlog.</p>
 
-					This is the directory structure of a theme:
+					<p>This is the directory structure of the theme:</p>
 
 					<pre class="brush: xml;">
-					theme_name
-					|-- core
-					|   |-- css
-					|   |   `-- screen.css
-					|   `-- templates
-					|       |-- home.tpl
-					|       |-- contentpage.tpl
-					`-- modules
-					    `-- blog
-					        `-- templates
-					            |-- detail.tpl
-					            `-- index.tpl</pre>
+					simpleblog
+					`-- core
+					    |-- css
+					    |   |-- ie6.css
+					    |   |-- ie7.css
+					    |   |-- print.css
+					    |   `-- screen.css
+					    |-- images
+					    `-- templates
+					        |-- _footer.tpl
+					        |-- _head.tpl
+					        `-- default.tpl
+					</pre>
+
+					<p>This theme contains 3 templates: default.tpl, _head.tpl and _footer.tpl (the use of an underscore signifies that the head and footer templates are partial templates; this is not a requirement for partials). Let's go through the code and learn how to work themes.</p>
+
+					<h3>The head template</h3>
+					
+					<p>The head template contains everything in the <code>&lt;head&gt;</code> section of the website. This is a partial template: if you want, you could have the contens of _head.tpl directly in the full template (default.tpl). It's preffered to the contents of <code>&lt;head&gt;</code> in a separate template to avoid code repetition. DRY!</p>
+				</div>
+
+				<h4>Doctype and &lt;html&gt;</h4>
+
+				<pre class="brush: xml;">
+					&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;
+					&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;
+					&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; lang=&quot;{$LANGUAGE}&quot;&gt;
+				</pre>
+
+				<p>Pretty standard: note the use of the <code>{$LANGUAGE}</code> constant. <code>{$LANGUAGE}</code> prints nl, fr, en, de, es and so on depending on which language of the site you are currently visiting.</p>
+
+				<h4>Encoding</h4>
+
+				<pre class="brush: xml;">
+				&lt;head&gt;
+					&lt;meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+				</pre>
+
+				<p>Fork uses UTF-8 for character encoding so you can enter Swahili or snowmen <span style="font-size:24px;">☃</span> without any problems.</p>
+
+				<h4>Title</h4>
+
+				<pre class="brush: xml;">
+					&lt;title&gt;{$pageTitle}&lt;/title&gt;
+				</pre>
+
+				<p>Prints out the title of the current page. You can <a href="modules.php#pageInformationTitle">change the page title</a> of every page in the backend.</p>
+
+				<h4>Favicon</h4>
+
+				<pre class="brush: xml;">
+					&lt;link rel=&quot;shortcut icon&quot; href=&quot;/favicon.ico&quot; /&gt;
+				</pre>
+
+				<p>Links to the favicon. The default favicon is the Fork logo. It's located in <code>&lt;path-to-site&gt;/default_www/favicon.ico</code>.</p>
+
+				<h4>X-UA-Compatible</h4>
+
+				<pre class="brush: xml;">
+					&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;IE=EmulateIE7&quot; /&gt;
+					&lt;meta http-equiv=&quot;X-UA-Compatible&quot; content=&quot;chrome=1&quot;&gt;
+				</pre>
+				<p>These meta tags ensure better browser compatibility: the first one makes Internet Explorer 8 behave as IE7 (so you only have to test against IE7 and IE6); the second one enables <a href="http://code.google.com/chrome/chromeframe/">Google Chrome Frame</a>.</p>
+
+				<h4>Debug mode</h4>
+
+				<pre class="brush: xml;">
+					{option:debug}&lt;meta name=&quot;robots&quot; content=&quot;noindex, nofollow&quot; /&gt;{/option:debug}
+				</pre>
+
+				<p>Several things going on here: <code>debug</code> is an option that will only display when your site is in debug mode (<a href="extra.php#debugmode">When is your site in debug mode?</a>). The robots tag prevents GoogleBot (and other robots) from indexing your website when it's not done yet.</p>
+
+				<h4>Meta</h4>
+
+				<pre class="brush: xml;">
+					&lt;meta name=&quot;generator&quot; content=&quot;Fork CMS&quot; /&gt;
+					&lt;meta name=&quot;description&quot; content=&quot;{$metaDescription}&quot; /&gt;
+					&lt;meta name=&quot;keywords&quot; content=&quot;{$metaKeywords}&quot; /&gt;
+					{$metaCustom}
+				</pre>
+
+				<p><code>{$metaDescription}</code>, <code>{$metaKeywords}</code> and <code>{$metaCustom}</code> are fields available in the backend for every page. See <a href="modules.php#pageInformationTitleMeta">Page information - Meta</a>.</p>
+
+				<h4>CSS</h4>
+
+				<pre class="brush: xml;">
+				{* Stylesheets *}
+				{iteration:cssFiles}
+					{option:!cssFiles.condition}
+						<link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" />
+					{/option:!cssFiles.condition}
+					{option:cssFiles.condition}
+						<!--[if {$cssFiles.condition}]><link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" /><![endif]-->
+					{/option:cssFiles.condition}
+				{/iteration:cssFiles}
+				</pre>
+
+				<p>This code grabs your CSS files: be sure they are named...<span class="markedTodo">@todo explain how this works (and why (caching))</span></p>
+
+				<h4>JS</h4>
+
+				<pre class="brush: xml;">
+				{* Javascript *}
+				{iteration:javascriptFiles}
+					&lt;script type=&quot;text/javascript&quot; src=&quot;{$javascriptFiles.file}&quot;&gt;&lt;/script&gt;
+				{/iteration:javascriptFiles}
+				</pre>
+
+				<p>This code grabs your JS files: be sure they are named...<span class="markedTodo">@todo explain how this works</span></p>
+
+				<p><span class="markedTodo">@todo explain how to add a non-default script</span></p>
+
+				<pre class="brush: xml;">
+				{* Site wide HTML *}
+				{$siteHTMLHeader}
+				</pre>
+
+				<pre class="brush: xml;">
+				&lt;/head&gt;
+				</pre>
+				
+				<p>And so there we have it: the full explanation of the contents of the <code>&lt;head&gt;</code> tag. Onwards to: the <code>&lt;body&gt;</code>!
+
+				<div class="col-6">
 
 					<h3 id="overrides">Overrides</h3>
 
@@ -216,6 +330,7 @@
 	
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/scripts/clipboard.swf';
+		SyntaxHighlighter.defaults['gutter'] = false;
 		SyntaxHighlighter.all();
 	</script>
 

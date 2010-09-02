@@ -19,6 +19,7 @@
 	<script src="js/syntax/scripts/shBrushCss.js" type="text/javascript"></script>
 	<script src="js/syntax/scripts/shBrushPlain.js" type="text/javascript"></script>
 	<script src="js/syntax/scripts/shBrushXml.js" type="text/javascript"></script>
+	<script src="js/syntax/scripts/shBrushPhp.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" href="js/syntax/styles/shCore.css" media="screen" />
 	<link type="text/css" rel="stylesheet" href="js/syntax/styles/shThemeDefault.css" media="screen" />
 	
@@ -31,5 +32,5 @@
 		    color: '-linear-gradient(black, #333)'
 		});
 	</script>
-    
+
 </head>

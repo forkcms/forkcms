@@ -184,3 +184,7 @@
 { 
 	color: red !important; 
 }
+
+.syntaxhighlighter a {
+	border: none !important;
+}

@@ -27,6 +27,17 @@
 
 					<p>The getByTag($tagId)-method should return an multidimensional array with the following keys for each row: url, name, module.</p>
 
+					<h3 id="debugMode">When is my site in debug mode?</h3>
+					
+					<p>Your site is in debug mode when the following option:</p>
+					
+					<pre class="brush: php;">
+						// should the debug information be shown
+						define('SPOON_DEBUG', true);
+					</pre>
+					<p>is set to true.</p>
+					
+
 				</div>
 
 			</div>

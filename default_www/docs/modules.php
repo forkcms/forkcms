@@ -229,8 +229,8 @@
 				<p>Labels: </p>
 
 				<ul>
-				<li>Pages - Add: add page</li>
-				<li>Users - Add: add user</li>
+					<li>Pages - Add: add page</li>
+					<li>Users - Add: add user</li>
 				</ul>
 
 				<p>Notice that in this last example &#8220;Add&#8221; translates as &#8220;Add page&#8221; when in the pages module and &#8220;add user&#8221; in the users module. When adding a translation for a custom module that already exists in the core module, your translation will override it.</p>
@@ -272,7 +272,19 @@
 				</pre>
 
 				<h3 id="pages">Pages</h3>
-				<p>...</p>
+
+				<h4 id="pageInformationTitle">Page information - Title</h4>
+				
+				<p>To change the title of a page: go to Pages, click the page you need in the tree, and change the field labelled "Title".</p>
+
+				<p>Note that the page title can be overrided in the SEO tab: you can enter separate titles for the page <code>&lt;title&gt;</code> and the title in the site's navigation.</p>
+				
+				<p>To display the current page's title in templates, use <code>{$page['title']}</code>.</p>
+
+				<h4 id="pageInformationTitleMeta">Page information - Meta</h4>
+
+				<p>To change the meta information of a page: go to Pages, click the page you need in the tree, and look at the SEO tab. The fields are pretty self-explanatory for a developer.</p>
+
 				<h3 id="contentBlocks">Content blocks</h3>
 				<p>...</p>
 				<h3 id="blog">Blog</h3>

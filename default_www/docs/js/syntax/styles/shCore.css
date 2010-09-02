@@ -48,7 +48,7 @@
 	height: auto !important;
 	width: auto !important;
 	line-height: 1.1em !important;
-	font-family: "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
+	font-family: Menlo, "Consolas", "Monaco", "Bitstream Vera Sans Mono", "Courier New", Courier, monospace !important;
 	font-weight: normal !important;
 	font-style: normal !important;
 	font-size: 12px !important;
@@ -145,12 +145,17 @@
 
 .syntaxhighlighter .toolbar
 {
+	display: none;
 	position: absolute !important;
 	right: 0px !important;
 	top: 0px !important;
 	font-size: 1px !important;
 	padding: 8px 8px 8px 0 !important; /* in px because images don't scale with ems */
 }
+
+	.syntaxhighlighter:hover .toolbar {
+		display: block;
+	}
 
 .syntaxhighlighter.collapsed .toolbar
 {
