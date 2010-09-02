@@ -323,7 +323,7 @@ class FrontendBlogModel
 		}
 
 		// loop years
-		for($i = $firstYear; $i <= $lastYear;  $i++)
+		for($i = $firstYear; $i <= $lastYear; $i++)
 		{
 			// year missing
 			if(!isset($stats[$i])) $stats[$i] = array('url' => null, 'label' => $i, 'total' => 0, 'months' => null);
@@ -615,15 +615,12 @@ class FrontendBlogModel
 	 */
 	public static function search(array $ids)
 	{
-		// get db
-		$db = FrontendModel::getDB();
-
 		// get items
-		$items = (array) $db->retrieve('SELECT bp.id, bp.title, bp.introduction, bp.text, m.url
-										FROM blog_posts AS bp
-										INNER JOIN meta AS m ON bp.meta_id = m.id
-										WHERE bp.status = ? AND bp.hidden = ? AND bp.language = ? AND bp.publish_on <= ? AND bp.id IN ('. implode(',', $ids) .');',
-										array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') .':00'), 'id');
+		$items = (array) FrontendModel::getDB()->retrieve('SELECT bp.id, bp.title, bp.introduction, bp.text, m.url
+															FROM blog_posts AS bp
+															INNER JOIN meta AS m ON bp.meta_id = m.id
+															WHERE bp.status = ? AND bp.hidden = ? AND bp.language = ? AND bp.publish_on <= ? AND bp.id IN ('. implode(',', $ids) .');',
+															array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') .':00'), 'id');
 
 		// prepare items for search
 		foreach($items as &$item)

@@ -33,7 +33,7 @@ tinyMCE.init({
 	theme_advanced_buttons2: 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,
-	theme_advanced_blockformats : "p,h2,h3,h4,blockquote,code",
+	theme_advanced_blockformats : 'p,h2,h3,h4,blockquote,code',
 	theme_advanced_resize_horizontal: false,
 	theme_advanced_toolbar_location: 'top',
 	theme_advanced_toolbar_align: 'left',
@@ -53,6 +53,8 @@ tinyMCE.init({
 	paste_strip_class_attributes: 'mso',
 	paste_remove_spans: true,
 	paste_remove_styles: true,
+	
+	onchange_callback: jsBackend.tinyMCE.checkContent,
 	
 	setup: function(editor) {
 		/**

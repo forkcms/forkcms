@@ -91,14 +91,11 @@ class FrontendModel
 		// get them all
 		if(empty(self::$moduleSettings))
 		{
-			// get db
-			$db = self::getDB();
-
 			// fetch settings
-			$settings = (array) $db->getRecords('SELECT ms.module, ms.name, ms.value
-													FROM modules_settings AS ms
-													INNER JOIN modules AS m ON ms.module = m.name
-													WHERE m.active = ?;', 'Y');
+			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
+															FROM modules_settings AS ms
+															INNER JOIN modules AS m ON ms.module = m.name
+															WHERE m.active = ?;', 'Y');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -126,12 +123,9 @@ class FrontendModel
 		// get them all
 		if(empty(self::$moduleSettings[$module]))
 		{
-			// get db
-			$db = self::getDB();
-
 			// fetch settings
-			$settings = (array) $db->getRecords('SELECT ms.module, ms.name, ms.value
-													FROM modules_settings AS ms;');
+			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
+															FROM modules_settings AS ms;');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -389,14 +383,11 @@ class FrontendModel
 		$name = (string) $name;
 		$value = serialize($value);
 
-		// get db
-		$db = self::getDB(true);
-
 		// store
-		$db->execute('INSERT INTO modules_settings (module, name, value)
-						VALUES (?, ?, ?)
-						ON DUPLICATE KEY UPDATE value = ?;',
-						array($module, $name, $value, $value));
+		self::getDB(true)->execute('INSERT INTO modules_settings (module, name, value)
+									VALUES (?, ?, ?)
+									ON DUPLICATE KEY UPDATE value = ?;',
+									array($module, $name, $value, $value));
 
 		// store in cache
 		self::$moduleSettings[$module][$name] = unserialize($value);

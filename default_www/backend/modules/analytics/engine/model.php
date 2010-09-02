@@ -91,7 +91,8 @@ class BackendAnalyticsModel
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
 
 		// delete tags
-		BackendModel::getDB(true)->execute('DELETE FROM analytics_landing_pages WHERE id IN ('. implode(',', $ids) .');');
+		BackendModel::getDB(true)->execute('DELETE FROM analytics_landing_pages
+											WHERE id IN ('. implode(',', $ids) .');');
 	}
 
 
@@ -521,7 +522,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getPageByPath($path)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT * FROM analytics_pages WHERE page = ?', array((string) $path));
+		return (array) BackendModel::getDB()->getRecord('SELECT * FROM analytics_pages WHERE page = ?;', array((string) $path));
 	}
 
 
@@ -534,7 +535,7 @@ class BackendAnalyticsModel
 	public static function getPageForId($pageId)
 	{
 		// get the page for the given id
-		return (string) BackendModel::getDB()->getVar('SELECT page FROM analytics_pages WHERE id = ?', array((int) $pageId));
+		return (string) BackendModel::getDB()->getVar('SELECT page FROM analytics_pages WHERE id = ?;', array((int) $pageId));
 	}
 
 
@@ -591,7 +592,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentKeywords()
 	{
-		return (array) BackendModel::getDB()->getRecords('SELECT * FROM analytics_keywords ORDER BY entrances DESC, id');
+		return (array) BackendModel::getDB()->getRecords('SELECT * FROM analytics_keywords ORDER BY entrances DESC, id;');
 	}
 
 
@@ -602,7 +603,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentReferrers()
 	{
-		return (array) BackendModel::getDB()->getRecords('SELECT * FROM analytics_referrers ORDER BY entrances DESC, id');
+		return (array) BackendModel::getDB()->getRecords('SELECT * FROM analytics_referrers ORDER BY entrances DESC, id;');
 	}
 
 
@@ -1068,7 +1069,7 @@ class BackendAnalyticsModel
 	public static function updatePageDateViewed($pageId)
 	{
 		// update the page
-		BackendModel::getDB()->update('analytics_pages', array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')), 'id = ?', array((int) $pageId));
+		BackendModel::getDB(true)->update('analytics_pages', array('date_viewed' => SpoonDate::getDate('Y-m-d H:i:s')), 'id = ?', array((int) $pageId));
 	}
 
 
@@ -1402,7 +1403,7 @@ class BackendAnalyticsHelper
 	public static function getDataForPage($pageId, $startTimestamp, $endTimestamp)
 	{
 		// get page
-		$page = BackendModel::getDB()->getVar('SELECT page FROM analytics_pages WHERE id = ?', array((int) $pageId));
+		$page = BackendModel::getDB()->getVar('SELECT page FROM analytics_pages WHERE id = ?;', array((int) $pageId));
 
 		// init vars
 		$data = array();

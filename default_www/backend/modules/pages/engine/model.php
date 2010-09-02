@@ -565,7 +565,7 @@ class BackendPagesModel
 		// we can't delete templates that are still in use
 		if($db->getNumRows('SELECT i.template_id
 							FROM pages AS i
-							WHERE i.template_id = ? AND i.status = ?',
+							WHERE i.template_id = ? AND i.status = ?;',
 							array($id, 'active')) > 0) return false;
 
 		// delete
@@ -574,7 +574,7 @@ class BackendPagesModel
 		// get all non-active pages that use this template
 		$ids = (array) $db->getColumn('SELECT i.revision_id
 										FROM pages AS i
-										WHERE i.template_id = ? AND i.status != ?',
+										WHERE i.template_id = ? AND i.status != ?;',
 										array($id, 'active'));
 
 		// any items
@@ -1483,7 +1483,8 @@ class BackendPagesModel
 	{
 		return (bool) BackendModel::getDB(false)->getNumRows('SELECT i.template_id
 																FROM pages AS i
-																WHERE i.template_id = ? AND i.status = ?', array((int) $templateId, 'active'));
+																WHERE i.template_id = ? AND i.status = ?;',
+																array((int) $templateId, 'active'));
 	}
 
 

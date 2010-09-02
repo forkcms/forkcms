@@ -219,13 +219,13 @@ class BackendBlogModel
 		$id = (int) $id;
 
 		// get record and return it
-		return (array) $db = BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-																m.url
-																FROM blog_posts AS i
-																INNER JOIN meta AS m ON m.id = i.meta_id
-																WHERE i.id = ? AND i.status = ?
-																LIMIT 1;',
-																array($id, 'active'));
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
+															m.url
+															FROM blog_posts AS i
+															INNER JOIN meta AS m ON m.id = i.meta_id
+															WHERE i.id = ? AND i.status = ?
+															LIMIT 1;',
+															array($id, 'active'));
 	}
 
 

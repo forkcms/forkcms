@@ -106,7 +106,7 @@ class BackendSearchModel
 
 			// update search index
 			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE value = ?, active = ?', array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y'));
+							ON DUPLICATE KEY UPDATE value = ?, active = ?;', array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y'));
 		}
 
 		// invalidate the cache for search
@@ -122,9 +122,9 @@ class BackendSearchModel
 	 */
 	public static function existsSynonymById($id)
 	{
-		return (bool) BackendModel::getDB(false)->getVar('SELECT COUNT(id)
-															FROM search_synonyms
-															WHERE id = ?', array((int) $id));
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM search_synonyms
+														WHERE id = ?;', array((int) $id));
 	}
 
 
@@ -137,13 +137,15 @@ class BackendSearchModel
 	 */
 	public static function existsSynonymByTerm($term, $exclude = null)
 	{
-		if($exclude == null) return (bool) BackendModel::getDB(false)->getVar('SELECT COUNT(id)
-																				FROM search_synonyms
-																				WHERE term = ?', array((string) $term));
+		if($exclude == null) return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+																			FROM search_synonyms
+																			WHERE term = ?;',
+																			array((string) $term));
 
-		return (bool) BackendModel::getDB(false)->getVar('SELECT COUNT(id)
-															FROM search_synonyms
-															WHERE term = ? AND id != ?', array((string) $term, (int) $exclude));
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM search_synonyms
+														WHERE term = ? AND id != ?;',
+														array((string) $term, (int) $exclude));
 	}
 
 
@@ -154,8 +156,9 @@ class BackendSearchModel
 	 */
 	public static function getModuleSettings()
 	{
-		return BackendModel::getDB(true)->retrieve('SELECT module, searchable, weight
-													FROM search_modules', array(), 'module');
+		return BackendModel::getDB()->retrieve('SELECT module, searchable, weight
+													FROM search_modules;',
+													array(), 'module');
 	}
 
 
@@ -167,9 +170,9 @@ class BackendSearchModel
 	 */
 	public static function getSynonym($id)
 	{
-		return (array) BackendModel::getDB(false)->getRecord('SELECT *
-																FROM search_synonyms
-																WHERE id = ?', array((int) $id));
+		return (array) BackendModel::getDB()->getRecord('SELECT *
+															FROM search_synonyms
+															WHERE id = ?;', array((int) $id));
 	}
 
 
@@ -185,7 +188,8 @@ class BackendSearchModel
 	{
 		// insert or update
 		BackendModel::getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
-											ON DUPLICATE KEY UPDATE searchable = ?, weight = ?', array($module['module'], $searchable, $weight, $searchable, $weight));
+											ON DUPLICATE KEY UPDATE searchable = ?, weight = ?;',
+											array($module['module'], $searchable, $weight, $searchable, $weight));
 
 		// invalidate the cache for search
 		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());

@@ -111,9 +111,6 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 	 */
 	protected function parse()
 	{
-		// get db
-		$db = BackendModel::getDB();
-
 		// get page
 		$page = ($this->pageId != '' ? BackendAnalyticsModel::getPageForId($this->pageId) : null);
 

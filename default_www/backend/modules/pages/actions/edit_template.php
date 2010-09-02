@@ -115,7 +115,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		}
 
 		// create array
-		$defaultExtras = array('' => array('editor' =>  BL::getLabel('Editor')),
+		$defaultExtras = array('' => array('editor' => BL::getLabel('Editor')),
 								ucfirst(BL::getLabel('Modules')) => $blocks,
 								ucfirst(BL::getLabel('Widgets')) => $widgets);
 

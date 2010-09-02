@@ -953,6 +953,14 @@ class BackendBaseWidget
 
 
 	/**
+	 * The header object
+	 *
+	 * @var	BackendHeader
+	 */
+	protected $header;
+
+
+	/**
 	 * The position in the column the widget should be shown
 	 *
 	 * @var	int
@@ -986,6 +994,7 @@ class BackendBaseWidget
 	{
 		// get objects from the reference so they are accessable from the action-object
 		$this->tpl = Spoon::getObjectReference('template');
+		$this->header = Spoon::getObjectReference('header');
 	}
 
 

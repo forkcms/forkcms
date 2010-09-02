@@ -395,7 +395,7 @@ class BackendModel
 		{
 			// get all modules
 			$modules = (array) self::getDB()->getPairs('SELECT m.name, m.active
-														FROM modules AS m');
+														FROM modules AS m;');
 
 			// loop
 			foreach($modules as $module => $active)

@@ -89,7 +89,7 @@ class SpoonFileCSV
 		$countCells = count($array[0]);
 
 		// loop the array
-		foreach($array as $row)
+		foreach($array as $key => $row)
 		{
 			// cellcount check
 			if($countCells != count($row)) throw new SpoonFileException('Each row has to have the same number of cells as the first row.');
@@ -156,7 +156,7 @@ class SpoonFileCSV
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
 	 */
-	public static function fileToArray($path, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
+	public static function fileToArray($path, array $columns = array(), array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// reset variables
 		$path = (string) $path;
@@ -328,7 +328,7 @@ class SpoonFileCSV
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
 	 */
-	public static function stringToArray($string, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
+	public static function stringToArray($string, array $columns = array(), array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// reset variables
 		$string = (string) $string;

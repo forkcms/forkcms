@@ -6,8 +6,9 @@
 
 <div id="blog" class="archive">
 	<h2 class="intro">
+		{* @todo	add labels *}
 		{option:blogArchive['month']}Archieven {$blogArchive['start_date']|date:'F Y':{$LANGUAGE}}{/option:blogArchive['month']}
-		{option:!blogArchive['month']}Archieven  {$blogArchive['start_date']|date:'Y':{$LANGUAGE}}{/option:!blogArchive['month']}
+		{option:!blogArchive['month']}Archieven {$blogArchive['start_date']|date:'Y':{$LANGUAGE}}{/option:!blogArchive['month']}
 	</h2>
 
 	{option:blogArticles}

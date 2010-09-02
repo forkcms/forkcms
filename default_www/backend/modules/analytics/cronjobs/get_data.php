@@ -133,7 +133,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 	private function cleanupDatabase()
 	{
 		// cleanup pages
-		BackendModel::getDB()->delete('analytics_pages', 'date_viewed < ?', array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week'))));
+		BackendModel::getDB(true)->delete('analytics_pages', 'date_viewed < ?', array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week'))));
 	}
 
 

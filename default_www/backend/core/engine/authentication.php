@@ -44,11 +44,8 @@ class BackendAuthentication
 	 */
 	public static function cleanupOldSessions()
 	{
-		// init var
-		$db = BackendModel::getDB(true);
-
 		// remove all sessions that are invalid (older then 30 min)
-		$db->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
+		BackendModel::getDB(true)->delete('users_sessions', 'date <= DATE_SUB(NOW(), INTERVAL 30 MINUTE)');
 	}
 
 

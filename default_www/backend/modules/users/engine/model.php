@@ -54,14 +54,11 @@ class BackendUsersModel
 		// redefine
 		$email = (string) $email;
 
-		// get db
-		$db = BackendModel::getDB();
-
 		// no user to ignore
-		return (bool) ($db->getNumRows('SELECT i.id
-										FROM users AS i
-										WHERE i.email = ? AND i.deleted = ?;',
-										array($email, 'Y')) >= 1);
+		return (bool) (BackendModel::getDB()->getNumRows('SELECT i.id
+															FROM users AS i
+															WHERE i.email = ? AND i.deleted = ?;',
+															array($email, 'Y')) >= 1);
 	}
 
 
@@ -188,7 +185,7 @@ class BackendUsersModel
 	public static function getGroups()
 	{
 		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
-														FROM groups AS i');
+														FROM groups AS i;');
 	}
 
 

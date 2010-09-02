@@ -83,7 +83,7 @@ class FrontendSearchModel
 		}
 
 		// get the search results
-		return (int) FrontendModel::getDB(false)->getVar($query, $params);
+		return (int) FrontendModel::getDB()->getVar($query, $params);
 	}
 
 
@@ -162,7 +162,7 @@ class FrontendSearchModel
 		}
 
 		// return the results
-		return (array) FrontendModel::getDB(false)->retrieve($query, $params);
+		return (array) FrontendModel::getDB()->retrieve($query, $params);
 	}
 
 
@@ -179,31 +179,33 @@ class FrontendSearchModel
 		// language given
 		if($language)
 		{
-			return FrontendModel::getDB(false)->retrieve('SELECT s1.term, s1.num_results
-															FROM search_statistics AS s1
-															INNER JOIN
-															(
-																SELECT term, MAX(id) as id, language
-																FROM search_statistics
-																WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
-																GROUP BY term
-															) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-															LIMIT ?', array((string) $term .'%', $language, $limit));
+			return FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+														FROM search_statistics AS s1
+														INNER JOIN
+														(
+															SELECT term, MAX(id) as id, language
+															FROM search_statistics
+															WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
+															GROUP BY term
+														) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+														LIMIT ?;',
+														array((string) $term .'%', $language, $limit));
 		}
 
 		// no language given
 		else
 		{
-			return FrontendModel::getDB(false)->retrieve('SELECT s1.term, s1.num_results
-															FROM search_statistics AS s1
-															INNER JOIN
-															(
-																SELECT term, MAX(id) as id, language
-																FROM search_statistics
-																WHERE term LIKE ? AND num_results IS NOT NULL
-																GROUP BY term
-															) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-															LIMIT ?', array((string) $term .'%', $limit));
+			return FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+													FROM search_statistics AS s1
+													INNER JOIN
+													(
+														SELECT term, MAX(id) as id, language
+														FROM search_statistics
+														WHERE term LIKE ? AND num_results IS NOT NULL
+														GROUP BY term
+													) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+													LIMIT ?;',
+													array((string) $term .'%', $limit));
 		}
 	}
 
@@ -217,9 +219,10 @@ class FrontendSearchModel
 	public static function getSynonyms($term)
 	{
 		// query db for synonyms
-		$synonyms = FrontendModel::getDB(false)->getVar('SELECT synonym
-															FROM search_synonyms
-															WHERE term = ?', array((string) $term));
+		$synonyms = FrontendModel::getDB()->getVar('SELECT synonym
+													FROM search_synonyms
+													WHERE term = ?;',
+													array((string) $term));
 
 		// found any? merge with original term
 		if($synonyms) return array_unique(array_merge(array($term), explode(',', $synonyms)));
@@ -331,7 +334,7 @@ class FrontendSearchModel
 		$active = ($active && $active !== 'N') ? 'Y' : 'N';
 
 		// deactivate!
-		if($otherIds) FrontendModel::getDB(false)->update('search_index', array('active' => $active), 'module = ? AND other_id IN ('. implode(',', $otherIds) .')', array((string) $module));
+		if($otherIds) FrontendModel::getDB(true)->update('search_index', array('active' => $active), 'module = ? AND other_id IN ('. implode(',', $otherIds) .')', array((string) $module));
 	}
 
 
@@ -349,11 +352,12 @@ class FrontendSearchModel
 		while(1)
 		{
 			// get the inactive indices
-			$searchResults = (array) FrontendModel::getDB(false)->retrieve('SELECT module, other_id
-																			FROM search_index
-																			WHERE language = ? AND active = ?
-																			GROUP BY module, other_id
-																			LIMIT ?, ?;', array(FRONTEND_LANGUAGE, 'N', $offset, $limit));
+			$searchResults = (array) FrontendModel::getDB()->retrieve('SELECT module, other_id
+																		FROM search_index
+																		WHERE language = ? AND active = ?
+																		GROUP BY module, other_id
+																		LIMIT ?, ?;',
+																		array(FRONTEND_LANGUAGE, 'N', $offset, $limit));
 
 			// none found? good news!
 			if(!$searchResults) return;

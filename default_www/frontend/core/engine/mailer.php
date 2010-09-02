@@ -86,11 +86,8 @@ class FrontendMailer
 			else $email['send_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
 		}
 
-		// get db
-		$db = FrontendModel::getDB(true);
-
 		// insert the email into the database
-		$id = $db->insert('emails', $email);
+		$id = FrontendModel::getDB(true)->insert('emails', $email);
 
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
@@ -145,14 +142,11 @@ class FrontendMailer
 	 */
 	public static function getQueuedMailIds()
 	{
-		// get db
-		$db = FrontendModel::getDB(true);
-
 		// return the ids
-		return (array) $db->getColumn('SELECT e.id
-										FROM emails AS e
-										WHERE e.send_on < ?;',
-										array(FrontendModel::getUTCDate()));
+		return (array) FrontendModel::getDB()->getColumn('SELECT e.id
+															FROM emails AS e
+															WHERE e.send_on < ?;',
+															array(FrontendModel::getUTCDate()));
 	}
 
 

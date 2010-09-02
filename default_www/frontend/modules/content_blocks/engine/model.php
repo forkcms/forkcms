@@ -22,14 +22,11 @@ class FrontendContentBlocksModel
 	 */
 	public static function get($id)
 	{
-		// get db
-		$db = FrontendModel::getDB();
-
 		// get data
-		return (array) $db->getRecord('SELECT i.id, i.title, i.text
-										FROM content_blocks AS i
-										WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?;',
-										array((int) $id, 'active', 'N', FRONTEND_LANGUAGE));
+		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.title, i.text
+															FROM content_blocks AS i
+															WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?;',
+															array((int) $id, 'active', 'N', FRONTEND_LANGUAGE));
 	}
 }
 

@@ -63,11 +63,8 @@ class BackendMailer
 			else $email['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
 		}
 
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// insert the email into the database
-		$id = $db->insert('emails', $email);
+		$id = BackendModel::getDB(true)->insert('emails', $email);
 
 		// if queue was not enabled, send this mail right away
 		if(!$queue) self::send($id);
@@ -122,14 +119,11 @@ class BackendMailer
 	 */
 	public static function getQueuedMailIds()
 	{
-		// get db
-		$db = BackendModel::getDB(true);
-
 		// return the ids
-		return (array) $db->getColumn('SELECT e.id
-										FROM emails AS e
-										WHERE e.send_on < ?;',
-										array(BackendModel::getUTCDate()));
+		return (array) BackendModel::getDB()->getColumn('SELECT e.id
+															FROM emails AS e
+															WHERE e.send_on < ?;',
+															array(BackendModel::getUTCDate()));
 	}
 
 

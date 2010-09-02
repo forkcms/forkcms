@@ -75,7 +75,10 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		{
 			if($module == 'blog')
 			{
-				$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id FROM modules_tags WHERE module = ? AND tag_id = ?;', array('blog', $this->id));
+				$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
+																		FROM modules_tags
+																		WHERE module = ? AND tag_id = ?;',
+																		array('blog', $this->id));
 
 				$this->record[] = array('name' => $module, 'items' => FrontendBlogModel::getForTags($otherIds));
 

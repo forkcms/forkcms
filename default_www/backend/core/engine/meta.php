@@ -280,14 +280,11 @@ class BackendMeta
 		// redefine
 		$this->id = (int) $id;
 
-		// get database
-		$db = BackendModel::getDB();
-
 		// get item
-		$this->data = (array) $db->getRecord('SELECT *
-												FROM meta AS m
-												WHERE m.id = ?;',
-												array($this->id));
+		$this->data = (array) BackendModel::getDB()->getRecord('SELECT *
+																FROM meta AS m
+																WHERE m.id = ?;',
+																array($this->id));
 
 		// validate meta-record
 		if(empty($this->data)) throw new BackendException('Meta-record doesn\'t exist.');

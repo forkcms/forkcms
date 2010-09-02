@@ -24,9 +24,11 @@ jsBackend = {
 		jsBackend.messages.init();
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
+
 		// IE fixes
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
+
 		// jsBackend.tableSequenceByDragAndDrop.init();
 	},
 
@@ -328,7 +330,7 @@ jsBackend.controls = {
 
 																	// submit
 																	// the form
-																	$($('*[rel='+ $(this).attr('id')  +']').parents('form')).submit();
+																	$($('*[rel='+ $(this).attr('id') +']').parents('form')).submit();
 																},
 											'{$lblCancel|ucfirst}': function() { $(this).dialog('close'); }
 										 },
@@ -404,7 +406,6 @@ jsBackend.controls = {
 					// show
 					$('#'+ wrapperId +' p.'+ classToShow).show();
 				});
-
 			});
 		}
 	},
@@ -864,6 +865,34 @@ jsBackend.tabs = {
 		}
 	},
 
+	// end
+	eof: true
+}
+
+jsBackend.tinyMCE = {
+	// init, something like a constructor
+	checkContent: function(editor) {
+		if(editor.isDirty()) {
+			var content = editor.getContent();
+			var warnings = [];
+
+			console.log('nu');
+			
+			// no alt?
+			if(content.match(/<img(.*)alt=""(.*)/im)) {
+				warnings.push('{$msgImagesWithoutAlt}');
+			}
+
+			// invalid links?
+			
+			if(warnings.length > 0) {
+				if($('#' + editor.id + '_warnings').length > 0) $('#' + editor.id + '_warnings').html(warnings.join(', '));
+				else $('#' + editor.id + '_parent').after('<span id="'+ editor.id + '_warnings' +'" class="infoMessage">'+ warnings.join(', ') + '</span>');
+			}
+			else $('#' + editor.id + '_warnings').remove();
+		}
+	},
+	
 	// end
 	eof: true
 }

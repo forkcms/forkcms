@@ -36,8 +36,8 @@ class BackendTagsModel
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
 
 		// delete tags
-		$db->execute('DELETE FROM tags WHERE id IN ('. implode(',', $ids) .');');
-		$db->execute('DELETE FROM modules_tags WHERE tag_id IN ('. implode(',', $ids) .');');
+		$db->delete('tags', 'id IN ('. implode(',', $ids) .');');
+		$db->delete('modules_tags', 'tag_id IN ('. implode(',', $ids) .');');
 	}
 
 

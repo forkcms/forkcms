@@ -14,11 +14,8 @@ class FrontendTagsModel
 {
 	public static function exists($URL)
 	{
-		// get db
-		$db = FrontendModel::getDB();
-
 		// exists
-		return (bool) $db->getNumRows('SELECT id FROM tags WHERE url = ? AND language = ?;', array((string) $URL, FRONTEND_LANGUAGE));
+		return (bool) (FrontendModel::getDB()->getNumRows('SELECT id FROM tags WHERE url = ? AND language = ?;', array((string) $URL, FRONTEND_LANGUAGE)) > 0);
 	}
 
 
@@ -29,14 +26,11 @@ class FrontendTagsModel
 	 */
 	public static function getAll()
 	{
-		// get db
-		$db = FrontendModel::getDB();
-
 		// fetch items
-		return (array) $db->getRecords('SELECT t.tag AS name, t.url, t.number
-										FROM tags AS t
-										WHERE t.language = ? AND t.number > 0
-										ORDER BY number DESC;', FRONTEND_LANGUAGE);
+		return (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url, t.number
+															FROM tags AS t
+															WHERE t.language = ? AND t.number > 0
+															ORDER BY number DESC;', FRONTEND_LANGUAGE);
 	}
 
 
@@ -53,18 +47,15 @@ class FrontendTagsModel
 		$module = (string) $module;
 		$otherId = (int) $otherId;
 
-		// get db
-		$db = FrontendModel::getDB();
-
 		// init var
 		$return = array();
 
 		// get tags
-		$linkedTags = (array) $db->getRecords('SELECT t.tag AS name, t.url
-												FROM modules_tags AS mt
-												INNER JOIN tags AS t ON mt.tag_id = t.id
-												WHERE mt.module = ? AND mt.other_id = ?;',
-												array($module, $otherId));
+		$linkedTags = (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url
+																	FROM modules_tags AS mt
+																	INNER JOIN tags AS t ON mt.tag_id = t.id
+																	WHERE mt.module = ? AND mt.other_id = ?;',
+																	array($module, $otherId));
 
 		// return
 		if(empty($linkedTags)) return $return;
@@ -89,21 +80,23 @@ class FrontendTagsModel
 
 	public static function getIdByURL($URL)
 	{
-		// get db
-		$db = FrontendModel::getDB();
-
 		// exists
-		return (int) $db->getVar('SELECT id FROM tags WHERE url = ?;',(string) $URL);
+		return (int) FrontendModel::getDB()->getVar('SELECT id
+													FROM tags
+													WHERE url = ?;',
+													(string) $URL);
 	}
 
 
 	public static function getModulesForTag($tagId)
 	{
-		// get db
-		$db = FrontendModel::getDB();
-
 		// get modules
-		return (array) $db->getColumn('SELECT module FROM modules_tags WHERE tag_id = ? GROUP BY module ORDER BY module ASC;', (int) $tagId);
+		return (array) FrontendModel::getDB()->getColumn('SELECT module
+															FROM modules_tags
+															WHERE tag_id = ?
+															GROUP BY module
+															ORDER BY module ASC;',
+															(int) $tagId);
 	}
 
 
