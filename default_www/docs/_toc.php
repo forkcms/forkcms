@@ -18,7 +18,9 @@
 				<ol>
 					<li><a href="themes.php#howitworks">How themes work</a></li>
 					<li><a href="themes.php#structure">Theme structure</a></li>
-					<li><a href="themes.php#overrides"><s>Overrides</s></a></li>
+					<li><a href="themes.php#themeBlocks">Working with Blocks</a></li>
+					<li><a href="themes.php#overrides">Overrides</a></li>
+					<li><a href="themes.php#thehead">Default <code>&lt;head&gt;</code> contents explained</a></li>
 					<li><a href="themes.php#templateModifiers">Template modifiers</a></li>
 					<li><a href="themes.php#constants">Available constants</a></li>
 				</ol>

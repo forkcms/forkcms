@@ -124,19 +124,23 @@
 					<a href="http://www.anantasoft.com/index.php?Home">
 						<img src="images/default.gif" width="48" height="48" alt="" />
 					</a>
-					<p><a href="#">Matthias</a></p>
+					<p><a href="http://www.anantasoft.com/index.php?Home">Matthias</a></p>
 				</li>
 				<li>
-					<a href="#">
-						<img src="http://www.annelyze.be" width="48" height="48" alt="" />
+					<a href="http://www.annelyze.be">
+						<img src="images/default.gif" width="48" height="48" alt="" />
 					</a>
-					<p><a href="#">Annelies</a></p>
+					<p><a href="http://www.annelyze.be">Annelies</a></p>
+				</li>
+				<li>
+					<img src="images/default.gif" width="48" height="48" alt="" />
+					<p>Dieter</p>
 				</li>
 				<li>
 					<a href="http://www.dextrose.be">
 						<img src="images/default.gif" width="48" height="48" alt="" />
 					</a>
-					<p><a href="#">Dextro</a></p>
+					<p><a href="http://www.dextrose.be">Dextro</a></p>
 				</li>
 			</ul>
 		</div>

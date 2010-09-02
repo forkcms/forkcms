@@ -360,7 +360,6 @@ kbd {
 /* Code examples */
 code, pre {
 	font-family: Menlo, Consolas, Monaco, "Courier New", monospace;
-	color: #000;
 	font-size: 12px;
 	line-height: 1.15;
 }
