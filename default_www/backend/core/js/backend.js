@@ -876,19 +876,19 @@ jsBackend.tinyMCE = {
 			var content = editor.getContent();
 			var warnings = [];
 
-			console.log('nu');
-			
 			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) {
-				warnings.push('{$msgImagesWithoutAlt}');
-			}
+			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt}'); }
 
 			// invalid links?
+			if(content.match(/href="\/private\/([a-z]{2,})\/pages\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks}'); }
 			
+			// any warnings?
 			if(warnings.length > 0) {
-				if($('#' + editor.id + '_warnings').length > 0) $('#' + editor.id + '_warnings').html(warnings.join(', '));
-				else $('#' + editor.id + '_parent').after('<span id="'+ editor.id + '_warnings' +'" class="infoMessage">'+ warnings.join(', ') + '</span>');
+				if($('#' + editor.id + '_warnings').length > 0) $('#' + editor.id + '_warnings').html(warnings.join(' '));
+				else $('#' + editor.id + '_parent').after('<span id="'+ editor.id + '_warnings' +'" class="infoMessage editorWarning">'+ warnings.join(' ') + '</span>');
 			}
+			
+			// no warnings
 			else $('#' + editor.id + '_warnings').remove();
 		}
 	},

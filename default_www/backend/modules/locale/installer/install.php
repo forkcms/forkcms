@@ -399,6 +399,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'EditCategory', 'bewerk categorie "%1$s"');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'Edited', 'Het item werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'EditedCategory', 'De categorie "%1$s" werd opgeslagen.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'EditorImagesWithoutAlt', 'Er zijn afbeeldingen zonder alt-attribute <small>(<a href="http://www.anysurfer.org/elke-afbeelding-heeft-een-alt-attribuut" target="_blank">lees meer</a>)</small>.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'EditorInvalidLinks', 'Er zijn ongeldige links.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'EN', 'Engels');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'ES', 'Spaans');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'ForgotPassword', 'Wachtwoord vergeten?');
@@ -750,6 +752,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'EditCategory', 'edit category "%1$s"');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'Edited', 'The item was saved.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'EditedCategory', 'The category "%1$s" was saved.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'EditorImagesWithoutAlt', 'There are images without an alt-attribute.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'EditorInvalidLinks', 'There are invalid links.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'EN', 'English');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ES', 'Spanish');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ForgotPassword', 'Forgot password?');

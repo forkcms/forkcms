@@ -81,3 +81,5 @@ tr.isDefault td.name { font-weight: 900; }
 .multipleTextWrapper li { margin: 0 4px 4px 0; }
 .multipleTextWrapper ul, .multipleTextWrapper li { zoom: 1; }
 .multipleTextWrapper ul:after, .multipleTextWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+.editorWarning { display: inline-block; margin-top: 3px; }
