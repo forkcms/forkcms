@@ -415,7 +415,7 @@ class BackendPagesModel
 					{
 						$html .= ' id="templateBlock-'. $index .'">
 									<h4 class="templateBlockTitle">'. $title .'</h4>
-									<p><span class="helpTxt templateBlockCurrentType">'. ucfirst(BL::getMessage(SpoonFilter::toCamelCase($type))) .'</span></p>
+									<p><span class="helpTxt templateBlockCurrentType">&nbsp;</span></p>
 									<div class="buttonHolder">
 										<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" rel="'. $index .'">
 											<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
@@ -783,7 +783,7 @@ class BackendPagesModel
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 
 			// add human readable name
-			$row['human_name'] = BackendLanguage::getLabel(SpoonFilter::toCamelCase($row['type'])) .': '. $name;
+			$row['human_name'] = BackendLanguage::getLabel(SpoonFilter::toCamelCase('ExtraType_'. $row['type'])) .': '. $name;
 			$row['message'] = sprintf(BackendLanguage::getMessage(SpoonFilter::toCamelCase($row['type'] . '_attached'), 'pages'), $name);
 		}
 
