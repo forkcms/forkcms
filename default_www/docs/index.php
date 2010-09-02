@@ -97,28 +97,10 @@
 					<p><a href="http://www.openminds.be">Frank</a></p>
 				</li>
 				<li>
-					<a href="http://dimitrivanheucke.be/blog/">
-						<img src="images/default.gif" width="48" height="48" alt="" />
-					</a>
-					<p><a href="http://dimitrivanheucke.be/blog/">Dimitri</a></p>
-				</li>
-				<li>
 					<a href="http://www.spoon-library.be">
 						<img src="images/dave-twitter.jpg" width="48" height="48" alt="Dave" />
 					</a>
 					<p><a href="http://www.spoon-library.be">Dave</a></p>
-				</li>
-				<li>
-					<a href="http://www.roam.be">
-						<img src="images/default.gif" width="48" height="48" alt="" />
-					</a>
-					<p><a href="http://www.roam.be">Kevin</a></p>
-				</li>
-				<li>
-					<a href="http://www.thehotseat.be/">
-						<img src="images/bytte.jpg" width="48" height="48" alt="" />
-					</a>
-					<p><a href="http://www.thehotseat.be/">Bytte</a></p>
 				</li>
 				<li>
 					<a href="http://www.netlash.com/">
@@ -139,26 +121,24 @@
 					<p><a href="http://www.spoon-library.com/blog">Davy</a></p>
 				</li>
 				<li>
-					<a href="#">
+					<a href="http://www.anantasoft.com/index.php?Home">
 						<img src="images/default.gif" width="48" height="48" alt="" />
 					</a>
 					<p><a href="#">Matthias</a></p>
 				</li>
 				<li>
 					<a href="#">
-						<img src="images/default.gif" width="48" height="48" alt="" />
+						<img src="http://www.annelyze.be" width="48" height="48" alt="" />
 					</a>
 					<p><a href="#">Annelies</a></p>
 				</li>
 				<li>
-					<a href="#">
+					<a href="http://www.dextrose.be">
 						<img src="images/default.gif" width="48" height="48" alt="" />
 					</a>
 					<p><a href="#">Dextro</a></p>
 				</li>
 			</ul>
-
-			<p><span class="markedTodo">@todo Add links for Matthias, Annelies, Dextro; add other contributors.</span></p>
 		</div>
 
 		<div class="hr"><hr /></div>
