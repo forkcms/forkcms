@@ -146,7 +146,7 @@ class SpoonDatagrid
 
 
 	/**
-	 * Array of row functions
+	 * List of row functions
 	 *
 	 * @var	array
 	 */
@@ -856,11 +856,8 @@ class SpoonDatagrid
 				$this->rowFunctionsParsed = array();
 			}
 
-			else
-			{
-				// row attributes
-				$row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
-			}
+			// default row behaviour
+			else $row['attributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row']));
 
 			// odd row attributes (reversed since the first $i = 0)
 			if(!SpoonFilter::isOdd($i)) $row['oddAttributes'] = str_replace($record['labels'], $record['values'], $this->getHtmlAttributes($this->attributes['row_odd']));
@@ -1011,8 +1008,6 @@ class SpoonDatagrid
 		// loop functions
 		foreach($this->columnFunctions as $function)
 		{
-			// @todo	Davy, waarom gebruik je niet altijd call_user_func_array, Matthias begrijpt dat niet zo goed...
-
 			// no arguments given
 			if($function['arguments'] == null) $value = call_user_func($function['function']);
 
@@ -1348,8 +1343,6 @@ class SpoonDatagrid
 		// loop functions
 		foreach($this->rowFunctions as $function)
 		{
-			// @todo	Davy, waarom gebruik je niet altijd call_user_func_array, Matthias begrijpt dat niet zo goed...
-
 			// no arguments given
 			if($function['arguments'] == null) $value = call_user_func($function['function'], $rowAttributes);
 
@@ -1387,6 +1380,7 @@ class SpoonDatagrid
 		// restore error reporting
 		error_reporting($currentErrorReporting);
 
+		// cough it up
 		return $record;
 	}
 

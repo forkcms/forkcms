@@ -38,16 +38,17 @@ class SpoonFileCSV
 	 * Converts an array to a CSV file
 	 *
 	 * @return	mixed
-	 * @param	string $path				The full path to the file you wish to create
-	 * @param	array $array				The array to convert
-	 * @param	array[optional] $columns	The column names you want to use
-	 * @param	string[optional] $delimiter	The field delimiter of the CSV
-	 * @param	string[optional] $enclosure	The enclosure character of the CSV
+	 * @param	string $path						The full path to the file you wish to create
+	 * @param	array $array						The array to convert
+	 * @param	array[optional] $columns			The column names you want to use
+	 * @param	array[optional] $excludeColumns		The columns you want to exclude
+	 * @param	string[optional] $delimiter			The field delimiter of the CSV
+	 * @param	string[optional] $enclosure			The enclosure character of the CSV
 	 */
-	public static function arrayToFile($path, array $array, array $columns = null, $delimiter = ',', $enclosure = '"', $download = false)
+	public static function arrayToFile($path, array $array, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"', $download = false)
 	{
 		// get the content of the file
-		$csv = self::arrayToString($array, $columns, $delimiter, $enclosure);
+		$csv = self::arrayToString($array, $columns, $excludeColumns, $delimiter, $enclosure);
 
 		// set file content
 		SpoonFile::setContent($path, $csv);
@@ -61,12 +62,13 @@ class SpoonFileCSV
 	 * Converts an array into a CSV-formatted string
 	 *
 	 * @return	string
-	 * @param	array $array				The array to convert
-	 * @param	array[optional] $columns	The column names you want to use
-	 * @param	string[optional] $delimiter	The field delimiter of the CSV
-	 * @param	string[optional] $enclosure	The enclosure character of the CSV
+	 * @param	array $array						The array to convert
+	 * @param	array[optional] $columns			The column names you want to use
+	 * @param	array[optional] $excludeColumns		The columns you want to exclude
+	 * @param	string[optional] $delimiter			The field delimiter of the CSV
+	 * @param	string[optional] $enclosure			The enclosure character of the CSV
 	 */
-	public static function arrayToString(array $array, array $columns = null, $delimiter = ',', $enclosure = '"')
+	public static function arrayToString(array $array, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// validate array
 		if(!empty($array) && !isset($array[0])) throw new SpoonFileException('Invalid array format.');
@@ -91,6 +93,13 @@ class SpoonFileCSV
 		{
 			// cellcount check
 			if($countCells != count($row)) throw new SpoonFileException('Each row has to have the same number of cells as the first row.');
+
+			// some columns are excluded
+			if(!empty($excludeColumns))
+			{
+				// unset the excluded columns
+				foreach($excludeColumns as $column) unset($row[$column]);
+			}
 
 			// add this row to the CSV
 			$csv .= $enclosure . implode($enclosure . $delimiter . $enclosure, (array) $row) . $enclosure . PHP_EOL;
@@ -120,7 +129,6 @@ class SpoonFileCSV
 		$headers = array();
 		$headers[] = 'Content-type: application/octet-stream';
 		$headers[] = 'Content-Disposition: attachment; filename="'. $filename .'"';
-		$headers[] = 'Content-type: application/octet-stream';
 
 		// overwrite the headers
 		SpoonHTTP::setHeaders($headers);
@@ -148,7 +156,7 @@ class SpoonFileCSV
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
 	 */
-	public static function fileToArray($path, array $columns = array(), $delimiter = ',', $enclosure = '"')
+	public static function fileToArray($path, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// reset variables
 		$path = (string) $path;
@@ -194,6 +202,13 @@ class SpoonFileCSV
 			{
 				// add the field to this row
 				$row[$columns[$columnId]] = $row[$columnId];
+
+				// some columns are excluded
+				if(!empty($excludeColumns))
+				{
+					// unset the excluded columns
+					foreach($excludeColumns as $column) unset($row[$column]);
+				}
 
 				// remove the original field from this row
 				unset($row[$columnId]);
@@ -313,7 +328,7 @@ class SpoonFileCSV
 	 * @param	string[optional] $delimiter	The field delimiter of the CSV
 	 * @param	string[optional] $enclosure	The enclosure character of the CSV
 	 */
-	public static function stringToArray($string, array $columns = array(), $delimiter = ',', $enclosure = '"')
+	public static function stringToArray($string, array $columns = null, array $excludeColumns = null, $delimiter = ',', $enclosure = '"')
 	{
 		// reset variables
 		$string = (string) $string;
@@ -323,7 +338,7 @@ class SpoonFileCSV
 		SpoonFile::setContent($filename, $string);
 
 		// return the file to array
-		$array = self::fileToArray($filename, $columns, $delimiter, $enclosure);
+		$array = self::fileToArray($filename, $columns, $excludeColumns, $delimiter, $enclosure);
 
 		// remove the created file
 		SpoonFile::delete($filename);
