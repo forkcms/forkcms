@@ -880,7 +880,7 @@ jsBackend.tinyMCE = {
 			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt}'); }
 
 			// invalid links?
-			if(content.match(/href="\/private\/([a-z]{2,})\/pages\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks}'); }
+			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks}'); }
 			
 			// any warnings?
 			if(warnings.length > 0) {
