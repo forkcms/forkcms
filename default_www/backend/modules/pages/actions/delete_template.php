@@ -29,7 +29,7 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 		$id = $this->getParameter('id', 'int');
 
 		// validate
-		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=delete-template');
+		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
 
 		// get template (we need the title)
 		$template = BackendPagesModel::getTemplate($id);
@@ -46,7 +46,7 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 
 		// page is deleted, so redirect to the overview
 		if($success) $this->redirect(BackendModel::createURLForAction('templates') .'&report=deleted-template&var='. urlencode($template['label']));
-		else $this->redirect(BackendModel::createURLForAction('templates') .'&error=delete-template');
+		else $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
 	}
 }
 

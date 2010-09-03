@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FrontendBlogWidgetRecentArticles
+ * FrontendBlogWidgetRecentArticlesFull
  * This is a widget with recent blog-articles
  *
  * @package		frontend
@@ -10,7 +10,7 @@
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendBlogWidgetRecentArticles extends FrontendBaseWidget
+class FrontendBlogWidgetRecentArticlesFull extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
@@ -38,7 +38,7 @@ class FrontendBlogWidgetRecentArticles extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign comments
-		$this->tpl->assign('widgetBlogRecentArticles', FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_num_items', 5)));
+		$this->tpl->assign('widgetBlogRecentArticlesFull', FrontendBlogModel::getAll(FrontendModel::getModuleSetting('blog', 'recent_articles_full_num_items', 5)));
 	}
 }
 

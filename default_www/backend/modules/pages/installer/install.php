@@ -91,7 +91,7 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Deleted', 'The page "%1$s" was deleted.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'DeletedTemplate', 'The template "%1$s" was deleted.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Edited', 'The page "%1$s" was saved.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Edited', 'The template "%1$s" was saved.');
+		$this->insertLocale('en', 'backend', 'pages', 'msg', 'EditedTemplate', 'The template "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpBlockContent', 'What kind of content do you want to show here?');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpMetaNavigation', 'Extra topnavigation (above/below the menu) on every page.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpNavigationTitle', 'The title that is shown in the menu.');
@@ -237,8 +237,8 @@ class PagesInstall extends ModuleInstaller
 		$extras['blog_widget_recent_comments'] = $this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
 		$extras['blog_widget_categories'] = $this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
 		$extras['blog_widget_archive'] = $this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
-		$extras['blog_widget_recent_articles'] = $this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N', 1004);
-		$extras['blog_widget_latest_articles'] = $this->insertExtra('blog', 'widget', 'LatestArticles', 'latest_articles', null, 'N', 1005);
+		$extras['blog_widget_recent_articles_full'] = $this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
+		$extras['blog_widget_recent_articles_list'] = $this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
 		$extras['search_block'] = $this->insertExtra('search', 'block', 'Search', null, null, 'N', 2000);
 		$extras['search_widget_form'] = $this->insertExtra('search', 'widget', 'SearchForm', 'form', null, 'N', 2001);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
@@ -251,7 +251,7 @@ class PagesInstall extends ModuleInstaller
 								'active' => 'Y',
 								'data' => serialize(array(	'format' => '[/,/,/,/,6],[1,1,2,2,2],[1,1,2,2,2],[/,3,3,3,4],[/,3,3,3,5],[/,3,3,3,/]',
 															'names' => array('Picture w/ caption', 'Introduction', 'Blog articles', 'Latest Comments', 'Contact', 'Search'),
-															'default_extras' => array('editor', 'editor', $extras['blog_widget_recent_articles'], $extras['blog_widget_recent_comments'], 'editor', $extras['search_widget_form'])
+															'default_extras' => array('editor', 'editor', $extras['blog_widget_recent_articles_full'], $extras['blog_widget_recent_comments'], 'editor', $extras['search_widget_form'])
 														))
 							);
 		$defaultTemplate = 	array('label' => 'Scorsese - Default',
@@ -295,7 +295,7 @@ class PagesInstall extends ModuleInstaller
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_1.txt'),
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt'),
-									array('extra_id' => $extras['blog_widget_recent_articles']),
+									array('extra_id' => $extras['blog_widget_recent_articles_list']),
 									array('extra_id' => $extras['blog_widget_recent_comments']),
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_3.txt'),
 									array('extra_id' => $extras['search_widget_form']));

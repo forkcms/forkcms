@@ -29,7 +29,7 @@ class BackendPagesDelete extends BackendBaseActionDelete
 		$id = $this->getParameter('id', 'int');
 
 		// validate
-		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=delete');
+		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
 
 		// get page (we need the title)
 		$page = BackendPagesModel::get($id);
@@ -49,7 +49,7 @@ class BackendPagesDelete extends BackendBaseActionDelete
 
 		// page is deleted, so redirect to the overview
 		if($success) $this->redirect(BackendModel::createURLForAction('index') .'&id='. $page['parent_id'] .'&report=deleted&var='. urlencode($page['title']));
-		else $this->redirect(BackendModel::createURLForAction('edit') .'&error=delete');
+		else $this->redirect(BackendModel::createURLForAction('edit') .'&error=non-existing');
 	}
 }
 

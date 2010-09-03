@@ -34,7 +34,8 @@ class BlogInstall extends ModuleInstaller
 		$this->setSetting('blog', 'moderation', true);
 		$this->setSetting('blog', 'ping_services', true);
 		$this->setSetting('blog', 'overview_num_items', 10);
-		$this->setSetting('blog', 'recent_articles_num_items', 5);
+		$this->setSetting('blog', 'recent_articles_full_num_items', 3);
+		$this->setSetting('blog', 'recent_articles_list_num_items', 5);
 		$this->setSetting('blog', 'max_num_revisions', 20);
 
 		// make module searchable
@@ -62,8 +63,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertExtra('blog', 'widget', 'RecentComments', 'recent_comments', null, 'N', 1001);
 		$this->insertExtra('blog', 'widget', 'Categories', 'categories', null, 'N', 1002);
 		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
-		$this->insertExtra('blog', 'widget', 'RecentArticles', 'recent_articles', null, 'N', 1004);
-		$this->insertExtra('blog', 'widget', 'LatestArticles', 'latest_articles', null, 'N', 1005);
+		$this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
+		$this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
 
 
 		// loop languages
@@ -143,8 +144,9 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NoItems', 'Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.');
-		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInLatestArticles', 'Aantal items in laatste artikels widget');
-		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Aantal items in recente artikels widget');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesFull', 'Aantal items in recente artikels (volledig) widget');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesList', 'Aantal items in recente artikels (lijst) widget');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ArticlesInCategory', 'artikels in categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'InTheCategory', 'in de categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'BlogArchive', 'blogarchief');
@@ -174,8 +176,9 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Enable the built-in spamfilter (Akismet) to help avoid spam comments.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NoItems', 'There are no articles yet. <a href="%1$s">Write the first article</a>.');
-		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInLatestArticles', 'Number of articles in the latest articles widget');
-		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticles', 'Number of articles in the recent articles widget');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesFull', 'Number of articles in the recent articles (full) widget');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesList', 'Number of articles in the recent articles (list) widget');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ArticlesInCategory', 'articles in category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'BlogArchive', 'blog archive');

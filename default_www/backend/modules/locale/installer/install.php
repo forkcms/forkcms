@@ -119,6 +119,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NameIsRequired', 'Gelieve een naam in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NicknameIsRequired', 'Gelieve een publicatienaam in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoCommentsSelected', 'Er waren geen reacties geselecteerd.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoItemsSelected', 'Er waren geen items geselecteerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoModuleLinked', 'Kan de URL niet genereren. Zorg dat deze module aan een pagina hangt.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NonExisting', 'Dit item bestaat niet.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NoSelection', 'Er waren geen items geselecteerd.');
@@ -293,7 +294,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PublishedArticles', 'gepubliceerde artikels');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PublishedOn', 'gepubliceerd op');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'PublishOn', 'publiceer op');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'RecentArticles', 'recente artikels');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'RecentArticlesFull', 'recente artikels (volledig)');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'RecentArticlesList', 'recente artikels (lijst)');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'RecentComments', 'recente reacties');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'RecentlyEdited', 'recent bewerkt');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'RecentVisits', 'recente bezoeken');
@@ -422,6 +424,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpRSSDescription', 'Beschrijf bondig wat voor soort inhoud de RSS-feed zal bevatten.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpRSSTitle', 'Geef een duidelijke titel aan de RSS-feed');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpSMTPServer', 'Mailserver die wordt gebruikt voor het versturen van e-mails.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'Imported', 'De data werd geïmporteerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'LoginFormForgotPasswordSuccess', '<strong>Mail sent.</strong> Please check your inbox!');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NL', 'Nederlands');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoAkismetKey', 'Om de spamfilter te activeren moet je een Akismet-key <a href="%1$s">ingeven</a>.');
@@ -472,6 +475,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NameIsRequired', 'Please provide a name.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NicknameIsRequired', 'Please provide a publication name.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NoCommentsSelected', 'No comments were selected.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'NoItemsSelected', 'No items were selected.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NoModuleLinked', 'Cannot generate URL. Create a page that has this module attached to it.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NonExisting', 'This item doesn\'t exist.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NoSelection', 'No items were selected.');
@@ -646,7 +650,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PublishedArticles', 'published articles');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PublishedOn', 'published on');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'PublishOn', 'publish on');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'RecentArticles', 'recent articles');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'RecentArticlesFull', 'recent articles (full)');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'RecentArticlesList', 'recent articles (list)');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'RecentComments', 'recent comments');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'RecentlyEdited', 'recently edited');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'RecentVisits', 'recent visits');
@@ -775,6 +780,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpRSSDescription', 'Briefly describe what kind of content the RSS feed will contain.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpRSSTitle', 'Provide a clear title for the RSS feed.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpSMTPServer', 'Mailserver that should be used for sending e-mails.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'Imported', 'The data was imported.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'LoginFormForgotPasswordSuccess', '<strong>Mail sent.</strong> Please check your inbox!');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NL', 'Dutch');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoAkismetKey', 'If you want to enable the spam-protection you should <a href="%1$s">configure</a> an Akismet-key.');

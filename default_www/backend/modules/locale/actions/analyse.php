@@ -171,10 +171,20 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	 */
 	private function processBackend()
 	{
-		// get files to process
+		// init some vars
 		$tree = self::getTree(BACKEND_PATH);
 		$modules = BackendModel::getModules(false);
 		$used = array();
+		$navigation = Spoon::getObjectReference('navigation');
+		$lbl = array();
+
+		// get labels from navigation
+		array_walk_recursive($navigation->navigation, array('self', 'getLabelsFromBackendNavigation'), &$lbl);
+		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in navigation</small>'), 'module_specific' => array());
+
+		// get labels from table
+		$lbl = (array) BackendModel::getDB()->getColumn('SELECT label FROM pages_extras');
+		foreach($lbl as $label) $used['lbl'][$label] = array('files' => array('<small>used in database</small>'), 'module_specific' => array());
 
 		// loop files
 		foreach($tree as $file)
@@ -230,9 +240,31 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 				// PHP file
 				case 'php':
 					$matches = array();
+					$matchesURL = array();
 
 					// get matches
 					preg_match_all('/(BackendLanguage|BL)::get(Label|Error|Message)\(\'(.*)\'(.*)?\)/iU', $content, $matches);
+
+					// match errors
+					preg_match_all('/&(amp;)?(error|report)=([A-Z0-9-_]+)/i', $content, $matchesURL);
+
+					// any errormessages
+					if(!empty($matchesURL[0]))
+					{
+						// loop matches
+						foreach($matchesURL[3] as $key => $match)
+						{
+							$type = 'lbl';
+							if($matchesURL[2][$key] == 'error') $type = 'Error';
+							if($matchesURL[2][$key] == 'report') $type = 'Message';
+
+							$matches[0][] = '';
+							$matches[1][] = 'BL';
+							$matches[2][] = $type;
+							$matches[3][] = SpoonFilter::toCamelCase($match, array('-', '_'));
+							$matches[4][] = '';
+						}
+					}
 
 					// any matches?
 					if(isset($matches[3]))
@@ -292,7 +324,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 								foreach($modules as $module)
 								{
 									// determine if this is a module specific locale
-									if(substr($match, 0, mb_strlen($module)) == SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module))
+									if(substr($match, 0, mb_strlen($module)) == SpoonFilter::toCamelCase($module) && mb_strlen($match) > mb_strlen($module) && ctype_upper(substr($match, mb_strlen($module) + 1, 1)))
 									{
 										// cleanup
 										$match = str_replace(SpoonFilter::toCamelCase($module), '', $match);
@@ -666,6 +698,21 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 		// return
 		return $nonExisting;
+	}
+
+
+	/**
+	 * Get the passed key should be treated as a label we add it to the array
+	 *
+	 * @return	void
+	 * @param	mixed $value	The value of the element.
+	 * @param	mixed $key		The key of the element.
+	 * @param	array $items	The array to append the found values to.
+	 */
+	private static function getLabelsFromBackendNavigation($value, $key, $items)
+	{
+		// add if needed
+		if((string) $key == 'label') $items[] = $value;
 	}
 }
 

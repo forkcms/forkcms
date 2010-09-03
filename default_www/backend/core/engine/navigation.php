@@ -18,7 +18,7 @@ class BackendNavigation
 	 *
 	 * @var	array
 	 */
-	private $navigation = array();
+	public $navigation = array();
 
 
 	/**
