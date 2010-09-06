@@ -324,6 +324,48 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
+	 * Sets the checkboxes for the mass action
+	 *
+	 * @return	void
+	 * @param	string $column						The name for the column that will hold the checkboxes.
+	 * @param	string $value						The value for the checkbox.
+	 * @param	array[optional] $excludedValues		The values that should be excluded.
+	 */
+	public function setMassActionCheckboxes($column, $value, array $excludedValues = null)
+	{
+		// build label and value
+		$label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>';
+		$value = '<span><input type="checkbox" name="id[]" value="'. $value .'" class="inputCheckbox" /></span>';
+
+		// add the column
+		$this->addColumn($column, $label, $value);
+
+		// set as first column
+		$this->setColumnsSequence($column);
+
+		// excluded IDs found
+		if(!empty($excludedValues))
+		{
+			// fetch the datagrid attributes
+			$attributes = $this->getAttributes();
+
+			// set if needed
+			if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_'. time()));
+
+			// fetch the datagrid attributes
+			$attributes = $this->getAttributes();
+
+			// build array
+			$excludedData['id'] = $attributes['id'];
+			$excludedData['JSON'] = json_encode($excludedValues);
+
+			// assign the stack to the datagrid template
+			$this->tpl->assign('excludedCheckboxesData', $excludedData);
+		}
+	}
+
+
+	/**
 	 * Sets all the default settings needed when attempting to use sorting
 	 *
 	 * @return	void

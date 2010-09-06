@@ -141,8 +141,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
 		// add the multicheckbox column
-		$this->datagrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
-		$this->datagrid->setColumnsSequence('checkbox');
+		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]');
 
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');

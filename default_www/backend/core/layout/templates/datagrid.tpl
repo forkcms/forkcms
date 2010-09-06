@@ -43,3 +43,17 @@
 		</tfoot>
 	{/option:footer}
 </table>
+
+{option:excludedCheckboxesData}
+<script type="text/javascript">
+//<![CDATA[
+	if(typeof excludedCheckboxesData != undefined) var excludedCheckboxesData = new Array();
+	excludedCheckboxesData['{$excludedCheckboxesData['id']}'] = {$excludedCheckboxesData['JSON']};
+
+	// loop and remove elements
+	for(var i in excludedCheckboxesData['{$excludedCheckboxesData['id']}']) {
+		$('#{$excludedCheckboxesData['id']} input[value='+ excludedCheckboxesData['{$excludedCheckboxesData['id']}'][i] +']').remove();
+	}
+//]]>
+</script>
+{/option:excludedCheckboxesData}

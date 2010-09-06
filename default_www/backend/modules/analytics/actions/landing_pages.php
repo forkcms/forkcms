@@ -63,8 +63,7 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 			$datagrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') .'&amp;page=[page_encoded]');
 
 			// add the multicheckbox column
-			$datagrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
-			$datagrid->setColumnsSequence('checkbox');
+			$datagrid->setMassActionCheckboxes('checkbox', '[id]');
 
 			// add mass action dropdown
 			$ddmMassAction = new SpoonFormDropdown('action', array('delete_landing_page' => BL::getLabel('Delete')), 'delete');

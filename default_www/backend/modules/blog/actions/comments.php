@@ -82,8 +82,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'text' => ucfirst(BL::getLabel('Comment'))));
 
 		// add the multicheckbox column
-		$this->dgPublished->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
-		$this->dgPublished->setColumnsSequence('checkbox');
+		$this->dgPublished->setAttributes(array('id' => 'mongool'));
+		$this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
 		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
@@ -119,8 +119,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'text' => ucfirst(BL::getLabel('Comment'))));
 
 		// add the multicheckbox column
-		$this->dgModeration->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
-		$this->dgModeration->setColumnsSequence('checkbox');
+		$this->dgModeration->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
 		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
@@ -158,8 +157,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'text' => ucfirst(BL::getLabel('Comment'))));
 
 		// add the multicheckbox column
-		$this->dgSpam->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span class="checkboxHolder"><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
-		$this->dgSpam->setColumnsSequence('checkbox');
+		$this->dgSpam->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
 		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
