@@ -24,12 +24,11 @@ jsBackend = {
 		jsBackend.messages.init();
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
-
+		jsBackend.tableSequenceByDragAndDrop.init();
+		
 		// IE fixes
 		jsBackend.selectors.init();
 		jsBackend.focusfix.init();
-
-		// jsBackend.tableSequenceByDragAndDrop.init();
 	},
 
 	// init ajax
@@ -964,14 +963,20 @@ jsBackend.tableSequenceByDragAndDrop = {
 				placeholder: 'dragAndDropPlaceholder',
 				forcePlaceholderSize: true,
 				stop: function(event, ui) {
+					// the table
+					var table = $(this);
+					
 					// buil ajax-url
 					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
+					
 					// init var
-					var rowIds = $(this).sortable('toArray');
+					var rows = $(this).find('tr');
 					var newIdSequence = new Array();
+					
 					// loop rowIds
-					for(var i in rowIds) newIdSequence.push(rowIds[i].split('-')[1]);
+					rows.each(function() { newIdSequence.push($(this).attr('rel')); });
 
+					// make the call
 					$.ajax({cache: false, type: 'POST', dataType: 'json',
 						url: url,
 						data: 'new_id_sequence=' + newIdSequence.join(','),
@@ -979,17 +984,26 @@ jsBackend.tableSequenceByDragAndDrop = {
 							// not a succes so revert the changes
 							if(data.code != 200) {
 								// revert
-								$(this).sortable('cancel');
+								table.sortable('cancel');
+								
 								// show message
 								jsBackend.messages.add('error', 'alter sequence failed.');
 							}
 
+							// success
+
+							// redo odd-even
+							table.find('tr').removeClass('odd').removeClass('even');
+							table.find('tr:even').addClass('even');
+							table.find('tr:odd').addClass('odd');
+							
 							// alert the user
 							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown) {
 							// revert
-							$(this).sortable('cancel');
+							table.sortable('cancel');
+
 							// show message
 							jsBackend.messages.add('error', 'alter sequence failed.');
 
