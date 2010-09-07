@@ -95,6 +95,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 		// add column
 		$this->dgPublished->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->dgPublished->addColumn('mark_as_spam', null, BL::getLabel('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=published&amp;action=spam', BL::getLabel('MarkAsSpam'));
 
 		// hide columns
 		$this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
@@ -131,6 +132,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 		// add column
 		$this->dgModeration->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->dgModeration->addColumn('approve', null, BL::getLabel('Approve'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=published&amp;action=published', BL::getLabel('Approve'));
 
 		// hide columns
 		$this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');
@@ -166,6 +168,9 @@ class BackendBlogComments extends BackendBaseActionIndex
 
 		// sorting
 		$this->dgSpam->setSortingColumns(array('created_on', 'text'), 'text');
+
+		// add column
+		$this->dgSpam->addColumn('approve', null, BL::getLabel('Approve'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=spam&amp;action=published', BL::getLabel('Approve'));
 
 		// hide columns
 		$this->dgSpam->setColumnsHidden('post_id', 'post_title', 'post_url');

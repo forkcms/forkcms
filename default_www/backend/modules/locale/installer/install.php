@@ -154,6 +154,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'APIKeys', 'API keys');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'APIURL', 'API URL');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Application', 'applicatie');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Approve', 'goedkeuren');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Archive', 'archief');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Archived', 'gearchiveerd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Articles', 'artikels');
@@ -246,6 +247,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LoginDetails', 'login gegevens');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'LongDateFormat', 'lange datumformaat');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MainContent', 'hoofdinhoud');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MarkAsSpam', 'markeer als spam');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Marketing', 'marketing');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Meta', 'meta');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MetaData', 'metadata');
@@ -510,6 +512,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'APIKeys', 'API keys');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'APIURL', 'API URL');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Application', 'application');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Approve', 'approve');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Archive', 'archive');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Archived', 'archived');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Articles', 'articles');
@@ -603,6 +606,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'LongDateFormat', 'long date format');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MainContent', 'main content');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Marketing', 'marketing');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MarkAsSpam', 'mark as spam');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Meta', 'meta');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MetaData', 'metadata');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MetaInformation', 'meta information');
