@@ -1,5 +1,5 @@
 <div id="headerHolder">
-	<h1><a href="/" title="{$lblVisitWebsite|ucfirst}">{$SITE_TITLE}</a></h1>
+	<h1><a href="/{$LANGUAGE}" title="{$lblVisitWebsite|ucfirst}">{$SITE_TITLE}</a></h1>
 	<table cellspacing="0" cellpadding="0" id="header">
 		<tr>
 			<td id="navigation">
