@@ -53,11 +53,19 @@ class InstallerStep2 extends InstallerStep
 	 */
 	private function loadForm()
 	{
-		// @todo tijs - goeie defaults kiezen (localhost, db: forkng username: forkng... op basis van de url)
+		// guess db & username
+		$host = $_SERVER['HTTP_HOST'];
+		$chunks = explode('.', $host);
 
-		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : null);
-		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : null);
-		$this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : null);
+		// remove tld
+		array_pop($chunks);
+
+		// create base
+		$base = implode('_', $chunks);
+
+		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : '127.0.0.1');
+		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
+		$this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : $base);
 		$this->frm->addPassword('password', SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null);
 	}
 

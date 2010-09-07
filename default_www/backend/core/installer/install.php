@@ -193,8 +193,12 @@ class ModuleInstaller
 		// file actually has content
 		if(!empty($content))
 		{
-			// some version of PHP can't handle multiple statements at once, so split them
-			$queries = explode(";\n", $content); // @todo: matthias is hier niet mee akkoord, maar weet niet meteen een betere work-around die niet vuil is
+			/**
+			 * Some versions of PHP can't handle multiple statements at once, so split them
+			 * We know this isn't the best solution, but we couldn't find a beter way.
+			 * @later: find a beter way to handle multiple-line queries
+			 */
+			$queries = explode(";\n", $content);
 
 			// loop queries and execute them
 			foreach($queries as $query) $this->getDB()->execute($query);
@@ -604,8 +608,6 @@ class CoreInstall extends ModuleInstaller
 	 */
 	protected function execute()
 	{
-		// @todo davy - scorcese als default theme
-
 		// validate variables
 		if($this->getVariable('default_language') === null) throw new SpoonException('Default language is not provided.');
 		if($this->getVariable('site_domain') === null) throw new SpoonException('Site domain is not provided.');

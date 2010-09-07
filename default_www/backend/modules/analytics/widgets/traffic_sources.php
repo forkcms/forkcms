@@ -28,12 +28,8 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		// set column
 		$this->setColumn('left');
 
-		// add css	@todo @tijs: header should be available in BackendBaseWidget
-		$header = Spoon::getObjectReference('header');
-		$header->addCSS('widgets.css', 'analytics');
-
 		// add highchart javascript
-		$header->addJavascript('dashboard.js', 'analytics');
+		$this->header->addJavascript('dashboard.js', 'analytics');
 
 		// parse
 		$this->parse();

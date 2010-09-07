@@ -240,11 +240,12 @@ class API
 	 */
 	public static function authorize()
 	{
-		// grab data	@todo	check POST
+		// grab data
 		$email = SpoonFilter::getGetValue('email', null, '');
 		$nonce = SpoonFilter::getGetValue('nonce', null, '');
 		$secret = SpoonFilter::getGetValue('secret', null, '');
 
+		// data can be available in the POST, so check it
 		if($email == '') $email = SpoonFilter::getPostValue('email', null, '');
 		if($nonce == '') $nonce = SpoonFilter::getPostValue('nonce', null, '');
 		if($secret == '') $secret = SpoonFilter::getPostValue('secret', null, '');
@@ -315,12 +316,16 @@ class API
 		// redefine
 		$statusCode = (int) $statusCode;
 
+		// init vars
+		$pathChunks = explode('/', trim(dirname(__FILE__), '/'));
+		$version = $pathChunks[count($pathChunks) - 2];
+
 		// build array
 		$JSON = array();
 		$JSON['meta']['status_code'] = $statusCode;
 		$JSON['meta']['status'] = ($statusCode == 200) ? 'ok' : 'error';
 		$JSON['meta']['version'] = FORK_VERSION;
-		$JSON['meta']['endpoint'] = SITE_URL .'/api/1.0';
+		$JSON['meta']['endpoint'] = SITE_URL .'/api/'. $version;
 
 		// add data
 		if($data !== null) $JSON['data'] = $data;
@@ -349,6 +354,10 @@ class API
 		// redefine
 		$statusCode = (int) $statusCode;
 
+		// init vars
+		$pathChunks = explode('/', trim(dirname(__FILE__), '/'));
+		$version = $pathChunks[count($pathChunks) - 2];
+
 		// init XML
 		$XML = new DOMDocument('1.0', 'utf-8');
 
@@ -363,7 +372,7 @@ class API
 		$root->setAttribute('status_code', $statusCode);
 		$root->setAttribute('status', ($statusCode == 200) ? 'ok' : 'error');
 		$root->setAttribute('version', FORK_VERSION);
-		$root->setAttribute('endpoint', SITE_URL .'/api/1.0');	// @todo detect version
+		$root->setAttribute('endpoint', SITE_URL .'/api/'. $version);
 
 		// append
 		$XML->appendChild($root);

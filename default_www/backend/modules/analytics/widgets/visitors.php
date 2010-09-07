@@ -28,9 +28,8 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		// set column
 		$this->setColumn('right');
 
-		// add css	@todo	@tijs make header available
-		$header = Spoon::getObjectReference('header');
-		$header->addCSS('widgets.css', 'analytics');
+		// add css
+		$this->header->addCSS('widgets.css', 'analytics');
 
 		// add highchart javascript
 		$header->addJavascript('highcharts.js', 'analytics');

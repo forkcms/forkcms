@@ -503,6 +503,9 @@ class BackendTemplateModifiers
 		// remove special chars
 		$var = htmlspecialchars_decode($var);
 
+		// remove HTML
+		$var = strip_tags($var);
+
 		// less characters
 		if(mb_strlen($var) <= $length) return SpoonFilter::htmlspecialchars($var);
 

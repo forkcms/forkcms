@@ -10,9 +10,7 @@
 			<p>
 				<label for="file">{$msgPathToTemplate|ucfirst}</label>
 				<small><code>core/templates/</code></small>{$txtFile} {$txtFileError}
-				<small><code>core/templates/</code></small>{$txtFile} {$txtFileError}
-				{* @todo add translation *}
-				<span class="helpTxt">Put your templates in the core/templates folder of your theme.</span>
+				<span class="helpTxt">{$msgHelpTemplateLocation}</span>
 			</p>
 			<p>
 				<label for="label">{$lblLabel|ucfirst}</label>

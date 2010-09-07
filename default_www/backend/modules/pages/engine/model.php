@@ -299,7 +299,7 @@ class BackendPagesModel
 	 *
 	 * @return	string
 	 * @param	array $template			The template data.
-	 * @param	bool[optional] $large	@todo tijs - wer zijn we mee bezig?
+	 * @param	bool[optional] $large	Will the HTML be used in a large version?
 	 */
 	public static function buildTemplateHTML($template, $large = false)
 	{

@@ -821,6 +821,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'MessageIsRequired', 'Bericht is een verplicht veld.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'NameIsRequired', 'Gelieve een naam in te geven.');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Archive', 'archief');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Archives', 'archieven');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'By', 'door');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Category', 'categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Categories', 'categorieën');
@@ -870,6 +871,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'MessageIsRequired', 'Message is a required field.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'NameIsRequired', 'Please provide a name.');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Archive', 'archive');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Archives', 'archives');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'By', 'by');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Category', 'category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Categories', 'categories');

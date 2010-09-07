@@ -25,8 +25,7 @@
 					{option:blogArticles.introduction}{$blogArticles.introduction}{/option:blogArticles.introduction}
 				</div>
 				<p class="meta">
-					{* @todo label 'in de categorie' *}
-					{$msgWrittenBy|ucfirst|sprintf:{$blogArticles.user_id|usersetting:'nickname'}} in de categorie: <a href="{$blogArticles.category_full_url}" title="{$blogArticles.category_name}">{$blogArticles.category_name}</a>. {option:blogArticles.tags}{$lblTags|ucfirst}: {iteration:blogArticles.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:blogArticles.tags}{/option:blogArticles.tags}
+					{$msgWrittenBy|ucfirst|sprintf:{$blogArticles.user_id|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$blogArticles.category_full_url}" title="{$blogArticles.category_name}">{$blogArticles.category_name}</a>. {option:blogArticles.tags}{$lblTags|ucfirst}: {iteration:blogArticles.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:blogArticles.tags}{/option:blogArticles.tags}
 				</p>
 			</div>
 			{/iteration:blogArticles}

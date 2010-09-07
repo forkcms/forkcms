@@ -26,8 +26,7 @@
 							</a>
 						</h2>
 						<div class="content">
-							{* @todo: truncate? *}
-							{option:!searchResults.introduction}{$searchResults.text}{/option:!searchResults.introduction}
+							{option:!searchResults.introduction}{$searchResults.text|truncate:200}{/option:!searchResults.introduction}
 							{option:searchResults.introduction}{$searchResults.introduction}{/option:searchResults.introduction}
 						</div>
 					</div>
