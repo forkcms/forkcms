@@ -25,14 +25,14 @@
 			<div>
 				<input type="hidden" name="step" value="2" />
 				<div class="horizontal">
-
+{*
 					<div class="{$requirementsStatusOK}">
 						<p>Hooray! Your server meets the requirements to run Fork CMS.</p>
 						<div class="buttonHolder">
 							<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Start installation" />
 						</div>
 					</div>
-
+*}
 
 					<div class="{$requirementsStatusError}">
 						<div class="formMessage errorMessage">

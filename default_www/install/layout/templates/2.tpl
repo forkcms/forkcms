@@ -19,6 +19,13 @@
 
 	<div id="installHolder" class="step2">
 
+		<h2>Install Fork CMS</h2>
+		<div class="horizontal">
+			<div>
+				<p>Hooray! Your server meets the requirements to run Fork CMS.</p>
+			</div>
+		</div>
+
 		<h2>Database configuration</h2>
 		{form:step2}
 			{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}
