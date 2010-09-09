@@ -365,43 +365,6 @@ class BackendLanguage
  */
 class BL extends BackendLanguage
 {
-	/**
-	 * Get an error from the language-file
-	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module to look in.
-	 */
-	public static function err($key, $module = 'core')
-	{
-		return BackendLanguage::getError($key, $module);
-	}
-
-
-	/**
-	 * Get a label from the language-file
-	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module to look in.
-	 */
-	public static function lbl($key, $module = 'core')
-	{
-		return BackendLanguage::getLabel($key, $module);
-	}
-
-
-	/**
-	 * Get a message from the language-file
-	 *
-	 * @return	string
-	 * @param	string $key					The key to get.
-	 * @param	string[optional] $module	The module to look in.
-	 */
-	public static function msg($key, $module = 'core')
-	{
-		return BackendLanguage::getMessage($key, $module);
-	}
 }
 
 ?>
