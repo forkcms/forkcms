@@ -116,14 +116,57 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 					// add error
 					$this->frm->addError('invalid login');
 
+					// store attempt in session
+					$current = (SpoonSession::exists('login_attemps')) ? (int) SpoonSession::get('login_attemps') : 0;
+
+					// increment and store
+					SpoonSession::set('login_attemps', ++$current);
+
 					// show error
 					$this->tpl->assign('hasError', true);
 				}
 			}
 
+			// check sessions
+			if(SpoonSession::exists('login_attemps') && (int) SpoonSession::get('login_attemps') >= 5)
+			{
+				// get previous attempt
+				$previousAttempt = (SpoonSession::exists('last_attemp')) ? SpoonSession::get('last_attemp') : time();
+
+				// calculate timeout
+				$timeout = 5 * ((SpoonSession::get('login_attemps') - 4));
+
+				// too soon!
+				if(time() < $previousAttempt + $timeout)
+				{
+					// sleep untill the user can login again
+					sleep($timeout);
+
+					// set a correct header, so bots understand they can't mess with us.
+					if(!headers_sent()) header('503 Service Unavailable', true, 503);
+				}
+
+				else
+				{
+					// increment and store
+					SpoonSession::set('last_attemp', time());
+				}
+
+				// too many attempts
+				$this->frm->addEditor('too many attempts');
+
+				// show error
+				$this->tpl->assign('hasTooManyAttemps', true);
+				$this->tpl->assign('hasError', false);
+			}
+
 			// no errors in the form?
 			if($this->frm->isCorrect())
 			{
+				// cleanup sessions
+				SpoonSession::delete('login_attemps');
+				SpoonSession::delete('last_attempt');
+
 				// get the redirect-URL from the URL
 				$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard'));
 

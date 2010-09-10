@@ -16,6 +16,14 @@
 					</div>
 				{/option:hasError}
 
+				{option:hasTooManyAttemps}
+					<div id="loginError">
+						<div class="errorMessage singleMessage">
+							<p>{$errTooManyLoginAttempts}</p>
+						</div>
+					</div>
+				{/option:hasTooManyAttemps}
+
 				<div id="loginBox" {option:hasError}class="hasError"{/option:hasError}>
 					<div id="loginBoxTop">
 						<h2>{$SITE_TITLE}</h2>

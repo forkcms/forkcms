@@ -132,6 +132,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'SomethingWentWrong', 'Er liep iets fout.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'StartDateIsInvalid', 'Ongeldige startdatum');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'SurnameIsRequired', 'Gelieve een achternaam in te geven.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'TooManyLoginAttempts', 'Te veel loginpogingen. Gelieve even te wachten.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'TimeIsInvalid', 'Ongeldige tijd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'TitleIsRequired', 'Geef een titel in.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'URLAlreadyExists', 'Deze URL bestaat reeds.');
@@ -490,6 +491,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'SomethingWentWrong', 'Something went wrong.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'StartDateIsInvalid', 'Invalid start date.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'SurnameIsRequired', 'Please provide a last name.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'TooManyLoginAttempts', 'Too many login attempts, you need to cool down.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'TimeIsInvalid', 'Invalid time.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'TitleIsRequired', 'Provide a title.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'URLAlreadyExists', 'This URL already exists.');
