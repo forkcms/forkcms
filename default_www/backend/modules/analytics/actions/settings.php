@@ -118,7 +118,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$token = SpoonFilter::getGetValue('token', null, null);
 
 			// a one time token is given in the get parameters
-			if(isset($token) && $token !== 'true')
+			if(!empty($token) && $token !== 'true')
 			{
 				// get google analytics instance
 				$ga = BackendAnalyticsHelper::getGoogleAnalyticsInstance();
@@ -154,7 +154,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 				$tableId = SpoonFilter::getGetValue('table_id', null, null);
 
 				// a table id is given in the get parameters
-				if(isset($tableId))
+				if(!empty($tableId))
 				{
 					// init vars
 					$profiles = array();

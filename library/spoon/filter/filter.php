@@ -657,7 +657,18 @@ class SpoonFilter
 	 */
 	public static function isURL($value)
 	{
-		return (bool) preg_match('/(((http|ftp|https):\/{2})?(([0-9a-z_-]+\.)+('. implode('|', self::$tlds) .')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu', (string) $value);
+		// validate url
+		$return = (bool) preg_match('/(((http|ftp|https):\/{2})+(([0-9a-z_-]+\.)+('. implode('|', self::$tlds) .')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu', (string) $value);
+
+		// invalid url
+		if(!$return)
+		{
+			// check if isn't an IP
+			$return = (bool) preg_match('/(((http|ftp|https):\/{2})+(([0-9a-f]+(\:|\.))(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu', (string) $value);
+		}
+
+		// return
+		return $return;
 	}
 
 

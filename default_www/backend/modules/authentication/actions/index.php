@@ -107,6 +107,13 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			$txtEmail->isFilled(BL::getError('EmailIsRequired'));
 			$txtPassword->isFilled(BL::getError('PasswordIsRequired'));
 
+			// invalid form-token?
+			if($this->frm->getToken() != $this->frm->getField('form_token')->getValue())
+			{
+				// set a correct header, so bots understand they can't mess with us.
+				if(!headers_sent()) header('400 Bad Request', true, 400);
+			}
+
 			// all fields are ok?
 			if($txtEmail->isFilled() && $txtPassword->isFilled() && $this->frm->getToken() == $this->frm->getField('form_token')->getValue())
 			{

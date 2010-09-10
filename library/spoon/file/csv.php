@@ -89,7 +89,7 @@ class SpoonFileCSV
 		$countCells = count($array[0]);
 
 		// loop the array
-		foreach($array as $key => $row)
+		foreach($array as $row)
 		{
 			// cellcount check
 			if($countCells != count($row)) throw new SpoonFileException('Each row has to have the same number of cells as the first row.');
