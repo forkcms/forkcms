@@ -284,8 +284,9 @@ class SpoonFilter
 			break;
 
 			// string
-			default:
+			case 'string':
 				$value = (string) $value;
+			break;
 		}
 
 		return $value;
