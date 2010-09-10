@@ -127,7 +127,6 @@ jsBackend.balloons = {
 	eof: true
 }
 
-
 jsBackend.controls = {
 	// init, something like a constructor
 	init: function() {
@@ -525,6 +524,7 @@ jsBackend.controls = {
 			document.location.href = url;
 		});
 	},
+	
 	// end
 	eof: true
 }
@@ -728,8 +728,8 @@ jsBackend.layout = {
 	// dataFilter layout fixes
 	dataFilter: function() {
 		// add last child and first child for IE
-		$('.dataFilter tbody td:first-child').addClass('firstChild')
-		$('.dataFilter tbody td:last-child').addClass('lastChild')
+		$('.dataFilter tbody td:first-child').addClass('firstChild');
+		$('.dataFilter tbody td:last-child').addClass('lastChild');
 
 		// init var
 		var tallest = 0;

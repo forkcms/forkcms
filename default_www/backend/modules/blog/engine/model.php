@@ -281,11 +281,11 @@ class BackendBlogModel
 		$id = (int) $id;
 
 		// get record and return it
-		return (array) $db = BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on
-																FROM blog_comments AS i
-																WHERE i.id = ?
-																LIMIT 1;',
-																array($id));
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on
+															FROM blog_comments AS i
+															WHERE i.id = ?
+															LIMIT 1;',
+															array($id));
 	}
 
 

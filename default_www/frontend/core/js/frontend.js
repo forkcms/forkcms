@@ -24,7 +24,7 @@ jsFrontend = {
 	
 	// end
 	eof: true
-}	
+}
 
 jsFrontend.gravatar = {
 	// init, something like a constructor
