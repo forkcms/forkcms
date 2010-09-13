@@ -246,7 +246,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * @param	string[optional] $operator
 	 * @param	string[optional] $error
 	 */
-	public function isFileSize($size, $unit = 'kb', $operator = 'smaller', $error = null)
+	public function isFilesize($size, $unit = 'kb', $operator = 'smaller', $error = null)
 	{
 		// file has been uploaded
 		if($this->isFilled())

@@ -203,6 +203,9 @@ class BackendLanguage
 		// loop language to reset the label
 		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
 
+		// sort alphabetically
+		asort($return);
+
 		// return
 		return $return;
 	}
@@ -277,6 +280,9 @@ class BackendLanguage
 
 		// loop language to reset the label
 		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+
+		// sort alphabetically
+		asort($return);
 
 		// return
 		return $return;

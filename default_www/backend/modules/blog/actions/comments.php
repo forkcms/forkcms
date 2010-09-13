@@ -82,7 +82,6 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setHeaderLabels(array('created_on' => ucfirst(BL::getLabel('Date')), 'text' => ucfirst(BL::getLabel('Comment'))));
 
 		// add the multicheckbox column
-		$this->dgPublished->setAttributes(array('id' => 'mongool'));
 		$this->dgPublished->setMassActionCheckboxes('checkbox', '[id]');
 
 		// assign column functions
