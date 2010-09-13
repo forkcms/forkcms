@@ -132,8 +132,6 @@ body#login {
 		#loginFields label {
 			font-size: 11px;
 			color: #666;
-			display: block;
-			width: 110px;
 		}
 		
 		#loginFields input {
@@ -146,7 +144,7 @@ body#login {
 
 		#loginBox p.spacing {
 			padding-bottom: 0;
-			padding-left: 158px;
+			padding-left: 163px;
 		}
 
 		/* Balloon overrides */
