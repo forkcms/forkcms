@@ -4,8 +4,6 @@
  * FrontendBlogArchive
  * This is the archive-action
  *
- * @later	shouldn't we redirect /nl/blog/archief/2008/1 to /nl/blog/archief/2008/01 (duplicate content)
- *
  * @package		frontend
  * @subpackage	blog
  *

@@ -61,7 +61,7 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 		$dashboardData = BackendAnalyticsModel::getDashboardData($metrics, $startTimestamp, $endTimestamp, true);
 
 		// there are some metrics
-		if(!empty($dashboardData))
+		if($dashboardData !== false)
 		{
 			// loop metrics
 			foreach($metrics as $i => $metric)

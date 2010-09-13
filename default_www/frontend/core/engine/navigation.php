@@ -267,7 +267,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// does the keys exists in the cache?
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
-			// validate file @later	the file should be regenerated
+			// validate file
 			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php'))
 			{
 				// require BackendPagesModel

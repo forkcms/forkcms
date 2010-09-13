@@ -149,7 +149,7 @@ class BackendAnalyticsModel
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($aggregates)) self::redirectToLoadingPage($action);
+		if($aggregates === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -172,8 +172,8 @@ class BackendAnalyticsModel
 		// doesnt exist in cache - load cache xml file
 		if(!isset(self::$data[$type]['aggregates'])) self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-		// return data
-		return (isset(self::$data[$type]['aggregates']) ? self::$data[$type]['aggregates'] : array());
+		// return data is exists and false if not to get live data
+		return (isset(self::$data[$type]['aggregates']) ? self::$data[$type]['aggregates'] : false);
 	}
 
 
@@ -196,7 +196,7 @@ class BackendAnalyticsModel
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($aggregates)) self::redirectToLoadingPage($action);
+		if($aggregates === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -323,8 +323,8 @@ class BackendAnalyticsModel
 			// load cache xml file
 			self::$data = self::getCacheFile($startTimestamp, $endTimestamp);
 
-			// doesnt exist in cache after loading the xml file so set to empty
-			if(!isset(self::$data[$type])) self::$data[$type] = array();
+			// doesnt exist in cache after loading the xml file so set to false to get live data
+			if(!isset(self::$data[$type])) return false;
 		}
 
 		// return data
@@ -348,7 +348,7 @@ class BackendAnalyticsModel
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -504,7 +504,7 @@ class BackendAnalyticsModel
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -555,7 +555,7 @@ class BackendAnalyticsModel
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -667,7 +667,7 @@ class BackendAnalyticsModel
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items['aggregates']) || empty($items['entries'])) self::redirectToLoadingPage($action, array('page_id' => $id));
+		if($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage($action, array('page_id' => $id));
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -694,13 +694,13 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('top_exit_pages', $startTimestamp, $endTimestamp);
 
 		// limit data
-		$items = array_slice($items, 0, $limit, true);
+		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -738,13 +738,13 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('top_keywords', $startTimestamp, $endTimestamp);
 
 		// limit data
-		$items = array_slice($items, 0, $limit, true);
+		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -784,13 +784,13 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('top_pages', $startTimestamp, $endTimestamp);
 
 		// limit data
-		$items = array_slice($items, 0, $limit, true);
+		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -831,13 +831,13 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('top_referrals', $startTimestamp, $endTimestamp);
 
 		// limit data
-		$items = array_slice($items, 0, $limit, true);
+		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -880,7 +880,7 @@ class BackendAnalyticsModel
 		$action = Spoon::getObjectReference('url')->getAction();
 
 		// nothing in cache
-		if(empty($items)) self::redirectToLoadingPage($action);
+		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
 		SpoonSession::set($action .'Loop', null);
@@ -923,13 +923,20 @@ class BackendAnalyticsModel
 			$children = (array) $children;
 
 			// skip attributes
-			if($name == '@attributes' || trim((string) $children) == '') continue;
+			if($name == '@attributes') continue;
+
+			// empty item
+			if(trim((string) $children) == '')
+			{
+				// save empty array
+				$data[$name] = array();
+
+				// continue
+				continue;
+			}
 
 			// save attributes
 			if(isset($children['@attributes']) && is_array($children['@attributes'])) $data[$name]['attributes'] = $children['@attributes'];
-
-			// get first item
-			$firstItem = array_slice($children, 0, 1);
 
 			// page details
 			if(strpos($name, 'page_') !== false)
@@ -1005,8 +1012,18 @@ class BackendAnalyticsModel
 				// loop children
 				foreach($children as $childName => $childValue)
 				{
-					// empty item - skip
-					if($childName == '@attributes' || trim((string) $childValue) == '') continue;
+					// attributes - skip
+					if($childName === '@attributes') continue;
+
+					// empty item
+					if(trim((string) $childValue) == '')
+					{
+						// save empty array
+						$data[$name] = array();
+
+						// continue
+						continue 2;
+					}
 
 					// cast and add item
 					$data[$name][$childName] = (string) $childValue;

@@ -256,7 +256,7 @@ jsBackend.analytics.loading = {
 			data: 'page=' + page + '&identifier=' + identifier,
 			success: function(data, textStatus) {
 				// redirect
-				if(data.data.status == 'unauthorized') window.location = $('#settingsUrl').html();
+				if(data.data.status == 'unauthorized') { window.location = $('#settingsUrl').html(); }
 	
 				if(data.code == 200) {
 					// get redirect url
