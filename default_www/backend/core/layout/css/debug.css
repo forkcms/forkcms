@@ -86,7 +86,3 @@ thead th.dragAndDropHandle span { padding: 0; }
 .multipleTextWrapper ul:after, .multipleTextWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 
 .editorWarning { display: inline-block; margin-top: 3px; }
-
-
-a.iconApprove span { background-position: 0 -10000px !important; }
-a.iconMarkAsSpam span { background-position: 0 -10000px !important; }

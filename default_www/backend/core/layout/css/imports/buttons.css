@@ -86,7 +86,8 @@ a.icon span {
 		background-position: 0 0 !important; }
 	a.iconEdit span {
 		background-position: 0 -22px !important; }
-	a.iconDelete span {
+	a.iconDelete span,
+	a.iconMarkAsSpam span {
 		background-position: 0 -44px !important; }
 	a.iconBack span {
 		background-position: 0 -66px !important; }
@@ -122,6 +123,8 @@ a.icon span {
 		background-position: 0 -560px !important; }
 	a.iconRefresh span {
 		background-position: 0 -583px !important; }
+	a.iconApprove span {
+		background-position: 0 -607px !important; }
 
 	a.iconOnly:link,
 	a.iconOnly:visited {

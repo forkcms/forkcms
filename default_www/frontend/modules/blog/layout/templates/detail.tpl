@@ -94,7 +94,7 @@
 					</p>
 					<p>
 						<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtText} {$txtTextError}
+						{$txtMessage} {$txtMessageError}
 					</p>
 					<p class="spacing">
 						<input class="inputSubmit" type="submit" name="comment" value="{$msgComment|ucfirst}" />
