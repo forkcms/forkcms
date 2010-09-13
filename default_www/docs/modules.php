@@ -9,24 +9,14 @@
 
 		<div class="cols id1">
 			<div class="col col-6 content">
+
 				<h3 id="intro">Introduction</h3>
-				<p>In this section you'll find documentation by module.</p>
+
+				<p>In this section you'll find documentation by module. For the pages module, see <a href="pages.php">pages</a>.</p>
 
 				<h3 id="core">Core</h3>
 
 				<p>The core will handle most of the hassle for you, so you only have to worry about what is really important.</p>
-
-				<h3 id="urls">URLs</h3>
-
-				<p>The URL will identify an action inside a module. For example: http://fork-cms.be/private/nl/blog/index, let's break that up into the different parts.</p>
-
-				<ul>
-					<li>http://forkng.local : the URL</li>
-					<li>private : the application (in this case an alias for backend)</li>
-					<li>nl : the language you are working in</li>
-					<li>blog : the current module</li>
-					<li>index : the current action</li>
-				</ul>
 
 				<h3 id="translations">Translations</h3>
 
@@ -109,32 +99,35 @@
 				<p>Correct examples:</p>
 
 				<ul>
-				<li>NewsletterSuccess: Bedankt voor je inschrijving.</li>
-				<li>JanuaryShort: jan
-				<ul>
-				<li>This is a short message, why not a label? Because it&#8217;s not a literal translation.</li>
-				</ul></li>
-				<li>WebdesignNetlash: <a href="http://www.netlash.com">Netlash webdesign &amp; grafisch ontwerp</a></li>
+					<li>NewsletterSuccess: Bedankt voor je inschrijving.</li>
+					<li>JanuaryShort: jan
+						<ul>
+							<li>This is a short message, why not a label? Because it&#8217;s not a literal translation.</li>
+						</ul>
+					</li>
+					<li>WebdesignNetlash: <a href="http://www.netlash.com">Netlash webdesign &amp; grafisch ontwerp</a></li>
 				</ul>
 
 				<p>Incorrect examples:</p>
 
 				<ul>
-				<li>Email: e-mail
-				<ul>
-				<li>What&#8217;s wrong? This should be a label, not a message</li>
-				</ul></li>
-				<li>InvalidEmail: Ongeldig e-mailadres
-				<ul>
-				<li>What&#8217;s wrong? This should be an error, not a message</li>
-				</ul></li>
+					<li>Email: e-mail
+						<ul>
+							<li>What&#8217;s wrong? This should be a label, not a message</li>
+						</ul>
+					</li>
+					<li>InvalidEmail: Ongeldig e-mailadres
+						<ul>
+							<li>What&#8217;s wrong? This should be an error, not a message</li>
+						</ul>
+					</li>
 				</ul>
 
 				<p>Usage:</p>
 
 				<ul>
-				<li>in templates: {$msgNewsletterSuccess}</li>
-				<li>in frontend PHP: FrontendLanguage::getMessage(&#8216;NewsletterSuccess&#8217;);</li>
+					<li>in templates: {$msgNewsletterSuccess}</li>
+					<li>in frontend PHP: FrontendLanguage::getMessage(&#8216;NewsletterSuccess&#8217;);</li>
 				</ul>
 
 				<h4 id="act_action">act (action):</h4>
@@ -145,24 +138,24 @@
 				<p>An action should only be used to build clean URLs. It cannot contain any special characters or spaces and describes. It describes the current module action (e.g. &#8220;add&#8221;, &#8220;edit&#8221;). This is an example Fork URL:</p>
 
 				<ul>
-				<li>English: http://mysite.be/en/blog/archive/</li>
-				<li>Dutch: http://mysite.be/nl/blog/archief/</li>
+					<li>English: http://mysite.be/en/blog/archive/</li>
+					<li>Dutch: http://mysite.be/nl/blog/archief/</li>
 				</ul>
 
 				<p>Let&#8217;s deconstruct the URL:</p>
 
 				<ul>
-				<li><strong>http://mysite.be</strong>: the domain</li>
-				<li><strong>/nl</strong>: the current languag; depends on what language the page is requested in</li>
-				<li><strong>/blog</strong>: the current page name; this is the name given to the page in the Pages module</li>
-				<li><strong>/index</strong>: the current module action; this depends on the &#8220;act&#8221; translation</li>
+					<li><strong>http://mysite.be</strong>: the domain</li>
+					<li><strong>/nl</strong>: the current languag; depends on what language the page is requested in</li>
+					<li><strong>/blog</strong>: the current page name; this is the name given to the page in the Pages module</li>
+					<li><strong>/index</strong>: the current module action; this depends on the &#8220;act&#8221; translation</li>
 				</ul>
 
 				<p>Usage:</p>
 
 				<ul>
-				<li>In templates: {$actCategory}</li>
-				<li>In frontend PHP: FrontendLanguage::getAction(&#8216;Category&#8217;);</li>
+					<li>In templates: {$actCategory}</li>
+					<li>In frontend PHP: FrontendLanguage::getAction(&#8216;Category&#8217;);</li>
 				</ul>
 
 				<p>Please note: it&#8217;s not possible for a page&#8217;s URL to be the same as one of the existing actions translations. E.g. you can&#8217;t set a page&#8217;s URL to &#8216;detail&#8217; when the translation for the action &#8216;detail&#8217; already exists in the translations module.</p>
@@ -179,32 +172,35 @@
 				<p>Correct examples:</p>
 
 				<ul>
-				<li>InvalidEmail: This e-mail address is invalid.</li>
-				<li>RequiredField: This field is required.</li>
+					<li>InvalidEmail: This e-mail address is invalid.</li>
+					<li>RequiredField: This field is required.</li>
 				</ul>
 
 				<p>Incorrect errors:</p>
 
 				<ul>
-				<li>RequiredField: This field is required
-				<ul>
-				<li>What&#8217;s wrong? Errors are full sentcences. Punctuation marks (e.g. periods and colons) are part of the translation.</li>
-				</ul></li>
-				<li>Email: e-mail
-				<ul>
-				<li>What&#8217;s wrong? This should be a label, not an error</li>
-				</ul></li>
-				<li>NewsletterSuccess: Thanks for subscribing to our newsletter.
-				<ul>
-				<li>What&#8217;s wrong? This is not an error, should be a message.</li>
-				</ul></li>
+					<li>RequiredField: This field is required
+						<ul>
+							<li>What&#8217;s wrong? Errors are full sentcences. Punctuation marks (e.g. periods and colons) are part of the translation.</li>
+						</ul>
+					</li>
+					<li>Email: e-mail
+						<ul>
+							<li>What&#8217;s wrong? This should be a label, not an error</li>
+						</ul>
+					</li>
+					<li>NewsletterSuccess: Thanks for subscribing to our newsletter.
+						<ul>
+							<li>What&#8217;s wrong? This is not an error, should be a message.</li>
+						</ul>
+					</li>
 				</ul>
 
 				<p>Usage:</p>
 
 				<ul>
-				<li>in templates: {$errInvalidEmail}</li>
-				<li>in frontend PHP: FrontendLanguage::getError(&#8216;InvalidEmail&#8217;);</li>
+					<li>in templates: {$errInvalidEmail}</li>
+					<li>in frontend PHP: FrontendLanguage::getError(&#8216;InvalidEmail&#8217;);</li>
 				</ul>
 
 				<h4 id="backend_translations">Backend translations</h4>
@@ -222,8 +218,8 @@
 				<p>Module specific message examples:</p>
 
 				<ul>
-				<li>Users - InvalidUsername: A username may not contain special characters. Only alphanumeric characters are allowed.</li>
-				<li>Blog - NoAkismetKey: No akismet key was provided. Please enter one in the field below.</li>
+					<li>Users - InvalidUsername: A username may not contain special characters. Only alphanumeric characters are allowed.</li>
+					<li>Blog - NoAkismetKey: No akismet key was provided. Please enter one in the field below.</li>
 				</ul>
 
 				<p>Labels: </p>
@@ -271,24 +267,14 @@
 					&nbsp;
 				</pre>
 
-				<h3 id="pages">Pages</h3>
-
-				<h4 id="pageInformationTitle">Page information - Title</h4>
-				
-				<p>To change the title of a page: go to Pages, click the page you need in the tree, and change the field labelled "Title".</p>
-
-				<p>Note that the page title can be overrided in the SEO tab: you can enter separate titles for the page <code>&lt;title&gt;</code> and the title in the site's navigation.</p>
-				
-				<p>To display the current page's title in templates, use <code>{$page['title']}</code>.</p>
-
-				<h4 id="pageInformationTitleMeta">Page information - Meta</h4>
-
-				<p>To change the meta information of a page: go to Pages, click the page you need in the tree, and look at the SEO tab. The fields are pretty self-explanatory for a developer.</p>
-
 				<h3 id="contentBlocks">Content blocks</h3>
+
 				<p>...</p>
+
 				<h3 id="blog">Blog</h3>
+
 				<p>...</p>
+
 			</div>
 		</div>
 

@@ -22,15 +22,5 @@
 	<script src="js/syntax/scripts/shBrushPhp.js" type="text/javascript"></script>
 	<link type="text/css" rel="stylesheet" href="js/syntax/styles/shCore.css" media="screen" />
 	<link type="text/css" rel="stylesheet" href="js/syntax/styles/shThemeDefault.css" media="screen" />
-	
-	<!-- Cufon -->
-	<script src="js/cufon/js/cufon.js" type="text/javascript"></script>
-	<script src="js/cufon/fonts/Frutiger_LT_Std.font.js" type="text/javascript" charset="utf-8"></script>
-
-	<script type="text/javascript">
-		Cufon.replace('h2, h3', {
-		    color: '-linear-gradient(black, #333)'
-		});
-	</script>
 
 </head>

@@ -21,7 +21,7 @@ body#login {
 	right: 0;
 	left: 0;
 	font-size: 11px;
-	font-family: "Menlo", Monaco, "Courier New", "Courier", monospace;
+	font-family: Monaco, "Courier New", "Courier", monospace;
 	font-style: italic;
 	color: #666;
 }
@@ -172,7 +172,7 @@ body#login {
 				width: 100%;
 				position: absolute;
 				bottom: 0;
-				left: 0;
+				left: -1px;
 
 				/* Reset border radius */
 				border-radius: 0;
@@ -189,8 +189,15 @@ body#login {
 
 			}
 
-				#forgotPasswordBox #backendEmail {
+				#forgotPasswordBox #backendEmail,
+				#forgotPasswordBox #backendEmailForgot {
 					width: 160px;
 				}
-				
-				
+
+/*
+	No global messaging on auth
+*/
+
+#messaging {
+	visibility: hidden;
+}

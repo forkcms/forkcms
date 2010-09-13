@@ -220,7 +220,8 @@ img.alignright {
 /* Typography and text styles */
 
 body {
-	font: 300 13px Arial, sans-serif;
+	font-family: Arial, sans-serif;
+	font-size: 13px;
 	line-height: 1.5; /* Safari 2.0.4 */
 	color: #454545;
 }

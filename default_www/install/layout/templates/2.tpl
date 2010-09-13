@@ -26,7 +26,7 @@
 			</div>
 		</div>
 
-		<h2>Database configuration</h2>
+		<h3>Database configuration</h3>
 		{form:step2}
 			{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}
 			<div class="horizontal">

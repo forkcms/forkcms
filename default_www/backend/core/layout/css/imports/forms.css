@@ -134,7 +134,6 @@ input[type="submit"] {
 .forkForms .horizontal .inputList label {
 	float: none;
 	width: auto;
-	line-height: 21px;
 	padding: 0;
 }
 

@@ -170,8 +170,3 @@ body#installer {
 .inputText {
 	width: 300px;
 }
-
-.step3 #moduleList {
-	-webkit-column-count: 3;
-	-moz-column-count: 3;
-}

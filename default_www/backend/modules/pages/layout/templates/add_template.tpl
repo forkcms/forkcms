@@ -50,7 +50,7 @@
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblAddTemplate|ucfirst}" />
+			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
 {/form:add}

@@ -50,6 +50,19 @@
 						<li><code>/library/globals.php</code></li>
 						<li><code>/library/globals.*.php</code></li>
 					</ul>
+
+					<h3 id="urls">URLs</h3>
+
+					<p>The URL will identify an action inside a module. For example: http://fork-cms.be/private/nl/blog/index, let's break that up into the different parts.</p>
+
+					<ul>
+						<li>http://forkng.local : the URL</li>
+						<li>private : the application (in this case an alias for backend)</li>
+						<li>nl : the language you are working in</li>
+						<li>blog : the current module</li>
+						<li>index : the current action</li>
+					</ul>
+
 				</div>
 			</div>
 		</div>

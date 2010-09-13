@@ -8,9 +8,22 @@
 		<div class="id1">
 			<div class="content">
 
+				<p><span class="markedTodo">@note This documentation is unfinished. Please post in the <a href="http://groups.google.com/group/fork-cms/?pli=1">Google Group</a> if you get stuck.</span></p>
+
 				<p class="intro">Welcome to the documentation of Fork CMS. You'll find everything you need here to get your Fork CMS powered website running up and quickly. Have fun!</p>
 
 				<hr />
+
+				<ol>
+					<li><a href="index.php#whatis">What is Fork CMS?</a></li>
+					<li><a href="index.php#download">Download</a></li>
+					<li><a href="index.php#why">Why?</a></li>
+					<li><a href="index.php#sysreq">System requirements</a></li>
+					<li><a href="index.php#installation">Installation</a></li>
+					<li><a href="index.php#bugReports">Bug reports</a></li>
+					<li><a href="index.php#discussion">Discussion</a></li>
+					<li><a href="index.php#thanks">Thanks!</a></li>
+				</ol>
 
 				<h3 id="whatis">What is Fork CMS?</h3>
 
@@ -34,7 +47,7 @@
 					<li>Fork CMS has been built up from the ground to deliver speedy, performant websites. Who doesn't like speed?</li>
 				</ul>
 
-				<h3 id="sysreq">First steps: system requirements</h3>
+				<h3 id="sysreq">System requirements</h3>
 
 				<p>After downloading Fork CMS, you'll have to install it. Typically you'll develop on a local copy before putting the website online. First, make sure your server matches the requirements:</p>
 
@@ -47,14 +60,6 @@
 				
 				<p>Please consult the <a href="sysreq.php">detailed system requirements</a> for more information.</p>
 
-				<h3 id="bugReports">Bug reports</h3>
-
-				<p>If you encounter any bugs, please create a new issue at <a href="https://github.com/forkcms/forkcms/issues">https://github.com/forkcms/forkcms/issues</a></p>
-
-				<h3 id="discussion">Discussion</h3>
-				
-				<p>If you encounter a problem, or want to discuss Fork CMS, visit the <a href="http://groups.google.com/group/fork-cms/">Fork CMS google group</a>. You have to be a member to post a new message.</p>
-
 				<h3 id="installation">Installation</h3>
 
 				<p>Point your localhost (e.g. <code>myforksite.local</code>) to the default_www path e.g. if your website lives in <code>/Users/accountname/Sites/mywebsite</code>, point your server to <code>/Users/accountname/Sites/mywebsite/default_www</code>.</p>
@@ -62,6 +67,14 @@
 				<p>Visit to <code>&lt;your-domain&gt;/install</code> (e.g. http://myforksite.local/install) to start the installation.</p>
 
 				<p>Have fun with your project!</p>
+
+				<h3 id="bugReports">Bug reports</h3>
+
+				<p>If you encounter any bugs, please create a new issue at <a href="https://github.com/forkcms/forkcms/issues">https://github.com/forkcms/forkcms/issues</a></p>
+
+				<h3 id="discussion">Discussion</h3>
+				
+				<p>If you encounter a problem, or want to discuss Fork CMS, visit the <a href="http://groups.google.com/group/fork-cms/">Fork CMS google group</a>. You have to be a member to post a new message.</p>
 
 			</div>
 		</div>

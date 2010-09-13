@@ -11,10 +11,15 @@
 			<div class="col col-8 content">
 				<div class="col-6">
 
+					<p><span class="markedTodo">@todo write introduction</span></p>
+
+					<ol>
+						<li><a href="module_development.php#backendConstants">Available constants</a></li>
+						<li><a href="module_development.php#backendModifiers">Template modifiers</a></li>
+					</ol>
+
 					<h3 id="howitworks">Developing custom modules</h3>
 
-					<p><span class="markedTodo">@todo write introduction</span></p>
-					
 					<p>The backend is the application that makes it possible for the user the manage the content (which is the mean task for a CMS). The backend is build as a modular system.</p>
 
 					<h3 id="backendConstants">Constants</h3>
