@@ -10,7 +10,14 @@
 		<div class="cols id1">
 			<div class="col col-6 content">
 
-				<p><span class="markedTodo">@todo write about hiding pages; versioning</span></p>
+				<ol>
+					<li><a href="#howTheTreeWorks">How the tree works</a></li>
+					<li><a href="#pageInformationTitle">Page information - Title</a></li>
+					<li><a href="#pageInformationTitleMeta">Page information - Meta</a></li>
+					<li><a href="#hidingPages">Hiding pages</a></li>
+					<li><a href="#deletingPages">Deleting pages</a></li>
+					<li><a href="#versioning">Versioning</a></li>
+				</ol>
 
 				<h3 id="howTheTreeWorks">How the tree works</h3>
 
@@ -61,6 +68,41 @@
 				<p>To change the meta information of a page: go to Pages, click the page you need in the tree, and look at the SEO tab. The fields are pretty self-explanatory for a developer.</p>
 
 				<p>Template usage: see <a href="themes.php#thehead">Default <code>&lt;head&gt;</code> contents explained</a>.</p>
+
+				<h3 id="hidingPages">Hiding pages</h3>
+
+				<div class="figure figureLeft" style="width: 181px;">
+					<img src="images/hidden_page.png" width="181" height="86" alt="Hidden Page" />
+					<p class="caption">"History" is hidden in this example.</p>
+				</div>
+
+				<p>To hide a page, click the page you want to hide in the tree, click "Settings" and then change "Published" to "Hidden".</p>
+
+				<p>When you hide a page it will appear greyed out in the tree. Note that when you hide a page all of it's subpages will be hidden too.</p>
+
+				<h3 id="deletingPages">Deleting pages</h3>
+
+				<div class="figure figureLeft" style="width: 73px;">
+					<img src="images/deletebutton.png" width="73" height="33" alt="Delete button" />
+					<p class="caption">Look for this.</p>
+				</div>
+
+				<p>To delete a page, click the page in the tree, and click the delete button. Deleting a page will delete it's contents and revisions and there is no way to get it back. So be careful ;).</p>
+
+				<p>A page can only be deleted if it has no subpages (children).</p>
+				<p>Consider the following tree structure:</p>
+
+				<img src="images/deletion_example.png" width="186" height="154" alt="Deletion Example" />
+
+				<p><em>About us</em> can be deleted because it has no subpages <em>First half</em> and <em>Second half</em> can be deleted too. To delete <em>15th century</em>, you'd have to move or delete <em>First Half</em> and <em>Second Half</em>.</p>
+				
+				<p>Note that we know this can be tedious when restructuring large websites; we intend to resolve this in the future.</p>
+
+				<h3 id="versioning">Versioning</h3>
+
+				<p>When you edit a page, the tab "versioning" allows you to revert to a previous version of that page. The change will not take place until you save that page again.</p>
+
+				<p>Tip: if you accidentally deleted earlier page content, revert to the older version, copy/paste the content, don't save, and click the page again in the tree. Paste your earlier content and voila: you saved yourself some work.</p>
 
 			</div>
 		</div>
