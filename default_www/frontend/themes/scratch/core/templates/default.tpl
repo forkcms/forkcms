@@ -8,6 +8,7 @@
 				{$var|getnavigation:'page':0:1}
 			</div>
 		</div>
+
 		<div id="main">
 			{option:block1IsHTML}{$block1}{/option:block1IsHTML}
 			{option:!block1IsHTML}{include:file='{$block1}'}{/option:!block1IsHTML}
