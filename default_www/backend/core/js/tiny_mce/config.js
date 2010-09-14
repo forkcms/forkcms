@@ -61,9 +61,10 @@ tinyMCE.init({
 	
 		/**
 		 * It seems like onActivate isn't called when their is just a single instance.
-		 * Our workaround is real ugly, we watch each event and add the class on the container,
+		 * Our workaround is really ugly, we watch each event and add the class on the container,
 		 * see: http://tinymce.moxiecode.com/punbb/viewtopic.php?id=12249
 		 */
+
 		// only one instance?
 		if($('.inputEditor').length == 1) {
 			// init var
@@ -75,14 +76,14 @@ tinyMCE.init({
 				if(!added) {
 					// add class
 					$(editor.getContainer()).addClass('expanded');
-					
+
 					// reset var
 					added = true;
 				}
 			});
 		}
 
-		// multiple instance, we can rely on onActivate
+		// multiple instances, we can rely on onActivate
 		else
 		{
 			// add the correct class when the editor becomes active
