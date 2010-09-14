@@ -47,6 +47,24 @@
 	-moz-border-radius: 8px;
 }
 
+.opaque {
+	/* @inc .opaque */
+	opacity: 1;
+	filter: alpha(opacity=100);
+	-ms-filter: "alpha(opacity=100)";
+	-khtml-opacity: 1;
+	-moz-opacity: 1;
+}
+
+.transparent {
+	/* @inc .transparent */
+	opacity: 0;
+	filter: alpha(opacity=0);
+	-ms-filter: "alpha(opacity=0)";
+	-khtml-opacity: 0;
+	-moz-opacity: 0;
+}
+
 .opacity {
 	/* @inc opacity */
 	opacity: .5; /* Standard: FF gt 1.5, Opera, Safari */
