@@ -11,26 +11,23 @@
 */
 
 body {
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -ms-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    height: 100%;
-    height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
-    cursor: text;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	height: 100%;
+	height: expression((window) && ((document.documentElement.clientHeight - 6) + "px"));
+	cursor: text;
+	padding: 6px;
+	height: auto;
+	width: auto;
+	margin: 0;
+	background: #FFF;
 }
 
 html {
 	height: auto;
 	width: auto;
-}
-
-body {
-	padding: 6px;
-	height: auto;
-	width: auto;
-	background: #FFF;
-	margin: 0;
 }
 
 img {

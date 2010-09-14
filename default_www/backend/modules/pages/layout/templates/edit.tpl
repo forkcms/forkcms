@@ -70,6 +70,7 @@
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
 							<fieldset>
+								<div class="clickToEdit"><span>Click to edit</span></div>
 								{$blocks.txtHTML}
 							</fieldset>
 						</div>

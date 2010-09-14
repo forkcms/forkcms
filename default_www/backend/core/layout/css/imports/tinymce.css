@@ -1,0 +1,65 @@
+/*
+
+    TinyMCE related backend CSS
+
+    @package      backend
+    @subpackage   core
+
+    @author       Johan Ronsse <johan@netlash.com>
+    @since        2.0
+
+*/
+
+/*
+	"Click to edit" message on TinyMCEs;
+	only shown when there is no content in a TinyMCE
+*/
+
+/* @tijs Remove this display: none; when starting */
+.clickToEdit {
+	display: none !important;
+}
+
+#editContent .optionsRTE fieldset {
+	position: relative;
+}
+
+#editContent .optionsRTE:hover .clickToEdit {
+	webkit-transition: opacity 0.45s linear;
+	/* @inc .opaque */
+	opacity: 1;
+	filter: alpha(opacity=100);
+	-ms-filter: "alpha(opacity=100)";
+	-khtml-opacity: 1;
+	-moz-opacity: 1;
+}
+
+#editContent .optionsRTE .clickToEdit {
+	position: absolute;
+	opacity: 0;
+	top: 37px;
+	height: 20px;
+	color: #808080;
+	width: 100%;
+	text-align: center;
+	/* @inc .transparent */
+	opacity: 0;
+	filter: alpha(opacity=0);
+	-ms-filter: "alpha(opacity=0)";
+	-khtml-opacity: 0;
+	-moz-opacity: 0;
+}
+
+	#editContent .optionsRTE .clickToEdit span {
+		background: rgba(0,0,0,0.6);
+		color: #FFF;
+		padding: 4px 9px;
+		line-height: 1;
+		font-size: 12px;
+		font-weight: 700;
+
+		/* @inc .rc */
+		border-radius: 4px;
+		-webkit-border-radius: 4px;
+		-moz-border-radius: 4px
+	}
