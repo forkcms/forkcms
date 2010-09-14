@@ -31,7 +31,7 @@
 
 				<h3 id="download">Download</h3>
 
-				<p>Download Fork CMS from Github:</p>
+				<p>Download Fork CMS from Github: <span class="markedTodo">Note: this repository is private until we release our first open source version</span></p>
 
 				<ul>
 					<li>Use git to clone the latest release: <code class="marked">git clone git@github.com:forkcms/forkcms.git</code></li>
@@ -70,7 +70,7 @@
 
 				<h3 id="bugReports">Bug reports</h3>
 
-				<p>If you encounter any bugs, please create a new issue at <a href="https://github.com/forkcms/forkcms/issues">https://github.com/forkcms/forkcms/issues</a></p>
+				<p>If you encounter any bugs, please create a new issue at <a href="https://github.com/forkcms/forkcms/issues">https://github.com/forkcms/forkcms/issues</a> <span class="markedTodo">Note: this repository is private until we release our first open source version</span></p>
 
 				<h3 id="discussion">Discussion</h3>
 				
