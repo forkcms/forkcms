@@ -127,6 +127,7 @@ jsBackend.balloons = {
 	eof: true
 }
 
+
 jsBackend.controls = {
 	// init, something like a constructor
 	init: function() {
@@ -524,7 +525,7 @@ jsBackend.controls = {
 			document.location.href = url;
 		});
 	},
-	
+
 	// end
 	eof: true
 }
@@ -876,10 +877,10 @@ jsBackend.tinyMCE = {
 			var warnings = [];
 
 			// no alt?
-			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt}'); }
+			if(content.match(/<img(.*)alt=""(.*)/im)) { warnings.push('{$msgEditorImagesWithoutAlt|addslashes}'); }
 
 			// invalid links?
-			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks}'); }
+			if(content.match(/href="\/private\/([a-z]{2,})\/([a-z_]*)\/(.*)"/im)) { warnings.push('{$msgEditorInvalidLinks|addslashes}'); }
 			
 			// any warnings?
 			if(warnings.length > 0) {
