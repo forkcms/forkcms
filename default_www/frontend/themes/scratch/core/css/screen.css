@@ -16,11 +16,11 @@ body {
 	font-family: Arial, sans-serif;
 	font-size: 13px;
 	line-height: 1.5;
-	background: #F1F5FA;
+	background: #FFF;
 }
 
 #container {
-	width: 880px;
+	width: 640px;
 	margin: 20px auto;
 }
 
@@ -30,10 +30,10 @@ body {
 }
 
 	#header h1 {
-		margin: 0;
-		font-size: 64px;
+		margin: 0 0 12px;
+		font-size: 52px;
 		font-family: "Helvetica Neue", Arial, sans-serif;
-		letter-spacing: -2px;
+		letter-spacing: -1px;
 	}
 	
 		#header h1 a {
