@@ -58,7 +58,7 @@ tinyMCE.init({
 	
 	setup: function(editor) {
 		editor.onLoadContent.add(jsBackend.tinyMCE.checkContent);
-	
+		
 		/**
 		 * It seems like onActivate isn't called when their is just a single instance.
 		 * Our workaround is really ugly, we watch each event and add the class on the container,
@@ -76,6 +76,9 @@ tinyMCE.init({
 				if(!added) {
 					// add class
 					$(editor.getContainer()).addClass('expanded');
+					
+					// hide click to edit
+					$(editor.getContainer()).siblings('.clickToEdit').hide();
 
 					// reset var
 					added = true;
@@ -88,11 +91,21 @@ tinyMCE.init({
 		{
 			// add the correct class when the editor becomes active
 			editor.onActivate.add(function(editor, otherEditor) {
+				// add class
 				$(editor.getContainer()).addClass('expanded');
+
+				// hide click to edit
+				$(editor.getContainer()).siblings('.clickToEdit').hide();
 			});
 			// remove the class when the editor isn't active
-			editor.onDeactivate.add(function(editor, otherEditor) { 
+			editor.onDeactivate.add(function(editor, otherEditor) {
+				// remove the class
 				$(editor.getContainer()).removeClass('expanded');
+				
+				// show click to edit
+				$(editor.getContainer()).siblings('.clickToEdit').show();
+				
+				// check the content
 				jsBackend.tinyMCE.checkContent(editor);
 			});
 		}

@@ -12,14 +12,7 @@
 
 /*
 	"Click to edit" message on TinyMCEs;
-	only shown when there is no content in a TinyMCE
 */
-
-/* @tijs Remove this display: none; when starting */
-.clickToEdit {
-	display: none !important;
-}
-
 #editContent .optionsRTE fieldset {
 	position: relative;
 }

@@ -25,6 +25,7 @@ jsBackend = {
 		jsBackend.tabs.init();
 		jsBackend.tooltip.init();
 		jsBackend.tableSequenceByDragAndDrop.init();
+		jsBackend.tinyMCE.init();
 		
 		// IE fixes
 		jsBackend.selectors.init();
@@ -871,6 +872,9 @@ jsBackend.tabs = {
 
 jsBackend.tinyMCE = {
 	// init, something like a constructor
+	init: function() {
+		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+	},	
 	checkContent: function(editor) {
 		if(editor.isDirty()) {
 			var content = editor.getContent();
