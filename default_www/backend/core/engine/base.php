@@ -136,11 +136,13 @@ class BackendBaseAction
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($this->getAction() .'.js', null, true);
 
 		// add css
-		$this->header->addCSS('screen.css', 'core');
+		$this->header->addCSS('reset.css', 'core');
+		if(!SPOON_DEBUG) $this->header->addCSS('screen.min.css', 'core');
 		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
 
 		// debug css
 		if(SPOON_DEBUG) $this->header->addCSS('debug.css', 'core');
+		if(SPOON_DEBUG) $this->header->addCSS('screen.css', 'core');
 
 		// add module specific js
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/layout/css/'. $this->getModule() .'.css')) $this->header->addCSS($this->getModule() .'.css', null);

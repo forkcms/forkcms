@@ -8,39 +8,38 @@
 	            Yoni De Beuele <yoni@netlash.com>
 */
 
-@import url("imports/reset.css");
-	@import url("imports/typography.css");
-	@import url("imports/structure.css");
+@import url("imports/typography.css");
+@import url("imports/structure.css");
 
-		/* Core modules */
-		@import url("imports/dashboard.css");
-		@import url("imports/core_modules.css");
+	/* Core modules */
+	@import url("imports/dashboard.css");
+	@import url("imports/core_modules.css");
 
-		/* UI core */
-		@import url("imports/ui_constructs.css");
-		@import url("imports/buttons.css");
-		@import url("imports/tags.css");
-		@import url("imports/balloon.css");
-		@import url("imports/tooltip.css");
+	/* UI core */
+	@import url("imports/ui_constructs.css");
+	@import url("imports/buttons.css");
+	@import url("imports/tags.css");
+	@import url("imports/balloon.css");
+	@import url("imports/tooltip.css");
 
-		/* Messaging system */
-		@import url("imports/forms.css");
-			@import url("imports/messaging.css");
-			@import url("imports/autocomplete.css");
-			@import url("imports/password_strength.css");
+	/* Messaging system */
+	@import url("imports/forms.css");
+		@import url("imports/messaging.css");
+		@import url("imports/autocomplete.css");
+		@import url("imports/password_strength.css");
 
-		/* Datagrid related */
-		@import url("imports/datagrid.css");
-		@import url("imports/datafilter.css");
-		
-		/* Standalone */
-		@import url("imports/general_purpose_classes.css");
-		@import url("imports/clearfix.css");
-		@import url("imports/avatars.css");
-		@import url("imports/wizard.css");
+	/* Datagrid related */
+	@import url("imports/datagrid.css");
+	@import url("imports/datafilter.css");
+	
+	/* Standalone */
+	@import url("imports/general_purpose_classes.css");
+	@import url("imports/clearfix.css");
+	@import url("imports/avatars.css");
+	@import url("imports/wizard.css");
 
-		/* Misc */
-		@import url("imports/misc.css");
+	/* Misc */
+	@import url("imports/misc.css");
 
-		/* TinyMCE related */
-		@import url("imports/tinymce.css");
+	/* TinyMCE related */
+	@import url("imports/tinymce.css");
