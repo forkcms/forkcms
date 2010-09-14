@@ -307,23 +307,7 @@ class BackendPagesModel
 		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
 
 		// cleanup
-		$template['data']['format'] = trim(str_replace(array("\n", "\r"), '', $template['data']['format']));
-
-		// init var
-		$table = array();
-
-		// split into rows
-		$rows = explode('],[', $template['data']['format']);
-
-		// loop rows
-		foreach($rows as $i => $row)
-		{
-			// cleanup
-			$row = trim(str_replace(array('[',']'), '', $row));
-
-			// build table
-			$table[$i] = (array) explode(',', $row);
-		}
+		$table = self::templateSyntaxToArray($template['data']['format']);
 
 		// add start html
 		$html = '<table border="0" cellpadding="0" cellspacing="10">'."\n";
@@ -1627,6 +1611,41 @@ class BackendPagesModel
 
 		// store
 		BackendModel::setModuleSetting('pages', 'template_max_blocks', $maximumNumberOfBlocks);
+	}
+
+
+	/**
+	 * Convert the template syntax into an array to work with
+	 *
+	 * @return	array
+	 * @param	string $syntax	The syntax
+	 */
+	public static function templateSyntaxToArray($syntax)
+	{
+		// redefine
+		$syntax = (string) $syntax;
+
+		// cleanup
+		$syntax = trim(str_replace(array("\n", "\r"), '', $syntax));
+
+		// init var
+		$table = array();
+
+		// split into rows
+		$rows = explode('],[', $syntax);
+
+		// loop rows
+		foreach($rows as $i => $row)
+		{
+			// cleanup
+			$row = trim(str_replace(array('[',']'), '', $row));
+
+			// build table
+			$table[$i] = (array) explode(',', $row);
+		}
+
+		return $table;
+
 	}
 
 

@@ -114,6 +114,34 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
 			}
 
+			// validate syntax
+			$syntax = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
+
+			// init var
+			$table = BackendPagesModel::templateSyntaxToArray($syntax);
+			$cellCount = 0;
+			$first = true;
+
+			// loop rows
+			foreach($table as $row)
+			{
+				// first row defines the cellcount
+				if($first) $cellCount = count($row);
+
+				// not same number of cells
+				if(count($row) != $cellCount)
+				{
+					// add error
+					$this->frm->getField('format')->addError(BL::getError('InvalidTemplateSyntax'));
+
+					// stop
+					break;
+				}
+
+				// reset
+				$first = false;
+			}
+
 			// no errors?
 			if($this->frm->isCorrect())
 			{
