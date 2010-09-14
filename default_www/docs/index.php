@@ -10,7 +10,7 @@
 
 				<p><span class="markedTodo">@note This documentation is unfinished. Please post in the <a href="http://groups.google.com/group/fork-cms/?pli=1">Google Group</a> if you get stuck.</span></p>
 
-				<p class="intro">Welcome to the documentation of Fork CMS. You'll find everything you need here to get your Fork CMS powered website running up and quickly. Have fun!</p>
+				<p class="intro">Welcome to the documentation of Fork CMS. You'll find everything you need here to get your website up and running quickly. Have fun!</p>
 
 				<hr />
 
@@ -27,15 +27,15 @@
 
 				<h3 id="whatis">What is Fork CMS?</h3>
 
- 				<p>Fork CMS in a nutshell: Fork enables developers to deliver kick-ass websites. Marketing and communication managers to edit every part of their website using an easy and usable interface. It comes with good defaults and modules so you can get a solid website up and running quickly</p>
+ 				<p>Fork CMS in a nutshell: Fork enables developers to deliver kick-ass websites. Marketing and communication managers to edit every part of their website using an easy interface. It comes with good defaults and various pre-built functionalities including a blog module and Google Analytics integration.</p>
 
 				<h3 id="download">Download</h3>
 
-				<p>Download Fork CMS from Github: <span class="markedTodo">Note: this repository is private until we release our first open source version</span></p>
+				<p>Download Fork CMS from Github: <span class="markedTodo">Note: this repository is set to private until we release our first open source version</span></p>
 
 				<ul>
-					<li>Use git to clone the latest release: <code class="marked">git clone git@github.com:forkcms/forkcms.git</code></li>
-					<li>Alternatively, go to <a href="https://github.com/forkcms/forkcms/tree/">Fork CMS's Github page</a> and click the download button. You can choose to download a .zip or .tar file there.</li>
+					<li>Go to <a href="https://github.com/forkcms/forkcms/tree/">Fork CMS's Github page</a> and click the download button. You can choose to download a .zip or .tar file there.</li>
+					<li>Alternatively, use git to clone the latest release: <code class="marked">git clone git@github.com:forkcms/forkcms.git</code></li>
 				</ul>
 
 				<h3 id="why">Why should I use Fork CMS?</h3>
@@ -49,7 +49,7 @@
 
 				<h3 id="sysreq">System requirements</h3>
 
-				<p>After downloading Fork CMS, you'll have to install it. Typically you'll develop on a local copy before putting the website online. First, make sure your server matches the requirements:</p>
+				<p>After downloading Fork CMS, you'll have to install it. Typically you'll develop on a local copy before putting the website online. First, make sure your server matches the system requirements:</p>
 
 				<ul>
 					<li>PHP 5.2 or higher</li>
@@ -64,7 +64,7 @@
 
 				<p>Point your localhost (e.g. <code>myforksite.local</code>) to the default_www path e.g. if your website lives in <code>/Users/accountname/Sites/mywebsite</code>, point your server to <code>/Users/accountname/Sites/mywebsite/default_www</code>.</p>
 
-				<p>Visit to <code>&lt;your-domain&gt;/install</code> (e.g. http://myforksite.local/install) to start the installation.</p>
+				<p>Visit <code>&lt;your-domain&gt;/install</code> (e.g. http://myforksite.local/install) to start the installation.</p>
 
 				<p>Have fun with your project!</p>
 
@@ -81,9 +81,9 @@
 
 		<div class="hr"><hr /></div>
 
-	<p class="secondaryContent">&copy;Fork CMS by <a href="http://www.netlash.com">Netlash</a> and contributors. See <a href="../LICENSE" rel="license">the Fork CMS license</a> for usage details.</p>
+		<p class="secondaryContent">&copy;Fork CMS by <a href="http://www.netlash.com">Netlash</a> and contributors. Read the Fork CMS license (See file named LICENSE distributed with every Fork) for usage details.</p>
 
-</div>
+	</div>
 
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/scripts/clipboard.swf';

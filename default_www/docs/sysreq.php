@@ -10,7 +10,7 @@
 		<div class="cols id1">
 			<div class="col col-6 content">
 
-				<p>Fork CMS is a web application, so it needs a we bserver. Below you will find the minimal requirements. Consult your system adminstrator for specifics: if you want to know if you can run Fork CMS on your webserver, refer him or her to this page..</p>
+				<p>Fork CMS is a web application, so it needs a we bserver. Below you will find the minimal requirements. Consult your system adminstrator for specifics: if you want to know if you can run Fork CMS on your webserver, refer him or her to this page.</p>
 
 				<h3>Short list</h3>
 
@@ -29,7 +29,7 @@
 					<li>MySQL 5.0</li>
 				</ul>
 
-				<h3>Resources</h2>
+				<h3>Resources</h3>
 
 				<p>A standard installation will use around 10MB of disk space. But as soon as you start to publish content this can increase. We advice you to have 50MB of diskspace available.</p>
 	
@@ -57,14 +57,13 @@
 		
 		<div class="hr"><hr /></div>
 
-</div>
+	</div>
 	
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/scripts/clipboard.swf';
 		SyntaxHighlighter.all();
 	</script>
 
-	</div>
 </body>
 </html>
 

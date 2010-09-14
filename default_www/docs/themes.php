@@ -10,21 +10,18 @@
 		<div class="cols id1">
 			<div class="col col-8 content">
 
-				<p><span class="markedTodo">@todo finish this section</span></p>
-				<p><span class="markedTodo">@todo default theme should be scratch</span></p>
-
 				<ol>
 					<li><a href="themes.php#howitworks">How themes work</a></li>
 					<li><a href="themes.php#structure">Theme directory structure</a></li>
 					<li><a href="themes.php#themeBlocks">Blocks</a></li>
-					<li><a href="footNotes">Footnotes</a></li>
+					<li><a href="themes.php#footNotes">Footnotes</a></li>
 				</ol>
 
 				<h3 id="howitworks">How themes work</h3>
 
 				<p>In order to get the most out of Fork CMS, it's very important to understand theming.</p>
 
-				<p>For every new project, you should create a new theme. It's always easier to modify an existing theme to your needs than to build a new theme from scratch. Fork CMS provides a default theme to start from called <em>scratch</em>. We'll take this theme as our example from now on.</p>
+				<p>For every new project, you should create a new theme. It's always easier to modify an existing theme to your needs than to build a new theme from scratch. Fork CMS provides a default theme to start from called <em>Scratch</em>. We'll take this theme as our example from now on.</p>
 
 				<h3 id="structure">Theme directory structure</h3>
 
@@ -112,14 +109,13 @@
 		
 		<div class="hr"><hr /></div>
 
-</div>
-	
+	</div>
+
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/scripts/clipboard.swf';
 		SyntaxHighlighter.defaults['gutter'] = false;
 		SyntaxHighlighter.all();
 	</script>
 
-	</div>
 </body>
 </html>

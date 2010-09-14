@@ -28,7 +28,7 @@
 
 				<h4>Hide the page title</h4>
 
-				<p>Sometimes you don't want the current page title to show, but it shows up because a module has it's own content titles. If you don't want to show the titles on module-action pages, use the following code:
+				<p>Sometimes you don't want the current page title to show, but it shows up because a module has it's own content titles. If you don't want to show the titles on module-action pages, use the following code:</p>
 
 				<pre class="brush: xml;">
 					{option:!hideContentTitle}&lt;h2 class=&quot;pageTitle&quot;&gt;{$page[&#x27;title&#x27;]}&lt;/h2&gt;{/option:!hideContentTitle}
@@ -43,7 +43,6 @@
 				</pre>
 
 				<p><span class="markedTodo">@todo extend this section with the other navigations</span></p>
-				<p><span class="markedTodo">@todo why not 'main' and 1:2?</span></p>
 
 				<h3 id="overrides">Using overrides</h3>
 
@@ -176,10 +175,10 @@
 				{* Stylesheets *}
 				{iteration:cssFiles}
 					{option:!cssFiles.condition}
-						<link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" />
+						&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;{$cssFiles.media}&quot; href=&quot;{$cssFiles.file}&quot; /&gt;
 					{/option:!cssFiles.condition}
 					{option:cssFiles.condition}
-						<!--[if {$cssFiles.condition}]><link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" /><![endif]-->
+						&lt;!--[if {$cssFiles.condition}]&gt;&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; media=&quot;{$cssFiles.media}&quot; href=&quot;{$cssFiles.file}&quot; /&gt;&lt;![endif]--&gt;
 					{/option:cssFiles.condition}
 				{/iteration:cssFiles}
 				</pre>
@@ -370,22 +369,20 @@
 							</ul>
 						</li>
 					</ul>
-				
+				</div>
 
 			</div>
 		</div>
-		
+
 		<div class="hr"><hr /></div>
 
-</div>
-	
+	</div>
+
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/scripts/clipboard.swf';
 		SyntaxHighlighter.defaults['gutter'] = false;
 		SyntaxHighlighter.all();
 	</script>
 
-	</div>
 </body>
 </html>
-

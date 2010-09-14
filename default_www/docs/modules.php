@@ -10,6 +10,16 @@
 		<div class="cols id1">
 			<div class="col col-6 content">
 
+				<ol>
+					<li><a href="#intro">Introduction</a></li>
+					<li><a href="#core">Core</a></li>
+					<li><a href="#contentBlocks">Content blocks</a></li>
+					<li><a href="#blog">Blog</a></li>
+					<li><a href="#tags">Tags</a></li>
+					<li><a href="#search">Search</a></li>
+					<li><a href="#analytics">Analytics</a></li>
+				</ol>
+
 				<h3 id="intro">Introduction</h3>
 
 				<p>In this section you'll find documentation by module. For the pages module, see <a href="pages.php">pages</a>.</p>
@@ -17,6 +27,8 @@
 				<h3 id="core">Core</h3>
 
 				<p>The core will handle most of the hassle for you, so you only have to worry about what is really important.</p>
+
+				<p><span class="markedTodo">@todo write documentation on the core module</span></p>
 
 				<h3 id="translations">Translations</h3>
 
@@ -269,11 +281,23 @@
 
 				<h3 id="contentBlocks">Content blocks</h3>
 
-				<p>...</p>
+				<p><span class="markedTodo">@todo write documentation on the content blocks module</span></p>
 
 				<h3 id="blog">Blog</h3>
 
-				<p>...</p>
+				<p><span class="markedTodo">@todo write documentation on the blog module</span></p>
+
+				<h3 id="tags">Tags</h3>
+
+				<p><span class="markedTodo">@todo write documentation on the tags module</span></p>
+
+				<h3 id="search">Search</h3>
+
+				<p><span class="markedTodo">@todo write documentation on the search module</span></p>
+
+				<h3 id="analytics">Analytics</h3>
+
+				<p><span class="markedTodo">@todo write documentation on the analytics module</span></p>
 
 			</div>
 		</div>

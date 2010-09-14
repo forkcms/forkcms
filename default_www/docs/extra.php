@@ -13,7 +13,7 @@
 
 					<p><span class="markedTodo">@todo sort this into relevant sections</span></p>
 
-					<h3>Pushing your site live</h3>
+					<h3>Pushing your website live</h3>
 
 					<p>When you're done developing:</p>
 					<ol>
@@ -76,14 +76,12 @@
 
 		<div class="hr"><hr /></div>
 
-</div>
+	</div>
 
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/scripts/clipboard.swf';
 		SyntaxHighlighter.all();
 	</script>
 
-	</div>
 </body>
 </html>
-

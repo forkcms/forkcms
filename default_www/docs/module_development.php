@@ -20,7 +20,9 @@
 
 					<h3 id="howitworks">Developing custom modules</h3>
 
-					<p>The backend is the application that makes it possible for the user the manage the content (which is the mean task for a CMS). The backend is build as a modular system.</p>
+					<p>Fork CMS's backend is built as a modular system: you could use Fork using only the core module; but of course there's a lot of pre-build functionality available to install.</p>
+
+					<p>If you want to develop your own modules, this section is for you.</p>
 
 					<h3 id="backendConstants">Constants</h3>
 
@@ -224,13 +226,12 @@
 		
 		<div class="hr"><hr /></div>
 
-</div>
-	
+	</div>
+
 	<script type="text/javascript">
 		SyntaxHighlighter.config.clipboardSwf = 'js/syntax/scripts/clipboard.swf';
 		SyntaxHighlighter.all();
 	</script>
 
-	</div>
 </body>
 </html>
