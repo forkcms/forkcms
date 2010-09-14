@@ -4,7 +4,7 @@
 <head>
 	<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 
-	<title>Fork CMS - documentation</title>
+	<title>Fork CMS - developer documentation</title>
 	<link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" />
 
 	<!-- jQuery -->
