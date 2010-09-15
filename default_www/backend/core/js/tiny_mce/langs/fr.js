@@ -1,6 +1,6 @@
 tinyMCE.addI18n({fr:{
 common:{
-edit_confirm:"souhaitez-vous utiliser le mode WYSIWYG pour cette zone  de texte ?",
+edit_confirm:"souhaitez-vous utiliser le mode WYSIWYG pour cette zone de texte ?",
 apply:"Appliquer",
 insert:"Ins\u00E9rer",
 update:"Mettre \u00E0 jour",

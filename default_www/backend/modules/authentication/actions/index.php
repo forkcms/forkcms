@@ -124,10 +124,10 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 					$this->frm->addError('invalid login');
 
 					// store attempt in session
-					$current = (SpoonSession::exists('login_attemps')) ? (int) SpoonSession::get('login_attemps') : 0;
+					$current = (SpoonSession::exists('backend_login_attempts')) ? (int) SpoonSession::get('backend_login_attempts') : 0;
 
 					// increment and store
-					SpoonSession::set('login_attemps', ++$current);
+					SpoonSession::set('backend_login_attempts', ++$current);
 
 					// show error
 					$this->tpl->assign('hasError', true);
@@ -135,13 +135,13 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			}
 
 			// check sessions
-			if(SpoonSession::exists('login_attemps') && (int) SpoonSession::get('login_attemps') >= 5)
+			if(SpoonSession::exists('backend_login_attempts') && (int) SpoonSession::get('backend_login_attempts') >= 5)
 			{
 				// get previous attempt
-				$previousAttempt = (SpoonSession::exists('last_attemp')) ? SpoonSession::get('last_attemp') : time();
+				$previousAttempt = (SpoonSession::exists('backend_last_attempt')) ? SpoonSession::get('backend_last_attempt') : time();
 
 				// calculate timeout
-				$timeout = 5 * ((SpoonSession::get('login_attemps') - 4));
+				$timeout = 5 * ((SpoonSession::get('backend_login_attempts') - 4));
 
 				// too soon!
 				if(time() < $previousAttempt + $timeout)
@@ -171,8 +171,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			if($this->frm->isCorrect())
 			{
 				// cleanup sessions
-				SpoonSession::delete('login_attemps');
-				SpoonSession::delete('last_attempt');
+				SpoonSession::delete('backend_login_attempts');
+				SpoonSession::delete('backend_last_attempt');
 
 				// get the redirect-URL from the URL
 				$redirectURL = $this->getParameter('querystring', 'string', BackendModel::createUrlForAction(null, 'dashboard'));
