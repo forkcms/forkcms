@@ -13,6 +13,7 @@
 						</li>
 					{/option:debug}
 
+					{option:SITE_MULTILANGUAGE}
 					{option:workingLanguages}
 						<li>
 							{$msgNowEditing}:
@@ -23,6 +24,7 @@
 							</select>
 						</li>
 					{/option:workingLanguages}
+					{/option:SITE_MULTILANGUAGE}
 
 					<li id="account">
 						<a href="#ddAccount" id="openAccountDropdown" class="fakeDropdown">
