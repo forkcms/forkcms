@@ -116,7 +116,7 @@ class BackendLocaleModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) BackendModel::getDB()->getNumRows('SELECT id FROM locale WHERE id = ?;', (int) $id);
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id) FROM locale WHERE id = ?;', (int) $id) > 0);
 	}
 
 
@@ -133,8 +133,25 @@ class BackendLocaleModel
 	 */
 	public static function existsByName($name, $type, $module, $language, $application, $id = null)
 	{
-		if($id !== null) return (bool) BackendModel::getDB()->getNumRows('SELECT id FROM locale WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?;', array((string) $name, (string) $type, (string) $module, (string) $language, (string) $application, (int) $id));
-		return (bool) BackendModel::getDB()->getNumRows('SELECT id FROM locale WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?;', array((string) $name, (string) $type, (string) $module, (string) $language, (string) $application));
+		// redefine
+		$name = (string) $name;
+		$type = (string) $type;
+		$module = (string) $module;
+		$language = (string) $language;
+		$application = (string) $application;
+		$id = ($id !== null) ? (int) $id : null;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		if($id !== null) return (bool) ((int) $db->getVar('SELECT COUNT(id)
+															FROM locale
+															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?;',
+															array($name, $type, $module, $language, $application, $id)) > 0);
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id)
+															FROM locale
+															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?;',
+															array($name, $type, $module, $language, $application)));
 	}
 
 

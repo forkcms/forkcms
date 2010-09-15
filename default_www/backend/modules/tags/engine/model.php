@@ -49,14 +49,11 @@ class BackendTagsModel
 	 */
 	public static function exists($id)
 	{
-		// redefine
-		$id = (int) $id;
-
 		// exists?
-		return BackendModel::getDB()->getNumRows('SELECT i.id
-													FROM tags AS i
-													WHERE i.id = ?;',
-													$id);
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
+															FROM tags AS i
+															WHERE i.id = ?;',
+															(int) $id) > 0);
 	}
 
 
@@ -144,10 +141,10 @@ class BackendTagsModel
 		if($id === null)
 		{
 			// get number of tags with the specified url
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM tags AS i
-												WHERE i.url = ? AND i.language = ?;',
-												array($URL, $language));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM tags AS i
+										WHERE i.url = ? AND i.language = ?;',
+										array($URL, $language));
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -167,10 +164,10 @@ class BackendTagsModel
 			$id = (int) $id;
 
 			// get number of tags with the specified url
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM tags AS i
-												WHERE i.url = ? AND i.language = ? AND i.id != ?;',
-												array($URL, $language, $id));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM tags AS i
+										WHERE i.url = ? AND i.language = ? AND i.id != ?;',
+										array($URL, $language, $id));
 
 			// there are items so, call this method again.
 			if($number != 0)

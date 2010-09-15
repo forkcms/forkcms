@@ -595,10 +595,10 @@ class FrontendBlogModel
 	public static function isModerated($author, $email)
 	{
 		// does the author has a moderated comment?
-		return (bool) (FrontendModel::getDB()->getNumRows('SELECT c.author, c.email
-															FROM blog_comments AS c
-															WHERE c.status = ? AND c.author = ? AND c.email = ?;',
-															array('published', (string) $author, (string) $email)) > 0);
+		return (bool) ((int) FrontendModel::getDB()->getVar('SELECT COUNT(c.id)
+																FROM blog_comments AS c
+																WHERE c.status = ? AND c.author = ? AND c.email = ?;',
+																array('published', (string) $author, (string) $email)) > 0);
 	}
 
 

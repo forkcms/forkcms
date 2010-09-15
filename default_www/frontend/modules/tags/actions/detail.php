@@ -59,11 +59,11 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		// validate incoming parameters
 		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
 
-		// item doesn't exist
-		if(!FrontendTagsModel::exists($this->URL->getParameter(1))) $this->redirect(FrontendNavigation::getURL(404));
-
 		// fetch id
 		$this->id = FrontendTagsModel::getIdByURL($this->URL->getParameter(1));
+
+		// validate id
+		if($this->id == 0) $this->redirect(FrontendNavigation::getURL(404));
 
 		// fetch modules
 		$this->modules = FrontendTagsModel::getModulesForTag($this->id);

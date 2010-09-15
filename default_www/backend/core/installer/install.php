@@ -286,7 +286,7 @@ class ModuleInstaller
 		if($type == '') throw new Exception('Invalid type. Possible values are: act, err, lbl, msg.');
 
 		// check if the label already exists
-		if($this->getDB()->getNumRows('SELECT i.id
+		if((int) $this->getDB()->getVar('SELECT COUNT(i.id)
 										FROM locale AS i
 										WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?',
 										array($language, $application, $module, $type, $name)) == 0)

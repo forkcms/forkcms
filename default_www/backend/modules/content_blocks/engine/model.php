@@ -72,16 +72,16 @@ class BackendContentBlocksModel
 		$db = BackendModel::getDB();
 
 		// if the item should also be active, there should be at least one row to return true
-		if($activeOnly) return ($db->getNumRows('SELECT i.id
-												FROM content_blocks AS i
-												WHERE i.id = ? AND i.status = ?;',
-												array($id, 'active')) >= 1);
+		if($activeOnly) return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
+															FROM content_blocks AS i
+															WHERE i.id = ? AND i.status = ?;',
+															array($id, 'active')) > 0);
 
 		// fallback, this doesn't take the active status in account
-		return ($db->getNumRows('SELECT i.id
-									FROM content_blocks AS i
-									WHERE i.revision_id = ?;',
-									array($id)) >= 1);
+		return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
+											FROM content_blocks AS i
+											WHERE i.revision_id = ?;',
+											array($id)) > 0);
 	}
 
 

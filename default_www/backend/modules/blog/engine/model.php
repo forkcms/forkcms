@@ -164,16 +164,16 @@ class BackendBlogModel
 	/**
 	 * Checks if a blogpost exists
 	 *
-	 * @return	int
+	 * @return	bool
 	 * @param	int $id		The id of the blogpost to check for existence.
 	 */
 	public static function exists($id)
 	{
 		// exists?
-		return BackendModel::getDB()->getNumRows('SELECT i.id
-													FROM blog_posts AS i
-													WHERE i.id = ?;',
-													(int) $id);
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
+															FROM blog_posts AS i
+															WHERE i.id = ?;',
+															(int) $id) > 0);
 	}
 
 
@@ -186,7 +186,7 @@ class BackendBlogModel
 	public static function existsCategory($id)
 	{
 		// exists?
-		return (bool) (BackendModel::getDB()->getNumRows('SELECT id AS i
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id)
 															FROM blog_categories AS i
 															WHERE i.id = ?;', (int) $id) > 0);
 	}
@@ -201,7 +201,7 @@ class BackendBlogModel
 	public static function existsComment($id)
 	{
 		// exists?
-		return (bool) (BackendModel::getDB()->getNumRows('SELECT id AS i
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id)
 															FROM blog_comments AS i
 															WHERE i.id = ?;', (int) $id) > 0);
 	}
@@ -526,11 +526,11 @@ class BackendBlogModel
 		if($itemId === null)
 		{
 			// get number of categories with this URL
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM blog_posts AS i
-												INNER JOIN meta AS m ON i.meta_id = m.id
-												WHERE i.language = ? AND m.url = ?;',
-												array(BL::getWorkingLanguage(), $URL));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM blog_posts AS i
+										INNER JOIN meta AS m ON i.meta_id = m.id
+										WHERE i.language = ? AND m.url = ?;',
+										array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
 			if($number != 0)
@@ -547,11 +547,11 @@ class BackendBlogModel
 		else
 		{
 			// get number of items with this URL
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM blog_posts AS i
-												INNER JOIN meta AS m ON i.meta_id = m.id
-												WHERE i.language = ? AND m.url = ? AND i.id != ?;',
-												array(BL::getWorkingLanguage(), $URL, $itemId));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM blog_posts AS i
+										INNER JOIN meta AS m ON i.meta_id = m.id
+										WHERE i.language = ? AND m.url = ? AND i.id != ?;',
+										array(BL::getWorkingLanguage(), $URL, $itemId));
 
 			// already exists
 			if($number != 0)
@@ -587,10 +587,10 @@ class BackendBlogModel
 		if($categoryId === null)
 		{
 			// get number of categories with this URL
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM blog_categories AS i
-												WHERE i.language = ? AND i.url = ?;',
-												array(BL::getWorkingLanguage(), $URL));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM blog_categories AS i
+										WHERE i.language = ? AND i.url = ?;',
+										array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
 			if($number != 0)
@@ -607,10 +607,10 @@ class BackendBlogModel
 		else
 		{
 			// get number of items with this URL
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM blog_categories AS i
-												WHERE i.language = ? AND i.url = ? AND i.id != ?;',
-												array(BL::getWorkingLanguage(), $URL, $categoryId));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM blog_categories AS i
+										WHERE i.language = ? AND i.url = ? AND i.id != ?;',
+										array(BL::getWorkingLanguage(), $URL, $categoryId));
 
 			// already exists
 			if($number != 0)

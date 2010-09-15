@@ -547,10 +547,10 @@ class BackendPagesModel
 		$db = BackendModel::getDB(true);
 
 		// we can't delete templates that are still in use
-		if($db->getNumRows('SELECT i.template_id
-							FROM pages AS i
-							WHERE i.template_id = ? AND i.status = ?;',
-							array($id, 'active')) > 0) return false;
+		if((int) $db->getVar('SELECT COUNT(i.template_id)
+								FROM pages AS i
+								WHERE i.template_id = ? AND i.status = ?;',
+								array($id, 'active')) > 0) return false;
 
 		// delete
 		$db->delete('pages_templates', 'id = ?', $id);
@@ -587,7 +587,7 @@ class BackendPagesModel
 		$language = BackendLanguage::getWorkingLanguage();
 
 		// get number of rows, if that result is more than 0 it means the page exists
-		return (bool) (BackendModel::getDB()->getNumRows('SELECT i.id
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
 															FROM pages AS i
 															WHERE i.id = ? AND i.language = ? AND i.status IN("active", "draft");',
 															array($id, $language)) > 0);
@@ -606,10 +606,10 @@ class BackendPagesModel
 		$id = (int) $id;
 
 		// get data
-		return (bool) BackendModel::getDB()->getNumRows('SELECT i.id
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
 															FROM pages_templates AS i
 															WHERE i.id = ?;',
-															$id);
+															$id) > 0);
 	}
 
 
@@ -1304,11 +1304,11 @@ class BackendPagesModel
 		if($id === null)
 		{
 			// get number of childs within this parent with the specified URL
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM pages AS i
-												INNER JOIN meta AS m ON i.meta_id = m.id
-												WHERE i.parent_id = ? AND i.status = ? AND m.url = ?;',
-												array($parentId, 'active', $URL));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM pages AS i
+										INNER JOIN meta AS m ON i.meta_id = m.id
+										WHERE i.parent_id = ? AND i.status = ? AND m.url = ?;',
+										array($parentId, 'active', $URL));
 
 			// no items?
 			if($number != 0)
@@ -1325,11 +1325,11 @@ class BackendPagesModel
 		else
 		{
 			// get number of childs within this parent with the specified URL
-			$number = (int) $db->getNumRows('SELECT i.id
-												FROM pages AS i
-												INNER JOIN meta AS m ON i.meta_id = m.id
-												WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.id != ?;',
-												array($parentId, 'active', $URL, $id));
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+										FROM pages AS i
+										INNER JOIN meta AS m ON i.meta_id = m.id
+										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.id != ?;',
+										array($parentId, 'active', $URL, $id));
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -1465,10 +1465,10 @@ class BackendPagesModel
 	 */
 	public static function isTemplateInUse($templateId)
 	{
-		return (bool) BackendModel::getDB(false)->getNumRows('SELECT i.template_id
+		return (bool) ((int) BackendModel::getDB(false)->getVar('SELECT i.template_id
 																FROM pages AS i
 																WHERE i.template_id = ? AND i.status = ?;',
-																array((int) $templateId, 'active'));
+																array((int) $templateId, 'active')) > 0);
 	}
 
 

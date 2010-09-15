@@ -12,13 +12,6 @@
  */
 class FrontendTagsModel
 {
-	public static function exists($URL)
-	{
-		// exists
-		return (bool) (FrontendModel::getDB()->getNumRows('SELECT id FROM tags WHERE url = ? AND language = ?;', array((string) $URL, FRONTEND_LANGUAGE)) > 0);
-	}
-
-
 	/**
 	 * Fetch the list of all tags, ordered by their occurence
 	 *
