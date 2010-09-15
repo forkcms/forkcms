@@ -30,6 +30,14 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
+	 * The path of the template to include, or that replaced the current one
+	 *
+	 * @var	string
+	 */
+	private static $templatePath;
+
+
+	/**
 	 * Default constructor.
 	 *
 	 * @return	void
@@ -39,144 +47,11 @@ class FrontendNavigation extends FrontendBaseObject
 		// call the parent
 		parent::__construct();
 
+		// set template path
+		$this->setTemplatePath(FRONTEND_PATH .'/core/layout/templates/navigation.tpl');
+
 		// set selected ids
 		$this->setSelectedPageIds();
-	}
-
-
-	/**
-	 * Creates the HTML for the menu
-	 *
-	 * @return	string
-	 * @param	string[optional] $type			The type of navigation the HTML should be build for.
-	 * @param	int[optional] $parentId			The parentID to start of.
-	 * @param	int[optional] $depth			The maximum depth to parse.
-	 * @param	array[optional] $excludedIds	PageIDs to be excluded.
-	 * @param	string[optional] $HTML			The already build HTML.
-	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
-	 */
-	private static function createHTML($type = 'page', $parentId = 0, $depth = null, $excludedIds = array(), $HTML = '', $depthCounter = 1, $noFirstChild = false)
-	{
-		// redefine
-		$type = (string) $type;
-		$parentId = (int) $parentId;
-		$depth = ($depth !== null) ? (int) $depth : null;
-		$excludedIds = (array) $excludedIds;
-		$HTML = (string) $HTML;
-		$depthCounter = (int) $depthCounter;
-		$noFirstChild = (bool) $noFirstChild;
-
-		// if the depthCounter exceeds the required depth return the generated HTML, we have the build the required HTML.
-		if($depth !== null && $depthCounter > $depth) return $HTML;
-
-		// init vars
-		$defaultSelectedClass = 'selected';
-		$firstChildClass = 'firstChild';
-		$lastChildClass = 'lastChild';
-
-		// fetch navigation
-		$navigation = self::getNavigation();
-
-		// meta-navigation is requested but meta isn't enabled
-		if($type == 'meta' && !FrontendModel::getModuleSetting('pages', 'meta_navigation', true)) return '';
-
-		// validate
-		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
-		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
-
-		// init some vars
-		$first = true;
-		$last = false;
-		$count = count($navigation[$type][$parentId]);
-		$i = 1;
-
-		// start HTML, only when parentId is different from 1, the first level below home should be on the same level as home
-		$HTML .= '<ul>' . "\n";
-
-		// loop elements
-		foreach($navigation[$type][$parentId] as $page)
-		{
-			// not hidden
-			if($page['hidden']) continue;
-
-			// calculate last
-			$last = ($count == $i);
-
-			// some ids should be excluded
-			if(in_array($page['page_id'], $excludedIds)) continue;
-
-			// if the item is in the selected page it should get an selected class
-			if(in_array($page['page_id'], self::$selectedPageIds))
-			{
-				if($first && $last && !$noFirstChild) $HTML .= '<li class="'. $defaultSelectedClass .' '. $firstChildClass .' '. $lastChildClass .'">'."\n";
-				elseif($first && !$noFirstChild) $HTML .= '<li class="'. $defaultSelectedClass .' '. $firstChildClass .'">'."\n";
-				elseif($last) $HTML .= '<li class="'. $defaultSelectedClass .' '. $lastChildClass .'">'."\n";
-				else $HTML .= '<li class="'. $defaultSelectedClass .'">'."\n";
-			}
-
-			// just start the html
-			else
-			{
-				if($first && $last && !$noFirstChild) $HTML .= '<li class="'. $firstChildClass .' '. $lastChildClass .'">'."\n";
-				elseif($first && !$noFirstChild) $HTML .= '<li class="'. $firstChildClass .'">'."\n";
-				elseif($last) $HTML .= '<li class="'. $lastChildClass .'">'."\n";
-				else $HTML .= '<li>'."\n";
-			}
-
-			// reset first and counter
-			$first = false;
-			$i++;
-
-			// add link
-			$HTML .= '<a href="'. FrontendNavigation::getURL($page['page_id']) .'" title="'. $page['title'] .'"';
-
-			// add nofollow attribute if needed
-			if($page['no_follow']) $HTML .= ' rel="nofollow"';
-
-			// end a tag
-			$HTML .= '>';
-
-			// add title
-			$HTML .= $page['navigation_title'];
-
-			// end link
-			$HTML .= '</a>'."\n";
-
-			// has children?
-			if(isset($navigation[$type][$page['page_id']]))
-			{
-				// home is a special item, it should live on the same depth
-				if($page['page_id'] == 1)
-				{
-					// decrement
-					$depthCounter--;
-
-					// because home is on the same level as all page directly below it, we should end the li-tag
-					$HTML .= '</li>'."\n";
-
-					// add the children
-					$HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter, true);
-
-					// remove invalid nesting
-					$HTML = str_replace("</li>\n<ul>", '</li>', $HTML);
-				}
-
-				// add children
-				else $HTML = self::createHTML($type, $page['page_id'], $depth, $excludedIds, $HTML, ++$depthCounter);
-			}
-
-			// because home is a special item the li was already closed, so for all other elements we end the HTML
-			$HTML .= '</li>'."\n";
-		}
-
-		// end HTML
-		$HTML .= '</ul>';
-
-		// remove invalid nesting
-		$HTML = str_replace("</ul></li>\n</ul>", '</ul>', $HTML);
-
-		// return
-		return $HTML;
 	}
 
 
@@ -339,12 +214,78 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	int[optional] $parentId			The parentID to start of.
 	 * @param	int[optional] $depth			The maximum depth to parse.
 	 * @param	array[optional] $excludedIds	PageIDs to be excluded.
+	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
 	 */
-	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array())
+	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
 	{
-		return self::createHTML($type, $parentId, $depth, $excludeIds);
-	}
+		// get navigation
+		$navigation = self::getNavigation();
 
+		// meta-navigation is requested but meta isn't enabled
+		if($type == 'meta' && !FrontendModel::getModuleSetting('pages', 'meta_navigation', true)) return '';
+
+		// validate
+		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
+		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
+
+		// special construction to merge home with it's immediate children
+		$mergedHome = false;
+		while(true)
+		{
+			// loop elements
+			foreach($navigation[$type][$parentId] as $id => $page)
+			{
+				// home is a special item, it should live on the same depth
+				if($page['page_id'] == 1 && !$mergedHome)
+				{
+					// add children
+					$navigation[$type][$parentId] = array_merge($navigation[$type][$parentId], $navigation[$type][$page['page_id']]);
+
+					// mark as merged
+					$mergedHome = true;
+
+					// restart loop
+					continue 2;
+				}
+
+				// not hidden
+				if($page['hidden']) unset($navigation[$type][$parentId][$id]);
+
+				// some ids should be excluded
+				if(in_array($page['page_id'], (array) $excludeIds)) unset($navigation[$type][$parentId][$id]);
+
+				// if the item is in the selected page it should get an selected class
+				if(in_array($page['page_id'], self::$selectedPageIds)) $navigation[$type][$parentId][$id]['selected'] = true;
+				else $navigation[$type][$parentId][$id]['selected'] = false;
+
+				// add nofollow attribute if needed
+				if($page['no_follow']) $navigation[$type][$parentId][$id]['nofollow'] = true;
+				else $navigation[$type][$parentId][$id]['nofollow'] = false;
+
+				// has children and is selected and is desired?
+				if(isset($navigation[$type][$page['page_id']]) && $navigation[$type][$parentId][$id]['selected'] == true && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $depthCounter + 1);
+				else $navigation[$type][$parentId][$id]['children'] = false;
+
+				// set link
+				$navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL($page['page_id']);
+			}
+
+			// break the loop (it is only used for the special construction with home)
+			break;
+		}
+
+		// create template
+		$tpl = new SpoonTemplate();
+		$tpl->setForceCompile(SPOON_DEBUG);
+		$tpl->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+
+		// assign navigation to template
+		$tpl->assign('navigation', $navigation[$type][$parentId]);
+
+		// return parsed content
+		return $tpl->getContent(self::$templatePath);
+	}
+	
 
 	/**
 	 * Get a menuId for an specified URL
@@ -543,6 +484,46 @@ class FrontendNavigation extends FrontendBaseObject
 				array_pop($pages);
 			}
 		}
+	}
+
+
+	/**
+	 * Set the path for the template
+	 *
+	 * @return	void
+	 * @param	string $path
+	 */
+	private function setTemplatePath($path)
+	{
+		// theme in use
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// core template
+			if(strpos($path, 'frontend/core/') !== false)
+			{
+				// path to possible theme template
+				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
+
+				// does this template exist
+				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
+			}
+
+			// module template
+			else
+			{
+				// path to possible theme template
+				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
+
+				// does this template exist
+				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
+			}
+		}
+
+		// set path
+		self::$templatePath = (string) $path;
 	}
 }
 
