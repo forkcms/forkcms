@@ -120,7 +120,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->stats['num_results'] = FrontendSearchModel::getTotal($this->term);
 
 		// set url
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q=test';
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q='. $this->term;
 		$this->pagination['limit'] = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
 
 		// populate count fields in pagination
