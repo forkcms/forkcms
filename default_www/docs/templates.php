@@ -98,7 +98,7 @@
 					                `-- index.tpl
 				</pre>
 
-				<p>When a page is requested, the template engine kicks in. It will first check for the existence of index.tpl in your own theme. If it can't find the template, it will revert to the defaults.</p>
+				<p>When a page is requested, the template engine kicks in. It will first look for the the a file called index.tpl in your own theme. If it can't find the template, it will fallback to the defaults.</p>
 
 				<h4>Why overrides?</h4>
 
@@ -231,6 +231,7 @@
 				</ul>
 
 				<p>Documentation: search for &#8220;List of default modifiers&#8221; <a href="http://tutorials.spoon-library.be/details/templates-part-3">here</a></p>
+				<p><span class="markedTodo">@todo check this</span></p>
 
 				<table class="datagrid" cellspacing="0">
 					<tbody>

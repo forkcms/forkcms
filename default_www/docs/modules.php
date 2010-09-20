@@ -71,7 +71,7 @@
 
 				<p>HTML is not allowed within messages.</p>
 
-				<p>Don&#8217;t use capitals: formatting (e.g. uppercase, ucfirst) should be done using modifiers in te template. You should, of course, ise capitals when the translation is an abbreviation such as RSS.</p>
+				<p>Don&#8217;t use capitals: formatting (e.g. uppercase, ucfirst) should be done using modifiers in the template. You should, of course, use capitals when the translation is an abbreviation such as RSS.</p>
 
 				<p>Correct examples:</p>
 

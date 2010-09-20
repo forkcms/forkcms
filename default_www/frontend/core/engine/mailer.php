@@ -170,25 +170,29 @@ class FrontendMailer
 												WHERE e.id = ?;',
 												array($id));
 
-		// get settings
-		$SMTPServer = FrontendModel::getModuleSetting('core', 'smtp_server');
-		$SMTPPort = FrontendModel::getModuleSetting('core', 'smtp_port', 25);
-		$SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
-		$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
-
-		// require SpoonEmail
-		require_once 'spoon/email/email.php';
+		// mailer type
+		$mailerType = FrontendModel::getModuleSetting('core', 'mailer_type', 'mail');
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
 		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
 
-		// set authentication if needed
-		if($SMTPUsername !== null && $SMTPPassword !== null)
+		// send via SMTP
+		if($mailerType == 'smtp')
 		{
-			// set server and connect with SMTP
-			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-			$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+			// get settings
+			$SMTPServer = FrontendModel::getModuleSetting('core', 'smtp_server');
+			$SMTPPort = FrontendModel::getModuleSetting('core', 'smtp_port', 25);
+			$SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
+			$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
+
+			// set authentication if needed
+			if($SMTPUsername !== null && $SMTPPassword !== null)
+			{
+				// set server and connect with SMTP
+				$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+				$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+			}
 		}
 
 		// set some properties

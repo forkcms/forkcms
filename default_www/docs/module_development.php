@@ -10,30 +10,73 @@
 		<div class="cols id1">
 			<div class="col col-8 content">
 				<div class="col-6">
-
-					<p><span class="markedTodo">@todo write introduction</span></p>
-
 					<ol>
-						<li><a href="module_development.php#backendConstants">Available constants</a></li>
-						<li><a href="module_development.php#backendModifiers">Template modifiers</a></li>
+						<li><a href="module_development.php#introduction">Introduction</a>
+						<li>
+							<a href="module_development.php#backend">Backend</a>
+							<ol>
+								<li><a href="module_development.php#backendHowDoesItWork">How does it work</a></li>
+								<li><a href="module_development.php#backendWriteYourOwn">Write your own</a></li>
+								<li><a href="module_development.php#backendConstants">Available constants</a></li>
+								<li><a href="module_development.php#backendModifiers">Template modifiers</a></li>
+							</ol>
+						</li>
+						<li>
+							<a href="module_development.php#frontend">Frontend</a>
+							<ol>
+								<li><a href="module_development.php#frontendHowDoesItWork">How does it work</a></li>
+								<li><a href="module_development.php#frontendWriteYourOwn">Write your own</a></li>
+								<li><a href="module_development.php#frontendConstants">Available constants</a></li>
+								<li><a href="module_development.php#frontendModifiers">Template modifiers</a></li>
+							</ol>
+						</li>
 					</ol>
 
-					<h3 id="howitworks">Developing custom modules</h3>
-
+					<h3 id="intro">Introduction</h3>
 					<p>Fork CMS's backend is built as a modular system: you could use Fork using only the core module; but of course there's a lot of pre-build functionality available to install.</p>
-
 					<p>If you want to develop your own modules, this section is for you.</p>
+					<p>Modules can exist in two places: frontend or/and backend. We will handle them both here. A module in the backend will typically be used to manage data that has to be displayed through a module on the frontend.</p>
 
-					<h3 id="backendConstants">Constants</h3>
+					<h3 id="backend">Backend</h3>
+					<p>
+						The backend is the part that you can reach by appending <code>/private</code> to your domain (eg: http://forkng.local/private). Modules on the front- and backend may look similar, they have stuff in common but a backend module will
+						contain typically more business-logic then a module on the frontend. A module in the backend will work in 90% of all cases in a similar way as other modules, so we can generalize a lot of stuff by providing some defaults (which we did).
+					</p>
 
+					<h4 id="backendHowDoesItWork">How does it work</h4>
+					<p>Before writing you own module it may come in handy to understand how a module on the backend works, or what happens in the code before your code kicks in.</p>
+
+					<p>A module is a collection of actions. Each action has a unique URL. So what happens after you login and click on Modules &gt; Content Blocks.</p>
+					<p>Well, a lot. We won't go into each tiny detail but basically:</p>
+					<p>The application (backend in this case) is initialized. The URL is processed so we know which action we should execute. But let's take a look at the URL.</p>
+					<p>As you can see thet URLs in the backend are pretty straight forward, but let explain them part by part, let's take <code>http://forkng.local/private/nl/content_blocks/add?token=true</code> as an example.</p>
+					<ul>
+						<li>http://forkng.local : the URL</li>
+						<li>private : the application (in this case an alias for backend)</li>
+						<li>nl : the language you're working in (workinglanguage)</li>
+						<li>content_blocks : the current module</li>
+						<li>add : the current action</li>
+						<li>token=true : parameters</li>
+					</ul>
+
+					<p>Based on the URL (offcourse of validation is done in the background) we create a new instance of <code>BackendAction</code>. This instance will load the config for the module an check if the action even is possible.</p>
+					<p>If the action is valid we will build the correct class name, which is contructed as 'Backend' . camelcase(module) . camelcase(action). So take our exampleURL will try to load <code>BackendContentBlockAdd</code>-class.</p>
+					<p>After the class is loaded the <code>execute</code>-method is called. So there your code kicks in.</p>
+
+					<h5>Stuff that may come in handy</h5>
+					<ul>
+						<li>if a js-file exists with the module as filename in the folder <code>/backend/modules/&lt;your-module&gt;/js/</code> it will be loaded automagically.</li>
+						<li>if a js-file exists with the action as filename in the folder <code>/backend/modules/&lt;your-module&gt;/js/</code> it will be loaded automagically.</li>
+					</ul>
+
+					<h4 id="backendWriteYourOwn">Write your own</h4>
+					…
+
+					<h4 id="backendConstants">Constants</h4>
 					<p>As the name suggests, the value of a constant cannot change during the execution of the script.</p>
-
 					<p>In templates, use curly brackets ({}) and a dollar sign ($) to use a constant. E.g. let's say you want to link an image from the core/images folder of your theme.</p>
-
 					<pre class="brush: xml;">
-						&nbsp;
-						&lt;img src=&quot;{$THEME_PATH}/core/images/logo.gif&quot; /&gt;
-						&nbsp;
+						&lt;img src=&quot;{$BACKEND_CORE_URL}/layout/images/logo.gif&quot; /&gt;
 					</pre>
 
 					<p>In PHP, use the constant itself. These constants are available in the backend.</p>
@@ -172,7 +215,7 @@
 
 				</div>
 
-				<h3 id="backendModifiers">Template modifiers</h3>
+				<h4 id="backendModifiers">Template modifiers</h4>
 
 				<table class="datagrid">
 					<tbody>
@@ -223,7 +266,7 @@
 
 			</div>
 		</div>
-		
+
 		<div class="hr"><hr /></div>
 
 	</div>

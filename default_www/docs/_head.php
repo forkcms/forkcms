@@ -9,7 +9,6 @@
 
 	<!-- jQuery -->
 	<script src="js/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
-	<script src="js/jquery/jquery.shortcuts.min.js" type="text/javascript"></script>
 
 	<link rel="stylesheet" href="css/docsspecific.css" type="text/css" media="screen" />
 

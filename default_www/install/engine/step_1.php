@@ -270,7 +270,7 @@ class InstallerStep1 extends InstallerStep
 		$location = '';
 
 		// loop directories
-		foreach(glob($directory .'/*') as $filename)
+		foreach((array) glob($directory .'/*') as $filename)
 		{
 			// not a directory and equals 'spoon.php'
 			if(!is_dir($filename) && substr($filename, -9) == 'spoon.php')

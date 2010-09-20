@@ -57,7 +57,7 @@
 					<li>MySQL 5.0</li>
 					<li>Apache 2.0 with mod_rewrite enabled</li>
 				</ul>
-				
+
 				<p>Please consult the <a href="sysreq.php">detailed system requirements</a> for more information.</p>
 
 				<h3 id="installation">Installation</h3>
@@ -73,7 +73,7 @@
 				<p>If you encounter any bugs, please create a new issue at <a href="https://github.com/forkcms/forkcms/issues">https://github.com/forkcms/forkcms/issues</a> <span class="markedTodo">Note: this repository is private until we release our first open source version</span></p>
 
 				<h3 id="discussion">Discussion</h3>
-				
+
 				<p>If you encounter a problem, or want to discuss Fork CMS, visit the <a href="http://groups.google.com/group/fork-cms/">Fork CMS google group</a>. You have to be a member to post a new message.</p>
 
 			</div>
@@ -81,7 +81,7 @@
 
 		<div class="hr"><hr /></div>
 
-		<p class="secondaryContent">&copy;Fork CMS by <a href="http://www.netlash.com">Netlash</a> and contributors. Read the Fork CMS license (See file named LICENSE distributed with every Fork) for usage details.</p>
+		<p class="secondaryContent">&copy; Fork CMS by <a href="http://www.netlash.com">Netlash</a> and contributors. Read the Fork CMS license (See file named LICENSE distributed with every Fork) for usage details.</p>
 
 	</div>
 
