@@ -119,7 +119,7 @@
 						{/option:needsGoogleMaps}
 						{option:needsAkismet}
 							<tr>
-								<td class="title"><label for="akismetKey">Akismet key<abbr title="{$lblRequiredField}">*</abbr></label></td>
+								<td class="title"><label for="akismetKey">Akismet key</label></td>
 								<td>{$txtAkismetKey} {$txtAkismetKeyError}</td>
 								<td><a href="http://akismet.com/personal">http://akismet.com/personal</a></td>
 							</tr>

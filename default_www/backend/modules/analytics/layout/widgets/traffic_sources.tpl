@@ -27,7 +27,7 @@
 					{option:!dgAnalyticsReferrers}
 						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
 							<tr>
-								<td>{$msgAnalyticsNoReferrers}</td>
+								<td>{$msgNoReferrers}</td>
 							</tr>
 						</table>
 					{/option:!dgAnalyticsReferrers}

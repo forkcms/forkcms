@@ -214,36 +214,40 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$accounts = array();
 			$accountsDatagrids = array();
 
-			// prepare accounts array
-			foreach($this->profiles as $profile)
+			// no profiles? Or not authorized
+			if(!empty($this->profiles) && $this->profiles !== 'UNAUTHORIZED')
 			{
-				// put profiles under their account
-				$accounts[$profile['accountId']]['name'] = $profile['accountName'];
-				$accounts[$profile['accountId']]['profiles'][$profile['profileId']]['title'] = $profile['title'];
-				$accounts[$profile['accountId']]['profiles'][$profile['profileId']]['table_id'] = $profile['tableId'];
+				// prepare accounts array
+				foreach((array) $this->profiles as $profile)
+				{
+					// put profiles under their account
+					$accounts[$profile['accountId']]['name'] = $profile['accountName'];
+					$accounts[$profile['accountId']]['profiles'][$profile['profileId']]['title'] = $profile['title'];
+					$accounts[$profile['accountId']]['profiles'][$profile['profileId']]['table_id'] = $profile['tableId'];
+				}
+
+				// create datagrid per account
+				foreach($accounts as $account)
+				{
+					// datagrid
+					$datagrid = new BackendDataGridArray($account['profiles']);
+
+					// hide colums
+					$datagrid->setColumnsHidden('table_id');
+
+					// headers
+					$datagrid->setHeaderLabels(array('title' => $account['name']));
+
+					// url for title
+					$datagrid->setColumnURL('title', BackendModel::createURLForAction('settings') .'&amp;table_id=[table_id]');
+
+					// add
+					$accountsDatagrids[]['datagrid'] = $datagrid->getContent();
+				}
+
+				// parse accounts
+				$this->tpl->assign('accounts', $accountsDatagrids);
 			}
-
-			// create datagrid per account
-			foreach($accounts as $account)
-			{
-				// datagrid
-				$datagrid = new BackendDataGridArray($account['profiles']);
-
-				// hide colums
-				$datagrid->setColumnsHidden('table_id');
-
-				// headers
-				$datagrid->setHeaderLabels(array('title' => $account['name']));
-
-				// url for title
-				$datagrid->setColumnURL('title', BackendModel::createURLForAction('settings') .'&amp;table_id=[table_id]');
-
-				// add
-				$accountsDatagrids[]['datagrid'] = $datagrid->getContent();
-			}
-
-			// parse accounts
-			$this->tpl->assign('accounts', $accountsDatagrids);
 		}
 
 		// everything is fine

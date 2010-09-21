@@ -105,7 +105,10 @@
 		
 		// extend options
 		var options = $.extend(defaults, options);
-	
+
+		// init var
+		var editing = false;
+		
 		// loop all elements
 		return this.each(function() {
 			// add wrapper and tooltip
@@ -116,6 +119,8 @@
 			
 			// bind events
 			element.bind('click focus', createElement);
+			$('.inlineEditTooltip').bind('click', createElement);
+			
 			$(this).hover(function() { 
 							$(this).addClass('inlineEditHover');
 							$($(this).find('span')[1]).show();
@@ -127,6 +132,12 @@
 			
 			// create an element
 			function createElement() {
+				// already editing
+				if(editing) return;
+				
+				// set var
+				editing = true;
+				
 				// grab current value
 				options.current.value = element.html();
 				
@@ -176,6 +187,9 @@
 				
 				// add class
 				parent.removeClass('inlineEditing');
+				
+				// restore
+				editing = false;
 			}
 			
 			// save the element

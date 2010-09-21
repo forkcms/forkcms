@@ -99,14 +99,13 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoKeywords', 'Er zijn nog geen statistieken van zoekwoorden.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoLandingPages', 'Er zijn nog geen statistieken van landingpagina\'s.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoPages', 'Er zijn nog geen statistieken van pagina\'s.');
-		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoReferrers', 'Er zijn nog geen statistieken van verwijzende sites.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'PagesHaveBeenViewedTimes', 'Pagina\'s op deze site zijn in totaal %1$s keer bekeken.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'RefreshedTrafficSources', 'De verkeersbronnen werden vernieuwd.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'RemoveAccountLink', 'Verwijder de koppeling met uw Google account');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'RemoveProfileLink', 'Verwijder de koppeling met uw Analytics website profiel');
 
 		// insert locale (en)
-		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoReferrers', 'There are no referrers yet.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoReferrers', 'There are no referrers yet.');
 
 		$this->insertLocale('en', 'backend', 'analytics', 'err', 'AnalyseNoSessionToken', 'There is no link with a Google analytics account yet. <a href="%1$s">Configure</a>');
 		$this->insertLocale('en', 'backend', 'analytics', 'err', 'AnalyseNoTableId', 'There is no link with an analytics website profile yet. <a href="%1$s">Configure</a>');
@@ -160,7 +159,6 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoKeywords', 'There are no keywords yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoLandingPages', 'There are no landing pages yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoPages', 'There are ni statistics for any pages.');
-		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoReferrers', 'There are no referrers yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'PagesHaveBeenViewedTimes', 'Pages on this site have been viewed %1$s times.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'RefreshedTrafficSources', 'The traffic sources have been refreshed.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'RemoveAccountLink', 'Remove the link with your Google account');
