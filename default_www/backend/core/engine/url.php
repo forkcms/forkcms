@@ -147,8 +147,33 @@ class BackendURL
 		// get the module, null will be the default
 		$module = (isset($chunks[2]) && $chunks[2] != '') ? $chunks[2] : 'dashboard';
 
-		// get the requested action, index will be our default action
-		$action = (isset($chunks[3]) && $chunks[3] != '') ? $chunks[3] : 'index'; // @later we should fetch the real defaultAction from the module config.
+		// get the requested action, if it is passed
+		if(isset($chunks[3]) && $chunks[3] != '') $action = $chunks[3];
+
+		// no action passed through URL
+		else
+		{
+			// build path to the module and define it. This is a constant because we can use this in templates.
+			if(!defined('BACKEND_MODULE_PATH')) define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH .'/'. $module);
+
+			// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
+			if(!SpoonFile::exists(BACKEND_MODULE_PATH .'/config.php')) throw new BackendException('The configfile for the module ('. $module .') can\'t be found.');
+
+			// build config-object-name
+			$configClassName = 'Backend'. SpoonFilter::toCamelCase($module .'_config');
+
+			// require the config file, we validated before for existence.
+			require_once BACKEND_MODULE_PATH .'/config.php';
+
+			// validate if class exists (aka has correct name)
+			if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: '. $configClassName .'.');
+
+			// create config-object, the constructor will do some magic
+			$config = new $configClassName($module);
+
+			// set action
+			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';
+		}
 
 		// if it is an request for a JS-file we only need the module
 		if($isJS)

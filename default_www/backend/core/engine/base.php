@@ -664,6 +664,17 @@ class BackendBaseConfig
 
 
 	/**
+	 * Get the default action
+	 *
+	 * @return	string
+	 */
+	public function getDefaultAction()
+	{
+		return $this->defaultAction;
+	}
+
+
+	/**
 	 * Get the current loaded module
 	 *
 	 * @return	string
