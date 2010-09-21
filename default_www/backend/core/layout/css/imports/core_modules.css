@@ -477,7 +477,7 @@
 /*
 	Don't show tinymce toolbars unless the field has focus
 */
-
+/*
 .mceEditor tr.mceFirst,
 .mceEditor tr.mceLast {
   display: none;
@@ -487,7 +487,7 @@
 .mceEditor.expanded tr.mceLast {
   display: block;
 }
-
+*/
 /*
 	Visual connection between templates and their edit field
 */

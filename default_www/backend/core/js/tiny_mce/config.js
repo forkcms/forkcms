@@ -35,7 +35,7 @@ tinyMCE.init({
 	theme_advanced_resizing: true,
 	theme_advanced_blockformats : 'p,h2,h3,h4,blockquote,code',
 	theme_advanced_resize_horizontal: false,
-	theme_advanced_toolbar_location: 'top',
+	theme_advanced_toolbar_location: 'external',
 	theme_advanced_toolbar_align: 'left',
 	theme_advanced_statusbar_location: 'bottom',
 
@@ -57,6 +57,7 @@ tinyMCE.init({
 	onchange_callback: jsBackend.tinyMCE.checkContent,
 	
 	setup: function(editor) {
+		// set content
 		editor.onLoadContent.add(jsBackend.tinyMCE.checkContent);
 		
 		/**
@@ -64,7 +65,6 @@ tinyMCE.init({
 		 * Our workaround is really ugly, we watch each event and add the class on the container,
 		 * see: http://tinymce.moxiecode.com/punbb/viewtopic.php?id=12249
 		 */
-
 		// only one instance?
 		if($('.inputEditor').length == 1) {
 			// init var
@@ -74,9 +74,6 @@ tinyMCE.init({
 			editor.onEvent.add(function(editor, evt) {
 				// class added before?
 				if(!added) {
-					// add class
-					$(editor.getContainer()).addClass('expanded');
-					
 					// hide click to edit
 					$(editor.getContainer()).siblings('.clickToEdit').hide();
 
@@ -91,17 +88,12 @@ tinyMCE.init({
 		{
 			// add the correct class when the editor becomes active
 			editor.onActivate.add(function(editor, otherEditor) {
-				// add class
-				$(editor.getContainer()).addClass('expanded');
-
 				// hide click to edit
 				$(editor.getContainer()).siblings('.clickToEdit').hide();
 			});
+			
 			// remove the class when the editor isn't active
 			editor.onDeactivate.add(function(editor, otherEditor) {
-				// remove the class
-				$(editor.getContainer()).removeClass('expanded');
-				
 				// show click to edit
 				$(editor.getContainer()).siblings('.clickToEdit').show();
 				
