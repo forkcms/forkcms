@@ -101,6 +101,7 @@ body {
 	#headerHolder #header {
 		width: 100%;
 		height: 36px;
+		margin: 0 1px;
 	}
 
 	#headerHolder #user {
