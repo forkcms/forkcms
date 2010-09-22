@@ -593,17 +593,18 @@
 	line-height: 22px;
 }
 
-.pageTitle {
-	zoom: 1;
-}
+	/* Clear it */
+	.pageTitle {
+		zoom: 1;
+	}
 
-.pageTitle:after {
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
+	.pageTitle:after {
+		content: ".";
+		display: block;
+		height: 0;
+		clear: both;
+		visibility: hidden;
+	}
 
 /*
 	Center message

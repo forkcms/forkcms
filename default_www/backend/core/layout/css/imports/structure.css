@@ -25,13 +25,15 @@ body {
 	height: 100%;
 	/* Fix jQuery UI modal scrollbars problem */
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 0; left: 0;
 }
 
 #container {
 	height: 100%;
+	width: 100%;
 	padding: 0 24px;
+	margin: 0 1px;
+	overflow: hidden;
 }
 
 #main {
@@ -45,6 +47,11 @@ body {
 	*height: 100%;
 }
 
+	/*
+		Note that this height code is weird due to Opera (10.6)
+		We don't want Opera to receive the 100% value of #main
+	*/
+
 	@-moz-document url-prefix() {
 		#main {
 			height: 100%;
@@ -57,21 +64,9 @@ body {
 		}
 	}
 
-	/*
-		@todo #main background is not shown in Opera on dashboard
-	*/
-
-#contentHolder {
-	height: 100%;
-}
-
 #contentHolder .inner {
 	padding: 24px 24px 24px 9px;
 	background: #FAFAFA;
-
-	min-height: 465px;
-	height: auto !important;
-	height: 465px;
 }
 
 #mainHolder {
@@ -95,7 +90,6 @@ body {
 	max-width: 1224px;
 	margin: 0 auto;
 	position: relative;
-
 }
 
 	#headerHolder #header {
