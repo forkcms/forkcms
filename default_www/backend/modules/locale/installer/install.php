@@ -793,7 +793,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NL', 'Dutch');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoAkismetKey', 'If you want to enable the spam-protection you should <a href="%1$s">configure</a> an Akismet-key.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoComments', 'There are no comments in this category.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoItems', 'There are no items');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoItems', 'There are no items.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoPublishedComments', 'There are no published comments.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoRevisions', 'There are no previous versions yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoTags', 'You didn\'t use tags yet.');
