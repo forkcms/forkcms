@@ -446,7 +446,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'Saved', 'De wijzigingen werden opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'SavedAsDraft', '"%1$s" als kladversie opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'UsingADraft', 'Je gebruikt een kladversie.');
-		$this->insertLocale('nl', 'backend', 'core', 'msg', 'UsingARevision', 'Je hebt een oudere versie geladen.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'UsingARevision', 'Je hebt een oudere versie ingeladen. Sla op om deze versie te gebruiken.');
 		// --
 		$this->insertLocale('en', 'backend', 'core', 'err', 'ActionNotAllowed', 'You have insufficient rights for this action.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AddingCategoryFailed', 'Something went wrong.');
@@ -782,7 +782,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaDescription', 'Briefly summarize the content. This summary is shown in the results of search engines.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaKeywords', 'Choose a number of wellthought terms that describe the content.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaURL', 'Replace the automaticly generated URL by the one you wish.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpNickname', 'The name you want to publish under (eg as author of a blogarticle).');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpNickname', 'The name you want to be published as (e.g. as the author of an article).');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpResetPassword', 'Provide your new password.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpRevisions', 'The last saved versions are kept here. The current version will only be overwritten when you save your changes.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpRSSDescription', 'Briefly describe what kind of content the RSS feed will contain.');
@@ -806,7 +806,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'Saved', 'The changes were saved.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'SavedAsDraft', '"%1$s" saved as draft.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'UsingADraft', 'You\'re using a draft.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'UsingARevision', 'You\'re using an older version.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'UsingARevision', 'You\'re using an older version. Save to overwrite the current version.');
 
 		// insert locale for frontend core
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Archive', 'archief');

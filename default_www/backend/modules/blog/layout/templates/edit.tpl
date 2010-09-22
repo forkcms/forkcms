@@ -82,9 +82,9 @@
 							</div>
 
 							<div class="options">
+								<p class="p0"><label for="publishOnDate">{$lblPublishOn|ucfirst}:</label></p>
 								<div class="oneLiner">
 									<p>
-										<label for="publishOnDate">{$lblPublishOn|ucfirst}:</label>
 										{$txtPublishOnDate} {$txtPublishOnDateError}
 									</p>
 									<p>

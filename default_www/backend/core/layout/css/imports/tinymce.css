@@ -38,16 +38,23 @@
 	text-align: center;
 	/* @inc .transparent */
 	opacity: 0;
-	pointer-events: none;
 	filter: alpha(opacity=0);
 	-ms-filter: "alpha(opacity=0)";
 	-khtml-opacity: 0;
 	-moz-opacity: 0;
 }
 
+.clickToEdit {
+	pointer-events: none;
+}
+
 	.clickToEdit span {
+		background: #666;
 		background: rgba(0,0,0,0.6);
 		color: #FFF;
+		display: block;
+		margin: 0 auto;
+		width: 100px;
 		padding: 4px 9px;
 		line-height: 1;
 		font-size: 12px;

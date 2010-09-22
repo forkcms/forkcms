@@ -44,7 +44,7 @@ body {
 	background: #FAFAFA;
 	border: 1px solid #BED7E9;
 	border-width: 0 1px;
-	*height: 100%;
+	*height: auto; /* IE7 */
 }
 
 	/*
@@ -124,7 +124,7 @@ body {
 				-moz-box-shadow: #AAA 0 2px 6px;
 			}
 
-			#user #account li {
+			#user #ddAccount li {
 				float: none;
 				border: none;
 				background: #FFF;
@@ -132,14 +132,18 @@ body {
 				line-height: 24px;
 				border-bottom: 1px solid #DDD;
 				padding: 0;
+				zoom: 1;
 			}
+			
+				#user #ddAccount li a {
+					zoom: 1;
+					display: block;
+					border: none !important;
+					float: none;
+				}
 
-			#user #account li:last-child {
+			#user #account .lastChild {
 				border: none;
-			}
-
-			#user #account li:hover {
-				border-color: #1F56AD;
 			}
 
 			#user #account .arrow {

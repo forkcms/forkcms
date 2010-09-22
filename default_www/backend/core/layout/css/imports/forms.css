@@ -46,7 +46,8 @@ input.disabled {
 }
 
 .inputText,
-.inputPassword {
+.inputPassword,
+textarea {
 	padding: 3px 2px;
 	color: #333;
 }
@@ -72,7 +73,7 @@ textarea:focus {
 
 input.code,
 textarea.code {
-	font-family: "Menlo", "Monaco", "Courier New", monospace;
+	font-family: Consolas, "Menlo", "Monaco", "Courier New", Courier, monospace;
 	font-size: 11px;
 }
 
@@ -160,11 +161,9 @@ input[type="submit"] {
 	border-bottom: 1px solid #E2E2E2;
 }
 
-.forkForms p {
-	padding: 0 0 12px;
-}
-
-.forkForms .fakeP {
+.forkForms p,
+.forkForms .fakeP,
+.textareaHolder {
 	padding: 0 0 12px;
 }
 
@@ -203,8 +202,6 @@ label {
 	padding: 1px 0 1px 116px;
 }
 
-.forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 155px; }
-
 .forkForms .horizontal label,
 .forkForms .horizontal p.label {
 	float: left;
@@ -220,6 +217,9 @@ label {
 	.forkForms .labelWidthLong p.label {
 		width: 145px;
 	}
+	
+	.forkForms .labelWidthLong .helpTxt { padding: 1px 0 1px 155px; }
+	.forkForms .labelWidthLong .spacing { padding-left: 155px; }
 
 .forkForms .horizontal p.label {
 	margin: 0;

@@ -38,7 +38,7 @@
 							<li><a href="{$authenticatedUserEditUrl}">{$lblEditProfile|ucfirst}</a></li>
 							<li><a class="targetBlank" href="http://userguide.fork-cms.be">{$lblUserguide|ucfirst}</a></li>
 							<li><a class="targetBlank" href="https://github.com/forkcms/forkcms/wikis">{$lblDeveloper|ucfirst}</a></li>
-							<li><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a></li>
+							<li class="lastChild"><a href="{$var|geturl:'logout':'authentication'}">{$lblSignOut|ucfirst}</a></li>
 						</ul>
 					</li>
 				</ul>

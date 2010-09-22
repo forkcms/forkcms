@@ -12,69 +12,13 @@
 */
 
 /*
-	Forms
-	title field
-*/
-
-.collapseBox {
-	width: 100%;
-	color: #333;
-
-	background: #EAEAEA;
-	background: -webkit-gradient(linear, left top, left bottom, from(#DDD), to(#EAEAEA));
-	background: -moz-linear-gradient(top, #DDD, #EAEAEA);
-	border: 1px solid #DDD;
-
-	margin: 0 0 12px;
-	font-family: "Lucida Grande";
-}
-
-		.collapseBox .collapseBoxHeading {
-			zoom: 1;
-		}
-
-		.collapseBox .collapseBoxHeading:after {
-			content: ".";
-			display: block;
-			height: 0;
-			clear: both;
-			visibility: hidden;
-		}
-
-		.collapseBoxHeading {
-			height: 22px;
-			padding: 3px;
-		}
-
-		.collapseBox .collapseBoxHeading h4 {
-			padding: 0 0 0 6px;
-			float: left;
-			width: 93%;
-			line-height: 22px;
-		}
-
-		.collapseBox .buttonHolderSingle {
-			float: left;
-		}
-
-		.collapseBox .collapseBoxHeading h4 a {
-			display: block;
-			color: #3A3A3A;
-		}
-
-	.collapseBox .options {
-		background: #FFF;
-		padding: 12px;
-	}
-
-/*
 	Box construct
 */
 
 .box, .widget {
 	color: #333;
 	margin: 0 0 20px;
-	font-family: "Lucida Grande", Arial, sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
 }
 
 .box .box,
@@ -92,10 +36,6 @@
 
 .subtleBox {
 	margin: 0 0 12px;
-}
-
-.textareaHolder {
-	padding: 0 0 12px;
 }
 
 .box .box:last-child,

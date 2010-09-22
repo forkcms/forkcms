@@ -106,8 +106,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if(in_array($name, array('add', 'edit', 'delete', 'details', 'details', 'approve', 'mark_as_spam', 'use_revision', 'use_draft')))
 		{
 			// add special attributes for actions we know
-			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),
-													'style' => 'width: 10%;'));
+			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name)));
 		}
 
 		// set header attributes

@@ -166,11 +166,13 @@
 							{$txtMetaKeywords} {$txtMetaKeywordsError}
 						</li>
 					</ul>
-					<p>
-						<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
-						<span class="helpTxt">{$msgHelpMetaCustom}</span>
-					</p>
-					{$txtMetaCustom} {$txtMetaCustomError}
+					<div class="textareaHolder">
+						<p>
+							<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
+							<span class="helpTxt">{$msgHelpMetaCustom}</span>
+						</p>
+						{$txtMetaCustom} {$txtMetaCustomError}
+					</div>
 				</div>
 			</div>
 

@@ -30,10 +30,10 @@
 		</div>
 		<div class="options">
 			<ul class="inputList p0">
-				<li>{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label></li>
-				<li>{$chkModeration} <label for="moderation">{$lblEnableModeration|ucfirst}</label></li>
+				<li><label for="allowComments">{$chkAllowComments} {$lblAllowComments|ucfirst}</label></li>
+				<li><label for="moderation">{$chkModeration} {$lblEnableModeration|ucfirst}</label></li>
 				<li>
-					{$chkSpamfilter} <label for="spamfilter">{$lblFilterCommentsForSpam|ucfirst}</label>
+					<label for="spamfilter">{$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}</label>
 					<span class="helpTxt">
 						{$msgHelpSpamFilter}
 						{option:noAkismetKey}<span class="infoMessage"><br />{$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}</span>{/option:noAkismetKey}
@@ -50,7 +50,7 @@
 		<div class="options">
 			<p>{$msgHelpPingServices}:</p>
 			<ul class="inputList p0">
-				<li>{$chkPingServices}<label for="pingServices">{$lblPingBlogServices|ucfirst}</label></li>
+				<li><label for="pingServices">{$chkPingServices} {$lblPingBlogServices|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>
@@ -78,7 +78,7 @@
 			<div class="options">
 				<p>{$msgHelpMeta}:</p>
 				<ul class="inputList p0">
-					<li>{$chkRssMeta}<label for="rssMeta">{$lblMetaInformation|ucfirst}</label></li>
+					<li><label for="rssMeta">{$chkRssMeta} {$lblMetaInformation|ucfirst}</label></li>
 				</ul>
 			</div>
 		</div>

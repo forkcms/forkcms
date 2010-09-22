@@ -31,11 +31,18 @@
 			<h3>{$lblScripts|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<p>{$msgHelpScriptsHead}</p>
-			{$txtSiteHtmlHeader} {$txtSiteHtmlHeaderError}
-
-			<p>{$msgHelpScriptsFoot}</p>
-			{$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
+			<div class="textareaHolder">
+				<p class="p0"><label for="siteHtmlHeader"><code>&lt;head&gt;</code> script(s)</label></p>
+				{$txtSiteHtmlHeader} {$txtSiteHtmlHeaderError}
+				<span class="helpTxt">{$msgHelpScriptsHead}</span>
+			</div>
+		</div>
+		<div class="options">
+			<div class="textareaHolder">
+				<p class="p0"><label for="siteHtmlHeader">End of <code>&lt;body&gt;</code> script(s)</label></p>
+				{$txtSiteHtmlFooter} {$txtSiteHtmlFooterError}
+				<span class="helpTxt">{$msgHelpScriptsFoot}</span>
+			</div>
 		</div>
 	</div>
 
@@ -44,16 +51,16 @@
 			<h3>{$lblLanguages|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<p>{$msgHelpLanguages}:</p>
-
-			<ul class="inputList">
+			<p>{$msgHelpLanguages}</p>
+			<ul class="inputList pb0">
 				{iteration:activeLanguages}
 					<li>{$activeLanguages.chkActiveLanguages} <label for="{$activeLanguages.id}">{$activeLanguages.label|ucfirst}{option:activeLanguages.default} ({$lblDefault}){/option:activeLanguages.default}</label></li>
 				{/iteration:activeLanguages}
 			</ul>
-
-			<p>{$msgHelpRedirectLanguages}:</p>
-			<ul class="inputList">
+		</div>
+		<div class="options">
+			<p>{$msgHelpRedirectLanguages}</p>
+			<ul class="inputList pb0">
 				{iteration:redirectLanguages}
 					<li>{$redirectLanguages.chkRedirectLanguages} <label for="{$redirectLanguages.id}">{$redirectLanguages.label|ucfirst}{option:redirectLanguages.default} ({$lblDefault}){/option:redirectLanguages.default}</label></li>
 				{/iteration:redirectLanguages}
@@ -61,11 +68,11 @@
 		</div>
 	</div>
 
-	<div class="box">
+	<div class="box horizontal">
 		<div class="heading">
 			<h3>{$lblDateAndTime|ucfirst}</h3>
 		</div>
-		<div class="options">
+		<div class="options labelWidthLong">
 			<p>
 				<label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
 				{$ddmTimeFormat} {$ddmTimeFormatError}

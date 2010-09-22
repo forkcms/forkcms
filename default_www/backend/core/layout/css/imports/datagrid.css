@@ -72,6 +72,14 @@
 		border: none;
 	}
 
+/*
+	Default action width
+*/
+
+.action {
+	width: 10%;
+}
+
 /* Fix nasty safari bug when inserting a datagrid into jQuery #tabs */
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {

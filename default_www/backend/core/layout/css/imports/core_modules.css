@@ -104,10 +104,6 @@
 		margin: 6px 6px 12px;
 	}
 
-	#pages.pagesSettings .inputList {
-		padding-top: 12px;
-	}
-
 	#pages.pagesAddTemplate #format,
 	#pages.pagesEditTemplate #format {
 		width: 200px;
@@ -134,28 +130,6 @@
 	margin: 0 0 24px;
 }
 
-		.contentType {
-			background: #666;
-			background: -webkit-gradient(linear, left top, left bottom, from(#666), to(#999));
-			background: -moz-linear-gradient(top, #666, #999);
-			border-bottom: 1px solid #666;
-			font-weight: 700;
-			padding: 5px 10px 5px 40px;
-			display: block;
-			font-size: 11px;
-			font-family: "Lucida Grande", Arial, sans-serif;
-		}
-
-		.contentType label {
-			color: #FFF;
-		}
-
-			.contentType select,
-			.contentType select optgroup {
-				font-size: 11px;
-				font-family: "Lucida Grande", Arial, sans-serif;
-			}
-
 /*
 	Pages
 	Template tab
@@ -164,7 +138,7 @@
 #templateVisualLarge table {
 	width: 100%;
 	border-collapse: separate;
-	border-spacing: 10px; /* If you change the value "10" change it in model.php of pages module too; for IE7 s*/
+	border-spacing: 10px; /* If you change the value "10" change it in model.php of pages module too; for IE7 */
 	table-layout: fixed;
 	border: 1px dotted #CCC;
 	background: #FCFCFC;
@@ -204,52 +178,17 @@
 	*/
 
 		/*
-			Table widths
+			Table cell widths
 		*/
 
-		#pages.pagesIndex .datagrid .user_id {
-			width: 20%;
-		}
-
-		#pages.pagesIndex .datagrid .date {
-			width: 20%;
-		}
-
-		#pages.pagesIndex .datagrid .title {
-			width: 40%;
-		}
-
-		#pages.pagesIndex .datagrid .action {
-			width: 20%;
-		}
+		#pages.pagesIndex .datagrid .user_id { width: 20%; }
+		#pages.pagesIndex .datagrid .date { width: 20%; }
+		#pages.pagesIndex .datagrid .title { width: 40%; }
+		#pages.pagesIndex .datagrid .action { width: 20%; }
 
 	/*
 		Add/edit
 	*/
-
-		/*
-			Tab SEO
-		*/
-
-		#pages.pagesAddEdit #tabSEO #pageTitle {
-			width: 340px;
-		}
-
-		#pages.pagesAddEdit #tabSEO #navigationTitle {
-			width: 160px;
-		}
-
-		#pages.pagesAddEdit #tabSEO #metaDescription {
-			width: 480px;
-		}
-
-		#pages.pagesAddEdit #tabSEO #metaKeywords {
-			width: 480px;
-		}
-
-		#pages.pagesAddEdit #tabSEO #url {
-			width: 340px;
-		}
 
 		/* Less important tabs go on the right side */
 
@@ -269,12 +208,32 @@
 	}
 
 /*
-	Blog
+	Tab SEO
+	Specified to #tabSEO not on module level: since it's also used in modules like blog
 */
 
-	/*
-		Index
-	*/
+#tabSEO #pageTitle { width: 340px; }
+#tabSEO #navigationTitle { width: 160px; }
+#tabSEO #metaDescription { width: 480px; }
+#tabSEO #metaKeywords { width: 480px;}
+#tabSEO #url { width: 340px; }
+
+/*
+	Tab Versions
+	Specified to #tabVersions not on module level: since it's also used in modules like blog
+*/
+
+/* Table widths */
+
+#tabVersions .datagrid .title { width: 35%; }
+#tabVersions .datagrid .date { width: 20%; }
+#tabVersions .datagrid .user_id { width: 20%; }
+#tabVersions .datagrid .action { width: 25%; }
+
+
+/*
+	Blog
+*/
 
 	/*
 		Categories
@@ -314,41 +273,11 @@
 	#blog.blogAddEdit #publishOnDate { width: 100px; }
 	#blog.blogAddEdit #publishOnTime { width: 40px; }
 
-		/*
-			Tab SEO
-		*/
-
-		#blog.blogAddEdit #tabSEO #pageTitle {
-			width: 340px;
-		}
-
-		#blog.blogAddEdit #tabSEO #navigationTitle {
-			width: 160px;
-		}
-
-		#blog.blogAddEdit #tabSEO #metaDescription {
-			width: 480px;
-		}
-
-		#blog.blogAddEdit #tabSEO #metaKeywords {
-			width: 480px;
-		}
-
-		#blog.blogAddEdit #tabSEO #url {
-			width: 340px;
-		}
-
 	/*
 		Settings
 	*/
 
-	#blog.blogAddEdit #feedburnerUrl {
-		width: 320px;
-	}
-
-	#blog.blogAddEdit #rssDescription {
-		padding: 3px;
-	}
+	#blog.blogSettings #feedburnerUrl { width: 320px; }
 
 	/*
 		Settings specific CSS
@@ -399,13 +328,32 @@
 		width: 320px;
 	}
 
-	#settings.settingsIndex #webmasterEmail {
+	#settings.settingsIndex #facebookAdminIds {
+		width: 400px;
+	}
+	
+	/*
+		Email
+	*/
+
+	#settings.settingsEmail #webmasterEmail {
 		width: 300px;
 	}
 
-	#settings.settingsIndex #smtpPort {
+	#settings.settingsEmail #smtpPort {
 		width: 40px;
 	}
+	
+	#settings.settingsEmail #mailerFromName,
+	#settings.settingsEmail #mailerToName {
+		width: 200px;
+	}
+
+	#settings.settingsEmail #mailerFromEmail,
+	#settings.settingsEmail #mailerToEmail {
+		width: 320px;
+	}
+	
 
 /*
 	Tags
@@ -453,40 +401,3 @@
 		top: 5px;
 		margin-left: 0;
 	}
-
-/*
-	TinyMCE expand/non expand
-*/
-
-/*
-	Don't show tinymce toolbars unless the field has focus
-*/
-/*
-.mceEditor tr.mceFirst,
-.mceEditor tr.mceLast {
-  display: none;
-}
-
-.mceEditor.expanded tr.mceFirst,
-.mceEditor.expanded tr.mceLast {
-  display: block;
-}
-*/
-/*
-	Visual connection between templates and their edit field
-*/
-
-#templateVisual td a:focus {
-	background: #666;
-	color: #FFF;
-	border: 1px solid #666;
-}
-
-	.box:target .heading {
-		background: #666;
-		border-color: #666;
-	}
-
-		.box:target .heading h3 {
-			color: #FFF;
-		}
