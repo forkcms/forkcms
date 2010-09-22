@@ -6,9 +6,11 @@
 		<div class="heading">
 			<h3>{$lblBlog|ucfirst}: {$lblAddCategory}</h3>
 		</div>
-		<div class="options">
-			<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-			{$txtName} {$txtNameError}
+		<div class="options horizontal">
+			<p>
+				<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtName} {$txtNameError}
+			</p>
 		</div>
 	</div>
 

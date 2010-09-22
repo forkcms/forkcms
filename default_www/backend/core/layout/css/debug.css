@@ -61,8 +61,6 @@ th.num_tags { width: 70px; }
 .templateVisual td a { border: none; }
 .templateVisual td { border: 1px solid #AAA; }
 
-tr.isDefault td.name { font-weight: 900; }
-
 thead th.dragAndDropHandle, tr td.dragAndDropHandle { width: 16px; padding: 0; cursor: move; }
 thead th.dragAndDropHandle span { padding: 0; }
 

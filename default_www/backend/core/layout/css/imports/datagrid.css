@@ -443,3 +443,12 @@
 	-webkit-border-radius: 4px;
 	-moz-border-radius: 4px;
 }
+
+/*
+	Default (e.g. default category)
+*/
+
+tr.isDefault td.name {
+	color: #000;
+	font-weight: 700;
+}
