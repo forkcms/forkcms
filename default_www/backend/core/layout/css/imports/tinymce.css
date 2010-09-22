@@ -13,11 +13,12 @@
 /*
 	"Click to edit" message on TinyMCEs;
 */
-#editContent .optionsRTE fieldset {
+
+.optionsRTE {
 	position: relative;
 }
 
-#editContent .optionsRTE:hover .clickToEdit {
+.optionsRTE:hover .clickToEdit {
 	webkit-transition: opacity 0.45s linear;
 	/* @inc .opaque */
 	opacity: 1;
@@ -27,7 +28,7 @@
 	-moz-opacity: 1;
 }
 
-#editContent .optionsRTE .clickToEdit {
+.clickToEdit {
 	position: absolute;
 	opacity: 0;
 	top: 37px;
@@ -37,13 +38,14 @@
 	text-align: center;
 	/* @inc .transparent */
 	opacity: 0;
+	pointer-events: none;
 	filter: alpha(opacity=0);
 	-ms-filter: "alpha(opacity=0)";
 	-khtml-opacity: 0;
 	-moz-opacity: 0;
 }
 
-	#editContent .optionsRTE .clickToEdit span {
+	.clickToEdit span {
 		background: rgba(0,0,0,0.6);
 		color: #FFF;
 		padding: 4px 9px;
