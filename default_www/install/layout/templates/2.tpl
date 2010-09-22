@@ -7,6 +7,7 @@
 
 	<title>Installer - Fork CMS</title>
 	<link rel="shortcut icon" href="../backend/favicon.ico" />
+	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/reset.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/screen.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="layout/css/installer.css" />
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
