@@ -56,19 +56,6 @@ th.comments { width: 70px; }
 th.num_tags { width: 70px; }
 	td.num_tags { text-align: right; }
 
-.inlineEditTooltip {
-	margin-left: 7px;
-	padding: 1px 4px 0;
-	font-size: 10px;
-	color: #808080;
-	background-color: #EEE;
-	border: 1px solid #BABABA;
-	
-	border-radius: 4px;
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-}
-
 #templateList li { float: none; }
 
 .templateVisual td a { border: none; }
