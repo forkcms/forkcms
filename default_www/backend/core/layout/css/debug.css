@@ -72,14 +72,3 @@ thead th.dragAndDropHandle span { padding: 0; }
 .multipleTextWrapper ul:after, .multipleTextWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 
 .editorWarning { display: inline-block; margin-top: 3px; }
-
-/** TinyMCE */
-a.mceExternalClose { display: none; }
-div.mceExternalToolbar { 
-	position: relative !important; 
-	top: 0 !important; 
-	background-color: #F0F0EE !important; 
-	width: 100% !important;
-	border: none !important;
-}
-

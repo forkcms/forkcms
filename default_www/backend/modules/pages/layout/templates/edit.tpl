@@ -78,21 +78,23 @@
 			</div>
 		</div>
 		<div id="tabVersions">
-			{option:revisions}<div class="datagridHolder">{/option:revisions}
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="tooltip" style="display: none;">
-							<p>{$msgHelpRevisions}</p>
-						</div>
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
 					</div>
 				</div>
-				{option:revisions}{$revisions}{/option:revisions}
-				{option:!revisions}
-					<p>{$msgNoRevisions}</p>
-				{/option:!revisions}
-			{option:revisions}</div>{/option:revisions}
+			</div>
+			{option:revisions}
+			<div class="datagridHolder">
+				{$revisions}
+			</div>
+			{/option:revisions}
+			{option:!revisions}
+				<p>{$msgNoRevisions}</p>
+			{/option:!revisions}
 		</div>
 		<div id="tabSEO">
 			<div class="subtleBox">
@@ -167,8 +169,8 @@
 					<p>
 						<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
 						<span class="helpTxt">{$msgHelpMetaCustom}</span>
-						{$txtMetaCustom} {$txtMetaCustomError}
 					</p>
+					{$txtMetaCustom} {$txtMetaCustomError}
 				</div>
 			</div>
 

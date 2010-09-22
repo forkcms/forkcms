@@ -25,8 +25,10 @@
 		</ul>
 		{option:txtMetaCustom}
 			<div class="textareaHolder">
-				<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
-				<span class="helpTxt">{$msgHelpMetaCustom}</span>
+				<p>
+					<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
+					<span class="helpTxt">{$msgHelpMetaCustom}</span>
+				</p>
 				{$txtMetaCustom} {$txtMetaCustomError}
 			</div>
 		{/option:txtMetaCustom}

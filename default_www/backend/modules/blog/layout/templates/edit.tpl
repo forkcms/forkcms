@@ -30,7 +30,7 @@
 
 						{* Main content *}
 						<div class="box">
-							<div class="heading headingRTE">
+							<div class="heading">
 								<h3>{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
 							</div>
 							<div class="optionsRTE">
@@ -130,37 +130,23 @@
 		</div>
 
 		<div id="tabRevisions">
-			{option:drafts}
-			<div class="datagridHolder">
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="floater">{$lblDrafts|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="tooltip" style="display: none;">
-							<p>{$msgHelpDrafts}</p>
-						</div>
+			<div class="tableHeading">
+				<div class="oneLiner">
+					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+					<abbr class="help">(?)</abbr>
+					<div class="tooltip" style="display: none;">
+						<p>{$msgHelpRevisions}</p>
 					</div>
 				</div>
-
-				{$drafts}
 			</div>
-			{/option:drafts}
-
+			{option:drafts}{$drafts}{/option:drafts}
 			{option:!drafts}
-			<div class="datagridHolder">
-				<div class="tableHeading">
-					<div class="oneLiner">
-						<h3 class="floater">{$lblPreviousVersions|ucfirst}</h3>
-						<abbr class="help">(?)</abbr>
-						<div class="tooltip" style="display: none;">
-							<p>{$msgHelpRevisions}</p>
-						</div>
-					</div>
+				{option:revisions}
+				<div class="datagridHolder">
+					{$revisions}
 				</div>
-
-				{option:revisions}{$revisions}{/option:revisions}
+				{/option:revisions}
 				{option:!revisions}{$msgNoRevisions}{/option:!revisions}
-			</div>
 			{/option:!drafts}
 		</div>
 

@@ -29,7 +29,7 @@
 
 						{* Main content *}
 						<div class="box">
-							<div class="heading headingRTE">
+							<div class="heading">
 								<h3>{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
 							</div>
 							<div class="optionsRTE">
@@ -73,13 +73,15 @@
 							</div>
 
 							<div class="options">
+								<p class="p0"><label for="publishOnDate">{$lblPublishOn|ucfirst}</label></p>
 								<div class="oneLiner">
 									<p>
-										<label for="publishOnDate">{$lblPublishOn|ucfirst}</label>
 										{$txtPublishOnDate} {$txtPublishOnDateError}
 									</p>
 									<p>
 										<label for="publishOnTime">{$lblAt}</label>
+									</p>
+									<p>
 										{$txtPublishOnTime} {$txtPublishOnTimeError}
 									</p>
 								</div>

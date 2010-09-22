@@ -58,3 +58,18 @@
 		-webkit-border-radius: 4px;
 		-moz-border-radius: 4px
 	}
+
+/*
+	TinyMCE
+	External toolbar overrides
+*/
+
+a.mceExternalClose { display: none; }
+
+div.mceExternalToolbar { 
+	position: relative !important; 
+	top: 0 !important; 
+	background-color: #F0F0EE !important; 
+	border: 1px solid #CCC !important;
+	border-top: none !important;
+}

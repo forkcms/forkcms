@@ -156,31 +156,6 @@
 				font-family: "Lucida Grande", Arial, sans-serif;
 			}
 
-	.headingRTE table {
-		width: 100%;
-	}
-
-		.headingRTE td.numbering {
-			vertical-align: middle;
-			padding-right: 10px;
-			width: 17px;
-		}
-
-		.headingRTE .numbering div {
-			font-size: 11px;
-			background: rgba(0,0,0,0.25);
-			text-align: center;
-			width: 13px;
-			height: 13px;
-			line-height: 13px;
-			-moz-border-radius: 8px;
-			color: #FFF;
-			text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-			border: 1px solid rgba(0,0,0,0.1);
-			font-family: Helvetica, Arial, sans-serif;
-			font-weight: 700;
-		}
-
 /*
 	Pages
 	Template tab
@@ -318,6 +293,15 @@
 		margin-bottom: 8px;
 		clear: left;
 	}
+	
+	/*
+		Edit comment
+	*/
+	
+	#blog.blogEditComment #author { width: 280px; }
+	#blog.blogEditComment #email { width: 380px; }
+	#blog.blogEditComment #website { width: 380px; }
+	#blog.blogEditComment #text { width: 600px; height: 160px; }
 
 	/*
 		Add/edit
