@@ -84,6 +84,7 @@
 .secondaryContent {
 	/* @inc .secondarycontent */
 	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 }
 
 .accessibility {

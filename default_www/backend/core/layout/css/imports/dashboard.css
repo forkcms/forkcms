@@ -94,4 +94,7 @@
 
 #widgetSettingsAnalyse ul {
 	padding-bottom: 0;
+	/* @inc .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 }

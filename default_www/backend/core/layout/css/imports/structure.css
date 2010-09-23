@@ -270,9 +270,16 @@ body {
 		position: relative;
 		top: 1px;
 		line-height: 1;
-		font-size: 11px;
 		font-weight: 700;
-		font-family: "Lucida grande", Arial, sans-serif;
+
+		background: #EBF3F9;
+		background: -webkit-gradient(linear, left top, left bottom, from(#EBF3F9), to(#DCE9F4));
+		background: -moz-linear-gradient(top, #EBF3F9, #DCE9F4);
+		border: 1px solid #BAD4E8;
+
+		/* @inc .secondaryContent */
+		font-size: 11px;
+		font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 
 		/* @inc .rcTopOnly */
 		border-top-left-radius: 4px;
@@ -281,12 +288,6 @@ body {
 		border-top-right-radius: 4px;
 		-webkit-border-top-right-radius: 4px;
 		-moz-border-radius-topright: 4px;
-
-		background: #EBF3F9;
-		background: -webkit-gradient(linear, left top, left bottom, from(#EBF3F9), to(#DCE9F4));
-		background: -moz-linear-gradient(top, #EBF3F9, #DCE9F4);
-		border: 1px solid #BAD4E8;
-
 	}
 
 	#navigation li a:hover,
