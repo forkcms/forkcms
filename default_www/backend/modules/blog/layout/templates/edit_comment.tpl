@@ -1,10 +1,19 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
+<div class="pageTitle">
+	<h2>{$lblBlog|ucfirst}: {$msgEditComment}</h2>
+	<div class="buttonHolderRight">
+		<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank">
+			<span>{$lblView|ucfirst}</span>
+		</a>
+	</div>
+</div>
+
 {form:editComment}
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblBlog|ucfirst}: {$msgEditComment}</h3>
+			<h3>{$lblComment|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<p>
@@ -29,9 +38,6 @@
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
-			<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank">
-				<span>{$lblView|ucfirst}</span>
-			</a>
 		</div>
 	</div>
 {/form:editComment}

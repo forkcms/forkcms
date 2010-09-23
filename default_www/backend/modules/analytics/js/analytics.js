@@ -105,7 +105,7 @@ jsBackend.analytics.chartDoubleMetricPerDay = {
 		var metric2Values = $('#dataChartDoubleMetricPerDay ul.series li#metric2serie span.value');
 		var metric2Data = [];
 		metric2Values.each(function() { metric2Data.push(parseInt($(this).html())); });
-		
+
 		var chart = new Highcharts.Chart({
 						chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, margin: [60, 0, 30, 40], defaultSeriesType: 'line' },
 						xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
