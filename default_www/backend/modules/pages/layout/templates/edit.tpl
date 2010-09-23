@@ -8,6 +8,7 @@
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
+			<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
 	</div>
@@ -296,9 +297,6 @@
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
-			<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank">
-				<span>{$lblView|ucfirst}</span>
-			</a>
 		</div>
 	</div>
 {/form:edit}
