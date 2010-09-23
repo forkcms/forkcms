@@ -158,25 +158,25 @@ class BackendForm extends SpoonForm
 		switch($type)
 		{
 			case 'from':
-				$class .= ' inputDatefieldFrom';
+				$class .= ' inputDatefieldFrom inputText';
 				$classError .= ' inputDatefieldFrom';
 				$rel .= ':::'. date('Y-m-d', $date);
 			break;
 
 			case 'till':
-				$class .= ' inputDatefieldTill';
+				$class .= ' inputDatefieldTill inputText';
 				$classError .= ' inputDatefieldTill';
 				$rel .= ':::'. date('Y-m-d', $date);
 			break;
 
 			case 'range':
-				$class .= ' inputDatefieldRange';
+				$class .= ' inputDatefieldRange inputText';
 				$classError .= ' inputDatefieldRange';
 				$rel .= ':::'. date('Y-m-d', $date) .':::'. date('Y-m-d', $date2);
 			break;
 
 			default:
-				$class .= ' inputDatefieldNormal';
+				$class .= ' inputDatefieldNormal inputText';
 				$classError .= ' inputDatefieldNormal';
 			break;
 		}
