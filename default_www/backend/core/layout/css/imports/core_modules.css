@@ -135,12 +135,6 @@
 	(in jQuery modal)
 */
 
-#templateList {
-	-moz-column-count: 2;
-	-moz-column-gap: 12px;
-	/* Not in webkit since it's kinda dodgy in Chrome */
-}
-
 #templateList li {
 	margin: 0 0 12px;
 	position: relative;
