@@ -6,12 +6,13 @@
 </div>
 
 {form:edit}
-	{$txtTitle} {$txtTitleError}
 
+	{option:!detailURL}<div class="generalMessage infoMessage singleMessage"><p>{$errNoModuleLinked}</p></div>{/option:!detailURL}
+
+	{$txtTitle} {$txtTitleError}
 	<div id="pageUrl">
 		<div class="oneLiner">
 			{option:detailURL}<p><span><a href="{$detailURL}/{$item['url']}">{$detailURL}/<span id="generatedUrl">{$item['url']}</span></a></span></p>{/option:detailURL}
-			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
 		</div>
 	</div>
 
