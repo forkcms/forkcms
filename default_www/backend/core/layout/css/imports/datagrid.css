@@ -257,6 +257,7 @@
 
 	.datagrid tr:hover td,
 	.datagrid tr.selected td,
+	.datagrid tr.isDefault:hover td,
 	.datagrid tr.selected td label,
 	.datagrid tr:hover td label,
 	#encloser #container .datagrid tbody tr:hover td a.linkButton span,
