@@ -136,7 +136,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het artikel "%1$s" wil verwijderen?');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Deleted', 'De geselecteerde artikels werden verwijderd.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditArticle', 'bewerk artikel "%1$s"');
-		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditComment', 'bewerk reactie');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditCommentOn', 'bewerk reactie op "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Edited', 'Het artikel "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditedComment', 'De reactie werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpMeta', 'Toon de meta informatie van deze blogpost in de RSS feed (categorie, tags, ...)');
@@ -169,7 +169,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the article "%1$s"?');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Deleted', 'The selected articles were deleted.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditArticle', 'edit article "%1$s"');
-		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditComment', 'edit comment');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditComment', 'edit comment on "%1$s"');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Edited', 'The article "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditedComment', 'The comment was saved.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpMeta', 'Show the meta information for this blogpost in the RSS feed (category, tags, ...)');
