@@ -1,22 +1,9 @@
 /*
 
-	Developent stylesheet for <Project name>
+	Development stylesheet for <Project name>
 	
 	Media:      screen, projection
 	Copyright:  Netlash <http://www.netlash.com>
 	author:     name <email@netlash.com>
 
-	@johan: review this shit and move into correct files
-
 */
-
-/* Force broken image icon in Mozilla Firefox */
-img {
-	-moz-force-broken-image-icon: 1;
-}
-
-/* Debug stuff */
-#console { position: fixed; height: 200px; width: 100%; bottom: 0; left: 0; overflow: auto; background-color: #000;  }
-	#console pre { background: none; margin: 7px; padding: 0; font: 300 11px Monaco, sans-serif; color: #FFF; }
-
-li li { margin-left: 14px; }

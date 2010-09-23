@@ -1,6 +1,6 @@
 {include:file='{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
 
-<body id="twocolumns" class="{$LANGUAGE} frontend">
+<body id="home" class="{$LANGUAGE} frontend">
 	<div id="container">
 
 		<div id="header">
@@ -13,10 +13,7 @@
 
 		<div id="main">
 
-			<div id="content">
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
-				{option:!hideContentTitle}<h2 class="pageTitle">{$page['title']}</h2>{/option:!hideContentTitle}
-
+			<div id="intro">
 				{* Block 1 *}
 				{option:block1IsHTML}
 					<div class="content">
@@ -26,7 +23,10 @@
 				{option:!block1IsHTML}
 					{include:file='{$block1}'}
 				{/option:!block1IsHTML}
-				
+			</div>
+
+			<div id="content">
+
 				{* Block 2 *}
 				{option:block2IsHTML}
 					<div class="content">
@@ -36,9 +36,6 @@
 				{option:!block2IsHTML}
 					{include:file='{$block2}'}
 				{/option:!block2IsHTML}
-			</div>
-			<div id="sidebar">
-
 
 				{* Block 3 *}
 				{option:block3IsHTML}
@@ -49,36 +46,6 @@
 				{option:!block3IsHTML}
 					{include:file='{$block3}'}
 				{/option:!block3IsHTML}
-
-				{* Block 4 *}
-				{option:block4IsHTML}
-					<div class="content">
-						{$block4}
-					</div>
-				{/option:block4IsHTML}
-				{option:!block4IsHTML}
-					{include:file='{$block4}'}
-				{/option:!block4IsHTML}
-
-				{* Block 5 *}
-				{option:block5IsHTML}
-					<div class="content">
-						{$block5}
-					</div>
-				{/option:block5IsHTML}
-				{option:!block5IsHTML}
-					{include:file='{$block5}'}
-				{/option:!block5IsHTML}
-
-				{* Block 6 *}
-				{option:block6IsHTML}
-					<div class="content">
-						{$block6}
-					</div>
-				{/option:block6IsHTML}
-				{option:!block6IsHTML}
-					{include:file='{$block6}'}
-				{/option:!block6IsHTML}
 
 			</div>
 		</div>
