@@ -17,7 +17,7 @@
 						<p>There's a few steps you're going to have to do first to make sure you're working with the correct data.</p>
 						<ul>
 							<li>Download the <a href="downloads/fork_scratch.sql">tutorial database</a></li>
-							<li>Import this database in a new database your local PHPMyAdmin</p>
+							<li>Import this database in a new database your local PHPMyAdmin</li>
 							<li>Change the database to connect to in library/globals.php</li>
 							<li>Remove all cache files from the default install, see "<a href="extra.php#reinstalling">Reinstalling Fork CMS</a>"</li>
 						</ul>
