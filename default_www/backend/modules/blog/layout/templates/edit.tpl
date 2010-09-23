@@ -3,6 +3,11 @@
 
 <div class="pageTitle">
 	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item['title']}}</h2>
+	<div class="buttonHolderRight">
+		<a href="{$detailURL}/{$item['url']}" class="button icon iconZoom previewButton targetBlank">
+			<span>{$lblView|ucfirst}</span>
+		</a>
+	</div>
 </div>
 
 {form:edit}
