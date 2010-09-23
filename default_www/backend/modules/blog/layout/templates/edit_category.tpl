@@ -13,7 +13,10 @@
 			</p>
 
 			<ul class="inputList">
-				<li><label for="isDefault">{$lblDefault}</label> {$chkIsDefault} {$chkIsDefaultError}</li>
+				<li>
+					<label for="isDefault">{$msgMakeDefaultCategory|sprintf:{$defaultCategory['name']}}</label>
+					{$chkIsDefault} {$chkIsDefaultError}
+				</li>
 			</ul>
 		</div>
 	</div>
