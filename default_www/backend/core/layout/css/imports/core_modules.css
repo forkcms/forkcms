@@ -181,10 +181,10 @@
 			Table cell widths
 		*/
 
-		#pages.pagesIndex .datagrid .user_id { width: 20%; }
-		#pages.pagesIndex .datagrid .date { width: 20%; }
-		#pages.pagesIndex .datagrid .title { width: 40%; }
-		#pages.pagesIndex .datagrid .action { width: 20%; }
+		#pages.pagesIndex .datagrid .user_id { width: 25%; }
+		#pages.pagesIndex .datagrid .date { width: 25%; }
+		#pages.pagesIndex .datagrid .title { width: 35%; }
+		#pages.pagesIndex .datagrid .action { width: 15%; }
 
 	/*
 		Add/edit
