@@ -29,10 +29,10 @@ class BackendBlogComments extends BackendBaseActionIndex
 	 * @param	string $title	The title for the blogarticle.
 	 * @param	string $URL		The URL for the blogarticle.
 	 */
-	public static function addPostData($text, $title, $URL)
+	public static function addPostData($text, $title, $URL, $id)
 	{
 		// reset URL
-		$URL = BackendModel::getURLForBlock('blog', 'detail') .'/'. (string) $URL;
+		$URL = BackendModel::getURLForBlock('blog', 'detail') .'/'. $URL .'#comment-'. $id;
 
 		// build HTML
 		return '<p><em>'. sprintf(BL::getMessage('CommentOnWithURL'), $URL, $title) .'</em></p>'."\n". (string) $text;
@@ -87,7 +87,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// assign column functions
 		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgPublished->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
-		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
+		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true);
 
 		// sorting
 		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');
@@ -124,7 +124,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// assign column functions
 		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgModeration->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
-		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
+		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true);
 
 		// sorting
 		$this->dgModeration->setSortingColumns(array('created_on', 'text'), 'text');
@@ -163,7 +163,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// assign column functions
 		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), '[created_on]', 'created_on', true);
 		$this->dgSpam->setColumnFunction(array('BackendDataGridFunctions', 'cleanupPlaintext'), '[text]', 'text', true);
-		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]'), 'text', true);
+		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true);
 
 		// sorting
 		$this->dgSpam->setSortingColumns(array('created_on', 'text'), 'text');

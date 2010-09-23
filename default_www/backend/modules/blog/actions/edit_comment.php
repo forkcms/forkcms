@@ -80,6 +80,9 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 		$this->frm->addText('email', $this->record['email']);
 		$this->frm->addText('website', $this->record['website']);
 		$this->frm->addTextarea('text', $this->record['text']);
+
+		// assign URL
+		$this->tpl->assign('itemURL', BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->record['post_url'] .'#comment-'. $this->record['post_id']);
 	}
 
 
