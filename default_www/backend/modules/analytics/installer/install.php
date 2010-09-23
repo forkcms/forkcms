@@ -153,7 +153,7 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'LinkGoogleAccount', 'Link your Google account to Fork CMS.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'LinkWebsiteProfile', 'Link your Google Analytics website profile to Fork CMS.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'LoadingData', 'Fork is collecting the data from Google Analytics.');
-		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoAccounts', 'There are no website profiles linked to this Google account. Log off at Google and try with a different account.');
+		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoAccounts', 'There are no website profiles linked to this Google account. Sign out at Google and try with a different account.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoContent', 'There is no content yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoExitPages', 'There are no exit pages yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoKeywords', 'There are no keywords yet.');
