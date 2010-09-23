@@ -437,7 +437,7 @@ class BackendTemplateModifiers
 	 * @param	string[optional] $action	The action to build the URL for.
 	 * @param	string[optional] $module	The module to build the URL for.
 	 */
-	public static function getURL($var = null, $action = null, $module = null)
+	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
 	{
 		// redefine
 		$var = (string) $var;
@@ -445,7 +445,7 @@ class BackendTemplateModifiers
 		$module = ($module !== null) ? (string) $module : null;
 
 		// build the url
-		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage());
+		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage()) . $suffix;
 	}
 
 

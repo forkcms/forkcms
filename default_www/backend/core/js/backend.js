@@ -874,6 +874,21 @@ jsBackend.tinyMCE = {
 	// init, something like a constructor
 	init: function() {
 		$('.inputEditor').before('<div class="clickToEdit"><span>{$msgClickToEdit|addslashes}</span></div>');
+		
+		// bind click on the element
+		$('.clickToEdit').live('click', function(evt) {
+			// get id
+			var id = $(this).siblings('textarea.inputEditor:first').attr('id');
+
+			// validate id
+			if(typeof id != undefined) {
+				// show the toolbar
+				$('#'+ id + '_external').show();
+
+				// set focus to the editor
+				tinyMCE.get(id).focus();
+			}
+		});
 	},	
 	checkContent: function(editor) {
 		if(editor.isDirty()) {
