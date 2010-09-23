@@ -60,6 +60,11 @@ tinyMCE.init({
 		// set content
 		editor.onLoadContent.add(jsBackend.tinyMCE.checkContent);
 
+		editor.onKeyUp.add(function(editor, event) {
+			// show
+			if($('#'+ editor.id + '_external').is(':hidden')) $('#'+ editor.id + '_external').show();
+		});
+		
 		/**
 		 * It seems like onActivate isn't called when their is just a single instance.
 		 * Our workaround is really ugly, we watch each event and add the class on the container,
@@ -96,6 +101,9 @@ tinyMCE.init({
 			editor.onDeactivate.add(function(editor, otherEditor) {
 				// show click to edit
 				$(editor.getContainer()).siblings('.clickToEdit').show();
+				
+				// hide
+				if($('#'+ editor.id + '_external').is(':visible')) $('#'+ editor.id + '_external').hide();
 				
 				// check the content
 				jsBackend.tinyMCE.checkContent(editor);
