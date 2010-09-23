@@ -30,8 +30,8 @@ a:focus { overflow: hidden; }
 body {
 	font-family: Georgia, "Times New Roman", serif;
 	line-height: 1.5;
-	color: #333;
-	font-size: 13px;
+	color: #444;
+	font-size: 14px;
 }
 
 /* Headings */
@@ -47,8 +47,13 @@ h1, h2, h3 {
 	}
 
 h2 {
-	font-size: 22px;
+	font-size: 32px;
 }
+
+	h2.pageTitle {
+		border-bottom: 1px solid #CCC;
+		margin: 0 0 12px;
+	}
 
 h3 {
 	font-size: 16px;
@@ -227,19 +232,41 @@ body {
 		font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 	}
 
-	#subnavigation {
-		width: 200px;
-		float: left;
-	}
+#subnavigation {
+	width: 200px;
+	margin: 0 20px 0 0;
+	float: left;
+}
 
-	#content {
-		width: 550px;
-		float: left;
+	#subnavigation {
+		/* @inc .sansSerif */
+		font-family: Arial, sans-serif;
 	}
 	
+		#subnavigation a {
+			display: block;
+			background: #000;
+			padding: 3px 6px;
+			color: #FFF;
+			text-decoration: none;
+		}
+
+#content {
+	width: 400px;
+	margin: 0 20px 0 0;
+	float: left;
+}
+
+#sidebar {
+	width: 200px;
+	float: left;
+}
+
 	#sidebar {
-		width: 200px;
-		float: left;
+		padding-top: 60px;
+		font-size: 12px;
+		/* @inc .sansSerif */
+		font-family: Arial, sans-serif;
 	}
 
 /*

@@ -5,18 +5,16 @@
 
 		<div id="header">
 			<h1><a href="/">{$siteTitle}</a></h1>
-
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
 			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
-		</div>
-
-		<div id="navigation">
-			{$var|getnavigation:'page':0:1}
+			<div id="navigation">
+				{$var|getnavigation:'page':0:1}
+			</div>
 		</div>
 
 		<div id="main">
 			<div id="subnavigation">
-				{$var|getsubnavigation:'page':{$page['id']}:1}
+				{$var|getsubnavigation:'page':{$page['id']}:2}
+				&nbsp;
 			</div>
 
 			<div id="content" class="content">
