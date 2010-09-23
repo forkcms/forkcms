@@ -8,8 +8,6 @@
 		<div class="id1">
 			<div class="content">
 
-				<p><span class="markedTodo">@note This documentation is unfinished. Please post in the <a href="http://groups.google.com/group/fork-cms/?pli=1">Google Group</a> if you get stuck.</span></p>
-
 				<p class="intro">Welcome to the documentation of Fork CMS. You'll find everything you need here to get your website up and running quickly. Have fun!</p>
 
 				<hr />
@@ -31,8 +29,7 @@
 
 				<h3 id="download">Download</h3>
 
-				<p>Download Fork CMS from Github: <span class="markedTodo">Note: this repository is set to private until we release our first open source version</span></p>
-
+				<p>Download Fork CMS from Github:</p>
 				<ul>
 					<li>Go to <a href="https://github.com/forkcms/forkcms/tree/">Fork CMS's Github page</a> and click the download button. You can choose to download a .zip or .tar file there.</li>
 					<li>Alternatively, use git to clone the latest release: <code class="marked">git clone git@github.com:forkcms/forkcms.git</code></li>
@@ -70,7 +67,7 @@
 
 				<h3 id="bugReports">Bug reports</h3>
 
-				<p>If you encounter any bugs, please create a new issue at <a href="https://github.com/forkcms/forkcms/issues">https://github.com/forkcms/forkcms/issues</a> <span class="markedTodo">Note: this repository is private until we release our first open source version</span></p>
+				<p>If you encounter any bugs, please create a new issue at <a href="https://github.com/forkcms/forkcms/issues">https://github.com/forkcms/forkcms/issues</a>.</p>
 
 				<h3 id="discussion">Discussion</h3>
 
