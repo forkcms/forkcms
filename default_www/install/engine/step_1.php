@@ -22,30 +22,67 @@ class InstallerStep1 extends InstallerStep
 	public function execute()
 	{
 		// init vars
+		$possiblePaths = array();
 		$variables = array();
 
-		// check requirements
-		$validated = self::checkRequirements($variables);
+		// get the possible library paths
+		self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $possiblePaths);
 
-		// has errors
-		if(!$validated)
+		// was the form submitted?
+		if(isset($_GET['spoon_location']) && in_array($_GET['spoon_location'], $possiblePaths))
 		{
-			// assign the variable
-			$variables['nextButton'] = '&nbsp;';
-			$variables['requirementsStatusError'] = '';
-			$variables['requirementsStatusOK'] = 'hidden';
-		}
+			// store in session
+			$_SESSION['path_library'] = $_GET['spoon_location'];
 
-		// no errors detected
-		else
-		{
+			// redirect to step 2
 			header('Location: index.php?step=2');
 			exit;
 		}
 
-		// set paths for template
-		$variables['PATH_WWW'] = PATH_WWW;
-		$variables['PATH_LIBRARY'] = PATH_LIBRARY;
+		// count
+		$count = count($possiblePaths);
+
+		// just one found? add it into the session
+		if($count == 1)
+		{
+			$_SESSION['path_library'] = $possiblePaths[0];
+
+			// redirect to step 2
+			header('Location: index.php?step=2');
+			exit;
+		}
+
+		// nothing found
+		elseif($count > 0)
+		{
+			$variables['content'] = '<h3>Location of Spoon</h3>
+									<div class="horizontal">
+										<p>We detected multiple folders containing Spoon. Below you can select the correct folder.</p>
+										<p>
+											<label for="spoonLocation">Paths<abbr title="Required field">*</abbr></label>
+											<select id="spoonLocation" name="spoon_location" class="input-select" style="width: 350px;">';
+
+			// loop locations
+			foreach($possiblePaths as $path)
+			{
+				$variables['content'] .= '<option value="'. $path .'">'. $path .'</option>';
+			}
+
+
+			$variables['content'] .= 	'</select>
+										</p>
+										<p class="buttonHolder spacing">
+											<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" />
+										</p>';
+		}
+
+		// nothing found
+		else
+		{
+			$variables['content'] = '<div class="formMessage errorMessage">
+										<p>We couldn\'t locate Spoon. Make sure you upload the <code>library</code>-folder.</p>
+									</div>';
+		}
 
 		// template contents
 		$tpl = file_get_contents('layout/templates/1.tpl');
@@ -69,202 +106,13 @@ class InstallerStep1 extends InstallerStep
 
 
 	/**
-	 * Check if a specific requirement is satisfied
-	 *
-	 * @return	boolean
-	 * @param	string $variable
-	 * @param	bool $requirement
- 	 * @param	array[optional] $variables
-	 */
-	public static function checkRequirement($variable, $requirement, array &$variables = null)
-	{
-		// requirement satisfied
-		if($requirement)
-		{
-			$variables[$variable] = 'ok';
-			$variables[$variable .'Status'] = 'ok';
-			return true;
-		}
-
-		// requirement not satisfied
-		else
-		{
-			$variables[$variable] = 'nok';
-			$variables[$variable .'Status'] = 'not ok';
-			return false;
-		}
-	}
-
-
-	/**
- 	 * Checks the requirements
- 	 *
- 	 * @return	bool
- 	 * @param	array[optional] $variables
-	 */
-	public static function checkRequirements(array &$variables = null)
-	{
-		// define step
-		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5'))) ? (int) $_GET['step'] : 1;
-
-		// define constants
-		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants($step);
-
-		/*
-		 * At first we're going to check to see if the PHP version meets the minimum requirements
-		 * for Fork CMS.
-		 */
-
-		// fetch the PHP version.
-		$version = (int) str_replace('.', '', PHP_VERSION);
-
-		// we require at least 5.2.x
-		self::checkRequirement('phpVersion', $version >= 520, $variables);
-
-		/*
-		 * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
-		 * extensions, we can't guarantee that everything will work.
-		 */
-
-		// check for cURL extension
-		self::checkRequirement('extensionCURL', extension_loaded('curl'), $variables);
-
-		// check for SimpleXML extension
-		self::checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'), $variables);
-
-		// check for SPL extension
-		self::checkRequirement('extensionSPL', extension_loaded('SPL'), $variables);
-
-		// check for mbstring extension
-		self::checkRequirement('extensionMBString', extension_loaded('mbstring'), $variables);
-
-		// check for iconv extension
-		self::checkRequirement('extensionIconv', extension_loaded('iconv'), $variables);
-
-		// check for gd extension and correct version
-		self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'), $variables);
-
-		// check for PDO extension
-		if(extension_loaded('PDO'))
-		{
-			// general PDO
-			$variables['extensionPDO'] = 'ok';
-			$variables['extensionPDOStatus'] = 'ok';
-
-			// check for mysql driver
-			if(in_array('mysql', PDO::getAvailableDrivers()))
-			{
-				$variables['extensionPDOMySQL'] = 'ok';
-				$variables['extensionPDOMySQLStatus'] = 'ok';
-			}
-
-			// mysql driver not found
-			else
-			{
-				$variables['extensionPDOMySQL'] = 'nok';
-				$variables['extensionPDOMySQLStatus'] = 'nok';
-			}
-		}
-
-		// PDO extension not found
-		else
-		{
-			$variables['extensionPDO'] = 'nok';
-			$variables['extensionPDOStatus'] = 'not ok';
-		}
-
-		/*
-		 * A couple of php.ini settings should be configured in a specific way to make sure that
-		 * they don't intervene with Fork CMS.
-		 */
-
-		// check for safe mode
-		self::checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', $variables);
-
-		// check for open basedir
-		self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', $variables);
-
-		/*
-		 * Make sure the filesystem is prepared for the installation and everything can be read/
-		 * written correctly.
-		 */
-
-		// check if the backend-cache-directory is writable
-		self::checkRequirement('fileSystemBackendCache', self::isWritable(PATH_WWW .'/backend/cache/'), $variables);
-
-		// check if the frontend-cache-directory is writable
-		self::checkRequirement('fileSystemFrontendCache', self::isWritable(PATH_WWW .'/frontend/cache/'), $variables);
-
-		// check if the frontend-files-directory is writable
-		self::checkRequirement('fileSystemFrontendFiles', self::isWritable(PATH_WWW .'/frontend/files/'), $variables);
-
-		// check if the library-directory is writable
-		self::checkRequirement('fileSystemLibrary', self::isWritable(PATH_LIBRARY), $variables);
-
-		// check if the installer-directory is writable
-		self::checkRequirement('fileSystemInstaller', self::isWritable(PATH_WWW .'/install'), $variables);
-
-		// does the config.example.php file exist
-		self::checkRequirement('fileSystemConfig', file_exists(PATH_LIBRARY .'/config.example.php') && is_readable(PATH_LIBRARY .'/config.example.php'), $variables);
-
-		// does the globals.example.php file exist
-		self::checkRequirement('fileSystemGlobals', file_exists(PATH_LIBRARY .'/globals.example.php') && is_readable(PATH_LIBRARY .'/globals.example.php'), $variables);
-
-		// does the globals_backend.example.php file exist
-		self::checkRequirement('fileSystemGlobalsBackend', file_exists(PATH_LIBRARY .'/globals_backend.example.php') && is_readable(PATH_LIBRARY .'/globals_backend.example.php'), $variables);
-
-		// does the globals_frontend.example.php file exist
-		self::checkRequirement('fileSystemGlobalsFrontend', file_exists(PATH_LIBRARY .'/globals_frontend.example.php') && is_readable(PATH_LIBRARY .'/globals_frontend.example.php'), $variables);
-
-		// library path exists
-		self::checkRequirement('fileSystemPathLibrary', PATH_LIBRARY != '', $variables);
-
-		// error status
-		return !in_array('nok', $variables);
-	}
-
-
-	/**
-	 * Define path constants
-	 *
-	 * @return	void
-	 */
-	private static function defineConstants($step)
-	{
-		// init library path
-		$pathLibrary = '';
-
-		// define step
-		if($step != 1) $pathLibrary = (isset($_SESSION['path_library'])) ? $_SESSION['path_library'] : '';
-
-		// guess the path to the library
-		if($pathLibrary == '')
-		{
-			// guess the path
-			self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $pathLibrary);
-
-			// add it to the session
-			$_SESSION['path_library'] = $pathLibrary;
-		}
-
-		// define constants
-		if(!defined('PATH_WWW')) define('PATH_WWW', dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME']))));
-		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', $pathLibrary);
-
-		// update session
-		if(!isset($_SESSION['path_library'])) $_SESSION['path_library'] = PATH_LIBRARY;
-		if(!isset($_SESSION['path_www'])) $_SESSION['path_www'] = PATH_WWW;
-	}
-
-
-	/**
 	 * Try to guess the location of the library based on spoon library
 	 *
 	 * @return	void
 	 * @param	string $directory
 	 * @param	string[optional] $library
 	 */
-	private static function guessLibraryPath($directory, &$library = null)
+	private static function guessLibraryPath($directory, array &$library = null)
 	{
 		// init var
 		$location = '';
@@ -275,7 +123,18 @@ class InstallerStep1 extends InstallerStep
 			// not a directory and equals 'spoon.php'
 			if(!is_dir($filename) && substr($filename, -9) == 'spoon.php')
 			{
-				$library = realpath(str_replace('spoon.php', '..', $filename));
+				// get real path
+				$path = realpath(str_replace('spoon.php', '..', $filename));
+
+				// only unique values should be added
+				if(is_array($library))
+				{
+					// add
+					if(!in_array($path, $library)) $library[] = $path;
+				}
+
+				// not an array
+				else $library = array($path);
 			}
 
 			// directory
@@ -285,47 +144,6 @@ class InstallerStep1 extends InstallerStep
 				self::guessLibraryPath($filename, $library);
 			}
 		}
-	}
-
-
-	/**
-	 * This step is always allowed.
-	 *
-	 * @return	bool
-	 */
-	public static function isAllowed()
-	{
-		return true;
-	}
-
-
-	/**
-	 * Check if a directory is writable.
-	 * The default is_writable function has problems due to Windows ACLs "bug"
-	 *
-	 * @return	bool
-	 * @param	string $path
-	 */
-	private static function isWritable($path)
-	{
-		// redefine argument
-		$path = (string) $path;
-
-		// create temporary file
-		$file = tempnam($path, 'isWritable');
-
-		// file has been created
-		if($file !== false)
-		{
-			// remove temporary file
-			@unlink($file);
-
-			// file could not be created = writable
-			return true;
-		}
-
-		// file could not be created = not writable
-		return false;
 	}
 }
 

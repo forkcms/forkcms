@@ -153,7 +153,7 @@ class ForkAPI
 		$options[CURLOPT_URL] = $url;
 		$options[CURLOPT_PORT] = self::API_PORT;
 		$options[CURLOPT_USERAGENT] = $this->getUserAgent();
-		$options[CURLOPT_FOLLOWLOCATION] = true;
+		if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options[CURLOPT_FOLLOWLOCATION] = true;
 		$options[CURLOPT_RETURNTRANSFER] = true;
 		$options[CURLOPT_TIMEOUT] = (int) $this->getTimeOut();
 

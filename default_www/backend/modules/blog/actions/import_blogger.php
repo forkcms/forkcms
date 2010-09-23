@@ -49,13 +49,13 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$headersImages = array('image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/tiff');
 
 		// set options
-		$options = array(CURLOPT_URL => $oldURL,
-						CURLOPT_HEADER => false,
-						CURLOPT_FOLLOWLOCATION => true,
-						CURLOPT_SSL_VERIFYPEER => false,
-						CURLOPT_SSL_VERIFYHOST => false,
-						CURLOPT_TIMEOUT => 5,
-						CURLOPT_RETURNTRANSFER => true);
+		$options['CURLOPT_URL'] = $oldURL;
+		$options['CURLOPT_HEADER'] = false;
+		if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options['CURLOPT_FOLLOWLOCATION'] = true;
+		$options['CURLOPT_SSL_VERIFYPEER'] = false;
+		$options['CURLOPT_SSL_VERIFYHOST'] = false;
+		$options['CURLOPT_TIMEOUT'] = 5;
+		$options['CURLOPT_RETURNTRANSFER'] = true;
 
 		// make the first call
 		$curl = curl_init();

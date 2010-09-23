@@ -44,7 +44,7 @@ class SpoonHTTP
 		// set options
 		$options[CURLOPT_URL] = (string) $URL;
 		$options[CURLOPT_USERAGENT] = 'Spoon '. SPOON_VERSION;
-		$options[CURLOPT_FOLLOWLOCATION] = true;
+		if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options[CURLOPT_FOLLOWLOCATION] = true;
 		$options[CURLOPT_RETURNTRANSFER] = true;
 		$options[CURLOPT_TIMEOUT] = 10;
 

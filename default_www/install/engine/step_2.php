@@ -15,125 +15,341 @@
 class InstallerStep2 extends InstallerStep
 {
 	/**
-	 * Executes this step.
+	 * Execute this step
 	 *
 	 * @return	void
 	 */
 	public function execute()
 	{
-		// load form
-		$this->loadForm();
+		// init vars
+		$variables = array();
 
-		// validate form
-		$this->validateForm();
+		// check requirements
+		$validated = self::checkRequirements($variables);
 
-		// parse form
-		$this->parseForm();
+		// has errors
+		if(!$validated)
+		{
+			// assign the variable
+			$variables['nextButton'] = '&nbsp;';
+			$variables['requirementsStatusError'] = '';
+			$variables['requirementsStatusOK'] = 'hidden';
+		}
 
-		// show output
-		$this->tpl->display('layout/templates/2.tpl');
+		// no errors detected
+		else
+		{
+			header('Location: index.php?step=3');
+			exit;
+		}
+
+		// set paths for template
+		$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
+		$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
+
+		// template contents
+		$tpl = file_get_contents('layout/templates/2.tpl');
+
+		// build the search & replace array
+		$search = array_keys($variables);
+		$replace = array_values($variables);
+
+		// loop search values
+		foreach($search as $key => $value) $search[$key] = '{$'. $value .'}';
+
+		// build output
+		$output = str_replace($search, $replace, $tpl);
+
+		// show
+		echo $output;
+
+		// stop the script
+		exit;
 	}
 
 
 	/**
-	 * Is this step allowed.
+	 * Check if a specific requirement is satisfied
+	 *
+	 * @return	boolean
+	 * @param	string $variable
+	 * @param	bool $requirement
+ 	 * @param	array[optional] $variables
+	 */
+	public static function checkRequirement($variable, $requirement, array &$variables = null)
+	{
+		// requirement satisfied
+		if($requirement)
+		{
+			$variables[$variable] = 'ok';
+			$variables[$variable .'Status'] = 'ok';
+			return true;
+		}
+
+		// requirement not satisfied
+		else
+		{
+			$variables[$variable] = 'nok';
+			$variables[$variable .'Status'] = 'not ok';
+			return false;
+		}
+	}
+
+
+	/**
+ 	 * Checks the requirements
+ 	 *
+ 	 * @return	bool
+ 	 * @param	array[optional] $variables
+	 */
+	public static function checkRequirements(array &$variables = null)
+	{
+		// define step
+		$step = (isset($_GET['step']) && in_array($_GET['step'], array('1', '2', '3', '4', '5', '6'))) ? (int) $_GET['step'] : 1;
+
+		// define constants
+		if(!defined('PATH_WWW') && !defined('PATH_LIBRARY')) self::defineConstants($step);
+
+		/*
+		 * At first we're going to check to see if the PHP version meets the minimum requirements
+		 * for Fork CMS.
+		 */
+
+		// fetch the PHP version.
+		$version = (int) str_replace('.', '', PHP_VERSION);
+
+		// we require at least 5.2.x
+		self::checkRequirement('phpVersion', $version >= 520, $variables);
+
+		/*
+		 * A couple extensions need to be loaded in order to be able to use Fork CMS. Without these
+		 * extensions, we can't guarantee that everything will work.
+		 */
+
+		// check for cURL extension
+		self::checkRequirement('extensionCURL', extension_loaded('curl'), $variables);
+
+		// check for SimpleXML extension
+		self::checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'), $variables);
+
+		// check for SPL extension
+		self::checkRequirement('extensionSPL', extension_loaded('SPL'), $variables);
+
+		// check for mbstring extension
+		self::checkRequirement('extensionMBString', extension_loaded('mbstring'), $variables);
+
+		// check for iconv extension
+		self::checkRequirement('extensionIconv', extension_loaded('iconv'), $variables);
+
+		// check for gd extension and correct version
+		self::checkRequirement('extensionGD2', extension_loaded('gd') && function_exists('gd_info'), $variables);
+
+		// check for PDO extension
+		if(extension_loaded('PDO'))
+		{
+			// general PDO
+			$variables['extensionPDO'] = 'ok';
+			$variables['extensionPDOStatus'] = 'ok';
+
+			// check for mysql driver
+			if(in_array('mysql', PDO::getAvailableDrivers()))
+			{
+				$variables['extensionPDOMySQL'] = 'ok';
+				$variables['extensionPDOMySQLStatus'] = 'ok';
+			}
+
+			// mysql driver not found
+			else
+			{
+				$variables['extensionPDOMySQL'] = 'nok';
+				$variables['extensionPDOMySQLStatus'] = 'nok';
+			}
+		}
+
+		// PDO extension not found
+		else
+		{
+			$variables['extensionPDO'] = 'nok';
+			$variables['extensionPDOStatus'] = 'not ok';
+		}
+
+		/*
+		 * A couple of php.ini settings should be configured in a specific way to make sure that
+		 * they don't intervene with Fork CMS.
+		 */
+
+		// check for safe mode
+		// self::checkRequirement('settingsSafeMode', ini_get('safe_mode') == '', $variables);
+
+		// check for open basedir
+		// self::checkRequirement('settingsOpenBasedir', ini_get('open_basedir') == '', $variables);
+
+		/*
+		 * Make sure the filesystem is prepared for the installation and everything can be read/
+		 * written correctly.
+		 */
+
+		// check if the backend-cache-directory is writable
+		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/backend/cache/')), $variables);
+
+		// check if the frontend-cache-directory is writable
+		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/frontend/cache/')), $variables);
+
+		// check if the frontend-files-directory is writable
+		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/frontend/files/')), $variables);
+
+		// check if the library-directory is writable
+		self::checkRequirement('fileSystemLibrary', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY)), $variables);
+
+		// check if the installer-directory is writable
+		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/install')), $variables);
+
+		// does the config.example.php file exist
+		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/config.example.php') && is_readable(PATH_LIBRARY .'/config.example.php')), $variables);
+
+		// does the globals.example.php file exist
+		self::checkRequirement('fileSystemGlobals', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals.example.php') && is_readable(PATH_LIBRARY .'/globals.example.php')), $variables);
+
+		// does the globals_backend.example.php file exist
+		self::checkRequirement('fileSystemGlobalsBackend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_backend.example.php') && is_readable(PATH_LIBRARY .'/globals_backend.example.php')), $variables);
+
+		// does the globals_frontend.example.php file exist
+		self::checkRequirement('fileSystemGlobalsFrontend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_frontend.example.php') && is_readable(PATH_LIBRARY .'/globals_frontend.example.php')), $variables);
+
+		// library path exists
+		self::checkRequirement('fileSystemPathLibrary', (defined('PATH_LIBRARY') && PATH_LIBRARY != ''), $variables);
+
+		// error status
+		return !in_array('nok', $variables);
+	}
+
+
+	/**
+	 * Define path constants
+	 *
+	 * @return	void
+	 */
+	private static function defineConstants($step)
+	{
+		// init library path
+		$pathLibrary = null;
+
+		// define step
+		if($step != 1) $pathLibrary = (isset($_SESSION['path_library'])) ? $_SESSION['path_library'] : null;
+
+		// guess the path to the library
+		if($pathLibrary == null)
+		{
+			// guess the path
+			self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $pathLibrary);
+
+			$count = count($pathLibrary);
+
+			// just one found? add it into the session
+			if($count == 1) $_SESSION['path_library'] = $pathLibrary;
+
+			// none found means there is no Spoon
+			elseif($count == 0) return false;
+
+			// multiple
+			else
+			{
+				// redirect
+				header('Location: index.php?step=1');
+				exit;
+			}
+		}
+
+		// define constants
+		if(!defined('PATH_WWW')) define('PATH_WWW', dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME']))));
+		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', $pathLibrary);
+
+		// update session
+		if(!isset($_SESSION['path_library'])) $_SESSION['path_library'] = PATH_LIBRARY;
+		if(!isset($_SESSION['path_www'])) $_SESSION['path_www'] = PATH_WWW;
+	}
+
+
+	/**
+	 * Try to guess the location of the library based on spoon library
+	 *
+	 * @return	void
+	 * @param	string $directory
+	 * @param	string[optional] $library
+	 */
+	private static function guessLibraryPath($directory, array &$library = null)
+	{
+		// init var
+		$location = '';
+
+		// loop directories
+		foreach((array) glob($directory .'/*') as $filename)
+		{
+			// not a directory and equals 'spoon.php'
+			if(!is_dir($filename) && substr($filename, -9) == 'spoon.php')
+			{
+				// get real path
+				$path = realpath(str_replace('spoon.php', '..', $filename));
+
+				// only unique values should be added
+				if(is_array($library))
+				{
+					// add
+					if(!in_array($path, $library)) $library[] = $path;
+				}
+
+				// not an array
+				else $library = array($path);
+			}
+
+			// directory
+			elseif(is_dir($filename) && substr($filename, -4) != '.svn')
+			{
+				// new location
+				self::guessLibraryPath($filename, $library);
+			}
+		}
+	}
+
+
+	/**
+	 * This step is always allowed.
 	 *
 	 * @return	bool
 	 */
 	public static function isAllowed()
 	{
-		return InstallerStep1::checkRequirements();
+		return true;
 	}
 
 
 	/**
-	 * Loads the form.
+	 * Check if a directory is writable.
+	 * The default is_writable function has problems due to Windows ACLs "bug"
 	 *
-	 * @return	void
+	 * @return	bool
+	 * @param	string $path
 	 */
-	private function loadForm()
+	private static function isWritable($path)
 	{
-		// guess db & username
-		$host = $_SERVER['HTTP_HOST'];
-		$chunks = explode('.', $host);
+		// redefine argument
+		$path = (string) $path;
 
-		// remove tld
-		array_pop($chunks);
+		// create temporary file
+		$file = tempnam($path, 'isWritable');
 
-		// create base
-		$base = implode('_', $chunks);
-
-		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : '127.0.0.1'); // 127.0.0.1 for Windows users
-		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
-		$this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : $base);
-		$this->frm->addPassword('password', SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null);
-	}
-
-
-	/**
-	 * Validate the form based on the variables in $_POST
-	 *
-	 * @return	void
-	 */
-	private function validateForm()
-	{
-		// form submitted
-		if($this->frm->isSubmitted())
+		// file has been created
+		if($file !== false)
 		{
-			// database settings
-			$this->frm->getField('hostname')->isFilled('This field is required.');
-			$this->frm->getField('database')->isFilled('This field is required.');
-			$this->frm->getField('username')->isFilled('This field is required.');
-			$this->frm->getField('password')->isFilled('This field is required.');
+			// remove temporary file
+			@unlink($file);
 
-			// all filled out
-			if($this->frm->getField('hostname')->isFilled() && $this->frm->getField('database')->isFilled() && $this->frm->getField('username')->isFilled() && $this->frm->getField('password')->isFilled())
-			{
-				/*
-				 * Test the database connection details.
-				 */
-				try
-				{
-					// create instance
-					$db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue());
-
-					// test table
-					$table = 'test'. uniqid();
-
-					// attempt to create table
-					$db->execute('DROP TABLE IF EXISTS '. $table .';');
-					$db->execute('CREATE TABLE IF NOT EXISTS '. $table .' (id int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1;');
-
-					// drop table
-					$db->drop($table);
-				}
-
-				/*
-				 * Catch possible exceptions
-				 */
-				catch(Exception $e)
-				{
-					// add errors
-					$this->frm->addError('Problem with database credentials');
-
-					// show error
-					$this->tpl->assign('formError', $e->getMessage());
-				}
-
-				// all valid
-				if($this->frm->isCorrect())
-				{
-					// update session
-					SpoonSession::set('db_hostname', $this->frm->getField('hostname')->getValue());
-					SpoonSession::set('db_database', $this->frm->getField('database')->getValue());
-					SpoonSession::set('db_username', $this->frm->getField('username')->getValue());
-					SpoonSession::set('db_password', $this->frm->getField('password')->getValue());
-
-					// redirect
-					SpoonHTTP::redirect('index.php?step=3');
-				}
-			}
+			// file could not be created = writable
+			return true;
 		}
+
+		// file could not be created = not writable
+		return false;
 	}
 }
 

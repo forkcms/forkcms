@@ -1,11 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-
-	<!--
-		Spoon is not loaded yet, so don't include head.tpl here
-	 -->
-
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
 	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
@@ -22,19 +17,30 @@
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
 <body id="installer">
-	<div id="installHolder" class="step1">
 
-		<h2>Install Fork CMS</h2>
+	<div id="installHolder" class="step6">
 
-		<form action="index.php" method="get" id="step1" class="forkForms submitWithLink">
-			<div>
-				<input type="hidden" name="step" value="1" />
-				<div class="horizontal">
-					{$content}
-				</div>
-			</div>
-		</form>
-
+		<h2>Installation complete</h2>
+		<p>Fork CMS is installed! You can now <a href="../private/">log in</a> using these credentials.</p>
+		<p>Remember your login details for future reference:</p>
+		<table border="0" cellspacing="0" cellpadding="0" class="infoGrid">
+			<tr>
+				<th>CMS</th>
+				<td><a href="../private/">http://{$url}/private/</a></td>
+			</tr>
+			<tr>
+				<th>Email</th>
+				<td>{$email}</td>
+			</tr>
+			<tr>
+				<th>Password</th>
+				<td>
+					<span id="plainPassword" class="hidden">{$password}</span>
+					<span id="fakePassword">********</span>
+					<input type="checkbox" id="showPassword" name="showPassword" /> <label for="showPassword">show password</label>
+				</td>
+			</tr>
+		</table>
 	</div>
 
 </body>

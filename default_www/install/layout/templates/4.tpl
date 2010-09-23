@@ -19,45 +19,62 @@
 <body id="installer">
 
 	<div id="installHolder" class="step4">
-
-		<h2>Your login info</h2>
-
+		<h2>Settings</h2>
 		{form:step4}
-			<div class="horizontal">
-				<p>Enter the e-mail address and password you'd like to use to log in.</p>
-				<p>
-					<label for="email">E-mail <abbr title="Required field">*</abbr></label>
-					{$txtEmail} {$txtEmailError}
-				</p>
-				<p>
-					<label for="password">Password <abbr title="Required field">*</abbr></label>
-					{$txtPassword} {$txtPasswordError}
-				</p>
-				<table id="passwordStrengthMeter" class="passwordStrength" rel="password" cellspacing="0">
-					<tr>
-						<td class="strength" id="passwordStrength">
-							<p class="strength none">/</p>
-							<p class="strength weak" style="background: red;">Weak</p>
-							<p class="strength ok" style="background: orange;">OK</p>
-							<p class="strength strong" style="background: green;">Strong</p>
-						</td>
-						<td>
-							<p class="helpTxt">Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>
-						</td>
-					</tr>
-				</table>
-				<p>
-					<label for="confirm">Confirm <abbr title="Required field">*</abbr></label>
-					{$txtConfirm} {$txtConfirmError}
-				</p>
-			</div>
+			{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}
+				<div>
+					<h3>Modules</h3>
+					<p>Which modules would you like to install?</p>
+					<ul id="moduleList" class="inputList">
+						{iteration:modules}
+							<li>{$modules.chkModules} <label for="{$modules.id}">{$modules.label}</label></li>
+						{/iteration:modules}
+					</ul>
 
-			<p class="spacing buttonHolder">
-				<a href="index.php?step=3" class="button">Previous</a>
-				<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Finish installation" />
-			</p>
+					<h3>Languages</h3>
+					<p>Will your site be available in multiple languages or just one? Changing this setting later on will change your URL structure.</p>
+
+					<ul class="inputList">
+						{iteration:languageType}
+							<li>{$languageType.rbtLanguageType} <label for="{$languageType.id}">{$languageType.label}</label>
+							{option:languageType.multiple}
+								<ul id="languages" class="hidden inputList">
+									{iteration:languages}
+										<li>{$languages.chkLanguages} <label for="{$languages.id}">{$languages.label}</label></li>
+									{/iteration:languages}
+								</ul>
+							{/option:languageType.multiple}
+							</li>
+							{option:languageType.single}
+								<li id="languageSingle" class="hidden">
+									{$ddmLanguage} {$ddmLanguageError}
+								</li>
+							{/option:languageType.single}
+						{/iteration:languageType}
+					</ul>
+
+					<div id="defaultLanguageContainer">
+						<p>What is the default language we should use for the website?</p>
+						<p>{$ddmDefaultLanguage} {$ddmDefaultLanguageError}</p>
+					</div>
+
+					<h3>Example data</h3>
+					<p>If you are new to Fork CMS, you might prefer to have an example website set up.</p>
+					<ul class="inputList">
+						<li>
+							{$chkExampleData} <label for="exampleData">Install example data </label>
+							<span class="helpTxt">(The blog-module is required and will be installed)</span>
+						</li>
+					</ul>
+				</div>
+
+				<div class="fullwidthOptions">
+					<div class="buttonHolder">
+						<a href="index.php?step=3" class="button">Previous</a>
+						<input id="installerButton" class="inputButton button mainButton" type="submit" name="installer" value="Next" />
+					</div>
+				</div>
 		{/form:step4}
-
 	</div>
 
 </body>
