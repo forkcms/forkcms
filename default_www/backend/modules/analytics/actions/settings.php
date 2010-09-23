@@ -140,15 +140,18 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			// get all possible profiles in this account
 			$this->profiles = $ga->getAnalyticsAccountList($this->sessionToken);
 
-			// something went wrong using the given session
-			if(!is_array($this->profiles))
+			// not authorized
+			if($this->profiles == 'UNAUTHORIZED')
 			{
 				// remove invalid session token
 				BackendModel::setModuleSetting('analytics', 'session_token', null);
+
+				// redirect to the settings page without parameters
+				$this->redirect(BackendModel::createURLForAction('settings'));
 			}
 
 			// everything went fine
-			else
+			elseif(is_array($this->profiles))
 			{
 				// get table id
 				$tableId = SpoonFilter::getGetValue('table_id', null, null);

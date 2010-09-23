@@ -15,7 +15,8 @@
 class GoogleAnalytics
 {
 	// internal constant to enable/disable debugging
-	const DEBUG = true;
+	const DEBUG = false;
+
 
 	// api url
 	const API_URL = 'https://www.google.com/analytics/feeds';
@@ -104,6 +105,13 @@ class GoogleAnalytics
 		$errorNumber = curl_errno($this->curl);
 		$errorMessage = curl_error($this->curl);
 
+		// no analytics account - should be dealt with otherwise but this has the same http code as the 'unauthorized' state
+		if($response == 'No Analytics account was found for the currently logged-in user')
+		{
+			// return this response
+			return $response;
+		}
+
 		// invalid headers
 		if($headers['http_code'] == 401)
 		{
@@ -180,6 +188,9 @@ class GoogleAnalytics
 
 		// catch possible exception
 		catch(Exception $e) { return array(); }
+
+		// no accounts - return an empty array
+		if($response == 'No Analytics account was found for the currently logged-in user') return array();
 
 		// unauthorized
 		if($response == 'UNAUTHORIZED') return $response;

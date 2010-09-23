@@ -30,16 +30,16 @@ $navigation[3]['children'][0]['children'][2] = array('url' => 'analytics/exit_pa
 $navigation[3]['children'][0]['children'][3] = array('url' => 'analytics/landing_pages', 'label' => 'LandingPages', 'selected_for' => array('analytics/add_landing_page', 'analytics/edit_landing_page', 'analytics/detail_page'));
 $navigation[4] = array('url' => 'settings/index', 'label' => 'Settings');
 $navigation[4]['children'][0] = array('url' => 'settings/index', 'label' => 'General');
-$navigation[4]['children'][1] = array('url' => 'settings/email', 'label' => 'Advanced');
-$navigation[4]['children'][1]['children'][0] = array('url' => 'settings/email', 'label' => 'Email');
-$navigation[4]['children'][1]['children'][1] = array('url' => 'settings/themes', 'label' => 'Themes');
+$navigation[4]['children'][1] = array('url' => 'settings/email', 'label' => 'Email');
 $navigation[4]['children'][2] = array('url' => 'users/index', 'label' => 'Users', 'selected_for' => array('users/add', 'users/edit'));
-$navigation[4]['children'][3] = array('url' => 'pages/templates', 'label' => 'Templates', 'selected_for' => array('pages/add_template', 'pages/edit_template'));
-$navigation[4]['children'][4] = array('url' => 'locale/index', 'label' => 'Translations', 'selected_for' => array('locale/add', 'locale/edit', 'locale/analyse'));
-$navigation[4]['children'][5] = array('url' => 'blog/settings', 'label' => 'Modules');
-$navigation[4]['children'][5]['children'][0] = array('url' => 'analytics/settings', 'label' => 'Analytics');
-$navigation[4]['children'][5]['children'][1] = array('url' => 'blog/settings', 'label' => 'Blog');
-$navigation[4]['children'][5]['children'][2] = array('url' => 'search/settings', 'label' => 'Search');
-$navigation[4]['children'][5]['children'][3] = array('url' => 'pages/settings', 'label' => 'Pages');
+$navigation[4]['children'][3] = array('url' => 'settings/themes', 'label' => 'Themes');
+$navigation[4]['children'][3]['children'][1] = array('url' => 'settings/themes', 'label' => 'ThemesSelection');
+$navigation[4]['children'][3]['children'][0] = array('url' => 'pages/templates', 'label' => 'Templates', 'selected_for' => array('pages/add_template', 'pages/edit_template'));
+$navigation[4]['children'][5] = array('url' => 'locale/index', 'label' => 'Translations', 'selected_for' => array('locale/add', 'locale/edit', 'locale/analyse'));
+$navigation[4]['children'][6] = array('url' => 'analytics/settings', 'label' => 'ModuleSettings');
+$navigation[4]['children'][6]['children'][0] = array('url' => 'analytics/settings', 'label' => 'Analytics');
+$navigation[4]['children'][6]['children'][1] = array('url' => 'blog/settings', 'label' => 'Blog');
+$navigation[4]['children'][6]['children'][2] = array('url' => 'search/settings', 'label' => 'Search');
+$navigation[4]['children'][6]['children'][3] = array('url' => 'pages/settings', 'label' => 'Pages');
 
 ?>

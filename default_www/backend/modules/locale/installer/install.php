@@ -345,6 +345,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Term', 'term');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Text', 'tekst');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Themes', 'thema\'s');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ThemesSelection', 'thema-keuze');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Till', 'tot');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'TimeFormat', 'formaat tijd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Title', 'titel');
@@ -705,6 +706,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Term', 'term');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Text', 'text');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Themes', 'themes');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ThemesSelection', 'theme selection');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Till', 'till');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'TimeFormat', 'time format');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Title', 'title');

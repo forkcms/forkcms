@@ -99,16 +99,16 @@ class BackendAnalyticsModel
 	/**
 	 * Checks if a landing page exists
 	 *
-	 * @return	bool
+	 * @return	int
 	 * @param	int $id		The id of the landing page to check for existence.
 	 */
 	public static function existsLandingPage($id)
 	{
 		// exists?
-		return (bool) (BackendModel::getDB()->getVar('SELECT COUNT(id)
-														FROM analytics_landing_pages
-														WHERE id = ?;',
-														array((int) $id)) > 0);
+		return BackendModel::getDB()->getNumRows('SELECT id
+													FROM analytics_landing_pages
+													WHERE id = ?;',
+													array((int) $id));
 	}
 
 
