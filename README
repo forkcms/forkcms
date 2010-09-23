@@ -2,14 +2,18 @@
 
 ## Documentation
 
-See our wiki for the latest documentation: https://github.com/forkcms/forkcms/wikis
+Point your browse to http://<your-fork-install>/docs to see the documentation, or go to http://fork-cms.be/docs for the online version.
 
 ## Bugs
 
-If you encounter any bugs, please submit to Issues on Github: https://github.com/forkcms/forkcms/issues
+If you encounter any bugs, please post a bug report to Issues on Github: 
+https://github.com/forkcms/forkcms/issues
+
+If you're stuck or would like to discuss Fork CMS, visit the Google group:
+http://groups.google.com/group/fork-cms
 
 ## Discussion
-- IRC: freenode.org #forkcms
+- IRC: irc.freenode.org #forkcms
 - E-mail: <forkcms@netlash.com> with any questions or remarks.
 
 _The Fork CMS team_
