@@ -469,6 +469,64 @@ class BackendMeta
 			// check if urls are different
 			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::getError('URLAlreadyExists'));
 		}
+
+		// if the form was submitted correctly the data array should be populated
+		if($this->frm->isCorrect())
+		{
+			// no callback set by user?
+			if(empty($this->callback))
+			{
+				// build class- & method-name
+				$className = 'Backend'. SpoonFilter::toCamelCase($this->URL->getModule()) .'Model';
+				$methodName = 'getURL';
+
+				// set
+				$this->setUrlCallback($className, $methodName);
+			}
+			// get meta keywords
+			if($this->frm->getField('meta_keywords_overwrite')->isChecked()) $keywords = $this->frm->getField('meta_keywords')->getValue();
+			else $keywords = $this->frm->getField($this->baseFieldName)->getValue();
+
+			// get meta description
+			if($this->frm->getField('meta_description_overwrite')->isChecked()) $description = $this->frm->getField('meta_description')->getValue();
+			else $description = $this->frm->getField($this->baseFieldName)->getValue();
+
+			// get page title
+			if($this->frm->getField('page_title_overwrite')->isChecked()) $title = $this->frm->getField('page_title')->getValue();
+			else $title = $this->frm->getField($this->baseFieldName)->getValue();
+
+			// get URL
+			if($this->frm->getField('url_overwrite')->isChecked()) $URL = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField('url')->getValue()));
+			else $URL = SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($this->frm->getField($this->baseFieldName)->getValue()));
+
+			// build parameters for use in the callback
+			$parameters[] = $URL;
+
+			// add parameters set by user
+			if(!empty($this->callback['parameters']))
+			{
+				foreach($this->callback['parameters'] as $parameter) $parameters[] = $parameter;
+			}
+
+			// get the real URL
+			$URL = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
+
+			// get meta custom
+			if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue();
+			else $custom = null;
+
+			// set data
+			$this->data['keywords'] = $keywords;
+			$this->data['keywords_overwrite'] = ($this->frm->getField('meta_keywords_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['description'] = $description;
+			$this->data['description_overwrite'] = ($this->frm->getField('meta_description_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['title'] = $title;
+			$this->data['title_overwrite'] = ($this->frm->getField('page_title_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['url'] = $URL;
+			$this->data['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
+			$this->data['custom'] = $custom;
+		}
+
 	}
 }
 
