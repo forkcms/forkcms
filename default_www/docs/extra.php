@@ -69,7 +69,6 @@
 						<li>Install Fork again by visiting <code>&lt;your-domain&gt;/install</code>; follow the installer steps.</li>
 						<li>Log in and go to Pages and resave a page to update the navigation cache. Done!</li>
 					</ul>
-
 				</div>
 			</div>
 		</div>

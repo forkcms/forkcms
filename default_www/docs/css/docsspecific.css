@@ -151,3 +151,24 @@ h1 {
 	font-size: 11px;
 	font-family: Arial, sans-serif;
 }
+
+#themeTutorial img {
+	width: 550px;
+	margin: 0 0 12px;
+	display: block;
+	border: 1px solid #EEE;
+	height: auto;
+	-moz-box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+	box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+}
+
+#themeTutorial ul.themeTutorial {
+	list-style: none;
+	padding: 0;
+}
+
+#themeTutorial .themeTutorial > li {
+	border-bottom: 1px solid #CCC;
+	margin: 0 0 24px;
+	padding: 0 0 12px;

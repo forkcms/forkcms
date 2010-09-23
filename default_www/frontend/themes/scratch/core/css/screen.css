@@ -357,3 +357,18 @@ li.ellipsis span {
 .nextPage, .previousPage { font-size: 11px !important; }
 .pagination li.nextPage { margin-left: 10px; }
 .pagination li.previousPage { margin-right: 15px; }
+
+/*
+	Two columns template
+*/
+
+#content {
+	width: 400px;
+	float: left;
+	padding-right: 20px;
+}
+
+#sidebar {
+	width: 200px;
+	float: left;
+}
