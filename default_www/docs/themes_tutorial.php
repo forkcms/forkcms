@@ -37,15 +37,7 @@
 					<li>
 						<img src="images/theme_tutorial/11.png" width="1024" height="617" alt="11" />
 						<p>You'll arrive at the dashboard (which is kind of empty here, since our site currently doesn't have too much functionalities).</p>
-						<p>Click "Settings".</p>
-					</li>
-					<li>
-						<img src="images/theme_tutorial/12.png" width="1017" height="1466" alt="12" />
-						<p>On the "Settings" page click "Advanced".</p>
-					</li>
-					<li>
-						<img src="images/theme_tutorial/13.png" width="1032" height="617" alt="13" />
-						<p>If you're following along, make sure your theme is set to "Scratch" (and make sure you're using the correct database, see step 1).</p>
+						<p>Go to Settings > Themes > Theme selection and make sure your theme is set to "Scratch" (it's probably set to "no theme" at this point).</p>
 					</li>
 					<li>
 						<img src="images/theme_tutorial/14.png" width="1032" height="617" alt="14" />
