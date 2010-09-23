@@ -131,8 +131,82 @@
 }
 
 /*
-	Pages
-	Template tab
+	Template list
+	(in jQuery modal)
+*/
+
+#templateList {
+	-moz-column-count: 2;
+	-moz-column-gap: 12px;
+	/* Not in webkit since it's kinda dodgy in Chrome */
+}
+
+#templateList li {
+	margin: 0 0 12px;
+	position: relative;
+	
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+	#templateList li label {
+		font-size: 12px;
+	}
+
+	#templateList li input {
+		position: relative;
+		top: -2px;
+		left: -2px;
+	}
+
+/*
+	Template visual shared code
+*/
+
+.templateVisual td:empty,
+.templateVisual td.empty,
+#templateVisualLarge td.empty {
+	background: #EEE url(/backend/core/layout/images/na.png) repeat;
+	border: 1px solid #CCC;
+}
+
+.templateVisual td,
+#templateVisulLarge td {
+	text-align: center;
+	border: 1px dotted #666;
+	background: #FFF;
+	vertical-align: middle;
+}
+
+/*
+	Template visual small
+*/
+
+.templateVisual table {
+	width: 100%;
+	table-layout: fixed;
+}
+
+.templateVisual table {
+	border-spacing: 3px;
+	border-collapse: separate;
+}
+
+.templateVisual td {
+	padding: 4px 2px;
+	/* @inc .secondarycontent */
+	font-size: 10px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+	.templateVisual td a {
+		color: #000;
+	}
+
+/*
+	Template visual large
 */
 
 #templateVisualLarge table {
@@ -157,21 +231,23 @@
 		height: 86px;
 	}
 
+	/* Edit button */
 	#templateVisualLarge .buttonHolder {
 		width: 24px;
 		margin: 0 auto;
 	}
 
-	#templateVisualLarge td.empty {
-		background: #EEE url(/backend/core/layout/images/na.png) repeat;
-		border: 1px solid #CCC;
-	}
-
+	/* Block name */
 	#templateVisualLarge h4,
 	#templateVisualLarge p {
 		margin: 0;
 		padding: 0 0 4px;
 	}
+
+
+/*
+	Pages
+*/
 
 	/*
 		Index

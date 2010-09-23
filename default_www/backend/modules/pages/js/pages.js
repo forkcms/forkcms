@@ -68,7 +68,7 @@ jsBackend.pages.extras = {
 		}
 
 		if($('#chooseTemplate').length > 0) {
-			$('#chooseTemplate').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, width: 500,
+			$('#chooseTemplate').dialog({ autoOpen: false, draggable: false, resizable: false, modal: true, width: 940,
 				buttons: { '{$lblOK|ucfirst}': function() {
 													if($('#templateList input:radio:checked').val() != $('#templateId').val())
 													{

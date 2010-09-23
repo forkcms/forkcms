@@ -243,14 +243,13 @@
 				Do not change the ID!
 			 *}
 			<div id="chooseTemplate" class="forkForms" title="{$lblChooseATemplate|ucfirst}" style="display: none;">
-				<p>
-					<span class="infoMessage">{$msgTemplateChangeWarning}</span>
-				</p>
-				<ul class="inputList" id="templateList">
+				<div class="generalMessage singleMessage infoMessage">
+					<p>{$msgTemplateChangeWarning}</p>
+				</div>
+				<ul id="templateList">
 				{iteration:templates}
 					<li>
-						<input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />
-						<label for="template{$templates.id}">{$templates.label}</label>
+						<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
 						<div class="templateVisual current">
 							{$templates.html}
 						</div>

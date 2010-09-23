@@ -108,7 +108,7 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'PageIsMoved', 'The page "%1$s" was moved.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'PathToTemplate', 'Path to template');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'RichText', 'Editor');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'TemplateChangeWarning', '<strong>Warning:</strong> Existing content will be removed when changing the template.');
+		$this->insertLocale('en', 'backend', 'pages', 'msg', 'TemplateChangeWarning', '<strong>Warning:</strong> Existing content will be deleted when changing the template.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'TemplateInUse', 'This template is in use. You can\'t change the number of blocks.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'WidgetAttached', 'The widget <strong>%1$s</strong> is attached to this section.');
 	}
