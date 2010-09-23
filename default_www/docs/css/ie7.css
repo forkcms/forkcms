@@ -26,17 +26,3 @@
 .colsGrid {
 	zoom: 1;
 }
-
-/*
-
-	Name:       IE7 conditional comments for
-	            Winston buttons module [0.4]
-
-*/
-
-/* Clearfix */
-
-.buttonHolder,
-.buttonHolderRight {
-	zoom: 1;
-}

@@ -7,10 +7,7 @@
 	<title>Fork CMS - developer documentation</title>
 	<link rel="stylesheet" href="css/screen.css" type="text/css" media="screen" />
 
-	<!-- jQuery -->
-	<script src="js/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
-
-	<link rel="stylesheet" href="css/docsspecific.css" type="text/css" media="screen" />
+	<!--[if IE 7]><link rel="stylesheet" href="css/ie7.css" type="text/css" media="screen" /><![endif]-->
 
 	<!--  Syntax highlighter -->
 	<script src="js/syntax/scripts/shCore.js" type="text/javascript"></script>
