@@ -1,32 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-
-	<!--
-		Spoon is not loaded yet, so don't include head.tpl here
-	 -->
-
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
-
-	<title>Installer - Fork CMS</title>
-	<link rel="shortcut icon" href="../backend/favicon.ico" />
-	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/reset.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/screen.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="layout/css/installer.css" />
-	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
-
-	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="js/backend.js"></script>
-	<script type="text/javascript" src="js/install.js"></script>
-</head>
+{$head}
 <body id="installer">
-
 	<div id="installHolder" class="step2">
-
 		<h2>Install Fork CMS</h2>
-
 		<form action="index.php" method="get" id="step2" class="forkForms submitWithLink">
 			<div>
 				<input type="hidden" name="step" value="2" />
@@ -36,7 +11,6 @@
 							<p>Your server doesn't meet the minimum requirements to run Fork CMS.</p>
 						</div>
 					</div>
-
 					<div id="requirementsInformation">
 						<h3>PHP version <span class="{$phpVersion}">{$phpVersionStatus}</span></h3>
 						<p>We require at least PHP 5.2</p>

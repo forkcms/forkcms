@@ -74,6 +74,9 @@ class InstallerStep
 			$this->tpl->setForceCompile(true);
 			$this->tpl->setCompileDirectory(dirname(__FILE__) .'/../cache/');
 
+			// assign the path
+			if(defined('PATH_WWW')) $this->tpl->assign('PATH_WWW', PATH_WWW);
+
 			// create form
 			$this->frm = new SpoonForm('step'. $step, 'index.php?step='. $step);
 			$this->frm->setParameter('class', 'forkForms submitWithLink');

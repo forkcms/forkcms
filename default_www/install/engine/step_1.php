@@ -25,6 +25,9 @@ class InstallerStep1 extends InstallerStep
 		$possiblePaths = array();
 		$variables = array();
 
+		// head
+		$variables['head'] = file_get_contents('layout/templates/head.tpl');
+
 		// get the possible library paths
 		self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $possiblePaths);
 

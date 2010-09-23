@@ -1,23 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
-	<meta http-equiv="X-UA-Compatible" content="chrome=1" />
-
-	<title>Installer - Fork CMS</title>
-	<link rel="shortcut icon" href="../backend/favicon.ico" />
-	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/reset.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/screen.css" />
-	<link rel="stylesheet" type="text/css" media="screen" href="layout/css/installer.css" />
-	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
-
-	<script type="text/javascript" src="../frontend/core/js/jquery/jquery.js"></script>
-	<script type="text/javascript" src="js/backend.js"></script>
-	<script type="text/javascript" src="js/install.js"></script>
-</head>
+{include:file='{$PATH_WWW}/install/layout/templates/head.tpl'}
 <body id="installer">
-
 	<div id="installHolder" class="step4">
 		<h2>Settings</h2>
 		{form:step4}
@@ -52,12 +34,10 @@
 							{/option:languageType.single}
 						{/iteration:languageType}
 					</ul>
-
 					<div id="defaultLanguageContainer">
 						<p>What is the default language we should use for the website?</p>
 						<p>{$ddmDefaultLanguage} {$ddmDefaultLanguageError}</p>
 					</div>
-
 					<h3>Example data</h3>
 					<p>If you are new to Fork CMS, you might prefer to have an example website set up.</p>
 					<ul class="inputList">
@@ -67,7 +47,6 @@
 						</li>
 					</ul>
 				</div>
-
 				<div class="fullwidthOptions">
 					<div class="buttonHolder">
 						<a href="index.php?step=3" class="button">Previous</a>
@@ -76,6 +55,5 @@
 				</div>
 		{/form:step4}
 	</div>
-
 </body>
 </html>
