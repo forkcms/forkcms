@@ -38,6 +38,14 @@ class SpoonFormText extends SpoonFormInput
 
 
 	/**
+	 * Overrule the reserverd attributes
+	 *
+	 * @var array
+	 */
+	protected $reservedAttributes = array('name', 'value');
+
+
+	/**
 	 * Class constructor.
 	 *
 	 * @return	void
@@ -57,6 +65,7 @@ class SpoonFormText extends SpoonFormInput
 		// custom optional fields
 		if($value !== null) $this->value = (string) $value;
 		if($maxlength !== null) $this->attributes['maxlength'] = (int) $maxlength;
+		$this->attributes['type'] = 'text';
 		$this->attributes['class'] = (string) $class;
 		if($classError !== null) $this->classError = (string) $classError;
 		$this->isHTML = (bool) $HTML;
@@ -731,7 +740,7 @@ class SpoonFormText extends SpoonFormInput
 		if($this->attributes['name'] == '') throw new SpoonFormException('A name is required for a textfield. Please provide a name.');
 
 		// start html generation
-		$output = '<input type="text" value="'. str_replace(array('"', '<', '>'), array('&quot;', '&lt;', '&gt'), $this->getValue()) .'"';
+		$output = '<input value="'. str_replace(array('"', '<', '>'), array('&quot;', '&lt;', '&gt'), $this->getValue()) .'"';
 
 		// add attributes
 		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) .' />';

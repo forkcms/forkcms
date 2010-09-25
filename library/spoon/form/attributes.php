@@ -74,7 +74,11 @@ class SpoonFormAttributes extends SpoonFormElement
 			}
 
 			// other elements
-			else $html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+			else
+			{
+				$html .= ' '. $key;
+				if($value !== null) $html .= '="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+			}
 		}
 
 		return $html;
@@ -88,13 +92,17 @@ class SpoonFormAttributes extends SpoonFormElement
 	 * @param	string $key
 	 * @param	string $value
 	 */
-	public function setAttribute($key, $value)
+	public function setAttribute($key, $value = null)
 	{
+		// redefine
+		$key = (string) $key;
+		$value = ($value !== null) ? (string) $value : null;
+
 		// key is NOT allowed
 		if(in_array(strtolower($key), $this->reservedAttributes)) throw new SpoonFormException('The key "'. $key .'" is a reserved attribute and can NOT be overwritten.');
 
 		// set attribute
-		$this->attributes[strtolower((string) $key)] = (string) $value;
+		$this->attributes[strtolower($key)] = $value;
 	}
 
 
