@@ -93,7 +93,7 @@
 						{$txtWebsite} {$txtWebsiteError}
 					</p>
 					<p>
-						<label for="text">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtMessage} {$txtMessageError}
 					</p>
 					<p class="spacing">

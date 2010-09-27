@@ -626,7 +626,7 @@ class FrontendBaseBlock
 	 * @param	string $URL				The URL whereto will be redirected
 	 * @param	int[optional] $code		The redirect code, default is 307 which means this is a temporary redirect.
 	 */
-	public function redirect($URL, $code = 307)
+	public function redirect($URL, $code = 302)
 	{
 		SpoonHTTP::redirect((string) $URL, (int) $code);
 	}
@@ -1092,7 +1092,7 @@ class FrontendBaseAJAXAction
 
 		// set correct headers
 		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json');
+		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
 		// output to the browser
 		echo json_encode($response);

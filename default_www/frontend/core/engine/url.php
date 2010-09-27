@@ -152,10 +152,11 @@ class FrontendURL
 	 * Return all the parameters
 	 *
 	 * @return	array
+	 * @param	bool[optional] $includeGET
 	 */
-	public function getParameters()
+	public function getParameters($includeGET = true)
 	{
-		return $this->parameters;
+		return ($includeGET) ? $this->parameters : array_diff($this->parameters, $_GET);
 	}
 
 

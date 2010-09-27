@@ -102,7 +102,14 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	public function clear($key = null)
 	{
 		// key given?
-		if($key !== null) unset($this->items[(int) $key]);
+		if($key !== null)
+		{
+			// remove specific key
+			unset($this->items[(int) $key]);
+
+			// resort, to avoid shit when parsing
+			$this->items = SpoonFilter::arraySortKeys($this->items);
+		}
 
 		// clear all
 		else $this->items = array();

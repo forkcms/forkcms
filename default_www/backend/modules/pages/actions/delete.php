@@ -31,6 +31,9 @@ class BackendPagesDelete extends BackendBaseActionDelete
 		// validate
 		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
 
+		// cannot have children
+		if(BackendPagesModel::getFirstChildId($id) !== false) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
+
 		// get page (we need the title)
 		$page = BackendPagesModel::get($id);
 

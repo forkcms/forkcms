@@ -137,6 +137,28 @@ class FrontendTagsModel
 		// return
 		return $return;
 	}
+
+
+	/**
+	 * Get all related items
+	 *
+	 * @param	int $id
+	 * @param	int $moduleId
+	 * @param	int $otherModuleId
+	 * @param	int[optional] $limit
+	 * @return	array
+	 */
+	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
+	{
+		return (array) FrontendModel::getDB()->getColumn('SELECT t2.other_id
+														FROM modules_tags AS t
+														INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
+														WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND t2.other_id != t.other_id
+														GROUP BY t2.other_id
+														ORDER BY COUNT(t2.tag_id) DESC
+														LIMIT ?;',
+														array($id, $module, $otherModule, $limit));
+	}
 }
 
 ?>

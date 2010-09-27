@@ -213,8 +213,19 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 *
 	 * @return	string
 	 */
-	public function getDefaultValue()
+	public function getDefaultValue($key = null)
 	{
+		// custom key
+		if($key !== null)
+		{
+			// does this key exist?
+			if(array_key_exists((string) $key, $this->values)) return $this->values[$key];
+
+			// something went wrong
+			throw new SpoonFormException('You can\'t fetch the value ('. $key .') from the dropdown values based on its key if it doesn\'t exist.');
+		}
+
+		// everything by default
 		return $this->values;
 	}
 
