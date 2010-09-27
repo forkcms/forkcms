@@ -109,10 +109,14 @@
 
 }
 
-	.errorMessage a {
+	.errorMessage a:link,
+	.errorMessage a:visited,
+	.errorMessage a:hover,
+	.errorMessage a:active,
+	.errorMessage a:focus {
 		color: #FFF;
 		font-weight: 700;
-		border-bottom: 1px solid #f5abb4;
+		border-bottom: 1px solid #F5ABB4;
 	}
 	
 	.errorMessage .iconClose span {
