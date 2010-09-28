@@ -114,6 +114,7 @@ body {
 		}
 
 			#user #ddAccount {
+				z-index: 3000;
 				border: 1px solid #DDD;
 				padding: 0;
 				border-color: #CCC #BABABA #CCC #BABABA;
