@@ -1465,7 +1465,7 @@ class BackendPagesModel
 	 */
 	public static function isTemplateInUse($templateId)
 	{
-		return (bool) ((int) BackendModel::getDB(false)->getVar('SELECT i.template_id
+		return (bool) ((int) BackendModel::getDB(false)->getVar('SELECT COUNT(i.template_id)
 																FROM pages AS i
 																WHERE i.template_id = ? AND i.status = ?;',
 																array((int) $templateId, 'active')) > 0);
