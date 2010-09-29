@@ -17,7 +17,7 @@ tinyMCE.init({
 	entity_encoding: 'raw',
 	extended_valid_elements : 'iframe[src|width|height|name|align]',
 
-	// plugings
+	// plugins
 	plugins: 'tabfocus,inlinepopups,paste,contextmenu,media,fullscreen,table,filemanager,imagemanager,bramus_cssextras,dextrose_videoembed',
 
 	// plugin options
@@ -29,7 +29,7 @@ tinyMCE.init({
 	content_css: '/frontend/core/layout/css/screen.css{option:THEME_HAS_CSS}, /frontend/themes/{$THEME}/core/css/screen.css{/option:THEME_HAS_CSS}, /backend/core/layout/css/editor_content.css{option:THEME_HAS_EDITOR_CSS}, /frontend/themes/{$THEME}/core/css/editor_content.css{/option:THEME_HAS_EDITOR_CSS}',
 
 	// theme options
-	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,link,unlink,anchor,|,charmap,code,|,fullscreen',
+	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor,|,charmap,code,|,fullscreen',
 	theme_advanced_buttons2: 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,
