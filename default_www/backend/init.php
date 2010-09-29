@@ -286,7 +286,40 @@ class Init
 		}
 
 		// build HTML for nice error
-		$html = '<html><body>Something went wrong.</body></html>';
+		$html = '
+			<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+			<html xmlns="http://www.w3.org/1999/xhtml">
+				<head>
+					<title>Fork CMS - Error</title>
+					<style type="text/css" media="screen">
+
+						body {
+							background: #FFF;
+							font-family: Arial, sans-serif;
+							font-size: 13px;
+							text-align: center;
+							width: 75%;
+							margin: 0 auto;
+						}
+
+						p {
+							padding: 0 0 12px;
+							margin: 0;
+						}
+
+						h2 {
+							font-size: 20px;
+							margin: 0
+							padding: 0 0 10px;
+						}
+					</style>
+				</head>
+				<body>
+					<h2>Internal error</h2>
+					<p>There was an internal error while processing your request. We have been notified of this error and will resolve it shortly. We\'re sorry for the inconvenience.</p>
+				</body>
+			</html>
+		';
 
 		// output
 		echo $html;
