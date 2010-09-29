@@ -18,7 +18,7 @@ tinyMCE.init({
 	extended_valid_elements : 'iframe[src|width|height|name|align]',
 
 	// plugins
-	plugins: 'tabfocus,inlinepopups,paste,contextmenu,media,fullscreen,table,filemanager,imagemanager,bramus_cssextras,dextrose_videoembed',
+	plugins: 'tabfocus,inlinepopups,paste,contextmenu,media,fullscreen,table,filemanager,imagemanager,bramus_cssextras,dextrose_videoembed,template',
 
 	// plugin options
 	tab_focus: ':prev,:next',
@@ -29,7 +29,7 @@ tinyMCE.init({
 	content_css: '/frontend/core/layout/css/screen.css{option:THEME_HAS_CSS}, /frontend/themes/{$THEME}/core/css/screen.css{/option:THEME_HAS_CSS}, /backend/core/layout/css/editor_content.css{option:THEME_HAS_EDITOR_CSS}, /frontend/themes/{$THEME}/core/css/editor_content.css{/option:THEME_HAS_EDITOR_CSS}',
 
 	// theme options
-	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor,|,charmap,code,|,fullscreen',
+	theme_advanced_buttons1: 'bold,italic,strikethrough,|,undo,redo,|,bullist,numlist,blockquote,|,outdent,indent,|,link,unlink,anchor,|,charmap,code,|,fullscreen,|,template',
 	theme_advanced_buttons2: 'table,|,image,dextrose_video,|,formatselect,|,bramus_cssextras_classes',
 	theme_advanced_buttons3: '',
 	theme_advanced_resizing: true,
@@ -44,6 +44,30 @@ tinyMCE.init({
 	
 	// image manager
 	imagemanager_handle: 'image',
+
+	// Templates
+	template_templates : [
+		{
+			title : "Paragraph with left aligned image",
+			src : "/backend/core/js/tiny_mce/snippets/image_left.html",
+			description : "Paragraph with left aligned image"
+		},
+		{
+			title : "Paragraph with right aligned image",
+			src : "/backend/core/js/tiny_mce/snippets/image_right.html",
+			description : "Paragraph with right aligned image"
+		},
+		{
+			title : "Basic table",
+			src : "/backend/core/js/tiny_mce/snippets/table.html",
+			description : "Basic table"
+		},
+		{
+			title : "Advanced table",
+			src : "/backend/core/js/tiny_mce/snippets/table_advanced.html",
+			description : "Advanced table"
+		}
+	],
 	
 	// file lists
 	external_link_list_url: '/frontend/cache/navigation/tinymce_link_list_{$LANGUAGE}.js?{$timestamp}',	
