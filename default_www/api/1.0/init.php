@@ -361,7 +361,7 @@ class Init
 			}
 
 			// we can nog load configuration file, however we can not run installer
-			exit('Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and rerun the installer.');
+			exit('Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.');
 		}
 	}
 
