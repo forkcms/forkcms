@@ -246,7 +246,7 @@ class BackendForm extends SpoonForm
 
 		// we add JS because we need TinyMCE
 		$this->header->addJavascript('tiny_mce/tiny_mce.js', 'core');
-		$this->header->addJavascript('tiny_mce/config.js', 'core', true);
+		$this->header->addJavascript('tiny_mce/tiny_mce_config.js', 'core', true);
 
 		// add the field
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
