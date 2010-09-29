@@ -1,4 +1,16 @@
 /*
+
+	Stylesheet for <Scratch theme>
+
+	@package      frontend
+	@author       Johan Ronsse <johan@netlash.com>
+	@since        2.0
+	@media        screen
+
+*/
+
+
+/*
 	Reset
 */
 
@@ -532,373 +544,379 @@ body {
 			font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
 		}
 
+/*
+	Comment form
+*/
 
-		/*
-		    Forms
-		*/
+#commentForm #message {
+	width: 420px;
+}
 
-		/* Modify input[type="text"] and textareas */
+/*
+    Forms
+*/
 
+/* Modify input[type="text"] and textareas */
+
+.inputText,
+.inputPassword,
+textarea {
+	font-family: Arial, sans-serif;
+	font-size: 12px;
+	border: 1px solid #9da6a5;
+	color: #808080;
+
+	/* @inc .rc */
+	border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+
+	/* Transition */
+	-webkit-transition: background-color 0.28s linear;
+
+}
+
+/* Repeat font statement since IE6 does not "get" previous selector */
+textarea {
+	font-family: Arial, sans-serif;
+	line-height: 1.3;
+	background: #FFF;
+}
+
+/* Disabled fields */
+input.inputText[disabled="disabled"],
+input.inputPassword[disabled="disabled"],
+input.disabled {
+	background: #EEE;
+	color: #666 !important;
+}
+
+.inputText,
+.inputPassword {
+	background: #FFF;
+	padding: 3px 2px;
+	color: #666;
+}
+
+	/* Fix alignment in Chrome/Saf */
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
 		.inputText,
+		input[type="text"],
 		.inputPassword,
-		textarea {
-			font-family: Arial, sans-serif;
-			font-size: 12px;
-			border: 1px solid #9da6a5;
-			color: #808080;
-
-			/* @inc .rc */
-			border-radius: 2px;
-			-webkit-border-radius: 2px;
-			-moz-border-radius: 2px;
-
-			/* Transition */
-			-webkit-transition: background-color 0.28s linear;
-
+		input[type="password"] {
+			height: 14px;
 		}
+	}
 
-		/* Repeat font statement since IE6 does not "get" previous selector */
-		textarea {
-			font-family: Arial, sans-serif;
-			line-height: 1.3;
-			background: #FFF;
-		}
+	.inputText:focus,
+	.inputPassword:focus,
+	textarea.focus {
+		color: #000;
+		border-color: #6BA1CB;
 
-		/* Disabled fields */
-		input.inputText[disabled="disabled"],
-		input.inputPassword[disabled="disabled"],
-		input.disabled {
-			background: #EEE;
-			color: #666 !important;
-		}
+		/* @inc .boxShadow */
+		box-shadow: 0 0 3px #6BA1CB;
+		-moz-box-shadow: #6BA1CB 0 0 3px;
+	}
 
+.inputSubmit {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+	overflow: visible;
+	font-size: 11px;
+	font-weight: 700;
+	color: #FFF;
+	background: #333;
+	padding: 2px 6px;
+	border: 1px solid #000;
+	cursor: pointer;
+}
+
+input.inputSubmit:hover,
+input.inputSubmit:focus {
+	background: #000;
+}
+
+/*
+	Inputs with a .code class get a monospaced font
+*/
+
+input.code,
+textarea.code {
+	font-family: "Menlo", Monaco, "Courier New", Courier, monospace;
+	font-size: 11px;
+}
+
+/* Selects should be left alone (not stylable without troubles) */
+select {
+	/* Nothing */
+	font-family: Arial, sans-serif;
+}
+
+/* Input type file should be left alone */
+.inputFile {
+	font-size: 11px;
+}
+
+/* Input submit gets replaced by a button, yet some styles here for better buildup */
+.inputSubmit {
+	font-size: 11px;
+}
+
+	/*
+		Focus outline; Mozilla specific since Safari implements this right
+	*/
+	@-moz-document url-prefix() {
 		.inputText,
 		.inputPassword {
-			background: #FFF;
-			padding: 3px 2px;
-			color: #666;
+			height: 14px;
+			line-height: 14px;
 		}
+	}
 
-			/* Fix alignment in Chrome/Saf */
-			@media screen and (-webkit-min-device-pixel-ratio:0) {
-				.inputText,
-				input[type="text"],
-				.inputPassword,
-				input[type="password"] {
-					height: 14px;
-				}
-			}
+form p {
+	clear: both;
+}
 
-			.inputText:focus,
-			.inputPassword:focus,
-			textarea.focus {
-				color: #000;
-				border-color: #6BA1CB;
+	/* Act as <p> e.g. for wrapping label+textarea */
+	form div.section {
+		margin: 0 0 12px 0;
+		clear: both;
+	}
 
-				/* @inc .boxShadow */
-				box-shadow: 0 0 3px #6BA1CB;
-				-moz-box-shadow: #6BA1CB 0 0 3px;
-			}
+.helpTxt {
+	display: block;
+	font-size: 11px;
+	color: #808080;
+}
 
-		.inputSubmit {
-			font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
-			overflow: visible;
-			font-size: 11px;
-			font-weight: 700;
-			color: #FFF;
-			background: #333;
-			padding: 2px 6px;
-			border: 1px solid #000;
-			cursor: pointer;
-		}
+	.helpTxt a {
+		font-weight: 700;
+	}
 
-		input.inputSubmit:hover,
-		input.inputSubmit:focus {
-			background: #000;
-		}
+form label,
+.fakeLabel {
+	font-weight: 700;
+	/* @inc .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
 
-		/*
-			Inputs with a .code class get a monospaced font
-		*/
+/* "Fake" label */
+form p.label {
+	padding-bottom: 0;
+	border: none;
+}
 
-		input.code,
-		textarea.code {
-			font-family: "Menlo", Monaco, "Courier New", Courier, monospace;
-			font-size: 11px;
-		}
+form p label {
+	display: block;
+}
 
-		/* Selects should be left alone (not stylable without troubles) */
-		select {
-			/* Nothing */
-			font-family: Arial, sans-serif;
-		}
+form .horizontal textarea {
+	width: auto;
+}
 
-		/* Input type file should be left alone */
-		.inputFile {
-			font-size: 11px;
-		}
+form .horizontal p label {
+	display: inline;
+}
 
-		/* Input submit gets replaced by a button, yet some styles here for better buildup */
-		.inputSubmit {
-			font-size: 11px;
-		}
+form .horizontal label,
+form .horizontal p.label {
+	float: left;
+	width: 105px;
+	line-height: 17px;
+	padding: 2px 10px 2px 0;
+}
 
-			/*
-				Focus outline; Mozilla specific since Safari implements this right
-			*/
-			@-moz-document url-prefix() {
-				.inputText,
-				.inputPassword {
-					height: 14px;
-					line-height: 14px;
-				}
-			}
+form .formError {
+	color: red;
+	display: block;
+	/* @inc .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
+}
 
-		form p {
-			clear: both;
-		}
+form .spacing,
+form .horizontal .formError {
+	padding-left: 115px;
+}
 
-			/* Act as <p> e.g. for wrapping label+textarea */
-			form div.section {
-				margin: 0 0 12px 0;
-				clear: both;
-			}
+form abbr {
+	cursor: help;
+}
 
-		.helpTxt {
-			display: block;
-			font-size: 11px;
-			color: #808080;
-		}
+/*
+	Messaging system
+	Styles for errors success warning and notices
+*/
 
-			.helpTxt a {
-				font-weight: 700;
-			}
+/* Form messages */
 
-		form label,
-		.fakeLabel {
-			font-weight: 700;
-			/* @inc .secondaryContent */
-			font-size: 11px;
-			font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
-		}
+.formMessage {
+	/* @inc .sansSerif */
+	font-family: Arial, sans-serif;
+	font-size: 12px;
 
-		/* "Fake" label */
-		form p.label {
-			padding-bottom: 0;
-			border: none;
-		}
+	position: relative;
+	border: 1px solid #AAA;
+	margin: 0 0 12px;
+	background: #FFF;
 
-		form p label {
-			display: block;
-		}
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+}
 
-		form .horizontal textarea {
-			width: auto;
-		}
+	.formMessage p {
+		padding: 6px 24px;
+	}
 
-		form .horizontal p label {
-			display: inline;
-		}
+.errorMessage {
+	/* @inc .errorColors */
+	color: #ffeaea;
+	background: #6c0000;
+	border: 1px solid #910000;
+}
 
-		form .horizontal label,
-		form .horizontal p.label {
-			float: left;
-			width: 105px;
-			line-height: 17px;
-			padding: 2px 10px 2px 0;
-		}
+	.errorMessage p {
+		background: url(../images/icons/exclamation.gif) no-repeat 12px 50%;
+		padding-left: 32px;
+	}
 
-		form .formError {
-			color: red;
-			display: block;
-			/* @inc .secondaryContent */
-			font-size: 11px;
-			font-family: "Lucida Grande", "Lucida Sans Unicode", Verdana, Arial, sans-serif;
-		}
+	.errorMessage a {
+		color: #FFF;
+		font-weight: 700;
+		border-bottom: 1px solid #f5abb4;
+	}
 
-		form .spacing,
-		form .horizontal .formError {
-			padding-left: 115px;
-		}
+.successMessage {
+	color: #edffd6;
+	border-color: #171914;
+	background: #435031;
+}
 
-		form abbr {
-			cursor: help;
-		}
+	.successMessage p {
+		background: url(../images/icons/checkmark.gif) no-repeat 12px 50%;
+		padding-left: 32px;
+	}
 
-		/*
-			Messaging system
-			Styles for errors success warning and notices
-		*/
+	.successMessage a:link,
+	.successMessage a:visited {
+		color: #FFF;
+		border-color: #a3c776;
+	}
 
-		/* Form messages */
+	.successMessage a:hover,
+	.successMessage a:active,
+	.successMessage a:focus {
+		color: #FFF;
+		border-color: #FFF;
+	}
 
-		.formMessage {
-			/* @inc .sansSerif */
-			font-family: Arial, sans-serif;
-			font-size: 12px;
+.generalMessage {
+	background: #DEE6E5;
+}
 
-			position: relative;
-			border: 1px solid #AAA;
-			margin: 0 0 12px;
-			background: #FFF;
+	.generalMessage p {
+		background: url(../images/icons/info.gif) no-repeat 12px 50%;
+		padding-left: 32px;
+	}
 
-			/* @inc .boxShadow */
-			box-shadow: 0 2px 6px #AAA;
-			-webkit-box-shadow: 0 2px 6px #AAA;
-			-moz-box-shadow: #AAA 0 2px 6px;
-		}
+/*
+	Image alignment classes
+*/
 
-			.formMessage p {
-				padding: 6px 24px;
-			}
+img.alignLeft {
+	float: left;
+	padding: 0 12px 12px 0;
+}
 
-		.errorMessage {
-			/* @inc .errorColors */
-			color: #ffeaea;
-			background: #6c0000;
-			border: 1px solid #910000;
-		}
+img.alignRight {
+	float: right;
+	padding: 0 0 12px 12px;
+}
 
-			.errorMessage p {
-				background: url(../images/icons/exclamation.gif) no-repeat 12px 50%;
-				padding-left: 32px;
-			}
+/*
+ 	Pattern: pagination
+*/
 
-			.errorMessage a {
-				color: #FFF;
-				font-weight: 700;
-				border-bottom: 1px solid #f5abb4;
-			}
+.paginationWrap {
+	width: 100%;
+	overflow: hidden;
+}
 
-		.successMessage {
-			color: #edffd6;
-			border-color: #171914;
-			background: #435031;
-		}
+.pagination {
+	float: left;
+	position: relative;
+	left: 50%;
+}
 
-			.successMessage p {
-				background: url(../images/icons/checkmark.gif) no-repeat 12px 50%;
-				padding-left: 32px;
-			}
+.pagination ul {
+	padding: 18px 0;
+	z-index: 2;
+	overflow: hidden;
+	position: relative;
+	left: -50%;
+}
 
-			.successMessage a:link,
-			.successMessage a:visited {
-				color: #FFF;
-				border-color: #a3c776;
-			}
+.pagination li {
+	float: left;
+	list-style: none;
+	margin: 0 5px 0 0;
+	text-decoration: none;
+	padding: 0;
+	line-height: 15px;
+	font-size: 12px;
+	text-align: center;
+}
 
-			.successMessage a:hover,
-			.successMessage a:active,
-			.successMessage a:focus {
-				color: #FFF;
-				border-color: #FFF;
-			}
+.pagination li span {
+	float: left;
+	display: block;
+	padding: 4px 5px;
+	color: #CCC;
+	min-width: 12px;
+}
 
-		.generalMessage {
-			background: #DEE6E5;
-		}
+.pagination li.currentPage span {
+	font-weight: 700;
+	color: #000;
+}
 
-			.generalMessage p {
-				background: url(../images/icons/info.gif) no-repeat 12px 50%;
-				padding-left: 32px;
-			}
+.pagination li.selected span {
+	padding: 4px 5px;
+	font-weight: 700;
+	color: #000;
+}
 
-		/*
-			Image alignment classes
-		*/
+.pagination li a:link,
+.pagination li a:visited {
+	float: left;
+	display: block;
+	padding: 3px 4px;
+	border: 1px solid #CCC;
+	text-decoration: none;
+	min-width: 12px;
+}
 
-		img.alignLeft {
-			float: left;
-			padding: 0 12px 12px 0;
-		}
+li.ellipsis {
+	margin: 0;
+}
 
-		img.alignRight {
-			float: right;
-			padding: 0 0 12px 12px;
-		}
+li.ellipsis span {
+	color: black;
+}
 
-		/*
-		 	Pattern: pagination
-		*/
+.pagination li a:hover,
+.pagination li a:active {
+	background: #EEE;
+	border: 1px solid #AAA;
+	color: black;
+}
 
-		.paginationWrap {
-			width: 100%;
-			overflow: hidden;
-		}
-
-		.pagination {
-			float: left;
-			position: relative;
-			left: 50%;
-		}
-
-		.pagination ul {
-			padding: 18px 0;
-			z-index: 2;
-			overflow: hidden;
-			position: relative;
-			left: -50%;
-		}
-
-		.pagination li {
-			float: left;
-			list-style: none;
-			margin: 0 5px 0 0;
-			text-decoration: none;
-			padding: 0;
-			line-height: 15px;
-			font-size: 12px;
-			text-align: center;
-		}
-
-		.pagination li span {
-			float: left;
-			display: block;
-			padding: 4px 5px;
-			color: #CCC;
-			min-width: 12px;
-		}
-
-		.pagination li.currentPage span {
-			font-weight: 700;
-			color: #000;
-		}
-
-		.pagination li.selected span {
-			padding: 4px 5px;
-			font-weight: 700;
-			color: #000;
-		}
-
-		.pagination li a:link,
-		.pagination li a:visited {
-			float: left;
-			display: block;
-			padding: 3px 4px;
-			border: 1px solid #CCC;
-			text-decoration: none;
-			min-width: 12px;
-		}
-
-		li.ellipsis {
-			margin: 0;
-		}
-
-		li.ellipsis span {
-			color: black;
-		}
-
-		.pagination li a:hover,
-		.pagination li a:active {
-			background: #EEE;
-			border: 1px solid #AAA;
-			color: black;
-		}
-
-		.nextPage, .previousPage { font-size: 11px !important; }
-		.pagination li.nextPage { margin-left: 10px; }
-		.pagination li.previousPage { margin-right: 15px; }
-
+.nextPage, .previousPage { font-size: 11px !important; }
+.pagination li.nextPage { margin-left: 10px; }
+.pagination li.previousPage { margin-right: 15px; }
 
 /*
 	Contact form
