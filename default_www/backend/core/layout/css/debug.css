@@ -19,26 +19,22 @@ img {
 	-moz-force-broken-image-icon: 1;
 }
 
-th.publish_on, th.edited_on, th.date { width: 170px; }
-th.user_id, th.author { width: 170px; }
-th.comments { width: 70px; }
-	td.comments { text-align: right; }
-th.num_tags { width: 70px; }
-	td.num_tags { text-align: right; }
+/*
+	To test drag/drop
 
-#templateList li { float: none; }
-
-.templateVisual td a { border: none; }
-.templateVisual td { border: 1px solid #AAA; }
+	model.php blog l20:
+		const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name, "" as sequence
+	categories.php ;add
+	$this->datagrid->enableSequenceByDragAndDrop();
+	to loadDataGrid()
+	
+*/
 
 thead th.dragAndDropHandle, tr td.dragAndDropHandle { width: 16px; padding: 0; cursor: move; }
 thead th.dragAndDropHandle span { padding: 0; }
 
-.multipleTextWrapper .multipleTextList { padding-bottom: 12px; }
-.multipleTextWrapper label { font-size: 11px; }
-.multipleTextWrapper ul { padding: 4px 0 0; }
-.multipleTextWrapper li { margin: 0 4px 4px 0; }
-.multipleTextWrapper ul, .multipleTextWrapper li { zoom: 1; }
-.multipleTextWrapper ul:after, .multipleTextWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+/*
+	Alt warning
+*/
 
 .editorWarning { display: inline-block; margin-top: 3px; }

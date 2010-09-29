@@ -73,11 +73,42 @@
 	}
 
 /*
-	Default action width
+	Default widths for certain cells
 */
 
-.action {
+th.action {
 	width: 10%;
+}
+
+/* Dates */
+th.publish_on,
+th.edited_on,
+th.date {
+	width: 170px;
+}
+
+/* User name w/ avatar */
+th.user_id,
+th.author {
+	width: 170px;
+}
+
+th.comments {
+	width: 70px;
+}
+
+/* No. of comments*/
+td.comments {
+	text-align: right;
+}
+
+th.num_tags {
+	width: 70px;
+}
+
+/* No. of tags */
+td.num_tags {
+	text-align: right;
 }
 
 /* Fix nasty safari bug when inserting a datagrid into jQuery #tabs */

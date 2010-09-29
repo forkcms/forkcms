@@ -135,9 +135,10 @@
 	(in jQuery modal)
 */
 
+#templateList {
+}
+
 #templateList li {
-	margin: 0 0 12px;
-	position: relative;
 	
 	/* @inc .rc */
 	border-radius: 4px;
@@ -167,7 +168,7 @@
 }
 
 .templateVisual td,
-#templateVisulLarge td {
+#templateVisualLarge td {
 	text-align: center;
 	border: 1px dotted #666;
 	background: #FFF;
