@@ -27,6 +27,7 @@ class InstallerStep1 extends InstallerStep
 
 		// head
 		$variables['head'] = file_get_contents('layout/templates/head.tpl');
+		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
 
 		// get the possible library paths
 		self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $possiblePaths);
@@ -83,7 +84,7 @@ class InstallerStep1 extends InstallerStep
 		else
 		{
 			$variables['content'] = '<div class="formMessage errorMessage">
-										<p>We couldn\'t locate Spoon. Make sure you upload the <code>library</code>-folder.</p>
+										<p>We couldn\'t locate Spoon Library. Make sure you uploaded the <code>library</code>-folder.</p>
 									</div>';
 		}
 

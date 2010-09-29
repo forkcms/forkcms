@@ -98,128 +98,141 @@ body {
 		margin: 0 1px;
 	}
 
-	#headerHolder #user {
-		min-width: 266px;
+	#header td {
+		vertical-align: middle;
+	}
+	
+
+/*
+	Debug message
+*/
+
+#debugnotify {
+	color: red;
+}
+
+/*
+	User
+*/
+
+#headerHolder #user {
+	min-width: 266px;
+}
+
+	#user li {
+		position: relative;
 	}
 
-		#user li {
-			position: relative;
+	#user ul ul {
+		position: absolute;
+		right: 0;
+		top: 24px;
+		width: 180px;
+	}
+
+		#user #ddAccount {
+			z-index: 3000;
+			border: 1px solid #DDD;
+			padding: 0;
+			border-color: #CCC #BABABA #CCC #BABABA;
+			background: #FFF;
+			/* @inc .boxShadow */
+			box-shadow: 0 2px 6px #AAA;
+			-webkit-box-shadow: 0 2px 6px #AAA;
+			-moz-box-shadow: #AAA 0 2px 6px;
 		}
 
-		#user ul ul {
-			position: absolute;
-			right: 0;
-			top: 24px;
-			width: 180px;
+		#user #ddAccount li {
+			float: none;
+			border: none;
+			background: #FFF;
+			margin: 0;
+			line-height: 24px;
+			border-bottom: 1px solid #DDD;
+			padding: 0;
+			zoom: 1;
 		}
-
-			#user #ddAccount {
-				z-index: 3000;
-				border: 1px solid #DDD;
-				padding: 0;
-				border-color: #CCC #BABABA #CCC #BABABA;
-				background: #FFF;
-				/* @inc .boxShadow */
-				box-shadow: 0 2px 6px #AAA;
-				-webkit-box-shadow: 0 2px 6px #AAA;
-				-moz-box-shadow: #AAA 0 2px 6px;
-			}
-
-			#user #ddAccount li {
-				float: none;
-				border: none;
-				background: #FFF;
-				margin: 0;
-				line-height: 24px;
-				border-bottom: 1px solid #DDD;
-				padding: 0;
+		
+			#user #ddAccount li a {
 				zoom: 1;
-			}
-			
-				#user #ddAccount li a {
-					zoom: 1;
-					display: block;
-					border: none !important;
-					float: none;
-				}
-
-			#user #account .lastChild {
-				border: none;
+				display: block;
+				border: none !important;
+				float: none;
 			}
 
-			#user #account .arrow {
-				font-size: 8px;
-				font-family: Courier;
+		#user #account .lastChild {
+			border: none;
+		}
+
+		#user #account .arrow {
+			font-size: 8px;
+			font-family: Courier;
+		}
+
+			#user #account li a:link,
+			#user #account li a:visited {
+				display: block;
+				background: #FFF;
+				padding: 1px 6px;
 			}
 
-				#user #account li a:link,
-				#user #account li a:visited {
-					display: block;
-					background: #FFF;
-					padding: 1px 6px;
-				}
-
-				#user #account li a:hover,
-				#user #account li a:active,
-				#user #account li a:focus {
-					color: #FFF;
-					outline: 1px solid #1a57ad;
-					/* @inc .selectedBlue */
-					background: #1A57AD;
-					background: -webkit-gradient(linear, left top, left bottom, from(#5C93D5), to(#1A57AD));
-					background: -moz-linear-gradient(top, #5C93D5, #1A57AD);
-				}
-
-				#openAccountDropdown {
-					background: #F5F5F5;
-					display: block;
-					border: 1px solid #B0B0B0;
-					zoom: 1;
-					cursor: pointer;
-
-					/* @inc .rc */
-					border-radius: 4px;
-					-webkit-border-radius: 4px;
-					-moz-border-radius: 4px;
-
-					/* Gradient */
-					background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#C5C5C5), color-stop(.0454545,#F7F7F7), color-stop(.9545455,#DDD));
-					background: -moz-linear-gradient(#FFF, #f7f7f7 4.5454545%, #DDD 95.454545%, #C5C5C5);
-				}
-
-				#openAccountDropdown .nickname {
-					float: left;
-					padding: 0 5px;
-					line-height: 22px;
-				}
-
-				#openAccountDropdown .arrow {
-					border-left: 1px solid #B0B0B0;
-					display: block;
-					float: left;
-					padding: 0 7px;
-					line-height: 22px;
-				}
-
-				#openAccountDropdown .avatar {
-					float: left;
-					line-height: 22px;
-					width: 22px;
-					height: 22px;
-					overflow: hidden;
-				}
-
-				#openAccountDropdown:after {
-					/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
-				}
-
-			#user ul ul li:last-child {
-				border: none;
+			#user #account li a:hover,
+			#user #account li a:active,
+			#user #account li a:focus {
+				color: #FFF;
+				outline: 1px solid #1a57ad;
+				/* @inc .selectedBlue */
+				background: #1A57AD;
+				background: -webkit-gradient(linear, left top, left bottom, from(#5C93D5), to(#1A57AD));
+				background: -moz-linear-gradient(top, #5C93D5, #1A57AD);
 			}
 
-#header td {
-	vertical-align: middle;
-}
+			#openAccountDropdown {
+				background: #F5F5F5;
+				display: block;
+				border: 1px solid #B0B0B0;
+				zoom: 1;
+				cursor: pointer;
+
+				/* @inc .rc */
+				border-radius: 4px;
+				-webkit-border-radius: 4px;
+				-moz-border-radius: 4px;
+
+				/* Gradient */
+				background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#C5C5C5), color-stop(.0454545,#F7F7F7), color-stop(.9545455,#DDD));
+				background: -moz-linear-gradient(#FFF, #f7f7f7 4.5454545%, #DDD 95.454545%, #C5C5C5);
+			}
+
+			#openAccountDropdown .nickname {
+				float: left;
+				padding: 0 5px;
+				line-height: 22px;
+			}
+
+			#openAccountDropdown .arrow {
+				border-left: 1px solid #B0B0B0;
+				display: block;
+				float: left;
+				padding: 0 7px;
+				line-height: 22px;
+			}
+
+			#openAccountDropdown .avatar {
+				float: left;
+				line-height: 22px;
+				width: 22px;
+				height: 22px;
+				overflow: hidden;
+			}
+
+			#openAccountDropdown:after {
+				/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+			}
+
+		#user ul ul li:last-child {
+			border: none;
+		}
 
 /*
 	Site title
@@ -229,6 +242,7 @@ body {
 	margin: 0;
 	padding: 12px 0 0;
 	font-size: 14px;
+	font-weight: 700;
 }
 
 	#headerHolder h1 a:link,
@@ -463,3 +477,44 @@ body {
 	color: #000;
 	background: transparent;
 }
+
+/*
+	Generic box
+*/
+
+#genericBox {
+	width: 460px;
+	margin: 20px auto;
+	padding: 20px;
+	border: 1px solid #DDD;
+	background: #FFF;
+	
+	/* @inc .rc */
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+
+	/* @inc .boxShadow */
+	box-shadow: 0 1px 3px rgba(0,0,0,0.15);;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+	-moz-box-shadow: rgba(0,0,0,0.15) 0 1px 3px;
+}
+
+/*
+	Heading
+*/
+
+#genericBoxTitle {
+	text-align: center;
+	border-bottom: 1px solid #DDD;
+	margin: 0 0 20px;
+}
+
+	#genericBoxTitle h2 {
+		font-family: Georgia, "Times New Roman", serif;
+		font-size: 14px;
+		letter-spacing: 3px;
+		text-transform: uppercase;
+		font-weight: 400;
+		color: #999;
+	}

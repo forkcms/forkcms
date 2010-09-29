@@ -123,6 +123,10 @@ input[type="submit"] {
 	padding: 0 0 12px;
 }
 
+	.forkForms .inputList .inputList {
+		margin-top: 3px;
+	}
+
 .forkForms .inputList li {
 	position: relative;
 	padding: 0 0 4px 24px;

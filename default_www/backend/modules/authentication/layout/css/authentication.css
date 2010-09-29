@@ -10,10 +10,6 @@
 
 */
 
-body#login {
-	background: url(/backend/core/layout/images/fork.png) no-repeat bottom center;
-}
-
 #login #debugnotify {
 	text-align: center;
 	position: fixed;
@@ -116,7 +112,6 @@ body#login {
 
 #loginBox h2 {
 	padding: 24px 0 12px;
-	font-size: 18px;
 	color: #000;
 }
 

@@ -15,3 +15,8 @@
 	<script type="text/javascript" src="js/backend.js"></script>
 	<script type="text/javascript" src="js/install.js"></script>
 </head>
+<body id="installer">
+	<div id="genericBox">
+		<div id="genericBoxTitle">
+			<h2>Install Fork CMS</h2>
+		</div>

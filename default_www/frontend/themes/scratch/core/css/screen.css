@@ -182,9 +182,9 @@ body {
 	-moz-border-radius: 4px;
 
 	/* @inc .boxShadow */
-	box-shadow: 0 2px 6px #AAA;
-	-webkit-box-shadow: 0 2px 6px #AAA;
-	-moz-box-shadow: #AAA 0 2px 6px;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.15);;
+	-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+	-moz-box-shadow: rgba(0,0,0,0.15) 0 1px 3px;
 }
 
 #header {

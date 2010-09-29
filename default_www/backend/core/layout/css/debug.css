@@ -41,14 +41,6 @@ img {
 	-moz-force-broken-image-icon: 1;
 }
 
-/*
-	Debug message
-*/
-
-#debugnotify {
-	color: red;
-}
-
 th.publish_on, th.edited_on, th.date { width: 170px; }
 th.user_id, th.author { width: 170px; }
 th.comments { width: 70px; }
