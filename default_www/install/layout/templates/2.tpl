@@ -4,7 +4,7 @@
 	<div>
 		<input type="hidden" name="step" value="2" />
 		<div class="horizontal">
-			<div class="{$requirementsStatusError}">
+			<div>
 				<div class="formMessage errorMessage">
 					<p>Your server doesn't meet the minimum requirements to run Fork CMS.</p>
 				</div>
