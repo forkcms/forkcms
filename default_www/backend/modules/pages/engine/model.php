@@ -273,8 +273,8 @@ class BackendPagesModel
 					$tempPageId = array_search($tempURL, $keys);
 
 					// prepend the title
-					if(!isset($cachedTitles[$tempPageId])) $title = ' • '. $title;
-					else $title = $cachedTitles[$tempPageId] .' • '. $title;
+					if(!isset($cachedTitles[$tempPageId])) $title = ' > '. $title;
+					else $title = $cachedTitles[$tempPageId] .' > '. $title;
 				}
 			}
 

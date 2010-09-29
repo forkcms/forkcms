@@ -17,7 +17,7 @@
 		}
 	</style>
 	<div id="browserSupport" class="content">
-		<h2>{$lblBrowserNotSupported}</h2>
+		<h2>{$lblBrowserNotSupported|ucfirst}</h2>
 		{$errBrowserNotSupported}
 	</div>
 <![endif]-->
