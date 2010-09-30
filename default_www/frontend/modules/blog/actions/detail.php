@@ -316,7 +316,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// append a parameter to the URL so we can show moderation
 				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
 				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
-				if($comment['status'] == 'published') $redirectLink .= '?comment=true#'. FL::getAction('Comment') .'-'. $comment['id'];
+				if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
 
 				// notify the admin
 				FrontendBlogModel::notifyAdmin($comment);

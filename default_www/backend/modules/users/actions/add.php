@@ -119,10 +119,10 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			if($this->frm->getField('avatar')->isFilled())
 			{
 				// correct extension
-				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif'), BL::getError('JPGAndGIFOnly')))
+				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::getError('JPGGIFAndPNGOnly')))
 				{
 					// correct mimetype?
-					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg'), BL::getError('JPGAndGIFOnly'));
+					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::getError('JPGGIFAndPNGOnly'));
 				}
 			}
 

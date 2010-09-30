@@ -14,11 +14,9 @@
 .avatar {
 	width: 48px;
 	height: 48px;
-	background: #FFF;
 	overflow: hidden;
 	position: relative;
 	text-indent: -9000px;
-	background: url(/backend/core/layout/images/avatars/male_48.gif) no-repeat;
 }
 
 .avOverlay {
@@ -48,7 +46,6 @@
 .av24 {
 	width: 24px;
 	height: 24px;
-	background: url(/backend/core/layout/images/avatars/male_24.png) no-repeat;
 }
 
 .av24 img {

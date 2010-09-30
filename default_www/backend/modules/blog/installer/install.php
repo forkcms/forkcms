@@ -169,7 +169,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the article "%1$s"?');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Deleted', 'The selected articles were deleted.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditArticle', 'edit article "%1$s"');
-		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditComment', 'edit comment on "%1$s"');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditCommentOn', 'edit comment on "%1$s"');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Edited', 'The article "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditedComment', 'The comment was saved.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpMeta', 'Show the meta information for this blogpost in the RSS feed (category, tags, ...)');

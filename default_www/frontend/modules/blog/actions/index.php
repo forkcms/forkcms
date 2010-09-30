@@ -61,7 +61,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 		// requested page
 		$requestedPage = $this->URL->getParameter('page', 'int', 1);
 
-		// set url
+		// set URL and limit
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog');
 		$this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_num_items', 10);
 

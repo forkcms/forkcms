@@ -109,8 +109,9 @@ class FrontendBlogArchive extends FrontendBaseBlock
 			$this->endDate = gmmktime(23, 59, 59, 12, 31, $this->year);
 		}
 
-		// set URL
+		// set URL and limit
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('blog', 'archive') .'/'. $url;
+		$this->pagination['limit'] = FrontendModel::getModuleSetting('blog', 'overview_num_items', 10);
 
 		// populate count fields in pagination
 		$this->pagination['num_items'] = FrontendBlogModel::getAllForDateRangeCount($this->startDate, $this->endDate);

@@ -1,8 +1,3 @@
-{*
-	variables that are available:
-	- {$tags}: contains an array with all tags that are used on the site, each element contains data about the tag
-*}
-
 <div id="contactForm">
 	{option:contactHasFormError}<div class="formMessage errorMessage"><p>{$errFormError}</p></div>{/option:contactHasFormError}
 	{option:contactHasError}<div class="formMessage errorMessage"><p>{$errContactErrorWhileSending}</p></div>{/option:contactHasError}

@@ -386,7 +386,14 @@ class FrontendHeader extends FrontendBaseObject
 		$content = SpoonFile::getContent(PATH_WWW . $file);
 
 		// fix urls
-		$content = preg_replace('|(url\(([\'"]?))([^http\:\/\/].*)\)|iUs', '$1$2'. dirname($file) .'/$3)', $content);
+		$matches = array();
+		$pattern = '/url\(';
+		$pattern .= 	'("|\'){0,1}';
+		$pattern .= 		'([\/\.a-z].*)';
+		$pattern .= 	'("|\'){0,1}';
+		$pattern .= 	'\)/iUs';
+
+		$content = preg_replace($pattern, 'url($3'. dirname($file) .'/$2$3)', $content);
 
 		// remove comments
 		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);

@@ -114,7 +114,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidURL', 'Ongeldige URL.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidValue', 'Ongeldige waarde.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'JavascriptNotEnabled', 'Om Fork CMS te gebruiken moet Javascript geactiveerd zijn in uw browser. Activeer javascript en vernieuw deze pagina.');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'JPGAndGIFOnly', 'Enkel jpg en gif bestanden zijn toegelaten.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'JPGGIFAndPNGOnly', 'Enkel jpg, gif en png bestanden zijn toegelaten.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'ModuleNotAllowed', 'Je hebt onvoldoende rechten voor deze module.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NameIsRequired', 'Gelieve een naam in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'NicknameIsRequired', 'Gelieve een publicatienaam in te geven.');
@@ -475,7 +475,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidURL', 'Invalid URL.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidValue', 'Invalid value.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'JavascriptNotEnabled', 'To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.');
-		$this->insertLocale('en', 'backend', 'core', 'err', 'JPGAndGIFOnly', 'Only jpg and gif files are allowed.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'JPGGIFAndPNGOnly', 'Only jpg, gif and png files are allowed.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'ModuleNotAllowed', 'You have insufficient rights for this module.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NameIsRequired', 'Please provide a name.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'NicknameIsRequired', 'Please provide a publication name.');
