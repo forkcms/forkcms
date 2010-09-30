@@ -53,6 +53,7 @@ class TagsInstall extends ModuleInstaller
 			{
 				// insert contact page
 				$this->insertPage(array('title' => 'Tags',
+										'type' => 'root',
 										'language' => $language),
 									null,
 									array('extra_id' => $tagsID));

@@ -1,2 +1,0 @@
-<p>Etiam id magna. <br />Proin euismod</p>
-<p><a href="#">vestibulum</a> torto</p>

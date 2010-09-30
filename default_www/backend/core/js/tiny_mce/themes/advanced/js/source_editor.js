@@ -46,6 +46,7 @@ function toggleWordWrap(elm) {
 
 function resizeInputs() {
 	var vp = tinyMCEPopup.dom.getViewPort(window), el;
+}
 
 function resizeInputs() {
 	var el = document.getElementById('htmlSource');
