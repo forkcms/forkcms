@@ -16,9 +16,6 @@
 			// init var
 			var element = $(this);
 			
-			// initialize
-			calculateMeta(null, $(this));
-			
 			// bind keypress
 			$(this).bind('keyup', calculateMeta);
 			
@@ -76,8 +73,10 @@
 					$('#metaKeywords').val(title);
 				}
 				if(!$('#urlOverwrite').is(':checked')) {
-					$('#url').val(utils.string.urlise(title));
-					$('#generatedUrl').html(utils.string.urlise(title));
+					if(typeof pageID == 'undefined' || pageID != 1) {
+						$('#url').val(utils.string.urlise(title));
+						$('#generatedUrl').html(utils.string.urlise(title));
+					}
 				}
 			}
 		});

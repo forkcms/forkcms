@@ -882,7 +882,17 @@ class BackendPagesModel
 		if(isset($keys[$id])) $URL = $keys[$id];
 
 		// parent id 0 hasn't an url
-		elseif($id == 0) return '';
+		elseif($id == 0)
+		{
+			// init
+			$URL = '/';
+
+			// multilanguages?
+			if(SITE_MULTILANGUAGE) $URL = '/'. BackendLanguage::getWorkingLanguage();
+
+			// return
+			return $URL;
+		}
 
 		// not availble
 		else throw new BackendException('keys-file isn\'t available.');
@@ -1079,6 +1089,10 @@ class BackendPagesModel
 																WHERE i.active = ?;',
 																array('Y'), 'id');
 
+		// init var
+		$half = (int) ceil(count($templates) / 2);
+		$i = 0;
+
 		// loop templates to unserialize the data
 		foreach($templates as $key => &$row)
 		{
@@ -1091,6 +1105,12 @@ class BackendPagesModel
 
 			// add all data as json
 			$row['json'] = json_encode($row);
+
+			// add the break-element so the templates can be split in 2 columns in the templatechooser
+			if($i == $half) $row['break'] = true;
+
+			// increment
+			$i++;
 		}
 
 		// return

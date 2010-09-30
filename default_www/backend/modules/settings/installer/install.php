@@ -32,6 +32,8 @@ class SettingsInstall extends ModuleInstaller
 
 		// action rights
 		$this->setActionRights(1, 'settings', 'index');
+		$this->setActionRights(1, 'settings', 'themes');
+		$this->setActionRights(1, 'settings', 'email');
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'ConfigurationError', 'Sommige instellingen zijn nog niet geconfigureerd:');

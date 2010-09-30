@@ -44,7 +44,8 @@ function toggleWordWrap(elm) {
 		setWrap('off');
 }
 
-var wHeight=0, wWidth=0, owHeight=0, owWidth=0;
+function resizeInputs() {
+	var vp = tinyMCEPopup.dom.getViewPort(window), el;
 
 function resizeInputs() {
 	var el = document.getElementById('htmlSource');

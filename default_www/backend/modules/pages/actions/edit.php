@@ -202,6 +202,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// get the record
 		$this->record = BackendPagesModel::get($this->id);
+		$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
 
 		// load blocks
 		$this->blocksContent = BackendPagesModel::getBlocks($this->id);
@@ -232,12 +233,17 @@ class BackendPagesEdit extends BackendBaseActionEdit
 	 */
 	protected function parse()
 	{
+		// set
+		$this->record['url'] = $this->meta->getURL();
+		if($this->id == 1) $this->record['url'] = '';
+
 		// parse some variables
-		$this->tpl->assignArray($this->record, 'record'); // @later davy - de variabelen moeten de richtlijnen volgen
+		$this->tpl->assign('item', $this->record);
 		$this->tpl->assign('templates', $this->templates);
 		$this->tpl->assign('blocks', $this->blocks);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
+		$this->tpl->assign('prefixURL', BackendPagesModel::getFullURL($this->record['parent_id']));
 
 		// init var
 		$showDelete = true;
@@ -254,13 +260,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 		// parse the form
 		$this->frm->parse($this->tpl);
-
-		// get full URL
-		$URL = BackendPagesModel::getFullURL($this->record['id']);
-
-		// assign full URL
-		$this->tpl->assign('itemURL', $URL);
-		$this->tpl->assign('URL', str_replace($this->meta->getURL(), '', $URL));
 
 		// parse datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);

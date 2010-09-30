@@ -179,7 +179,7 @@ class PagesInstall extends ModuleInstaller
 										'type' => 'meta',
 										'language' => $language,
 										'allow_move' => 'N',
-										'allow_delete' => 'N'));
+										'allow_delete' => 'Y'));
 
 				// insert 404
 				$this->insertPage(array('id' => 404,

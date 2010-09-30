@@ -14,6 +14,9 @@
 	<p id="pagesPageTitle">
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
+		<span class="oneLiner">
+			<span><a href="{$SITE_URL}">{$SITE_URL}{$prefixURL}<span id="generatedUrl"></span></a></span>
+		</span>
 	</p>
 
 	<div id="tabs" class="tabs">
@@ -142,11 +145,13 @@
 							{$txtMetaKeywords} {$txtMetaKeywordsError}
 						</li>
 					</ul>
-					<p>
-						<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
-						<span class="helpTxt">{$msgHelpMetaCustom}</span>
+					<div class="textareaHolder">
+						<p>
+							<label for="metaCustom">{$lblExtraMetaTags|ucfirst}</label>
+							<span class="helpTxt">{$msgHelpMetaCustom}</span>
+						</p>
 						{$txtMetaCustom} {$txtMetaCustomError}
-					</p>
+					</div>
 				</div>
 			</div>
 
@@ -161,7 +166,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
-							<span id="urlFirstPart">{$SITE_URL}/</span>{$txtUrl} {$txtUrlError}
+							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
 				</div>
@@ -220,18 +225,23 @@
 				<div class="generalMessage singleMessage infoMessage">
 					<p>{$msgTemplateChangeWarning}</p>
 				</div>
-				<ul id="templateList">
-				{iteration:templates}
-					<li>
-						<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
-						<div class="templateVisual current">
-							{$templates.html}
-						</div>
-					</li>
-				{/iteration:templates}
-				</ul>
+				<div id="templateList">
+					<ul>
+						{iteration:templates}
+					{option:templates.break}
+					</ul>
+					<ul class="last">
+					{/option:templates.break}
+							<li>
+								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
+								<div class="templateVisual current">
+									{$templates.html}
+								</div>
+							</li>
+						{/iteration:templates}
+					</ul>
+				</div>
 			</div>
-
 		</div>
 		<div id="tabTags">
 			<div class="subtleBox">

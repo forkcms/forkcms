@@ -8,7 +8,7 @@
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>
+			<a href="{$SITE_URL}{$item['full_url']}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 		<span class="oneLiner">
-			<span><a href="{$SITE_URL}{$itemURL}">{$SITE_URL}{$URL}<span id="generatedUrl">{$itemURL}</span></a></span>
+			<span><a href="{$SITE_URL}">{$SITE_URL}{$prefixURL}<span id="generatedUrl">{$item['url']}</span></a></span>
 		</span>
 	</p>
 
@@ -188,7 +188,7 @@
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
-							<span id="urlFirstPart">{$SITE_URL}{$URL}</span>{$txtUrl} {$txtUrlError}
+							<span id="urlFirstPart">{$SITE_URL}{$prefixURL}</span>{$txtUrl} {$txtUrlError}
 						</li>
 					</ul>
 				</div>
@@ -247,18 +247,23 @@
 				<div class="generalMessage singleMessage infoMessage">
 					<p>{$msgTemplateChangeWarning}</p>
 				</div>
-				<ul id="templateList">
-				{iteration:templates}
-					<li>
-						<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
-						<div class="templateVisual current">
-							{$templates.html}
-						</div>
-					</li>
-				{/iteration:templates}
-				</ul>
+				<div id="templateList">
+					<ul>
+						{iteration:templates}
+					{option:templates.break}
+					</ul>
+					<ul class="last">
+					{/option:templates.break}
+							<li>
+								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
+								<div class="templateVisual current">
+									{$templates.html}
+								</div>
+							</li>
+						{/iteration:templates}
+					</ul>
+				</div>
 			</div>
-
 		</div>
 		<div id="tabTags">
 			<div class="subtleBox">
@@ -285,12 +290,12 @@
 	</div>
 	<div class="fullwidthOptions">
 		{option:showDelete}
-			<a href="{$var|geturl:'delete'}&amp;id={$recordid}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 				<p>
-					{$msgConfirmDelete|sprintf:{$recordtitle}}
+					{$msgConfirmDelete|sprintf:{$item['title']}}
 				</p>
 			</div>
 		{/option:showDelete}
@@ -304,7 +309,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 		// the ID of the page
-		var pageID = {$recordid};
+		var pageID = {$item['id']};
 
 		// all the possible templates
 		var templates = {};
