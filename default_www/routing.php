@@ -7,6 +7,7 @@
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
  * @author			Davy Hellemans <davy@netlash.com>
+ * @author			Dieter Vanden Eynde <dieter@netlash.com>
  * @since			2.0
  */
 class ApplicationRouting
@@ -33,6 +34,9 @@ class ApplicationRouting
 	 */
 	public function __construct()
 	{
+		// spoof querystring on lighttp
+		$this->spoofQueryString();
+
 		// process querystring
 		$this->processQueryString();
 
@@ -81,6 +85,43 @@ class ApplicationRouting
 		// define APP
 		if(!defined('APPLICATION')) define('APPLICATION', $application);
 		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', $proposedApplication);
+	}
+
+
+	/**
+	 * Spoof QUERY_STRING when on a lighttp webserver
+	 *
+	 * Lighttp does not fill up the QUERY_STRING var when using rewrites or the error handler.
+	 * This function fakes the QUERY_STRING.
+	 *
+	 * PHP uses QUERY_STRING to fill up the GET array. Without this fix GET would be empty
+	 *
+	 * @return	void
+	 */
+	public static function spoofQueryString()
+	{
+		// its a lighttp server
+		if(strpos($_SERVER['SERVER_SOFTWARE'], 'lighttpd') !== false)
+		{
+			// build current url (we need a valid url to use parse_url)
+			$url = 'http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+
+			// get querystring
+			$queryString = @parse_url($url, PHP_URL_QUERY);
+
+			// successfuly parsed
+			if($queryString !== false)
+			{
+				// spoof the query string
+				$_SERVER['QUERY_STRING'] = (string) $queryString;
+
+				// parse querystring to array
+				parse_str($queryString, $get);
+
+				// spoof get
+				foreach($get as $key => $val) $_GET[$key] = $val;
+			}
+		}
 	}
 }
 
