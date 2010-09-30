@@ -275,7 +275,8 @@ label {
 	}
 
 	.oneLiner label,
-	.oneLiner p.label { float: left; line-height: 20px; padding: 2px 4px 2px 0;}
+	.oneLiner p.label,
+	.oneLiner p label { float: left; line-height: 20px; padding: 2px 4px 2px 0;}
 
 	.oneLiner input.inputText, 
 	.oneLiner input.inputPassword,
