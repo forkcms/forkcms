@@ -138,6 +138,20 @@
 #templateList {
 }
 
+
+/* Columns */
+
+#templateList ul {
+	float: left;
+	padding-right: 12px;
+	width: 452px;
+}
+
+#templateList ul.lastChild {
+	padding-right: 0;
+}
+
+
 #templateList li {
 	
 	/* @inc .rc */

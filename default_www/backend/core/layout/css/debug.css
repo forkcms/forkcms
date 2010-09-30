@@ -33,10 +33,6 @@ img {
 thead th.dragAndDropHandle, tr td.dragAndDropHandle { width: 16px; padding: 0; cursor: move; }
 thead th.dragAndDropHandle span { padding: 0; }
 
-/* columns in template chooser */
-#templateList ul { float: left; width: 450px; margin-right: 14px; }
-#templateList ul.last, #templateList ul:last-child { margin-right: 0; }
-
 /*
 	Alt warning
 */

@@ -230,7 +230,7 @@
 						{iteration:templates}
 					{option:templates.break}
 					</ul>
-					<ul class="last">
+					<ul class="lastChild">
 					{/option:templates.break}
 							<li>
 								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
