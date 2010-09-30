@@ -57,7 +57,7 @@ class FrontendBlogModel
 																INNER JOIN blog_categories AS c ON i.category_id = c.id
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
-																ORDER BY i.publish_on DESC
+																ORDER BY i.publish_on DESC, i.id DESC
 																LIMIT ?, ?;',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (int) $offset, (int) $limit), 'id');
 
@@ -363,9 +363,9 @@ class FrontendBlogModel
 		$comments = (array) FrontendModel::getDB()->getRecords('SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text, c.data,
 																c.author, c.email, c.website
 																FROM blog_comments AS c
-																WHERE c.post_id = ? AND c.status = ?
+																WHERE c.post_id = ? AND c.status = ? AND c.language = ?
 																ORDER BY c.created_on ASC;',
-																array((int) $id, 'published'));
+																array((int) $id, 'published', FRONTEND_LANGUAGE));
 
 		// loop comments
 		foreach($comments as &$row) $row['gravatar_id'] = md5($row['email']);
@@ -447,13 +447,13 @@ class FrontendBlogModel
 		$db = FrontendModel::getDB();
 
 		// get date for current item
-		$date = (int) $db->getVar('SELECT UNIX_TIMESTAMP(i.publish_on)
+		$date = (string) $db->getVar('SELECT i.publish_on
 									FROM blog_posts AS i
 									WHERE i.id = ?;',
 									array($id));
 
 		// validate
-		if($date == 0) return array();
+		if($date == '') return array();
 
 		// init var
 		$return = array();
@@ -462,19 +462,19 @@ class FrontendBlogModel
 		$return['previous'] = $db->getRecord('SELECT i.id, i.title, m.url
 											FROM blog_posts AS i
 											INNER JOIN meta AS m ON i.meta_id = m.id
-											WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on < ? AND i.id != ?
+											WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ?
 											ORDER BY i.publish_on DESC
 											LIMIT 1;',
-											array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i:s', $date), $id));
+											array($id, 'active', 'N', FRONTEND_LANGUAGE, $date));
 
 		// get next post
 		$return['next'] = $db->getRecord('SELECT i.id, i.title, m.url
 											FROM blog_posts AS i
 											INNER JOIN meta AS m ON i.meta_id = m.id
-											WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on > ? AND i.publish_on <= ?
+											WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on > ?
 											ORDER BY i.publish_on ASC
 											LIMIT 1;',
-											array('active', FRONTEND_LANGUAGE, 'N', date('Y-m-d H:i:s', $date), FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
+											array($id, 'active', 'N', FRONTEND_LANGUAGE, $date));
 
 		// return
 		return $return;
@@ -500,7 +500,7 @@ class FrontendBlogModel
 																i.id AS post_id, i.title AS post_title,
 																m.url AS post_url
 																FROM blog_comments AS c
-																INNER JOIN blog_posts AS i ON c.post_id = i.id
+																INNER JOIN blog_posts AS i ON c.post_id = i.id AND c.language = i.language
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 																ORDER BY c.created_on DESC
@@ -545,9 +545,9 @@ class FrontendBlogModel
 		// get count of unmoderated items
 		$badge = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id)
 														FROM blog_comments AS i
-														WHERE i.status = ?
+														WHERE i.status = ? AND i.language = ?
 														GROUP BY i.status;',
-														array('moderation'));
+														array('moderation', FRONTEND_LANGUAGE));
 
 		// reset if needed
 		if($badge == 0) $badge = null;

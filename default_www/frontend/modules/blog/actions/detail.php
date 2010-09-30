@@ -223,6 +223,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// assign settings
 		$this->tpl->assign('blogSettings', $this->settings);
 
+//		Spoon::dump(FrontendBlogModel::getNavigation($this->record['id']));
+
 		// assign navigation
 		$this->tpl->assign('blogNavigation', FrontendBlogModel::getNavigation($this->record['id']));
 	}
@@ -284,6 +286,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 				// build array
 				$comment['post_id'] = $this->record['id'];
+				$comment['language'] = FRONTEND_LANGUAGE;
 				$comment['created_on'] = FrontendModel::getUTCDate();
 				$comment['author'] = $author;
 				$comment['email'] = $email;

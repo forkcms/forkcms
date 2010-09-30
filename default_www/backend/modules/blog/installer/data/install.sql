@@ -10,6 +10,7 @@ CREATE TABLE IF NOT EXISTS `blog_categories` (
 CREATE TABLE IF NOT EXISTS `blog_comments` (
   `id` int(11) NOT NULL auto_increment,
   `post_id` int(11) NOT NULL,
+  `language` varchar(5) collate utf8_unicode_ci NOT NULL,
   `created_on` datetime NOT NULL,
   `author` varchar(255) collate utf8_unicode_ci NOT NULL,
   `email` varchar(255) collate utf8_unicode_ci NOT NULL,

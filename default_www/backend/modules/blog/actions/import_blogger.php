@@ -222,6 +222,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 
 		// build array
 		$item['post_id'] = $this->newIds[$postID];
+		$item['language'] = BL::getWorkingLanguage();
 		$item['created_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->published));
 		$item['author'] = (string) $xml->author->name;
 		$item['email'] = (string) $xml->author->email;

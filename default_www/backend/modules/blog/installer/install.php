@@ -151,6 +151,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'InTheCategory', 'in de categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'BlogArchive', 'blogarchief');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextArticle', 'volgend bericht');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousArticle', 'vorig bericht');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentArticles', 'recente artikels');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoComments', 'Reageer als eerste');
@@ -184,6 +186,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'BlogArchive', 'blog archive');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NextArticle', 'next article');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'PreviousArticle', 'previous article');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentArticles', 'recent articles');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Wrote', 'wrote');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoComments', 'Be the first to comment');

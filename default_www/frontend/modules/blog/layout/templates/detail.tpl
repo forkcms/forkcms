@@ -11,7 +11,7 @@
 		<div class="heading">
 			<h1>{$blogArticle['title']}</h1>
 			<p class="date">
-				{$blogArticle['publish_on']|date:{$dateFormatLong}:{$LANGUAGE}} - 
+				{$blogArticle['publish_on']|date:{$dateFormatLong}:{$LANGUAGE}} -
 				{option:!blogComments}<a href="{$blogArticle['full_url']}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogComments}
 				{option:blogComments}
 					{option:blogCommentsMultiple}<a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogCommentsCount}}</a>{/option:blogCommentsMultiple}
@@ -31,12 +31,12 @@
 		<ul>
 			{option:blogNavigation['previous']}
 			<li class="previousLink">
-				<a href="{$blogNavigation['previous']['url']}" rel="prev">Vorig bericht: <em>{$blogNavigation['previous']['title']}</em></a>
+				<a href="{$blogNavigation['previous']['url']}" rel="prev">{$lblPreviousArticle|ucfirst}: <em>{$blogNavigation['previous']['title']}</em></a>
 			</li>
 			{/option:blogNavigation['previous']}
 			{option:blogNavigation['next']}
 			<li class="nextLink">
-				<a href="{$blogNavigation['next']['url']}" rel="next">Volgend bericht: <em>{$blogNavigation['next']['title']}</em></a>
+				<a href="{$blogNavigation['next']['url']}" rel="next">{$lblNextArticle|ucfirst}: <em>{$blogNavigation['next']['title']}</em></a>
 			</li>
 			{/option:blogNavigation['next']}
 		</ul>
