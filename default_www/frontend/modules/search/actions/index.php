@@ -42,7 +42,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $stats = array();
+	private $statistics = array();
 
 
 	/**
@@ -68,7 +68,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->display();
 
 		// save statistics
-		$this->saveStats();
+		$this->saveStatistics();
 	}
 
 
@@ -117,14 +117,14 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		if(!$this->term) return;
 
 		// get amount of results
-		$this->stats['num_results'] = FrontendSearchModel::getTotal($this->term);
+		$this->statistics['num_results'] = FrontendSearchModel::getTotal($this->term);
 
 		// set url
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q='. $this->term;
 		$this->pagination['limit'] = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
 
 		// populate count fields in pagination
-		$this->pagination['num_items'] = $this->stats['num_results'];
+		$this->pagination['num_items'] = $this->statistics['num_results'];
 		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
 		// num pages is always equal to at least 1
@@ -203,13 +203,13 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 *
 	 * @return	void
 	 */
-	private function saveStats()
+	private function saveStatistics()
 	{
 		// don't save?
-		if(!isset($this->stats['term'])) return;
+		if(!isset($this->statistics['term'])) return;
 
 		// save data
-		FrontendSearchModel::save($this->stats);
+		FrontendSearchModel::save($this->statistics);
 	}
 
 
@@ -243,10 +243,10 @@ class FrontendSearchIndex extends FrontendBaseBlock
 				if($previousTerm != $this->term)
 				{
 					// format data
-					$this->stats['term'] = $this->term;
-					$this->stats['language'] = FRONTEND_LANGUAGE;
-					$this->stats['time'] = FrontendModel::getUTCDate();
-					$this->stats['data'] = serialize(array('server' => $_SERVER));
+					$this->statistics['term'] = $this->term;
+					$this->statistics['language'] = FRONTEND_LANGUAGE;
+					$this->statistics['time'] = FrontendModel::getUTCDate();
+					$this->statistics['data'] = serialize(array('server' => $_SERVER));
 				}
 
 				// save in cookie
