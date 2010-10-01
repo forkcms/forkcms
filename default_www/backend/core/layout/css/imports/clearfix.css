@@ -12,14 +12,7 @@
 
 */
 
-.clearfix:after,
-#contentHolder:after,
-.columns:after,
-.section:after,
-.oneLiner:after,
-.buttonHolder:after,
-.buttonHolderSingle:after,
-.buttonHolderRight:after {
+.clearfix:after {
 	content: ".";
 	display: block;
 	height: 0;

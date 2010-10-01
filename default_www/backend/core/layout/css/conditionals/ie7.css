@@ -16,12 +16,6 @@
 */
 
 .clearfix,
-#content,
-.columns,
-.section,
-.oneLiner,
-.buttonHolder,
-.buttonHolderSingle,
-.buttonHolderRight {
+.columns {
 	zoom: 1;
 }

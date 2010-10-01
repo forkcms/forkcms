@@ -10,33 +10,15 @@
 
 */
 
-/*
-	Work in progress activecollab reminder
-	@todo @johan remove when we have a release
-*/
-
-	#wip p {
-		text-align: center;
-		font-size: 11px;
-		padding-top: 12px;
-	}
-
-
 #dashboardWidgets {
 	padding: 12px 0;
-	zoom: 1;
-
 	border-top: 1px solid #DDD;
+	zoom: 1;
 }
 
-#dashboardWidgets:after {
-	/* @inc .clearfix */
-	content: ".";
-	display: block;
-	height: 0;
-	clear: both;
-	visibility: hidden;
-}
+	#dashboardWidgets:after {
+		/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+	}
 
 #dashboardWidgets .leftColumn,
 #dashboardWidgets .middleColumn,

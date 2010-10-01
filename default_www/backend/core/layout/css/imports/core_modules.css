@@ -274,10 +274,10 @@
 
 		/* Less important tabs go on the right side */
 
-		#pages.pagesAddEdit #contentHolder .ui-tabs-nav li { float: right; }
-		#pages.pagesAddEdit #contentHolder .ui-tabs-nav li:first-child { float: left; }
+		#pages.pagesAddEdit .ui-tabs-nav li { float: right; }
+		#pages.pagesAddEdit .ui-tabs-nav li:first-child { float: left; }
 
-		#pages.pagesAddEdit #contentHolder .ui-tabs-nav li:nth-child(2) {
+		#pages.pagesAddEdit .ui-tabs-nav li:nth-child(2) {
 			margin-right: 0;
 		}
 

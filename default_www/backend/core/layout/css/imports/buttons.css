@@ -230,3 +230,20 @@ a.icon span {
 .ui-icon-closethick {
 	background: url(/backend/core/layout/images/sprites/fork_icons.png) no-repeat 0 -220px;
 }
+
+/*
+	Clearfix
+*/
+
+.buttonHolder,
+.buttonHolderSingle,
+.buttonHolderRight {
+	zoom: 1;
+}
+
+.buttonHolder:after,
+.buttonHolderSingle:after,
+.buttonHolderRight:after {
+	/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+}
+

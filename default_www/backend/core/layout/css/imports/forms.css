@@ -165,13 +165,17 @@ input[type="submit"] {
 	border-bottom: 1px solid #E2E2E2;
 }
 
+	/* Clearfix */
+	.forkForms .section { zoom: 1; }
+	.forkForms  .section:after { /* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
 .forkForms p,
 .forkForms .fakeP,
-.textareaHolder {
+.forkForms .textareaHolder {
 	padding: 0 0 12px;
 }
 
-label {
+.forkForms label {
 	font-weight: 700;
 	color: #4A4A4A;
 	font-size: 11px;
@@ -283,7 +287,11 @@ label {
 	.oneLiner input[type="text"], 
 	.oneLiner input[type="password"],
 	.oneLiner input.inputDatefieldRange { float: left; }
-	
+
+	/* Clearfix */
+	.oneLiner { zoom: 1; }
+	.oneLiner:after { /* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
 /*
 	Item adder
 */
