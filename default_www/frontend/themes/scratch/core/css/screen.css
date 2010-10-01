@@ -184,6 +184,7 @@ body {
 }
 
 #container {
+	position: relative;
 	background: #FFF;
 	width: 880px;
 	margin: 20px auto;
@@ -218,11 +219,46 @@ body {
 			border: none;
 		}
 
+/*
+	Language
+	Used when the site has multiple languages
+*/
+
 #language {
 	position: absolute;
-	right: 0;
-	top: 0;
+	right: 20px;
+	top: 20px;
 }
+
+	/* Clearfix */
+	#navigation { zoom: 1; }
+	#navigation ul:after {
+		/* @inc .clearfix */ content: "."; display: block; height: 0; clear: both; visibility: hidden;
+	}
+
+	#language li {
+		float: left;
+		margin-right: 1px;
+		font-size: 12px;
+		text-align: center;
+	}
+
+	#language li a:link,
+	#language li a:visited {
+		display: block;
+		background: #AAA;
+		padding: 2px 0;
+		width: 24px;
+		color: #FFF;
+		border: none;
+	}
+
+	#language li a:hover,
+	#language li a:active,
+	#language li a:focus,
+	#language li.selected a {
+		background: #444;
+	}
 
 #navigation {
 	background: #444;

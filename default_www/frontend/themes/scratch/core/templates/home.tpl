@@ -5,7 +5,9 @@
 
 		<div id="header">
 			<h1><a href="/">{$siteTitle}</a></h1>
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
+			<div id="language">
+				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
+			</div>
 			<div id="navigation">
 				{$var|getnavigation:'page':0:1}
 			</div>
