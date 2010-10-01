@@ -26,6 +26,7 @@ $(document).ready(function() {
 	$('#languages input:checkbox').bind('change', function() {
 		$('#defaultLanguage option').attr('disabled', 'disabled');
 		$('#languages input:checked').each(function() { $('#defaultLanguage option[value='+ $(this).val() +']').attr('disabled', ''); });
+		$('#defaultLanguage').val($('#defaultLanguage option:enabled:first').val());
 	});
 	
 	// single languages
