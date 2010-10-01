@@ -13,6 +13,7 @@
 		<p>
 			<label for="database">Database<abbr title="Required field">*</abbr></label>
 			{$txtDatabase} {$txtDatabaseError}
+			<span class="helpTxt">Make sure this database is empty!</span>
 		</p>
 		<p>
 			<label for="username">Username<abbr title="Required field">*</abbr></label>
