@@ -1,16 +1,9 @@
-<p>Welcome to the new Fork CMS blog.</p>
-<h4>What?</h4>
-<p>We are open sourcing our content management system for the world to use. Fork CMS has been in use internally at our company for over three years. We’re building a new major version and you’re invited to the ride. We’re committed to building the best CMS out there.</p>
-<h4>Why?</h4>
-<p>Our main goal is to help anyone responsible for a website kick ass at their job. To enable them to communicate their message they way they want to. To start a conversation.</p>
-<p>Too many websites don’t change for over a year because they require a call to a web developer to update. That guy then sends over his bill and is frustrated that all of his clients can’t figure out his CMS. Those CMSes are either super-hacked <a href="http://wordpress.org">Wordpress</a> installs that nobody “gets” anymore, or overly complicated <a href="http://drupal.org">Drupal</a>/<a href="http://joomla.com">Joomla</a> installs that no non-developer dares to update.</p>
-<p>We believe that the launch of a website is just the start. We believe anyone should be able to update any part of a website. We believe in a user interface without developer-speak. We believe putting something into a setting is a sign of weakness. We think modes make confusing software, and that a UI should be as simple as possible.</p>
-<p>We are web developers. We want to code in a friendly and clean environment. We want structure and cleanliness. We hate trailing whitespace. We built a tool to help us create the best websites possible. Joel Spolsky says you have to define what your company is about.</p>
-<blockquote>
-<p>(…) if you can’t explain your mission in the form, “We help $TYPEOFPERSON be awesome at $THING,” you are not going to have passionate users. What’s your tagline? Can you fit it into that template?</p>
-</blockquote>
-<p>We help website owners to be awesome at communication.</p>
-<h4>Who?</h4>
-<p>We are <a href="http://www.netlash.com">Netlash</a>, a web agency based in Ghent, Belgium. We’re eighteen people who build websites day in, day out. We build small business websites like Equazion. We build e-commerce shops like Cookstore and community websites like AB Concerts. In order to make these websites awesome, we built Fork CMS.</p>
-<h4>Stay up to date</h4>
-<p>Subscribe to the <a href="/nl/blog/rss">RSS feed</a>.</p>
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+<ul>
+	<li>Consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.</li>
+	<li>Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+	<li>Esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</li>
+</ul>
+
+<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
