@@ -42,7 +42,7 @@ $navigation[5]['children'][3] = array('url' => 'settings/themes', 'label' => 'Th
 $navigation[5]['children'][3]['children'][0] = array('url' => 'settings/themes', 'label' => 'ThemesSelection');
 $navigation[5]['children'][3]['children'][1] = array('url' => 'pages/templates', 'label' => 'Templates', 'selected_for' => array('pages/add_template', 'pages/edit_template'));
 $navigation[5]['children'][4] = array('url' => 'locale/index', 'label' => 'Translations', 'selected_for' => array('locale/add', 'locale/edit', 'locale/analyse'));
-$navigation[5]['children'][5] = array('url' => 'blog/settings', 'label' => 'Modules');
+$navigation[5]['children'][5] = array('url' => 'analytics/settings', 'label' => 'Modules');
 $navigation[5]['children'][5]['children'][0] = array('url' => 'analytics/settings', 'label' => 'Analytics');
 $navigation[5]['children'][5]['children'][1] = array('url' => 'blog/settings', 'label' => 'Blog');
 $navigation[5]['children'][5]['children'][2] = array('url' => 'search/settings', 'label' => 'Search');

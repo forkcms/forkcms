@@ -423,6 +423,9 @@ class Init
 	 */
 	private function setDebugging()
 	{
+		// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
+		set_error_handler(array('Init', 'errorHandler'));
+
 		// debugging enabled
 		if(SPOON_DEBUG)
 		{
@@ -431,9 +434,6 @@ class Init
 
 			// show errors on the screen
 			ini_set('display_errors', 'On');
-
-			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
-			set_error_handler(array('Init', 'errorHandler'));
 		}
 
 		// debugging disabled
