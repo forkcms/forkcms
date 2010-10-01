@@ -135,9 +135,6 @@
 	(in jQuery modal)
 */
 
-#templateList {
-}
-
 
 /* Columns */
 
@@ -151,9 +148,9 @@
 	padding-right: 0;
 }
 
-
 #templateList li {
-	
+	margin: 0 0 12px;
+
 	/* @inc .rc */
 	border-radius: 4px;
 	-webkit-border-radius: 4px;
