@@ -47,10 +47,13 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		// create form
 		$this->frm = new BackendForm('add');
 
+		// init var
+		$maximumBlocks = 20;
+
 		// create elements
 		$this->frm->addText('label');
 		$this->frm->addText('file');
-		$this->frm->addDropdown('num_blocks', array_combine(range(1, 20), range(1, 20)), 3);
+		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), 3);
 		$this->frm->addTextarea('format');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('default');
@@ -78,7 +81,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 								ucfirst(BL::getLabel('Widgets')) => $widgets);
 
 		// add some fields
-		for($i = 1; $i <= 10; $i++)
+		for($i = 1; $i <= $maximumBlocks; $i++)
 		{
 			$names[$i]['i'] = $i;
 			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i);

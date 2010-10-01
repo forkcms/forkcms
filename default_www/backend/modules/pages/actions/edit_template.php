@@ -88,10 +88,13 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// create form
 		$this->frm = new BackendForm('edit');
 
+		// init var
+		$maximumBlocks = 20;
+
 		// create elements
 		$this->frm->addText('label', $this->record['label']);
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
-		$this->frm->addDropdown('num_blocks', array_combine(range(1, 20), range(1, 20)), $this->record['num_blocks']);
+		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), $this->record['num_blocks']);
 		if(BackendPagesModel::isTemplateInUse($this->id)) $this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
 		$this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
@@ -120,7 +123,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 								ucfirst(BL::getLabel('Widgets')) => $widgets);
 
 		// add some fields
-		for($i = 1; $i <= 10; $i++)
+		for($i = 1; $i <= $maximumBlocks; $i++)
 		{
 			// grab values
 			$name = isset($this->record['data']['names'][$i - 1]) ? $this->record['data']['names'][$i - 1] : null;
