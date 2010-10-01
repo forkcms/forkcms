@@ -4,7 +4,7 @@ FileETag MTime Size
 # caching
 <IfModule mod_expires.c>
 	ExpiresActive On
-	<FilesMatch "\.(ico|gif|jpe?g|png|js|css|swf)$">
+	<FilesMatch "\.(ico|gif|jpe?g|png|svg|svgz|js|css|swf|ttf|otf|woff|eot)$">
 		ExpiresDefault "access plus 1 month" 
 	</FilesMatch>
 </IfModule>

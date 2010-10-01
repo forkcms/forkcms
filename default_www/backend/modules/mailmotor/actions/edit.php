@@ -1,0 +1,622 @@
+<?php
+
+/**
+ * BackendMailmotorEdit
+ * This is the edit-action, it will display a form to edit a mailing
+ *
+ * @package		backend
+ * @subpackage	mailmotor
+ *
+ * @author		Dave Lens <dave@netlash.com>
+ * @since		2.0
+ */
+class BackendMailmotorEdit extends BackendBaseActionEdit
+{
+	/**
+	 * The full HTML content of the e-mail
+	 *
+	 * @var	string
+	 */
+	private $fullHTMLContent;
+
+
+	/**
+	 * Bool that represents if the plain-text box should be shown
+	 *
+	 * @var	bool
+	 */
+	private $showPlainTextBox = true;
+
+
+	/**
+	 * The step ID
+	 *
+	 * @var	int
+	 */
+	private $stepId;
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// get parameters
+		$this->id = $this->getParameter('id', 'int');
+
+		// get the step
+		$this->stepId = SpoonFilter::getGetValue('step', array(1, 2, 3, 4), 1, 'int');
+
+		// does the item exist
+		if(BackendMailmotorModel::existsMailing($this->id))
+		{
+			// call parent, this will probably add some general CSS/JS or other required files
+			parent::execute();
+
+			// load jquery tiny
+			$this->header->addJavascript('tiny_mce/jquery.tinymce.js', 'core');
+
+			// get all data for the item we want to edit
+			$this->getData();
+
+			// load the wizard steps
+			$this->loadWizardSteps();
+
+			// load the appropriate step
+			$this->{'loadStep'. $this->stepId}();
+
+			// parse the datagrid
+			$this->parse();
+
+			// display the page
+			$this->display();
+		}
+
+		// no item found, throw an exceptions, because somebody is fucking with our URL
+		else $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=non-existing');
+	}
+
+
+	/**
+	 * Get the data
+	 * If a revision-id was specified in the URL we load the revision and not the actual data
+	 *
+	 * @return	void
+	 */
+	private function getData()
+	{
+		// get the record
+		$this->record = (array) BackendMailmotorModel::getMailing($this->id);
+
+		// no item found, throw an exceptions, because somebody is fucking with our URL
+		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=non-existing');
+	}
+
+
+	/**
+	 * Load the confirmation dialog
+	 *
+	 * @return	void
+	 */
+	private function loadConfirmationDialog()
+	{
+		// load statistics
+		$groups = BackendMailmotorModel::getGroupsByIds($this->record['groups']);
+
+		// fetch the campaign
+		$campaign = BackendMailmotorModel::getCampaign($this->record['campaign_id']);
+
+		// fetch the template
+		$template = BackendMailmotorModel::getTemplate($this->record['language'], $this->record['template']);
+
+		// declare stats array
+		$stats = array();
+		$stats['recipients'] = count($this->record['recipients']);
+		$stats['mailing'] = $this->record['name'];
+		$stats['label_persons'] = ($stats['recipients'] > 1) ? BL::getLabel('Persons', 'core') : BL::getLabel('Person', 'core');
+
+		// campaign was set
+		if(!empty($campaign))
+		{
+			// set data
+			$stats['message'] = BL::getMessage('RecipientStatisticsCampaign', 'mailmotor');
+			$stats['campaign'] = $campaign['name'];
+
+			// assign the recipient statistics variable
+			$this->tpl->assign('recipientStatistics', sprintf($stats['message'], $stats['mailing'], $stats['campaign'], $stats['recipients'], $stats['label_persons']));
+		}
+
+		// campaign was not set
+		else
+		{
+			// set data
+			$stats['message'] = BL::getMessage('RecipientStatisticsNoCampaign', 'mailmotor');
+
+			// assign the recipient statistics variable
+			$this->tpl->assign('recipientStatistics', sprintf($stats['message'], $stats['mailing'], $stats['recipients'], $stats['label_persons']));
+		}
+
+		// add comma separator to groups
+		if(!empty($groups))
+		{
+			// fetch the last key in this array
+			$lastRecord = end($groups);
+
+			// loop the groups
+			foreach($groups as $key => &$group)
+			{
+				// add comma field to the groups if this is not the last item
+				if($lastRecord['id'] != $key) $group['comma'] = true;
+			}
+		}
+
+		// assign the groups to the template
+		$this->tpl->assign('groups', $groups);
+
+		// assign the template language
+		$this->tpl->assign('templateLanguage', ucfirst(BL::getLabel(strtoupper($template['language']))));
+
+		// get the price setting
+		$price = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
+
+		// parse the price total
+		$this->tpl->assign('price', $stats['recipients'] * $price);
+	}
+
+
+	/**
+	 * Load the form for step 1
+	 *
+	 * @return	void
+	 */
+	private function loadFormForStep1()
+	{
+		// create form
+		$this->frm = new BackendForm('step1');
+
+		// fetch the campaigns
+		$campaigns = BackendMailmotorModel::getCampaignsAsPairs();
+
+		// fetch the groups
+		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
+
+		// fetch the languages
+		$languages = BackendMailmotorModel::getLanguagesForCheckboxes();
+
+		// settings
+		$this->frm->addText('name', $this->record['name']);
+		if(count($campaigns) > 1) $this->frm->addDropdown('campaign', $campaigns, $this->record['campaign_id']);
+
+		// sender
+		$this->frm->addText('from_name', $this->record['from_name']);
+		$this->frm->addText('from_email', $this->record['from_email']);
+
+		// reply-to address
+		$this->frm->addText('reply_to_email', $this->record['reply_to_email']);
+
+		// groups
+		$this->frm->addMultiCheckbox('groups', $groups, $this->record['groups']);
+
+		// languages
+		$this->frm->addRadiobutton('languages', $languages, $this->record['language']);
+
+		// show the form
+		$this->tpl->assign('step1', true);
+	}
+
+
+	/**
+	 * Load the form for step 2
+	 *
+	 * @return	void
+	 */
+	private function loadFormForStep2()
+	{
+		// create form
+		$this->frm = new BackendForm('step2');
+
+		// fetch the templates
+		$templates = BackendMailmotorModel::getTemplatesForCheckboxes($this->record['language']);
+
+		// no templates found
+		if(empty($templates)) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=1&amp;error=no-templates');
+
+		// loop the templates
+		foreach($templates as &$record)
+		{
+			// reformat custom variables
+			$record['variables'] = array('language' => $record['language']);
+
+			// set selected template
+			if($record['value'] == $this->record['template']) $record['variables']['selected'] = true;
+
+			// unset the language field
+			unset($record['language']);
+		}
+
+		// templates
+		$this->frm->addRadiobutton('templates', $templates, (!empty($this->record['template']) ? $this->record['template'] : null));
+
+		// show the form
+		$this->tpl->assign('step2', true);
+	}
+
+
+	/**
+	 * Load the form for step 3
+	 *
+	 * @return	void
+	 */
+	private function loadFormForStep3()
+	{
+		// check if we have to redirect back to step 2 (template is not set)
+		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=2&amp;error=complete-step-2');
+
+		// check if we should show the plain text box
+		$this->showPlainTextBox = BackendModel::getModuleSetting('mailmotor', 'plain_text_editable');
+
+		// create form
+		$this->frm = new BackendForm('step3');
+
+		// subject
+		$this->frm->addText('subject', $this->record['subject']);
+		$this->frm->addTextarea('content_html', $this->record['content_html']);
+		if($this->showPlainTextBox)
+		{
+			$this->frm->addTextarea('content_plain', $this->record['content_plain']);
+			$this->frm->getField('content_plain')->setAttribute('style', 'width: 99%;');
+		}
+
+		// show the form
+		$this->tpl->assign('step3', true);
+	}
+
+
+	/**
+	 * Load the form for step 4
+	 *
+	 * @return	void
+	 */
+	private function loadFormForStep4()
+	{
+		// check if we have to redirect back to step 3 (HTML content is not set)
+		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3&amp;error=complete-step-3');
+
+		// parse the preview URL
+		$this->tpl->assign('previewURL', BackendMailmotorModel::getMailingPreviewURL($this->record['id']));
+
+		// create form
+		$this->frm = new BackendForm('step4');
+
+		// subject
+		$this->frm->addText('email');
+		$this->frm->addDate('send_on_date', $this->record['send_on']);
+		$this->frm->addTime('send_on_time', SpoonDate::getDate('H:i', $this->record['send_on']));
+
+		// show the form
+		$this->tpl->assign('step4', true);
+	}
+
+
+	/**
+	 * Loads step one
+	 *
+	 * @return	void
+	 */
+	private function loadStep1()
+	{
+		// load the form
+		$this->loadFormForStep1();
+
+		// validate the form
+		$this->validateFormForStep1();
+	}
+
+
+	/**
+	 * Loads step two
+	 *
+	 * @return	void
+	 */
+	private function loadStep2()
+	{
+		// load the form
+		$this->loadFormForStep2();
+
+		// validate the form
+		$this->validateFormForStep2();
+	}
+
+
+	/**
+	 * Loads step three
+	 *
+	 * @return	void
+	 */
+	private function loadStep3()
+	{
+		// load the form
+		$this->loadFormForStep3();
+	}
+
+
+	/**
+	 * Loads step four
+	 *
+	 * @return	void
+	 */
+	private function loadStep4()
+	{
+		// load the confirmation dialog
+		$this->loadConfirmationDialog();
+
+		// load the form
+		$this->loadFormForStep4();
+
+		// validate the form
+		$this->validateFormForStep4();
+	}
+
+
+	/**
+	 * Loads the wizard
+	 *
+	 * @return	void
+	 */
+	private function loadWizardSteps()
+	{
+		// check if this template path exists
+		$templatePath = SpoonDirectory::exists(BACKEND_MODULE_PATH .'/templates/'. $this->record['language'] .'/'. $this->record['template']);
+
+		// set wizard values
+		$wizard = array();
+		$wizard[1] = array('id' => 1, 'label' => BL::getLabel('WizardInformation'));
+		$wizard[2] = array('id' => 2, 'label' => BL::getLabel('WizardTemplate'));
+		$wizard[3] = array('id' => 3, 'label' => BL::getLabel('WizardContent'));
+		$wizard[4] = array('id' => 4, 'label' => BL::getLabel('WizardSend'));
+
+		// load the appropriate selected classes
+		$wizard[$this->stepId]['selected'] = true;
+
+		// loop the wizard steps
+		foreach($wizard as &$step)
+		{
+			// if the current active step equals this loop's ID + 1, this list item will need the beforeSelected class
+			if(($step['id'] + 1) == $this->stepId) $step['beforeSelected'] = true;
+
+			// make the step link visible if we already passed this step
+			if($step['id'] <= $this->stepId) $step['stepLink'] = true;
+
+			// make the step link visible if this is step 2
+			if($step['id'] == 2) $step['stepLink'] = true;
+
+			// make the step link visible if this is step 3 and the template is already set
+			if($step['id'] == 3 && !empty($this->record['template']) && $templatePath) $step['stepLink'] = true;
+
+			// make the step link visible if this is step 4 and the subject/content_html is already set
+			if($step['id'] == 4 && !empty($this->record['content_html'])) $step['stepLink'] = true;
+		}
+
+		// assign iteration to the template
+		$this->tpl->assign('wizard', $wizard);
+	}
+
+
+	/**
+	 * Parse the active step's form
+	 *
+	 * @return	void
+	 */
+	protected function parse()
+	{
+		// call parent
+		parent::parse();
+
+		// assign the active record and additional variables
+		$this->tpl->assign('mailing', $this->record);
+	}
+
+
+	/**
+	 * Validate the form for step 1
+	 *
+	 * @return	void
+	 */
+	private function validateFormForStep1()
+	{
+		// is the form submitted?
+		if($this->frm->isSubmitted())
+		{
+			// cleanup the submitted fields, ignore fields that were added by hackers
+			$this->frm->cleanupFields();
+
+			// shorten fields
+			$txtName = $this->frm->getField('name');
+			$txtFromName = $this->frm->getField('from_name');
+			$txtFromEmail = $this->frm->getField('from_email');
+			$txtReplyToEmail = $this->frm->getField('reply_to_email');
+			$chkGroups = $this->frm->getField('groups');
+			$rbtLanguages = $this->frm->getField('languages');
+
+			// validate fields
+			if($txtName->isFilled(BL::getError('NameIsRequired')))
+			{
+				if(BackendMailmotorModel::existsMailingByName($txtName->getValue()) && $txtName->getValue() != $this->record['name']) $txtName->addError(BL::getError('MailingAlreadyExists'));
+			}
+			$txtFromName->isFilled(BL::getError('NameIsRequired'));
+			$txtFromEmail->isFilled(BL::getError('EmailIsRequired'));
+			$txtReplyToEmail->isFilled(BL::getError('EmailIsRequired'));
+
+			// set form values
+			$values = $this->frm->getValues();
+
+			// check if at least one recipient group is chosen
+			if(empty($values['groups'])) $chkGroups->addError(BL::getError('ChooseAtLeastOneGroup'));
+			else
+			{
+				// fetch the recipients for these groups
+				$recipients = BackendMailmotorModel::getAddressesByGroupID($values['groups']);
+
+				// if no recipients were found, throw an error
+				if(empty($recipients)) $chkGroups->addError(BL::getError('GroupsNoRecipients'));
+			}
+
+			// check if at least one language is chosen
+			if(empty($values['languages'])) $rbtLanguages->isFilled(BL::getError('FieldIsRequired'));
+
+			// no errors?
+			if($this->frm->isCorrect())
+			{
+				// set values
+				$variables = array();
+				$variables['id'] = $this->id;
+				$variables['name'] = $txtName->getValue();
+				$variables['from_name'] = $txtFromName->getValue();
+				$variables['from_email'] = $txtFromEmail->getValue();
+				$variables['reply_to_email'] = $txtReplyToEmail->getValue();
+				$variables['language'] = $rbtLanguages->getValue();
+				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				if(isset($values['campaign']) && (!empty($values['campaign']) || $values['campaign'] == 0)) $variables['campaign_id'] = $this->frm->getField('campaign')->getValue();
+
+				// update the concept
+				BackendMailmotorModel::updateMailing($variables);
+
+				// update groups for this mailing
+				BackendMailmotorModel::updateGroupsForMailing($this->id, $values['groups']);
+
+				// everything is saved, so redirect to the overview
+				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=2');
+			}
+		}
+	}
+
+
+	/**
+	 * Validate the form for step 2
+	 *
+	 * @return	void
+	 */
+	private function validateFormForStep2()
+	{
+		// is the form submitted?
+		if($this->frm->isSubmitted())
+		{
+			// cleanup the submitted fields, ignore fields that were added by hackers
+			$this->frm->cleanupFields();
+
+			// shorten fields
+			$rbtTemplates = $this->frm->getField('templates');
+
+			// set form values
+			$values = $this->frm->getValues();
+
+			// check if at least one language is chosen
+			if(empty($values['templates'])) $rbtTemplates->isFilled(BL::getError('TemplateIsRequired'));
+
+			// no errors?
+			if($this->frm->isCorrect())
+			{
+				// set values
+				$variables = array();
+				$variables['id'] = $this->id;
+				$variables['template'] = $rbtTemplates->getValue();
+				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+
+				// update the concept
+				BackendMailmotorModel::updateMailing($variables);
+
+				// everything is saved, so redirect to the overview
+				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3');
+			}
+		}
+	}
+
+
+	/**
+	 * Validate the form for step 4
+	 *
+	 * @return	void
+	 */
+	private function validateFormForStep4()
+	{
+		// is the form submitted?
+		if($this->frm->isSubmitted())
+		{
+			// cleanup the submitted fields, ignore fields that were added by hackers
+			$this->frm->cleanupFields();
+
+			// shorten fields
+			$txtEmail = $this->frm->getField('email');
+			$txtSendOnDate = $this->frm->getField('send_on_date');
+			$txtSendOnTime = $this->frm->getField('send_on_time');
+
+			// validation
+			if($txtEmail->isFilled(BL::getError('FieldIsRequired')))
+			{
+				$txtEmail->isEmail(BL::getError('EmailIsInvalid'));
+			}
+			$txtSendOnDate->isValid(BL::getError('DateIsInvalid'));
+			$txtSendOnTime->isValid(BL::getError('TimeIsInvalid'));
+
+			// set form values
+			$values = $this->frm->getValues();
+
+			// no errors?
+			if($this->frm->isCorrect())
+			{
+				/*
+					the actual sending of a mailing happens in ajax/send_mailing.php
+					This, however, is the point where a preview is sent to a specific address.
+				*/
+
+				// require spoon email
+				$email = new SpoonEmail();
+				$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH .'/templates');
+
+				// set from email
+				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting('mailmotor', 'from_email') : $this->record['from_email'];
+				$fromName = empty($this->record['from_name']) ? BackendModel::getModuleSetting('mailmotor', 'from_name') : $this->record['from_name'];
+				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting('mailmotor', 'reply_to_email') : $this->record['reply_to_email'];
+
+				// set headers
+				$email->setFrom($fromEmail, $fromName);
+				$email->setReplyTo($replyToEmail);
+				$email->setSubject('[TEST] '. $this->record['subject']);
+
+				// add recipient(s)
+				$email->addRecipient($txtEmail->getValue());
+
+				// set HTML content
+				$email->setHTMLContent($this->record['data']['full_content_html']);
+
+				// set plain text content
+				if(!empty($this->record['content_plain'])) $email->setPlainContent($this->record['content_plain']);
+
+				// get SMTP info
+				$SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
+				$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
+				$SMTPServer = BackendModel::getModuleSetting('core', 'smtp_server');
+				$SMTPPort = BackendModel::getModuleSetting('core', 'smtp_port');
+
+				// set SMTP authentication
+				if($SMTPUsername !== null && $SMTPPassword !== null)
+				{
+					// set server and connect with SMTP
+					$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+					$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
+				}
+
+				// build URL
+				$url = BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=4';
+
+				// send the preview
+				if($email->send()) $this->redirect($url .'&amp;report=preview-sent&amp;var='. $txtEmail->getValue());
+				else $this->redirect($url .'&amp;error=no-preview-sent&amp;var='. $txtEmail->getValue());
+			}
+		}
+	}
+}
+
+?>

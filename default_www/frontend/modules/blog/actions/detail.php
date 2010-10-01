@@ -223,8 +223,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		// assign settings
 		$this->tpl->assign('blogSettings', $this->settings);
 
-//		Spoon::dump(FrontendBlogModel::getNavigation($this->record['id']));
-
 		// assign navigation
 		$this->tpl->assign('blogNavigation', FrontendBlogModel::getNavigation($this->record['id']));
 	}

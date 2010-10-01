@@ -61,7 +61,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @var	bool
 	 */
-	private $foreCompile = false;
+	private $forceCompile = false;
 
 
 	/**
@@ -989,7 +989,7 @@ class SpoonTemplateCompiler
 	 */
 	public function setForceCompile($on = true)
 	{
-		$this->foreCompile = (bool) $on;
+		$this->forceCompile = (bool) $on;
 	}
 
 

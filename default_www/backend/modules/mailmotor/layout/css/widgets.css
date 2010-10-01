@@ -1,0 +1,27 @@
+/*
+
+    Mailmotor widget
+
+    @package      backend
+    @subpackage   mailmotor
+
+    @author       Yoni De Beule <yoni@netlash.com>
+
+*/
+
+
+/* Compact traffic sources */
+
+#tabMailmotorSubscriptions, #tabMailmotorUnsubscriptions, #tabMailmotorStatistics {
+	max-width: 355px;
+	overflow: hidden;
+	padding: 12px 0 6px 0;
+}
+
+#tabMailmotorSubscriptions .datagridHolder, #tabMailmotorSubscriptions .datagrid tr td, #tabMailmotorUnsubscriptions .datagridHolder, #tabMailmotorUnsubscriptions .datagrid tr td, #tabMailmotorStatistics .datagridHolder, #tabMailmotorStatistics .datagrid tr td {
+	border: 0;
+}
+
+#tabMailmotorSubscriptions thead, #tabMailmotorUnsubscriptions thead, #tabMailmotorStatistics thead {
+	display: none;
+}

@@ -1,0 +1,177 @@
+<?php
+
+/**
+ * BackendMailmotorWidgetStats
+ * This is the classic fork cayenne mailmotor widget
+ *
+ * @package		backend
+ * @subpackage	mailmotor
+ *
+ * @author 		Dave Lens <dave@netlash.com>
+ * @since		2.0
+ */
+class BackendMailmotorWidgetStats extends BackendBaseWidget
+{
+	// max number of items to show per page
+	const PAGING_LIMIT = 10;
+
+
+	/**
+	 * the default group ID
+	 *
+	 * @var	int
+	 */
+	private $groupId;
+
+
+	/**
+	 * Execute the widget
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// add css
+		$this->header->addCSS('widgets.css', 'mailmotor');
+
+		// set column
+		$this->setColumn('right');
+
+		// fetch the default group ID
+		$this->groupId = BackendMailmotorModel::getDefaultGroupID();
+
+		// parse
+		$this->parse();
+
+		// display
+		$this->display();
+	}
+
+
+	/**
+	 * Load the datagrid for statistics
+	 *
+	 * @return	void
+	 */
+	private function loadStatistics()
+	{
+		// fetch the latest mailing
+		$mailing = BackendMailmotorModel::getSentMailings(1);
+
+		// check if a mailing was found
+		if(empty($mailing)) return false;
+
+		// check if a mailing was set
+		if(!isset($mailing[0])) return false;
+		
+		// show the sent mailings block
+		$this->tpl->assign('oSentMailings', true);
+
+		// require the helper class
+		require_once BACKEND_MODULES_PATH .'/mailmotor/engine/helper.php';
+
+		// fetch the statistics for this mailing
+		$stats = BackendMailmotorCMHelper::getStatistics($mailing[0]['id'], true);
+
+		// reformat the send date
+		$mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) .' '. BL::getLabel('At') .' '. SpoonDate::getDate('H:i', $mailing);
+
+		// get results
+		$results = array();
+		$results[] = array('label' => BL::getLabel('MailmotorLatestMailing'), 'value' => $mailing[0]['name']);
+		$results[] = array('label' => BL::getLabel('MailmotorSendDate'), 'value' => $mailing[0]['sent']);
+		$results[] = array('label' => BL::getLabel('MailmotorSent'), 'value' => $stats['recipients'] .' ('. $stats['recipients_percentage'] .')');
+		$results[] = array('label' => BL::getLabel('MailmotorOpened'), 'value' => $stats['unique_opens'] .' ('. $stats['unique_opens_percentage'] .')');
+		$results[] = array('label' => BL::getLabel('MailmotorClicks'), 'value' => $stats['clicks_total']);
+
+		// there are some results
+		if(!empty($results))
+		{
+			// get the datagrid
+			$datagrid = new BackendDataGridArray($results);
+
+			// no pagination
+			$datagrid->setPaging(false);
+
+			// parse the datagrid
+			$this->tpl->assign('dgMailmotorStatistics', $datagrid->getContent());
+		}
+	}
+
+
+	/**
+	 * Load the datagrid for subscriptions
+	 *
+	 * @return	void
+	 */
+	private function loadSubscriptions()
+	{
+		// get results
+		$results = BackendMailmotorModel::getAddressesByGroupID($this->groupId, false, self::PAGING_LIMIT);
+
+		// there are some results
+		if(!empty($results))
+		{
+			// get the datagrid
+			$datagrid = new BackendDataGridArray($results);
+
+			// no pagination
+			$datagrid->setPaging(false);
+
+			// set edit link
+			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') .'&amp;email=[email]');
+
+			// set column functions
+			$datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+
+			// parse the datagrid
+			$this->tpl->assign('dgMailmotorSubscriptions', $datagrid->getContent());
+		}
+	}
+
+
+	/**
+	 * Load the datagrid for unsubscriptions
+	 *
+	 * @return	void
+	 */
+	private function loadUnsubscriptions()
+	{
+		// get results
+		$results = BackendMailmotorModel::getUnsubscribedAddressesByGroupID($this->groupId, self::PAGING_LIMIT);
+
+		// there are some results
+		if(!empty($results))
+		{
+			// get the datagrid
+			$datagrid = new BackendDataGridArray($results);
+
+			// no pagination
+			$datagrid->setPaging(false);
+
+			// set edit link
+			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') .'&amp;email=[email]');
+
+			// set column functions
+			$datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
+
+			// parse the datagrid
+			$this->tpl->assign('dgMailmotorUnsubscriptions', $datagrid->getContent());
+		}
+	}
+
+
+	/**
+	 * Parse stuff into the template
+	 *
+	 * @return	void
+	 */
+	private function parse()
+	{
+		$this->loadStatistics();
+		$this->loadSubscriptions();
+		$this->loadUnsubscriptions();
+	}
+}
+
+?>

@@ -2,7 +2,7 @@
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
 
 <div class="pageTitle">
-	<h2>{$lblBlog|ucfirst}: {$msgEditCommentOn|sprintf:{$itemTitle}:{$itemURL}}</h2>
+	<h2>{$lblBlog|ucfirst}: {$msgEditCommentOn|sprintf:{$itemTitle}}</h2>
 	<div class="buttonHolderRight">
 		<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank">
 			<span>{$lblView|ucfirst}</span>

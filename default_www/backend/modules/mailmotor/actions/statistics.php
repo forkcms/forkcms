@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * BackendMailmotorStatistics
+ * This page will display the statistical overview of a sent mailing
+ *
+ * @package		backend
+ * @subpackage	mailmotor
+ *
+ * @author		Dave Lens <dave@netlash.com>
+ * @since		2.0
+ */
+class BackendMailmotorStatistics extends BackendBaseActionIndex
+{
+	// maximum number of items
+	const PAGING_LIMIT = 10;
+
+
+	/**
+	 * The given mailing ID
+	 *
+	 * @var	int
+	 */
+	private $id;
+
+
+	/**
+	 * The mailing record
+	 *
+	 * @var	array
+	 */
+	private $mailing;
+
+
+	/**
+	 * The statistics record
+	 *
+	 * @var	array
+	 */
+	private $statistics;
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// add highchart javascript
+		$this->header->addJavascript('highcharts.js');
+
+		// get the data
+		$this->getData();
+
+		// load datagrid
+		$this->loadDataGrid();
+
+		// parse page
+		$this->parse();
+
+		// display the page
+		$this->display();
+	}
+
+
+	/**
+	 * Gets all data needed for this page
+	 *
+	 * @return	void
+	 */
+	private function getData()
+	{
+		// get parameters
+		$this->id = $this->getParameter('id', 'int');
+
+		// does the item exist
+		if(!BackendMailmotorModel::existsMailing($this->id)) $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=mailing-does-not-exist');
+
+		// get mailing
+		$this->mailing = BackendMailmotorModel::getMailing($this->id);
+
+		// fetch the statistics
+		$this->statistics = BackendMailmotorCMHelper::getStatistics($this->id, true);
+
+		// no stats found
+		if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=no-statistics-loaded&amp;var='. str_replace('#', '', $this->mailing['name']));
+	}
+
+
+	/**
+	 * Loads the datagrid with the clicked link
+	 *
+	 * @return	void
+	 */
+	private function loadDatagrid()
+	{
+		// no statistics found
+		if(empty($this->statistics['clicked_links'])) return false;
+
+		// map urlencode to clicked links stack
+		$this->statistics['clicked_links'] = SpoonFilter::arrayMapRecursive('urlencode', $this->statistics['clicked_links']);
+
+		// create a new source-object
+		$source = new SpoonDataGridSourceArray($this->statistics['clicked_links']);
+
+		// call the parent, as in create a new datagrid with the created source
+		$this->datagrid = new BackendDataGrid($source);
+
+		// set headers values
+		$headers['link'] = strtoupper(BL::getLabel('URL'));
+		$headers['clicks'] = ucfirst(BL::getMessage('ClicksAmount'));
+
+		// set headers
+		$this->datagrid->setHeaderLabels($headers);
+
+		// sorting columns
+		$this->datagrid->setSortingColumns(array('link', 'clicks'), 'link');
+
+		// set colunn functions
+		$this->datagrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
+		$this->datagrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
+
+		// add edit column
+		$this->datagrid->addColumnAction('users', null, BL::getLabel('Who'), BackendModel::createURLForAction('statistics_link') .'&amp;url=[link]&amp;mailing_id='. $this->id, BL::getLabel('Who'));
+
+		// set paging limit
+		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+	}
+
+
+	/**
+	 * Parse all datagrids
+	 *
+	 * @return	void
+	 */
+	private function parse()
+	{
+		// parse the datagrid
+		if(!empty($this->statistics['clicked_links'])) $this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+
+		// parse the mailing record
+		$this->tpl->assign('mailing', $this->mailing);
+
+		// parse statistics
+		$this->tpl->assign('stats', $this->statistics);
+	}
+}
+
+?>

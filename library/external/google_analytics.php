@@ -17,7 +17,6 @@ class GoogleAnalytics
 	// internal constant to enable/disable debugging
 	const DEBUG = false;
 
-
 	// api url
 	const API_URL = 'https://www.google.com/analytics/feeds';
 
