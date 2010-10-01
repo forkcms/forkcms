@@ -5,6 +5,7 @@ tinyMCE.init({
 	
 	// layout
 	theme: 'advanced',
+	skin: 'fork',
 	dialog_type: 'modal',
 	width: '100%',
 	button_tile_map: true,
