@@ -1,66 +1,66 @@
 CREATE TABLE IF NOT EXISTS `emails` (
-  `id` int(11) NOT NULL auto_increment,
-  `to_email` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `to_name` varchar(255) collate utf8_unicode_ci default NULL,
-  `from_email` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `from_name` varchar(255) collate utf8_unicode_ci default NULL,
-  `reply_to_email` varchar(255) collate utf8_unicode_ci default NULL,
-  `reply_to_name` varchar(255) collate utf8_unicode_ci default NULL,
-  `subject` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `html` text collate utf8_unicode_ci NOT NULL,
-  `plain_text` text collate utf8_unicode_ci NOT NULL,
-  `send_on` datetime default NULL,
-  `created_on` datetime NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ `id` int(11) NOT NULL auto_increment,
+ `to_email` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `to_name` varchar(255) collate utf8_unicode_ci default NULL,
+ `from_email` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `from_name` varchar(255) collate utf8_unicode_ci default NULL,
+ `reply_to_email` varchar(255) collate utf8_unicode_ci default NULL,
+ `reply_to_name` varchar(255) collate utf8_unicode_ci default NULL,
+ `subject` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `html` text collate utf8_unicode_ci NOT NULL,
+ `plain_text` text collate utf8_unicode_ci NOT NULL,
+ `send_on` datetime default NULL,
+ `created_on` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `meta` (
-  `id` int(11) NOT NULL auto_increment,
-  `keywords` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `keywords_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
-  `description` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `description_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
-  `title` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `title_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
-  `url` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `url_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
-  `custom` text character set utf8 COMMENT 'used for custom meta-information',
-  PRIMARY KEY  (`id`),
-  KEY `idx_url` (`url`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
+ `id` int(11) NOT NULL auto_increment,
+ `keywords` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `keywords_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
+ `description` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `description_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
+ `title` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `title_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
+ `url` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `url_overwrite` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
+ `custom` text character set utf8 COMMENT 'used for custom meta-information',
+ PRIMARY KEY (`id`),
+ KEY `idx_url` (`url`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `modules` (
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'unique module name',
-  `description` text collate utf8_unicode_ci,
-  `active` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'Y',
-  PRIMARY KEY  (`name`)
+ `name` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'unique module name',
+ `description` text collate utf8_unicode_ci,
+ `active` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'Y',
+ PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `modules_settings` (
-  `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
-  `value` text collate utf8_unicode_ci NOT NULL COMMENT 'serialized value',
-  PRIMARY KEY  (`module`,`name`)
+ `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
+ `name` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
+ `value` text collate utf8_unicode_ci NOT NULL COMMENT 'serialized value',
+ PRIMARY KEY (`module`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 CREATE TABLE IF NOT EXISTS `modules_tags` (
-  `module` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `tag_id` int(11) NOT NULL,
-  `other_id` int(11) NOT NULL,
-  PRIMARY KEY  (`module`,`tag_id`,`other_id`)
+ `module` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `tag_id` int(11) NOT NULL,
+ `other_id` int(11) NOT NULL,
+ PRIMARY KEY (`module`,`tag_id`,`other_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
 DROP TABLE IF EXISTS `timezones`;
 CREATE TABLE IF NOT EXISTS `timezones` (
-  `id` int(11) NOT NULL auto_increment,
-  `timezone` varchar(255) collate utf8_unicode_ci NOT NULL,
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ `id` int(11) NOT NULL auto_increment,
+ `timezone` varchar(255) collate utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 INSERT INTO `timezones` (`id`, `timezone`) VALUES
@@ -520,11 +520,11 @@ INSERT INTO `timezones` (`id`, `timezone`) VALUES
 
 
 CREATE TABLE IF NOT EXISTS `groups` (
-  `id` int(11) NOT NULL auto_increment,
-  `name` varchar(255) collate utf8_unicode_ci NOT NULL,
-  `parameters` text collate utf8_unicode_ci COMMENT 'serialized array containing default user module/action rights',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ `id` int(11) NOT NULL auto_increment,
+ `name` varchar(255) collate utf8_unicode_ci NOT NULL,
+ `parameters` text collate utf8_unicode_ci COMMENT 'serialized array containing default user module/action rights',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 INSERT INTO `groups` (`id`, `name`, `parameters`) VALUES
@@ -532,19 +532,19 @@ INSERT INTO `groups` (`id`, `name`, `parameters`) VALUES
 
 
 CREATE TABLE IF NOT EXISTS `groups_rights_actions` (
-  `id` int(11) NOT NULL auto_increment,
-  `group_id` int(11) NOT NULL,
-  `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  `action` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the action',
-  `level` double NOT NULL default '1' COMMENT 'unix type levels 1, 3, 5 and 7',
-  PRIMARY KEY  (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ `id` int(11) NOT NULL auto_increment,
+ `group_id` int(11) NOT NULL,
+ `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
+ `action` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the action',
+ `level` double NOT NULL default '1' COMMENT 'unix type levels 1, 3, 5 and 7',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
-  `id` int(11) NOT NULL auto_increment,
-  `group_id` int(11) NOT NULL,
-  `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  PRIMARY KEY  (`id`),
-  KEY `idx_group_id` (`group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+ `id` int(11) NOT NULL auto_increment,
+ `group_id` int(11) NOT NULL,
+ `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
+ PRIMARY KEY (`id`),
+ KEY `idx_group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;

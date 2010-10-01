@@ -174,7 +174,7 @@ jsBackend.mailmotor.resizing = {
 		// make the plain content textarea resizable
 		$('#contentPlain').resizable({
 			// only resize on the bottom
-			handles: 's',
+			handles: 's'
 		});
 		
 		// make the iframe resizable

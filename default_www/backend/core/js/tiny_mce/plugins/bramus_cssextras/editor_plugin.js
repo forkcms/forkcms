@@ -268,7 +268,7 @@
 				// build the elmsAndShizzleArray (Shizzle being either Ids or Classes)
 					var elmsAndShizzleArray			= new Array();
 
-					for (var i = 0;  i < arr_selectors.length; i++) {
+					for (var i = 0; i < arr_selectors.length; i++) {
 						elmsAndShizzleArray.push(arr_selectors[i] + "[" + arr_values[i] + "]");
 					}
 

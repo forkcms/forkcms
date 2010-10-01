@@ -27,17 +27,17 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 DROP TABLE IF EXISTS `content_blocks`;
 CREATE TABLE IF NOT EXISTS `content_blocks` (
-  `id` int(11) NOT NULL,
-  `revision_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `language` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `text` text COLLATE utf8_unicode_ci,
-  `hidden` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `status` enum('active','archived') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active',
-  `created_on` datetime NOT NULL,
-  `edited_on` datetime NOT NULL,
-  PRIMARY KEY (`revision_id`)
+ `id` int(11) NOT NULL,
+ `revision_id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `language` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+ `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `text` text COLLATE utf8_unicode_ci,
+ `hidden` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ `status` enum('active','archived') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active',
+ `created_on` datetime NOT NULL,
+ `edited_on` datetime NOT NULL,
+ PRIMARY KEY (`revision_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -53,19 +53,19 @@ CREATE TABLE IF NOT EXISTS `content_blocks` (
 
 DROP TABLE IF EXISTS `emails`;
 CREATE TABLE IF NOT EXISTS `emails` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `to_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `to_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `from_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `from_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reply_to_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `reply_to_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `html` text COLLATE utf8_unicode_ci NOT NULL,
-  `plain_text` text COLLATE utf8_unicode_ci NOT NULL,
-  `send_on` datetime DEFAULT NULL,
-  `created_on` datetime NOT NULL,
-  PRIMARY KEY (`id`)
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `to_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `to_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+ `from_email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `from_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+ `reply_to_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+ `reply_to_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+ `subject` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `html` text COLLATE utf8_unicode_ci NOT NULL,
+ `plain_text` text COLLATE utf8_unicode_ci NOT NULL,
+ `send_on` datetime DEFAULT NULL,
+ `created_on` datetime NOT NULL,
+ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -81,11 +81,11 @@ CREATE TABLE IF NOT EXISTS `emails` (
 
 DROP TABLE IF EXISTS `groups`;
 CREATE TABLE IF NOT EXISTS `groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `parameters` text COLLATE utf8_unicode_ci COMMENT 'serialized array containing default user module/action rights',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `parameters` text COLLATE utf8_unicode_ci COMMENT 'serialized array containing default user module/action rights',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `groups`
@@ -101,13 +101,13 @@ INSERT INTO `groups` VALUES(1, 'admin', NULL);
 
 DROP TABLE IF EXISTS `groups_rights_actions`;
 CREATE TABLE IF NOT EXISTS `groups_rights_actions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the action',
-  `level` double NOT NULL DEFAULT '1' COMMENT 'unix type levels 1, 3, 5 and 7',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `group_id` int(11) NOT NULL,
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
+ `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the action',
+ `level` double NOT NULL DEFAULT '1' COMMENT 'unix type levels 1, 3, 5 and 7',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=39 ;
 
 --
 -- Dumping data for table `groups_rights_actions`
@@ -160,12 +160,12 @@ INSERT INTO `groups_rights_actions` VALUES(38, 1, 'tags', 'mass_action', 7);
 
 DROP TABLE IF EXISTS `groups_rights_modules`;
 CREATE TABLE IF NOT EXISTS `groups_rights_modules` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  PRIMARY KEY (`id`),
-  KEY `idx_group_id` (`group_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `group_id` int(11) NOT NULL,
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
+ PRIMARY KEY (`id`),
+ KEY `idx_group_id` (`group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=10 ;
 
 --
 -- Dumping data for table `groups_rights_modules`
@@ -189,17 +189,17 @@ INSERT INTO `groups_rights_modules` VALUES(9, 1, 'tags');
 
 DROP TABLE IF EXISTS `locale`;
 CREATE TABLE IF NOT EXISTS `locale` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `application` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `type` enum('act','err','lbl','msg') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'lbl',
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci,
-  `edited_on` datetime NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1043 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+ `application` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `type` enum('act','err','lbl','msg') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'lbl',
+ `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `value` text COLLATE utf8_unicode_ci,
+ `edited_on` datetime NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1043 ;
 
 --
 -- Dumping data for table `locale`
@@ -1198,7 +1198,7 @@ INSERT INTO `locale` VALUES(990, 1, 'nl', 'backend', 'search', 'msg', 'AddedSyno
 INSERT INTO `locale` VALUES(991, 1, 'nl', 'backend', 'search', 'msg', 'ConfirmDeleteSynonym', 'Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?', '2010-09-14 11:13:59');
 INSERT INTO `locale` VALUES(992, 1, 'nl', 'backend', 'search', 'msg', 'DeletedSynonym', 'Het synoniem voor zoekterm "%1$s" werd verwijderd.', '2010-09-14 11:13:59');
 INSERT INTO `locale` VALUES(993, 1, 'nl', 'backend', 'search', 'msg', 'EditedSynonym', 'Het synoniem voor zoekterm "%1$s" werd opgeslagen.', '2010-09-14 11:13:59');
-INSERT INTO `locale` VALUES(994, 1, 'nl', 'backend', 'search', 'msg', 'HelpWeight', 'Het standaard gewicht is 1. Als je zoekresultaten van een specifieke module belangrijker vindt, verhoog dan het gewicht. vb.  als pagina''s gewicht "3" heeft dan zullen resultaten van deze module 3 keer meer kans hebben om voor te komen in de zoekresultaten.', '2010-09-14 11:13:59');
+INSERT INTO `locale` VALUES(994, 1, 'nl', 'backend', 'search', 'msg', 'HelpWeight', 'Het standaard gewicht is 1. Als je zoekresultaten van een specifieke module belangrijker vindt, verhoog dan het gewicht. vb. als pagina''s gewicht "3" heeft dan zullen resultaten van deze module 3 keer meer kans hebben om voor te komen in de zoekresultaten.', '2010-09-14 11:13:59');
 INSERT INTO `locale` VALUES(995, 1, 'nl', 'backend', 'search', 'msg', 'HelpWeightGeneral', 'Definieer de belangrijkheid van iedere module in de zoekresultaten.', '2010-09-14 11:13:59');
 INSERT INTO `locale` VALUES(996, 1, 'nl', 'backend', 'search', 'msg', 'IncludeInSearch', 'Opnemen in de zoekresultaten?', '2010-09-14 11:13:59');
 INSERT INTO `locale` VALUES(997, 1, 'nl', 'backend', 'search', 'msg', 'NoStatistics', 'Er zijn nog geen statistieken.', '2010-09-14 11:13:59');
@@ -1256,19 +1256,19 @@ INSERT INTO `locale` VALUES(1042, 1, 'en', 'backend', 'tags', 'err', 'NoSelectio
 
 DROP TABLE IF EXISTS `meta`;
 CREATE TABLE IF NOT EXISTS `meta` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `keywords_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `description_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `title_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `url_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `custom` text CHARACTER SET utf8 COMMENT 'used for custom meta-information',
-  PRIMARY KEY (`id`),
-  KEY `idx_url` (`url`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=50 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `keywords` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `keywords_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ `description` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `description_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `title_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `url_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ `custom` text CHARACTER SET utf8 COMMENT 'used for custom meta-information',
+ PRIMARY KEY (`id`),
+ KEY `idx_url` (`url`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Meta-information' AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `meta`
@@ -1317,10 +1317,10 @@ INSERT INTO `meta` VALUES(43, 'Home', 'N', 'Home', 'N', 'Home', 'N', 'home', 'N'
 
 DROP TABLE IF EXISTS `modules`;
 CREATE TABLE IF NOT EXISTS `modules` (
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'unique module name',
-  `description` text COLLATE utf8_unicode_ci,
-  `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  PRIMARY KEY (`name`)
+ `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'unique module name',
+ `description` text COLLATE utf8_unicode_ci,
+ `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+ PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1349,10 +1349,10 @@ INSERT INTO `modules` VALUES('tags', 'The tags module.', 'Y');
 
 DROP TABLE IF EXISTS `modules_settings`;
 CREATE TABLE IF NOT EXISTS `modules_settings` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
-  `value` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'serialized value',
-  PRIMARY KEY (`module`,`name`)
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the module',
+ `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
+ `value` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'serialized value',
+ PRIMARY KEY (`module`,`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1448,10 +1448,10 @@ INSERT INTO `modules_settings` VALUES('users', 'time_formats', 'a:4:{i:0;s:3:"H:
 
 DROP TABLE IF EXISTS `modules_tags`;
 CREATE TABLE IF NOT EXISTS `modules_tags` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `tag_id` int(11) NOT NULL,
-  `other_id` int(11) NOT NULL,
-  PRIMARY KEY (`module`,`tag_id`,`other_id`)
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `tag_id` int(11) NOT NULL,
+ `other_id` int(11) NOT NULL,
+ PRIMARY KEY (`module`,`tag_id`,`other_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1467,34 +1467,34 @@ CREATE TABLE IF NOT EXISTS `modules_tags` (
 
 DROP TABLE IF EXISTS `pages`;
 CREATE TABLE IF NOT EXISTS `pages` (
-  `id` int(11) NOT NULL COMMENT 'the real page_id',
-  `revision_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL COMMENT 'which user has created this page?',
-  `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the parent_id for the page ',
-  `template_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the template to use',
-  `meta_id` int(11) NOT NULL COMMENT 'linked meta information',
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL COMMENT 'language of the content',
-  `type` enum('home','root','page','meta','footer','external_alias','internal_alias') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'root' COMMENT 'page, header, footer, ...',
-  `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `navigation_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'title that will be used in the navigation',
-  `navigation_title_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'should we override the navigation title',
-  `hidden` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the page hidden?',
-  `status` enum('active','archive','draft') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active' COMMENT 'is this the active, archive or draft version',
-  `publish_on` datetime NOT NULL,
-  `data` text COLLATE utf8_unicode_ci COMMENT 'serialized array that may contain type specific parameters',
-  `created_on` datetime NOT NULL,
-  `edited_on` datetime NOT NULL,
-  `allow_move` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  `allow_children` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  `allow_edit` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  `allow_delete` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
-  `no_follow` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  `sequence` int(11) NOT NULL,
-  `has_extra` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL,
-  `extra_ids` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`revision_id`),
-  KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=50 ;
+ `id` int(11) NOT NULL COMMENT 'the real page_id',
+ `revision_id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL COMMENT 'which user has created this page?',
+ `parent_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the parent_id for the page ',
+ `template_id` int(11) NOT NULL DEFAULT '0' COMMENT 'the template to use',
+ `meta_id` int(11) NOT NULL COMMENT 'linked meta information',
+ `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL COMMENT 'language of the content',
+ `type` enum('home','root','page','meta','footer','external_alias','internal_alias') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'root' COMMENT 'page, header, footer, ...',
+ `title` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `navigation_title` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'title that will be used in the navigation',
+ `navigation_title_overwrite` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'should we override the navigation title',
+ `hidden` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the page hidden?',
+ `status` enum('active','archive','draft') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active' COMMENT 'is this the active, archive or draft version',
+ `publish_on` datetime NOT NULL,
+ `data` text COLLATE utf8_unicode_ci COMMENT 'serialized array that may contain type specific parameters',
+ `created_on` datetime NOT NULL,
+ `edited_on` datetime NOT NULL,
+ `allow_move` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+ `allow_children` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+ `allow_edit` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+ `allow_delete` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y',
+ `no_follow` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ `sequence` int(11) NOT NULL,
+ `has_extra` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL,
+ `extra_ids` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+ PRIMARY KEY (`revision_id`),
+ KEY `idx_id_status_hidden_language` (`id`,`status`,`hidden`,`language`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=50 ;
 
 --
 -- Dumping data for table `pages`
@@ -1541,14 +1541,14 @@ INSERT INTO `pages` VALUES(1, 43, 1, 0, 3, 43, 'nl', 'page', 'Home', 'Home', 'N'
 
 DROP TABLE IF EXISTS `pages_blocks`;
 CREATE TABLE IF NOT EXISTS `pages_blocks` (
-  `id` int(11) NOT NULL COMMENT 'An ID that will be the same over the revisions.\n',
-  `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
-  `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
-  `html` text COLLATE utf8_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
-  `status` enum('active','archive','draft') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active',
-  `created_on` datetime NOT NULL,
-  `edited_on` datetime NOT NULL,
-  KEY `idx_rev_status` (`revision_id`,`status`)
+ `id` int(11) NOT NULL COMMENT 'An ID that will be the same over the revisions.\n',
+ `revision_id` int(11) NOT NULL COMMENT 'The ID of the page that contains this block.',
+ `extra_id` int(11) DEFAULT NULL COMMENT 'The linked extra.',
+ `html` text COLLATE utf8_unicode_ci COMMENT 'if this block is HTML this field should contain the real HTML.',
+ `status` enum('active','archive','draft') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'active',
+ `created_on` datetime NOT NULL,
+ `edited_on` datetime NOT NULL,
+ KEY `idx_rev_status` (`revision_id`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1561,7 +1561,7 @@ INSERT INTO `pages_blocks` VALUES(2, 1, NULL, '', 'active', '2010-09-14 11:13:58
 INSERT INTO `pages_blocks` VALUES(0, 2, 1, '', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
 INSERT INTO `pages_blocks` VALUES(1, 2, NULL, '', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
 INSERT INTO `pages_blocks` VALUES(2, 2, NULL, '', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
-INSERT INTO `pages_blocks` VALUES(0, 3, NULL, '<p><strong>Deze website is eigendom van [Bedrijfsnaam].</strong></p>\n<p><strong>Contactgegevens:</strong><br />[Bedrijfsnaam]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\n<p><strong>Adres maatschappelijk zetel:</strong><br />[Maatschappelijke zetel]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\n<p>Telefoon:<br />E-mail:</p>\n<p>Ondernemingsnummer: BTW BE 0 [BTW-nummer]</p>\n<p>De toezichthoudende autoriteit: (wanneer uw activiteit aan een vergunningsstelsel is onderworpen)</p>\n<p>Door de toegang tot en het gebruik van de website verklaart u zich uitdrukkelijk akkoord met de volgende algemene voorwaarden.</p>\n<h3>Intellectuele eigendomsrechten</h3>\n<p>De inhoud van deze site, met inbegrip van de merken, logo&rsquo;s, tekeningen, data, product- of bedrijfsnamen, teksten, beelden e.d. zijn beschermd door intellectuele rechten en behoren toe aan [Bedrijfsnaam] of rechthoudende derden.</p>\n<h3>Bepeperking van aansprakelijkheid</h3>\n<p>De informatie op de webstite is van algemene aard. De informatie is niet aangepast aan persoonlijke of specifieke omstandigheden, en kan dus niet als een persoonlijk, professioneel of juridisch advies aan de gebruiker worden beschouwd.</p>\n<p>[Bedrijfsnaam] levert grote inspanningen opdat de ter beschikking gestelde informatie volledig, juist, nauwkeurig en bijgewerkt zou zijn. Ondanks deze inspanningen kunnen onjuistheden zich voordoen in de ter beschikking gestelde informatie. Indien de verstrekte informatie onjuistheden zou bevatten of indien bepaalde informatie op of via de site onbeschikbaar zou zijn, zal [Bedrijfsnaam] de grootst mogelijke inspanning leveren om dit zo snel mogelijk recht te zetten.</p>\n<p>[Bedrijfsnaam] kan evenwel niet aansprakelijk worden gesteld voor rechtstreekse of onrechtstreekse schade die onstaat uit het gebruik van de informatie op deze site.</p>\n<p>Indien u onjuistheden zou vaststellen in de informatie die via de site ter beschikking wordt gesteld, kan u de beheerder van de site contacteren.</p>\n<p>De inhoud van de site (links inbegrepen) kan te allen tijde zonder aankondiging of kennisgeving aangepast, gewijzigd of aangevuld worden. [Bedrijfsnaam] geeft geen garanties voor de goede werking van de website en kan op geen enkele wijze aansprakelijk gehouden worden voor een slechte werking of tijdelijke (on)beschikbaarheid van de website of voor enige vorm van schade, rechtstreekse of onrechtstreekse, die zou voortvloeien uit de toegang tot of het gebruik van de website.</p>\n<p>[Bedrijfsnaam] kan in geen geval tegenover wie dan ook, op directe of indirecte, bijzondere of andere wijze aansprakelijk worden gesteld voor schade te wijten aan het gebruik van deze site of van een andere, inzonderheid als gevolg van links of hyperlinks, met inbegrip, zonder beperking, van alle verliezen, werkonderbrekingen, beschadiging van programma''s of andere gegevens op het computersysteem, van apparatuur, programmatuur of andere van de gebruiker.</p>\n<p>De website kan hyperlinks bevatten naar websites of pagina''s van derden, of daar onrechtstreeks naar verwijzen. Het plaatsen van links naar deze websites of pagina&rsquo;s impliceert op geen enkele wijze een impliciete goedkeuring van de inhoud ervan.</p>\n<p>[Bedrijfsnaam] verklaart uitdrukkelijk dat zij geen zeggenschap heeft over de inhoud of over andere kenmerken van deze websites en kan in geen geval aansprakelijk gehouden worden voor de inhoud of de kenmerken ervan of voor enige andere vorm van schade door het gebruik ervan.</p>\n<h3>Toepasselijk recht en bevoegde rechtbanken.</h3>\n<p>Het Belgisch recht is van toepassing op deze site. In geval van een geschil zijn enkel de rechtbanken van het arrondissement [Naam arondissement] bevoegd.</p>\n<h3>Privacybeleid</h3>\n<p>[Bedrijfsnaam] hecht belang aan uw privacy. Hoewel de meeste informatie op deze site beschikbaar is zonder dat er persoonlijke gegevens moeten worden verstrekt, is het mogelijk dat de gebruiker om persoonlijke informatie gevraagd wordt. Deze informatie zal enkel gebruikt worden in het kader van [Kader]. <em>(bv ons klantenbeheer, om u op de hoogte te houden van onze activiteiten, &hellip;)</em>. De gebruiker kan zich, kosteloos en op verzoek, steeds verzetten tegen het gebruik van zijn gegevens voor direct marketing. Daartoe zal hij zich richten tot [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf]. Uw persoonsgegevens worden nooit doorgegeven aan derden (indien wel het geval vermelden aan wie).</p>\n<p>Conform de wet verwerking persoonsgegevens van 08/12/1992 beschikt de gebruiker over een wettelijk recht op inzage en eventuele correctie van zijn persoonsgegevens. Mits bewijs van identiteit (kopie identiteitskaart) kunt u  via een schriftelijke, gedateerde en ondertekende aanvraag aan [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf], gratis de schriftelijke mededeling bekomen van uw persoonsgegevens. Indien nodig kunt u ook vragen de gegevens te corrigeren die onjuist, niet volledig of niet pertinent zouden zijn.</p>\n<p>[Bedrijfsnaam] kan anonieme of geaggregeerde gegevens verzamelen van niet-persoonlijke aard, zoals browser type of IP-adres, het besturingsprogramma dat u gebruikt of de domeinnaam van de website langs waar u naar onze-website gekomen bent, of waarlangs u die verlaat. Dit maakt het ons mogelijk om onze website permanent te optimaliseren voor de gebruikers.</p>\n<h3>Het gebruik van cookies.</h3>\n<p>Tijdens een bezoek aan de site kunnen cookies op de harde schijf van uw computer geplaatst worden en dit enkel en alleen om de site beter af te stemmen op de behoeften van de terugkerende bezoeker. Deze mini bestandjes of cookies worden niet gebruikt om het surfgedrag van de bezoeker op andere websites na te gaan. Uw internetbrowser laat u toe dat u het gebruik van cookies verhindert, dat u een waarschuwing ontvangt wanneer een cookie ge&iuml;nstalleerd wordt of dat u de cookies nadien van uw harde schijf verwijdert. Raadpleeg hiervoor de help-functie van uw internetbrowser.</p>', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
+INSERT INTO `pages_blocks` VALUES(0, 3, NULL, '<p><strong>Deze website is eigendom van [Bedrijfsnaam].</strong></p>\n<p><strong>Contactgegevens:</strong><br />[Bedrijfsnaam]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\n<p><strong>Adres maatschappelijk zetel:</strong><br />[Maatschappelijke zetel]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\n<p>Telefoon:<br />E-mail:</p>\n<p>Ondernemingsnummer: BTW BE 0 [BTW-nummer]</p>\n<p>De toezichthoudende autoriteit: (wanneer uw activiteit aan een vergunningsstelsel is onderworpen)</p>\n<p>Door de toegang tot en het gebruik van de website verklaart u zich uitdrukkelijk akkoord met de volgende algemene voorwaarden.</p>\n<h3>Intellectuele eigendomsrechten</h3>\n<p>De inhoud van deze site, met inbegrip van de merken, logo&rsquo;s, tekeningen, data, product- of bedrijfsnamen, teksten, beelden e.d. zijn beschermd door intellectuele rechten en behoren toe aan [Bedrijfsnaam] of rechthoudende derden.</p>\n<h3>Bepeperking van aansprakelijkheid</h3>\n<p>De informatie op de webstite is van algemene aard. De informatie is niet aangepast aan persoonlijke of specifieke omstandigheden, en kan dus niet als een persoonlijk, professioneel of juridisch advies aan de gebruiker worden beschouwd.</p>\n<p>[Bedrijfsnaam] levert grote inspanningen opdat de ter beschikking gestelde informatie volledig, juist, nauwkeurig en bijgewerkt zou zijn. Ondanks deze inspanningen kunnen onjuistheden zich voordoen in de ter beschikking gestelde informatie. Indien de verstrekte informatie onjuistheden zou bevatten of indien bepaalde informatie op of via de site onbeschikbaar zou zijn, zal [Bedrijfsnaam] de grootst mogelijke inspanning leveren om dit zo snel mogelijk recht te zetten.</p>\n<p>[Bedrijfsnaam] kan evenwel niet aansprakelijk worden gesteld voor rechtstreekse of onrechtstreekse schade die onstaat uit het gebruik van de informatie op deze site.</p>\n<p>Indien u onjuistheden zou vaststellen in de informatie die via de site ter beschikking wordt gesteld, kan u de beheerder van de site contacteren.</p>\n<p>De inhoud van de site (links inbegrepen) kan te allen tijde zonder aankondiging of kennisgeving aangepast, gewijzigd of aangevuld worden. [Bedrijfsnaam] geeft geen garanties voor de goede werking van de website en kan op geen enkele wijze aansprakelijk gehouden worden voor een slechte werking of tijdelijke (on)beschikbaarheid van de website of voor enige vorm van schade, rechtstreekse of onrechtstreekse, die zou voortvloeien uit de toegang tot of het gebruik van de website.</p>\n<p>[Bedrijfsnaam] kan in geen geval tegenover wie dan ook, op directe of indirecte, bijzondere of andere wijze aansprakelijk worden gesteld voor schade te wijten aan het gebruik van deze site of van een andere, inzonderheid als gevolg van links of hyperlinks, met inbegrip, zonder beperking, van alle verliezen, werkonderbrekingen, beschadiging van programma''s of andere gegevens op het computersysteem, van apparatuur, programmatuur of andere van de gebruiker.</p>\n<p>De website kan hyperlinks bevatten naar websites of pagina''s van derden, of daar onrechtstreeks naar verwijzen. Het plaatsen van links naar deze websites of pagina&rsquo;s impliceert op geen enkele wijze een impliciete goedkeuring van de inhoud ervan.</p>\n<p>[Bedrijfsnaam] verklaart uitdrukkelijk dat zij geen zeggenschap heeft over de inhoud of over andere kenmerken van deze websites en kan in geen geval aansprakelijk gehouden worden voor de inhoud of de kenmerken ervan of voor enige andere vorm van schade door het gebruik ervan.</p>\n<h3>Toepasselijk recht en bevoegde rechtbanken.</h3>\n<p>Het Belgisch recht is van toepassing op deze site. In geval van een geschil zijn enkel de rechtbanken van het arrondissement [Naam arondissement] bevoegd.</p>\n<h3>Privacybeleid</h3>\n<p>[Bedrijfsnaam] hecht belang aan uw privacy. Hoewel de meeste informatie op deze site beschikbaar is zonder dat er persoonlijke gegevens moeten worden verstrekt, is het mogelijk dat de gebruiker om persoonlijke informatie gevraagd wordt. Deze informatie zal enkel gebruikt worden in het kader van [Kader]. <em>(bv ons klantenbeheer, om u op de hoogte te houden van onze activiteiten, &hellip;)</em>. De gebruiker kan zich, kosteloos en op verzoek, steeds verzetten tegen het gebruik van zijn gegevens voor direct marketing. Daartoe zal hij zich richten tot [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf]. Uw persoonsgegevens worden nooit doorgegeven aan derden (indien wel het geval vermelden aan wie).</p>\n<p>Conform de wet verwerking persoonsgegevens van 08/12/1992 beschikt de gebruiker over een wettelijk recht op inzage en eventuele correctie van zijn persoonsgegevens. Mits bewijs van identiteit (kopie identiteitskaart) kunt u via een schriftelijke, gedateerde en ondertekende aanvraag aan [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf], gratis de schriftelijke mededeling bekomen van uw persoonsgegevens. Indien nodig kunt u ook vragen de gegevens te corrigeren die onjuist, niet volledig of niet pertinent zouden zijn.</p>\n<p>[Bedrijfsnaam] kan anonieme of geaggregeerde gegevens verzamelen van niet-persoonlijke aard, zoals browser type of IP-adres, het besturingsprogramma dat u gebruikt of de domeinnaam van de website langs waar u naar onze-website gekomen bent, of waarlangs u die verlaat. Dit maakt het ons mogelijk om onze website permanent te optimaliseren voor de gebruikers.</p>\n<h3>Het gebruik van cookies.</h3>\n<p>Tijdens een bezoek aan de site kunnen cookies op de harde schijf van uw computer geplaatst worden en dit enkel en alleen om de site beter af te stemmen op de behoeften van de terugkerende bezoeker. Deze mini bestandjes of cookies worden niet gebruikt om het surfgedrag van de bezoeker op andere websites na te gaan. Uw internetbrowser laat u toe dat u het gebruik van cookies verhindert, dat u een waarschuwing ontvangt wanneer een cookie ge&iuml;nstalleerd wordt of dat u de cookies nadien van uw harde schijf verwijdert. Raadpleeg hiervoor de help-functie van uw internetbrowser.</p>', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
 INSERT INTO `pages_blocks` VALUES(1, 3, NULL, '', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
 INSERT INTO `pages_blocks` VALUES(2, 3, NULL, '', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
 INSERT INTO `pages_blocks` VALUES(0, 4, NULL, '', 'active', '2010-09-14 11:13:58', '2010-09-14 11:13:58');
@@ -1584,29 +1584,29 @@ INSERT INTO `pages_blocks` VALUES(1, 9, NULL, '', 'active', '2010-09-14 11:14:22
 INSERT INTO `pages_blocks` VALUES(2, 9, NULL, '', 'active', '2010-09-14 11:14:22', '2010-09-14 11:14:22');
 INSERT INTO `pages_blocks` VALUES(0, 10, NULL, '', 'active', '2010-09-14 11:19:51', '2010-09-14 11:19:51');
 INSERT INTO `pages_blocks` VALUES(0, 11, 5, NULL, 'active', '2010-09-14 12:08:11', '2010-09-14 12:08:11');
-INSERT INTO `pages_blocks` VALUES(1, 11, NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id  magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec  interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac  nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis  quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit  consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at,  vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit  amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida.  Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut  nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:08:11', '2010-09-14 12:08:11');
+INSERT INTO `pages_blocks` VALUES(1, 11, NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:08:11', '2010-09-14 12:08:11');
 INSERT INTO `pages_blocks` VALUES(2, 11, NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:08:11', '2010-09-14 12:08:11');
 INSERT INTO `pages_blocks` VALUES(0, 12, 5, NULL, 'active', '2010-09-14 12:28:50', '2010-09-14 12:28:50');
 INSERT INTO `pages_blocks` VALUES(0, 13, NULL, '<p>Hello.</p>', 'active', '2010-09-14 12:29:01', '2010-09-14 12:29:01');
 INSERT INTO `pages_blocks` VALUES(0, 14, NULL, '<p>Hello.</p>', 'active', '2010-09-14 12:29:48', '2010-09-14 12:29:48');
-INSERT INTO `pages_blocks` VALUES(0, 15, NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id  magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec  interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac  nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis  quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit  consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at,  vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit  amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida.  Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut  nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:30:31', '2010-09-14 12:30:31');
-INSERT INTO `pages_blocks` VALUES(0, 16, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id  magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec  interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac  nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis  quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit  consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at,  vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit  amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida.  Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut  nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:30:50', '2010-09-14 12:30:50');
+INSERT INTO `pages_blocks` VALUES(0, 15, NULL, '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:30:31', '2010-09-14 12:30:31');
+INSERT INTO `pages_blocks` VALUES(0, 16, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:30:50', '2010-09-14 12:30:50');
 INSERT INTO `pages_blocks` VALUES(0, 17, NULL, '', 'active', '2010-09-14 12:31:18', '2010-09-14 12:31:18');
 INSERT INTO `pages_blocks` VALUES(0, 18, NULL, '', 'active', '2010-09-14 12:31:27', '2010-09-14 12:31:27');
 INSERT INTO `pages_blocks` VALUES(0, 19, NULL, '<p>De opgevraagde pagina werd niet gevonden.</p>', 'active', '2010-09-14 12:31:58', '2010-09-14 12:31:58');
 INSERT INTO `pages_blocks` VALUES(0, 20, 2, NULL, 'active', '2010-09-14 12:32:14', '2010-09-14 12:32:14');
 INSERT INTO `pages_blocks` VALUES(0, 21, 4, NULL, 'active', '2010-09-14 12:32:53', '2010-09-14 12:32:53');
-INSERT INTO `pages_blocks` VALUES(0, 22, NULL, '<p><strong>Deze website is eigendom van [Bedrijfsnaam].</strong></p>\r\n<p><strong>Contactgegevens:</strong><br />[Bedrijfsnaam]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\r\n<p><strong>Adres maatschappelijk zetel:</strong><br />[Maatschappelijke zetel]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\r\n<p>Telefoon:<br />E-mail:</p>\r\n<p>Ondernemingsnummer: BTW BE 0 [BTW-nummer]</p>\r\n<p>De toezichthoudende autoriteit: (wanneer uw activiteit aan een vergunningsstelsel is onderworpen)</p>\r\n<p>Door de toegang tot en het gebruik van de website verklaart u zich uitdrukkelijk akkoord met de volgende algemene voorwaarden.</p>\r\n<h3>Intellectuele eigendomsrechten</h3>\r\n<p>De inhoud van deze site, met inbegrip van de merken, logo’s,  tekeningen, data, product- of bedrijfsnamen, teksten, beelden e.d. zijn  beschermd door intellectuele rechten en behoren toe aan [Bedrijfsnaam]  of rechthoudende derden.</p>\r\n<h3>Bepeperking van aansprakelijkheid</h3>\r\n<p>De informatie op de webstite is van algemene aard. De informatie is  niet aangepast aan persoonlijke of specifieke omstandigheden, en kan dus  niet als een persoonlijk, professioneel of juridisch advies aan de  gebruiker worden beschouwd.</p>\r\n<p>[Bedrijfsnaam] levert grote inspanningen opdat de ter beschikking  gestelde informatie volledig, juist, nauwkeurig en bijgewerkt zou zijn.  Ondanks deze inspanningen kunnen onjuistheden zich voordoen in de ter  beschikking gestelde informatie. Indien de verstrekte informatie  onjuistheden zou bevatten of indien bepaalde informatie op of via de  site onbeschikbaar zou zijn, zal [Bedrijfsnaam] de grootst mogelijke  inspanning leveren om dit zo snel mogelijk recht te zetten.</p>\r\n<p>[Bedrijfsnaam] kan evenwel niet aansprakelijk worden gesteld voor  rechtstreekse of onrechtstreekse schade die onstaat uit het gebruik van  de informatie op deze site.</p>\r\n<p>Indien u onjuistheden zou vaststellen in de informatie die via de  site ter beschikking wordt gesteld, kan u de beheerder van de site  contacteren.</p>\r\n<p>De inhoud van de site (links inbegrepen) kan te allen tijde zonder  aankondiging of kennisgeving aangepast, gewijzigd of aangevuld worden.  [Bedrijfsnaam] geeft geen garanties voor de goede werking van de website  en kan op geen enkele wijze aansprakelijk gehouden worden voor een  slechte werking of tijdelijke (on)beschikbaarheid van de website of voor  enige vorm van schade, rechtstreekse of onrechtstreekse, die zou  voortvloeien uit de toegang tot of het gebruik van de website.</p>\r\n<p>[Bedrijfsnaam] kan in geen geval tegenover wie dan ook, op directe of  indirecte, bijzondere of andere wijze aansprakelijk worden gesteld voor  schade te wijten aan het gebruik van deze site of van een andere,  inzonderheid als gevolg van links of hyperlinks, met inbegrip, zonder  beperking, van alle verliezen, werkonderbrekingen, beschadiging van  programma''s of andere gegevens op het computersysteem, van apparatuur,  programmatuur of andere van de gebruiker.</p>\r\n<p>De website kan hyperlinks bevatten naar websites of pagina''s van  derden, of daar onrechtstreeks naar verwijzen. Het plaatsen van links  naar deze websites of pagina’s impliceert op geen enkele wijze een  impliciete goedkeuring van de inhoud ervan.</p>\r\n<p>[Bedrijfsnaam] verklaart uitdrukkelijk dat zij geen zeggenschap heeft  over de inhoud of over andere kenmerken van deze websites en kan in  geen geval aansprakelijk gehouden worden voor de inhoud of de kenmerken  ervan of voor enige andere vorm van schade door het gebruik ervan.</p>\r\n<h3>Toepasselijk recht en bevoegde rechtbanken.</h3>\r\n<p>Het Belgisch recht is van toepassing op deze site. In geval van een  geschil zijn enkel de rechtbanken van het arrondissement [Naam  arondissement] bevoegd.</p>\r\n<h3>Privacybeleid</h3>\r\n<p>[Bedrijfsnaam] hecht belang aan uw privacy. Hoewel de meeste  informatie op deze site beschikbaar is zonder dat er persoonlijke  gegevens moeten worden verstrekt, is het mogelijk dat de gebruiker om  persoonlijke informatie gevraagd wordt. Deze informatie zal enkel  gebruikt worden in het kader van [Kader]. <em>(bv ons klantenbeheer, om u op de hoogte te houden van onze activiteiten, …)</em>.  De gebruiker kan zich, kosteloos en op verzoek, steeds verzetten tegen  het gebruik van zijn gegevens voor direct marketing. Daartoe zal hij  zich richten tot [Bedrijfsnaam], [Adres bedrijf] of via [Email adres  bedrijf]. Uw persoonsgegevens worden nooit doorgegeven aan derden  (indien wel het geval vermelden aan wie).</p>\r\n<p>Conform de wet verwerking persoonsgegevens van 08/12/1992 beschikt de  gebruiker over een wettelijk recht op inzage en eventuele correctie van  zijn persoonsgegevens. Mits bewijs van identiteit (kopie  identiteitskaart) kunt u  via een schriftelijke, gedateerde en  ondertekende aanvraag aan [Bedrijfsnaam], [Adres bedrijf] of via [Email  adres bedrijf], gratis de schriftelijke mededeling bekomen van uw  persoonsgegevens. Indien nodig kunt u ook vragen de gegevens te  corrigeren die onjuist, niet volledig of niet pertinent zouden zijn.</p>\r\n<p>[Bedrijfsnaam] kan anonieme of geaggregeerde gegevens verzamelen van  niet-persoonlijke aard, zoals browser type of IP-adres, het  besturingsprogramma dat u gebruikt of de domeinnaam van de website langs  waar u naar onze-website gekomen bent, of waarlangs u die verlaat. Dit  maakt het ons mogelijk om onze website permanent te optimaliseren voor  de gebruikers.</p>\r\n<h3>Het gebruik van cookies.</h3>\r\n<p>Tijdens een bezoek aan de site kunnen cookies op de harde schijf van  uw computer geplaatst worden en dit enkel en alleen om de site beter af  te stemmen op de behoeften van de terugkerende bezoeker. Deze mini  bestandjes of cookies worden niet gebruikt om het surfgedrag van de  bezoeker op andere websites na te gaan. Uw internetbrowser laat u toe  dat u het gebruik van cookies verhindert, dat u een waarschuwing  ontvangt wanneer een cookie geïnstalleerd wordt of dat u de cookies  nadien van uw harde schijf verwijdert. Raadpleeg hiervoor de  help-functie van uw internetbrowser.</p>', 'active', '2010-09-14 12:33:12', '2010-09-14 12:33:12');
+INSERT INTO `pages_blocks` VALUES(0, 22, NULL, '<p><strong>Deze website is eigendom van [Bedrijfsnaam].</strong></p>\r\n<p><strong>Contactgegevens:</strong><br />[Bedrijfsnaam]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\r\n<p><strong>Adres maatschappelijk zetel:</strong><br />[Maatschappelijke zetel]<br /> [Straatnaam] [Nummer]<br /> [Postcode] [Gemeente]</p>\r\n<p>Telefoon:<br />E-mail:</p>\r\n<p>Ondernemingsnummer: BTW BE 0 [BTW-nummer]</p>\r\n<p>De toezichthoudende autoriteit: (wanneer uw activiteit aan een vergunningsstelsel is onderworpen)</p>\r\n<p>Door de toegang tot en het gebruik van de website verklaart u zich uitdrukkelijk akkoord met de volgende algemene voorwaarden.</p>\r\n<h3>Intellectuele eigendomsrechten</h3>\r\n<p>De inhoud van deze site, met inbegrip van de merken, logo’s, tekeningen, data, product- of bedrijfsnamen, teksten, beelden e.d. zijn beschermd door intellectuele rechten en behoren toe aan [Bedrijfsnaam] of rechthoudende derden.</p>\r\n<h3>Bepeperking van aansprakelijkheid</h3>\r\n<p>De informatie op de webstite is van algemene aard. De informatie is niet aangepast aan persoonlijke of specifieke omstandigheden, en kan dus niet als een persoonlijk, professioneel of juridisch advies aan de gebruiker worden beschouwd.</p>\r\n<p>[Bedrijfsnaam] levert grote inspanningen opdat de ter beschikking gestelde informatie volledig, juist, nauwkeurig en bijgewerkt zou zijn. Ondanks deze inspanningen kunnen onjuistheden zich voordoen in de ter beschikking gestelde informatie. Indien de verstrekte informatie onjuistheden zou bevatten of indien bepaalde informatie op of via de site onbeschikbaar zou zijn, zal [Bedrijfsnaam] de grootst mogelijke inspanning leveren om dit zo snel mogelijk recht te zetten.</p>\r\n<p>[Bedrijfsnaam] kan evenwel niet aansprakelijk worden gesteld voor rechtstreekse of onrechtstreekse schade die onstaat uit het gebruik van de informatie op deze site.</p>\r\n<p>Indien u onjuistheden zou vaststellen in de informatie die via de site ter beschikking wordt gesteld, kan u de beheerder van de site contacteren.</p>\r\n<p>De inhoud van de site (links inbegrepen) kan te allen tijde zonder aankondiging of kennisgeving aangepast, gewijzigd of aangevuld worden. [Bedrijfsnaam] geeft geen garanties voor de goede werking van de website en kan op geen enkele wijze aansprakelijk gehouden worden voor een slechte werking of tijdelijke (on)beschikbaarheid van de website of voor enige vorm van schade, rechtstreekse of onrechtstreekse, die zou voortvloeien uit de toegang tot of het gebruik van de website.</p>\r\n<p>[Bedrijfsnaam] kan in geen geval tegenover wie dan ook, op directe of indirecte, bijzondere of andere wijze aansprakelijk worden gesteld voor schade te wijten aan het gebruik van deze site of van een andere, inzonderheid als gevolg van links of hyperlinks, met inbegrip, zonder beperking, van alle verliezen, werkonderbrekingen, beschadiging van programma''s of andere gegevens op het computersysteem, van apparatuur, programmatuur of andere van de gebruiker.</p>\r\n<p>De website kan hyperlinks bevatten naar websites of pagina''s van derden, of daar onrechtstreeks naar verwijzen. Het plaatsen van links naar deze websites of pagina’s impliceert op geen enkele wijze een impliciete goedkeuring van de inhoud ervan.</p>\r\n<p>[Bedrijfsnaam] verklaart uitdrukkelijk dat zij geen zeggenschap heeft over de inhoud of over andere kenmerken van deze websites en kan in geen geval aansprakelijk gehouden worden voor de inhoud of de kenmerken ervan of voor enige andere vorm van schade door het gebruik ervan.</p>\r\n<h3>Toepasselijk recht en bevoegde rechtbanken.</h3>\r\n<p>Het Belgisch recht is van toepassing op deze site. In geval van een geschil zijn enkel de rechtbanken van het arrondissement [Naam arondissement] bevoegd.</p>\r\n<h3>Privacybeleid</h3>\r\n<p>[Bedrijfsnaam] hecht belang aan uw privacy. Hoewel de meeste informatie op deze site beschikbaar is zonder dat er persoonlijke gegevens moeten worden verstrekt, is het mogelijk dat de gebruiker om persoonlijke informatie gevraagd wordt. Deze informatie zal enkel gebruikt worden in het kader van [Kader]. <em>(bv ons klantenbeheer, om u op de hoogte te houden van onze activiteiten, …)</em>. De gebruiker kan zich, kosteloos en op verzoek, steeds verzetten tegen het gebruik van zijn gegevens voor direct marketing. Daartoe zal hij zich richten tot [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf]. Uw persoonsgegevens worden nooit doorgegeven aan derden (indien wel het geval vermelden aan wie).</p>\r\n<p>Conform de wet verwerking persoonsgegevens van 08/12/1992 beschikt de gebruiker over een wettelijk recht op inzage en eventuele correctie van zijn persoonsgegevens. Mits bewijs van identiteit (kopie identiteitskaart) kunt u via een schriftelijke, gedateerde en ondertekende aanvraag aan [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf], gratis de schriftelijke mededeling bekomen van uw persoonsgegevens. Indien nodig kunt u ook vragen de gegevens te corrigeren die onjuist, niet volledig of niet pertinent zouden zijn.</p>\r\n<p>[Bedrijfsnaam] kan anonieme of geaggregeerde gegevens verzamelen van niet-persoonlijke aard, zoals browser type of IP-adres, het besturingsprogramma dat u gebruikt of de domeinnaam van de website langs waar u naar onze-website gekomen bent, of waarlangs u die verlaat. Dit maakt het ons mogelijk om onze website permanent te optimaliseren voor de gebruikers.</p>\r\n<h3>Het gebruik van cookies.</h3>\r\n<p>Tijdens een bezoek aan de site kunnen cookies op de harde schijf van uw computer geplaatst worden en dit enkel en alleen om de site beter af te stemmen op de behoeften van de terugkerende bezoeker. Deze mini bestandjes of cookies worden niet gebruikt om het surfgedrag van de bezoeker op andere websites na te gaan. Uw internetbrowser laat u toe dat u het gebruik van cookies verhindert, dat u een waarschuwing ontvangt wanneer een cookie geïnstalleerd wordt of dat u de cookies nadien van uw harde schijf verwijdert. Raadpleeg hiervoor de help-functie van uw internetbrowser.</p>', 'active', '2010-09-14 12:33:12', '2010-09-14 12:33:12');
 INSERT INTO `pages_blocks` VALUES(0, 23, NULL, '', 'active', '2010-09-14 12:33:25', '2010-09-14 12:33:25');
 INSERT INTO `pages_blocks` VALUES(0, 24, 1, NULL, 'active', '2010-09-14 12:33:47', '2010-09-14 12:33:47');
 INSERT INTO `pages_blocks` VALUES(3, 25, NULL, '<p>Hello I am about us Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 12:38:49', '2010-09-14 12:38:49');
 INSERT INTO `pages_blocks` VALUES(0, 33, 2, NULL, 'active', '2010-09-14 13:28:10', '2010-09-14 13:28:10');
-INSERT INTO `pages_blocks` VALUES(0, 42, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id  magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec  interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac  nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis  quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit  consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at,  vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit  amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida.  Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut  nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 14:00:04', '2010-09-14 14:00:04');
-INSERT INTO `pages_blocks` VALUES(0, 43, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id  magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec  interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac  nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis  quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit  consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at,  vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit  amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida.  Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut  nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 14:00:14', '2010-09-14 14:00:14');
+INSERT INTO `pages_blocks` VALUES(0, 42, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 14:00:04', '2010-09-14 14:00:04');
+INSERT INTO `pages_blocks` VALUES(0, 43, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 14:00:14', '2010-09-14 14:00:14');
 INSERT INTO `pages_blocks` VALUES(0, 44, NULL, '', 'active', '2010-09-14 14:00:51', '2010-09-14 14:00:51');
 INSERT INTO `pages_blocks` VALUES(0, 45, NULL, '<p>This is the about us page.</p>', 'active', '2010-09-14 14:01:07', '2010-09-14 14:01:07');
 INSERT INTO `pages_blocks` VALUES(0, 46, NULL, '<p>This is the about us page. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 14:01:13', '2010-09-14 14:01:13');
-INSERT INTO `pages_blocks` VALUES(0, 47, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. This is a link to <a href="/about-us">the about page</a>. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id  magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec  interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac  nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis  quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit  consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at,  vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit  amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida.  Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut  nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 14:04:08', '2010-09-14 14:04:08');
+INSERT INTO `pages_blocks` VALUES(0, 47, NULL, '<p>(This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. This is a link to <a href="/about-us">the about page</a>. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>\r\n<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 14:04:08', '2010-09-14 14:04:08');
 INSERT INTO `pages_blocks` VALUES(0, 48, NULL, '<p>This is the about us page. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 15:17:02', '2010-09-14 15:17:02');
 INSERT INTO `pages_blocks` VALUES(0, 49, NULL, '<p>This is the about us page. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.</p>', 'active', '2010-09-14 15:22:27', '2010-09-14 15:22:27');
 
@@ -1618,16 +1618,16 @@ INSERT INTO `pages_blocks` VALUES(0, 49, NULL, '<p>This is the about us page. Lo
 
 DROP TABLE IF EXISTS `pages_extras`;
 CREATE TABLE IF NOT EXISTS `pages_extras` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the module this extra belongs to.',
-  `type` enum('homepage','block','widget') COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of the block.',
-  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The label for this extra. It will be used for displaying purposes.',
-  `action` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `data` text COLLATE utf8_unicode_ci COMMENT 'A serialized value with the optional parameters',
-  `hidden` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'Should the extra be shown in the backend?',
-  `sequence` int(11) NOT NULL COMMENT 'The sequence in the backend.',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible extras' AUTO_INCREMENT=6 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the extra.',
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The name of the module this extra belongs to.',
+ `type` enum('homepage','block','widget') COLLATE utf8_unicode_ci NOT NULL COMMENT 'The type of the block.',
+ `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The label for this extra. It will be used for displaying purposes.',
+ `action` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+ `data` text COLLATE utf8_unicode_ci COMMENT 'A serialized value with the optional parameters',
+ `hidden` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'Should the extra be shown in the backend?',
+ `sequence` int(11) NOT NULL COMMENT 'The sequence in the backend.',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible extras' AUTO_INCREMENT=6 ;
 
 --
 -- Dumping data for table `pages_extras`
@@ -1647,14 +1647,14 @@ INSERT INTO `pages_extras` VALUES(5, 'tags', 'block', 'Tags', NULL, NULL, 'N', 3
 
 DROP TABLE IF EXISTS `pages_templates`;
 CREATE TABLE IF NOT EXISTS `pages_templates` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the template.',
-  `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The label for the template, will be used for displaying purposes.',
-  `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Filename for the template.',
-  `num_blocks` int(11) NOT NULL DEFAULT '1' COMMENT 'The number of blocks used in the template.',
-  `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'Is this template active (as in: will it be used).',
-  `data` text COLLATE utf8_unicode_ci COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible templates' AUTO_INCREMENT=4 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Unique ID for the template.',
+ `label` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'The label for the template, will be used for displaying purposes.',
+ `path` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'Filename for the template.',
+ `num_blocks` int(11) NOT NULL DEFAULT '1' COMMENT 'The number of blocks used in the template.',
+ `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'Is this template active (as in: will it be used).',
+ `data` text COLLATE utf8_unicode_ci COMMENT 'A serialized array with data that is specific for this template (eg.: names for the blocks).',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The possible templates' AUTO_INCREMENT=4 ;
 
 --
 -- Dumping data for table `pages_templates`
@@ -1672,14 +1672,14 @@ INSERT INTO `pages_templates` VALUES(3, 'Scratch - Default', 'core/layout/templa
 
 DROP TABLE IF EXISTS `search_index`;
 CREATE TABLE IF NOT EXISTS `search_index` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `other_id` int(11) NOT NULL,
-  `field` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
-  `value` text COLLATE utf8_unicode_ci NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`module`,`other_id`,`field`,`language`),
-  FULLTEXT KEY `value` (`value`)
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `other_id` int(11) NOT NULL,
+ `field` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+ `value` text COLLATE utf8_unicode_ci NOT NULL,
+ `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+ `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ PRIMARY KEY (`module`,`other_id`,`field`,`language`),
+ FULLTEXT KEY `value` (`value`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Search index';
 
 --
@@ -1687,13 +1687,13 @@ CREATE TABLE IF NOT EXISTS `search_index` (
 --
 
 INSERT INTO `search_index` VALUES('pages', 1, 'title', 'Home', 'nl', 'Y');
-INSERT INTO `search_index` VALUES('pages', 1, 'text', ' (This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. This is a link to the about page. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id  magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec  interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac  nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis  quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit  consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at,  vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit  amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida.  Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut  nisl congue justo pharetra accumsan.', 'nl', 'Y');
+INSERT INTO `search_index` VALUES('pages', 1, 'text', ' (This is the content of the homepage) Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. This is a link to the about page. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam id magna. Proin euismod vestibulum tortor. Vestibulum eget nisl. Donec interdum quam at nunc. In laoreet orci sit amet sem. In sed metus ac nunc blandit ultricies. Maecenas sed tortor. Sed velit velit, mollis quis, ultricies tincidunt, dictum ac, felis. Integer hendrerit consectetur libero. Duis sem. Mauris tellus justo, sollicitudin at, vehicula eget, auctor vel, odio. Proin mattis. Mauris mollis elit sit amet lectus. Vestibulum in tortor sodales elit sollicitudin gravida. Integer scelerisque sollicitudin velit. Aliquam erat volutpat. Sed ut nisl congue justo pharetra accumsan.', 'nl', 'Y');
 INSERT INTO `search_index` VALUES('pages', 2, 'title', 'Sitemap', 'nl', 'Y');
 INSERT INTO `search_index` VALUES('pages', 2, 'text', ' ', 'nl', 'Y');
 INSERT INTO `search_index` VALUES('pages', 3, 'title', 'Disclaimer', 'nl', 'Y');
-INSERT INTO `search_index` VALUES('pages', 3, 'text', ' Deze website is eigendom van [Bedrijfsnaam].\r\nContactgegevens:[Bedrijfsnaam] [Straatnaam] [Nummer] [Postcode] [Gemeente]\r\nAdres maatschappelijk zetel:[Maatschappelijke zetel] [Straatnaam] [Nummer] [Postcode] [Gemeente]\r\nTelefoon:E-mail:\r\nOndernemingsnummer: BTW BE 0 [BTW-nummer]\r\nDe toezichthoudende autoriteit: (wanneer uw activiteit aan een vergunningsstelsel is onderworpen)\r\nDoor de toegang tot en het gebruik van de website verklaart u zich uitdrukkelijk akkoord met de volgende algemene voorwaarden.\r\nIntellectuele eigendomsrechten\r\nDe inhoud van deze site, met inbegrip van de merken, logo’s,  tekeningen, data, product- of bedrijfsnamen, teksten, beelden e.d. zijn  beschermd door intellectuele rechten en behoren toe aan [Bedrijfsnaam]  of rechthoudende derden.\r\nBepeperking van aansprakelijkheid\r\nDe informatie op de webstite is van algemene aard. De informatie is  niet aangepast aan persoonlijke of specifieke omstandigheden, en kan dus  niet als een persoonlijk, professioneel of juridisch advies aan de  gebruiker worden beschouwd.\r\n[Bedrijfsnaam] levert grote inspanningen opdat de ter beschikking  gestelde informatie volledig, juist, nauwkeurig en bijgewerkt zou zijn.  Ondanks deze inspanningen kunnen onjuistheden zich voordoen in de ter  beschikking gestelde informatie. Indien de verstrekte informatie  onjuistheden zou bevatten of indien bepaalde informatie op of via de  site onbeschikbaar zou zijn, zal [Bedrijfsnaam] de grootst mogelijke  inspanning leveren om dit zo snel mogelijk recht te zetten.\r\n[Bedrijfsnaam] kan evenwel niet aansprakelijk worden gesteld voor  rechtstreekse of onrechtstreekse schade die onstaat uit het gebruik van  de informatie op deze site.\r\nIndien u onjuistheden zou vaststellen in de informatie die via de  site ter beschikking wordt gesteld, kan u de beheerder van de site  contacteren.\r\nDe inhoud van de site (links inbegrepen) kan te allen tijde zonder  aankondiging of kennisgeving aangepast, gewijzigd of aangevuld worden.  [Bedrijfsnaam] geeft geen garanties voor de goede werking van de website  en kan op geen enkele wijze aansprakelijk gehouden worden voor een  slechte werking of tijdelijke (on)beschikbaarheid van de website of voor  enige vorm van schade, rechtstreekse of onrechtstreekse, die zou  voortvloeien uit de toegang tot of het gebruik van de website.\r\n[Bedrijfsnaam] kan in geen geval tegenover wie dan ook, op directe of  indirecte, bijzondere of andere wijze aansprakelijk worden gesteld voor  schade te wijten aan het gebruik van deze site of van een andere,  inzonderheid als gevolg van links of hyperlinks, met inbegrip, zonder  beperking, van alle verliezen, werkonderbrekingen, beschadiging van  programma''s of andere gegevens op het computersysteem, van apparatuur,  programmatuur of andere van de gebruiker.\r\nDe website kan hyperlinks bevatten naar websites of pagina''s van  derden, of daar onrechtstreeks naar verwijzen. Het plaatsen van links  naar deze websites of pagina’s impliceert op geen enkele wijze een  impliciete goedkeuring van de inhoud ervan.\r\n[Bedrijfsnaam] verklaart uitdrukkelijk dat zij geen zeggenschap heeft  over de inhoud of over andere kenmerken van deze websites en kan in  geen geval aansprakelijk gehouden worden voor de inhoud of de kenmerken  ervan of voor enige andere vorm van schade door het gebruik ervan.\r\nToepasselijk recht en bevoegde rechtbanken.\r\nHet Belgisch recht is van toepassing op deze site. In geval van een  geschil zijn enkel de rechtbanken van het arrondissement [Naam  arondissement] bevoegd.\r\nPrivacybeleid\r\n[Bedrijfsnaam] hecht belang aan uw privacy. Hoewel de meeste  informatie op deze site beschikbaar is zonder dat er persoonlijke  gegevens moeten worden verstrekt, is het mogelijk dat de gebruiker om  persoonlijke informatie gevraagd wordt. Deze informatie zal enkel  gebruikt worden in het kader van [Kader]. (bv ons klantenbeheer, om u op de hoogte te houden van onze activiteiten, …).  De gebruiker kan zich, kosteloos en op verzoek, steeds verzetten tegen  het gebruik van zijn gegevens voor direct marketing. Daartoe zal hij  zich richten tot [Bedrijfsnaam], [Adres bedrijf] of via [Email adres  bedrijf]. Uw persoonsgegevens worden nooit doorgegeven aan derden  (indien wel het geval vermelden aan wie).\r\nConform de wet verwerking persoonsgegevens van 08/12/1992 beschikt de  gebruiker over een wettelijk recht op inzage en eventuele correctie van  zijn persoonsgegevens. Mits bewijs van identiteit (kopie  identiteitskaart) kunt u  via een schriftelijke, gedateerde en  ondertekende aanvraag aan [Bedrijfsnaam], [Adres bedrijf] of via [Email  adres bedrijf], gratis de schriftelijke mededeling bekomen van uw  persoonsgegevens. Indien nodig kunt u ook vragen de gegevens te  corrigeren die onjuist, niet volledig of niet pertinent zouden zijn.\r\n[Bedrijfsnaam] kan anonieme of geaggregeerde gegevens verzamelen van  niet-persoonlijke aard, zoals browser type of IP-adres, het  besturingsprogramma dat u gebruikt of de domeinnaam van de website langs  waar u naar onze-website gekomen bent, of waarlangs u die verlaat. Dit  maakt het ons mogelijk om onze website permanent te optimaliseren voor  de gebruikers.\r\nHet gebruik van cookies.\r\nTijdens een bezoek aan de site kunnen cookies op de harde schijf van  uw computer geplaatst worden en dit enkel en alleen om de site beter af  te stemmen op de behoeften van de terugkerende bezoeker. Deze mini  bestandjes of cookies worden niet gebruikt om het surfgedrag van de  bezoeker op andere websites na te gaan. Uw internetbrowser laat u toe  dat u het gebruik van cookies verhindert, dat u een waarschuwing  ontvangt wanneer een cookie geïnstalleerd wordt of dat u de cookies  nadien van uw harde schijf verwijdert. Raadpleeg hiervoor de  help-functie van uw internetbrowser.', 'nl', 'Y');
+INSERT INTO `search_index` VALUES('pages', 3, 'text', ' Deze website is eigendom van [Bedrijfsnaam].\r\nContactgegevens:[Bedrijfsnaam] [Straatnaam] [Nummer] [Postcode] [Gemeente]\r\nAdres maatschappelijk zetel:[Maatschappelijke zetel] [Straatnaam] [Nummer] [Postcode] [Gemeente]\r\nTelefoon:E-mail:\r\nOndernemingsnummer: BTW BE 0 [BTW-nummer]\r\nDe toezichthoudende autoriteit: (wanneer uw activiteit aan een vergunningsstelsel is onderworpen)\r\nDoor de toegang tot en het gebruik van de website verklaart u zich uitdrukkelijk akkoord met de volgende algemene voorwaarden.\r\nIntellectuele eigendomsrechten\r\nDe inhoud van deze site, met inbegrip van de merken, logo’s, tekeningen, data, product- of bedrijfsnamen, teksten, beelden e.d. zijn beschermd door intellectuele rechten en behoren toe aan [Bedrijfsnaam] of rechthoudende derden.\r\nBepeperking van aansprakelijkheid\r\nDe informatie op de webstite is van algemene aard. De informatie is niet aangepast aan persoonlijke of specifieke omstandigheden, en kan dus niet als een persoonlijk, professioneel of juridisch advies aan de gebruiker worden beschouwd.\r\n[Bedrijfsnaam] levert grote inspanningen opdat de ter beschikking gestelde informatie volledig, juist, nauwkeurig en bijgewerkt zou zijn. Ondanks deze inspanningen kunnen onjuistheden zich voordoen in de ter beschikking gestelde informatie. Indien de verstrekte informatie onjuistheden zou bevatten of indien bepaalde informatie op of via de site onbeschikbaar zou zijn, zal [Bedrijfsnaam] de grootst mogelijke inspanning leveren om dit zo snel mogelijk recht te zetten.\r\n[Bedrijfsnaam] kan evenwel niet aansprakelijk worden gesteld voor rechtstreekse of onrechtstreekse schade die onstaat uit het gebruik van de informatie op deze site.\r\nIndien u onjuistheden zou vaststellen in de informatie die via de site ter beschikking wordt gesteld, kan u de beheerder van de site contacteren.\r\nDe inhoud van de site (links inbegrepen) kan te allen tijde zonder aankondiging of kennisgeving aangepast, gewijzigd of aangevuld worden. [Bedrijfsnaam] geeft geen garanties voor de goede werking van de website en kan op geen enkele wijze aansprakelijk gehouden worden voor een slechte werking of tijdelijke (on)beschikbaarheid van de website of voor enige vorm van schade, rechtstreekse of onrechtstreekse, die zou voortvloeien uit de toegang tot of het gebruik van de website.\r\n[Bedrijfsnaam] kan in geen geval tegenover wie dan ook, op directe of indirecte, bijzondere of andere wijze aansprakelijk worden gesteld voor schade te wijten aan het gebruik van deze site of van een andere, inzonderheid als gevolg van links of hyperlinks, met inbegrip, zonder beperking, van alle verliezen, werkonderbrekingen, beschadiging van programma''s of andere gegevens op het computersysteem, van apparatuur, programmatuur of andere van de gebruiker.\r\nDe website kan hyperlinks bevatten naar websites of pagina''s van derden, of daar onrechtstreeks naar verwijzen. Het plaatsen van links naar deze websites of pagina’s impliceert op geen enkele wijze een impliciete goedkeuring van de inhoud ervan.\r\n[Bedrijfsnaam] verklaart uitdrukkelijk dat zij geen zeggenschap heeft over de inhoud of over andere kenmerken van deze websites en kan in geen geval aansprakelijk gehouden worden voor de inhoud of de kenmerken ervan of voor enige andere vorm van schade door het gebruik ervan.\r\nToepasselijk recht en bevoegde rechtbanken.\r\nHet Belgisch recht is van toepassing op deze site. In geval van een geschil zijn enkel de rechtbanken van het arrondissement [Naam arondissement] bevoegd.\r\nPrivacybeleid\r\n[Bedrijfsnaam] hecht belang aan uw privacy. Hoewel de meeste informatie op deze site beschikbaar is zonder dat er persoonlijke gegevens moeten worden verstrekt, is het mogelijk dat de gebruiker om persoonlijke informatie gevraagd wordt. Deze informatie zal enkel gebruikt worden in het kader van [Kader]. (bv ons klantenbeheer, om u op de hoogte te houden van onze activiteiten, …). De gebruiker kan zich, kosteloos en op verzoek, steeds verzetten tegen het gebruik van zijn gegevens voor direct marketing. Daartoe zal hij zich richten tot [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf]. Uw persoonsgegevens worden nooit doorgegeven aan derden (indien wel het geval vermelden aan wie).\r\nConform de wet verwerking persoonsgegevens van 08/12/1992 beschikt de gebruiker over een wettelijk recht op inzage en eventuele correctie van zijn persoonsgegevens. Mits bewijs van identiteit (kopie identiteitskaart) kunt u via een schriftelijke, gedateerde en ondertekende aanvraag aan [Bedrijfsnaam], [Adres bedrijf] of via [Email adres bedrijf], gratis de schriftelijke mededeling bekomen van uw persoonsgegevens. Indien nodig kunt u ook vragen de gegevens te corrigeren die onjuist, niet volledig of niet pertinent zouden zijn.\r\n[Bedrijfsnaam] kan anonieme of geaggregeerde gegevens verzamelen van niet-persoonlijke aard, zoals browser type of IP-adres, het besturingsprogramma dat u gebruikt of de domeinnaam van de website langs waar u naar onze-website gekomen bent, of waarlangs u die verlaat. Dit maakt het ons mogelijk om onze website permanent te optimaliseren voor de gebruikers.\r\nHet gebruik van cookies.\r\nTijdens een bezoek aan de site kunnen cookies op de harde schijf van uw computer geplaatst worden en dit enkel en alleen om de site beter af te stemmen op de behoeften van de terugkerende bezoeker. Deze mini bestandjes of cookies worden niet gebruikt om het surfgedrag van de bezoeker op andere websites na te gaan. Uw internetbrowser laat u toe dat u het gebruik van cookies verhindert, dat u een waarschuwing ontvangt wanneer een cookie geïnstalleerd wordt of dat u de cookies nadien van uw harde schijf verwijdert. Raadpleeg hiervoor de help-functie van uw internetbrowser.', 'nl', 'Y');
 INSERT INTO `search_index` VALUES('pages', 4, 'title', 'About', 'nl', 'Y');
-INSERT INTO `search_index` VALUES('pages', 4, 'text', '  ', 'nl', 'Y');
+INSERT INTO `search_index` VALUES('pages', 4, 'text', ' ', 'nl', 'Y');
 INSERT INTO `search_index` VALUES('pages', 404, 'title', '404', 'nl', 'Y');
 INSERT INTO `search_index` VALUES('pages', 404, 'text', ' De opgevraagde pagina werd niet gevonden.', 'nl', 'Y');
 INSERT INTO `search_index` VALUES('pages', 404, 'tags', '', 'nl', 'Y');
@@ -1721,10 +1721,10 @@ INSERT INTO `search_index` VALUES('pages', 408, 'tags', '', 'nl', 'Y');
 
 DROP TABLE IF EXISTS `search_modules`;
 CREATE TABLE IF NOT EXISTS `search_modules` (
-  `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `searchable` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL,
-  `weight` int(11) NOT NULL,
-  PRIMARY KEY (`module`)
+ `module` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `searchable` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL,
+ `weight` int(11) NOT NULL,
+ PRIMARY KEY (`module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -1741,13 +1741,13 @@ INSERT INTO `search_modules` VALUES('pages', 'Y', 1);
 
 DROP TABLE IF EXISTS `search_statistics`;
 CREATE TABLE IF NOT EXISTS `search_statistics` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `time` datetime NOT NULL,
-  `data` text COLLATE utf8_unicode_ci,
-  `num_results` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+ `time` datetime NOT NULL,
+ `data` text COLLATE utf8_unicode_ci,
+ `num_results` int(11) DEFAULT NULL,
+ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -1763,12 +1763,12 @@ CREATE TABLE IF NOT EXISTS `search_statistics` (
 
 DROP TABLE IF EXISTS `search_synonyms`;
 CREATE TABLE IF NOT EXISTS `search_synonyms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `synonym` text COLLATE utf8_unicode_ci NOT NULL,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQUE` (`term`,`language`)
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `term` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `synonym` text COLLATE utf8_unicode_ci NOT NULL,
+ `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`),
+ UNIQUE KEY `UNIQUE` (`term`,`language`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -1784,12 +1784,12 @@ CREATE TABLE IF NOT EXISTS `search_synonyms` (
 
 DROP TABLE IF EXISTS `tags`;
 CREATE TABLE IF NOT EXISTS `tags` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
-  `tag` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `number` int(11) NOT NULL,
-  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `language` varchar(5) COLLATE utf8_unicode_ci NOT NULL,
+ `tag` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `number` int(11) NOT NULL,
+ `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
@@ -1805,10 +1805,10 @@ CREATE TABLE IF NOT EXISTS `tags` (
 
 DROP TABLE IF EXISTS `timezones`;
 CREATE TABLE IF NOT EXISTS `timezones` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `timezone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=454 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `timezone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=454 ;
 
 --
 -- Dumping data for table `timezones`
@@ -2276,15 +2276,15 @@ INSERT INTO `timezones` VALUES(453, 'Pacific/Yap');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `group_id` int(11) NOT NULL,
-  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'will be case-sensitive',
-  `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'is this user active?',
-  `deleted` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the user deleted?',
-  `is_god` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The backend users' AUTO_INCREMENT=2 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `group_id` int(11) NOT NULL,
+ `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'will be case-sensitive',
+ `active` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'Y' COMMENT 'is this user active?',
+ `deleted` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N' COMMENT 'is the user deleted?',
+ `is_god` enum('Y','N') COLLATE utf8_unicode_ci NOT NULL DEFAULT 'N',
+ PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The backend users' AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `users`
@@ -2300,14 +2300,14 @@ INSERT INTO `users` VALUES(1, 1, 'johan@netlash.com', '2abdcd154119e13839475ad3c
 
 DROP TABLE IF EXISTS `users_sessions`;
 CREATE TABLE IF NOT EXISTS `users_sessions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `session_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `secret_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `date` datetime NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idx_session_id_secret_key` (`session_id`(100),`secret_key`(100))
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `user_id` int(11) NOT NULL,
+ `session_id` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `secret_key` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+ `date` datetime NOT NULL,
+ PRIMARY KEY (`id`),
+ KEY `idx_session_id_secret_key` (`session_id`(100),`secret_key`(100))
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 --
 -- Dumping data for table `users_sessions`
@@ -2323,10 +2323,10 @@ INSERT INTO `users_sessions` VALUES(4, 1, 'c7de6f9ea30f9314803d143e835b2222', '3
 
 DROP TABLE IF EXISTS `users_settings`;
 CREATE TABLE IF NOT EXISTS `users_settings` (
-  `user_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
-  `value` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'serialized value',
-  PRIMARY KEY (`user_id`,`name`)
+ `user_id` int(11) NOT NULL,
+ `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
+ `value` text COLLATE utf8_unicode_ci NOT NULL COMMENT 'serialized value',
+ PRIMARY KEY (`user_id`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
