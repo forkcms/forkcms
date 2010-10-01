@@ -412,7 +412,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'ES', 'Spaans');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'ForgotPassword', 'Wachtwoord vergeten?');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'FR', 'Frans');
-		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpAvatar', 'Een vierkante foto van je gezicht geeft het beste resultaat.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpAvatar', 'Een vierkante afbeelding geeft het beste resultaat.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpBlogger', 'Selecteer het bestand dat u heeft geëxporteerd van <a href="http://blogger.com">Blogger</a>.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpDrafts', 'Hier kan je jouw kladversie zien. Dit zijn tijdelijke versies.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpEmailFrom', 'E-mails verzonden vanuit het CMS gebruiken deze instellingen.');
@@ -434,8 +434,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NL', 'Nederlands');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoAkismetKey', 'Om de spamfilter te activeren moet je een Akismet-key <a href="%1$s">ingeven</a>.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoComments', 'Er zijn geen reacties in deze categorie.');
-		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoItems', 'Er zijn geen items.');
-		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoPublishedComments', 'Er zijn geen gepubliceerde reacties.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoItems', 'Er zijn nog geen items.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoPublishedComments', 'Er zijn nog geen gepubliceerde reacties.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoRevisions', 'Er zijn nog geen vorige versies.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoTags', 'Je hebt nog geen tags ingegeven.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoUsage', 'Nog niet gebruikt.');
@@ -773,7 +773,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ES', 'Spanish');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'ForgotPassword', 'Forgot password?');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'FR', 'French');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpAvatar', 'A square picture of your face produces the best results.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpAvatar', 'A square picture produces the best results.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpBlogger', 'Select the file that you exported from <a href="http://blogger.com">Blogger</a>.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpDrafts', 'Here you can see your draft. These are temporarily versions.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpEmailFrom', 'E-mails sent from the CMS use these settings.');
@@ -795,7 +795,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NL', 'Dutch');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoAkismetKey', 'If you want to enable the spam-protection you should <a href="%1$s">configure</a> an Akismet-key.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoComments', 'There are no comments in this category.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoItems', 'There are no items.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoItems', 'There are no items yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoPublishedComments', 'There are no published comments.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoRevisions', 'There are no previous versions yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoTags', 'You didn\'t use tags yet.');
@@ -858,7 +858,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er zijn geen resultaten.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'TagsNoItems', 'Er zijn nog geen tags gebruikt.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'TagsNoItems', 'Er werden nog geen tags gebruikt.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'WrittenBy', 'geschreven door %1$s');
 		// --
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Archive', 'archive');
