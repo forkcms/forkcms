@@ -4,12 +4,12 @@
 *}
 
 {option:widgetBlogRecentArticlesList}
-	<div class="widget widgetBlogRecentArticlesList">
-		<h4>{$lblRecentArticles|ucfirst}</h4>
-		<ul>
-			{iteration:widgetBlogRecentArticlesList}
-				<li><a href="{$widgetBlogRecentArticlesList.full_url}" title="{$widgetBlogRecentArticlesList.title}">{$widgetBlogRecentArticlesList.title}</a></li>
-			{/iteration:widgetBlogRecentArticlesList}
-		</ul>
-	</div>
+<div class="widget widgetBlogRecentArticlesList">
+	<h4>{$lblRecentArticles|ucfirst}</h4>
+	<ul>
+		{iteration:widgetBlogRecentArticlesList}
+			<li><a href="{$widgetBlogRecentArticlesList.full_url}" title="{$widgetBlogRecentArticlesList.title}">{$widgetBlogRecentArticlesList.title}</a></li>
+		{/iteration:widgetBlogRecentArticlesList}
+	</ul>
+</div>
 {/option:widgetBlogRecentArticlesList}

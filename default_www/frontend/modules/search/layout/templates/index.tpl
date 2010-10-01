@@ -13,10 +13,9 @@
 			<input id="submit" class="inputButton button mainButton" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
 		</p>
 	{/form:search}
-
 	{option:searchTerm}
 		<div id="search" class="index">
-			{option:!searchResults}<div class="message warning"><p>{$msgSearchNoItems}</p></div>{/option:!searchResults}
+			{option:!searchResults}<p>{$msgSearchNoItems}</p>{/option:!searchResults}
 			{option:searchResults}
 				{iteration:searchResults}
 					<div class="article">
@@ -31,7 +30,6 @@
 						</div>
 					</div>
 				{/iteration:searchResults}
-
 				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl'}
 			{/option:searchResults}
 		</div>

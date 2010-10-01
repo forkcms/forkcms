@@ -26,7 +26,6 @@
 			{$msgWrittenBy|ucfirst|sprintf:{$blogArticle['user_id']|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$blogArticle['category_full_url']}" title="{$blogArticle['category_name']">{$blogArticle['category_name']}</a>. {$lblTags|ucfirst}: {iteration:blogArticleTags}<a href="{$blogArticleTags.full_url}" rel="tag" title="{$blogArticleTags.name}">{$blogArticleTags.name}</a>{option:!blogArticleTags.last}, {/option:!blogArticleTags.last}{/iteration:blogArticleTags}
 		</p>
 	</div>
-
 	<div class="navigation">
 		<ul>
 			{option:blogNavigation['previous']}
@@ -41,7 +40,6 @@
 			{/option:blogNavigation['next']}
 		</ul>
 	</div>
-
 	{option:blogComments}
 	<div id="comments">
 		<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
@@ -68,16 +66,13 @@
 		{/iteration:blogComments}
 	</div>
 	{/option:blogComments}
-
 	{option:blogArticle['allow_comments']}
 		<div id="commentForm">
 			{* Remark: Do not alter the id! It is used as anchor *}
 			<h3 id="{$actComment}">{$msgComment|ucfirst}</h3>
-
 			{option:commentIsInModeration}<div class="formMessage generalMessage"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
 			{option:commentIsSpam}<div class="formMessage errorMessage"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
 			{option:commentIsAdded}<div class="formMessage successMessage"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
-
 			{form:comment}
 				<fieldset class="horizontal">
 					<p>

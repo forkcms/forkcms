@@ -1,6 +1,6 @@
 {*
-	variables that are available:
-
+	Variables that are available:
+	@todo add variables that are available
 *}
 
 <div id="tags" class"detail">
@@ -8,7 +8,7 @@
 		<ul>
 			{iteration:tagsModules}
 				<li>
-					{$tagsModules.name} {* naam van deze module als label *}
+					{$tagsModules.name} {* Module name as label *}
 					<ul>
 						{iteration:tagsModules.items}
 							<li><a href="{$items.url}">{$items.title}</a></li>

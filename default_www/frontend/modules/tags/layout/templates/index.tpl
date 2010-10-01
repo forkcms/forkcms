@@ -3,7 +3,7 @@
 	- {$tags}: contains an array with all tags that are used on the site, each element contains data about the tag
 *}
 
-{option:!tags}<div class="message warning"><p>{$msgTagsNoItems}</p></div>{/option:!tags}
+{option:!tags}<p>{$msgTagsNoItems}</p>{/option:!tags}
 {option:tags}
 	<ul>
 		{iteration:tags}

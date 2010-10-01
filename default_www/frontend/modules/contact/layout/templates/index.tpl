@@ -5,29 +5,21 @@
 
 	{option:!contactHideForm}
 	{form:contact}
-		<div class="horizontal">
-			<div class="options">
-				<p>
-					<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtAuthor} {$txtAuthorError}
-				</p>
-				<p>
-					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtEmail} {$txtEmailError}
-				</p>
-			</div>
-			<div class="options">
-				<p>
-					<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtMessage} {$txtMessageError}
-				</p>
-			</div>
-			<div class="spacing">
-				<p>
-					<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSend|ucfirst}" />
-				</p>
-			</div>
-		</div>
+		<p>
+			<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			{$txtAuthor} {$txtAuthorError}
+		</p>
+		<p>
+			<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			{$txtEmail} {$txtEmailError}
+		</p>
+		<p>
+			<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+			{$txtMessage} {$txtMessageError}
+		</p>
+		<p>
+			<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSend|ucfirst}" />
+		</p>
 	{/form:contact}
 	{/option:!contactHideForm}
 </div>
