@@ -10,7 +10,7 @@
 			{$txtQ} {$txtQError}
 		</p>
 		<p>
-			<input id="submit" class="inputButton button mainButton" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
+			<input id="submit" class="inputSubmit" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
 		</p>
 	{/form:search}
 	{option:searchTerm}
