@@ -8,7 +8,7 @@
 		<div class="horizontal">
 			<div class="options">
 				<p>
-					<label for="email">{$lblEmail|ucfirst}<abbr title=" {$lblRequired}">*</abbr></label>
+					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtEmail} {$txtEmailError}
 				</p>
 			</div>

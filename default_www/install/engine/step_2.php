@@ -132,6 +132,9 @@ class InstallerStep2 extends InstallerStep
 		// check for cURL extension
 		self::checkRequirement('extensionCURL', extension_loaded('curl'), $variables);
 
+		// check for cURL extension
+		self::checkRequirement('extensionDOM', extension_loaded('dom'), $variables);
+
 		// check for SimpleXML extension
 		self::checkRequirement('extensionSimpleXML', extension_loaded('SimpleXML'), $variables);
 

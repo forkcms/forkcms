@@ -10,9 +10,9 @@
 	<div class="options">
 		<div id="tabs" class="tabs">
 			<ul>
-				<li><a href="#tabMailmotorSubscriptions">{$lblMailmotorSubscriptions|ucfirst}</a></li>
-				<li><a href="#tabMailmotorUnsubscriptions">{$lblMailmotorUnsubscriptions|ucfirst}</a></li>
-				<li><a href="#tabMailmotorStatistics">{$lblMailmotorStatistics|ucfirst}</a></li>
+				<li><a href="#tabMailmotorSubscriptions">{$lblSubscriptions|ucfirst}</a></li>
+				<li><a href="#tabMailmotorUnsubscriptions">{$lblUnsubscriptions|ucfirst}</a></li>
+				<li><a href="#tabMailmotorStatistics">{$lblStatistics|ucfirst}</a></li>
 			</ul>
 
 			<div id="tabMailmotorSubscriptions">
@@ -25,7 +25,7 @@
 					{option:!dgMailmotorSubscriptions}
 						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
 							<tr>
-								<td>{$msgMailmotorNoSubscriptions|ucfirst}</td>
+								<td>{$msgNoSubscriptions|ucfirst}</td>
 							</tr>
 						</table>
 					{/option:!dgMailmotorSubscriptions}
@@ -42,7 +42,7 @@
 					{option:!dgMailmotorUnsubscriptions}
 						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
 							<tr>
-								<td>{$msgMailmotorNoUnsubscriptions|ucfirst}</td>
+								<td>{$msgNoUnsubscriptions|ucfirst}</td>
 							</tr>
 						</table>
 					{/option:!dgMailmotorUnsubscriptions}
@@ -59,7 +59,7 @@
 					{option:!dgMailmotorStatistics}
 						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
 							<tr>
-								<td>{$msgMailmotorNoSentMailings|ucfirst}</td>
+								<td>{$msgNoSentMailings|ucfirst}</td>
 							</tr>
 						</table>
 					{/option:!dgMailmotorStatistics}
@@ -69,7 +69,7 @@
 	</div>
 	<div class="footer">
 		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'addresses':'mailmotor'}" class="button"><span>{$msgMailmotorAllAddresses|ucfirst}</span></a>
+			<a href="{$var|geturl:'addresses':'mailmotor'}" class="button"><span>{$msgAllAddresses|ucfirst}</span></a>
 		</div>
 	</div>
 </div>

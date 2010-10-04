@@ -349,7 +349,7 @@ jsBackend.pages.template = {
 		// loop blocks and set extra's, to initialize the page
 		$('.contentBlock').each(function() {
 			var index = $(this).attr('id').replace('block-', '');
-			var extraId = $('#block_extra_id_'+ index).val();
+			var extraId = $('#blockExtraId'+ index).val();
 
 			// no extra specified, we should grab the default
 			if(typeof current.data.default_extras != 'undefined' && (typeof extraId == 'undefined')) {

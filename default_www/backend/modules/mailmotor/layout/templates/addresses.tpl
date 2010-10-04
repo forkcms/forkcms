@@ -58,7 +58,7 @@
 
 {option:!datagrid}
 	{option:oPost}<p>{$msgNoResultsForFilter|sprintf:{$email}}</p>{/option:oPost}
-	{option:!oPost}<p>{$msgMailmotorNoSubscriptions}</p>{/option:!oPost}
+	{option:!oPost}<p>{$msgNoSubscriptions}</p>{/option:!oPost}
 {/option:!datagrid}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}

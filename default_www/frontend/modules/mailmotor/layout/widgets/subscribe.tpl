@@ -4,7 +4,7 @@
 		<div class="horizontal">
 			<div class="options">
 				<p>
-					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequired}">*</abbr></label>
+					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					<input type="text" value="" id="email" name="email" class="inputText" />
 				</p>
 			</div>

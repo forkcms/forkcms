@@ -20,6 +20,12 @@
 					can be found on: <a href="http://php.net/curl">http://php.net/curl</a>.
 				</p>
 
+				<h4>DOM: <span class="{$extensionDOM}">{$extensionDOMStatus}</span></h4>
+				<p>
+					The DOM extension allows you to operate on XML documents through the DOM API with PHP 5. More information
+					can be found on: <a href="http://php.net/dom">http://php.net/dom</a>.
+				</p>
+
 				<h4>SimpleXML: <span class="{$extensionSimpleXML}">{$extensionSimpleXMLStatus}</span></h4>
 				<p>
 					The SimpleXML extension provides a very simple and easily usable toolset to convert XML to an object that can be
