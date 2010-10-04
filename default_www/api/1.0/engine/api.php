@@ -17,6 +17,7 @@ class API
 	const BAD_REQUEST = 400;
 	const FORBIDDEN = 403;
 	const ERROR = 500;
+	const NOT_FOUND = 404;
 
 
 	/**
@@ -116,7 +117,7 @@ class API
 			}
 
 			// get the return
-			$data = (array) call_user_func_array(array($className, $methodName), $arguments);
+			$data = (array) call_user_func_array(array($className, $methodName), (array) $arguments);
 
 			// output
 			self::output(self::OK, $data);
@@ -146,7 +147,7 @@ class API
 	 * @param	string $key			The key
 	 * @param	DOMElement $XML		The root-element
 	 */
-	private static function arrayToXML($input, $key, $XML)
+	private static function arrayToXML(&$input, $key, $XML)
 	{
 		// skip attributes
 		if($key == '@attributes') return;
@@ -218,7 +219,7 @@ class API
 			}
 
 			// is there are named keys they should be handles as elements
-			if($isNonNumeric) array_walk($input, array('API', 'arrayToXML'), &$element);
+			if($isNonNumeric) array_walk($input, array('API', 'arrayToXML'), $element);
 
 			// numeric elements means this a list of items
 			else
@@ -226,7 +227,7 @@ class API
 				// handle the value as an element
 				foreach($input as $value)
 				{
-					array_walk($value, array('API', 'arrayToXML'), &$element);
+					array_walk($value, array('API', 'arrayToXML'), $element);
 				}
 			}
 		}
@@ -378,7 +379,7 @@ class API
 		$XML->appendChild($root);
 
 		// build XML
-		array_walk($data, array('API', 'arrayToXML'), &$root);
+		array_walk($data, array('API', 'arrayToXML'), $root);
 
 		// set correct headers
 		SpoonHTTP::setHeadersByCode($statusCode);
