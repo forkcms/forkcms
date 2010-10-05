@@ -1,6 +1,6 @@
 /**
  * @name         bramus_cssextras
- * @version      0.5.2
+ * @version      0.5.3
  *
  * @author       Bramus! (Bram Van Damme)
  * @authorURL    http://www.bram.us/
@@ -9,6 +9,7 @@
  * @license      Creative Commons Attribution-Share Alike 2.5
  * @licenseURL   http://creativecommons.org/licenses/by-sa/2.5/
  *
+ * v 0.5.3 - 2010.09.13 - BUG: 'selectDropDown' is undefined when using GZIP
  * v 0.5.2 - 2010.05.15 - BUG : dropdown remained in place / wasn't removed properly most of the time
  *                      - UPD : back to using TinyMCE's internal XHR object which didn't make it into 0.5.1.
  *                              (turns out it was a bug in the TinyMCE version at the time that didn't execute non-asynchronous (thus synchronous) ajax calls properly)
@@ -47,7 +48,7 @@
 					author 		: 'Bramus!',
 					authorurl	: 'http://www.bram.us/',
 					infourl		: 'http://www.bram.us/projects/tinymce-plugins/',
-					version		: "0.5.2"
+					version		: "0.5.3"
 				};
 			},
 
@@ -268,7 +269,7 @@
 				// build the elmsAndShizzleArray (Shizzle being either Ids or Classes)
 					var elmsAndShizzleArray			= new Array();
 
-					for (var i = 0; i < arr_selectors.length; i++) {
+					for (var i = 0;  i < arr_selectors.length; i++) {
 						elmsAndShizzleArray.push(arr_selectors[i] + "[" + arr_values[i] + "]");
 					}
 
@@ -427,6 +428,10 @@
 			_rebuildDropdown			: function(gotHit, selectDropDown, what, ed) {
 
 				// console.log(selectDropDown);
+				
+				if (!selectDropDown) {
+					return;
+				}
 				
 				if (gotHit === null) {
 
