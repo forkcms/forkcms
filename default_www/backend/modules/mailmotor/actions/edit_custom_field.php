@@ -165,7 +165,7 @@ class BackendMailmotorEditCustomField extends BackendBaseActionAdd
 
 						// update custom fields in Fork for the active group
 						BackendMailmotorModel::updateCustomFields($fields, $this->group['id']);
-						
+
 						// re-insert the field in CampaignMonitor
 						BackendMailmotorCMHelper::createCustomField($txtName->getValue(), $this->group['id']);
 					}

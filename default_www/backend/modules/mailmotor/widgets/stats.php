@@ -63,7 +63,7 @@ class BackendMailmotorWidgetStats extends BackendBaseWidget
 
 		// check if a mailing was set
 		if(!isset($mailing[0])) return false;
-		
+
 		// show the sent mailings block
 		$this->tpl->assign('oSentMailings', true);
 

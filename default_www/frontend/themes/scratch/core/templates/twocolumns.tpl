@@ -28,7 +28,7 @@
 				{option:!block1IsHTML}
 					{include:file='{$block1}'}
 				{/option:!block1IsHTML}
-				
+
 				{* Block 2 *}
 				{option:block2IsHTML}
 					<div class="content">

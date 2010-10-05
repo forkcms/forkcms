@@ -28,14 +28,14 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-		
+
 		// get parameters
 		$mailingId = SpoonFilter::getPostValue('mailing_id', null, '', 'int');
 		$subject = SpoonFilter::getPostValue('subject', null, '');
 		$contentHTML = urldecode(SpoonFilter::getPostValue('content_html', null, ''));
 		$contentPlain = SpoonFilter::getPostValue('content_plain', null, '');
 		$fullContentHTML = SpoonFilter::getPostValue('full_content_html', null, '');
-		
+
 		// validate mailing ID
 		if($mailingId == '') $this->output(self::BAD_REQUEST, null, 'No mailing ID provided');
 
@@ -78,7 +78,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	{
 		// init var
 		$matches = array();
-		
+
 		// search for all hrefs
 		preg_match_all('/href="(.*)"/isU', $HTML, $matches);
 
@@ -88,7 +88,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 		// check if we have matches
 		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
-		
+
 		// build the google vars query
 		$params = array();
 		$params['utm_source'] = 'mailmotor';
@@ -98,7 +98,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		// build google vars query
 		$googleQuery = http_build_query($params);
 
-		
+
 		// loop the matches
 		foreach($matches[1] as $match)
 		{
@@ -109,7 +109,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 			$search[] = 'href="'. $match .'"';
 			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
 		}
-				
+
 		// replace the content HTML with the replace values
 		return str_replace($search, $replace, $HTML);
 	}
@@ -136,10 +136,10 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 		// remove TinyMCE
 		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);
-		
+
 		// add Google UTM parameters to all anchors
 		$fullContentHTML = $this->addUTMParameters($fullContentHTML);
-		
+
 		// search values
 		$search = array();
 		$search[] = '{$siteURL}';
@@ -151,7 +151,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$replace[] = SITE_URL;
 		$replace[] = '"';
 		$replace[] = 'src="'. SITE_URL .'/';
-		
+
 		// replace some variables
 		$fullContentHTML = str_replace($search, $replace, $fullContentHTML);
 

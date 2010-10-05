@@ -101,10 +101,10 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		// set CSS object
 		$css = new CSSToInlineStyles($this->template['content'], $this->template['css']);
 		$HTML = urldecode($css->convert());
-		
+
 		/*
 			I realise this is a bit confusing, so let me elaborate:
-			
+
 			1.	edit_mailing_iframe.tpl contains a var {$templateHtml}. This is where $this->template['content'] goes.
 
 			2.	Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside. This will

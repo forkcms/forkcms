@@ -168,7 +168,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 
 		// manually parse fields
 		$this->frm->parse($this->tpl);
-		
+
 		// check if the filter form was set
 		if($this->frm->isSubmitted()) $this->tpl->assign('oPost', true);
 	}

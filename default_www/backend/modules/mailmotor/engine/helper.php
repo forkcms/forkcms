@@ -14,7 +14,7 @@ class BackendMailmotorCMHelper
 {
 	/**
 	 * Checks if a valid CM account is set up
-	 * 
+	 *
 	 * @return	bool
 	 */
 	public static function checkAccount()
@@ -24,17 +24,17 @@ class BackendMailmotorCMHelper
 		{
 			self::getCM();
 		}
-		
+
 		catch(Exception $e)
 		{
 			return false;
 		}
-		
+
 		// if we made it here, the account was valid
 		return true;
 	}
-	
-	
+
+
 	/**
 	 * Returns the CampaignMonitor object.
 	 *

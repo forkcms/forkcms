@@ -76,7 +76,7 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 	{
 		// no group set
 		if($this->groupId == '') $this->groupId = null;
-		
+
 		// get all groups
 		$groupIds = BackendMailmotorModel::getGroupIDs();
 
@@ -88,7 +88,7 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 			{
 				// if no groups were set, break here
 				if(empty($groupIds)) break;
-				
+
 				// loop the group IDs
 				foreach($groupIds as $groupId)
 				{
@@ -99,11 +99,11 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 					}
 					catch(Exception $e){}
 				}
-				
+
 				// delete all addresses
 				BackendMailmotorModel::deleteAddresses($email);
 			}
-			
+
 			// group ID was set, unsubscribe the address for this group
 			else BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
 		}

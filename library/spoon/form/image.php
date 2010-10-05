@@ -47,8 +47,8 @@ class SpoonFormImage extends SpoonFormFile
 		$thumbnail->setForceOriginalAspectRatio($forceOriginalAspectRatio);
 		$thumbnail->parseToFile($filename, $quality);
 	}
-	
-	
+
+
 	/**
 	 * Retrieve the extension of the uploaded file (based on the MIME-type).
 	 *

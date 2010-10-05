@@ -1,63 +1,85 @@
 if(!jsFrontend) { var jsFrontend = new Object(); }
 
-jsFrontend = {
+jsFrontend = 
+{
 	// datamembers
 	debug: false,
-	
+
+
 	// init, something like a constructor
-	init: function() {
+	init: function() 
+	{
 		// init stuff
 		jsFrontend.initAjax();
-		
+
 		// init search
 		if($('input[name=q]').length > 0) jsFrontend.search.init();
 
 		// init gravatar
 		jsFrontend.gravatar.init();
 	},
-	
+
+
 	// init
-	initAjax: function() {
+	initAjax: function() 
+	{
 		// set defaults for AJAX
 		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });
 	},
-	
+
+
 	// end
-	eof: true
+	eoo: true
 }
 
-jsFrontend.gravatar = {
+
+jsFrontend.gravatar = 
+{
 	// init, something like a constructor
-	init: function() {
-		$('.replaceWithGravatar').each(function() {
+	init: function() 
+	{
+		$('.replaceWithGravatar').each(function() 
+		{
 			var element = $(this);
 			var gravatarId = element.attr('rel');
 			var size = element.attr('height');
+		
 			// valid gravatar id
-			if(gravatarId != '') {
+			if(gravatarId != '') 
+			{
 				// build url
 				var url = 'http://www.gravatar.com/avatar/'+ gravatarId + '?r=g&d=404';
+				
 				// add size if set before
 				if(size != '') url += '&s=' + size;
+				
 				// create new image
 				var gravatar = new Image();
 				gravatar.src = url;
+				
 				// reset src
-				gravatar.onload = function() { element.attr('src', url).addClass('gravatarLoaded'); }
+				gravatar.onload = function() 
+				{ 
+					element.attr('src', url).addClass('gravatarLoaded'); 
+				}
 			}
 		});
 	},
-	
+
+
 	// end
-	eof: true
+	eoo: true
 }
 
-jsFrontend.search = {
+
+jsFrontend.search = 
+{
 	// init, something like a constructor
-	init: function() {
+	init: function() 
+	{
 		// split url to buil the ajax-url
 		var chunks = document.location.pathname.split('/');
-		
+
 		// max results
 		var limit = 50;
 
@@ -65,16 +87,22 @@ jsFrontend.search = {
 		$('input[name=q]').autocomplete({
 			delay: 200,
 			minLength: 3,
-			source: function(request, response) {
-				$.ajax({ url: '/frontend/ajax.php?module=search&action=autocomplete',
+			source: function(request, response) 
+			{
+				$.ajax({ 
+					url: '/frontend/ajax.php?module=search&action=autocomplete',
 					type: 'GET',
 					data: 'term=' + request.term + '&language=' + chunks[1] + '&limit=' + limit,
-					success: function(data, textStatus) {
+					success: function(data, textStatus) 
+					{
 						// init var
 						var realData = [];
+						
 						// alert the user
 						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
-						if(data.code == 200) {
+						
+						if(data.code == 200) 
+						{
 							for(var i in data.data) realData.push({ label: data.data[i].term, value: data.data[i].term });
 						}
 
@@ -86,8 +114,9 @@ jsFrontend.search = {
 		});
 	},
 
+
 	// end
-	eof: true
+	eoo: true
 }
 
 $(document).ready(function() { jsFrontend.init(); });

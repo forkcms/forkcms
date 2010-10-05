@@ -1,7 +1,9 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-jsBackend.mailmotor = {
-	init: function() {
+jsBackend.mailmotor =
+{
+	init: function()
+	{
 		jsBackend.mailmotor.charts.init();
 		jsBackend.mailmotor.chartPieChart.init();
 		jsBackend.mailmotor.changeGroup.init();
@@ -11,56 +13,76 @@ jsBackend.mailmotor = {
 		jsBackend.mailmotor.step4.init();
 		jsBackend.mailmotor.templateSelection.init();
 	},
+
+
 	// end
 	eoo: true
 }
 
-jsBackend.mailmotor.charts = {
-	init: function() {
-		if($('#chartPieChart').length > 0 || $('#chartDoubleMetricPerDay').length > 0 || $('#chartSingleMetricPerDay').length > 0 || $('#chartWidget').length > 0) {
-			Highcharts.setOptions({ colors: ['#058DC7', '#50b432', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
-									title: { text: '' },
-									legend: { layout: 'vertical', backgroundColor: '#FFF', borderWidth: 0, shadow: false, symbolPadding: 12,
-												symbolWidth: 10, 
-												itemStyle: { cursor: 'pointer', color: '#000', lineHeight: '18px' },
-												itemHoverStyle: { color: '#666' },
-												style: { right: '0', top: '0', bottom: 'auto', left: 'auto' }
-											}
-								});
+
+jsBackend.mailmotor.charts =
+{
+	init: function()
+	{
+		if($('#chartPieChart').length > 0 || $('#chartDoubleMetricPerDay').length > 0 || $('#chartSingleMetricPerDay').length > 0 || $('#chartWidget').length > 0)
+		{
+			Highcharts.setOptions({
+				colors: ['#058DC7', '#50b432', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
+				title: { text: '' },
+				legend: {
+					layout: 'vertical',
+					backgroundColor: '#FFF',
+					borderWidth: 0,
+					shadow: false,
+					symbolPadding: 12,
+					symbolWidth: 10,
+					itemStyle: { cursor: 'pointer', color: '#000', lineHeight: '18px' },
+					itemHoverStyle: { color: '#666' },
+					style: { right: '0', top: '0', bottom: 'auto', left: 'auto' }
+				}
+			});
 		}
 	},
 
+
 	// end
 	eoo: true
 }
 
-jsBackend.mailmotor.chartPieChart = {
-	init: function() {
+
+jsBackend.mailmotor.chartPieChart =
+{
+	init: function()
+	{
 		if($('#chartPieChart').length > 0) { jsBackend.mailmotor.chartPieChart.create(); }
 	},
 
 	// add new chart
-	create: function(evt) {
+	create: function(evt)
+	{
 		var pieChartValues = $('#dataChartPieChart ul.data li');
 		var pieChartData = [];
-		pieChartValues.each(function() { 
+
+		pieChartValues.each(function()
+		{
 			pieChartData.push({
-				'name': $(this).children('span.label').html(), 
+				'name': $(this).children('span.label').html(),
 				'y': parseInt($(this).children('span.value').html()),
 				'percentage': parseInt($(this).children('span.percentage').html())
-			}); 
+			});
 		});
 
 		var chart = new Highcharts.Chart({
 			chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]	},
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
-			tooltip: { 
+			tooltip: {
 				formatter: function() {
 					var percentage = String(this.point.percentage);
 					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, percentage.indexOf('.') + 3) + '%)';
 				},
-				borderWidth: 2, shadow: false
+				borderWidth: 2,
+				shadow: false
 			},
 			plotOptions: {
 				pie: { allowPointSelect: true,
@@ -75,30 +97,39 @@ jsBackend.mailmotor.chartPieChart = {
 			series: [ {type: 'pie', data: pieChartData } ]
 		});
 	},
-	
+
+
 	// end
 	eoo: true
 };
 
-jsBackend.mailmotor.changeGroup = {
-	init: function() {
+
+jsBackend.mailmotor.changeGroup =
+{
+	init: function()
+	{
 		// cache objects
 		var dropdown = $('#subscriptions');
 		var form = $('#edit');
-		
+
 		// dropdown is changed
-		dropdown.change(function(){
+		dropdown.change(function()
+		{
 			// redirect with the new group
 			window.location = document.location.pathname +'?token=true&email='+ variables['email'] +'&group_id='+ $(this).val();
 		});
 	},
-	
+
+
 	// end
 	eoo: true
 };
 
-jsBackend.mailmotor.linkAccount = {
-	init: function() {
+
+jsBackend.mailmotor.linkAccount =
+{
+	init: function()
+	{
 		// cache objects
 		var confirm = $('#linkAccount');
 		var url = $('#url');
@@ -106,23 +137,25 @@ jsBackend.mailmotor.linkAccount = {
 		var password = $('#password');
 
 		// prevent submit on keyup
-		$('#accountBox input').keypress(function(e){
+		$('#accountBox input').keypress(function(e)
+		{
 			if(e.keyCode == 13)
 			{
 				// prevent the default action
 				e.preventDefault();
 
 				// if all fields are set
-				if(url.val() != '' && username.val() != '' && password.val() != '') 
+				if(url.val() != '' && username.val() != '' && password.val() != '')
 				{
 					// do the call to link the account
 					jsBackend.mailmotor.linkAccount.doCall();
 				}
 			}
 		});
-		
+
 		// link account button clicked
-		confirm.live('click', function(e){
+		confirm.live('click', function(e)
+		{
 			// prevent default
 			e.preventDefault();
 
@@ -131,26 +164,33 @@ jsBackend.mailmotor.linkAccount = {
 		});
 	},
 
-	doCall: function() {
+
+	doCall: function()
+	{
 		var url = $('#url');
 		var username = $('#username');
 		var password = $('#password');
-		
+
 		// make the call
-		$.ajax({url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language,
+		$.ajax({
+			url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language,
 			data: 'url='+ url.val() +'&username='+ username.val() +'&password='+ password.val(),
-			success: function(data, textStatus) {
+			success: function(data, textStatus)
+			{
 				// remove all previous errors
 				$('.formError').remove();
-				
+
 				// success!
-				if(data.code == 200) {
+				if(data.code == 200)
+				{
 					// client_id field is set
 					if(data.data.client_id) window.location = document.location.pathname +'?token=true&report='+ data.data.message;
-					
+
 					// client_id field was empty, so a redirect is easier to filter out the new form
 					else window.location = document.location.pathname +'?token=true';
-				} else {
+				}
+				else
+				{
 					// field was set
 					if(data.data.field)
 					{
@@ -161,47 +201,49 @@ jsBackend.mailmotor.linkAccount = {
 			}
 		});
 	},
-	
+
+
 	// end
 	eoo: true
 };
 
-jsBackend.mailmotor.resizing = {
-	init: function() {
+
+jsBackend.mailmotor.resizing =
+{
+	init: function()
+	{
 		var iframe = $('#contentBox');
 		var iframeBox = $('#iframeBox');
-		
+
 		// make the plain content textarea resizable
 		$('#contentPlain').resizable({
-			// only resize on the bottom
 			handles: 's'
 		});
-		
+
 		// make the iframe resizable
 		iframeBox.resizable({
-			// only resize on the bottom
 			handles: 's',
-			
 			/*
-				This is a hack to fix sloppy default resizing in jqueryui. The default behaviour stops resizing as soon as your mouse 
-				enters the content viewport of an iframe, meaning quick resizing is not possible. What we do here is adding an overlay 
+				This is a hack to fix sloppy default resizing in jqueryui. The default behaviour stops resizing as soon as your mouse
+				enters the content viewport of an iframe, meaning quick resizing is not possible. What we do here is adding an overlay
 				div to the iframe to "block" the mouse from ever entering the iframe contents while resizing.
 			*/
-			start: function(){
+			start: function()
+			{
 				// create an overlay
 				var overlay = $('<div></div>');
-	
+
 				// append the overlay to the iframe box and give it an ID
 				iframeBox.append(overlay);
 				overlay[0].id = 'iframeOverlay';
-				
+
 				// the overlay should be absolutely positioned with the top value aligned to the top of the iframe
 				overlay.css({
 					left: 0,
-					position:'absolute', 
+					position:'absolute',
 					top: iframe.position().top
 				});
-				
+
 				// height should be the height of the iframe
 				overlay.height(iframe.height());
 				overlay.width('100%');
@@ -212,27 +254,33 @@ jsBackend.mailmotor.resizing = {
 			}
 		});
 	},
-	
+
+
 	// end
 	eoo: true
 }
 
-jsBackend.mailmotor.step3 = {
-	init: function() {
+
+jsBackend.mailmotor.step3 =
+{
+	init: function()
+	{
 		// cache objects
 		var iframe = $('#contentBox');
 		var iframeBox = $('#iframeBox');
 		var form = $('#step3');
 
 		// only continue if the iframe is ready
-		iframe.load(function(){
+		iframe.load(function()
+		{
 			// cache objects from inside the iframe
 			var body = iframe.contents().find('body');
-			
+
 			// give the iframebox the height of the body contents
 			iframeBox.height(body.height());
-			
-			form.submit(function(e){
+
+			form.submit(function(e)
+			{
 				// prevent the form from submitting
 				e.preventDefault();
 
@@ -248,17 +296,22 @@ jsBackend.mailmotor.step3 = {
 				var bodyHTML = encodeURIComponent(body.html());
 
 				// make the call
-				$.ajax({url: url,
+				$.ajax({
+					url: url,
 					data: 'mailing_id='+ variables.mailingId +'&subject='+ subject +'&content_plain='+ plainText +'&content_html=' + textareaValue +'&full_content_html='+ bodyHTML,
-					success: function(data, textStatus) {
-						if(data.code == 200) {							
+					success: function(data, textStatus)
+					{
+						if(data.code == 200)
+						{
 							// direct the user to step 4
 							window.location = document.location.pathname +'?token=true&id='+ variables.mailingId +'&step=4';
-						} else {
+						}
+						else
+						{
 							// hide all previous errors, and add the new one
 							$('#'+ data.data.element).parent().children('.formError').remove();
 							$('#'+ data.data.element).parent().append('<span class="formError">'+ data.data.element_error +'</span>');
-							
+
 							// show message
 							jsBackend.messages.add('error', data.message);
 						}
@@ -268,12 +321,16 @@ jsBackend.mailmotor.step3 = {
 		});
 	},
 
+
 	// end
 	eoo: true
 }
 
-jsBackend.mailmotor.step4 = {
-	init: function() {
+
+jsBackend.mailmotor.step4 =
+{
+	init: function()
+	{
 		// cache objects
 		var form = $('#step4');
 		var confirmBox = $('#sendMailingConfirmationModal');
@@ -285,72 +342,86 @@ jsBackend.mailmotor.step4 = {
 		var sendTime = oSendTime.val();
 
 		// initalize the confirmation modal
-		confirmBox.dialog({ autoOpen: false, draggable: false, width: 500, modal: true, resizable: false,
-							buttons: {
-								'{$lblSendMailing|ucfirst}': function() {
-									// send the mailing
-									jsBackend.mailmotor.step4.sendMail();
-								},
-								'{$lblCancel|ucfirst}': function() {
-									// close the dialog
-									$(this).dialog('close');
-								}
-							}
-						});
+		confirmBox.dialog({
+			autoOpen: false,
+			draggable: false,
+			width: 500,
+			modal: true,
+			resizable: false,
+			buttons: {
+				'{$lblSendMailing|ucfirst}': function()
+				{
+					// send the mailing
+					jsBackend.mailmotor.step4.sendMail();
+				},
+				'{$lblCancel|ucfirst}': function()
+				{
+					// close the dialog
+					$(this).dialog('close');
+				}
+			}
+		});
 
-		
 		// value of date/time has changed
-		$(oSendDate.selector +', '+ oSendTime.selector).change(function(e){
+		$(oSendDate.selector +', '+ oSendTime.selector).change(function(e)
+		{
 			// check if the send date/time is empty. if they are, reset the dates to the old values
 			if(oSendDate.val() == '') oSendDate.val(sendDate);
 			if(oSendTime.val() == '') oSendTime.val(sendTime);
-			
+
 			// save the send date
 			jsBackend.mailmotor.step4.saveSendDate();
 		});
-		
-		
+
 		// enter was pressed
-		$(oSendDate.selector +', '+ oSendTime.selector).keypress(function(e){
-			if(e.keyCode == 13) {
+		$(oSendDate.selector +', '+ oSendTime.selector).keypress(function(e)
+		{
+			if(e.keyCode == 13)
+			{
 				// check if the send time is empty. if they are, reset the time to the old value
 				if(oSendDate.val() == '') oSendDate.val(sendDate);
 				if(oSendTime.val() == '') oSendTime.val(sendTime);
 
 				// save the send date
 				jsBackend.mailmotor.step4.saveSendDate();
-				
+
 				// lose focus
 				$(this).blur();
-				
+
 				// cancel form submit
 				e.preventDefault();
 			}
 		});
-		
 
 		// sendMailing is clicked
-		$('#sendMailing').click(function(e){
+		$('#sendMailing').click(function(e)
+		{
 			// prevent the form from submitting
-			e.preventDefault();			
-			
+			e.preventDefault();
+
 			// open the dialog
-			confirmBox.dialog('open'); 
+			confirmBox.dialog('open');
 		});
 	},
-	
-	saveSendDate: function() {
+
+
+	saveSendDate: function()
+	{
 		// build ajax URL
 		var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=save_send_date&language=' + jsBackend.current.language;
-		
+
 		// cache date/time values
 		var sendOnDate = $('#sendOnDate').val();
 		var sendOnTime = $('#sendOnTime').val();
 
 		// make the call
-		$.ajax({url: url, data: 'mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
-			success: function(data, textStatus) {
-				if(data.code != 200) {
+		$.ajax({
+			url: url,
+			data: 'mailing_id='+ variables.mailingId +'&send_on_date='+ sendOnDate +'&send_on_time='+ sendOnTime,
+			success: function(data, textStatus)
+			{
+				if(data.code != 200)
+				{
 					// unload spinner
 					buttonPane.removeClass('loading');
 
@@ -359,20 +430,23 @@ jsBackend.mailmotor.step4 = {
 
 					// show message
 					jsBackend.messages.add('error', data.message);
-				} else {
+				}
+				else
+				{
 					// cache sendDate text block and create some date objects
 					var modalSendInfo = $('#sendOn');
 					var now = new Date();
 					var sendDate = new Date(data.data.timestamp * 1000);
-					
+
 					// if the send date is in the past (or now), we hide the modalSendInfo text
 					if(sendDate <= now) modalSendInfo.hide();
-					
+
 					// send date did not take place yet
-					else {
+					else
+					{
 						// show the additional sending information
 						modalSendInfo.show();
-						
+
 						// replace the modal values
 						modalSendInfo.text('{$msgSendOn}'.replace('%1$s', sendOnDate).replace('%2$s', sendOnTime));
 					}
@@ -381,10 +455,12 @@ jsBackend.mailmotor.step4 = {
 		});
 	},
 
-	sendMail: function() {
+
+	sendMail: function()
+	{
 		// save the send date
 		jsBackend.mailmotor.step4.saveSendDate();
-		
+
 		// build ajax URL
 		var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=send_mailing&language=' + jsBackend.current.language;
 		var confirmBox = $('#sendMailingConfirmationModal');
@@ -392,54 +468,68 @@ jsBackend.mailmotor.step4 = {
 
 		// load spinner
 		buttonPane.addClass('loading');
-		
+
 		// make the call
-		$.ajax({url: url, data: 'id='+ variables.mailingId,
-			success: function(data, textStatus) {
-				if(data.code == 200) {
+		$.ajax({
+			url: url,
+			data: 'id='+ variables.mailingId,
+			success: function(data, textStatus)
+			{
+				if(data.code == 200)
+				{
 					// redirect to index with a proper message
 					window.location = '/private/'+ jsBackend.current.language +'/'+ jsBackend.current.module +'/index?report=mailing-sent';
-				} else {					
+				}
+				else
+				{
 					// unload spinner
 					buttonPane.removeClass('loading');
 
 					// destroy the dialog
 					confirmBox.dialog('close');
-					
+
 					// show message
 					jsBackend.messages.add('error', data.message);
 				}
 			}
 		});
 	},
-	
+
+
 	// end
 	eoo: true
 }
 
-jsBackend.mailmotor.templateSelection = {
-	init: function() {
+
+jsBackend.mailmotor.templateSelection =
+{
+	init: function()
+	{
 		// store the list items
 		var listItems = $('#templateSelection').children('li');
-		
+
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		listItems.children('input[type="radio"]').click(function(){
+		listItems.children('input[type="radio"]').click(function()
+		{
 			// store the object
 			var radiobutton = $(this);
-			
+
 			// if the radiobutton is checked
-			if(radiobutton.is(':checked')) {
+			if(radiobutton.is(':checked'))
+			{
 				// remove the selected state from all other templates
 				listItems.removeClass('selected');
-				
+
 				// add a selected state to the parent
 				radiobutton.parent('li').addClass('selected');
 			}
 		});
 	},
-	
+
+
 	// end
 	eoo: true
 }
+
 
 $(document).ready(function() { jsBackend.mailmotor.init(); });

@@ -152,7 +152,7 @@
 			<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />
 		</div>
 	</div>
-	
+
 {/form:settingsIndex}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}

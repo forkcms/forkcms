@@ -31,7 +31,7 @@
 		</div>
 	</div>
 
-	
+
 	{option:ddmSubscriptions}
 	<div class="box">
 		<div class="heading ">
@@ -44,7 +44,7 @@
 					{$ddmSubscriptions} {$ddmSubscriptionsError}
 				</p>
 			</div>
-			
+
 			{option:fields}
 			<div class="options">
 				{iteration:fields}

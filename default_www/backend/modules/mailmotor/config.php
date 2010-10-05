@@ -40,7 +40,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 	{
 		// parent construct
 		parent::__construct($module);
-		
+
 		// get url object reference
 		$url = Spoon::isObjectReference('url') ? Spoon::getObjectReference('url') : null;
 
@@ -49,30 +49,30 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		{
 			// check for CM account
 			$this->checkForAccount();
-	
+
 			// check for client ID
 			$this->checkForClientID();
-	
+
 			// check for default groups
 			$this->checkForDefaultGroups();
 		}
 	}
-	
-	
+
+
 	/**
 	 * Checks if a general CM account is made or not
-	 * 
+	 *
 	 * @return	void
 	 */
 	private function checkForAccount()
 	{
 		if(!BackendMailmotorCMHelper::checkAccount()) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));
 	}
-	
-	
+
+
 	/**
 	 * Checks if a client ID was already set or not
-	 * 
+	 *
 	 * @return	void
 	 */
 	private function checkForClientID()
@@ -81,7 +81,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$clientId = BackendMailmotorCMHelper::getClientID();
 
 		// no client ID set, so redirect to settings with an appropriate error message.
-		if(empty($clientId)) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));	
+		if(empty($clientId)) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));
 
 		// get price per email
 		$pricePerEmail = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
@@ -100,10 +100,10 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 	{
 		// defaults are already set
 		if(BackendModel::getModuleSetting('mailmotor', 'cm_defaults_set')) return false;
-		
+
 		// no CM data found
 		if(!BackendMailmotorCMHelper::checkAccount()) return false;
-		
+
 		// fetch the default groups, language abbreviation is the array key
 		$groups = BackendMailmotorModel::getDefaultGroups();
 

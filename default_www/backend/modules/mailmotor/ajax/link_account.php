@@ -21,12 +21,12 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-		
+
 		// get parameters
 		$url = SpoonFilter::getPostValue('url', null, '');
 		$username = SpoonFilter::getPostValue('username', null, '');
 		$password = SpoonFilter::getPostValue('password', null, '');
-		
+
 		// check input
 		if(empty($url)) $this->output(900, array('field' => 'url'), BL::getError('FieldIsRequired'));
 		if(empty($username)) $this->output(900, array('field' => 'username'), BL::getError('FieldIsRequired'));
@@ -53,7 +53,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			$contactName = BackendModel::getModuleSetting('mailmotor', 'cm_client_contact_name');
 			$country = BackendModel::getModuleSetting('mailmotor', 'cm_client_country');
 			$timezone = BackendModel::getModuleSetting('mailmotor', 'cm_client_timezone');
-			
+
 			// create a client
 			try
 			{
@@ -65,23 +65,23 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			BackendModel::setModuleSetting('mailmotor', 'cm_url', $url);
 			BackendModel::setModuleSetting('mailmotor', 'cm_username', $username);
 			BackendModel::setModuleSetting('mailmotor', 'cm_password', $password);
-			
+
 			// account was linked
 			BackendModel::setModuleSetting('mailmotor', 'cm_account', true);
-			
+
 			// client ID was set
 			if(!empty($clientID)) BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $clientID);
 		}
-		
+
 		catch(Exception $e)
 		{
 			// timeout occured
 			if($e->getMessage() == 'Error Fetching http headers') $this->output(self::BAD_REQUEST, null, BL::getError('CmTimeout', 'mailmotor'));
-			
+
 			// other error
 			$this->output(900, array('field' => 'url'), sprintf(BL::getError('CampaignMonitorError', 'mailmotor'), $e->getMessage()));
 		}
-		
+
 		// CM was successfully initialized
 		$this->output(self::OK, array('client_id' => (!empty($clientID) ? $clientID : null), 'message' => 'account-linked'), BL::getMessage('AccountLinked', 'mailmotor'));
 	}

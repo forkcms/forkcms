@@ -2,7 +2,7 @@
 	{option:datagrid}
 	{$datagrid}
 	{/option:datagrid}
-	
+
 	{option:!datagrid}
 	<p>{$msgNoSentMailings}</p>
 	{/option:!datagrid}

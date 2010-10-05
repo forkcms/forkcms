@@ -1,20 +1,31 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
-jsBackend.search = {
+jsBackend.search = 
+{
 	// init, something like a constructor
-	init: function() {
+	init: function() 
+	{
 		// synonyms box
-		if($('input.synonymBox').length > 0) { $('input.synonymBox').multipleTextBox( { emptyMessage: '{$msgNoSynonymsBox}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteSynonym|ucfirst}' }); }
+		if($('input.synonymBox').length > 0) 
+		{ 
+			$('input.synonymBox').multipleTextBox({ 
+				emptyMessage: '{$msgNoSynonymsBox}', 
+				addLabel: '{$lblAdd|ucfirst}', 
+				removeLabel: '{$lblDeleteSynonym|ucfirst}' 
+			}); 
+		}
 
 		// settings enable/disable
-		$('#searchModules input[type=checkbox]').change(function() {
+		$('#searchModules input[type=checkbox]').change(function() 
+		{
 			if($(this).is(':checked')) { $('#' + $(this).attr('id') + 'Weight').removeAttr('disabled').removeClass('disabled'); }
 			else { $('#' + $(this).attr('id') + 'Weight').attr('disabled', 'disabled').addClass('disabled'); }
 		});
 	},
 
+
 	// end
-	eof: true
+	eoo: true
 }
 
 $(document).ready(function() { jsBackend.search.init(); });

@@ -13,23 +13,23 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 {
 	/**
 	 * Holds true if the CM account exists
-	 * 
+	 *
 	 * @var	bool
 	 */
 	private $accountLinked = false;
-	
-	
+
+
 	/**
 	 * The client ID
 	 *
 	 * @var	string
 	 */
 	private $clientID;
-	
-	
+
+
 	/**
 	 * Mailmotor settings
-	 * 
+	 *
 	 * @var	array
 	 */
 	private $settings = array();
@@ -44,7 +44,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-		
+
 		// get data
 		$this->getData();
 
@@ -60,11 +60,11 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// display the page
 		$this->display();
 	}
-	
-	
+
+
 	/**
 	 * Attempts to create a client
-	 * 
+	 *
 	 * @return	mixed
 	 */
 	private function createClient()
@@ -73,23 +73,23 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
 		$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
 		$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
-		
+
 		// get the client gettings from the install
 		$companyName = $this->frm->getField('company_name')->getValue();
 		$contactEmail = $this->frm->getField('contact_email')->getValue();
 		$contactName = $this->frm->getField('contact_name')->getValue();
 		$country = $this->frm->getField('countries')->getValue();
-		$timezone = $this->frm->getField('timezones')->getValue();		
-		
+		$timezone = $this->frm->getField('timezones')->getValue();
+
 		// create a client
 		try
 		{
 			// init CampaignMonitor object
 			$cm = new CampaignMonitor($url, $username, $password, 5);
-		
+
 			// create client
 			$clientID = $cm->createClient($companyName, $contactName, $contactEmail, $country, $timezone);
-			
+
 			// store ID in a setting
 			if(!empty($clientID)) BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $clientID);
 		}
@@ -99,21 +99,21 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			$this->redirect(BackendModel::createURLForAction('settings') .'&error=campaign-monitor-error&var='. $e->getMessage());
 		}
 	}
-	
-	
+
+
 	/**
 	 * Get all necessary data
-	 * 
+	 *
 	 * @return	void
 	 */
 	private function getData()
 	{
 		// fetch the mailmotor settings
 		$settings = BackendModel::getModuleSettings();
-		
+
 		// store mailmotor settings
 		$this->settings = $settings['mailmotor'];
-		
+
 		// check if an account was linked already and/or client ID was set
 		$this->accountLinked = BackendMailmotorCMHelper::checkAccount();
 		$this->clientID = BackendMailmotorCMHelper::getClientID();
@@ -129,12 +129,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	{
 		// init settings form
 		$this->frm = new BackendForm('settings');
-		
+
 		// add fields for campaignmonitor API
 		$this->frm->addText('url', BackendModel::getModuleSetting('mailmotor', 'cm_url'));
 		$this->frm->addText('username', BackendModel::getModuleSetting('mailmotor', 'cm_username'));
 		$this->frm->addPassword('password', BackendModel::getModuleSetting('mailmotor', 'cm_password'));
-		
+
 		// no client ID set
 		if(empty($this->clientID))
 		{
@@ -143,10 +143,10 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			{
 				// fetch CM countries
 				$countries = BackendMailmotorCMHelper::getCountriesAsPairs();
-	
+
 				// fetch CM timezones
 				$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
-	
+
 				// add fields for campaignmonitor client ID
 				$this->frm->addText('company_name', BackendModel::getModuleSetting('mailmotor', 'cm_client_company_name'));
 				$this->frm->addText('contact_name', BackendModel::getModuleSetting('mailmotor', 'cm_client_contact_name'));
@@ -155,7 +155,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				$this->frm->addDropdown('timezones', $timezones, BackendModel::getModuleSetting('mailmotor', 'cm_client_timezone', '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris'));
 			}
 		}
-		
+
 		// client ID was set
 		else
 		{
@@ -188,13 +188,13 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	{
 		// call parent
 		parent::parse();
-		
+
 		// parse settings in template
 		$this->tpl->assign('account', $this->accountLinked);
-		
+
 		// parse client ID
 		if($this->accountLinked && !empty($this->settings['cm_client_id'])) $this->tpl->assign('clientId', $this->settings['cm_client_id']);
-		
+
 		// parse god status
 		$this->tpl->assign('userIsGod', BackendAuthentication::getUser()->isGod());
 	}
@@ -209,12 +209,12 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 	{
 		// set settings URL
 		$settingsURL = BackendModel::createURLForAction('settings');
-				
+
 		// form is submitted
 		if($this->frm->isSubmitted())
 		{
 			// validation
-			
+
 			// account is linked but no client ID is set yet
 			if($this->accountLinked && empty($this->clientID))
 			{
@@ -224,13 +224,13 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				$this->frm->getField('countries')->isFilled(BL::getError('FieldIsRequired'));
 				$this->frm->getField('timezones')->isFilled(BL::getError('FieldIsRequired'));
 			}
-			
+
 			// user is god
 			elseif(BackendAuthentication::getUser()->isGod())
 			{
 				$this->frm->getField('price_per_email')->isFilled(BL::getError('FieldIsRequired'));
 			}
-			
+
 			// form is validated
 			if($this->frm->isCorrect())
 			{
@@ -239,11 +239,11 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				{
 					// attempt to create the client
 					$this->createClient();
-					
+
 					// redirect to a custom success message
 					$this->redirect($settingsURL .'&report=client-linked&var='. $this->frm->getField('company_name')->getValue());
 				}
-				
+
 				// set sender info
 				BackendModel::setModuleSetting('mailmotor', 'from_name', $this->frm->getField('from_name')->getValue());
 				BackendModel::setModuleSetting('mailmotor', 'from_email', $this->frm->getField('from_email')->getValue());

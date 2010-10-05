@@ -121,25 +121,25 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
 			// convert the CSV file to an array
 			$csv = SpoonFileCSV::fileToArray($fileCSV->getTempFileName());
-			
+
 			// check if the csv is valid
 			if($csv === false || empty($csv) || !isset($csv[0])) $fileCSV->addError(BL::getError('InvalidCSV'));
-			
+
 			// fetch the columns of the first row
 			$columns = array_keys($csv[0]);
-			
+
 			// loop the columns
 			foreach($csv as $row)
 			{
 				// fetch the row columns
 				$rowColumns = array_keys($row);
-				
+
 				// check if the arrays match
 				if($rowColumns != $columns)
 				{
 					// add an error to the CSV files
 					$fileCSV->addError(BL::getError('InvalidCSV'));
-					
+
 					// exit loop
 					break;
 				}

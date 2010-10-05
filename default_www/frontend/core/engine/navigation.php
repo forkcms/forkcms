@@ -285,7 +285,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// return parsed content
 		return $tpl->getContent(self::$templatePath);
 	}
-	
+
 
 	/**
 	 * Get a menuId for an specified URL

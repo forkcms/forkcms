@@ -46,7 +46,7 @@
 			<div class="heading">
 				<h3>CampaignMonitor - {$lblClientID|ucfirst} </h3>
 			</div>
-	
+
 			{option:clientId}
 			<div class="options id">
 				<label for="clientId">{$lblClientID|ucfirst}</label>
@@ -80,19 +80,19 @@
 			</div>
 			{/option:!clientId}
 		</div>
-	
+
 		{option:clientId}
 		<div class="box horizontal">
 			<div class="heading">
 				<h3>{$lblSender|ucfirst}</h3>
 			</div>
-	
+
 			<div class="options">
 				<p>
 					<label for="fromName">{$lblName|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtFromName} {$txtFromNameError}
 				</p>
-	
+
 				<p>
 					<label for="fromEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
 					{$txtFromEmail} {$txtFromEmailError}
@@ -104,7 +104,7 @@
 			<div class="heading">
 				<h3>{$lblReplyTo|ucfirst}</h3>
 			</div>
-	
+
 			<div class="options">
 				<p>
 					<label for="replyToEmail">{$lblEmailAddress|ucfirst} <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
@@ -112,25 +112,25 @@
 				</p>
 			</div>
 		</div>
-	
+
 		<div class="box">
 			<div class="heading">
 				<h3>{$lblPlainTextVersion|ucfirst}</h3>
 			</div>
-	
+
 			<div class="options">
 				<ul class="inputList p0">
 					<li>{$chkPlainTextEditable} <label for="plainTextEditable">{$msgPlainTextEditable|ucfirst}</label></li>
 				</ul>
 			</div>
 		</div>
-	
+
 		{option:userIsGod}
 		<div class="box horizontal">
 			<div class="heading">
 				<h3>{$lblPricePerEmail|ucfirst}</h3>
 			</div>
-	
+
 			<div class="options">
 				<p>
 					<label for="pricePerEmail">{$lblPrice|ucfirst} in &euro; <abbr title="{$lblRequiredField|ucfirst}">*</abbr></label>
@@ -140,7 +140,7 @@
 		</div>
 		{/option:userIsGod}
 		{/option:clientId}
-		
+
 		<div class="fullwidthOptions">
 			<div class="buttonHolderRight">
 				<input id="save" class="inputButton button mainButton" type="submit" name="save" value="{$lblSave|ucfirst}" />

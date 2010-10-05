@@ -16,11 +16,11 @@
 	<div id="apiHolder">
 		<h1>Fork API</h1>
 		<p>The Fork API allows anyone to build their own programs using the data in Fork.</p>
-		
+
 		<h2>Basics</h2>
 		<p>The Fork API is a REST-style api.</p>
 		<p>[..]</p>
-		
+
 		<h2>Possible methods</h2>
 		<ul>
 			<li><a href="#core_getapikey">core.getAPIKey</a></li>
@@ -32,8 +32,8 @@
 			<li><a href="#blog_comments_update">blog.comments.update</a></li>
 			<li><a href="#blog_comments_update_status">blog.comments.updateStatus</a></li>
 		</ul>
-		
-		
+
+
 		<h2>Core</h2>
 		<h3 id="core_getapikey">core.getAPIKey</h3>
 		<p>Get the API-key for a user.</p>
@@ -45,7 +45,7 @@
 		<h4>Return</h4>
 		<p>An array with the public- and privatekey.</p>
 
-		
+
 		<h3 id="core_getinfo">core.getInfo</h3>
 		<p>Get info about the site.</p>
 		<h4>Return</h4>
@@ -77,22 +77,22 @@
 		<p>Update a comment</p>
 		<h4>Parameters</h4>
 		<dl>
-			<dt>id <small>int</small></dt><dd>The id of the comment.</dd>		
-			<dt>status <small>string (optional)</small></dt><dd>The new status for the comment. Possible values are: published, moderation, spam.</dd>		
-			<dt>text <small>string (optional)</small></dt><dd>The new text for the comment.</dd>		
-			<dt>authorName <small>string (optional)</small></dt><dd>The new author for the comment.</dd>		
-			<dt>authorEmail <small>string (optional)</small></dt><dd>The new email for the comment.</dd>		
+			<dt>id <small>int</small></dt><dd>The id of the comment.</dd>
+			<dt>status <small>string (optional)</small></dt><dd>The new status for the comment. Possible values are: published, moderation, spam.</dd>
+			<dt>text <small>string (optional)</small></dt><dd>The new text for the comment.</dd>
+			<dt>authorName <small>string (optional)</small></dt><dd>The new author for the comment.</dd>
+			<dt>authorEmail <small>string (optional)</small></dt><dd>The new email for the comment.</dd>
 			<dt>authorWebsite <small>string (optional)</small></dt><dd>The new website for the comment.</dd>
 		</dl>
 
 		<h3 id="blog_comments_update_status">blog.comments.updateStatus</h3>
 		<p>Update the status for multiple comments at once.</p>
-		
+
 		<h4>Parameters</h4>
 		<dl>
-			<dt>id <small>array</small></dt><dd>The id/ids of the comment(s) to update.</dd>		
+			<dt>id <small>array</small></dt><dd>The id/ids of the comment(s) to update.</dd>
 			<dt>status <small>string</small></dt><dd>The new status for the comment. Possible values are: published, moderation, spam.</dd>
-		</dl>	
+		</dl>
 	</div>
 </body>
 </html>

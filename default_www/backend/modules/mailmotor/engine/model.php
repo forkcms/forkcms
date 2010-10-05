@@ -982,22 +982,22 @@ class BackendMailmotorModel
 	public static function getGroupsForCheckboxes()
 	{
 		// fetch the records
-		$records = (array) BackendModel::getDB()->getRecords('SELECT 
+		$records = (array) BackendModel::getDB()->getRecords('SELECT
 															mg.id AS value, mg.name AS label, COUNT(mag.email) AS recipients
 															FROM mailmotor_groups AS mg
 															LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
 															GROUP BY mg.id;');
-		
+
 		// no records found
 		if(empty($records)) return array();
-		
+
 		// loop the records
 		foreach($records as &$record)
 		{
 			// store variables array
-			$record['variables'] = array('recipients' => ($record['recipients'] != 0) ? $record['recipients'] : false, 
+			$record['variables'] = array('recipients' => ($record['recipients'] != 0) ? $record['recipients'] : false,
 										 'single' => ($record['recipients'] == 1) ? true : false);
-			
+
 			// unset the recipients from this stack
 			unset($record['recipients']);
 		}
@@ -1097,8 +1097,8 @@ class BackendMailmotorModel
 		// return the URL
 		return SITE_URL . BackendModel::getURLForBlock('mailmotor', 'detail') .'/'. $id .'?type='. $contentType .'&cm='. $forCM;
 	}
-	
-	
+
+
 	/**
 	 * Get the maximum id for mailings
 	 *
@@ -1109,8 +1109,8 @@ class BackendMailmotorModel
 		// return
 		return (int) BackendModel::getDB()->getVar('SELECT MAX(id) FROM mailmotor_mailings LIMIT 1;');
 	}
-	
-	
+
+
 	/**
 	 * Get the maximum id for groups
 	 *

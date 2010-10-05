@@ -130,7 +130,7 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 			{
 				// email does not exist
 				if(!FrontendMailmotorModel::exists($email->getValue())) $email->addError(FL::getError('EmailNotInDatabase'));
-				
+
 				// user is already unsubscribed
 				if(!FrontendMailmotorModel::isSubscribed($email->getValue(), $this->group)) $email->addError(FL::getError('AlreadyUnsubscribed'));
 			}

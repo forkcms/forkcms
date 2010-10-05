@@ -38,7 +38,6 @@ class FrontendMailmotorWidgetSubscribe extends FrontendBaseWidget
 	private function parse()
 	{
 		// parse the subscribe form link
-		
 	}
 }
 

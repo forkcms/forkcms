@@ -129,7 +129,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// add styles
 		$this->dgUnsentMailings->setColumnAttributes('name', array('class' => 'title'));
-		
+
 		// set paging limit
 		$this->dgSentMailings->setPagingLimit(self::SENT_MAILINGS_PAGING_LIMIT);
 	}
@@ -247,7 +247,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// add styles
 		$this->dgQueuedMailings->setColumnAttributes('name', array('class' => 'title'));
-		
+
 		// set paging limit
 		$this->dgQueuedMailings->setPagingLimit(self::SENT_MAILINGS_PAGING_LIMIT);
 	}
