@@ -243,7 +243,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->tpl->assign('blocks', $this->blocks);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
-		$this->tpl->assign('prefixURL', BackendPagesModel::getFullURL($this->record['parent_id']));
+		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL($this->record['parent_id']), '/'));
 
 		// init var
 		$showDelete = true;

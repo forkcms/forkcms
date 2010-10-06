@@ -15,7 +15,7 @@
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 		<span class="oneLiner">
-			<span><a href="{$SITE_URL}">{$SITE_URL}{$prefixURL}<span id="generatedUrl"></span></a></span>
+			<span><a href="{$SITE_URL}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl"></span></a></span>
 		</span>
 	</p>
 

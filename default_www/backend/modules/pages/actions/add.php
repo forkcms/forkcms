@@ -159,7 +159,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->tpl->assign('blocks', $this->blocks);
 		$this->tpl->assign('extrasData', json_encode(BackendPagesModel::getExtrasData()));
 		$this->tpl->assign('extrasById', json_encode(BackendPagesModel::getExtras()));
-		$this->tpl->assign('prefixURL', BackendPagesModel::getFullURL(1));
+		$this->tpl->assign('prefixURL', rtrim(BackendPagesModel::getFullURL(1), '/'));
 
 		// get default template id
 		$defaultTemplateId = BackendModel::getModuleSetting('pages', 'default_template', 1);
