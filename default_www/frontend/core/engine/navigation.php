@@ -457,6 +457,54 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
+	 * Fetch the first direct link to an extra id
+	 *
+	 * @return	string
+	 * @param	int $id
+	 * @param	string[optional] $language
+	 */
+	public static function getURLForExtraId($id, $language = null)
+	{
+		// redefine
+		$id = (int) $id;
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// get the menuItems
+		$navigation = self::getNavigation($language);
+
+		// loop types
+		foreach($navigation as $type => $level)
+		{
+			// loop level
+			foreach($level as $parentId => $pages)
+			{
+				// loop pages
+				foreach($pages as $pageId => $properties)
+				{
+					// only process pages with extra_blocks
+					if(isset($properties['extra_blocks']))
+					{
+						// loop extras
+						foreach($properties['extra_blocks'] as $extra)
+						{
+							// direct link?
+							if($extra['id'] == $id)
+							{
+								// exacte page was found, so return
+								return self::getURL($properties['page_id']);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		// fallback
+		return self::getURL(404);
+	}
+
+
+	/**
 	 * Set the selected page ids
 	 *
 	 * @return	void
