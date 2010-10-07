@@ -238,6 +238,47 @@ class SpoonFormFile extends SpoonFormAttributes
 
 
 	/**
+	 * Checks if the mime-type is allowed.
+	 * @see	http://www.w3schools.com/media/media_mimeref.asp
+	 *
+	 * @return	bool
+	 * @param	array $allowedTypes
+	 * @param	string[optional] $error
+	 */
+	public function isAllowedMimeType(array $allowedTypes, $error = null)
+	{
+		// file has been uploaded
+		if($this->isFilled())
+		{
+			// get image properties
+			$properties = @getimagesize($_FILES[$this->attributes['name']]['tmp_name']);
+
+			// invalid properties
+			if($properties === false) $return = false;
+
+			// search for mime-type
+			else $return = in_array($properties['mime'], $allowedTypes);
+
+			// add error if needed
+			if(!$return && $error !== null) $this->setError($error);
+
+			// return
+			return $return;
+		}
+
+		// no file uploaded
+		else
+		{
+			// add error if needed
+			if($error !== null) $this->setError($error);
+
+			// return
+			return false;
+		}
+	}
+
+
+	/**
 	 * Checks of the filesize is greater, equal or smaller than the given number + units.
 	 *
 	 * @return	bool
