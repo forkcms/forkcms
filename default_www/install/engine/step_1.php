@@ -75,7 +75,7 @@ class InstallerStep1 extends InstallerStep
 
 			$variables['content'] .= 	'</select>
 										</p>
-										<p class="buttonHolder spacing">
+										<p class="buttonHolder">
 											<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" />
 										</p>';
 		}
