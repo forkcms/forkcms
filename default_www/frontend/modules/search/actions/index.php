@@ -30,6 +30,14 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 
 	/**
+	 * The requested page
+	 *
+	 * @var	int
+	 */
+	private $requestedPage;
+
+
+	/**
 	 * The search term
 	 *
 	 * @var string
