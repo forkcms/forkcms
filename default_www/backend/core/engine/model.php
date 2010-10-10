@@ -745,8 +745,8 @@ class BackendModel
 		// get ping services
 		$pingServices = self::getModuleSetting('core', 'ping_services', null);
 
-		// no ping services available or older then one 30 days
-		if($pingServices === null || $pingServices['date'] < (time() - (30 * 24 * 60 * 60)))
+		// no ping services available or older than one month ago
+		if($pingServices === null || $pingServices['date'] < strtotime('-1 month'))
 		{
 			// get ForkAPI-keys
 			$publicKey = self::getModuleSetting('core', 'fork_api_public_key', '');
@@ -769,22 +769,25 @@ class BackendModel
 			}
 
 			// catch any exceptions
-			catch (Exception $e)
+			catch(Exception $e)
 			{
-				// check if the error should be ignored
-				if(substr_count($e->getMessage(), 'Operation timed out') > 0) continue;
-				elseif(substr_count($e->getMessage(), 'Invalid headers') > 0) continue;
+				// check if the error should not be ignored
+				if(strpos($e->getMessage(), 'Operation timed out') === false && strpos($e->getMessage(), 'Invalid headers') === false)
+				{
+					// in debugmode we want to see the exceptions
+					if(SPOON_DEBUG) throw $e;
 
-				// in debugmode we want to see the exceptions
-				if(SPOON_DEBUG) throw $e;
-
-				// stop
-				else return false;
+					// stop
+					else return false;
+				}
 			}
 
 			// store the services
 			self::setModuleSetting('core', 'ping_services', $pingServices);
 		}
+
+		// make sure services array will not trigger an error (even if we couldn't load any)
+		if(!isset($pingServices['services']) || !$pingServices['services']) $pingServices['services'] = array();
 
 		// loop services
 		foreach($pingServices['services'] as $service)
@@ -833,11 +836,15 @@ class BackendModel
 			// catch any exceptions
 			catch(Exception $e)
 			{
-				// in debugmode we want to see the exceptions
-				if(SPOON_DEBUG) throw $e;
+				// check if the error should not be ignored
+				if(strpos($e->getMessage(), 'Operation timed out') === false && strpos($e->getMessage(), 'Invalid headers') === false)
+				{
+					// in debugmode we want to see the exceptions
+					if(SPOON_DEBUG) throw $e;
+				}
 
 				// next!
-				else continue;
+				continue;
 			}
 		}
 
