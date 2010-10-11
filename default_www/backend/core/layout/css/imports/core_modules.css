@@ -409,6 +409,12 @@
 	#settings.settingsIndex #siteTitle {
 		width: 320px;
 	}
+	
+	#settings.settingsIndex #siteHtmlFooter,
+	#settings.settingsIndex #siteHtmlHeader {
+		width: 700px;
+		height: 200px;
+	}
 
 	#settings.settingsIndex #facebookAdminIds {
 		width: 400px;
