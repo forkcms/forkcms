@@ -105,7 +105,7 @@ class BackendPagesModel
 
 				// special items
 				if($pageID == 1) $treeType = 'home';
-				if($pageID == 2) $treeType = 'sitemap';
+				if($page['has_extra'] == 'Y' && strpos($page['extra_ids'], '6') !== false) $treeType = 'sitemap';
 				if($pageID == 404) $treeType = 'error';
 
 				// add type

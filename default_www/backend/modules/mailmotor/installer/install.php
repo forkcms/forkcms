@@ -153,6 +153,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Persons', 'people');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Price', 'price');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'QuantityNo', 'no');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SentMailings', 'sent mailings');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SentOn', 'sent on');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Source', 'source');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Subscriptions', 'subscriptions');
@@ -189,6 +190,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'HTMLContentURLRequired', 'CampaignMonitor could not find an URL to the HTML content. (The URL needs to be accessible)');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'InvalidAccountCredentials', 'The CampaignMonitor account credentials are invalid.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'InvalidCSV', 'The CSV file is empty, or not valid.');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'LinkDoesNotExist', 'This link doesn\'t exists.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'LinkDoesNotExists', 'This link doesn\'t exists.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'MailingAlreadyExists', 'This mailing already exists, choose another name.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'MailingAlreadySent', 'The given mailing has already been sent!');
@@ -225,6 +227,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'ClientID', 'client ID');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'CustomFields', 'custom fields');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'EditCampaign', 'edit campaign');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'EditMailingCampaign', 'edit campaign');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'EditCustomField', 'edit custom field');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'EditEmail', 'edit e-mail address');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'EditGroup', 'edit group');
@@ -252,7 +255,6 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'SendOn', 'send on');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'SendPreview', 'send preview');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Sent', 'sent');
-		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'SentMailings', 'sent mailings');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Subject', 'subject');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateDefault', 'default template');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateEmpty', 'empty template');
@@ -381,6 +383,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Persons', 'personen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Price', 'prijs');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'QuantityNo', 'geen');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SentMailings', 'verzonden mailings');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SentOn', 'verzonden op');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Source', 'bron');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SubscribeForm', 'inschrijfformulier');
@@ -414,6 +417,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'err', 'HTMLContentURLRequired', 'CampaignMonitor kon geen URL naar de HTML content vinden. (Als je lokaal werkt is dit normaal, probeer eens op SVN.)');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'err', 'InvalidAccountCredentials', 'De CampaignMonitor accountgegevens zijn niet geldig.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'err', 'InvalidCSV', 'Het CSV bestand is leeg, of ongeldig.');
+		$this->insertLocale('nl', 'backend', 'mailmotor', 'err', 'LinkDoesNotExist', 'Deze link bestaat niet.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'err', 'LinkDoesNotExists', 'Deze link bestaat niet.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'err', 'MailingAlreadyExists', 'Deze mailing bestaat al, kies een andere naam.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'err', 'MailingAlreadySent', 'De opgegeven mailing is reeds verzonden!');
@@ -452,6 +456,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'EditCustomField', 'variabel veld bewerken');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'EditEmail', 'e-mailadres bewerken');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'EditGroup', 'doelgroep bewerken');
+		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'EditMailingCampaign', 'wijzig campagne');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'EmailAddress', 'e-mailadres');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'EmailAddresses', 'e-mailadressen');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'ExampleFile', 'een voorbeeldbestand');
@@ -476,7 +481,6 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'SendOn', 'verzenden op');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'SendPreview', 'verzend preview');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'Sent', 'verzonden');
-		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'SentMailings', 'verzonden mailings');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'Subject', 'onderwerp');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateDefault', 'default template');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateEmpty', 'leeg template');

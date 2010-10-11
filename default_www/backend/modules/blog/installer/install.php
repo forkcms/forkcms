@@ -257,7 +257,7 @@ class BlogInstall extends ModuleInstaller
 			$postID = $db->insert('blog_posts', array('id' => 1,
 											'category_id' => $this->getSetting('blog', 'default_category_'. $language),
 											'user_id' => $this->getDefaultUserID(),
-											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est'),
+											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
 											'title' => 'Nunc sediam est',
 											'introduction' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample1.txt'),
