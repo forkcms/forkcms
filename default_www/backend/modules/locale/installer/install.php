@@ -433,7 +433,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'LoginFormForgotPasswordSuccess', '<strong>Mail sent.</strong> Please check your inbox!');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NL', 'Nederlands');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoAkismetKey', 'Om de spamfilter te activeren moet je een Akismet-key <a href="%1$s">ingeven</a>.');
-		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoComments', 'Er zijn geen reacties in deze categorie.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoComments', 'Er zijn nog geen reacties in deze categorie.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoItems', 'Er zijn nog geen items.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoPublishedComments', 'Er zijn nog geen gepubliceerde reacties.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'NoRevisions', 'Er zijn nog geen vorige versies.');
@@ -794,7 +794,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'LoginFormForgotPasswordSuccess', '<strong>Mail sent.</strong> Please check your inbox!');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NL', 'Dutch');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoAkismetKey', 'If you want to enable the spam-protection you should <a href="%1$s">configure</a> an Akismet-key.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoComments', 'There are no comments in this category.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoComments', 'There are no comments in this category yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoItems', 'There are no items yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoPublishedComments', 'There are no published comments.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoRevisions', 'There are no previous versions yet.');
