@@ -30,6 +30,7 @@
 	}
 
 #fullwidthSwitch {
+	height: 100%;
 	width: 6px;
 	background: #FAFAFA;
 }
