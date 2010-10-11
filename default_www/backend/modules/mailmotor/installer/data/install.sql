@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_campaigns` (
  `name` varchar(255) NOT NULL,
  `created_on` datetime default NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_groups` (
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_groups` (
  `is_default` enum('N','Y') NOT NULL default 'N',
  `created_on` datetime NOT NULL,
  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=59 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_mailings` (
@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_mailings` (
  `created_on` datetime default NULL,
  `edited_on` datetime default NULL,
  PRIMARY KEY (`id`,`language`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=75 ;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 
 CREATE TABLE IF NOT EXISTS `mailmotor_mailings_groups` (
