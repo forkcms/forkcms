@@ -181,10 +181,10 @@ img.alignright {
 /* Typography and text styles */
 
 body {
-	font-family: Arial, sans-serif;
-	font-size: 13px;
-	line-height: 1.5; /* Safari 2.0.4 */
-	color: #454545;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.58; /* Safari 2.0.4 */
+	color: #555;
 }
 
 /* Headings */
@@ -270,7 +270,6 @@ em {
 
 blockquote, q {
 	font-style: italic;
-	font-family: Georgia, serif;
 }
 
 blockquote {
@@ -359,9 +358,12 @@ ins {
 */
 
 table.datagrid  {
-	font-family: Arial, sans-serif;
 	width: 100%;
 	margin: 0 0 12px;
+	/* INC .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	
 }
 
 table.datagrid td,
@@ -470,6 +472,7 @@ body {
 }
 
 #toc {
+	font-size: 11px;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -490,8 +493,9 @@ body {
 }
 
 p.intro {
-	font-family: Georgia;
-	font-size: 17px;
+	font-size: 16px;
+	letter-spacing: -0.02em;
+	line-height: 1.3;
 }
 
 .example {
@@ -528,19 +532,15 @@ p.intro {
 	
 	#toc h4 {
 		padding-top: 6px;
+		font-size: 11px;
 		text-transform: uppercase;
 	}
 
 h1 {
-	background: url(../images/logo_docs.png) no-repeat scroll top left;
-	width: 430px;
-	height: 143px;
-	font-size: 97px;
-	padding: 0;
-	letter-spacing: -5px;
-	text-transform: uppercase;
+	padding: 0 0 20px;
 	line-height: 1;
-	text-indent: -9000px;
+	letter-spacing: -1px;
+	font-size: 32px;
 }
 
 .id1 {
@@ -570,7 +570,7 @@ h1 {
 		text-align: center;
 		/* INC .secondaryContent */
 		font-size: 11px;
-		font-family: Arial, sans-serif;
+		font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 	}
 
 	.people li a {
@@ -616,7 +616,13 @@ h1 {
 	background: #999;
 	/* INC .secondaryContent */
 	font-size: 11px;
-	font-family: Arial, sans-serif;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+.secondaryContent {
+	/* INC .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
 }
 
 /*
