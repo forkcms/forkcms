@@ -16,7 +16,7 @@ tinyMCE.init({
 	// processing
 	relative_urls: false,
 	entity_encoding: 'raw',
-	extended_valid_elements: 'iframe[src|width|height|name|align]',
+	extended_valid_elements: 'iframe[src|width|height|name|align],object[*],param[*],embed[*]',
 
 	// plugins
 	plugins: 'tabfocus,inlinepopups,paste,contextmenu,media,fullscreen,table,filemanager,imagemanager,bramus_cssextras,dextrose_videoembed,template',
@@ -78,6 +78,9 @@ tinyMCE.init({
 	paste_strip_class_attributes: 'mso',
 	paste_remove_spans: true,
 	paste_remove_styles: true,
+	
+	media_strict: false,
+	
 	onchange_callback: jsBackend.tinyMCE.checkContent,
 	setup: function(editor)
 	{
