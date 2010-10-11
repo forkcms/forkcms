@@ -285,7 +285,10 @@ body {
 			background: #444;
 		}
 
-		#navigation li.selected a {
+		#navigation li.selected a,
+		#navigation li a:hover,
+		#navigation li a:active,
+		#navigation li a:focus {
 			background: #000;
 		}
 
@@ -335,9 +338,13 @@ body {
 			border: none;
 		}
 
-		#subnavigation li.selected a {
+		#subnavigation li.selected a,
+		#subnavigation li a:hover,
+		#subnavigation li a:active,
+		#subnavigation li a:focus {
 			background: #000;
 		}
+
 
 #home #intro {
 	border: 1px solid #DDD;
@@ -958,6 +965,11 @@ li.ellipsis span {
 	Contact form
 */
 
-#message {
-	width: 280px;
+#contactForm #email {
+	width: 240px;
+}
+
+#contactForm #message {
+	width: 380px;
+	height: 10em;
 }
