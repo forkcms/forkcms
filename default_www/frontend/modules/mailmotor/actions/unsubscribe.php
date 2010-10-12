@@ -97,13 +97,20 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 		if(SpoonFilter::isEmail($this->email) && FrontendMailmotorModel::existsGroup($this->group))
 		{
 			// unsubscribe the address from this group
-			if(FrontendMailmotorCMHelper::unsubscribe($this->email, $this->group, true))
+			if(FrontendMailmotorModel::unsubscribe($this->email, $this->group))
 			{
 				// hide form
 				$this->tpl->assign('unsubscribeHideForm', true);
 
 				// show message
 				$this->tpl->assign('unsubscribeIsSuccess', true);
+			}
+
+			// unsubscribe failed, show an error
+			else
+			{
+				// show message
+				$this->tpl->assign('unsubscribeHasError', true);
 			}
 		}
 

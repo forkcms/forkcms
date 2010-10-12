@@ -218,7 +218,12 @@ class FrontendMailmotorCMHelper
 				self::getCM()->unsubscribe($email, $groupCMId);
 			}
 
-			catch(Exception $e) {}
+			// for the unsubscribe function we ignore any errors
+			catch(Exception $e)
+			{
+				// stop here if something went wrong with CM
+				return false;
+			}
 
 			// set variables
 			$subscriber = array();
