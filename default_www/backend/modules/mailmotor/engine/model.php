@@ -1652,8 +1652,8 @@ class BackendMailmotorModel
 		// loop the records
 		foreach($records as $record)
 		{
-			// if the send_on date is smaller than the current date, update status to 'sent'
-			if(date('Y-m-d H:i:s', $record['send_on']) < date('Y-m-d H:i:s')) $updateIds[] = $record['id'];
+			// if the sent date is smaller than the current date, update status to 'sent'
+			if(date('Y-m-d H:i:s', $record['sent']) < date('Y-m-d H:i:s')) $updateIds[] = $record['id'];
 		}
 
 		// if don't need to update any record, stop here

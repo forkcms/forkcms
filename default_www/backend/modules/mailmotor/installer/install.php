@@ -199,7 +199,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoBounces', 'There are no bounces for this mailing.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoCMAccount', 'There is no link with a CampaignMonitor account yet.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoCMClientID', 'There is no client linked to the CampaignMonitor account yet.');
-		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoCMAccount', 'Please fill in your CampaignMonitor credentials.');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoCMAccount', 'Please enter your CampaignMonitor credentials.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoGroups', 'Select a group.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoSubject', 'Enter a subject for this mailing.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'err', 'NoTemplates', 'No templates are available for this language, select another one.');
@@ -255,6 +255,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'SendOn', 'send on');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'SendPreview', 'send preview');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Sent', 'sent');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'SentMailings', 'sent mailings');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Subject', 'subject');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateDefault', 'default template');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateEmpty', 'empty template');
@@ -329,6 +330,10 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'ResetSettings', 'module settings');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'SendOn', 'The mailing will be sent on %1$s at %2$s.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'TemplateLanguage', 'language of the template');
+
+		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'SentMailings', 'sent mailings');
+		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'SubscribeForm', 'subscribe form');
+		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'UnsubscribeForm', 'unsubscribe form');
 	}
 
 
@@ -481,6 +486,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'SendOn', 'verzenden op');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'SendPreview', 'verzend preview');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'Sent', 'verzonden');
+		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'SentMailings', 'verzonden mailings');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'Subject', 'onderwerp');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateDefault', 'default template');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateEmpty', 'leeg template');
@@ -555,6 +561,10 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'ResetSettings', 'module-settings');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'SendOn', 'De mailing wordt verzonden op %1$s om %2$s.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'TemplateLanguage', 'taal van de template');
+
+		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'SentMailings', 'verzonden nieuwsbrieven');
+		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'SubscribeForm', 'inschrijvingsformulier');
+		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'UnsubscribeForm', 'uitschrijvingsformulier');
 	}
 
 

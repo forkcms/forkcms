@@ -44,8 +44,8 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
 		$rows = BackendMailmotorModel::updateCampaign($record);
 
 		// output
-		if($rows !== 0) $this->output(self::OK, array('id' => $id), BL::getMessage('CampaignEdited', 'mailmotor'));
-		else $this->output(self::ERROR, null, BL::getError('CampaignNotEdited', 'mailmotor'));
+		if($rows !== 0) $this->output(self::OK, array('id' => $id), BL::getLabel('CampaignEdited', 'mailmotor'));
+		else $this->output(self::ERROR, null, BL::getLabel('CampaignNotEdited', 'mailmotor'));
 	}
 }
 

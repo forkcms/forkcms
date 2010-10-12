@@ -950,8 +950,11 @@ class BackendMailmotorCMHelper
 	*/
 	public static function updateGroup($item)
 	{
+		// build unsubscribe link for this list
+		$unsubscribeLink = SITE_URL . BackendModel::getURLForBlock('mailmotor', 'unsubscribe', BL::getWorkingLanguage());
+
 		// a list was updated
-		if(self::getCM()->updateList($item['name'], null, null, null, self::getCampaignMonitorID('list', $item['id'])))
+		if(self::getCM()->updateList($item['name'], $unsubscribeLink .'/?group='. $item['id'] .'&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id'])))
 		{
 			// update in database
 			return (int) BackendMailmotorModel::updateGroup($item);

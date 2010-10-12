@@ -120,7 +120,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		// set column functions
 		$this->dgSentMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
 		$this->dgSentMailings->setColumnFunction(array(__CLASS__, 'setFancybox'), array('[name]', BackendMailmotorModel::getMailingPreviewURL('[id]')), 'name', true);
-		$this->dgSentMailings->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[send_on]'), 'sent', true);
+		$this->dgSentMailings->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
 
 		// add delete column
 		$this->dgSentMailings->addColumnAction('copy', null, BL::getLabel('Copy'), BackendModel::createURLForAction('copy') .'&amp;id=[id]', BL::getLabel('Copy'), array('class' => 'button icon iconMailAdd linkButton'));

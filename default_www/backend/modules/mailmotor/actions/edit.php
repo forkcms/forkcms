@@ -43,6 +43,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	 */
 	public function execute()
 	{
+		// set force compile on because we're using multiple forms on 1 page
+		$this->tpl->setForceCompile(true);
+
 		// get parameters
 		$this->id = $this->getParameter('id', 'int');
 

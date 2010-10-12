@@ -81,7 +81,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$clientId = BackendMailmotorCMHelper::getClientID();
 
 		// no client ID set, so redirect to settings with an appropriate error message.
-		if(empty($clientId)) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));
+		if(empty($clientId)) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));	
 
 		// get price per email
 		$pricePerEmail = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
