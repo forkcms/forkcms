@@ -80,7 +80,7 @@ jsBackend.controls =
 			if($.inArray(string.charAt(i), uniqueChars) == -1) { uniqueChars.push(string.charAt(i)); }
 		}
 
-		// less then 3 unique chars is just week
+		// less then 3 unique chars is just weak
 		if(uniqueChars.length < 3) return 'weak';
 
 		// more then 6 chars is good
