@@ -3,6 +3,7 @@
 <h2>Database configuration</h2>
 {form:step3}
 	{option:formError}<div class="formMessage errorMessage"><p>{$formError}</p></div>{/option:formError}
+	<div id="javascriptDisabled" class="formMessage errorMessage"><p>Javascript should be enabled.</p></div>
 	<div class="horizontal">
 		<p>Enter your database details. Make sure this database already exists.</p>
 		<p>
@@ -25,7 +26,7 @@
 		</p>
 	</div>
 	<p class="buttonHolder spacing">
-		<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" />
+		<input id="installerButton" class="button inputButton mainButton" type="submit" name="installer" value="Next" disabled="disabled" />
 	</p>
 {/form:step3}
 

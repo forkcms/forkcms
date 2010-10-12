@@ -1,13 +1,10 @@
 $(document).ready(function() 
 {
-	// Step 1 - requirements
-	$('a.toggleInformation').bind('click', function(evt) 
-	{
-		evt.preventDefault();
-		$('#requirementsInformation').toggle();
-	});
-
-	// Step 3 - general settings (modules, languages, ...)
+	// Step 3 - DB configuration
+	$('#javascriptDisabled').remove();
+	$('#installerButton').attr('disabled', '');
+	
+	// Step 4 - general settings (modules, languages, ...)
 	if($('#languageTypeMultiple').is(':checked')) 
 	{
 		$('#languages').show();
@@ -46,7 +43,7 @@ $(document).ready(function()
 		}
 	});
 
-	// Step 5 - confirmation
+	// Step 6 - confirmation
 	$('#showPassword').bind('change', function(evt) 
 	{
 		evt.preventDefault();
