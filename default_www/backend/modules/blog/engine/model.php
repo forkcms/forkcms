@@ -738,9 +738,9 @@ class BackendBlogModel
 		$commentCounts = (array) $db->getPairs('SELECT i.post_id, COUNT(i.id) AS comment_count
 												FROM blog_comments AS i
 												INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-												WHERE i.status = ? AND i.post_id IN('. implode(',', $uniqueIds) .') AND i.language = ?
+												WHERE i.status = ? AND i.post_id IN('. implode(',', $uniqueIds) .') AND i.language = ? AND p.status = ?
 												GROUP BY i.post_id;',
-												array('published', BL::getWorkingLanguage()));
+												array('published', BL::getWorkingLanguage(), 'active'));
 
 		// loop posts
 		foreach($uniqueIds as $id)
