@@ -601,7 +601,7 @@ class BackendModel
 							if($extra['module'] == $module && $extra['action'] == $action)
 							{
 								// exacte page was found, so return
-								return self::getURL($properties['page_id']);
+								return self::getURL($properties['page_id'], $language);
 							}
 
 							// correct module but no action
