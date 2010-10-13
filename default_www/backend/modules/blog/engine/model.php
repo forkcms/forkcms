@@ -147,10 +147,10 @@ class BackendBlogModel
 		// get blogpost ids
 		$postIds = (array) $db->getColumn('SELECT i.post_id
 											FROM blog_comments AS i
-											WHERE i.id IN('. implode(',', $ids) .' AND i.language = ?;', BL::getWorkingLanguage());
+											WHERE i.id IN('. implode(',', $ids) .') AND i.language = ?;', BL::getWorkingLanguage());
 
 		// update record
-		$db->delete('blog_comments', 'id IN('. implode(',', $ids) .' AND language = ?;', BL::getWorkingLanguage());
+		$db->delete('blog_comments', 'id IN('. implode(',', $ids) .') AND language = ?;', BL::getWorkingLanguage());
 
 
 		// recalculate the comment count

@@ -1,0 +1,13 @@
+2.0.1 (xxxx-xx-xx)
+-----
+- files with extension jpeg are allowed from now on in TinyMCE imagemanager.
+- installer required javascript to be enabled, so added a check.
+- minor improvements for user-interface
+- bugfix: tinyMCE stripped the embed-tag
+- bugfix: comment_count on blogarticles ignored the archived/draft status
+- bugfix: spam comments couldn't be removed.
+- bugfix: generating an URL for a block didn't passed the language in the recursive part.
+
+2.0.0 (2010-10-11)
+-----
+None

@@ -30,16 +30,8 @@
 	{/option:blogComments}
 
 	{option:!blogComments}
-	<div class="datagridHolder">
-		<table cellspacing="0" class="datagrid">
-			<tbody>
-				<tr>
-					<td>
-						{$msgNoPublishedComments}
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="options content">
+		<p>{$msgNoPublishedComments}</p>
 	</div>
 	{/option:!blogComments}
 
