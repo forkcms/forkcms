@@ -70,7 +70,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		/*
 		 * Datagrid for the published comments.
 		 */
-		$this->dgPublished = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'published');
+		$this->dgPublished = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('published', BL::getWorkingLanguage()));
 
 		// active tab
 		$this->dgPublished->setActiveTab('tabPublished');
@@ -107,7 +107,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setMassAction($ddmMassAction);
 
 		// datagrid for the comments that are awaiting moderation
-		$this->dgModeration = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'moderation');
+		$this->dgModeration = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('moderation', BL::getWorkingLanguage()));
 
 		// active tab
 		$this->dgModeration->setActiveTab('tabModeration');
@@ -146,7 +146,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		/*
 		 * Datagrid for the comments that are marked as spam
 		 */
-		$this->dgSpam = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, 'spam');
+		$this->dgSpam = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_COMMENTS, array('spam', BL::getWorkingLanguage()));
 
 		// active tab
 		$this->dgSpam->setActiveTab('tabSpam');

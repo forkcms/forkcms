@@ -52,6 +52,7 @@ class BlogInstall extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'delete_category');
 		$this->setActionRights(1, 'blog', 'delete');
 		$this->setActionRights(1, 'blog', 'edit_category');
+		$this->setActionRights(1, 'blog', 'edit_comment');
 		$this->setActionRights(1, 'blog', 'edit');
 		$this->setActionRights(1, 'blog', 'import_blogger');
 		$this->setActionRights(1, 'blog', 'index');
@@ -254,7 +255,7 @@ class BlogInstall extends ModuleInstaller
 		if((int) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)) == 0)
 		{
 			// insert sample blogpost 1
-			$postID = $db->insert('blog_posts', array('id' => 1,
+			$db->insert('blog_posts', array('id' => 1,
 											'category_id' => $this->getSetting('blog', 'default_category_'. $language),
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
@@ -288,7 +289,8 @@ class BlogInstall extends ModuleInstaller
 											'num_comments' => '0'));
 
 			// insert example comment 1
-			$db->insert('blog_comments', array('post_id' => $postID,
+			$db->insert('blog_comments', array('post_id' => 1,
+												'language' => $language,
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Matthias Mullie',
 												'email' => 'matthias@spoon-library.com',
@@ -299,7 +301,8 @@ class BlogInstall extends ModuleInstaller
 												'data' => null));
 
 			// insert example comment 2
-			$db->insert('blog_comments', array('post_id' => $postID,
+			$db->insert('blog_comments', array('post_id' => 1,
+												'language' => $language,
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Davy Hellemans',
 												'email' => 'davy@spoon-library.com',
@@ -310,7 +313,8 @@ class BlogInstall extends ModuleInstaller
 												'data' => null));
 
 			// insert example comment 3
-			$db->insert('blog_comments', array('post_id' => $postID,
+			$db->insert('blog_comments', array('post_id' => 1,
+												'language' => $language,
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Tijs Verkoyen',
 												'email' => 'tijs@spoon-library.com',

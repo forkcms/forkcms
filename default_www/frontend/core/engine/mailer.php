@@ -31,6 +31,15 @@ class FrontendMailer
 		$subject = (string) $subject;
 		$template = (string) $template;
 
+		if(FrontendModel::getModuleSetting('core', 'theme') !== null)
+		{
+			// get new template path
+			$newTemplate = str_replace(FRONTEND_PATH, FRONTEND_PATH . '/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default'), $template);
+
+			// check if the file exists, if so reset the current template
+			if(SpoonFile::exists($newTemplate)) $template = $newTemplate;
+		}
+
 		// set defaults
 		$to = FrontendModel::getModuleSetting('core', 'mailer_to');
 		$from = FrontendModel::getModuleSetting('core', 'mailer_from');
@@ -54,6 +63,9 @@ class FrontendMailer
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
 		$email['html'] = self::getTemplateContent($template, $variables);
 		$email['created_on'] = FrontendModel::getUTCDate();
+
+		echo $email['html'];
+		exit;
 
 		// init var
 		$matches = array();

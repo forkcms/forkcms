@@ -6,6 +6,8 @@
 - core: minor improvements for user-interface.
 - core: improved BackendMailer
 - core: fixed some labels
+- core: when a template used by the mailer exist in the theme it will overule the default
+- blog: fixed installer (comments, rights, ..)
 - mailmotor: preview is now send with BackendMailer.
 - bugfix: tinyMCE stripped the embed-tag
 - bugfix: comment_count on blogarticles ignored the archived/draft status
@@ -15,6 +17,7 @@
 - bugfix: fixed some calls to BackendPagesModel::buildCache() (language should be passed)
 - bugfix: deleting a blog post resulted in an error (thx to Frederik Heyninck)
 - bugfix: pages disappear when moving in seperate pages
+- bugfix: when deleting a blog-category blogpost were not moved into the default category
 
 2.0.0 (2010-10-11)
 -----
