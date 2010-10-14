@@ -47,7 +47,7 @@ class BackendPagesDelete extends BackendBaseActionDelete
 			if(method_exists('BackendSearchModel', 'removeIndex')) BackendSearchModel::removeIndex('pages', $id);
 
 			// build cache
-			BackendPagesModel::buildCache();
+			BackendPagesModel::buildCache(BL::getWorkingLanguage());
 		}
 
 		// page is deleted, so redirect to the overview

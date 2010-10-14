@@ -189,7 +189,8 @@ class PagesInstall extends ModuleInstaller
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'));
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
+									array('extra_id' => $sitemapID));
 			}
 		}
 	}
@@ -302,7 +303,8 @@ class PagesInstall extends ModuleInstaller
 								);
 
 				// insert blog
-				$this->insertPage(array('title' => 'Blog',
+				$this->insertPage(array('id' => 10,
+										'title' => 'Blog',
 										'template_id' => $templateIds['two_columns'],
 										'language' => $language),
 									null,
@@ -394,7 +396,8 @@ class PagesInstall extends ModuleInstaller
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt')
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
+									array('extra_id' => $extras['sitemap_widget_sitemap'])
 								);
 			}
 		}

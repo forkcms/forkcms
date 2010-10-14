@@ -308,7 +308,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// build the cache
-				BackendPagesModel::buildCache();
+				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=added&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);

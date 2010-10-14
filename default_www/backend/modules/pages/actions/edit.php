@@ -402,7 +402,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendTagsModel::saveTags($page['id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 				// build cache
-				BackendPagesModel::buildCache();
+				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);

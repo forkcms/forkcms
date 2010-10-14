@@ -48,6 +48,24 @@ class BackendPagesModel
 																WHERE i.type = ?;',
 																array('block'), 'id');
 
+		// get widgets
+		$widgets = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
+																FROM pages_extras AS i
+																WHERE i.type = ?;',
+																array('widget'), 'id');
+
+		// search sitemap
+		$sitemapID = null;
+
+		foreach($widgets as $id => $row)
+		{
+			if($row['action'] == 'sitemap')
+			{
+				$sitemapID = $id;
+				break;
+			}
+		}
+
 		// init vars
 		$keys = array();
 		$navigation = array();
@@ -103,10 +121,32 @@ class BackendPagesModel
 				$treeType = 'page';
 				if($page['hidden'] == 'Y') $treeType = 'hidden';
 
-				// special items
+				// homepage should have a special icon
 				if($pageID == 1) $treeType = 'home';
-				if($page['has_extra'] == 'Y' && strpos($page['extra_ids'], '6') !== false) $treeType = 'sitemap';
-				if($pageID == 404) $treeType = 'error';
+
+				// 404 page should have a special icon
+				elseif($pageID == 404) $treeType = 'error';
+
+				// sitemap should have a special icon (but only the one that was added by the installer.
+				elseif($pageID < 404 && substr_count($page['extra_ids'], $sitemapID) > 0)
+				{
+					// get extras
+					$extraIDs = explode(',', $page['extra_ids']);
+
+					// loop extras
+					foreach($extraIDs as $id)
+					{
+						// check if this is the sitemap id
+						if($id == $sitemapID)
+						{
+							// set type
+							$treeType = 'sitemap';
+
+							// break it
+							break;
+						}
+					}
+				}
 
 				// add type
 				$temp['tree_type'] = $treeType;
@@ -870,7 +910,7 @@ class BackendPagesModel
 	public static function getFullURL($id)
 	{
 		// generate the cache files if needed
-		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache();
+		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/keys_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache(BL::getWorkingLanguage());
 
 		// init var
 		$keys = array();
@@ -1166,7 +1206,7 @@ class BackendPagesModel
 	public static function getTreeHTML()
 	{
 		// check if the cached file exists, if not we generated it
-		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache();
+		if(!SpoonFile::exists(PATH_WWW .'/frontend/cache/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php')) self::buildCache(BL::getWorkingLanguage());
 
 		// init var
 		$navigation = array();

@@ -157,11 +157,11 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SentOn', 'sent on');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Source', 'source');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Subscriptions', 'subscriptions');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SubscribeForm', 'subscribeform');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SubscribeForm', 'subscribe form');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Timezone', 'timezone');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ToStep', 'to step');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Unsubscriptions', 'unsubscriptions');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'UnsubscribeForm', 'unsubscribe-form');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'UnsubscribeForm', 'unsubscribe form');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'AllAddresses', 'All addresses sorted by subscription date.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoSentMailings', 'No mailings have been sent yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoSubscriptions', 'No one subscribed to the mailinglist yet.');

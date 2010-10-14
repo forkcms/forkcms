@@ -32,6 +32,9 @@ class InstallerStep6 extends InstallerStep
 		// validate all previous steps
 		if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
 
+		// delete cached data
+		$this->deleteCachedData();
+
 		// create configuration files
 		$this->createConfigurationFiles();
 
@@ -194,6 +197,48 @@ class InstallerStep6 extends InstallerStep
 		{
 			$this->buildCache($this->db, $language, 'frontend');
 			$this->buildCache($this->db, $language, 'backend');
+		}
+	}
+
+
+	/**
+	 * Delete the cached data
+	 *
+	 * @return	void
+	 */
+	private function deleteCachedData()
+	{
+		// init some vars
+		$foldersToLoop = array('/backend/cache', '/frontend/cache');
+		$foldersToIgnore = array('/backend/cache/navigation');
+		$filesToDelete = array();
+
+		// loop folders
+		foreach($foldersToLoop as $folder)
+		{
+			// get folderlisting
+			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn'));
+
+			// loop folders
+			foreach($subfolders as $subfolder)
+			{
+				// not in ignore list?
+				if(!in_array($folder .'/'. $subfolder, $foldersToIgnore))
+				{
+					// get the filelisting
+					$files = (array) SpoonFile::getList(PATH_WWW . $folder .'/'. $subfolder);
+
+					// loop the files
+					foreach($files as $file) $filesToDelete[] = PATH_WWW . $folder .'/'. $subfolder .'/'. $file;
+				}
+			}
+		}
+
+		// delete cached files
+		if(!empty($filesToDelete))
+		{
+			// loop files and delete them
+			foreach($filesToDelete as $file) SpoonFile::delete($file);
 		}
 	}
 

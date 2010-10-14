@@ -35,7 +35,7 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 		$success = BackendPagesModel::move($id, $droppedOn, $typeOfDrop);
 
 		// build cache
-		BackendPagesModel::buildCache();
+		BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 		// output
 		if($success) $this->output(self::OK, BackendPagesModel::get($id), 'page moved');

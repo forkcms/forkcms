@@ -24,10 +24,13 @@ class BackendMailer
 	 * @param	string[optional] $toEmail		The to-address for the email.
 	 * @param	string[optional] $toName		The to-name for the email.
 	 * @param	string[optional] $fromEmail		The from-address for the mail.
-	 * @param	string[optional] $fromName		The from-name for the mail
+	 * @param	string[optional] $fromName		The from-name for the mail.
 	 * @param	bool[optional] $queue			Should the mail be queued?
+	 * @param	int[optional] $sendOn			When should the email be send, only used when $queue is true.
+	 * @param	bool[optional] $isRawHTML		If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
+	 * @param	string[optional] $plaintText	The plain text version.
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null)
 	{
 		// redefine
 		$subject = (string) $subject;
@@ -53,7 +56,9 @@ class BackendMailer
 
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
-		$email['html'] = self::getTemplateContent($template, $variables);
+		if($isRawHTML) $email['html'] = $template;
+		else $email['html'] = self::getTemplateContent($template, $variables);
+		if($plainText !== null) $email['plain_text'] = $plainText;
 		$email['created_on'] = BackendModel::getUTCDate();
 
 		// set send date

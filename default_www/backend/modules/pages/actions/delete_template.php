@@ -41,7 +41,7 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 			$success = BackendPagesModel::deleteTemplate($id);
 
 			// build cache
-			BackendPagesModel::buildCache();
+			BackendPagesModel::buildCache(BL::getWorkingLanguage());
 		}
 
 		// page is deleted, so redirect to the overview

@@ -1,12 +1,18 @@
 2.0.1 (xxxx-xx-xx)
 -----
-- files with extension jpeg are allowed from now on in TinyMCE imagemanager.
-- installer required javascript to be enabled, so added a check.
-- minor improvements for user-interface
+- core: files with extension jpeg are allowed from now on in TinyMCE imagemanager.
+- core: installer required javascript to be enabled, so added a check.
+- core: installer will clear previous cached data
+- core: minor improvements for user-interface.
+- core: improved BackendMailer
+- core: fixed some labels
+- mailmotor: preview is now send with BackendMailer.
 - bugfix: tinyMCE stripped the embed-tag
 - bugfix: comment_count on blogarticles ignored the archived/draft status
 - bugfix: spam comments couldn't be removed.
 - bugfix: generating an URL for a block didn't passed the language in the recursive part.
+- bugfix: correct detection of sitemap-page
+- bugfix: fixed some calls to BackendPagesModel::buildCache() (language should be passed)
 
 2.0.0 (2010-10-11)
 -----

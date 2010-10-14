@@ -574,49 +574,23 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 					This, however, is the point where a preview is sent to a specific address.
 				*/
 
-				// require spoon email
-				$email = new SpoonEmail();
-				$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH .'/templates');
-
 				// set from email
 				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting('mailmotor', 'from_email') : $this->record['from_email'];
 				$fromName = empty($this->record['from_name']) ? BackendModel::getModuleSetting('mailmotor', 'from_name') : $this->record['from_name'];
 				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting('mailmotor', 'reply_to_email') : $this->record['reply_to_email'];
 
-				// set headers
-				$email->setFrom($fromEmail, $fromName);
-				$email->setReplyTo($replyToEmail);
-				$email->setSubject('[TEST] '. $this->record['subject']);
-
-				// add recipient(s)
-				$email->addRecipient($txtEmail->getValue());
-
-				// set HTML content
-				$email->setHTMLContent($this->record['data']['full_content_html']);
-
-				// set plain text content
-				if(!empty($this->record['content_plain'])) $email->setPlainContent($this->record['content_plain']);
-
-				// get SMTP info
-				$SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
-				$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
-				$SMTPServer = BackendModel::getModuleSetting('core', 'smtp_server');
-				$SMTPPort = BackendModel::getModuleSetting('core', 'smtp_port');
-
-				// set SMTP authentication
-				if($SMTPUsername !== null && $SMTPPassword !== null)
-				{
-					// set server and connect with SMTP
-					$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-					$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
-				}
-
 				// build URL
 				$url = BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=4';
 
+				$subject = '[TEST] '. $this->record['subject'];
+				$HTML = $this->record['data']['full_content_html'];
+				$plainText = (!empty($this->record['content_plain'])) ? $this->record['content_plain'] : null;
+
+				// send mail
+				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true);
+
 				// send the preview
-				if($email->send()) $this->redirect($url .'&amp;report=preview-sent&amp;var='. $txtEmail->getValue());
-				else $this->redirect($url .'&amp;error=no-preview-sent&amp;var='. $txtEmail->getValue());
+				$this->redirect($url .'&amp;report=preview-sent&amp;var='. $txtEmail->getValue());
 			}
 		}
 	}
