@@ -95,7 +95,7 @@ class BackendBlogModel
 		// get used meta ids
 		$metaIds = (array) $db->getColumn('SELECT meta_id
 											FROM blog_posts AS p
-											WHERE id IN('. implode(',', $ids) .' AND language = ?;', BL::getWorkingLanguage());
+											WHERE id IN('. implode(',', $ids) .') AND language = ?;', BL::getWorkingLanguage());
 
 		// delete meta
 		if(!empty($metaIds)) $db->delete('meta', 'id IN('. implode(',', $metaIds) .');');

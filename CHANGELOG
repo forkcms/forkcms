@@ -13,6 +13,8 @@
 - bugfix: generating an URL for a block didn't passed the language in the recursive part.
 - bugfix: correct detection of sitemap-page
 - bugfix: fixed some calls to BackendPagesModel::buildCache() (language should be passed)
+- bugfix: deleting a blog post resulted in an error (thx to Frederik Heyninck)
+- bugfix: pages disappear when moving in seperate pages
 
 2.0.0 (2010-10-11)
 -----

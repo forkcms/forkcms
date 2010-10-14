@@ -1579,7 +1579,11 @@ class BackendPagesModel
 		$newType = 'page';
 		if($droppedOnPage['type'] == 'meta') $newType = 'meta';
 		if($droppedOnPage['type'] == 'footer') $newType = 'footer';
-		if($droppedOnPage['type'] == 'root') $newType = 'page';
+		if($droppedOnPage['type'] == 'root')
+		{
+			if($newParent == 0) $newType = 'root';
+			else $newType = 'page';
+		}
 
 		// calculate new sequence for items that should be moved inside
 		if($typeOfDrop == 'inside')
