@@ -15,7 +15,7 @@
 				<h3>Short list</h3>
 
 				<ul>
-					<li>Apache 2.0 width mod_rewrite enabled</li>
+					<li>Apache 2.0 with mod_rewrite enabled</li>
 					<li>PHP 5.2 or greater
 					<ul>
 						<li>cURL</li>
