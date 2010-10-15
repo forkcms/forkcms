@@ -64,9 +64,6 @@ class FrontendMailer
 		$email['html'] = self::getTemplateContent($template, $variables);
 		$email['created_on'] = FrontendModel::getUTCDate();
 
-		echo $email['html'];
-		exit;
-
 		// init var
 		$matches = array();
 
