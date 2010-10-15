@@ -18,6 +18,7 @@
 - bugfix: deleting a blog post resulted in an error (thx to Frederik Heyninck)
 - bugfix: pages disappear when moving in seperate pages
 - bugfix: when deleting a blog-category blogpost were not moved into the default category
+- bugfix: CURLOPT_xxx options should be integer/constants instead of strings
 
 2.0.0 (2010-10-11)
 -----
