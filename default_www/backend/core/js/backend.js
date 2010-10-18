@@ -224,7 +224,7 @@ jsBackend.controls = {
 								$(this).dialog('close');
 
 								// goto link
-								window.location = url;
+								window.location = $(this).attr('rel');
 							},
 						'{$lblCancel|ucfirst}': function()
 							{
@@ -248,9 +248,16 @@ jsBackend.controls = {
 
 			// get id
 			var id = $(this).attr('rel');
-
+			
 			// bind
-			if(id != '') $('#'+ id).dialog('open');
+			if(id != '')
+			{
+				// set target
+				$('#'+ id).attr('rel', $(this).attr('href'));
+				
+				// open dialog
+				$('#'+ id).dialog('open');
+			}
 		});
 	},
 

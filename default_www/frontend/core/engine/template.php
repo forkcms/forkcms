@@ -112,8 +112,9 @@ class FrontendTemplate extends SpoonTemplate
 		// URL for a specific pageId
 		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
 
-		// URL for a specific block
+		// URL for a specific block/extra
 		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'getURLForBlock'));
+		$this->mapModifier('geturlforextraid', array('FrontendTemplateModifiers', 'getURLForExtraId'));
 
 		// convert var into navigation
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
@@ -134,6 +135,9 @@ class FrontendTemplate extends SpoonTemplate
 
 		// highlight
 		$this->mapModifier('highlight', array('FrontendTemplateModifiers', 'highlightCode'));
+
+		// urlencode
+		$this->mapModifier('urlencode', 'urlencode');
 
 		// debug stuff
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));
@@ -451,6 +455,26 @@ class FrontendTemplateModifiers
 
 		// return
 		return FrontendNavigation::getURLForBlock($module, $action, $language);
+	}
+
+
+	/**
+	 * Fetch an URL based on an extraId
+	 *
+	 * @return	string
+	 * @param	string $var
+	 * @param	int $extraId
+	 * @param	string[optional] $language
+	 */
+	public static function getURLForExtraId($var, $extraId, $language = null)
+	{
+		// redefine
+		$var = (string) $var;
+		$extraId = (int) $extraId;
+		$language = ($language !== null) ? (string) $language : null;
+
+		// return
+		return FrontendNavigation::getURLForExtraId($extraId, $language);
 	}
 
 

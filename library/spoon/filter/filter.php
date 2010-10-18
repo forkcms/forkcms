@@ -700,12 +700,11 @@ class SpoonFilter
 	 */
 	public static function isValidRegexp($regexp)
 	{
-		// regexp & dummy string
-		$regexp = (string) $regexp;
+		// dummy string
 		$dummy = 'spoon is growing every day';
 
 		// validate
-		return (@preg_match($regexp, $dummy) !== false);
+		return (@preg_match((string) $regexp, $dummy) !== false);
 	}
 
 

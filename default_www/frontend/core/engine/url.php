@@ -8,6 +8,8 @@
  * @subpackage		core
  *
  * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author			Davy Hellemans <davy@netlash.com>
+ * @author			Dieter Vanden Eynde <dieter@netlash.com>
  * @since			2.0
  */
 class FrontendURL
@@ -65,6 +67,9 @@ class FrontendURL
 
 		// process URL
 		$this->processQueryString();
+
+		// set constant
+		define('SELF', SITE_URL .'/'. $this->queryString);
 	}
 
 

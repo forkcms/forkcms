@@ -253,7 +253,11 @@ class SpoonThumbnail
 		$currentMime = (string) $imageProperties['mime'];
 
 		// file is the same?
-		if($extension == SpoonFile::getExtension($this->filename) && $currentWidth == $this->width && $currentHeight == $this->height) return SpoonDirectory::copy($this->filename, $filename, true, true, $chmod);
+		// @todo check if mime type is the same
+		if($currentWidth == $this->width && $currentHeight == $this->height)
+		{
+			return SpoonDirectory::copy($this->filename, $filename, true, true, $chmod);
+		}
 
 		// resize image
 		$this->resizeImage($currentWidth, $currentHeight, $currentType, $currentMime);

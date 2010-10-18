@@ -106,13 +106,13 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	array $values
+	 * @param	array[optional] $values
 	 * @param	mixed[optional] $selected
 	 * @param	bool[optional] $multipleSelection
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classError
 	 */
-	public function __construct($name, array $values, $selected = null, $multipleSelection = false, $class = 'inputDropdown', $classError = 'inputDropdownError')
+	public function __construct($name, array $values = null, $selected = null, $multipleSelection = false, $class = 'inputDropdown', $classError = 'inputDropdownError')
 	{
 		// obligates fields
 		$this->attributes['id'] = SpoonFilter::toCamelCase($name, '_', true);
@@ -372,11 +372,29 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// form submitted
 		if($this->isSubmitted())
 		{
-			// something went wrong
-			if($this->getValue() === null)
+			// post/get data
+			$data = $this->getMethod(true);
+
+			// default element has value
+			if(isset($this->defaultElement[1]) && trim($this->defaultElement[1]) != '')
 			{
-				if($error !== null) $this->setError($error);
-				return false;
+				// no value set and not equal to the default element
+				if($this->getValue() === null && $data[$this->getName()] != $this->defaultElement[1])
+				{
+					if($error !== null) $this->setError($error);
+					return false;
+				}
+			}
+
+			// no default element or it has no value
+			else
+			{
+				// something went wrong
+				if($this->getValue() === null)
+				{
+					if($error !== null) $this->setError($error);
+					return false;
+				}
 			}
 
 			// no problems
@@ -641,37 +659,41 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 * @return	void
 	 * @param	array $values
 	 */
-	private function setValues(array $values)
+	private function setValues(array $values = null)
 	{
 		// has not items
-		if(count($values) == 0) throw new SpoonFormException('The array with values contains no items.');
+		if(count($values) == 0) $this->setDefaultElement('');
 
-		// check the first element
-		foreach($values as $value)
-		{
-			// dropdownfield with optgroups?
-			$this->optionGroups = (is_array($value)) ? true : false;
-
-			// break the loop
-			break;
-		}
-
-		// has option groups
-		if($this->optionGroups)
-		{
-			// loop each group
-			foreach($values as $groupName => $options)
-			{
-				// loop each option
-				foreach($options as $key => $value) $this->values[$groupName][$key] = $value;
-			}
-		}
-
-		// no option groups
+		// at least 1 item
 		else
 		{
-			// has items
-			foreach($values as $label => $value) $this->values[$label] = $value;
+			// check the first element
+			foreach($values as $value)
+			{
+				// dropdownfield with optgroups?
+				$this->optionGroups = (is_array($value)) ? true : false;
+
+				// break the loop
+				break;
+			}
+
+			// has option groups
+			if($this->optionGroups)
+			{
+				// loop each group
+				foreach($values as $groupName => $options)
+				{
+					// loop each option
+					foreach($options as $key => $value) $this->values[$groupName][$key] = $value;
+				}
+			}
+
+			// no option groups
+			else
+			{
+				// has items
+				foreach($values as $label => $value) $this->values[$label] = $value;
+			}
 		}
 	}
 }

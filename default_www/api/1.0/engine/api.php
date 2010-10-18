@@ -332,8 +332,8 @@ class API
 		if($data !== null) $JSON['data'] = $data;
 
 		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: application/json');
+//		SpoonHTTP::setHeadersByCode($statusCode);
+		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
 		// output
 		echo json_encode($JSON);
@@ -382,8 +382,8 @@ class API
 		array_walk($data, array('API', 'arrayToXML'), $root);
 
 		// set correct headers
-		SpoonHTTP::setHeadersByCode($statusCode);
-		SpoonHTTP::setHeaders('content-type: text/xml');
+//		SpoonHTTP::setHeadersByCode($statusCode);
+		SpoonHTTP::setHeaders('content-type: text/xml;charset=utf-8');
 
 		// output XML
 		echo $XML->saveXML();

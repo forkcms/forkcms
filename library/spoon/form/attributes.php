@@ -90,7 +90,7 @@ class SpoonFormAttributes extends SpoonFormElement
 	 *
 	 * @return	void
 	 * @param	string $key
-	 * @param	string $value
+	 * @param	string[optional] $value
 	 */
 	public function setAttribute($key, $value = null)
 	{

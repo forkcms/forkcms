@@ -16,7 +16,6 @@ class BackendTagsModel
 {
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.tag, i.number AS num_tags
 									FROM tags AS i
-									LEFT OUTER JOIN modules_tags AS mt ON mt.tag_id = i.id
 									WHERE i.language = ?
 									GROUP BY i.id';
 
@@ -227,6 +226,9 @@ class BackendTagsModel
 
 		// redefine the tags as an array
 		if(!is_array($tags)) $tags = (array) explode(',', $tags);
+
+		// make sure the list of tags is unique
+		$tags = array_unique($tags);
 
 		// get db
 		$db = BackendModel::getDB(true);

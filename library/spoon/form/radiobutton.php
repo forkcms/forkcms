@@ -82,7 +82,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	string $values
+	 * @param	array $values
 	 * @param	string[optional] $checked
 	 * @param	string[optional] $class
 	 */
@@ -263,7 +263,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 			$element[$name] = '<input type="radio" name="'. $this->name .'" value="'. $value .'"';
 
 			// checked status
-			if($value == $this->getChecked()) $element[$name] .= ' checked="checked"';
+			if($value === $this->getChecked()) $element[$name] .= ' checked="checked"';
 
 			// add attributes
 			$element[$name] .= $this->getAttributesHTML($value, array('[id]' => $this->variables[$value]['id'], '[value]' => $value));
