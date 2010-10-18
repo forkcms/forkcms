@@ -19,6 +19,7 @@
 - bugfix: pages disappear when moving in seperate pages
 - bugfix: when deleting a blog-category blogpost were not moved into the default category
 - bugfix: CURLOPT_xxx options should be integer/constants instead of strings
+- bugfix: limited key length for table modules_settings to overcome SQL error 'Specified key was too long; max key length is 1000 bytes'
 
 2.0.0 (2010-10-11)
 -----
