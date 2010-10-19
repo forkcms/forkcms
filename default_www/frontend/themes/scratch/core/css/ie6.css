@@ -1,35 +1,15 @@
 /*
 
-	Conditional comments for Scorsese theme (Fork CMS)
-	Browser: Internet Explorer 7
-	
-	Media:      screen, projection
-	Copyright:  Netlash <http://www.netlash.com>
-	author:     Thomas Deceuninck <thomasdeceuninck@netlash.com>
+	Stylesheet for <Scratch theme>
+
+	@package      frontend
+	@author       Johan Ronsse <johan@netlash.com>
+	@since        2.0
+	@media        screen
+	@browser      Internet Explorer 6
 
 */
 
-.clearfix,
-#top,
-#header,
-#navigation,
-#main,
-#intro,
-#content,
-#subnavigation,
-#contentWrapper,
-#mainContent,
-#footerWrapper,
-#footer {
+.clearfix {
 	zoom: 1;
-}
-
-/* sticky footer fix */
-#container {
-	display: table;
-	height: 100%;
-}
-
-#subnavigation ul li {
-	width: 156px;
 }
