@@ -581,8 +581,22 @@ class CampaignMonitor
 			default;
 		}
 
-		// execute the soap call and fetch the response
-		$response = $this->XMLObjectsToArray($this->soap->{$callMethod}($parameters));
+		// catch any timeouts that may occur
+		try
+		{
+			// execute the soap call and fetch the response
+			$response = $this->XMLObjectsToArray($this->soap->{$callMethod}($parameters));
+		}
+		catch(CampaignMonitorException $e)
+		{
+			// check what message we got
+			switch(strtolower($e->getMessage()))
+			{
+				case 'error fetching http headers':
+					throw new CampaignMonitorException('The request to '. API_URL .' timed out.');
+				break;
+			}
+		}
 
 		// fetch response message and code
 		$responseMessage = (string) (isset($response[$responseKey]['enc_value']['Message']) ? $response[$responseKey]['enc_value']['Message'] : null);
