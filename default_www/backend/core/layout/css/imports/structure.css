@@ -87,7 +87,7 @@ body {
 #headerHolder {
 	padding: 0 24px;
 	min-width: 960px;
-	max-width: 1224px;
+	max-width: 1226px; /* 2px more than #container to compensate for border */
 	margin: 0 auto;
 	position: relative;
 }
