@@ -76,7 +76,8 @@
 	Default widths for certain cells
 */
 
-th.action {
+th.action,
+th.edit {
 	width: 10%;
 }
 
