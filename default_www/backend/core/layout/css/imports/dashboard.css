@@ -97,3 +97,9 @@
 	#widgetMailmotorClassic .ui-tabs .ui-tabs-selected {
 		font-weight: 700;
 	}
+	
+	#datagridSubscriptions p,
+	#datagridUnsubscriptions p,
+	#datagridStatistics p {
+		padding: 0 10px 6px;
+	}

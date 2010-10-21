@@ -17,51 +17,49 @@
 
 			<div id="tabMailmotorSubscriptions">
 				{* All the subscriptions *}
-				<div class="datagridHolder" id="datagridSubscriptions">
+				<div id="datagridSubscriptions">
 					{option:dgMailmotorSubscriptions}
+					<div class="datagridHolder">
 						{$dgMailmotorSubscriptions}
+					</div>
 					{/option:dgMailmotorSubscriptions}
-
 					{option:!dgMailmotorSubscriptions}
-						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
-							<tr>
-								<td>{$msgNoSubscriptions|ucfirst}</td>
-							</tr>
-						</table>
+					<p>
+						{$msgNoSubscriptions|ucfirst}
+					</p>
 					{/option:!dgMailmotorSubscriptions}
 				</div>
 			</div>
 
 			<div id="tabMailmotorUnsubscriptions">
 				{* All the unsubscriptions *}
-				<div class="datagridHolder" id="datagridUnsubscriptions">
+				<div id="datagridUnsubscriptions">
 					{option:dgMailmotorUnsubscriptions}
+					<div class="datagridHolder" >
 						{$dgMailmotorUnsubscriptions}
+					</div>
 					{/option:dgMailmotorUnsubscriptions}
-
 					{option:!dgMailmotorUnsubscriptions}
-						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
-							<tr>
-								<td>{$msgNoUnsubscriptions|ucfirst}</td>
-							</tr>
-						</table>
+					<p>
+						{$msgNoUnsubscriptions|ucfirst}
+					</p>
 					{/option:!dgMailmotorUnsubscriptions}
 				</div>
 			</div>
 
 			<div id="tabMailmotorStatistics">
-				{* All the unsubscriptions *}
-				<div class="datagridHolder" id="datagridStatistics">
+				{* The stats *}
+				<div id="datagridStatistics">
 					{option:dgMailmotorStatistics}
+					<div class="datagridHolder">
 						{$dgMailmotorStatistics}
+					</div>
 					{/option:dgMailmotorStatistics}
 
 					{option:!dgMailmotorStatistics}
-						<table border="0" cellspacing="0" cellpadding="0" class="datagrid">
-							<tr>
-								<td>{$msgNoSentMailings|ucfirst}</td>
-							</tr>
-						</table>
+					<p>
+						{$msgNoSentMailings|ucfirst}
+					</p>
 					{/option:!dgMailmotorStatistics}
 				</div>
 			</div>
