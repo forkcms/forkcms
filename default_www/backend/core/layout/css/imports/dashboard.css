@@ -81,3 +81,19 @@
 #widgetSettingsAnalyse ul {
 	padding-bottom: 0;
 }
+
+/*
+	Mailmotor widget
+*/
+
+#widgetMailmotorClassic .ui-tabs .ui-tabs-nav li a {
+	padding: 4px 7px;
+}
+
+	#widgetMailmotorClassic .ui-tabs li {
+		font-weight: 400;
+	}
+	
+	#widgetMailmotorClassic .ui-tabs .ui-tabs-selected {
+		font-weight: 700;
+	}
