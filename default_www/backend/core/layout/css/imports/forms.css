@@ -136,6 +136,26 @@ input[type="submit"] {
 		padding-bottom: 0;
 	}
 
+/*
+	Horizontal forms
+*/
+
+
+/* Fix alignment in Chrome/Saf */
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.forkForms .horizontal select {
+		position: relative;
+		top: 1px;
+	}
+}
+
+/* Fix alignment in FF */
+@-moz-document url-prefix() {
+	.forkForms .horizontal select {
+		margin-top: 3px;
+	}
+}
+
 .forkForms .horizontal .inputList label {
 	float: none;
 	width: auto;
@@ -154,7 +174,7 @@ input[type="submit"] {
 		margin: 0 0 8px;
 	}
 
-		#urlManager ul .inputText] {
+		#urlManager ul .inputText {
 			font-size: 11px;
 			width: 210px;
 		}
