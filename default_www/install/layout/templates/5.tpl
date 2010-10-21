@@ -16,9 +16,9 @@
 			<tr>
 				<td class="strength" id="passwordStrength">
 					<p class="strength none">/</p>
-					<p class="strength weak" style="background: red;">Weak</p>
-					<p class="strength ok" style="background: orange;">OK</p>
-					<p class="strength strong" style="background: green;">Strong</p>
+					<p class="strength weak">Weak</p>
+					<p class="strength ok">OK</p>
+					<p class="strength strong">Strong</p>
 				</td>
 				<td>
 					<p class="helpTxt">Strong passwords consist of a combination of capitals, small letters, digits and special characters.</p>

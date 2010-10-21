@@ -110,9 +110,9 @@
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">/</p>
-								<p class="strength weak" style="background: red;">{$lblWeak|ucfirst}</p>
-								<p class="strength ok" style="background: orange;">{$lblOK|ucfirst}</p>
-								<p class="strength strong" style="background: green;">{$lblStrong|ucfirst}</p>
+								<p class="strength weak">{$lblWeak|ucfirst}</p>
+								<p class="strength ok">{$lblOK|ucfirst}</p>
+								<p class="strength strong">{$lblStrong|ucfirst}</p>
 							</td>
 							<td>
 								<p class="helpTxt">{$msgHelpStrongPassword}</p>
