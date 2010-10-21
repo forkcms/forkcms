@@ -1,6 +1,7 @@
 #! /bin/bash
 # Script to remove all cache files
 # Useful when merging two Fork installs
+# Run from the scripts/ folder
 rm ../../../default_www/install/cache/*
 rm ../../../default_www/frontend/cache/cached_templates/*
 rm ../../../default_www/frontend/cache/locale/*
