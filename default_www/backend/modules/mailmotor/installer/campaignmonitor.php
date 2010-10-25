@@ -42,7 +42,7 @@ class CampaignMonitor
 	const API_PORT = 80;
 
 	// current version
-	const VERSION = '0.0.1';
+	const VERSION = '1.0.0';
 
 	/**
 	 * The API key for the logged-in user
