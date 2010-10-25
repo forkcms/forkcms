@@ -9,6 +9,7 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BlogInstall extends ModuleInstaller
@@ -120,12 +121,8 @@ class BlogInstall extends ModuleInstaller
 									array('extra_id' => $blogID));
 			}
 
-			// check if example data should be installed
-			if($this->installExample())
-			{
-				// install example data
-				$this->installExampleData($language);
-			}
+			// install example data if requested
+			if($this->installExample()) $this->installExampleData($language);
 		}
 
 

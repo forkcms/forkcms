@@ -73,7 +73,7 @@ class ModuleInstaller
 		$name = (string) $name;
 
 		// module does not yet exists
-		if($this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?;', $name) == 0)
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?;', $name))
 		{
 			// build item
 			$item = array('name' => $name,
@@ -286,10 +286,10 @@ class ModuleInstaller
 		if($type == '') throw new Exception('Invalid type. Possible values are: act, err, lbl, msg.');
 
 		// check if the label already exists
-		if((int) $this->getDB()->getVar('SELECT COUNT(i.id)
-										FROM locale AS i
-										WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?',
-										array($language, $application, $module, $type, $name)) == 0)
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(i.id)
+											FROM locale AS i
+											WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?',
+											array($language, $application, $module, $type, $name)))
 		{
 			// insert
 			$this->db->insert('locale', array('user_id' => $this->getDefaultUserID(),
@@ -414,6 +414,7 @@ class ModuleInstaller
 		// get arguments (this function has a variable length argument list, to allow multiple blocks to be added)
 		$blocks = array();
 
+		// loop blocks
 		for($i = 0; $i < $numBlocks; $i++)
 		{
 			// get block
@@ -499,10 +500,10 @@ class ModuleInstaller
 		$level = (int) $level;
 
 		// action doesn't exist
-		if($this->getDB()->getVar('SELECT COUNT(id)
-									FROM groups_rights_actions
-									WHERE group_id = ? AND module = ? AND action = ?',
-									array($groupId, $module, $action)) == 0)
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
+											FROM groups_rights_actions
+											WHERE group_id = ? AND module = ? AND action = ?',
+											array($groupId, $module, $action)))
 		{
 			// build item
 			$item = array('group_id' => $groupId,
@@ -530,10 +531,10 @@ class ModuleInstaller
 		$module = (string) $module;
 
 		// module doesn't exist
-		if($this->getDB()->getVar('SELECT COUNT(id)
-									FROM groups_rights_modules
-									WHERE group_id = ? AND module = ?',
-									array((int) $groupId, (string) $module)) == 0)
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
+											FROM groups_rights_modules
+											WHERE group_id = ? AND module = ?',
+											array((int) $groupId, (string) $module)))
 		{
 			// build item
 			$item = array('group_id' => $groupId,
@@ -563,10 +564,10 @@ class ModuleInstaller
 		$overwrite = (bool) $overwrite;
 
 		// doens't already exist
-		if($this->getDB()->getVar('SELECT COUNT(name)
-									FROM modules_settings
-									WHERE module = ? AND name = ?;',
-									array($module, $name)) == 0)
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
+											FROM modules_settings
+											WHERE module = ? AND name = ?;',
+											array($module, $name)))
 		{
 			// build item
 			$item = array('module' => $module,

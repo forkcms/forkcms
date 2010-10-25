@@ -210,17 +210,17 @@ class InstallerStep2 extends InstallerStep
 		// check if the installer-directory is writable
 		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/install')), $variables);
 
-		// does the config.example.php file exist
-		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/config.example.php') && is_readable(PATH_LIBRARY .'/config.example.php')), $variables);
+		// does the config.base.php file exist
+		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/config.base.php') && is_readable(PATH_LIBRARY .'/config.base.php')), $variables);
 
-		// does the globals.example.php file exist
-		self::checkRequirement('fileSystemGlobals', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals.example.php') && is_readable(PATH_LIBRARY .'/globals.example.php')), $variables);
+		// does the globals.base.php file exist
+		self::checkRequirement('fileSystemGlobals', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals.base.php') && is_readable(PATH_LIBRARY .'/globals.base.php')), $variables);
 
-		// does the globals_backend.example.php file exist
-		self::checkRequirement('fileSystemGlobalsBackend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_backend.example.php') && is_readable(PATH_LIBRARY .'/globals_backend.example.php')), $variables);
+		// does the globals_backend.base.php file exist
+		self::checkRequirement('fileSystemGlobalsBackend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_backend.base.php') && is_readable(PATH_LIBRARY .'/globals_backend.base.php')), $variables);
 
-		// does the globals_frontend.example.php file exist
-		self::checkRequirement('fileSystemGlobalsFrontend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_frontend.example.php') && is_readable(PATH_LIBRARY .'/globals_frontend.example.php')), $variables);
+		// does the globals_frontend.base.php file exist
+		self::checkRequirement('fileSystemGlobalsFrontend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_frontend.base.php') && is_readable(PATH_LIBRARY .'/globals_frontend.base.php')), $variables);
 
 		// library path exists
 		self::checkRequirement('fileSystemPathLibrary', (defined('PATH_LIBRARY') && PATH_LIBRARY != ''), $variables);

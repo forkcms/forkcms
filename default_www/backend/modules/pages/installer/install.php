@@ -8,6 +8,7 @@
  * @subpackage	pages
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class PagesInstall extends ModuleInstaller
@@ -124,7 +125,7 @@ class PagesInstall extends ModuleInstaller
 		// insert templates
 		$this->insertTemplates();
 
-		// install scorsese if needed
+		// install example data if requested
 		if($this->installExample()) $this->installExampleData();
 
 		// insert required pages
@@ -249,11 +250,11 @@ class PagesInstall extends ModuleInstaller
 		$extras['contact_block'] = $this->insertExtra('contact', 'block', 'Contact', null, null, 'N', 6);
 
 		// build templates
-		$homeTemplate = array(	'label' => 'Scratch - Home',
+		$homeTemplate = array('label' => 'Scratch - Home',
 								'path' => 'core/layout/templates/home.tpl',
 								'num_blocks' => 3,
 								'active' => 'Y',
-								'data' => serialize(array(	'format' => '[1,1],[2,3]',
+								'data' => serialize(array('format' => '[1,1],[2,3]',
 															'names' => array('Main content', 'Module or secondary content', 'Widget'),
 															'default_extras' => array('editor', 'editor', $extras['blog_widget_recent_articles_list'])
 														))
@@ -262,7 +263,7 @@ class PagesInstall extends ModuleInstaller
 									'path' => 'core/layout/templates/default.tpl',
 									'num_blocks' => 2,
 									'active' => 'Y',
-									'data' => serialize(array(	'format' => '[1],[2]',
+									'data' => serialize(array('format' => '[1],[2]',
 																'names' => array('Main content', 'Module or secondary content'),
 																'default_extras' => array('editor', 'editor')
 																))
@@ -271,7 +272,7 @@ class PagesInstall extends ModuleInstaller
 									'path' => 'core/layout/templates/twocolumns.tpl',
 									'num_blocks' => 6,
 									'active' => 'Y',
-									'data' => serialize(array(	'format' => '[1,1,3],[2,2,4],[2,2,5],[2,2,6]',
+									'data' => serialize(array('format' => '[1,1,3],[2,2,4],[2,2,5],[2,2,6]',
 																'names' => array('Main content', 'Module or secondary content', 'Sidebar item 1', 'Sidebar item 2', 'Sidebar item 3', 'Sidebar item 4'),
 																'default_extras' => array('editor', 'editor', 'editor', 'editor', 'editor', 'editor')
 														))
@@ -286,7 +287,7 @@ class PagesInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if pages already exist for this language
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)) == 0)
+			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)))
 			{
 				// insert homepage
 				$this->insertPage(array('id' => 1,
@@ -323,7 +324,7 @@ class PagesInstall extends ModuleInstaller
 										'type' => 'footer',
 										'language' => $language),
 									null,
-									array('html' => '<p>Take a look at all the pages in our website:</p>'),
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sitemap.txt'),
 									array('extra_id' => $extras['sitemap_widget_sitemap'])
 								);
 
@@ -383,7 +384,7 @@ class PagesInstall extends ModuleInstaller
 										'parent_id' => 1,
 										'language' => $language),
 									null,
-									array('html' => '<p>Want to leave a message?</p>'),
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/contact.txt'),
 									array('extra_id' => $extras['contact_block'])
 								);
 

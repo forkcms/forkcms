@@ -474,8 +474,8 @@ class BackendModel
 		if(empty(self::$moduleSettings))
 		{
 			// get all settings
-			$moduleSettings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
-																	FROM modules_settings AS ms;');
+			$moduleSettings = (array) self::getDB()->retrieve('SELECT ms.module, ms.name, ms.value
+																FROM modules_settings AS ms;');
 
 			// loop and store settings in the cache
 			foreach($moduleSettings as $setting)

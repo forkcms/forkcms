@@ -26,7 +26,7 @@ define('SPOON_CHARSET', 'utf-8');
  * Fork configuration
  */
 // version of Fork
-define('FORK_VERSION', '2.0.0');
+define('FORK_VERSION', '2.0.1');
 
 
 /**
@@ -60,7 +60,7 @@ define('SITE_MULTILANGUAGE', '<site-multilanguage>');
 /**
  * Path configuration
  *
- * Depends on the serverlayout
+ * Depends on the server layout
  */
 // path to the website itself
 define('PATH_WWW', '<path-www>');

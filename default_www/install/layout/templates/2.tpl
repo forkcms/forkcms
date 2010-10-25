@@ -94,16 +94,16 @@
 				<h4>{$PATH_WWW}/install <span class="{$fileSystemInstaller}">{$fileSystemInstallerStatus}</span></h4>
 				<p>This location must be writable for the installer.</p>
 
-				<h4>{$PATH_LIBRARY}/config.example.php <span class="{$fileSystemConfig}">{$fileSystemConfigStatus}</span></h4>
+				<h4>{$PATH_LIBRARY}/config.base.php <span class="{$fileSystemConfig}">{$fileSystemConfigStatus}</span></h4>
 				<p>This file is used to create the application config file.</p>
 
-				<h4>{$PATH_LIBRARY}/globals.example.php <span class="{$fileSystemGlobals}">{$fileSystemGlobalsStatus}</span></h4>
+				<h4>{$PATH_LIBRARY}/globals.base.php <span class="{$fileSystemGlobals}">{$fileSystemGlobalsStatus}</span></h4>
 				<p>This file is used to create the global configuration file.</p>
 
-				<h4>{$PATH_LIBRARY}/globals_backend.example.php <span class="{$fileSystemGlobalsBackend}">{$fileSystemGlobalsBackendStatus}</span></h4>
+				<h4>{$PATH_LIBRARY}/globals_backend.base.php <span class="{$fileSystemGlobalsBackend}">{$fileSystemGlobalsBackendStatus}</span></h4>
 				<p>This file is used to create the global backend configuration file.</p>
 
-				<h4>{$PATH_LIBRARY}/globals_frontend.example.php <span class="{$fileSystemGlobalsFrontend}">{$fileSystemGlobalsFrontendStatus}</span></h4>
+				<h4>{$PATH_LIBRARY}/globals_frontend.base.php <span class="{$fileSystemGlobalsFrontend}">{$fileSystemGlobalsFrontendStatus}</span></h4>
 				<p>This file is used to create the global frontend configuration file.</p>
 
 				<h4>{$PATH_LIBRARY} <span class="{$fileSystemPathLibrary}">{$fileSystemPathLibraryStatus}</span></h4>

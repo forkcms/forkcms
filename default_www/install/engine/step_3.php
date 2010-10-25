@@ -92,18 +92,18 @@ class InstallerStep3 extends InstallerStep
 			// all filled out
 			if($this->frm->getField('hostname')->isFilled() && $this->frm->getField('database')->isFilled() && $this->frm->getField('username')->isFilled() && $this->frm->getField('password')->isFilled())
 			{
-				// Test the database connection details.
+				// test the database connection details
 				try
 				{
 					// create instance
 					$db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue());
 
 					// test table
-					$table = 'test'. uniqid();
+					$table = 'test'. time();
 
 					// attempt to create table
 					$db->execute('DROP TABLE IF EXISTS '. $table .';');
-					$db->execute('CREATE TABLE IF NOT EXISTS '. $table .' (id int(11) NOT NULL) ENGINE=MyISAM DEFAULT CHARSET=latin1;');
+					$db->execute('CREATE TABLE '. $table .' (id int(11) NOT NULL) ENGINE=MyISAM;');
 
 					// drop table
 					$db->drop($table);

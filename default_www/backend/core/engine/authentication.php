@@ -151,7 +151,7 @@ class BackendAuthentication
 			foreach($alwaysAllowed as $allowedModule => $actions) $activeModules[] = $allowedModule;
 
 			// get allowed actions
-			$allowedActionsRows = (array) $db->getRecords('SELECT gra.module, gra.action, gra.level
+			$allowedActionsRows = (array) $db->retrieve('SELECT gra.module, gra.action, gra.level
 															FROM users_sessions AS us
 															INNER JOIN users AS u ON us.user_id = u.id
 															INNER JOIN groups_rights_actions AS gra ON u.group_id = gra.group_id

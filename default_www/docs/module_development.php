@@ -39,7 +39,7 @@
 
 					<h3 id="backend">Backend</h3>
 					<p>
-						The backend is the part that you can reach by appending <code>/private</code> to your domain (eg: http://forkng.local/private). Modules on the front- and backend may look similar, they have stuff in common but a backend module will
+						The backend is the part that you can reach by appending <code>/private</code> to your domain (eg: http://fork.local/private). Modules on the front- and backend may look similar, they have stuff in common but a backend module will
 						contain typically more business-logic then a module on the frontend. A module in the backend will work in 90% of all cases in a similar way as other modules, so we can generalize a lot of stuff by providing some defaults (which we did).
 					</p>
 
@@ -49,9 +49,9 @@
 					<p>A module is a collection of actions. Each action has a unique URL. So what happens after you login and click on Modules &gt; Content Blocks.</p>
 					<p>Well, a lot. We won't go into each tiny detail but basically:</p>
 					<p>The application (backend in this case) is initialized. The URL is processed so we know which action we should execute. But let's take a look at the URL.</p>
-					<p>As you can see thet URLs in the backend are pretty straight forward, but let explain them part by part, let's take <code>http://forkng.local/private/nl/content_blocks/add?token=true</code> as an example.</p>
+					<p>As you can see thet URLs in the backend are pretty straight forward, but let explain them part by part, let's take <code>http://fork.local/private/nl/content_blocks/add?token=true</code> as an example.</p>
 					<ul>
-						<li>http://forkng.local : the URL</li>
+						<li>http://fork.local : the URL</li>
 						<li>private : the application (in this case an alias for backend)</li>
 						<li>nl : the language you're working in (workinglanguage)</li>
 						<li>content_blocks : the current module</li>
@@ -176,7 +176,7 @@
 							<strong>SITE_DEFAULT_TITLE</strong>: The default title for the site, can be used as fallback. eg: Fork NG
 						</li>
 						<li>
-							<strong>SITE_DOMAIN</strong>: The primary domain for the site, eg: forkng.local
+							<strong>SITE_DOMAIN</strong>: The primary domain for the site, eg: fork.local
 						</li>
 						<li>
 							<strong>SITE_MULTILANGUAGE</strong>: Is the site available in multiple languages?, eg: true

@@ -319,7 +319,7 @@
 							<strong>PATH_WWW</strong>: Path to the folder that has to be used as document-root, eg: /home/fork/default_www
 						</li>
 						<li>
-							<strong>SITE_DOMAIN</strong>: The primary domain for the site, eg: forkng.local
+							<strong>SITE_DOMAIN</strong>: The primary domain for the site, eg: fork.local
 						</li>
 						<li>
 							<strong>SITE_DEFAULT_LANGUAGE</strong>: The default language for the site, eg: nl
