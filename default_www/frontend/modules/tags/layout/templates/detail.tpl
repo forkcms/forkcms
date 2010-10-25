@@ -1,6 +1,6 @@
 {*
 	Variables that are available:
-	@todo add variables that are available
+	- {$tagsModules}: {* @todo: add info *}
 *}
 
 <div id="tags" class"detail">

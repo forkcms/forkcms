@@ -55,7 +55,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$item = array();
 		$item['id'] = $this->mailing['id'];
 		$item['subject'] = $subject;
-		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::htmlentities(SpoonFilter::stripHTML($HTML)) : $contentPlain;
+		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
 		$item['content_html'] = $contentHTML;
 		$item['data'] = serialize(array('full_content_html' => $HTML));
 		$item['edited_on'] = date('Y-m-d H:i:s');

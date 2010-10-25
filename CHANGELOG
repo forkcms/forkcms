@@ -9,7 +9,8 @@
 - core: fixed some labels
 - core: when a template used by the mailer exist in the theme it will overule the default
 - blog: fixed installer (comments, rights, ..)
-- mailmotor: preview is now send with BackendMailer.
+- mailmotor: preview is now sent with BackendMailer.
+- mailmotor: utf8 instead of latin1.
 - bugfix: tinyMCE stripped the embed-tag
 - bugfix: comment_count on blogarticles ignored the archived/draft status
 - bugfix: spam comments couldn't be removed.
