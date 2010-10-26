@@ -13,13 +13,13 @@
 class FrontendMailmotorModel
 {
 	const QRY_DATAGRID_BROWSE_SENT = 'SELECT
-								mm.id,
-								mm.name,
-								UNIX_TIMESTAMP(mm.send_on) AS send_on,
-								mm.status
-								FROM mailmotor_mailings AS mm
-								LEFT OUTER JOIN mailmotor_campaigns AS mc ON mc.id = mm.campaign_id
-								WHERE mm.status = ? AND mm.language = ?';
+										mm.id,
+										mm.name,
+										UNIX_TIMESTAMP(mm.send_on) AS send_on,
+										mm.status
+										FROM mailmotor_mailings AS mm
+										LEFT OUTER JOIN mailmotor_campaigns AS mc ON mc.id = mm.campaign_id
+										WHERE mm.status = ? AND mm.language = ?';
 
 
 	/**
@@ -78,9 +78,9 @@ class FrontendMailmotorModel
 	{
 		// get record and return it
 		$record = (array) FrontendModel::getDB()->getRecord('SELECT mm.*
-															FROM mailmotor_mailings AS mm
-															WHERE mm.id = ?;',
-															array((int) $id));
+																FROM mailmotor_mailings AS mm
+																WHERE mm.id = ?;',
+																array((int) $id));
 
 		// record is empty, stop here
 		if(empty($record)) return array();
@@ -112,10 +112,10 @@ class FrontendMailmotorModel
 	public static function getDefaultGroupID()
 	{
 		return (int) FrontendModel::getDB()->getVar('SELECT mg.id
-													FROM mailmotor_groups AS mg
-													WHERE mg.is_default = ? AND mg.language = ?
-													LIMIT 1;',
-													array('Y', FRONTEND_LANGUAGE));
+														FROM mailmotor_groups AS mg
+														WHERE mg.is_default = ? AND mg.language = ?
+														LIMIT 1;',
+														array('Y', FRONTEND_LANGUAGE));
 	}
 
 
@@ -133,11 +133,11 @@ class FrontendMailmotorModel
 
 		// return records
 		$records = (array) $db->getColumn('SELECT mg.id
-										FROM mailmotor_groups AS mg
-										LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
-										WHERE mag.email = ?
-										GROUP BY mg.id;',
-										array($email));
+											FROM mailmotor_groups AS mg
+											LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
+											WHERE mag.email = ?
+											GROUP BY mg.id;',
+											array($email));
 
 		// excludeId set
 		if(!empty($excludeId))
