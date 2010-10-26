@@ -2,7 +2,7 @@
 
 /**
  * FrontendMailmotorModel
- * In this file we store all generic functions that we will be using in the blog module
+ * In this file we store all generic functions that we will be using in the mailmotor module
  *
  * @package		frontend
  * @subpackage	mailmotor
