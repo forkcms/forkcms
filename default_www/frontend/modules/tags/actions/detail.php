@@ -102,8 +102,8 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		// assign tags
 		$this->tpl->assign('tagsModules', $this->record);
 
-		// add to breadcrumb
-		$this->breadcrumb->addElement($this->record['name']);
+		// update breadcrumb
+		$this->breadcrumb->addElement(FrontendTagsModel::getName($this->id));
 	}
 }
 

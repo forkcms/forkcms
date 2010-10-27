@@ -1,5 +1,7 @@
 <?php
 
+// @todo davy - alfabet vergeten?
+
 /**
  * FrontendTagsModel
  * In this file we store all generic functions
@@ -136,6 +138,18 @@ class FrontendTagsModel
 
 		// return
 		return $return;
+	}
+
+
+	/**
+	 * Fetch a specific tag name
+	 *
+	 * @return	string
+	 * @param	int $id
+	 */
+	public static function getName($id)
+	{
+		return FrontendModel::getDB()->getVar('SELECT name FROM tags WHERE id = ?;', (int) $id);
 	}
 
 
