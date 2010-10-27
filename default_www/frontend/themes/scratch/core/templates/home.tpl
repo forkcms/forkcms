@@ -4,7 +4,7 @@
 	<div id="container">
 
 		<div id="header">
-			<h1><a href="/">{$siteTitle}</a></h1>
+			<h2><a href="/">{$siteTitle}</a></h2>
 			<div id="language">
 				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
 			</div>
@@ -14,45 +14,63 @@
 		</div>
 
 		<div id="main">
-
 			<div id="intro">
-				{* Block 1 *}
+
+				{* Block 1 (default: Editor) *}
 				{option:block1IsHTML}
-					<div class="content">
-						{$block1}
-					</div>
+					{option:block1}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block1}
+								</div>
+							</div>
+						</div>
+					{/option:block1}
 				{/option:block1IsHTML}
 				{option:!block1IsHTML}
 					{include:file='{$block1}'}
 				{/option:!block1IsHTML}
 			</div>
-
 			<div id="content">
 
-				{* Block 2 *}
+				{* Block 2 (default: Editor) *}
 				{option:block2IsHTML}
-					<div class="content">
-						{$block2}
-					</div>
+					{option:block2}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block2}
+								</div>
+							</div>
+						</div>
+					{/option:block2}
 				{/option:block2IsHTML}
 				{option:!block2IsHTML}
 					{include:file='{$block2}'}
 				{/option:!block2IsHTML}
 
-				{* Block 3 *}
+				{* Block 3 (default: Recent articles) *}
 				{option:block3IsHTML}
-					<div class="content">
-						{$block3}
-					</div>
+					{option:block3}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block3}
+								</div>
+							</div>
+						</div>
+					{/option:block3}
 				{/option:block3IsHTML}
 				{option:!block3IsHTML}
 					{include:file='{$block3}'}
 				{/option:!block3IsHTML}
-
 			</div>
 		</div>
 
-		{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+		<div id="footer">
+			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+		</div>
 	</div>
 </body>
 </html>

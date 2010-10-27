@@ -15,7 +15,7 @@
 	img {border: 0; display: block;}
 </style>
 </head>
-<body style="margin: 0; padding: 0; background-color: #f4f4f4">
+<body style="margin: 0; padding: 0; background-color: #EBF3F9">
 <style>
 	body { background-color:#EBF3F9 }
 	h2 {font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; color: #000000; margin: 12px 0 12px 0; padding: 0; text-align: left;}

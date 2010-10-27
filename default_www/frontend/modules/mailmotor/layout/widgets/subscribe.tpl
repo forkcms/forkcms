@@ -1,18 +1,16 @@
-<div id="subscribeForm">
-	<form action="{$var|geturlforblock:'mailmotor':'subscribe'}" method="post">
-	<input type="hidden" name="form" value="subscribe" />
-		<div class="horizontal">
-			<div class="options">
+<div id="subscribeForm" class="mod">
+	<div class="inner">
+		<div class="bd">
+			<form action="{$var|geturlforblock:'mailmotor':'subscribe'}" method="post">
+				<input type="hidden" name="form" value="subscribe" />
 				<p>
 					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					<input type="text" value="" id="email" name="email" class="inputText" />
 				</p>
-			</div>
-			<div class="options">
 				<p>
-					<input id="send" class="inputButton button mainButton" type="submit" name="send" value="{$lblSend|ucfirst}" />
+					<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSend|ucfirst}" />
 				</p>
-			</div>
+			</form>
 		</div>
-	</form>
+	</div>
 </div>

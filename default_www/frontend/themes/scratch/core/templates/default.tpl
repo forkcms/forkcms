@@ -19,25 +19,42 @@
 				&nbsp;
 			</div>
 
-			<div id="content" class="content">
+			<div id="content">
 				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
-				{option:!hideContentTitle}<h2 class="pageTitle">{$page['title']}</h2>{/option:!hideContentTitle}
 
-				{* Block 1 *}
-				{option:block1IsHTML}
-					<div class="content">
-						{$block1}
+				{option:!hideContentTitle}
+					<div class="pageTitle">
+						<h2>{$page['title']}</h2>
 					</div>
+				{/option:!hideContentTitle}
+
+				{* Block 1 (default: Editor) *}
+				{option:block1IsHTML}
+					{option:block1}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block1}
+								</div>
+							</div>
+						</div>
+					{/option:block1}
 				{/option:block1IsHTML}
 				{option:!block1IsHTML}
 					{include:file='{$block1}'}
 				{/option:!block1IsHTML}
 
-				{* Block 2 *}
+				{* Block 2 (default: Module) *}
 				{option:block2IsHTML}
-					<div class="content">
-						{$block2}
-					</div>
+					{option:block2}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block2}
+								</div>
+							</div>
+						</div>
+					{/option:block2}
 				{/option:block2IsHTML}
 				{option:!block2IsHTML}
 					{include:file='{$block2}'}
@@ -48,7 +65,9 @@
 			</div>
 		</div>
 
-		{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+		<div id="footer">
+			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+		</div>
 	</div>
 </body>
 </html>

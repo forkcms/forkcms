@@ -1,23 +1,21 @@
-<div id="subscribeForm">
-	{option:subscribeHasFormError}<div class="message error"><p>{$errFormError}</p></div>{/option:subscribeHasFormError}
-	{option:subscribeHasError}<div class="message error"><p>{$errSubscribeFailed}</p></div>{/option:subscribeHasError}
-	{option:subscribeIsSuccess}<div class="message success"><p>{$msgSubscribeSuccess}</p></div>{/option:subscribeIsSuccess}
+<div id="subscribeIndex" class="mod">
+	<div class="inner">
+		<div class="bd">
+			{option:subscribeHasFormError}<div class="message error"><p>{$errFormError}</p></div>{/option:subscribeHasFormError}
+			{option:subscribeHasError}<div class="message error"><p>{$errSubscribeFailed}</p></div>{/option:subscribeHasError}
+			{option:subscribeIsSuccess}<div class="message success"><p>{$msgSubscribeSuccess}</p></div>{/option:subscribeIsSuccess}
 
-	{option:!subscribeHideForm}
-	{form:subscribe}
-		<div class="horizontal">
-			<div class="options">
-				<p>
-					<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtEmail} {$txtEmailError}
-				</p>
-			</div>
-			<div class="options">
-				<p>
-					<input id="send" class="inputButton button mainButton" type="submit" name="send" value="{$lblSend|ucfirst}" />
-				</p>
-			</div>
+			{option:!subscribeHideForm}
+				{form:subscribe}
+					<p>
+						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+						{$txtEmail} {$txtEmailError}
+					</p>
+					<p>
+						<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSend|ucfirst}" />
+					</p>
+				{/form:subscribe}
+			{/option:!subscribeHideForm}
 		</div>
-	{/form:subscribe}
-	{/option:!subscribeHideForm}
+	</div>
 </div>

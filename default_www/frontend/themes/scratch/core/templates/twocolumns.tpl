@@ -4,7 +4,7 @@
 	<div id="container">
 
 		<div id="header">
-			<h1><a href="/">{$siteTitle}</a></h1>
+			<h2><a href="/">{$siteTitle}</a></h2>
 			<div id="language">
 				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
 			</div>
@@ -17,23 +17,40 @@
 
 			<div id="content">
 				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
-				{option:!hideContentTitle}<h2 class="pageTitle">{$page['title']}</h2>{/option:!hideContentTitle}
 
-				{* Block 1 *}
-				{option:block1IsHTML}
-					<div class="content">
-						{$block1}
+				{option:!hideContentTitle}
+					<div class="pageTitle">
+						<h2>{$page['title']}</h2>
 					</div>
+				{/option:!hideContentTitle}
+
+				{* Block 1 (default: Editor) *}
+				{option:block1IsHTML}
+					{option:block1}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block1}
+								</div>
+							</div>
+						</div>
+					{/option:block1}
 				{/option:block1IsHTML}
 				{option:!block1IsHTML}
 					{include:file='{$block1}'}
 				{/option:!block1IsHTML}
 
-				{* Block 2 *}
+				{* Block 2 (default: Module) *}
 				{option:block2IsHTML}
-					<div class="content">
-						{$block2}
-					</div>
+					{option:block2}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block2}
+								</div>
+							</div>
+						</div>
+					{/option:block2}
 				{/option:block2IsHTML}
 				{option:!block2IsHTML}
 					{include:file='{$block2}'}
@@ -41,51 +58,75 @@
 			</div>
 			<div id="sidebar">
 
-
-				{* Block 3 *}
+				{* Block 3 (default: Categories) *}
 				{option:block3IsHTML}
-					<div class="content">
-						{$block3}
-					</div>
+					{option:block3}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block3}
+								</div>
+							</div>
+						</div>
+					{/option:block3}
 				{/option:block3IsHTML}
 				{option:!block3IsHTML}
 					{include:file='{$block3}'}
 				{/option:!block3IsHTML}
 
-				{* Block 4 *}
+				{* Block 4 (default: Archive) *}
 				{option:block4IsHTML}
-					<div class="content">
-						{$block4}
-					</div>
+					{option:block4}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block4}
+								</div>
+							</div>
+						</div>
+					{/option:block4}
 				{/option:block4IsHTML}
 				{option:!block4IsHTML}
 					{include:file='{$block4}'}
 				{/option:!block4IsHTML}
 
-				{* Block 5 *}
+				{* Block 5 (default: Recent articles) *}
 				{option:block5IsHTML}
-					<div class="content">
-						{$block5}
-					</div>
+					{option:block5}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block5}
+								</div>
+							</div>
+						</div>
+					{/option:block5}
 				{/option:block5IsHTML}
 				{option:!block5IsHTML}
 					{include:file='{$block5}'}
 				{/option:!block5IsHTML}
 
-				{* Block 6 *}
+				{* Block 6 (default: Editor) *}
 				{option:block6IsHTML}
-					<div class="content">
-						{$block6}
-					</div>
+					{option:block6}
+						<div class="mod">
+							<div class="inner">
+								<div class="bd">
+									{$block6}
+								</div>
+							</div>
+						</div>
+					{/option:block6}
 				{/option:block6IsHTML}
 				{option:!block6IsHTML}
 					{include:file='{$block6}'}
 				{/option:!block6IsHTML}
-
 			</div>
 		</div>
 
-		{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+		<div id="footer">
+			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+		</div>
 	</div>
 </body>
 </html>
