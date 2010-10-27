@@ -315,6 +315,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SaveDraft', 'kladversie opslaan');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Scripts', 'scripts');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Search', 'zoeken');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SearchAgain', 'opnieuw zoeken');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SearchForm', 'zoekformulier');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Send', 'verzenden');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'SendingEmails', 'e-mails versturen');
@@ -677,6 +678,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SaveDraft', 'save draft');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Scripts', 'scripts');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Search', 'search');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SearchAgain', 'search again');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SearchForm', 'search form');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Send', 'send');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'SendingEmails', 'sending e-mails');
