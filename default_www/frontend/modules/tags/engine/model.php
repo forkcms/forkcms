@@ -20,7 +20,7 @@ class FrontendTagsModel
 	public static function getAll()
 	{
 		// fetch items
-		return (array) FrontendModel::getDB()->retrieve('SELECT t.tag AS name, t.url, t.number
+		return (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url, t.number
 															FROM tags AS t
 															WHERE t.language = ? AND t.number > 0
 															ORDER BY number DESC;', FRONTEND_LANGUAGE);
@@ -44,11 +44,11 @@ class FrontendTagsModel
 		$return = array();
 
 		// get tags
-		$linkedTags = (array) FrontendModel::getDB()->retrieve('SELECT t.tag AS name, t.url
-																FROM modules_tags AS mt
-																INNER JOIN tags AS t ON mt.tag_id = t.id
-																WHERE mt.module = ? AND mt.other_id = ?;',
-																array($module, $otherId));
+		$linkedTags = (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url
+																	FROM modules_tags AS mt
+																	INNER JOIN tags AS t ON mt.tag_id = t.id
+																	WHERE mt.module = ? AND mt.other_id = ?;',
+																	array($module, $otherId));
 
 		// return
 		if(empty($linkedTags)) return $return;
@@ -70,14 +70,14 @@ class FrontendTagsModel
 		return $return;
 	}
 
-
+	// @todo davy - awel waar is de comment?
 	public static function getIdByURL($URL)
 	{
 		// exists
 		return (int) FrontendModel::getDB()->getVar('SELECT id
-														FROM tags
-														WHERE url = ?;',
-														(string) $URL);
+													FROM tags
+													WHERE url = ?;',
+													(string) $URL);
 	}
 
 
@@ -112,7 +112,7 @@ class FrontendTagsModel
 		$return = array();
 
 		// get tags
-		$linkedTags = (array) $db->retrieve('SELECT mt.other_id, t.tag AS name, t.url
+		$linkedTags = (array) $db->getRecords('SELECT mt.other_id, t.tag AS name, t.url
 												FROM modules_tags AS mt
 												INNER JOIN tags AS t ON mt.tag_id = t.id
 												WHERE mt.module = ? AND mt.other_id IN('. implode(', ', $otherIds) .');',
@@ -151,13 +151,13 @@ class FrontendTagsModel
 	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
 	{
 		return (array) FrontendModel::getDB()->getColumn('SELECT t2.other_id
-															FROM modules_tags AS t
-															INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-															WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND t2.other_id != t.other_id
-															GROUP BY t2.other_id
-															ORDER BY COUNT(t2.tag_id) DESC
-															LIMIT ?;',
-															array($id, $module, $otherModule, $limit));
+														FROM modules_tags AS t
+														INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
+														WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND t2.other_id != t.other_id
+														GROUP BY t2.other_id
+														ORDER BY COUNT(t2.tag_id) DESC
+														LIMIT ?;',
+														array($id, $module, $otherModule, $limit));
 	}
 }
 

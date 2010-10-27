@@ -540,7 +540,7 @@ class FrontendBaseBlock
 		{
 			// build URL
 			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] - 1);
-			else $URL = $this->pagination['url'] .'&page='. ($this->pagination['requested_page'] - 1);
+			else $URL = $this->pagination['url'] .'&amp;page='. ($this->pagination['requested_page'] - 1);
 
 			// set
 			$pagination['show_previous'] = true;
@@ -559,7 +559,7 @@ class FrontendBaseBlock
 			{
 				// build URL
 				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-				else $URL = $this->pagination['url'] .'&page='. $i;
+				else $URL = $this->pagination['url'] .'&amp;page='. $i;
 
 				// add
 				$pagination['first'][] = array('url' => $URL, 'label' => $i);
@@ -574,7 +574,7 @@ class FrontendBaseBlock
 
 			// build URL
 			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-			else $URL = $this->pagination['url'] .'&page='. $i;
+			else $URL = $this->pagination['url'] .'&amp;page='. $i;
 
 			// add
 			$pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
@@ -592,7 +592,7 @@ class FrontendBaseBlock
 			{
 				// build URL
 				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-				else $URL = $this->pagination['url'] .'&page='. $i;
+				else $URL = $this->pagination['url'] .'&amp;page='. $i;
 
 				// add
 				$pagination['last'][] = array('url' => $URL, 'label' => $i);
@@ -604,7 +604,7 @@ class FrontendBaseBlock
 		{
 			// build URL
 			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] + 1);
-			else $URL = $this->pagination['url'] .'&page='. ($this->pagination['requested_page'] + 1);
+			else $URL = $this->pagination['url'] .'&amp;page='. ($this->pagination['requested_page'] + 1);
 
 			// set
 			$pagination['show_next'] = true;

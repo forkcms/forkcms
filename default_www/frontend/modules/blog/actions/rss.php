@@ -83,7 +83,7 @@ class FrontendBlogRSS extends FrontendBaseBlock
 			// init vars
 			$title = $item['title'];
 			$link = $item['full_url'];
-			$description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];;
+			$description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];
 
 			// meta is wanted
 			if(FrontendModel::getModuleSetting('blog', 'rss_meta_'. FRONTEND_LANGUAGE, true))
@@ -116,10 +116,10 @@ class FrontendBlogRSS extends FrontendBaseBlock
 					// end
 					$description .= '.</p>'."\n";
 				}
-			}
 
-			// end HTML
-			$description .= '</div>'."\n";
+				// end HTML
+				$description .= '</div>'."\n";
+			}
 
 			// create new instance
 			$rssItem = new FrontendRSSItem($title, $link, $description);

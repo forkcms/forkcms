@@ -25,7 +25,7 @@ class BackendPagesModel
 									WHERE i.id = ? AND i.status = ? AND i.language = ?
 									ORDER BY i.edited_on DESC;';
 	const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
-									FROM pages_templates AS i';
+									FROM pages_templates AS i ORDER BY i.label ASC';
 
 
 	/**
@@ -43,16 +43,16 @@ class BackendPagesModel
 		$levels = self::getTree(array(0), null, 1, $language);
 
 		// get extras
-		$extras = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.module, i.action
-															FROM pages_extras AS i
-															WHERE i.type = ?;',
-															array('block'), 'id');
+		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
+																FROM pages_extras AS i
+																WHERE i.type = ?;',
+																array('block'), 'id');
 
 		// get widgets
-		$widgets = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.module, i.action
-															FROM pages_extras AS i
-															WHERE i.type = ?;',
-															array('widget'), 'id');
+		$widgets = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
+																FROM pages_extras AS i
+																WHERE i.type = ?;',
+																array('widget'), 'id');
 
 		// search sitemap
 		$sitemapID = null;
@@ -279,8 +279,8 @@ class BackendPagesModel
 		// init var
 		$first = true;
 		$cachedTitles = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.navigation_title
-																	FROM pages AS i
-																	WHERE i.id IN('. implode(',', array_keys($keys)) .');');
+																FROM pages AS i
+																WHERE i.id IN('. implode(',', array_keys($keys)) .');');
 
 		// loop all keys
 		foreach($keys as $pageID => $URL)
@@ -712,12 +712,12 @@ class BackendPagesModel
 		$language = ($language === null) ? BackendLanguage::getWorkingLanguage() : (string) $language;
 
 		// get page (active version)
-		return (array) BackendModel::getDB()->retrieve('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
-														FROM pages_blocks AS b
-														INNER JOIN pages AS i ON b.revision_id = i.revision_id
-														WHERE i.id = ? AND i.language = ? AND i.status = ?
-														ORDER BY b.id ASC;',
-														array($id, $language, 'active'));
+		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
+															FROM pages_blocks AS b
+															INNER JOIN pages AS i ON b.revision_id = i.revision_id
+															WHERE i.id = ? AND i.language = ? AND i.status = ?
+															ORDER BY b.id ASC;',
+															array($id, $language, 'active'));
 	}
 
 
@@ -736,12 +736,12 @@ class BackendPagesModel
 		$language = BackendLanguage::getWorkingLanguage();
 
 		// get page (active version)
-		return (array) BackendModel::getDB()->retrieve('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
-														FROM pages_blocks AS b
-														INNER JOIN pages AS i ON b.revision_id = i.revision_id
-														WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
-														ORDER BY b.id ASC;',
-														array($id, $revisionId, $language));
+		return (array) BackendModel::getDB()->getRecords('SELECT b.*, UNIX_TIMESTAMP(b.created_on) AS created_on, UNIX_TIMESTAMP(b.edited_on) AS edited_on
+															FROM pages_blocks AS b
+															INNER JOIN pages AS i ON b.revision_id = i.revision_id
+															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
+															ORDER BY b.id ASC;',
+															array($id, $revisionId, $language));
 	}
 
 
@@ -757,7 +757,7 @@ class BackendPagesModel
 		$tagId = (int) $tagId;
 
 		// get the items
-		$items = (array) BackendModel::getDB()->retrieve('SELECT i.id AS url, i.title AS name, mt.module
+		$items = (array) BackendModel::getDB()->getRecords('SELECT i.id AS url, i.title AS name, mt.module
 															FROM modules_tags AS mt
 															INNER JOIN tags AS t ON mt.tag_id = t.id
 															INNER JOIN pages AS i ON mt.other_id = i.id
@@ -780,12 +780,12 @@ class BackendPagesModel
 	public static function getExtras()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.module, i.type, i.label, i.data
-															FROM pages_extras AS i
-															INNER JOIN modules AS m ON i.module = m.name
-															WHERE m.active = ?
-															ORDER BY i.module, i.sequence;',
-															array('Y'), 'id');
+		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
+																FROM pages_extras AS i
+																INNER JOIN modules AS m ON i.module = m.name
+																WHERE m.active = ?
+																ORDER BY i.module, i.sequence;',
+																array('Y'), 'id');
 
 		// init var
 		$itemsToRemove = array();
@@ -831,12 +831,12 @@ class BackendPagesModel
 	public static function getExtrasData()
 	{
 		// get all extras
-		$extras = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.module, i.type, i.label, i.data
-															FROM pages_extras AS i
-															INNER JOIN modules AS m ON i.module = m.name
-															WHERE m.active = ?
-															ORDER BY i.module, i.sequence;',
-															array('Y'));
+		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.type, i.label, i.data
+																FROM pages_extras AS i
+																INNER JOIN modules AS m ON i.module = m.name
+																WHERE m.active = ?
+																ORDER BY i.module, i.sequence;',
+																array('Y'));
 
 		// build array
 		$values = array();
@@ -1124,7 +1124,7 @@ class BackendPagesModel
 	public static function getTemplates()
 	{
 		// get templates
-		$templates = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.label, i.path, i.num_blocks, i.data
+		$templates = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
 																FROM pages_templates AS i
 																WHERE i.active = ?;',
 																array('Y'), 'id');
@@ -1174,7 +1174,7 @@ class BackendPagesModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// get data
-		$data[$level] = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
+		$data[$level] = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.title, i.parent_id, i.navigation_title, i.type, i.hidden, i.has_extra, i.no_follow,
 																		i.extra_ids,
 																		m.url
 																	FROM pages AS i
@@ -1365,10 +1365,10 @@ class BackendPagesModel
 		{
 			// get number of childs within this parent with the specified URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM pages AS i
-											INNER JOIN meta AS m ON i.meta_id = m.id
-											WHERE i.parent_id = ? AND i.status = ? AND m.url = ?;',
-											array($parentId, 'active', $URL));
+										FROM pages AS i
+										INNER JOIN meta AS m ON i.meta_id = m.id
+										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.language = ?;',
+										array($parentId, 'active', $URL, BL::getWorkingLanguage()));
 
 			// no items?
 			if($number != 0)
@@ -1386,10 +1386,10 @@ class BackendPagesModel
 		{
 			// get number of childs within this parent with the specified URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM pages AS i
-											INNER JOIN meta AS m ON i.meta_id = m.id
-											WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.id != ?;',
-											array($parentId, 'active', $URL, $id));
+										FROM pages AS i
+										INNER JOIN meta AS m ON i.meta_id = m.id
+										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.id != ? AND i.language = ?;',
+										array($parentId, 'active', $URL, $id, BL::getWorkingLanguage()));
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -1526,9 +1526,9 @@ class BackendPagesModel
 	public static function isTemplateInUse($templateId)
 	{
 		return (bool) ((int) BackendModel::getDB(false)->getVar('SELECT COUNT(i.template_id)
-																	FROM pages AS i
-																	WHERE i.template_id = ? AND i.status = ?;',
-																	array((int) $templateId, 'active')) > 0);
+																FROM pages AS i
+																WHERE i.template_id = ? AND i.status = ?;',
+																array((int) $templateId, 'active')) > 0);
 	}
 
 

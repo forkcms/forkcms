@@ -170,7 +170,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setColumnHidden('sequence');
 
 		// add a column for the handle, so users have something to hold while draging
-		$this->addColumn('dragAndDropHandle');
+		$this->addColumn('dragAndDropHandle', null, '<span>'. BL::getLabel('Move') .'</span>');
 
 		// make sure the column with the handler is the first one
 		$this->setColumnsSequence('dragAndDropHandle');

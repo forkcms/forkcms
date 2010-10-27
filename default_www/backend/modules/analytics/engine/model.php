@@ -388,14 +388,14 @@ class BackendAnalyticsModel
 		$db = BackendModel::getDB();
 
 		// get data from database
-		if($limit === null) $items = (array) $db->retrieve('SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+		if($limit === null) $items = (array) $db->getRecords('SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
+																		FROM analytics_landing_pages
+																		ORDER BY entrances DESC;');
+		else $items = (array) $db->getRecords('SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
 															FROM analytics_landing_pages
-															ORDER BY entrances DESC;');
-		else $items = (array) $db->retrieve('SELECT *, UNIX_TIMESTAMP(updated_on) AS updated_on
-												FROM analytics_landing_pages
-												ORDER BY entrances DESC
-												LIMIT ?;',
-												array((int) $limit));
+															ORDER BY entrances DESC
+															LIMIT ?;',
+															array((int) $limit));
 
 		// loop items
 		foreach($items as $item)
@@ -592,7 +592,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentKeywords()
 	{
-		return (array) BackendModel::getDB()->retrieve('SELECT * FROM analytics_keywords ORDER BY entrances DESC, id;');
+		return (array) BackendModel::getDB()->getRecords('SELECT * FROM analytics_keywords ORDER BY entrances DESC, id;');
 	}
 
 
@@ -603,7 +603,7 @@ class BackendAnalyticsModel
 	 */
 	public static function getRecentReferrers()
 	{
-		return (array) BackendModel::getDB()->retrieve('SELECT * FROM analytics_referrers ORDER BY entrances DESC, id;');
+		return (array) BackendModel::getDB()->getRecords('SELECT * FROM analytics_referrers ORDER BY entrances DESC, id;');
 	}
 
 

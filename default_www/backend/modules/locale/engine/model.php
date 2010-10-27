@@ -29,7 +29,7 @@ class BackendLocaleModel
 		$types = $db->getEnumValues('locale', 'type');
 
 		// get locale for backend
-		$locale = (array) $db->retrieve('SELECT type, module, name, value
+		$locale = (array) $db->getRecords('SELECT type, module, name, value
 											FROM locale
 											WHERE language = ? AND application = ?
 											ORDER BY type ASC, name ASC, module ASC;',

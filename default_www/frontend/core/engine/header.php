@@ -508,7 +508,7 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($existingCSSFiles as $file)
 			{
 				// add lastmodified time
-				$file['file'] = $file['file'] .'?m='. LAST_MODIFIED_TIME;
+				$file['file'] .= (strpos($file['file'], '?') !== false) ? '&m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
 
 				// add
 				$cssFiles[] = $file;
@@ -542,7 +542,11 @@ class FrontendHeader extends FrontendBaseObject
 					if(substr($file, 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file .'&amp;m='. time());
 
 					// add lastmodified time
-					else $javascriptFiles[] = array('file' => $file .'?m='. LAST_MODIFIED_TIME);
+					else
+					{
+						$modifiedTime = (strpos($file, '?') !== false) ? '&amp;m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
+						$javascriptFiles[] = array('file' => $file . $modifiedTime);
+					}
 				}
 			}
 		}

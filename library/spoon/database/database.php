@@ -753,19 +753,25 @@ class SpoonDatabase
 
 		// init vars
 		$query = 'INSERT INTO '. (string) $table .' (';
-		$aKeys = array_keys($values);
-		$aValues = array_values($values);
+		$keys = array_keys($values);
+		$actualValues = array_values($values);
 		$parameters = array();
 
 		// multidimensional array
-		if(is_array($aValues[0]))
+		if(is_array($actualValues[0]))
 		{
 			// num values/keys
 			$numRecords = count($values);
-			$numFields = count($aValues[0]);
+			$numFields = count($actualValues[0]);
+
+			// fetch keys
+			$subKeys = array_keys($actualValues[0]);
+
+			// prefix with table name
+			array_walk($subKeys, create_function('&$key', '$key = "'. $table .'.$key";'));
 
 			// build query
-			$query .= implode(', ', array_keys($aValues[0])) .') VALUES ';
+			$query .= implode(', ', $subKeys) .') VALUES ';
 
 			// init counter
 			$i = 1;
@@ -807,13 +813,16 @@ class SpoonDatabase
 		else
 		{
 			// number of fields
-			$numFields = count($aValues);
+			$numFields = count($actualValues);
+
+			// prefix with table name
+			array_walk($keys, create_function('&$key', '$key = "'. $table .'.$key";'));
 
 			// build query
-			$query .= implode(', ', $aKeys) .') VALUES (';
+			$query .= implode(', ', $keys) .') VALUES (';
 
 			// add parameters
-			for($i = 0; $i < count($aValues); $i++)
+			for($i = 0; $i < count($actualValues); $i++)
 			{
 				// add parameter marker
 				$query .= '?, ';
@@ -826,7 +835,7 @@ class SpoonDatabase
 			$query .= ');';
 
 			// set parameters
-			$parameters = $aValues;
+			$parameters = $actualValues;
 		}
 
 		// create statement
@@ -1015,7 +1024,7 @@ class SpoonDatabase
 		// loop values
 		foreach($values as $key => $value)
 		{
-			$query .= $key .' = ?, ';
+			$query .= $table .'.'. $key .' = ?, ';
 			$aTmpParameters[] = $value;
 			$i++;
 		}

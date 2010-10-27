@@ -259,6 +259,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Module', 'module');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Modules', 'modules');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ModuleSettings', 'module-instellingen');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Move', 'verplaats');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MoveToModeration', 'verplaats naar moderatie');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MoveToPublished', 'verplaats naar gepubliceerd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'MoveToSpam', 'verplaats naar spam');
@@ -620,6 +621,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Module', 'module');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Modules', 'modules');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ModuleSettings', 'module settings');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Move', 'move');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MoveToModeration', 'move to moderation');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MoveToPublished', 'move to published');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'MoveToSpam', 'move to spam');

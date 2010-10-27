@@ -203,7 +203,7 @@ class BackendForm extends SpoonForm
 	 * @param	string[optional] $class				Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError		Class(es) that will be applied on the element when an error occurs.
 	 */
-	public function addDropdown($name, array $values, $selected = null, $multipleSelection = false, $class = null, $classError = null)
+	public function addDropdown($name, array $values = null, $selected = null, $multipleSelection = false, $class = null, $classError = null)
 	{
 		// redefine
 		$name = (string) $name;

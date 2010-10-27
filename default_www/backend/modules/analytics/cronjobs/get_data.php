@@ -42,7 +42,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		$filename = null;
 
 		// no parameters given? cronjob called
-		if($page == '' && $identifier == '' && !isset($startTimestamp) && !isset($endTimestamp))
+		if($page == '' && $identifier == '' && $startTimestamp === 0 && $endTimestamp === 0)
 		{
 			// is everything still set?
 			if(BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED')
@@ -59,7 +59,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		}
 
 		// all parameters given? curl called
-		elseif($page != '' && $identifier != '' && isset($startTimestamp) && isset($endTimestamp))
+		elseif($page != '' && $identifier != '' && $startTimestamp !== 0 && $endTimestamp !== 0)
 		{
 			// init vars
 			$filename = $this->cachePath .'/'. $page . ($pageId != '' ? '_'. $pageId : '') .'_'. $identifier .'.txt';

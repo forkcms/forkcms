@@ -79,11 +79,11 @@ class BackendTagsModel
 	 */
 	public static function getStartsWith($term)
 	{
-		return (array) BackendModel::getDB()->retrieve('SELECT i.tag AS name, i.tag AS value
-														FROM tags AS i
-														WHERE i.tag LIKE ?
-														ORDER BY i.tag ASC;',
-														array((string) $term .'%'));
+		return (array) BackendModel::getDB()->getRecords('SELECT i.tag AS name, i.tag AS value
+															FROM tags AS i
+															WHERE i.tag LIKE ?
+															ORDER BY i.tag ASC;',
+															array((string) $term .'%'));
 	}
 
 

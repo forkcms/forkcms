@@ -307,7 +307,7 @@ class BackendBlogModel
 		$tagId = (int) $tagId;
 
 		// get the items
-		$items = (array) BackendModel::getDB()->retrieve('SELECT i.id AS url, i.title AS name, mt.module
+		$items = (array) BackendModel::getDB()->getRecords('SELECT i.id AS url, i.title AS name, mt.module
 															FROM modules_tags AS mt
 															INNER JOIN tags AS t ON mt.tag_id = t.id
 															INNER JOIN blog_posts AS i ON mt.other_id = i.id
@@ -423,11 +423,11 @@ class BackendBlogModel
 
 		// get record and return it
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-															m.url
-															FROM blog_posts AS i
-															INNER JOIN meta AS m ON m.id = i.meta_id
-															WHERE i.id = ? AND i.revision_id = ?;',
-															array($id, $draftId));
+														m.url
+														FROM blog_posts AS i
+														INNER JOIN meta AS m ON m.id = i.meta_id
+														WHERE i.id = ? AND i.revision_id = ?;',
+														array($id, $draftId));
 	}
 
 
@@ -445,15 +445,15 @@ class BackendBlogModel
 		$limit = (int) $limit;
 
 		// return the comments (order by id, this is faster then on date, the higher the id, the more recent
-		$return = (array) BackendModel::getDB()->retrieve('SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.created_on) AS created_in,
-																p.title, p.language, m.url
-															FROM blog_comments AS i
-															INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-															INNER JOIN meta AS m ON p.meta_id = m.id
-															WHERE i.status = ? AND p.status = ? AND i.language = ?
-															ORDER BY i.id DESC
-															LIMIT ?;',
-															array($status, 'active', BL::getWorkingLanguage(), $limit));
+		$return = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.author, i.text, UNIX_TIMESTAMP(i.created_on) AS created_in,
+																	p.title, p.language, m.url
+																FROM blog_comments AS i
+																INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+																INNER JOIN meta AS m ON p.meta_id = m.id
+																WHERE i.status = ? AND p.status = ? AND i.language = ?
+																ORDER BY i.id DESC
+																LIMIT ?;',
+																array($status, 'active', BL::getWorkingLanguage(), $limit));
 
 		// loop entries
 		foreach($return as $key => &$row)

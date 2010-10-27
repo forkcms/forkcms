@@ -269,13 +269,13 @@ class SpoonForm
 	 *
 	 * @return	void
 	 * @param	string $name
-	 * @param	array $values
+	 * @param	array[optional] $values
 	 * @param	string[optional] $selected
 	 * @param	bool[optional] $multipleSelection
 	 * @param	string[optional] $class
 	 * @param	string[optional] $classError
 	 */
-	public function addDropdown($name, array $values, $selected = null, $multipleSelection = false, $class = 'inputDropdown', $classError = 'inputDropdownError')
+	public function addDropdown($name, array $values = null, $selected = null, $multipleSelection = false, $class = 'inputDropdown', $classError = 'inputDropdownError')
 	{
 		// add element
 		$this->add(new SpoonFormDropdown($name, $values, $selected, $multipleSelection, $class, $classError));

@@ -553,7 +553,7 @@ class FrontendTemplateModifiers
 	public static function truncate($var = null, $length, $useHellip = true)
 	{
 		// remove special chars
-		$var = htmlspecialchars_decode($var);
+		$var = htmlspecialchars_decode($var, ENT_QUOTES);
 
 		// remove HTML
 		$var = strip_tags($var);
@@ -574,7 +574,7 @@ class FrontendTemplateModifiers
 			if($useHellip) $var .= '…';
 
 			// return
-			return SpoonFilter::htmlspecialchars($var);
+			return SpoonFilter::htmlspecialchars($var, ENT_QUOTES);
 		}
 	}
 

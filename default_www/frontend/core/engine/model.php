@@ -92,7 +92,7 @@ class FrontendModel
 		if(empty(self::$moduleSettings))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->retrieve('SELECT ms.module, ms.name, ms.value
+			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
 															FROM modules_settings AS ms
 															INNER JOIN modules AS m ON ms.module = m.name
 															WHERE m.active = ?;', 'Y');
@@ -124,7 +124,7 @@ class FrontendModel
 		if(empty(self::$moduleSettings[$module]))
 		{
 			// fetch settings
-			$settings = (array) self::getDB()->retrieve('SELECT ms.module, ms.name, ms.value
+			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
 															FROM modules_settings AS ms;');
 
 			// loop settings and cache them, also unserialize the values
@@ -176,13 +176,13 @@ class FrontendModel
 		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
 
 		// get blocks
-		$record['blocks'] = (array) $db->retrieve('SELECT pb.extra_id, pb.html,
-													pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
-													FROM pages_blocks AS pb
-													LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
-													WHERE pb.revision_id = ? AND pb.status = ?
-													ORDER BY pb.id;',
-													array($record['revision_id'], 'active'));
+		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
+														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
+														FROM pages_blocks AS pb
+														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
+														WHERE pb.revision_id = ? AND pb.status = ?
+														ORDER BY pb.id;',
+														array($record['revision_id'], 'active'));
 
 		// loop blocks
 		foreach($record['blocks'] as $index => $row)

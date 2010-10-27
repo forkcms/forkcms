@@ -214,7 +214,7 @@ class CSSToInlineStyles
 		$this->processCSS();
 
 		// create new DOMDocument
-		$document = new DOMDocument();
+		$document = new DOMDocument('1.0', SPOON_CHARSET);
 
 		// set error level
 		libxml_use_internal_errors(true);
@@ -301,6 +301,16 @@ class CSSToInlineStyles
 
 		// cleanup the HTML if we need to
 		if($this->cleanup) $html = $this->cleanupHTML($html);
+
+		// search items
+		$search = array('&Atilde;&copy;', '&Atilde;&reg;', '&acirc;&#128;&#153;', '&Atilde;&uml;', '&Atilde;&nbsp;', '&Atilde;&laquo;', '&Atilde;&ordf;',
+						'&Atilde;&sect;', '&Atilde;&raquo;', '&Atilde;&sup1;', '&Atilde;&acute;');
+
+		// replacements
+		$replace = array('é', 'î', '’', 'è', 'à', 'ë', 'ê', 'ç', 'û', 'ù', 'ô');
+
+		// replace
+		$html = str_replace($search, $replace, $html);
 
 		// return
 		return $html;

@@ -117,6 +117,9 @@ function exceptionHandler($exception)
 	if(!isset($_SERVER['HTTP_HOST'])) $_SERVER['HTTP_HOST'] = '';
 	if(!isset($_SERVER['REQUEST_URI'])) $_SERVER['REQUEST_URI'] = '';
 
+	// user agent
+	$userAgent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'unknown';
+
 	// generate output
 	$output = '
 	<html>
@@ -171,6 +174,10 @@ function exceptionHandler($exception)
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Request Method</th>
 											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $_SERVER['REQUEST_METHOD'] .'</td>
+										</tr>
+										<tr>
+											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">User-agent</th>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $userAgent .'</td>
 										</tr>';
 		// no documentation ?
 		if(isset($documentation))
