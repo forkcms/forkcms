@@ -8,6 +8,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class FrontendJavascript
@@ -121,7 +122,7 @@ class FrontendJavascript
 				SpoonHTTP::setHeadersByCode(404);
 
 				// throw an exception, when debug is on we get a descent message
-				throw new FrontendException('File not present.');
+				if(SPOON_DEBUG) throw new FrontendException('File not present.');
 			}
 		}
 
@@ -135,7 +136,7 @@ class FrontendJavascript
 				SpoonHTTP::setHeadersByCode(404);
 
 				// throw an exception, when debug is on we get a descent message
-				throw new FrontendException('File not present.');
+				if(SPOON_DEBUG) throw new FrontendException('File not present.');
 			}
 		}
 	}

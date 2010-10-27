@@ -1208,14 +1208,14 @@ jsBackend.tableSequenceByDragAndDrop =
 
 							// redo odd-even
 							table.find('tr').removeClass('odd').removeClass('even');
-							table.find('tr:even').addClass('even');
-							table.find('tr:odd').addClass('odd');
+							table.find('tr:even').addClass('odd');
+							table.find('tr:odd').addClass('even');
 
 							// alert the user
 							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
-
 							// show message
 							jsBackend.messages.add('success', 'Changed order successfully.');
+
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown)
 						{
