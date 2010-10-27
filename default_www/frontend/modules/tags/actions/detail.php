@@ -99,7 +99,11 @@ class FrontendTagsDetail extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
+		// assign tags
 		$this->tpl->assign('tagsModules', $this->record);
+
+		// add to breadcrumb
+		$this->breadcrumb->addElement($this->record['name']);
 	}
 }
 
