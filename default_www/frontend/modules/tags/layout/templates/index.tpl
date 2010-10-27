@@ -5,7 +5,7 @@
 
 <div id="tagsIndex" class="mod">
 	<div class="inner">
-		<div class="bd content">
+		<div class="bd">
 			{option:!tags}<p>{$msgTagsNoItems}</p>{/option:!tags}
 			{option:tags}
 				<ul>

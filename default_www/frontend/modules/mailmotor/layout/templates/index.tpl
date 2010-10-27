@@ -1,6 +1,6 @@
 <div id="mailmotorIndex" class="mod">
 	<div class="inner">
-		<div class="bd content">
+		<div class="bd">
 			{option:datagrid}
 				{$datagrid}
 			{/option:datagrid}

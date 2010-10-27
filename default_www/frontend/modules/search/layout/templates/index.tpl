@@ -33,14 +33,22 @@
 				{/option:!searchResults}
 				{option:searchResults}
 					{iteration:searchResults}
-						<div class="bd content">
-							<h3>
-								<a href="{$searchResults.full_url}" title="{$searchResults.title}">
-									{$searchResults.title}
-								</a>
-							</h3>
-							{option:!searchResults.introduction}{$searchResults.text|truncate:200}{/option:!searchResults.introduction}
-							{option:searchResults.introduction}{$searchResults.introduction}{/option:searchResults.introduction}
+						<div class="bd">
+							<div class="mod result">
+								<div class="inner">
+									<div class="hd">
+										<h3>
+											<a href="{$searchResults.full_url}" title="{$searchResults.title}">
+												{$searchResults.title}
+											</a>
+										</h3>
+									</div>
+									<div class="bd content">
+										{option:!searchResults.introduction}{$searchResults.text|truncate:200}{/option:!searchResults.introduction}
+										{option:searchResults.introduction}{$searchResults.introduction}{/option:searchResults.introduction}
+									</div>
+								</div>
+							</div>
 						</div>
 					{/iteration:searchResults}
 				{/option:searchResults}

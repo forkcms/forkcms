@@ -1,4 +1,4 @@
-<div id="subscribeForm" class="mod">
+<div id="subscribeFormWidget" class="mod">
 	<div class="inner">
 		<div class="bd">
 			<form action="{$var|geturlforblock:'mailmotor':'subscribe'}" method="post">

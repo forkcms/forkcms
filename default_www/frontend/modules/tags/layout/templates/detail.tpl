@@ -5,7 +5,7 @@
 
 <div id="tagsDetail" class="mod">
 	<div class="inner">
-		<div class="bd content">
+		<div class="bd">
 			{option:tagsModules}
 				<ul>
 					{iteration:tagsModules}
