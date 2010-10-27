@@ -149,7 +149,7 @@ class FrontendTagsModel
 	 */
 	public static function getName($id)
 	{
-		return FrontendModel::getDB()->getVar('SELECT name FROM tags WHERE id = ?;', (int) $id);
+		return FrontendModel::getDB()->getVar('SELECT tag FROM tags WHERE id = ?;', (int) $id);
 	}
 
 
