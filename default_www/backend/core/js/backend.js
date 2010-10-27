@@ -1213,6 +1213,9 @@ jsBackend.tableSequenceByDragAndDrop =
 
 							// alert the user
 							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+
+							// show message
+							jsBackend.messages.add('success', 'Changed order successfully.');
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown)
 						{

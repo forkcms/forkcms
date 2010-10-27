@@ -493,3 +493,27 @@ tr.isDefault td.name {
 	color: #000;
 	font-weight: 700;
 }
+
+
+/*
+	Datagrid drag and drop
+*/
+
+.sequenceByDragAndDrop thead th.dragAndDropHandle,
+.sequenceByDragAndDrop tr td.dragAndDropHandle {
+	width: 16px;
+	padding: 0;
+	cursor: move;
+}
+
+.sequenceByDragAndDrop thead th.dragAndDropHandle span {
+	padding: 0;
+}
+
+.sequenceByDragAndDrop tbody td.dragAndDropHandle span {
+	background: url(/backend/core/layout/images/move_handle.gif) no-repeat center center;
+	display: block;
+	font-size: 0;
+	cursor: move;
+	height: 20px;
+}
