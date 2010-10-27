@@ -8,6 +8,7 @@
 - core: improved BackendMailer
 - core: fixed some labels
 - core: when a template used by the mailer exist in the theme it will overule the default
+- core: Better styling for drag/drop tables + addded success message after reorder
 - blog: fixed installer (comments, rights, ..)
 - mailmotor: preview is now sent with BackendMailer.
 - mailmotor: utf8 instead of latin1.
