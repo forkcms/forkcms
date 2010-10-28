@@ -4,7 +4,7 @@
 *}
 
 {option:widgetBlogRecentComments}
-	<div id="blogBlogRecentCommentsWidget" class="mod">
+	<div id="blogRecentCommentsWidget" class="mod">
 		<div class="inner">
 			<div class="hd">
 				<h3>{$lblRecentComments|ucfirst}</h3>

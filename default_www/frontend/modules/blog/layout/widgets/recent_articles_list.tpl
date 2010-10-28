@@ -4,7 +4,7 @@
 *}
 
 {option:widgetBlogRecentArticlesList}
-	<div id="blogBlogRecentArticlesListWidget" class="mod">
+	<div id="blogRecentArticlesListWidget" class="mod">
 		<div class="inner">
 			<div class="hd">
 				<h3>{$lblRecentArticles|ucfirst}</h3>
