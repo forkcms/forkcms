@@ -9,7 +9,6 @@
 	<link rel="shortcut icon" href="/favicon.ico" />
 	<link rel="image_src" href="{$FRONTEND_CORE_URL}/layout/images/image_src.jpg" />
 
-
 	{option:debug}<meta name="robots" content="noindex, nofollow" />{/option:debug}
 	<meta name="generator" content="Fork CMS" />
 	<meta name="description" content="{$metaDescription}" />
