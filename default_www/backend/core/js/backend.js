@@ -224,7 +224,7 @@ jsBackend.controls = {
 								$(this).dialog('close');
 
 								// goto link
-								window.location = $(this).attr('rel');
+								window.location = url;
 							},
 						'{$lblCancel|ucfirst}': function()
 							{

@@ -1,1 +1,3 @@
 globals*.php
+!*.base.php
+!*.example.php

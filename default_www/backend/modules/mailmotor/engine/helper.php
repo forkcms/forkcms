@@ -566,7 +566,7 @@ class BackendMailmotorCMHelper
 		$stats['unopens'] = 0;
 
 		// fetch all mailings in this campaign
-		$mailings = BackendModel::getDB()->retrieve(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $email));
+		$mailings = BackendModel::getDB()->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $email));
 
 		// no mailings found
 		if(empty($mailings)) return array();
@@ -620,7 +620,7 @@ class BackendMailmotorCMHelper
 		$stats['unopens'] = 0;
 
 		// fetch all mailings in this campaign
-		$mailings = BackendModel::getDB()->retrieve(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
+		$mailings = BackendModel::getDB()->getRecords(BackendMailmotorModel::QRY_DATAGRID_BROWSE_SENT_FOR_CAMPAIGN, array('sent', $id));
 
 		// no mailings found
 		if(empty($mailings)) return array();

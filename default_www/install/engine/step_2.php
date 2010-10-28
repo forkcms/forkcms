@@ -247,7 +247,7 @@ class InstallerStep2 extends InstallerStep
 		if($pathLibrary == null)
 		{
 			// guess the path
-			self::guessLibraryPath(dirname(dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME'])))), $pathLibrary);
+			self::guessLibraryPath(dirname(dirname(dirname($_SERVER['SCRIPT_FILENAME']))), $pathLibrary);
 
 			$count = count($pathLibrary);
 
@@ -295,7 +295,7 @@ class InstallerStep2 extends InstallerStep
 			if(!is_dir($filename) && substr($filename, -9) == 'spoon.php')
 			{
 				// get real path
-				$path = realpath(str_replace('spoon.php', '..', $filename));
+				$path = dirname(dirname($filename));
 
 				// only unique values should be added
 				if(is_array($library))

@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `modules_settings` (
  `module` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the module',
  `name` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'name of the setting',
  `value` text collate utf8_unicode_ci NOT NULL COMMENT 'serialized value',
- PRIMARY KEY (`module`(25),`name`(100))
+ PRIMARY KEY (`module`,`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 

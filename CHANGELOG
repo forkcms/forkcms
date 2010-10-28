@@ -1,6 +1,7 @@
 2.0.1 (xxxx-xx-xx)
 -----
-- added correct .gitignore-files
+- added correct .gitignore-files and ignored .git
+- fixed some stuff so app is ready for deployment with Capistrano
 - core: files with extension jpeg are allowed from now on in TinyMCE imagemanager.
 - core: installer required javascript to be enabled, so added a check.
 - core: installer will clear previous cached data
