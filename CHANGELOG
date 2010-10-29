@@ -13,6 +13,8 @@
 - core: Better styling for drag/drop tables + addded success message after reorder
 - core: upgraded CSSToInlineStyles to the latest version
 - blog: fixed installer (comments, rights, ..)
+- blog: added a feed on each article with the comments for that article
+- blog: added a feed with all comments (on all articles)
 - mailmotor: preview is now sent with BackendMailer.
 - mailmotor: utf8 instead of latin1.
 - bugfix: tinyMCE stripped the embed-tag
@@ -28,6 +30,7 @@
 - bugfix: limited index length for table modules_settings to overcome SQL error 'Specified key was too long; max key length is 1000 bytes'
 - bugfix: datepicker days of week are now correct
 - bugfix: fixed UTF-8 issue in contact-module, remember we're using UTF-8, so mails should have teh correct meta-tag
+- bugfix: fixed issue with addURLParameters-method, which fucked up URLs with a hash in them.
 
 2.0.0 (2010-10-11)
 -----
