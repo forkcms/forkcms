@@ -819,6 +819,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Category', 'categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Comment', 'reageer');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Comments', 'reacties');
+		$this->insertLocale('nl', 'frontend', 'core', 'act', 'CommentsRss', 'reacties-rss');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Detail', 'detail');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Rss', 'rss');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'AuthorIsRequired', 'Auteur is een verplicht veld.');
@@ -869,6 +870,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Category', 'category');
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Comment', 'comment');
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Comments', 'comments');
+		$this->insertLocale('en', 'frontend', 'core', 'act', 'CommentsRss', 'comments-rss');
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Detail', 'detail');
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Rss', 'rss');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'AuthorIsRequired', 'Author is a required field.');

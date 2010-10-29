@@ -112,6 +112,32 @@ class FrontendBlogModel
 
 
 	/**
+	 * Get all comments (at least a chunk)
+	 *
+	 * @return	array
+	 * @param	int[optional] $limit		The number of items to get.
+	 * @param	int[optional] $offset		The offset.
+	 */
+	public static function getAllComments($limit = 10, $offset = 0)
+	{
+		// get the comments
+		$comments = (array) FrontendModel::getDB()->getRecords('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
+																p.id AS post_id, p.title AS post_title, m.url AS post_url
+																FROM blog_comments AS i
+																INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+																INNER JOIN meta AS m ON p.meta_id = m.id
+																WHERE i.status = ? AND i.language = ?
+																GROUP BY i.id
+																ORDER BY i.created_on DESC
+																LIMIT ?, ?;',
+																array('published', FRONTEND_LANGUAGE, (int) $offset, (int) $limit));
+
+		// return the comments
+		return $comments;
+	}
+
+
+	/**
 	 * Get the number of items
 	 *
 	 * @return	int

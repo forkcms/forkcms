@@ -79,6 +79,21 @@ class BackendBlogSettings extends BackendBaseActionEdit
 
 
 	/**
+	 * Parse the form
+	 *
+	 * @return	void
+	 */
+	protected function parse()
+	{
+		// call parent
+		parent::parse();
+
+		// parse additional variables
+		$this->tpl->assign('commentsRSSURL', SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'comments_rss'));
+	}
+
+
+	/**
 	 * Validates the settings form
 	 *
 	 * @return	void

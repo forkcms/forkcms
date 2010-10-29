@@ -40,6 +40,8 @@
 					</span>
 				</li>
 			</ul>
+
+			<p>{$msgFollowAllCommentsInRSS|sprintf:{$commentsRSSURL}}</p>
 		</div>
 	</div>
 

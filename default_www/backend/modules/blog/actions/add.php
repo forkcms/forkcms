@@ -73,7 +73,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 
 
 	/**
-	 * parse the form
+	 * Parse the form
 	 *
 	 * @return	void
 	 */

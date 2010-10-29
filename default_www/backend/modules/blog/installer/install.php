@@ -137,6 +137,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditCommentOn', 'bewerk reactie op "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Edited', 'Het artikel "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditedComment', 'De reactie werd opgeslagen.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'FollowAllCommentsInRSS', 'Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpMeta', 'Toon de meta informatie van deze blogpost in de RSS feed (categorie, tags, ...)');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpPingServices', 'Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.');
@@ -153,6 +154,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousArticle', 'vorig bericht');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentArticles', 'recente artikels');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogAllComments', 'Alle reacties op je blog.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoComments', 'Reageer als eerste');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNumberOfComments', 'Al %1$s reacties');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogOneComment', 'Al 1 reactie');
@@ -172,6 +174,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditCommentOn', 'edit comment on "%1$s"');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Edited', 'The article "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditedComment', 'The comment was saved.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'FollowAllCommentsInRSS', 'Follow all comments in a RSS feed: <a href="%1$s">%1$s</a>.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpMeta', 'Show the meta information for this blogpost in the RSS feed (category, tags, ...)');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpPingServices', 'Let various blogservices know when you\'ve posted a new article.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
@@ -188,6 +191,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'PreviousArticle', 'previous article');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentArticles', 'recent articles');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Wrote', 'wrote');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogAllComments', 'All comments on your blog.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoComments', 'Be the first to comment');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNumberOfComments', '%1$s comments');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogOneComment', '1 comment already');
