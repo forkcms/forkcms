@@ -90,7 +90,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true);
 
 		// sorting
-		$this->dgPublished->setSortingColumns(array('created_on', 'text'), 'text');
+		$this->dgPublished->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
+		$this->dgPublished->setSortParameter('desc');
 
 		// add column
 		$this->dgPublished->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::getLabel('Edit'));
@@ -127,7 +128,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true);
 
 		// sorting
-		$this->dgModeration->setSortingColumns(array('created_on', 'text'), 'text');
+		$this->dgModeration->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
+		$this->dgModeration->setSortParameter('desc');
 
 		// add column
 		$this->dgModeration->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::getLabel('Edit'));
@@ -166,7 +168,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setColumnFunction(array('BackendBlogComments', 'addPostData'), array('[text]', '[post_title]', '[post_url]', '[id]'), 'text', true);
 
 		// sorting
-		$this->dgSpam->setSortingColumns(array('created_on', 'text'), 'text');
+		$this->dgSpam->setSortingColumns(array('created_on', 'text', 'author'), 'created_on');
+		$this->dgSpam->setSortParameter('desc');
 
 		// add column
 		$this->dgSpam->addColumn('approve', null, BL::getLabel('Approve'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=spam&amp;action=published', BL::getLabel('Approve'));
