@@ -11,6 +11,7 @@
 - core: fixed some labels
 - core: when a template used by the mailer exist in the theme it will overule the default
 - core: Better styling for drag/drop tables + addded success message after reorder
+- core: upgraded CSSToInlineStyles to the latest version
 - blog: fixed installer (comments, rights, ..)
 - mailmotor: preview is now sent with BackendMailer.
 - mailmotor: utf8 instead of latin1.
@@ -26,6 +27,7 @@
 - bugfix: CURLOPT_xxx options should be integer/constants instead of strings
 - bugfix: limited index length for table modules_settings to overcome SQL error 'Specified key was too long; max key length is 1000 bytes'
 - bugfix: datepicker days of week are now correct
+- bugfix: fixed UTF-8 issue in contact-module, remember we're using UTF-8, so mails should have teh correct meta-tag
 
 2.0.0 (2010-10-11)
 -----

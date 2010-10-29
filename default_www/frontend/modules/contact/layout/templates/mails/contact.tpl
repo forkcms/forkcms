@@ -1,6 +1,8 @@
 <html>
 <head>
 <title>Fork CMS</title>
+{* do NOT remove the UTF-8 part *}
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style>
 	body { background-color:#ebf3f9 }
 	h2 {font-family: Arial, sans-serif; font-size: 22px; font-weight: bold; color: #000000; margin: 12px 0 12px 0; padding: 0; text-align: left;}
@@ -46,6 +48,16 @@
 									<td width="24">
 									</td>
 									<td width="532">
+											<p id="ik" class="me">
+♥ 	✈ 	☺ 	♬ 	☑
+♠ 	☎ 	☻ 	♫ 	☒
+♤ 	☤ 	☹ 	♪ 	♀
+✩ 	✉ 	☠ 	✔ 	♂
+★ 	✇ 	♺ 	✖ 	♨
+</p>
+<p>éçà</p>
+
+
 										<h2>Fork CMS</h2>
 										<p>{$msgContactSubject}</p>
 										<p><strong>{$lblName|ucfirst}:</strong><br /> {$author}</p>

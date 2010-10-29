@@ -138,6 +138,7 @@ class FrontendMailer
 		// set some properties
 		$cssToInlineStyles->setHTML($content);
 		$cssToInlineStyles->setUseInlineStylesBlock(true);
+		$cssToInlineStyles->setEncoding(SPOON_CHARSET);
 
 		// return the content
 		return (string) $cssToInlineStyles->convert();
@@ -210,6 +211,7 @@ class FrontendMailer
 		$email->setReplyTo($emailRecord['reply_to_email']);
 		$email->setSubject($emailRecord['subject']);
 		$email->setHTMLContent($emailRecord['html']);
+		$email->setCharset(SPOON_CHARSET);
 		if($emailRecord['plain_text'] != '') $email->setPlainContent($emailRecord['plain_text']);
 
 		// send the email
