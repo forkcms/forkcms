@@ -80,6 +80,14 @@ class SpoonDatabase
 
 
 	/**
+	 * Database port
+	 *
+	 * @var int
+	 */
+	private $port;
+
+
+	/**
 	 * List of all executed queries and their parameters
 	 *
 	 * @var	array
@@ -99,19 +107,21 @@ class SpoonDatabase
 	 * Creates a database connection instance.
 	 *
 	 * @return	void
-	 * @param	string $driver		The driver to use. Available drivers depend on your server configuration.
-	 * @param	string $hostname	The host or IP of your database-server.
-	 * @param	string $username	The username to authenticate on your database-server.
-	 * @param	string $password	The password to authenticate on your database-server.
-	 * @param	string $database	The name of the database to use.
+	 * @param	string $driver			The driver to use. Available drivers depend on your server configuration.
+	 * @param	string $hostname		The host or IP of your database-server.
+	 * @param	string $username		The username to authenticate on your database-server.
+	 * @param	string $password		The password to authenticate on your database-server.
+	 * @param	string $database		The name of the database to use.
+	 * @param	int[optional] $port		The port to connect on
 	 */
-	public function __construct($driver, $hostname, $username, $password, $database)
+	public function __construct($driver, $hostname, $username, $password, $database, $port = null)
 	{
 		$this->setDriver($driver);
 		$this->setHostname($hostname);
 		$this->setUsername($username);
 		$this->setPassword($password);
 		$this->setDatabase($database);
+		$this->setPort($port);
 	}
 
 
@@ -127,7 +137,11 @@ class SpoonDatabase
 		{
 			try
 			{
-				$this->handler = new PDO($this->driver .':host='. $this->hostname .';dbname='. $this->database, $this->username, $this->password);
+				// build dsn
+				if($this->port !== null) $dsn = $this->driver .':host='. $this->hostname .';port='. $this->port .';dbname='. $this->database;
+				else $dsn = $this->driver .':host='. $this->hostname .';dbname='. $this->database;
+
+				$this->handler = new PDO($dsn, $this->username, $this->password);
 				$this->handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
 
@@ -964,6 +978,18 @@ class SpoonDatabase
 	private function setPassword($password)
 	{
 		$this->password = (string) $password;
+	}
+
+
+	/**
+	 * Set port
+	 *
+	 * @return	void
+	 * @param	int $port	The port to connect on.
+	 */
+	private function setPort($port)
+	{
+		$this->port = (int) $port;
 	}
 
 

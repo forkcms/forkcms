@@ -22,6 +22,14 @@ class FrontendAJAX
 
 
 	/**
+	 * The language
+	 *
+	 * @var	string
+	 */
+	private $language;
+
+
+	/**
 	 * The module
 	 *
 	 * @var	string
@@ -124,6 +132,15 @@ class FrontendAJAX
 			// output error
 			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Language not provided.');
 		}
+
+		// set property
+		$this->language = (string) $value;
+
+		// define constant
+		define('FRONTEND_LANGUAGE', $this->language);
+
+		// set the locale (we need this for the labels)
+		FrontendLanguage::setLocale($this->language);
 	}
 
 

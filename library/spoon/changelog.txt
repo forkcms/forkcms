@@ -35,6 +35,7 @@
 - Bugfix: fixed check that used to always fail. Needs to be improved though. (thx to Dieter Vanden Eynde)
 - SpoonDatabase now prefixes fields with their tablename (insert/update)
 - Exceptions now show the user-agent, if we can find it in the $_SERVER array
+- Spoondatabase can now be used with custom ports
 
 
 1.2.0 (2010-05-18)

@@ -294,7 +294,7 @@ class BackendModel
 		if(!Spoon::isObjectReference('database'))
 		{
 			// create instance
-			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 			// utf8 compliance & MySQL-timezone
 			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00";');

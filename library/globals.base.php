@@ -38,6 +38,8 @@ define('DB_TYPE', 'mysql');
 define('DB_DATABASE', '<database-name>');
 // database host
 define('DB_HOSTNAME', '<database-hostname>');
+// database port
+define('DB_PORT', '<database-port>');
 // database username
 define('DB_USERNAME', '<database-username>');
 // datebase password

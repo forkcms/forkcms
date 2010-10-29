@@ -43,6 +43,13 @@ span.nok {
 }
 
 /*
+	Step 3: DB
+*/
+
+#installer input#hostname { width: 140px; }
+#installer input#port { width: 40px; }
+
+/*
 	Step 4: modules
 */
 

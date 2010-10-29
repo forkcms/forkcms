@@ -148,6 +148,7 @@ class InstallerStep6 extends InstallerStep
 		$variables['<database-hostname>'] = addslashes(SpoonSession::get('db_hostname'));
 		$variables['<database-username>'] = addslashes(SpoonSession::get('db_username'));
 		$variables['<database-password>'] = addslashes(SpoonSession::get('db_password'));
+		$variables['<database-port>'] = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? addslashes(SpoonSession::get('db_port')) : 3306;
 		$variables['<site-domain>'] = (isset($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : 'fork.local';
 		$variables['<site-default-title>'] = 'Fork CMS';
 		$variables['\'<site-multilanguage>\''] = SpoonSession::get('multiple_languages') ? 'true' : 'false';
@@ -260,8 +261,11 @@ class InstallerStep6 extends InstallerStep
 	 */
 	private function installModules()
 	{
+		// get port
+		$port = (SpoonSession::exists('db_port') && SpoonSession::get('db_port') != '') ? SpoonSession::get('db_port') : 3306;
+
 		// database instance
-		$this->db = new SpoonDatabase('mysql', SpoonSession::get('db_hostname'), SpoonSession::get('db_username'), SpoonSession::get('db_password'), SpoonSession::get('db_database'));
+		$this->db = new SpoonDatabase('mysql', SpoonSession::get('db_hostname'), SpoonSession::get('db_username'), SpoonSession::get('db_password'), SpoonSession::get('db_database'), $port);
 
 		// utf8 compliance & MySQL-timezone
 		$this->db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00";');

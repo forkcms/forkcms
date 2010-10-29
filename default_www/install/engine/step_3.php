@@ -67,6 +67,7 @@ class InstallerStep3 extends InstallerStep
 		$base = implode('_', $chunks);
 
 		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : $dbHost);
+		$this->frm->addText('port', SpoonSession::exists('db_port') ? SpoonSession::get('db_port') : 3306, 10);
 		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
 		$this->frm->addText('username', SpoonSession::exists('db_username') ? SpoonSession::get('db_username') : $base);
 		$this->frm->addPassword('password', SpoonSession::exists('db_password') ? SpoonSession::get('db_password') : null);
@@ -95,8 +96,11 @@ class InstallerStep3 extends InstallerStep
 				// test the database connection details
 				try
 				{
+					// get port
+					$port = ($this->frm->getField('port')->isFilled()) ? $this->frm->getField('port')->getValue() : 3306;
+
 					// create instance
-					$db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue());
+					$db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue(), $port);
 
 					// test table
 					$table = 'test'. time();
@@ -127,6 +131,7 @@ class InstallerStep3 extends InstallerStep
 					SpoonSession::set('db_database', $this->frm->getField('database')->getValue());
 					SpoonSession::set('db_username', $this->frm->getField('username')->getValue());
 					SpoonSession::set('db_password', $this->frm->getField('password')->getValue());
+					SpoonSession::set('db_port', $this->frm->getField('port')->getValue());
 
 					// redirect
 					SpoonHTTP::redirect('index.php?step=4');

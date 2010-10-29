@@ -8,7 +8,7 @@
 		<p>Enter your database details. Make sure this database already exists.</p>
 		<p>
 			<label for="hostname">Hostname<abbr title="Required field">*</abbr></label>
-			{$txtHostname} {$txtHostnameError}
+			{$txtHostname} : {$txtPort} {$txtHostnameError} {$txtPortError}
 			<span class="helpTxt">If you are working locally, your hostname is probably <strong>localhost</strong>.</span>
 		</p>
 		<p>
