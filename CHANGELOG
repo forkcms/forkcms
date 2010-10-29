@@ -31,6 +31,7 @@
 - bugfix: datepicker days of week are now correct
 - bugfix: fixed UTF-8 issue in contact-module, remember we're using UTF-8, so mails should have teh correct meta-tag
 - bugfix: fixed issue with addURLParameters-method, which fucked up URLs with a hash in them.
+- bugfix: fixed comment-count on overview.
 
 2.0.0 (2010-10-11)
 -----
