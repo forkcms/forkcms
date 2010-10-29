@@ -860,6 +860,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'WrittenOn', 'geschreven op');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'YouAreHere', 'je bent hier');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'Comment', 'reageer');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'CommentsOn', 'Reacties op %1$s');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er zijn geen resultaten.');
@@ -911,6 +912,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'WrittenOn', 'written on');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'YouAreHere', 'you are here');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'Comment', 'comment');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'CommentsOn', 'Comments on %1$s');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Your e-mail was sent.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contact form.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SearchNoItems', 'There were no results.');

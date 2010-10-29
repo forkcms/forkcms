@@ -146,6 +146,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NoItems', 'Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesFull', 'Aantal items in recente artikels (volledig) widget');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesList', 'Aantal items in recente artikels (lijst) widget');
+		$this->insertLocale('nl', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'reacties-op-rss');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ArticlesInCategory', 'artikels in categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'InTheCategory', 'in de categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
@@ -183,6 +184,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesFull', 'Number of articles in the recent articles (full) widget');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesList', 'Number of articles in the recent articles (list) widget');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'MakeDefaultCategory', 'Make default category (current default category is: %1$s).');
+		$this->insertLocale('en', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'comments-on-rss');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ArticlesInCategory', 'articles in category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');

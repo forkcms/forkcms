@@ -34,14 +34,29 @@ class FrontendModel
 		// no parameters means no appending
 		if(empty($parameters)) return $URL;
 
+		// split to remove the hash
+		$chunks = explode('#', $URL, 2);
+
+		// init var
+		$hash = '';
+
+		if(isset($chunks[1]))
+		{
+			// reset URL
+			$URL = $chunks[0];
+
+			// store has
+			$hash = '#'. $chunks[1];
+		}
+
 		// build querystring
 		$queryString = http_build_query($parameters, null, '&amp;');
 
 		// already GET parameters?
-		if(mb_strpos($URL, '?') !== false) return $URL .= '&'. $queryString;
+		if(mb_strpos($URL, '?') !== false) return $URL .= '&'. $queryString . $hash;
 
 		// no GET-parameters defined before
-		else return $URL .= '?'. $queryString;
+		else return $URL .= '?'. $queryString . $hash;
 	}
 
 

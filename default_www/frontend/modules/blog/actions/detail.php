@@ -155,6 +155,15 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_'. FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
+		// add RSS-feed into the metaCustom
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
+
+		// get RSS-link for the comments
+		$rssCommentsLink = FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') .'/'. $this->record['url'];
+
+		// add RSS-feed into the metaCustom
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. vsprintf(FL::getMessage('CommentsOn'), array($this->record['title'])) .'" href="'. $rssCommentsLink .'" />');
+
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
 		{
@@ -184,9 +193,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// add
 			$this->header->addMetaCustom($meta);
 		}
-
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
 
 		// add into breadcrumb
 		$this->breadcrumb->addElement($this->record['title']);

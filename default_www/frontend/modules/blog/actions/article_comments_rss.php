@@ -1,17 +1,26 @@
 <?php
 
 /**
- * FrontendBlogCommentsRSS
- * This is the RSS-feed with all the comments
+ * FrontendBlogArticleCommentsRSS
+ * This is the RSS-feed
  *
  * @package		frontend
  * @subpackage	blog
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class FrontendBlogCommentsRSS extends FrontendBaseBlock
+class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 {
+	/**
+	 * The record
+	 *
+	 * @var array
+	 */
+	private $record;
+
+
 	/**
 	 * The comments
 	 *
@@ -45,8 +54,17 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
 	 */
 	private function getData()
 	{
+		// validate incoming parameters
+		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
+
+		// get record
+		$this->record = FrontendBlogModel::get($this->URL->getParameter(1));
+
+		// anything found?
+		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
+
 		// get articles
-		$this->items = FrontendBlogModel::getAllComments();
+		$this->items = FrontendBlogModel::getComments($this->record['id']);
 	}
 
 
@@ -58,8 +76,8 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
 	private function parse()
 	{
 		// get vars
-		$title = ucfirst(FL::getMessage('BlogAllComments'));
-		$link = SITE_URL . FrontendNavigation::getURLForBlock('blog');
+		$title = vsprintf(FL::getMessage('CommentsOn'), array($this->record['title']));
+		$link = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') .'/'. $this->record['url'];
 		$detailLink = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail');
 		$description = null;
 
@@ -70,8 +88,8 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
 		foreach($this->items as $item)
 		{
 			// init vars
-			$title = $item['author'] .' '. FL::getLabel('On') .' '. $item['post_title'];
-			$link = $detailLink .'/'. $item['post_url'] .'/#comment-'. $item['id'];
+			$title = $item['author'] .' '. FL::getLabel('On') .' '. $this->record['title'];
+			$link = $detailLink .'/'. $this->record['url'] .'/#comment-'. $item['id'];
 			$description = $item['text'];
 
 			// create new instance
