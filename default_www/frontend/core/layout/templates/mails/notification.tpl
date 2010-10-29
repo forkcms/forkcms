@@ -49,10 +49,6 @@
 									</td>
 									<td width="532">
 										<h2>Fork CMS</h2>
-										<p>{$msgContactSubject}</p>
-										<p><strong>{$lblName|ucfirst}:</strong><br /> {$author}</p>
-										<p><strong>{$lblEmail|ucfirst}:</strong><br /> {$email}</p>
-										<p><strong>{$lblMessage|ucfirst}:</strong></p>
 										{$message}
 									</td>
 									<td width="24">

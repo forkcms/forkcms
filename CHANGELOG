@@ -12,9 +12,11 @@
 - core: when a template used by the mailer exist in the theme it will overule the default
 - core: Better styling for drag/drop tables + addded success message after reorder
 - core: upgraded CSSToInlineStyles to the latest version
+- core: added a method to build a backend URL from the frontend
 - blog: fixed installer (comments, rights, ..)
 - blog: added a feed on each article with the comments for that article
 - blog: added a feed with all comments (on all articles)
+- blog: added notification on new comments (settings in backend)
 - mailmotor: preview is now sent with BackendMailer.
 - mailmotor: utf8 instead of latin1.
 - bugfix: tinyMCE stripped the embed-tag

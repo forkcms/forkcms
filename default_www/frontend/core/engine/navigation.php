@@ -56,6 +56,49 @@ class FrontendNavigation extends FrontendBaseObject
 
 
 	/**
+	 * Creates a Backend URL for a given action and module
+	 * If you don't specify a language the current language will be used.
+	 *
+	 * @return	string
+	 * @param	string $action					The action to build the URL for.
+	 * @param	string $module					The module to build the URL for.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 * @param	array[optional] $parameters		GET-parameters to use.
+	 * @param	bool[optional] $urlencode		Should the parameters be urlencoded?
+	 */
+	public static function getBackendURLForBlock($action, $module, $language = null, array $parameters = null, $urlencode = true)
+	{
+		// redefine parameters
+		$action = (string) $action;
+		$module = (string) $module;
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+		$querystring = '';
+
+		// add at least one parameter
+		if(empty($parameters)) $parameters['token'] = 'true';
+
+		// init counter
+		$i = 1;
+
+		// add parameters
+		foreach($parameters as $key => $value)
+		{
+			// first element
+			if($i == 1) $querystring .= '?'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+
+			// other elements
+			else $querystring .= '&amp;'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+
+			// update counter
+			$i++;
+		}
+
+		// build the URL and return it
+		return '/private/'. $language .'/'. $module .'/'. $action . $querystring;
+	}
+
+
+	/**
 	 * Get the first child for a given parent
 	 *
 	 * @return	mixed

@@ -583,6 +583,45 @@ class FrontendBlogModel
 
 		// push it
 		FrontendModel::pushToAppleApp($alert, $badge, null, $data);
+
+		// get settings
+		$notifyByMailOnComment = FrontendModel::getModuleSetting('blog', 'notify_by_email_on_new_comment', false);
+		$notifyByMailOnCommentToModerate = FrontendModel::getModuleSetting('blog', 'notify_by_email_on_new_comment_to_moderate', false);
+
+		// create URLs
+		$URL = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $comment['post_url'] .'#comment-'. $comment['id'];
+		$backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'blog') .'#tabModeration';
+
+		// notify on all comments
+		if($notifyByMailOnComment)
+		{
+			// comment to moderate
+			if($comment['status'] == 'moderation')
+			{
+				// set variables
+				$variables['message'] = vsprintf(FL::getMessage('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
+			}
+
+			// comment was published
+			elseif($comment['status'] == 'published')
+			{
+				// set variables
+				$variables['message'] = vsprintf(FL::getMessage('BlogEmailNotificationsNewComment'), array($comment['author'], $URL, $comment['post_title']));
+			}
+
+			// send the mail
+			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
+		}
+
+		// only notify on new comments to moderate and if the comment is one to moderate
+		elseif($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation')
+		{
+				// set variables
+				$variables['message'] = vsprintf(FL::getMessage('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
+
+			// send the mail
+			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
+		}
 	}
 
 

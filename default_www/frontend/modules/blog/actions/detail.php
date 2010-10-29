@@ -325,6 +325,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
 				if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
 
+				// set title
+				$comment['post_title'] = $this->record['title'];
+				$comment['post_url'] = $this->record['url'];
+
 				// notify the admin
 				FrontendBlogModel::notifyAdmin($comment);
 

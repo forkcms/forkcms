@@ -29,7 +29,7 @@
 			<h3>{$lblComments|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<ul class="inputList p0">
+			<ul class="inputList">
 				<li><label for="allowComments">{$chkAllowComments} {$lblAllowComments|ucfirst}</label></li>
 				<li><label for="moderation">{$chkModeration} {$lblEnableModeration|ucfirst}</label></li>
 				<li>
@@ -40,8 +40,19 @@
 					</span>
 				</li>
 			</ul>
+			<p class="p0">{$msgFollowAllCommentsInRSS|sprintf:{$commentsRSSURL}}</p>
+		</div>
+	</div>
 
-			<p>{$msgFollowAllCommentsInRSS|sprintf:{$commentsRSSURL}}</p>
+	<div class="box">
+		<div class="heading">
+			<h3>{$lblNotifications|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<ul class="inputList p0">
+				<li><label for="notifyOnNewCommentToModerate">{$chkNotifyByEmailOnNewCommentToModerate} {$msgNotifyByEmailOnNewCommentToModerate|ucfirst}</label></li>
+				<li><label for="notifyOnNewComment">{$chkNotifyByEmailOnNewComment} {$msgNotifyByEmailOnNewComment|ucfirst}</label></li>
+			</ul>
 		</div>
 	</div>
 

@@ -144,6 +144,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'MakeDefaultCategory', 'Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NoItems', 'Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NotifyOnNewComment', 'Verwittig via email als er een nieuwe reactie is.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NotifyOnNewCommentToModerate', 'Verwittig via email als er een nieuwe reactie te modereren is.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesFull', 'Aantal items in recente artikels (volledig) widget');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesList', 'Aantal items in recente artikels (lijst) widget');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'reacties-op-rss');
@@ -162,6 +164,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentIsAdded', 'Je reactie werd toegevoegd.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentInModeration', 'Je reactie wacht op goedkeuring.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogCommentIsSpam', 'Je reactie werd gemarkeerd als spam.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogEmailNotificationsNewComment', '%1$s reageerde op <a href="%2$s">%3$s</a>.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogEmailNotificationsNewCommentToModerate', '%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'BlogNoItems', 'Er zijn nog geen blogposts.');
 
 		// insert locale (en)
@@ -181,6 +185,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'HelpSpamFilter', 'Enable the built-in spamfilter (Akismet) to help avoid spam comments.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NoItems', 'There are no articles yet. <a href="%1$s">Write the first article</a>.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NotifyByEmailOnNewComment', 'Notify by email when there is a new comment.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NotifyByEmailOnNewCommentToModerate', 'Notify by email when there is a new comment to moderate.');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesFull', 'Number of articles in the recent articles (full) widget');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'NumItemsInRecentArticlesList', 'Number of articles in the recent articles (list) widget');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'MakeDefaultCategory', 'Make default category (current default category is: %1$s).');
@@ -200,6 +206,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogCommentIsAdded', 'Your comment was added.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogCommentInModeration', 'Your comment is awaiting moderation.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogCommentIsSpam', 'Your comment was marked as spam.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogEmailNotificationsNewComment', '%1$s commented on <a href="%2$s">%3$s</a>.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogEmailNotificationsNewCommentToModerate', '%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoItems', 'There are no articles yet.');
 	}
 

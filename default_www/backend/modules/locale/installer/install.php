@@ -271,6 +271,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NextPage', 'volgende pagina');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Nickname', 'publicatienaam');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'None', 'geen');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Notifications', 'verwitigingen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NoTheme', 'geen thema');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NumberOfBlocks', 'aantal blokken');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'OK', 'OK');
@@ -634,6 +635,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NextPage', 'next page');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Nickname', 'publication name');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'None', 'none');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Notifications', 'notifications');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NoTheme', 'no theme');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NumberOfBlocks', 'number of blocks');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'OK', 'OK');
@@ -853,6 +855,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RequiredField', 'verplicht veld');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Send', 'verstuur');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchAgain', 'zoek opnieuw');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchTerm', 'zoekterm');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Title', 'titel');
@@ -863,6 +866,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'CommentsOn', 'Reacties op %1$s');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NotificationSubject', 'Verwittiging');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er zijn geen resultaten.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'TagsNoItems', 'Er werden nog geen tags gebruikt.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'WrittenBy', 'geschreven door %1$s');
@@ -905,6 +909,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RequiredField', 'required field');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Send', 'send');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Search', 'search');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchAgain', 'search again');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchTerm', 'searchterm');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Title', 'title');
@@ -915,6 +920,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'CommentsOn', 'Comments on %1$s');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Your e-mail was sent.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contact form.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'NotificationSubject', 'Notification');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SearchNoItems', 'There were no results.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'TagsNoItems', 'No tags were used.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'WrittenBy', 'written by %1$s');
