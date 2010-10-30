@@ -1067,7 +1067,59 @@ jsBackend.tinyMCE =
 		});
 	},
 
+	
+	afterSave: function(editor, object)
+	{
+		// replace target _self
+		object.content = object.content.replace(new RegExp('<a(.*)target="_self"(.*)>', 'gim'), '<a$1$2>');
+		
+		// get items with the target _blank
+		var matches = object.content.match(new RegExp('<a(.*)target="_blank"(.*)>', 'gim'));
 
+		// loop the matches
+		for(var i in matches)
+		{
+			// already classes defined?
+			if(matches[i].indexOf('class="') > 0) 
+			{
+				// remove target and add the class
+				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1$2>')
+										.replace('class="', 'class="targetBlank ');
+			}
+			else
+			{
+				// remove target and set class
+				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1class="targetBlank"$2>')
+			}
+			
+			// replace
+			object.content = object.content.replace(matches[i], newLink.replace(/ {2,}/g, ' '));
+		}
+	},
+	
+
+	beforeLoad: function(editor, object)
+	{
+		// get items that have the targetBlank class
+		var matches = object.content.match(new RegExp('<a(.*)class="(.*)?targetBlank(.*)>', 'gim'));
+		
+		// loop the matches
+		for(var i in matches)
+		{
+			// build new link by removing the class and adding the target again
+			var newLink = matches[i].replace('targetBlank', '')
+									.replace('<a', '<a target="_blank"')
+									.replace('class=""', '')
+									.replace(/ {2,}/g, ' ')
+									.replace('=" ', '="')
+									.replace(' " ', '" ');
+
+			// replace in the content
+			object.content = object.content.replace(matches[i], newLink);
+		}
+	},
+	
+	
 	checkContent: function(editor)
 	{
 		if(editor.isDirty())
@@ -1093,7 +1145,7 @@ jsBackend.tinyMCE =
 		}
 	},
 
-
+	
 	// end
 	eoo: true
 }

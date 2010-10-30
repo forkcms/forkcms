@@ -84,6 +84,10 @@ tinyMCE.init({
 	onchange_callback: jsBackend.tinyMCE.checkContent,
 	setup: function(editor)
 	{
+		// catch some events
+		editor.onSaveContent.add(jsBackend.tinyMCE.afterSave);
+		editor.onBeforeSetContent.add(jsBackend.tinyMCE.beforeLoad);
+
 		// set content
 		editor.onLoadContent.add(jsBackend.tinyMCE.checkContent);
 

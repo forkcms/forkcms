@@ -12,14 +12,17 @@ jsFrontend =
 		// init stuff
 		jsFrontend.initAjax();
 
-		// init search
-		if($('input[name=q]').length > 0) jsFrontend.search.init();
-
+		// init controls
+		jsFrontend.controls.init();
+		
 		// init gravatar
 		jsFrontend.gravatar.init();
+
+		// init search
+		if($('input[name=q]').length > 0) jsFrontend.search.init();
 	},
 
-
+	
 	// init
 	initAjax: function() 
 	{
@@ -27,10 +30,31 @@ jsFrontend =
 		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });
 	},
 
-
 	// end
 	eoo: true
 }
+
+
+jsFrontend.controls = 
+{
+	// init, something like a constructor
+	init: function() 
+	{
+		jsFrontend.controls.bindTargetBlank();
+	},
+
+	
+	// bind target blank
+	bindTargetBlank: function()
+	{
+		$('a.targetBlank').attr('target', '_blank');
+	},
+
+	
+	// end
+	eoo: true
+}
+
 
 
 jsFrontend.gravatar = 
@@ -114,7 +138,7 @@ jsFrontend.search =
 		});
 	},
 
-
+	
 	// end
 	eoo: true
 }
