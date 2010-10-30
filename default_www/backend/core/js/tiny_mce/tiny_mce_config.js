@@ -91,10 +91,10 @@ tinyMCE.init({
 		editor.onKeyUp.add(function(editor, event)
 		{
 			// show
-				if($('#' + editor.id + '_external').is(':hidden'))
-				{
-					$('#' + editor.id + '_external').show();
-				}
+			if($('#' + editor.id + '_external').is(':hidden'))
+			{
+				$('#' + editor.id + '_external').show();
+			}
 		});
 
 		/**
@@ -113,15 +113,15 @@ tinyMCE.init({
 			editor.onEvent.add(function(editor, evt)
 			{
 				// class added before?
-					if(!added)
-					{
-						// hide click to edit
-						$(editor.getContainer()).siblings('.clickToEdit').hide();
+				if(!added)
+				{
+					// hide click to edit
+					$(editor.getContainer()).siblings('.clickToEdit').hide();
 
-						// reset var
-						added = true;
-					}
-				});
+					// reset var
+					added = true;
+				}
+			});
 		}
 		// multiple instances, we can rely on onActivate
 		else

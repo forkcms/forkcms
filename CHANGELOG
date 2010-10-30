@@ -19,6 +19,7 @@
 - blog: added notification on new comments (settings in backend)
 - mailmotor: preview is now sent with BackendMailer.
 - mailmotor: utf8 instead of latin1.
+- mailmotor: synced TinyMCE "look and feel" from core
 - bugfix: tinyMCE stripped the embed-tag
 - bugfix: comment_count on blogarticles ignored the archived/draft status
 - bugfix: spam comments couldn't be removed.

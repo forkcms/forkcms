@@ -18,7 +18,7 @@ $(function() {
 
 		// processing
 		relative_urls: false,
-		extended_valid_elements : 'iframe[src|width|height|name|align]',
+		extended_valid_elements : 'iframe[src|width|height|name|align],object[*],param[*],embed[*]',
 
 		// plugins
 		plugins: 'tabfocus,inlinepopups,paste,contextmenu,media,fullscreen,table,filemanager,imagemanager,bramus_cssextras',
@@ -56,11 +56,41 @@ $(function() {
 		paste_strip_class_attributes: 'mso',
 		paste_remove_spans: true,
 		paste_remove_styles: true,
+	
+		media_strict: false,
 
 		// hide the "click to edit" label
 		setup: function(editor)
 		{
-			$('.clickToEdit').hide();
+		// add event
+		editor.onKeyUp.add(function(editor, event)
+		{
+			// show
+			if($('#' + editor.id + '_external').is(':hidden'))
+			{
+				$('#' + editor.id + '_external').show();
+			}
+			
+			// init var
+			var added = false;
+
+			// hook all events
+			editor.onEvent.add(function(editor, evt)
+			{
+				// class added before?
+				if(!added)
+				{
+					// hide click to edit
+					$(editor.getContainer()).siblings('.clickToEdit').hide();
+
+					// reset var
+					added = true;
+				}
+			});
+			
+			
+		});
+
 		}
 	});
 });

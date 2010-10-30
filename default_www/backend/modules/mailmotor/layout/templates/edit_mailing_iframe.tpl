@@ -9,6 +9,7 @@
 	<link rel="shortcut icon" href="/backend/favicon.ico" />
 
 	<link rel="stylesheet" type="text/css" media="screen" href="/backend/modules/mailmotor/layout/css/iframe.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/imports/tinymce.css" />
 
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.js"></script>
 	<script type="text/javascript" src="/backend/core/js/jquery/jquery.ui.js"></script>
