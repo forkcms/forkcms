@@ -378,7 +378,7 @@ class SpoonTemplateCompiler
 	private function parseCycle($content, $iteration)
 	{
 		// regex pattern
-		$pattern = '/\{cycle((:\'[a-z0-9\-_\<\/\>\"\=\;\:\s]+\')+)\}/is';
+		$pattern = '/\{cycle((:\'[a-z0-9\-_\<\/\>\"\=\;\:\s]?\')+)\}/is';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))

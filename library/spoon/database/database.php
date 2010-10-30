@@ -141,6 +141,7 @@ class SpoonDatabase
 				if($this->port !== null) $dsn = $this->driver .':host='. $this->hostname .';port='. $this->port .';dbname='. $this->database;
 				else $dsn = $this->driver .':host='. $this->hostname .';dbname='. $this->database;
 
+				// create handler
 				$this->handler = new PDO($dsn, $this->username, $this->password);
 				$this->handler->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}

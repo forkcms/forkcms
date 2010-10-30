@@ -22,7 +22,6 @@
 - Bugfix: SpoonDatagrid::getColumn no longer triggers an exception when the datagrid contains no results.
 - Bugfix: SpoonDropdown::isFilled will no longer equal true when allowExternalData is disabled and the value is not found in the initial
   list of values. (thx to Dieter Vanden Eynde)
-- Feature: added SpoonProcess to support multiple background processes
 - SpoonFilter::isURL will now acccept domains such as 'spoon.local'
 - Feature: added SpoonDirectory::isWritable, a better alternative to the native is_writable function (that can not handle Windows' permissions properly)
 - bugfix: fixed SpoonTemplate on Windows for file includes: absolute paths were identified as relative paths
