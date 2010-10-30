@@ -34,7 +34,32 @@ jsBackend.pages.extras =
 	init: function()
 	{
 		// bind events
-		$('#extraType').change(jsBackend.pages.extras.populateExtraModules);
+		$('#extraType').change(function(evt)
+		{
+			if($(this).val() != 'block') 
+			{
+				
+				var hasModules = false;
+
+				// check if there already blocks linked
+				$('.linkedExtra input:hidden').each(function()
+				{
+					// get id
+					var id = $(this).val();
+
+					// only process other blocks
+					if(id !== $('#extraForBlock').val())
+					{
+						if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
+					}
+				});
+
+				// no modules
+				if(!hasModules) $('#extraType option[value="block"]').attr('disabled', '');
+			}
+			
+			jsBackend.pages.extras.populateExtraModules(evt);
+		});
 		$('#extraModule').change(jsBackend.pages.extras.populateExtraIds);
 
 		// bind buttons
@@ -284,7 +309,7 @@ jsBackend.pages.extras =
 				// add option if needed
 				if(typeof extrasData[i]['items'][selectedType] != 'undefined') $('#extraModule').append('<option value="'+ extrasData[i].value +'">'+ extrasData[i].name +'</option>');
 			}
-
+			
 			// show
 			$('#extraModuleHolder').show();
 		}
@@ -524,9 +549,11 @@ jsBackend.pages.tree =
 	{
 		// get pageID that has to be moved
 		var currentPageID = $(node).attr('id').replace('page-', '');
-
+		if(typeof refNode == 'undefined') parentPageID = 0;
+		else var parentPageID = $(refNode).attr('id').replace('page-', '')
+		
 		// home is a special item
-		if($(refNode).attr('id').replace('page-', '') == '1')
+		if(parentPageID == '1')
 		{
 			if(type == 'before') return false;
 			if(type == 'after') return false;
@@ -582,7 +609,8 @@ jsBackend.pages.tree =
 		var currentPageID = $(node).attr('id').replace('page-', '');
 
 		// get pageID wheron the page has been dropped
-		var droppedOnPageID = $(refNode).attr('id').replace('page-', '');
+		if(typeof refNode == 'undefined') droppedOnPageID = 0;
+		else var droppedOnPageID = $(refNode).attr('id').replace('page-', '')
 
 		// make the call
 		$.ajax({

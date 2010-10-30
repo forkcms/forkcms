@@ -19,6 +19,7 @@
 	:background: url(separate/decoded_base64.gif);
 	background-position: 10px 1px;
 	background-repeat: repeat-y;
+	min-height: 16px;
 }
 .tree li {
 	display: block;

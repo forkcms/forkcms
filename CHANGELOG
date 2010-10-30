@@ -17,6 +17,7 @@
 - blog: added a feed on each article with the comments for that article
 - blog: added a feed with all comments (on all articles)
 - blog: added notification on new comments (settings in backend)
+- pages: Made it possible to move stuff from tree into an empty meta-navigation
 - mailmotor: preview is now sent with BackendMailer.
 - mailmotor: utf8 instead of latin1.
 - mailmotor: synced TinyMCE "look and feel" from core
@@ -35,6 +36,7 @@
 - bugfix: fixed UTF-8 issue in contact-module, remember we're using UTF-8, so mails should have teh correct meta-tag
 - bugfix: fixed issue with addURLParameters-method, which fucked up URLs with a hash in them.
 - bugfix: fixed comment-count on overview.
+- bugfix: when a module was linked, and the block was changed, you couldn't select module again. (thx to Frederik Heyninck)
 
 2.0.0 (2010-10-11)
 -----

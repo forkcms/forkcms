@@ -47,6 +47,6 @@ $navigation[5]['children'][5]['children'][0] = array('url' => 'analytics/setting
 $navigation[5]['children'][5]['children'][1] = array('url' => 'blog/settings', 'label' => 'Blog');
 $navigation[5]['children'][5]['children'][2] = array('url' => 'search/settings', 'label' => 'Search');
 $navigation[5]['children'][5]['children'][3] = array('url' => 'pages/settings', 'label' => 'Pages');
-$navigation[5]['children'][5]['children'][3] = array('url' => 'mailmotor/settings', 'label' => 'Mailmotor');
+$navigation[5]['children'][5]['children'][4] = array('url' => 'mailmotor/settings', 'label' => 'Mailmotor');
 
 ?>

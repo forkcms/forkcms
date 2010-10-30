@@ -1554,16 +1554,21 @@ class BackendPagesModel
 
 		// reset type of drop for special pages
 		if($droppedOn == 1) $typeOfDrop = 'inside';
+		if($droppedOn == 0) $typeOfDrop = 'inside';
 
 		// get data for pages
 		$page = self::get($id, $language);
 		$droppedOnPage = self::get($droppedOn, $language);
 
+		// reset if the drop was on 0 (new meta)
+		if($droppedOn == 0) $droppedOnPage = self::get(1, $language);
+
 		// validate
-		if(empty($page) || empty($droppedOn)) return false;
+		if(empty($page) || empty($droppedOnPage)) return false;
 
 		// calculate new parent for items that should be moved inside
-		if($typeOfDrop == 'inside')
+		if($droppedOn == 0) $newParent == 0;
+		elseif($typeOfDrop == 'inside')
 		{
 			// check if item allows children
 			if($page['allow_children'] != 'Y') return false;
@@ -1577,7 +1582,7 @@ class BackendPagesModel
 
 		// decide new type
 		$newType = 'page';
-		if($droppedOnPage['type'] == 'meta') $newType = 'meta';
+		if($droppedOn == 0) $newType = 'meta';
 		if($droppedOnPage['type'] == 'footer') $newType = 'footer';
 		if($droppedOnPage['type'] == 'root')
 		{

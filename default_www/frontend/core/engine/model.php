@@ -20,6 +20,41 @@ class FrontendModel
 
 
 	/**
+	 * Add a number to the string
+	 *
+	 * @return	string
+	 * @param	string $string	The string where the number will be appended to.
+	 */
+	public static function addNumber($string)
+	{
+		// split
+		$chunks = explode('-', $string);
+
+		// count the chunks
+		$count = count($chunks);
+
+		// get last chunk
+		$last = $chunks[$count - 1];
+
+		// is nummeric
+		if(SpoonFilter::isNumeric($last))
+		{
+			// remove last chunk
+			array_pop($chunks);
+
+			// join together, and increment the last one
+			$string = implode('-', $chunks ) .'-'. ((int) $last + 1);
+		}
+
+		// not numeric, so add -2
+		else $string .= '-2';
+
+		// return
+		return $string;
+	}
+
+
+	/**
 	 * Add parameters to an URL
 	 *
 	 * @return	string
