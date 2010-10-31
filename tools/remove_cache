@@ -6,17 +6,20 @@
 # @author	Johan Ronsse <johan@netlash.com>
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
 
-rm -f ../default_www/install/cache/*
-rm -f ../default_www/frontend/cache/cached_templates/*
-rm -f ../default_www/frontend/cache/locale/*
-rm -f ../default_www/frontend/cache/minified_css/*
-rm -f ../default_www/frontend/cache/minified_js/*
-rm -f ../default_www/frontend/cache/navigation/*
-rm -f ../default_www/frontend/cache/statistics/*
-rm -f ../default_www/frontend/cache/templates/*
-rm -f ../default_www/backend/cache/analytics/*
-rm -f ../default_www/backend/cache/cronjobs/*
-rm -f ../default_www/backend/cache/locale/*
-rm -f ../default_www/backend/cache/templates/*
+rm -f `ls ../default_www/install/cache | grep -v ".gitignore"`
+
+rm -f `ls ../default_www/frontend/cache/cached_templates | grep -v ".gitignore"`
+rm -f `ls ../default_www/frontend/cache/locale | grep -v ".gitignore"`
+rm -f `ls ../default_www/frontend/cache/minified_css | grep -v ".gitignore"`
+rm -f `ls ../default_www/frontend/cache/minified_js | grep -v ".gitignore"`
+rm -f `ls ../default_www/frontend/cache/navigation | grep -v ".gitignore"`
+rm -f `ls ../default_www/frontend/cache/statistics | grep -v ".gitignore"`
+rm -f `ls ../default_www/frontend/cache/templates | grep -v ".gitignore"`
+
+rm -f `ls ../default_www/backend/cache/analytics | grep -v ".gitignore"`
+rm -f `ls ../default_www/backend/cache/cronjobs | grep -v ".gitignore"`
+rm -f `ls ../default_www/backend/cache/locale | grep -v ".gitignore"`
+rm -f `ls ../default_www/backend/cache/mailmotor | grep -v ".gitignore"`
+rm -f `ls ../default_www/backend/cache/templates | grep -v ".gitignore"`
 
 echo 'All done! Cache files removed.'
