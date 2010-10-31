@@ -1,0 +1,22 @@
+#! /bin/bash
+#
+# This script will remove all cache-files.
+#
+# @version	1.1.0
+# @author	Johan Ronsse <johan@netlash.com>
+# @author	Tijs Verkoyen <tijs@sumocoders.be>
+
+rm -f ../default_www/install/cache/*
+rm -f ../default_www/frontend/cache/cached_templates/*
+rm -f ../default_www/frontend/cache/locale/*
+rm -f ../default_www/frontend/cache/minified_css/*
+rm -f ../default_www/frontend/cache/minified_js/*
+rm -f ../default_www/frontend/cache/navigation/*
+rm -f ../default_www/frontend/cache/statistics/*
+rm -f ../default_www/frontend/cache/templates/*
+rm -f ../default_www/backend/cache/analytics/*
+rm -f ../default_www/backend/cache/cronjobs/*
+rm -f ../default_www/backend/cache/locale/*
+rm -f ../default_www/backend/cache/templates/*
+
+echo 'All done! Cache files removed.'

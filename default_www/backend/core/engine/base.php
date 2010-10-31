@@ -121,30 +121,49 @@ class BackendBaseAction
 	 */
 	public function execute()
 	{
-		// add jquery, we will need this in every action, so add it globally
-		$this->header->addJavascript('jquery/jquery.js', 'core');
-		$this->header->addJavascript('jquery/jquery.ui.js', 'core');
-		$this->header->addJavascript('jquery/jquery.tools.js', 'core');
-		$this->header->addJavascript('jquery/jquery.backend.js', 'core');
+		// if not in debug-mode we should include the minified versions
+		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH .'/js/minified.js'))
+		{
+			// include the minified JS-file
+			$this->header->addJavascript('minified.js', 'core', false);
+		}
+
+		// in debug-mode or minified files don't exist
+		else
+		{
+			// add jquery, we will need this in every action, so add it globally
+			$this->header->addJavascript('jquery/jquery.js', 'core');
+			$this->header->addJavascript('jquery/jquery.ui.js', 'core');
+			$this->header->addJavascript('jquery/jquery.tools.js', 'core');
+			$this->header->addJavascript('jquery/jquery.backend.js', 'core');
+		}
 
 		// add items that always need to be loaded
-		$this->header->addJavascript('backend.js', 'core', true);
 		$this->header->addJavascript('utils.js', 'core', true);
+		$this->header->addJavascript('backend.js', 'core', true);
 
 		// add default js file (if the file exists)
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($this->getModule() .'.js', null, true);
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($this->getAction() .'.js', null, true);
 
-		// add css
-		$this->header->addCSS('reset.css', 'core');
-		if(!SPOON_DEBUG) $this->header->addCSS('screen.min.css', 'core');
-		$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
+		// if not in debug-mode we should include the minified version
+		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH .'/layout/css/minified.css'))
+		{
+			// include the minified CSS-file
+			$this->header->addCSS('minified.css', 'core');
+		}
 
-		// debug css
-		if(SPOON_DEBUG) $this->header->addCSS('debug.css', 'core');
-		if(SPOON_DEBUG) $this->header->addCSS('screen.css', 'core');
+		// debug-mode or minified file does not exists
+		else
+		{
+			// add css
+			$this->header->addCSS('reset.css', 'core');
+			$this->header->addCSS('jquery_ui/fork/jquery_ui.css', 'core');
+			$this->header->addCSS('debug.css', 'core');
+			$this->header->addCSS('screen.css', 'core');
+		}
 
-		// add module specific js
+		// add module specific css
 		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/layout/css/'. $this->getModule() .'.css')) $this->header->addCSS($this->getModule() .'.css', null);
 
 		// store var so we don't have to call this function twice
