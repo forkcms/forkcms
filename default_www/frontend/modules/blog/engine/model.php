@@ -553,6 +553,33 @@ class FrontendBlogModel
 	}
 
 
+
+	/**
+	 * Get a revision for an item
+	 *
+	 * @return	array
+	 * @param	string $URL		The URL for the item to get.
+	 * @param	int $revision	The revisionID.
+	 */
+	public static function getRevision($URL, $revision)
+	{
+		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.language, i.title, i.introduction, i.text,
+															c.name AS category_name, c.url AS category_url,
+															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+															i.allow_comments,
+															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+															m.url
+															FROM blog_posts AS i
+															INNER JOIN blog_categories AS c ON i.category_id = c.id
+															INNER JOIN meta AS m ON i.meta_id = m.id
+															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
+															LIMIT 1;',
+															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
+	}
+
+
 	/**
 	 * Notify the admin
 	 *

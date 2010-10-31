@@ -86,10 +86,20 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
 
 		// load draft
-		if($this->URL->getParameter('draft', 'int') !== null)
+		if($this->URL->getParameter('draft', 'int') != 0)
 		{
 			// get data
 			$this->record = FrontendBlogModel::getDraft($this->URL->getParameter(1), $this->URL->getParameter('draft', 'int'));
+
+			// add no-index to meta-custom, so the draft won't get accidentally indexed
+			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+		}
+
+		// load revision
+		elseif($this->URL->getParameter('revision', 'int') != 0)
+		{
+			// get data
+			$this->record = FrontendBlogModel::getRevision($this->URL->getParameter(1), $this->URL->getParameter('revision', 'int'));
 
 			// add no-index to meta-custom, so the draft won't get accidentally indexed
 			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
