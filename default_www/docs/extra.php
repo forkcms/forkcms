@@ -61,6 +61,10 @@
 						<li>index : the current action</li>
 					</ul>
 
+					<h3>I want to install Fork CMS but I have no access to the folder(s) above my document root/public folder.</h3>
+
+					<p>Simply move the <code>library/</code> folder inside <code>default_www</code>. The installler will detect this.</p>
+
 					<h3 id="reinstalling">Reinstalling Fork CMS</h3>
 					<p>To reinstall Fork CMS — a reinstall as in, you previously installed and ran Fork CMS from the same disk location — do the following:</p>
 					<ul>
