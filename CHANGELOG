@@ -1,4 +1,4 @@
-2.0.1 (xxxx-xx-xx)
+2.0.1 (2010-11-03)
 -----
 - added correct .gitignore-files and ignored .git
 - fixed some stuff so app is ready for deployment with Capistrano
