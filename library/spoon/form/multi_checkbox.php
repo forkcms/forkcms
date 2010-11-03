@@ -270,18 +270,21 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 			// end input tag
 			$element[$name] .= ' />';
 
+			// clone into element
+			$element['element'] = $element[$name];
+
 			// add checkbox
-			$checkBoxes[] = $element;
+			$checkboxes[] = $element;
 		}
 
 		// template
 		if($template !== null)
 		{
-			$template->assign(SpoonFilter::toCamelCase($this->name, '_', true), $checkBoxes);
+			$template->assign(SpoonFilter::toCamelCase($this->name, '_', true), $checkboxes);
 			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		return $checkBoxes;
+		return $checkboxes;
 	}
 
 

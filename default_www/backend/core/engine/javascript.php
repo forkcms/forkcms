@@ -121,8 +121,11 @@ class BackendJavascript
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);
 
-				// throw an exception, when debug is on we get a descent message
+				// when debug is on throw an exception
 				if(SPOON_DEBUG) throw new BackendException('File not present.');
+
+				// when debug is of show a descent message
+				else exit(SPOON_DEBUG_MESSAGE);
 			}
 		}
 
@@ -135,8 +138,11 @@ class BackendJavascript
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);
 
-				// throw an exception, when debug is on we get a descent message
+				// when debug is on throw an exception
 				if(SPOON_DEBUG) throw new BackendException('File not present.');
+
+				// when debug is of show a descent message
+				else exit(SPOON_DEBUG_MESSAGE);
 			}
 		}
 	}

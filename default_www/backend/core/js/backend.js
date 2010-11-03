@@ -224,7 +224,7 @@ jsBackend.controls = {
 								$(this).dialog('close');
 
 								// goto link
-								window.location = url;
+								window.location = $(this).attr('rel');
 							},
 						'{$lblCancel|ucfirst}': function()
 							{
@@ -1145,7 +1145,7 @@ jsBackend.tinyMCE =
 		}
 	},
 
-	
+
 	// end
 	eoo: true
 }
