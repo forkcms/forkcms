@@ -10,6 +10,7 @@ jsBackend.analytics =
 		jsBackend.analytics.chartSingleMetricPerDay.init();
 		jsBackend.analytics.chartWidget.init();
 		jsBackend.analytics.loading.init();
+		jsBackend.analytics.resize.init();
 	},
 
 
@@ -47,9 +48,10 @@ jsBackend.analytics.charts =
 	eoo: true
 }
 
-
-jsBackend.analytics.chartPieChart =
+jsBackend.analytics.chartPieChart = 
 {
+	chart: '',
+
 	init: function()
 	{
 		if($('#chartPieChart').length > 0) { jsBackend.analytics.chartPieChart.create(); }
@@ -70,8 +72,10 @@ jsBackend.analytics.chartPieChart =
 			});
 		});
 
-		var chart = new Highcharts.Chart({
-			chart: { renderTo: 'chartPieChart', height: 200, margin: [0, 160, 0, 0]	},
+		var containerWidth = $('#chartPieChart').width();
+
+		jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart({
+			chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0] },
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
 			tooltip: {
@@ -97,19 +101,25 @@ jsBackend.analytics.chartPieChart =
 		});
 	},
 
+	// destroy chart
+	destroy: function()
+	{
+		jsBackend.analytics.chartPieChart.chart.destroy();
+	},
+
 
 	// end
 	eoo: true
 }
 
-
 jsBackend.analytics.chartDoubleMetricPerDay =
 {
+	chart: '',
+
 	init: function()
 	{
 		if($('#chartDoubleMetricPerDay').length > 0) { jsBackend.analytics.chartDoubleMetricPerDay.create(); }
 	},
-
 
 	// add new chart
 	create: function(evt)
@@ -141,8 +151,10 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
 		metric2Values.each(function() { metric2Data.push(parseInt($(this).html())); });
 
-		var chart = new Highcharts.Chart({
-			chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, margin: [60, 0, 30, 40], defaultSeriesType: 'line' },
+		var containerWidth = $('#chartDoubleMetricPerDay').width();
+
+		jsBackend.analytics.chartDoubleMetricPerDay.chart = new Highcharts.Chart({
+			chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line' },
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
 			yAxis: { min: 0, max: $('#dataChartDoubleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartDoubleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartDoubleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
@@ -157,19 +169,24 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 		});
 	},
 
+	// destroy chart
+	destroy: function() {
+		jsBackend.analytics.chartDoubleMetricPerDay.chart.destroy();
+	},
+
 
 	// end
 	eoo: true
 }
 
-
 jsBackend.analytics.chartSingleMetricPerDay =
 {
+	chart: '',
+
 	init: function()
 	{
 		if($('#chartSingleMetricPerDay').length > 0) { jsBackend.analytics.chartSingleMetricPerDay.create(); }
 	},
-
 
 	// add new chart
 	create: function(evt)
@@ -194,8 +211,10 @@ jsBackend.analytics.chartSingleMetricPerDay =
 
 		singleMetricValues.each(function() { singleMetricData.push(parseInt($(this).html())); });
 
-		var chart = new Highcharts.Chart({
-			chart: { renderTo: 'chartSingleMetricPerDay', height: 200, margin: [60, 0, 30, 40], defaultSeriesType: 'area' },
+		var containerWidth = $('#chartSingleMetricPerDay').width();
+
+		jsBackend.analytics.chartSingleMetricPerDay.chart = new Highcharts.Chart({
+			chart: { renderTo: 'chartSingleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'area' },
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
 			yAxis: { min: 0, max: $('#dataChartSingleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartSingleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartSingleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
@@ -210,6 +229,11 @@ jsBackend.analytics.chartSingleMetricPerDay =
 		});
 	},
 
+	// destroy chart
+	destroy: function() {
+		jsBackend.analytics.chartSingleMetricPerDay.chart.destroy();
+	},
+
 
 	// end
 	eoo: true
@@ -217,11 +241,12 @@ jsBackend.analytics.chartSingleMetricPerDay =
 
 jsBackend.analytics.chartWidget =
 {
+	chart: '',
+
 	init: function()
 	{
 		if($('#chartWidget').length > 0) { jsBackend.analytics.chartWidget.create(); }
 	},
-
 
 	// add new chart
 	create: function(evt)
@@ -252,7 +277,7 @@ jsBackend.analytics.chartWidget =
 
 		metric2Values.each(function() { metric2Data.push(parseInt($(this).html())); });
 
-		var chart = new Highcharts.Chart({
+		jsBackend.analytics.chartWidget.chart = new Highcharts.Chart({
 			chart: { renderTo: 'chartWidget', defaultSeriesType: 'line', margin: [30, 0, 30, 0], height: 200, width: 270, defaultSeriesType: 'line' },
 			xAxis: { categories: xAxisCategories },
 			yAxis: { min: 0, max: $('#dataChartWidget #maxYAxis').html(), tickInterval: ($('#dataChartWidget #tickInterval').html() == '' ? null : $('#dataChartWidget #tickInterval').html()), title: { enabled: false } },
@@ -267,6 +292,11 @@ jsBackend.analytics.chartWidget =
 			},
 			series: [ { name: metric1Name, data: metric1Data, type: 'area' }, { name: metric2Name, data: metric2Data } ]
 		});
+	},
+
+	// destroy chart
+	destroy: function() {
+		jsBackend.analytics.chartWidget.chart.destroy();
 	},
 
 
@@ -299,7 +329,6 @@ jsBackend.analytics.loading =
 			jsBackend.analytics.loading.interval = setInterval("jsBackend.analytics.loading.checkStatus()", 5000);
 		}
 	},
-
 
 	checkStatus: function()
 	{
@@ -369,6 +398,61 @@ jsBackend.analytics.loading =
 				if(jsBackend.debug) alert(textStatus);
 			}
 		});
+	},
+
+
+	// end
+	eoo: true
+}
+
+jsBackend.analytics.resize =
+{
+	init: function()
+	{
+		var interval = 1000;
+		var timeout = false;
+
+		$(window).resize(function()
+		{
+			resizeTime = new Date();
+			if (timeout === false)
+			{
+				timeout = true;
+				setTimeout(resizeend, interval);
+			}
+		});
+
+		function resizeend()
+		{
+			if (new Date() - resizeTime < interval)
+			{
+				setTimeout(resizeend, interval);
+			}
+			else
+			{
+				timeout = false;
+				if($('#chartPieChart').length > 0)
+				{
+					$('#chartPieChart').html('&nbsp;');
+					jsBackend.analytics.chartPieChart.create();
+				}
+				if($('#chartDoubleMetricPerDay').length > 0)
+				{
+					$('#chartDoubleMetricPerDay').html('&nbsp;');
+					jsBackend.analytics.chartDoubleMetricPerDay.create();
+				}
+				if($('#chartSingleMetricPerDay').length > 0)
+				{
+					$('#chartSingleMetricPerDay').html('&nbsp;');
+					jsBackend.analytics.chartSingleMetricPerDay.create();
+				}
+				if($('#chartWidget').length > 0)
+				{
+					$('#chartWidget').html('&nbsp;');
+					jsBackend.analytics.chartWidget.create();
+				}
+			}
+		}
 	},
 
 

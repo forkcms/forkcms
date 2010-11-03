@@ -25,18 +25,23 @@
 			{option:NoSessionToken}
 				<p>{$msgLinkGoogleAccount}</p>
 				<div class="buttonHolder">
-					<a href="{$googleAccountAuthenticationForm}" class="submitButton button inputButton button "><span>{$msgAuthenticateAtGoogle}</span></a>
+					<a href="{$googleAccountAuthenticationForm}" class="submitButton button inputButton"><span>{$msgAuthenticateAtGoogle}</span></a>
 				</div>
 			{/option:NoSessionToken}
 
 			{option:NoTableId}
 				{option:accounts}
 					<p>{$msgLinkWebsiteProfile}</p>
-					{iteration:accounts}
-						<div class="datagridHolder">
-							{$accounts.datagrid}
+					{form:linkProfile}
+					<div class="oneLiner fakeP">
+						<p>
+							{$ddmTableId}
+						</p>
+						<div class="buttonHolder">
+							<input id="submitForm" class="inputButton button mainButton" type="submit" name="submitForm" value="{$lblLinkThisProfile|ucfirst}" />
 						</div>
-					{/iteration:accounts}
+					</div>
+					{/form:linkProfile}
 				{/option:accounts}
 
 				{option:!accounts}
@@ -44,7 +49,7 @@
 				{/option:!accounts}
 
 				<div class="buttonHolder">
-					<a href="{$var|geturl:'settings'}&amp;remove=session_token" rel="confirmDeleteSessionToken" class="askConfirmation submitButton button inputButton button"><span>{$msgRemoveAccountLink}</span></a>
+					<a href="{$var|geturl:'settings'}&amp;remove=session_token" rel="confirmDeleteSessionToken" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveAccountLink}</span></a>
 				</div>
 			{/option:NoTableId}
 		{/option:Wizard}
@@ -55,7 +60,8 @@
 				{$lblLinkedProfile|ucfirst}: <strong>{$profileTitle}</strong>
 			</p>
 			<div class="buttonHolder">
-				<a href="{$var|geturl:'settings'}&amp;remove=table_id" rel="confirmDeleteTableId" class="askConfirmation submitButton button inputButton button"><span>{$msgRemoveProfileLink}</span></a>
+				<a href="{$var|geturl:'settings'}&amp;remove=table_id" rel="confirmDeleteTableId" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveProfileLink}</span></a>
+				<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$lblViewStatistics|ucfirst}</span></a>
 			</div>
 		{/option:EverythingIsPresent}
 

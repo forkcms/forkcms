@@ -332,7 +332,7 @@ class API
 		if($data !== null) $JSON['data'] = $data;
 
 		// set correct headers
-//		SpoonHTTP::setHeadersByCode($statusCode);
+		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
 		// output
@@ -382,7 +382,7 @@ class API
 		array_walk($data, array('API', 'arrayToXML'), $root);
 
 		// set correct headers
-//		SpoonHTTP::setHeadersByCode($statusCode);
+		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: text/xml;charset=utf-8');
 
 		// output XML

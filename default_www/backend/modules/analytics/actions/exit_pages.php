@@ -158,19 +158,26 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 		// get total aggregates
 		$resultsTotal = BackendAnalyticsModel::getAggregatesTotal($this->startTimestamp, $this->endTimestamp);
 
+		// are there some values?
+		$dataAvailable = false;
+		foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+
+		// show message if there is no data
+		$this->tpl->assign('dataAvailable', $dataAvailable);
+
 		// there are some results
 		if(!empty($results))
 		{
 			// exits percentage of total
-			$exitsPercentageOfTotal = ($results['exits'] == 0) ? 0 : number_format(($results['exitPagesExits'] / $results['exits']) * 100, 2);
+			$exitsPercentageOfTotal = ($results['exits'] == 0) ? 0 : number_format(($results['exitPagesExits'] / $results['exits']) * 100, 0);
 
 			// pageviews percentage of total
-			$pageviewsPercentageOfTotal = ($results['pageviews'] == 0) ? 0 : number_format(($results['exitPagesPageviews'] / $results['pageviews']) * 100, 2);
+			$pageviewsPercentageOfTotal = ($results['pageviews'] == 0) ? 0 : number_format(($results['exitPagesPageviews'] / $results['pageviews']) * 100, 0);
 
 			// exits percentage
-			$exitsPercentage = ($results['exitPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['exitPagesPageviews']) * 100, 2);
-			$exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 2);
-			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 2);
+			$exitsPercentage = ($results['exitPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['exitPagesPageviews']) * 100, 0);
+			$exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 0);
+			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
 			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+'. $exitsPercentageDifference;
 
 			// parse data

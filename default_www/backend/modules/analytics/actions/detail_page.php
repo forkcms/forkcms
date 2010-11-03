@@ -131,31 +131,38 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		// get total aggregates
 		$resultsTotal = BackendAnalyticsModel::getAggregatesTotal($this->startTimestamp, $this->endTimestamp);
 
+		// are there some values?
+		$dataAvailable = false;
+		foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+
+		// show message if there is no data
+		$this->tpl->assign('dataAvailable', $dataAvailable);
+
 		// there are some results
 		if(!empty($results))
 		{
 			// time on page values
-			$timeOnPage = ($results['pageviews'] == 0) ? 0 : ($results['timeOnPage'] / ($results['pageviews'] - $results['exits']));
-			$timeOnPageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : ($resultsTotal['timeOnPage'] / ($resultsTotal['pageviews'] - $resultsTotal['exits']));
-			$timeOnPageDifference = ($timeOnPageTotal == 0) ? 0 : number_format((($timeOnPage - $timeOnPageTotal) / $timeOnPageTotal) * 100, 2);
+			$timeOnPage = ($results['pageviews'] - $results['exits'] == 0) ? 0 : ($results['timeOnPage'] / ($results['pageviews'] - $results['exits']));
+			$timeOnPageTotal = ($results['pageviews'] - $results['exits'] == 0) ? 0 : ($resultsTotal['timeOnPage'] / ($resultsTotal['pageviews'] - $resultsTotal['exits']));
+			$timeOnPageDifference = ($timeOnPageTotal == 0) ? 0 : number_format((($timeOnPage - $timeOnPageTotal) / $timeOnPageTotal) * 100, 0);
 			if($timeOnPageDifference > 0) $timeOnPageDifference = '+'. $timeOnPageDifference;
 
 			// pages / visit
 			$pagesPerVisit = ($results['visits'] == 0) ? 0 : number_format(($results['pageviews'] / $results['visits']), 2);
 			$pagesPerVisitTotal = ($resultsTotal['visits'] == 0) ? 0 : number_format(($resultsTotal['pageviews'] / $resultsTotal['visits']), 2);
-			$pagesPerVisitDifference = ($pagesPerVisitTotal == 0) ? 0 : number_format((($pagesPerVisit - $pagesPerVisitTotal) / $pagesPerVisitTotal) * 100, 2);
+			$pagesPerVisitDifference = ($pagesPerVisitTotal == 0) ? 0 : number_format((($pagesPerVisit - $pagesPerVisitTotal) / $pagesPerVisitTotal) * 100, 0);
 			if($pagesPerVisitDifference > 0) $pagesPerVisitDifference = '+'. $pagesPerVisitDifference;
 
 			// new visits
-			$newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 2);
-			$newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 2);
-			$newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 2);
+			$newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 0);
+			$newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 0);
+			$newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 0);
 			if($newVisitsDifference > 0) $newVisitsDifference = '+'. $newVisitsDifference;
 
 			// bounces
-			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 2);
-			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 2);
-			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 2);
+			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
+			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
+			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
 			if($bouncesDifference > 0) $bouncesDifference = '+'. $bouncesDifference;
 
 			// percentages relative to total

@@ -128,31 +128,38 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		// get total aggregates
 		$resultsTotal = BackendAnalyticsModel::getAggregatesTotal($this->startTimestamp, $this->endTimestamp);
 
+		// are there some values?
+		$dataAvailable = false;
+		foreach($resultsTotal as $data) if($data != 0) $dataAvailable = true;
+
+		// show message if there is no data
+		$this->tpl->assign('dataAvailable', $dataAvailable);
+
 		// there are some results
 		if(!empty($results))
 		{
 			// pageviews percentage of total
-			$pageviewsPercentageOfTotal = ($results['pageviews'] == 0) ? 0 : number_format(($results['allPagesPageviews'] / $results['pageviews']) * 100, 2);
+			$pageviewsPercentageOfTotal = ($results['pageviews'] == 0) ? 0 : number_format(($results['allPagesPageviews'] / $results['pageviews']) * 100, 0);
 
 			// unique pageviews percentage of total
-			$uniquePageviewsPercentageOfTotal = ($results['uniquePageviews'] == 0) ? 0 : number_format(($results['allPagesUniquePageviews'] / $results['uniquePageviews']) * 100, 2);
+			$uniquePageviewsPercentageOfTotal = ($results['uniquePageviews'] == 0) ? 0 : number_format(($results['allPagesUniquePageviews'] / $results['uniquePageviews']) * 100, 0);
 
 			// time on site values
 			$timeOnSite = ($results['entrances'] == 0) ? 0 : ($results['timeOnSite'] / $results['entrances']);
 			$timeOnSiteTotal = ($resultsTotal['entrances'] == 0) ? 0 : ($resultsTotal['timeOnSite'] / $resultsTotal['entrances']);
-			$timeOnSiteDifference = ($timeOnSiteTotal == 0) ? 0 : number_format((($timeOnSite - $timeOnSiteTotal) / $timeOnSiteTotal) * 100, 2);
+			$timeOnSiteDifference = ($timeOnSiteTotal == 0) ? 0 : number_format((($timeOnSite - $timeOnSiteTotal) / $timeOnSiteTotal) * 100, 0);
 			if($timeOnSiteDifference > 0) $timeOnSiteDifference = '+'. $timeOnSiteDifference;
 
 			// bounces
-			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 2);
-			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 2);
-			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 2);
+			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
+			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
+			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
 			if($bouncesDifference > 0) $bouncesDifference = '+'. $bouncesDifference;
 
 			// exits percentage
-			$exitsPercentage = ($results['allPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['allPagesPageviews']) * 100, 2);
-			$exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 2);
-			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 2);
+			$exitsPercentage = ($results['allPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['allPagesPageviews']) * 100, 0);
+			$exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 0);
+			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
 			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+'. $exitsPercentageDifference;
 
 			// parse data

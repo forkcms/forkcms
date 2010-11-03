@@ -5,6 +5,12 @@
 	<h2>{$lblAllPages|ucfirst}</h2>
 </div>
 
+{option:!dataAvailable}
+	<div class="generalMessage infoMessage content singleMessage">
+		<p><strong>{$msgNoData}</strong></p>
+	</div>
+{/option:!dataAvailable}
+
 <div class="box">
 	{include:file='{$BACKEND_MODULE_PATH}/layout/templates/period.tpl'}
 

@@ -67,6 +67,7 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'GoogleAnalyticsLink', 'koppeling met Google Analytics');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'LinkedAccount', 'gekoppelde account');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'LinkedProfile', 'gekoppeld profiel');
+		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'LinkThisProfile', 'koppel dit profiel');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'NewVisitsPercentage', 'nieuw bezoekpercentage');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'PagesPerVisit', 'pagina\'s per bezoek');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'Pageviews', 'paginaweergaves');
@@ -85,16 +86,19 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'TopReferrers', 'belangrijkste verwijzende sites');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'UniquePageviews', 'unieke paginaweergaves');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'Views', 'weergaves');
+		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'ViewStatistics', 'bekijk de statistieken');
 		$this->insertLocale('nl', 'backend', 'analytics', 'lbl', 'Visits', 'bezoeken');
-		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'AuthenticateAtGoogle', 'Authentificatie bij Google starten');
+		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'AuthenticateAtGoogle', 'Koppel uw Google account');
+		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'ChooseWebsiteProfile', 'Kies een Analytics website profiel...');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'ConfirmDeleteLinkAccount', 'Weet u zeker dat u de koppeling met de account "%1$s" wil verwijderen?<br />Alle opgeslagen statistieken worden dan verwijderd uit het CMS.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'ConfirmDeleteLinkGoogleAccount', 'Weet u zeker dat u de koppeling met uw Google account wilt verwijderen?');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'GetDataError', 'Er liep iets mis bij het ophalen van de gegevens via Google Analytics. Onze excuses voor het ongemak. Probeer het later nog eens.');
-		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'LinkGoogleAccount', 'Koppel uw Google account aan Fork CMS');
-		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'LinkWebsiteProfile', 'Koppel een Google Analytics website profiel aan Fork CMS');
+		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'LinkGoogleAccount', 'Koppel uw Google account aan Fork CMS.');
+		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'LinkWebsiteProfile', 'Koppel een Google Analytics website profiel aan Fork CMS.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'LoadingData', 'Fork haalt momenteel de gegevens binnen via Google Analytics.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoAccounts', 'Er hangen geen website profielen aan deze Google account. Meld je af bij Google en probeer het met een andere account.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoContent', 'Er zijn nog geen statistieken van inhoud.');
+		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoData', 'Google heeft nog geen Analytics gegevens van uw website. Dit kan enkele dagen duren. Kijk zeker ook na of al uw instellingen bij Google goedstaan.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoExitPages', 'Er zijn nog geen statistieken van uitstappagina\'s');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoKeywords', 'Er zijn nog geen statistieken van zoekwoorden.');
 		$this->insertLocale('nl', 'backend', 'analytics', 'msg', 'NoLandingPages', 'Er zijn nog geen statistieken van landingpagina\'s.');
@@ -127,6 +131,7 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'GoogleAnalyticsLink', 'link to Google Analytics');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'LinkedAccount', 'linked account');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'LinkedProfile', 'linked profile');
+		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'LinkThisProfile', 'link this profile');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'NewVisitsPercentage', 'new visits percentage');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'PagesPerVisit', 'pages per visit');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'Pageviews', 'pageviews');
@@ -145,8 +150,10 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'TopReferrers', 'top referrers');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'UniquePageviews', 'unique pageviews');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'Views', 'views');
+		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'ViewStatistics', 'view statistics');
 		$this->insertLocale('en', 'backend', 'analytics', 'lbl', 'Visits', 'visits');
-		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'AuthenticateAtGoogle', 'Start Google authentication');
+		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'AuthenticateAtGoogle', 'Link your Google account');
+		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'ChooseWebsiteProfile', 'Choose an Analytics website profile...');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'ConfirmDeleteLinkAccount', 'Are you sure you want to remove the link with the account "%1$s"?<br />All saves statistics will be deleted from the CMS.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'ConfirmDeleteLinkGoogleAccount', 'Are you sure you want to remove the link with your Google account?');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'GetDataError', 'Something went wrong while collecting the data from Google Analytics. Our appologies for the inconvenience. Please try again later.');
@@ -155,6 +162,7 @@ class AnalyticsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'LoadingData', 'Fork is collecting the data from Google Analytics.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoAccounts', 'There are no website profiles linked to this Google account. Log off at Google and try with a different account.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoContent', 'There is no content yet.');
+		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoData', 'Google has no Analytics data yet for your website. This could take a few days. Also check you Google Analytics account to make sure all settings are correct.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoExitPages', 'There are no exit pages yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoKeywords', 'There are no keywords yet.');
 		$this->insertLocale('en', 'backend', 'analytics', 'msg', 'NoLandingPages', 'There are no landing pages yet.');

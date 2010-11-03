@@ -5,6 +5,12 @@
 	<h2><a href="{$pagePath}">{$pagePath}</a></h2>
 </div>
 
+{option:!dataAvailable}
+	<div class="generalMessage infoMessage content singleMessage">
+		<p><strong>{$msgNoData}</strong></p>
+	</div>
+{/option:!dataAvailable}
+
 <div class="box">
 	{include:file='{$BACKEND_MODULE_PATH}/layout/templates/period.tpl'}
 
@@ -15,7 +21,7 @@
 				<p><strong>{$visits} </strong><a href="{$googleContentDetailURL}">{$lblVisits|ucfirst}</a></p>
 			</div>
 			<div class="analyticsCol">
-				<p><strong>{$pagesPerVisit} </strong><a href="{$googleContentDetailURL}">{$lblAnalyticsPagesPerVisit|ucfirst}</a> <small>({$pagesPerVisitDifference}%)</small></p>
+				<p><strong>{$pagesPerVisit} </strong><a href="{$googleContentDetailURL}">{$lblPagesPerVisit|ucfirst}</a> <small>({$pagesPerVisitDifference}%)</small></p>
 				<p><strong>{$timeOnPage} </strong><a href="{$googleContentDetailURL}">{$lblAverageTimeOnPage|ucfirst}</a> <small>({$timeOnPageDifference}%)</small></p>
 			</div>
 			<div class="analyticsCol">

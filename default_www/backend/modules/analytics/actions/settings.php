@@ -220,36 +220,34 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			// no profiles? Or not authorized
 			if(!empty($this->profiles) && $this->profiles !== 'UNAUTHORIZED')
 			{
+				// init var
+				$accounts[''][0] = BL::getMessage('ChooseWebsiteProfile');
+
 				// prepare accounts array
 				foreach((array) $this->profiles as $profile)
 				{
 					// put profiles under their account
-					$accounts[$profile['accountId']]['name'] = $profile['accountName'];
-					$accounts[$profile['accountId']]['profiles'][$profile['profileId']]['title'] = $profile['title'];
-					$accounts[$profile['accountId']]['profiles'][$profile['profileId']]['table_id'] = $profile['tableId'];
+					$accounts[$profile['accountName']][$profile['tableId']] = $profile['title'];
 				}
 
-				// create datagrid per account
-				foreach($accounts as $account)
+				// there are accounts
+				if(!empty($accounts))
 				{
-					// datagrid
-					$datagrid = new BackendDataGridArray($account['profiles']);
+					// sort accounts
+					uksort($accounts, array('BackendAnalyticsSettings', 'sortAccounts'));
 
-					// hide colums
-					$datagrid->setColumnsHidden('table_id');
+					// create form
+					$frm = new BackendForm('linkProfile', BackendModel::createURLForAction(), 'get');
 
-					// headers
-					$datagrid->setHeaderLabels(array('title' => $account['name']));
+					// create elements
+					$frm->addDropdown('table_id', $accounts);
 
-					// url for title
-					$datagrid->setColumnURL('title', BackendModel::createURLForAction('settings') .'&amp;table_id=[table_id]');
+					// parse form
+					$frm->parse($this->tpl);
 
-					// add
-					$accountsDatagrids[]['datagrid'] = $datagrid->getContent();
+					// parse accounts
+					$this->tpl->assign('accounts', true);
 				}
-
-				// parse accounts
-				$this->tpl->assign('accounts', $accountsDatagrids);
 			}
 		}
 
@@ -263,6 +261,13 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$this->tpl->assign('accountName', $this->accountName);
 			$this->tpl->assign('profileTitle', $this->profileTitle);
 		}
+	}
+
+	public static function sortAccounts($account1, $account2)
+	{
+		if(strtolower($account1) > strtolower($account2)) return 1;
+		if(strtolower($account1) < strtolower($account2)) return -1;
+		return 0;
 	}
 }
 
