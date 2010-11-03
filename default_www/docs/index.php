@@ -16,7 +16,7 @@
 					<li><a href="index.php#whatis">What is Fork CMS?</a></li>
 					<li><a href="index.php#download">Download</a></li>
 					<li><a href="index.php#why">Why?</a></li>
-					<li><a href="index.php#download">Dowmload &amp; install</a></li>
+					<li><a href="index.php#download">Download &amp; install</a></li>
 					<li><a href="index.php#bugReports">Bug reports</a></li>
 					<li><a href="index.php#discussion">Discussion</a></li>
 				</ol>
