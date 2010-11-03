@@ -50,8 +50,8 @@ class BackendForm extends SpoonForm
 	public function __construct($name = null, $action = null, $method = 'post', $useToken = true, $useGlobalError = true)
 	{
 		// init the URL-instance
-		$this->URL = Spoon::getObjectReference('url');
-		$this->header = Spoon::getObjectReference('header');
+		if(Spoon::isObjectReference('url')) $this->URL = Spoon::getObjectReference('url');
+		if(Spoon::isObjectReference('header')) $this->header = Spoon::getObjectReference('header');
 		$this->useGlobalError = (bool) $useGlobalError;
 
 		// build a name if there wasn't one provided
@@ -84,7 +84,7 @@ class BackendForm extends SpoonForm
 		$name = (string) $name;
 		$value = (string) $value;
 		$type = (string) $type;
-		$class = ($class !== null) ? (string) $class : 'inputText inputButton';
+		$class = ($class !== null) ? (string) $class : 'inputButton';
 
 		// do a check
 		if($type == 'submit' && $name == 'submit') throw new BackendException('You can\'t add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');

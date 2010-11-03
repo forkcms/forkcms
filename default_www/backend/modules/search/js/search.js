@@ -8,7 +8,7 @@ jsBackend.search =
 		// synonyms box
 		if($('input.synonymBox').length > 0) 
 		{ 
-			$('input.synonymBox').multipleTextBox({ 
+			$('input.synonymBox').multipleTextbox({ 
 				emptyMessage: '{$msgNoSynonymsBox}', 
 				addLabel: '{$lblAdd|ucfirst}', 
 				removeLabel: '{$lblDeleteSynonym|ucfirst}' 

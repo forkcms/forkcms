@@ -39,6 +39,9 @@ class BackendAJAX
 		// check if the user is logged in
 		$this->validateLogin();
 
+		// named application
+		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend_ajax');
+
 		// set the module
 		$this->setModule(SpoonFilter::getGetValue('module', null, ''));
 

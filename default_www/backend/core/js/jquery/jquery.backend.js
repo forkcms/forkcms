@@ -543,7 +543,7 @@
  */
 (function($)
 {
-	$.fn.multipleTextBox = function(options)
+	$.fn.multipleTextbox = function(options)
 	{
 		// define defaults
 		var defaults = {

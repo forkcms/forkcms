@@ -8,6 +8,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendModel
@@ -192,6 +193,77 @@ class BackendModel
 
 		// build the URL and return it
 		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;
+	}
+
+
+	/**
+	 * Delete a page extra by module, type or data.
+	 *
+	 * Data is a key/value array. Example: array(id => 23, language => nl);
+	 *
+	 * @return	void
+	 * @param	string[optional] $module
+	 * @param	string[optional] $type
+	 * @param	array[optional] $data
+	 */
+	public static function deleteExtra($module = null, $type = null, array $data = null)
+	{
+		// init
+		$query = 'SELECT i.id, i.data FROM pages_extras AS i WHERE 1';
+		$parameters = array();
+
+		// module
+		if($module !== null)
+		{
+			$query .= ' AND i.module = ?';
+			$parameters[] = (string) $module;
+		}
+
+		// type
+		if($type !== null)
+		{
+			$query .= ' AND i.type = ?';
+			$parameters[] = (string) $type;
+		}
+
+		// get extras
+		$extras = (array) BackendModel::getDB(true)->getRecords($query, $parameters);
+
+		// loop found extras
+		foreach($extras as $extra)
+		{
+			// match by parameters
+			if($data !== null && $extra['data'] !== null)
+			{
+				// unserialize
+				$extraData = (array) unserialize($extra['data']);
+
+				// skip extra if parameters do not match
+				if(count(array_intersect($data, $extraData)) !== count($data)) continue;
+			}
+
+			// delete extra
+			self::deleteExtraById($extra['id']);
+		}
+	}
+
+
+	/**
+	 * Delete a page extra by its id
+	 *
+	 * @return	void
+	 * @param	int $id
+	 */
+	public static function deleteExtraById($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// unset blocks
+		BackendModel::getDB(true)->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $id);
+
+		// delete extra
+		BackendModel::getDB(true)->delete('pages_extras', 'id = ?', $id);
 	}
 
 

@@ -131,11 +131,14 @@ class BackendURL
 		// check if this is a request for a JS-file
 		$isJS = (isset($chunks[1]) && $chunks[1] == 'js.php');
 
+		// check if this is a request for a AJAX-file
+		$isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax.php');
+
 		// get the language, this will always be in front
 		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], BackendLanguage::getActiveLanguages(), '') : '';
 
 		// no language provided?
-		if($language == '' && !$isJS)
+		if($language == '' && !$isJS && !$isAJAX)
 		{
 			// remove first element
 			array_shift($chunks);
@@ -151,7 +154,7 @@ class BackendURL
 		if(isset($chunks[3]) && $chunks[3] != '') $action = $chunks[3];
 
 		// no action passed through URL
-		else
+		elseif(!$isJS && !$isAJAX)
 		{
 			// build path to the module and define it. This is a constant because we can use this in templates.
 			if(!defined('BACKEND_MODULE_PATH')) define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH .'/'. $module);
@@ -175,8 +178,8 @@ class BackendURL
 			$action = ($config->getDefaultAction() !== null) ? $config->getDefaultAction() : 'index';
 		}
 
-		// if it is an request for a JS-file we only need the module
-		if($isJS)
+		// if it is an request for a JS-file or an AJAX-file we only need the module
+		if($isJS || $isAJAX)
 		{
 			// set the working language, this is not the interface language
 			BackendLanguage::setWorkingLanguage(SpoonFilter::getGetValue('language', null, SITE_DEFAULT_LANGUAGE));
