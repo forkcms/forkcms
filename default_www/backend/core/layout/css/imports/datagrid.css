@@ -77,7 +77,8 @@
 */
 
 th.action,
-th.edit {
+th.edit,
+td.action {
 	width: 10%;
 }
 
