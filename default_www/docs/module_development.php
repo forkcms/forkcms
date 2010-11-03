@@ -11,7 +11,7 @@
 			<div class="col col-8 content">
 				<div class="col-6">
 					<ol>
-						<li><a href="module_development.php#introduction">Introduction</a>
+						<li><a href="module_development.php#intro">Introduction</a>
 						<li>
 							<a href="module_development.php#backend">Backend</a>
 							<ol>
@@ -19,15 +19,6 @@
 								<li><a href="module_development.php#backendWriteYourOwn">Write your own</a></li>
 								<li><a href="module_development.php#backendConstants">Available constants</a></li>
 								<li><a href="module_development.php#backendModifiers">Template modifiers</a></li>
-							</ol>
-						</li>
-						<li>
-							<a href="module_development.php#frontend">Frontend</a>
-							<ol>
-								<li><a href="module_development.php#frontendHowDoesItWork">How does it work</a></li>
-								<li><a href="module_development.php#frontendWriteYourOwn">Write your own</a></li>
-								<li><a href="module_development.php#frontendConstants">Available constants</a></li>
-								<li><a href="module_development.php#frontendModifiers">Template modifiers</a></li>
 							</ol>
 						</li>
 					</ol>
@@ -70,7 +61,7 @@
 					</ul>
 
 					<h4 id="backendWriteYourOwn">Write your own</h4>
-					…
+					<p><span class="marked markedTodo">@todo add tutorial</span></p>
 
 					<h4 id="backendConstants">Constants</h4>
 					<p>As the name suggests, the value of a constant cannot change during the execution of the script.</p>

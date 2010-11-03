@@ -13,15 +13,14 @@
 				<ol>
 					<li><a href="themes.php#howitworks">How themes work</a></li>
 					<li><a href="themes.php#structure">Theme directory structure</a></li>
-					<li><a href="themes.php#themeBlocks">Blocks</a></li>
-					<li><a href="themes.php#footNotes">Footnotes</a></li>
+					<li><a href="themes.php#layoutCode">Layout code</a></li>
 				</ol>
 
 				<h3 id="howitworks">How themes work</h3>
 
 				<p>In order to get the most out of Fork CMS, it's very important to understand theming.</p>
 
-				<p>For every new project, you should create a new theme. It's always easier to modify an existing theme to your needs than to build a new theme. Fork CMS provides a default theme to start from called <em>Scratch</em>. Follow the <a href="themes_tutorial.php">theme tutorial</a> to get started. This section contains general information on how themes work.</p>
+				<p>For every new project, you should create a new theme. It's always easier to modify an existing theme to your needs than to build a new theme. Fork CMS provides a default theme to start from called <em>Scratch</em>. This section contains general information on how themes work.</p>
 
 				<h3 id="structure">Theme directory structure</h3>
 
@@ -37,16 +36,21 @@
 				    |   `-- screen.css
 				    |-- images
 				    `-- templates
-				        |-- _footer.tpl
-				        |-- _head.tpl
-				        `-- default.tpl
+				        |-- default.tpl
+				        |-- home.tpl
+				        `-- twocolumns.tpl
 				</pre>
 
-				<p>This theme contains a folder for your CSS and a folder for images. It also contains 1 templat: <code>default.tpl</code>. The other template files <code>_head.tpl</code> and <code>_footer.tpl</code> are partial templates<sup><a href="#footnote1">1</a></sup>.</p>
-
-				<h3 id="footNotes">Footnotes</h3>
-
-				<p><strong id="footnote1">1:</strong> The underscores in the filenames signify partial templates; this is not a requirement, but it's a helpful convention to separate real templates from partial ones.</p>
+				<p>This theme contains a folder for your CSS and a folder for images. It also contains 3 templates: default, home and twocolumns.</p>
+				
+				<h3 id="layoutCode">Layout code</h3>
+				<p>How does the layout code work?</p>
+				<ul>
+					<li>If you want to add a row, use []</li>
+					<li>If you want to display a block, use the block number</li>
+					<li>If you want to add an empty cell (e.g. a non-editable area) use /</li>
+					<li>If you want a block to be wider or bigger in it's graphical representation, repeat the number multiple times (can be done on multiple rows too: but the shape should form a rectangle)</li>
+				</ul>
 
 			</div>
 		</div>

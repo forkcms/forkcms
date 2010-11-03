@@ -50,29 +50,7 @@
 						<li><code>/library/globals.*.php</code></li>
 					</ul>
 
-					<h3 id="urls">URLs</h3>
-					<p>The URL will identify an action inside a module. For example: http://fork-cms.be/private/nl/blog/index, let's break that up into the different parts.</p>
 
-					<ul>
-						<li>http://fork.local : the URL</li>
-						<li>private : the application (in this case an alias for backend)</li>
-						<li>nl : the language you are working in</li>
-						<li>blog : the current module</li>
-						<li>index : the current action</li>
-					</ul>
-
-					<h3>I want to install Fork CMS but I have no access to the folder(s) above my document root/public folder.</h3>
-
-					<p>Simply move the <code>library/</code> folder inside <code>default_www</code>. The installler will detect this.</p>
-
-					<h3 id="reinstalling">Reinstalling Fork CMS</h3>
-					<p>To reinstall Fork CMS — a reinstall as in, you previously installed and ran Fork CMS from the same disk location — do the following:</p>
-					<ul>
-						<li>Delete the file installed.txt in the default_www/install folder.</li>
-						<li>Delete all of cache files by running the remove_cache script in tools/remove_cache</li>
-						<li>Install Fork again by visiting <code>&lt;your-domain&gt;/install</code>; follow the installer steps.</li>
-						<li>Log in and go to Pages and resave a page to update the navigation cache. Done!</li>
-					</ul>
 				</div>
 			</div>
 		</div>
