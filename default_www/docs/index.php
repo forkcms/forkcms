@@ -61,13 +61,13 @@
 
 				<p>Have fun with your project!</p>
 
-				<!-- <h3 id="bugReports">Bug reports</h3>
+				<h3 id="bugReports">Bug reports</h3>
 
-				<p>If you encounter any bugs, please create a new issue at (URL).</p>
+				<p>If you encounter any bugs, please create a new issue using the <a href="http://forkcms.lighthouseapp.com/projects/61890-fork-cms/overview">bugtracker</a>.</p>
 
 				<h3 id="discussion">Discussion</h3>
 
-				<p>If you encounter a problem, or want to discuss Fork CMS, visit the <a href="http://groups.google.com/group/fork-cms/">Fork CMS google group</a>. You have to be a member to post a new message.</p> -->
+				<p>If you encounter a problem, or want to discuss Fork CMS, visit the <a href="https://forkcms.tenderapp.com/discussions/general">Fork CMS support forum</a>.</p>
 
 			</div>
 		</div>
