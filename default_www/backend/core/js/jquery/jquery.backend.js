@@ -553,7 +553,8 @@
 			removeLabel: 'delete',
 			autoCompleteUrl: '',
 			canAddNew: false,
-			showIconOnly: false
+			showIconOnly: false,
+			afterBuild: null
 		};
 
 		// extend options
@@ -779,6 +780,9 @@
 
 				// set html
 				$('#elementList-' + id).html(html);
+				
+				// call callback if specified
+				if(options.afterBuild != null){ options.afterBuild(id); }
 			}
 
 
