@@ -62,11 +62,6 @@ tinyMCE.init({
 			title: 'Basic table',
 			src: '/backend/core/js/tiny_mce/snippets/table.html',
 			description: 'Basic table'
-		},
-		{
-			title: 'Advanced table',
-			src: '/backend/core/js/tiny_mce/snippets/table_advanced.html',
-			description: 'Advanced table'
 		}
 	],
 

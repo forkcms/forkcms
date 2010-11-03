@@ -473,14 +473,24 @@ body {
 */
 
 .datagrid {
+	width: 100%;
 	/* @inc .sansSerif */
 	font-family: Arial, sans-serif;
 	font-size: 12px;
 }
 
+	.datagrid td,
+	.datagrid th {
+		padding: 4px;
+	}
+
+	.datagrid th {
+		background: #000;
+		color: #FFF;
+	}
+
 	.datagrid td {
 		border-bottom: 1px solid #DDD;
-		padding: 4px 0;
 	}
 
 
