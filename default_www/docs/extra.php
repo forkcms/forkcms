@@ -69,7 +69,7 @@
 					<p>To reinstall Fork CMS — a reinstall as in, you previously installed and ran Fork CMS from the same disk location — do the following:</p>
 					<ul>
 						<li>Delete the file installed.txt in the default_www/install folder.</li>
-						<li>Delete all of the files (files, not folders!) in <code>default_www/frontend/cache/</code> and <code>default_www/backend/cache</code>, except for the files in <code>backend/navigation/</code>.</li>
+						<li>Delete all of cache files by running the remove_cache script in tools/remove_cache</li>
 						<li>Install Fork again by visiting <code>&lt;your-domain&gt;/install</code>; follow the installer steps.</li>
 						<li>Log in and go to Pages and resave a page to update the navigation cache. Done!</li>
 					</ul>
