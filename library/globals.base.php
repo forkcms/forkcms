@@ -67,6 +67,6 @@ define('SITE_MULTILANGUAGE', '<site-multilanguage>');
 // path to the website itself
 define('PATH_WWW', '<path-www>');
 // path to the library
-define('PATH_LIBRARY', dirname(__FILE__));
+define('PATH_LIBRARY', '<path-library>');
 
 ?>
