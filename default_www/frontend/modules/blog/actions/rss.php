@@ -77,6 +77,20 @@ class FrontendBlogRSS extends FrontendBaseBlock
 		// create new rss instance
 		$rss = new FrontendRSS($title, $link, $description);
 
+		// theme was set
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// theme rss image exists
+			if(SpoonFile::exists(PATH_WWW .'/frontend/themes/'. $theme .'/core/images/rss_image.png'))
+			{
+				// rss
+				$rss->setImage(SITE_URL . '/frontend/themes/'. $theme .'/core/images/rss_image.png', $title, $link);
+			}
+		}
+
 		// loop articles
 		foreach($this->items as $item)
 		{
