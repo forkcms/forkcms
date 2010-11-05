@@ -1,10 +1,15 @@
 2.0.2 (xxxx-xx-xx)
 -----
+- added .gitignore files (AGAIN, plz fix your shit...)
+- upgraded jQuery and jQuery UI
+- upgrades Spoon to reflect the latest changes on their repo (extra methods in SpoonLocale)
+- core: added a modifier to format a string as currency (frontend)
+- core: added a modifier to format a string as a float (backend)
 - blog: when the rss_image.png exists in your theme, it will automatically be used in your rss feed.
 	- moved the code for default RSS-image into FrontendRSS
-- added .gitignore files (AGAIN, plz fix your shit...)
 - pages: added sorting for extras in dropdowns
 - bugfix: extra's weren't populated when the template was changed
+
 
 
 2.0.1 (2010-11-03)

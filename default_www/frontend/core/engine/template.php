@@ -109,6 +109,9 @@ class FrontendTemplate extends SpoonTemplate
 	 */
 	private function mapCustomModifiers()
 	{
+		// formating
+		$this->mapModifier('formatcurrency', array('FrontendTemplateModifiers', 'formatCurrency'));
+
 		// URL for a specific pageId
 		$this->mapModifier('geturl', array('FrontendTemplateModifiers', 'getURL'));
 
@@ -329,6 +332,30 @@ class FrontendTemplateModifiers
 	public static function dump($var)
 	{
 		Spoon::dump($var, false);
+	}
+
+
+	/**
+	 * Format a number as currency
+	 * 	syntax: {$var|formatcurrency[:<currency>][:<decimals>]}
+	 *
+	 * @return	string
+	 * @param	string $var						The string to form.
+	 * @param	string[optional] $currency		The currency to will be used to format the number.
+	 * @param	int[optional] $decimals			The number of decimals to show.
+	 */
+	public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
+	{
+		// @later get settings from backend
+
+		switch($currency)
+		{
+			case 'EUR':
+				$decimals = ($decimals === null) ? 2 : (int) $decimals;
+
+				// format as Euro
+				return '€ '. number_format((float) $var, $decimals, ',', ' ');
+		}
 	}
 
 

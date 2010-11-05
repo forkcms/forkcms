@@ -113,6 +113,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));
 
 		// string
+		$this->mapModifier('formatFloat', array('BackendTemplateModifiers', 'formatFloat'));
 		$this->mapModifier('truncate', array('BackendTemplateModifiers', 'truncate'));
 
 		// debug stuff
@@ -408,6 +409,24 @@ class BackendTemplateModifiers
 
 		// format the date
 		return SpoonDate::getDate($format, (int) $var, BackendLanguage::getInterfaceLanguage());
+	}
+
+
+	/**
+	 * Format a number as a float
+	 * @later	grab settings from database
+	 *
+	 * @return	string
+	 * @param	float $number				The number to format
+	 * @param	int[optional] $decimals		The number of decimals
+	 */
+	public static function formatFloat($number, $decimals = 2)
+	{
+		// redefine
+		$number = (float) $number;
+		$decimals = (int) $decimals;
+
+		return number_format($number, $decimals, '.', ' ');
 	}
 
 
