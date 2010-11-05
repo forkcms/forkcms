@@ -309,7 +309,7 @@ jsBackend.pages.extras =
 				// add option if needed
 				if(typeof extrasData[i]['items'][selectedType] != 'undefined') $('#extraModule').append('<option value="'+ extrasData[i].value +'">'+ extrasData[i].name +'</option>');
 			}
-			
+
 			// show
 			$('#extraModuleHolder').show();
 		}
@@ -451,7 +451,7 @@ jsBackend.pages.template =
 			var extraId = $('#blockExtraId'+ index).val();
 
 			// no extra specified, we should grab the default
-			if(typeof current.data.default_extras != 'undefined' && (typeof extraId == 'undefined'))
+			if(typeof current.data.default_extras != 'undefined' && (typeof extraId == 'undefined' || extraId == ''))
 			{
 				if(current.data.default_extras[index] != 'editor') { extraId = parseInt(current.data.default_extras[index]); }
 			}

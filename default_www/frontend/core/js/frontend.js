@@ -22,13 +22,14 @@ jsFrontend =
 		if($('input[name=q]').length > 0) jsFrontend.search.init();
 	},
 
-	
+
 	// init
 	initAjax: function() 
 	{
 		// set defaults for AJAX
 		$.ajaxSetup({ cache: false, type: 'POST', dataType: 'json', timeout: 10000 });
 	},
+
 
 	// end
 	eoo: true
@@ -138,7 +139,7 @@ jsFrontend.search =
 		});
 	},
 
-	
+
 	// end
 	eoo: true
 }

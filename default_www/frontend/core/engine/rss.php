@@ -74,6 +74,20 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 
 		// set some properties
 		$this->setGuid($link, true);
+
+		// theme was set
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// theme rss image exists
+			if(SpoonFile::exists(PATH_WWW .'/frontend/themes/'. $theme .'/core/images/rss_image.png'))
+			{
+				// rss
+				$rss->setImage(SITE_URL . '/frontend/themes/'. $theme .'/core/images/rss_image.png', $title, $link);
+			}
+		}
 	}
 
 

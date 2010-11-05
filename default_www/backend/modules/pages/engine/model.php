@@ -867,7 +867,14 @@ class BackendPagesModel
 			if(!isset($values[$row['module']])) $values[$row['module']] = array('value' => $row['module'], 'name' => $moduleName, 'items' => array());
 
 			// add real extra
-			$values[$row['module']]['items'][$row['type']][] = array('id' => $row['id'], 'label' => $name);
+			$values[$row['module']]['items'][$row['type']][$name] = array('id' => $row['id'], 'label' => $name);
+		}
+
+		// loop
+		foreach($values as &$row)
+		{
+			if(!empty($row['items']['widget'])) $row['items']['widget'] = SpoonFilter::arraySortKeys($row['items']['widget']);
+			if(!empty($row['items']['block'])) $row['items']['block'] = SpoonFilter::arraySortKeys($row['items']['block']);
 		}
 
 		// return

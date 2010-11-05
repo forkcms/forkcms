@@ -117,6 +117,10 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			}
 		}
 
+		// sort
+		asort($blocks, SORT_STRING);
+		asort($widgets, SORT_STRING);
+
 		// create array
 		$defaultExtras = array('' => array('editor' => BL::getLabel('Editor')),
 								ucfirst(BL::getLabel('Modules')) => $blocks,

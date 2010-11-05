@@ -553,7 +553,6 @@ class FrontendBlogModel
 	}
 
 
-
 	/**
 	 * Get a revision for an item
 	 *

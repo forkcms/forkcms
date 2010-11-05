@@ -2,7 +2,7 @@
 <html>
 <head>
 	{* do NOT remove the UTF-8 part *}
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>Fork CMS - {$msgResetYourPasswordMailSubject}</title>
 	<style type="text/css" media="screen">
 		html, body {

@@ -684,6 +684,23 @@ class BackendDataGridFunctions
 
 
 	/**
+	 * Format a number as a float
+	 *
+	 * @return	string
+	 * @param	float $number				The number to format
+	 * @param	int[optional] $decimals		The number of decimals
+	 */
+	public static function formatAsFloat($number, $decimals = 2)
+	{
+		// redefine
+		$number = (float) $number;
+		$decimals = (int) $decimals;
+
+		return number_format($number, $decimals, '.', ' ');
+	}
+
+
+	/**
 	 * Format a date as a long representation according the users' settings
 	 *
 	 * @return	string
@@ -757,6 +774,26 @@ class BackendDataGridFunctions
 
 		// return
 		return $html;
+	}
+
+
+	/**
+	 * Returns an image tag
+	 *
+	 * @return	string
+	 * @param	string $path		The path to the image
+	 * @param	string $image		The filename of the image
+	 * @param	string[optional]	The title (will be used as alt)
+	 */
+	public static function showImage($path, $image, $title = '')
+	{
+		// redefine
+		$path = (string) $path;
+		$image = (string) $image;
+		$title = (string) $title;
+
+		// return
+		return '<img src="'. $path .'/'. $image .'" alt="'. $title .'" />';
 	}
 
 
