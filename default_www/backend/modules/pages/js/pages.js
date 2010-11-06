@@ -261,7 +261,13 @@ jsBackend.pages.extras =
 				if(extrasById[selectedExtraId].type == 'block')
 				{
 					$('#blockContentModule-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
-					$('#blockContentModule-'+ selectedBlock +' .oneLiner a').attr('href', extrasById[selectedExtraId].data.url);
+
+					if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule-'+ selectedBlock +' .oneLiner a').hide();
+					else 
+					{
+						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show()
+																				.attr('href', extrasById[selectedExtraId].data.url);						
+					}
 					$('#blockContentModule-'+ selectedBlock).show();
 				}
 

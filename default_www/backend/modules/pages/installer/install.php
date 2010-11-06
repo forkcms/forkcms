@@ -247,7 +247,7 @@ class PagesInstall extends ModuleInstaller
 		$extras['blog_widget_recent_articles_full'] = $this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
 		$extras['blog_widget_recent_articles_list'] = $this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
 		$extras['sitemap_widget_sitemap'] = $this->insertExtra('pages', 'widget', 'Sitemap', 'sitemap', null, 'N', 1);
-		$extras['contact_block'] = $this->insertExtra('contact', 'block', 'Contact', null, null, 'N', 6);
+		$extras['contact_block'] = $this->insertExtra('contact', 'block', 'Contact', null, 'a:1:{s:3:"url";s:0:"";}', 'N', 6);
 
 		// build templates
 		$homeTemplate = array('label' => 'Scratch - Home',

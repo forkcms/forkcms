@@ -502,8 +502,11 @@ jsBackend.controls = {
 		var score = 0;
 		var uniqueChars = [];
 
-		// less then 4 chars isn't a valid password
-		if(string.length <= 4) return 'none';
+		// no chars means no password
+		if(string.length == 0) return 'none';
+		
+		// less then 4 chars is just a weak password
+		if(string.length <= 4) return 'weak';
 
 		// loop chars and add unique chars
 		for(var i = 0; i<string.length; i++)

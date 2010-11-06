@@ -9,6 +9,9 @@
 	- moved the code for default RSS-image into FrontendRSS
 - pages: added sorting for extras in dropdowns
 - bugfix: extra's weren't populated when the template was changed
+- bugfix: URL was changed when moved if the page was an direct subaction as reported in http://forkcms.lighthouseapp.com/projects/61890/tickets/29-url-gets-changed-when-dragging-a-page-with-isaction-checked
+- bugfix: contactmodule has no backend, so no button should appear in the pages-module, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/34-edit-module-contact-no-config-file-found#ticket-34-3
+- core: password strength-meter should report passwords with less then 4 charachters as weak, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/33-installer-step5-password-weakness-indicator#ticket-33-3
 
 
 

@@ -1662,7 +1662,7 @@ class BackendPagesModel
 											array($page['meta_id']));
 
 		// rebuild url
-		$newURL = self::getURL($currentURL, $id, $newParent);
+		$newURL = self::getURL($currentURL, $id, $newParent, (isset($page['data']['is_action']) && $page['data']['is_action'] == 'Y'));
 
 		// store
 		$db->update('meta', array('url' => $newURL), 'id = ?', array($page['meta_id']));
