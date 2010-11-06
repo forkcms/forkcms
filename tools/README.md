@@ -25,6 +25,13 @@ It can be executed with the following command
 
 	./minify
 
+### prepare_for_reinstall
+This script is more an internal tool, it removes all files so the Fork is just like it wasn't installed before.
+
+It can be executed with the following command
+
+	./prepare_for_reinstall
+
 ### remove_cache
 The remove_cache-script will clear folders that contain cached files. And can be executed with the following command:
 

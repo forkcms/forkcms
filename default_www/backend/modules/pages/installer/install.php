@@ -152,7 +152,6 @@ class PagesInstall extends ModuleInstaller
 				// insert homepage
 				$this->insertPage(array('id' => 1,
 										'parent_id' => 0,
-										'template_id' => 1,
 										'title' => 'Home',
 										'language' => $language,
 										'allow_move' => 'N',
@@ -204,19 +203,9 @@ class PagesInstall extends ModuleInstaller
 	 */
 	private function insertTemplates()
 	{
-		// insert home template
 		try
 		{
-			$this->getDB()->insert('pages_templates', array('id' => 1, 'label' => 'Home', 'path' => 'core/layout/templates/home.tpl', 'num_blocks' => 3, 'active' => 'Y', 'data' => 'a:3:{s:6:"format";s:11:"[1,2],[1,3]";s:5:"names";a:3:{i:0;s:12:"Main Content";i:1;s:16:"Sidebar: block 1";i:2;s:16:"Sidebar: block 2";}s:14:"default_extras";a:3:{i:0;s:6:"editor";i:1;s:6:"editor";i:2;s:6:"editor";}}'));
-		}
-		catch(Exception $e)
-		{
-			if(substr_count($e->getMessage(), 'Duplicate entry') == 0) throw $e;
-		}
-
-		try
-		{
-			$this->getDB()->insert('pages_templates', array('id' => 2, 'label' => 'Default', 'path' => 'core/layout/templates/default.tpl', 'num_blocks' => 3, 'active' => 'Y', 'data' => 'a:3:{s:6:"format";s:11:"[1,2],[1,3]";s:5:"names";a:3:{i:0;s:12:"Main Content";i:1;s:16:"Sidebar: block 1";i:2;s:16:"Sidebar: block 2";}s:14:"default_extras";a:3:{i:0;s:6:"editor";i:1;s:6:"editor";i:2;s:6:"editor";}}'));
+			$this->getDB()->insert('pages_templates', array('id' => 1, 'label' => 'Default', 'path' => 'core/layout/templates/default.tpl', 'num_blocks' => 3, 'active' => 'Y', 'data' => 'a:3:{s:6:"format";s:11:"[1,2],[1,3]";s:5:"names";a:3:{i:0;s:12:"Main Content";i:1;s:16:"Sidebar: block 1";i:2;s:16:"Sidebar: block 2";}s:14:"default_extras";a:3:{i:0;s:6:"editor";i:1;s:6:"editor";i:2;s:6:"editor";}}'));
 		}
 		catch(Exception $e)
 		{

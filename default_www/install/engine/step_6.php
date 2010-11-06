@@ -222,13 +222,14 @@ class InstallerStep6 extends InstallerStep
 		// init some vars
 		$foldersToLoop = array('/backend/cache', '/frontend/cache');
 		$foldersToIgnore = array('/backend/cache/navigation');
+		$filesToIgnore = array('.gitignore');
 		$filesToDelete = array();
 
 		// loop folders
 		foreach($foldersToLoop as $folder)
 		{
 			// get folderlisting
-			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn'));
+			$subfolders = (array) SpoonDirectory::getList(PATH_WWW . $folder, false, array('.svn', '.gitignore'));
 
 			// loop folders
 			foreach($subfolders as $subfolder)
@@ -240,7 +241,13 @@ class InstallerStep6 extends InstallerStep
 					$files = (array) SpoonFile::getList(PATH_WWW . $folder .'/'. $subfolder);
 
 					// loop the files
-					foreach($files as $file) $filesToDelete[] = PATH_WWW . $folder .'/'. $subfolder .'/'. $file;
+					foreach($files as $file)
+					{
+						if(!in_array($file, $filesToIgnore))
+						{
+							$filesToDelete[] = PATH_WWW . $folder .'/'. $subfolder .'/'. $file;
+						}
+					}
 				}
 			}
 		}

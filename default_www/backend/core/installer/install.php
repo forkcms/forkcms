@@ -367,7 +367,7 @@ class ModuleInstaller
 		if(!isset($revision['id'])) $revision['id'] = (int) $this->getDB()->getVar('SELECT MAX(id) + 1 FROM pages WHERE language = ?', array($revision['language']));
 		if(!$revision['id']) $revision['id'] = 1;
 		if(!isset($revision['user_id'])) $revision['user_id'] = $this->getDefaultUserID();
-		if(!isset($revision['template_id'])) $revision['template_id'] = 2;
+		if(!isset($revision['template_id'])) $revision['template_id'] = 1;
 		if(!isset($revision['type'])) $revision['type'] = 'page';
 		if(!isset($revision['parent_id'])) $revision['parent_id'] = ($revision['type'] == 'page' ? 1 : 0);
 		if(!isset($revision['navigation_title'])) $revision['navigation_title'] = $revision['title'];

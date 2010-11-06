@@ -281,6 +281,10 @@ class FrontendNavigation extends FrontendBaseObject
 				// home is a special item, it should live on the same depth
 				if($page['page_id'] == 1 && !$mergedHome)
 				{
+					// extra checks otherwise exceptions will wbe triggered.
+					if(!isset($navigation[$type][$parentId]) || !is_array($navigation[$type][$parentId])) $navigation[$type][$parentId] = array();
+					if(!isset($navigation[$type][$page['page_id']]) || !is_array($navigation[$type][$page['page_id']])) $navigation[$type][$page['page_id']] = array();
+
 					// add children
 					$navigation[$type][$parentId] = array_merge($navigation[$type][$parentId], $navigation[$type][$page['page_id']]);
 
