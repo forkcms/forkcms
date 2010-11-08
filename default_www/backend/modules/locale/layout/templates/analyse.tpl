@@ -5,21 +5,34 @@
 	<h2>{$lblTranslations|ucfirst}</h2>
 </div>
 
+{option:dgFrontend}
 <div class="datagridHolder">
 	<div class="tableHeading">
 		<h3>{$lblFrontend|ucfirst}</h3>
 	</div>
-	{option:dgFrontend}{$dgFrontend}{/option:dgFrontend}
-	{option:!dgFrontend}<p>{$msgNoItemsAnalyse}</p>{/option:!dgFrontend}
+	{$dgFrontend}
 </div>
+{/option:dgFrontend}
 
+{option:!dgFrontend}
+<h3>{$lblFrontend|ucfirst}</h3>
+<p>{$msgNoItemsAnalyse}</p>
+{/option:!dgFrontend}
+
+
+{option:dgBackend}
 <div class="datagridHolder">
 	<div class="tableHeading">
 		<h3>{$lblBackend|ucfirst}</h3>
 	</div>
-	{option:dgBackend}{$dgBackend}{/option:dgBackend}
-	{option:!dgBackend}<p>{$msgNoItemsAnalyse}</p>{/option:!dgBackend}
+	{$dgBackend}
 </div>
+{/option:dgBackend}
+
+{option:!dgBackend}
+<h3>{$lblBackend|ucfirst}</h3>
+<p>{$msgNoItemsAnalyse}</p>
+{/option:!dgBackend}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}

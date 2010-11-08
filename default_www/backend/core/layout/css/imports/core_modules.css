@@ -490,3 +490,11 @@
 		top: 5px;
 		margin-left: 0;
 	}
+
+	/*
+		Analyse
+	*/
+
+	#locale.localeAnalyse td.used_in li code {
+		font-size: 11px;
+	}

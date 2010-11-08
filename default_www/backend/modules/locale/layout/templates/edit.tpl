@@ -49,6 +49,7 @@
 			</div>
 		</div>
 	</div>
+
 {/form:edit}
 
 {include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
