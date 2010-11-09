@@ -40,7 +40,8 @@ class TagsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'tags', 'mass_action');
 
 		// add extra
-		$tagsID = $this->insertExtra('tags', 'block', 'Tags', null, null, 'N', 3);
+		$tagsID = $this->insertExtra('tags', 'block', 'Tags', null, null, 'N', 30);
+		$this->insertExtra('tags', 'widget', 'TagCloud', null, null, 'N', 31);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)

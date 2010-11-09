@@ -13,6 +13,7 @@
 - bugfix: contactmodule has no backend, so no button should appear in the pages-module, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/34-edit-module-contact-no-config-file-found#ticket-34-3
 - core: password strength-meter should report passwords with less then 4 charachters as weak, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/33-installer-step5-password-weakness-indicator#ticket-33-3
 - core: added a script that enables us to restore the directory/file-structure like Fork wasn't installed before
+- tags: added a tagcloud-widget
 
 
 2.0.1 (2010-11-03)
