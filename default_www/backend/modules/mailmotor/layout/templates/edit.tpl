@@ -186,9 +186,16 @@
 			<div class="heading">
 				<h3>{$lblPreview|ucfirst}</h3>
 			</div>
+			{option:previewURL}
 			<div id="iframeBox">
 				<iframe id="contentBox" src="{$previewURL}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
 			</div>
+			{/option:previewURL}
+			{option:!previewURL}
+			<div class="options">
+				<p><span class="infoMessage">{$errNoModuleLinked}</span></p>
+			</div>
+			{/option:!previewURL}
 		</div>
 
 		<div class="box oneLiner">

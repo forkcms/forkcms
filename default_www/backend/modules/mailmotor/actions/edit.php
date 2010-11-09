@@ -287,8 +287,13 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		// check if we have to redirect back to step 3 (HTML content is not set)
 		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3&amp;error=complete-step-3');
 
+		// get preview URL
+		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
+
+		if(BackendModel::getURLForBlock('mailmotor', 'detail') == BackendModel::getURL(404)) $previewURL = false;
+
 		// parse the preview URL
-		$this->tpl->assign('previewURL', BackendMailmotorModel::getMailingPreviewURL($this->record['id']));
+		$this->tpl->assign('previewURL', $previewURL);
 
 		// create form
 		$this->frm = new BackendForm('step4');

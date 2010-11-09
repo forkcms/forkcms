@@ -1,7 +1,10 @@
 $(function() {
 	$('textarea.inputEditor').tinymce({
-		// Location of TinyMCE script
+		// location of TinyMCE script
 		script_url : '/backend/core/js/tiny_mce/tiny_mce.js',
+		
+		// set height, so we don't have a tiny TinyMCE
+		height: '300',
 
 		// general options
 		mode: 'textareas',
