@@ -119,6 +119,9 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('geturlforblock', array('FrontendTemplateModifiers', 'getURLForBlock'));
 		$this->mapModifier('geturlforextraid', array('FrontendTemplateModifiers', 'getURLForExtraId'));
 
+		// page related
+		$this->mapModifier('getpageinfo', array('FrontendTemplateModifiers', 'getPageInfo'));
+
 		// convert var into navigation
 		$this->mapModifier('getnavigation', array('FrontendTemplateModifiers', 'getNavigation'));
 		$this->mapModifier('getsubnavigation', array('FrontendTemplateModifiers', 'getSubNavigation'));
@@ -438,6 +441,36 @@ class FrontendTemplateModifiers
 
 		// fallback
 		return $var;
+	}
+
+
+	/**
+	 * Get a given field for a page-record
+	 * 	syntax: {$var|getpageinfo:404:'title'}
+	 *
+	 * @return	string
+	 * @param	string $var
+	 * @param	int $pageId						The id of the page to build the URL for.
+	 * @param	string $field					The field to get.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
+	 */
+	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
+	{
+		// redefine
+		$var = (string) $var;
+		$pageId = (int) $pageId;
+		$field = (string) $field;
+		$language = ($language !== null) ? (string) $language : null;
+
+		// get page
+		$page = FrontendNavigation::getPageInfo($pageId);
+
+		// validate
+		if(empty($page)) return '';
+		if(!isset($page[$field])) return '';
+
+		// return
+		return $page[$field];
 	}
 
 
