@@ -16,6 +16,7 @@
 - tags: added a tagcloud-widget
 - core: added an extra modifier to grab page related info (getpageinfo)
 - bugfix: mass checkbox and mass dropdown behaviour now function as intended
+- bugfix: z-index of modal and resize-handle, as reported in http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/37-design-ui-bug-mailmotor#ticket-37-4
 
 
 2.0.1 (2010-11-03)

@@ -102,7 +102,8 @@ a.mailAnalyticsBacklink {
 
 .ui-resizable-handle {
 	height: 10px;
-	bottom:-8px;
+	bottom: -8px;
+	z-index: 999 !important;
 }
 
 .ui-resizable-handle:hover {
