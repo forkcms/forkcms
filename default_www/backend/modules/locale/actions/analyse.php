@@ -60,7 +60,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$return = '<ul>'."\n";
 
 		// loop files
-		foreach($files as $file) $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">'. str_replace(PATH_WWW, '', $file) .'</code></li>'."\n";
+		foreach($files as $file) $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">'. wordwrap(str_replace(PATH_WWW, '', $file), 80, '<br />', true) .'</code></li>'."\n";
 
 		// end
 		$return .= '</ul>';
