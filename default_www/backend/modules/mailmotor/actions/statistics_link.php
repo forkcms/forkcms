@@ -184,7 +184,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 			// validate fields
 			if($txtGroup->isFilled(BL::getError('NameIsRequired')))
 			{
-				if(BackendMailmotorModel::existsGroupByName($txtGroup->getValue())) $txtGroup->addError(BL::getError('GroupExists'));
+				if(BackendMailmotorModel::existsGroupByName($txtGroup->getValue())) $txtGroup->addError(BL::getError('GroupAlreadyExists'));
 			}
 
 			// no errors?

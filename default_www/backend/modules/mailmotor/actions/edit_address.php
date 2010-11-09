@@ -216,7 +216,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 			// validate fields
 			if($txtEmail->isFilled(BL::getError('EmailIsRequired')))
 			{
-				$txtEmail->isEmail(BL::getError('EmailIsValid'));
+				$txtEmail->isEmail(BL::getError('EmailIsInvalid'));
 			}
 
 			// no errors?

@@ -64,6 +64,7 @@ class TagsInstall extends ModuleInstaller
 
 
 		// insert locale (nl)
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'TagCloud', 'tag-cloud');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Edited', 'De tag "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'EditTag', 'bewerk tag "%1$s"');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Deleted', 'De geselecteerde tag(s) werd(en) verwijderd.');
@@ -72,6 +73,7 @@ class TagsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NoSelection', 'Er waren geen tags geselecteerd.');
 
 		// insert locale (en)
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'TagCloud', 'tagcloud');
 		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Edited', 'The tag "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'tags', 'msg', 'EditTag', 'edit tag "%1$s"');
 		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Deleted', 'The selected tag(s) was/were deleted.');
