@@ -582,15 +582,10 @@ class BackendPagesModel
 
 		// we can't delete the default template
 		if($id == BackendModel::getModuleSetting('pages', 'default_template')) return false;
+		if(BackendPagesModel::isTemplateInUse($id)) return false;
 
 		// get db
 		$db = BackendModel::getDB(true);
-
-		// we can't delete templates that are still in use
-		if((int) $db->getVar('SELECT COUNT(i.template_id)
-								FROM pages AS i
-								WHERE i.template_id = ? AND i.status = ?;',
-								array($id, 'active')) > 0) return false;
 
 		// delete
 		$db->delete('pages_templates', 'id = ?', $id);

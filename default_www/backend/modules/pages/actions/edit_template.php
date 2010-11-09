@@ -90,15 +90,29 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 		// init var
 		$maximumBlocks = 20;
+		$defaultId = BackendModel::getModuleSetting('pages', 'default_template');
 
 		// create elements
 		$this->frm->addText('label', $this->record['label']);
 		$this->frm->addText('file', str_replace('core/layout/templates/', '', $this->record['path']));
 		$this->frm->addDropdown('num_blocks', array_combine(range(1, $maximumBlocks), range(1, $maximumBlocks)), $this->record['num_blocks']);
-		if(BackendPagesModel::isTemplateInUse($this->id)) $this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
 		$this->frm->addTextarea('format', str_replace('],[', "],\n[", $this->record['data']['format']));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
-		$this->frm->addCheckbox('default', ($this->record['id'] == BackendModel::getModuleSetting('pages', 'default_template')));
+		$this->frm->addCheckbox('default', ($this->record['id'] == $defaultId));
+
+		// if this is the default template we can't alter the active/default state
+		if(($this->record['id'] == $defaultId))
+		{
+			$this->frm->getField('active')->setAttributes(array('disabled' => 'disabled'));
+			$this->frm->getField('default')->setAttributes(array('disabled' => 'disabled'));
+		}
+
+		// if the template is in use we cant alter the active state or the number of blocks
+		if(BackendPagesModel::isTemplateInUse($this->id))
+		{
+			$this->frm->getField('num_blocks')->setAttributes(array('disabled' => 'disabled'));
+			$this->frm->getField('active')->setAttributes(array('disabled' => 'disabled'));
+		}
 
 		// init vars
 		$names = array();
@@ -208,7 +222,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 				$template['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
-				if(BackendPagesModel::isTemplateInUse($this->id)) $template['num_blocks'] = $this->record['num_blocks'];
+				// if this is the default template make the template active
+				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $template['active'] = 'Y';
+
+				// if the template is in use we can't alter the number of blocks or de-activate it
+				if(BackendPagesModel::isTemplateInUse($this->id))
+				{
+					$template['num_blocks'] = $this->record['num_blocks'];
+					$template['active'] = 'Y';
+				}
 
 				// loop fields
 				for($i = 1; $i <= $template['num_blocks']; $i++)
@@ -224,7 +246,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				BackendPagesModel::updateTemplate($this->id, $template);
 
 				// set default template
-				if($this->frm->getField('default')->getChecked()) BackendModel::setModuleSetting('pages', 'default_template', $this->id);
+				if($this->frm->getField('default')->getChecked() || BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) BackendModel::setModuleSetting('pages', 'default_template', $this->id);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited-template&var='. urlencode($template['label']));
