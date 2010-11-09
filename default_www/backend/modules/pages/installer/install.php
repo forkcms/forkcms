@@ -437,7 +437,7 @@ class PagesInstall extends ModuleInstaller
 		$this->setSetting('pages', 'meta_navigation', true);
 		$this->setSetting('pages', 'requires_akismet', false);
 		$this->setSetting('pages', 'requires_google_maps', false);
-		$this->setSetting('pages', 'default_template', 2);
+		$this->setSetting('pages', 'default_template', 1);
 	}
 }
 
