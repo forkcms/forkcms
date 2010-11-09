@@ -1,5 +1,11 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
+/**
+ * Backend related objects
+ * 
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ */
 jsBackend =
 {
 	// datamembers
@@ -157,8 +163,8 @@ jsBackend.controls = {
 		jsBackend.controls.bindConfirm();
 		jsBackend.controls.bindFakeDropdown();
 		jsBackend.controls.bindFullWidthSwitch();
-		jsBackend.controls.bindMassAction();
 		jsBackend.controls.bindMassCheckbox();
+		jsBackend.controls.bindMassAction();
 		jsBackend.controls.bindPasswordStrengthMeter();
 		jsBackend.controls.bindWorkingLanguageSelection();
 		jsBackend.controls.bindTableCheckbox();
@@ -332,7 +338,8 @@ jsBackend.controls = {
 	bindFullWidthSwitch: function()
 	{
 		$('#fullwidthSwitch a').toggle(
-			function(evt) {
+			function(evt)
+			{
 				// prevent default behaviour
 				evt.preventDefault();
 
@@ -376,6 +383,8 @@ jsBackend.controls = {
 				table.find('.massAction select').removeClass('disabled').attr('disabled', '');
 				table.find('.massAction .submitButton').removeClass('disabledButton').attr('disabled', '');
 			}
+			
+			// nothing checked
 			else
 			{
 				table.find('.massAction select').addClass('disabled').attr('disabled', 'disabled');
@@ -396,21 +405,20 @@ jsBackend.controls = {
 				resizable: false,
 				modal: true,
 				buttons: {
-					'{$lblOK|ucfirst}': function() {
+					'{$lblOK|ucfirst}': function()
+					{
 						// close dialog
 						$(this).dialog('close');
 
 						// submit the form
 						$($('*[rel='+ $(this).attr('id') +']').parents('form')).submit();
 					},
-					'{$lblCancel|ucfirst}': function()
-					{
-						$(this).dialog('close');
-					}
+					'{$lblCancel|ucfirst}': function(){ $(this).dialog('close'); }
 				},
-				open: function(evt) {
+				open: function(evt)
+				{
 					// set focus on first button
-					if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
+					if($(this).next().find('button').length > 0){ $(this).next().find('button')[0].focus(); }
 				}
 			});
 		});
@@ -418,29 +426,35 @@ jsBackend.controls = {
 		// hijack the form
 		$('.tableOptions .massAction .submitButton').live('click', function(evt)
 		{
-			// get the selected element
-			if($(this).parents('.massAction').find('select[name=action] option:selected').length > 0)
+			// prevent default action
+			evt.preventDefault();
+			
+			// not disabled
+			if(!$(this).is('.disabledButton'))
 			{
-				// prevent default action
-				evt.preventDefault();
-				var element = $(this).parents('.massAction').find('select[name=action] option:selected');
-
-				// if the rel-attribute exists we should show the dialog
-				if(typeof element.attr('rel') != 'undefined')
+				// get the selected element
+				if($(this).parents('.massAction').find('select[name=action] option:selected').length > 0)
 				{
-					// get id
-					var id = element.attr('rel');
-
-					// open dialog
-					$('#'+ id).dialog('open');
+					// get action element
+					var element = $(this).parents('.massAction').find('select[name=action] option:selected');
+	
+					// if the rel-attribute exists we should show the dialog
+					if(typeof element.attr('rel') != 'undefined')
+					{
+						// get id
+						var id = element.attr('rel');
+	
+						// open dialog
+						$('#'+ id).dialog('open');
+					}
+	
+					// no confirm
+					else $($(this).parents('form')).submit();
 				}
-
+	
 				// no confirm
 				else $($(this).parents('form')).submit();
 			}
-
-			// no confirm
-			else $($(this).parents('form')).submit();
 		});
 	},
 
@@ -448,6 +462,7 @@ jsBackend.controls = {
 	// check all checkboxes with one checkbox in the tableheader
 	bindMassCheckbox: function()
 	{
+		// mass checkbox changed
 		$('th .checkboxHolder input:checkbox').bind('change', function(evt)
 		{
 			// check or uncheck all the checkboxes in this datagrid
@@ -457,10 +472,24 @@ jsBackend.controls = {
 			if($(this).is(':checked')) $($(this).parents().filter('table')[0]).find('tbody tr').addClass('selected');
 			else $($(this).parents().filter('table')[0]).find('tbody tr').removeClass('selected');
 		});
+		
+		// single checkbox changed
+		$('td.checkbox input:checkbox').bind('change', function(evt)
+		{
+			// check mass checkbox
+			if($(this).closest('table').find('td.checkbox input:checkbox').length == $(this).closest('table').find('td.checkbox input:checkbox:checked').length)
+			{
+				$(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', 'checked'); 
+			}
+			
+			// uncheck mass checkbox
+			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', ''); }
+		});
 	},
 
 
-	bindPasswordStrengthMeter: function() {
+	bindPasswordStrengthMeter: function()
+	{
 		if($('.passwordStrength').length > 0)
 		{
 			$('.passwordStrength').each(function()
@@ -502,16 +531,13 @@ jsBackend.controls = {
 		var score = 0;
 		var uniqueChars = [];
 
-		// no chars means no password
-		if(string.length == 0) return 'none';
-		
-		// less then 4 chars is just a weak password
-		if(string.length <= 4) return 'weak';
+		// less then 4 chars isn't a valid password
+		if(string.length <= 4) return 'none';
 
 		// loop chars and add unique chars
 		for(var i = 0; i<string.length; i++)
 		{
-			if($.inArray(string.charAt(i), uniqueChars) == -1) { uniqueChars.push(string.charAt(i)); }
+			if($.inArray(string.charAt(i), uniqueChars) == -1){ uniqueChars.push(string.charAt(i)); }
 		}
 
 		// less then 3 unique chars is just weak

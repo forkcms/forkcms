@@ -15,6 +15,7 @@
 - core: added a script that enables us to restore the directory/file-structure like Fork wasn't installed before
 - tags: added a tagcloud-widget
 - core: added an extra modifier to grab page related info (getpageinfo)
+- bugfix: mass checkbox and mass dropdown behaviour now function as intended
 
 
 2.0.1 (2010-11-03)
