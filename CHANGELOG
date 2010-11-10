@@ -19,6 +19,7 @@
 - bugfix: z-index of modal and resize-handle, as reported in http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/37-design-ui-bug-mailmotor#ticket-37-4
 - mailmotor: corrected some labels
 - mailmotor: added a warning if the module isn't linked (so preview won't trigger a 404)
+- bugfix: FrontendRSS now handles an encoded RSS title as intended
 
 
 2.0.1 (2010-11-03)
