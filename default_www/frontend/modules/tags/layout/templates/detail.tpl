@@ -7,18 +7,14 @@
 	<div class="inner">
 		<div class="bd">
 			{option:tagsModules}
-				<ul>
-					{iteration:tagsModules}
-						<li>
-							{$tagsModules.name} {* Module name as label *}
-							<ul>
-								{iteration:tagsModules.items}
-									<li><a href="{$items.url}">{$items.title}</a></li>
-								{/iteration:tagsModules.items}
-							</ul>
-						</li>
-					{/iteration:tagsModules}
-				</ul>
+				{iteration:tagsModules}
+					<h2>{$tagsModules.name}</h2>
+					<ul>
+						{iteration:tagsModules.items}
+							<li><a href="{$items.url}">{$items.title}</a></li>
+						{/iteration:tagsModules.items}
+					</ul>
+				{/iteration:tagsModules}
 			{/option:tagsModules}
 		</div>
 	</div>

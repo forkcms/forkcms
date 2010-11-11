@@ -1,7 +1,5 @@
 <?php
 
-// @later davy - code herwerken
-
 /**
  * FrontendTagsDetail
  *
@@ -11,6 +9,7 @@
  * @subpackage	tags
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTagsDetail extends FrontendBaseBlock
@@ -68,25 +67,23 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		// fetch modules
 		$this->modules = FrontendTagsModel::getModulesForTag($this->id);
 
-		require_once FRONTEND_PATH .'/modules/blog/engine/model.php';
-
 		// loop modules
 		foreach($this->modules as $module)
 		{
-			if($module == 'blog')
+			// check if this module actually is prepared to handle searches (well it should, because else there shouldn't be any search indices)
+			if(method_exists('Frontend'. SpoonFilter::toCamelCase($module) .'Model', 'getForTags'))
 			{
+				// get the ids of the items linked to the tag
 				$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
 																		FROM modules_tags
 																		WHERE module = ? AND tag_id = ?;',
-																		array('blog', $this->id));
+																		array($module, $this->id));
 
-				$this->record[] = array('name' => $module, 'items' => FrontendBlogModel::getForTags($otherIds));
+				// get the items that are linked to the tags
+				$items = (array) call_user_func(array('Frontend'. SpoonFilter::toCamelCase($module) .'Model', 'getForTags'), $otherIds);
 
-			}
-
-			elseif($module == 'pages')
-			{
-
+				// add into results array
+				if(!empty($items)) $this->record[] = array('name' => $module, 'items' => $items);
 			}
 		}
 	}

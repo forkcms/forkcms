@@ -8,6 +8,7 @@
  * @subpackage	contact
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendContactIndex extends FrontendBaseBlock
@@ -130,7 +131,7 @@ class FrontendContactIndex extends FrontendBaseBlock
 				try
 				{
 					// add email
-					FrontendMailer::addEmail(FL::getMessage('ContactSubject'), FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $variables, null, null, null, null, $email, $author);
+					FrontendMailer::addEmail(FL::getMessage('ContactSubject') .': '. $author, FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $variables, null, null, null, null, $email, $author);
 
 					// redirect
 					$this->redirect(FrontendNavigation::getURLForBlock('contact') .'?sent=true');

@@ -20,6 +20,10 @@
 - mailmotor: corrected some labels
 - mailmotor: added a warning if the module isn't linked (so preview won't trigger a 404)
 - bugfix: FrontendRSS now handles an encoded RSS title as intended
+- core: added some labels
+- core: added an new modifier "formatfloat"
+- contact: added author in the subject of the mails, so spam can be detected without checking the email, and Mail.app won't mess up threads
+- tags: fixed some todo's, fixed some stupid code, wrote markup that can be used in a real life project for the default template
 
 
 2.0.1 (2010-11-03)

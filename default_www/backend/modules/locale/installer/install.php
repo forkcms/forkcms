@@ -8,7 +8,7 @@
  * @subpackage	locale
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class LocaleInstall extends ModuleInstaller
@@ -843,12 +843,15 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Comments', 'reacties');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Date', 'datum');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Email', 'e-mail');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EN', 'Engels');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'FR', 'Frans');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'GoTo', 'ga naar');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'GoToPage', 'ga naar pagina');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'In', 'in');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Message', 'bericht');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Name', 'naam');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextPage', 'volgende pagina');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NL', 'Nederlands');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'On', 'op');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousPage', 'vorige pagina');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentComments', 'recente reacties');
@@ -866,6 +869,9 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'CommentsOn', 'Reacties op %1$s');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EN', 'Engels');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'FR', 'Frans');
+		$this->insertLocale('nl', 'frontent', 'core', 'msg', 'NL', 'Nederlands');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NotificationSubject', 'Verwittiging');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er zijn geen resultaten.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'TagsNoItems', 'Er werden nog geen tags gebruikt.');
@@ -897,12 +903,15 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Comments', 'comments');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Date', 'date');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Email', 'e-mail');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'EN', 'English');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'FR', 'French');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'GoTo', 'go to');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'GoToPage', 'go to page');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'In', 'in');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Message', 'message');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Name', 'name');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NextPage', 'next page');
+		$this->insertLocale('en', 'frontent', 'core', 'lbl', 'NL', 'Dutch');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'On', 'on');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'PreviousPage', 'previous page');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentComments', 'recent comments');
@@ -920,6 +929,9 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'CommentsOn', 'Comments on %1$s');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Your e-mail was sent.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contact form.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EN', 'English');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'FR', 'French');
+		$this->insertLocale('en', 'frontent', 'core', 'msg', 'NL', 'Dutch');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'NotificationSubject', 'Notification');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SearchNoItems', 'There were no results.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'TagsNoItems', 'No tags were used.');

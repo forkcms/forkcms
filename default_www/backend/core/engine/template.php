@@ -12,7 +12,7 @@
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplate extends SpoonTemplate
@@ -113,7 +113,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));
 
 		// string
-		$this->mapModifier('formatFloat', array('BackendTemplateModifiers', 'formatFloat'));
+		$this->mapModifier('formatfloat', array('BackendTemplateModifiers', 'formatFloat'));
 		$this->mapModifier('truncate', array('BackendTemplateModifiers', 'truncate'));
 
 		// debug stuff
@@ -360,7 +360,7 @@ class BackendTemplate extends SpoonTemplate
  * @package		backend
  * @subpackage	template
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplateModifiers

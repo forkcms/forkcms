@@ -11,7 +11,7 @@
  * @package		frontend
  * @subpackage	template
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTemplate extends SpoonTemplate
@@ -130,6 +130,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'rand'));
 
 		// string
+		$this->mapModifier('formatfloat', array('FrontendTemplateModifiers', 'formatFloat'));
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
 
@@ -289,7 +290,7 @@ class FrontendTemplate extends SpoonTemplate
  * @package		frontend
  * @subpackage	template
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTemplateModifiers
@@ -359,6 +360,24 @@ class FrontendTemplateModifiers
 				// format as Euro
 				return '€ '. number_format((float) $var, $decimals, ',', ' ');
 		}
+	}
+
+
+	/**
+	 * Format a number as a float
+	 * @later	grab settings from database
+	 *
+	 * @return	string
+	 * @param	float $number				The number to format
+	 * @param	int[optional] $decimals		The number of decimals
+	 */
+	public static function formatFloat($number, $decimals = 2)
+	{
+		// redefine
+		$number = (float) $number;
+		$decimals = (int) $decimals;
+
+		return number_format($number, $decimals, '.', ' ');
 	}
 
 

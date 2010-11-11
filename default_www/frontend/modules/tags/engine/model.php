@@ -1,7 +1,5 @@
 <?php
 
-// @todo davy - alfabet vergeten?
-
 /**
  * FrontendTagsModel
  * In this file we store all generic functions
@@ -10,6 +8,7 @@
  * @subpackage	tags
  *
  * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTagsModel
@@ -72,7 +71,13 @@ class FrontendTagsModel
 		return $return;
 	}
 
-	// @todo davy - awel waar is de comment?
+
+	/**
+	 * Get the tag-id for a given URL
+	 *
+	 * @return	int
+	 * @param	string $URL		The URL to get the id for.
+	 */
 	public static function getIdByURL($URL)
 	{
 		// exists
@@ -80,18 +85,6 @@ class FrontendTagsModel
 													FROM tags
 													WHERE url = ?;',
 													(string) $URL);
-	}
-
-
-	public static function getModulesForTag($tagId)
-	{
-		// get modules
-		return (array) FrontendModel::getDB()->getColumn('SELECT module
-															FROM modules_tags
-															WHERE tag_id = ?
-															GROUP BY module
-															ORDER BY module ASC;',
-															(int) $tagId);
 	}
 
 
@@ -138,6 +131,24 @@ class FrontendTagsModel
 
 		// return
 		return $return;
+	}
+
+
+	/**
+	 * Get the modules that used a tag.
+	 *
+	 * @return	array
+	 * @param	int $tagId
+	 */
+	public static function getModulesForTag($tagId)
+	{
+		// get modules
+		return (array) FrontendModel::getDB()->getColumn('SELECT module
+															FROM modules_tags
+															WHERE tag_id = ?
+															GROUP BY module
+															ORDER BY module ASC;',
+															(int) $tagId);
 	}
 
 

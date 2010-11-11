@@ -3,7 +3,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 /**
  * Backend related objects
  * 
- * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend =
@@ -413,12 +413,15 @@ jsBackend.controls = {
 						// submit the form
 						$($('*[rel='+ $(this).attr('id') +']').parents('form')).submit();
 					},
-					'{$lblCancel|ucfirst}': function(){ $(this).dialog('close'); }
+					'{$lblCancel|ucfirst}': function()
+					{
+						$(this).dialog('close');
+					}
 				},
 				open: function(evt)
 				{
 					// set focus on first button
-					if($(this).next().find('button').length > 0){ $(this).next().find('button')[0].focus(); }
+					if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
 				}
 			});
 		});
@@ -451,7 +454,7 @@ jsBackend.controls = {
 					// no confirm
 					else $($(this).parents('form')).submit();
 				}
-	
+
 				// no confirm
 				else $($(this).parents('form')).submit();
 			}
@@ -531,13 +534,16 @@ jsBackend.controls = {
 		var score = 0;
 		var uniqueChars = [];
 
-		// less then 4 chars isn't a valid password
-		if(string.length <= 4) return 'none';
+		// no chars means no password
+		if(string.length == 0) return 'none';
+		
+		// less then 4 chars is just a weak password
+		if(string.length <= 4) return 'weak';
 
 		// loop chars and add unique chars
 		for(var i = 0; i<string.length; i++)
 		{
-			if($.inArray(string.charAt(i), uniqueChars) == -1){ uniqueChars.push(string.charAt(i)); }
+			if($.inArray(string.charAt(i), uniqueChars) == -1) { uniqueChars.push(string.charAt(i)); }
 		}
 
 		// less then 3 unique chars is just weak

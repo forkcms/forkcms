@@ -107,7 +107,7 @@ class Init
 		$exceptions['backendbaseconfig'] = BACKEND_CORE_PATH .'/engine/base.php';
 		$exceptions['backendbasecronjob'] = BACKEND_CORE_PATH .'/engine/base.php';
 		$exceptions['backendpagesmodel'] = BACKEND_MODULES_PATH .'/pages/engine/model.php';
-		$exceptions['fl'] = FRONTEND_CORE_PATH .'/engine/language.php'; // @todo tijs - bekijk of dit juist geplaatst is
+		$exceptions['fl'] = FRONTEND_CORE_PATH .'/engine/language.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
