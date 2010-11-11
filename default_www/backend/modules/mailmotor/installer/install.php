@@ -259,7 +259,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Subject', 'subject');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateDefault', 'default template');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateEmpty', 'empty template');
-		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateFork', Fork CMS template');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateFork', 'Fork CMS template');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TemplateLanguage', 'template language');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'TotalSentMailings', 'sent mailings');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'UnopenedMailings', 'unopened mailings');
@@ -491,7 +491,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'Subject', 'onderwerp');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateDefault', 'default template');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateEmpty', 'leeg template');
-		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateFork', Fork CMS template');
+		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateFork', 'Fork CMS template');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TemplateLanguage', 'taal template');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'TotalSentMailings', 'verzonden mailings');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'UnopenedMailings', 'ongeopende mailings');
