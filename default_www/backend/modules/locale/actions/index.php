@@ -119,6 +119,30 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
+	 * Get a label
+	 *
+	 * @return	string
+	 * @param	string $type		The type to get a label for.
+	 */
+	public function getType($type)
+	{
+		return BackendLanguage::getMessage(mb_strtoupper((string) $type), 'core');
+	}
+
+
+	/**
+	 * Get the name of the languages
+	 *
+	 * @return	string
+	 * @param	string $language
+	 */
+	public function getLanguage($language)
+	{
+		return BackendLanguage::getMessage(mb_strtoupper((string) $language), 'core');
+	}
+
+
+	/**
 	 * Load the datagrid
 	 *
 	 * @return void
@@ -149,6 +173,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 		// update value
 		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'truncate'), array('[value]', 30), 'value', true);
+		$this->datagrid->setColumnFunction(array(__CLASS__, 'getLanguage'), array('[language]'), 'language', true);
+		$this->datagrid->setColumnFunction(array(__CLASS__, 'getType'), array('[type]'), 'type', true);
 
 		// add columns
 		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&amp;id=[id]', BL::getLabel('Edit'));

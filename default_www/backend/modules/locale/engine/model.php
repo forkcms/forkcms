@@ -177,8 +177,14 @@ class BackendLocaleModel
 		// fetch types
 		$types = BackendModel::getDB()->getEnumValues('locale', 'type');
 
+		// init
+		$labels = $types;
+
+		// loop and build labels
+		foreach($labels as &$row) $row = ucfirst(BackendLanguage::getMessage(mb_strtoupper($row), 'core'));
+
 		// build array
-		return array_combine($types, $types);
+		return array_combine($types, $labels);
 	}
 
 

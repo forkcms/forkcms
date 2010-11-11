@@ -690,7 +690,7 @@ class BackendDataGridFunctions
 	 * @param	float $number				The number to format
 	 * @param	int[optional] $decimals		The number of decimals
 	 */
-	public static function formatAsFloat($number, $decimals = 2)
+	public static function formatFloat($number, $decimals = 2)
 	{
 		// redefine
 		$number = (float) $number;
