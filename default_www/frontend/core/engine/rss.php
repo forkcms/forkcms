@@ -33,6 +33,21 @@ class FrontendRSS extends SpoonFeedRSS
 		$this->setCopyright(SpoonDate::getDate('Y') .' '. FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE));
 		$this->setGenerator(SITE_RSS_GENERATOR);
 		$this->setImage(SITE_URL . FRONTEND_CORE_URL .'/layout/images/rss_image.png', $title, $link);
+
+		// theme was set
+		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
+		{
+			// theme name
+			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
+
+			// theme rss image exists
+			if(SpoonFile::exists(PATH_WWW .'/frontend/themes/'. $theme .'/core/images/rss_image.png'))
+			{
+				// rss
+				$this->setImage(SITE_URL . '/frontend/themes/'. $theme .'/core/images/rss_image.png', $title, $link);
+			}
+		}
+
 	}
 }
 
