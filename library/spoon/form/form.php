@@ -925,11 +925,12 @@ class SpoonForm
 	 * Returns the form's status.
 	 *
 	 * @return	bool
+	 * @param	bool[optional] $revalidate
 	 */
-	public function isCorrect()
+	public function isCorrect($revalidate = false)
 	{
 		// not parsed
-		if(!$this->validated) $this->validate();
+		if(!$this->validated || (bool) $revalidate) $this->validate();
 
 		// return current status
 		return $this->correct;
@@ -1087,42 +1088,38 @@ class SpoonForm
 	 */
 	public function validate()
 	{
-		// not parsed
-		if(!$this->validated)
+		// define errors
+		$errors = '';
+
+		// if we use tokens, we validate them here
+		if($this->getUseToken())
 		{
-			// define errors
-			$errors = '';
+			// token not available?
+			if(!SpoonSession::exists('form_token')) $errors .= $this->tokenError;
 
-			// if we use tokens, we validate them here
-			if($this->getUseToken())
+			// token was found
+			else
 			{
-				// token not available?
-				if(!SpoonSession::exists('form_token')) $errors .= $this->tokenError;
-
-				// token was found
-				else
-				{
-					// compare tokens
-					if($this->getField('form_token')->getValue() != SpoonSession::get('form_token')) $errors .= $this->tokenError;
-				}
+				// compare tokens
+				if($this->getField('form_token')->getValue() != SpoonSession::get('form_token')) $errors .= $this->tokenError;
 			}
-
-			// loop objects
-			foreach($this->objects as $oElement)
-			{
-				// check, since some objects don't have this method!
-				if(method_exists($oElement, 'getErrors')) $errors .= $oElement->getErrors();
-			}
-
-			// affect correct status
-			if(trim($errors) != '') $this->correct = false;
-
-			// main form errors?
-			if(trim($this->getErrors()) != '') $this->correct = false;
-
-			// update parsed status
-			$this->validated = true;
 		}
+
+		// loop objects
+		foreach($this->objects as $oElement)
+		{
+			// check, since some objects don't have this method!
+			if(method_exists($oElement, 'getErrors')) $errors .= $oElement->getErrors();
+		}
+
+		// affect correct status
+		if(trim($errors) != '') $this->correct = false;
+
+		// main form errors?
+		if(trim($this->getErrors()) != '') $this->correct = false;
+
+		// update parsed status
+		$this->validated = true;
 	}
 }
 

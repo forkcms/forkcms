@@ -25,6 +25,7 @@
  *
  *
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Bram Van Damme <bramus@bram.us>
  * @since		1.1.1
  */
 class SpoonRESTClient
@@ -69,7 +70,7 @@ class SpoonRESTClient
 	 * @param	array[optional] $parameters
 	 * @param	string[optional] $method
 	 */
-	public function execute($url, array $parameters = null, $method = 'GET')
+	public function execute($url, array $parameters = null, $method = 'GET', array $cURLoptions = null)
 	{
 		// check if curl is available
 		if(!function_exists('curl_init')) throw new SpoonFileException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
@@ -90,6 +91,13 @@ class SpoonRESTClient
 		$options[CURLOPT_USERAGENT] = $this->getUserAgent();
 		$options[CURLOPT_TIMEOUT] = $this->getTimeout();
 		$options[CURLOPT_RETURNTRANSFER] = true;
+
+		// any extra curl options provided?
+		if($cURLoptions !== null)
+		{
+			// loop the extra options, and set 'm
+			foreach($cURLoptions as $key => $value) $options[$key] = $value;
+		}
 
 		// set headers
 		$headers = $this->getCustomHeaders();

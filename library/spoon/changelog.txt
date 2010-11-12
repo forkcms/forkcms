@@ -1,6 +1,6 @@
-1.2.1 (xxxx-xx-xx)
+1.3.0 (xxxx-xx-xx)
 ----
-- Template options may now start with an integer. eg {option:404}
+- Template options may now start with an integer e.g. {option:404}
 - The WHERE clause in SpoonDatabase::update and SpoonDatabase::delete may now be null instead of an empty string.
 - Added option for headers.sortingIcon in datagrid.tpl - empty <img> elements are no longer shown for default sorting settings.
 - Fixed the sorting problem when setting the sortParameter option in a datagrid.
@@ -35,6 +35,10 @@
 - SpoonDatabase now prefixes fields with their tablename (insert/update)
 - Exceptions now show the user-agent, if we can find it in the $_SERVER array
 - Spoondatabase can now be used with custom ports
+- SpoonTemplate does allow empty strings in the cycle-tag from now on.
+- SpoonLocale::getCountry added, which allows you to fetch a country in a specific language.
+- SpoonLocale: getMonth and getWeekDay added as well.
+- SpoonFile::delete now allows you to delete an array of files.
 
 
 1.2.0 (2010-05-18)

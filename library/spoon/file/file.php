@@ -32,14 +32,18 @@
 class SpoonFile
 {
 	/**
-	 * Deletes a file.
+	 * Deletes one or more files.
 	 *
 	 * @return	bool				True if the file was deleted, false if not.
-	 * @param	string $filename	Full path (including filename) of the file that should be deleted.
+	 * @param	mixed $filename		Full path (including filename) of the file(s) that should be deleted.
 	 */
 	public static function delete($filename)
 	{
-		return @unlink((string) $filename);
+		// an array
+		if(is_array($filename)) foreach($filename as $file) @unlink((string) $file);
+
+		// string
+		else return @unlink((string) $filename);
 	}
 
 

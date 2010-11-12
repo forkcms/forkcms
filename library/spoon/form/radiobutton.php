@@ -274,18 +274,21 @@ class SpoonFormRadiobutton extends SpoonFormElement
 			// end input tag
 			$element[$name] .= ' />';
 
+			// clone into element
+			$element['element'] = $element[$name];
+
 			// add checkbox
-			$radioButtons[] = $element;
+			$radiobuttons[] = $element;
 		}
 
 		// template
 		if($template !== null)
 		{
-			$template->assign($this->name, $radioButtons);
+			$template->assign($this->name, $radiobuttons);
 			$template->assign('rbt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
-		return $radioButtons;
+		return $radiobuttons;
 	}
 
 
