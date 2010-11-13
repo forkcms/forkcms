@@ -647,12 +647,6 @@ class BackendBlogModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// calculate new id
-		$newId = self::getMaximumId() + 1;
-
-		// build array
-		$item['id'] = $newId;
-
 		// insert and return the insertId
 		$db->insert('blog_posts', $item);
 

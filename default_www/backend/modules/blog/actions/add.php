@@ -1,14 +1,15 @@
 <?php
 
 /**
- * BackendBlogAddCategory
- * This is the add-action, it will display a form to create a new post
+ * BackendBlogAdd
+ * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
  * @subpackage	blog
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogAdd extends BackendBaseActionAdd
