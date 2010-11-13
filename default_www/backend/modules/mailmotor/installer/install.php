@@ -8,6 +8,7 @@
  * @subpackage	mailmotor
  *
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class MailmotorInstall extends ModuleInstaller
