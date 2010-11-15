@@ -1,31 +1,32 @@
 2.0.2 (xxxx-xx-xx)
 -----
-- added .gitignore files (AGAIN, plz fix your shit...)
-- upgraded jQuery and jQuery UI
-- upgrades Spoon to reflect the latest changes on their repo (extra methods in SpoonLocale)
-- core: added a modifier to format a string as currency (frontend)
-- core: added a modifier to format a string as a float (backend)
-- blog: when the rss_image.png exists in your theme, it will automatically be used in your rss feed.
+- Added .gitignore files again
+- Upgraded jQuery and jQuery UI to latest version
+- Upgrades Spoon to reflect the latest changes on their repo (extra methods in SpoonLocale)
+- Core: added a modifier to format a string as currency (frontend)
+- Core: added a modifier to format a string as a float (backend)
+- Blog: when the rss_image.png exists in your theme, it will automatically be used in your rss feed.
 	- moved the code for default RSS-image into FrontendRSS
-- pages: added sorting for extras in dropdowns
-- bugfix: extra's weren't populated when the template was changed
-- bugfix: URL was changed when moved if the page was an direct subaction as reported in http://forkcms.lighthouseapp.com/projects/61890/tickets/29-url-gets-changed-when-dragging-a-page-with-isaction-checked
-- bugfix: contactmodule has no backend, so no button should appear in the pages-module, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/34-edit-module-contact-no-config-file-found#ticket-34-3
-- core: password strength-meter should report passwords with less then 4 charachters as weak, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/33-installer-step5-password-weakness-indicator#ticket-33-3
-- core: added a script that enables us to restore the directory/file-structure like Fork wasn't installed before
-- tags: added a tagcloud-widget
-- core: added an extra modifier to grab page related info (getpageinfo)
-- bugfix: mass checkbox and mass dropdown behaviour now function as intended
-- bugfix: z-index of modal and resize-handle, as reported in http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/37-design-ui-bug-mailmotor#ticket-37-4
-- mailmotor: corrected some labels
-- mailmotor: added a warning if the module isn't linked (so preview won't trigger a 404)
-- bugfix: FrontendRSS now handles an encoded RSS title as intended
-- core: added some labels
-- core: added an new modifier "formatfloat"
-- contact: added author in the subject of the mails, so spam can be detected without checking the email, and Mail.app won't mess up threads
-- tags: fixed some todo's, fixed some stupid code, wrote markup that can be used in a real life project for the default template
-- locale: Implemented some remarks on Locale-module, see http://www.fork-cms.com/blog/detail/the-translations-module
-
+- Pages: added sorting for extras in dropdowns
+- Bugfix: extra's weren't populated when the template was changed
+- Bugfix: URL was changed when moved if the page was an direct subaction as reported in http://forkcms.lighthouseapp.com/projects/61890/tickets/29-url-gets-changed-when-dragging-a-page-with-isaction-checked
+- Bugfix: contactmodule has no backend, so no button should appear in the pages-module, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/34-edit-module-contact-no-config-file-found#ticket-34-3
+- Core: password strength-meter should report passwords with less then 4 charachters as weak, as reported on http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/33-installer-step5-password-weakness-indicator#ticket-33-3
+- Core: added a script that enables us to restore the directory/file-structure like Fork wasn't installed before
+- Tags: added a tagcloud-widget
+- Core: added an extra modifier to grab page related info (getpageinfo)
+- Bugfix: mass checkbox and mass dropdown behaviour now function as intended
+- Bugfix: z-index of modal and resize-handle, as reported in http://forkcms.lighthouseapp.com/projects/61890-fork-cms/tickets/37-design-ui-bug-mailmotor#ticket-37-4
+- Mailmotor: corrected some labels
+- Mailmotor: added a warning if the module isn't linked (so preview won't trigger a 404)
+- Bugfix: FrontendRSS now handles an encoded RSS title as intended
+- Core: added some labels
+- Core: added an new modifier "formatfloat"
+- Contact: added author in the subject of the mails, so spam can be detected without checking the email, and Mail.app won't mess up threads
+- Tags: fixed some todo's, fixed some stupid code, wrote markup that can be used in a real life project for the default template
+- Locale: Implemented some remarks on Locale-module, see http://www.fork-cms.com/blog/detail/the-translations-module
+- Styled analyze function of locale module
+- Added docs page on installing
 
 2.0.1 (2010-11-03)
 -----
