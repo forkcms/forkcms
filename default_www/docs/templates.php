@@ -95,7 +95,8 @@
 					        `-- core
 					        `-- modules
 					            `-- contact
-					                `-- index.tpl
+					                `-- templates
+					                    `-- index.tpl
 				</pre>
 
 				<p>When a page is requested, the template engine kicks in. It will first look for the the a file called index.tpl in your own theme. If it can't find the template, it will fallback to the defaults.</p>

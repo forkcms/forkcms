@@ -268,7 +268,7 @@ class InstallerStep2 extends InstallerStep
 
 		// define constants
 		if(!defined('PATH_WWW')) define('PATH_WWW', dirname(dirname(realpath($_SERVER['SCRIPT_FILENAME']))));
-		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', $pathLibrary);
+		if(!defined('PATH_LIBRARY')) define('PATH_LIBRARY', (string) $pathLibrary);
 
 		// update session
 		if(!isset($_SESSION['path_library'])) $_SESSION['path_library'] = PATH_LIBRARY;
