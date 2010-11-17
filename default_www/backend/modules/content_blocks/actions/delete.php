@@ -39,7 +39,7 @@ class BackendContentBlocksDelete extends BackendBaseActionDelete
 			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));
 		}
 
-		// no item found, throw an exceptions, because somebody is fucking with our URL
+		// no item found, redirect to the overview with an error
 		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 }
