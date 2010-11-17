@@ -40,6 +40,9 @@ class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
 		// get categories
 		$tags = FrontendTagsModel::getAll();
 
+		// we just need the 10 first items
+		$tags = array_slice($tags, 0, 10);
+
 		// build link
 		$link = FrontendNavigation::getURLForBlock('tags', 'detail');
 

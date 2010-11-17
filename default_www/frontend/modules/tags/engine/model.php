@@ -24,7 +24,7 @@ class FrontendTagsModel
 		return (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url, t.number
 															FROM tags AS t
 															WHERE t.language = ? AND t.number > 0
-															ORDER BY number DESC;', FRONTEND_LANGUAGE);
+															ORDER BY number DESC, t.tag;', FRONTEND_LANGUAGE);
 	}
 
 
