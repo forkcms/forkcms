@@ -554,6 +554,48 @@ class FrontendBlogModel
 
 
 	/**
+	 * Get related items based on tags
+	 *
+	 * @return	array
+	 * @param	int $id
+	 * @param	int[optional] $limit
+	 */
+	public static function getRelated($id, $limit = 5)
+	{
+		// redefine
+		$id = (int) $id;
+		$limit = (int) $limit;
+
+		// get the related IDs
+		$relatedIDs = (array) FrontendTagsModel::getRelatedItemsByTags($id, 'blog', 'blog');
+
+		// no items
+		if(empty($relatedIDs)) return array();
+
+		// get link
+		$link = FrontendNavigation::getURLForBlock('blog', 'detail');
+
+		// get items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title, m.url
+																FROM blog_posts AS i
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN('. implode(',', $relatedIDs) .')
+																ORDER BY i.publish_on DESC, i.id DESC
+																LIMIT ?;',
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit), 'id');
+
+		// loop items
+		foreach($items as &$row)
+		{
+			$row['full_url'] = $link .'/'. $row['url'];
+		}
+
+		// return
+		return $items;
+	}
+
+
+	/**
 	 * Get a revision for an item
 	 *
 	 * @return	array
