@@ -654,7 +654,7 @@ class BackendBlogModel
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
 
 		// return the new id
-		return $newId;
+		return $item['id'];
 	}
 
 
