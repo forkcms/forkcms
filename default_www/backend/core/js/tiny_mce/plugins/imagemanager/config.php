@@ -22,8 +22,8 @@
 	$mcImageManagerConfig['general.allow_override'] = "*";
 
 	// Preview options
-	$mcImageManagerConfig['preview.wwwroot'] = ''; // absolute or relative from this script path, try to leave blank system figures it out.
-	$mcImageManagerConfig['preview.urlprefix'] = "{proto}://{host}/"; // domain name
+	$mcImageManagerConfig['preview.wwwroot'] = '../../../../../../frontend/files/userfiles'; // absolute or relative from this script path, try to leave blank system figures it out.
+	$mcImageManagerConfig['preview.urlprefix'] = "{proto}://{host}/frontend/files/userfiles"; // domain name
 	$mcImageManagerConfig['preview.urlsuffix'] = "";
 	$mcImageManagerConfig['preview.allow_export'] = "urlprefix,urlsuffix";
 	$mcImageManagerConfig['preview.allow_override'] = "*";

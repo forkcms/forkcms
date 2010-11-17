@@ -22,8 +22,8 @@
 	$mcFileManagerConfig['general.allow_export'] = "demo,tools,disabled_tools,debug";
 
 	// Preview options
-	$mcFileManagerConfig['preview.wwwroot'] = ''; // absolute or relative from this script path (c:/Inetpub/wwwroot).
-	$mcFileManagerConfig['preview.urlprefix'] = "{proto}://{host}/"; // domain name
+	$mcFileManagerConfig['preview.wwwroot'] = '../../../../../../frontend/files/userfiles'; // absolute or relative from this script path (c:/Inetpub/wwwroot).
+	$mcFileManagerConfig['preview.urlprefix'] = "{proto}://{host}/frontend/files/userfiles"; // domain name
 	$mcFileManagerConfig['preview.urlsuffix'] = "";
 	$mcFileManagerConfig['preview.include_file_pattern'] = '';
 	$mcFileManagerConfig['preview.exclude_file_pattern'] = '';
