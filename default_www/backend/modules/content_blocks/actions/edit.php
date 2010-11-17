@@ -172,7 +172,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 
 				// insert the item
-				$id = (int) BackendContentBlocksModel::update($this->id, $item);
+				$id = BackendContentBlocksModel::update($this->id, $item);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=id-'. $id);
