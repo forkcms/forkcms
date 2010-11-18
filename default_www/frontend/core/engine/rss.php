@@ -1,12 +1,13 @@
 <?php
 
 /**
- * FrontendRSS, this is our extended version of SpoonRSS
+ * Frontend RSS class.
  *
  * @package		frontend
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class FrontendRSS extends SpoonFeedRSS
@@ -47,7 +48,6 @@ class FrontendRSS extends SpoonFeedRSS
 				$this->setImage(SITE_URL . '/frontend/themes/'. $theme .'/core/images/rss_image.png', $title, $link);
 			}
 		}
-
 	}
 }
 
