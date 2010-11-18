@@ -27,6 +27,10 @@
 - Locale: Implemented some remarks on Locale-module, see http://www.fork-cms.com/blog/detail/the-translations-module
 - Styled analyze function of locale module
 - Added docs page on installing
+- Core: added a modifier to strip the tags from a string (frontend)
+- Bugfix: FrontendRSS, special chars should de decoded (thx to Unrated)
+- Blog: added a method to get related
+- Bugfix: fixed the config of the file- and imagemanager so they can handle symlinks. (and deployment)
 
 2.0.1 (2010-11-03)
 -----
