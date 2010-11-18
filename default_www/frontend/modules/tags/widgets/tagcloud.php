@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Tijs Verkoyen <tijs@verkoyen.eu>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
