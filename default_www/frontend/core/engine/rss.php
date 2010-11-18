@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -120,6 +120,9 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 */
 	public function setDescription($description)
 	{
+		// remove special chars
+		$description = SpoonFilter::htmlspecialcharsDecode($description);
+
 		// process links
 		$description = $this->processLinks($description);
 
