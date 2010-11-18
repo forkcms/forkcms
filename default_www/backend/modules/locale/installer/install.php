@@ -88,6 +88,7 @@ class LocaleInstall extends ModuleInstaller
 		// insert locale for backend core
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'ActionNotAllowed', 'Je hebt onvoldoende rechten voor deze actie.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AddingCategoryFailed', 'Er ging iets mis.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'AddTagBeforeSubmitting', 'Voeg de tag eerst toe.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AkismetKey', 'Akismet API-key werd nog niet geconfigureerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AlphaNumericCharactersOnly', 'Enkel alfanumerieke karakters zijn toegestaan.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'AuthorIsRequired', 'Gelieve een auteur in te geven.');
@@ -456,6 +457,7 @@ class LocaleInstall extends ModuleInstaller
 		// --
 		$this->insertLocale('en', 'backend', 'core', 'err', 'ActionNotAllowed', 'You have insufficient rights for this action.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AddingCategoryFailed', 'Something went wrong.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'AddTagBeforeSubmitting', 'Add the tag before submitting.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AkismetKey', 'Akismet API-key is not yet configured.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AlphaNumericCharactersOnly', 'Only alphanumeric characters are allowed.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'AuthorIsRequired', 'Please provide an author.');

@@ -291,6 +291,7 @@
 		var defaults = {
 			splitChar: ',',
 			emptyMessage: '',
+			errorMessage: 'Add the tag before submitting',
 			addLabel: 'add',
 			removeLabel: 'delete',
 			autoCompleteUrl: '',
@@ -309,13 +310,29 @@
 			var id = $(this).attr('id');
 			var elements = get();
 			var blockSubmit = false;
+			var timer = null;
 
 			// reset label, so it points to the correct item
 			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
 
 			// bind submit
-			$(this.form).submit(function()
+			$(this.form).submit(function(evt)
 			{
+				// hide before..
+				$('#errorMessage-'+ id).remove();
+				
+				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
+				{
+					// show warning
+					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					
+					// clear other timers
+					clearTimeout(timer);
+					
+					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
+					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
+				}
+				
 				return !blockSubmit;
 			});
 
@@ -386,13 +403,19 @@
 				// grab code
 				var code = evt.which;
 
+				// remove error message
+				$('#errorMessage-'+ id).remove();
+				
 				// enter of splitchar should add an element
 				if(code == 13 || String.fromCharCode(code) == options.splitChar)
 				{
+					// hide before..
+					$('#errorMessage-'+ id).remove();
+					
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
-
+					
 					// add element
 					add();
 				}
@@ -443,6 +466,9 @@
 				// reset box
 				$('#addValue-' + id).val('').focus();
 				$('#addButton-' + id).addClass('disabledButton');
+
+				// remove error message
+				$('#errorMessage-'+ id).remove();
 
 				// only add new element if it isn't empty
 				if(value != '')
