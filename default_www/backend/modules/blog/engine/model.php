@@ -9,7 +9,7 @@
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogModel
