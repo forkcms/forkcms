@@ -1,6 +1,6 @@
 {*
 	Variables that are available:
-	@todo add variables that are available
+	- {$tagsModules}: contains all tags group per module
 *}
 
 <div id="tagsDetail" class="mod">
