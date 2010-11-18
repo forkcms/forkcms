@@ -27,8 +27,6 @@ class UsersInstall extends ModuleInstaller
 		$this->addModule('users', 'User management.');
 
 		// general settings
-		$this->setSetting('users', 'requires_akismet', false);
-		$this->setSetting('users', 'requires_google_maps', false);
 		$this->setSetting('users', 'default_group', 1);
 		$this->setSetting('users', 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
 		$this->setSetting('users', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));

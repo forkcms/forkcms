@@ -23,10 +23,6 @@ class SettingsInstall extends ModuleInstaller
 		// add 'settings' as a module
 		$this->addModule('settings', 'The module to manage your settings.');
 
-		// general settings
-		$this->setSetting('settings', 'requires_akismet', false);
-		$this->setSetting('settings', 'requires_google_maps', false);
-
 		// module rights
 		$this->setModuleRights(1, 'settings');
 

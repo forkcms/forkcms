@@ -27,8 +27,6 @@ class ContentBlocksInstall extends ModuleInstaller
 		$this->addModule('content_blocks', 'The content blocks module.');
 
 		// general settings
-		$this->setSetting('content_blocks', 'requires_akismet', false);
-		$this->setSetting('content_blocks', 'requires_google_maps', false);
 		$this->setSetting('content_blocks', 'max_num_revisions', 20);
 
 		// module rights

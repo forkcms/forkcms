@@ -26,10 +26,6 @@ class TagsInstall extends ModuleInstaller
 		// add 'blog' as a module
 		$this->addModule('tags', 'The tags module.');
 
-		// general settings
-		$this->setSetting('tags', 'requires_akismet', false);
-		$this->setSetting('tags', 'requires_google_maps', false);
-
 		// module rights
 		$this->setModuleRights(1, 'tags');
 

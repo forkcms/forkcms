@@ -665,9 +665,7 @@ class CoreInstall extends ModuleInstaller
 
 		// other settings
 		$this->setSetting('core', 'theme');
-		$this->setSetting('core', 'requires_akismet', false);
 		$this->setSetting('core', 'akismet_key', '');
-		$this->setSetting('core', 'requires_google_maps', false);
 		$this->setSetting('core', 'google_maps_keky', '');
 		$this->setSetting('core', 'max_num_revisions', 20);
 		$this->setSetting('core', 'site_domains', array($this->getVariable('site_domain')));
@@ -736,10 +734,6 @@ class CoreInstall extends ModuleInstaller
 		{
 			// we don't need those keys.
 		}
-
-		// general settings
-		$this->setSetting('dashboard', 'requires_akismet', false);
-		$this->setSetting('dashboard', 'requires_google_maps', false);
 	}
 }
 

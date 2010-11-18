@@ -23,10 +23,6 @@ class ExampleInstall extends ModuleInstaller
 		// add 'example' as a module
 		$this->addModule('example', 'The example module, used as a reference.');
 
-		// general settings
-		$this->setSetting('example', 'requires_akismet', false);
-		$this->setSetting('example', 'requires_google_maps', false);
-
 		// module rights
 		$this->setModuleRights(1, 'example');
 

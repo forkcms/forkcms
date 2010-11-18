@@ -516,7 +516,7 @@ class BackendModel
 	 * @return	mixed
 	 * @param	string $module					The module in which the setting is stored.
 	 * @param	string $key						The name of the setting.
-	 * @param	mixed[optional] $defaultValue	The value to store if the setting isn't present.
+	 * @param	mixed[optional] $defaultValue	The value to return if the setting isn't present.
 	 */
 	public static function getModuleSetting($module, $key, $defaultValue = null)
 	{
@@ -528,7 +528,7 @@ class BackendModel
 		$key = (string) $key;
 
 		// if the value isn't present we should set a defaultvalue
-		if(!isset(self::$moduleSettings[$module][$key])) self::setModuleSetting($module, $key, $defaultValue);
+		if(!isset(self::$moduleSettings[$module][$key])) return $defaultValue;
 
 		// return
 		return self::$moduleSettings[$module][$key];

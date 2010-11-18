@@ -70,8 +70,6 @@ class MailmotorInstall extends ModuleInstaller
 		$replyTo = $this->getSetting('core', 'mailer_reply_to');
 
 		// general settings
-		$this->setSetting('mailmotor', 'requires_akismet', false);
-		$this->setSetting('mailmotor', 'requires_google_maps', false);
 		$this->setSetting('mailmotor', 'from_email', $from['email']);
 		$this->setSetting('mailmotor', 'from_name', $from['name']);
 		$this->setSetting('mailmotor', 'plain_text_editable', true);

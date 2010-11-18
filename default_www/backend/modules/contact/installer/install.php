@@ -23,10 +23,6 @@ class ContactInstall extends ModuleInstaller
 		// add 'contact' as a module
 		$this->addModule('contact', 'The contact module.');
 
-		// general settings
-		$this->setSetting('contact', 'requires_akismet', false);
-		$this->setSetting('contact', 'requires_google_maps', false);
-
 		// add extra
 		$contactID = $this->insertExtra('contact', 'block', 'Contact', null, null, 'N', 6);
 

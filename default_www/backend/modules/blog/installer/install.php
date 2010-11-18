@@ -30,7 +30,6 @@ class BlogInstall extends ModuleInstaller
 		// general settings
 		$this->setSetting('blog', 'allow_comments', true);
 		$this->setSetting('blog', 'requires_akismet', true);
-		$this->setSetting('blog', 'requires_google_maps', false);
 		$this->setSetting('blog', 'spamfilter', false);
 		$this->setSetting('blog', 'moderation', true);
 		$this->setSetting('blog', 'ping_services', true);
