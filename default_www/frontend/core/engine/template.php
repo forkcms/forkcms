@@ -146,6 +146,9 @@ class FrontendTemplate extends SpoonTemplate
 		// urlencode
 		$this->mapModifier('urlencode', 'urlencode');
 
+		// strip tags
+		$this->mapModifier('striptags', 'strip_tags');
+
 		// debug stuff
 		$this->mapModifier('dump', array('FrontendTemplateModifiers', 'dump'));
 	}
