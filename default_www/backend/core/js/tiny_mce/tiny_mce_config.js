@@ -125,18 +125,22 @@ tinyMCE.init({
 		// multiple instances, we can rely on onActivate
 		else
 		{
-			// add the correct class when the editor becomes active
 			editor.onActivate.add(function(editor, otherEditor)
 			{
+				// add the correct class when the editor becomes active
+				$(editor.getContainer()).addClass('tinyActive');
+
 				// hide click to edit
 				$(editor.getContainer()).siblings('.clickToEdit').hide();
 			});
 
-			// remove the class when the editor isn't active
 			editor.onDeactivate.add(function(editor, otherEditor)
 			{
 				// show click to edit
 				$(editor.getContainer()).siblings('.clickToEdit').show();
+
+				// remove the class when the editor isn't active
+				$(editor.getContainer()).removeClass('tinyActive');
 
 				// hide
 				if($('#' + editor.id + '_external').is(':visible')) $('#' + editor.id + '_external').hide();

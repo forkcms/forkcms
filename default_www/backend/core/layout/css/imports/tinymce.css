@@ -14,10 +14,11 @@
 	"Click to edit" message on TinyMCEs;
 */
 
-.optionsRTE {
+.options, .optionsRTE {
 	position: relative;
 }
 
+.options:hover .clickToEdit,
 .optionsRTE:hover .clickToEdit {
 	webkit-transition: opacity 0.45s linear;
 	/* @inc .opaque */
@@ -28,10 +29,19 @@
 	-moz-opacity: 1;
 }
 
+.options:hover .tinyActive .clickToEdit,
+.optionsRTE:hover .tinyActive .clickToEdit {
+	/* @inc .transparent */
+	opacity: 0;
+	filter: alpha(opacity=0);
+	-ms-filter: "alpha(opacity=0)";
+	-khtml-opacity: 0;
+	-moz-opacity: 0;
+}
+
 .clickToEdit {
 	position: absolute;
 	opacity: 0;
-	top: 37px;
 	height: 20px;
 	color: #808080;
 	width: 100%;
@@ -43,6 +53,14 @@
 	-khtml-opacity: 0;
 	-moz-opacity: 0;
 }
+
+	.options .clickToEdit {
+		top: 67px;
+	}
+
+	.optionsRTE .clickToEdit {
+		top: 37px;
+	}
 
 .clickToEdit {
 	pointer-events: none;
@@ -76,7 +94,5 @@ a.mceExternalClose { display: none; }
 div.mceExternalToolbar { 
 	position: relative !important; 
 	top: 0 !important; 
-	background-color: #F0F0EE !important; 
-	border: 1px solid #CCC !important;
-	border-top: none !important;
+	background-color: #F0F0EE !important;
 }

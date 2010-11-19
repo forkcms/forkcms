@@ -31,6 +31,7 @@
 - Bugfix: FrontendRSS, special chars should de decoded (thx to Unrated)
 - Blog: added a method to get related
 - Bugfix: fixed the config of the file- and imagemanager so they can handle symlinks. (and deployment)
+- TinyMCE nows get a TinyActive class when active. Fixed Fork tinyMCE skin bugs including wide scrollbar. (always wrap a tinyMCE in <div class="options"> or <div class="optionsRTE">)
 
 2.0.1 (2010-11-03)
 -----

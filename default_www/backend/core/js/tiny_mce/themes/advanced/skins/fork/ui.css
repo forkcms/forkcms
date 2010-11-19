@@ -11,14 +11,19 @@
 .forkSkin .mceRight {text-align:right}
 
 /* External */
-.forkSkin .mceExternalToolbar {position:absolute; border:1px solid #CCC; border-bottom:0; display:none;}
+.forkSkin .mceExternalToolbar {position:absolute; border:1px solid #CCC; border-bottom:0; display:none; background: red; border-top: 1px solid #CCC;}
+.optionsRTE .forkSkin .mceExternalToolbar { border-top: none; }
 .forkSkin .mceExternalToolbar td.mceToolbar {padding-right:13px;}
 .forkSkin .mceExternalClose {position:absolute; top:3px; right:3px; width:7px; height:7px; background:url(../../img/icons.gif) -820px 0}
 
 /* Layout */
 .forkSkin table.mceLayout {border:0; border-left:1px solid #CCC; border-right:1px solid #CCC}
-.forkSkin table.mceLayout tr.mceFirst td {border-top:1px solid #CCC}
-.forkSkin table.mceLayout tr.mceLast td {border-bottom:1px solid #CCC}
+.forkSkin table.mceLayout tr.mceFirst td { border-top:1px solid #CCC; }
+
+	.optionsRTE .forkSkin table.mceLayout tr.mceFirst td { border-top: none; }
+	.optionsRTE .tinyActive table.mceLayout tr.mceFirst td { border-top:1px solid #CCC; }
+
+.forkSkin table.mceLayout tr.mceLast td { border-bottom:1px solid #CCC; }
 .forkSkin table.mceToolbar, .forkSkin tr.mceFirst .mceToolbar tr td, .forkSkin tr.mceLast .mceToolbar tr td {border:0; margin:0; padding:0;}
 .forkSkin td.mceToolbar {padding-top:1px; vertical-align:top}
 .forkSkin .mceIframeContainer {border-top:1px solid #CCC; border-bottom:1px solid #CCC}
