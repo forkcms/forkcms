@@ -134,7 +134,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$this->frm->addText('navigation_title');
 
 		// tags
-		$this->frm->addText('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 
 		// meta
 		$this->meta = new BackendMeta($this->frm, null, 'title', true);

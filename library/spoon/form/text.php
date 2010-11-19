@@ -56,7 +56,7 @@ class SpoonFormText extends SpoonFormInput
 	 * @param	string[optional] $classError
 	 * @param	bool[optional] $HTML
 	 */
-	public function __construct($name, $value = null, $maxlength = null, $class = 'inputTextfield', $classError = 'inputTextfieldError', $HTML = false)
+	public function __construct($name, $value = null, $maxlength = null, $class = 'inputText', $classError = 'inputTextError', $HTML = false)
 	{
 		// obligated fields
 		$this->attributes['id'] = SpoonFilter::toCamelCase($name, '_', true);

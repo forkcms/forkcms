@@ -173,7 +173,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->frm->addText('navigation_title', $this->record['navigation_title']);
 
 		// tags
-		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputText tagBox', 'inputTextError tagBox');
 
 		// extra
 		$this->frm->addDropdown('extra_type', BackendPagesModel::getTypes());

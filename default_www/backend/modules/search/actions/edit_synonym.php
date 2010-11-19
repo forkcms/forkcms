@@ -72,7 +72,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('term', $this->record['term'], 255);
-		$this->frm->addText('synonym', $this->record['synonym'], null, 'inputTextfield synonymBox', 'inputTextfieldError synonymBox');
+		$this->frm->addText('synonym', $this->record['synonym'], null, 'inputText synonymBox', 'inputTextError synonymBox');
 	}
 
 

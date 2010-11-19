@@ -64,7 +64,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('blog', 'allow_comments', false));
 		$this->frm->addDropdown('category_id', BackendBlogModel::getCategories(), $defaultCategoryId);
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
-		$this->frm->addText('tags', null, null, 'inputTextfield tagBox', 'inputTextfieldError tagBox');
+		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
 
