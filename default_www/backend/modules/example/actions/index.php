@@ -10,7 +10,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class BackendExampleIndex extends BackendBaseActionIndex
+class BackendExampleIndex extends BackendBaseActionAdd
 {
 	/**
 	 * Execute the action
@@ -21,6 +21,11 @@ class BackendExampleIndex extends BackendBaseActionIndex
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		$frm = new BackendForm('test');
+		$frm->addEditor('editor');
+		$frm->addEditor('editor2');
+		$frm->parse($this->tpl);
 
 		// display the page
 		$this->display();

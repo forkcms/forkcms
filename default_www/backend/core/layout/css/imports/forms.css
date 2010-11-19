@@ -219,6 +219,12 @@ input[type="submit"] {
 	width: auto;
 }
 
+.forkForms .horizontal .mceEditor {
+	float: left;
+	width: 600px;
+}
+
+
 .forkForms .horizontal p label,
 .forkForms .horizontal .fakeP label {
 	display: inline;
