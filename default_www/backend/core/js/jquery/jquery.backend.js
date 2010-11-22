@@ -415,7 +415,7 @@
 					// prevent default behaviour
 					evt.preventDefault();
 					evt.stopPropagation();
-					
+
 					// add element
 					add();
 				}

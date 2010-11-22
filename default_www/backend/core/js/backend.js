@@ -1031,7 +1031,7 @@ jsBackend.messages =
 
 		// show
 		$('#'+ uniqueId).fadeIn();
-		
+
 		// timeout
 		if(type == 'notice') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }
 		if(type == 'success') { setTimeout('jsBackend.messages.hide($("#'+ uniqueId +'"));', 5000); }

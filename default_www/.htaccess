@@ -21,7 +21,6 @@ FileETag MTime Size
 	SetEnvIf User-Agent ".*MSIE.*" nokeepalive ssl-unclean-shutdown downgrade-1.0 force
 </IfModule>
 
-
 # options 
 Options -Indexes
 Options +FollowSymlinks
