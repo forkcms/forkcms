@@ -26,6 +26,7 @@ class InstallerStep2 extends InstallerStep
 
 		// head
 		$variables['head'] = file_get_contents('layout/templates/head.tpl');
+		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
 
 		// check requirements
 		$validated = self::checkRequirements($variables);
