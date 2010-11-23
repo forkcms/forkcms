@@ -25,6 +25,8 @@ class BackendExampleIndex extends BackendBaseActionAdd
 		$frm = new BackendForm('test');
 		$frm->addEditor('editor');
 		$frm->addEditor('editor2');
+		$frm->addEditor('editor3');
+		$frm->addEditor('editor4');
 		$frm->parse($this->tpl);
 
 		// display the page
