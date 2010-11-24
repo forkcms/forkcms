@@ -71,12 +71,12 @@
 					different image formats. More information can be found on: <a href="http://php.net/gd">http://php.net/gd</a>.
 				</p>
 
-				<h3>PHP ini-settings</h3>
+				<!-- <h3>PHP ini-settings</h3>
 				<h4>Safe Mode: <span class="{$settingsSafeMode}">{$settingsSafeModeStatus}</span></h4>
 				<p><strong>As of PHP 5.3.0 Safe Mode is deprecated.</strong> For forward compability we highly recommend you to disable Safe Mode.</p>
 
 				<h4>Open Basedir: <span class="{$settingsOpenBasedir}">{$settingsOpenBasedirStatus}</span></h4>
-				<p>For forward compability we highly recommend you not to use open_basedir.</p>
+				<p>For forward compability we highly recommend you not to use open_basedir.</p> -->
 
 				<h3>Required permissions and/or files</h3>
 				<h4>{$PATH_WWW}/backend/cache/* <span class="{$fileSystemBackendCache}">{$fileSystemBackendCacheStatus}</span></h4>
