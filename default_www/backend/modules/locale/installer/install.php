@@ -423,7 +423,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpEmailTo', 'Notificaties van het CMS worden hiernaar verstuurd.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpFeedburnerURL', 'bijv. http://feeds.feedburner.com/jouw-website');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpForgotPassword', 'Vul hieronder je e-mail adres in. Je krijgt een e-mail met instructies hoe je een nieuw wachtwoord instelt.');
-		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpMetaCustom', 'Voeg extra, op maat gemaakte metatags toe.');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpMetaCustom', 'Deze extra metatags worden in de <code>&lt;head&gt;</code> sectie van de pagina gezet.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpMetaDescription', 'Vat de inhoud kort samen. Deze samenvatting wordt getoond in de resultaten van zoekmachines.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpMetaKeywords', 'Kies een aantal goed gekozen termen die de inhoud omschrijven.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpMetaURL', 'Vervang de automatisch gegenereerde URL door een zelfgekozen URL.');
@@ -792,10 +792,10 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpEmailTo', 'Notifications from the CMS are sent here.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpFeedburnerURL', 'eg. http://feeds.feedburner.com/your-website');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpForgotPassword', 'Below enter your e-mail. You will receive an e-mail containing instructions on how to get a new password.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaCustom', 'Add your custom metatags here. These will appear in the <code>&lt;head&gt;</code> section of your site.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaCustom', 'These custom metatags will be placed in the <code>&lt;head&gt;</code> section of the page.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaDescription', 'Briefly summarize the content. This summary is shown in the results of search engines.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaKeywords', 'Choose a number of wellthought terms that describe the content.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaURL', 'Replace the automaticly generated URL by the one you wish.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaURL', 'Replace the automaticly generated URL by a custom one.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpNickname', 'The name you want to be published as (e.g. as the author of an article).');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpResetPassword', 'Provide your new password.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpRevisions', 'The last saved versions are kept here. The current version will only be overwritten when you save your changes.');
@@ -812,7 +812,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoItems', 'There are no items yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoPublishedComments', 'There are no published comments.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoRevisions', 'There are no previous versions yet.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoTags', 'You didn\'t use tags yet.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoTags', 'You didn\'t add tags yet.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NoUsage', 'Not yet used.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'NowEditing', 'now editing');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'PasswordResetSuccess', 'Your password has been changed.');

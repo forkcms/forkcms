@@ -45,7 +45,7 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'EditModuleContent', 'wijzig module inhoud');
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'ExtraTypeBlock', 'module');
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'ExtraTypeWidget', 'widget');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Footer', 'navigatie onderaan');
+		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Footer', 'footer navigatie');
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'MainNavigation', 'hoofdnavigatie');
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Meta', 'metanavigatie');
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Root', 'losse pagina\'s');
@@ -65,7 +65,7 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpPageTitle', 'De titel die in het browservenster staat (<code>&lt;title&gt;</code>).');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpTemplateFormat', 'vb. [1,2],[/,2]');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpTemplateLocation', 'Plaats de templates in de map <code>core/templates</code> van je thema.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'IsAction', 'Deze pagina is een directe subactie.');
+		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'IsAction', 'Gebruik deze pagina als module-actie.');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'MetaNavigation', 'Metanavigatie inschakelen voor deze website.');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'ModuleBlockAlreadyLinked', 'Er werd reeds een module gekoppeld aan deze pagina.');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'PageIsMoved', 'De pagina "%1$s" werd verplaatst.');
@@ -83,10 +83,10 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'EditModuleContent', 'edit module content');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'ExtraTypeBlock', 'module');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'ExtraTypeWidget', 'widget');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Footer', 'bottom navigation');
+		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Footer', 'footer navigation');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'MainNavigation', 'main navigation');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Meta', 'meta navigation');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Root', 'separate pages');
+		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Root', 'loose pages');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Added', 'The page "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'AddedTemplate', 'The template "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'BlockAttached', 'The module <strong>%1$s</strong> is attached to this section.');
@@ -103,7 +103,7 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpPageTitle', 'The title in the browser window (<code>&lt;title&gt;</code>).');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpTemplateFormat', 'e.g. [1,2],[/,2]');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpTemplateLocation', 'Put your templates in the <code>core/templates</code> folder of your theme.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'IsAction', 'This page is a direct subaction.');
+		$this->insertLocale('en', 'backend', 'pages', 'msg', 'IsAction', 'Use this page as a module action.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'MetaNavigation', 'Enable metanavigation for this website.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'ModuleBlockAlreadyLinked', 'A module has already been linked to this page.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'PageIsMoved', 'The page "%1$s" was moved.');
