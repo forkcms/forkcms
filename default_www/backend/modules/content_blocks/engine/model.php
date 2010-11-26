@@ -201,7 +201,7 @@ class BackendContentBlocksModel
 		$values['edited_on'] = BackendModel::getUTCDate();
 
 		// archive all older versions
-		$db->update('content_blocks', array('status' => 'archived'), 'id = ?', array($id));
+		$db->update('content_blocks', array('status' => 'archived'), 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
 
 		// insert new version
 		$db->insert('content_blocks', $values);
@@ -212,13 +212,13 @@ class BackendContentBlocksModel
 		// get revision-ids for items to keep
 		$revisionIdsToKeep = (array) $db->getColumn('SELECT i.revision_id
 														FROM content_blocks AS i
-														WHERE i.id = ? AND i.status = ?
+														WHERE i.id = ? AND i.language = ? AND i.status = ?
 														ORDER BY i.edited_on DESC
 														LIMIT ?;',
-														array($id, 'archived', $rowsToKeep));
+														array($id, BL::getWorkingLanguage(), 'archived', $rowsToKeep));
 
 		// delete other revisions
-		if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, 'archived'));
+		if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND language = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, BL::getWorkingLanguage(), 'archived'));
 
 		// build array
 		$extra['data'] = serialize(array('language' => $values['language'], 'extra_label' => $values['title'], 'id' => $id, 'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $id));
