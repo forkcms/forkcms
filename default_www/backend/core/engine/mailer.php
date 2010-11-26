@@ -111,7 +111,7 @@ class BackendMailer
 		// set some properties
 		$cssToInlineStyles->setHTML($content);
 		$cssToInlineStyles->setUseInlineStylesBlock(true);
-		$cssToInlineStyles->setEnconding(SPOON_CHARSET);
+		$cssToInlineStyles->setEncoding(SPOON_CHARSET);
 
 		// return the content
 		return (string) $cssToInlineStyles->convert();
