@@ -25,6 +25,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonFormDropdown extends SpoonFormAttributes
@@ -164,7 +165,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			if($key == 'class') $html .= $this->getClassHTML();
 
 			// name
-			elseif($key == 'name' && !$this->single) $html .= ' name[]="'. $value .'"';
+			elseif($key == 'name' && !$this->single) $html .= ' name="'. $value .'"';
 
 			// other elements
 			else $html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
@@ -549,8 +550,8 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// parse to template
 		if($template !== null)
 		{
-			$template->assign('ddm'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('ddm'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('ddm'. SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])), $output);
+			$template->assign('ddm'. SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;
