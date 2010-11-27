@@ -4,6 +4,16 @@
 	</div>
 	<div class="options">
 		<p>
+			<label for="pageTitleOverwrite">{$lblPageTitle|ucfirst}</label>
+			<span class="helpTxt">{$msgHelpPageTitle}</span>
+		</p>
+		<ul class="inputList checkboxTextFieldCombo">
+			<li>
+				{$chkPageTitleOverwrite}
+				{$txtPageTitle} {$txtPageTitleError}
+			</li>
+		</ul>
+		<p>
 			<label for="metaDescriptionOverwrite">{$lblDescription|ucfirst}</label>
 			<span class="helpTxt">{$msgHelpMetaDescription}</span>
 		</p>
