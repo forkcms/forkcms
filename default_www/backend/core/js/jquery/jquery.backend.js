@@ -563,6 +563,235 @@
 
 
 /**
+ * Multiple select box
+ *
+ * @author Tijs Verkoyen <tijs@netlash.com>
+ */
+(function($)
+{
+	$.fn.multipleSelectbox = function(options)
+	{
+		// define defaults
+		var defaults = {
+			splitChar: ',',
+			emptyMessage: '',
+			addLabel: 'add',
+			removeLabel: 'delete',
+			showIconOnly: false,
+			afterBuild: null
+		};
+
+		// extend options
+		var options = $.extend(defaults, options);
+
+		// loop all elements
+		return this.each(function()
+		{
+			// define some vars
+			var id = $(this).attr('id');
+			var possibleOptions = $(this).find('option');
+			var elements = get();
+			var blockSubmit = false;
+			
+			// bind submit
+			$(this.form).submit(function()
+			{
+				return !blockSubmit;
+			});
+
+			// remove previous HTML
+			if($('#elementList-' + id).length > 0)
+			{
+				$('#elementList-' + id).parent('.multipleSelectWrapper').remove();
+			}
+
+			// build replace html
+			var html =	'<div class="multipleSelectWrapper">' + 
+						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' + 
+						'	<div class="oneLiner">' + 
+						'		<p>' +
+						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
+			
+			
+			for(var i = 0; i < possibleOptions.length; i++)
+			{
+				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
+			}
+			
+			html +=		'			</select>' +
+						'		</p>' + 
+						'		<div class="buttonHolder">' + 
+						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd';
+
+			if(options.showIconOnly) html += ' iconOnly';
+
+			html += 	'">' + 
+						'				<span>' + options.addLabel + '</span>' + 
+						'			</a>' + 
+						'		</div>' + 
+						'	</div>' + 
+						'</div>';
+
+			// hide current element
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+
+			// prepend html
+			$(this).before(html);
+
+			// add elements list
+			build();
+
+			// bind click on add-button
+			$('#addButton-' + id).bind('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// add element
+				add();
+			});
+
+			// bind click on delete-button
+			$('.deleteButton-' + id).live('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// remove element
+				remove($(this).attr('rel'));
+			});
+
+			// add an element
+			function add()
+			{
+				blockSubmit = false;
+
+				// init some vars
+				var value = $('#addValue-' + id).val();
+				var inElements = false;
+
+				// reset box
+				$('#addValue-' + id).focus();
+
+				// only add new element if it isn't empty
+				if(value != null && value != '')
+				{
+					// already in elements?
+					for( var i in elements)
+					{
+						if(value == elements[i]) inElements = true;
+					}
+
+					// only add if not already in elements
+					if(!inElements)
+					{
+						// add elements
+						elements.push(value);
+
+						// set new value
+						$('#' + id).val(elements.join(options.splitChar));
+
+						// rebuild element list
+						build();
+					}
+				}
+			}
+
+
+			// build the list
+			function build()
+			{
+				// init var
+				var html = '';
+
+				// no items and message given?
+				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+
+				// items available
+				else
+				{
+					// start html
+					html = '<ul>';
+
+					// loop elements
+					for( var i in elements)
+					{
+						html += '	<li class="oneLiner">' + 
+								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' + 
+								'		<div class="buttonHolder">' + 
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
+								'		</div>' + 
+								'	</li>';
+						
+						// remove from dropdown
+						$('#addValue-' + id + ' option[value=' + elements[i] + ']').attr('disabled', 'disabled');
+					}
+
+					// end html
+					html += '</ul>';
+				}
+
+				// set html
+				$('#elementList-' + id).html(html);
+				
+				// disabled?
+				$('#addButton-' + id).removeClass('disabledButton');
+				$('#addValue-' + id).removeClass('disabled').attr('disabled', '');
+				if($('#addValue-' + id + ' option:enabled').length == 0) 
+				{
+					$('#addButton-' + id).addClass('disabledButton');
+					$('#addValue-' + id).addClass('disabled').attr('disabled', 'disabled');
+				}
+				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').attr('value'));
+				
+				// call callback if specified
+				if(options.afterBuild != null){ options.afterBuild(id); }
+			}
+
+
+			// get all items
+			function get()
+			{
+				// get chunks
+				var chunks = $('#' + id).val();
+				var elements = [];
+
+				// loop elements and trim them from spaces
+				for( var i in chunks)
+				{
+					value = chunks[i].replace(/^\s+|\s+$/g, '');
+					if(value != '') elements.push(value);
+				}
+
+				return elements;
+			}
+
+
+			// remove an item
+			function remove(value)
+			{
+				// get index for element
+				var index = $.inArray(value, elements);
+
+				// remove element
+				if(index > -1) elements.splice(index, 1);
+
+				// set new value
+				$('#' + id).val(elements.join(options.splitChar));
+				
+				$('#addValue-' + id + ' option[value=' + value + ']').attr('disabled', '');
+
+				// rebuild element list
+				build();
+			}
+		});
+	};
+})(jQuery);
+
+
+/**
  * Multiple text box
  *
  * @author Tijs Verkoyen <tijs@netlash.com>

@@ -349,3 +349,13 @@ input[type="submit"] {
 .multipleTextWrapper li { margin: 0 4px 4px 0; }
 .multipleTextWrapper ul, .multipleTextWrapper li { zoom: 1; }
 .multipleTextWrapper ul:after, .multipleTextWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+
+/* @todo Yoni/Johan check me */
+.multipleSelectWrapper .multipleSelectList { padding-bottom: 12px; }
+.multipleSelectWrapper label { font-size: 11px; }
+.multipleSelectWrapper ul { padding: 4px 0 0; }
+.multipleSelectWrapper li { margin: 0 4px 4px 0; }
+.multipleSelectWrapper ul, .multipleSelectWrapper li { zoom: 1; }
+.multipleSelectWrapper ul:after, .multipleSelectWrapper li:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+.multipleSelectWrapper ul li span { float: left; display: block; padding-right: 18px; line-height: 25px; }
+
