@@ -208,7 +208,7 @@ class BackendForm extends SpoonForm
 		// redefine
 		$name = (string) $name;
 		$values = (array) $values;
-		$selected = ($selected !== null) ? (string) $selected : null;
+		$selected = ($selected !== null) ? $selected : null;
 		$multipleSelection = (bool) $multipleSelection;
 		$class = ($class !== null) ? (string) $class : 'select';
 		$classError = ($classError !== null) ? (string) $classError : 'selectError';
