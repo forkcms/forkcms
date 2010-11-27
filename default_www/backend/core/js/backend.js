@@ -1263,10 +1263,14 @@ jsBackend.tableSequenceByDragAndDrop =
 				{
 					// the table
 					var table = $(this);
+					var action = (typeof $(table.parents('table.datagrid')).data('action') == 'undefined') ? 'sequence' : $(table.parents('table.datagrid')).data('action').toString();
 
 					// buil ajax-url
-					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action=sequence&language=' + jsBackend.current.language;
-
+					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
+					
+					// append
+					if(typeof $(table.parents('table.datagrid')).data('extra-params') != 'undefined') url += $(table.parents('table.datagrid')).data('extra-params');
+					
 					// init var
 					var rows = $(this).find('tr');
 					var newIdSequence = new Array();
