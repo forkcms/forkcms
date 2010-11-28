@@ -15,6 +15,7 @@
 				<p>
 					<label for="email">{$lblEmailAddress|ucfirst}</label>
 					{$txtEmail} {$txtEmailError}
+					<span class="helpTxt">{$msgAddMultipleEmails|ucfirst}</span>
 				</p>
 			</div>
 		</div>

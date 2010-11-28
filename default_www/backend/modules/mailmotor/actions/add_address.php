@@ -104,8 +104,16 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 					// loop the groups
 					foreach($item['groups'] as $group)
 					{
-						// insert the subscriber
-						BackendMailmotorCMHelper::subscribe($txtEmail->getValue(), $group);
+						$emails = explode(',', $txtEmail->getValue());
+
+						foreach($emails as $email)
+						{
+							// trim whitespaces
+							$email = trim($email);
+
+							// insert the subscriber
+							if(SpoonFilter::isEmail($email)) BackendMailmotorCMHelper::subscribe($email, $group);
+						}
 					}
 				}
 
