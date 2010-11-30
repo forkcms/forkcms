@@ -39,6 +39,9 @@
 - SpoonLocale::getCountry added, which allows you to fetch a country in a specific language.
 - SpoonLocale: getMonth and getWeekDay added as well.
 - SpoonFile::delete now allows you to delete an array of files.
+- Rearranged the general authors/owners.
+- Bugfix: you can now use named parameters within update queries.
+- Bugfix: multiple dropdownfields weren't parsed because of the [].
 
 
 1.2.0 (2010-05-18)

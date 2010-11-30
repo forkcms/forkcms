@@ -11,8 +11,6 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @author 		Tijs Verkoyen <tijs@spoon-library.com>
- * @author		Dave Lens <dave@spoon-library.com>
  * @since		0.1.1
  */
 
@@ -378,7 +376,7 @@ class SpoonTemplateCompiler
 	private function parseCycle($content, $iteration)
 	{
 		// regex pattern
-		$pattern = '/\{cycle((:\'[a-z0-9\-_\<\/\>\"\=\;\:\s]*\')+)\}/is';
+		$pattern = '/\{cycle((:\'[a-z0-9\-_\<\/\>\"\=\;\:\s]?\')+)\}/is';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))

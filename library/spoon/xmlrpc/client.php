@@ -11,14 +11,12 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @author 		Tijs Verkoyen <tijs@spoon-library.com>
- * @author		Dave Lens <dave@spoon-library.com>
  * @since		1.1.4
  */
 
 
 /**
- * This base class provides all the methods used by a XMLRPC-client.
+ * This base class provides all the methods used by an XMLRPC-client.
  *
  * @package		spoon
  * @subpackage	xmlrpc

@@ -11,8 +11,6 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @author 		Tijs Verkoyen <tijs@spoon-library.com>
- * @author		Dave Lens <dave@spoon-library.com>
  * @since		0.1.1
  */
 
@@ -795,7 +793,7 @@ class SpoonForm
 			// is a hidden field
 			if(($object instanceof SpoonFormHidden) && $object->getName() != 'form')
 			{
-				$value .= "\t". '{$hid'. SpoonFilter::toCamelCase($object->getName()) ."}\n";
+				$value .= "\t". '{$hid'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."}\n";
 			}
 		}
 
@@ -839,10 +837,10 @@ class SpoonForm
 				// dropdowns
 				elseif($object instanceof SpoonFormDropdown)
 				{
-					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."</label>\n";
 					$value .= "\t<p>\n";
-					$value .= "\t\t". '{$ddm'. SpoonFilter::toCamelCase($object->getName()) ."}\n";
-					$value .= "\t\t". '{$ddm'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
+					$value .= "\t\t". '{$ddm'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."}\n";
+					$value .= "\t\t". '{$ddm'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."Error}\n";
 					$value .= "\t</p>\n";
 				}
 

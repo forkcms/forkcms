@@ -10,8 +10,6 @@
  * @subpackage	feed
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @author 		Tijs Verkoyen <tijs@spoon-library.com>
- * @author		Dave Lens <dave@spoon-library.com>
  * @since		1.1.0
  */
 
@@ -328,7 +326,7 @@ class SpoonFeedRSS
 		$XML .= '<channel>'."\n";
 
 		// insert title
-		$XML .= '	<title>'. $this->getTitle() .'</title>'."\n";
+		$XML .= '	<title><![CDATA['. $this->getTitle() .']]></title>'."\n";
 
 		// insert link
 		$XML .= '	<link>'. $this->getLink() .'</link>'."\n";
@@ -349,7 +347,7 @@ class SpoonFeedRSS
 			$image = $this->getImage();
 
 			$XML .= '	<image>'."\n";
-			$XML .= '		<title>'. $image['title'] .'</title>'."\n";
+			$XML .= '		<title><![CDATA['. $image['title'] .']]></title>'."\n";
 			$XML .= '		<url>'. $image['url'] .'</url>'."\n";
 			$XML .= '		<link>'. $image['link'] .'</link>'."\n";
 			if(isset($image['width']) && $image['width'] != '') $XML .= '		<width>'. $image['title'] .'</width>'."\n";

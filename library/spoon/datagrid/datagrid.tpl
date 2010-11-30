@@ -11,26 +11,25 @@
 	- paging / whether pagination is enabled
 *}
 
-
 <table{option:summary} summary="{$summary}"{/option:summary}{$attributes}>
 	{option:caption}<caption>{$caption}</caption>{/option:caption}
 	<thead>
 		<tr>
 			{iteration:headers}
-			<th>
-				{option:headers.sorting}
-					{option:headers.sorted}
-						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label}{option:headers.sortingIcon} <img src="{$headers.sortingIcon}" />{/option:headers.sortingIcon}</a>
-					{/option:headers.sorted}
-					{option:headers.notSorted}
-						<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label}{option:headers.sortingIcon} <img src="{$headers.sortingIcon}" />{/option:headers.sortingIcon}</a>
-					{/option:headers.notSorted}
-				{/option:headers.sorting}
+				<th{$headers.attributes}>
+					{option:headers.sorting}
+						{option:headers.sorted}
+							<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label}{option:headers.sortingIcon} <img src="{$headers.sortingIcon}" />{/option:headers.sortingIcon}</a>
+						{/option:headers.sorted}
+						{option:headers.notSorted}
+							<a href="{$headers.sortingURL}" title="{$headers.sortingLabel}">{$headers.label}{option:headers.sortingIcon} <img src="{$headers.sortingIcon}" />{/option:headers.sortingIcon}</a>
+						{/option:headers.notSorted}
+					{/option:headers.sorting}
 
-				{option:headers.noSorting}
-					{$headers.label}
-				{/option:headers.noSorting}
-			</th>
+					{option:headers.noSorting}
+						{$headers.label}
+					{/option:headers.noSorting}
+				</th>
 			{/iteration:headers}
 		</tr>
 	</thead>
