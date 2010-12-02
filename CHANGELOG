@@ -1,6 +1,7 @@
 2.0.3 (xxxx-xx-xx)
 - Bugfix: navigation used to give notices with hidden/excluded pages
 - Bugfix: autoloader path to frontendbaseajaxaction was incorrect
+- Bugfix: setting a language for an ajax-call on non-multilanguage sites wat a bit - ehm - fubar
 
 2.0.2 (2010-11-24)
 -----

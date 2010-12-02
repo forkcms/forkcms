@@ -124,17 +124,24 @@ class FrontendAJAX
 		$possibleLanguages = FrontendLanguage::getActiveLanguages();
 
 		// validate
-		if(!in_array($value, array_keys($possibleLanguages)))
+		if(!in_array($value, $possibleLanguages))
 		{
-			// create fake action
-			$fakeAction = new FrontendBaseAJAXAction('', '');
+			// only 1 active language?
+			if(!SITE_MULTILANGUAGE && count($possibleLanguages) == 1) $this->language = array_shift($possibleLanguages);
 
-			// output error
-			$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Language not provided.');
+			// multiple languages available but none selected
+			else
+			{
+				// create fake action
+				$fakeAction = new FrontendBaseAJAXAction('', '');
+
+				// output error
+				$fakeAction->output(FrontendBaseAJAXAction::BAD_REQUEST, null, 'Language not provided.');
+			}
 		}
 
-		// set property
-		$this->language = (string) $value;
+		// language is valid: set property
+		else $this->language = (string) $value;
 
 		// define constant
 		define('FRONTEND_LANGUAGE', $this->language);
