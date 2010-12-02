@@ -296,10 +296,18 @@ class FrontendNavigation extends FrontendBaseObject
 				}
 
 				// not hidden
-				if($page['hidden']) unset($navigation[$type][$parentId][$id]);
+				if($page['hidden'])
+				{
+					unset($navigation[$type][$parentId][$id]);
+					continue;
+				}
 
 				// some ids should be excluded
-				if(in_array($page['page_id'], (array) $excludeIds)) unset($navigation[$type][$parentId][$id]);
+				if(in_array($page['page_id'], (array) $excludeIds))
+				{
+					unset($navigation[$type][$parentId][$id]);
+					continue;
+				}
 
 				// if the item is in the selected page it should get an selected class
 				if(in_array($page['page_id'], self::$selectedPageIds)) $navigation[$type][$parentId][$id]['selected'] = true;

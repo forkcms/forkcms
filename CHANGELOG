@@ -1,3 +1,7 @@
+2.0.3 (xxxx-xx-xx)
+- Bugfix: navigation used to give notices with hidden/excluded pages
+- Bugfix: autoloader path to frontendbaseajaxaction was incorrect
+
 2.0.2 (2010-11-24)
 -----
 - Added .gitignore files again
