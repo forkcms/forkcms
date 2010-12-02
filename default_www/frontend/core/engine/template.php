@@ -354,7 +354,6 @@ class FrontendTemplateModifiers
 	public static function formatCurrency($var, $currency = 'EUR', $decimals = null)
 	{
 		// @later get settings from backend
-
 		switch($currency)
 		{
 			case 'EUR':
