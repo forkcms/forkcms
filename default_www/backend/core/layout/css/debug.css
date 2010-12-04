@@ -1,6 +1,7 @@
 /*
 
 	Debug stylesheet for Fork NG
+	@remark THIS FILE WILL NOT BE INCLUDED WHEN DEBUG-MODE IS OFF
     
 	@package      backend
 	@subpackage   core
@@ -8,7 +9,7 @@
 	@author       Johan Ronsse <johan@netlash.com>
 	@since        2.0
 
-	@todo @johan: check me
+	@todo @yoni @johan: check me
 */
 
 /*
@@ -38,3 +39,5 @@ thead th.dragAndDropHandle span { padding: 0; }
 */
 
 .editorWarning { display: inline-block; margin-top: 3px; }
+
+.placeholder { color: #AAA !important; }
