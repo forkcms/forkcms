@@ -7,6 +7,7 @@
 - Bugfix: loading of classes in getWarnings should use SpoonFilter::toCamelCase instead of ucfirst (thx to Frederik Heyninck)
 - Pages: added the getForTags-method
 - Core: added JS to enable placeholder-behaviour in browsers that doesn't support placeholders
+- Core: made it possible for cronjobs to use BackendMailer
 
 
 2.0.2 (2010-11-24)
