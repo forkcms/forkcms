@@ -82,7 +82,7 @@ class BackendSettingsModel
 		foreach($activeModules as $module)
 		{
 			// model class
-			$class = 'Backend'. ucfirst($module) .'Model';
+			$class = 'Backend'. SpoonFilter::toCamelCase($module) .'Model';
 
 			// model file exists
 			if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php'))
