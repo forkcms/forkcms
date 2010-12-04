@@ -8,7 +8,7 @@
 - Pages: added the getForTags-method
 - Core: added JS to enable placeholder-behaviour in browsers that doesn't support placeholders
 - Core: made it possible for cronjobs to use BackendMailer
-
+- Core: made it possible to use setColumnConfirm on other columns that haven't a link as value
 
 2.0.2 (2010-11-24)
 -----

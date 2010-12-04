@@ -232,6 +232,22 @@ class BackendDataGrid extends SpoonDataGrid
 			// exists
 			else
 			{
+				// get URL
+				$URL = $this->columns[$column]->getURL();
+
+				// URL provided?
+				if($URL != '')
+				{
+					// grab current value
+					$currentValue = $this->columns[$column]->getValue();
+
+					// reset URL
+					$this->columns[$column]->setURL(null);
+
+					// set the value
+					$this->columns[$column]->setValue('<a href="' . $URL . '" class="">' . $currentValue . '</a>');
+				}
+
 				// generate id
 				$id = 'confirm-'. (string) $uniqueId;
 
@@ -242,7 +258,14 @@ class BackendDataGrid extends SpoonDataGrid
 				$value = $this->columns[$column]->getValue();
 
 				// add class for confirmation
-				$value = str_replace('class="', 'rel="'. $id .'" class="askConfirmation ', $value);
+				if(substr_count($value, '<a') > 0)
+				{
+					if(substr_count($value, 'class="') > 0)	$value = str_replace('class="', 'rel="'. $id .'" class="askConfirmation ', $value);
+					else $value = str_replace('<a ', '<a class="askConfirmation" ', $value);
+				}
+
+				// is it a link?
+				else throw new BackendException('The column doesn\'t contain a link.');
 
 				// append message
 				$value .= '<div id="'. $id .'" title="'. $title .'" style="display: none;"><p>'. $message .'</p></div>';
