@@ -38,7 +38,7 @@ class BackendTemplate extends SpoonTemplate
 		parent::__construct();
 
 		// get URL instance
-		$this->URL = Spoon::getObjectReference('url');
+		if(Spoon::isObjectReference('url')) $this->URL = Spoon::getObjectReference('url');
 
 		// store in reference so we can access it from everywhere
 		if($addToReference) Spoon::setObjectReference('template', $this);
@@ -185,11 +185,14 @@ class BackendTemplate extends SpoonTemplate
 		// we use some abbrviations and common terms, these should also be assigned
 		$this->assign('LANGUAGE', BackendLanguage::getWorkingLanguage());
 
-		// assign the current module
-		$this->assign('MODULE', $this->URL->getModule());
+		if($this->URL instanceof BackendURL)
+		{
+			// assign the current module
+			$this->assign('MODULE', $this->URL->getModule());
 
-		// assign the current action
-		$this->assign('ACTION', $this->URL->getAction());
+			// assign the current action
+			$this->assign('ACTION', $this->URL->getAction());
+		}
 
 		// is the user object filled?
 		if(BackendAuthentication::getUser()->isAuthenticated())
@@ -235,7 +238,8 @@ class BackendTemplate extends SpoonTemplate
 	private function parseLabels()
 	{
 		// grab the current module
-		$currentModule = $this->URL->getModule();
+		if($this->URL instanceof BackendURL) $currentModule = $this->URL->getModule();
+		else $currentModule = 'core';
 
 		// init vars
 		$realErrors = array();
@@ -340,16 +344,19 @@ class BackendTemplate extends SpoonTemplate
 		$this->assign('timestamp', time());
 
 		// assign body ID
-		$this->assign('bodyID', SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));
+		if($this->URL instanceof BackendURL)
+		{
+			$this->assign('bodyID', SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));
 
-		// build classes
-		$bodyClass = SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true);
+			// build classes
+			$bodyClass = SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true);
 
-		// special occasions
-		if($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit') $bodyClass = $this->URL->getModule() .'AddEdit';
+			// special occasions
+			if($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit') $bodyClass = $this->URL->getModule() .'AddEdit';
 
-		// assign
-		$this->assign('bodyClass', $bodyClass);
+			// assign
+			$this->assign('bodyClass', $bodyClass);
+		}
 	}
 }
 

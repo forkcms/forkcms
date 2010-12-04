@@ -806,14 +806,12 @@ class BackendBaseCronjob
 	 * @return	void
 	 * @param	string $action		The action to load.
 	 * @param	string $module		The module to load.
-	 * @param	string $id			The id of the cronjob.
 	 */
-	public function __construct($action, $module, $id)
+	public function __construct($action, $module)
 	{
 		// store the current module and action (we grab them from the URL)
 		$this->setModule($module);
 		$this->setAction($action);
-		$this->setId($id);
 	}
 
 
@@ -866,7 +864,7 @@ class BackendBaseCronjob
 	 */
 	public function getId()
 	{
-		return $this->id;
+		return strtolower($this->getModule() .'_'. $this->getAction());
 	}
 
 
@@ -936,18 +934,6 @@ class BackendBaseCronjob
 
 		// if the cronjob is busy we shoul NOT proceed.
 		if($isBusy) exit;
-	}
-
-
-	/**
-	 * Set the action, for later use
-	 *
-	 * @return	void
-	 * @param	int $id		The id of the cronjob.
-	 */
-	protected function setId($id)
-	{
-		$this->id = (int) $id;
 	}
 
 

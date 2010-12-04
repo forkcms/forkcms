@@ -60,14 +60,11 @@ class BackendCronjob
 		// set the requested file
 		$this->setAction(SpoonFilter::getGetValue('action', null, ''));
 
-		// set the id
-		$this->setId(SpoonFilter::getGetValue('id', null, ''));
-
 		// set the language
 		$this->setLanguage(SpoonFilter::getGetValue('language', FrontendLanguage::getActiveLanguages(), SITE_DEFAULT_LANGUAGE));
 
 		// create new action
-		$action = new BackendCronjobAction($this->getAction(), $this->getModule(), $this->getId());
+		$action = new BackendCronjobAction($this->getAction(), $this->getModule());
 
 		// execute
 		$action->execute();
@@ -82,17 +79,6 @@ class BackendCronjob
 	public function getAction()
 	{
 		return $this->action;
-	}
-
-
-	/**
-	 * Get the id
-	 *
-	 * @return	int
-	 */
-	public function getId()
-	{
-		return $this->id;
 	}
 
 
@@ -141,32 +127,6 @@ class BackendCronjob
 
 		// set property
 		$this->action = (string) $value;
-	}
-
-
-	/**
-	 * Set id
-	 *
-	 * @return	void
-	 * @param	string $value	The id of the cronjob.
-	 */
-	public function setId($value)
-	{
-		// redefine
-		$value = (int) $value;
-
-		// validate
-		if($value == 0)
-		{
-			// set correct headers
-			SpoonHTTP::setHeadersByCode(400);
-
-			// throw exceptions
-			throw new BackendException('Id not present.');
-		}
-
-		// set property
-		$this->id = $value;
 	}
 
 
@@ -265,14 +225,12 @@ class BackendCronjobAction
 	 * @return	void
 	 * @param	string $action		The action to load.
 	 * @param	string $module		The module to load.
-	 * @param	int $id				The id of the cronjob.
 	 */
-	public function __construct($action, $module, $id)
+	public function __construct($action, $module)
 	{
 		// set properties
 		$this->setModule($module);
 		$this->setAction($action);
-		$this->setId($id);
 	}
 
 
@@ -330,7 +288,7 @@ class BackendCronjobAction
 		}
 
 		// create action-object
-		$object = new $actionClassName($this->getAction(), $this->getModule(), $this->getId());
+		$object = new $actionClassName($this->getAction(), $this->getModule());
 
 		// call the execute method of the real action (defined in the module)
 		$object->execute();
