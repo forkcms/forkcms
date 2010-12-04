@@ -60,7 +60,7 @@ jsFrontend.controls =
 }
 
 
-jsFrontend.form = 
+jsFrontend.forms = 
 {
 	// init, something like a constructor
 	init: function() 
