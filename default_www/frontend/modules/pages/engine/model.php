@@ -13,6 +13,34 @@
 class FrontendPagesModel
 {
 	/**
+	 * Fetch the list of tags for a list of items
+	 *
+	 * @return	array
+	 * @param	array $ids
+	 */
+	public static function getForTags(array $ids)
+	{
+		// fetch items
+		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title
+															FROM pages AS i
+															INNER JOIN meta AS m ON m.id = i.meta_id
+															WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN ('. implode(',', $ids) .')
+															ORDER BY i.title ASC;',
+															array('active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
+
+		// has items
+		if(!empty($items))
+		{
+			// reset url
+			foreach($items as &$row) $row['url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+		}
+
+		// return
+		return $items;
+	}
+
+
+	/**
 	 * Parse the search results for this module
 	 *
 	 * Note: a module's search function should always:
