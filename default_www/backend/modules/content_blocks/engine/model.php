@@ -47,7 +47,7 @@ class BackendContentBlocksModel
 										array('content_blocks', 'widget', '200'. $id));
 
 		// update blocks with this item linked
-		$db->update('pages_blocks', array('extra_id' => null), 'extra_id = ?', $extraId);
+		$db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', $extraId);
 
 		// delete all records
 		$db->delete('content_blocks', 'id = ?', $id);
