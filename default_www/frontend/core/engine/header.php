@@ -75,16 +75,16 @@ class FrontendHeader extends FrontendBaseObject
 		Spoon::setObjectReference('header', $this);
 
 		// add some default CSS files
-		$this->addCSSFile('/frontend/core/layout/css/screen.css');
-		$this->addCSSFile('/frontend/core/layout/css/print.css', 'print');
-		$this->addCSSFile('/frontend/core/layout/css/jquery_ui/ui-lightness/jquery_ui.css');
+		$this->addCSS('/frontend/core/layout/css/screen.css');
+		$this->addCSS('/frontend/core/layout/css/print.css', 'print');
+		$this->addCSS('/frontend/core/layout/css/jquery_ui/ui-lightness/jquery_ui.css');
 
 		// add default IE stylesheets
-		$this->addCSSFile('/frontend/core/layout/css/ie6.css', 'screen', 'lte IE 6');
-		$this->addCSSFile('/frontend/core/layout/css/ie7.css', 'screen', 'IE 7');
+		$this->addCSS('/frontend/core/layout/css/ie6.css', 'screen', 'lte IE 6');
+		$this->addCSS('/frontend/core/layout/css/ie7.css', 'screen', 'IE 7');
 
 		// debug stylesheet
-		if(SPOON_DEBUG) $this->addCSSFile('/frontend/core/layout/css/debug.css');
+		if(SPOON_DEBUG) $this->addCSS('/frontend/core/layout/css/debug.css');
 
 		// add default javascript-files
 		$this->addJavascript('/frontend/core/js/jquery/jquery.js', false);
@@ -103,7 +103,7 @@ class FrontendHeader extends FrontendBaseObject
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
 	 */
-	public function addCSSFile($file, $media = 'screen', $condition = null, $minify = true)
+	public function addCSS($file, $media = 'screen', $condition = null, $minify = true)
 	{
 		// redefine
 		$file = (string) $file;

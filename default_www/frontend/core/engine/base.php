@@ -338,7 +338,7 @@ class FrontendBaseBlock
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
 	 */
-	public function addCSSFile($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
+	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
 	{
 		// redefine
 		$file = (string) $file;
@@ -348,7 +348,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
 
 		// add css to the header
-		$this->header->addCSSFile($file, $media, $condition, $minify);
+		$this->header->addCSS($file, $media, $condition, $minify);
 	}
 
 
