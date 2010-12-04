@@ -469,39 +469,6 @@ class SpoonDatabase
 		$query = (string) $query;
 		$parameters = (array) $parameters;
 
-		// create statement
-		$statement = $this->handler->prepare($query);
-
-		// validate statement
-		if($statement === false)
-		{
-			// get error
-			$errorInfo = $this->handler->errorInfo();
-
-			// throw exceptions
-			throw new SpoonDatabaseException($errorInfo[2]);
-		}
-
-		// has parameters
-		foreach($parameters as $label => $value)
-		{
-			// bind values
-			$statement->bindValue((is_int($label) ? $label + 1 : (string) $label), $value, $this->getType($value));
-		}
-
-		// execute statement
-		$statement->execute();
-
-		// has errors
-		if($statement->errorCode() != 0)
-		{
-			$aError = $statement->errorInfo();
-			throw new SpoonDatabaseException($aError[2]);
-		}
-
-		// debug enabled
-		if($this->debug) $this->queries[] = array('query' => $query, 'parameters' => $parameters);
-
 		// init var
 		$results = array();
 		$keys = null;
