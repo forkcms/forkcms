@@ -2,6 +2,12 @@
 - Bugfix: navigation used to give notices with hidden/excluded pages
 - Bugfix: autoloader path to frontendbaseajaxaction was incorrect
 - Bugfix: setting a language for an ajax-call on non-multilanguage sites wat a bit - ehm - fubar
+- Bugfix: when deleting a content_block, the HTML-field for the block should be set to an empty string (thx to Frederik Heyninck)
+- Core: renamed addCSSFile to addCSS, to reflect the backend (thx to Frederik Heyninck)
+- Bugfix: loading of classes in getWarnings should use SpoonFilter::toCamelCase instead of ucfirst (thx to Frederik Heyninck)
+- Pages: added the getForTags-method
+- Core: added JS to enable placeholder-behaviour in browsers that doesn't support placeholders
+
 
 2.0.2 (2010-11-24)
 -----
