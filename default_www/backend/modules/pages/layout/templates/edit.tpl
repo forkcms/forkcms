@@ -182,9 +182,10 @@
 					<h3>{$lblURL}</h3>
 				</div>
 				<div class="options">
-					<label for="urlOverwrite">{$lblCustomURL|ucfirst}</label>
-					<span class="helpTxt">{$msgHelpMetaURL}</span>
-
+					<p>
+						<label for="urlOverwrite">{$lblCustomURL|ucfirst}</label>
+						<span class="helpTxt">{$msgHelpMetaURL}</span>
+					</p>
 					<ul class="inputList checkboxTextFieldCombo">
 						<li>
 							{$chkUrlOverwrite}
