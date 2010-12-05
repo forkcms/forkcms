@@ -1253,7 +1253,7 @@ jsBackend.tooltip =
 	{
 		if($('.help').length > 0)
 		{
-			$('.help').tooltip({ effect: 'fade' }).dynamic();
+			$('.help').tooltip({ effect: 'fade', relative: true }).dynamic();
 		}
 	},
 
