@@ -1569,7 +1569,7 @@ class BackendPagesModel
 		if(empty($page) || empty($droppedOnPage)) return false;
 
 		// calculate new parent for items that should be moved inside
-		if($droppedOn == 0) $newParent == 0;
+		if($droppedOn == 0) $newParent = 0;
 		elseif($typeOfDrop == 'inside')
 		{
 			// check if item allows children
