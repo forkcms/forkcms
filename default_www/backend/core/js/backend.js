@@ -711,7 +711,7 @@ jsBackend.forms =
 	init: function()
 	{
 		jsBackend.forms.placeholders();	// make sure this is done before focussing the first field
-		//jsBackend.forms.focusFirstField();
+		jsBackend.forms.focusFirstField();
 		jsBackend.forms.datefields();
 		jsBackend.forms.submitWithLinks();
 		jsBackend.forms.tagBoxes();
