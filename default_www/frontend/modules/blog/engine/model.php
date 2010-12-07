@@ -13,7 +13,7 @@
  * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
-class FrontendBlogModel
+class FrontendBlogModel implements FrontendTagsInterface
 {
 	/**
 	 * Get an item

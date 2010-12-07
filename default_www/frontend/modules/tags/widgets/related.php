@@ -8,6 +8,7 @@
  * @subpackage	tags
  *
  * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendTagsWidgetRelated extends FrontendBaseWidget
@@ -108,19 +109,22 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 			// set module class
 			$class = 'Frontend'. SpoonFilter::toCamelCase($entry['module']) .'Model';
 
-			// check to see if the interface is correctly implemented
-			if(method_exists($class, 'getForTags'))
+			// reflection of my class
+			$reflection = new ReflectionClass($class);
+
+			// check to see if the interface is implemented
+			if($reflection->implementsInterface('FrontendTagsInterface'))
 			{
 				// get module record
 				$this->related[$id] = call_user_func(array($class, 'getForTags'), (array) array($entry['other_id']));
 				if($this->related[$id]) $this->related[$id] = array_pop($this->related[$id]);
 			}
 
-			// method does not exist
+			// interface is not implemented
 			else
 			{
 				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the Model of your module.'); // @todo this has to be checked by the reflection api http://be2.php.net/manual/en/reflectionclass.implementsinterface.php
+				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $entry['module'] .').');
 
 				// when debug is off show a descent message
 				else exit(SPOON_DEBUG_MESSAGE);
@@ -161,8 +165,11 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 			// set module class
 			$class = 'Frontend'. SpoonFilter::toCamelCase($block['module']) .'Model';
 
-			// check to see if the interface is correctly implemented
-			if(method_exists($class, 'getIdForTags'))
+			// reflection of my class
+			$reflection = new ReflectionClass($class);
+
+			// check to see if the interface is implemented
+			if($reflection->implementsInterface('FrontendTagsInterface'))
 			{
 				// get record for module
 				$record = call_user_func(array($class, 'getIdForTags'), $this->URL);
@@ -178,11 +185,11 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
 			}
 
-			// method does not exist
+			// interface is not implemented
 			else
 			{
 				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the Model of your module.');
+				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $block['module'] .').');
 
 				// when debug is off show a descent message
 				else exit(SPOON_DEBUG_MESSAGE);
