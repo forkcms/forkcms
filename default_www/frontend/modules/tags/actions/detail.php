@@ -10,21 +10,25 @@
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendTagsDetail extends FrontendBaseBlock
 {
-	private $id;
-
-	private $modules = array();
-
-
 	/**
-	 * The ?
+	 * The tag
 	 *
 	 * @var	array
 	 */
 	private $record = array();
+
+
+	/**
+	 * The items per module with this tag
+	 *
+	 * @var array
+	 */
+	private $results = array();
 
 
 	/**
@@ -36,6 +40,9 @@ class FrontendTagsDetail extends FrontendBaseBlock
 	{
 		// call the parent
 		parent::execute();
+
+		// hide contenTitle, in the template the title is wrapped with an inverse-option
+		$this->tpl->assign('hideContentTitle', true);
 
 		// load template
 		$this->loadTemplate();
@@ -58,14 +65,14 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		// validate incoming parameters
 		if($this->URL->getParameter(1) === null) $this->redirect(FrontendNavigation::getURL(404));
 
-		// fetch id
-		$this->id = FrontendTagsModel::getIdByURL($this->URL->getParameter(1));
+		// fetch record
+		$this->record = FrontendTagsModel::get($this->URL->getParameter(1));
 
-		// validate id
-		if($this->id == 0) $this->redirect(FrontendNavigation::getURL(404));
+		// validate record
+		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 
 		// fetch modules
-		$this->modules = FrontendTagsModel::getModulesForTag($this->id);
+		$this->modules = FrontendTagsModel::getModulesForTag($this->record['id']);
 
 		// loop modules
 		foreach($this->modules as $module)
@@ -77,13 +84,13 @@ class FrontendTagsDetail extends FrontendBaseBlock
 				$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
 																		FROM modules_tags
 																		WHERE module = ? AND tag_id = ?;',
-																		array($module, $this->id));
+																		array($module, $this->record['id']));
 
 				// get the items that are linked to the tags
 				$items = (array) call_user_func(array('Frontend'. SpoonFilter::toCamelCase($module) .'Model', 'getForTags'), $otherIds);
 
 				// add into results array
-				if(!empty($items)) $this->record[] = array('name' => $module, 'items' => $items);
+				if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::getLabel(ucfirst($module)), 'items' => $items);
 			}
 		}
 	}
@@ -96,11 +103,14 @@ class FrontendTagsDetail extends FrontendBaseBlock
 	 */
 	private function parse()
 	{
+		// assign tag
+		$this->tpl->assign('tag', $this->record);
+
 		// assign tags
-		$this->tpl->assign('tagsModules', $this->record);
+		$this->tpl->assign('tagsModules', $this->results);
 
 		// update breadcrumb
-		$this->breadcrumb->addElement(FrontendTagsModel::getName($this->id));
+		$this->breadcrumb->addElement($this->record['name']);
 	}
 }
 
