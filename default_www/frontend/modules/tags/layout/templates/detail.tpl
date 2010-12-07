@@ -14,7 +14,7 @@
 					<h2>{$tagsModules.label}</h2>
 					<ul>
 						{iteration:tagsModules.items}
-							<li><a href="{$items.url}">{$items.title}</a></li>
+							<li><a href="{$items.full_url}">{$items.title}</a></li>
 						{/iteration:tagsModules.items}
 					</ul>
 				{/iteration:tagsModules}

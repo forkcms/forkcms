@@ -108,13 +108,23 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 			// set module class
 			$class = 'Frontend'. SpoonFilter::toCamelCase($entry['module']) .'Model';
 
-			// get module record
-			if(method_exists($class, 'search')) // @todo: may vary between modules?
+			// check to see if the interface is correctly implemented
+			if(method_exists($class, 'getForTags'))
 			{
-				$this->related[$id] = call_user_func(array($class, 'search'), array($entry['other_id']));
+				// get module record
+				$this->related[$id] = call_user_func(array($class, 'getForTags'), (array) array($entry['other_id']));
 				if($this->related[$id]) $this->related[$id] = array_pop($this->related[$id]);
 			}
-			else unset($this->related[$id]);
+
+			// method does not exist
+			else
+			{
+				// when debug is on throw an exception
+				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the Model of your module.'); // @todo this has to be checked by the reflection api http://be2.php.net/manual/en/reflectionclass.implementsinterface.php
+
+				// when debug is off show a descent message
+				else exit(SPOON_DEBUG_MESSAGE);
+			}
 
 			// remove empty items
 			if(empty($this->related[$id])) unset($this->related[$id]);
@@ -145,20 +155,17 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		// get page record
 		$record = (array) FrontendNavigation::getPageInfo($pageId);
 
-		// get url-part for module
-		$url = $this->URL->getParameter(1); // @todo: this should not be done here, because it can vary between modules
-
 		// loop blocks
 		foreach((array) $record['extra_blocks'] as $block)
 		{
 			// set module class
 			$class = 'Frontend'. SpoonFilter::toCamelCase($block['module']) .'Model';
 
-			// get module record
-			if(method_exists($class, 'get')) // @todo: may vary between modules?
+			// check to see if the interface is correctly implemented
+			if(method_exists($class, 'getIdForTags'))
 			{
 				// get record for module
-				$record = call_user_func(array($class, 'get'), $url);
+				$record = call_user_func(array($class, 'getIdForTags'), $this->URL);
 
 				// check if record exists
 				if(!$record) continue;
@@ -169,6 +176,16 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				// get record's tags
 				$tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);
 				foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
+			}
+
+			// method does not exist
+			else
+			{
+				// when debug is on throw an exception
+				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the Model of your module.');
+
+				// when debug is off show a descent message
+				else exit(SPOON_DEBUG_MESSAGE);
 			}
 		}
 	}
