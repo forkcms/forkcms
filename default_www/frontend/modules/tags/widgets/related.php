@@ -12,7 +12,6 @@
  */
 class FrontendTagsWidgetRelated extends FrontendBaseWidget
 {
-
 	/**
 	 * Records to exclude
 	 *
