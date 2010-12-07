@@ -25,7 +25,7 @@ class FrontendContentBlocksModel
 		// get data
 		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.title, i.text
 															FROM content_blocks AS i
-															WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?;',
+															WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?',
 															array((int) $id, 'active', 'N', FRONTEND_LANGUAGE));
 	}
 }

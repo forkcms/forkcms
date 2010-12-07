@@ -33,7 +33,7 @@ class BackendLocaleModel
 		$locale = (array) $db->getRecords('SELECT type, module, name, value
 											FROM locale
 											WHERE language = ? AND application = ?
-											ORDER BY type ASC, name ASC, module ASC;',
+											ORDER BY type ASC, name ASC, module ASC',
 											array((string) $language, (string) $application));
 
 		// start generating PHP
@@ -101,7 +101,7 @@ class BackendLocaleModel
 	public static function delete(array $ids)
 	{
 		// delete records
-		BackendModel::getDB(true)->execute('DELETE FROM locale WHERE id IN ('. implode(',', $ids) .');');
+		BackendModel::getDB(true)->execute('DELETE FROM locale WHERE id IN ('. implode(',', $ids) .')');
 
 		// rebuild cache
 		self::buildCache('nl', 'backend');
@@ -117,7 +117,7 @@ class BackendLocaleModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id) FROM locale WHERE id = ?;', (int) $id) > 0);
+		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id) FROM locale WHERE id = ?', (int) $id) > 0);
 	}
 
 
@@ -147,11 +147,11 @@ class BackendLocaleModel
 
 		if($id !== null) return (bool) ((int) $db->getVar('SELECT COUNT(id)
 															FROM locale
-															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?;',
+															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?',
 															array($name, $type, $module, $language, $application, $id)) > 0);
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id)
 															FROM locale
-															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?;',
+															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
 															array($name, $type, $module, $language, $application)));
 	}
 
@@ -164,7 +164,7 @@ class BackendLocaleModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT * FROM locale WHERE id = ?;', (int) $id);
+		return (array) BackendModel::getDB()->getRecord('SELECT * FROM locale WHERE id = ?', (int) $id);
 	}
 
 

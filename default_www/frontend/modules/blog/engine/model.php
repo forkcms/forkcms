@@ -34,7 +34,7 @@ class FrontendBlogModel
 															INNER JOIN blog_categories AS c ON i.category_id = c.id
 															INNER JOIN meta AS m ON i.meta_id = m.id
 															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
-															LIMIT 1;',
+															LIMIT 1',
 															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $URL));
 	}
 
@@ -58,7 +58,7 @@ class FrontendBlogModel
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 																ORDER BY i.publish_on DESC, i.id DESC
-																LIMIT ?, ?;',
+																LIMIT ?, ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (int) $offset, (int) $limit), 'id');
 
 		// no results?
@@ -106,7 +106,7 @@ class FrontendBlogModel
 															FROM blog_categories AS c
 															INNER JOIN blog_posts AS i ON c.id = i.category_id AND c.language = i.language
 															WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
-															GROUP BY c.id;',
+															GROUP BY c.id',
 															array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'), 'id');
 	}
 
@@ -129,7 +129,7 @@ class FrontendBlogModel
 																WHERE i.status = ? AND i.language = ?
 																GROUP BY i.id
 																ORDER BY i.created_on DESC
-																LIMIT ?, ?;',
+																LIMIT ?, ?',
 																array('published', FRONTEND_LANGUAGE, (int) $offset, (int) $limit));
 
 		// return the comments
@@ -146,7 +146,7 @@ class FrontendBlogModel
 	{
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
 														FROM blog_posts AS i
-														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?;',
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
 	}
 
@@ -171,7 +171,7 @@ class FrontendBlogModel
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?
 																ORDER BY i.publish_on DESC
-																LIMIT ?, ?;',
+																LIMIT ?, ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL, (int) $offset, (int) $limit), 'id');
 
 		// no results?
@@ -219,7 +219,7 @@ class FrontendBlogModel
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
 														FROM blog_posts AS i
 														INNER JOIN blog_categories AS c ON i.category_id = c.id
-														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?;',
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL));
 	}
 
@@ -251,7 +251,7 @@ class FrontendBlogModel
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
 																ORDER BY i.publish_on DESC
-																LIMIT ?, ?;',
+																LIMIT ?, ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'id');
 
 		// no results?
@@ -299,7 +299,7 @@ class FrontendBlogModel
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
 														FROM blog_posts AS i
 														INNER JOIN blog_categories AS c ON i.category_id = c.id
-														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?;',
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i:s', $start), FrontendModel::getUTCDate('Y-m-d H:i:s', $end)));
 
 	}
@@ -317,7 +317,7 @@ class FrontendBlogModel
 													FROM blog_posts AS i
 													INNER JOIN meta AS m ON i.meta_id = m.id
 													WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
-													GROUP BY month;',
+													GROUP BY month',
 													array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
 
 		// init vars
@@ -390,7 +390,7 @@ class FrontendBlogModel
 																c.author, c.email, c.website
 																FROM blog_comments AS c
 																WHERE c.post_id = ? AND c.status = ? AND c.language = ?
-																ORDER BY c.created_on ASC;',
+																ORDER BY c.created_on ASC',
 																array((int) $id, 'published', FRONTEND_LANGUAGE));
 
 		// loop comments
@@ -422,7 +422,7 @@ class FrontendBlogModel
 															INNER JOIN blog_categories AS c ON i.category_id = c.id
 															INNER JOIN meta AS m ON i.meta_id = m.id
 															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.revision_id = ? AND m.url = ?
-															LIMIT 1;',
+															LIMIT 1',
 															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
 	}
 
@@ -440,7 +440,7 @@ class FrontendBlogModel
 															FROM blog_posts AS i
 															INNER JOIN meta AS m ON m.id = i.meta_id
 															WHERE i.status = ? AND i.hidden = ? AND i.id IN ('. implode(',', $ids) .')
-															ORDER BY i.publish_on DESC;',
+															ORDER BY i.publish_on DESC',
 															array('active', 'N'));
 
 		// has items
@@ -475,7 +475,7 @@ class FrontendBlogModel
 		// get date for current item
 		$date = (string) $db->getVar('SELECT i.publish_on
 									FROM blog_posts AS i
-									WHERE i.id = ?;',
+									WHERE i.id = ?',
 									array($id));
 
 		// validate
@@ -490,7 +490,7 @@ class FrontendBlogModel
 											INNER JOIN meta AS m ON i.meta_id = m.id
 											WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ?
 											ORDER BY i.publish_on DESC
-											LIMIT 1;',
+											LIMIT 1',
 											array($id, 'active', 'N', FRONTEND_LANGUAGE, $date));
 
 		// get next post
@@ -499,7 +499,7 @@ class FrontendBlogModel
 											INNER JOIN meta AS m ON i.meta_id = m.id
 											WHERE i.id != ? AND i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on > ?
 											ORDER BY i.publish_on ASC
-											LIMIT 1;',
+											LIMIT 1',
 											array($id, 'active', 'N', FRONTEND_LANGUAGE, $date));
 
 		// return
@@ -530,7 +530,7 @@ class FrontendBlogModel
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 																ORDER BY c.created_on DESC
-																LIMIT ?;',
+																LIMIT ?',
 																array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit));
 
 		// validate
@@ -581,7 +581,7 @@ class FrontendBlogModel
 																INNER JOIN meta AS m ON i.meta_id = m.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN('. implode(',', $relatedIDs) .')
 																ORDER BY i.publish_on DESC, i.id DESC
-																LIMIT ?;',
+																LIMIT ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit), 'id');
 
 		// loop items
@@ -616,7 +616,7 @@ class FrontendBlogModel
 															INNER JOIN blog_categories AS c ON i.category_id = c.id
 															INNER JOIN meta AS m ON i.meta_id = m.id
 															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
-															LIMIT 1;',
+															LIMIT 1',
 															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
 	}
 
@@ -640,7 +640,7 @@ class FrontendBlogModel
 		$badge = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id)
 														FROM blog_comments AS i
 														WHERE i.status = ? AND i.language = ?
-														GROUP BY i.status;',
+														GROUP BY i.status',
 														array('moderation', FRONTEND_LANGUAGE));
 
 		// reset if needed
@@ -712,7 +712,7 @@ class FrontendBlogModel
 																FROM blog_comments AS i
 																INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 																WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-																GROUP BY i.post_id;',
+																GROUP BY i.post_id',
 																array('published', $comment['post_id'], FRONTEND_LANGUAGE, 'active'));
 
 		// update num comments
@@ -735,7 +735,7 @@ class FrontendBlogModel
 		// does the author has a moderated comment?
 		return (bool) ((int) FrontendModel::getDB()->getVar('SELECT COUNT(c.id)
 																FROM blog_comments AS c
-																WHERE c.status = ? AND c.author = ? AND c.email = ?;',
+																WHERE c.status = ? AND c.author = ? AND c.email = ?',
 																array('published', (string) $author, (string) $email)) > 0);
 	}
 
@@ -757,7 +757,7 @@ class FrontendBlogModel
 		$items = (array) FrontendModel::getDB()->retrieve('SELECT i.id, i.title, i.introduction, i.text, m.url
 															FROM blog_posts AS i
 															INNER JOIN meta AS m ON i.meta_id = m.id
-															WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN ('. implode(',', $ids) .');',
+															WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN ('. implode(',', $ids) .')',
 															array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') .':00'), 'id');
 
 		// prepare items for search

@@ -89,16 +89,16 @@ class BackendBlogModel
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
 
 		// delete blogpost records
-		$db->delete('blog_posts', 'id IN('. implode(',', $ids) .') AND language = ?;', BL::getWorkingLanguage());
+		$db->delete('blog_posts', 'id IN('. implode(',', $ids) .') AND language = ?', BL::getWorkingLanguage());
 		$db->delete('blog_comments', 'post_id IN('. implode(',', $ids) .') AND language = ?;', BL::getWorkingLanguage());
 
 		// get used meta ids
 		$metaIds = (array) $db->getColumn('SELECT meta_id
 											FROM blog_posts AS p
-											WHERE id IN('. implode(',', $ids) .') AND language = ?;', BL::getWorkingLanguage());
+											WHERE id IN('. implode(',', $ids) .') AND language = ?', BL::getWorkingLanguage());
 
 		// delete meta
-		if(!empty($metaIds)) $db->delete('meta', 'id IN('. implode(',', $metaIds) .');');
+		if(!empty($metaIds)) $db->delete('meta', 'id IN('. implode(',', $metaIds) .')');
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
@@ -147,10 +147,10 @@ class BackendBlogModel
 		// get blogpost ids
 		$postIds = (array) $db->getColumn('SELECT i.post_id
 											FROM blog_comments AS i
-											WHERE i.id IN('. implode(',', $ids) .') AND i.language = ?;', BL::getWorkingLanguage());
+											WHERE i.id IN('. implode(',', $ids) .') AND i.language = ?', BL::getWorkingLanguage());
 
 		// update record
-		$db->delete('blog_comments', 'id IN('. implode(',', $ids) .') AND language = ?;', BL::getWorkingLanguage());
+		$db->delete('blog_comments', 'id IN('. implode(',', $ids) .') AND language = ?', BL::getWorkingLanguage());
 
 
 		// recalculate the comment count
@@ -172,7 +172,7 @@ class BackendBlogModel
 		// exists?
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
 															FROM blog_posts AS i
-															WHERE i.id = ? AND i.language = ?;',
+															WHERE i.id = ? AND i.language = ?',
 															array((int) $id, BL::getWorkingLanguage())) > 0);
 	}
 
@@ -188,7 +188,7 @@ class BackendBlogModel
 		// exists?
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id)
 															FROM blog_categories AS i
-															WHERE i.id = ? AND i.language = ?;',
+															WHERE i.id = ? AND i.language = ?',
 															array((int) $id, BL::getWorkingLanguage())) > 0);
 	}
 
@@ -204,7 +204,7 @@ class BackendBlogModel
 		// exists?
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id)
 															FROM blog_comments AS i
-															WHERE i.id = ? AND i.language = ?;',
+															WHERE i.id = ? AND i.language = ?',
 															array((int) $id, BL::getWorkingLanguage())) > 0);
 	}
 
@@ -226,7 +226,7 @@ class BackendBlogModel
 															FROM blog_posts AS i
 															INNER JOIN meta AS m ON m.id = i.meta_id
 															WHERE i.id = ? AND i.status = ? AND i.language = ?
-															LIMIT 1;',
+															LIMIT 1',
 															array($id, 'active', BL::getWorkingLanguage()));
 	}
 
@@ -256,7 +256,7 @@ class BackendBlogModel
 															INNER JOIN meta AS m ON p.meta_id = m.id
 															WHERE i.language = ?
 															GROUP BY i.id
-															LIMIT ?, ?;',
+															LIMIT ?, ?',
 															array(BL::getWorkingLanguage(), $offset, $limit));
 		}
 
@@ -267,7 +267,7 @@ class BackendBlogModel
 														INNER JOIN meta AS m ON p.meta_id = m.id
 														WHERE i.status = ? AND i.language = ?
 														GROUP BY i.id
-														LIMIT ?, ?;',
+														LIMIT ?, ?',
 														array($status, BL::getWorkingLanguage(), $offset, $limit));
 	}
 
@@ -290,7 +290,7 @@ class BackendBlogModel
 															INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 															INNER JOIN meta AS m ON p.meta_id = m.id
 															WHERE i.id = ?
-															LIMIT 1;',
+															LIMIT 1',
 															array($id));
 	}
 
@@ -311,7 +311,7 @@ class BackendBlogModel
 															FROM modules_tags AS mt
 															INNER JOIN tags AS t ON mt.tag_id = t.id
 															INNER JOIN blog_posts AS i ON mt.other_id = i.id
-															WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?;',
+															WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ? AND i.language = ?',
 															array('blog', $tagId, 'active', BL::getWorkingLanguage()));
 
 		// loop items
@@ -332,7 +332,7 @@ class BackendBlogModel
 		// get records and return them
 		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
 																FROM blog_categories AS i
-																WHERE i.language = ?;', BL::getWorkingLanguage());
+																WHERE i.language = ?', BL::getWorkingLanguage());
 
 		// no categories?
 		if(empty($categories))
@@ -368,7 +368,7 @@ class BackendBlogModel
 		// get record and return it
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*
 															FROM blog_categories AS i
-															WHERE i.id = ? AND i.language = ?;',
+															WHERE i.id = ? AND i.language = ?',
 															array((int) $id, BL::getWorkingLanguage()));
 	}
 
@@ -389,7 +389,7 @@ class BackendBlogModel
 		// exists?
 		return (int) BackendModel::getDB()->getVar('SELECT i.id
 													FROM blog_categories AS i
-													WHERE i.name = ? AND i.language = ?;',
+													WHERE i.name = ? AND i.language = ?',
 													array($name, $language));
 	}
 
@@ -404,7 +404,7 @@ class BackendBlogModel
 	{
 		return (array) BackendModel::getDB()->retrieve('SELECT *
 														FROM blog_comments AS i
-														WHERE i.id IN ('. implode(',', $ids) .');');
+														WHERE i.id IN ('. implode(',', $ids) .')');
 	}
 
 
@@ -426,7 +426,7 @@ class BackendBlogModel
 														m.url
 														FROM blog_posts AS i
 														INNER JOIN meta AS m ON m.id = i.meta_id
-														WHERE i.id = ? AND i.revision_id = ?;',
+														WHERE i.id = ? AND i.revision_id = ?',
 														array($id, $draftId));
 	}
 
@@ -452,7 +452,7 @@ class BackendBlogModel
 																INNER JOIN meta AS m ON p.meta_id = m.id
 																WHERE i.status = ? AND p.status = ? AND i.language = ?
 																ORDER BY i.id DESC
-																LIMIT ?;',
+																LIMIT ?',
 																array($status, 'active', BL::getWorkingLanguage(), $limit));
 
 		// loop entries
@@ -475,7 +475,7 @@ class BackendBlogModel
 	public static function getMaximumId()
 	{
 		// return
-		return (int) BackendModel::getDB()->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1;');
+		return (int) BackendModel::getDB()->getVar('SELECT MAX(id) FROM blog_posts LIMIT 1');
 	}
 
 
@@ -496,7 +496,7 @@ class BackendBlogModel
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on, m.url
 															FROM blog_posts AS i
 															INNER JOIN meta AS m ON m.id = i.meta_id
-															WHERE i.id = ? AND i.revision_id = ?;',
+															WHERE i.id = ? AND i.revision_id = ?',
 															array($id, $revisionId));
 	}
 
@@ -512,7 +512,7 @@ class BackendBlogModel
 		return (array) BackendModel::getDB()->getPairs('SELECT i.status, COUNT(i.id)
 															FROM blog_comments AS i
 															WHERE i.language = ?
-															GROUP BY i.status;',
+															GROUP BY i.status',
 															array(BL::getWorkingLanguage()));
 	}
 
@@ -538,7 +538,7 @@ class BackendBlogModel
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM blog_posts AS i
 										INNER JOIN meta AS m ON i.meta_id = m.id
-										WHERE i.language = ? AND m.url = ?;',
+										WHERE i.language = ? AND m.url = ?',
 										array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
@@ -559,7 +559,7 @@ class BackendBlogModel
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM blog_posts AS i
 										INNER JOIN meta AS m ON i.meta_id = m.id
-										WHERE i.language = ? AND m.url = ? AND i.id != ?;',
+										WHERE i.language = ? AND m.url = ? AND i.id != ?',
 										array(BL::getWorkingLanguage(), $URL, $itemId));
 
 			// already exists
@@ -598,7 +598,7 @@ class BackendBlogModel
 			// get number of categories with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM blog_categories AS i
-										WHERE i.language = ? AND i.url = ?;',
+										WHERE i.language = ? AND i.url = ?',
 										array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
@@ -618,7 +618,7 @@ class BackendBlogModel
 			// get number of items with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM blog_categories AS i
-										WHERE i.language = ? AND i.url = ? AND i.id != ?;',
+										WHERE i.language = ? AND i.url = ? AND i.id != ?',
 										array(BL::getWorkingLanguage(), $URL, $categoryId));
 
 			// already exists
@@ -733,7 +733,7 @@ class BackendBlogModel
 												FROM blog_comments AS i
 												INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
 												WHERE i.status = ? AND i.post_id IN('. implode(',', $uniqueIds) .') AND i.language = ? AND p.status = ?
-												GROUP BY i.post_id;',
+												GROUP BY i.post_id',
 												array('published', BL::getWorkingLanguage(), 'active'));
 
 		// loop posts
@@ -792,7 +792,7 @@ class BackendBlogModel
 													 FROM blog_posts AS i
 													 WHERE i.id = ? AND i.status = ? AND i.language = ?
 													 ORDER BY i.edited_on DESC
-													 LIMIT ?;',
+													 LIMIT ?',
 													 array($id, 'archived', BL::getWorkingLanguage(), $rowsToKeep));
 
 		// delete other revisions
@@ -855,12 +855,12 @@ class BackendBlogModel
 		// get blogpost ids
 		$postIds = (array) $db->getColumn('SELECT i.post_id
 											FROM blog_comments AS i
-											WHERE i.id IN('. implode(',', $ids) .');');
+											WHERE i.id IN('. implode(',', $ids) .')');
 
 		// update record
 		$db->execute('UPDATE blog_comments
 						SET status = ?
-						WHERE id IN('. implode(',', $ids) .');',
+						WHERE id IN('. implode(',', $ids) .')',
 						$status);
 
 		// recalculate the comment count

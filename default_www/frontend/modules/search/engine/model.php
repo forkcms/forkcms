@@ -59,7 +59,7 @@ class FrontendSearchModel
 							SELECT i0.module, i0.other_id
 							FROM '. implode(' INNER JOIN ', $join) .'
 							WHERE '. implode(' AND ', $where) .'
-						) AS results;';
+						) AS results';
 		}
 
 		// simple search
@@ -77,7 +77,7 @@ class FrontendSearchModel
 							INNER JOIN search_modules AS m ON i.module = m.module
 							WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (?) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
 							GROUP BY i.module, i.other_id
-						) AS results;';
+						) AS results';
 
 			$params = array_merge($terms, array(FRONTEND_LANGUAGE, 'Y', 'Y'));
 		}
@@ -138,7 +138,7 @@ class FrontendSearchModel
 						FROM '. implode(' INNER JOIN ', $join) .'
 						WHERE '. implode(' AND ', $where) .'
 						ORDER BY score DESC
-						LIMIT ?, ?;';
+						LIMIT ?, ?';
 
 			$params = array_merge($params1, $params2, array($offset, $limit));
 		}
@@ -156,7 +156,7 @@ class FrontendSearchModel
 						WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (?) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
 						GROUP BY module, other_id
 						ORDER BY score DESC
-						LIMIT ?, ?;';
+						LIMIT ?, ?';
 
 			$params = array_merge($terms, $terms, array(FRONTEND_LANGUAGE, 'Y', 'Y', $offset, $limit));
 		}
@@ -188,7 +188,7 @@ class FrontendSearchModel
 															WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
 															GROUP BY term
 														) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-														LIMIT ?;',
+														LIMIT ?',
 														array((string) $term .'%', $language, $limit));
 		}
 
@@ -204,7 +204,7 @@ class FrontendSearchModel
 														WHERE term LIKE ? AND num_results IS NOT NULL
 														GROUP BY term
 													) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-													LIMIT ?;',
+													LIMIT ?',
 													array((string) $term .'%', $limit));
 		}
 	}
@@ -221,7 +221,7 @@ class FrontendSearchModel
 		// query db for synonyms
 		$synonyms = FrontendModel::getDB()->getVar('SELECT synonym
 													FROM search_synonyms
-													WHERE term = ?;',
+													WHERE term = ?',
 													array((string) $term));
 
 		// found any? merge with original term
@@ -356,7 +356,7 @@ class FrontendSearchModel
 																		FROM search_index
 																		WHERE language = ? AND active = ?
 																		GROUP BY module, other_id
-																		LIMIT ?, ?;',
+																		LIMIT ?, ?',
 																		array(FRONTEND_LANGUAGE, 'N', $offset, $limit));
 
 			// none found? good news!
