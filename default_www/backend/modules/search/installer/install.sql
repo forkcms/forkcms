@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS `search_index` (
  `field` varchar(64) NOT NULL,
  `value` text NOT NULL,
  `language` varchar(5) NOT NULL,
- `active` enum('Y','N') NOT NULL default 'N',
+ `active` enum('N','Y') NOT NULL default 'N',
  PRIMARY KEY (`module`,`other_id`,`field`,`language`),
  FULLTEXT KEY `value` (`value`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Search index';
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `search_index` (
 
 CREATE TABLE IF NOT EXISTS `search_modules` (
  `module` varchar(255) NOT NULL,
- `searchable` enum('Y','N') NOT NULL,
+ `searchable` enum('N','Y') NOT NULL,
  `weight` int(11) NOT NULL,
  PRIMARY KEY (`module`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
