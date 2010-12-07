@@ -16,14 +16,14 @@ class BackendContentBlocksModel
 	// overview of the items
 	const QRY_BROWSE = 'SELECT i.id, i.title
 						FROM content_blocks AS i
-						WHERE i.status = ? AND i.language = ?;';
+						WHERE i.status = ? AND i.language = ?';
 
 
 	// overview of the revisions for an item
 	const QRY_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 									FROM content_blocks AS i
 									WHERE i.status = ? AND i.id = ? AND i.language = ?
-									ORDER BY i.edited_on DESC;';
+									ORDER BY i.edited_on DESC';
 
 
 	/**
@@ -43,7 +43,7 @@ class BackendContentBlocksModel
 		// get extra id for this content block
 		$extraId = (int) $db->getVar('SELECT id
 										FROM pages_extras
-										WHERE module = ? AND type = ? AND sequence = ?;',
+										WHERE module = ? AND type = ? AND sequence = ?',
 										array('content_blocks', 'widget', '200'. $id));
 
 		// update blocks with this item linked
@@ -74,13 +74,13 @@ class BackendContentBlocksModel
 		// if the item should also be active, there should be at least one row to return true
 		if($activeOnly) return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
 															FROM content_blocks AS i
-															WHERE i.id = ? AND i.status = ?;',
+															WHERE i.id = ? AND i.status = ?',
 															array($id, 'active')) > 0);
 
 		// fallback, this doesn't take the active status in account
 		return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
 											FROM content_blocks AS i
-											WHERE i.revision_id = ?;',
+											WHERE i.revision_id = ?',
 											array($id)) > 0);
 	}
 
@@ -103,7 +103,7 @@ class BackendContentBlocksModel
 		return (array) $db->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 										FROM content_blocks AS i
 										WHERE i.id = ? AND i.status = ?
-										LIMIT 1;',
+										LIMIT 1',
 										array($id, 'active'));
 	}
 
@@ -125,7 +125,7 @@ class BackendContentBlocksModel
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM content_blocks AS i
 															WHERE i.id = ? AND i.revision_id = ?
-															LIMIT 1;',
+															LIMIT 1',
 															array($id, $revisionId));
 	}
 
@@ -142,7 +142,7 @@ class BackendContentBlocksModel
 		$db = BackendModel::getDB(true);
 
 		// calculate new id
-		$newId = (int) $db->getVar('SELECT MAX(id) FROM content_blocks LIMIT 1;') + 1;
+		$newId = (int) $db->getVar('SELECT MAX(id) FROM content_blocks LIMIT 1') + 1;
 
 		// build array
 		$values['id'] = $newId;
@@ -214,7 +214,7 @@ class BackendContentBlocksModel
 														FROM content_blocks AS i
 														WHERE i.id = ? AND i.language = ? AND i.status = ?
 														ORDER BY i.edited_on DESC
-														LIMIT ?;',
+														LIMIT ?',
 														array($id, BL::getWorkingLanguage(), 'archived', $rowsToKeep));
 
 		// delete other revisions

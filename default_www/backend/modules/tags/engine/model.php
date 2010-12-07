@@ -35,8 +35,8 @@ class BackendTagsModel
 		$ids = (!is_array($ids)) ? array($ids) : $ids;
 
 		// delete tags
-		$db->delete('tags', 'id IN ('. implode(',', $ids) .');');
-		$db->delete('modules_tags', 'tag_id IN ('. implode(',', $ids) .');');
+		$db->delete('tags', 'id IN ('. implode(',', $ids) .')');
+		$db->delete('modules_tags', 'tag_id IN ('. implode(',', $ids) .')');
 	}
 
 
@@ -51,7 +51,7 @@ class BackendTagsModel
 		// exists?
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
 															FROM tags AS i
-															WHERE i.id = ?;',
+															WHERE i.id = ?',
 															(int) $id) > 0);
 	}
 
@@ -66,7 +66,7 @@ class BackendTagsModel
 	{
 		return (array) BackendModel::getDB()->getRecord('SELECT i.tag AS name
 															FROM tags AS i
-															WHERE i.id = ?;',
+															WHERE i.id = ?',
 															array((int) $id));
 	}
 
@@ -82,7 +82,7 @@ class BackendTagsModel
 		return (array) BackendModel::getDB()->getRecords('SELECT i.tag AS name, i.tag AS value
 															FROM tags AS i
 															WHERE i.tag LIKE ?
-															ORDER BY i.tag ASC;',
+															ORDER BY i.tag ASC',
 															array((string) $term .'%'));
 	}
 
@@ -109,7 +109,7 @@ class BackendTagsModel
 															FROM tags AS i
 															INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
 															WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?
-															ORDER BY i.tag ASC;',
+															ORDER BY i.tag ASC',
 															array($module, $otherId, $language));
 
 		// return as an imploded string
@@ -142,7 +142,7 @@ class BackendTagsModel
 			// get number of tags with the specified url
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM tags AS i
-										WHERE i.url = ? AND i.language = ?;',
+										WHERE i.url = ? AND i.language = ?',
 										array($URL, $language));
 
 			// there are items so, call this method again.
@@ -165,7 +165,7 @@ class BackendTagsModel
 			// get number of tags with the specified url
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM tags AS i
-										WHERE i.url = ? AND i.language = ? AND i.id != ?;',
+										WHERE i.url = ? AND i.language = ? AND i.id != ?',
 										array($URL, $language, $id));
 
 			// there are items so, call this method again.
@@ -237,7 +237,7 @@ class BackendTagsModel
 		$currentTags = (array) $db->getPairs('SELECT i.tag, i.id
 												FROM tags AS i
 												INNER JOIN modules_tags AS mt ON i.id = mt.tag_id
-												WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?;',
+												WHERE mt.module = ? AND mt.other_id = ? AND i.language = ?',
 												array($module, $otherId, $language));
 
 		// remove old links
@@ -262,7 +262,7 @@ class BackendTagsModel
 			// get tag ids
 			$tagsAndIds = (array) $db->getPairs('SELECT i.tag, i.id
 													FROM tags AS i
-													WHERE i.tag IN("'. implode('", "', $tags) .'") AND i.language = ?;',
+													WHERE i.tag IN("'. implode('", "', $tags) .'") AND i.language = ?',
 													$language);
 
 			// loop again and create tags that don't exist already

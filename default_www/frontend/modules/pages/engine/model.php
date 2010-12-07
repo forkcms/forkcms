@@ -25,7 +25,7 @@ class FrontendPagesModel
 															FROM pages AS i
 															INNER JOIN meta AS m ON m.id = i.meta_id
 															WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN ('. implode(',', $ids) .')
-															ORDER BY i.title ASC;',
+															ORDER BY i.title ASC',
 															array('active', 'N', FRONTEND_LANGUAGE, FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
 
 		// has items
@@ -61,7 +61,7 @@ class FrontendPagesModel
 										FROM pages AS p
 										INNER JOIN meta AS m ON p.meta_id = m.id
 										INNER JOIN pages_templates AS t ON p.template_id = t.id
-										WHERE p.id IN ('. implode(', ', $ids) .') AND p.status = ? AND p.hidden = ? AND p.language = ?;',
+										WHERE p.id IN ('. implode(', ', $ids) .') AND p.status = ? AND p.hidden = ? AND p.language = ?',
 										array('active', 'N', FRONTEND_LANGUAGE), 'id');
 
 		// prepare items for search
@@ -69,7 +69,7 @@ class FrontendPagesModel
 		{
 			$item['text'] = implode(' ', (array) $db->getColumn('SELECT pb.html
 																	FROM pages_blocks AS pb
-																	WHERE pb.revision_id = ? AND pb.status = ?;',
+																	WHERE pb.revision_id = ? AND pb.status = ?',
 																	array($item['text'], 'active')));
 
 			$item['full_url'] = FrontendNavigation::getURL($item['id']);

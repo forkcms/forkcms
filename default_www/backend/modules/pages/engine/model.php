@@ -23,7 +23,7 @@ class BackendPagesModel
 	const QRY_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 									FROM pages AS i
 									WHERE i.id = ? AND i.status = ? AND i.language = ?
-									ORDER BY i.edited_on DESC;';
+									ORDER BY i.edited_on DESC';
 	const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
 									FROM pages_templates AS i ORDER BY i.label ASC';
 
@@ -45,13 +45,13 @@ class BackendPagesModel
 		// get extras
 		$extras = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
 																FROM pages_extras AS i
-																WHERE i.type = ?;',
+																WHERE i.type = ?',
 																array('block'), 'id');
 
 		// get widgets
 		$widgets = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.module, i.action
 																FROM pages_extras AS i
-																WHERE i.type = ?;',
+																WHERE i.type = ?',
 																array('widget'), 'id');
 
 		// search sitemap
@@ -280,7 +280,7 @@ class BackendPagesModel
 		$first = true;
 		$cachedTitles = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.navigation_title
 																FROM pages AS i
-																WHERE i.id IN('. implode(',', array_keys($keys)) .');');
+																WHERE i.id IN('. implode(',', array_keys($keys)) .')');
 
 		// loop all keys
 		foreach($keys as $pageID => $URL)
@@ -537,13 +537,13 @@ class BackendPagesModel
 		// get revision ids
 		$revisionIDs = (array) $db->getColumn('SELECT i.revision_id
 												FROM pages AS i
-												WHERE i.id = ? AND i.language = ?;',
+												WHERE i.id = ? AND i.language = ?',
 												array($id, $language));
 
 		// get meta ids
 		$metaIDs = (array) $db->getColumn('SELECT i.meta_id
 											FROM pages AS i
-											WHERE i.id = ? AND i.language = ?;',
+											WHERE i.id = ? AND i.language = ?',
 											array($id, $language));
 
 		// delete meta records
@@ -593,7 +593,7 @@ class BackendPagesModel
 		// get all non-active pages that use this template
 		$ids = (array) $db->getColumn('SELECT i.revision_id
 										FROM pages AS i
-										WHERE i.template_id = ? AND i.status != ?;',
+										WHERE i.template_id = ? AND i.status != ?',
 										array($id, 'active'));
 
 		// any items
@@ -624,7 +624,7 @@ class BackendPagesModel
 		// get number of rows, if that result is more than 0 it means the page exists
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
 															FROM pages AS i
-															WHERE i.id = ? AND i.language = ? AND i.status IN("active", "draft");',
+															WHERE i.id = ? AND i.language = ? AND i.status IN("active", "draft")',
 															array($id, $language)) > 0);
 	}
 
@@ -643,7 +643,7 @@ class BackendPagesModel
 		// get data
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
 															FROM pages_templates AS i
-															WHERE i.id = ?;',
+															WHERE i.id = ?',
 															$id) > 0);
 	}
 
@@ -665,7 +665,7 @@ class BackendPagesModel
 		// get page (active version)
 		$return = (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM pages AS i
-															WHERE i.id = ? AND i.language = ? AND i.status = ?;',
+															WHERE i.id = ? AND i.language = ? AND i.status = ?',
 															array($id, $language, 'active'));
 
 		// no page?
@@ -711,7 +711,7 @@ class BackendPagesModel
 															FROM pages_blocks AS b
 															INNER JOIN pages AS i ON b.revision_id = i.revision_id
 															WHERE i.id = ? AND i.language = ? AND i.status = ?
-															ORDER BY b.id ASC;',
+															ORDER BY b.id ASC',
 															array($id, $language, 'active'));
 	}
 
@@ -735,7 +735,7 @@ class BackendPagesModel
 															FROM pages_blocks AS b
 															INNER JOIN pages AS i ON b.revision_id = i.revision_id
 															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?
-															ORDER BY b.id ASC;',
+															ORDER BY b.id ASC',
 															array($id, $revisionId, $language));
 	}
 
@@ -756,7 +756,7 @@ class BackendPagesModel
 															FROM modules_tags AS mt
 															INNER JOIN tags AS t ON mt.tag_id = t.id
 															INNER JOIN pages AS i ON mt.other_id = i.id
-															WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?;',
+															WHERE mt.module = ? AND mt.tag_id = ? AND i.status = ?',
 															array('pages', $tagId, 'active'));
 
 		// loop items
@@ -779,7 +779,7 @@ class BackendPagesModel
 																FROM pages_extras AS i
 																INNER JOIN modules AS m ON i.module = m.name
 																WHERE m.active = ?
-																ORDER BY i.module, i.sequence;',
+																ORDER BY i.module, i.sequence',
 																array('Y'), 'id');
 
 		// init var
@@ -830,7 +830,7 @@ class BackendPagesModel
 																FROM pages_extras AS i
 																INNER JOIN modules AS m ON i.module = m.name
 																WHERE m.active = ?
-																ORDER BY i.module, i.sequence;',
+																ORDER BY i.module, i.sequence',
 																array('Y'));
 
 		// build array
@@ -893,7 +893,7 @@ class BackendPagesModel
 														FROM pages AS i
 														WHERE i.parent_id = ? AND i.status = ?
 														ORDER BY i.sequence ASC
-														LIMIT 1;',
+														LIMIT 1',
 														array($pageId, 'active'));
 
 		if($childId != 0) return (int) $childId;
@@ -959,7 +959,7 @@ class BackendPagesModel
 	{
 		// get the maximum id
 		return (int) BackendModel::getDB()->getVar('SELECT MAX(i.id)
-													FROM pages_blocks AS i;');
+													FROM pages_blocks AS i');
 	}
 
 
@@ -977,7 +977,7 @@ class BackendPagesModel
 		// get the maximum id
 		$maximumMenuId = (int) BackendModel::getDB()->getVar('SELECT MAX(i.id)
 																FROM pages AS i
-																WHERE i.language = ?;',
+																WHERE i.language = ?',
 																array($language));
 
 		// pages created by a user that isn't a god should have an id higher then 1000
@@ -1005,7 +1005,7 @@ class BackendPagesModel
 		// get the maximum sequence inside a certain leaf
 		return (int) BackendModel::getDB()->getVar('SELECT MAX(i.sequence)
 													FROM pages AS i
-													WHERE i.language = ? AND i.parent_id = ?;',
+													WHERE i.language = ? AND i.parent_id = ?',
 													array($language, $parentId));
 	}
 
@@ -1027,7 +1027,7 @@ class BackendPagesModel
 		// get page (active version)
 		$return = (array) BackendModel::getDB()->getRecord('SELECT *, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM pages AS i
-															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?;',
+															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?',
 															array($id, $revisionId, $language));
 
 		// anything found
@@ -1113,7 +1113,7 @@ class BackendPagesModel
 		// fetch data
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*
 															FROM pages_templates AS i
-															WHERE i.id = ?;',
+															WHERE i.id = ?',
 															$id);
 	}
 
@@ -1128,7 +1128,7 @@ class BackendPagesModel
 		// get templates
 		$templates = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
 																FROM pages_templates AS i
-																WHERE i.active = ?;',
+																WHERE i.active = ?',
 																array('Y'), 'id');
 
 		// init var
@@ -1183,7 +1183,7 @@ class BackendPagesModel
 																	INNER JOIN meta AS m ON i.meta_id = m.id
 																	WHERE i.parent_id IN ('. implode(', ', $ids) .')
 																	AND i.status = ? AND i.language = ?
-																	ORDER BY i.sequence ASC;',
+																	ORDER BY i.sequence ASC',
 																	array('active', $language), 'id');
 
 		// get the childIDs
@@ -1369,7 +1369,7 @@ class BackendPagesModel
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM pages AS i
 										INNER JOIN meta AS m ON i.meta_id = m.id
-										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.language = ?;',
+										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.language = ?',
 										array($parentId, 'active', $URL, BL::getWorkingLanguage()));
 
 			// no items?
@@ -1390,7 +1390,7 @@ class BackendPagesModel
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM pages AS i
 										INNER JOIN meta AS m ON i.meta_id = m.id
-										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.id != ? AND i.language = ?;',
+										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.id != ? AND i.language = ?',
 										array($parentId, 'active', $URL, $id, BL::getWorkingLanguage()));
 
 			// there are items so, call this method again.
@@ -1529,7 +1529,7 @@ class BackendPagesModel
 	{
 		return (bool) ((int) BackendModel::getDB(false)->getVar('SELECT COUNT(i.template_id)
 																FROM pages AS i
-																WHERE i.template_id = ? AND i.status = ?;',
+																WHERE i.template_id = ? AND i.status = ?',
 																array((int) $templateId, 'active')) > 0);
 	}
 
@@ -1600,7 +1600,7 @@ class BackendPagesModel
 												FROM pages AS i
 												WHERE i.id = ? AND i.language = ? AND i.status = ?
 												ORDER BY i.sequence DESC
-												LIMIT 1;',
+												LIMIT 1',
 												array($newParent, $language, 'active')) + 1;
 
 			// update
@@ -1614,13 +1614,13 @@ class BackendPagesModel
 			$newSequence = (int) $db->getVar('SELECT i.sequence
 												FROM pages AS i
 												WHERE i.id = ? AND i.language = ? AND i.status = ?
-												LIMIT 1;',
+												LIMIT 1',
 												array($droppedOnPage['id'], $language, 'active')) - 1;
 
 			// increment all pages with a sequence that is higher or equal to the current sequence;
 			$db->execute('UPDATE pages
 							SET sequence = sequence + 1
-							WHERE parent_id = ? AND language = ? AND sequence >= ?;',
+							WHERE parent_id = ? AND language = ? AND sequence >= ?',
 							array($newParent, $language, $newSequence + 1));
 
 			// update
@@ -1634,13 +1634,13 @@ class BackendPagesModel
 			$newSequence = (int) $db->getVar('SELECT i.sequence
 												FROM pages AS i
 												WHERE i.id = ? AND i.language = ? AND i.status = ?
-												LIMIT 1;',
+												LIMIT 1',
 												array($droppedOnPage['id'], $language, 'active')) + 1;
 
 			// increment all pages with a sequence that is higher then the current sequence;
 			$db->execute('UPDATE pages
 							SET sequence = sequence + 1
-							WHERE parent_id = ? AND language = ? AND sequence > ?;',
+							WHERE parent_id = ? AND language = ? AND sequence > ?',
 							array($newParent, $language, $newSequence));
 
 			// update
@@ -1653,7 +1653,7 @@ class BackendPagesModel
 		// get current URL
 		$currentURL = (string) $db->getVar('SELECT url
 											FROM meta AS m
-											WHERE m.id = ?;',
+											WHERE m.id = ?',
 											array($page['meta_id']));
 
 		// rebuild url
@@ -1677,7 +1677,7 @@ class BackendPagesModel
 		// get maxim number of blocks for active templates
 		$maximumNumberOfBlocks = (int) BackendModel::getDB()->getVar('SELECT MAX(i.num_blocks) AS max_num_blocks
 																		FROM pages_templates AS i
-																		WHERE i.active = ?;',
+																		WHERE i.active = ?',
 																		array('Y'));
 
 		// store
@@ -1746,7 +1746,7 @@ class BackendPagesModel
 														FROM pages AS i
 														WHERE i.id = ? AND i.status = ?
 														ORDER BY i.edited_on DESC
-														LIMIT ?;',
+														LIMIT ?',
 														array($page['id'], 'archive', $rowsToKeep));
 
 		// delete other revisions

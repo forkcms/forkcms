@@ -16,7 +16,7 @@ class BackendUsersModel
 	// overview of the active users
 	const QRY_BROWSE = 'SELECT i.id
 						FROM users AS i
-						WHERE i.deleted = ?;';
+						WHERE i.deleted = ?';
 
 
 	/**
@@ -57,7 +57,7 @@ class BackendUsersModel
 		// no user to ignore
 		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
 															FROM users AS i
-															WHERE i.email = ? AND i.deleted = ?;',
+															WHERE i.email = ? AND i.deleted = ?',
 															array($email, 'Y')) > 0);
 	}
 
@@ -81,13 +81,13 @@ class BackendUsersModel
 		// if the user should also be active, there should be at least one row to return true
 		if($active) return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
 														FROM users AS i
-														WHERE i.id = ? AND i.deleted = ?;',
+														WHERE i.id = ? AND i.deleted = ?',
 														array($id, 'N')) > 0);
 
 		// fallback, this doesn't take the active nor deleted status in account
 		return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
 											FROM users AS i
-											WHERE i.id = ?;',
+											WHERE i.id = ?',
 											array($id)) > 0);
 	}
 
@@ -112,13 +112,13 @@ class BackendUsersModel
 		// userid specified?
 		if($id !== null) return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
 															FROM users AS i
-															WHERE i.id != ? AND i.email = ?;',
+															WHERE i.id != ? AND i.email = ?',
 															array($id, $email)) > 0);
 
 		// no user to ignore
 		return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
 											FROM users AS i
-											WHERE i.email = ?;',
+											WHERE i.email = ?',
 											array($email)) > 0);
 	}
 
@@ -140,13 +140,13 @@ class BackendUsersModel
 		// get general user data
 		$user = (array) $db->getRecord('SELECT i.id, i.email, i.active, i.group_id
 										FROM users AS i
-										WHERE i.id = ?;',
+										WHERE i.id = ?',
 										array($id));
 
 		// get user-settings
 		$user['settings'] = (array) $db->getPairs('SELECT s.name, s.value
 													FROM users_settings AS s
-													WHERE s.user_id = ?;',
+													WHERE s.user_id = ?',
 													array($id));
 
 		// loop settings and unserialize them
@@ -185,7 +185,7 @@ class BackendUsersModel
 	public static function getGroups()
 	{
 		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
-														FROM groups AS i;');
+														FROM groups AS i');
 	}
 
 
@@ -200,7 +200,7 @@ class BackendUsersModel
 		// get user-settings
 		$userId = BackendModel::getDB()->getVar('SELECT i.id
 													FROM users AS i
-													WHERE i.email = ?;',
+													WHERE i.email = ?',
 													array((string) $email));
 
 		// userId or false on error
@@ -238,7 +238,7 @@ class BackendUsersModel
 		$return = (array) BackendModel::getDB()->getPairs('SELECT i.id, s.value
 															FROM users AS i
 															INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
-															WHERE i.active = ? AND i.deleted = ?;',
+															WHERE i.active = ? AND i.deleted = ?',
 															array('nickname', 'Y', 'N'), 'id');
 
 		// unserialize
@@ -298,7 +298,7 @@ class BackendUsersModel
 			// insert or update
 			$db->execute('INSERT INTO users_settings(user_id, name, value)
 							VALUES(?, ?, ?)
-							ON DUPLICATE KEY UPDATE value = ?;',
+							ON DUPLICATE KEY UPDATE value = ?',
 							array($user['id'], $key, serialize($value), serialize($value)));
 		}
 	}
@@ -344,7 +344,7 @@ class BackendUsersModel
 		$id = $db->getVar('SELECT id
 							FROM users AS i
 							INNER JOIN users_settings AS s ON i.id = s.user_id
-							WHERE i.email = ? AND i.deleted = ?;',
+							WHERE i.email = ? AND i.deleted = ?',
 							array($email, 'Y'));
 
 		// no valid users

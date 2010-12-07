@@ -114,7 +114,7 @@ class FrontendModel
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 			// utf8 compliance & MySQL-timezone
-			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00";');
+			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
 
 			// store
 			Spoon::setObjectReference('database', $db);
@@ -145,7 +145,7 @@ class FrontendModel
 			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
 															FROM modules_settings AS ms
 															INNER JOIN modules AS m ON ms.module = m.name
-															WHERE m.active = ?;', 'Y');
+															WHERE m.active = ?', 'Y');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -175,7 +175,7 @@ class FrontendModel
 		{
 			// fetch settings
 			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
-															FROM modules_settings AS ms;');
+															FROM modules_settings AS ms');
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -215,7 +215,7 @@ class FrontendModel
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											INNER JOIN pages_templates AS t ON p.template_id = t.id
 											WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
-											LIMIT 1;',
+											LIMIT 1',
 											array($pageId, 'active', 'N', FRONTEND_LANGUAGE));
 
 		// validate
@@ -231,7 +231,7 @@ class FrontendModel
 														FROM pages_blocks AS pb
 														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
 														WHERE pb.revision_id = ? AND pb.status = ?
-														ORDER BY pb.id;',
+														ORDER BY pb.id',
 														array($record['revision_id'], 'active'));
 
 		// loop blocks
@@ -335,7 +335,7 @@ class FrontendModel
 			$deviceTokens = (array) FrontendModel::getDB()->getColumn('SELECT s.value
 																		FROM users AS i
 																		INNER JOIN users_settings AS s
-																		WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?;',
+																		WHERE i.active = ? AND i.deleted = ? AND s.name = ? AND s.value != ?',
 																		array('Y', 'N', 'apple_device_token', 'N;'));
 
 			// any devices?
@@ -379,7 +379,7 @@ class FrontendModel
 								// get setting wherin the token is available
 								$row = $db->getRecord('SELECT i.*
 														FROM users_settings AS i
-														WHERE i.name = ? AND i.value LIKE ?;',
+														WHERE i.name = ? AND i.value LIKE ?',
 														array('apple_device_token', '%'. $deviceToken .'%'));
 
 								// any rows?
@@ -436,7 +436,7 @@ class FrontendModel
 		// store
 		self::getDB(true)->execute('INSERT INTO modules_settings (module, name, value)
 									VALUES (?, ?, ?)
-									ON DUPLICATE KEY UPDATE value = ?;',
+									ON DUPLICATE KEY UPDATE value = ?',
 									array($module, $name, $value, $value));
 
 		// store in cache

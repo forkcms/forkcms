@@ -369,7 +369,7 @@ class BackendModel
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
 
 			// utf8 compliance & MySQL-timezone
-			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00";');
+			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
 
 			// store
 			Spoon::setObjectReference('database', $db);
@@ -467,7 +467,7 @@ class BackendModel
 		{
 			// get all modules
 			$modules = (array) self::getDB()->getPairs('SELECT m.name, m.active
-														FROM modules AS m;');
+														FROM modules AS m');
 
 			// loop
 			foreach($modules as $module => $active)
@@ -547,7 +547,7 @@ class BackendModel
 		{
 			// get all settings
 			$moduleSettings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
-																	FROM modules_settings AS ms;');
+																	FROM modules_settings AS ms');
 
 			// loop and store settings in the cache
 			foreach($moduleSettings as $setting)
@@ -943,7 +943,7 @@ class BackendModel
 		// store
 		self::getDB(true)->execute('INSERT INTO modules_settings(module, name, value)
 											VALUES(?, ?, ?)
-											ON DUPLICATE KEY UPDATE value = ?;',
+											ON DUPLICATE KEY UPDATE value = ?',
 											array($module, $key, $valueToStore, $valueToStore));
 
 		// cache it

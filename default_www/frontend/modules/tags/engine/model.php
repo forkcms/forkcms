@@ -24,7 +24,7 @@ class FrontendTagsModel
 		return (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url, t.number
 															FROM tags AS t
 															WHERE t.language = ? AND t.number > 0
-															ORDER BY number DESC, t.tag;', FRONTEND_LANGUAGE);
+															ORDER BY number DESC, t.tag', FRONTEND_LANGUAGE);
 	}
 
 
@@ -48,7 +48,7 @@ class FrontendTagsModel
 		$linkedTags = (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url
 																	FROM modules_tags AS mt
 																	INNER JOIN tags AS t ON mt.tag_id = t.id
-																	WHERE mt.module = ? AND mt.other_id = ?;',
+																	WHERE mt.module = ? AND mt.other_id = ?',
 																	array($module, $otherId));
 
 		// return
@@ -83,7 +83,7 @@ class FrontendTagsModel
 		// exists
 		return (int) FrontendModel::getDB()->getVar('SELECT id
 													FROM tags
-													WHERE url = ?;',
+													WHERE url = ?',
 													(string) $URL);
 	}
 
@@ -110,7 +110,7 @@ class FrontendTagsModel
 		$linkedTags = (array) $db->getRecords('SELECT mt.other_id, t.tag AS name, t.url
 												FROM modules_tags AS mt
 												INNER JOIN tags AS t ON mt.tag_id = t.id
-												WHERE mt.module = ? AND mt.other_id IN('. implode(', ', $otherIds) .');',
+												WHERE mt.module = ? AND mt.other_id IN('. implode(', ', $otherIds) .')',
 												array($module));
 
 		// return
@@ -147,7 +147,7 @@ class FrontendTagsModel
 															FROM modules_tags
 															WHERE tag_id = ?
 															GROUP BY module
-															ORDER BY module ASC;',
+															ORDER BY module ASC',
 															(int) $tagId);
 	}
 
@@ -160,7 +160,7 @@ class FrontendTagsModel
 	 */
 	public static function getName($id)
 	{
-		return FrontendModel::getDB()->getVar('SELECT tag FROM tags WHERE id = ?;', (int) $id);
+		return FrontendModel::getDB()->getVar('SELECT tag FROM tags WHERE id = ?', (int) $id);
 	}
 
 
@@ -181,7 +181,7 @@ class FrontendTagsModel
 														WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND t2.other_id != t.other_id
 														GROUP BY t2.other_id
 														ORDER BY COUNT(t2.tag_id) DESC
-														LIMIT ?;',
+														LIMIT ?',
 														array($id, $module, $otherModule, $limit));
 	}
 }
