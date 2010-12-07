@@ -80,34 +80,20 @@ class FrontendTagsDetail extends FrontendBaseBlock
 			// set module class
 			$class = 'Frontend'. SpoonFilter::toCamelCase($module) .'Model';
 
-			// reflection of my class
-			$reflection = new ReflectionClass($class);
+			// get the ids of the items linked to the tag
+			$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
+																	FROM modules_tags
+																	WHERE module = ? AND tag_id = ?;',
+																	array($module, $this->record['id']));
 
-			// check to see if the interface is implemented
-			if($reflection->implementsInterface('FrontendTagsInterface'))
-			{
-				// get the ids of the items linked to the tag
-				$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
-																		FROM modules_tags
-																		WHERE module = ? AND tag_id = ?;',
-																		array($module, $this->record['id']));
+			// set module class
+			$class = 'Frontend'. SpoonFilter::toCamelCase($module) .'Model';
 
-				// get the items that are linked to the tags
-				$items = (array) call_user_func(array('Frontend'. SpoonFilter::toCamelCase($module) .'Model', 'getForTags'), $otherIds);
+			// get the items that are linked to the tags
+			$items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
 
-				// add into results array
-				if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::getLabel(ucfirst($module)), 'items' => $items);
-			}
-
-			// interface is not implemented
-			else
-			{
-				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $module .').');
-
-				// when debug is off show a descent message
-				else exit(SPOON_DEBUG_MESSAGE);
-			}
+			// add into results array
+			if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::getLabel(ucfirst($module)), 'items' => $items);
 		}
 	}
 

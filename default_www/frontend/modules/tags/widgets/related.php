@@ -109,26 +109,9 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 			// set module class
 			$class = 'Frontend'. SpoonFilter::toCamelCase($entry['module']) .'Model';
 
-			// reflection of my class
-			$reflection = new ReflectionClass($class);
-
-			// check to see if the interface is implemented
-			if($reflection->implementsInterface('FrontendTagsInterface'))
-			{
-				// get module record
-				$this->related[$id] = call_user_func(array($class, 'getForTags'), (array) array($entry['other_id']));
-				if($this->related[$id]) $this->related[$id] = array_pop($this->related[$id]);
-			}
-
-			// interface is not implemented
-			else
-			{
-				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $entry['module'] .').');
-
-				// when debug is off show a descent message
-				else exit(SPOON_DEBUG_MESSAGE);
-			}
+			// get module record
+			$this->related[$id] = FrontendTagsModel::callFromInterface($entry['module'], $class, 'getForTags', (array) array($entry['other_id']));
+			if($this->related[$id]) $this->related[$id] = array_pop($this->related[$id]);
 
 			// remove empty items
 			if(empty($this->related[$id])) unset($this->related[$id]);
@@ -165,35 +148,18 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 			// set module class
 			$class = 'Frontend'. SpoonFilter::toCamelCase($block['module']) .'Model';
 
-			// reflection of my class
-			$reflection = new ReflectionClass($class);
+			// get record for module
+			$record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->URL);
 
-			// check to see if the interface is implemented
-			if($reflection->implementsInterface('FrontendTagsInterface'))
-			{
-				// get record for module
-				$record = call_user_func(array($class, 'getIdForTags'), $this->URL);
+			// check if record exists
+			if(!$record) continue;
 
-				// check if record exists
-				if(!$record) continue;
+			// add to excluded records
+			$this->exclude[] = array('module' => $block['module'], 'other_id' => $record['id']);
 
-				// add to excluded records
-				$this->exclude[] = array('module' => $block['module'], 'other_id' => $record['id']);
-
-				// get record's tags
-				$tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);
-				foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
-			}
-
-			// interface is not implemented
-			else
-			{
-				// when debug is on throw an exception
-				if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $block['module'] .').');
-
-				// when debug is off show a descent message
-				else exit(SPOON_DEBUG_MESSAGE);
-			}
+			// get record's tags
+			$tags = (array) FrontendTagsModel::getForItem($block['module'], $record['id']);
+			foreach($tags as $tag) $this->tags = array_merge((array) $this->tags, (array) $tag['name']);
 		}
 	}
 

@@ -14,6 +14,39 @@
 class FrontendTagsModel
 {
 	/**
+	 * Calls a method that has to be implemented though the tags interface
+	 *
+	 * @param string $module
+	 * @param string $class
+	 * @param string $method
+	 * @param mixed $parameter
+	 * @return mixed
+	 */
+	public static function callFromInterface($module, $class, $method, $parameter = null)
+	{
+		// reflection of my class
+		$reflection = new ReflectionClass($class);
+
+		// check to see if the interface is implemented
+		if($reflection->implementsInterface('FrontendTagsInterface'))
+		{
+			// return result
+			return call_user_func(array($class, $method), $parameter);
+		}
+
+		// interface is not implemented
+		else
+		{
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $module .').');
+
+			// when debug is off show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
+		}
+	}
+
+
+	/**
 	 * Get the tag for a given URL
 	 *
 	 * @return	array
