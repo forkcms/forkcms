@@ -38,8 +38,8 @@ CREATE TABLE IF NOT EXISTS `blog_posts` (
  `publish_on` datetime NOT NULL,
  `created_on` datetime NOT NULL,
  `edited_on` datetime NOT NULL,
- `hidden` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
- `allow_comments` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
+ `hidden` enum('N','Y') collate utf8_unicode_ci NOT NULL default 'N',
+ `allow_comments` enum('N','Y') collate utf8_unicode_ci NOT NULL default 'N',
  `num_comments` int(11) NOT NULL,
  PRIMARY KEY (`revision_id`),
  KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)

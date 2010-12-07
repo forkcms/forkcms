@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS `content_blocks` (
  `language` varchar(10) collate utf8_unicode_ci NOT NULL,
  `title` varchar(255) collate utf8_unicode_ci NOT NULL,
  `text` text collate utf8_unicode_ci,
- `hidden` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
+ `hidden` enum('N','Y') collate utf8_unicode_ci NOT NULL default 'N',
  `status` enum('active','archived') collate utf8_unicode_ci NOT NULL default 'active',
  `created_on` datetime NOT NULL,
  `edited_on` datetime NOT NULL,

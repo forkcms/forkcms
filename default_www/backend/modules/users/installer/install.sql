@@ -3,9 +3,9 @@ CREATE TABLE IF NOT EXISTS `users` (
  `group_id` int(11) NOT NULL,
  `email` varchar(255) collate utf8_unicode_ci NOT NULL,
  `password` varchar(255) collate utf8_unicode_ci NOT NULL COMMENT 'will be case-sensitive',
- `active` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'Y' COMMENT 'is this user active?',
- `deleted` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N' COMMENT 'is the user deleted?',
- `is_god` enum('Y','N') collate utf8_unicode_ci NOT NULL default 'N',
+ `active` enum('N','Y') collate utf8_unicode_ci NOT NULL default 'Y' COMMENT 'is this user active?',
+ `deleted` enum('N','Y') collate utf8_unicode_ci NOT NULL default 'N' COMMENT 'is the user deleted?',
+ `is_god` enum('N','Y') collate utf8_unicode_ci NOT NULL default 'N',
  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='The backend users' AUTO_INCREMENT=1 ;
 
