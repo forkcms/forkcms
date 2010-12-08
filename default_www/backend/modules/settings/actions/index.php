@@ -92,6 +92,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm->addDropdown('date_format_short', BackendModel::getDateFormatsShort(), BackendModel::getModuleSetting('core', 'date_format_short'));
 		$this->frm->addDropdown('date_format_long', BackendModel::getDateFormatsLong(), BackendModel::getModuleSetting('core', 'date_format_long'));
 
+		// number formats
+		$this->frm->addDropdown('number_format', BackendModel::getNumberFormats(), BackendModel::getModuleSetting('core', 'number_format'));
+
 		// create a list of the languages
 		foreach(BackendModel::getModuleSetting('core', 'languages', array('nl')) as $abbreviation)
 		{
@@ -188,6 +191,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$this->frm->getField('date_format_short')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format_long')->isFilled(BL::getError('FieldIsRequired'));
 
+			// number
+			$this->frm->getField('number_format')->isFilled(BL::getError('FieldIsRequired'));
+
 			// akismet key may be filled in
 			if($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled())
 			{
@@ -250,6 +256,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				BackendModel::setModuleSetting('core', 'time_format', $this->frm->getField('time_format')->getValue());
 				BackendModel::setModuleSetting('core', 'date_format_short', $this->frm->getField('date_format_short')->getValue());
 				BackendModel::setModuleSetting('core', 'date_format_long', $this->frm->getField('date_format_long')->getValue());
+
+				// date & time formats
+				BackendModel::setModuleSetting('core', 'number_format', $this->frm->getField('number_format')->getValue());
 
 				// before we save the languages, we need to ensure that each language actually exists and may be chosen.
 				$languages = array(SITE_DEFAULT_LANGUAGE);

@@ -131,6 +131,7 @@ class FrontendTemplate extends SpoonTemplate
 
 		// string
 		$this->mapModifier('formatfloat', array('FrontendTemplateModifiers', 'formatFloat'));
+		$this->mapModifier('formatnumber', array('FrontendTemplateModifiers', 'formatNumber'));
 		$this->mapModifier('truncate', array('FrontendTemplateModifiers', 'truncate'));
 		$this->mapModifier('cleanupplaintext', array('FrontendTemplateModifiers', 'cleanupPlainText'));
 
@@ -380,6 +381,35 @@ class FrontendTemplateModifiers
 		$decimals = (int) $decimals;
 
 		return number_format($number, $decimals, '.', ' ');
+	}
+
+
+	/**
+	 * Format a number
+	 * 	syntax: {$var|formatnumber}
+	 *
+	 * @return	string
+	 * @param	float $var		The number to format
+	 */
+	public static function formatNumber($var)
+	{
+		// redefine
+		$var = (float) $var;
+
+		// get setting
+		$format = FrontendModel::getModuleSetting('core', 'number_format');
+
+		// get amount of decimals
+		$decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
+
+		// get separators
+		$separators = explode('_', $format);
+		$separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+		$decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
+		$thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+
+		// format the number
+		return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
 	}
 
 
