@@ -198,7 +198,7 @@ class ModuleInstaller
 			 * We know this isn't the best solution, but we couldn't find a beter way.
 			 * @later: find a beter way to handle multiple-line queries
 			 */
-			$queries = explode(";\n", $content);
+			$queries = preg_split("/;(\r)?\n/", $content);
 
 			// loop queries and execute them
 			foreach($queries as $query) $this->getDB()->execute($query);
