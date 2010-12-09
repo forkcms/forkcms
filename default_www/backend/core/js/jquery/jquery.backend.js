@@ -1270,7 +1270,7 @@
 				// init some vars
 				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
-				
+
 				// reset box
 				$('#addValue-' + id).val('').focus();
 				$('#addButton-' + id).addClass('disabledButton');
@@ -1298,7 +1298,7 @@
 					}
 				}
 			}
-			
+
 
 			// build the list
 			function build()
