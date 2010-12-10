@@ -428,7 +428,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$keys = self::getKeys($language);
 
 		// get the URL, if it doens't exist return 404
-		if(!isset($keys[$pageId])) return self::getURL(404);
+		if(!isset($keys[$pageId])) return self::getURL(404, $language);
 
 		// add URL
 		else $URL .= $keys[$pageId];
@@ -478,7 +478,7 @@ class FrontendNavigation extends FrontendBaseObject
 							if($extra['module'] == $module && $extra['action'] == $action)
 							{
 								// exacte page was found, so return
-								return self::getURL($properties['page_id']);
+								return self::getURL($properties['page_id'], $language);
 							}
 
 							// correct module but no action
@@ -507,7 +507,7 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// fallback
-		return self::getURL(404);
+		return self::getURL(404, $language);
 	}
 
 
@@ -546,7 +546,7 @@ class FrontendNavigation extends FrontendBaseObject
 							if($extra['id'] == $id)
 							{
 								// exacte page was found, so return
-								return self::getURL($properties['page_id']);
+								return self::getURL($properties['page_id'], $language);
 							}
 						}
 					}
@@ -555,7 +555,7 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// fallback
-		return self::getURL(404);
+		return self::getURL(404, $language);
 	}
 
 
