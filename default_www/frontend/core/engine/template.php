@@ -12,6 +12,7 @@
  * @subpackage	template
  *
  * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendTemplate extends SpoonTemplate
@@ -53,6 +54,7 @@ class FrontendTemplate extends SpoonTemplate
 	 * @return	void
 	 * @param	string $template				The path of the template to use
 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
+	 * @param	bool[optional] $parseCustom		Parse custom template
 	 */
 	public function display($template, $customHeaders = false, $parseCustom = false)
 	{
@@ -80,25 +82,69 @@ class FrontendTemplate extends SpoonTemplate
 		// parse headers
 		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
 
-		// theme was set
+		// get template path
+		$template = $this->getTemplatePath($template);
+
+		// call the parent
+		parent::display($template);
+	}
+
+
+	/**
+	 * Fetch the parsed content from this template.
+	 *
+	 * @return	string	 						The actual parsed content after executing this template.
+	 * @param	string $template				The location of the template file, used to display this template.
+ 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
+	 * @param	bool[optional] $parseCustom		Parse custom template
+	 */
+	public function getContent($template, $customHeaders = false, $parseCustom = false)
+	{
+		// get template path
+		$template = $this->getTemplatePath($template);
+
+		// turn on output buffering
+		ob_start();
+
+		// show output
+		$this->display($template, $customHeaders, $parseCustom);
+
+		// return template content
+		return ob_get_clean();
+	}
+
+
+	/**
+	 * Get the template path based on the theme.
+	 * If it does not exist in the theme it will return $template.
+	 *
+	 * @return	string					Path to the (theme) template.
+	 * @param	string $template		Path to the template.
+	 */
+	private function getTemplatePath($template)
+	{
+		// theme in use
 		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
 		{
 			// theme name
 			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
 
-			// core template
-			if(strpos($template, 'frontend/core/') !== false)
+			// theme not yet specified
+			if(stripos($template, 'frontend/themes/'. $theme) === false)
 			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $template);
+				// add theme location
+				$themeTemplate = str_replace(array('frontend', 'layout/'), array('frontend/themes/'. $theme, ''), $template);
 
-				// does this template exist?
+				// does this template exist
 				if(SpoonFile::exists($themeTemplate)) $template = $themeTemplate;
 			}
 		}
 
-		// call the parent
-		parent::display($template);
+		// check if the file exists
+		if(!SpoonFile::exists($template)) throw new FrontendException('The template ('. $template .') doesn\'t exists.');
+
+		// return template path
+		return $template;
 	}
 
 

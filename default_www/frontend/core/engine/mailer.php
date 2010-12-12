@@ -8,6 +8,7 @@
  * @subpackage	mailer
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendMailer
@@ -30,15 +31,6 @@ class FrontendMailer
 		// redefine
 		$subject = (string) $subject;
 		$template = (string) $template;
-
-		if(FrontendModel::getModuleSetting('core', 'theme') !== null)
-		{
-			// get new template path
-			$newTemplate = str_replace(FRONTEND_PATH, FRONTEND_PATH . '/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default'), $template);
-
-			// check if the file exists, if so reset the current template
-			if(SpoonFile::exists($newTemplate)) $template = $newTemplate;
-		}
 
 		// set defaults
 		$to = FrontendModel::getModuleSetting('core', 'mailer_to');

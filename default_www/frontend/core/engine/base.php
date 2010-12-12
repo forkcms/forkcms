@@ -221,6 +221,7 @@ class FrontendBaseConfig
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendBaseBlock
@@ -710,6 +711,7 @@ class FrontendBaseBlock
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendBaseWidget
@@ -869,36 +871,6 @@ class FrontendBaseWidget
 		// redefine
 		else $template = (string) $path;
 
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new FrontendException('The template ('. $path .') doesn\'t exists.');
-
 		// set template
 		$this->setTemplatePath($path);
 	}
@@ -956,34 +928,6 @@ class FrontendBaseWidget
 	 */
 	private function setTemplatePath($path)
 	{
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// set template path
 		$this->templatePath = (string) $path;
 	}
 }

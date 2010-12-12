@@ -8,6 +8,7 @@
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendNavigation extends FrontendBaseObject
@@ -330,15 +331,13 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// create template
-		$tpl = new SpoonTemplate();
-		$tpl->setForceCompile(SPOON_DEBUG);
-		$tpl->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$tpl = new FrontendTemplate(false);
 
 		// assign navigation to template
 		$tpl->assign('navigation', $navigation[$type][$parentId]);
 
 		// return parsed content
-		return $tpl->getContent(self::$templatePath);
+		return $tpl->getContent(self::$templatePath, true);
 	}
 
 
@@ -598,34 +597,6 @@ class FrontendNavigation extends FrontendBaseObject
 	 */
 	private function setTemplatePath($path)
 	{
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// set path
 		self::$templatePath = (string) $path;
 	}
 }
