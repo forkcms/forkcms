@@ -121,8 +121,11 @@ class FrontendTemplate extends SpoonTemplate
 	 * @return	string					Path to the (theme) template.
 	 * @param	string $template		Path to the template.
 	 */
-	private function getTemplatePath($template)
+	public function getTemplatePath($template)
 	{
+		// redefine
+		$template = (string) $template;
+
 		// theme in use
 		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
 		{
