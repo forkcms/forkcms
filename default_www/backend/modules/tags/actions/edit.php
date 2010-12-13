@@ -200,7 +200,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				BackendTagsModel::updateTag($tag);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($tag['tag']));
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($tag['tag']) .'&highlight=row-'. $this->id);
 			}
 		}
 	}

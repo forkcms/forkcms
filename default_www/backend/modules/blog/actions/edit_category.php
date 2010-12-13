@@ -138,7 +138,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($category['name']));
+				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($category['name']) .'&highlight=row-'. $this->id);
 			}
 		}
 	}

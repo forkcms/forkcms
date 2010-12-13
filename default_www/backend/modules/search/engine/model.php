@@ -199,16 +199,19 @@ class BackendSearchModel
 	/**
 	 * Insert a synonym
 	 *
-	 * @return	void
+	 * @return	int
 	 * @param	array $item					The data to insert in the db.
 	 */
 	public static function insertSynonym($item)
 	{
 		// insert into db
-		BackendModel::getDB(true)->insert('search_synonyms', $item);
+		$id = BackendModel::getDB(true)->insert('search_synonyms', $item);
 
 		// invalidate the cache for search
 		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+
+		// return insert id
+		return $id;
 	}
 
 

@@ -119,7 +119,7 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 				BackendBlogModel::updateComment($this->id, $item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('comments') .'&report=editedComment&id='. $this->id .'#tab'. SpoonFilter::toCamelCase($this->record['status']));
+				$this->redirect(BackendModel::createURLForAction('comments') .'&report=editedComment&id='. $this->id .'&highlight=row-'. $this->id .'#tab'. SpoonFilter::toCamelCase($this->record['status']));
 			}
 		}
 	}
