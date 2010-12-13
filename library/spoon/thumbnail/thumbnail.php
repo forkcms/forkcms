@@ -215,6 +215,8 @@ class SpoonThumbnail
 		$filename = (string) $filename;
 		$quality = (int) $quality;
 
+		// @todo is the destination path writeable? (throw exception or just return false?)
+
 		// get extension
 		$extension = SpoonFile::getExtension($filename);
 
