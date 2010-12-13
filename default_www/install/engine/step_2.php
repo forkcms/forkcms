@@ -197,19 +197,22 @@ class InstallerStep2 extends InstallerStep
 		 */
 
 		// check if the backend-cache-directory is writable
-		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/backend/cache/')), $variables);
+		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/backend/cache/')), $variables);
 
 		// check if the frontend-cache-directory is writable
-		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/frontend/cache/')), $variables);
+		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/frontend/cache/')), $variables);
 
 		// check if the frontend-files-directory is writable
-		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/frontend/files/')), $variables);
+		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/frontend/files/')), $variables);
 
 		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY)), $variables);
 
+		// check if the library/external-directory is writable
+		self::checkRequirement('fileSystemLibraryExternal', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY .'/external')), $variables);
+
 		// check if the installer-directory is writable
-		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/install')), $variables);
+		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/install/cache')), $variables);
 
 		// does the config.base.php file exist
 		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/config.base.php') && is_readable(PATH_LIBRARY .'/config.base.php')), $variables);
@@ -340,7 +343,7 @@ class InstallerStep2 extends InstallerStep
 	private static function isWritable($path)
 	{
 		// redefine argument
-		$path = (string) $path;
+		$path = rtrim((string) $path, '/');
 
 		// create temporary file
 		$file = tempnam($path, 'isWritable');
@@ -357,6 +360,40 @@ class InstallerStep2 extends InstallerStep
 
 		// file could not be created = not writable
 		return false;
+	}
+
+
+	/**
+	 * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
+	 *
+	 * @return	bool
+	 * @param	string $path
+	 */
+	private static function isRecursivelyWritable($path)
+	{
+		// redefine argument
+		$path = rtrim((string) $path, '/');
+
+		// check if path is writable
+		if(!self::isWritable($path)) return false;
+
+		// loop child directories
+		foreach((array) scandir($path) as $file)
+		{
+			// no '.' and '..'
+			if(($file != '.') && ($file != '..'))
+			{
+				// directory
+				if(is_dir($path .'/'. $file))
+				{
+					// check if children are readable
+					if(!self::isRecursivelyWritable($path .'/'. $file)) return false;
+				}
+			}
+		}
+
+		// we were able to read all sub-directories
+		return true;
 	}
 }
 

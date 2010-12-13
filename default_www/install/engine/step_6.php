@@ -45,7 +45,7 @@ class InstallerStep6 extends InstallerStep
 		$this->createLocaleFiles();
 
 		// already installed
-		SpoonFile::setContent('installed.txt', date('Y-m-d H:i:s'));
+		SpoonFile::setContent(dirname(__FILE__) .'/../cache/installed.txt', date('Y-m-d H:i:s'));
 
 		// show success message
 		$this->showSuccess();
