@@ -21,7 +21,7 @@ class ContentBlocksInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/content_blocks/installer/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/install.sql');
 
 		// add 'content_blocks' as a module
 		$this->addModule('content_blocks', 'The content blocks module.');

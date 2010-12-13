@@ -20,7 +20,7 @@ class SearchInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/search/installer/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/install.sql');
 
 		// add 'search' as a module
 		$this->addModule('search', 'The search module.');
@@ -47,7 +47,7 @@ class SearchInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// check if a page for blog already exists in this language
+			// check if a page for search already exists in this language
 			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id

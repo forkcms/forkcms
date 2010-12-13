@@ -22,7 +22,7 @@ class BlogInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/blog/installer/data/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('blog', 'The blog module.');

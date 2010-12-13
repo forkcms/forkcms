@@ -617,7 +617,7 @@ class CoreInstall extends ModuleInstaller
 		if($this->getVariable('site_title') === null) throw new SpoonException('Site title is not provided.');
 
 		// import SQL
-		$this->importSQL(PATH_WWW .'/backend/core/installer/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/install.sql');
 
 		// add core modules
 		$this->addModule('core', 'The Fork CMS core module.');

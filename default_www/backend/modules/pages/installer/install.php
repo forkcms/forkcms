@@ -23,7 +23,7 @@ class PagesInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/pages/installer/data/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
 
 		// add 'pages' as a module
 		$this->addModule('pages', 'The module to manage your pages and website structure.');

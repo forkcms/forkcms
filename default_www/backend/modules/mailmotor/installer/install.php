@@ -48,7 +48,7 @@ class MailmotorInstall extends ModuleInstaller
 	private function installDatabase()
 	{
 		// load install.sql and labels.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/mailmotor/installer/data/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
 	}
 
 
