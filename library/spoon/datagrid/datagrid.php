@@ -336,7 +336,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no attributes can be removed.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefore no attributes can be removed.');
 
 			// exists
 			$this->columns[(string) $column]->clearAttributes();
@@ -1431,7 +1431,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no attributes can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no attributes can be added.');
 
 			// exists
 			else $this->columns[$column]->setAttributes($attributes);
@@ -1453,7 +1453,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no confirm message/script can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no confirm message/script can be added.');
 
 			// exists
 			else $this->columns[$column]->setConfirm($message, $custom);
@@ -1511,7 +1511,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no attributes can be added to its header.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no attributes can be added to its header.');
 
 			// exists
 			else $this->columns[$column]->setHeaderAttributes($attributes);
@@ -1532,7 +1532,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor can\'t be set hidden.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefore can\'t be set hidden.');
 
 			// exists
 			$this->columns[(string) $column]->setHidden($on);
@@ -1597,7 +1597,7 @@ class SpoonDatagrid
 				foreach($columns as $column)
 				{
 					// column exists
-					if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist. Therefor its sequence can\'t be altered.');
+					if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist. Therefore its sequence can\'t be altered.');
 
 					// update sequence
 					$this->columns[(string) $column]->setSequence($i);
@@ -1640,7 +1640,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no default sorting method can be applied to it.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefore no default sorting method can be applied to it.');
 
 			// exists
 			$this->columns[(string) $column]->setSortingMethod($sort);
@@ -1662,7 +1662,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no URL can be applied.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefore no URL can be applied.');
 
 			// exists
 			$this->columns[(string) $column]->setURL($URL, $title);
@@ -1726,7 +1726,7 @@ class SpoonDatagrid
 			foreach($labels as $column => $label)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no label can be assigned to it.');
+				if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no label can be assigned to it.');
 
 				// exists
 				else $this->columns[$column]->setLabel($label);
@@ -1887,7 +1887,7 @@ class SpoonDatagrid
 			foreach($columns as $column)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor can\'t be sorted on.');
+				if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefore can\'t be sorted on.');
 
 				// column exists
 				else

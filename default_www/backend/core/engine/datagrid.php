@@ -227,7 +227,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no confirm message/script can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no confirm message/script can be added.');
 
 			// exists
 			else
