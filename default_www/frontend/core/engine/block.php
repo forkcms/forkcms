@@ -402,8 +402,8 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// call the execute method of the real action (defined in the module)
 		$output = $object->execute();
 
-		// set some properties
-		$this->setTemplatePath($object->getTemplatePath());
+		// set path to template if the widget didnt return any data
+		if($output === null) $this->setTemplatePath($object->getTemplatePath());
 
 		// return possible output
 		return $output;
