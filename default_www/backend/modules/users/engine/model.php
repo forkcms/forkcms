@@ -209,6 +209,26 @@ class BackendUsersModel
 
 
 	/**
+	 * Fetch the list of number formats including examples of these formats.
+	 *
+	 * @return	array
+	 */
+	public static function getNumberFormats()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach((array) BackendModel::getModuleSetting('core', 'number_formats') as $format => $example)
+		{
+			$possibleFormats[$format] = $example;
+		}
+
+		return $possibleFormats;
+	}
+
+
+	/**
 	 * Fetch the list of time formats including examples of these formats.
 	 *
 	 * @return	array

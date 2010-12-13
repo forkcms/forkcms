@@ -91,6 +91,19 @@
 		</div>
 	</div>
 
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblNumbers|ucfirst}</h3>
+		</div>
+		<div class="options labelWidthLong">
+			<p>
+				<label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
+				{$ddmNumberFormat} {$ddmNumberFormatError}
+				<span class="helpTxt">{$msgHelpNumberFormat}</span>
+			</p>
+		</div>
+	</div>
+
 	<div id="settingsApiKeys" class="box">
 		<div class="heading">
 			<h3>{$lblAPIKeys|ucfirst}</h3>

@@ -569,6 +569,26 @@ class BackendModel
 
 
 	/**
+	 * Fetch the list of number formats including examples of these formats.
+	 *
+	 * @return	array
+	 */
+	public static function getNumberFormats()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach((array) self::getModuleSetting('core', 'number_formats') as $format => $example)
+		{
+			$possibleFormats[$format] = $example;
+		}
+
+		return $possibleFormats;
+	}
+
+
+	/**
 	 * Fetch the list of available themes
 	 *
 	 * @return array
