@@ -322,6 +322,12 @@ class FrontendNavigation extends FrontendBaseObject
 				if(isset($navigation[$type][$page['page_id']]) && $navigation[$type][$parentId][$id]['selected'] == true && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $depthCounter + 1);
 				else $navigation[$type][$parentId][$id]['children'] = false;
 
+				// add parent id
+				$navigation[$type][$parentId][$id]['parent_id'] = $parentId;
+
+				// add depth
+				$navigation[$type][$parentId][$id]['depth'] = $depth;
+
 				// set link
 				$navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL($page['page_id']);
 			}
