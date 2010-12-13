@@ -293,7 +293,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 */
 	private function setTemplatePath($path)
 	{
-		$this->templatePath = (string) $path;
+		$this->templatePath = $this->tpl->getTemplatePath($path);
 	}
 }
 
@@ -535,7 +535,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 */
 	private function setTemplatePath($path)
 	{
-		$this->templatePath = (string) $path;
+		$this->templatePath = $this->tpl->getTemplatePath($path);
 	}
 }
 

@@ -172,6 +172,17 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 
 
 	/**
+	 * Fetch the list of values as provided in the constructor.
+	 *
+	 * @return	array
+	 */
+	public function getRawValues()
+	{
+		return $this->variables;
+	}
+
+
+	/**
 	 * Retrieve the value(s).
 	 *
 	 * @return	array
@@ -340,7 +351,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * @param	mixed $values
 	 * @param	string[optional] $defaultClass
 	 */
-	private function setValues(array $values, $defaultClass = 'inputCheckbox')
+	public function setValues(array $values, $defaultClass = 'inputCheckbox')
 	{
 		// empty values not allowed
 		if(empty($values)) throw new SpoonFormException('The list with values should not be empty.');

@@ -187,6 +187,17 @@ class SpoonFormRadiobutton extends SpoonFormElement
 
 
 	/**
+	 * Fetch the list of values as provided in the constructor.
+	 *
+	 * @return	array
+	 */
+	public function getRawValues()
+	{
+		return $this->variables;
+	}
+
+
+	/**
 	 * Retrieves the initial or submitted value.
 	 *
 	 * @return	string
@@ -324,7 +335,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * @return	void
 	 * @param	array $values
 	 */
-	private function setValues(array $values, $defaultClass = 'inputRadio')
+	public function setValues(array $values, $defaultClass = 'inputRadio')
 	{
 		// empty values not allowed
 		if(empty($values)) throw new SpoonFormException('The list with values should not be empty.');

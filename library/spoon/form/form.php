@@ -494,6 +494,27 @@ class SpoonForm
 
 
 	/**
+	 * Adds a single textfield.
+	 *
+	 * @return	void
+	 * @param	string $name
+	 * @param	string[optional] $value
+	 * @param	int[optional] $maxlength
+	 * @param	string[optional] $class
+	 * @param	string[optional] $classError
+	 * @param	bool[optional] $HTML
+	 */
+	public function addText($name, $value = null, $maxlength = null, $class = 'inputText', $classError = 'inputTextError', $HTML = false)
+	{
+		// add element
+		$this->add(new SpoonFormText($name, $value, $maxlength, $class, $classError, $HTML));
+
+		// return element
+		return $this->getField($name);
+	}
+
+
+	/**
 	 * Adds one or more textareas.
 	 *
 	 * @return	void
@@ -512,27 +533,6 @@ class SpoonForm
 				foreach($argument as $name => $defaultValue) $this->add(new SpoonFormTextarea($name, $defaultValue));
 			}
 		}
-	}
-
-
-	/**
-	 * Adds a single textfield.
-	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	int[optional] $maxlength
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
-	 */
-	public function addText($name, $value = null, $maxlength = null, $class = 'inputText', $classError = 'inputTextError', $HTML = false)
-	{
-		// add element
-		$this->add(new SpoonFormText($name, $value, $maxlength, $class, $classError, $HTML));
-
-		// return element
-		return $this->getField($name);
 	}
 
 
