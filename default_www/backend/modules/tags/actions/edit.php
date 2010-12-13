@@ -101,7 +101,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				if(method_exists($className, 'getByTag'))
 				{
 					// make the call and get the item
-					$moduleItems = (array) call_user_func_array(array($className, 'getByTag'), $this->id);
+					$moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
 
 					// loop items
 					foreach($moduleItems as $row)
