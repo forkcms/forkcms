@@ -123,6 +123,9 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('formatdate', array('BackendTemplateModifiers', 'formatDate'));
 		$this->mapModifier('formattime', array('BackendTemplateModifiers', 'formatTime'));
 		$this->mapModifier('formatdatetime', array('BackendTemplateModifiers', 'formatDateTime'));
+
+		// numbers
+		$this->mapModifier('formatnumber', array('BackendTemplateModifiers', 'formatNumber'));
 	}
 
 
@@ -434,6 +437,35 @@ class BackendTemplateModifiers
 		$decimals = (int) $decimals;
 
 		return number_format($number, $decimals, '.', ' ');
+	}
+
+
+	/**
+	 * Format a number
+	 * 	syntax: {$var|formatnumber}
+	 *
+	 * @return	string
+	 * @param	float $var		The number to format
+	 */
+	public static function formatNumber($var)
+	{
+		// redefine
+		$var = (float) $var;
+
+		// get setting
+		$format = BackendAuthentication::getUser()->getSetting('number_format');
+
+		// get amount of decimals
+		$decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
+
+		// get separators
+		$separators = explode('_', $format);
+		$separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+		$decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
+		$thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+
+		// format the number
+		return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
 	}
 
 

@@ -8,12 +8,13 @@
  * @subpackage	pages
  *
  * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
-class FrontendPagesModel
+class FrontendPagesModel implements FrontendTagsInterface
 {
 	/**
-	 * Fetch the list of tags for a list of items
+	 * Fetch a list of items for a list of ids
 	 *
 	 * @return	array
 	 * @param	array $ids
@@ -32,11 +33,25 @@ class FrontendPagesModel
 		if(!empty($items))
 		{
 			// reset url
-			foreach($items as &$row) $row['url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
+			foreach($items as &$row) $row['full_url'] = FrontendNavigation::getURL($row['id'], FRONTEND_LANGUAGE);
 		}
 
 		// return
 		return $items;
+	}
+
+
+	/**
+	 * Get the id of an item by the full URL of the current page.
+	 * Selects the proper part of the full URL to get the item's id from the database.
+	 *
+	 * @return	int				The id that corresponds with the given full URL.
+	 * @param	FrontendURL		The current URL
+	 */
+	public static function getIdForTags(FrontendURL $URL)
+	{
+		// return the item
+		return FrontendNavigation::getPageId($URL->getQueryString());
 	}
 
 
