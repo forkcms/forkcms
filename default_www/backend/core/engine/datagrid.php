@@ -14,6 +14,7 @@
  *
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class BackendDataGrid extends SpoonDataGrid
@@ -56,6 +57,9 @@ class BackendDataGrid extends SpoonDataGrid
 
 		// set paging class
 		$this->setPagingClass('BackendDatagridPaging');
+
+		// our JS needs to know an id, so we can highlight it
+		$this->setRowAttributes(array('id' => 'row-[id]'));
 
 		// set default template
 		$this->setTemplate(BACKEND_CORE_PATH .'/layout/templates/datagrid.tpl');

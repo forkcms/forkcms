@@ -268,3 +268,53 @@ utils.string =
 	// end
 	eoo: true
 }
+
+
+/**
+ * Object that contains some functions related to the current url
+ *
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ */
+utils.url =
+{
+	/**
+	 * Get a GET parameter
+	 *
+	 * @return	string
+	 * @param	string name
+	 */
+	getGetValue: function(name)
+	{
+		// init return value
+		var getValue = '';
+		
+		// get GET chunks from url
+	    var hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
+
+	    // find requested parameter
+	    $.each(hashes, function(index, value)
+	    {
+	    	// split name/value up
+	    	var chunks = value.split('=');
+
+	    	// found the requested parameter
+	    	if(chunks[0] == name)
+	    	{
+	    		// set for return
+	    		getValue = chunks[1];
+
+	    		// break loop
+	    		return false;
+	    	}
+	    });
+
+	    // cough up value
+	    return getValue;
+	},
+
+
+	/**
+	 * End of object
+	 */
+	eoo: true
+}

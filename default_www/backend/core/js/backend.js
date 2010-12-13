@@ -32,6 +32,7 @@ jsBackend =
 		jsBackend.initAjax();
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
+		jsBackend.effects.init();
 		jsBackend.forms.init();
 		jsBackend.layout.init();
 		jsBackend.messages.init();
@@ -669,12 +670,17 @@ jsBackend.controls = {
 	eoo: true
 }
 
-
+/**
+ * Backend effects
+ *
+ * @author	Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.effects = {
 	// init, something like a constructor
 	init: function()
 	{
-		jsBackend.effects.bindFadeOutAfterMouseMove();
+		//jsBackend.effects.bindFadeOutAfterMouseMove();
 		jsBackend.effects.bindHighlight();
 	},
 
@@ -686,18 +692,31 @@ jsBackend.effects = {
 	},
 
 
-	// if a var highlightId exists it will be highlighted
+	// if a var highlight exists in the url it will be highlighted
 	bindHighlight: function()
 	{
-		if(typeof highlightId != 'undefined')
-		{
-			var selector = highlightId;
+		// get hightlight from url
+	    var highlightId = utils.url.getGetValue('highlight');
 
-			// if the element is a table-row we should highlight all cells in that row
-			if($(highlightId)[0].tagName.toLowerCase == 'tr') { selector += ' td'; }
+	    // id is set
+	    if(highlightId != '')
+	    {
+	    	// init selector of the element we want to highlight
+	    	var selector = '#'+ highlightId;
 
-			$(selector).effect('highlight', null, 5000);
-		}
+	    	// item exists
+	    	if($(selector).length > 0)
+	    	{
+		    	// if its a table row we need to highlight all cells in that row
+		    	if($(selector)[0].tagName.toLowerCase() == 'tr'){ selector += ' td'; }
+
+		    	// when we hover over the item we stop the effect, otherwise we will mess up background hover styles
+	    		$(selector).bind('mouseover', function(){ $(selector).stop(true, true); });
+
+		    	// highlight!
+		    	$(selector).effect("highlight", {}, 5000);
+	    	}
+	    }
 	},
 
 
