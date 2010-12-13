@@ -567,6 +567,7 @@
  * Tag-box
  *
  * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
@@ -692,7 +693,7 @@
 				$('#errorMessage-'+ id).remove();
 				
 				// enter of splitchar should add an element
-				if(code == 13 || String.fromCharCode(code) == options.splitChar)
+				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{
 					// hide before..
 					$('#errorMessage-'+ id).remove();
@@ -742,7 +743,7 @@
 				blockSubmit = false;
 
 				// init some vars
-				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '');
+				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
 
 				// if multiple arguments aren't allowed, clear before adding
@@ -1080,6 +1081,7 @@
  * Multiple text box
  *
  * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
@@ -1181,13 +1183,14 @@
 			// bind keypress on value-field
 			$('#addValue-' + id).bind('keyup', function(evt)
 			{
+				// block form submit
 				blockSubmit = true;
 
 				// grab code
 				var code = evt.which;
-
-				// enter of splitchar should add an element
-				if(code == 13 || String.fromCharCode(code) == options.splitChar)
+				
+				// enter or splitchar should add an element
+				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{
 					// prevent default behaviour
 					evt.preventDefault();
@@ -1206,7 +1209,10 @@
 
 				else $('#addButton-' + id).removeClass('disabledButton');
 			});
-
+			
+			// unblock the submit event when we lose focus
+			$('#addValue-' + id).bind('blur', function(evt){ blockSubmit = false; });
+			
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(evt)
 			{
@@ -1229,8 +1235,8 @@
 				remove($(this).attr('rel'));
 			});
 
-			// bind blur event on inputfields
-			$('.inputField-' + id).live('blur', function(evt)
+			// bind keypress on inputfields (we need to rebuild so new values are saved)
+			$('.inputField-' + id).live('keyup', function(evt)
 			{
 				// clear elements
 				elements = [];
@@ -1258,10 +1264,11 @@
 			// add an element
 			function add()
 			{
+				// unblock form submit
 				blockSubmit = false;
 
 				// init some vars
-				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '');
+				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
 				var inElements = false;
 
 				// reset box

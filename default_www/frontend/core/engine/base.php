@@ -221,6 +221,7 @@ class FrontendBaseConfig
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendBaseBlock
@@ -710,6 +711,7 @@ class FrontendBaseBlock
  * @subpackage	core
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendBaseWidget
@@ -794,6 +796,53 @@ class FrontendBaseWidget
 
 
 	/**
+	 * Add a CSS file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file					The path for the CSS-file that should be loaded.
+	 * @param	bool[optional] $overwritePath	Whether or not to add the module to this path. Module path is added by default.
+	 * @param	string[optional] $media			The media to use.
+	 * @param	string[optional] $condition		A condition for the CSS-file.
+	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 */
+	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
+	{
+		// redefine
+		$file = (string) $file;
+		$overwritePath = (bool) $overwritePath;
+
+		// use module path
+		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
+
+		// add css to the header
+		$this->header->addCSS($file, $media, $condition, $minify);
+	}
+
+
+	/**
+	 * Add a javascript file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file						The path to the javascript-file that should be loaded.
+	 * @param 	bool[optional] $overwritePath		Whether or not to add the module to this path. Module path is added by default.
+	 * @param	bool[optional] $minify				Should the file be minified?
+	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 */
+	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	{
+		// redefine
+		$file = (string) $file;
+		$overwritePath = (bool) $overwritePath;
+
+		// use module path
+		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/js/'. $file;
+
+		// add js to the header
+		$this->header->addJavascript($file, $minify, $parseThroughPHP);
+	}
+
+
+	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
 	 *
@@ -869,36 +918,6 @@ class FrontendBaseWidget
 		// redefine
 		else $template = (string) $path;
 
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new FrontendException('The template ('. $path .') doesn\'t exists.');
-
 		// set template
 		$this->setTemplatePath($path);
 	}
@@ -956,34 +975,6 @@ class FrontendBaseWidget
 	 */
 	private function setTemplatePath($path)
 	{
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// set template path
 		$this->templatePath = (string) $path;
 	}
 }
