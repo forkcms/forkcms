@@ -857,6 +857,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'GoToPage', 'ga naar pagina');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'In', 'in');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Message', 'bericht');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'More', 'meer');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Name', 'naam');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextPage', 'volgende pagina');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NL', 'Nederlands');
@@ -879,6 +880,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EN', 'Engels');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'FR', 'Frans');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'MoreResults', 'Vind meer resultaten…');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NL', 'Nederlands');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NotificationSubject', 'Verwittiging');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SearchNoItems', 'Er zijn geen resultaten.');
@@ -917,6 +919,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'GoToPage', 'go to page');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'In', 'in');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Message', 'message');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'More', 'more');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Name', 'name');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NextPage', 'next page');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NL', 'Dutch');
@@ -939,6 +942,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contact form.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EN', 'English');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'FR', 'French');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'MoreResults', 'Find more results…');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'NL', 'Dutch');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'NotificationSubject', 'Notification');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SearchNoItems', 'There were no results.');

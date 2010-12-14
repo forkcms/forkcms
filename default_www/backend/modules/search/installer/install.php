@@ -65,6 +65,9 @@ class SearchInstall extends ModuleInstaller
 		// activate search on 'pages'
 		$this->searchPages();
 
+		// create module cache path
+		if(!SpoonDirectory::exists(PATH_WWW .'/frontend/cache/search')) SpoonDirectory::create(PATH_WWW .'/frontend/cache/search');
+
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht.');
 		$this->insertLocale('nl', 'backend', 'search', 'err', 'TermIsRequired', 'De zoekterm is verplicht.');
@@ -73,6 +76,8 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'AddSynonym', 'synoniem toevoegen');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'DeleteSynonym', 'synoniem verwijderen');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'EditSynonym', 'synoniem bewerken');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'ItemsForAutocomplete', 'Items in autocomplete (zoekresultaten: suggesties zoekwoorden)');
+		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'ItemsForAutosuggest', 'Items in autosuggest (zoek widget: resultaten)');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'ModuleWeight', 'module gewicht');
 		$this->insertLocale('nl', 'backend', 'search', 'lbl', 'SearchedOn', 'gezocht op');
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'AddedSynonym', 'Het synoniem voor zoekterm "%1$s" werd toegevoegd.');
@@ -94,6 +99,8 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'AddSynonym', 'add synonym');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'DeleteSynonym', 'delete synonym');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'EditSynonym', 'edit synonym');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'ItemsForAutocomplete', 'Items in autocomplete (search results: search term suggestions)');
+		$this->insertLocale('en', 'backend', 'search', 'lbl', 'ItemsForAutosuggest', 'Items in autosuggest (search widget: results)');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'ModuleWeight', 'module weight');
 		$this->insertLocale('en', 'backend', 'search', 'lbl', 'SearchedOn', 'searched on');
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'AddedSynonym', 'The synonym for the searchterm "%1$s" was added.');

@@ -22,7 +22,7 @@ jsFrontend =
 		jsFrontend.gravatar.init();
 
 		// init search
-		if($('input[name=q]').length > 0) jsFrontend.search.init();
+		jsFrontend.search.init();
 	},
 
 
@@ -179,22 +179,35 @@ jsFrontend.search =
 	// init, something like a constructor
 	init: function() 
 	{
-		// split url to buil the ajax-url
+		// split url to build the ajax-url
 		var chunks = document.location.pathname.split('/');
 
-		// max results
-		var limit = 50;
+		// autosuggest (search widget)
+		if($('input[name=q].autoSuggest').length > 0) jsFrontend.search.autosuggest(chunks[1], 55);
 
-		// ajax call!
-		$('input[name=q]').autocomplete({
-			delay: 200,
-			minLength: 3,
+		// autocomplete (search results page: autocomplete based on known search terms)
+		if($('input[name=q].autoComplete').length > 0) jsFrontend.search.autocomplete(chunks[1]);
+
+		// livesuggest (search results page: live feed of matches)
+		if($('input[name=q].liveSuggest').length > 0 && $('#searchContainer').length > 0) jsFrontend.search.livesuggest(chunks[1]);
+	},
+
+
+	// autocomplete (search results page: autocomplete based on known search terms)
+	autocomplete: function(language)
+	{
+		// autocomplete (based on saved search terms) on results page
+		$('input[name=q].autoComplete').autocomplete(
+		{
+			minLength: 1,
 			source: function(request, response) 
 			{
-				$.ajax({ 
+				// ajax call!
+				$.ajax(
+				{ 
 					url: '/frontend/ajax.php?module=search&action=autocomplete',
 					type: 'GET',
-					data: 'term=' + request.term + '&language=' + chunks[1] + '&limit=' + limit,
+					data: 'term='+ request.term +'&language='+ language,
 					success: function(data, textStatus) 
 					{
 						// init var
@@ -203,13 +216,151 @@ jsFrontend.search =
 						// alert the user
 						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
 						
-						if(data.code == 200) 
+						if(data.code == 200)
 						{
-							for(var i in data.data) realData.push({ label: data.data[i].term, value: data.data[i].term });
+							for(var i in data.data) realData.push({ label: data.data[i].term, value: data.data[i].term, url: data.data[i].url });
 						}
 
 						// set response
 						response(realData);
+					}
+				});
+			},
+			select: function(evt, ui)
+			{
+				window.location.href = ui.item.url
+			}
+		})
+		// ok, so, when we have been typing in the search textfield and we blur out of it,
+		// I suppose we have entered our full search query and we're ready to save it
+		.bind('blur', function()
+		{
+			// ajax call!
+			$.ajax(
+			{ 
+				url: '/frontend/ajax.php?module=search&action=save',
+				type: 'GET',
+				data: 'term='+ $(this).val() +'&language='+ language
+			});
+		});
+	},
+
+
+	// autosuggest (search widget)
+	autosuggest: function(language, length)
+	{
+		// set default values
+		if(typeof length == 'undefined') length = 100;
+
+		// search widget suggestions
+		$('input[name=q].autoSuggest').autocomplete(
+		{
+			minLength: 1,
+			source: function(request, response) 
+			{
+				// ajax call!
+				$.ajax(
+				{
+					url: '/frontend/ajax.php?module=search&action=autosuggest',
+					type: 'GET',
+					data: 'term='+ request.term +'&language='+ language +'&length='+ length,
+					success: function(data, textStatus) 
+					{
+						// init var
+						var realData = [];
+						
+						// alert the user
+						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
+						
+						if(data.code == 200)
+						{
+							for(var i in data.data) realData.push({ label: data.data[i].title, value: data.data[i].title, url: data.data[i].full_url, desc: data.data[i].text });
+						}
+
+						// set response
+						response(realData);
+					}
+				});
+			},
+			select: function(evt, ui)
+			{
+				window.location.href = ui.item.url
+			}
+		})
+		// ok, so, when we have been typing in the search textfield and we blur out of it,
+		// I suppose we have entered our full search query and we're ready to save it
+		.blur(function()
+		{
+			// ajax call!
+			$.ajax(
+			{ 
+				url: '/frontend/ajax.php?module=search&action=save',
+				type: 'GET',
+				data: 'term='+ $(this).val() +'&language='+ language
+			});
+		})
+		// and also: alter the autocomplete style: add description!
+		.data('autocomplete')._renderItem = function(ul, item)
+		{
+			return $('<li></li>')
+			.data('item.autocomplete', item)
+			.append('<a><strong>'+ item.label +'</strong><br \>'+ item.desc +'</a>' )
+			.appendTo(ul);
+		};
+	},
+
+
+	// livesuggest (search results page: live feed of matches)
+	livesuggest: function(language)
+	{
+		// check if calls for live suggest are allowed
+		var allowCall = true;
+
+		// change in input = do the dance: live search results completion
+		$('input[name=q].liveSuggest').keyup(function()
+		{
+			// make sure we're allowed to do the call (= previous call is no longer processing)
+			if(allowCall)
+			{
+				// temporarely allow no more calls
+				allowCall = false;
+
+				// fade out
+				$('#searchContainer').fadeTo(0, 0.5);
+				
+				// ajax call!
+				$.ajax(
+				{ 
+					url: '/frontend/ajax.php?module=search&action=livesuggest',
+					type: 'GET',
+					data: 'term='+ $(this).val() +'&language='+ language,
+					success: function(data, textStatus) 
+					{
+						// allow for new calls
+						allowCall = true;
+
+						// alert the user
+						if(data.code != 200 && jsFrontend.debug) { alert(data.message); }
+						
+						if(data.code == 200)
+						{
+							// replace search results
+							$('#searchContainer').html(data.data);
+	
+							// fade in
+							$('#searchContainer').fadeTo(0, 1);
+						}
+					},
+					error: function()
+					{
+						// allow for new calls
+						allowCall = true;
+
+						// replace search results
+						$('#searchContainer').html('');
+
+						// fade in
+						$('#searchContainer').fadeTo(0, 1);
 					}
 				});
 			}

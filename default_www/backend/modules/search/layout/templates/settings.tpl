@@ -11,8 +11,18 @@
 			<h3>{$lblPagination|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<label for="overviewNumItems">{$lblItemsPerPage|ucfirst}</label>
-			{$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
+			<p>
+				<label for="overviewNumItems">{$lblItemsPerPage|ucfirst}</label>
+				{$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
+			</p>
+			<p>
+				<label for="autocompleteNumItems">{$lblItemsForAutocomplete|ucfirst}</label>
+				{$ddmAutocompleteNumItems} {$ddmAutocompleteNumItemsError}
+			</p>
+			<p>
+				<label for="autosuggestNumItems">{$lblItemsForAutosuggest|ucfirst}</label>
+				{$ddmAutosuggestNumItems} {$ddmAutosuggestNumItemsError}
+			</p>
 		</div>
 	</div>
 

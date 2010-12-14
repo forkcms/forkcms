@@ -337,6 +337,7 @@ class Init
 		switch($this->type)
 		{
 			case 'frontend':
+			case 'frontend_ajax':
 				require_once FRONTEND_CORE_PATH .'/engine/template_custom.php';
 				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
 			break;

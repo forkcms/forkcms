@@ -42,10 +42,13 @@ class FrontendSearchModel
 				// get all terms to search for (including synonyms)
 				$terms = self::getSynonyms((string) $value);
 
+				// build search terms
+				$terms = self::buildTerm($terms);
+
 				$queryNr = count($where);
 
 				// add query
-				$where[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (?) OR ', count($terms)), 0, -4) .') AND i'. $queryNr .'.field = ? AND i'. $queryNr .'.language = ? AND i'. $queryNr .'.active = ? AND m'. $queryNr .'.searchable = ?';
+				$where[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i'. $queryNr .'.field = ? AND i'. $queryNr .'.language = ? AND i'. $queryNr .'.active = ? AND m'. $queryNr .'.searchable = ?';
 				$join[$queryNr] = 'search_index AS i'. $queryNr . ($join ? ' ON i'. $queryNr .'.module = i0.module AND i'. $queryNr .'.other_id = i0.other_id' : '') .' INNER JOIN search_modules AS m'. $queryNr .' ON m'. $queryNr .'.module = i'. $queryNr .'.module';
 
 				// add params
@@ -68,6 +71,9 @@ class FrontendSearchModel
 			// get all terms to search for (including synonyms)
 			$terms = self::getSynonyms((string) $term);
 
+			// build search terms
+			$terms = self::buildTerm($terms);
+
 			// prepare query and params
 			$query = 'SELECT COUNT(module)
 						FROM
@@ -75,7 +81,7 @@ class FrontendSearchModel
 							SELECT i.module
 							FROM search_index AS i
 							INNER JOIN search_modules AS m ON i.module = m.module
-							WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (?) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
+							WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
 							GROUP BY i.module, i.other_id
 						) AS results';
 
@@ -84,6 +90,39 @@ class FrontendSearchModel
 
 		// get the search results
 		return (int) FrontendModel::getDB()->getVar($query, $params);
+	}
+
+
+	/**
+	 * Build the search term
+	 *
+	 * @return	string
+	 * @param	string $term
+	 */
+	public static function buildTerm($terms)
+	{
+		// loop all items
+		foreach($terms as $i => $term)
+		{
+			// trim terms
+			$term = trim($term);
+
+			// last word may be incomplete (still typing)
+			$split = explode(' ', $term);
+			$last = (string) array_pop($split);
+			$terms[$i] = ($split ? '+'. implode(' +', $split) .' ' : '') .'(>+'. $last .' <+'. $last .'*)';
+
+			// current string encountered
+			$terms[$i] = '>'. $terms[$i];
+
+			if(strpos($terms[$i], ' ') !== false)
+			{
+				// part of words encountered
+				$terms[$i] .= ' <('. str_replace(' ', '* ', trim($term)) .'*)';
+			}
+		}
+
+		return $terms;
 	}
 
 
@@ -121,11 +160,14 @@ class FrontendSearchModel
 				// get all terms to search for (including synonyms)
 				$terms = self::getSynonyms((string) $value);
 
+				// build search terms
+				$terms = self::buildTerm($terms);
+
 				$queryNr = count($where);
 
 				// add query
-				$where[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (?) OR ', count($terms)), 0, -4) .') AND i'. $queryNr .'.field = ? AND i'. $queryNr .'.language = ? AND i'. $queryNr .'.active = ? AND m'. $queryNr .'.searchable = ?';
-				$order[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (?) + ', count($terms)), 0, -3) .') * m'. $queryNr .'.weight';
+				$where[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i'. $queryNr .'.field = ? AND i'. $queryNr .'.language = ? AND i'. $queryNr .'.active = ? AND m'. $queryNr .'.searchable = ?';
+				$order[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (? IN BOOLEAN MODE) + ', count($terms)), 0, -3) .') * m'. $queryNr .'.weight';
 				$join[$queryNr] = 'search_index AS i'. $queryNr . ($join ? ' ON i'. $queryNr .'.module = i0.module AND i'. $queryNr .'.other_id = i0.other_id' : '') .' INNER JOIN search_modules AS m'. $queryNr .' ON m'. $queryNr .'.module = i'. $queryNr .'.module';
 
 				// add params
@@ -149,11 +191,14 @@ class FrontendSearchModel
 			// get all terms to search for (including synonyms)
 			$terms = self::getSynonyms((string) $term);
 
+			// build search terms
+			$terms = self::buildTerm($terms);
+
 			// prepare query and params
-			$query = 'SELECT i.module, i.other_id, SUM('. substr(str_repeat('MATCH (i.value) AGAINST (?) + ', count($terms)), 0, -3) .') * m.weight AS score
+			$query = 'SELECT i.module, i.other_id, SUM('. substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) + ', count($terms)), 0, -3) .') * m.weight AS score
 						FROM search_index AS i
 						INNER JOIN search_modules AS m ON i.module = m.module
-						WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (?) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
+						WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
 						GROUP BY module, other_id
 						ORDER BY score DESC
 						LIMIT ?, ?';
@@ -174,38 +219,40 @@ class FrontendSearchModel
 	 * @param	string $language			The language to search in.
 	 * @param	int $limit					Limit resultset.
 	 */
-	public static function getStartsWith($term, $language = '', $limit = 50)
+	public static function getStartsWith($term, $language = '', $limit = 10)
 	{
 		// language given
 		if($language)
 		{
-			return FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
-														FROM search_statistics AS s1
-														INNER JOIN
-														(
-															SELECT term, MAX(id) as id, language
-															FROM search_statistics
-															WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
-															GROUP BY term
-														) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-														LIMIT ?',
-														array((string) $term .'%', $language, $limit));
+			return (array) FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+																FROM search_statistics AS s1
+																INNER JOIN
+																(
+																	SELECT term, MAX(id) as id, language
+																	FROM search_statistics
+																	WHERE term LIKE ? AND num_results IS NOT NULL AND language = ?
+																	GROUP BY term
+																) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+																ORDER BY s1.num_results ASC
+																LIMIT ?',
+																array((string) $term .'%', $language, $limit));
 		}
 
 		// no language given
 		else
 		{
-			return FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
-													FROM search_statistics AS s1
-													INNER JOIN
-													(
-														SELECT term, MAX(id) as id, language
-														FROM search_statistics
-														WHERE term LIKE ? AND num_results IS NOT NULL
-														GROUP BY term
-													) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
-													LIMIT ?',
-													array((string) $term .'%', $limit));
+			return (array) FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+																FROM search_statistics AS s1
+																INNER JOIN
+																(
+																	SELECT term, MAX(id) as id, language
+																	FROM search_statistics
+																	WHERE term LIKE ? AND num_results IS NOT NULL
+																	GROUP BY term
+																) AS s2 ON s1.term = s2.term AND s1.id = s2.id AND s1.language = s2.language AND s1.num_results > 0
+																ORDER BY s1.num_results ASC
+																LIMIT ?',
+																array((string) $term .'%', $limit));
 		}
 	}
 

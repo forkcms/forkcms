@@ -55,7 +55,7 @@ class BackendSearchModel
 		}
 
 		// invalidate the cache for search
-		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+		self::invalidateCache();
 	}
 
 
@@ -71,7 +71,7 @@ class BackendSearchModel
 		BackendModel::getDB(true)->delete('search_synonyms', 'id = ?', array((int) $id));
 
 		// invalidate the cache for search
-		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+		self::invalidateCache();
 	}
 
 
@@ -110,7 +110,7 @@ class BackendSearchModel
 		}
 
 		// invalidate the cache for search
-		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+		self::invalidateCache();
 	}
 
 
@@ -192,7 +192,7 @@ class BackendSearchModel
 											array($module['module'], $searchable, $weight, $searchable, $weight));
 
 		// invalidate the cache for search
-		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+		self::invalidateCache();
 	}
 
 
@@ -208,7 +208,18 @@ class BackendSearchModel
 		BackendModel::getDB(true)->insert('search_synonyms', $item);
 
 		// invalidate the cache for search
-		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+		self::invalidateCache();
+	}
+
+
+	/**
+	 * Invalidate search cache
+	 *
+	 * @return void
+	 */
+	public static function invalidateCache()
+	{
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH .'/search/') as $file) SpoonFile::delete(FRONTEND_CACHE_PATH .'/search/'. $file);
 	}
 
 
@@ -224,7 +235,7 @@ class BackendSearchModel
 		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($id));
 
 		// invalidate the cache for search
-		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+		self::invalidateCache();
 	}
 
 
@@ -247,7 +258,7 @@ class BackendSearchModel
 		BackendModel::getDB(true)->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((string) $module, (int) $otherId, (string) $language));
 
 		// invalidate the cache for search
-		BackendModel::invalidateFrontendCache('search', BL::getWorkingLanguage());
+		self::invalidateCache();
 	}
 }
 

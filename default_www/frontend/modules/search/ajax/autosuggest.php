@@ -1,8 +1,8 @@
 <?php
 
 /**
- * FrontendSearchIndex
- * This is the overview-action
+ * FrontendSearchAjaxAutosuggest
+ * This is the autosuggest-action, it will output a list of results for a certain search
  *
  * @package		frontend
  * @subpackage	search
@@ -10,7 +10,7 @@
  * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
-class FrontendSearchIndex extends FrontendBaseBlock
+class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 {
 	/**
 	 * Name of the cachefile
@@ -70,37 +70,20 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 
 	/**
-	 * Search statistics
-	 *
-	 * @var	array
-	 */
-	private $statistics;
-
-
-	/**
-	 * Execute the extra
+	 * Execute the action
 	 *
 	 * @return	void
 	 */
 	public function execute()
 	{
-		// call the parent
+		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
-
-		// load template
-		$this->loadTemplate();
-
-		// load form
-		$this->loadForm();
 
 		// validate form
 		$this->validateForm();
 
 		// display
 		$this->display();
-
-		// save statistics
-		$this->saveStatistics();
 	}
 
 
@@ -112,8 +95,8 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	private function display()
 	{
 		// set variables
-		$this->requestedPage = $this->URL->getParameter('page', 'int', 1);
-		$this->limit = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
+		$this->requestedPage = 1;
+		$this->limit = (int) FrontendModel::getModuleSetting('search', 'autosuggest_num_items', 10);
 		$this->offset = ($this->requestedPage * $this->limit) - $this->limit;
 		$this->cacheFile = FRONTEND_CACHE_PATH .'/'. $this->getModule() .'/'. FRONTEND_LANGUAGE .'_'. md5($this->term) .'_'. $this->offset .'_'. $this->limit .'.php';
 
@@ -174,11 +157,11 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 		// set url
 		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') .'?form=search&q='. $this->term;
+		$this->pagination['limit'] = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
 
 		// populate calculated fields in pagination
-		$this->pagination['limit'] = $this->limit;
-		$this->pagination['offset'] = $this->offset;
 		$this->pagination['requested_page'] = $this->requestedPage;
+		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
 
 		// get items
 		$this->items = FrontendSearchModel::search($this->term, $this->pagination['limit'], $this->pagination['offset']);
@@ -203,35 +186,21 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	}
 
 
-	/**
-	 * Load the form
-	 *
-	 * @return	void
-	 */
-	private function loadForm()
+	public function parse()
 	{
-		// create form
-		$this->frm = new FrontendForm('search', null, 'get', null, false);
+		// more matches to be found than?
+		if($this->pagination['num_items'] > count($this->items))
+		{
+			// remove last result (to add this reference)
+			array_pop($this->items);
 
-		// create elements
-		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
-	}
+			// add reference to full search results page
+			$this->items[] = array('title' => FrontendLanguage::getLabel('More'),
+									'text' => FrontendLanguage::getMessage('MoreResults'),
+									'full_url' => FrontendNavigation::getURLForBlock('search') .'?form=search&q='. $this->term);
+		}
 
-
-	/**
-	 * Parse the data into the template
-	 *
-	 * @return	void
-	 */
-	private function parse()
-	{
-		// parse the form
-		$this->frm->parse($this->tpl);
-
-		// no search term = no search
-		if(!$this->term) return;
-
-		// loop items
+		// format data
 		foreach($this->items as &$item)
 		{
 			// full url is set?
@@ -243,53 +212,18 @@ class FrontendSearchIndex extends FrontendBaseBlock
 			$utm['utm_term'] = $this->term;
 
 			// get parameters in url already
-			if(strpos($item['full_url'], '?') !== false) $glue = '&amp;';
+			if(strpos($item['full_url'], '?') !== false) $glue = '&';
 			else $glue = '?';
 
 			// add utm to url
-			$item['full_url'] .= $glue . http_build_query($utm, '', '&amp;');
+			$item['full_url'] .= $glue . http_build_query($utm, '', '&');
+
+			// format description
+			$item['text'] = mb_strlen($item['text']) > $this->length ? substr(strip_tags($item['text']), 0, $this->length) .'…' : $item['text'];
 		}
 
-		// assign articles
-		$this->tpl->assign('searchResults', $this->items);
-		$this->tpl->assign('searchTerm', $this->term);
-
-		// parse the pagination
-		$this->parsePagination();
-	}
-
-
-	/**
-	 * Save statistics
-	 *
-	 * @return	void
-	 */
-	private function saveStatistics()
-	{
-		// no search term = no search
-		if(!$this->term) return;
-
-		// previous search result
-		$previousTerm = SpoonSession::exists('searchTerm') ? SpoonSession::get('searchTerm') : '';
-		SpoonSession::set('searchTerm', '');
-
-		// save this term?
-		if($previousTerm != $this->term)
-		{
-			// format data
-			$this->statistics = array();
-			$this->statistics['term'] = $this->term;
-			$this->statistics['language'] = FRONTEND_LANGUAGE;
-			$this->statistics['time'] = FrontendModel::getUTCDate();
-			$this->statistics['data'] = serialize(array('server' => $_SERVER));
-			$this->statistics['num_results'] = $this->pagination['num_items'];
-
-			// save data
-			FrontendSearchModel::save($this->statistics);
-		}
-
-		// save current search term in cookie
-		SpoonSession::set('searchTerm', $this->term);
+		// output
+		$this->output(self::OK, $this->items);
 	}
 
 
@@ -300,22 +234,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private function validateForm()
 	{
-		// is the form submitted
-		if($this->frm->isSubmitted())
-		{
-			// cleanup the submitted fields, ignore fields that were added by hackers
-			$this->frm->cleanupFields();
+		// set values
+		$this->term = SpoonFilter::getGetValue('term', null, '');
+		$this->length = (int) SpoonFilter::getGetValue('length', null, 50);
 
-			// validate required fields
-			$this->frm->getField('q')->isFilled(FL::err('TermIsRequired'));
-
-			// no errors?
-			if($this->frm->isCorrect())
-			{
-				// get search term
-				$this->term = $this->frm->getField('q')->getValue();
-			}
-		}
+		// validate
+		if($this->term == '') $this->output(self::BAD_REQUEST, null, 'term-parameter is missing.');
 	}
 }
 
