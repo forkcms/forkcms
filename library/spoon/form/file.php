@@ -159,6 +159,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * @return	int
 	 * @param	string[optional] $unit
 	 * @param	int[optional] $precision
+	 * @todo Use the proper SI units. Lowercase "b" means "bit" and "k" means "1000", not "1024". "KiB" and the like are the SI units.
 	 */
 	public function getFileSize($unit = 'kb', $precision = null)
 	{
@@ -170,7 +171,7 @@ class SpoonFormFile extends SpoonFormAttributes
 			// fetch size
 			$size = $_FILES[$this->attributes['name']]['size'];
 
-			// redefine prection
+			// redefine precision
 			if($precision !== null) $precision = (int) $precision;
 
 			// bytes
