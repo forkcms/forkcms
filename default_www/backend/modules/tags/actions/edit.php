@@ -101,7 +101,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				if(method_exists($className, 'getByTag'))
 				{
 					// make the call and get the item
-					$moduleItems = (array) call_user_func_array(array($className, 'getByTag'), $this->id);
+					$moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
 
 					// loop items
 					foreach($moduleItems as $row)
@@ -200,7 +200,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				BackendTagsModel::updateTag($tag);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($tag['tag']));
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($tag['tag']) .'&highlight=row-'. $this->id);
 			}
 		}
 	}

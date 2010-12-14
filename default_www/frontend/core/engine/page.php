@@ -316,12 +316,8 @@ class FrontendPage extends FrontendBaseObject
 						$this->tpl->assign($templateVariable, $data);
 					}
 
-					// regular widget
-					else
-					{
-						// assign the templatepath so it will be included
-						$this->tpl->assign($templateVariable, $widget->getTemplatePath());
-					}
+					// regular widget, assign the templatepath so it will be included
+					else $this->tpl->assign($templateVariable, $widget->getTemplatePath());
 				}
 			}
 

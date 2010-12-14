@@ -92,6 +92,10 @@
 						<label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
 						{$ddmTimeFormat} {$ddmTimeFormatError}
 					</p>
+					<p>
+						<label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
+						{$ddmNumberFormat} {$ddmNumberFormatError}
+					</p>
 				</div>
 			</div>
 		</div>

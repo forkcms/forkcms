@@ -30,6 +30,7 @@ class UsersInstall extends ModuleInstaller
 		$this->setSetting('users', 'default_group', 1);
 		$this->setSetting('users', 'date_formats', array('j/n/Y', 'd/m/Y', 'j F Y', 'F j, Y'));
 		$this->setSetting('users', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
+		$this->setSetting('users', 'number_formats', array('comma_nothing' => '10000,25', 'dot_nothing' => '10000.25', 'dot_comma' => '10,000.25', 'comma_dot' => '10.000,25', 'dot_space' => '10 000.25', 'comma_space' => '10 000,25'));
 
 		// module rights
 		$this->setModuleRights(1, 'users');
@@ -108,6 +109,7 @@ class UsersInstall extends ModuleInstaller
 			$settings['date_format'] = serialize('j F Y');
 			$settings['time_format'] = serialize('H:i');
 			$settings['datetime_format'] = serialize(unserialize($settings['date_format']) .' '. unserialize($settings['time_format']));
+			$settings['number_format'] = serialize('dot_comma');
 			$settings['password_key'] = serialize(uniqid());
 			$settings['avatar'] = serialize('god.jpg');
 

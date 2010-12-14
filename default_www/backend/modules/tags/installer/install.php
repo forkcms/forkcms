@@ -37,7 +37,8 @@ class TagsInstall extends ModuleInstaller
 
 		// add extra
 		$tagsID = $this->insertExtra('tags', 'block', 'Tags', null, null, 'N', 30);
-		$this->insertExtra('tags', 'widget', 'TagCloud', null, null, 'N', 31);
+		$this->insertExtra('tags', 'widget', 'TagCloud', 'tagcloud', null, 'N', 31);
+		$this->insertExtra('tags', 'widget', 'Related', 'related', null, 'N', 32);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
@@ -60,6 +61,12 @@ class TagsInstall extends ModuleInstaller
 
 
 		// insert locale (nl)
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Blog', 'blog');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ItemsWithTag', 'items met tag "%1$s"');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Pages', 'pagina\'s');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Related', 'gerelateerd');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ToTagsOverview', 'naar het tags overzicht');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Related', 'gerelateerd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'TagCloud', 'tag-cloud');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Edited', 'De tag "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'EditTag', 'bewerk tag "%1$s"');
@@ -69,6 +76,12 @@ class TagsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NoSelection', 'Er waren geen tags geselecteerd.');
 
 		// insert locale (en)
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Blog', 'blog');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ItemsWithTag', 'items with tag "%1$s"');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Pages', 'pages');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Related', 'related');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ToTagsOverview', 'to tags overview');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Related', 'related');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'TagCloud', 'tagcloud');
 		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Edited', 'The tag "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'tags', 'msg', 'EditTag', 'edit tag "%1$s"');

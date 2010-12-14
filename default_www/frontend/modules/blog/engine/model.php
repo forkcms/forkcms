@@ -10,9 +10,10 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
-class FrontendBlogModel
+class FrontendBlogModel implements FrontendTagsInterface
 {
 	/**
 	 * Get an item
@@ -450,11 +451,28 @@ class FrontendBlogModel
 			$link = FrontendNavigation::getURLForBlock('blog', 'detail');
 
 			// reset url
-			foreach($items as &$row) $row['url'] = $link .'/'. $row['url'];
+			foreach($items as &$row) $row['full_url'] = $link .'/'. $row['url'];
 		}
 
 		// return
 		return $items;
+	}
+
+
+	/**
+	 * Get the id of an item by the full URL of the current page.
+	 * Selects the proper part of the full URL to get the item's id from the database.
+	 *
+	 * @return	int				The id that corresponds with the given full URL.
+	 * @param	FrontendURL		The current URL
+	 */
+	public static function getIdForTags(FrontendURL $URL)
+	{
+		// select the proper part of the full URL
+		$itemURL = (string) $URL->getParameter(1);
+
+		// return the item
+		return self::get($itemURL);
 	}
 
 

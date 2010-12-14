@@ -176,7 +176,7 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 				$id = BackendContentBlocksModel::update($this->id, $item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=row-'. $id);
 			}
 		}
 	}

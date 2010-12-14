@@ -154,7 +154,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 					if(BackendModel::getModuleSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
 
 					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+					$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=row-'. $id);
 				}
 
 				// draft
@@ -167,7 +167,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
 
 					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $item['id'] .'&draft='. $id .'&report=saved_as_draft&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+					$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $item['id'] .'&draft='. $id .'&report=saved_as_draft&var='. urlencode($item['title']));
 				}
 			}
 		}

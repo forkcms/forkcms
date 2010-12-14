@@ -167,10 +167,10 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 				$locale['edited_on'] = BackendModel::getUTCDate();
 
 				// update item
-				BackendLocaleModel::insert($locale);
+				$id = BackendLocaleModel::insert($locale);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=added&var='. urlencode($locale['name']));
+				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=added&var='. urlencode($locale['name']) .'&highlight=row-'. $id);
 			}
 		}
 	}

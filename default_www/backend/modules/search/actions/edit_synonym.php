@@ -123,7 +123,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 				BackendSearchModel::updateSynonym($this->id, $item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=edited-synonym&var='. urlencode($item['term']));
+				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=edited-synonym&var='. urlencode($item['term']).'&highlight=row-'. $this->id);
 			}
 		}
 	}
