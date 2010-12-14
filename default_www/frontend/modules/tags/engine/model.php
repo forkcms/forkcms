@@ -214,24 +214,97 @@ class FrontendTagsModel
 
 
 	/**
-	 * Get all related items
+	 * Get the IDs and number of shared tags of all related items, sorted by the number of tags shared by both items.
 	 *
-	 * @param	int $id
-	 * @param	int $moduleId
-	 * @param	int $otherModuleId
-	 * @param	int[optional] $limit
-	 * @return	array
+	 * @return  array                            The keys are the IDs. The values are the number of matches. Sorted in descending order of number of matches.
+	 * @param   int $id                          The ID of the item to match against.
+	 * @param   string $module                   The name of the module $id belongs to.
+	 * @param   string $otherModule              The name of the module in which to go looking for matches.
+	 * @param   int[optional] $limit             The maximum number of related IDs to return.
+	 * @param   int[optional] $numMinimumMatches The minimum number of matches, i.e. the number of tags that are shared with $id.
 	 */
-	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
+	public static function getRelatedIdsAndNumberOfMatchesByTags($id, $module, $otherModule, $limit = 5, $numMinimumMatches = 1)
 	{
-		return (array) FrontendModel::getDB()->getColumn('SELECT t2.other_id
-														FROM modules_tags AS t
-														INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
-														WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND t2.other_id != t.other_id
-														GROUP BY t2.other_id
-														ORDER BY COUNT(t2.tag_id) DESC
-														LIMIT ?;',
-														array($id, $module, $otherModule, $limit));
+		// get more results than the given limit to increase the pool when picking random IDs with the same number of matches
+		$increasedLimit = (int) $limit * 3;
+
+		// set the parameters
+		$parameters = array(
+			':id' => (int) $id,
+			':module' => (string) $module,
+			':otherModule' => (string) $otherModule,
+			':limit' => $increasedLimit,
+			':numMinimumMatches' => (int) $numMinimumMatches
+		);
+
+		// get the top $increasedLimit IDs and their number of matching tags
+		$pairs = FrontendModel::getDB()->getPairs('SELECT t2.other_id, COUNT(t2.other_id) AS numMatches
+		                                           FROM modules_tags AS t
+		                                           INNER JOIN modules_tags AS t2 ON t.tag_id = t2.tag_id
+		                                           WHERE t.module = :module AND t.other_id = :id AND t2.module = :otherModule AND t2.other_id != t.other_id
+		                                           GROUP BY t2.other_id
+		                                           HAVING numMatches >= :numMinimumMatches
+		                                           ORDER BY numMatches DESC
+		                                           LIMIT :limit',
+		                                          $parameters);
+
+		// create the array to group the IDs by the number of matching tags
+		$idsPerNumMatches = array();
+
+		// now really, really, really group the IDs by the number of matching tags
+		foreach($pairs as $id => $numMatches)
+		{
+			$idsPerNumMatches[$numMatches][] = $id;
+		}
+
+		// create our result array
+		$result = array();
+
+		// try to get $limit items, preferring those with the highest number of matches
+		foreach($idsPerNumMatches as $numMatches => $ids)
+		{
+			// determine the number of IDs we still need
+			$numNeededIds = $limit - count($result);
+
+			// randomise the IDs
+			shuffle($ids);
+
+			// get as many IDs as needed, or at least as many as possible
+			for($i = 0; $i < $numNeededIds && $i < count($ids); $i++)
+			{
+				$result[$ids[$i]] = $numMatches;
+			}
+
+			// stop if we have enough (remember that we could have many more results than the original $limit)
+			if(count($result) === $limit)
+			{
+				break;
+			}
+		}
+
+		// return the result
+		return $result;
+	}
+
+
+	/**
+	 * Get the IDs of at most $limit related items, as determined by the number of tags shared by both items.
+	 *
+	 * @return  array                            The IDs of the related items, sorted in descending order of number of matches.
+	 * @param   int $id                          The ID of the item to match against.
+	 * @param   string $module                   The name of the module $id belongs to.
+	 * @param   string $otherModule              The name of the module in which to go looking for matches.
+	 * @param   int[optional] $limit             The maximum number of related IDs to return.
+	 * @param   int[optional] $numMinimumMatches The minimum number of matches, i.e. the number of tags that are shared with $id.
+	 */
+	public static function getRelatedIdsByTags($id, $module, $otherModule, $limit = 5, $numMinimumMatches = 1)
+	{
+		// store this function's arguments (PHP 5.2 does not allow inlining this call as a function argument)
+		$arguments = func_get_args();
+
+		// return the IDs of the related items, which are the keys of the (ID, numMatches) pairs
+		return array_keys(call_user_func_array(array('self', 'getRelatedIdsAndNumberOfMatchesByTags'), $arguments));
+
 	}
 }
 
