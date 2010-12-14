@@ -680,15 +680,7 @@ jsBackend.effects = {
 	// init, something like a constructor
 	init: function()
 	{
-		//jsBackend.effects.bindFadeOutAfterMouseMove();
 		jsBackend.effects.bindHighlight();
-	},
-
-
-	// when the mouse is moved, all items with a class "fadeOutAfterMouseMove" will fade away
-	bindFadeOutAfterMouseMove: function()
-	{
-		$(document.body).bind('mousemove', function(evt) { $('.fadeOutAfterMouseMove').fadeOut(2500); });
 	},
 
 
