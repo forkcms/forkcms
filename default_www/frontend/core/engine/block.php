@@ -114,7 +114,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 		// set some properties
 		$this->setOverwrite($object->getOverwrite());
-		$this->setTemplatePath($object->getTemplatePath());
+		if($object->getTemplatePath() !== null) $this->setTemplatePath($object->getTemplatePath());
 	}
 
 
