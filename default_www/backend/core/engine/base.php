@@ -979,11 +979,19 @@ class BackendBaseWidget
 
 
 	/**
-	 * The position in the column the widget should be shown
+	 * The position in the column where the widget should be shown
 	 *
 	 * @var	int
 	 */
 	private $position;
+
+
+	/**
+	 * Required rights needed for this widget.
+	 *
+	 * @var	array
+	 */
+	protected $rights = array();
 
 
 	/**
@@ -1059,6 +1067,31 @@ class BackendBaseWidget
 	public function getTemplatePath()
 	{
 		return $this->templatePath;
+	}
+
+
+	/**
+	 * Is this widget allowed for this user?
+	 *
+	 * @return	bool
+	 */
+	public function isAllowed()
+	{
+		// loop all rights
+		foreach($this->rights as $rights)
+		{
+			// define vars
+			list($module, $action) = explode('/', $rights);
+
+			// not exactly 2 vars
+			if(isset($module) && isset($action))
+			{
+				if(!BackendAuthentication::isAllowedAction($action, $module)) return false;
+			}
+		}
+
+		// everything turned out just fine
+		return true;
 	}
 
 

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendNavigation
  * This class will be used to build the navigation
  *
  * @package		backend
@@ -9,6 +8,7 @@
  *
  * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendNavigation
@@ -50,14 +50,25 @@ class BackendNavigation
 
 		// load it
 		$this->navigation = (array) $navigation;
+
+		// cleanup navigation (not needed for god user)
+		if(!BackendAuthentication::getUser()->isGod())
+		{
+			$this->navigation = $this->cleanup($this->navigation);
+		}
 	}
 
 
 	/**
-	 * Build the HTML for an navigation item
+	 * Build the HTML for a navigation item
 	 *
 	 * @return	string
 	 * @param	string $value
+	 * @param	string $key
+	 * @param	array[optional] $selectedKeys
+	 * @param	int[optional] $startDepth
+	 * @param	int[optional] $endDepth
+	 * @param	int[optional] $currentDepth
 	 */
 	public function buildHTML(array $value, $key, array $selectedKeys = null, $startDepth = 0, $endDepth = null, $currentDepth = 0)
 	{
@@ -115,38 +126,96 @@ class BackendNavigation
 	}
 
 
-	/**
-	 * Get the HTML for the navigation
-	 *
-	 * @return	string
-	 * @param	int[optional] $startDepth	The start-depth.
-	 * @param	int[optional] $endDepth		The end-depth.
-	 */
-	public function getNavigation($startDepth = 0, $endDepth = null)
+	// @todo phpdoc
+	private function cleanup(array $navigation)
 	{
-		// get selected
-		$selectedKeys = $this->getSelectedKeys();
-
-		// init html
-		$HTML = '<ul>'."\n";
-
-		// loop the navigation elements
-		foreach($this->navigation as $key => $value)
+		// loop elements
+		foreach($navigation as $key => $value)
 		{
-			// append the generated HTML
-			$HTML .= $this->buildHTML($value, $key, $selectedKeys, $startDepth, $endDepth);
+			// error?
+			$allowed = true;
+
+			// get rid of invalid items
+			if(!isset($value['url']) || !isset($value['label'])) $allowed = false;
+
+			// split up chunks
+			list($module, $action) = explode('/', $value['url']);
+
+			// no rights for this module?
+			if(!BackendAuthentication::isAllowedModule($module)) $allowed = false;
+
+			// no rights for this action?
+			if(!BackendAuthentication::isAllowedAction($action, $module)) $allowed = false;
+
+			// error occured
+			if(!$allowed)
+			{
+				unset($navigation[$key]);
+				continue;
+			}
+
+			// has children
+			if(isset($value['children']) && is_array($value['children']) && !empty($value['children']))
+			{
+				// loop children
+				foreach($value['children'] as $keyB => $valueB)
+				{
+					// error?
+					$allowed = true;
+
+					// get rid of invalid items
+					if(!isset($valueB['url']) || !isset($valueB['label'])) $allowed = false;
+
+					// split up chunks
+					list($module, $action) = explode('/', $valueB['url']);
+
+					// no rights for this module?
+					if(!BackendAuthentication::isAllowedModule($module)) $allowed = false;
+
+					// no rights for this action?
+					if(!BackendAuthentication::isAllowedAction($action, $module)) $allowed = false;
+
+					// error occured
+					if(!$allowed)
+					{
+						unset($navigation[$key]['children'][$keyB]);
+						continue;
+					}
+
+					// has children
+					if(isset($valueB['children']) && is_array($valueB['children']) && !empty($valueB['children']))
+					{
+						// loop children
+						foreach($valueB['children'] as $keyC => $valueC)
+						{
+							// error?
+							$allowed = true;
+
+							// get rid of invalid items
+							if(!isset($valueC['url']) || !isset($valueC['label'])) $allowed = false;
+
+							// split up chunks
+							list($module, $action) = explode('/', $valueC['url']);
+
+							// no rights for this module?
+							if(!BackendAuthentication::isAllowedModule($module)) $allowed = false;
+
+							// no rights for this action?
+							if(!BackendAuthentication::isAllowedAction($action, $module)) $allowed = false;
+
+							// error occured
+							if(!$allowed)
+							{
+								unset($navigation[$key]['children'][$keyB]['children'][$keyC]);
+								continue;
+							}
+						}
+					}
+				}
+			}
 		}
 
-		// end ul
-		$HTML .= '</ul>';
-
-		// cleanup
-//		$HTML = preg_replace('|<ul>(\s*)</ul>|iUs', '<ul>', $HTML);
-//		$HTML = preg_replace('|<ul>(\s*)<ul>|iUs', '<ul>', $HTML);
-//		$HTML = preg_replace('|</ul>(\s*)</ul>|iUs', '<ul>', $HTML);
-
-		// return the generated HTML
-		return $HTML;
+		return $navigation;
 	}
 
 
@@ -202,6 +271,36 @@ class BackendNavigation
 				if(!empty($subKeys)) return $subKeys;
 			}
 		}
+	}
+
+
+	/**
+	 * Get the HTML for the navigation
+	 *
+	 * @return	string
+	 * @param	int[optional] $startDepth	The start-depth.
+	 * @param	int[optional] $endDepth		The end-depth.
+	 */
+	public function getNavigation($startDepth = 0, $endDepth = null)
+	{
+		// get selected
+		$selectedKeys = $this->getSelectedKeys();
+
+		// init html
+		$HTML = '<ul>'."\n";
+
+		// loop the navigation elements
+		foreach($this->navigation as $key => $value)
+		{
+			// append the generated HTML
+			$HTML .= $this->buildHTML($value, $key, $selectedKeys, $startDepth, $endDepth);
+		}
+
+		// end ul
+		$HTML .= '</ul>';
+
+		// return the generated HTML
+		return $HTML;
 	}
 
 

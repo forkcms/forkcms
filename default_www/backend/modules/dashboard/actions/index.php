@@ -88,6 +88,9 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// create instance
 						$instance = new $className();
 
+						// has rights
+						if(!$instance->isAllowed()) continue;
+
 						// execute instance
 						$instance->execute();
 
