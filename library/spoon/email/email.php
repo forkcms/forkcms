@@ -865,9 +865,16 @@ class SpoonEmail
 			// check security level to change port
 			switch($this->security)
 			{
-				case 'ssl': $port = 465; break;
-				case 'tls': $port = 587; break;
-				default: $port = 25;
+				case 'ssl':
+					$port = 465;
+				break;
+
+				case 'tls':
+					$port = 587;
+				break;
+
+				default:
+					$port = 25;
 			}
 		}
 

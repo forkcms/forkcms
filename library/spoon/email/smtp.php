@@ -117,9 +117,15 @@ class SpoonEmailSMTP
 		// initialize security layer
 		switch($this->security)
 		{
-			case 'ssl': break;
-			case 'tls': $this->startTLS(); break;
-			default: break;
+			case 'ssl':
+			break;
+
+			case 'tls':
+				$this->startTLS();
+			break;
+
+			default:
+			break;
 		}
 	}
 

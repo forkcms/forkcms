@@ -66,7 +66,7 @@ class SpoonFilter
 		if(empty($array)) return array();
 
 		// just call the function once if this isn't an array
-		if(!is_array($array)) return($callback($array));
+		if(!is_array($array)) return $callback($array);	// @todo	davy, like wtf, shouldn't this use call_user...
 
 		// check if there is a key restriction
 		if(!empty($allowedKeys))
@@ -115,9 +115,8 @@ class SpoonFilter
 	 *
 	 * @return	array					The sorted array.
 	 * @param	array $array			The array that will be sorted.
-	 * @param	int[optional] $start	The index will start from this value.
 	 */
-	public static function arraySortKeys(array $array, $start = 0)
+	public static function arraySortKeys(array $array)
 	{
 		// has no elements
 		if(empty($array)) throw new SpoonFilterException('The array needs to contain at least one element.');

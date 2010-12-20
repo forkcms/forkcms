@@ -917,7 +917,7 @@ class SpoonFeedRSS
 				}
 
 				// catch exception
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					// ignore exceptions
 				}
@@ -937,7 +937,7 @@ class SpoonFeedRSS
 				}
 
 				// catch exception
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					// ignore exceptions
 				}
@@ -1003,7 +1003,7 @@ class SpoonFeedRSS
 			}
 
 			// catch exception
-			catch (Exception $e)
+			catch(Exception $e)
 			{
 				// ignore exceptions
 			}

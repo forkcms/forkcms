@@ -184,10 +184,16 @@ class GoogleAnalytics
 	public function getAnalyticsAccountList($sessionToken)
 	{
 		// try to make the call
-		try { $response = $this->doCall(self::API_URL .'/accounts/default', $sessionToken); }
+		try
+		{
+			$response = $this->doCall(self::API_URL .'/accounts/default', $sessionToken);
+		}
 
 		// catch possible exception
-		catch(Exception $e) { return array(); }
+		catch(Exception $e)
+		{
+			return array();
+		}
 
 		// no accounts - return an empty array
 		if($response == 'No Analytics account was found for the currently logged-in user') return array();
@@ -264,7 +270,7 @@ class GoogleAnalytics
 		if(count($parameters) > 0)
 		{
 			// loop them and combine key and urlencoded value (but don't encode the colons)
-			foreach ($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace('%3A', ':', urlencode($value));
+			foreach($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace('%3A', ':', urlencode($value));
 
 			// append to array
 			$URL .= '&'. implode('&', $parameters);
@@ -312,12 +318,12 @@ class GoogleAnalytics
 			foreach($simpleXML->entry as $entry)
 			{
 				// loop the dimensions
-				foreach ($entry->dimension as $dimension) {
+				foreach($entry->dimension as $dimension) {
 					$results['entries'][$i][(string) $dimension['name']] = (string) $dimension['value'];
 				}
 
 				// loop the metrics
-				foreach ($entry->metric as $metric) {
+				foreach($entry->metric as $metric) {
 					$results['entries'][$i][(string) $metric['name']] = (string) $metric['value'];
 				}
 

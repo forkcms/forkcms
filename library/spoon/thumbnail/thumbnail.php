@@ -418,7 +418,7 @@ class SpoonThumbnail
 		}
 
 		// read current image
-		switch ($currentType)
+		switch($currentType)
 		{
 			case IMG_GIF:
 				$currentImage = @imagecreatefromgif($this->filename);
@@ -525,7 +525,7 @@ class SpoonThumbnail
 		$newHeight = $this->height;
 
 		// read current image
-		switch ($currentType)
+		switch($currentType)
 		{
 			case IMG_GIF:
 				$currentImage = @imagecreatefromgif($this->filename);
