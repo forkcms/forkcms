@@ -341,7 +341,7 @@ class BackendMeta
 		$URL = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 
 		// get meta custom
-		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue();
+		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue(true);
 		else $custom = null;
 
 		// build meta
