@@ -42,6 +42,7 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 		$sendTimestamp = strtotime($sendOnDate .' '. $sendOnTime);
 
 		// build data
+		$item = array();
 		$item['id'] = $mailingId;
 		$item['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $sendTimestamp);
 		$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');

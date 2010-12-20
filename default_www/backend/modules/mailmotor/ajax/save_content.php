@@ -52,6 +52,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
 
 		// build data
+		$item = array();
 		$item['id'] = $this->mailing['id'];
 		$item['subject'] = $subject;
 		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;

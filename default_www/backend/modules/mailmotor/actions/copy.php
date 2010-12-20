@@ -32,28 +32,28 @@ class BackendMailmotorCopy extends BackendBaseAction
 		else
 		{
 			// get the mailing and reset some fields
-			$item = BackendMailmotorModel::getMailing($id);
-			$item['name'] = $item['name'] .' (#'. (BackendMailmotorModel::getMaximumId() + 1) .')';
-			$item['status'] = 'concept';
-			$item['send_on'] = null;
-			$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-			$item['edited_on'] = $item['created_on'];
-			$item['data'] = serialize($item['data']);
-			unset($item['recipients'], $item['id'], $item['cm_id'], $item['send_on_raw']);
+			$mailing = BackendMailmotorModel::getMailing($id);
+			$mailing['name'] = $mailing['name'] .' (#'. (BackendMailmotorModel::getMaximumId() + 1) .')';
+			$mailing['status'] = 'concept';
+			$mailing['send_on'] = null;
+			$mailing['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+			$mailing['edited_on'] = $mailing['created_on'];
+			$mailing['data'] = serialize($mailing['data']);
+			unset($mailing['recipients'], $mailing['id'], $mailing['cm_id'], $mailing['send_on_raw']);
 
 			// set groups
-			$groups = $item['groups'];
-			unset($item['groups']);
+			$groups = $mailing['groups'];
+			unset($mailing['groups']);
 
 			// create a new mailing based on the old one
-			$item['id'] = BackendMailmotorModel::insertMailing($item);
+			$newId = BackendMailmotorModel::insertMailing($mailing);
 
 			// update groups for this mailing
-			BackendMailmotorModel::updateGroupsForMailing($item['id'], $groups);
+			BackendMailmotorModel::updateGroupsForMailing($newId, $groups);
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('index') .'&report=mailing-copied&var='. $item['name']);
+		$this->redirect(BackendModel::createURLForAction('index') .'&report=mailing-copied&var='. $mailing['name']);
 	}
 }
 

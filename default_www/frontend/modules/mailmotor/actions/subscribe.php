@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * FrontendMailmotorSubscribe
  * This is the subscribe-action
  *
  * @package		frontend

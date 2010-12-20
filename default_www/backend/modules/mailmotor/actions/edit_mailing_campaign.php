@@ -31,7 +31,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendMailmotorModel::existsMailing($this->id))
+		if(BackendMailmotorModel::existsMailing($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -132,7 +132,7 @@ class BackendMailmotorEditMailingCampaign extends BackendBaseActionEdit
 				BackendMailmotorModel::updateMailing($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($this->record['name']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($this->record['name']) .'&highlight=id-'. $this->id);
 			}
 		}
 	}

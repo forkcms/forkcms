@@ -23,7 +23,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendMailmotorModel::existsGroup($this->id))
+		if(BackendMailmotorModel::existsGroup($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -128,7 +128,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 				BackendMailmotorCMHelper::updateGroup($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('groups') .'&report=edited&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('groups') .'&report=edited&var='. urlencode($item['name']) .'&highlight=id-'. $this->id);
 			}
 		}
 	}

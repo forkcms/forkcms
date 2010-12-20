@@ -620,7 +620,7 @@ class CampaignMonitor
 				// end proper format
 				echo '</pre>';
 
-				// stop script execution
+				// stop the script
 				exit;
 			}
 

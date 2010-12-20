@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * FrontendMailmotorCMHelper
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
  * @package		frontend
@@ -81,7 +82,7 @@ class FrontendMailmotorCMHelper
 		return (bool) $db->getNumRows('SELECT mg.*
 										FROM mailmotor_groups AS mg
 										INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-										WHERE mci.cm_id = ? AND mci.type = ?', array($id, 'list'));
+										WHERE mci.cm_id = ? AND mci.type = ?;', array($id, 'list'));
 	}
 
 
@@ -95,7 +96,7 @@ class FrontendMailmotorCMHelper
 	public static function getCampaignMonitorID($type, $otherId)
 	{
 		// insert the campaignmonitor ID
-		return FrontendModel::getDB()->getVar('SELECT cm_id FROM mailmotor_campaignmonitor_ids WHERE type = ? AND other_id = ?', array($type, $otherId));
+		return FrontendModel::getDB()->getVar('SELECT cm_id FROM mailmotor_campaignmonitor_ids WHERE type = ? AND other_id = ?;', array($type, $otherId));
 	}
 
 
@@ -116,7 +117,7 @@ class FrontendMailmotorCMHelper
 		// fetch campaignmonitor IDs
 		return (array) FrontendModel::getDB()->getColumn('SELECT mci.cm_id
 															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groups) .')',
+															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groups) .');',
 															array('list'));
 	}
 
@@ -163,7 +164,7 @@ class FrontendMailmotorCMHelper
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses(email, source, created_on)
 							VALUES (?, ?, ?)
-							ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
+							ON DUPLICATE KEY UPDATE source = ?, created_on = ?;',
 							array($subscriber['email'], $subscriber['source'], $subscriber['created_on'],
 									$subscriber['source'], $subscriber['created_on']));
 
@@ -176,7 +177,7 @@ class FrontendMailmotorCMHelper
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
 							VALUES (?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
+							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?;',
 							array($subscriberGroup['email'], $subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on'],
 									$subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on']));
 

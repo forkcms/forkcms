@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * FrontendMailmotorUnsubscribe
  * This is the index-action
  *
  * @package		frontend

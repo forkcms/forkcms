@@ -53,7 +53,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->stepId = SpoonFilter::getGetValue('step', array(1, 2, 3, 4), 1, 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendMailmotorModel::existsMailing($this->id))
+		if(BackendMailmotorModel::existsMailing($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -478,23 +478,24 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set values
-				$item['id'] = $this->id;
-				$item['name'] = $txtName->getValue();
-				$item['from_name'] = $txtFromName->getValue();
-				$item['from_email'] = $txtFromEmail->getValue();
-				$item['reply_to_email'] = $txtReplyToEmail->getValue();
-				$item['language'] = $rbtLanguages->getValue();
-				$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-				if(isset($values['campaign']) && (!empty($values['campaign']) || $values['campaign'] == 0)) $item['campaign_id'] = $this->frm->getField('campaign')->getValue();
+				$variables = array();
+				$variables['id'] = $this->id;
+				$variables['name'] = $txtName->getValue();
+				$variables['from_name'] = $txtFromName->getValue();
+				$variables['from_email'] = $txtFromEmail->getValue();
+				$variables['reply_to_email'] = $txtReplyToEmail->getValue();
+				$variables['language'] = $rbtLanguages->getValue();
+				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				if(isset($values['campaign']) && (!empty($values['campaign']) || $values['campaign'] == 0)) $variables['campaign_id'] = $this->frm->getField('campaign')->getValue();
 
 				// update the concept
-				BackendMailmotorModel::updateMailing($item);
+				BackendMailmotorModel::updateMailing($variables);
 
 				// update groups for this mailing
-				BackendMailmotorModel::updateGroupsForMailing($item['id'], $values['groups']);
+				BackendMailmotorModel::updateGroupsForMailing($this->id, $values['groups']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $item['id'] .'&amp;step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=2');
 			}
 		}
 	}
@@ -526,15 +527,16 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set values
-				$item['id'] = $this->id;
-				$item['template'] = $rbtTemplates->getValue();
-				$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				$variables = array();
+				$variables['id'] = $this->id;
+				$variables['template'] = $rbtTemplates->getValue();
+				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 				// update the concept
-				BackendMailmotorModel::updateMailing($item);
+				BackendMailmotorModel::updateMailing($variables);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $item['id'] .'&amp;step=3');
+				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3');
 			}
 		}
 	}
@@ -573,9 +575,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				/*
-				 *	the actual sending of a mailing happens in ajax/send_mailing.php
-				 *	This, however, is the point where a preview is sent to a specific address.
-				 */
+					the actual sending of a mailing happens in ajax/send_mailing.php
+					This, however, is the point where a preview is sent to a specific address.
+				*/
 
 				// set from email
 				$fromEmail = empty($this->record['from_email']) ? BackendModel::getModuleSetting('mailmotor', 'from_email') : $this->record['from_email'];

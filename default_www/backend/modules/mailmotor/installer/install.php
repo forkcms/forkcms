@@ -59,7 +59,7 @@ class MailmotorInstall extends ModuleInstaller
 	 */
 	private function installSettings()
 	{
-		// add 'mailmotor' as a module
+		// add 'blog' as a module
 		$this->addModule('mailmotor', 'The module to manage and send mailings.');
 
 		// get email from the session

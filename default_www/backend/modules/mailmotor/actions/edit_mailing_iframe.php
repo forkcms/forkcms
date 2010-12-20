@@ -31,7 +31,7 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendMailmotorModel::existsMailing($this->id))
+		if(BackendMailmotorModel::existsMailing($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -103,15 +103,15 @@ class BackendMailmotorEditMailingIframe extends BackendBaseActionEdit
 		$HTML = urldecode($css->convert());
 
 		/*
-		 *	I realise this is a bit confusing, so let me elaborate:
-		 *
-		 *	1.	edit_mailing_iframe.tpl contains a var {$templateHtml}. This is where $this->template['content'] goes.
-		 *
-		 *	2.	Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside. This will
-		 *		become the TinyMCE field which will contain our stored content HTML.
-		 *
-		 *	3.	We need everything inside the <body> tags so we don't end up with two <body>s.
-		 */
+			I realise this is a bit confusing, so let me elaborate:
+
+			1.	edit_mailing_iframe.tpl contains a var {$templateHtml}. This is where $this->template['content'] goes.
+
+			2.	Inside $this->template['content'] should be a textarea with a variable {$contentHtml} inside. This will
+				become the TinyMCE field which will contain our stored content HTML.
+
+			3.	We need everything inside the <body> tags so we don't end up with two <body>s.
+		*/
 
 		// find the body element
 		if(preg_match('/<body.*>.*?<\/body>/is', $HTML, $match))

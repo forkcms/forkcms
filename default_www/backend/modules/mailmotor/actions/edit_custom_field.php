@@ -120,8 +120,8 @@ class BackendMailmotorEditCustomField extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				/*
-				 * Since CampaignMonitor has no updateCustomField function, we have to find a way around that
-				 */
+					Since CampaignMonitor has no updateCustomField function, we have to find a way around that
+				*/
 
 				try
 				{
@@ -182,7 +182,7 @@ class BackendMailmotorEditCustomField extends BackendBaseActionAdd
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'] .'&report=edited&var='. urlencode($txtName->getValue()) .'&highlight=row-'. $this->group['id']);
+				$this->redirect(BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'] .'&report=edited&var='. urlencode($txtName->getValue()) .'&highlight=id-'. $this->group['id']);
 			}
 		}
 	}

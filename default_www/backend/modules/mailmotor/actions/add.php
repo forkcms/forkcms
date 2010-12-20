@@ -128,24 +128,25 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// set values
-				$item['name'] = $txtName->getValue();
-				$item['from_name'] = $txtFromName->getValue();
-				$item['from_email'] = $txtFromEmail->getValue();
-				$item['reply_to_email'] = $txtReplyToEmail->getValue();
-				$item['language'] = $rbtLanguages->getValue();
-				$item['status'] = 'concept';
-				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-				$item['edited_on'] = $item['created_on'];
-				if(!empty($values['campaign'])) $item['campaign_id'] = $this->frm->getField('campaign')->getValue();
+				$variables = array();
+				$variables['name'] = $txtName->getValue();
+				$variables['from_name'] = $txtFromName->getValue();
+				$variables['from_email'] = $txtFromEmail->getValue();
+				$variables['reply_to_email'] = $txtReplyToEmail->getValue();
+				$variables['language'] = $rbtLanguages->getValue();
+				$variables['status'] = 'concept';
+				$variables['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				if(!empty($values['campaign'])) $variables['campaign_id'] = $this->frm->getField('campaign')->getValue();
 
 				// insert the concept
-				$item['id'] = BackendMailmotorModel::insertMailing($item);
+				$id = BackendMailmotorModel::insertMailing($variables);
 
 				// update the groups for this mailing
-				BackendMailmotorModel::updateGroupsForMailing($item['id'], $values['groups']);
+				BackendMailmotorModel::updateGroupsForMailing($id, $values['groups']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $item['id'] .'&step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $id .'&step=2');
 			}
 		}
 	}

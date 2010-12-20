@@ -1,6 +1,7 @@
 <?php
 
 /**
+ * FrontendMailmotorDetail
  * This is the detail-action
  *
  * @package		frontend

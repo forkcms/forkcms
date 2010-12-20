@@ -23,7 +23,7 @@ class BackendMailmotorDeleteBounces extends BackendBaseActionDelete
 		$this->id = $this->getParameter('mailing_id', 'int');
 
 		// does the item exist
-		if($this->id !== null && BackendMailmotorModel::existsMailing($this->id))
+		if(BackendMailmotorModel::existsMailing($this->id))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
