@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendTagsAjaxAutocomplete
  * This is the autocomplete-action, it will output a list of tags that start with a certain string.
  *
  * @package		backend

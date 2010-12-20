@@ -1,7 +1,7 @@
 <?php
 
 /**
- * ApplicationRouting
+ * Application routing
  *
  * @package			Frontend
  *
@@ -34,7 +34,7 @@ class ApplicationRouting
 	 */
 	public function __construct()
 	{
-		// spoof querystring on lighttp
+		// spoof querystring on lighttpd
 		$this->spoofQueryString();
 
 		// process querystring

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This exception is used to handle frontend related exceptions.
+ * This class is used to handle frontend related exceptions.
  *
  * @package		frontend
  * @subpackage	core

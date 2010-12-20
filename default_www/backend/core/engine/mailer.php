@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailer
  * This class will send mails
  *
  * @package		backend
@@ -128,7 +127,7 @@ class BackendMailer
 		// return the ids
 		return (array) BackendModel::getDB()->getColumn('SELECT e.id
 															FROM emails AS e
-															WHERE e.send_on < ?;',
+															WHERE e.send_on < ?',
 															array(BackendModel::getUTCDate()));
 	}
 
@@ -150,7 +149,7 @@ class BackendMailer
 		// get record
 		$emailRecord = (array) $db->getRecord('SELECT *
 												FROM emails AS e
-												WHERE e.id = ?;',
+												WHERE e.id = ?',
 												array($id));
 
 		// mailer type
@@ -158,7 +157,7 @@ class BackendMailer
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
-		$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH .'/templates');
+		$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
 
 		// send via SMTP
 		if($mailerType == 'smtp')

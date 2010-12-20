@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendJavascript
  * This class will handle files JS-files that have to be parsed by PHP
  *
  * @package		frontend

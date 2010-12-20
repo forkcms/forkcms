@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendSearchWidgetForm
  * This is a widget with the search form
  *
  * @package		frontend

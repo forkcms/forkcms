@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendSearchEditSynonym
  * This is the edit synonym action, it will display a form to edit an existing synonym.
  *
  * @package		backend
@@ -114,16 +113,16 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$item = array();
+				$item['id'] = $this->id;
 				$item['term'] = $this->frm->getField('term')->getValue();
 				$item['synonym'] = $this->frm->getField('synonym')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 
 				// upate the item
-				BackendSearchModel::updateSynonym($this->id, $item);
+				BackendSearchModel::updateSynonym($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=edited-synonym&var='. urlencode($item['term']).'&highlight=row-'. $this->id);
+				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=edited-synonym&var='. urlencode($item['term']).'&highlight=row-'. $item['id']);
 			}
 		}
 	}

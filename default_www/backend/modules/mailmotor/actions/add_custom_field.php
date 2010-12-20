@@ -135,7 +135,7 @@ class BackendMailmotorAddCustomField extends BackendBaseActionAdd
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'] .'&report=added&var='. urlencode($txtName->getValue()) .'&highlight=id-'. $this->group['id']);
+				$this->redirect(BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'] .'&report=added&var='. urlencode($txtName->getValue()) .'&highlight=row-'. $this->group['id']);
 			}
 		}
 	}

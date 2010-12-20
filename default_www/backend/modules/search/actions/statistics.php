@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendSearchStatistics
  * This is the statistics-action, it will display the overview of search statistics
  *
  * @package		backend
@@ -71,6 +70,7 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// assign the datagrid
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
 

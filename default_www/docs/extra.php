@@ -45,7 +45,7 @@
 						<li><code>/default_www/frontend/files/userfiles/files/*</code></li>
 						<li><code>/default_www/frontend/files/userfiles/images/*</code></li>
 						<li><code>/default_www/install/cache/*</code></li>
-						<li><code>/default_www/install/installed.txt</code></li>
+						<li><code>/default_www/install/cache/installed.txt</code></li>
 						<li><code>/library/globals.php</code></li>
 						<li><code>/library/globals.*.php</code></li>
 					</ul>

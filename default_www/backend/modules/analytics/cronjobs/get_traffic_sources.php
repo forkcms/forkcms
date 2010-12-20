@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsCronjobCheckStatus
+ * This cronjob will fetch the traffic sources
  *
  * @package		backend
  * @subpackage	analytics

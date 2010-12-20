@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogRSS
  * This is the RSS-feed
  *
  * @package		frontend

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsWidgetTrafficSources
+ * This widget will show the latest traffic sources
  *
  * @package		backend
  * @subpackage	analytics
@@ -69,7 +69,8 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		curl_exec($curl);
 
 		// close
-		curl_close($curl);	}
+		curl_close($curl);
+	}
 
 
 	/**

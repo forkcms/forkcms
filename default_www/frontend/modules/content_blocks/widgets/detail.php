@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendContentBlocksWidgetDetail
  * This is the detail widget.
  *
  * @package		frontend

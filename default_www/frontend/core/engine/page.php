@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FrontendPage
+ * Frontend page class, this class will handle everything on a page
  *
  * @package		frontend
  * @subpackage	core

@@ -82,10 +82,10 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 				// insert the item
-				$id = BackendMailmotorCMHelper::insertGroup($item);
+				$item['id'] = BackendMailmotorCMHelper::insertGroup($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('groups') .'&report=added&var='. urlencode($item['name']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('groups') .'&report=added&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

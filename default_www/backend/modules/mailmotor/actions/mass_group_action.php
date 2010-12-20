@@ -34,7 +34,7 @@ class BackendMailmotorMassGroupAction extends BackendBaseAction
 			// redefine id's
 			$aIds = (array) $_GET['id'];
 
-			// delete comment(s)
+			// delete item(s)
 			if($action == 'delete') BackendMailmotorCMHelper::deleteGroups($aIds);
 		}
 

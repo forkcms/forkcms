@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendLocaleEdit
  * This is the edit action, it will display a form to edit an existing locale item.
  *
  * @package		backend
@@ -184,21 +183,21 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$locale = array();
-				$locale['user_id'] = BackendAuthentication::getUser()->getUserId();
-				$locale['language'] = $this->frm->getField('language')->getValue();
-				$locale['application'] = $this->frm->getField('application')->getValue();
-				$locale['module'] = $this->frm->getField('module')->getValue();
-				$locale['type'] = $this->frm->getField('type')->getValue();
-				$locale['name'] = $this->frm->getField('name')->getValue();
-				$locale['value'] = $this->frm->getField('value')->getValue();
-				$locale['edited_on'] = BackendModel::getUTCDate();
+				$item['id'] = $this->id;
+				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['language'] = $this->frm->getField('language')->getValue();
+				$item['application'] = $this->frm->getField('application')->getValue();
+				$item['module'] = $this->frm->getField('module')->getValue();
+				$item['type'] = $this->frm->getField('type')->getValue();
+				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['value'] = $this->frm->getField('value')->getValue();
+				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// update item
-				BackendLocaleModel::update($this->id, $locale);
+				BackendLocaleModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=edited&var='. urlencode($locale['name']) .'&highlight=row-'. $this->id);
+				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=edited&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FrontendTemplate, this is our extended version of SpoonTemplate
+ * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
  * 	- it will map some modifiers
@@ -36,7 +36,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
 
 		// set compile directory
-		$this->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$this->setCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
 
 		// when debugging the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
@@ -332,13 +332,15 @@ class FrontendTemplate extends SpoonTemplate
 	{
 		// assign a placeholder var
 		$this->assign('var', '');
+
+		// assign current timestamp
 		$this->assign('timestamp', time());
 	}
 }
 
 
 /**
- * FrontendTemplateMofidiers, contains all Frontend-related custom modifiers
+ * Contains all Frontend-related custom modifiers
  *
  * @package		frontend
  * @subpackage	template
@@ -411,6 +413,7 @@ class FrontendTemplateModifiers
 
 				// format as Euro
 				return '€ '. number_format((float) $var, $decimals, ',', ' ');
+			break;
 		}
 	}
 
@@ -425,11 +428,7 @@ class FrontendTemplateModifiers
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
-		// redefine
-		$number = (float) $number;
-		$decimals = (int) $decimals;
-
-		return number_format($number, $decimals, '.', ' ');
+		return number_format((float) $number, (int) $decimals, '.', ' ');
 	}
 
 
@@ -569,7 +568,7 @@ class FrontendTemplateModifiers
 		if(empty($page)) return '';
 		if(!isset($page[$field])) return '';
 
-		// return
+		// return page info
 		return $page[$field];
 	}
 
@@ -590,7 +589,7 @@ class FrontendTemplateModifiers
 		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : null;
 
-		// return
+		// return url
 		return FrontendNavigation::getURL($pageId, $language);
 	}
 
@@ -613,7 +612,7 @@ class FrontendTemplateModifiers
 		$action = ($action !== null) ? (string) $action : null;
 		$language = ($language !== null) ? (string) $language : null;
 
-		// return
+		// return url
 		return FrontendNavigation::getURLForBlock($module, $action, $language);
 	}
 
@@ -633,7 +632,7 @@ class FrontendTemplateModifiers
 		$extraId = (int) $extraId;
 		$language = ($language !== null) ? (string) $language : null;
 
-		// return
+		// return url
 		return FrontendNavigation::getURLForExtraId($extraId, $language);
 	}
 
@@ -663,6 +662,7 @@ class FrontendTemplateModifiers
 			}
 		}
 
+		// return content
 		return $content;
 	}
 
@@ -760,7 +760,7 @@ class FrontendTemplateModifiers
 		// get user
 		$user = FrontendUser::getBackendUser($userId);
 
-		// return setting
+		// return
 		return (string) $user->getSetting($setting);
 	}
 }

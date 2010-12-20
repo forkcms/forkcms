@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogWidgetRecentComments
  * This is a widget with recent comments on all blog-articles
  *
  * @package		frontend

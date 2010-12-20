@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendPagesDelete
  * This is the delete-action, it will delete a page
  *
  * @package		backend
@@ -19,39 +18,43 @@ class BackendPagesDelete extends BackendBaseActionDelete
 	 */
 	public function execute()
 	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// init var
-		$success = false;
-
 		// get parameters
-		$id = $this->getParameter('id', 'int');
+		$this->id = $this->getParameter('id', 'int');
 
-		// validate
-		if($id === null) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
-
-		// cannot have children
-		if(BackendPagesModel::getFirstChildId($id) !== false) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
-
-		// get page (we need the title)
-		$page = BackendPagesModel::get($id);
-
-		// valid page?
-		if(!empty($page))
+		// does the item exist
+		if($this->id !== null && BackendPagesModel::exists($this->id))
 		{
-			// delete the page
-			$success = BackendPagesModel::delete($id);
+			// call parent, this will probably add some general CSS/JS or other required files
+			parent::execute();
 
-			// delete search indexes
-			if(method_exists('BackendSearchModel', 'removeIndex')) BackendSearchModel::removeIndex('pages', $id);
+			// init var
+			$success = false;
 
-			// build cache
-			BackendPagesModel::buildCache(BL::getWorkingLanguage());
+			// cannot have children
+			if(BackendPagesModel::getFirstChildId($this->id) !== false) $this->redirect(BackendModel::createURLForAction('edit') .'&error=non-existing');
+
+			// get page (we need the title)
+			$page = BackendPagesModel::get($this->id);
+
+			// valid page?
+			if(!empty($page))
+			{
+				// delete the page
+				$success = BackendPagesModel::delete($this->id);
+
+				// delete search indexes
+				if(method_exists('BackendSearchModel', 'removeIndex')) BackendSearchModel::removeIndex('pages', $this->id);
+
+				// build cache
+				BackendPagesModel::buildCache(BL::getWorkingLanguage());
+			}
+
+			// page is deleted, so redirect to the overview
+			if($success) $this->redirect(BackendModel::createURLForAction('index') .'&id='. $page['parent_id'] .'&report=deleted&var='. urlencode($page['title']));
+			else $this->redirect(BackendModel::createURLForAction('edit') .'&error=non-existing');
 		}
 
-		// page is deleted, so redirect to the overview
-		if($success) $this->redirect(BackendModel::createURLForAction('index') .'&id='. $page['parent_id'] .'&report=deleted&var='. urlencode($page['title']));
+		// something went wrong
 		else $this->redirect(BackendModel::createURLForAction('edit') .'&error=non-existing');
 	}
 }

@@ -49,7 +49,7 @@
 				{/option:!accounts}
 
 				<div class="buttonHolder">
-					<a href="{$var|geturl:'settings'}&amp;remove=session_token" rel="confirmDeleteSessionToken" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveAccountLink}</span></a>
+					<a href="{$var|geturl:'settings'}&amp;remove=session_token" data-message-id="confirmDeleteSessionToken" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveAccountLink}</span></a>
 				</div>
 			{/option:NoTableId}
 		{/option:Wizard}
@@ -60,7 +60,7 @@
 				{$lblLinkedProfile|ucfirst}: <strong>{$profileTitle}</strong>
 			</p>
 			<div class="buttonHolder">
-				<a href="{$var|geturl:'settings'}&amp;remove=table_id" rel="confirmDeleteTableId" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveProfileLink}</span></a>
+				<a href="{$var|geturl:'settings'}&amp;remove=table_id" data-message-id="confirmDeleteTableId" class="askConfirmation submitButton button inputButton"><span>{$msgRemoveProfileLink}</span></a>
 				<a href="{$var|geturl:'index'}" class="mainButton button"><span>{$lblViewStatistics|ucfirst}</span></a>
 			</div>
 		{/option:EverythingIsPresent}

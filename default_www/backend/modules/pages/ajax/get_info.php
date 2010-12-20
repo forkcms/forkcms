@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendPagesAjaxGetInfo
+ * This edit-action will get the page info using Ajax
  *
  * @package		backend
  * @subpackage	pages
@@ -25,7 +25,7 @@ class BackendPagesAjaxGetInfo extends BackendBaseAJAXAction
 		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
 
 		// validate
-		if($id == 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
 
 		// get page
 		$page = BackendPagesModel::get($id);

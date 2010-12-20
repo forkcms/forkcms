@@ -54,11 +54,11 @@
 											<td width="31">
 											</td>
 											<td width="277" valign="top">
-											<!-- tinymce  -->
+											<!-- tinymce -->
 												<textarea id="contentHtml" name="content_html" cols="62" rows="5" class="inputEditor">
 													{$contentHtml}
 												</textarea>
-											<!-- /tinymce  -->
+											<!-- /tinymce -->
 											</td>
 											<td width="24">
 											</td>

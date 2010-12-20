@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendPagesTemplates
  * This is the templates-action, it will display the templates-overview
  *
  * @package		backend

@@ -44,7 +44,7 @@ class FrontendRSS extends SpoonFeedRSS
 			// theme rss image exists
 			if(SpoonFile::exists(PATH_WWW .'/frontend/themes/'. $theme .'/core/images/rss_image.png'))
 			{
-				// rss
+				// set rss image
 				$this->setImage(SITE_URL . '/frontend/themes/'. $theme .'/core/images/rss_image.png', $title, $link);
 			}
 		}
@@ -214,7 +214,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 			$content = str_replace($searchLinks, $replaceLinks, $content);
 		}
 
-		// return
+		// return content
 		return $content;
 	}
 }

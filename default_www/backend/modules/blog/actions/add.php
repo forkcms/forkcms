@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendBlogAdd
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
@@ -10,6 +9,7 @@
  * @author 		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendBlogAdd extends BackendBaseActionAdd
@@ -129,45 +129,38 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['introduction'] = $this->frm->getField('introduction')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
-				$item['status'] = 'active';
 				$item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('publish_on_date'), $this->frm->getField('publish_on_time')));
 				$item['created_on'] = BackendModel::getUTCDate();
-				$item['edited_on'] = BackendModel::getUTCDate();
+				$item['edited_on'] = $item['created_on'];
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['num_comments'] = 0;
 				$item['status'] = $status;
 
+				// insert the item
+				$item['revision_id'] = BackendBlogModel::insert($item);
+
+				// save the tags
+				BackendTagsModel::saveTags($item['revision_id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+
 				// active
-				if($status == 'active')
+				if($item['status'] == 'active')
 				{
-					// insert the item
-					$id = BackendBlogModel::insert($item);
-
-					// save the tags
-					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
-
 					// add search index
-					if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('blog', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+					if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('blog', $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
 					if(BackendModel::getModuleSetting('blog', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('blog', 'detail') .'/'. $this->meta->getURL());
 
 					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=row-'. $id);
+					$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=row-'. $item['revision_id']);
 				}
 
 				// draft
-				else
+				elseif($item['status'] == 'draft')
 				{
-					// insert the item
-					$id = (int) BackendBlogModel::insertDraft($item['id'], $item);
-
-					// save the tags
-					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
-
-					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $item['id'] .'&draft='. $id .'&report=saved_as_draft&var='. urlencode($item['title']));
+					// everything is saved, so redirect to the edit action
+					$this->redirect(BackendModel::createURLForAction('edit') .'&report=saved_as_draft&var='. urlencode($item['title']) .'&id='. $item['id'] .'&draft='. $item['revision_id'] .'&highlight=row-'. $item['revision_id']);
 				}
 			}
 		}
