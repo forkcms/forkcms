@@ -1,9 +1,7 @@
 <?php
 
 /**
- * BackendLocaleModel
  * In this file we store all generic functions that we will be using in the locale module
- *
  *
  * @package		backend
  * @subpackage	locale
@@ -101,7 +99,7 @@ class BackendLocaleModel
 	public static function delete(array $ids)
 	{
 		// delete records
-		BackendModel::getDB(true)->execute('DELETE FROM locale WHERE id IN ('. implode(',', $ids) .')');
+		BackendModel::getDB(true)->delete('locale', 'id IN ('. implode(',', $ids) .')');
 
 		// rebuild cache
 		self::buildCache('nl', 'backend');
@@ -117,7 +115,7 @@ class BackendLocaleModel
 	 */
 	public static function exists($id)
 	{
-		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id) FROM locale WHERE id = ?', (int) $id) > 0);
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id) FROM locale WHERE id = ?', array((int) $id));
 	}
 
 
@@ -145,14 +143,16 @@ class BackendLocaleModel
 		// get db
 		$db = BackendModel::getDB();
 
-		if($id !== null) return (bool) ((int) $db->getVar('SELECT COUNT(id)
-															FROM locale
-															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?',
-															array($name, $type, $module, $language, $application, $id)) > 0);
-		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(id)
-															FROM locale
-															WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
-															array($name, $type, $module, $language, $application)));
+		// return
+		if($id !== null) return (bool) $db->getVar('SELECT COUNT(id)
+													FROM locale
+													WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ? AND id != ?',
+													array($name, $type, $module, $language, $application, $id));
+
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM locale
+														WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
+														array($name, $type, $module, $language, $application));
 	}
 
 
@@ -164,7 +164,7 @@ class BackendLocaleModel
 	 */
 	public static function get($id)
 	{
-		return (array) BackendModel::getDB()->getRecord('SELECT * FROM locale WHERE id = ?', (int) $id);
+		return (array) BackendModel::getDB()->getRecord('SELECT * FROM locale WHERE id = ?', array((int) $id));
 	}
 
 
@@ -198,13 +198,13 @@ class BackendLocaleModel
 	public static function insert(array $item)
 	{
 		// insert item
-		$id = (int) BackendModel::getDB(true)->insert('locale', $item);
+		$item['id'] = (int) BackendModel::getDB(true)->insert('locale', $item);
 
 		// rebuild the cache
 		self::buildCache($item['language'], $item['application']);
 
-		// new id
-		return $id;
+		// return the new id
+		return $item['id'];
 	}
 
 
@@ -212,16 +212,18 @@ class BackendLocaleModel
 	 * Update a locale item.
 	 *
 	 * @return	void
-	 * @param	int $id			The id of the item to update.
 	 * @param	array $item		The new data.
 	 */
-	public static function update($id, array $item)
+	public static function update(array $item)
 	{
 		// update category
-		BackendModel::getDB(true)->update('locale', $item, 'id = ?', (int) $id);
+		$updated = BackendModel::getDB(true)->update('locale', $item, 'id = ?', array($item['id']));
 
 		// rebuild the cache
 		self::buildCache($item['language'], $item['application']);
+
+		// return
+		return $updated;
 	}
 }
 

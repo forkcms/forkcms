@@ -1,7 +1,6 @@
 <?php
 
 /**
- * ContactInstall
  * Installer for the contact module
  *
  * @package		installer
@@ -30,10 +29,10 @@ class ContactInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if a page for contact already exists in this language
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?', array($contactID, $language)) == 0)
+												WHERE b.extra_id = ? AND p.language = ?', array($contactID, $language)))
 			{
 				// insert contact page
 				$this->insertPage(array('title' => 'Contact',

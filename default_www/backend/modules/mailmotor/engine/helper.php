@@ -265,7 +265,7 @@ class BackendMailmotorCMHelper
 		// insert the campaignmonitor ID
 		return $db->getVar('SELECT cm_id
 							FROM mailmotor_campaignmonitor_ids
-							WHERE type = ? AND other_id = ?;',
+							WHERE type = ? AND other_id = ?',
 							array($type, $otherId));
 	}
 
@@ -284,7 +284,7 @@ class BackendMailmotorCMHelper
 		// fetch campaignmonitor IDs
 		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
 															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groupIds) .');',
+															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groupIds) .')',
 															array('list'));
 	}
 
@@ -303,7 +303,7 @@ class BackendMailmotorCMHelper
 		// fetch campaignmonitor IDs
 		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
 															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $templates) .');',
+															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $templates) .')',
 															array('template'));
 	}
 
@@ -814,7 +814,7 @@ class BackendMailmotorCMHelper
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses(email, source, created_on)
 							VALUES (?, ?, ?)
-							ON DUPLICATE KEY UPDATE source = ?, created_on = ?;',
+							ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
 							array($subscriber['email'], $subscriber['source'], $subscriber['created_on'],
 									$subscriber['source'], $subscriber['created_on']));
 
@@ -827,7 +827,7 @@ class BackendMailmotorCMHelper
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
 							VALUES (?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?;',
+							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
 							array($subscriberGroup['email'], $subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on'],
 									$subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on']));
 

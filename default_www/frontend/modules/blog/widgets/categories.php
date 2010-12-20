@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogWidgetCategories
  * This is a widget with the blog-categories
  *
  * @package		frontend

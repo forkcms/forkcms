@@ -48,13 +48,13 @@
 					{/form:authenticationIndex}
 
 					<ul id="loginNav">
-						<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" rel="forgotPasswordHolder">{$msgForgotPassword}</a></li>
+						<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" data-message-id="forgotPasswordHolder">{$msgForgotPassword}</a></li>
 					</ul>
 				</div>
 				<div id="forgotPasswordHolder" class="balloon {option:!showForm}balloonNoMessage{/option:!showForm}"{option:!showForm} style="display: none;"{/option:!showForm}>
 					<div id="forgotPasswordBox">
 
-						<a class="button linkButton icon iconClose iconOnly toggleBalloon" href="#" rel="forgotPasswordHolder"><span>X</span></a>
+						<a class="button linkButton icon iconClose iconOnly toggleBalloon" href="#" data-message-id="forgotPasswordHolder"><span>X</span></a>
 
 						<div class="balloonTop">&nbsp;</div>
 

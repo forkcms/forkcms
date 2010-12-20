@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendTagsWidgetRelated
  * This is a widget with the related items based on tags
  *
  * @package		frontend

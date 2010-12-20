@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendLocaleIndex
  * This is the index-action, it will display the overview of locale items.
  *
  * @package		backend
@@ -66,8 +65,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// init var
 		$parameters = array();
 
-		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
-		// wherin we allow the query to be in the actionfile itself
+		// start query, as you can see this query is build in the wrong place, because of the filter
+		// it is a special case wherein we allow the query to be in the actionfile itself
 		$query = 'SELECT l.id, l.language, l.application, l.module, l.type, l.name, l.value
 					FROM locale AS l
 					WHERE 1';
@@ -240,7 +239,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = ($this->getParameter('language') != '') ? $this->getParameter('language') : BL::getWorkingLanguage();
+		$this->filter['language'] = $this->getParameter('language');
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
 		$this->filter['type'] = $this->getParameter('type');

@@ -118,7 +118,7 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id='. $this->groupId : '') .'&report=added&var='. urlencode($item['email']) .'&highlight=email-'. $item['email']);
+				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->groupId) ? '&group_id='. $this->groupId : '') .'&report=added&var='. urlencode($item['email']) .'&highlight=row-'. $item['email']);
 			}
 		}
 	}

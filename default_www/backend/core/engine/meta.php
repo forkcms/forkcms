@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMeta
  * This class represents a META-object
  *
  * @package		backend
@@ -283,7 +282,7 @@ class BackendMeta
 		// get item
 		$this->data = (array) BackendModel::getDB()->getRecord('SELECT *
 																FROM meta AS m
-																WHERE m.id = ?;',
+																WHERE m.id = ?',
 																array($this->id));
 
 		// validate meta-record
@@ -526,7 +525,6 @@ class BackendMeta
 			$this->data['url_overwrite'] = ($this->frm->getField('url_overwrite')->isChecked()) ? 'Y' : 'N';
 			$this->data['custom'] = $custom;
 		}
-
 	}
 }
 

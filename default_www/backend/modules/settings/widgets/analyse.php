@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendSettingsWidgetAnalyse
+ * This widget will analyze the CMS warnings
  *
  * @package		backend
  * @subpackage	settings

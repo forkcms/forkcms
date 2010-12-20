@@ -1,6 +1,5 @@
 <?php
 /**
- * FrontendTemplateCustom
  * Add all custom stuff here.
  *
  * @package		frontend

@@ -88,7 +88,6 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		}
 
 		// set status to 'sent'
-		$item = array();
 		$item['id'] = $id;
 		$item['status'] = ($mailing['send_on'] > time()) ? 'queued' : 'sent';
 

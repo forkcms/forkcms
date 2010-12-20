@@ -36,7 +36,7 @@ class Installer
 	public function __construct()
 	{
 		// already installed
-		if(file_exists('installed.txt')) exit('This Fork has already been installed. To reinstall, delete installed.txt from the install directory. To log in, <a href="/private">click here</a>.');
+		if(file_exists('cache/installed.txt')) exit('This Fork has already been installed. To reinstall, delete installed.txt from the install/cache directory. To log in, <a href="/private">click here</a>.');
 
 		// define the current step
 		$this->setStep();

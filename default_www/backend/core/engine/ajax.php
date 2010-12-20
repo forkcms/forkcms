@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAJAX
  * This class will handle AJAX-related stuff
  *
  * @package		backend

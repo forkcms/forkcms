@@ -18,7 +18,7 @@
 									{$widgetBlogArchive.label}
 									{option:widgetBlogArchive.url}({$widgetBlogArchive.total}){/option:widgetBlogArchive.url}
 								{option:widgetBlogArchive.url}</a>{/option:widgetBlogArchive.url}
-            	
+
 								{option:widgetBlogArchive.months}
 									<ul>
 										{iteration:widgetBlogArchive.months}

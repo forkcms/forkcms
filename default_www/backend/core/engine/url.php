@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendURL
  * This class will handle the incomming URL.
  *
  * @package		backend

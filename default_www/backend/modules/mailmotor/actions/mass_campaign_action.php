@@ -34,7 +34,7 @@ class BackendMailmotorMassCampaignAction extends BackendBaseAction
 			// redefine id's
 			$ids = (array) $_GET['id'];
 
-			// delete comment(s)
+			// delete item(s)
 			if($action == 'delete') BackendMailmotorModel::deleteCampaigns($ids);
 		}
 

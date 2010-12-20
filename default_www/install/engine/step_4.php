@@ -81,7 +81,7 @@ class InstallerStep4 extends InstallerStep
 		$this->frm->addMultiCheckbox('modules', $modules, array_unique(array_merge($this->modules['required'], $checkedModules)));
 
 		// multiple or single language
-		$this->frm->addRadiobutton('languageType',	array(array('value' => 'multiple', 'label' => 'Multiple languages', 'variables' => array('multiple' => true)),
+		$this->frm->addRadiobutton('languageType', array(array('value' => 'multiple', 'label' => 'Multiple languages', 'variables' => array('multiple' => true)),
 													array('value' => 'single', 'label' => 'Just one language', 'variables' => array('single' => true))), (SpoonSession::exists('multiple_languages') && SpoonSession::get('multiple_languages')) ? 'multiple' : 'single');
 
 		// multiple languages

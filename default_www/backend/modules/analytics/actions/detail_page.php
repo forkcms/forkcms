@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsDetailPage
  * This is the detail-page-action, it will display the overview of analytics posts
  *
  * @package		backend

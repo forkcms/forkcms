@@ -55,7 +55,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		$this->email = $this->getParameter('email');
 
 		// does the item exist
-		if(BackendMailmotorModel::existsAddress($this->email))
+		if($this->id !== null && BackendMailmotorModel::existsAddress($this->email))
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
@@ -276,7 +276,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->subscriptions) ? '&group_id='. $ddmGroups->getValue() : '') .'&report=edited&var='. urlencode($item['email']) .'&highlight=email-'. $item['email']);
+				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->subscriptions) ? '&group_id='. $ddmGroups->getValue() : '') .'&report=edited&var='. urlencode($item['email']) .'&highlight=row-'. $item['email']);
 			}
 		}
 	}

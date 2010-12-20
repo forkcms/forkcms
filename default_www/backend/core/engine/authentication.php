@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAuthentication
  * The class below will handle all authentication stuff. It will handle module-access, action-acces, ...
  *
  * @package		backend
@@ -79,8 +78,8 @@ class BackendAuthentication
 
 
 	/**
-	 * Returns a string encrypted like sha1(md5($salt).md5($string))
-	 * 	The salt is an optional extra string you can put in
+	 * Returns a string encrypted like sha1(md5($salt) . md5($string))
+	 * 	The salt is an optional extra string you can strenghten your encryption with
 	 *
 	 * @return	string
 	 * @param string $string			The string to encrypt.
@@ -88,12 +87,8 @@ class BackendAuthentication
 	 */
 	public static function getEncryptedString($string, $salt = null)
 	{
-		// redefine
-		$string = (string) $string;
-		$salt = (string) $salt;
-
 		// return the encrypted string
-		return (string) sha1(md5($salt) . md5($string));
+		return (string) sha1(md5((string) $salt) . md5((string) $string));
 	}
 
 
@@ -125,7 +120,7 @@ class BackendAuthentication
 		if(self::getUser()->isGod()) return true;
 
 		// always allowed actions (yep, hardcoded, because we don't want other people to fuck up)
-		$alwaysAllowed = array(	'dashboard' => array('index' => 7),
+		$alwaysAllowed = array('dashboard' => array('index' => 7),
 								'error' => array('index' => 7),
 								'authentication' => array('index' => 7, 'reset_password' => 7, 'logout' => 7));
 
@@ -145,7 +140,8 @@ class BackendAuthentication
 			// get active modules
 			$activeModules = (array) $db->getColumn('SELECT m.name
 														FROM modules AS m
-														WHERE m.active = ?;', 'Y');
+														WHERE m.active = ?',
+														array('Y'));
 
 			// add always allowed
 			foreach($alwaysAllowed as $allowedModule => $actions) $activeModules[] = $allowedModule;
@@ -155,7 +151,7 @@ class BackendAuthentication
 															FROM users_sessions AS us
 															INNER JOIN users AS u ON us.user_id = u.id
 															INNER JOIN groups_rights_actions AS gra ON u.group_id = gra.group_id
-															WHERE us.session_id = ? AND us.secret_key = ?;',
+															WHERE us.session_id = ? AND us.secret_key = ?',
 															array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all actions and there level
@@ -209,7 +205,7 @@ class BackendAuthentication
 												FROM users_sessions AS us
 												INNER JOIN users AS u ON us.user_id = u.id
 												INNER JOIN groups_rights_modules AS grm ON u.group_id = grm.group_id
-												WHERE us.session_id = ? AND us.secret_key = ?;',
+												WHERE us.session_id = ? AND us.secret_key = ?',
 												array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// add all modules
@@ -241,7 +237,7 @@ class BackendAuthentication
 			$sessionData = $db->getRecord('SELECT us.id, us.user_id
 											FROM users_sessions AS us
 											WHERE us.session_id = ? AND us.secret_key = ?
-											LIMIT 1;',
+											LIMIT 1',
 											array(SpoonSession::getSessionId(), SpoonSession::get('backend_secret_key')));
 
 			// if we found a matching row, we know the user is logged in, so we update his session
@@ -284,11 +280,8 @@ class BackendAuthentication
 	 */
 	public static function logout()
 	{
-		// init var
-		$db = BackendModel::getDB(true);
-
 		// remove all rows owned by the current user
-		$db->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
+		BackendModel::getDB(true)->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
 
 		// reset values. We can't destroy the session because session-data can be used on the site.
 		SpoonSession::set('backend_logged_in', false);
@@ -320,10 +313,10 @@ class BackendAuthentication
 		$userId = (int) $db->getVar('SELECT u.id
 										FROM users AS u
 										WHERE u.email = ? AND u.password = ? AND u.active = ? AND u.deleted = ?
-										LIMIT 1;',
+										LIMIT 1',
 										array($login, $passwordEncrypted, 'Y', 'N'));
 
-		// not 0, a valid user!
+		// not 0 = valid user!
 		if($userId !== 0)
 		{
 			// cleanup old sessions

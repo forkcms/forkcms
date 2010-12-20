@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FrontendModel
+ * In this file we store all generic functions that we will be using in the frontend.
  *
  * @package		frontend
  * @subpackage	core
@@ -120,6 +120,7 @@ class FrontendModel
 			Spoon::setObjectReference('database', $db);
 		}
 
+		// return db-object
 		return Spoon::getObjectReference('database');
 	}
 
@@ -145,7 +146,8 @@ class FrontendModel
 			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
 															FROM modules_settings AS ms
 															INNER JOIN modules AS m ON ms.module = m.name
-															WHERE m.active = ?', 'Y');
+															WHERE m.active = ?',
+															array('Y'));
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -197,9 +199,6 @@ class FrontendModel
 	 */
 	public static function getPage($pageId)
 	{
-		// redefine
-		$pageId = (int) $pageId;
-
 		// get database instance
 		$db = self::getDB();
 
@@ -216,7 +215,7 @@ class FrontendModel
 											INNER JOIN pages_templates AS t ON p.template_id = t.id
 											WHERE p.id = ? AND p.status = ? AND p.hidden = ? AND p.language = ?
 											LIMIT 1',
-											array($pageId, 'active', 'N', FRONTEND_LANGUAGE));
+											array((int) $pageId, 'active', 'N', FRONTEND_LANGUAGE));
 
 		// validate
 		if(empty($record)) return array();
@@ -241,6 +240,7 @@ class FrontendModel
 			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
 		}
 
+		// return page record
 		return $record;
 	}
 
@@ -292,9 +292,9 @@ class FrontendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.0');
+		$akismet->setUserAgent('Fork CMS/2.1');
 
-		// try it to decide it the item is spam
+		// try it to decide if the item is spam
 		try
 		{
 			// check with Akismet if the item is spam
@@ -414,7 +414,6 @@ class FrontendModel
 				}
 			}
 		}
-
 	}
 
 

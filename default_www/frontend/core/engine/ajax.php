@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendAJAX
  * This class will handle AJAX-related stuff
  *
  * @package		frontend
