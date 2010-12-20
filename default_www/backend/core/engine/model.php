@@ -18,7 +18,8 @@ class BackendModel
 	 *
 	 * @var	array
 	 */
-	private static $keys = array(), $navigation = array();
+	private static $keys = array(),
+					$navigation = array();
 
 
 	/**

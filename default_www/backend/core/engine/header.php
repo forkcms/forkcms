@@ -16,7 +16,7 @@ class BackendHeader
 	/**
 	 * All added CSS-files
 	 *
-	 * @var array
+	 * @var	array
 	 */
 	private $cssFiles = array();
 
