@@ -91,6 +91,13 @@ class FrontendHeader extends FrontendBaseObject
 		$this->addJavascript('/frontend/core/js/jquery/jquery.ui.js', false);
 		$this->addJavascript('/frontend/core/js/frontend.js', true);
 		$this->addJavascript('/frontend/core/js/utils.js', true);
+
+		// facebook admins given?
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			// add Facebook
+			$this->addJavascript('http://connect.facebook.net/'. strtolower(FRONTEND_LANGUAGE) .'_'. strtoupper(FRONTEND_LANGUAGE) .'/all.js#xfbml=1', false, false);
+		}
 	}
 
 
