@@ -1,5 +1,11 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
+
+/**
+ * All methods related to the search
+ * 
+ * @author	Matthias Mullie <matthias@netlash.com>
+ */
 jsBackend.search = 
 {
 	// init, something like a constructor
@@ -8,7 +14,8 @@ jsBackend.search =
 		// synonyms box
 		if($('input.synonymBox').length > 0) 
 		{ 
-			$('input.synonymBox').multipleTextbox({ 
+			$('input.synonymBox').multipleTextbox(
+			{ 
 				emptyMessage: '{$msgNoSynonymsBox}', 
 				addLabel: '{$lblAdd|ucfirst}', 
 				removeLabel: '{$lblDeleteSynonym|ucfirst}' 
@@ -27,5 +34,6 @@ jsBackend.search =
 	// end
 	eoo: true
 }
+
 
 $(document).ready(function() { jsBackend.search.init(); });

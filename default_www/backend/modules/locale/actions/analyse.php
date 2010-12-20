@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendLocaleAnalyse
  * This is the analyse-action, it will display an overview of used locale.
  *
  * @package		backend
@@ -113,6 +112,9 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	 */
 	private function loadDataGrids()
 	{
+		/*
+		 * Frontend datagrid
+		 */
 		// create datagrid
 		$this->dgFrontend = new BackendDataGridArray($this->processFrontend());
 
@@ -131,6 +133,9 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		// add columns
 		$this->dgFrontend->addColumn('add', null, BL::getLabel('Add'), BackendModel::createURLForAction('add') .'&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::getLabel('Add'));
 
+		/*
+		 * Backend datagrid
+		 */
 		// create datagrid
 		$this->dgBackend = new BackendDataGridArray($this->processBackend());
 

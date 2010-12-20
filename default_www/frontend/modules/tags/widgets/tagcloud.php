@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendTagsWidgetTagcloud
  * This is a widget with the tags
  *
  * @package		frontend

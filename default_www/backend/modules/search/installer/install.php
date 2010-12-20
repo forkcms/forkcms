@@ -1,7 +1,6 @@
 <?php
 
 /**
- * SearchInstall
  * Installer for the search module
  *
  * @package		installer
@@ -48,10 +47,10 @@ class SearchInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if a page for search already exists in this language
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?', array($searchID, $language)) == 0)
+												WHERE b.extra_id = ? AND p.language = ?', array($searchID, $language)))
 			{
 				// insert search
 				$this->insertPage(array('title' => 'Search',
@@ -130,7 +129,7 @@ class SearchInstall extends ModuleInstaller
 		$db = $this->getDB();
 
 		// get existing menu items
-		$menu = $db->retrieve('SELECT id, revision_id, language, title FROM pages WHERE status = ?', array('active'));
+		$menu = $db->getRecords('SELECT id, revision_id, language, title FROM pages WHERE status = ?', array('active'));
 
 		// loop menu items
 		foreach($menu as $id => $page)
@@ -142,9 +141,11 @@ class SearchInstall extends ModuleInstaller
 			$text = strip_tags(implode(' ', $blocks));
 
 			// add page to search index
-			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
+			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active)
+							VALUES (?, ?, ?, ?, ?, ?)
 							ON DUPLICATE KEY UPDATE value = ?, active = ?', array('pages', (int) $page['id'], (string) $page['language'], 'title', $page['title'], 'Y', $page['title'], 'Y'));
-			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
+			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active)
+							VALUES (?, ?, ?, ?, ?, ?)
 							ON DUPLICATE KEY UPDATE value = ?, active = ?', array('pages', (int) $page['id'], (string) $page['language'], 'text', $text, 'Y', $text, 'Y'));
 		}
 	}

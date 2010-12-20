@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendBlogImportBlogger
+ * This import-action will let you import a blog from blogger.com
  *
  * @package		backend
  * @subpackage	blog
@@ -39,9 +39,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		if($fileInfo['extension'] == '') return false;
 
 		// some extensions we can ignore by default
-		$extensionsToIgnore = array('htm', 'html', 'shtml', 'php', 'asp', 'aspx',
-									'com', 'be', 'org', 'eu');
-
+		$extensionsToIgnore = array('htm', 'html', 'shtml', 'php', 'asp', 'aspx', 'com', 'be', 'org', 'eu');
 		if(in_array($fileInfo['extension'], $extensionsToIgnore)) return false;
 
 		// init vars
@@ -263,7 +261,6 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		if((string) $xml->title == '') return false;
 
 		// build item
-		$item = array();
 		$item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
 		$item['user_id'] = BackendAuthentication::getUser()->getUserId();
 		$item['hidden'] = 'N';
@@ -393,7 +390,6 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 
 		// store the post
 		$this->newIds[$postID] = $item['id'];
-
 
 		// get tags
 		$tags = array();

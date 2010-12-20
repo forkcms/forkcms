@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsLanding
  * This is the landing-pages-action, it will display the overview of analytics posts
  *
  * @package		backend

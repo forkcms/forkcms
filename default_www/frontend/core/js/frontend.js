@@ -1,5 +1,11 @@
 if(!jsFrontend) { var jsFrontend = new Object(); }
 
+
+/**
+ * Frontend related objects
+ *
+ * @author Tijs Verkoyen <tijs@netlash.com>
+ */
 jsFrontend = 
 {
 	// datamembers
@@ -143,7 +149,7 @@ jsFrontend.gravatar =
 		$('.replaceWithGravatar').each(function() 
 		{
 			var element = $(this);
-			var gravatarId = element.attr('rel');
+			var gravatarId = element.data('gravatar-id');
 			var size = element.attr('height');
 		
 			// valid gravatar id
@@ -371,5 +377,6 @@ jsFrontend.search =
 	// end
 	eoo: true
 }
+
 
 $(document).ready(function() { jsFrontend.init(); });

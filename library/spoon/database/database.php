@@ -172,7 +172,7 @@ class SpoonDatabase
 		$query = 'DELETE FROM '. (string) $table;
 
 		// add where class
-		$query = ($where != '') ? $query .' WHERE '. (string) $where .';' : $query .';';
+		$query = ($where != '') ? $query .' WHERE '. (string) $where : $query;
 
 		// set parameters
 		$parameters = (array) $parameters;
@@ -223,7 +223,7 @@ class SpoonDatabase
 	 */
 	public function drop($tables)
 	{
-		$this->execute('DROP TABLE '. implode(', ', (array) $tables) .';');
+		$this->execute('DROP TABLE '. implode(', ', (array) $tables));
 	}
 
 
@@ -346,7 +346,7 @@ class SpoonDatabase
 		$field = (string) $field;
 
 		// build query
-		$query = 'SHOW COLUMNS FROM '. $table .' LIKE "'. $field .'";';
+		$query = 'SHOW COLUMNS FROM '. $table .' LIKE "'. $field .'"';
 
 		// get information
 		$row = $this->getRecord($query);
@@ -644,7 +644,7 @@ class SpoonDatabase
 	 */
 	public function getTables()
 	{
-		return (array) $this->getColumn('SHOW TABLES;');
+		return (array) $this->getColumn('SHOW TABLES');
 	}
 
 
@@ -786,7 +786,7 @@ class SpoonDatabase
 			}
 
 			// finish query
-			$query .= ');';
+			$query .= ')';
 		}
 
 		// single array
@@ -812,7 +812,7 @@ class SpoonDatabase
 			if($numFields) $query = substr($query, 0, -2);
 
 			// end query
-			$query .= ');';
+			$query .= ')';
 
 			// set parameters
 			$parameters = $actualValues;
@@ -861,7 +861,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// build & execute query
-		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables) .';');
+		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables));
 	}
 
 
@@ -983,7 +983,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// loop & truncate
-		foreach($tables as $table) $this->execute('TRUNCATE TABLE '. $table .';');
+		foreach($tables as $table) $this->execute('TRUNCATE TABLE '. $table);
 	}
 
 
@@ -1055,9 +1055,6 @@ class SpoonDatabase
 
 		// add where clause
 		if($where != '') $query .= ' WHERE '. (string) $where;
-
-		// finalize query
-		$query .= ';';
 
 		// update parameters
 		$parameters = array_merge($aTmpParameters, $parameters);

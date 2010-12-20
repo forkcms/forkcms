@@ -101,7 +101,7 @@ class InstallerStep1 extends InstallerStep
 		// build output
 		$output = str_replace($search, $replace, $tpl);
 
-		// show
+		// show output
 		echo $output;
 
 		// stop the script

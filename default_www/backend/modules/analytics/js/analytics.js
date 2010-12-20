@@ -1,5 +1,6 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
+
 jsBackend.analytics =
 {
 	init: function()
@@ -25,10 +26,12 @@ jsBackend.analytics.charts =
 	{
 		if($('#chartPieChart').length > 0 || $('#chartDoubleMetricPerDay').length > 0 || $('#chartSingleMetricPerDay').length > 0 || $('#chartWidget').length > 0)
 		{
-			Highcharts.setOptions({
+			Highcharts.setOptions(
+			{
 				colors: ['#058DC7', '#50b432', '#ED561B', '#EDEF00', '#24CBE5', '#64E572', '#FF9655'],
 				title: { text: '' },
-				legend: {
+				legend:
+				{
 					layout: 'vertical',
 					backgroundColor: '#FFF',
 					borderWidth: 0,
@@ -48,6 +51,7 @@ jsBackend.analytics.charts =
 	eoo: true
 }
 
+
 jsBackend.analytics.chartPieChart = 
 {
 	chart: '',
@@ -65,7 +69,8 @@ jsBackend.analytics.chartPieChart =
 
 		pieChartValues.each(function()
 		{
-			pieChartData.push({
+			pieChartData.push(
+			{
 				'name': $(this).children('span.label').html(),
 				'y': parseInt($(this).children('span.value').html()),
 				'percentage': parseInt($(this).children('span.percentage').html())
@@ -74,11 +79,13 @@ jsBackend.analytics.chartPieChart =
 
 		var containerWidth = $('#chartPieChart').width();
 
-		jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart({
+		jsBackend.analytics.chartPieChart.chart = new Highcharts.Chart(
+		{
 			chart: { renderTo: 'chartPieChart', height: 200, width: containerWidth, margin: [0, 160, 0, 0] },
 			credits: { enabled: false },
 			plotArea: { shadow: null, borderWidth: null, backgroundColor: null },
-			tooltip: {
+			tooltip:
+			{
 				formatter: function()
 				{
 					var percentage = String(this.point.percentage);
@@ -86,15 +93,19 @@ jsBackend.analytics.chartPieChart =
 				},
 				borderWidth: 2, shadow: false
 			},
-			plotOptions: {
-				pie: { allowPointSelect: true,
-						dataLabels: {
-							enabled: true,
-							formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
-							color: 'white',
-							style: { display: 'none' }
-						}
+			plotOptions:
+			{
+				pie:
+				{
+					allowPointSelect: true,
+					dataLabels:
+					{
+						enabled: true,
+						formatter: function() { if(this.point.percentage > 5) { return this.point.name; } },
+						color: 'white',
+						style: { display: 'none' }
 					}
+				}
 			},
 			legend: { style: { right: '10px' } },
 			series: [ {type: 'pie', data: pieChartData } ]
@@ -111,6 +122,7 @@ jsBackend.analytics.chartPieChart =
 	// end
 	eoo: true
 }
+
 
 jsBackend.analytics.chartDoubleMetricPerDay =
 {
@@ -153,13 +165,15 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 
 		var containerWidth = $('#chartDoubleMetricPerDay').width();
 
-		jsBackend.analytics.chartDoubleMetricPerDay.chart = new Highcharts.Chart({
+		jsBackend.analytics.chartDoubleMetricPerDay.chart = new Highcharts.Chart(
+		{
 			chart: { renderTo: 'chartDoubleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'line' },
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
 			yAxis: { min: 0, max: $('#dataChartDoubleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartDoubleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartDoubleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
-			plotOptions: {
+			plotOptions:
+			{
 				line: { marker: { enabled: false, states: { hover: { enabled: true, symbol: 'circle', radius: 5, lineWidth: 1 } } } },
 				area: {	marker: { enabled: false, states: { hover: { enabled: true, symbol: 'circle', radius: 5, lineWidth: 1 } } } },
 				column: { pointPadding: 0.2, borderWidth: 0 },
@@ -170,7 +184,8 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 	},
 
 	// destroy chart
-	destroy: function() {
+	destroy: function()
+	{
 		jsBackend.analytics.chartDoubleMetricPerDay.chart.destroy();
 	},
 
@@ -178,6 +193,7 @@ jsBackend.analytics.chartDoubleMetricPerDay =
 	// end
 	eoo: true
 }
+
 
 jsBackend.analytics.chartSingleMetricPerDay =
 {
@@ -197,7 +213,8 @@ jsBackend.analytics.chartSingleMetricPerDay =
 		var counter = 0;
 		var interval = Math.ceil(xAxisItems.length / 10);
 
-		xAxisItems.each(function() {
+		xAxisItems.each(function()
+		{
 			xAxisValues.push($(this).children('span.fulldate').html());
 			var text = $(this).children('span.date').html();
 			if(xAxisItems.length > 10 && counter%interval > 0) text = ' ';
@@ -213,14 +230,16 @@ jsBackend.analytics.chartSingleMetricPerDay =
 
 		var containerWidth = $('#chartSingleMetricPerDay').width();
 
-		jsBackend.analytics.chartSingleMetricPerDay.chart = new Highcharts.Chart({
+		jsBackend.analytics.chartSingleMetricPerDay.chart = new Highcharts.Chart(
+		{
 			chart: { renderTo: 'chartSingleMetricPerDay', height: 200, width: containerWidth, margin: [60, 0, 30, 40], defaultSeriesType: 'area' },
 			xAxis: { lineColor: '#CCC', lineWidth: 1, categories: xAxisCategories, color: '#000' },
 			yAxis: { min: 0, max: $('#dataChartSingleMetricPerDay #maxYAxis').html(), tickInterval: ($('#dataChartSingleMetricPerDay #tickInterval').html() == '' ? null : $('#dataChartSingleMetricPerDay #tickInterval').html()), title: { text: '' } },
 			credits: { enabled: false },
 			legend: { symbolPadding: 16, symbolWidth: 14 },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
-			plotOptions: {
+			plotOptions:
+			{
 				area: { marker: { enabled: false, states: { hover: { enabled: true, symbol: 'circle', radius: 5, lineWidth: 1 } } } },
 				column: { pointPadding: 0.2, borderWidth: 0 },
 				series: { fillOpacity: 0.3 }
@@ -230,7 +249,8 @@ jsBackend.analytics.chartSingleMetricPerDay =
 	},
 
 	// destroy chart
-	destroy: function() {
+	destroy: function()
+	{
 		jsBackend.analytics.chartSingleMetricPerDay.chart.destroy();
 	},
 
@@ -238,6 +258,7 @@ jsBackend.analytics.chartSingleMetricPerDay =
 	// end
 	eoo: true
 }
+
 
 jsBackend.analytics.chartWidget =
 {
@@ -257,7 +278,8 @@ jsBackend.analytics.chartWidget =
 		var counter = 0;
 		var interval = Math.ceil(xAxisItems.length / 10);
 
-		xAxisItems.each(function() {
+		xAxisItems.each(function()
+		{
 			xAxisValues.push($(this).children('span.fulldate').html());
 			var text = $(this).children('span.date').html();
 			if(xAxisItems.length > 10 && counter%interval > 0) text = ' ';
@@ -277,14 +299,16 @@ jsBackend.analytics.chartWidget =
 
 		metric2Values.each(function() { metric2Data.push(parseInt($(this).html())); });
 
-		jsBackend.analytics.chartWidget.chart = new Highcharts.Chart({
+		jsBackend.analytics.chartWidget.chart = new Highcharts.Chart(
+		{
 			chart: { renderTo: 'chartWidget', defaultSeriesType: 'line', margin: [30, 0, 30, 0], height: 200, width: 270, defaultSeriesType: 'line' },
 			xAxis: { categories: xAxisCategories },
 			yAxis: { min: 0, max: $('#dataChartWidget #maxYAxis').html(), tickInterval: ($('#dataChartWidget #tickInterval').html() == '' ? null : $('#dataChartWidget #tickInterval').html()), title: { enabled: false } },
 			credits: { enabled: false },
 			legend: { layout: 'horizontal' },
 			tooltip: { formatter: function() { return '<b>'+ this.series.name +'</b><br/>'+ xAxisValues[this.point.x] +': '+ this.y; } },
-			plotOptions: {
+			plotOptions:
+			{
 				line: { marker: { enabled: false, states: { hover: { enabled: true, symbol: 'circle', radius: 5, lineWidth: 1 } } } },
 				area: { marker: { enabled: false, states: { hover: { enabled: true, symbol: 'circle', radius: 5, lineWidth: 1 } } } },
 				column: { pointPadding: 0.2, borderWidth: 0 },
@@ -295,7 +319,8 @@ jsBackend.analytics.chartWidget =
 	},
 
 	// destroy chart
-	destroy: function() {
+	destroy: function()
+	{
 		jsBackend.analytics.chartWidget.chart.destroy();
 	},
 
@@ -303,6 +328,7 @@ jsBackend.analytics.chartWidget =
 	// end
 	eoo: true
 }
+
 
 jsBackend.analytics.loading =
 {
@@ -337,7 +363,8 @@ jsBackend.analytics.loading =
 		var identifier = jsBackend.analytics.loading.identifier;
 
 		// make the call to check the status
-		$.ajax({
+		$.ajax(
+		{
 			cache: false,
 			type: 'POST',
 			timeout: 5000,
@@ -405,6 +432,7 @@ jsBackend.analytics.loading =
 	eoo: true
 }
 
+
 jsBackend.analytics.resize =
 {
 	init: function()
@@ -415,42 +443,42 @@ jsBackend.analytics.resize =
 		$(window).resize(function()
 		{
 			resizeTime = new Date();
-			if (timeout === false)
+			if(timeout === false)
 			{
 				timeout = true;
-				setTimeout(resizeend, interval);
+				setTimeout(jsBackend.analytics.resize.resizeEnd, interval);
 			}
 		});
-
-		function resizeend()
+	},
+		
+	resizeEnd: function()
+	{
+		if(new Date() - resizeTime < interval)
 		{
-			if (new Date() - resizeTime < interval)
+			setTimeout(jsBackend.analytics.resize.resizeEnd, interval);
+		}
+		else
+		{
+			timeout = false;
+			if($('#chartPieChart').length > 0)
 			{
-				setTimeout(resizeend, interval);
+				$('#chartPieChart').html('&nbsp;');
+				jsBackend.analytics.chartPieChart.create();
 			}
-			else
+			if($('#chartDoubleMetricPerDay').length > 0)
 			{
-				timeout = false;
-				if($('#chartPieChart').length > 0)
-				{
-					$('#chartPieChart').html('&nbsp;');
-					jsBackend.analytics.chartPieChart.create();
-				}
-				if($('#chartDoubleMetricPerDay').length > 0)
-				{
-					$('#chartDoubleMetricPerDay').html('&nbsp;');
-					jsBackend.analytics.chartDoubleMetricPerDay.create();
-				}
-				if($('#chartSingleMetricPerDay').length > 0)
-				{
-					$('#chartSingleMetricPerDay').html('&nbsp;');
-					jsBackend.analytics.chartSingleMetricPerDay.create();
-				}
-				if($('#chartWidget').length > 0)
-				{
-					$('#chartWidget').html('&nbsp;');
-					jsBackend.analytics.chartWidget.create();
-				}
+				$('#chartDoubleMetricPerDay').html('&nbsp;');
+				jsBackend.analytics.chartDoubleMetricPerDay.create();
+			}
+			if($('#chartSingleMetricPerDay').length > 0)
+			{
+				$('#chartSingleMetricPerDay').html('&nbsp;');
+				jsBackend.analytics.chartSingleMetricPerDay.create();
+			}
+			if($('#chartWidget').length > 0)
+			{
+				$('#chartWidget').html('&nbsp;');
+				jsBackend.analytics.chartWidget.create();
 			}
 		}
 	},
@@ -459,5 +487,6 @@ jsBackend.analytics.resize =
 	// end
 	eoo: true
 }
+
 
 $(document).ready(function() { jsBackend.analytics.init(); });

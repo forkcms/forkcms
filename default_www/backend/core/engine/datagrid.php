@@ -1,8 +1,7 @@
 <?php
 
 /**
- * BackendDatagrid,
- * this is our extended version of SpoonDatagrid
+ * This is our extended version of SpoonDatagrid
  *
  * This class will handle a lot of stuff for you, for example:
  * 	- it will set debugmode
@@ -13,7 +12,7 @@
  * @subpackage	datagrid
  *
  * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -34,7 +33,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setDebug(SPOON_DEBUG);
 
 		// set the compile-directory, so compiled templates will be in a folder that is writable
-		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/templates');
+		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
 
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'datagrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
@@ -183,7 +182,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 
 		// our JS needs to know an id, so we can send the new order
-		$this->setRowAttributes(array('rel' => '[id]'));
+		$this->setRowAttributes(array('data-id' => '[id]'));
 	}
 
 
@@ -231,7 +230,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no confirm message/script can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no confirm message/script can be added.');
 
 			// exists
 			else
@@ -264,8 +263,8 @@ class BackendDataGrid extends SpoonDataGrid
 				// add class for confirmation
 				if(substr_count($value, '<a') > 0)
 				{
-					if(substr_count($value, 'class="') > 0)	$value = str_replace('class="', 'rel="'. $id .'" class="askConfirmation ', $value);
-					else $value = str_replace('<a ', '<a class="askConfirmation" ', $value);
+					if(substr_count($value, 'class="') > 0)	$value = str_replace('class="', 'data-message-id="'. $id .'" class="askConfirmation ', $value);
+					else $value = str_replace('<a ', '<a data-message-id="'. $id .'" class="askConfirmation" ', $value);
 				}
 
 				// is it a link?
@@ -442,12 +441,12 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 /**
- * BackendDatagridPaging
+ * This is our implementation of iSpoonDatagridPaging
  *
  * @package		backend
  * @subpackage	datagrid
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -605,7 +604,6 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 
 
 /**
- * BackendDatagridArray
  * A datagrid with an array as source
  *
  * @package		backend
@@ -634,7 +632,6 @@ class BackendDataGridArray extends BackendDataGrid
 
 
 /**
- * BackendDatagridDB
  * A datagrid with a DB-connection as source
  *
  * @package		backend
@@ -669,13 +666,12 @@ class BackendDataGridDB extends BackendDataGrid
 
 
 /**
- * BackendDatagridFunctions
  * A set of common used functions that will be applied on rows or columns
  *
  * @package		backend
  * @subpackage	datagrid
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendDataGridFunctions
@@ -719,11 +715,7 @@ class BackendDataGridFunctions
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
-		// redefine
-		$number = (float) $number;
-		$decimals = (int) $decimals;
-
-		return number_format($number, $decimals, '.', ' ');
+		return number_format((float) $number, (int) $decimals, '.', ' ');
 	}
 
 
@@ -814,13 +806,7 @@ class BackendDataGridFunctions
 	 */
 	public static function showImage($path, $image, $title = '')
 	{
-		// redefine
-		$path = (string) $path;
-		$image = (string) $image;
-		$title = (string) $title;
-
-		// return
-		return '<img src="'. $path .'/'. $image .'" alt="'. $title .'" />';
+		return '<img src="'. (string) $path .'/'. (string) $image .'" alt="'. (string) $title .'" />';
 	}
 
 

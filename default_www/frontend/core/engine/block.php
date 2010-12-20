@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlockExtra
  * This class will handle all stuff related to blocks
  *
  * @package		frontend
@@ -104,7 +103,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
-		// @later check if the action implements an interface
+		// @later	check if the action implements an interface
 
 		// create action-object
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
@@ -157,6 +156,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 			}
 		}
 
+		// return
 		return $this->action;
 	}
 

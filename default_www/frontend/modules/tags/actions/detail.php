@@ -1,8 +1,6 @@
 <?php
 
 /**
- * FrontendTagsDetail
- *
  * This is the detail-action
  *
  * @package		frontend
@@ -83,7 +81,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 			// get the ids of the items linked to the tag
 			$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
 																	FROM modules_tags
-																	WHERE module = ? AND tag_id = ?;',
+																	WHERE module = ? AND tag_id = ?',
 																	array($module, $this->record['id']));
 
 			// set module class

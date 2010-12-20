@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogWidgetArchive
  * This is a widget with the link to the archive
  *
  * @package		frontend

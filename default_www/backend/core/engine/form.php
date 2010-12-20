@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendForm
- * this is our extended version of SpoonForm
+ * This is our extended version of SpoonForm
  *
  * @package		backend
  * @subpackage	core
  *
  * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendForm extends SpoonForm
@@ -89,7 +88,7 @@ class BackendForm extends SpoonForm
 		// do a check
 		if($type == 'submit' && $name == 'submit') throw new BackendException('You can\'t add buttons with the name submit. JS freaks out when we replace the buttons with a link and use that link to submit the form.');
 
-		// call the real form class
+		// create and return a button
 		return parent::addButton($name, $value, $type, $class);
 	}
 
@@ -111,7 +110,7 @@ class BackendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputCheckbox';
 		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
 
-		// return element
+		// create and return a checkbox
 		return parent::addCheckbox($name, $checked, $class, $classError);
 	}
 
@@ -147,32 +146,36 @@ class BackendForm extends SpoonForm
 		// @later	get prefered mask & first day
 		$mask = 'd/m/Y';
 		$firstday = 1;
+		$startDate = null;
+		$endDate = null;
 
-		// rebuild mask
-		$relMask = str_replace(array('d', 'm', 'Y', 'j', 'n'), array('dd', 'mm', 'yy', 'd', 'm'), $mask);
-
-		// build rel
-		$rel = $relMask .':::'. $firstday;
+		// build attributes
+		$attributes['data-mask'] = str_replace(array('d', 'm', 'Y', 'j', 'n'), array('dd', 'mm', 'yy', 'd', 'm'), $mask);
+		$attributes['data-firstday'] = $firstday;
 
 		// add extra classes based on type
 		switch($type)
 		{
+			// start date
 			case 'from':
 				$class .= ' inputDatefieldFrom inputText';
 				$classError .= ' inputDatefieldFrom';
-				$rel .= ':::'. date('Y-m-d', $date);
+				$attributes['data-startdate'] = date('Y-m-d', $date);
 			break;
 
+			// end date
 			case 'till':
 				$class .= ' inputDatefieldTill inputText';
 				$classError .= ' inputDatefieldTill';
-				$rel .= ':::'. date('Y-m-d', $date);
+				$attributes['data-enddate'] = date('Y-m-d', $date);
 			break;
 
+			// date range
 			case 'range':
 				$class .= ' inputDatefieldRange inputText';
 				$classError .= ' inputDatefieldRange';
-				$rel .= ':::'. date('Y-m-d', $date) .':::'. date('Y-m-d', $date2);
+				$attributes['data-startdate'] = date('Y-m-d', $date);
+				$attributes['data-enddate'] = date('Y-m-d', $date2);
 			break;
 
 			default:
@@ -181,13 +184,13 @@ class BackendForm extends SpoonForm
 			break;
 		}
 
-		// call parent
+		// create a datefield
 		parent::addDate($name, $value, $mask, $class, $classError);
 
 		// set attributes
-		parent::getField($name)->setAttributes(array('rel' => $rel));
+		parent::getField($name)->setAttributes($attributes);
 
-		// fetch field
+		// return datefield
 		return parent::getField($name);
 	}
 
@@ -220,7 +223,7 @@ class BackendForm extends SpoonForm
 			$classError .= ' selectMultipleError';
 		}
 
-		// return element
+		// create and return a dropdown
 		return parent::addDropdown($name, $values, $selected, $multipleSelection, $class, $classError);
 	}
 
@@ -248,7 +251,7 @@ class BackendForm extends SpoonForm
 		$this->header->addJavascript('tiny_mce/tiny_mce.js', 'core');
 		$this->header->addJavascript('tiny_mce/tiny_mce_config.js', 'core', true);
 
-		// add the field
+		// create and return a textarea for TinyMCE
 		return $this->addTextArea($name, $value, $class, $classError, $HTML);
 	}
 
@@ -268,7 +271,7 @@ class BackendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputFile';
 		$classError = ($classError !== null) ? (string) $classError : 'inputFileError';
 
-		// return element
+		// create and return a filefield
 		return parent::addFile($name, $class, $classError);
 	}
 
@@ -288,7 +291,7 @@ class BackendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputFile inputImage';
 		$classError = ($classError !== null) ? (string) $classError : 'inputFileError inputImageError';
 
-		// return element
+		// create and return an imagefield
 		return parent::addImage($name, $class, $classError);
 	}
 
@@ -312,7 +315,7 @@ class BackendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputCheckbox';
 		$classError = ($classError !== null) ? (string) $classError : 'inputCheckboxError';
 
-		// return element
+		// create and return a multi checkbox
 		return parent::addMultiCheckbox($name, $values, $checked, $class, $classError);
 	}
 
@@ -338,7 +341,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputTextError inputPasswordError';
 		$HTML = (bool) $HTML;
 
-		// return element
+		// create and return a password field
 		return parent::addPassword($name, $value, $maxlength, $class, $classError, $HTML);
 	}
 
@@ -362,7 +365,7 @@ class BackendForm extends SpoonForm
 		$class = ($class !== null) ? (string) $class : 'inputRadio';
 		$classError = ($classError !== null) ? (string) $classError : 'inputRadioError';
 
-		// return element
+		// create and return a radio button
 		return parent::addRadiobutton($name, $values, $checked, $class, $classError);
 	}
 
@@ -386,7 +389,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'textareaError';
 		$HTML = (bool) $HTML;
 
-		// return element
+		// create and return a textarea
 		return parent::addTextarea($name, $value, $class, $classError, $HTML);
 	}
 
@@ -412,7 +415,7 @@ class BackendForm extends SpoonForm
 		$classError = ($classError !== null) ? (string) $classError : 'inputTextError';
 		$HTML = (bool) $HTML;
 
-		// return element
+		// create and return a textfield
 		return parent::addText($name, $value, $maxlength, $class, $classError, $HTML);
 	}
 
@@ -428,12 +431,13 @@ class BackendForm extends SpoonForm
 	 */
 	public function addTime($name, $value = null, $class = null, $classError = null)
 	{
+		// redefine
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
 		$class = ($class !== null) ? (string) $class : 'inputText inputTime';
 		$classError = ($classError !== null) ? (string) $classError : 'inputTextError inputTimeError';
 
-		// return element
+		// create and return a timefield
 		return parent::addTime($name, $value, $class, $classError);
 	}
 
@@ -454,7 +458,7 @@ class BackendForm extends SpoonForm
 	 * Parse the form
 	 *
 	 * @return	void
-	 * @param	SpoonTemplate $tpl	The template instance wherein the form will be parsed.
+	 * @param	BackendTemplate $tpl	The template instance wherein the form will be parsed.
 	 */
 	public function parse(SpoonTemplate $tpl)
 	{

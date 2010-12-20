@@ -12,7 +12,7 @@
 			<label for="password">Password <abbr title="Required field">*</abbr></label>
 			{$txtPassword} {$txtPasswordError}
 		</p>
-		<table id="passwordStrengthMeter" class="passwordStrength" rel="password" cellspacing="0">
+		<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
 			<tr>
 				<td class="strength" id="passwordStrength">
 					<p class="strength none">/</p>

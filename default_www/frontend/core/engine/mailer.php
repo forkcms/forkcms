@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendMailer
  * This class will send mails
  *
  * @package		frontend
@@ -144,10 +143,9 @@ class FrontendMailer
 	 */
 	public static function getQueuedMailIds()
 	{
-		// return the ids
 		return (array) FrontendModel::getDB()->getColumn('SELECT e.id
 															FROM emails AS e
-															WHERE e.send_on < ?;',
+															WHERE e.send_on < ?',
 															array(FrontendModel::getUTCDate()));
 	}
 
@@ -169,7 +167,7 @@ class FrontendMailer
 		// get record
 		$emailRecord = (array) $db->getRecord('SELECT *
 												FROM emails AS e
-												WHERE e.id = ?;',
+												WHERE e.id = ?',
 												array($id));
 
 		// mailer type
@@ -177,7 +175,7 @@ class FrontendMailer
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
-		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
 
 		// send via SMTP
 		if($mailerType == 'smtp')

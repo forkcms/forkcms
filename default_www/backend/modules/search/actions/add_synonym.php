@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendSearchAddSynonym
  * This is the add-action, it will display a form to create a new synonym
  *
  * @package		backend
@@ -74,16 +73,15 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$item = array();
 				$item['term'] = $this->frm->getField('term')->getValue();
 				$item['synonym'] = $this->frm->getField('synonym')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 
 				// insert the item
-				$id = BackendSearchModel::insertSynonym($item);
+				$item['id'] = BackendSearchModel::insertSynonym($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=added-synonym&var='. urlencode($item['term']) .'&highlight=row-'. $id);
+				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=added-synonym&var='. urlencode($item['term']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendSearchAjaxLivesuggest
  * This is the livesuggest-action, it will output a list of results for a certain search
  *
  * @package		frontend

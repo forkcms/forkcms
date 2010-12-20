@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendUser
  * The class below will handle all stuff relates to the current authenticated user
  *
  * @package		backend
@@ -173,7 +172,7 @@ class BackendUser
 	{
 		return @unserialize(BackendModel::getDB()->getVar('SELECT value
 															FROM users_settings
-															WHERE user_id = ? AND name = ?;',
+															WHERE user_id = ? AND name = ?',
 															array((int) $userId, (string) $setting)));
 	}
 
@@ -253,7 +252,7 @@ class BackendUser
 											FROM users AS u
 											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
 											WHERE u.id = ?
-											LIMIT 1;',
+											LIMIT 1',
 											array(SpoonSession::getSessionId(), $userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
@@ -272,7 +271,7 @@ class BackendUser
 		// get settings
 		$settings = (array) $db->getPairs('SELECT us.name, us.value
 											FROM users_settings AS us
-											WHERE us.user_id = ?;',
+											WHERE us.user_id = ?',
 											array($userId));
 
 		// loop settings and store them in the object
@@ -303,7 +302,7 @@ class BackendUser
 											FROM users AS u
 											LEFT OUTER JOIN users_sessions AS us ON u.id = us.user_id AND us.session_id = ?
 											WHERE u.email = ?
-											LIMIT 1;',
+											LIMIT 1',
 											array(SpoonSession::getSessionId(), $email));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
@@ -323,7 +322,7 @@ class BackendUser
 		$settings = (array) $db->getPairs('SELECT us.name, us.value
 											FROM users_settings AS us
 											INNER JOIN users AS u ON us.user_id = u.id
-											WHERE u.email = ?;',
+											WHERE u.email = ?',
 											array($email));
 
 		// loop settings and store them in the object
@@ -412,7 +411,7 @@ class BackendUser
 		// store
 		$db->execute('INSERT INTO users_settings(user_id, name, value)
 						VALUES(?, ?, ?)
-						ON DUPLICATE KEY UPDATE value = ?;',
+						ON DUPLICATE KEY UPDATE value = ?',
 						array($this->getUserId(), $key, $valueToStore, $valueToStore));
 
 		// cache it

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendURL
  * This class will handle the incomming URL.
  *
  * @package			frontend

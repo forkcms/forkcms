@@ -107,4 +107,4 @@ minifyCSS
 minifyJS
 
 # done
-echo  "Done"
+echo "Done"
