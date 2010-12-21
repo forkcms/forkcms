@@ -24,7 +24,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		0.1.1
  */
 class SpoonSession
@@ -161,7 +161,7 @@ class SpoonSession
 	/**
 	 * Starts the session.
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	public static function start()
 	{

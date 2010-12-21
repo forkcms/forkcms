@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseObject
@@ -52,7 +52,7 @@ class FrontendBaseObject
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseConfig
@@ -220,7 +220,7 @@ class FrontendBaseConfig
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -710,7 +710,7 @@ class FrontendBaseBlock
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -901,7 +901,7 @@ class FrontendBaseWidget
 	 * Load the template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template		The path for the template to use.
+	 * @param	string[optional] $path		The path for the template to use.
 	 */
 	protected function loadTemplate($path = null)
 	{
@@ -939,7 +939,7 @@ class FrontendBaseWidget
 	 * Set the data, for later use
 	 *
 	 * @return	void
-	 * @param	string $data	The data that should available.
+	 * @param	string[optional] $data	The data that should available.
 	 */
 	private function setData($data = null)
 	{
@@ -987,7 +987,7 @@ class FrontendBaseWidget
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseAJAXAction

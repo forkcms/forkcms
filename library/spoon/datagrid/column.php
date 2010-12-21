@@ -164,6 +164,7 @@ class SpoonDatagridColumn
 	 * @param	string[optional] $label
 	 * @param	string[optional] $value
 	 * @param	string[optional] $URL
+	 * @param	string[optional] $title
 	 * @param	string[optional] $image
 	 * @param	string[optional] $sequence
 	 */

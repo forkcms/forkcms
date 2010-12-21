@@ -5,9 +5,9 @@
  * The class below will handle all authentication stuff. It will handle module-access, action-acces, ...
  *
  * @package		backend
- * @subpackage	authentication
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -83,8 +83,8 @@ class BackendAuthentication
 	 * 	The salt is an optional extra string you can put in
 	 *
 	 * @return	string
-	 * @param string $string			The string to encrypt.
-	 * @param string[optional] $salt	The salt to use.
+	 * @param	string $string			The string to encrypt.
+	 * @param	string[optional] $salt	The salt to use.
 	 */
 	public static function getEncryptedString($string, $salt = null)
 	{

@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchModel
@@ -97,7 +97,7 @@ class FrontendSearchModel
 	 * Build the search term
 	 *
 	 * @return	string
-	 * @param	string $term
+	 * @param	string $terms
 	 */
 	public static function buildTerm($terms)
 	{
@@ -216,8 +216,8 @@ class FrontendSearchModel
 	 *
 	 * @return	array
 	 * @param	string $term				The first letters of the term we're looking for.
-	 * @param	string $language			The language to search in.
-	 * @param	int $limit					Limit resultset.
+	 * @param	string[optional] $language	The language to search in.
+	 * @param	int[optional] $limit		Limit resultset.
 	 */
 	public static function getStartsWith($term, $language = '', $limit = 10)
 	{
@@ -371,9 +371,9 @@ class FrontendSearchModel
 	 * Deactivate an index (no longer has to be searched)
 	 *
 	 * @return	void
-	 * @param	string $module		The module we're deleting an item from.
-	 * @param	array $otherIds		An array of other_id's for this module.
-	 * @param	bool $active		Set the index to active?
+	 * @param	string $module				The module we're deleting an item from.
+	 * @param	array $otherIds				An array of other_id's for this module.
+	 * @param	bool[optional] $active		Set the index to active?
 	 */
 	public static function statusIndex($module, array $otherIds, $active = true)
 	{

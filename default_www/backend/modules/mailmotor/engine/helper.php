@@ -383,7 +383,8 @@ class BackendMailmotorCMHelper
 	 * Returns what addresses opened a certain mailing
 	 *
 	 * @return	array
-	 * @param	string $cmId	The id of the mailing in CampaignMonitor.
+	 * @param	string $cmId				The id of the mailing in CampaignMonitor.
+	 * @param	bool[optional] $getColumn
 	 */
 	public static function getMailingOpens($cmId, $getColumn = false)
 	{
@@ -700,8 +701,8 @@ class BackendMailmotorCMHelper
 	 * Creates a list in campaignmonitor and inserts the group record in the database. Returns the group ID
 	 *
 	 * @return	int
-	 * @param	array $item		The group record to insert/
-	*/
+	 * @param	array $item		The group record to insert
+	 */
 	public static function insertGroup(array $item)
 	{
 		// build unsubscribe link for this list
@@ -950,7 +951,8 @@ class BackendMailmotorCMHelper
 	 * Updates a list with campaignmonitor and in the database. Returns the affected rows
 	 *
 	 * @return	int
-	*/
+	 * @param	array $item
+	 */
 	public static function updateGroup($item)
 	{
 		// build unsubscribe link for this list

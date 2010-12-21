@@ -7,8 +7,8 @@
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Dieter Vanden Eynde <dieter@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsLandingPages extends BackendAnalyticsBase

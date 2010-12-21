@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @author		Dieter Van den Eynde <dieter@netlash.com>
  * @since		2.0
  */
@@ -487,10 +487,10 @@ class BackendAnalyticsModel
 	 * Fetch metrics grouped by day
 	 *
 	 * @return	array
-	 * @param	array $metrics			The metrics to collect.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
-	 * @param	string $forceCache		Should the data be forced from cache.
+	 * @param	array $metrics					The metrics to collect.
+	 * @param	int $startTimestamp				The start timestamp for the cache file.
+	 * @param	int $endTimestamp				The end timestamp for the cache file.
+	 * @param	string[optional] $forceCache	Should the data be forced from cache.
 	 */
 	public static function getMetricsPerDay(array $metrics, $startTimestamp, $endTimestamp, $forceCache = false)
 	{
@@ -643,9 +643,9 @@ class BackendAnalyticsModel
 	 * Get the top exit pages
 	 *
 	 * @return	array
+	 * @param	string $page			The page.
 	 * @param	int $startTimestamp		The start timestamp for the cache file.
 	 * @param	int $endTimestamp		The end timestamp for the cache file.
-	 * @param	int[optional] $limit	An optional limit of the number of exit pages to get.
 	 */
 	public static function getDataForPage($page, $startTimestamp, $endTimestamp)
 	{
@@ -1242,7 +1242,7 @@ class BackendAnalyticsModel
  * @subpackage	analytics
  *
  * @author		Dieter Van den Eynde <dieter@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsHelper
@@ -1348,7 +1348,7 @@ class BackendAnalyticsHelper
 	/**
 	 * Get Google Analytics instance
 	 *
-	 * @return GoogleAnalytics
+	 * @return	GoogleAnalytics
 	 */
 	public static function getGoogleAnalyticsInstance()
 	{

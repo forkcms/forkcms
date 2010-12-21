@@ -10,10 +10,10 @@
  * 	- ...
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -23,7 +23,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param SpoonDataGridSource $source	The datasource
+	 * @param	SpoonDataGridSource $source	The datasource
 	 */
 	public function __construct(SpoonDataGridSource $source)
 	{
@@ -74,6 +74,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @param	string[optional] $label		The label for the column.
 	 * @param	string[optional] $value		The value for the column.
 	 * @param	string[optional] $URL		The URL for the link inside the column.
+	 * @param	string[optional] $title		A title for the image inside the column.
 	 * @param	string[optional] $image		An URL to the image inside the column.
 	 * @param	int[optional] $sequence		The sequence for the column.
 	 */
@@ -122,12 +123,14 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Adds a new column with a custom action button
 	 *
 	 * @return	void
-	 * @param	string $name				The name for the new column.
-	 * @param	string[optional] $label		The label for the column.
-	 * @param	string[optional] $value		The value for the column.
-	 * @param	string[optional] $URL		The URL for the link inside the column.
-	 * @param	string[optional] $image		An URL to the image inside the column.
-	 * @param	int[optional] $sequence		The sequence for the column.
+	 * @param	string $name						The name for the new column.
+	 * @param	string[optional] $label				The label for the column.
+	 * @param	string[optional] $value				The value for the column.
+	 * @param	string[optional] $URL				The URL for the link inside the column.
+	 * @param	string[optional] $title				The title for the link inside the column.
+	 * @param	array[optional] $anchorAttributes	The attributes for the anchor inside the column.
+	 * @param	string[optional] $image				An URL to the image inside the column.
+	 * @param	int[optional] $sequence				The sequence for the column.
 	 */
 	public function addColumnAction($name, $label = null, $value = null, $URL = null, $title = null, $anchorAttributes = null, $image = null, $sequence = null)
 	{
@@ -445,7 +448,7 @@ class BackendDataGrid extends SpoonDataGrid
  * BackendDatagridPaging
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
@@ -609,9 +612,9 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
  * A datagrid with an array as source
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendDataGridArray extends BackendDataGrid
@@ -638,9 +641,9 @@ class BackendDataGridArray extends BackendDataGrid
  * A datagrid with a DB-connection as source
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendDataGridDB extends BackendDataGrid
@@ -673,9 +676,9 @@ class BackendDataGridDB extends BackendDataGrid
  * A set of common used functions that will be applied on rows or columns
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendDataGridFunctions
@@ -808,9 +811,9 @@ class BackendDataGridFunctions
 	 * Returns an image tag
 	 *
 	 * @return	string
-	 * @param	string $path		The path to the image
-	 * @param	string $image		The filename of the image
-	 * @param	string[optional]	The title (will be used as alt)
+	 * @param	string $path				The path to the image
+	 * @param	string $image				The filename of the image
+	 * @param	string[optional] $title		The title (will be used as alt)
 	 */
 	public static function showImage($path, $image, $title = '')
 	{

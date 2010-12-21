@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	users
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -328,8 +328,8 @@ class BackendUsersModel
 	 * Update the user password
 	 *
 	 * @return	void
-	 * @param BackendUser $user		An instance of BackendUser.
-	 * @param string $password		The new password for the user.
+	 * @param	BackendUser $user	An instance of BackendUser.
+	 * @param	string $password	The new password for the user.
 	 */
 	public static function updatePassword(BackendUser $user, $password)
 	{
@@ -349,7 +349,7 @@ class BackendUsersModel
 	 * Restores a user
 	 * @later	this method should check if all needed data is present
 	 *
-	 * @return 	bool
+	 * @return	bool
 	 * @param	string $email	The emailadress of the user to restore.
 	 */
 	public static function undoDelete($email)

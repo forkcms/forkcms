@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseAction
@@ -227,9 +227,9 @@ class BackendBaseAction
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
 	 *
 	 * @return	mixed
-	 * @param	string $key					The name of the parameter.
-	 * @param	string[optional] $type		The return-type, possible values are: bool, boolean, int, integer, float, double, string, array
-	 * @param	mixed $defaultValue			The value that should be returned if the key is not available
+	 * @param	string $key						The name of the parameter.
+	 * @param	string[optional] $type			The return-type, possible values are: bool, boolean, int, integer, float, double, string, array
+	 * @param	mixed[optional] $defaultValue	The value that should be returned if the key is not available
 	 */
 	public function getParameter($key, $type = 'string', $defaultValue = null)
 	{
@@ -286,10 +286,10 @@ class BackendBaseAction
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the index action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseActionIndex extends BackendBaseAction
@@ -321,10 +321,10 @@ class BackendBaseActionIndex extends BackendBaseAction
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the add action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseActionAdd extends BackendBaseAction
@@ -363,10 +363,10 @@ class BackendBaseActionAdd extends BackendBaseAction
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the edit action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseActionEdit extends BackendBaseAction
@@ -428,10 +428,10 @@ class BackendBaseActionEdit extends BackendBaseAction
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the delete action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseActionDelete extends BackendBaseAction
@@ -471,7 +471,7 @@ class BackendBaseActionDelete extends BackendBaseAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseAJAXAction
@@ -606,7 +606,7 @@ class BackendBaseAJAXAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseConfig
@@ -770,7 +770,7 @@ class BackendBaseConfig
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseCronjob
@@ -818,7 +818,7 @@ class BackendBaseCronjob
 	/**
 	 * Clear/removed the busy file
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	protected function clearBusyFile()
 	{
@@ -957,7 +957,7 @@ class BackendBaseCronjob
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBaseWidget

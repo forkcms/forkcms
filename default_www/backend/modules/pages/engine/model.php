@@ -9,8 +9,8 @@
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendPagesModel
@@ -651,9 +651,9 @@ class BackendPagesModel
 	/**
 	 * Get the data for a record
 	 *
-	 * @return	mixed				false if the record can't be found, otherwise an array with all data.
-	 * @param	int $id				The Id of the page to fetch.
-	 * @param	string[optional]	The language to use while fetching the page.
+	 * @return	mixed						false if the record can't be found, otherwise an array with all data.
+	 * @param	int $id						The Id of the page to fetch.
+	 * @param	string[optional] $language	The language to use while fetching the page.
 	 */
 	public static function get($id, $language = null)
 	{
@@ -698,7 +698,8 @@ class BackendPagesModel
 	 * Get the blocks in a certain page
 	 *
 	 * @return	array
-	 * @param	int $id		The Id of the page to get the blocks for.
+	 * @param	int $id						The Id of the page to get the blocks for.
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function getBlocks($id, $language = null)
 	{
@@ -744,7 +745,7 @@ class BackendPagesModel
 	 * Get all items by a given tag id
 	 *
 	 * @return	array
-	 * @param	int	$tagId	The id of the tag.
+	 * @param	int $tagId	The id of the tag.
 	 */
 	public static function getByTag($tagId)
 	{
@@ -1352,6 +1353,7 @@ class BackendPagesModel
 	 * @param	string $URL					The URL to base on.
 	 * @param	int[optional] $id			The id to ignore.
 	 * @param	int[optional] $parentId		The parent for the page to create an url for.
+	 * @param	bool[optional] $isAction	Is this page an action.
 	 */
 	public static function getURL($URL, $id = null, $parentId = 0, $isAction = false)
 	{
@@ -1471,7 +1473,8 @@ class BackendPagesModel
 	 * Insert multiple blocks at once
 	 *
 	 * @return	void
-	 * @param	array $blocks		The blocks to insert.
+	 * @param	array $blocks				The blocks to insert.
+	 * @param	bool[optional] $hasBlock	The blocks to insert.
 	 */
 	public static function insertBlocks(array $blocks, $hasBlock = false)
 	{
@@ -1775,8 +1778,8 @@ class BackendPagesModel
 	 * Update the blocks
 	 *
 	 * @return	void
-	 * @param	array $blocks	The blocks to update.
-	 * @param	bool $hasBlock	Is there a real block inside the blocks.
+	 * @param	array $blocks				The blocks to update.
+	 * @param	bool[optional] $hasBlock	Is there a real block inside the blocks.
 	 */
 	public static function updateBlocks(array $blocks, $hasBlock = false)
 	{

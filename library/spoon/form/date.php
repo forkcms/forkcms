@@ -334,7 +334,7 @@ class SpoonFormDate extends SpoonFormInput
 		if($template !== null)
 		{
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;

@@ -5,10 +5,10 @@
  * This class will send mails
  *
  * @package		backend
- * @subpackage	mailer
+ * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
@@ -25,10 +25,12 @@ class BackendMailer
 	 * @param	string[optional] $toName		The to-name for the email.
 	 * @param	string[optional] $fromEmail		The from-address for the mail.
 	 * @param	string[optional] $fromName		The from-name for the mail.
+	 * @param	string[optional] $replyToEmail	The replyto-address for the mail.
+	 * @param	string[optional] $replyToName	The replyto-name for the mail.
 	 * @param	bool[optional] $queue			Should the mail be queued?
 	 * @param	int[optional] $sendOn			When should the email be send, only used when $queue is true.
 	 * @param	bool[optional] $isRawHTML		If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
-	 * @param	string[optional] $plaintText	The plain text version.
+	 * @param	string[optional] $plainText		The plain text version.
 	 */
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null)
 	{
@@ -80,8 +82,8 @@ class BackendMailer
 	 * Returns the content from a given template
 	 *
 	 * @return	string
-	 * @param	string	$template				The template to use.
-	 * @param	array[optional]	$variables		The variabled to assign.
+	 * @param	string $template				The template to use.
+	 * @param	array[optional] $variables		The variabled to assign.
 	 */
 	private static function getTemplateContent($template, $variables = null)
 	{

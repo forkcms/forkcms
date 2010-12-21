@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 final class BackendAnalyticsConfig extends BackendBaseConfig
@@ -32,6 +32,7 @@ final class BackendAnalyticsConfig extends BackendBaseConfig
 	 * Check if all required settings have been set
 	 *
 	 * @return	void
+	 * @param	string $module
 	 */
 	public function __construct($module)
 	{

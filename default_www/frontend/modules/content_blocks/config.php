@@ -5,9 +5,9 @@
  * This is the configuration-object
  *
  * @package		frontend
- * @subpackage	contentblocks
+ * @subpackage	content_blocks
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 final class FrontendContentBlocksConfig extends FrontendBaseConfig

@@ -7,7 +7,7 @@
  * @package		api
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class API
@@ -284,8 +284,8 @@ class API
 	 * Output the return
 	 *
 	 * @return	void
-	 * @param	int $statusCode		The status code
-	 * @param	array $data			The data to return
+	 * @param	int $statusCode			The status code
+	 * @param	array[optional] $data	The data to return
 	 */
 	public static function output($statusCode, array $data = null)
 	{
@@ -309,8 +309,8 @@ class API
 	 * Output as JSON
 	 *
 	 * @return	void
-	 * @param	int $statusCode		The status code
-	 * @param	array $data			The data to return
+	 * @param	int $statusCode			The status code
+	 * @param	array[optional] $data	The data to return
 	 */
 	private static function outputJSON($statusCode, array $data = null)
 	{
@@ -347,8 +347,8 @@ class API
 	 * Output as XML
 	 *
 	 * @return	void
-	 * @param	int $statusCode		The status code
-	 * @param	array $data			The data to return
+	 * @param	int $statusCode			The status code
+	 * @param	array[optional] $data	The data to return
 	 */
 	private static function outputXML($statusCode, array $data = null)
 	{

@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
@@ -299,7 +299,7 @@ class BackendBlogModel
 	 * Get all items by a given tag id
 	 *
 	 * @return	array
-	 * @param	int	$tagId	The id of the tag.
+	 * @param	int $tagId	The id of the tag.
 	 */
 	public static function getByTag($tagId)
 	{
@@ -521,6 +521,7 @@ class BackendBlogModel
 	 * Retrieve the unique URL for an item
 	 *
 	 * @return	string						The URL to base on.
+	 * @param	string $URL					The URL to start from.
 	 * @param	int[optional] $itemId		The id of the blogpost to ignore.
 	 */
 	public static function getURL($URL, $itemId = null)

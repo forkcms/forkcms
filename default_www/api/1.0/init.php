@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Init
+ * APIInit
  * This class will initiate the API
  *
  * @package		api
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class Init
+class APIInit
 {
 	/**
 	 * Current type
@@ -39,7 +39,7 @@ class Init
 		$this->type = $type;
 
 		// register the autoloader
-		spl_autoload_register(array('Init', 'autoLoader'));
+		spl_autoload_register(array('APIInit', 'autoLoader'));
 
 		// set some ini-options
 		ini_set('memory_limit', '64M');
@@ -212,6 +212,10 @@ class Init
 	 */
 	public static function errorHandler($errNumber, $errString)
 	{
+		// redefine
+		$errNumber = (int) $errNumber;
+		$errString = (string) $errString;
+
 		// is this an undefined index?
 		if(mb_substr_count($errString, 'Undefined index:') > 0)
 		{
@@ -242,6 +246,9 @@ class Init
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
+		// redefine
+		$output = (string) $output;
+
 		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
 
@@ -265,6 +272,9 @@ class Init
 	 */
 	public static function exceptionHandler($exception, $output)
 	{
+		// redefine
+		$output = (string) $output;
+
 		// mail it?
 		if(SPOON_DEBUG_EMAIL != '')
 		{
@@ -300,6 +310,9 @@ class Init
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
+		// redefine
+		$output = (string) $output;
+
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
@@ -383,7 +396,7 @@ class Init
 			ini_set('display_errors', 'On');
 
 			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
-			set_error_handler(array('Init', 'errorHandler'));
+			set_error_handler(array('APIInit', 'errorHandler'));
 		}
 
 		// debugging disabled
@@ -404,7 +417,7 @@ class Init
 
 				case 'backend_js':
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionJSHandler');
-					break;
+				break;
 
 				default:
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionHandler');

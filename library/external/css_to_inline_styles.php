@@ -206,7 +206,7 @@ class CSSToInlineStyles
 	 * Converts the loaded HTML into an HTML-string with inline styles based on the loaded CSS
 	 *
 	 * @return	string
-	 * @param	bool $outputXHTML	Should we output valid XHTML?
+	 * @param	bool[optional] $outputXHTML		Should we output valid XHTML?
 	 */
 	public function convert($outputXHTML = false)
 	{
@@ -523,6 +523,7 @@ class CSSToInlineStyles
 	 * Set use of inline styles block
 	 * If this is enabled the class will use the style-block in the HTML.
 	 *
+	 * @return	void
 	 * @param	bool[optional] $on
 	 */
 	public function setUseInlineStylesBlock($on = true)

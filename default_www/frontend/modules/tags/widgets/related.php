@@ -7,8 +7,8 @@
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendTagsWidgetRelated extends FrontendBaseWidget
@@ -125,7 +125,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	/**
 	 * Get tags for current "page"
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function getTags()
 	{

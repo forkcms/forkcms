@@ -8,7 +8,7 @@
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 interface FrontendTagsInterface
@@ -26,8 +26,8 @@ interface FrontendTagsInterface
 	 * Get the id of an item by the full URL of the current page.
 	 * Selects the proper part of the full URL to get the item's id from the database.
 	 *
-	 * @return	int				The id that corresponds with the given full URL.
-	 * @param	FrontendURL		The current URL
+	 * @return	int					The id that corresponds with the given full URL.
+	 * @param	FrontendURL $URL	The current URL
 	 */
 	public static function getIdForTags(FrontendURL $URL);
 }

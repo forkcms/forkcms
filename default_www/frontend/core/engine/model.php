@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendModel
@@ -270,10 +270,10 @@ class FrontendModel
 	 *
 	 * @return	bool
 	 * @param	string $content				The content that was submitted
-	 * @param	string $permalink			The permanent location of the entry the comment was submitted to
+	 * @param	string $permaLink			The permanent location of the entry the comment was submitted to
 	 * @param	string[optional] $author	Commenters name
 	 * @param	string[optional] $email		Commenters email address
-	 * @param	string[optional] $url		Commenters URL
+	 * @param	string[optional] $URL		Commenters URL
 	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration"
 	 */
 	public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')

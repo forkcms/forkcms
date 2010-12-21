@@ -8,7 +8,7 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendBlogComments extends BackendBaseActionIndex
@@ -28,6 +28,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 	 * @param 	string $text	The comment.
 	 * @param	string $title	The title for the blogarticle.
 	 * @param	string $URL		The URL for the blogarticle.
+	 * @param	int $id			The id of the comment
 	 */
 	public static function addPostData($text, $title, $URL, $id)
 	{
@@ -63,7 +64,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 	/**
 	 * Loads the datagrids
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadDataGrids()
 	{

@@ -7,8 +7,8 @@
  * @package		backend
  * @subpackage	content_blocks
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendContentBlocksAdd extends BackendBaseActionAdd

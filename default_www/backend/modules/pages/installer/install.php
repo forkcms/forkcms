@@ -7,8 +7,8 @@
  * @package		installer
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class PagesInstall extends ModuleInstaller
@@ -17,8 +17,6 @@ class PagesInstall extends ModuleInstaller
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	SpoonDatabase $db
-	 * @param	array $languages
 	 */
 	protected function execute()
 	{

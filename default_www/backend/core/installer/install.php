@@ -4,13 +4,13 @@
  * ModuleInstaller
  * The base-class for the installer
  *
- * @package     installer
- * @subpackage  core
+ * @package		backend
+ * @subpackage	core
  *
- * @author      Davy Hellemans <davy@netlash.com>
- * @author      Tijs Verkoyen <tijs@netlash.com>
- * @author      Matthias Mullie <matthias@netlash.com>
- * @since       2.0
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
+ * @since		2.0
  */
 class ModuleInstaller
 {
@@ -307,9 +307,9 @@ class ModuleInstaller
     /**
      * Insert a meta item
      *
-     * @return  int
-     * @param   string $keywords
-     * @param   string $description
+     * @return	int
+     * @param	string $keywords
+     * @param	string $description
      * @param   string $title
      * @param   string $url
      * @param   bool[optional] $keywordsOverwrite
@@ -350,10 +350,10 @@ class ModuleInstaller
     /**
      * Insert a page
      *
-     * @return  void
-     * @param   array $revision
-     * @param   array[optional] $meta
-     * @param   array[optional] $block
+     * @return	void
+     * @param	array $revision
+     * @param	array[optional] $meta
+     * @param	array[optional] $block
      */
     protected function insertPage(array $revision, array $meta = null, array $block = null)
     {
@@ -464,10 +464,10 @@ class ModuleInstaller
     /**
      * Make a module searchable
      *
-     * @return  void
-     * @param   string $module                      The module to make searchable.
-     * @param   bool[optional] $searchable          Enable/disable search for this module by default?
-     * @param   int[optional] $weight               Set default search weight for this module.
+     * @return	void
+     * @param	string $module					The module to make searchable.
+     * @param	bool[optional] $searchable		Enable/disable search for this module by default?
+     * @param	int[optional] $weight			Set default search weight for this module.
      */
     protected function makeSearchable($module, $searchable = true, $weight = 1)
     {
@@ -485,11 +485,11 @@ class ModuleInstaller
     /**
      * Set the rights for an action
      *
-     * @return  void
-     * @param   int $groupId            The group wherefor the rights will be set.
-     * @param   string $module          The module wherin the action appears.
-     * @param   string $action          The action wherefor the rights have to set.
-     * @param   int[optional] $level    The leve, default is 7 (max).
+     * @return	void
+     * @param	int $groupId			The group wherefor the rights will be set.
+     * @param	string $module			The module wherin the action appears.
+     * @param	string $action			The action wherefor the rights have to set.
+     * @param	int[optional] $level	The leve, default is 7 (max).
      */
     protected function setActionRights($groupId, $module, $action, $level = 7)
     {
@@ -520,9 +520,9 @@ class ModuleInstaller
     /**
      * Sets the rights for a module
      *
-     * @return  void
-     * @param   int $groupId        The group wherefor the rights will be set.
-     * @param   string $module      The module too set the rights for.
+     * @return	void
+     * @param	int $groupId		The group wherefor the rights will be set.
+     * @param	string $module		The module too set the rights for.
      */
     protected function setModuleRights($groupId, $module)
     {
@@ -549,11 +549,11 @@ class ModuleInstaller
     /**
      * Stores a module specific setting in the database.
      *
-     * @return  void
-     * @param   string $module              The module wherefore the setting will be set.
-     * @param   string $name                The name of the setting.
-     * @param   mixed[optional] $value      The optional value.
-     * @param   bool[optional] $overwrite   Overwrite no matter what.
+     * @return	void
+     * @param	string $module				The module wherefore the setting will be set.
+     * @param	string $name				The name of the setting.
+     * @param	mixed[optional] $value		The optional value.
+     * @param	bool[optional] $overwrite	Overwrite no matter what.
      */
     protected function setSetting($module, $name, $value = null, $overwrite = false)
     {
@@ -593,12 +593,12 @@ class ModuleInstaller
  * CoreInstall
  * Installer for the core
  *
- * @package     installer
- * @subpackage  core
+ * @package		backend
+ * @subpackage	core
  *
- * @author      Davy Hellemans <davy@netlash.com>
- * @author      Tijs Verkoyen <tijs@netlash.com>
- * @since       2.0
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
  */
 class CoreInstall extends ModuleInstaller
 {

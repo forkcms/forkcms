@@ -12,7 +12,7 @@ utils =
 /**
  * Object that contains some function related to arrays
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@netlash.com>
  */
 utils.array =
 {
@@ -42,7 +42,7 @@ utils.array =
 /**
  * Object that contains some function related to cookies
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@netlash.com>
  */
 utils.cookies =
 {
@@ -77,7 +77,7 @@ utils.cookies =
 /**
  * Object that contains some functions related to forms
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@netlash.com>
  */
 utils.form =
 {
@@ -151,8 +151,8 @@ utils.form =
 /**
  * Object that contains some functions related to strings
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 utils.string =
 {

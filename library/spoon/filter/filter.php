@@ -58,7 +58,7 @@ class SpoonFilter
 	 * @return	array
 	 * @param	mixed $callback						The callback function(s) you wish to map
 	 * @param	array $array						The array you wish to map callback functions on
-	 * $param	mixed[optional] $allowedKeys		The list of keys you want to map the callback to. All other keys will be ignored.
+	 * @param	mixed[optional] $allowedKeys		The list of keys you want to map the callback to. All other keys will be ignored.
 	 */
 	public static function arrayMapRecursive($callback, array $array, $allowedKeys = null)
 	{
@@ -744,12 +744,12 @@ class SpoonFilter
 	 * Strips HTML from a string
 	 *
 	 * @return	string										A string with all HTML elements stripped.
-	 * @param string $string								The string with HTML in it.
-	 * @param mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'
-	 * @param bool[optional] $replaceAnchorsWithURL			If this is true it will replace all anchor elements with their href value.
-	 * @param bool[optional] $replaceImagesWithAltText		If this is true it will replace all img elements with their alt text.
-	 * @param bool[optional] $preserveParagraphLinebreaks	If this is true it will generate an additional EOL for paragraphs.
-	 * @param bool[optional] $stripTabs						If this is true it will strip all tabs from the string.
+	 * @param	string $string								The string with HTML in it.
+	 * @param	mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'
+	 * @param	bool[optional] $replaceAnchorsWithURL			If this is true it will replace all anchor elements with their href value.
+	 * @param	bool[optional] $replaceImagesWithAltText		If this is true it will replace all img elements with their alt text.
+	 * @param	bool[optional] $preserveParagraphLinebreaks	If this is true it will generate an additional EOL for paragraphs.
+	 * @param	bool[optional] $stripTabs						If this is true it will strip all tabs from the string.
 	 */
 	public static function stripHTML($string, $exceptions = null, $replaceAnchorsWithURL = false, $replaceImagesWithAltText = false, $preserveParagraphLinebreaks = false, $stripTabs = true)
 	{

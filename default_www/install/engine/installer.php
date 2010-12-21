@@ -13,7 +13,8 @@ require_once 'step_6.php';
 /**
  * Installer
  *
- * @package		installer
+ * @package		install
+ * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0

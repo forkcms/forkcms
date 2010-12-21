@@ -92,7 +92,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Retrieve the attributes as HTML.
 	 *
 	 * @return	string
-	 *.@param	array $variables
+	 * @param	array $variables
 	 */
 	protected function getAttributesHTML(array $variables)
 	{
@@ -273,7 +273,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 		if($template !== null)
 		{
 			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;

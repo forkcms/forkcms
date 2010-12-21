@@ -7,8 +7,8 @@
  * @package		backend
  * @subpackage	core
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendForm extends SpoonForm
@@ -197,7 +197,7 @@ class BackendForm extends SpoonForm
 	 *
 	 * @return	void
 	 * @param	string $name						Name of the element.
-	 * @param	array $values						Values for the dropdown
+	 * @param	array[optional] $values				Values for the dropdown
 	 * @param	string[optional] $selected			The selected elements.
 	 * @param	bool[optional] $multipleSelection	Is it possible to select multiple items?
 	 * @param	string[optional] $class				Class(es) that will be applied on the element.

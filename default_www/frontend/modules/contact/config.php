@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	contact
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 final class FrontendContactConfig extends FrontendBaseConfig

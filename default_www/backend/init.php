@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Init
+ * BackendInit
  * This class will initiate the backend-application
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class Init
+class BackendInit
 {
 	/**
 	 * Current type
@@ -39,7 +39,7 @@ class Init
 		$this->type = $type;
 
 		// register the autoloader
-		spl_autoload_register(array('Init', 'autoLoader'));
+		spl_autoload_register(array('BackendInit', 'autoLoader'));
 
 		// set some ini-options
 		ini_set('pcre.backtrack_limit', 999999999);
@@ -425,7 +425,7 @@ class Init
 	private function setDebugging()
 	{
 		// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
-		set_error_handler(array('Init', 'errorHandler'));
+		set_error_handler(array('BackendInit', 'errorHandler'));
 
 		// debugging enabled
 		if(SPOON_DEBUG)
@@ -455,7 +455,7 @@ class Init
 
 				case 'backend_js':
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionJSHandler');
-					break;
+				break;
 
 				default:
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionHandler');

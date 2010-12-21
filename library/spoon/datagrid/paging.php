@@ -15,6 +15,16 @@
  */
 
 
+/**
+ * This interface has to be implemented by the paging-classes
+ *
+ * @package		spoon
+ * @subpackage	datagrid
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @since		1.0.0
+ */
 interface iSpoonDatagridPaging
 {
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null);

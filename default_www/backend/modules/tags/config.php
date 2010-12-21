@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	tags
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 final class BackendTagsConfig extends BackendBaseConfig

@@ -7,10 +7,10 @@
  * @package		frontend
  * @subpackage	blog
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendBlogModel implements FrontendTagsInterface
@@ -215,13 +215,13 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * @return	int
 	 * @param	string $URL		The URL for the category.
 	 */
-	public static function getAllForCategoryCount($categoryURL)
+	public static function getAllForCategoryCount($URL)
 	{
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
 														FROM blog_posts AS i
 														INNER JOIN blog_categories AS c ON i.category_id = c.id
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?',
-														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL));
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $URL));
 	}
 
 
@@ -289,6 +289,10 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 	/**
 	 * Get the number of items in a date range
+	 *
+	 * @return	int
+	 * @param	int $start
+	 * @param	int $end
 	 */
 	public static function getAllForDateRangeCount($start, $end)
 	{
@@ -463,8 +467,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Get the id of an item by the full URL of the current page.
 	 * Selects the proper part of the full URL to get the item's id from the database.
 	 *
-	 * @return	int				The id that corresponds with the given full URL.
-	 * @param	FrontendURL		The current URL
+	 * @return	int					The id that corresponds with the given full URL.
+	 * @param	FrontendURL $URL	The current URL
 	 */
 	public static function getIdForTags(FrontendURL $URL)
 	{
@@ -529,7 +533,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Get recent comments
 	 *
 	 * @return	array
-	 * @param	int $limit	The number of comments to get.
+	 * @param	int[optional] $limit	The number of comments to get.
 	 */
 	public static function getRecentComments($limit = 5)
 	{

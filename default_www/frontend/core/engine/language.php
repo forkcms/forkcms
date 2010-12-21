@@ -5,9 +5,9 @@
  * This class will store the language-dependant content for the frontend.
  *
  * @package		frontend
- * @subpackage	language
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendLanguage
@@ -17,7 +17,7 @@ class FrontendLanguage
 	 *
 	 * @var	array
 	 */
-	private static	$act = array(),
+	private static $act = array(),
 					$err = array(),
 					$lbl = array(),
 					$msg = array();
@@ -350,9 +350,9 @@ class FrontendLanguage
  *
  *
  * @package		frontend
- * @subpackage	language
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FL extends FrontendLanguage

@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -89,7 +89,8 @@ class BackendUser
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	int $userId
+	 * @param	int[optional] $userId
+	 * @param	string[optional] $email
 	 */
 	public function __construct($userId = null, $email = null)
 	{
@@ -332,6 +333,7 @@ class BackendUser
 		// nickname available?
 		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] .' '. $this->settings['surname']);
 	}
+
 
 	/**
 	 * Set email

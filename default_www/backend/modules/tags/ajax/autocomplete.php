@@ -7,8 +7,8 @@
  * @package		backend
  * @subpackage	tags
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendTagsAjaxAutocomplete extends BackendBaseAJAXAction

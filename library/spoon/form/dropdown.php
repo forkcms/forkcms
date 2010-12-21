@@ -211,6 +211,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 * Retrieve the initial value.
 	 *
 	 * @return	string
+	 * @param	string[optional] $key	The key to grab, of not provided all values will be returned.
 	 */
 	public function getDefaultValue($key = null)
 	{
@@ -549,7 +550,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		if($template !== null)
 		{
 			$template->assign('ddm'. SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])), $output);
-			$template->assign('ddm'. SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('ddm'. SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;
@@ -656,7 +657,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 * Sets the values for this dropdown menu.
 	 *
 	 * @return	void
-	 * @param	array $values
+	 * @param	array[optional] $values
 	 */
 	private function setValues(array $values = null)
 	{

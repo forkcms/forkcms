@@ -294,7 +294,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 		if($template !== null)
 		{
 			$template->assign($this->name, $radiobuttons);
-			$template->assign('rbt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('rbt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $radiobuttons;
@@ -334,6 +334,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 *
 	 * @return	void
 	 * @param	array $values
+	 * @param	string[optional] $defaultClass
 	 */
 	public function setValues(array $values, $defaultClass = 'inputRadio')
 	{

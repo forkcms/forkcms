@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	authentication
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendAuthenticationResetPassword extends BackendBaseActionAdd

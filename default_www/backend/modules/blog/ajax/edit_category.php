@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBlogAjaxEditCategory extends BackendBaseAJAXAction

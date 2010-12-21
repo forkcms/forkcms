@@ -399,7 +399,7 @@ class SpoonFormFile extends SpoonFormAttributes
 		if($template !== null)
 		{
 			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;

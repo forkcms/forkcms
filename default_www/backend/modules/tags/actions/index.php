@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	tags
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -37,7 +37,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 	/**
 	 * Loads the datagrids
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadDataGrid()
 	{

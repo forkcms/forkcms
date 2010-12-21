@@ -6,8 +6,8 @@
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
- * @author 		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsSettings extends BackendBaseActionEdit
@@ -263,6 +263,14 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		}
 	}
 
+
+	/**
+	 * Sort account
+	 *
+	 * @return	int
+	 * @param	string $account1
+	 * @param	string $account2
+	 */
 	public static function sortAccounts($account1, $account2)
 	{
 		if(strtolower($account1) > strtolower($account2)) return 1;

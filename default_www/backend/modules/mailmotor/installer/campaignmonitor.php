@@ -123,7 +123,9 @@ class CampaignMonitor
 	 * @param	string $siteURL					The base URL of the site you use to login to Campaign Monitor.
 	 * @param	string $username				The username you use to login to Campaign Monitor.
 	 * @param	string $password				The password you use to login to Campaign Monitor.
+	 * @param	int[optional] $timeOut			The timeout
 	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
+	 * @param	string[optional] $listId		The default list ID to use throughout the class.
 	 * @param	string[optional] $campaignId	The default campaign ID to use throughout the class.
 	 */
 	public function __construct($siteURL, $username, $password, $timeOut = 60, $clientId = null, $listId = null, $campaignId = null)
@@ -172,8 +174,8 @@ class CampaignMonitor
 	 * @param	string $email					The email address of the new subscriber.
 	 * @param	string $name					The name of the new subscriber. If the name is unknown, an empty string can be passed in.
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
-	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
-	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
+	 * @param	string[optional] $listId		The list you want to add the subscriber to.
 	 */
 	public function addSubscriber($email, $name, $customFields = array(), $resubscribe = true, $listId = null)
 	{
@@ -221,16 +223,16 @@ class CampaignMonitor
 	 * Creates a campaign. Returns the campaign ID when succesful or false if the call failed
 	 *
 	 * @return	mixed
-	 * @param	string $name					The name of the new campaign. This must be unique across all draft campaigns for the client.
-	 * @param	string $subject					The subject of the new campaign.
-	 * @param	string $fromName				The name to appear in the From field in the recipients email client when they receive the new campaign.
-	 * @param	string $fromEmail				The email address that the new campaign will come from.
-	 * @param	string $replyToEmail			The email address that any replies to the new campaign will be sent to.
-	 * @param	string $HTMLContentURL			The URL of the HTML content for the new campaign.
-	 * @param	string $textContentURL			The URL of the text content for the new campaign.
-	 * @param	array $subscriberLists			An array of lists to send the campaign to.
-	 * @param	array $subscriberListSegments	An array of Segment Names and their appropriate List ID’s to send the campaign to.
-	 * @param	string[optional] $clientId		The ID of the client who will be owner of the campaign.
+	 * @param	string $name								The name of the new campaign. This must be unique across all draft campaigns for the client.
+	 * @param	string $subject								The subject of the new campaign.
+	 * @param	string $fromName							The name to appear in the From field in the recipients email client when they receive the new campaign.
+	 * @param	string $fromEmail							The email address that the new campaign will come from.
+	 * @param	string $replyToEmail						The email address that any replies to the new campaign will be sent to.
+	 * @param	string $HTMLContentURL						The URL of the HTML content for the new campaign.
+	 * @param	string $textContentURL						The URL of the text content for the new campaign.
+	 * @param	array $subscriberLists						An array of lists to send the campaign to.
+	 * @param	array[optional] $subscriberListSegments		An array of Segment Names and their appropriate List ID’s to send the campaign to.
+	 * @param	string[optional] $clientId					The ID of the client who will be owner of the campaign.
 	 */
 	public function createCampaign($name, $subject, $fromName, $fromEmail, $replyToEmail, $HTMLContentURL, $textContentURL, array $subscriberLists, array $subscriberListSegments = array(), $clientId = null)
 	{
@@ -306,8 +308,8 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $name				The name of the field.
-	 * @param	string $type				The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
-	 * @param	array $options				The available options for a multi-valued custom field. Options should be separated by a double pipe "||". This field must be null for Text and Number custom fields.
+	 * @param	string[optional] $type		The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
+	 * @param	array[optional] $options	The available options for a multi-valued custom field. Options should be separated by a double pipe "||". This field must be null for Text and Number custom fields.
 	 * @param	string[optional] $listId	The list ID to create the custom field for
 	 */
 	public function createCustomField($name, $type = null, $options = array(), $listId = null)
@@ -2052,8 +2054,8 @@ class CampaignMonitor
 	 * @param	string $email					The email address of the new subscriber.
 	 * @param	string $name					The name of the new subscriber. If the name is unknown, an empty string can be passed in.
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
-	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
-	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
+	 * @param	string[optional] $listId		The list you want to add the subscriber to.
 	 */
 	public function subscribe($email, $name, $customFields = array(), $resubscribe = true, $listId = null)
 	{

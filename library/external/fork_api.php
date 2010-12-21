@@ -95,8 +95,10 @@ class ForkAPI
 	 * Make the call
 	 *
 	 * @return	string
-	 * @param	string $url
-	 * @param	array[optional] $aParameters
+	 * @param	string $method
+	 * @param	array[optional] $parameters
+	 * @param	bool[optional] $authenticate
+	 * @param	bool[optional] $usePOST
 	 */
 	private function doCall($method, $parameters = array(), $authenticate = true, $usePOST = false)
 	{

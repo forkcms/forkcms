@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchIndex extends FrontendBaseBlock
@@ -132,7 +132,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	/**
 	 * Load the cached data
 	 *
-	 * @return bool
+	 * @return	bool
 	 */
 	private function getCachedData()
 	{

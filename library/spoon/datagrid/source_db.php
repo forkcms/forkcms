@@ -104,7 +104,6 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 
 				default:
 					throw new SpoonDataGridException('No datagrid support has been written for this database backend ('. $this->db->getDriver() .')');
-				break;
 			}
 
 			// fetch record

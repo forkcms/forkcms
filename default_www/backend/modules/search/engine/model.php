@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchModel
@@ -133,7 +133,7 @@ class BackendSearchModel
 	 *
 	 * @return	bool
 	 * @param	string $term				The term we're looking for.
-	 * @param	int[optional] $id			exclude a certain id.
+	 * @param	int[optional] $exclude		Exclude a certain id.
 	 */
 	public static function existsSynonymByTerm($term, $exclude = null)
 	{
@@ -218,7 +218,7 @@ class BackendSearchModel
 	/**
 	 * Invalidate search cache
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	public static function invalidateCache()
 	{
@@ -230,7 +230,8 @@ class BackendSearchModel
 	 * Update a synonym
 	 *
 	 * @return	void
-	 * @param	array $item					The data to update in the db.
+	 * @param	int $id			The Id of the synonym
+	 * @param	array $item		The data to update in the db.
 	 */
 	public static function updateSynonym($id, $item)
 	{
@@ -248,6 +249,7 @@ class BackendSearchModel
 	 * @return	void
 	 * @param	string $module				The module wherin will be searched.
 	 * @param	int $otherId				The id of the record.
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function removeIndex($module, $otherId, $language = null)
 	{

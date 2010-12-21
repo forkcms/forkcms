@@ -4,12 +4,12 @@
  * InstallerStep6
  * Step 6 of the Fork installer
  *
- * @package		installer
- * @subpackage	install
+ * @package		install
+ * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class InstallerStep6 extends InstallerStep

@@ -290,7 +290,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 		if($template !== null)
 		{
 			$template->assign(SpoonFilter::toCamelCase($this->name, '_', true), $checkboxes);
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $checkboxes;
@@ -348,7 +348,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Set the initial values.
 	 *
 	 * @return	void
-	 * @param	mixed $values
+	 * @param	array $values
 	 * @param	string[optional] $defaultClass
 	 */
 	public function setValues(array $values, $defaultClass = 'inputCheckbox')

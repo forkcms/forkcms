@@ -329,7 +329,7 @@ class SpoonEmailSMTP
 	 * Pushes a command to the host and returns + saves the status code.
 	 *
 	 * @return	int
-	 * @param	string $message	The command message to send to the SMTP host
+	 * @param	string[optional] $message	The command message to send to the SMTP host
 	 */
 	private function say($message = null)
 	{
@@ -374,7 +374,7 @@ class SpoonEmailSMTP
 	 * Sets the security layer
 	 *
 	 * @return	void
-	 * @param string $layer
+	 * @param	string $layer
 	 */
 	public function setSecurity($layer)
 	{

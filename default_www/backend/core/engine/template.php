@@ -12,7 +12,7 @@
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplate extends SpoonTemplate
@@ -368,9 +368,9 @@ class BackendTemplate extends SpoonTemplate
  * BackendTemplateModifiers, this is our class with custom modifiers.
  *
  * @package		backend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplateModifiers

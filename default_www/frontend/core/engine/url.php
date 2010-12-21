@@ -7,7 +7,7 @@
  * @package			frontend
  * @subpackage		core
  *
- * @author 			Tijs Verkoyen <tijs@netlash.com>
+ * @author			Tijs Verkoyen <tijs@netlash.com>
  * @author			Davy Hellemans <davy@netlash.com>
  * @author			Dieter Vanden Eynde <dieter@netlash.com>
  * @since			2.0
@@ -135,9 +135,9 @@ class FrontendURL
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
 	 *
 	 * @return	mixed
-	 * @param	mixed $index				The index of the parameter
-	 * @param	string[optional] $type		The return type, possible values are: bool, boolean, int, integer, float, double, string, array
-	 * @param	mixed $defaultValue			The value that should be returned if the key is not available
+	 * @param	mixed $index						The index of the parameter
+	 * @param	string[optional] $type				The return type, possible values are: bool, boolean, int, integer, float, double, string, array
+	 * @param	mixed[optioanl] $defaultValue		The value that should be returned if the key is not available
 	 */
 	public function getParameter($index, $type = 'string', $defaultValue = null)
 	{

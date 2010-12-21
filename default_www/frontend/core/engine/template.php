@@ -9,9 +9,9 @@
  * 	- ...
  *
  * @package		frontend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -22,7 +22,7 @@ class FrontendTemplate extends SpoonTemplate
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @return	void
-	 * @param	bool[optional]	$addToReference	Should the instance be added into the reference.
+	 * @param	bool[optional] $addToReference	Should the instance be added into the reference.
 	 */
 	public function __construct($addToReference = true)
 	{
@@ -93,7 +93,7 @@ class FrontendTemplate extends SpoonTemplate
 	/**
 	 * Fetch the parsed content from this template.
 	 *
-	 * @return	string	 						The actual parsed content after executing this template.
+	 * @return	string							The actual parsed content after executing this template.
 	 * @param	string $template				The location of the template file, used to display this template.
  	 * @param	bool[optional] $customHeaders	Are custom headers already set?
 	 * @param	bool[optional] $parseCustom		Parse custom template
@@ -265,7 +265,7 @@ class FrontendTemplate extends SpoonTemplate
 	/**
 	 * Assigns an option if we are in debug-mode
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function parseDebug()
 	{
@@ -341,9 +341,9 @@ class FrontendTemplate extends SpoonTemplate
  * FrontendTemplateMofidiers, contains all Frontend-related custom modifiers
  *
  * @package		frontend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTemplateModifiers
@@ -550,9 +550,9 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getpageinfo:404:'title'}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string[optional] $var
 	 * @param	int $pageId						The id of the page to build the URL for.
-	 * @param	string $field					The field to get.
+	 * @param	string[optional] $field			The field to get.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
 	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
@@ -692,7 +692,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|timeAgo}
 	 *
 	 * @return	string
-	 * @param	string $var		A UNIX-timestamp that will be formated as a time-ago-string.
+	 * @param	string[optional] $var		A UNIX-timestamp that will be formated as a time-ago-string.
 	 */
 	public static function timeAgo($var = null)
 	{
@@ -712,7 +712,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string[optional] $var
 	 * @param	int $length					The maximum length of the truncated string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */
@@ -750,7 +750,7 @@ class FrontendTemplateModifiers
 	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string[optional] $var
 	 * @param	string $setting			The name of the setting you want.
 	 * @param	int[optional] $userId	The userId, if not set by $var.
 	 */

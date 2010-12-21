@@ -7,8 +7,8 @@
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTagsModel
@@ -16,11 +16,11 @@ class FrontendTagsModel
 	/**
 	 * Calls a method that has to be implemented though the tags interface
 	 *
-	 * @param string $module
-	 * @param string $class
-	 * @param string $method
-	 * @param mixed $parameter
-	 * @return mixed
+	 * @return	mixed
+	 * @param	string $module
+	 * @param	string $class
+	 * @param	string $method
+	 * @param	mixed[optional] $parameter
 	 */
 	public static function callFromInterface($module, $class, $method, $parameter = null)
 	{
@@ -216,11 +216,11 @@ class FrontendTagsModel
 	/**
 	 * Get all related items
 	 *
-	 * @param	int $id
-	 * @param	int $moduleId
-	 * @param	int $otherModuleId
-	 * @param	int[optional] $limit
 	 * @return	array
+	 * @param	int $id
+	 * @param	int $module
+	 * @param	int $otherModule
+	 * @param	int[optional] $limit
 	 */
 	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
 	{

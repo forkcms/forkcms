@@ -86,7 +86,7 @@ class SpoonXMLRPCClient
 	 * @param	string $method
 	 * @param	array[optional] $parameters
 	 */
-	private function buildXML($method, array $parameters)
+	private function buildXML($method, array $parameters = array())
 	{
 		// redefine
 		$method = (string) $method;

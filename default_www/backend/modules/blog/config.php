@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 final class BackendBlogConfig extends BackendBaseConfig

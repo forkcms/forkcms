@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	authentication
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 final class BackendAuthenticationConfig extends BackendBaseConfig

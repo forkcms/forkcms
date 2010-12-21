@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
@@ -69,7 +69,8 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		curl_exec($curl);
 
 		// close
-		curl_close($curl);	}
+		curl_close($curl);
+	}
 
 
 	/**

@@ -5,9 +5,9 @@
  * This class will store the language-dependant content for the Backend, it will also store the current language for the user.
  *
  * @package		backend
- * @subpackage	language
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendLanguage
@@ -364,9 +364,9 @@ class BackendLanguage
  *
  *
  * @package		backend
- * @subpackage	language
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BL extends BackendLanguage
