@@ -36,10 +36,10 @@ class BackendSearchModel
 		if(!in_array('search', BackendModel::getModules(true))) return;
 
 		// no fields?
-		if (empty($fields)) return;
+		if(empty($fields)) return;
 
 		// set language
-		if (!$language) $language = BL::getWorkingLanguage();
+		if(!$language) $language = BL::getWorkingLanguage();
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -90,10 +90,10 @@ class BackendSearchModel
 		if(!in_array('search', BackendModel::getModules(true))) return;
 
 		// no fields?
-		if (empty($fields)) return;
+		if(empty($fields)) return;
 
 		// set language
-		if (!$language) $language = BL::getWorkingLanguage();
+		if(!$language) $language = BL::getWorkingLanguage();
 
 		// get db
 		$db = BackendModel::getDB(true);

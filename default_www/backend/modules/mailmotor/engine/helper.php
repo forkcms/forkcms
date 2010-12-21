@@ -209,8 +209,11 @@ class BackendMailmotorCMHelper
 				self::getCM()->deleteCampaign(self::getCampaignMonitorID('campaign', $id));
 			}
 
-			// ignore errors
-			catch(Exception $e){}
+			// ignore exceptions
+			catch(Exception $e)
+			{
+				// do nothing
+			}
 
 			// delete group
 			BackendMailmotorModel::delete($id);

@@ -108,7 +108,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 			// validate fields
 			$this->frm->getField('synonym')->isFilled(BL::getError('SynonymIsRequired'));
 			$this->frm->getField('term')->isFilled(BL::getError('TermIsRequired'));
-			if (BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue(), $this->id)) $this->frm->getField('term')->addError(BL::getError('TermExists'));
+			if(BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue(), $this->id)) $this->frm->getField('term')->addError(BL::getError('TermExists'));
 
 			// no errors?
 			if($this->frm->isCorrect())

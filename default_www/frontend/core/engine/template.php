@@ -411,6 +411,7 @@ class FrontendTemplateModifiers
 
 				// format as Euro
 				return '€ '. number_format((float) $var, $decimals, ',', ' ');
+			break;
 		}
 	}
 
@@ -677,7 +678,12 @@ class FrontendTemplateModifiers
 	 */
 	public static function rand($var = null, $min, $max)
 	{
-		return rand((int) $min, (int) $max);
+		// redefine
+		$var = (string) $var;
+		$min = (int) $min;
+		$max = (int) $max;
+
+		return rand($min, $max);
 	}
 
 

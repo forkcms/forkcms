@@ -516,6 +516,10 @@ class BackendTemplateModifiers
 	 */
 	public static function getMainNavigation($var = null)
 	{
+		// redefine
+		$var = (string) $var;
+
+		// return
 		return Spoon::getObjectReference('navigation')->getNavigation(1, 1);
 	}
 
@@ -529,6 +533,10 @@ class BackendTemplateModifiers
 	 */
 	public static function getNavigation($var = null)
 	{
+		// redefine
+		$var = (string) $var;
+
+		// return
 		return Spoon::getObjectReference('navigation')->getNavigation(2);
 	}
 
@@ -543,7 +551,13 @@ class BackendTemplateModifiers
 	 */
 	public static function rand($var = null, $min, $max)
 	{
-		return rand((int) $min, (int) $max);
+		// redefine
+		$var = (string) $var;
+		$min = (int) $min;
+		$max = (int) $max;
+
+		// return
+		return rand($min, $max);
 	}
 
 

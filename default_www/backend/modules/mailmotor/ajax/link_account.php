@@ -59,7 +59,12 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			{
 				$clientID = $cm->createClient($companyName, $contactName, $contactEmail, $country, $timezone);
 			}
-			catch(Exception $e) {}
+
+			// ignore exceptions
+			catch(Exception $e)
+			{
+				// do nothing
+			}
 
 			// save the new data
 			BackendModel::setModuleSetting('mailmotor', 'cm_url', $url);

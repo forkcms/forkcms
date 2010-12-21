@@ -378,10 +378,16 @@ class CampaignMonitor
 		$parameters['ConfirmationSuccessPage'] = (string) $confirmationSuccessPage;
 
 		// try and create the record
-		try { $result = (string) $this->doCall('List.Create', $parameters); }
+		try
+		{
+			$result = (string) $this->doCall('List.Create', $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { $result = false; }
+		catch(Exception $e)
+		{
+			$result = false;
+		}
 
 		// if we made it here, the record exists
 		return $result;
@@ -411,10 +417,16 @@ class CampaignMonitor
 		$parameters['ScreenshotURL'] = (string) $screenshotURL;
 
 		// try and create the template record
-		try { $templateId = (string) $this->doCall('Template.Create', $parameters); }
+		try
+		{
+			$templateId = (string) $this->doCall('Template.Create', $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { $templateId = false; }
+		catch(Exception $e)
+		{
+			$templateId = false;
+		}
 
 		// if we made it here, the template exists
 		return $templateId;
@@ -556,29 +568,93 @@ class CampaignMonitor
 		// check for getDetail
 		switch($method[1])
 		{
-			case 'Add': $callMethod = 'Add'. $method[0]; break;
-			case 'Create': $callMethod = 'Create'. $method[0]; break;
-			case 'CreateCustomField': $callMethod = 'Create'. $method[0] .'CustomField'; break;
-			case 'Delete': $callMethod = 'Delete'. $method[0]; break;
-			case 'DeleteCustomField': $callMethod = 'Delete'. $method[0] .'CustomField'; break;
-			case 'GetBounces': $callMethod = 'Get'. $method[0] .'Bounces'; break;
-			case 'GetCampaigns': $callMethod = 'Get'. $method[0] .'Campaigns'; break;
-			case 'GetCustomFields': $callMethod = 'Get'. $method[0] .'CustomFields'; break;
-			case 'GetDetail': $callMethod = 'Get'. $method[0] .'Detail'; break;
-			case 'GetLists': $callMethod = 'Get'. $method[0] .'Lists'; break;
-			case 'GetOpens': $callMethod = 'Get'. $method[0] .'Opens'; break;
-			case 'GetSubscribers': $responseKey = 'Subscribers.GetActiveResult'; break;
-			case 'GetSegments': $callMethod = 'Get'. $method[0] .'Segments'; break;
-			case 'GetStats': $callMethod = 'Get'. $method[0] .'Stats'; break;
-			case 'GetSummary': $callMethod = 'Get'. $method[0] .'Summary'; break;
-			case 'GetSuppressionList': $callMethod = 'Get'. $method[0] .'SuppressionList'; break;
-			case 'GetTemplates': $callMethod = 'Get'. $method[0] .'Templates'; break;
-			case 'GetUnsubscribes': $callMethod = 'Get'. $method[0] .'Unsubscribes'; break;
-			case 'Send': $callMethod = 'Send'. $method[0]; break;
-			case 'Update': $callMethod = 'Update'. $method[0]; break;
-			case 'UpdateBasics': $callMethod = 'Update'. $method[0] .'Basics'; break;
-			case 'UpdateAccessAndBilling': $callMethod = 'Update'. $method[0] .'AccessAndBilling'; break;
-			default;
+			case 'Add':
+				$callMethod = 'Add'. $method[0];
+			break;
+
+			case 'Create':
+				$callMethod = 'Create'. $method[0];
+			break;
+
+			case 'CreateCustomField':
+				$callMethod = 'Create'. $method[0] .'CustomField';
+			break;
+
+			case 'Delete':
+				$callMethod = 'Delete'. $method[0];
+			break;
+
+			case 'DeleteCustomField':
+				$callMethod = 'Delete'. $method[0] .'CustomField';
+			break;
+
+			case 'GetBounces':
+				$callMethod = 'Get'. $method[0] .'Bounces';
+			break;
+
+			case 'GetCampaigns':
+				$callMethod = 'Get'. $method[0] .'Campaigns';
+			break;
+
+			case 'GetCustomFields':
+				$callMethod = 'Get'. $method[0] .'CustomFields';
+			break;
+
+			case 'GetDetail':
+				$callMethod = 'Get'. $method[0] .'Detail';
+			break;
+
+			case 'GetLists':
+				$callMethod = 'Get'. $method[0] .'Lists';
+			break;
+
+			case 'GetOpens':
+				$callMethod = 'Get'. $method[0] .'Opens';
+			break;
+
+			case 'GetSubscribers':
+				$responseKey = 'Subscribers.GetActiveResult';
+			break;
+
+			case 'GetSegments':
+				$callMethod = 'Get'. $method[0] .'Segments';
+			break;
+
+			case 'GetStats':
+				$callMethod = 'Get'. $method[0] .'Stats';
+			break;
+
+			case 'GetSummary':
+				$callMethod = 'Get'. $method[0] .'Summary';
+			break;
+
+			case 'GetSuppressionList':
+				$callMethod = 'Get'. $method[0] .'SuppressionList';
+			break;
+
+			case 'GetTemplates':
+				$callMethod = 'Get'. $method[0] .'Templates';
+			break;
+
+			case 'GetUnsubscribes':
+				$callMethod = 'Get'. $method[0] .'Unsubscribes';
+			break;
+
+			case 'Send':
+				$callMethod = 'Send'. $method[0];
+			break;
+
+			case 'Update':
+				$callMethod = 'Update'. $method[0];
+			break;
+
+			case 'UpdateBasics':
+				$callMethod = 'Update'. $method[0] .'Basics';
+			break;
+
+			case 'UpdateAccessAndBilling':
+				$callMethod = 'Update'. $method[0] .'AccessAndBilling';
+			break;
 		}
 
 		// catch any timeouts that may occur
@@ -649,10 +725,16 @@ class CampaignMonitor
 	private function doSilentCall($method, $parameters)
 	{
 		// try and update the template record
-		try { $this->doCall($method, $parameters); }
+		try
+		{
+			$this->doCall($method, $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { return false; }
+		catch(Exception $e)
+		{
+			return false;
+		}
 
 		// if we made it here, the template was updated
 		return true;
@@ -1073,10 +1155,21 @@ class CampaignMonitor
 		// set value of billing type
 		switch($billing['BillingType'])
 		{
-			case 'UserPaysOnClientsBehalf': $result['billing_type'] = 'user'; break;
-			case 'ClientPaysAtStandardRate': $result['billing_type'] = 'client_standard'; break;
-			case 'ClientPaysWithMarkup': $result['billing_type'] = 'client_markup'; break;
-			default: $result['billing_type'] = null;
+			case 'UserPaysOnClientsBehalf':
+				$result['billing_type'] = 'user';
+			break;
+
+			case 'ClientPaysAtStandardRate':
+				$result['billing_type'] = 'client_standard';
+			break;
+
+			case 'ClientPaysWithMarkup':
+				$result['billing_type'] = 'client_markup';
+			break;
+
+			default:
+				$result['billing_type'] = null;
+			break;
 		}
 
 		// depending on the billing type, parse these vars
@@ -1830,9 +1923,14 @@ class CampaignMonitor
 		// check for True/False
 		switch($result)
 		{
-			case 'False': return false;
-			case 'True': return true;
-			default: return false;
+			case 'False':
+				return false;
+
+			case 'True':
+				return true;
+
+			default:
+				return false;
 		}
 	}
 
@@ -2200,4 +2298,5 @@ class CampaignMonitorException extends Exception
 		parent::__construct((string) $message, $code);
 	}
 }
+
 ?>

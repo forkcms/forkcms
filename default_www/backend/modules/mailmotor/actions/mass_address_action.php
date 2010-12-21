@@ -97,7 +97,12 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 					{
 						BackendMailmotorCMHelper::unsubscribe($email, $groupId);
 					}
-					catch(Exception $e){}
+
+					// ignore exceptions
+					catch(Exception $e)
+					{
+						// do nothing
+					}
 				}
 
 				// delete all addresses
