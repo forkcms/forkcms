@@ -56,14 +56,14 @@
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
+								<a href="#" class="button" rel="external">{$lblEditModuleContent|ucfirst}</a>
 							</div>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
+								<a href="#" class="button" rel="external">{$lblEdit|ucfirst}</a>
 							</div>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">

@@ -4,7 +4,7 @@
 <div class="pageTitle">
 	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item['title']}}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$detailURL}/{$item['url']}{option:item['revision_id']}?revision={$item['revision_id']}{/option:item['revision_id']}" class="button icon iconZoom previewButton targetBlank">
+		<a href="{$detailURL}/{$item['url']}{option:item['revision_id']}?revision={$item['revision_id']}{/option:item['revision_id']}" class="button icon iconZoom previewButton" rel="external">
 			<span>{$lblView|ucfirst}</span>
 		</a>
 	</div>
@@ -71,7 +71,7 @@
 							{option:usingDraft}
 							<div class="options">
 								<div class="buttonHolder">
-									<a href="{$detailURL}/{$item['url']}?draft={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
+									<a href="{$detailURL}/{$item['url']}?draft={$draftId}" class="button icon iconZoom" rel="external"><span>{$lblPreview|ucfirst}</span></a>
 								</div>
 							</div>
 							{/option:usingDraft}

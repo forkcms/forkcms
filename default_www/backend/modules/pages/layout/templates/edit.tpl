@@ -8,7 +8,7 @@
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			<a href="{$SITE_URL}{$item['full_url']}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>
+			<a href="{$SITE_URL}{$item['full_url']}" class="button icon iconZoom previewButton" rel="external"><span>{$lblView|ucfirst}</span></a>
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
 	</div>
@@ -59,14 +59,14 @@
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
+								<a href="#" class="button" rel="external">{$lblEditModuleContent|ucfirst}</a>
 							</div>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
+								<a href="#" class="button" rel="external">{$lblEdit|ucfirst}</a>
 							</div>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">

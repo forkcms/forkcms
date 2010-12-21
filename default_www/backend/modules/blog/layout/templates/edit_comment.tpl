@@ -4,7 +4,7 @@
 <div class="pageTitle">
 	<h2>{$lblBlog|ucfirst}: {$msgEditCommentOn|sprintf:{$itemTitle}}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton targetBlank">
+		<a href="{$SITE_URL}{$itemURL}" class="button icon iconZoom previewButton" rel="external">
 			<span>{$lblView|ucfirst}</span>
 		</a>
 	</div>

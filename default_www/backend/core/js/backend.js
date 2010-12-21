@@ -614,7 +614,7 @@ jsBackend.controls = {
 	// bind target blank
 	bindTargetBlank: function()
 	{
-		$('a.targetBlank').attr('target', '_blank');
+		$('a[rel*="external"]').attr('target', '_blank');
 	},
 
 
