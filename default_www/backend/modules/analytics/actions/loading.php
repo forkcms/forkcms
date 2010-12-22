@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsIndex
  * This is the loading-action, it will display a spinner while data is collected
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */

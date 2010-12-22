@@ -1,7 +1,14 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
+
+/**
+ * Interaction for the users module
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.users =
 {
+	// init, something like a constructor
 	init: function()
 	{
 		jsBackend.users.controls.init();
@@ -15,14 +22,14 @@ jsBackend.users =
 
 jsBackend.users.controls =
 {
-	// somewhat like a constructor
+	// init, something like a constructor
 	init: function()
 	{
 		jsBackend.users.controls.nick();
 	},
 
 
-	// set nick
+	// set nickname
 	nick: function()
 	{
 		// are all elements available

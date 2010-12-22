@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogWidgetRecentArticlesFull
  * This is a widget with recent blog-articles
  *
  * @package		frontend

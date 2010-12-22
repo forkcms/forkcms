@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendContentBlocksDelete
  * This is the delete-action, it will delete an item.
  *
  * @package		backend
  * @subpackage	content_blocks
  *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
@@ -30,13 +29,13 @@ class BackendContentBlocksDelete extends BackendBaseActionDelete
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get all data for the item we want to edit
+			// get data
 			$this->record = (array) BackendContentBlocksModel::get($this->id);
 
 			// delete item
 			BackendContentBlocksModel::delete($this->id);
 
-			// user was deleted, so redirect
+			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));
 		}
 

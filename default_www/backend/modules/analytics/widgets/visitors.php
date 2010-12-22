@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsWidgetVisitors
+ * This widget will show the latest visitors
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsWidgetVisitors extends BackendBaseWidget

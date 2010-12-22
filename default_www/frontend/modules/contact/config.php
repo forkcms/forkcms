@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendContactConfig
  * This is the configuration-object
  *
  * @package		frontend

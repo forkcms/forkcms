@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendFooter
  * This class will be used to alter the footer-part of the HTML-document that will be created by the frontend.
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendFooter extends FrontendBaseObject

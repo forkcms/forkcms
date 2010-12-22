@@ -1,12 +1,12 @@
 <?php
 
 /**
- * FrontendPage
+ * Frontend page class, this class will handle everything on a page
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendPage extends FrontendBaseObject

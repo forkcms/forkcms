@@ -1,11 +1,11 @@
 <?php
 
 /**
- * ApplicationRouting
+ * Application routing
  *
  * @package			Frontend
  *
- * @author			Tijs Verkoyen <tijs@netlash.com>
+ * @author 			Tijs Verkoyen <tijs@netlash.com>
  * @author			Davy Hellemans <davy@netlash.com>
  * @author			Dieter Vanden Eynde <dieter@netlash.com>
  * @since			2.0
@@ -34,7 +34,7 @@ class ApplicationRouting
 	 */
 	public function __construct()
 	{
-		// spoof querystring on lighttp
+		// spoof querystring on lighttpd
 		$this->spoofQueryString();
 
 		// process querystring

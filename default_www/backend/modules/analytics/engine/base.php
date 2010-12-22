@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsBase
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsBase extends BackendBaseActionIndex

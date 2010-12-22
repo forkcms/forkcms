@@ -1,6 +1,11 @@
 if(!utils) var utils = new Object();
 
 
+/**
+ * Utilities; usefull scripts
+ *
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ */
 utils =
 {
 	// datamembers
@@ -10,21 +15,21 @@ utils =
 
 
 /**
- * Object that contains some function related to arrays
+ * Functions related to arrays
  *
  * @author	Tijs Verkoyen <tijs@netlash.com>
  */
 utils.array =
 {
 	/**
-	 * is the given value present in the array
+	 * Is the given value present in the array
 	 *
 	 * @return bool
 	 */
 	inArray: function(needle, array)
 	{
 		// loop values
-		for( var i in array)
+		for(var i in array)
 		{
 			if(array[i] == needle) return true;
 		}
@@ -40,7 +45,7 @@ utils.array =
 
 
 /**
- * Object that contains some function related to cookies
+ * Function related to cookies
  *
  * @author	Tijs Verkoyen <tijs@netlash.com>
  */
@@ -75,7 +80,7 @@ utils.cookies =
 
 
 /**
- * Object that contains some functions related to forms
+ * Functions related to forms
  *
  * @author	Tijs Verkoyen <tijs@netlash.com>
  */
@@ -149,7 +154,7 @@ utils.form =
 
 
 /**
- * Object that contains some functions related to strings
+ * Functions related to strings
  *
  * @author	Tijs Verkoyen <tijs@netlash.com>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
@@ -217,7 +222,7 @@ utils.string =
 	urlise: function(value)
 	{
 		// allowed chars
-		var allowedChars = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', ' ' ];
+		var allowedChars = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', ' '];
 
 		// to lowercase
 		value = value.toLowerCase();
@@ -266,5 +271,55 @@ utils.string =
 
 
 	// end
+	eoo: true
+}
+
+
+/**
+ * Functions related to the current url
+ *
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ */
+utils.url =
+{
+	/**
+	 * Get a GET parameter
+	 *
+	 * @return	string
+	 * @param	string name
+	 */
+	getGetValue: function(name)
+	{
+		// init return value
+		var getValue = '';
+		
+		// get GET chunks from url
+	    var hashes = window.location.search.slice(window.location.search.indexOf('?') + 1).split('&');
+
+	    // find requested parameter
+	    $.each(hashes, function(index, value)
+	    {
+	    	// split name/value up
+	    	var chunks = value.split('=');
+
+	    	// found the requested parameter
+	    	if(chunks[0] == name)
+	    	{
+	    		// set for return
+	    		getValue = chunks[1];
+
+	    		// break loop
+	    		return false;
+	    	}
+	    });
+
+	    // cough up value
+	    return getValue;
+	},
+
+
+	/**
+	 * End of object
+	 */
 	eoo: true
 }

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendContentBlocksConfig
  * This is the configuration-object
  *
  * @package		frontend

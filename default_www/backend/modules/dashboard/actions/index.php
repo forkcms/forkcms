@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendDashboardIndex
  * This is the index-action (default), it will display the login screen
  *
  * @package		backend
  * @subpackage	dashboard
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendDashboardIndex extends BackendBaseActionIndex

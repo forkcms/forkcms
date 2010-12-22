@@ -1,7 +1,6 @@
 <?php
 
 /**
- * InstallerStep5
  * Step 5 of the Fork installer
  *
  * @package		install

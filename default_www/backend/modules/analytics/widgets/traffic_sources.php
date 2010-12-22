@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsWidgetTrafficSources
+ * This widget will show the latest traffic sources
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget

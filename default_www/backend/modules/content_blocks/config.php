@@ -1,8 +1,6 @@
 <?php
 
 /**
- * BackendContentBlocksConfig
- *
  * This is the configuration-object for the content_blocks module
  *
  * @package		backend

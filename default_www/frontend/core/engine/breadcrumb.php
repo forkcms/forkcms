@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBreadcrumb
  * This class will be used to manage the breadcrumb
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */

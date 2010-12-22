@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendErrorIndex
  * This is the index-action (default), it will display an error depending on a given parameters
  *
  * @package		backend
  * @subpackage	error
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -65,8 +64,11 @@ class BackendErrorIndex extends BackendBaseActionIndex
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);
 
-				// stop the script, but give a nice error, so we can detect which file is missing
-				exit('Requested file ('. implode('?', $chunks) .') not found.');
+				// give a nice error, so we can detect which file is missing
+				echo 'Requested file ('. implode('?', $chunks) .') not found.';
+
+				// stop script execution
+				exit;
 			}
 		}
 

@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendAnalyticsIndex
  * This is the index-action (default), it will display the overview of analytics posts
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @autho		Annelies Van Extergem <annelies@netlash.com>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author 		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsIndex extends BackendAnalyticsBase

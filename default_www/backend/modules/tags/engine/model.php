@@ -1,19 +1,23 @@
 <?php
 
 /**
- * BackendTagsModel
  * In this file we store all generic functions that we will be using in the TagsModule
  *
  * @package		backend
  * @subpackage	tags
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendTagsModel
 {
+	/**
+	 * Overview of all tags
+	 *
+	 * @var	string
+	 */
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.tag, i.number AS num_tags
 									FROM tags AS i
 									WHERE i.language = ?
@@ -31,8 +35,8 @@ class BackendTagsModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// if $ids is not an array, make it so.
-		$ids = (!is_array($ids)) ? array($ids) : $ids;
+		// make sure $ids is an array
+		$ids = (array) $ids;
 
 		// delete tags
 		$db->delete('tags', 'id IN ('. implode(',', $ids) .')');
@@ -48,11 +52,10 @@ class BackendTagsModel
 	 */
 	public static function exists($id)
 	{
-		// exists?
-		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
-															FROM tags AS i
-															WHERE i.id = ?',
-															(int) $id) > 0);
+		return (bool) BackendModel::getDB()->getVar('SELECT i.id
+														FROM tags AS i
+														WHERE i.id = ?',
+														array((int) $id));
 	}
 
 
@@ -141,9 +144,9 @@ class BackendTagsModel
 		{
 			// get number of tags with the specified url
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
-										FROM tags AS i
-										WHERE i.url = ? AND i.language = ?',
-										array($URL, $language));
+											FROM tags AS i
+											WHERE i.url = ? AND i.language = ?',
+											array($URL, $language));
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -164,9 +167,9 @@ class BackendTagsModel
 
 			// get number of tags with the specified url
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
-										FROM tags AS i
-										WHERE i.url = ? AND i.language = ? AND i.id != ?',
-										array($URL, $language, $id));
+											FROM tags AS i
+											WHERE i.url = ? AND i.language = ? AND i.id != ?',
+											array($URL, $language, $id));
 
 			// there are items so, call this method again.
 			if($number != 0)
@@ -179,6 +182,7 @@ class BackendTagsModel
 			}
 		}
 
+		// return the unique URL!
 		return $URL;
 	}
 
@@ -190,20 +194,20 @@ class BackendTagsModel
 	 * @param	string $tag						The data for the tag.
 	 * @param	string[optional] $language		The language wherin the tag will be inserted, if not provided the workinglanguage will be used.
 	 */
-	public static function insertTag($tag, $language = null)
+	public static function insert($tag, $language = null)
 	{
 		// redefine
 		$tag = (string) $tag;
 		$language = ($language != null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// build record
-		$record['language'] = $language;
-		$record['tag'] = $tag;
-		$record['number'] = 0;
-		$record['url'] = self::getURL($tag);
+		$item['language'] = $language;
+		$item['tag'] = $tag;
+		$item['number'] = 0;
+		$item['url'] = self::getURL($tag);
 
-		// insert
-		return (int) BackendModel::getDB(true)->insert('tags', $record);
+		// insert and return id
+		return (int) BackendModel::getDB(true)->insert('tags', $item);
 	}
 
 
@@ -262,8 +266,8 @@ class BackendTagsModel
 			// get tag ids
 			$tagsAndIds = (array) $db->getPairs('SELECT i.tag, i.id
 													FROM tags AS i
-													WHERE i.tag IN("'. implode('", "', $tags) .'") AND i.language = ?',
-													$language);
+													WHERE i.tag IN ("'. implode('", "', $tags) .'") AND i.language = ?',
+													array($language));
 
 			// loop again and create tags that don't exist already
 			foreach($tags as $tag)
@@ -272,7 +276,7 @@ class BackendTagsModel
 				if(!isset($tagsAndIds[$tag]))
 				{
 					// insert tag
-					$tagsAndIds[$tag] = self::insertTag($tag, $language);
+					$tagsAndIds[$tag] = self::insert($tag, $language);
 				}
 			}
 
@@ -297,7 +301,7 @@ class BackendTagsModel
 		}
 
 		// add to search index
-		if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex($module, (int) $otherId, array('tags' => implode(' ', (array) $tags)));
+		if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)));
 
 		// decrement number
 		foreach($currentTags as $tag => $tagId)
@@ -316,11 +320,11 @@ class BackendTagsModel
 	 * Remark: $tag['id'] should be available.
 	 *
 	 * @return	void
-	 * @param	array $tag		The new data for the tag
+	 * @param	array $item		The new data for the tag
 	 */
-	public static function updateTag($tag)
+	public static function update($item)
 	{
-		BackendModel::getDB(true)->update('tags', $tag, 'id = ?', $tag['id']);
+		return BackendModel::getDB(true)->update('tags', $item, 'id = ?', $item['id']);
 	}
 }
 

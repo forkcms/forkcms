@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendSearchDeleteSynonym
  * This action will delete a synonym
  *
  * @package		backend
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchDeleteSynonym extends BackendBaseActionDelete
@@ -28,13 +27,13 @@ class BackendSearchDeleteSynonym extends BackendBaseActionDelete
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get all data for the item we want to delete
+			// get data
 			$this->record = (array) BackendSearchModel::getSynonym($this->id);
 
 			// delete item
 			BackendSearchModel::deleteSynonym($this->id);
 
-			// synonym was deleted, so redirect
+			// item was deleted, so redirect
 			$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=deleted-synonym&var='. urlencode($this->record['term']));
 		}
 

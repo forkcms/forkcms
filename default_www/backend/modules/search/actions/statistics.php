@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendSearchStatistics
  * This is the statistics-action, it will display the overview of search statistics
  *
  * @package		backend
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchStatistics extends BackendBaseActionIndex
@@ -36,7 +35,7 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	/**
 	 * Loads the datagrids
 	 *
-	 * @return	void
+	 * @return void
 	 */
 	private function loadDataGrid()
 	{
@@ -71,6 +70,7 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// assign the datagrid
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
 

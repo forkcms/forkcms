@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendPagesConfig
  * This is the configuration-object
  *
  * @package		frontend

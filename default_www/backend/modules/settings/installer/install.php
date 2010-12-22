@@ -1,7 +1,6 @@
 <?php
 
 /**
- * SettingsInstall
  * Installer for the settings module
  *
  * @package		installer

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsCronjobGetData
+ * This cronjob will fetch the requested data
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
@@ -226,8 +226,8 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 					// add entries to items
 					foreach($gaResults['entries'] as $entry)
 					{
-						$topReferrals[] = array('referrer' => $entry['source'] . $entry['referralPath'],
-										 		'pageviews' => $entry['pageviews']);
+						$topReferrals[] = array('referrer'	=> $entry['source'] . $entry['referralPath'],
+										 		'pageviews'	=> $entry['pageviews']);
 					}
 
 					// set cache

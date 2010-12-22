@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendPagesSettings
+ * This is the settings-action, it will display a form to set general pages settings
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */

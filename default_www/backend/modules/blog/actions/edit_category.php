@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendBlogEditCategory
  * This is the edit category action, it will display a form to edit an existing category.
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -123,22 +122,22 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$category = array();
-				$category['name'] = $this->frm->getField('name')->getValue();
-				$category['url'] = BackendBlogModel::getURLForCategory($category['name'], $this->id);
+				$item['id'] = $this->id;
+				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['url'] = BackendBlogModel::getURLForCategory($item['name'], $this->id);
 
 				// upate the item
-				BackendBlogModel::updateCategory($this->id, $category);
+				BackendBlogModel::updateCategory($item);
 
 				// it isn't the default category but it should be.
-				if(BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) != $this->id && $this->frm->getField('is_default')->getChecked())
+				if(BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) != $item['id'] && $this->frm->getField('is_default')->getChecked())
 				{
 					// store
-					BackendModel::setModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), $this->id);
+					BackendModel::setModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), $item['id']);
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($category['name']) .'&highlight=row-'. $this->id);
+				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

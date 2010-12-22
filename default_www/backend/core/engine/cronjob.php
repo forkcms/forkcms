@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendCronjob
  * This class will handle cronjob related stuff
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendCronjob
@@ -51,7 +50,7 @@ class BackendCronjob
 	 */
 	public function __construct()
 	{
-		// define the Named appliation
+		// define the Named Application
 		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 
 		// set the module
@@ -183,7 +182,6 @@ class BackendCronjob
 
 
 /**
- * BackendCronjobAction
  * This class is the real code, it creates an action, ...
  *
  * @package		backend

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendModel
  * In this file we store all generic functions that we will be using in the backend.
  *
  * @package		backend
@@ -107,6 +106,9 @@ class BackendModel
 
 		// check if debug-mode is active
 		if(SPOON_DEBUG) $warnings[] = array('message' => BL::getError('DebugModeIsActive'));
+/*
+		// @note: robots.txt are removed
+		// 	indexability is now based on meta noindex (SPOON_DEBUG true = not noindex)
 
 		// try to validate robots.txt
 		if(SpoonFile::exists(PATH_WWW .'/robots.txt'))
@@ -138,7 +140,7 @@ class BackendModel
 			// add warning
 			if(!$isOK) $warnings[] = array('message' => BL::getError('RobotsFileIsNotOK'));
 		}
-
+*/
 		// return
 		return $warnings;
 	}
@@ -279,7 +281,7 @@ class BackendModel
 	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
 	{
 		// list of allowed vowels and vowelsounds
-		$vowels = array('a', 'e','u', 'ae', 'ea');
+		$vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
 
 		// list of allowed consonants and consonant sounds
 		$consonants = array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
@@ -324,9 +326,11 @@ class BackendModel
 		// loop available formats
 		foreach((array) self::getModuleSetting('core', 'date_formats_long') as $format)
 		{
+			// get date based on given format
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -344,9 +348,11 @@ class BackendModel
 		// loop available formats
 		foreach((array) self::getModuleSetting('core', 'date_formats_short') as $format)
 		{
+			// get date based on given format
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -376,7 +382,7 @@ class BackendModel
 			Spoon::setObjectReference('database', $db);
 		}
 
-		// return it
+		// return
 		return Spoon::getObjectReference('database');
 	}
 
@@ -412,6 +418,7 @@ class BackendModel
 			self::$keys[$language] = $keys;
 		}
 
+		// return
 		return self::$keys[$language];
 	}
 
@@ -582,9 +589,11 @@ class BackendModel
 		// loop available formats
 		foreach((array) self::getModuleSetting('core', 'number_formats') as $format => $example)
 		{
+			// reformat array
 			$possibleFormats[$format] = $example;
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -617,9 +626,11 @@ class BackendModel
 		// loop available formats
 		foreach(self::getModuleSetting('core', 'time_formats') as $format)
 		{
+			// get time based on given format
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -649,7 +660,7 @@ class BackendModel
 		// add URL
 		else $URL .= $keys[$pageId];
 
-		// return
+		// return the unique URL!
 		return $URL;
 	}
 
@@ -721,7 +732,7 @@ class BackendModel
 			// append action
 			$URL .= '/'. FrontendLanguage::getAction(SpoonFilter::toCamelCase($action));
 
-			// return the URL
+			// return the unique URL!
 			return $URL;
 		}
 
@@ -781,6 +792,7 @@ class BackendModel
 			$minute = 0;
 		}
 
+		// make and return timestamp
 		return mktime($hour, $minute, 0, $month, $day, $year);
 	}
 
@@ -1003,7 +1015,7 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.0');
+		$akismet->setUserAgent('Fork CMS/2.1');
 
 		// try it to decide it the item is spam
 		try
@@ -1055,7 +1067,7 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.0');
+		$akismet->setUserAgent('Fork CMS/2.1');
 
 		// try it to decide it the item is spam
 		try

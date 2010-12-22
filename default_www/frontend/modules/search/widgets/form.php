@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendSearchWidgetForm
  * This is a widget with the search form
  *
  * @package		frontend
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchWidgetForm extends FrontendBaseWidget

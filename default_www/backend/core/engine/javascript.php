@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendJavascript
  * This class will handle files JS-files that have to be parsed by PHP
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
@@ -44,7 +43,7 @@ class BackendJavascript
 	 */
 	public function __construct()
 	{
-		// define the Named appliation
+		// define the Named Application
 		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 
 		// set the module
@@ -193,7 +192,7 @@ class BackendJavascript
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(403);
 
-				// stop script
+				// stop script execution
 				exit;
 			}
 		}

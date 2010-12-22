@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendBlogConfig
  * This is the configuration-object for the blog module
  *
  * @package		backend

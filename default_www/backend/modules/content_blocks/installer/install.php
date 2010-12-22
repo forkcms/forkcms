@@ -1,14 +1,13 @@
 <?php
 
 /**
- * ContentBlocksInstall
  * Installer for the content blocks module
  *
  * @package		installer
  * @subpackage	content_blocks
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class ContentBlocksInstall extends ModuleInstaller

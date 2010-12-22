@@ -1,21 +1,31 @@
 <?php
 
 /**
- * BackendSearchModel
  * In this file we store all generic functions that we will be using in the search module
  *
  * @package		backend
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchModel
 {
+	/**
+	 * Overview of all synonyms
+	 *
+	 * @var	string
+	 */
 	const QRY_DATAGRID_BROWSE_SYNONYMS = 'SELECT i.id, i.term, i.synonym
 											FROM search_synonyms AS i
 											WHERE i.language = ?';
 
+
+	/**
+	 * Overview of all statistics
+	 *
+	 * @var	string
+	 */
 	const QRY_DATAGRID_BROWSE_STATISTICS = 'SELECT UNIX_TIMESTAMP(i.time) AS time, i.term, i.data
 											FROM search_statistics AS i
 											WHERE i.language = ?';
@@ -105,7 +115,8 @@ class BackendSearchModel
 			$value = strip_tags((string) $value);
 
 			// update search index
-			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
+			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active)
+							VALUES (?, ?, ?, ?, ?, ?)
 							ON DUPLICATE KEY UPDATE value = ?, active = ?', array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y'));
 		}
 
@@ -156,7 +167,7 @@ class BackendSearchModel
 	 */
 	public static function getModuleSettings()
 	{
-		return BackendModel::getDB()->retrieve('SELECT module, searchable, weight
+		return BackendModel::getDB()->getRecords('SELECT module, searchable, weight
 													FROM search_modules',
 													array(), 'module');
 	}
@@ -187,7 +198,8 @@ class BackendSearchModel
 	public static function insertModuleSettings($module, $searchable, $weight)
 	{
 		// insert or update
-		BackendModel::getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
+		BackendModel::getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight)
+											VALUES (?, ?, ?)
 											ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
 											array($module['module'], $searchable, $weight, $searchable, $weight));
 
@@ -218,7 +230,7 @@ class BackendSearchModel
 	/**
 	 * Invalidate search cache
 	 *
-	 * @return	void
+	 * @return void
 	 */
 	public static function invalidateCache()
 	{
@@ -230,13 +242,12 @@ class BackendSearchModel
 	 * Update a synonym
 	 *
 	 * @return	void
-	 * @param	int $id			The Id of the synonym
-	 * @param	array $item		The data to update in the db.
+	 * @param	array $item					The data to update in the db.
 	 */
-	public static function updateSynonym($id, $item)
+	public static function updateSynonym($item)
 	{
 		// update
-		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($id));
+		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($item['id']));
 
 		// invalidate the cache for search
 		self::invalidateCache();

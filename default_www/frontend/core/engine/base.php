@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBaseObject
  * This class will be the base of the objects used in onsite
  *
  * @package		frontend
@@ -46,7 +45,6 @@ class FrontendBaseObject
 
 
 /**
- * FrontendBaseConfig
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class.
  *
  * @package		frontend
@@ -213,7 +211,6 @@ class FrontendBaseConfig
 
 
 /**
- * FrontendBaseBlock
  * This class implements a lot of functionality that can be extended by a specific block
  * @later Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
@@ -703,7 +700,6 @@ class FrontendBaseBlock
 
 
 /**
- * FrontendBaseWidget
  * This class implements a lot of functionality that can be extended by a specific widget
  * @later Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
@@ -981,7 +977,6 @@ class FrontendBaseWidget
 
 
 /**
- * FrontendBaseAJAXAction
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @package		frontend
@@ -1085,8 +1080,10 @@ class FrontendBaseAJAXAction
 		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
-		// output to the browser
+		// output JSON to the browser
 		echo json_encode($response);
+
+		// stop script execution
 		exit;
 	}
 

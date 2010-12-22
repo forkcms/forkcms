@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendUsersIndex
  * This is the index-action (default), it will display the users-overview
  *
  * @package		backend
  * @subpackage	users
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */

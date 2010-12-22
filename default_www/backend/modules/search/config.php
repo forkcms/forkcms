@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendSearchConfig
  * This is the configuration-object for the search module
  *
  * @package		backend

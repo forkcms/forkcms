@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlogWidgetArchive
  * This is a widget with the link to the archive
  *
  * @package		frontend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBlogWidgetArchive extends FrontendBaseWidget

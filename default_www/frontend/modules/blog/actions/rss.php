@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlogRSS
  * This is the RSS-feed
  *
  * @package		frontend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */

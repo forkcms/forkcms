@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAuthenticationResetPassword
  * This is the reset password action, it will display a form that allows the user to reset his/her password.
  *
  * @package		backend
  * @subpackage	authentication
  *
- * @author		Dave Lens <dave@netlash.com>
+ * @author 		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendAuthenticationResetPassword extends BackendBaseActionAdd

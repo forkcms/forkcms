@@ -1,7 +1,6 @@
 <?php
 
 /**
- * InstallerStep6
  * Step 6 of the Fork installer
  *
  * @package		install
@@ -75,7 +74,7 @@ class InstallerStep6 extends InstallerStep
 		$locale = (array) $db->getRecords('SELECT type, module, name, value
 											FROM locale
 											WHERE language = ? AND application = ?
-											ORDER BY type ASC, name ASC, module ASC;',
+											ORDER BY type ASC, name ASC, module ASC',
 											array((string) $language, (string) $application));
 
 		// start generating PHP
@@ -199,7 +198,7 @@ class InstallerStep6 extends InstallerStep
 			// get applications
 			$applications = $this->db->getColumn('SELECT DISTINCT application
 													FROM locale
-													WHERE language = ?;',
+													WHERE language = ?',
 													array((string) $language));
 
 			// loop applications
@@ -275,7 +274,7 @@ class InstallerStep6 extends InstallerStep
 		$this->db = new SpoonDatabase('mysql', SpoonSession::get('db_hostname'), SpoonSession::get('db_username'), SpoonSession::get('db_password'), SpoonSession::get('db_database'), $port);
 
 		// utf8 compliance & MySQL-timezone
-		$this->db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00";');
+		$this->db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
 
 		/**
 		 * First we need to install the core. All the linked modules, settings and sql tables are
@@ -284,7 +283,9 @@ class InstallerStep6 extends InstallerStep
 		require_once PATH_WWW .'/backend/core/installer/install.php';
 
 		// install the core
-		$install = new CoreInstall($this->db, SpoonSession::get('languages'), SpoonSession::get('example_data'),
+		$install = new CoreInstall($this->db,
+									SpoonSession::get('languages'),
+									SpoonSession::get('example_data'),
 									array('default_language' => SpoonSession::get('default_language'),
 											'spoon_debug_email' => SpoonSession::get('email'),
 											'api_email' => SpoonSession::get('email'),

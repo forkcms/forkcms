@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendSearchAjaxLivesuggest
  * This is the livesuggest-action, it will output a list of results for a certain search
  *
  * @package		frontend
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
@@ -121,7 +120,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	/**
 	 * Load the cached data
 	 *
-	 * @return	bool
+	 * @return bool
 	 */
 	private function getCachedData()
 	{

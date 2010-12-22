@@ -1,15 +1,14 @@
 <?php
 
 /**
- * BlogInstall
  * Installer for the blog module
  *
  * @package		installer
  * @subpackage	blog
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BlogInstall extends ModuleInstaller
@@ -108,10 +107,11 @@ class BlogInstall extends ModuleInstaller
 
 
 			// check if a page for blog already exists in this language
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?', array($blogID, $language)) == 0)
+												WHERE b.extra_id = ? AND p.language = ?', 
+												array($blogID, $language)))
 			{
 				// insert page
 				$this->insertPage(array('title' => 'Blog',
@@ -234,7 +234,7 @@ class BlogInstall extends ModuleInstaller
 	 */
 	private function existsCategory($language, $id)
 	{
-		return (bool) ($this->getDB()->getVar('SELECT COUNT(id) FROM blog_categories WHERE id = ? AND language = ?;', array((int) $id, (string) $language)) > 0);
+		return (bool) $this->getDB()->getVar('SELECT COUNT(id) FROM blog_categories WHERE id = ? AND language = ?', array((int) $id, (string) $language));
 	}
 
 
@@ -246,7 +246,7 @@ class BlogInstall extends ModuleInstaller
 	 */
 	private function getCategory($language)
 	{
-		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?;', (string) $language);
+		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?', array((string) $language));
 	}
 
 
@@ -262,7 +262,7 @@ class BlogInstall extends ModuleInstaller
 		$db = $this->getDB();
 
 		// check if blogposts already exist in this language
-		if((int) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)) == 0)
+		if(!(bool) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)))
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array('id' => 1,
@@ -328,7 +328,7 @@ class BlogInstall extends ModuleInstaller
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Tijs Verkoyen',
 												'email' => 'tijs@spoon-library.com',
-												'website' => 'http://www.sumocoders.com',
+												'website' => 'http://www.sumocoders.be',
 												'text' => 'wicked!',
 												'type' => 'comment',
 												'status' => 'published',

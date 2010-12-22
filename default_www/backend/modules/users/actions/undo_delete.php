@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendUsersUndoDelete
  * This is the undo-delete-action, it will restore a deleted user
  *
  * @package		backend
  * @subpackage	users
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendUsersUndoDelete extends BackendBaseAction

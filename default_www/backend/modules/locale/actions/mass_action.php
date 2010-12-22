@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendLocaleMassAction
  * This action is used to delete one or more locale items.
  *
  * @package		backend
  * @subpackage	locale
  *
- * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendLocaleMassAction extends BackendBaseAction
@@ -45,7 +44,7 @@ class BackendLocaleMassAction extends BackendBaseAction
 			// redefine id's
 			$aIds = (array) $_GET['id'];
 
-			// delete comment(s)
+			// delete item(s)
 			if($action == 'delete') BackendLocaleModel::delete($aIds);
 		}
 

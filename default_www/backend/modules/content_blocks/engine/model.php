@@ -1,25 +1,33 @@
 <?php
 
 /**
- * BackendContentBlocksModel
  * In this file we store all generic functions that we will be using in the content_blocks module
  *
  * @package		backend
  * @subpackage	content_blocks
  *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendContentBlocksModel
 {
-	// overview of the items
+	/**
+	 * Overview of the items
+	 *
+	 * @var	string
+	 */
 	const QRY_BROWSE = 'SELECT i.id, i.title
 						FROM content_blocks AS i
 						WHERE i.status = ? AND i.language = ?';
 
 
-	// overview of the revisions for an item
+	/**
+	 * Overview of the revisions for an item
+	 *
+	 * @var	string
+	 */
 	const QRY_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 									FROM content_blocks AS i
 									WHERE i.status = ? AND i.id = ? AND i.language = ?
@@ -40,18 +48,23 @@ class BackendContentBlocksModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// get extra id for this content block
-		$extraId = (int) $db->getVar('SELECT id
-										FROM pages_extras
-										WHERE module = ? AND type = ? AND sequence = ?',
-										array('content_blocks', 'widget', '200'. $id));
+		// get item
+		$item = self::get($id);
+
+		// build extra
+		$extra = array('id' => $item['extra_id'],
+						'module' => 'content_blocks',
+						'type' => 'widget',
+						'action' => 'detail');
+
+		// delete extra
+		$db->delete('pages_extras', 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// update blocks with this item linked
-		$db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', $extraId);
+		$db->update('pages_blocks', array('extra_id' => null, 'html' => ''), 'extra_id = ?', array($item['extra_id']));
 
 		// delete all records
 		$db->delete('content_blocks', 'id = ?', $id);
-		$db->delete('pages_extras', 'id = ?', $extraId);
 	}
 
 
@@ -64,24 +77,20 @@ class BackendContentBlocksModel
 	 */
 	public static function exists($id, $activeOnly = true)
 	{
-		// redefine
-		$id = (int) $id;
-		$activeOnly = (bool) $activeOnly;
-
 		// get db
 		$db = BackendModel::getDB();
 
 		// if the item should also be active, there should be at least one row to return true
-		if($activeOnly) return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
+		if((bool) $activeOnly) return (bool) $db->getVar('SELECT COUNT(i.id)
 															FROM content_blocks AS i
 															WHERE i.id = ? AND i.status = ?',
-															array($id, 'active')) > 0);
+															array((int) $id, 'active'));
 
 		// fallback, this doesn't take the active status in account
-		return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
-											FROM content_blocks AS i
-											WHERE i.revision_id = ?',
-											array($id)) > 0);
+		return (bool) $db->getVar('SELECT COUNT(i.id)
+									FROM content_blocks AS i
+									WHERE i.revision_id = ?',
+									array((int) $id));
 	}
 
 
@@ -93,18 +102,22 @@ class BackendContentBlocksModel
 	 */
 	public static function get($id)
 	{
-		// redefine
-		$id = (int) $id;
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+															FROM content_blocks AS i
+															WHERE i.id = ? AND i.status = ?
+															LIMIT 1',
+															array((int) $id, 'active'));
+	}
 
-		// get db
-		$db = BackendModel::getDB();
 
-		// get record and return it
-		return (array) $db->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
-										FROM content_blocks AS i
-										WHERE i.id = ? AND i.status = ?
-										LIMIT 1',
-										array($id, 'active'));
+	/**
+	 * Get the maximum id.
+	 *
+	 * @return	int
+	 */
+	public static function getMaximumId()
+	{
+		return (int) BackendModel::getDB()->getVar('SELECT MAX(i.id) FROM content_blocks AS i LIMIT 1');
 	}
 
 
@@ -117,16 +130,11 @@ class BackendContentBlocksModel
 	 */
 	public static function getRevision($id, $revisionId)
 	{
-		// redefine
-		$id = (int) $id;
-		$revisionId = (int) $revisionId;
-
-		// get record and return it
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
 															FROM content_blocks AS i
 															WHERE i.id = ? AND i.revision_id = ?
 															LIMIT 1',
-															array($id, $revisionId));
+															array((int) $id, (int) $revisionId));
 	}
 
 
@@ -134,42 +142,42 @@ class BackendContentBlocksModel
 	 * Add a new item.
 	 *
 	 * @return	int
-	 * @param	array $values		The data to insert.
+	 * @param	array $item			The data to insert.
 	 */
-	public static function insert(array $values)
+	public static function insert(array $item)
 	{
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// calculate new id
-		$newId = (int) $db->getVar('SELECT MAX(id) FROM content_blocks LIMIT 1') + 1;
-
-		// build array
-		$values['id'] = $newId;
-		$values['user_id'] = BackendAuthentication::getUser()->getUserId();
-		$values['language'] = BL::getWorkingLanguage();
-		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
-		$values['status'] = 'active';
-		$values['created_on'] = BackendModel::getUTCDate();
-		$values['edited_on'] = BackendModel::getUTCDate();
-
-		// insert and return the insertId
-		$db->insert('content_blocks', $values);
-
-		// build array
-		$extra['module'] = 'content_blocks';
-		$extra['type'] = 'widget';
-		$extra['label'] = 'ContentBlocks';
-		$extra['action'] = 'detail';
-		$extra['data'] = serialize(array('language' => $values['language'], 'extra_label' => $values['title'], 'id' => $newId, 'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $newId));
-		$extra['hidden'] = 'N';
-		$extra['sequence'] = '200'. $newId;
+		// build extra
+		$extra = array('module' => 'content_blocks',
+						'type' => 'widget',
+						'label' => 'ContentBlocks',
+						'action' => 'detail',
+						'data' => null,
+						'hidden' => 'N',
+						'sequence' => BackendModel::getDB(false)->getVar('SELECT MAX(i.sequence) + 1
+																			FROM pages_extras AS i
+																			WHERE i.module = ?', array('content_blocks')));
+		if(is_null($extra['sequence'])) $extra['sequence'] = $db->getVar('SELECT CEILING(MAX(i.sequence) / 1000) * 1000
+																			FROM pages_extras AS i');
 
 		// insert extra
-		$db->insert('pages_extras', $extra);
+		$item['extra_id'] = (int) BackendModel::getDB(true)->insert('pages_extras', $extra);
+		$extra['id'] = $item['extra_id'];
 
-		// return the new id
-		return $newId;
+		// insert and return the new revision id
+		$item['revision_id'] = $db->insert('content_blocks', $item);
+
+		// update extra (item id is now known)
+		$extra['data'] = serialize(array('id' => $item['id'],
+											'extra_label' => $item['title'],
+											'language' => $item['language'],
+											'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id']));
+		BackendModel::getDB(true)->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+
+		// return the new revision_id
+		return $item['revision_id'];
 	}
 
 
@@ -177,34 +185,33 @@ class BackendContentBlocksModel
 	 * Update an existing item.
 	 *
 	 * @return	int
-	 * @param	int $id				The id for the item to update.
-	 * @param	array $values		The new data.
+	 * @param	array $item			The new data.
 	 */
-	public static function update($id, array $values)
+	public static function update(array $item)
 	{
-		// redefine
-		$id = (int) $id;
-
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// get current version
-		$version = self::get($id);
+		// build extra
+		$extra = array('id' => $item['extra_id'],
+						'module' => 'content_blocks',
+						'type' => 'widget',
+						'label' => 'ContentBlocks',
+						'action' => 'detail',
+						'data' => serialize(array('id' => $item['id'],
+													'extra_label' => $item['title'],
+													'language' => $item['language'],
+													'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id'])),
+						'hidden' => 'N');
 
-		// build array
-		$values['id'] = $id;
-		$values['user_id'] = BackendAuthentication::getUser()->getUserId();
-		$values['language'] = $version['language'];
-		$values['hidden'] = ($values['hidden']) ? 'N' : 'Y';
-		$values['status'] = 'active';
-		$values['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', $version['created_on']);
-		$values['edited_on'] = BackendModel::getUTCDate();
+		// update extra
+		BackendModel::getDB(true)->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// archive all older versions
-		$db->update('content_blocks', array('status' => 'archived'), 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
+		$db->update('content_blocks', array('status' => 'archived'), 'id = ? AND language = ?', array($item['id'], BL::getWorkingLanguage()));
 
 		// insert new version
-		$db->insert('content_blocks', $values);
+		$item['revision_id'] = $db->insert('content_blocks', $item);
 
 		// how many revisions should we keep
 		$rowsToKeep = (int) BackendModel::getModuleSetting('content_blocks', 'max_num_revisions', 20);
@@ -215,19 +222,13 @@ class BackendContentBlocksModel
 														WHERE i.id = ? AND i.language = ? AND i.status = ?
 														ORDER BY i.edited_on DESC
 														LIMIT ?',
-														array($id, BL::getWorkingLanguage(), 'archived', $rowsToKeep));
+														array($item['id'], BL::getWorkingLanguage(), 'archived', $rowsToKeep));
 
 		// delete other revisions
-		if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND language = ? AND status = ? AND revision_id NOT IN('. implode(', ', $revisionIdsToKeep) .')', array($id, BL::getWorkingLanguage(), 'archived'));
+		if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND language = ? AND status = ? AND revision_id NOT IN ('. implode(', ', $revisionIdsToKeep) .')', array($item['id'], BL::getWorkingLanguage(), 'archived'));
 
-		// build array
-		$extra['data'] = serialize(array('language' => $values['language'], 'extra_label' => $values['title'], 'id' => $id, 'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $id));
-
-		// update extra
-		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('content_blocks', 'widget', '200'. $id));
-
-		// return id
-		return $id;
+		// return the new revision_id
+		return $item['revision_id'];
 	}
 }
 

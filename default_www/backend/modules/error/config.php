@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendErrorConfig
  * This is the configuration-object
  *
  * @package		backend

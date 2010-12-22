@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendTagsWidgetTagcloud
  * This is a widget with the tags
  *
  * @package		frontend
  * @subpackage	tags
  *
- * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author 		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTagsWidgetTagcloud extends FrontendBaseWidget

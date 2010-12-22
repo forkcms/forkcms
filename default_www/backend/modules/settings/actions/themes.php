@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendSettingsThemes
+ * This is the themes-action, it will display a form to set theme settings
  *
  * @package		backend
  * @subpackage	settings
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSettingsThemes extends BackendBaseActionIndex

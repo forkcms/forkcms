@@ -1,7 +1,6 @@
 <?php
 
 /**
- * APIInit
  * This class will initiate the API
  *
  * @package		api
@@ -255,7 +254,7 @@ class APIInit
 		// create response array
 		$response = array('code' => ($exception->getCode() != 0) ? $exception->getCode() : 500, 'message' => $exception->getMessage());
 
-		// output to the browser
+		// output JSON to the browser
 		echo json_encode($response);
 
 		// stop script execution
@@ -293,7 +292,7 @@ class APIInit
 		// build HTML for nice error
 		$html = '<html><body>Something went wrong.</body></html>';
 
-		// output
+		// output HTML to the browser
 		echo $html;
 
 		// stop script execution
@@ -316,7 +315,7 @@ class APIInit
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
-		// output
+		// output exception
 		echo '// '. $exception->getMessage();
 
 		// stop script execution
@@ -364,7 +363,7 @@ class APIInit
 		if(in_array(false, $installed))
 		{
 			// installation folder
-			$installer = dirname(dirname(__FILE__)) .'/install';
+			$installer = dirname(__FILE__) .'/../install/cache';
 
 			// Fork has not yet been installed
 			if(file_exists($installer) && is_dir($installer) && !file_exists($installer .'/installed.txt'))
@@ -374,7 +373,10 @@ class APIInit
 			}
 
 			// we can nog load configuration file, however we can not run installer
-			exit('Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.');
+			echo 'Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.';
+
+			// stop script execution
+			exit;
 		}
 	}
 

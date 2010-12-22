@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendUsersAdd
  * This is the add-action, it will display a form to create a new user
  *
  * @package		backend
  * @subpackage	users
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -152,7 +151,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// save changes
 				$user['id'] = (int) BackendUsersModel::insert($user, $settings);
 
-				// does the user submitted an avatar
+				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// create new filename

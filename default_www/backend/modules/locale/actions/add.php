@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendLocaleAdd
  * This is the add action, it will display a form to add an item to the locale.
  *
  * @package		backend
  * @subpackage	locale
  *
- * @author		Davy Hellemans <davy@netlash.com>
+ * @author 		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendLocaleAdd extends BackendBaseActionAdd
@@ -156,21 +155,20 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$locale = array();
-				$locale['user_id'] = BackendAuthentication::getUser()->getUserId();
-				$locale['language'] = $this->frm->getField('language')->getValue();
-				$locale['application'] = $this->frm->getField('application')->getValue();
-				$locale['module'] = $this->frm->getField('module')->getValue();
-				$locale['type'] = $this->frm->getField('type')->getValue();
-				$locale['name'] = $this->frm->getField('name')->getValue();
-				$locale['value'] = $this->frm->getField('value')->getValue();
-				$locale['edited_on'] = BackendModel::getUTCDate();
+				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['language'] = $this->frm->getField('language')->getValue();
+				$item['application'] = $this->frm->getField('application')->getValue();
+				$item['module'] = $this->frm->getField('module')->getValue();
+				$item['type'] = $this->frm->getField('type')->getValue();
+				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['value'] = $this->frm->getField('value')->getValue();
+				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// update item
-				$id = BackendLocaleModel::insert($locale);
+				$item['id'] = BackendLocaleModel::insert($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=added&var='. urlencode($locale['name']) .'&highlight=row-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=added&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendException
  * This exception is used to handle backend related exceptions.
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author 		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendException extends SpoonException

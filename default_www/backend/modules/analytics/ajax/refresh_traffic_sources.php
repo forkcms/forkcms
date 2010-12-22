@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsAjaxCheckStatus
+ * This edit-action will refresh the traffic sources using Ajax
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author 		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendSearchAjaxAutocomplete
  * This is the autocomplete-action, it will output a list of searches that start with a certain string.
  *
  * @package		frontend
  * @subpackage	search
  *
- * @author		Matthias Mullie <matthias@netlash.com>
+ * @author 		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsConfig
  * This is the configuration-object for the analytics module
  *
  * @package		backend

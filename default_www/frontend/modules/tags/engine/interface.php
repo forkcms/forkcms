@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendTagsInterface
  * In this file we specify the functions a class must implement to work with tags.
  * To use tags in your module simply implement this interface in your module's model class.
  *

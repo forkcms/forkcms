@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendTagsEdit
  * This is the edit action, it will display a form to edit an existing tag.
  *
  * @package		backend
  * @subpackage	tags
  *
- * @author		Dave Lens <dave@netlash.com>
+ * @author 		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -191,16 +190,15 @@ class BackendTagsEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build tag
-				$tag = array();
-				$tag['id'] = $this->id;
-				$tag['tag'] = $this->frm->getField('name')->getValue();
-				$tag['url'] = BackendTagsModel::getURL($tag['tag'], $this->id);
+				$item['id'] = $this->id;
+				$item['tag'] = $this->frm->getField('name')->getValue();
+				$item['url'] = BackendTagsModel::getURL($item['tag'], $this->id);
 
 				// upate the item
-				BackendTagsModel::updateTag($tag);
+				$item['id'] = BackendTagsModel::updateTag($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($tag['tag']) .'&highlight=row-'. $this->id);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['tag']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}
