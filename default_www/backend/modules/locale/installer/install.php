@@ -1,7 +1,6 @@
 <?php
 
 /**
- * LocaleInstall
  * Installer for the locale module
  *
  * @package		installer
@@ -272,7 +271,9 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'None', 'geen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Notifications', 'verwitigingen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NoTheme', 'geen thema');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NumberFormat', 'formaat getallen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'NumberOfBlocks', 'aantal blokken');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Numbers', 'getallen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'OK', 'OK');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Or', 'of');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Overview', 'overzicht');
@@ -428,6 +429,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpMetaKeywords', 'Kies een aantal goed gekozen termen die de inhoud omschrijven.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpMetaURL', 'Vervang de automatisch gegenereerde URL door een zelfgekozen URL.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpNickname', 'De naam waaronder je wilt publiceren (bijvoorbeeld als auteur van een blogartikel).');
+		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpPageTitle', 'De titel die in het browservenster staat (<code>&lt;title&gt;</code>).');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpResetPassword', 'Vul je gewenste, nieuwe wachtwoord in.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpRevisions', 'De laatst opgeslagen versies worden hier bijgehouden. De huidige versie wordt pas overschreven als je opslaat.');
 		$this->insertLocale('nl', 'backend', 'core', 'msg', 'HelpRSSDescription', 'Beschrijf bondig wat voor soort inhoud de RSS-feed zal bevatten.');
@@ -641,7 +643,9 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'None', 'none');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Notifications', 'notifications');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NoTheme', 'no theme');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NumberFormat', 'number format');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'NumberOfBlocks', 'number of blocks');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Numbers', 'numbers');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'OK', 'OK');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Or', 'or');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Overview', 'overview');
@@ -787,7 +791,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'FR', 'French');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpAvatar', 'A square picture produces the best results.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpBlogger', 'Select the file that you exported from <a href="http://blogger.com">Blogger</a>.');
-		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpDrafts', 'Here you can see your draft. These are temporarily versions.');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpDrafts', 'Here you can see your draft. These are temporary versions.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpEmailFrom', 'E-mails sent from the CMS use these settings.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpEmailTo', 'Notifications from the CMS are sent here.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpFeedburnerURL', 'eg. http://feeds.feedburner.com/your-website');
@@ -797,6 +801,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaKeywords', 'Choose a number of wellthought terms that describe the content.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpMetaURL', 'Replace the automaticly generated URL by a custom one.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpNickname', 'The name you want to be published as (e.g. as the author of an article).');
+		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpPageTitle', 'The title in the browser window (<code>&lt;title&gt;</code>).');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpResetPassword', 'Provide your new password.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpRevisions', 'The last saved versions are kept here. The current version will only be overwritten when you save your changes.');
 		$this->insertLocale('en', 'backend', 'core', 'msg', 'HelpRSSDescription', 'Briefly describe what kind of content the RSS feed will contain.');

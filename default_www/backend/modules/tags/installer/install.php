@@ -1,7 +1,6 @@
 <?php
 
 /**
- * TagsInstall
  * Installer for the tags module
  *
  * @package		installer

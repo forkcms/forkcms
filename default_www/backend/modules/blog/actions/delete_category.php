@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendBlogDeleteCategory
  * This action will delete a category
  *
  * @package		backend
@@ -28,7 +27,7 @@ class BackendBlogDeleteCategory extends BackendBaseActionDelete
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
-			// get all data for the item we want to edit
+			// get data
 			$this->record = (array) BackendBlogModel::getCategory($this->id);
 
 			// delete item

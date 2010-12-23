@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendUsersEdit
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
  * @package		backend
@@ -140,12 +139,15 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
 					{
 						// was this emailaddress deleted before
-						if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(sprintf(BL::getError('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
-
-						else
+						if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue()))
 						{
-							// email already exists
-							if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id)) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
+							$this->frm->getField('email')->addError(sprintf(BL::getError('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
+						}
+
+						// email already exists
+						elseif(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id))
+						{
+							$this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
 						}
 					}
 				}
@@ -182,7 +184,6 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build user-array
-				$user = array();
 				$user['id'] = $this->id;
 				$user['group_id'] = $this->frm->getField('group')->getValue();
 				if(!$this->user->isGod()) $user['email'] = $this->frm->getField('email')->getValue(true);
@@ -202,7 +203,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
-				// is there a file given
+				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// delete old avatar if it isn't the default-image

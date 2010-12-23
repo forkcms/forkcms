@@ -1,8 +1,7 @@
 <?php
 
 /**
- * FrontendSearchIndex
- * This is the overview-action
+ * This action will display a form to search
  *
  * @package		frontend
  * @subpackage	search
@@ -154,7 +153,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		// include cache file
 		require_once $this->cacheFile;
 
-		// set info
+		// set info (received from cache)
 		$this->pagination = $pagination;
 		$this->items = $items;
 

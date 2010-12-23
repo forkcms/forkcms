@@ -1,13 +1,13 @@
 <?php
 
 /**
- * BackendBlogCategories
  * This is the categories-action, it will display the overview of blog categories
  *
  * @package		backend
  * @subpackage	blog
  *
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogCategories extends BackendBaseActionIndex
@@ -56,7 +56,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		$this->datagrid->setPaging(false);
 
 		// add attributes, so the inline editing has all the needed data
-		$this->datagrid->setColumnAttributes('name', array('rel' => '{id:[id]}'));
+		$this->datagrid->setColumnAttributes('name', array('data-id' => '{id:[id]}'));
 	}
 
 

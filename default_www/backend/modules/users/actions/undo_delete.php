@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendUsersUndoDelete
  * This is the undo-delete-action, it will restore a deleted user
  *
  * @package		backend

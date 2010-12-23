@@ -1,7 +1,6 @@
 <?php
 
 /**
- * TagsConfig
  * This is the configuration-object for the tags module
  *
  * @package		backend

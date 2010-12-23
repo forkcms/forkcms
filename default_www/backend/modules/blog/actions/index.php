@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendBlogIndex
  * This is the index-action (default), it will display the overview of blog posts
  *
  * @package		backend
@@ -9,7 +8,8 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendBlogIndex extends BackendBaseActionIndex
@@ -74,6 +74,9 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		// set headers
 		$this->dgPosts->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author')), 'publish_on' => ucfirst(BL::getLabel('PublishedOn'))));
 
+		// hide columns
+		$this->dgPosts->setColumnsHidden(array('revision_id'));
+
 		// sorting columns
 		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'user_id', 'comments'), 'publish_on');
 		$this->dgPosts->setSortParameter('desc');
@@ -87,6 +90,9 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 		// add edit column
 		$this->dgPosts->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
+
+		// our JS needs to know an id, so we can highlight it
+		$this->dgPosts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
 
@@ -119,6 +125,9 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 		// add edit column
 		$this->dgDrafts->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]', BL::getLabel('Edit'));
+
+		// our JS needs to know an id, so we can highlight it
+		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
 
@@ -130,10 +139,13 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	private function loadDatagridRecentPosts()
 	{
 		// create datagrid
-		$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active', BL::getWorkingLanguage()));
+		$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active', BL::getWorkingLanguage(), 4));
 
 		// set headers
 		$this->dgRecent->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('Author'))));
+
+		// hide columns
+		$this->dgRecent->setColumnsHidden(array('revision_id'));
 
 		// set paging
 		$this->dgRecent->setPaging(false);
@@ -147,6 +159,9 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 		// add edit column
 		$this->dgRecent->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
+
+		// our JS needs to know an id, so we can highlight it
+		$this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
 

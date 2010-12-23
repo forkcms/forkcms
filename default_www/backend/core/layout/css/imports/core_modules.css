@@ -353,7 +353,7 @@
 	#blog.blogAddEdit #addValue-tags { width: 120px; }
 	#blog.blogAddEdit #newCategoryValue { width: 120px; }
 
-	#blog.blogAddEdit #publishOnDate { width: 100px; }
+	#blog.blogAddEdit #publishOnDate { width: 90px; }
 	#blog.blogAddEdit #publishOnTime { width: 40px; }
 
 	/*

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendTagsAjaxEdit
+ * This edit-action will update tags using Ajax
  *
  * @package		backend
  * @subpackage	tags
@@ -26,17 +26,16 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 		$tag = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
 
 		// validate
-		if($id == 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($tag == '') $this->output(self::BAD_REQUEST, null, BL::getError('NameIsRequired'));
+		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($tag === '') $this->output(self::BAD_REQUEST, null, BL::getError('NameIsRequired'));
 
 		// build array
-		$item = array();
 		$item['id'] = $id;
 		$item['tag'] = SpoonFilter::htmlspecialchars($tag);
 		$item['url'] = BackendTagsModel::getURL($item['tag'], $id);
 
 		// update
-		BackendTagsModel::updateTag($item);
+		BackendTagsModel::update($item);
 
 		// output
 		$this->output(self::OK, $item, vsprintf(BL::getMessage('Edited'), array($item['tag'])));

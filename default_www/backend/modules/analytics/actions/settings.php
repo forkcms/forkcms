@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsSettings
+ * This is the settings-action, it will display a form to set general analytics settings
  *
  * @package		backend
  * @subpackage	analytics
@@ -265,11 +265,11 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 
 
 	/**
-	 * Sort account
+	 * Helper function to sort accounts
 	 *
 	 * @return	int
-	 * @param	string $account1
-	 * @param	string $account2
+	 * @param	array $account1		First account for comparison
+	 * @param	array $account2		Second account for comparison
 	 */
 	public static function sortAccounts($account1, $account2)
 	{

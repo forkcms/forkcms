@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendTagsWidgetRelated
  * This is a widget with the related items based on tags
  *
  * @package		frontend
@@ -172,7 +171,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign
-		$this->tpl->assign('widgetRelated', $this->related);
+		$this->tpl->assign('widgetTagsRelated', $this->related);
 	}
 }
 

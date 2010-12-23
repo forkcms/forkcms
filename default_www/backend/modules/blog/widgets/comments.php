@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendWidgetComments
+ * This widget will show the latest comments
  *
  * @package		backend
  * @subpackage	blog

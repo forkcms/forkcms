@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsAjaxCheckStatus
+ * This edit-action will check the status using Ajax
  *
  * @package		backend
  * @subpackage	analytics

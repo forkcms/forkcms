@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsIndex
  * This is the loading-action, it will display a spinner while data is collected
  *
  * @package		backend

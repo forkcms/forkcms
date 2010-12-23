@@ -1,8 +1,6 @@
 <?php
 
 /**
- * BackendSettingsConfig
- *
  * This is the configuration-object for the settings module
  *
  * @package		backend

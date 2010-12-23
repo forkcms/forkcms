@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendBaseAction
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseAction
@@ -282,14 +281,13 @@ class BackendBaseAction
 
 
 /**
- * BackendBaseActionIndex
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the index action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionIndex extends BackendBaseAction
@@ -317,14 +315,13 @@ class BackendBaseActionIndex extends BackendBaseAction
 
 
 /**
- * BackendBaseActionAdd
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the add action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionAdd extends BackendBaseAction
@@ -359,14 +356,13 @@ class BackendBaseActionAdd extends BackendBaseAction
 
 
 /**
- * BackendBaseActionEdit
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the edit action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionEdit extends BackendBaseAction
@@ -424,14 +420,13 @@ class BackendBaseActionEdit extends BackendBaseAction
 
 
 /**
- * BackendBaseActionDelete
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the delete action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionDelete extends BackendBaseAction
@@ -460,18 +455,18 @@ class BackendBaseActionDelete extends BackendBaseAction
 	 */
 	public function execute()
 	{
+		// this method will be overwritten by the children
 	}
 }
 
 
 /**
- * BackendBaseAJAXAction
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseAJAXAction
@@ -521,7 +516,7 @@ class BackendBaseAJAXAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the childs so
+		// this method will be overwritten by the children
 	}
 
 
@@ -568,8 +563,10 @@ class BackendBaseAJAXAction
 		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json');
 
-		// output to the browser
+		// output JSON to the browser
 		echo json_encode($response);
+
+		// stop script execution
 		exit;
 	}
 
@@ -600,13 +597,12 @@ class BackendBaseAJAXAction
 
 
 /**
- * BackendBaseConfig
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseConfig
@@ -764,13 +760,12 @@ class BackendBaseConfig
 
 
 /**
- * BackendBaseCronjob
  * This is the base-object for cronjobs. The module-specific cronjob-files can extend the functionality from this class
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseCronjob
@@ -932,7 +927,7 @@ class BackendBaseCronjob
 		// store content
 		SpoonFile::setContent($path, $counter, true, false);
 
-		// if the cronjob is busy we shoul NOT proceed.
+		// if the cronjob is busy we should NOT proceed
 		if($isBusy) exit;
 	}
 
@@ -951,13 +946,12 @@ class BackendBaseCronjob
 
 
 /**
- * BackendBaseWidget
  * This is the base-object for widgets
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseWidget

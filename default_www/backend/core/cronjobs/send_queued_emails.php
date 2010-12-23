@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendCoreCronjobSendQueuedEmails
  * This is the cronjob to send the queued emails.
  *
  * @package		backend

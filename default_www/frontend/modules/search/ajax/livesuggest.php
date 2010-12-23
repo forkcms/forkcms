@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendSearchAjaxLivesuggest
  * This is the livesuggest-action, it will output a list of results for a certain search
  *
  * @package		frontend
@@ -197,7 +196,6 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	 *
 	 * @return	void
 	 */
-	// @todo: make a decent function for this
 	protected function loadTemplate()
 	{
 		// create template

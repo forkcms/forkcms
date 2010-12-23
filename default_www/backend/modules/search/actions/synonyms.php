@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendSearchSynonyms
  * This is the synonyms-action, it will display the overview of search synonyms
  *
  * @package		backend
@@ -64,6 +63,7 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// assign the datagrid
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
 }

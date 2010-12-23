@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogArchive
  * This is the archive-action
  *
  * @package		frontend

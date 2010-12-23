@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsExitPages
  * This is the exit-pages-action, it will display the overview of analytics posts
  *
  * @package		backend

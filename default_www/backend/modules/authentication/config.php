@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAuthenticationConfig
  * This is the configuration-object for the authentication module
  *
  * @package		backend

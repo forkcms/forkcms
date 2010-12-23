@@ -1,8 +1,7 @@
 <?php
 
 /**
- * FrontendBlogArticleCommentsRSS
- * This is the RSS-feed
+ * This is the RSS-feed for comments on a certain article.
  *
  * @package		frontend
  * @subpackage	blog

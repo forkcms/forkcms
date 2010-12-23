@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsBase
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @package		backend

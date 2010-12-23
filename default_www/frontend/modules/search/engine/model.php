@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendSearchModel
  * In this file we store all generic functions that we will be using in the search module
  *
  * @package		frontend
@@ -207,7 +206,7 @@ class FrontendSearchModel
 		}
 
 		// return the results
-		return (array) FrontendModel::getDB()->retrieve($query, $params);
+		return (array) FrontendModel::getDB()->getRecords($query, $params);
 	}
 
 
@@ -224,7 +223,7 @@ class FrontendSearchModel
 		// language given
 		if($language)
 		{
-			return (array) FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+			return (array) FrontendModel::getDB()->getRecords('SELECT s1.term, s1.num_results
 																FROM search_statistics AS s1
 																INNER JOIN
 																(
@@ -241,7 +240,7 @@ class FrontendSearchModel
 		// no language given
 		else
 		{
-			return (array) FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+			return (array) FrontendModel::getDB()->getRecords('SELECT s1.term, s1.num_results
 																FROM search_statistics AS s1
 																INNER JOIN
 																(
@@ -399,12 +398,12 @@ class FrontendSearchModel
 		while(1)
 		{
 			// get the inactive indices
-			$searchResults = (array) FrontendModel::getDB()->retrieve('SELECT module, other_id
-																		FROM search_index
-																		WHERE language = ? AND active = ?
-																		GROUP BY module, other_id
-																		LIMIT ?, ?',
-																		array(FRONTEND_LANGUAGE, 'N', $offset, $limit));
+			$searchResults = (array) FrontendModel::getDB()->getRecords('SELECT module, other_id
+																			FROM search_index
+																			WHERE language = ? AND active = ?
+																			GROUP BY module, other_id
+																			LIMIT ?, ?',
+																			array(FRONTEND_LANGUAGE, 'N', $offset, $limit));
 
 			// none found? good news!
 			if(!$searchResults) return;

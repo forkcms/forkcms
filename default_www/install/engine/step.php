@@ -1,7 +1,6 @@
 <?php
 
 /**
- * InstallerStep
  * The base-class for all installer-steps
  *
  * @package		install

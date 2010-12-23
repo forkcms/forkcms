@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendPagesEdit
  * This is the edit-action, it will display a form to update an item
  *
  * @package		backend
@@ -198,31 +197,35 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// validate id
-		if($this->id === null || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
-
-		// get the record
-		$this->record = BackendPagesModel::get($this->id);
-		$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
-
-		// load blocks
-		$this->blocksContent = BackendPagesModel::getBlocks($this->id);
-
-		// is there a revision specified?
-		$revisionToLoad = $this->getParameter('revision', 'int');
-
-		// if this is a valid revision
-		if($revisionToLoad !== null)
+		if($this->id !== null && BackendPagesModel::exists($this->id))
 		{
-			// overwrite the current record
-			$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
+			// get the record
+			$this->record = BackendPagesModel::get($this->id);
+			$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
 
 			// load blocks
-			$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
+			$this->blocksContent = BackendPagesModel::getBlocks($this->id);
 
-			// show warning
-			if($this->record['status'] == 'archive') $this->tpl->assign('usingRevision', true);
-			elseif($this->record['status'] == 'draft') $this->tpl->assign('usingDraft', true);
+			// is there a revision specified?
+			$revisionToLoad = $this->getParameter('revision', 'int');
+
+			// if this is a valid revision
+			if($revisionToLoad !== null)
+			{
+				// overwrite the current record
+				$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
+
+				// load blocks
+				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
+
+				// show warning
+				if($this->record['status'] == 'archive') $this->tpl->assign('usingRevision', true);
+				elseif($this->record['status'] == 'draft') $this->tpl->assign('usingDraft', true);
+			}
 		}
+
+		// something went wrong
+		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
 
@@ -295,7 +298,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build page record
-				$page = array();
 				$page['id'] = $this->record['id'];
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $this->record['parent_id'];
@@ -375,7 +377,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;
 					$block['status'] = 'active';
-					$block['created_on'] = BackendModel::getUTCDate();
+					if(!isset($this->blocksContent[$i]['created_on'])) $block['created_on'] = BackendModel::getUTCDate();
 					$block['edited_on'] = BackendModel::getUTCDate();
 
 					// add block
@@ -395,7 +397,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					foreach($blocks as $block) $text .= ' '. $block['html'];
 
 					// add
-					BackendSearchModel::editIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text));
+					BackendSearchModel::editIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
 				}
 
 				// save tags
@@ -405,7 +407,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&highlight=row-'. $page['id']);
 			}
 		}
 	}

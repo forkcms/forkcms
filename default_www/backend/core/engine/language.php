@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendLanguage
  * This class will store the language-dependant content for the Backend, it will also store the current language for the user.
  *
  * @package		backend
@@ -129,17 +128,21 @@ class BackendLanguage
 	 */
 	public static function getInterfaceLanguages()
 	{
-		// grab from settings
-		$languages = BackendModel::getModuleSetting('core', 'interface_languages', array('nl'));
-
 		// init var
-		$return = array();
+		$languages = array();
 
-		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		// grab the languages from the settings & loop language to reset the label
+		foreach((array) BackendModel::getModuleSetting('core', 'interface_languages', array('nl')) as $key)
+		{
+			// fetch language's translation
+			$languages[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		}
 
-		// return
-		return $return;
+		// sort alphabetically
+		asort($languages);
+
+		// return languages
+		return $languages;
 	}
 
 
@@ -271,20 +274,21 @@ class BackendLanguage
 	 */
 	public static function getWorkingLanguages()
 	{
-		// get languages
-		$languages = BackendModel::getModuleSetting('core', 'languages', array('nl'));
-
 		// init var
-		$return = array();
+		$languages = array();
 
-		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		// grab the languages from the settings & loop language to reset the label
+		foreach((array) BackendModel::getModuleSetting('core', 'languages', array('nl')) as $key)
+		{
+			// fetch the language's translation
+			$languages[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		}
 
 		// sort alphabetically
-		asort($return);
+		asort($languages);
 
-		// return
-		return $return;
+		// return languages
+		return $languages;
 	}
 
 
@@ -359,7 +363,7 @@ class BackendLanguage
 
 
 /**
- * BL (some kind of alias for BackendLanguage)
+ * Some kind of alias for BackendLanguage
  *
  *
  * @package		backend

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogIndex
  * This is the overview-action
  *
  * @package		frontend

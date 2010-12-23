@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogCategory
  * This is the category-action
  *
  * @package		frontend

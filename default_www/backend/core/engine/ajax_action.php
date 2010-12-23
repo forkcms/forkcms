@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendBaseAction
  * This class is the real code, it creates an action, loads the configfile, ...
  *
  * @package		backend

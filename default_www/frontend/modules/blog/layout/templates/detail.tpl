@@ -58,7 +58,7 @@
 				<div id="comment-{$blogComments.id}" class="bd comment">
 					<div class="imageHolder">
 						{option:blogComments.website}<a href="{$blogComments.website}">{/option:blogComments.website}
-							<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$blogComments.author}" class="replaceWithGravatar" rel="{$blogComments.gravatar_id}" />
+							<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$blogComments.author}" class="replaceWithGravatar" data-gravatar-id="{$blogComments.gravatar_id}" />
 						{option:blogComments.website}</a>{/option:blogComments.website}
 					</div>
 					<div class="commentContent">

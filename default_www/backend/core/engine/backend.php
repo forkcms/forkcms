@@ -1,7 +1,6 @@
 <?php
 
 /**
- * Backend
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
  *

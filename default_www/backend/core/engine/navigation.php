@@ -122,14 +122,15 @@ class BackendNavigation
 			if($currentDepth >= $startDepth - 1) $HTML .= '</li>'."\n";
 		}
 
+		// return
 		return $HTML;
 	}
 
 
 	/**
-	 * @todo @davy, PHPdoc plz
+	 * Clean the navigation
 	 *
-	 * @return	void
+	 * @return	array
 	 * @param	array $navigation
 	 */
 	private function cleanup(array $navigation)
@@ -254,7 +255,7 @@ class BackendNavigation
 					// recursive here...
 					$subKeys = $this->compareURL($value, $key, $keys);
 
-					// wrap it up.
+					// wrap it up
 					if(!empty($subKeys)) return $subKeys;
 				}
 			}
@@ -272,7 +273,7 @@ class BackendNavigation
 				// recursive here...
 				$subKeys = $this->compareURL($value, $key, $keys);
 
-				// wrap it up.
+				// wrap it up
 				if(!empty($subKeys)) return $subKeys;
 			}
 		}

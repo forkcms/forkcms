@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendBlogSettings
+ * This is the settings-action, it will display a form to set general blog settings
  *
  * @package		backend
  * @subpackage	blog
@@ -54,7 +54,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		// add fields for spam
 		$this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
 
-		// no Akismet-key, so we can't enable SPAM-filtering
+		// no Akismet-key, so we can't enable spam-filter
 		if(BackendModel::getModuleSetting('core', 'akismet_key') == '')
 		{
 			$this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');

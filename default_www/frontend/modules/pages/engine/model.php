@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendPagesModel
  * In this file we store all generic functions that we will be using in the pages module
  *
  * @package		frontend
@@ -72,12 +71,12 @@ class FrontendPagesModel implements FrontendTagsInterface
 		$db = FrontendModel::getDB();
 
 		// get items
-		$items = (array) $db->retrieve('SELECT p.id, p.title, m.url, p.revision_id AS text
-										FROM pages AS p
-										INNER JOIN meta AS m ON p.meta_id = m.id
-										INNER JOIN pages_templates AS t ON p.template_id = t.id
-										WHERE p.id IN ('. implode(', ', $ids) .') AND p.status = ? AND p.hidden = ? AND p.language = ?',
-										array('active', 'N', FRONTEND_LANGUAGE), 'id');
+		$items = (array) $db->getRecords('SELECT p.id, p.title, m.url, p.revision_id AS text
+											FROM pages AS p
+											INNER JOIN meta AS m ON p.meta_id = m.id
+											INNER JOIN pages_templates AS t ON p.template_id = t.id
+											WHERE p.id IN ('. implode(', ', $ids) .') AND p.status = ? AND p.hidden = ? AND p.language = ?',
+											array('active', 'N', FRONTEND_LANGUAGE), 'id');
 
 		// prepare items for search
 		foreach($items as &$item)

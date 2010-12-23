@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsMassLandingPageAction
  * This action is used to perform mass actions on landing pages (delete, ...)
  *
  * @package		backend
@@ -34,7 +33,7 @@ class BackendAnalyticsMassLandingPageAction extends BackendBaseAction
 			// redefine id's
 			$ids = (array) $_GET['id'];
 
-			// delete comment(s)
+			// delete items
 			if($action == 'delete') BackendAnalyticsModel::deleteLandingPage($ids);
 		}
 

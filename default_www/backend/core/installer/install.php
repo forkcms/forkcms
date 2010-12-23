@@ -1,7 +1,6 @@
 <?php
 
 /**
- * ModuleInstaller
  * The base-class for the installer
  *
  * @package		backend
@@ -14,6 +13,7 @@
  */
 class ModuleInstaller
 {
+<<<<<<< HEAD
 	/**
 	 * Database connection instance
 	 *
@@ -563,11 +563,20 @@ class ModuleInstaller
 		$value = serialize($value);
 		$overwrite = (bool) $overwrite;
 
-		// doens't already exist
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
-											FROM modules_settings
-											WHERE module = ? AND name = ?;',
-											array($module, $name)))
+		// overwrite
+		if($overwrite)
+		{
+			// insert setting
+			$this->getDB()->execute('INSERT INTO modules_settings (module, name, value)
+										VALUES (?, ?, ?)
+										ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
+		}
+
+		// doesn't already exist
+		elseif(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
+												FROM modules_settings
+												WHERE module = ? AND name = ?',
+												array($module, $name)))
 		{
 			// build item
 			$item = array('module' => $module,
@@ -576,14 +585,6 @@ class ModuleInstaller
 
 			// insert setting
 			$this->getDB()->insert('modules_settings', $item);
-		}
-
-		// overwrite
-		elseif($overwrite)
-		{
-			// insert setting
-			$this->getDB()->execute('INSERT INTO modules_settings (module, name, value) VALUES (?, ?, ?)
-										ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
 		}
 	}
 }

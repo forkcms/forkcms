@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendTagsConfig
  * This is the configuration-object
  *
  * @package		frontend

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendSettingsThemes
+ * This is the themes-action, it will display a form to set theme settings
  *
  * @package		backend
  * @subpackage	settings

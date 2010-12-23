@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendNavigation
  * This class will be used to build the navigation
  *
  * @package		frontend
@@ -168,6 +167,7 @@ class FrontendNavigation extends FrontendBaseObject
 			$return[] = $temp;
 		}
 
+		// return footer links
 		return $return;
 	}
 
@@ -245,7 +245,7 @@ class FrontendNavigation extends FrontendBaseObject
 			self::$navigation[$language] = $navigation;
 		}
 
-		// return
+		// return from cache
 		return self::$navigation[$language];
 	}
 
@@ -343,7 +343,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$tpl->assign('navigation', $navigation[$type][$parentId]);
 
 		// return parsed content
-		return $tpl->getContent(self::$templatePath, true);
+		return $tpl->getContent(self::$templatePath, true, true);
 	}
 
 
@@ -438,7 +438,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// add URL
 		else $URL .= $keys[$pageId];
 
-		// return
+		// return the URL
 		return $URL;
 	}
 
@@ -482,7 +482,7 @@ class FrontendNavigation extends FrontendBaseObject
 							// direct link?
 							if($extra['module'] == $module && $extra['action'] == $action)
 							{
-								// exacte page was found, so return
+								// exact page was found, so return
 								return self::getURL($properties['page_id'], $language);
 							}
 
@@ -550,7 +550,7 @@ class FrontendNavigation extends FrontendBaseObject
 							// direct link?
 							if($extra['id'] == $id)
 							{
-								// exacte page was found, so return
+								// exact page was found, so return
 								return self::getURL($properties['page_id'], $language);
 							}
 						}

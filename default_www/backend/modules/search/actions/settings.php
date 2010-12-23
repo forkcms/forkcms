@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendSearchSettings
+ * This is the settings-action, it will display a form to set general search settings
  *
  * @package		backend
  * @subpackage	search

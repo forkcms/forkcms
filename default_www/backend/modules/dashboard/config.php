@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendDashboardConfig
  * This is the configuration-object for the dashboard module
  *
  * @package		backend

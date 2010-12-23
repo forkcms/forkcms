@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendCoreAPI
  * In this file we store all generic functions that we will be available through the API
  *
  * @package		backend
@@ -121,10 +120,11 @@ class BackendCoreAPI
 	 */
 	public static function getInfo()
 	{
+		// authorized?
 		if(API::authorize())
 		{
 			// init
-			$return = array();
+			$info = array();
 
 			// get all languages
 			$languages = BackendLanguage::getActiveLanguages();
@@ -145,11 +145,11 @@ class BackendCoreAPI
 				$var['language']['url'] = SITE_URL .'/'. $language;
 
 				// add
-				$return['languages'][] = $var;
+				$info['languages'][] = $var;
 			}
 
-			// return
-			return $return;
+			// return info
+			return $info;
 		}
 	}
 }

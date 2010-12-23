@@ -1,7 +1,6 @@
 <?php
 
 /**
- * ContentBlocksInstall
  * Installer for the content blocks module
  *
  * @package		installer

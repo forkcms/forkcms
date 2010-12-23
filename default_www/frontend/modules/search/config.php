@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendSearchConfig
  * This is the configuration-object
  *
  * @package		frontend

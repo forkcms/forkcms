@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendContentBlocksEdit
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend
@@ -10,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendContentBlocksEdit extends BackendBaseActionEdit
@@ -168,15 +168,21 @@ class BackendContentBlocksEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['id'] = $this->id;
+				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['language'] = $this->record['language'];
+				$item['extra_id'] = $this->record['extra_id'];
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
-				$item['hidden'] = $this->frm->getField('hidden')->getValue();
+				$item['hidden'] = $this->frm->getField('hidden')->getChecked() ? 'N' : 'Y';
+				$item['status'] = 'active';
+				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// insert the item
-				$id = BackendContentBlocksModel::update($this->id, $item);
+				$item['revision_id'] = BackendContentBlocksModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=row-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

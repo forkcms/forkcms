@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsCronjobGetData
+ * This cronjob will fetch the requested data
  *
  * @package		backend
  * @subpackage	analytics

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * UsersConfig
  * This is the configuration-object for the users module
  *
  * @package		backend

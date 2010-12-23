@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsWidgetTrafficSources
+ * This widget will show the latest traffic sources
  *
  * @package		backend
  * @subpackage	analytics

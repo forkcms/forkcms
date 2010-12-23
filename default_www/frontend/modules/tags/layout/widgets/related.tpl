@@ -1,9 +1,9 @@
 {*
 	variables that are available:
-	- {$widgetRelated}:
+	- {$widgetTagsRelated}: contains an array with all related items
 *}
 
-{option:widgetRelated}
+{option:widgetTagsRelated}
 	<div id="TagCloudWidget" class="mod">
 		<div class="inner">
 			<div class="hd">
@@ -11,15 +11,15 @@
 			</div>
 			<div class="bd">
 				<ul>
-					{iteration:widgetRelated}
+					{iteration:widgetTagsRelated}
 						<li>
-							<a href="{$widgetRelated.full_url}" title="{$widgetRelated.title}">
-								{$widgetRelated.title}
+							<a href="{$widgetTagsRelated.full_url}" title="{$widgetTagsRelated.title}">
+								{$widgetTagsRelated.title}
 							</a>
 						</li>
-					{/iteration:widgetRelated}
+					{/iteration:widgetTagsRelated}
 				</ul>
 			</div>
 		</div>
 	</div>
-{/option:widgetRelated}
+{/option:widgetTagsRelated}

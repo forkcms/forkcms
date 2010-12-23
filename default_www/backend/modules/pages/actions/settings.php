@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendPagesSettings
+ * This is the settings-action, it will display a form to set general pages settings
  *
  * @package		backend
  * @subpackage	pages

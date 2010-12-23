@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendTagsWidgetTagcloud
  * This is a widget with the tags
  *
  * @package		frontend
@@ -54,8 +53,7 @@ class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
 		}
 
 		// assign comments
-		$this->tpl->assign('widgetTagCloud', $tags);
-		$this->tpl->assign('widgetTagCloudURL', FrontendNavigation::getURLForBlock('tags'));
+		$this->tpl->assign('widgetTagsTagCloud', $tags);
 	}
 }
 

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * API
  * This class defines the API,
  *
  * @package		api
@@ -74,7 +73,7 @@ class API
 
 			// get data from docs
 			$matches = array();
-			preg_match_all('|@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$|Um', $reflectionMethod->getDocComment(), $matches);
+			preg_match_all('/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um', $reflectionMethod->getDocComment(), $matches);
 
 			// documentation found
 			if(!empty($matches[0]))
@@ -292,12 +291,15 @@ class API
 		// get output format
 		$output = SpoonFilter::getGetValue('format', array('xml', 'json'), 'xml');
 
+		// return in the requested format
 		switch($output)
 		{
+			// json
 			case 'json':
 				self::outputJSON($statusCode, $data);
 			break;
 
+			// xml
 			default:
 				self::outputXML($statusCode, $data);
 			break;
@@ -335,10 +337,10 @@ class API
 		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
-		// output
+		// output JSON
 		echo json_encode($JSON);
 
-		// stop script
+		// stop script execution
 		exit;
 	}
 
@@ -388,7 +390,7 @@ class API
 		// output XML
 		echo $XML->saveXML();
 
-		// stop script
+		// stop script execution
 		exit;
 	}
 

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendLocaleConfig
  * This is the configuration-object for the locale module
  *
  * @package		backend

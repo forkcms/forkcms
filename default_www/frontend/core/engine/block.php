@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlockExtra
  * This class will handle all stuff related to blocks
  *
  * @package		frontend
@@ -157,6 +156,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 			}
 		}
 
+		// return
 		return $this->action;
 	}
 

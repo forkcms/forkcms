@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsContent
  * This is the content-action, it will display the overview of analytics posts
  *
  * @package		backend

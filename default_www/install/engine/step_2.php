@@ -1,7 +1,6 @@
 <?php
 
 /**
- * InstallerStep2
  * Step 2 of the Fork installer
  *
  * @package		install
@@ -64,7 +63,7 @@ class InstallerStep2 extends InstallerStep
 		// build output
 		$output = str_replace($search, $replace, $tpl);
 
-		// show
+		// show output
 		echo $output;
 
 		// stop the script
