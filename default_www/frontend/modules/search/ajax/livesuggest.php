@@ -196,7 +196,6 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 	 *
 	 * @return	void
 	 */
-	// @todo: make a decent function for this
 	protected function loadTemplate()
 	{
 		// create template

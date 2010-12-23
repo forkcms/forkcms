@@ -171,7 +171,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign
-		$this->tpl->assign('widgetRelated', $this->related);
+		$this->tpl->assign('widgetTagsRelated', $this->related);
 	}
 }
 

@@ -156,14 +156,14 @@ class BackendContentBlocksModel
 						'action' => 'detail',
 						'data' => null,
 						'hidden' => 'N',
-						'sequence' => BackendModel::getDB(false)->getVar('SELECT MAX(i.sequence) + 1
-																			FROM pages_extras AS i
-																			WHERE i.module = ?', array('content_blocks')));
+						'sequence' => $db->getVar('SELECT MAX(i.sequence) + 1
+													FROM pages_extras AS i
+													WHERE i.module = ?', array('content_blocks')));
 		if(is_null($extra['sequence'])) $extra['sequence'] = $db->getVar('SELECT CEILING(MAX(i.sequence) / 1000) * 1000
 																			FROM pages_extras AS i');
 
 		// insert extra
-		$item['extra_id'] = (int) BackendModel::getDB(true)->insert('pages_extras', $extra);
+		$item['extra_id'] = $db->insert('pages_extras', $extra);
 		$extra['id'] = $item['extra_id'];
 
 		// insert and return the new revision id
@@ -174,7 +174,7 @@ class BackendContentBlocksModel
 											'extra_label' => $item['title'],
 											'language' => $item['language'],
 											'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id']));
-		BackendModel::getDB(true)->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// return the new revision_id
 		return $item['revision_id'];
@@ -205,7 +205,7 @@ class BackendContentBlocksModel
 						'hidden' => 'N');
 
 		// update extra
-		BackendModel::getDB(true)->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
+		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// archive all older versions
 		$db->update('content_blocks', array('status' => 'archived'), 'id = ? AND language = ?', array($item['id'], BL::getWorkingLanguage()));

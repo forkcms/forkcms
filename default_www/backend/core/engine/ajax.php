@@ -158,6 +158,12 @@ class BackendAJAX
 			$fakeAction = new BackendBaseAJAXAction('', '');
 			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Module not allowed.');
 		}
+
+		// create URL instance, the templatemodifiers need this object
+		$URL = new BackendURL();
+
+		// set the module
+		$URL->setModule($this->module);
 	}
 
 

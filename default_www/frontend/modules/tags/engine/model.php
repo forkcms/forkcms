@@ -1,7 +1,7 @@
 <?php
 
 /**
- * In this file we store all generic functions
+ * In this file we store all generic functions that we will be using in the tags module
  *
  * @package		frontend
  * @subpackage	tags

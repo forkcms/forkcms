@@ -153,7 +153,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		// include cache file
 		require_once $this->cacheFile;
 
-		// set info
+		// set info (received from cache)
 		$this->pagination = $pagination;
 		$this->items = $items;
 
