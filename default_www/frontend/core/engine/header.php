@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendHeader extends FrontendBaseObject

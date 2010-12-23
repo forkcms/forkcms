@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class FrontendTagsIndex extends FrontendBaseBlock

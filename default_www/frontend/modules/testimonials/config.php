@@ -3,11 +3,11 @@
 /**
  * This is the configuration-object
  *
- * @package     frontend
- * @subpackage  testimonials
+ * @package		frontend
+ * @subpackage	testimonials
  *
- * @author      Jan Moesen <jan@netlash.com>
- * @since       2.1
+ * @author		Jan Moesen <jan@netlash.com>
+ * @since		2.1
  */
 final class FrontendTestimonialsConfig extends FrontendBaseConfig
 {

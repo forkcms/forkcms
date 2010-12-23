@@ -142,13 +142,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				$item['country'] = $this->frm->getField('country')->getValue();
 
 				// check if it's neccessary to geocode again
-				if($this->record['lat'] === null ||
-					$this->record['lng'] === null ||
-					$item['street'] != $this->record['street'] ||
-					$item['number'] != $this->record['number'] ||
-					$item['zip'] != $this->record['zip'] ||
-					$item['city'] != $this->record['city'] ||
-					$item['country'] != $this->record['country'])
+				if($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country'])
 				{
 					// geocode address
 					$url = 'http://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($item['street'] .' '. $item['number'] .', '. $item['zip'] .' '. $item['city'] .', '. SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) .'&sensor=false';

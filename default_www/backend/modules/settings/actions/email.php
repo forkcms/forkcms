@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	settings
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSettingsEmail extends BackendBaseActionIndex

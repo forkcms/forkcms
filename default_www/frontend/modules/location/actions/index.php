@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	location
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.1
  */
 class FrontendLocationIndex extends FrontendBaseBlock

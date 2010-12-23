@@ -6,8 +6,8 @@
  * @package		backend
  * @subpackage	faq
  *
- * @author 		Lester Lievens <lester@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Lester Lievens <lester@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.1
  */
 class BackendFaqAdd extends BackendBaseActionAdd

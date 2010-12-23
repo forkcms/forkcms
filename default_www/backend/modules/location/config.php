@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	location
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.1
  */
 final class BackendLocationConfig extends BackendBaseConfig

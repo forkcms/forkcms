@@ -116,7 +116,7 @@ class BackendAnalyticsModel
 	 *
 	 * @return	string
 	 * @param	string $name			The name of the aggregate to look for.
- 	 * @param	int $startTimestamp		The start timestamp for the cache file.
+	 * @param	int $startTimestamp		The start timestamp for the cache file.
 	 * @param	int $endTimestamp		The end timestamp for the cache file.
 	 */
 	public static function getAggregate($name, $startTimestamp, $endTimestamp)

@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchSynonyms extends BackendBaseActionIndex
@@ -35,7 +35,7 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 	/**
 	 * Loads the datagrids
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadDataGrid()
 	{

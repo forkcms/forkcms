@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0

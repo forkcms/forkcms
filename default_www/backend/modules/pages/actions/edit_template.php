@@ -6,8 +6,8 @@
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendPagesEditTemplate extends BackendBaseActionEdit

@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	dashboard
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendDashboardIndex extends BackendBaseActionIndex

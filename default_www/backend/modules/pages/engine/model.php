@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -1549,7 +1549,7 @@ class BackendPagesModel
 	{
 		// refedine
 		$templateId = (int) $templateId;
-		
+
 		// return
 		return (bool) BackendModel::getDB(false)->getVar('SELECT COUNT(i.template_id)
 															FROM pages AS i

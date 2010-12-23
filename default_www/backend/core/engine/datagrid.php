@@ -12,7 +12,7 @@
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -208,10 +208,10 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
- 	 * Sets the active tab for this datagrid
- 	 *
- 	 * @return	void
- 	 * @param	string $tab		The name of the tab to show.
+	 * Sets the active tab for this datagrid
+	 *
+	 * @return	void
+	 * @param	string $tab		The name of the tab to show.
 	 */
 	public function setActiveTab($tab)
 	{
@@ -226,6 +226,8 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @param	string $column
 	 * @param	string $message
 	 * @param	string[optional] $custom
+	 * @param	string[optional] $title
+	 * @param	string[optional] $uniqueId
 	 */
 	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
 	{
@@ -449,7 +451,7 @@ class BackendDataGrid extends SpoonDataGrid
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -674,7 +676,7 @@ class BackendDataGridDB extends BackendDataGrid
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendDataGridFunctions
@@ -827,7 +829,7 @@ class BackendDataGridFunctions
 	 * Truncate a string
 	 *
 	 * @return	string
-	 * @param	string $string				The string to truncate.
+	 * @param	string[optional] $string	The string to truncate.
 	 * @param	int $length					The maximumlength for the string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended?
 	 */

@@ -7,7 +7,7 @@
  * @subpackage	analytics
  *
  * @author		Dieter Van den Eynde <dieter@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsHelper
@@ -113,7 +113,7 @@ class BackendAnalyticsHelper
 	/**
 	 * Get Google Analytics instance
 	 *
-	 * @return GoogleAnalytics
+	 * @return	GoogleAnalytics
 	 */
 	public static function getGoogleAnalyticsInstance()
 	{

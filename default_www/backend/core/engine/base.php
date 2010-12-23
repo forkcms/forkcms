@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseAction
@@ -287,7 +287,7 @@ class BackendBaseAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionIndex extends BackendBaseAction
@@ -321,7 +321,7 @@ class BackendBaseActionIndex extends BackendBaseAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionAdd extends BackendBaseAction
@@ -362,7 +362,7 @@ class BackendBaseActionAdd extends BackendBaseAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionEdit extends BackendBaseAction
@@ -426,7 +426,7 @@ class BackendBaseActionEdit extends BackendBaseAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionDelete extends BackendBaseAction
@@ -466,7 +466,7 @@ class BackendBaseActionDelete extends BackendBaseAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseAJAXAction
@@ -602,7 +602,7 @@ class BackendBaseAJAXAction
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseConfig
@@ -765,7 +765,7 @@ class BackendBaseConfig
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseCronjob
@@ -951,7 +951,7 @@ class BackendBaseCronjob
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseWidget

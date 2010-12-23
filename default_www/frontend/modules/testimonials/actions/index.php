@@ -3,18 +3,18 @@
 /**
  * Show all testimonials.
  *
- * @package     frontend
- * @subpackage  testimonials
+ * @package		frontend
+ * @subpackage	testimonials
  *
- * @author      Jan Moesen <jan@netlash.com>
- * @since       2.1
+ * @author		Jan Moesen <jan@netlash.com>
+ * @since		2.1
  */
 class FrontendTestimonialsIndex extends FrontendBaseBlock
 {
 	/**
 	 * Execute the extra.
 	 *
-	 * @return  void
+	 * @return	void
 	 */
 	public function execute()
 	{
@@ -32,7 +32,7 @@ class FrontendTestimonialsIndex extends FrontendBaseBlock
 	/**
 	 * Parse the data and compile the template.
 	 *
-	 * @return  void
+	 * @return	void
 	 */
 	private function parse()
 	{

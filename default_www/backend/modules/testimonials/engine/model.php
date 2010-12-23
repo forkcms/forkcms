@@ -7,7 +7,7 @@
  * @subpackage	testimonials
  *
  * @author		Jan Moesen <jan@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.1
  */
 class BackendTestimonialsModel
@@ -81,7 +81,7 @@ class BackendTestimonialsModel
 	 * Add a new testimonial.
 	 *
 	 * @return	int				The ID of the newly inserted testimonial.
-	 * @param	array $values	The data to insert.
+	 * @param	array $item		The data to insert.
 	 */
 	public static function insert(array $item)
 	{

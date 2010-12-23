@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchDeleteSynonym extends BackendBaseActionDelete

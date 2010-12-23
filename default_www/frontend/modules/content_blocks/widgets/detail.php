@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	content_blocks
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -41,7 +41,7 @@ class FrontendContentBlocksWidgetDetail extends FrontendBaseWidget
 	/**
 	 * Load the data
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadData()
 	{

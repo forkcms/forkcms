@@ -7,8 +7,8 @@
  * @subpackage	blog
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BlogInstall extends ModuleInstaller
@@ -110,7 +110,7 @@ class BlogInstall extends ModuleInstaller
 			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?', 
+												WHERE b.extra_id = ? AND p.language = ?',
 												array($blogID, $language)))
 			{
 				// insert page
@@ -239,10 +239,10 @@ class BlogInstall extends ModuleInstaller
 
 
 	/**
- 	 * Fetch the id of the first category in this language we come across
- 	 *
- 	 * @return	int
- 	 * @param	string $language
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @return	int
+	 * @param	string $language
 	 */
 	private function getCategory($language)
 	{

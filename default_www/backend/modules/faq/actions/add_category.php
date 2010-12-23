@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	faq
  *
- * @author 		Lester Lievens <lester@netlash.com>
+ * @author		Lester Lievens <lester@netlash.com>
  * @since		2.1
  */
 class BackendFaqAddCategory extends BackendBaseActionAdd

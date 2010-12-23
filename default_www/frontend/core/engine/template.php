@@ -95,7 +95,7 @@ class FrontendTemplate extends SpoonTemplate
 	 *
 	 * @return	string							The actual parsed content after executing this template.
 	 * @param	string $template				The location of the template file, used to display this template.
- 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
+	 * @param	bool[optional] $customHeaders	Are custom headers already set?
 	 * @param	bool[optional] $parseCustom		Parse custom template
 	 */
 	public function getContent($template, $customHeaders = false, $parseCustom = false)
@@ -176,7 +176,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->mapModifier('getsubnavigation', array('FrontendTemplateModifiers', 'getSubNavigation'));
 
 		// rand
-		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'rand'));
+		$this->mapModifier('rand', array('FrontendTemplateModifiers', 'random'));
 
 		// string
 		$this->mapModifier('formatfloat', array('FrontendTemplateModifiers', 'formatFloat'));
@@ -499,7 +499,7 @@ class FrontendTemplateModifiers
 	 * @return	string
 	 * @param	string[optional] $var
 	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer
-	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build
+	 * @param	int[optional] $pageId			The parent wherefore the navigation should be build
 	 * @param	int[optional] $startDepth		The depth to strat from
 	 * @param	int[optional] $endDepth			The maximum depth that has to be build
 	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -)
@@ -672,14 +672,14 @@ class FrontendTemplateModifiers
 
 
 	/**
- 	 * Get a random var between a min and max
- 	 *
- 	 * @return	int
- 	 * @param	string[optional] $var
- 	 * @param	int $min
- 	 * @param	int $max
+	 * Get a random var between a min and max
+	 *
+	 * @return	int
+	 * @param	string[optional] $var
+	 * @param	int $min
+	 * @param	int $max
 	 */
-	public static function rand($var = null, $min, $max)
+	public static function random($var = null, $min, $max)
 	{
 		// redefine
 		$var = (string) $var;

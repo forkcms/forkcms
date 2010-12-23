@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	authentication
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendAuthenticationLogout extends BackendBaseAction

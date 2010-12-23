@@ -14,7 +14,7 @@ class TestimonialsInstall extends ModuleInstaller
 	/**
 	 * Install the module.
 	 *
-	 * @return  void
+	 * @return	void
 	 */
 	protected function execute()
 	{

@@ -14,7 +14,7 @@ class BackendTestimonialsAjaxSequence extends BackendBaseAJAXAction
 	/**
 	 * Execute the action
 	 *
-	 * @return  void
+	 * @return	void
 	 */
 	public function execute()
 	{

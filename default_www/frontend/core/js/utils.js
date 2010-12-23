@@ -24,7 +24,7 @@ utils.array =
 	/**
 	 * Is the given value present in the array
 	 *
-	 * @return bool
+	 * @return	bool
 	 */
 	inArray: function(needle, array)
 	{
@@ -54,7 +54,7 @@ utils.cookies =
 	/**
 	 * Are cookies enabled?
 	 *
-	 * @return bool
+	 * @return	bool
 	 */
 	isEnabled: function()
 	{
@@ -89,7 +89,7 @@ utils.form =
 	/**
 	 * Is a checkbox checked?
 	 *
-	 * @return bool
+	 * @return	bool
 	 * @param object element
 	 */
 	isChecked: function(element)
@@ -101,7 +101,7 @@ utils.form =
 	/**
 	 * Is the value inside the element a valid emailaddress
 	 *
-	 * @return bool
+	 * @return	bool
 	 * @param object element
 	 */
 	isEmail: function(element)
@@ -114,7 +114,7 @@ utils.form =
 	/**
 	 * Is the element filled
 	 *
-	 * @return bool
+	 * @return	bool
 	 * @param object element
 	 */
 	isFilled: function(element)
@@ -126,7 +126,7 @@ utils.form =
 	/**
 	 * Is the value inside the element a valid number
 	 *
-	 * @return bool
+	 * @return	bool
 	 * @param object element
 	 */
 	isNumber: function(element)
@@ -138,7 +138,7 @@ utils.form =
 	/**
 	 * Is the value inside the element a valid URL
 	 *
-	 * @return bool
+	 * @return	bool
 	 * @param object element
 	 */
 	isURL: function(element)
@@ -164,7 +164,7 @@ utils.string =
 	/**
 	 * Encode the string as HTML
 	 *
-	 * @return string
+	 * @return	string
 	 * @param string value
 	 */
 	htmlEncode: function(value)
@@ -176,7 +176,7 @@ utils.string =
 	/**
 	 * Decode the string as HTML
 	 *
-	 * @return string
+	 * @return	string
 	 * @param string value
 	 */
 	htmlDecode: function(value)
@@ -188,7 +188,7 @@ utils.string =
 	/**
 	 * Replace all occurences of one string into a string
 	 *
-	 * @return string
+	 * @return	string
 	 * @param string value
 	 * @param string needle
 	 * @param string replacement
@@ -203,7 +203,7 @@ utils.string =
 	/**
 	 * Strip whitespace from the beginning and end of a string
 	 *
-	 * @return string
+	 * @return	string
 	 * @param string value
 	 */
 	trim: function(value)
@@ -216,7 +216,7 @@ utils.string =
 	/**
 	 * Urlise a string (cfr. SpoonFilter)
 	 *
-	 * @return string
+	 * @return	string
 	 * @param string value
 	 */
 	urlise: function(value)

@@ -6,8 +6,8 @@
  * @package		backend
  * @subpackage	faq
  *
- * @author 		Lester Lievens <lester@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Lester Lievens <lester@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.1
  */
 class BackendFaqModel
@@ -38,7 +38,7 @@ class BackendFaqModel
 	 * Delete a category
 	 *
 	 * @return	void
-	 * @param   int $id			 	The id of the category to be deleted
+	 * @param	int $id		The id of the category to be deleted
 	 */
 	public static function deleteCategory($id)
 	{
@@ -66,7 +66,7 @@ class BackendFaqModel
 	 * Delete a question
 	 *
 	 * @return	void
-	 * @param   int $id			 	The id of the question to be deleted
+	 * @param	int $id		The id of the question to be deleted
 	 */
 	public static function deleteQuestion($id)
 	{
@@ -107,7 +107,7 @@ class BackendFaqModel
 	/**
 	 * Get all categories
 	 *
-	 * @return 	array
+	 * @return	array
 	 */
 	public static function getCategories()
 	{
@@ -122,7 +122,7 @@ class BackendFaqModel
 	/**
 	 * Get all category names for dropdown
 	 *
-	 * @return 	array
+	 * @return	array
 	 */
 	public static function getCategoriesForDropdown()
 	{
@@ -138,7 +138,7 @@ class BackendFaqModel
 	 * Get category by id
 	 *
 	 * @return	array
-	 * @param   int $id				The id of the category
+	 * @param	int $id		The id of the category
 	 */
 	public static function getCategory($id)
 	{
@@ -152,7 +152,7 @@ class BackendFaqModel
 	/**
 	 * Get the max sequence id for category
 	 *
-	 * @return 	int
+	 * @return	int
 	 */
 	public static function getMaximumCategorySequence()
 	{
@@ -164,8 +164,8 @@ class BackendFaqModel
 	/**
 	 * Get the max sequence id for question
 	 *
-	 * @return 	int
-	 * @param   int $id				The category id
+	 * @return	int
+	 * @param	int $id		The category id
 	 */
 	public static function getMaximumQuestionSequence($id)
 	{
@@ -179,8 +179,8 @@ class BackendFaqModel
 	/**
 	 * Get a question by id
 	 *
-	 * @return 	array
-	 * @param   int $id				The question id
+	 * @return	array
+	 * @param	int $id		The question id
 	 */
 	public static function getQuestion($id)
 	{
@@ -265,7 +265,7 @@ class BackendFaqModel
 	 * Update a category item
 	 *
 	 * @return	int
-	 * @param 	array	$item		The updated values
+	 * @param	array $item	The updated values
 	 */
 	public static function updateCategory(array $item)
 	{

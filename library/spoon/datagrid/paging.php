@@ -27,6 +27,19 @@
  */
 interface iSpoonDatagridPaging
 {
+	/**
+	 * Builds & returns the pagination.
+	 *
+	 * @return	string
+	 * @param	string $URL
+	 * @param	int $offset
+	 * @param	string $order
+	 * @param	string $sort
+	 * @param	int $numResults
+	 * @param	int $numPerPage
+	 * @param	bool[optional] $debug
+	 * @param	string[optional] $compileDirectory
+	 */
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null);
 }
 

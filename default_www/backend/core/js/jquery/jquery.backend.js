@@ -123,7 +123,7 @@
 /**
  * Inline editing
  *
- * @author Dave Lens <dave@netlash.com>
+ * @author	Dave Lens <dave@netlash.com>
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)

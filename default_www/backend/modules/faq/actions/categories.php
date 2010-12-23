@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	faq
  *
- * @author 		Lester Lievens <lester@netlash.com>
+ * @author		Lester Lievens <lester@netlash.com>
  * @since		2.1
  */
 class BackendFaqCategories extends BackendBaseActionIndex
@@ -35,7 +35,7 @@ class BackendFaqCategories extends BackendBaseActionIndex
 	/**
 	 * Loads the datagrid
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadDataGrid()
 	{

@@ -3,19 +3,19 @@
 /**
  * In this file we store all generic functions that we will be using in the testimonials module
  *
- * @package     frontend
- * @subpackage  testimonials
+ * @package		frontend
+ * @subpackage	testimonials
  *
- * @author      Jan Moesen <jan@netlash.com>
- * @since       2.1
+ * @author		Jan Moesen <jan@netlash.com>
+ * @since		2.1
  */
 class FrontendTestimonialsModel
 {
 	/**
 	 * Get the visible testimonial with the given ID.
 	 *
-	 * @return  array
-	 * @param	int $id			The id of the item to fetch.
+	 * @return	array
+	 * @param	int $id		The id of the item to fetch.
 	 */
 	public static function get($id)
 	{
@@ -30,7 +30,7 @@ class FrontendTestimonialsModel
 	/**
 	 * Get a random visible testimonial.
 	 *
-	 * @return  array
+	 * @return	array
 	 */
 	public static function getRandom()
 	{
@@ -51,7 +51,7 @@ class FrontendTestimonialsModel
 	/**
 	 * Get all testimonials.
 	 *
-	 * @return  array
+	 * @return	array
 	 */
 	public static function getAll()
 	{

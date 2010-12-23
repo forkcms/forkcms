@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	locale
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendLocaleEdit extends BackendBaseActionEdit

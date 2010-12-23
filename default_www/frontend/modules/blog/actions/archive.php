@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBlogArchive extends FrontendBaseBlock
