@@ -592,7 +592,7 @@ class BackendModel
 	/**
 	 * Fetch the list of available themes
 	 *
-	 * @return array
+	 * @return	array
 	 */
 	public static function getThemes()
 	{
@@ -754,7 +754,7 @@ class BackendModel
 	 * Get the UTC timestamp for a date/time object combination.
 	 *
 	 * @return	int
-	 * @param	SpoonformDate $date					An instance of SpoonFormDate.
+	 * @param	SpoonFormDate $date					An instance of SpoonFormDate.
 	 * @param	SpoonFormTime[optional] $time		An instance of SpoonFormTime.
 	 */
 	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
@@ -790,6 +790,7 @@ class BackendModel
 	 *
 	 * @return	void
 	 * @param	string[optional] $module	A specific module to clear the cache for.
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function invalidateFrontendCache($module = null, $language = null)
 	{

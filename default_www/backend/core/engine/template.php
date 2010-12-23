@@ -224,7 +224,7 @@ class BackendTemplate extends SpoonTemplate
 	/**
 	 * Assigns an option if we are in debug-mode
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function parseDebug()
 	{
@@ -494,6 +494,7 @@ class BackendTemplateModifiers
 	 * @param	string[optional] $var		A placeholder variable, it will be replaced with the URL.
 	 * @param	string[optional] $action	The action to build the URL for.
 	 * @param	string[optional] $module	The module to build the URL for.
+	 * @param	string[optional] $suffix	A string to append.
 	 */
 	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
 	{
@@ -542,12 +543,12 @@ class BackendTemplateModifiers
 
 
 	/**
- 	 * Get a random var between a min and max
- 	 *
- 	 * @return	int
- 	 * @param	string[optional] $var
- 	 * @param	int $min
- 	 * @param	int $max
+	 * Get a random var between a min and max
+	 *
+	 * @return	int
+	 * @param	string[optional] $var
+	 * @param	int $min
+	 * @param	int $max
 	 */
 	public static function rand($var = null, $min, $max)
 	{
@@ -566,7 +567,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
-	 * @param	string $var					A placeholder var, will be replaced with the generated HTML.
+	 * @param	string[optional] $var					A placeholder var, will be replaced with the generated HTML.
 	 * @param	int $length					The maximum length of the truncated string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */

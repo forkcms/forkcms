@@ -68,7 +68,6 @@ class BackendLanguage
 	}
 
 
-
 	/**
 	 * Get an error from the language-file
 	 *
@@ -115,7 +114,7 @@ class BackendLanguage
 	/**
 	 * Get the current interface language
 	 *
-	 * @return string
+	 * @return	string
 	 */
 	public static function getInterfaceLanguage()
 	{
@@ -257,7 +256,7 @@ class BackendLanguage
 	/**
 	 * Get the current working language
 	 *
-	 * @return string
+	 * @return	string
 	 */
 	public static function getWorkingLanguage()
 	{

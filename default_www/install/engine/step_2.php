@@ -78,7 +78,7 @@ class InstallerStep2 extends InstallerStep
 	 * @return	boolean
 	 * @param	string $variable
 	 * @param	bool $requirement
- 	 * @param	array[optional] $variables
+	 * @param	array[optional] $variables
 	 */
 	public static function checkRequirement($variable, $requirement, array &$variables = null)
 	{
@@ -101,10 +101,10 @@ class InstallerStep2 extends InstallerStep
 
 
 	/**
- 	 * Checks the requirements
- 	 *
- 	 * @return	bool
- 	 * @param	array[optional] $variables
+	 * Checks the requirements
+	 *
+	 * @return	bool
+	 * @param	array[optional] $variables
 	 */
 	public static function checkRequirements(array &$variables = null)
 	{

@@ -209,10 +209,10 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
- 	 * Sets the active tab for this datagrid
- 	 *
- 	 * @return	void
- 	 * @param	string $tab		The name of the tab to show.
+	 * Sets the active tab for this datagrid
+	 *
+	 * @return	void
+	 * @param	string $tab		The name of the tab to show.
 	 */
 	public function setActiveTab($tab)
 	{
@@ -227,6 +227,8 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @param	string $column
 	 * @param	string $message
 	 * @param	string[optional] $custom
+	 * @param	string[optional] $title
+	 * @param	string[optional] $uniqueId
 	 */
 	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
 	{
@@ -831,7 +833,7 @@ class BackendDataGridFunctions
 	 * Truncate a string
 	 *
 	 * @return	string
-	 * @param	string $string				The string to truncate.
+	 * @param	string[optional] $string	The string to truncate.
 	 * @param	int $length					The maximumlength for the string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended?
 	 */

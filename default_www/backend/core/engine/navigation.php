@@ -63,7 +63,7 @@ class BackendNavigation
 	 * Build the HTML for a navigation item
 	 *
 	 * @return	string
-	 * @param	string $value
+	 * @param	array $value
 	 * @param	string $key
 	 * @param	array[optional] $selectedKeys
 	 * @param	int[optional] $startDepth
@@ -126,7 +126,12 @@ class BackendNavigation
 	}
 
 
-	// @todo phpdoc
+	/**
+	 * @todo @davy, PHPdoc plz
+	 *
+	 * @return	void
+	 * @param	array $navigation
+	 */
 	private function cleanup(array $navigation)
 	{
 		// loop elements

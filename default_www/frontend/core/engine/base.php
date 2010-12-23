@@ -310,8 +310,8 @@ class FrontendBaseBlock
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $action				The name of the action.
 	 * @param	string $module				The name of the module.
+	 * @param	string $action				The name of the action.
 	 * @param	string[optional] $data		The data that should be available in this block.
 	 */
 	public function __construct($module, $action, $data = null)

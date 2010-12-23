@@ -137,7 +137,7 @@ class FrontendURL
 	 * @return	mixed
 	 * @param	mixed $index						The index of the parameter
 	 * @param	string[optional] $type				The return type, possible values are: bool, boolean, int, integer, float, double, string, array
-	 * @param	mixed[optioanl] $defaultValue		The value that should be returned if the key is not available
+	 * @param	mixed[optional] $defaultValue		The value that should be returned if the key is not available
 	 */
 	public function getParameter($index, $type = 'string', $defaultValue = null)
 	{

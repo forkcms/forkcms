@@ -239,10 +239,10 @@ class BlogInstall extends ModuleInstaller
 
 
 	/**
- 	 * Fetch the id of the first category in this language we come across
- 	 *
- 	 * @return	int
- 	 * @param	string $language
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @return	int
+	 * @param	string $language
 	 */
 	private function getCategory($language)
 	{
