@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendTemplate, this is our extended version of SpoonTemplate
+ * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
  * 	- it will map some modifiers
@@ -12,7 +12,7 @@
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplate extends SpoonTemplate
@@ -47,7 +47,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->setCacheDirectory(BACKEND_CACHE_PATH .'/cached_templates');
 
 		// set compile directory
-		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/templates');
+		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
 
 		// when debugging the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
@@ -86,7 +86,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->parseVars();
 
 		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+		if(!$customHeaders) SpoonHTTP::setHeaders('Content-type: text/html;charset=utf-8');
 
 		// call the parent
 		parent::display($template);
@@ -136,6 +136,7 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseAuthenticatedUser()
 	{
+		// check if the current user is authenticated
 		if(BackendAuthentication::getUser()->isAuthenticated())
 		{
 			// show stuff that only should be visible if authenticated
@@ -168,7 +169,7 @@ class BackendTemplate extends SpoonTemplate
 	private function parseConstants()
 	{
 		// constants that should be protected from usage in the template
-		$notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+		$notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD');
 
 		// get all defined constants
 		$constants = get_defined_constants(true);
@@ -228,8 +229,7 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseDebug()
 	{
-		// check if SPOON_DEBUG is true
-		if(SPOON_DEBUG) $this->assign('debug', true);
+		$this->assign('debug', SPOON_DEBUG);
 	}
 
 
@@ -344,6 +344,8 @@ class BackendTemplate extends SpoonTemplate
 	{
 		// assign a placeholder var
 		$this->assign('var', '');
+
+		// assign current timestamp
 		$this->assign('timestamp', time());
 
 		// assign body ID
@@ -365,12 +367,12 @@ class BackendTemplate extends SpoonTemplate
 
 
 /**
- * BackendTemplateModifiers, this is our class with custom modifiers.
+ * This is our class with custom modifiers.
  *
  * @package		backend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplateModifiers
@@ -526,10 +528,18 @@ class BackendTemplateModifiers
 	 *
 	 * @return	string
 	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
+	 * @param	int[optional] $startDepth	The start depth of the navigation to get.
+	 * @param	int[optional] $endDepth		The ending depth of the navigation to get.
 	 */
-	public static function getNavigation($var = null)
+	public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
 	{
-		return Spoon::getObjectReference('navigation')->getNavigation(2);
+		// redefine
+		$var = (string) $var;
+		$startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
+		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
+
+		// return navigation
+		return Spoon::getObjectReference('navigation')->getNavigation($startDepth, $endDepth);
 	}
 
 
@@ -543,7 +553,13 @@ class BackendTemplateModifiers
 	 */
 	public static function rand($var = null, $min, $max)
 	{
-		return rand((int) $min, (int) $max);
+		// redefine
+		$var = (string) $var;
+		$min = (int) $min;
+		$max = (int) $max;
+
+		// return
+		return rand($min, $max);
 	}
 
 

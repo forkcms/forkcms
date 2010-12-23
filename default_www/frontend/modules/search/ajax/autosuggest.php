@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendSearchAjaxAutosuggest
  * This is the autosuggest-action, it will output a list of results for a certain search
  *
  * @package		frontend

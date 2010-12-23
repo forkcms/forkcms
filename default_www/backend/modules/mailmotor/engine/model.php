@@ -1163,6 +1163,7 @@ class BackendMailmotorModel
 															array((string) $email), 'group_id');
 	}
 
+
 	/**
 	 * Get the template record
 	 *
@@ -1297,7 +1298,7 @@ class BackendMailmotorModel
 	 * @param	int $groupId							The ID of the group for which the fields will be inserted.
 	 * @param	string[optional] $email					The email you want to insert the custom fields for.
 	 * @param	int[optional] $customFieldsGroup		If this is set it will only update the custom fields for this group.
-	 * $param	bool[optional] $import					This method is called through the import action.
+	 * @param	bool[optional] $import					This method is called through the import action.
 	 */
 	public static function insertCustomFields(array $fields, $groupId, $email = null, $customFieldsGroup = null, $import = false)
 	{

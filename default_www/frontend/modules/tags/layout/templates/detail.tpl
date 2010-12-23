@@ -1,6 +1,6 @@
 {*
 	Variables that are available:
-	- {$tagsModules}: contains all tags group per module
+	- {$tagsModules}: contains all tags, grouped per module
 *}
 
 <div id="tagsDetail" class="mod">

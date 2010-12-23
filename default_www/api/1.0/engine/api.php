@@ -1,13 +1,12 @@
 <?php
 
 /**
- * API
  * This class defines the API,
  *
  * @package		api
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class API
@@ -74,7 +73,7 @@ class API
 
 			// get data from docs
 			$matches = array();
-			preg_match_all('|@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$|Um', $reflectionMethod->getDocComment(), $matches);
+			preg_match_all('/@param[\s\t]+(.*)[\s\t]+\$(.*)[\s\t]+(.*)$/Um', $reflectionMethod->getDocComment(), $matches);
 
 			// documentation found
 			if(!empty($matches[0]))
@@ -284,20 +283,23 @@ class API
 	 * Output the return
 	 *
 	 * @return	void
-	 * @param	int $statusCode		The status code
-	 * @param	array $data			The data to return
+	 * @param	int $statusCode			The status code
+	 * @param	array[optional] $data	The data to return
 	 */
 	public static function output($statusCode, array $data = null)
 	{
 		// get output format
 		$output = SpoonFilter::getGetValue('format', array('xml', 'json'), 'xml');
 
+		// return in the requested format
 		switch($output)
 		{
+			// json
 			case 'json':
 				self::outputJSON($statusCode, $data);
 			break;
 
+			// xml
 			default:
 				self::outputXML($statusCode, $data);
 			break;
@@ -309,8 +311,8 @@ class API
 	 * Output as JSON
 	 *
 	 * @return	void
-	 * @param	int $statusCode		The status code
-	 * @param	array $data			The data to return
+	 * @param	int $statusCode			The status code
+	 * @param	array[optional] $data	The data to return
 	 */
 	private static function outputJSON($statusCode, array $data = null)
 	{
@@ -335,10 +337,10 @@ class API
 		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
-		// output
+		// output JSON
 		echo json_encode($JSON);
 
-		// stop script
+		// stop script execution
 		exit;
 	}
 
@@ -347,8 +349,8 @@ class API
 	 * Output as XML
 	 *
 	 * @return	void
-	 * @param	int $statusCode		The status code
-	 * @param	array $data			The data to return
+	 * @param	int $statusCode			The status code
+	 * @param	array[optional] $data	The data to return
 	 */
 	private static function outputXML($statusCode, array $data = null)
 	{
@@ -388,7 +390,7 @@ class API
 		// output XML
 		echo $XML->saveXML();
 
-		// stop script
+		// stop script execution
 		exit;
 	}
 

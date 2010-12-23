@@ -35,7 +35,7 @@ jsBackend.controls =
 			$('.passwordStrength').each(function() 
 			{
 				// grab id
-				var id = $(this).attr('rel');
+				var id = $(this).data('id');
 				var wrapperId = $(this).attr('id');
 
 				// hide all

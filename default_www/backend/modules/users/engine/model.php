@@ -1,19 +1,22 @@
 <?php
 
 /**
- * BackendUserModel
  * In this file we store all generic functions that we will be using in the users module.
  *
  * @package		backend
  * @subpackage	users
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendUsersModel
 {
-	// overview of the active users
+	/**
+	 * Overview of the active users
+	 *
+	 * @var	string
+	 */
 	const QRY_BROWSE = 'SELECT i.id
 						FROM users AS i
 						WHERE i.deleted = ?';
@@ -27,7 +30,7 @@ class BackendUsersModel
 	 */
 	public static function delete($id)
 	{
-		BackendModel::getDB(true)->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', (int) $id);
+		BackendModel::getDB(true)->update('users', array('active' => 'N', 'deleted' => 'Y'), 'id = ?', array((int) $id));
 	}
 
 
@@ -39,12 +42,12 @@ class BackendUsersModel
 	 */
 	public static function deleteResetPasswordSettings($id)
 	{
-		BackendModel::getDB(true)->delete('users_settings', "(name = 'reset_password_key' OR name = 'reset_password_timestamp') AND user_id = ?", (int) $id);
+		BackendModel::getDB(true)->delete('users_settings', '(name = \'reset_password_key\' OR name = \'reset_password_timestamp\') AND user_id = ?', array((int) $id));
 	}
 
 
 	/**
-	 * Was a user deleted before
+	 * Was a user deleted before?
 	 *
 	 * @return	bool
 	 * @param	string $email
@@ -55,10 +58,10 @@ class BackendUsersModel
 		$email = (string) $email;
 
 		// no user to ignore
-		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
-															FROM users AS i
-															WHERE i.email = ? AND i.deleted = ?',
-															array($email, 'Y')) > 0);
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
+														FROM users AS i
+														WHERE i.email = ? AND i.deleted = ?',
+														array($email, 'Y'));
 	}
 
 
@@ -79,16 +82,16 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// if the user should also be active, there should be at least one row to return true
-		if($active) return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
-														FROM users AS i
-														WHERE i.id = ? AND i.deleted = ?',
-														array($id, 'N')) > 0);
+		if($active) return (bool) $db->getVar('SELECT COUNT(i.id)
+												FROM users AS i
+												WHERE i.id = ? AND i.deleted = ?',
+												array($id, 'N'));
 
 		// fallback, this doesn't take the active nor deleted status in account
-		return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
-											FROM users AS i
-											WHERE i.id = ?',
-											array($id)) > 0);
+		return (bool) $db->getVar('SELECT COUNT(i.id)
+									FROM users AS i
+									WHERE i.id = ?',
+									array($id));
 	}
 
 
@@ -110,16 +113,16 @@ class BackendUsersModel
 		$db = BackendModel::getDB();
 
 		// userid specified?
-		if($id !== null) return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
-															FROM users AS i
-															WHERE i.id != ? AND i.email = ?',
-															array($id, $email)) > 0);
+		if($id !== null) return (bool) $db->getVar('SELECT COUNT(i.id)
+													FROM users AS i
+													WHERE i.id != ? AND i.email = ?',
+													array($id, $email));
 
 		// no user to ignore
-		return (bool) ((int) $db->getVar('SELECT COUNT(i.id)
-											FROM users AS i
-											WHERE i.email = ?',
-											array($email)) > 0);
+		return (bool) $db->getVar('SELECT COUNT(i.id)
+									FROM users AS i
+									WHERE i.email = ?',
+									array($email));
 	}
 
 
@@ -173,6 +176,7 @@ class BackendUsersModel
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -224,6 +228,7 @@ class BackendUsersModel
 			$possibleFormats[$format] = $example;
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -244,6 +249,7 @@ class BackendUsersModel
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -255,17 +261,18 @@ class BackendUsersModel
 	 */
 	public static function getUsers()
 	{
-		$return = (array) BackendModel::getDB()->getPairs('SELECT i.id, s.value
+		// fetch users
+		$users = (array) BackendModel::getDB()->getPairs('SELECT i.id, s.value
 															FROM users AS i
 															INNER JOIN users_settings AS s ON i.id = s.user_id AND s.name = ?
 															WHERE i.active = ? AND i.deleted = ?',
 															array('nickname', 'Y', 'N'), 'id');
 
-		// unserialize
-		foreach($return as $id => &$value) $value = unserialize($value);
+		// loop users & unserialize
+		foreach($users as $id => &$value) $value = unserialize($value);
 
 		// return
-		return $return;
+		return $users;
 	}
 
 
@@ -310,7 +317,7 @@ class BackendUsersModel
 		$db = BackendModel::getDB(true);
 
 		// update user
-		$db->update('users', $user, 'id = ?', $user['id']);
+		$updated = $db->update('users', $user, 'id = ?', array($user['id']));
 
 		// loop settings
 		foreach($settings as $key => $value)
@@ -321,6 +328,9 @@ class BackendUsersModel
 							ON DUPLICATE KEY UPDATE value = ?',
 							array($user['id'], $key, serialize($value), serialize($value)));
 		}
+
+		// return updated
+		return $updated;
 	}
 
 
@@ -328,8 +338,8 @@ class BackendUsersModel
 	 * Update the user password
 	 *
 	 * @return	void
-	 * @param BackendUser $user		An instance of BackendUser.
-	 * @param string $password		The new password for the user.
+	 * @param	BackendUser $user	An instance of BackendUser.
+	 * @param	string $password	The new password for the user.
 	 */
 	public static function updatePassword(BackendUser $user, $password)
 	{
@@ -349,7 +359,7 @@ class BackendUsersModel
 	 * Restores a user
 	 * @later	this method should check if all needed data is present
 	 *
-	 * @return 	bool
+	 * @return	bool
 	 * @param	string $email	The emailadress of the user to restore.
 	 */
 	public static function undoDelete($email)

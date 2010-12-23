@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendTagsMassAction
  * This action is used to perform mass actions on tags (delete, ...)
  *
  * @package		backend

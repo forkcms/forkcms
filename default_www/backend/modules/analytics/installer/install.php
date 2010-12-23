@@ -1,7 +1,6 @@
 <?php
 
 /**
- * AnalyticsInstall
  * Installer for the analytics module
  *
  * @package		installer

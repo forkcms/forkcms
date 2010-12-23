@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendSearchModel
  * In this file we store all generic functions that we will be using in the search module
  *
  * @package		frontend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchModel
@@ -97,7 +96,7 @@ class FrontendSearchModel
 	 * Build the search term
 	 *
 	 * @return	string
-	 * @param	string $term
+	 * @param	string $terms
 	 */
 	public static function buildTerm($terms)
 	{
@@ -207,7 +206,7 @@ class FrontendSearchModel
 		}
 
 		// return the results
-		return (array) FrontendModel::getDB()->retrieve($query, $params);
+		return (array) FrontendModel::getDB()->getRecords($query, $params);
 	}
 
 
@@ -216,15 +215,15 @@ class FrontendSearchModel
 	 *
 	 * @return	array
 	 * @param	string $term				The first letters of the term we're looking for.
-	 * @param	string $language			The language to search in.
-	 * @param	int $limit					Limit resultset.
+	 * @param	string[optional] $language	The language to search in.
+	 * @param	int[optional] $limit		Limit resultset.
 	 */
 	public static function getStartsWith($term, $language = '', $limit = 10)
 	{
 		// language given
 		if($language)
 		{
-			return (array) FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+			return (array) FrontendModel::getDB()->getRecords('SELECT s1.term, s1.num_results
 																FROM search_statistics AS s1
 																INNER JOIN
 																(
@@ -241,7 +240,7 @@ class FrontendSearchModel
 		// no language given
 		else
 		{
-			return (array) FrontendModel::getDB()->retrieve('SELECT s1.term, s1.num_results
+			return (array) FrontendModel::getDB()->getRecords('SELECT s1.term, s1.num_results
 																FROM search_statistics AS s1
 																INNER JOIN
 																(
@@ -350,7 +349,7 @@ class FrontendSearchModel
 				if($otherId == $result['other_id'])
 				{
 					$searchResults[$i] = array_merge(array('module' => $result['module']), $moduleResult);
-					continue 2;
+					continue(2);
 				}
 			}
 
@@ -371,9 +370,9 @@ class FrontendSearchModel
 	 * Deactivate an index (no longer has to be searched)
 	 *
 	 * @return	void
-	 * @param	string $module		The module we're deleting an item from.
-	 * @param	array $otherIds		An array of other_id's for this module.
-	 * @param	bool $active		Set the index to active?
+	 * @param	string $module				The module we're deleting an item from.
+	 * @param	array $otherIds				An array of other_id's for this module.
+	 * @param	bool[optional] $active		Set the index to active?
 	 */
 	public static function statusIndex($module, array $otherIds, $active = true)
 	{
@@ -399,12 +398,12 @@ class FrontendSearchModel
 		while(1)
 		{
 			// get the inactive indices
-			$searchResults = (array) FrontendModel::getDB()->retrieve('SELECT module, other_id
-																		FROM search_index
-																		WHERE language = ? AND active = ?
-																		GROUP BY module, other_id
-																		LIMIT ?, ?',
-																		array(FRONTEND_LANGUAGE, 'N', $offset, $limit));
+			$searchResults = (array) FrontendModel::getDB()->getRecords('SELECT module, other_id
+																			FROM search_index
+																			WHERE language = ? AND active = ?
+																			GROUP BY module, other_id
+																			LIMIT ?, ?',
+																			array(FRONTEND_LANGUAGE, 'N', $offset, $limit));
 
 			// none found? good news!
 			if(!$searchResults) return;

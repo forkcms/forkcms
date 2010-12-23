@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlockExtra
  * This class will handle all stuff related to blocks
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -157,6 +156,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 			}
 		}
 
+		// return
 		return $this->action;
 	}
 
@@ -241,7 +241,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action	The action to load.
+	 * @param	string[optional] $action	The action to load.
 	 */
 	private function setAction($action = null)
 	{
@@ -305,7 +305,7 @@ class FrontendBlockExtra extends FrontendBaseObject
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -495,7 +495,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action		The action to load.
+	 * @param	string[optional] $action		The action to load.
 	 */
 	private function setAction($action = null)
 	{

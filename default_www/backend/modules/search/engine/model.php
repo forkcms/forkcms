@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendSearchModel
  * In this file we store all generic functions that we will be using in the search module
  *
  * @package		backend
@@ -12,10 +11,21 @@
  */
 class BackendSearchModel
 {
+	/**
+	 * Overview of all synonyms
+	 *
+	 * @var	string
+	 */
 	const QRY_DATAGRID_BROWSE_SYNONYMS = 'SELECT i.id, i.term, i.synonym
 											FROM search_synonyms AS i
 											WHERE i.language = ?';
 
+
+	/**
+	 * Overview of all statistics
+	 *
+	 * @var	string
+	 */
 	const QRY_DATAGRID_BROWSE_STATISTICS = 'SELECT UNIX_TIMESTAMP(i.time) AS time, i.term, i.data
 											FROM search_statistics AS i
 											WHERE i.language = ?';
@@ -36,10 +46,10 @@ class BackendSearchModel
 		if(!in_array('search', BackendModel::getModules(true))) return;
 
 		// no fields?
-		if (empty($fields)) return;
+		if(empty($fields)) return;
 
 		// set language
-		if (!$language) $language = BL::getWorkingLanguage();
+		if(!$language) $language = BL::getWorkingLanguage();
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -90,10 +100,10 @@ class BackendSearchModel
 		if(!in_array('search', BackendModel::getModules(true))) return;
 
 		// no fields?
-		if (empty($fields)) return;
+		if(empty($fields)) return;
 
 		// set language
-		if (!$language) $language = BL::getWorkingLanguage();
+		if(!$language) $language = BL::getWorkingLanguage();
 
 		// get db
 		$db = BackendModel::getDB(true);
@@ -105,7 +115,8 @@ class BackendSearchModel
 			$value = strip_tags((string) $value);
 
 			// update search index
-			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active) VALUES (?, ?, ?, ?, ?, ?)
+			$db->execute('INSERT INTO search_index (module, other_id, language, field, value, active)
+							VALUES (?, ?, ?, ?, ?, ?)
 							ON DUPLICATE KEY UPDATE value = ?, active = ?', array((string) $module, (int) $otherId, (string) $language, (string) $field, $value, 'Y', $value, 'Y'));
 		}
 
@@ -133,7 +144,7 @@ class BackendSearchModel
 	 *
 	 * @return	bool
 	 * @param	string $term				The term we're looking for.
-	 * @param	int[optional] $id			exclude a certain id.
+	 * @param	int[optional] $exclude		Exclude a certain id.
 	 */
 	public static function existsSynonymByTerm($term, $exclude = null)
 	{
@@ -156,7 +167,7 @@ class BackendSearchModel
 	 */
 	public static function getModuleSettings()
 	{
-		return BackendModel::getDB()->retrieve('SELECT module, searchable, weight
+		return BackendModel::getDB()->getRecords('SELECT module, searchable, weight
 													FROM search_modules',
 													array(), 'module');
 	}
@@ -187,7 +198,8 @@ class BackendSearchModel
 	public static function insertModuleSettings($module, $searchable, $weight)
 	{
 		// insert or update
-		BackendModel::getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
+		BackendModel::getDB(true)->execute('INSERT INTO search_modules (module, searchable, weight)
+											VALUES (?, ?, ?)
 											ON DUPLICATE KEY UPDATE searchable = ?, weight = ?',
 											array($module['module'], $searchable, $weight, $searchable, $weight));
 
@@ -232,10 +244,10 @@ class BackendSearchModel
 	 * @return	void
 	 * @param	array $item					The data to update in the db.
 	 */
-	public static function updateSynonym($id, $item)
+	public static function updateSynonym($item)
 	{
 		// update
-		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($id));
+		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($item['id']));
 
 		// invalidate the cache for search
 		self::invalidateCache();
@@ -248,6 +260,7 @@ class BackendSearchModel
 	 * @return	void
 	 * @param	string $module				The module wherin will be searched.
 	 * @param	int $otherId				The id of the record.
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function removeIndex($module, $otherId, $language = null)
 	{

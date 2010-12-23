@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Akismet class
  *
@@ -105,7 +106,7 @@ class Akismet
 	 *
 	 * @return	string
 	 * @param	string $url
-	 * @param	array[optiona] $aParameters
+	 * @param	array[optional] $aParameters
 	 * @param	bool[optional] $authenticate
 	 */
 	private function doCall($url, $aParameters = array(), $authenticate = true)

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsAjaxCheckStatus
+ * This edit-action will refresh the traffic sources using Ajax
  *
  * @package		backend
  * @subpackage	analytics

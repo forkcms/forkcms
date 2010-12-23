@@ -333,7 +333,7 @@ class SpoonEmail
 	 * Gets attachment content MIME type for given file extension.
 	 *
 	 * @return	string
-	 * @param	string $extension The extension to look up
+	 * @param	string $extension	The extension to look up
 	 */
 	private function getAttachmentContentType($extension)
 	{
@@ -865,9 +865,16 @@ class SpoonEmail
 			// check security level to change port
 			switch($this->security)
 			{
-				case 'ssl': $port = 465; break;
-				case 'tls': $port = 587; break;
-				default: $port = 25;
+				case 'ssl':
+					$port = 465;
+				break;
+
+				case 'tls':
+					$port = 587;
+				break;
+
+				default:
+					$port = 25;
 			}
 		}
 
@@ -880,7 +887,7 @@ class SpoonEmail
 	 * Sets the SMTP security layer (either SSL or TLS)
 	 *
 	 * @return	void
-	 * @param string $layer		The security layer to use with SMTP (either SSL or TLS).
+	 * @param	string $layer	The security layer to use with SMTP (either SSL or TLS).
 	 */
 	public function setSMTPSecurity($layer)
 	{

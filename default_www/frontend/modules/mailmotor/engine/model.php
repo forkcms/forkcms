@@ -59,7 +59,7 @@ class FrontendMailmotorModel
 	 * Checks if a group exists
 	 *
 	 * @return	bool
-	 * @param	int $group
+	 * @param	int $id
 	 */
 	public static function existsGroup($id)
 	{
@@ -124,7 +124,7 @@ class FrontendMailmotorModel
 	 *
 	 * @return	array
 	 * @param	string $email
-	 * @param	int	$excludeId
+	 * @param	int[optional] $excludeId
 	 */
 	public static function getGroupIDsByEmail($email, $excludeId = null)
 	{
@@ -160,6 +160,7 @@ class FrontendMailmotorModel
 	 * @return	string
 	 * @param	int $id
 	 * @param	string[optional] $contentType
+	 * @param	bool[optional] $forCM
 	 */
 	public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
 	{
@@ -176,7 +177,8 @@ class FrontendMailmotorModel
 	 * Inserts a new e-mail address into the database
 	 *
 	 * @return	bool
-	 * @param	array $item		The data to insert for the address.
+	 * @param	array $item						The data to insert for the address.
+	 * @param	bool[optional] $unsubscribe		@todo	@dave	complete this
 	 */
 	public static function insertAddress(array $item, $unsubscribe = false)
 	{

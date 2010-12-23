@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendException
  * This exception is used to handle backend related exceptions.
  *
  * @package		backend

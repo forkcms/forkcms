@@ -1,14 +1,13 @@
 <?php
 
 /**
- * FrontendTagsModel
- * In this file we store all generic functions
+ * In this file we store all generic functions that we will be using in the tags module
  *
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTagsModel
@@ -16,11 +15,11 @@ class FrontendTagsModel
 	/**
 	 * Calls a method that has to be implemented though the tags interface
 	 *
-	 * @param string $module
-	 * @param string $class
-	 * @param string $method
-	 * @param mixed $parameter
-	 * @return mixed
+	 * @return	mixed
+	 * @param	string $module
+	 * @param	string $class
+	 * @param	string $method
+	 * @param	mixed[optional] $parameter
 	 */
 	public static function callFromInterface($module, $class, $method, $parameter = null)
 	{
@@ -57,8 +56,8 @@ class FrontendTagsModel
 		// exists
 		return (array) FrontendModel::getDB()->getRecord('SELECT id, language, tag AS name, number, url
 															FROM tags
-															WHERE url = ?;',
-															(string) $URL);
+															WHERE url = ?',
+															array((string) $URL));
 	}
 
 
@@ -69,11 +68,11 @@ class FrontendTagsModel
 	 */
 	public static function getAll()
 	{
-		// fetch items
 		return (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url, t.number
 															FROM tags AS t
 															WHERE t.language = ? AND t.number > 0
-															ORDER BY number DESC, t.tag;', FRONTEND_LANGUAGE);
+															ORDER BY number DESC, t.tag',
+															array(FRONTEND_LANGUAGE));
 	}
 
 
@@ -97,7 +96,7 @@ class FrontendTagsModel
 		$linkedTags = (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url
 																	FROM modules_tags AS mt
 																	INNER JOIN tags AS t ON mt.tag_id = t.id
-																	WHERE mt.module = ? AND mt.other_id = ?;',
+																	WHERE mt.module = ? AND mt.other_id = ?',
 																	array($module, $otherId));
 
 		// return
@@ -129,11 +128,10 @@ class FrontendTagsModel
 	 */
 	public static function getIdByURL($URL)
 	{
-		// exists
 		return (int) FrontendModel::getDB()->getVar('SELECT id
-													FROM tags
-													WHERE url = ?;',
-													(string) $URL);
+														FROM tags
+														WHERE url = ?',
+														array((string) $URL));
 	}
 
 
@@ -159,7 +157,7 @@ class FrontendTagsModel
 		$linkedTags = (array) $db->getRecords('SELECT mt.other_id, t.tag AS name, t.url
 												FROM modules_tags AS mt
 												INNER JOIN tags AS t ON mt.tag_id = t.id
-												WHERE mt.module = ? AND mt.other_id IN('. implode(', ', $otherIds) .');',
+												WHERE mt.module = ? AND mt.other_id IN ('. implode(', ', $otherIds) .')',
 												array($module));
 
 		// return
@@ -191,13 +189,12 @@ class FrontendTagsModel
 	 */
 	public static function getModulesForTag($tagId)
 	{
-		// get modules
 		return (array) FrontendModel::getDB()->getColumn('SELECT module
 															FROM modules_tags
 															WHERE tag_id = ?
 															GROUP BY module
-															ORDER BY module ASC;',
-															(int) $tagId);
+															ORDER BY module ASC',
+															array((int) $tagId));
 	}
 
 
@@ -209,18 +206,21 @@ class FrontendTagsModel
 	 */
 	public static function getName($id)
 	{
-		return FrontendModel::getDB()->getVar('SELECT tag FROM tags WHERE id = ?;', (int) $id);
+		return FrontendModel::getDB()->getVar('SELECT tag
+												FROM tags
+												WHERE id = ?',
+												array((int) $id));
 	}
 
 
 	/**
 	 * Get all related items
 	 *
-	 * @param	int $id
-	 * @param	int $moduleId
-	 * @param	int $otherModuleId
-	 * @param	int[optional] $limit
 	 * @return	array
+	 * @param	int $id
+	 * @param	int $module
+	 * @param	int $otherModule
+	 * @param	int[optional] $limit
 	 */
 	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
 	{
@@ -230,8 +230,8 @@ class FrontendTagsModel
 														WHERE t.other_id = ? AND t.module = ? AND t2.module = ? AND t2.other_id != t.other_id
 														GROUP BY t2.other_id
 														ORDER BY COUNT(t2.tag_id) DESC
-														LIMIT ?;',
-														array($id, $module, $otherModule, $limit));
+														LIMIT ?',
+														array((int) $id, (string) $module, (string) $otherModule, (int) $limit));
 	}
 }
 

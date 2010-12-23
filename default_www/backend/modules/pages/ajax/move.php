@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendPagesAjaxMove
+ * This edit-action will reorder moved pages using Ajax
  *
  * @package		backend
  * @subpackage	pages
@@ -27,8 +27,8 @@ class BackendPagesAjaxMove extends BackendBaseAJAXAction
 		$typeOfDrop = SpoonFilter::getPostValue('type', null, '');
 
 		// validate
-		if($id == 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($droppedOn == -1) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($droppedOn === -1) $this->output(self::BAD_REQUEST, null, 'no id provided');
 		if($typeOfDrop == '') $this->output(self::BAD_REQUEST, null, 'no type provided');
 
 		// get page

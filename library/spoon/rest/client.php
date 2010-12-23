@@ -64,9 +64,10 @@ class SpoonRESTClient
 	 * Make the call.
 	 *
 	 * @return	string
-	 * @param	string $url
-	 * @param	array[optional] $parameters
-	 * @param	string[optional] $method
+	 * @param	string $url						The url to call.
+	 * @param	array[optional] $parameters		The parameters to pass.
+	 * @param	string[optional] $method		The HTTP-method to use, possible values are: GET, POST.
+	 * @param	array[optional]	$cURLOptions	Optional extra cURL-options.
 	 */
 	public function execute($url, array $parameters = null, $method = 'GET', array $cURLoptions = null)
 	{

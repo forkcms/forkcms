@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendMeta
  * This class represents a META-object
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendMeta
@@ -283,7 +282,7 @@ class BackendMeta
 		// get item
 		$this->data = (array) BackendModel::getDB()->getRecord('SELECT *
 																FROM meta AS m
-																WHERE m.id = ?;',
+																WHERE m.id = ?',
 																array($this->id));
 
 		// validate meta-record

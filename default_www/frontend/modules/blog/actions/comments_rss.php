@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendBlogCommentsRSS
  * This is the RSS-feed with all the comments
  *
  * @package		frontend

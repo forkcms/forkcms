@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendCoreCronjobSendQueuedEmails
  * This is the cronjob to send the queued emails.
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendCoreCronjobSendQueuedEmails extends BackendBaseCronjob

@@ -123,7 +123,9 @@ class CampaignMonitor
 	 * @param	string $siteURL					The base URL of the site you use to login to Campaign Monitor.
 	 * @param	string $username				The username you use to login to Campaign Monitor.
 	 * @param	string $password				The password you use to login to Campaign Monitor.
+	 * @param	int[optional] $timeOut			The timeout
 	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
+	 * @param	string[optional] $listId		The default list ID to use throughout the class.
 	 * @param	string[optional] $campaignId	The default campaign ID to use throughout the class.
 	 */
 	public function __construct($siteURL, $username, $password, $timeOut = 60, $clientId = null, $listId = null, $campaignId = null)
@@ -172,8 +174,8 @@ class CampaignMonitor
 	 * @param	string $email					The email address of the new subscriber.
 	 * @param	string $name					The name of the new subscriber. If the name is unknown, an empty string can be passed in.
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
-	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
-	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
+	 * @param	string[optional] $listId		The list you want to add the subscriber to.
 	 */
 	public function addSubscriber($email, $name, $customFields = array(), $resubscribe = true, $listId = null)
 	{
@@ -221,16 +223,16 @@ class CampaignMonitor
 	 * Creates a campaign. Returns the campaign ID when succesful or false if the call failed
 	 *
 	 * @return	mixed
-	 * @param	string $name					The name of the new campaign. This must be unique across all draft campaigns for the client.
-	 * @param	string $subject					The subject of the new campaign.
-	 * @param	string $fromName				The name to appear in the From field in the recipients email client when they receive the new campaign.
-	 * @param	string $fromEmail				The email address that the new campaign will come from.
-	 * @param	string $replyToEmail			The email address that any replies to the new campaign will be sent to.
-	 * @param	string $HTMLContentURL			The URL of the HTML content for the new campaign.
-	 * @param	string $textContentURL			The URL of the text content for the new campaign.
-	 * @param	array $subscriberLists			An array of lists to send the campaign to.
-	 * @param	array $subscriberListSegments	An array of Segment Names and their appropriate List ID’s to send the campaign to.
-	 * @param	string[optional] $clientId		The ID of the client who will be owner of the campaign.
+	 * @param	string $name								The name of the new campaign. This must be unique across all draft campaigns for the client.
+	 * @param	string $subject								The subject of the new campaign.
+	 * @param	string $fromName							The name to appear in the From field in the recipients email client when they receive the new campaign.
+	 * @param	string $fromEmail							The email address that the new campaign will come from.
+	 * @param	string $replyToEmail						The email address that any replies to the new campaign will be sent to.
+	 * @param	string $HTMLContentURL						The URL of the HTML content for the new campaign.
+	 * @param	string $textContentURL						The URL of the text content for the new campaign.
+	 * @param	array $subscriberLists						An array of lists to send the campaign to.
+	 * @param	array[optional] $subscriberListSegments		An array of Segment Names and their appropriate List ID’s to send the campaign to.
+	 * @param	string[optional] $clientId					The ID of the client who will be owner of the campaign.
 	 */
 	public function createCampaign($name, $subject, $fromName, $fromEmail, $replyToEmail, $HTMLContentURL, $textContentURL, array $subscriberLists, array $subscriberListSegments = array(), $clientId = null)
 	{
@@ -306,8 +308,8 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $name				The name of the field.
-	 * @param	string $type				The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
-	 * @param	array $options				The available options for a multi-valued custom field. Options should be separated by a double pipe "||". This field must be null for Text and Number custom fields.
+	 * @param	string[optional] $type		The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
+	 * @param	array[optional] $options	The available options for a multi-valued custom field. Options should be separated by a double pipe "||". This field must be null for Text and Number custom fields.
 	 * @param	string[optional] $listId	The list ID to create the custom field for
 	 */
 	public function createCustomField($name, $type = null, $options = array(), $listId = null)
@@ -378,10 +380,16 @@ class CampaignMonitor
 		$parameters['ConfirmationSuccessPage'] = (string) $confirmationSuccessPage;
 
 		// try and create the record
-		try { $result = (string) $this->doCall('List.Create', $parameters); }
+		try
+		{
+			$result = (string) $this->doCall('List.Create', $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { $result = false; }
+		catch(Exception $e)
+		{
+			$result = false;
+		}
 
 		// if we made it here, the record exists
 		return $result;
@@ -411,10 +419,16 @@ class CampaignMonitor
 		$parameters['ScreenshotURL'] = (string) $screenshotURL;
 
 		// try and create the template record
-		try { $templateId = (string) $this->doCall('Template.Create', $parameters); }
+		try
+		{
+			$templateId = (string) $this->doCall('Template.Create', $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { $templateId = false; }
+		catch(Exception $e)
+		{
+			$templateId = false;
+		}
 
 		// if we made it here, the template exists
 		return $templateId;
@@ -556,29 +570,93 @@ class CampaignMonitor
 		// check for getDetail
 		switch($method[1])
 		{
-			case 'Add': $callMethod = 'Add'. $method[0]; break;
-			case 'Create': $callMethod = 'Create'. $method[0]; break;
-			case 'CreateCustomField': $callMethod = 'Create'. $method[0] .'CustomField'; break;
-			case 'Delete': $callMethod = 'Delete'. $method[0]; break;
-			case 'DeleteCustomField': $callMethod = 'Delete'. $method[0] .'CustomField'; break;
-			case 'GetBounces': $callMethod = 'Get'. $method[0] .'Bounces'; break;
-			case 'GetCampaigns': $callMethod = 'Get'. $method[0] .'Campaigns'; break;
-			case 'GetCustomFields': $callMethod = 'Get'. $method[0] .'CustomFields'; break;
-			case 'GetDetail': $callMethod = 'Get'. $method[0] .'Detail'; break;
-			case 'GetLists': $callMethod = 'Get'. $method[0] .'Lists'; break;
-			case 'GetOpens': $callMethod = 'Get'. $method[0] .'Opens'; break;
-			case 'GetSubscribers': $responseKey = 'Subscribers.GetActiveResult'; break;
-			case 'GetSegments': $callMethod = 'Get'. $method[0] .'Segments'; break;
-			case 'GetStats': $callMethod = 'Get'. $method[0] .'Stats'; break;
-			case 'GetSummary': $callMethod = 'Get'. $method[0] .'Summary'; break;
-			case 'GetSuppressionList': $callMethod = 'Get'. $method[0] .'SuppressionList'; break;
-			case 'GetTemplates': $callMethod = 'Get'. $method[0] .'Templates'; break;
-			case 'GetUnsubscribes': $callMethod = 'Get'. $method[0] .'Unsubscribes'; break;
-			case 'Send': $callMethod = 'Send'. $method[0]; break;
-			case 'Update': $callMethod = 'Update'. $method[0]; break;
-			case 'UpdateBasics': $callMethod = 'Update'. $method[0] .'Basics'; break;
-			case 'UpdateAccessAndBilling': $callMethod = 'Update'. $method[0] .'AccessAndBilling'; break;
-			default;
+			case 'Add':
+				$callMethod = 'Add'. $method[0];
+			break;
+
+			case 'Create':
+				$callMethod = 'Create'. $method[0];
+			break;
+
+			case 'CreateCustomField':
+				$callMethod = 'Create'. $method[0] .'CustomField';
+			break;
+
+			case 'Delete':
+				$callMethod = 'Delete'. $method[0];
+			break;
+
+			case 'DeleteCustomField':
+				$callMethod = 'Delete'. $method[0] .'CustomField';
+			break;
+
+			case 'GetBounces':
+				$callMethod = 'Get'. $method[0] .'Bounces';
+			break;
+
+			case 'GetCampaigns':
+				$callMethod = 'Get'. $method[0] .'Campaigns';
+			break;
+
+			case 'GetCustomFields':
+				$callMethod = 'Get'. $method[0] .'CustomFields';
+			break;
+
+			case 'GetDetail':
+				$callMethod = 'Get'. $method[0] .'Detail';
+			break;
+
+			case 'GetLists':
+				$callMethod = 'Get'. $method[0] .'Lists';
+			break;
+
+			case 'GetOpens':
+				$callMethod = 'Get'. $method[0] .'Opens';
+			break;
+
+			case 'GetSubscribers':
+				$responseKey = 'Subscribers.GetActiveResult';
+			break;
+
+			case 'GetSegments':
+				$callMethod = 'Get'. $method[0] .'Segments';
+			break;
+
+			case 'GetStats':
+				$callMethod = 'Get'. $method[0] .'Stats';
+			break;
+
+			case 'GetSummary':
+				$callMethod = 'Get'. $method[0] .'Summary';
+			break;
+
+			case 'GetSuppressionList':
+				$callMethod = 'Get'. $method[0] .'SuppressionList';
+			break;
+
+			case 'GetTemplates':
+				$callMethod = 'Get'. $method[0] .'Templates';
+			break;
+
+			case 'GetUnsubscribes':
+				$callMethod = 'Get'. $method[0] .'Unsubscribes';
+			break;
+
+			case 'Send':
+				$callMethod = 'Send'. $method[0];
+			break;
+
+			case 'Update':
+				$callMethod = 'Update'. $method[0];
+			break;
+
+			case 'UpdateBasics':
+				$callMethod = 'Update'. $method[0] .'Basics';
+			break;
+
+			case 'UpdateAccessAndBilling':
+				$callMethod = 'Update'. $method[0] .'AccessAndBilling';
+			break;
 		}
 
 		// catch any timeouts that may occur
@@ -649,10 +727,16 @@ class CampaignMonitor
 	private function doSilentCall($method, $parameters)
 	{
 		// try and update the template record
-		try { $this->doCall($method, $parameters); }
+		try
+		{
+			$this->doCall($method, $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { return false; }
+		catch(Exception $e)
+		{
+			return false;
+		}
 
 		// if we made it here, the template was updated
 		return true;
@@ -1073,10 +1157,21 @@ class CampaignMonitor
 		// set value of billing type
 		switch($billing['BillingType'])
 		{
-			case 'UserPaysOnClientsBehalf': $result['billing_type'] = 'user'; break;
-			case 'ClientPaysAtStandardRate': $result['billing_type'] = 'client_standard'; break;
-			case 'ClientPaysWithMarkup': $result['billing_type'] = 'client_markup'; break;
-			default: $result['billing_type'] = null;
+			case 'UserPaysOnClientsBehalf':
+				$result['billing_type'] = 'user';
+			break;
+
+			case 'ClientPaysAtStandardRate':
+				$result['billing_type'] = 'client_standard';
+			break;
+
+			case 'ClientPaysWithMarkup':
+				$result['billing_type'] = 'client_markup';
+			break;
+
+			default:
+				$result['billing_type'] = null;
+			break;
 		}
 
 		// depending on the billing type, parse these vars
@@ -1830,9 +1925,14 @@ class CampaignMonitor
 		// check for True/False
 		switch($result)
 		{
-			case 'False': return false;
-			case 'True': return true;
-			default: return false;
+			case 'False':
+				return false;
+
+			case 'True':
+				return true;
+
+			default:
+				return false;
 		}
 	}
 
@@ -1954,8 +2054,8 @@ class CampaignMonitor
 	 * @param	string $email					The email address of the new subscriber.
 	 * @param	string $name					The name of the new subscriber. If the name is unknown, an empty string can be passed in.
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
-	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
-	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
+	 * @param	string[optional] $listId		The list you want to add the subscriber to.
 	 */
 	public function subscribe($email, $name, $customFields = array(), $resubscribe = true, $listId = null)
 	{
@@ -2200,4 +2300,5 @@ class CampaignMonitorException extends Exception
 		parent::__construct((string) $message, $code);
 	}
 }
+
 ?>

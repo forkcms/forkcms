@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorMassAddressAction extends BackendBaseAction
@@ -97,7 +97,12 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 					{
 						BackendMailmotorCMHelper::unsubscribe($email, $groupId);
 					}
-					catch(Exception $e){}
+
+					// ignore exceptions
+					catch(Exception $e)
+					{
+						// do nothing
+					}
 				}
 
 				// delete all addresses

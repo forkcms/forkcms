@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
@@ -122,11 +122,17 @@ class BackendNavigation
 			if($currentDepth >= $startDepth - 1) $HTML .= '</li>'."\n";
 		}
 
+		// return
 		return $HTML;
 	}
 
 
-	// @todo phpdoc
+	/**
+	 * Clean the navigation
+	 *
+	 * @return	array
+	 * @param	array $navigation
+	 */
 	private function cleanup(array $navigation)
 	{
 		// loop elements
@@ -249,7 +255,7 @@ class BackendNavigation
 					// recursive here...
 					$subKeys = $this->compareURL($value, $key, $keys);
 
-					// wrap it up.
+					// wrap it up
 					if(!empty($subKeys)) return $subKeys;
 				}
 			}
@@ -267,7 +273,7 @@ class BackendNavigation
 				// recursive here...
 				$subKeys = $this->compareURL($value, $key, $keys);
 
-				// wrap it up.
+				// wrap it up
 				if(!empty($subKeys)) return $subKeys;
 			}
 		}

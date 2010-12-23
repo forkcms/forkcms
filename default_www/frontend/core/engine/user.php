@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendUser
  * The class below will handle all stuff relates to users
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendUser
@@ -65,9 +64,9 @@ class FrontendUser
 	 */
 	public static function getBackendUser($userId)
 	{
+		// create new instance if neccessary and cache it
 		if(!isset(self::$cache[$userId])) self::$cache[$userId] = new FrontendUser($userId);
 
-		// create new instance and return it
 		return self::$cache[$userId];
 	}
 
@@ -142,7 +141,7 @@ class FrontendUser
 		$userData = (array) $db->getRecord('SELECT u.id, u.email
 											FROM users AS u
 											WHERE u.id = ?
-											LIMIT 1;',
+											LIMIT 1',
 											array($userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
@@ -155,7 +154,7 @@ class FrontendUser
 		// get settings
 		$settings = (array) $db->getPairs('SELECT us.name, us.value
 											FROM users_settings AS us
-											WHERE us.user_id = ?;',
+											WHERE us.user_id = ?',
 											array($userId));
 
 		// loop settings and store them in the object

@@ -1,4 +1,5 @@
-tinyMCE.init({
+tinyMCE.init(
+{
 	// general options
 	mode: 'textareas',
 	editor_selector: 'inputEditor',
@@ -47,7 +48,8 @@ tinyMCE.init({
 	imagemanager_handle: 'image',
 
 	// templates
-	template_templates: [
+	template_templates:
+	[
 		{
 			title: 'Paragraph with left aligned image',
 			src: '/backend/core/js/tiny_mce/snippets/image_left.html',
@@ -97,7 +99,7 @@ tinyMCE.init({
 		});
 
 		/**
-		 * It seems like onActivate isn't called when their is just a single
+		 * It seems like onActivate isn't called when there is just a single
 		 * instance. Our workaround is really ugly, we watch each event and
 		 * add the class on the container, see:
 		 * http://tinymce.moxiecode.com/punbb/viewtopic.php?id=12249

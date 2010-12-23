@@ -1,16 +1,15 @@
 <?php
 
 /**
- * ModuleInstaller
  * The base-class for the installer
  *
- * @package     installer
- * @subpackage  core
+ * @package		backend
+ * @subpackage	core
  *
- * @author      Davy Hellemans <davy@netlash.com>
- * @author      Tijs Verkoyen <tijs@netlash.com>
- * @author      Matthias Mullie <matthias@netlash.com>
- * @since       2.0
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
+ * @since		2.0
  */
 class ModuleInstaller
 {
@@ -49,7 +48,7 @@ class ModuleInstaller
      */
     public function __construct(SpoonDatabase $db, array $languages, $example = false, array $variables = array())
     {
-        // set DB
+		// save vars
         $this->db = $db;
         $this->languages = $languages;
         $this->example = (bool) $example;
@@ -73,7 +72,7 @@ class ModuleInstaller
         $name = (string) $name;
 
         // module does not yet exists
-        if(!(bool) $this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?;', $name))
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?', array($name)))
         {
             // build item
             $item = array('name' => $name,
@@ -90,13 +89,13 @@ class ModuleInstaller
 
 
     /**
-     * Method that will be overriden by the specific installers
+	 * Method that will be overwritten by the specific installers
      *
      * @return void
      */
     protected function execute()
     {
-        // just a placeholder
+		// this method will be overwritten by the children
     }
 
 
@@ -227,7 +226,7 @@ class ModuleInstaller
             $sequence = $this->getDB()->getVar('SELECT MAX(sequence) + 1 FROM pages_extras WHERE module = ?', array((string) $module));
 
             // this is the first extra for this module: generate new 1000-series
-            if(is_null($sequence)) $sequence = $sequence = $this->getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM pages_extras');
+            if(is_null($sequence)) $sequence = $this->getDB()->getVar('SELECT CEILING(MAX(sequence) / 1000) * 1000 FROM pages_extras');
         }
 
         // redefine
@@ -307,9 +306,9 @@ class ModuleInstaller
     /**
      * Insert a meta item
      *
-     * @return  int
-     * @param   string $keywords
-     * @param   string $description
+     * @return	int
+     * @param	string $keywords
+     * @param	string $description
      * @param   string $title
      * @param   string $url
      * @param   bool[optional] $keywordsOverwrite
@@ -350,10 +349,10 @@ class ModuleInstaller
     /**
      * Insert a page
      *
-     * @return  void
-     * @param   array $revision
-     * @param   array[optional] $meta
-     * @param   array[optional] $block
+     * @return	void
+     * @param	array $revision
+     * @param	array[optional] $meta
+     * @param	array[optional] $block
      */
     protected function insertPage(array $revision, array $meta = null, array $block = null)
     {
@@ -464,10 +463,10 @@ class ModuleInstaller
     /**
      * Make a module searchable
      *
-     * @return  void
-     * @param   string $module                      The module to make searchable.
-     * @param   bool[optional] $searchable          Enable/disable search for this module by default?
-     * @param   int[optional] $weight               Set default search weight for this module.
+     * @return	void
+     * @param	string $module					The module to make searchable.
+     * @param	bool[optional] $searchable		Enable/disable search for this module by default?
+     * @param	int[optional] $weight			Set default search weight for this module.
      */
     protected function makeSearchable($module, $searchable = true, $weight = 1)
     {
@@ -477,7 +476,8 @@ class ModuleInstaller
         $weight = (int) $weight;
 
         // make module searchable
-        $this->getDB()->execute('INSERT INTO search_modules (module, searchable, weight) VALUES (?, ?, ?)
+		$this->getDB()->execute('INSERT INTO search_modules (module, searchable, weight)
+									VALUES (?, ?, ?)
                                     ON DUPLICATE KEY UPDATE searchable = ?, weight = ?', array($module, $searchable, $weight, $searchable, $weight));
     }
 
@@ -485,11 +485,11 @@ class ModuleInstaller
     /**
      * Set the rights for an action
      *
-     * @return  void
-     * @param   int $groupId            The group wherefor the rights will be set.
-     * @param   string $module          The module wherin the action appears.
-     * @param   string $action          The action wherefor the rights have to set.
-     * @param   int[optional] $level    The leve, default is 7 (max).
+     * @return	void
+     * @param	int $groupId			The group wherefor the rights will be set.
+     * @param	string $module			The module wherin the action appears.
+     * @param	string $action			The action wherefor the rights have to set.
+     * @param	int[optional] $level	The leve, default is 7 (max).
      */
     protected function setActionRights($groupId, $module, $action, $level = 7)
     {
@@ -520,9 +520,9 @@ class ModuleInstaller
     /**
      * Sets the rights for a module
      *
-     * @return  void
-     * @param   int $groupId        The group wherefor the rights will be set.
-     * @param   string $module      The module too set the rights for.
+     * @return	void
+     * @param	int $groupId		The group wherefor the rights will be set.
+     * @param	string $module		The module too set the rights for.
      */
     protected function setModuleRights($groupId, $module)
     {
@@ -546,46 +546,47 @@ class ModuleInstaller
     }
 
 
-    /**
-     * Stores a module specific setting in the database.
-     *
-     * @return  void
-     * @param   string $module              The module wherefore the setting will be set.
-     * @param   string $name                The name of the setting.
-     * @param   mixed[optional] $value      The optional value.
-     * @param   bool[optional] $overwrite   Overwrite no matter what.
-     */
-    protected function setSetting($module, $name, $value = null, $overwrite = false)
-    {
-        // redefine
-        $module = (string) $module;
-        $name = (string) $name;
-        $value = serialize($value);
-        $overwrite = (bool) $overwrite;
+	/**
+	 * Stores a module specific setting in the database.
+	 *
+	 * @return	void
+	 * @param	string $module				The module wherefore the setting will be set.
+	 * @param	string $name				The name of the setting.
+	 * @param	mixed[optional] $value		The optional value.
+	 * @param	bool[optional] $overwrite	Overwrite no matter what.
+	 */
+	protected function setSetting($module, $name, $value = null, $overwrite = false)
+	{
+		// redefine
+		$module = (string) $module;
+		$name = (string) $name;
+		$value = serialize($value);
+		$overwrite = (bool) $overwrite;
 
-        // doens't already exist
-        if(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
-                                            FROM modules_settings
-                                            WHERE module = ? AND name = ?;',
-                                            array($module, $name)))
-        {
-            // build item
-            $item = array('module' => $module,
-                            'name' => $name,
-                            'value' => $value);
+		// overwrite
+		if($overwrite)
+		{
+			// insert setting
+			$this->getDB()->execute('INSERT INTO modules_settings (module, name, value)
+										VALUES (?, ?, ?)
+										ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
+		}
 
-            // insert setting
-            $this->getDB()->insert('modules_settings', $item);
-        }
+		// doesn't already exist
+		elseif(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
+												FROM modules_settings
+												WHERE module = ? AND name = ?',
+												array($module, $name)))
+		{
+			// build item
+			$item = array('module' => $module,
+							'name' => $name,
+							'value' => $value);
 
-        // overwrite
-        elseif($overwrite)
-        {
-            // insert setting
-            $this->getDB()->execute('INSERT INTO modules_settings (module, name, value) VALUES (?, ?, ?)
-                                        ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
-        }
-    }
+			// insert setting
+			$this->getDB()->insert('modules_settings', $item);
+		}
+	}
 }
 
 
@@ -593,12 +594,12 @@ class ModuleInstaller
  * CoreInstall
  * Installer for the core
  *
- * @package     installer
- * @subpackage  core
+ * @package		backend
+ * @subpackage	core
  *
- * @author      Davy Hellemans <davy@netlash.com>
- * @author      Tijs Verkoyen <tijs@netlash.com>
- * @since       2.0
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @since		2.0
  */
 class CoreInstall extends ModuleInstaller
 {
@@ -663,6 +664,9 @@ class CoreInstall extends ModuleInstaller
         $this->setSetting('core', 'interface_languages', array('nl', 'en'), true);
         $this->setSetting('core', 'default_interface_language', 'en', true);
 
+		// numbers
+		$this->setSetting('core', 'number_formats', array('comma_nothing' => '10000,25', 'dot_nothing' => '10000.25', 'dot_comma' => '10,000.25', 'comma_dot' => '10.000,25', 'dot_space' => '10 000.25', 'comma_space' => '10 000,25'));
+
         // other settings
         $this->setSetting('core', 'theme');
         $this->setSetting('core', 'akismet_key', '');
@@ -714,7 +718,7 @@ class CoreInstall extends ModuleInstaller
             // get the keys
             $keys = $api->coreRequestKeys($this->getVariable('site_domain'), $this->getVariable('api_email'));
 
-            // ap settings
+			// api settings
             $this->setSetting('core', 'fork_api_public_key', $keys['public']);
             $this->setSetting('core', 'fork_api_private_key', $keys['private']);
 
@@ -732,7 +736,7 @@ class CoreInstall extends ModuleInstaller
         // catch exceptions
         catch(Exception $e)
         {
-            // we don't need those keys.
+			// we don't need those keys
         }
     }
 }

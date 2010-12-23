@@ -1,14 +1,13 @@
 <?php
 
 /**
- * FrontendTagsWidgetRelated
  * This is a widget with the related items based on tags
  *
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendTagsWidgetRelated extends FrontendBaseWidget
@@ -84,7 +83,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				foreach($this->related as $related)
 				{
 					// already exists
-					if($item == $related) continue 2;
+					if($item == $related) continue(2);
 				}
 
 				// add to list of related items
@@ -102,7 +101,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				if($entry['module'] == $exclude['module'] && $entry['other_id'] == $exclude['other_id'])
 				{
 					unset($this->related[$id]);
-					continue 2;
+					continue(2);
 				}
 			}
 
@@ -125,7 +124,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	/**
 	 * Get tags for current "page"
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function getTags()
 	{
@@ -172,7 +171,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign
-		$this->tpl->assign('widgetRelated', $this->related);
+		$this->tpl->assign('widgetTagsRelated', $this->related);
 	}
 }
 

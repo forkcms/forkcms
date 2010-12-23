@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
@@ -120,8 +120,8 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 *
 	 * @return	string
 	 * @param	string $template
+	 * @param	string $contentHTML
 	 * @param	string $fullContentHTML
-	 * $param	string $contentHTML
 	 */
 	private function getEmailContent($template, $contentHTML, $fullContentHTML)
 	{

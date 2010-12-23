@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendHeader
  * This class will be used to alter the head-part of the HTML-document that will be created by he Backend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *

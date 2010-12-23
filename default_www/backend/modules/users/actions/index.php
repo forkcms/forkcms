@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendUsersIndex
  * This is the index-action (default), it will display the users-overview
  *
  * @package		backend

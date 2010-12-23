@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendMailer
  * This class will send mails
  *
  * @package		frontend
- * @subpackage	mailer
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -24,7 +23,10 @@ class FrontendMailer
 	 * @param	string[optional] $toName		The to-name for the email.
 	 * @param	string[optional] $fromEmail		The from-address for the mail.
 	 * @param	string[optional] $fromName		The from-name for the mail
+	 * @param	string[optional] $replyToEmail	The replyto-address for the mail.
+	 * @param	string[optional] $replyToName	The replyto-name for the mail
 	 * @param	bool[optional] $queue			Should the mail be queued?
+	 * @param	int[optional] $sendOn
 	 */
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null)
 	{
@@ -99,8 +101,8 @@ class FrontendMailer
 	 * Returns the content from a given template
 	 *
 	 * @return	string
-	 * @param	string	$template				The template to use.
-	 * @param	array[optional]	$variables		The variabled to assign.
+	 * @param	string $template				The template to use.
+	 * @param	array[optional] $variables		The variabled to assign.
 	 */
 	private static function getTemplateContent($template, $variables = null)
 	{
@@ -147,7 +149,7 @@ class FrontendMailer
 		// return the ids
 		return (array) FrontendModel::getDB()->getColumn('SELECT e.id
 															FROM emails AS e
-															WHERE e.send_on < ?;',
+															WHERE e.send_on < ?',
 															array(FrontendModel::getUTCDate()));
 	}
 
@@ -169,7 +171,7 @@ class FrontendMailer
 		// get record
 		$emailRecord = (array) $db->getRecord('SELECT *
 												FROM emails AS e
-												WHERE e.id = ?;',
+												WHERE e.id = ?',
 												array($id));
 
 		// mailer type
@@ -177,7 +179,7 @@ class FrontendMailer
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
-		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
 
 		// send via SMTP
 		if($mailerType == 'smtp')

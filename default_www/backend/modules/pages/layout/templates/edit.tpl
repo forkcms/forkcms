@@ -291,7 +291,7 @@
 	</div>
 	<div class="fullwidthOptions">
 		{option:showDelete}
-			<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">

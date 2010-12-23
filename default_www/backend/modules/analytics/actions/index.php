@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendAnalyticsIndex
  * This is the index-action (default), it will display the overview of analytics posts
  *
  * @package		backend

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendPagesWidgetSitemap
  * This is a widget wherin the sitemap lives
  *
  * @package		frontend

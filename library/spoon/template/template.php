@@ -357,7 +357,7 @@ class SpoonTemplate
 	 *
 	 * @return	string					The special unique name, used for storing this file once compiled in the compile directory.
 	 * @param	string $template		The filename of the template.
-	 * @param	string[optional] $path 	The optional path to this template.
+	 * @param	string[optional] $path	The optional path to this template.
 	 */
 	private function getCompileName($template, $path = null)
 	{

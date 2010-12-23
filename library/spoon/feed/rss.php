@@ -20,7 +20,7 @@
  * @package		spoon
  * @subpackage	feed
  *
- * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		1.1.0
  */
 class SpoonFeedRSS
@@ -917,7 +917,7 @@ class SpoonFeedRSS
 				}
 
 				// catch exception
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					// ignore exceptions
 				}
@@ -937,7 +937,7 @@ class SpoonFeedRSS
 				}
 
 				// catch exception
-				catch (Exception $e)
+				catch(Exception $e)
 				{
 					// ignore exceptions
 				}
@@ -1003,7 +1003,7 @@ class SpoonFeedRSS
 			}
 
 			// catch exception
-			catch (Exception $e)
+			catch(Exception $e)
 			{
 				// ignore exceptions
 			}

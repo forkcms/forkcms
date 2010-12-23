@@ -1,14 +1,13 @@
 <?php
 
 /**
- * FrontendPagesModel
  * In this file we store all generic functions that we will be using in the pages module
  *
  * @package		frontend
  * @subpackage	pages
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendPagesModel implements FrontendTagsInterface
@@ -45,8 +44,8 @@ class FrontendPagesModel implements FrontendTagsInterface
 	 * Get the id of an item by the full URL of the current page.
 	 * Selects the proper part of the full URL to get the item's id from the database.
 	 *
-	 * @return	int				The id that corresponds with the given full URL.
-	 * @param	FrontendURL		The current URL
+	 * @return	int					The id that corresponds with the given full URL.
+	 * @param	FrontendURL $URL	The current URL
 	 */
 	public static function getIdForTags(FrontendURL $URL)
 	{
@@ -72,12 +71,12 @@ class FrontendPagesModel implements FrontendTagsInterface
 		$db = FrontendModel::getDB();
 
 		// get items
-		$items = (array) $db->retrieve('SELECT p.id, p.title, m.url, p.revision_id AS text
-										FROM pages AS p
-										INNER JOIN meta AS m ON p.meta_id = m.id
-										INNER JOIN pages_templates AS t ON p.template_id = t.id
-										WHERE p.id IN ('. implode(', ', $ids) .') AND p.status = ? AND p.hidden = ? AND p.language = ?',
-										array('active', 'N', FRONTEND_LANGUAGE), 'id');
+		$items = (array) $db->getRecords('SELECT p.id, p.title, m.url, p.revision_id AS text
+											FROM pages AS p
+											INNER JOIN meta AS m ON p.meta_id = m.id
+											INNER JOIN pages_templates AS t ON p.template_id = t.id
+											WHERE p.id IN ('. implode(', ', $ids) .') AND p.status = ? AND p.hidden = ? AND p.language = ?',
+											array('active', 'N', FRONTEND_LANGUAGE), 'id');
 
 		// prepare items for search
 		foreach($items as &$item)

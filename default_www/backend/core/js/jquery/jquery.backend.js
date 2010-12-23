@@ -6,7 +6,7 @@
 /**
  * Meta-handler
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
@@ -124,14 +124,15 @@
  * Inline editing
  *
  * @author Dave Lens <dave@netlash.com>
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
 	$.fn.inlineTextEdit = function(options)
 	{
 		// define defaults
-		var defaults = {
+		var defaults =
+		{
 			saveUrl: null,
 			current: {},
 			extraParams: {},
@@ -186,9 +187,9 @@
 				options.current.value = element.html();
 
 				// grab extra params
-				if($(this).parent().attr('rel') != '')
+				if($(this).parent().data('id') != '')
 				{
-					options.current.extraParams = eval('(' + $(this).parent().attr('rel') + ')');
+					options.current.extraParams = eval('(' + $(this).parent().data('id') + ')');
 				}
 
 				// add class
@@ -209,20 +210,20 @@
 				// bind events
 				options.current.element.bind('blur', saveElement);
 				options.current.element.keyup(function(evt)
+				{
+					// handle escape
+					if(evt.which == 27)
 					{
-						// handle escape
-						if(evt.which == 27)
-						{
-							// reset
-							options.current.element.val(options.current.value);
+						// reset
+						options.current.element.val(options.current.value);
 
-							// destroy
-							destroyElement();
-						}
+						// destroy
+						destroyElement();
+					}
 
-						// save when someone presses enter
-						if(evt.which == 13) saveElement();
-					});
+					// save when someone presses enter
+					if(evt.which == 13) saveElement();
+				});
 			}
 
 
@@ -259,14 +260,15 @@
 					options.current.extraParams['value'] = options.current.element.val();
 
 					// make the call
-					$.ajax({
+					$.ajax(
+					{
 						url: options.saveUrl,
 						data: options.current.extraParams,
 						success: function(data, textStatus)
-							{
-								// destroy the element
-								destroyElement();
-							}
+						{
+							// destroy the element
+							destroyElement();
+						}
 					});
 				}
 
@@ -281,14 +283,15 @@
 /**
  * key-value-box
  *
- * @author Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
 	$.fn.keyValueBox = function(options)
 	{
 		// define defaults
-		var defaults = {
+		var defaults =
+		{
 			splitChar: ',',
 			secondSplitChar: '|',
 			emptyMessage: '',
@@ -353,42 +356,45 @@
 			// add elements list
 			build();
 
-			$('#addValue-' + id).autocomplete({
+			$('#addValue-' + id).autocomplete(
+			{
 				delay: 200,
 				minLength: 2,
 				source: function(request, response)
+				{
+					$.ajax(
+					{
+						url: options.autoCompleteUrl,
+						type: 'GET',
+						data: 'term=' + request.term,
+						success: function(data, textStatus)
 						{
-							$.ajax({
-								url: options.autoCompleteUrl,
-								type: 'GET',
-								data: 'term=' + request.term,
-								success: function(data, textStatus)
+							// init var
+							var realData = [];
+
+							// alert the user
+							if(data.code != 200 && jsBackend.debug)
+							{
+								alert(data.message);
+							}
+
+							if(data.code == 200)
+							{
+								for(var i in data.data)
+								{
+									realData.push(
 									{
-										// init var
-										var realData = [];
+										label: data.data[i].name,
+										value: data.data[i].value + options.secondSplitChar + data.data[i].name
+									});
+								}
+							}
 
-										// alert the user
-										if(data.code != 200 && jsBackend.debug)
-										{
-											alert(data.message);
-										}
-
-										if(data.code == 200)
-										{
-											for( var i in data.data)
-											{
-												realData.push({
-													label: data.data[i].name,
-													value: data.data[i].value + options.secondSplitChar + data.data[i].name
-												});
-											}
-										}
-
-										// set response
-										response(realData);
-									}
-							});
+							// set response
+							response(realData);
 						}
+					});
+				}
 			});
 
 			// bind keypress on value-field
@@ -473,7 +479,7 @@
 				if(value != '')
 				{
 					// already in elements?
-					for( var i in elements)
+					for(var i in elements)
 					{
 						if(value == elements[i]) inElements = true;
 					}
@@ -509,7 +515,7 @@
 					html = '<ul>';
 
 					// loop elements
-					for( var i in elements)
+					for(var i in elements)
 					{
 						var humanValue = elements[i].split(options.secondSplitChar)[1];
 						
@@ -533,7 +539,7 @@
 				var elements = [];
 
 				// loop elements and trim them from spaces
-				for( var i in chunks)
+				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
 					if(value != '') elements.push(value);
@@ -566,15 +572,16 @@
 /**
  * Tag-box
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
 	$.fn.tagBox = function(options)
 	{
 		// define defaults
-		var defaults = {
+		var defaults =
+		{
 			splitChar: ',',
 			emptyMessage: '',
 			errorMessage: 'Add the tag before submitting',
@@ -623,15 +630,25 @@
 			});
 
 			// build replace html
-			var html = '<div class="tagsWrapper">' + '	<div class="oneLiner">' + '		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
+			var html = 	'<div class="tagsWrapper">' + 
+						'	<div class="oneLiner">' + 
+						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + 
+						'		<div class="buttonHolder">' + 
+						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
 
 			if(options.showIconOnly) html += ' iconOnly';
 
-			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '	<div id="elementList-' + id + '" class="tagList">' + '	</div>' + '</div>';
+			html += 	'">' + 
+						'				<span>' + options.addLabel + '</span>' + 
+						'			</a>' + 
+						'		</div>' + 
+						'	</div>' + 
+						'	<div id="elementList-' + id + '" class="tagList">' + 
+						'	</div>' + 
+						'</div>';
 
 			// hide current element
 			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
-
 
 			// prepend html
 			$(this).before(html);
@@ -642,42 +659,45 @@
 			// bind autocomplete if needed
 			if(options.autoCompleteUrl != '')
 			{
-				$('#addValue-' + id).autocomplete({
+				$('#addValue-' + id).autocomplete(
+				{
 					delay: 200,
 					minLength: 2,
 					source: function(request, response)
+					{
+						$.ajax(
+						{
+							url: options.autoCompleteUrl,
+							type: 'GET',
+							data: 'term=' + request.term,
+							success: function(data, textStatus)
 							{
-								$.ajax({
-									url: options.autoCompleteUrl,
-									type: 'GET',
-									data: 'term=' + request.term,
-									success: function(data, textStatus)
+								// init var
+								var realData = [];
+
+								// alert the user
+								if(data.code != 200 && jsBackend.debug)
+								{
+									alert(data.message);
+								}
+
+								if(data.code == 200)
+								{
+									for(var i in data.data)
+									{
+										realData.push(
 										{
-											// init var
-											var realData = [];
+											label: data.data[i].name,
+											value: data.data[i].name
+										});
+									}
+								}
 
-											// alert the user
-											if(data.code != 200 && jsBackend.debug)
-											{
-												alert(data.message);
-											}
-
-											if(data.code == 200)
-											{
-												for( var i in data.data)
-												{
-													realData.push({
-														label: data.data[i].name,
-														value: data.data[i].name
-													});
-												}
-											}
-
-											// set response
-											response(realData);
-										}
-								});
+								// set response
+								response(realData);
 							}
+						});
+					}
 				});
 			}
 
@@ -734,7 +754,7 @@
 				evt.stopPropagation();
 
 				// remove element
-				remove($(this).attr('rel'));
+				remove($(this).data('id'));
 			});
 
 			// add an element
@@ -760,7 +780,7 @@
 				if(value != '')
 				{
 					// already in elements?
-					for( var i in elements)
+					for(var i in elements)
 					{
 						if(value == elements[i]) inElements = true;
 					}
@@ -796,9 +816,11 @@
 					html = '<ul>';
 
 					// loop elements
-					for( var i in elements)
+					for(var i in elements)
 					{
-						html += '	<li><span><strong>' + elements[i] + '</strong>' + '		<a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '	</li>';
+						html += '	<li><span><strong>' + elements[i] + '</strong>' + 
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + 
+								'	</li>';
 					}
 
 					// end html
@@ -818,7 +840,7 @@
 				var elements = [];
 
 				// loop elements and trim them from spaces
-				for( var i in chunks)
+				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
 					if(value != '') elements.push(value);
@@ -851,14 +873,15 @@
 /**
  * Multiple select box
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 (function($)
 {
 	$.fn.multipleSelectbox = function(options)
 	{
 		// define defaults
-		var defaults = {
+		var defaults =
+		{
 			splitChar: ',',
 			emptyMessage: '',
 			addLabel: 'add',
@@ -946,7 +969,7 @@
 				evt.stopPropagation();
 
 				// remove element
-				remove($(this).attr('rel'));
+				remove($(this).data('id'));
 			});
 
 			// add an element
@@ -965,7 +988,7 @@
 				if(value != null && value != '')
 				{
 					// already in elements?
-					for( var i in elements)
+					for(var i in elements)
 					{
 						if(value == elements[i]) inElements = true;
 					}
@@ -1002,15 +1025,15 @@
 					html = '<ul>';
 
 					// loop elements
-					for( var i in elements)
+					for(var i in elements)
 					{
 						html += '	<li class="oneLiner">' + 
 								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' + 
 								'		<div class="buttonHolder">' + 
-								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
 								'		</div>' + 
 								'	</li>';
-						
+
 						// remove from dropdown
 						$('#addValue-' + id + ' option[value=' + elements[i] + ']').attr('disabled', 'disabled');
 					}
@@ -1021,7 +1044,7 @@
 
 				// set html
 				$('#elementList-' + id).html(html);
-				
+
 				// disabled?
 				$('#addButton-' + id).removeClass('disabledButton');
 				$('#addValue-' + id).removeClass('disabled').attr('disabled', '');
@@ -1031,9 +1054,9 @@
 					$('#addValue-' + id).addClass('disabled').attr('disabled', 'disabled');
 				}
 				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').attr('value'));
-				
+
 				// call callback if specified
-				if(options.afterBuild != null){ options.afterBuild(id); }
+				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
 
@@ -1045,7 +1068,7 @@
 				var elements = [];
 
 				// loop elements and trim them from spaces
-				for( var i in chunks)
+				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
 					if(value != '') elements.push(value);
@@ -1080,8 +1103,8 @@
 /**
  * Multiple text box
  *
- * @author Tijs Verkoyen <tijs@netlash.com>
- * @author Dieter Vanden Eynde <dieter@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 (function($)
 {
@@ -1141,42 +1164,45 @@
 			// bind autocomplete if needed
 			if(options.autoCompleteUrl != '')
 			{
-				$('#addValue-' + id).autocomplete({
+				$('#addValue-' + id).autocomplete(
+				{
 					delay: 200,
 					minLength: 2,
 					source: function(request, response)
+					{
+						$.ajax(
 						{
-							$.ajax({
-								url: options.autoCompleteUrl,
-								type: 'GET',
-								data: 'term=' + request.term,
-								success: function(data, textStatus)
+							url: options.autoCompleteUrl,
+							type: 'GET',
+							data: 'term=' + request.term,
+							success: function(data, textStatus)
+							{
+								// init var
+								var realData = [];
+
+								// alert the user
+								if(data.code != 200 && jsBackend.debug)
+								{
+									alert(data.message);
+								}
+
+								if(data.code == 200)
+								{
+									for(var i in data.data)
 									{
-										// init var
-										var realData = [];
-
-										// alert the user
-										if(data.code != 200 && jsBackend.debug)
+										realData.push(
 										{
-											alert(data.message);
-										}
-
-										if(data.code == 200)
-										{
-											for( var i in data.data)
-											{
-												realData.push({
-													label: data.data[i].name,
-													value: data.data[i].name
-												});
-											}
-										}
-
-										// set response
-										response(realData);
+											label: data.data[i].name,
+											value: data.data[i].name
+										});
 									}
-							});
-						}
+								}
+
+								// set response
+								response(realData);
+							}
+						});
+					}
 				});
 			}
 
@@ -1209,9 +1235,9 @@
 
 				else $('#addButton-' + id).removeClass('disabledButton');
 			});
-			
+
 			// unblock the submit event when we lose focus
-			$('#addValue-' + id).bind('blur', function(evt){ blockSubmit = false; });
+			$('#addValue-' + id).bind('blur', function(evt) { blockSubmit = false; });
 			
 			// bind click on add-button
 			$('#addButton-' + id).bind('click', function(evt)
@@ -1232,7 +1258,7 @@
 				evt.stopPropagation();
 
 				// remove element
-				remove($(this).attr('rel'));
+				remove($(this).data('id'));
 			});
 
 			// bind keypress on inputfields (we need to rebuild so new values are saved)
@@ -1279,7 +1305,7 @@
 				if(value != '')
 				{
 					// already in elements?
-					for( var i in elements)
+					for(var i in elements)
 					{
 						if(value == elements[i]) inElements = true;
 					}
@@ -1316,9 +1342,14 @@
 					html = '<ul>';
 
 					// loop elements
-					for( var i in elements)
+					for(var i in elements)
 					{
-						html += '	<li class="oneLiner">' + '		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + '		</div>' + '	</li>';
+						html += '	<li class="oneLiner">' + 
+								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' + 
+								'		<div class="buttonHolder">' + 
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
+								'		</div>' + 
+								'	</li>';
 					}
 
 					// end html
@@ -1329,7 +1360,7 @@
 				$('#elementList-' + id).html(html);
 				
 				// call callback if specified
-				if(options.afterBuild != null){ options.afterBuild(id); }
+				if(options.afterBuild != null) { options.afterBuild(id); }
 			}
 
 
@@ -1341,7 +1372,7 @@
 				var elements = [];
 
 				// loop elements and trim them from spaces
-				for( var i in chunks)
+				for(var i in chunks)
 				{
 					value = chunks[i].replace(/^\s+|\s+$/g, '');
 					if(value != '') elements.push(value);

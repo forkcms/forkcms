@@ -58,7 +58,7 @@
 					<td id="sidebar">
 						<div id="publishOptions" class="box">
 							<div class="heading">
-								<h3>{$lblPublish|ucfirst}</h3>
+								<h3>{$lblStatus|ucfirst}</h3>
 							</div>
 
 							<div class="options">
@@ -129,6 +129,7 @@
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
+			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
 	</div>
 {/form:add}

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendAnalyticsWidgetVisitors
+ * This widget will show the latest visitors
  *
  * @package		backend
  * @subpackage	analytics

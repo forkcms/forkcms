@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FrontendTemplate, this is our extended version of SpoonTemplate
+ * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
  * 	- it will map some modifiers
@@ -9,9 +9,9 @@
  * 	- ...
  *
  * @package		frontend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -22,7 +22,7 @@ class FrontendTemplate extends SpoonTemplate
 	 * The constructor will store the instance in the reference, preset some settings and map the custom modifiers.
 	 *
 	 * @return	void
-	 * @param	bool[optional]	$addToReference	Should the instance be added into the reference.
+	 * @param	bool[optional] $addToReference	Should the instance be added into the reference.
 	 */
 	public function __construct($addToReference = true)
 	{
@@ -36,7 +36,7 @@ class FrontendTemplate extends SpoonTemplate
 		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
 
 		// set compile directory
-		$this->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$this->setCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
 
 		// when debugging the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
@@ -93,7 +93,7 @@ class FrontendTemplate extends SpoonTemplate
 	/**
 	 * Fetch the parsed content from this template.
 	 *
-	 * @return	string	 						The actual parsed content after executing this template.
+	 * @return	string							The actual parsed content after executing this template.
 	 * @param	string $template				The location of the template file, used to display this template.
  	 * @param	bool[optional] $customHeaders	Are custom headers already set?
 	 * @param	bool[optional] $parseCustom		Parse custom template
@@ -265,7 +265,7 @@ class FrontendTemplate extends SpoonTemplate
 	/**
 	 * Assigns an option if we are in debug-mode
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function parseDebug()
 	{
@@ -332,18 +332,20 @@ class FrontendTemplate extends SpoonTemplate
 	{
 		// assign a placeholder var
 		$this->assign('var', '');
+
+		// assign current timestamp
 		$this->assign('timestamp', time());
 	}
 }
 
 
 /**
- * FrontendTemplateMofidiers, contains all Frontend-related custom modifiers
+ * Contains all Frontend-related custom modifiers
  *
  * @package		frontend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTemplateModifiers
@@ -411,6 +413,7 @@ class FrontendTemplateModifiers
 
 				// format as Euro
 				return '€ '. number_format((float) $var, $decimals, ',', ' ');
+			break;
 		}
 	}
 
@@ -549,9 +552,9 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getpageinfo:404:'title'}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string[optional] $var
 	 * @param	int $pageId						The id of the page to build the URL for.
-	 * @param	string $field					The field to get.
+	 * @param	string[optional] $field			The field to get.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
 	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
@@ -569,7 +572,7 @@ class FrontendTemplateModifiers
 		if(empty($page)) return '';
 		if(!isset($page[$field])) return '';
 
-		// return
+		// return page info
 		return $page[$field];
 	}
 
@@ -590,7 +593,7 @@ class FrontendTemplateModifiers
 		$pageId = (int) $pageId;
 		$language = ($language !== null) ? (string) $language : null;
 
-		// return
+		// return url
 		return FrontendNavigation::getURL($pageId, $language);
 	}
 
@@ -613,7 +616,7 @@ class FrontendTemplateModifiers
 		$action = ($action !== null) ? (string) $action : null;
 		$language = ($language !== null) ? (string) $language : null;
 
-		// return
+		// return url
 		return FrontendNavigation::getURLForBlock($module, $action, $language);
 	}
 
@@ -633,7 +636,7 @@ class FrontendTemplateModifiers
 		$extraId = (int) $extraId;
 		$language = ($language !== null) ? (string) $language : null;
 
-		// return
+		// return url
 		return FrontendNavigation::getURLForExtraId($extraId, $language);
 	}
 
@@ -663,6 +666,7 @@ class FrontendTemplateModifiers
 			}
 		}
 
+		// return content
 		return $content;
 	}
 
@@ -677,7 +681,12 @@ class FrontendTemplateModifiers
 	 */
 	public static function rand($var = null, $min, $max)
 	{
-		return rand((int) $min, (int) $max);
+		// redefine
+		$var = (string) $var;
+		$min = (int) $min;
+		$max = (int) $max;
+
+		return rand($min, $max);
 	}
 
 
@@ -686,7 +695,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|timeAgo}
 	 *
 	 * @return	string
-	 * @param	string $var		A UNIX-timestamp that will be formated as a time-ago-string.
+	 * @param	string[optional] $var		A UNIX-timestamp that will be formated as a time-ago-string.
 	 */
 	public static function timeAgo($var = null)
 	{
@@ -706,7 +715,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string[optional] $var
 	 * @param	int $length					The maximum length of the truncated string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */
@@ -744,7 +753,7 @@ class FrontendTemplateModifiers
 	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string[optional] $var
 	 * @param	string $setting			The name of the setting you want.
 	 * @param	int[optional] $userId	The userId, if not set by $var.
 	 */
@@ -760,7 +769,7 @@ class FrontendTemplateModifiers
 		// get user
 		$user = FrontendUser::getBackendUser($userId);
 
-		// return setting
+		// return
 		return (string) $user->getSetting($setting);
 	}
 }

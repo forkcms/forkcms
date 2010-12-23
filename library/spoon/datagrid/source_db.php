@@ -104,7 +104,6 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 
 				default:
 					throw new SpoonDataGridException('No datagrid support has been written for this database backend ('. $this->db->getDriver() .')');
-				break;
 			}
 
 			// fetch record
@@ -131,10 +130,10 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 		$query = $this->query;
 
 		// order & sort defined
-		if($order !== null && $sort !== null) $query .= " ORDER BY $order $sort";
+		if($order !== null && $sort !== null) $query .= ' ORDER BY '. $order . ' ' . $sort;
 
 		// offset & limit defined
-		if($offset !== null && $limit !== null) $query .= " LIMIT $offset, $limit";
+		if($offset !== null && $limit !== null) $query .= ' LIMIT '. $offset . ', ' . $limit;
 
 		// fetch data
 		return (array) $this->db->getRecords($query, $this->queryParameters);

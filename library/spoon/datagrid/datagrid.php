@@ -170,7 +170,7 @@ class SpoonDatagrid
 	/**
 	 * Sorting columns (cached when requested)
 	 *
-	 * @var array
+	 * @var	array
 	 */
 	private $sortingColumns = array();
 

@@ -14,7 +14,7 @@ if(!defined('APPLICATION'))
 require_once 'init.php';
 
 // initialize components
-new Init(APPLICATION);
+new FrontendInit(APPLICATION);
 
 // create frontend
 new Frontend();

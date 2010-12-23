@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendNavigation
  * This class will be used to build the navigation
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -18,7 +17,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private static	$keys = array(),
+	private static $keys = array(),
 					$navigation = array();
 
 
@@ -168,6 +167,7 @@ class FrontendNavigation extends FrontendBaseObject
 			$return[] = $temp;
 		}
 
+		// return footer links
 		return $return;
 	}
 
@@ -245,7 +245,7 @@ class FrontendNavigation extends FrontendBaseObject
 			self::$navigation[$language] = $navigation;
 		}
 
-		// return
+		// return from cache
 		return self::$navigation[$language];
 	}
 
@@ -257,7 +257,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	string[optional] $type			The type of navigation the HTML should be build for.
 	 * @param	int[optional] $parentId			The parentID to start of.
 	 * @param	int[optional] $depth			The maximum depth to parse.
-	 * @param	array[optional] $excludedIds	PageIDs to be excluded.
+	 * @param	array[optional] $excludeIds		PageIDs to be excluded.
 	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
 	 */
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
@@ -293,7 +293,7 @@ class FrontendNavigation extends FrontendBaseObject
 					$mergedHome = true;
 
 					// restart loop
-					continue 2;
+					continue(2);
 				}
 
 				// not hidden
@@ -343,7 +343,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$tpl->assign('navigation', $navigation[$type][$parentId]);
 
 		// return parsed content
-		return $tpl->getContent(self::$templatePath, true);
+		return $tpl->getContent(self::$templatePath, true, true);
 	}
 
 
@@ -438,7 +438,7 @@ class FrontendNavigation extends FrontendBaseObject
 		// add URL
 		else $URL .= $keys[$pageId];
 
-		// return
+		// return the URL
 		return $URL;
 	}
 
@@ -482,7 +482,7 @@ class FrontendNavigation extends FrontendBaseObject
 							// direct link?
 							if($extra['module'] == $module && $extra['action'] == $action)
 							{
-								// exacte page was found, so return
+								// exact page was found, so return
 								return self::getURL($properties['page_id'], $language);
 							}
 
@@ -550,7 +550,7 @@ class FrontendNavigation extends FrontendBaseObject
 							// direct link?
 							if($extra['id'] == $id)
 							{
-								// exacte page was found, so return
+								// exact page was found, so return
 								return self::getURL($properties['page_id'], $language);
 							}
 						}
