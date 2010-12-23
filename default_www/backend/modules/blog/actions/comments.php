@@ -27,7 +27,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 	 * @param 	string $text	The comment.
 	 * @param	string $title	The title for the blogarticle.
 	 * @param	string $URL		The URL for the blogarticle.
-	 * @param	int $id			The id of the comment
+	 * @param	int $id			The id of the comment.
 	 */
 	public static function addPostData($text, $title, $URL, $id)
 	{

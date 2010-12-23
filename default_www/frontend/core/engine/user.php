@@ -75,7 +75,7 @@ class FrontendUser
 	 * Get a setting
 	 *
 	 * @return	mixed			The stored value, if the setting wasn't found null will be returned
-	 * @param	string $key		The name of the setting
+	 * @param	string $key		The name of the setting.
 	 */
 	public function getSetting($key)
 	{

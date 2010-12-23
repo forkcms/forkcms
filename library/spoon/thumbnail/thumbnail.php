@@ -296,8 +296,8 @@ class SpoonThumbnail
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
-	 * @param	int $currentType		Current type of image
-	 * @param	string $currentMime		Current mime-type
+	 * @param	int $currentType		Current type of image.
+	 * @param	string $currentMime		Current mime-type.
 	 */
 	private function resizeImage($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -315,8 +315,8 @@ class SpoonThumbnail
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
-	 * @param	int $currentType		Current type of image
-	 * @param	string $currentMime		Current mime-type
+	 * @param	int $currentType		Current type of image.
+	 * @param	string $currentMime		Current mime-type.
 	 */
 	private function resizeImageWithForceAspectRatio($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -512,8 +512,8 @@ class SpoonThumbnail
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
-	 * @param	int $currentType		Current type of image
-	 * @param	string $currentMime		Current mime-type
+	 * @param	int $currentType		Current type of image.
+	 * @param	string $currentMime		Current mime-type.
 	 */
 	private function resizeImageWithoutForceAspectRatio($currentWidth, $currentHeight, $currentType, $currentMime)
 	{

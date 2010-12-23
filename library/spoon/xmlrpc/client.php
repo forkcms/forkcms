@@ -71,7 +71,7 @@ class SpoonXMLRPCClient
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $server	The server to communicate with
+	 * @param	string $server	The server to communicate with.
 	 */
 	public function __construct($server)
 	{

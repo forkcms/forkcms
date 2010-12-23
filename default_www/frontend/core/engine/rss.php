@@ -136,7 +136,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 * If the link is an internal link the sites URL will be prepended.
 	 *
 	 * @return	void
-	 * @param	string $link					The guid for an item
+	 * @param	string $link					The guid for an item.
 	 * @param	bool[optional] $isPermaLink		Is this link permanent?
 	 */
 	public function setGuid($link, $isPermaLink = true)

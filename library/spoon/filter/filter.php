@@ -56,8 +56,8 @@ class SpoonFilter
 	 * This method will map functions to an array with one or more dimensions
 	 *
 	 * @return	array
-	 * @param	mixed $callback						The callback function(s) you wish to map
-	 * @param	array $array						The array you wish to map callback functions on
+	 * @param	mixed $callback						The callback function(s) you wish to map.
+	 * @param	array $array						The array you wish to map callback functions on.
 	 * @param	mixed[optional] $allowedKeys		The list of keys you want to map the callback to. All other keys will be ignored.
 	 */
 	public static function arrayMapRecursive($callback, array $array, $allowedKeys = null)
@@ -191,7 +191,7 @@ class SpoonFilter
 	 *
 	 * @return	mixed							The value that was stored in $_POST or the default when the field wasn't found.
 	 * @param	string $field					The field to retrieve.
-	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned
+	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned.
 	 * @param	mixed $defaultValue				The default-value.
 	 * @param	string[optional] $returnType	The type that should be returned.
 	 */
@@ -213,7 +213,7 @@ class SpoonFilter
 	 *
 	 * @return	mixed							The validated value or the default when the value wasn't found.
 	 * @param	string $variable				The variable that should be validated.
-	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned
+	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned.
 	 * @param	mixed $defaultValue				The default-value.
 	 * @param	string[optional] $returnType	The type that should be returned.
 	 */
@@ -745,7 +745,7 @@ class SpoonFilter
 	 *
 	 * @return	string										A string with all HTML elements stripped.
 	 * @param	string $string								The string with HTML in it.
-	 * @param	mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'
+	 * @param	mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'.
 	 * @param	bool[optional] $replaceAnchorsWithURL			If this is true it will replace all anchor elements with their href value.
 	 * @param	bool[optional] $replaceImagesWithAltText		If this is true it will replace all img elements with their alt text.
 	 * @param	bool[optional] $preserveParagraphLinebreaks	If this is true it will generate an additional EOL for paragraphs.

@@ -252,10 +252,18 @@ class SpoonFormDate extends SpoonFormInput
 					$year = substr($data[$this->attributes['name']], strpos($longMask, 'yyyy'), 4);
 
 					// not an int
-					if(!SpoonFilter::isInteger($year)) { $this->setError($error); return false; }
+					if(!SpoonFilter::isInteger($year))
+					{
+						$this->setError($error);
+						return false;
+					}
 
 					// invalid year
-					if(!checkdate(1, 1, $year)) { $this->setError($error); return false; }
+					if(!checkdate(1, 1, $year))
+					{
+						$this->setError($error);
+						return false;
+					}
 				}
 
 				// validate year (yy)
@@ -265,10 +273,18 @@ class SpoonFormDate extends SpoonFormInput
 					$year = substr($data[$this->attributes['name']], strpos($longMask, 'yy'), 2);
 
 					// not an int
-					if(!SpoonFilter::isInteger($year)) { $this->setError($error); return false; }
+					if(!SpoonFilter::isInteger($year))
+					{
+						$this->setError($error);
+						return false;
+					}
 
 					// invalid year
-					if(!checkdate(1, 1, '19'. $year)) { $this->setError($error); return false; }
+					if(!checkdate(1, 1, '19'. $year))
+					{
+						$this->setError($error);
+						return false;
+					}
 				}
 
 				// validate month (mm)
@@ -278,10 +294,18 @@ class SpoonFormDate extends SpoonFormInput
 					$month = substr($data[$this->attributes['name']], strpos($longMask, 'mm'), 2);
 
 					// not an int
-					if(!SpoonFilter::isInteger($month)) { $this->setError($error); return false; }
+					if(!SpoonFilter::isInteger($month))
+					{
+						$this->setError($error);
+						return false;
+					}
 
 					// invalid month
-					if(!checkdate($month, 1, $year)) { $this->setError($error); return false; }
+					if(!checkdate($month, 1, $year))
+					{
+						$this->setError($error);
+						return false;
+					}
 				}
 
 				// validate day (dd)
@@ -291,19 +315,35 @@ class SpoonFormDate extends SpoonFormInput
 					$day = substr($data[$this->attributes['name']], strpos($longMask, 'dd'), 2);
 
 					// not an int
-					if(!SpoonFilter::isInteger($day)) { $this->setError($error); return false; }
+					if(!SpoonFilter::isInteger($day))
+					{
+						$this->setError($error);
+						return false;
+					}
 
 					// invalid day
-					if(!checkdate($month, $day, $year)) { $this->setError($error); return false; }
+					if(!checkdate($month, $day, $year))
+					{
+						$this->setError($error);
+						return false;
+					}
 				}
 			}
 
 			// maximum length doesn't check out
-			else { $this->setError($error); return false; }
+			else
+			{
+				$this->setError($error);
+				return false;
+			}
 		}
 
 		// not filled out
-		else { $this->setError($error); return false; }
+		else
+		{
+			$this->setError($error);
+			return false;
+		}
 
 		/**
 		 * When the code reaches the point, it means no errors have occured

@@ -52,9 +52,9 @@ class FrontendTemplate extends SpoonTemplate
 	 * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
 	 *
 	 * @return	void
-	 * @param	string $template				The path of the template to use
+	 * @param	string $template				The path of the template to use.
 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
-	 * @param	bool[optional] $parseCustom		Parse custom template
+	 * @param	bool[optional] $parseCustom		Parse custom template.
 	 */
 	public function display($template, $customHeaders = false, $parseCustom = false)
 	{
@@ -96,7 +96,7 @@ class FrontendTemplate extends SpoonTemplate
 	 * @return	string							The actual parsed content after executing this template.
 	 * @param	string $template				The location of the template file, used to display this template.
 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
-	 * @param	bool[optional] $parseCustom		Parse custom template
+	 * @param	bool[optional] $parseCustom		Parse custom template.
 	 */
 	public function getContent($template, $customHeaders = false, $parseCustom = false)
 	{
@@ -423,8 +423,8 @@ class FrontendTemplateModifiers
 	 * @later	grab settings from database
 	 *
 	 * @return	string
-	 * @param	float $number				The number to format
-	 * @param	int[optional] $decimals		The number of decimals
+	 * @param	float $number				The number to format.
+	 * @param	int[optional] $decimals		The number of decimals.
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
@@ -441,7 +441,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|formatnumber}
 	 *
 	 * @return	string
-	 * @param	float $var		The number to format
+	 * @param	float $var		The number to format.
 	 */
 	public static function formatNumber($var)
 	{
@@ -470,11 +470,11 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
-	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer
-	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build
-	 * @param	int[optional] $depth			The maximum depth that has to be build
-	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -)
+	 * @param	string[optional] $var			The variable.
+	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer.
+	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build.
+	 * @param	int[optional] $depth			The maximum depth that has to be build.
+	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -).
 	 */
 	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
 	{
@@ -497,12 +497,12 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:<excludeIds-splitted-by-dash>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
-	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer
-	 * @param	int[optional] $pageId			The parent wherefore the navigation should be build
-	 * @param	int[optional] $startDepth		The depth to strat from
-	 * @param	int[optional] $endDepth			The maximum depth that has to be build
-	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -)
+	 * @param	string[optional] $var			The variable.
+	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer.
+	 * @param	int[optional] $pageId			The parent wherefore the navigation should be build.
+	 * @param	int[optional] $startDepth		The depth to strat from.
+	 * @param	int[optional] $endDepth			The maximum depth that has to be build.
+	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -).
 	 */
 	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
 	{

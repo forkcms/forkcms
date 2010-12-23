@@ -241,7 +241,7 @@ class GoogleAnalytics
 	 * Makes a call to Google.
 	 *
 	 * @return	array
-	 * @param	mixed $metrics					The metrics as string or as array
+	 * @param	mixed $metrics					The metrics as string or as array.
 	 * @param	int $startTimestamp				The start date from where data must be collected.
 	 * @param	int $endTimestamp				The end date to where data must be collected.
 	 * @param	mixed[optional] $dimensions		The optional diminsions as string or as array.
@@ -318,14 +318,10 @@ class GoogleAnalytics
 			foreach($simpleXML->entry as $entry)
 			{
 				// loop the dimensions
-				foreach($entry->dimension as $dimension) {
-					$results['entries'][$i][(string) $dimension['name']] = (string) $dimension['value'];
-				}
+				foreach($entry->dimension as $dimension) $results['entries'][$i][(string) $dimension['name']] = (string) $dimension['value'];
 
 				// loop the metrics
-				foreach($entry->metric as $metric) {
-					$results['entries'][$i][(string) $metric['name']] = (string) $metric['value'];
-				}
+				foreach($entry->metric as $metric) $results['entries'][$i][(string) $metric['name']] = (string) $metric['value'];
 
 				// increase counter
 				$i++;
@@ -352,7 +348,7 @@ class GoogleAnalytics
 	 * Set the session token to make calls with
 	 *
 	 * @return	void
-	 * @param	string $sessionToken	The session token to make calls with
+	 * @param	string $sessionToken	The session token to make calls with.
 	 */
 	public function setSessionToken($sessionToken)
 	{

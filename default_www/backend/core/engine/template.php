@@ -395,7 +395,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatdate}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatDate($var)
 	{
@@ -412,7 +412,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatdatetime}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatDateTime($var)
 	{
@@ -429,8 +429,8 @@ class BackendTemplateModifiers
 	 * @later	grab settings from database
 	 *
 	 * @return	string
-	 * @param	float $number				The number to format
-	 * @param	int[optional] $decimals		The number of decimals
+	 * @param	float $number				The number to format.
+	 * @param	int[optional] $decimals		The number of decimals.
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
@@ -447,7 +447,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatnumber}
 	 *
 	 * @return	string
-	 * @param	float $var		The number to format
+	 * @param	float $var		The number to format.
 	 */
 	public static function formatNumber($var)
 	{
@@ -476,7 +476,7 @@ class BackendTemplateModifiers
 	 * 	syntac: {$var|formatdate}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatTime($var)
 	{

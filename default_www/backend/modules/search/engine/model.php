@@ -38,7 +38,7 @@ class BackendSearchModel
 	 * @param	string $module				The module wherin will be searched.
 	 * @param	int $otherId				The id of the record.
 	 * @param 	array $fields				A key/value pair of fields to index.
-	 * @param	string[optional] $language	The frontend language for this entry;
+	 * @param	string[optional] $language	The frontend language for this entry.
 	 */
 	public static function addIndex($module, $otherId, array $fields, $language = null)
 	{
@@ -92,7 +92,7 @@ class BackendSearchModel
 	 * @param	string $module				The module wherin will be searched.
 	 * @param	int $otherId				The id of the record.
 	 * @param 	array $fields				A key/value pair of fields to index.
-	 * @param	string[optional] $language	The frontend language for this entry;
+	 * @param	string[optional] $language	The frontend language for this entry.
 	 */
 	public static function editIndex($module, $otherId, array $fields, $language = null)
 	{

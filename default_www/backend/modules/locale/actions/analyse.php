@@ -45,7 +45,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	 * Format a serialized path-array into something that is usable in a datagrid
 	 *
 	 * @return	string
-	 * @param	string $files	The serialized array with the paths
+	 * @param	string $files	The serialized array with the paths.
 	 */
 	public static function formatFilesList($files)
 	{
@@ -74,7 +74,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	 *
 	 * @return	array
 	 * @param	string $path			The path to get the filetree for.
-	 * @param	array[optional] $tree	An array to hold the results
+	 * @param	array[optional] $tree	An array to hold the results.
 	 */
 	private static function getTree($path, array $tree = array())
 	{

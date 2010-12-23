@@ -22,9 +22,9 @@ class FrontendMailer
 	 * @param	string[optional] $toEmail		The to-address for the email.
 	 * @param	string[optional] $toName		The to-name for the email.
 	 * @param	string[optional] $fromEmail		The from-address for the mail.
-	 * @param	string[optional] $fromName		The from-name for the mail
+	 * @param	string[optional] $fromName		The from-name for the mail.
 	 * @param	string[optional] $replyToEmail	The replyto-address for the mail.
-	 * @param	string[optional] $replyToName	The replyto-name for the mail
+	 * @param	string[optional] $replyToName	The replyto-name for the mail.
 	 * @param	bool[optional] $queue			Should the mail be queued?
 	 * @param	int[optional] $sendOn
 	 */

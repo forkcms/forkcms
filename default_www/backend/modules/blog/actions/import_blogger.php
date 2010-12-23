@@ -23,8 +23,8 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 	 * Download a file
 	 *
 	 * @return	mixed
-	 * @param	string $oldURL		The URL of the file to download
-	 * @param	int $id				The new ID of the blogpost
+	 * @param	string $oldURL		The URL of the file to download.
+	 * @param	int $id				The new ID of the blogpost.
 	 */
 	public static function download($oldURL, $id)
 	{

@@ -85,7 +85,7 @@ class APIInit
 	 * Autoloader for the backend
 	 *
 	 * @return	void
-	 * @param	string $className	The name of the class to require
+	 * @param	string $className	The name of the class to require.
 	 */
 	public static function autoLoader($className)
 	{

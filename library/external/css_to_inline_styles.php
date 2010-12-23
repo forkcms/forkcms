@@ -96,8 +96,8 @@ class CSSToInlineStyles
 	 * Creates an instance, you could set the HTML and CSS here, or load it later.
 	 *
 	 * @return	void
-	 * @param	string[optional] $html	The HTML to process
-	 * @param	string[optional] $css	The CSS to use
+	 * @param	string[optional] $html	The HTML to process.
+	 * @param	string[optional] $css	The CSS to use.
 	 */
 	public function __construct($html = null, $css = null)
 	{
@@ -110,7 +110,7 @@ class CSSToInlineStyles
 	 * Convert a CSS-selector into an xPath-query
 	 *
 	 * @return	string
-	 * @param	string $selector	The CSS-selector
+	 * @param	string $selector	The CSS-selector.
 	 */
 	private function buildXPathQuery($selector)
 	{
@@ -187,7 +187,7 @@ class CSSToInlineStyles
 	 * Cleanup the generated HTML
 	 *
 	 * @return	string
-	 * @param	string $html	The HTML to cleanup
+	 * @param	string $html	The HTML to cleanup.
 	 */
 	private function cleanupHTML($html)
 	{
@@ -487,7 +487,7 @@ class CSSToInlineStyles
 	 * Set CSS to use
 	 *
 	 * @return	void
-	 * @param	string $css		The CSS to use
+	 * @param	string $css		The CSS to use.
 	 */
 	public function setCSS($css)
 	{
@@ -536,8 +536,8 @@ class CSSToInlineStyles
 	 * Sort an array on the specifity element
 	 *
 	 * @return	int
-	 * @param	array $e1	The first element
-	 * @param	array $e2	The second element
+	 * @param	array $e1	The first element.
+	 * @param	array $e2	The second element.
 	 */
 	private static function sortOnSpecifity($e1, $e2)
 	{

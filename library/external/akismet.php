@@ -91,8 +91,8 @@ class Akismet
 	 * Creates an instance of the Akismet Class.
 	 *
 	 * @return	void
-	 * @param	string $apiKey	The API key being verified for use with the API
-	 * @param	string $url	The front page or home URL of the instance making the request. For a blog or wiki this would be the front page. Note: Must be a full URI, including http://.
+	 * @param	string $apiKey	The API key being verified for use with the API.
+	 * @param	string $url		The front page or home URL of the instance making the request. For a blog or wiki this would be the front page. Note: Must be a full URI, including http://.
 	 */
 	public function __construct($apiKey, $url)
 	{
@@ -272,7 +272,7 @@ class Akismet
 	 * After this time the request will stop. You should handle any errors triggered by this.
 	 *
 	 * @return	void
-	 * @param	int $seconds	The timeout in seconds
+	 * @param	int $seconds	The timeout in seconds.
 	 */
 	public function setTimeOut($seconds)
 	{
@@ -285,7 +285,7 @@ class Akismet
 	 * It will be appended to ours, the result will look like: "PHP Akismet/<version> <your-user-agent>"
 	 *
 	 * @return	void
-	 * @param	string $userAgent	Your user-agent, it should look like <app-name>/<app-version>
+	 * @param	string $userAgent	Your user-agent, it should look like <app-name>/<app-version>.
 	 */
 	public function setUserAgent($userAgent)
 	{
@@ -340,12 +340,12 @@ class Akismet
 	 * REMARK: If you are having trouble triggering you can send "viagra-test-123" as the author and it will trigger a true response, always.
 	 *
 	 * @return	bool	If the comment is spam true will be returned, otherwise false.
-	 * @param	string[optional] $content	The content that was submitted
-	 * @param	string[optional] $author	Commenters name
-	 * @param	string[optional] $email		Commenters email address
-	 * @param	string[optional] $url		Commenters URL
-	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to
-	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration"
+	 * @param	string[optional] $content	The content that was submitted.
+	 * @param	string[optional] $author	Commenters name.
+	 * @param	string[optional] $email		Commenters email address.
+	 * @param	string[optional] $url		Commenters URL.
+	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
+	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 */
 	public function isSpam($content, $author = null, $email = null, $url = null, $permalink = null, $type = null)
 	{
@@ -408,13 +408,13 @@ class Akismet
 	 * @param	string $userIp				IP address of the comment submitter.
 	 * @param	string $userAgent			User agent information.
 	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment
-	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $author	Submitted name with the comment.
+	 * @param	string[optional] $email		Submitted email address.
 	 * @param	string[optional] $url		Commenter URL.
 	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
 	 */
 	public function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
@@ -466,13 +466,13 @@ class Akismet
 	 * @param	string $userIp				IP address of the comment submitter.
 	 * @param	string $userAgent			User agent information.
 	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment
-	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $author	Submitted name with the comment.
+	 * @param	string[optional] $email		Submitted email address.
 	 * @param	string[optional] $url		Commenter URL.
 	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
 	 */
 	public function submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{

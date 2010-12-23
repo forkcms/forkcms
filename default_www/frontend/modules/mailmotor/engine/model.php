@@ -178,7 +178,7 @@ class FrontendMailmotorModel
 	 *
 	 * @return	bool
 	 * @param	array $item						The data to insert for the address.
-	 * @param	bool[optional] $unsubscribe		@todo	@dave	complete this
+	 * @param	bool[optional] $unsubscribe		@todo	@dave	complete this.
 	 */
 	public static function insertAddress(array $item, $unsubscribe = false)
 	{

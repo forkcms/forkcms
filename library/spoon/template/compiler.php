@@ -372,7 +372,7 @@ class SpoonTemplateCompiler
 	 *
 	 * @return	string				The updated content, containing the parsed cycle tags.
 	 * @param	string $content		The content that may contain the cycle tags.
-	 * @param	string $iteration	@todo	@davy: check me
+	 * @param	string $iteration	@todo	@davy: check me.
 	 */
 	private function parseCycle($content, $iteration)
 	{

@@ -192,7 +192,7 @@ class SpoonEmailSMTP
 	 * Returns the SMTP code from a reply - basicly this is just a substring to make life easier.
 	 *
 	 * @return	int
-	 * @param	string $reply	The SMTP reply string from any sent request
+	 * @param	string $reply	The SMTP reply string from any sent request.
 	 */
 	private function getCode($reply)
 	{
@@ -260,7 +260,7 @@ class SpoonEmailSMTP
 	 * MAIL FROM command, function that shows the host the sender's email address.
 	 *
 	 * @return	bool
-	 * @param	string $email	The sender's e-mail address
+	 * @param	string $email	The sender's e-mail address.
 	 */
 	public function mailFrom($email)
 	{
@@ -294,7 +294,7 @@ class SpoonEmailSMTP
 	 * RCPT TO command, function that shows the host the recipients's email address.
 	 *
 	 * @return	bool
-	 * @param	string $email	The recipient's e-mail address
+	 * @param	string $email	The recipient's e-mail address.
 	 */
 	public function rcptTo($email)
 	{
@@ -313,7 +313,7 @@ class SpoonEmailSMTP
 	 * Stores a reply whenever a function is called.
 	 *
 	 * @return	void
-	 * @param	string[optional] $reply	The host's reply from the last sent request
+	 * @param	string[optional] $reply	The host's reply from the last sent request.
 	 */
 	private function saveReply($reply = null)
 	{
@@ -329,7 +329,7 @@ class SpoonEmailSMTP
 	 * Pushes a command to the host and returns + saves the status code.
 	 *
 	 * @return	int
-	 * @param	string[optional] $message	The command message to send to the SMTP host
+	 * @param	string[optional] $message	The command message to send to the SMTP host.
 	 */
 	private function say($message = null)
 	{
@@ -351,7 +351,7 @@ class SpoonEmailSMTP
 	 * Sends an email, return true on success.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $data		The e-mail body to be sent to the SMTP host
+	 * @param	string[optional] $data		The e-mail body to be sent to the SMTP host.
 	 */
 	public function send($data = null)
 	{

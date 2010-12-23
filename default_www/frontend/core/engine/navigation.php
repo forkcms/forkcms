@@ -258,7 +258,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	int[optional] $parentId			The parentID to start of.
 	 * @param	int[optional] $depth			The maximum depth to parse.
 	 * @param	array[optional] $excludeIds		PageIDs to be excluded.
-	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
+	 * @param	int[optional] $depthCounter		A counter that will hold the current depth.
 	 */
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
 	{

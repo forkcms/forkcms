@@ -59,7 +59,7 @@ class FrontendModel
 	 *
 	 * @return	string
 	 * @param	string $URL			The URL to append the parameters too.
-	 * @param	array $parameters	The parameters as key-value-pairs
+	 * @param	array $parameters	The parameters as key-value-pairs.
 	 */
 	public static function addURLParameters($URL, array $parameters)
 	{
@@ -272,12 +272,12 @@ class FrontendModel
 	 * General method to check if something is spam
 	 *
 	 * @return	bool
-	 * @param	string $content				The content that was submitted
-	 * @param	string $permaLink			The permanent location of the entry the comment was submitted to
-	 * @param	string[optional] $author	Commenters name
-	 * @param	string[optional] $email		Commenters email address
-	 * @param	string[optional] $URL		Commenters URL
-	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration"
+	 * @param	string $content				The content that was submitted.
+	 * @param	string $permaLink			The permanent location of the entry the comment was submitted to.
+	 * @param	string[optional] $author	Commenters name.
+	 * @param	string[optional] $email		Commenters email address.
+	 * @param	string[optional] $URL		Commenters URL.
+	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 */
 	public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
 	{
@@ -321,9 +321,9 @@ class FrontendModel
 	 *
 	 * @return	void
 	 * @param	mixed $alert						The message/dictonary to send.
-	 * @param	int[optional] $badge				The number for the badge
-	 * @param	string[optional] $sound				The sound that should be played
-	 * @param 	array[optional] $extraDictionaries	Extra dictionaries
+	 * @param	int[optional] $badge				The number for the badge.
+	 * @param	string[optional] $sound				The sound that should be played.
+	 * @param 	array[optional] $extraDictionaries	Extra dictionaries.
 	 */
 	public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{

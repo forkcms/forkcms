@@ -110,7 +110,7 @@ class SpoonDatabase
 	 * @param	string $username		The username to authenticate on your database-server.
 	 * @param	string $password		The password to authenticate on your database-server.
 	 * @param	string $database		The name of the database to use.
-	 * @param	int[optional] $port		The port to connect on
+	 * @param	int[optional] $port		The port to connect on.
 	 */
 	public function __construct($driver, $hostname, $username, $password, $database, $port = null)
 	{
@@ -231,7 +231,7 @@ class SpoonDatabase
 	 * Executes a query.
 	 *
 	 * @return	void
-	 * @param	string $query					The query to execute, only use with queries that don't return a result
+	 * @param	string $query					The query to execute, only use with queries that don't return a result.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function execute($query, $parameters = array())
@@ -336,7 +336,7 @@ class SpoonDatabase
 	 * Retrieves the possible ENUM-values
 	 *
 	 * @return	array			An array with all the possible ENUM-values.
-	 * @param	string $table	The table that contains the ENUM-field
+	 * @param	string $table	The table that contains the ENUM-field.
 	 * @param	string $field	The name of the field.
 	 */
 	public function getEnumValues($table, $field)
@@ -720,7 +720,7 @@ class SpoonDatabase
 	 * Inserts one or more records
 	 *
 	 * @return	int				The last inserted ID.
-	 * @param	string $table	The table wherin the record will be inserted
+	 * @param	string $table	The table wherin the record will be inserted.
 	 * @param	array $values	The values for the record to insert, keys of this array should match the column-names.
 	 */
 	public function insert($table, array $values)
@@ -991,8 +991,8 @@ class SpoonDatabase
 	 * Builds a query for updating records
 	 *
 	 * @return	int								The number of affected rows.
-	 * @param	string $table					The table to run the UPDATE-statement on
-	 * @param	array $values					The values to update, use the key(s) as columnnames
+	 * @param	string $table					The table to run the UPDATE-statement on.
+	 * @param	array $values					The values to update, use the key(s) as columnnames.
 	 * @param	string[optional] $where			The WHERE-clause.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */

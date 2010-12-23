@@ -123,7 +123,7 @@ class CampaignMonitor
 	 * @param	string $siteURL					The base URL of the site you use to login to Campaign Monitor.
 	 * @param	string $username				The username you use to login to Campaign Monitor.
 	 * @param	string $password				The password you use to login to Campaign Monitor.
-	 * @param	int[optional] $timeOut			The timeout
+	 * @param	int[optional] $timeOut			The timeout.
 	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
 	 * @param	string[optional] $listId		The default list ID to use throughout the class.
 	 * @param	string[optional] $campaignId	The default campaign ID to use throughout the class.
@@ -310,7 +310,7 @@ class CampaignMonitor
 	 * @param	string $name				The name of the field.
 	 * @param	string[optional] $type		The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
 	 * @param	array[optional] $options	The available options for a multi-valued custom field. Options should be separated by a double pipe "||". This field must be null for Text and Number custom fields.
-	 * @param	string[optional] $listId	The list ID to create the custom field for
+	 * @param	string[optional] $listId	The list ID to create the custom field for.
 	 */
 	public function createCustomField($name, $type = null, $options = array(), $listId = null)
 	{
@@ -833,7 +833,7 @@ class CampaignMonitor
 	 * Returns a list of all subscribers for a list that have hard bounced since the specified date.
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId	The list ID to fetch the bounced subscribers from
+	 * @param	string[optional] $listId	The list ID to fetch the bounced subscribers from.
 	 * @param	int[optional] $timestamp	The date to check from.
 	 */
 	public function getBouncedSubscribers($listId = null, $timestamp = null)
@@ -1301,7 +1301,7 @@ class CampaignMonitor
 	 * Returns all the custom fields available for a list.
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId	The list ID to fetch the custom fields from
+	 * @param	string[optional] $listId	The list ID to fetch the custom fields from.
 	 */
 	public function getCustomFields($listId = null)
 	{
@@ -1547,7 +1547,7 @@ class CampaignMonitor
 	 *
 	 * @return	array
 	 * @param	string $email				The emailaddress.
-	 * @param	string[optional] $listId	The list ID to fetch the subscriber from
+	 * @param	string[optional] $listId	The list ID to fetch the subscriber from.
 	 */
 	public function getSubscriber($email, $listId = null)
 	{
@@ -1593,8 +1593,8 @@ class CampaignMonitor
 	 * In the documentation this function is called GetActive, yet the soap methods will tell you it requires GetSubscribers
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId		The ID of the list.
-	 * @param	int[optional] $timestamp	The list ID to fetch the subscribers from
+	 * @param	string[optional] $listId	The ID of the list.
+	 * @param	int[optional] $timestamp	The list ID to fetch the subscribers from.
 	 */
 	public function getSubscribers($listId = null, $timestamp = null)
 	{
@@ -1684,7 +1684,7 @@ class CampaignMonitor
 	 * Returns all subscribers in the client-wide suppression list.
 	 *
 	 * @return	array
-	 * @param	string[optional] $clientId	The client ID to fetch the suppression list from
+	 * @param	string[optional] $clientId	The client ID to fetch the suppression list from.
 	 */
 	public function getSuppressionListByClientId($clientId = null)
 	{
@@ -1839,8 +1839,8 @@ class CampaignMonitor
 	 * Results only contain custom fields if they have values OR if they have had a value once before. CM has some funny quirks like that.
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId		The list ID to fetch the unsubscribers from
-	 * @param	int[optional] $timestamp	If this is filled this method will only return unsubscribes that occured since this timestamp
+	 * @param	string[optional] $listId	The list ID to fetch the unsubscribers from.
+	 * @param	int[optional] $timestamp	If this is filled this method will only return unsubscribes that occured since this timestamp.
 	 */
 	public function getUnsubscribers($listId = null, $timestamp = null)
 	{
@@ -1905,7 +1905,7 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $email				The emailaddress.
-	 * @param	string[optional] $listId	The list ID to look in
+	 * @param	string[optional] $listId	The list ID to look in.
 	 */
 	public function isSubscribed($email, $listId = null)
 	{
@@ -1942,7 +1942,7 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $confirmationEmail		The email address that the confirmation email that the campaign has been sent will go to.
-	 * @param	string[optional] $deliveryDate	The date the campaign should be scheduled to be sent. (YYYY-MM-DD HH:MM:SS)
+	 * @param	string[optional] $deliveryDate	The date the campaign should be scheduled to be sent (YYYY-MM-DD HH:MM:SS).
 	 * @param	string[optional] $campaignId	The ID of the campaign to send.
 	 */
 	public function sendCampaign($confirmationEmail, $deliveryDate = null, $campaignId = null)
@@ -2015,7 +2015,7 @@ class CampaignMonitor
 	 * Set the site URL
 	 *
 	 * @return	void
-	 * @param	string $siteURL		The base URL of the site you use to login to Campaign Monitor. e.g. http://example.createsend.com/
+	 * @param	string $siteURL		The base URL of the site you use to login to Campaign Monitor. e.g. http://example.createsend.com/.
 	 */
 	private function setSiteURL($siteURL)
 	{
@@ -2068,7 +2068,7 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $email				The emailaddress.
-	 * @param	string[optional] $listId	The list ID to unsubscribe from
+	 * @param	string[optional] $listId	The list ID to unsubscribe from.
 	 */
 	public function unsubscribe($email, $listId = null)
 	{
@@ -2099,7 +2099,7 @@ class CampaignMonitor
 	 * @param	string[optional] $deliveryFee			Flat rate delivery fee to be charged to the client for each campaign sent, expressed in the chosen currency’s major unit, but without the currency symbol. Only required if BillingType is set to ClientPaysWithMarkup.
 	 * @param	string[optional] $costPerRecipient		Additional cost added to the campaign for each email address the campaign is sent to, expressed in the chosen currency’s minor unit. Only required if BillingType is set to ClientPaysWithMarkup.
 	 * @param	string[optional] $designAndSpamTestFee	Expressed in the chosen currency’s major unit. Only required if BillingType is set to ClientPaysWithMarkup and client has access to design and spam tests.
-	 * @param	string[optional] $clientId				The client ID to update
+	 * @param	string[optional] $clientId				The client ID to update.
 	 */
 	public function updateClientAccessAndBilling($accessLevel, $username = null, $password = null, $billingType = null, $currency = null, $deliveryFee = null, $costPerRecipient = null, $designAndSpamTestFee = null, $clientId = null)
 	{
@@ -2159,7 +2159,7 @@ class CampaignMonitor
 	 * @param	string[optional] $unsubscribePage			The URL to which subscribers will be directed when unsubscribing from the list. If left blank or omitted a generic unsubscribe page is used.
 	 * @param	bool[optional] $confirmOptIn				Either true or false depending on whether the list requires email confirmation or not. Please see the help documentation for more details of what this means.
 	 * @param	string[optional] $confirmationSuccessPage	Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn is false. If left blank or omitted a generic confirmation page is used.
-	 * @param	string[optional] $listId					The list ID to update
+	 * @param	string[optional] $listId					The list ID to update.
 	 */
 	public function updateList($title, $unsubscribePage = null, $confirmOptIn = false, $confirmationSuccessPage = null, $listId = null)
 	{

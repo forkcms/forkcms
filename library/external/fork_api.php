@@ -81,8 +81,8 @@ class ForkAPI
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string[optional] $publicKey		The public-key of the keypair
-	 * @param	string[optional] $privateKey	The private-key of the keypair
+	 * @param	string[optional] $publicKey		The public-key of the keypair.
+	 * @param	string[optional] $privateKey	The private-key of the keypair.
 	 */
 	public function __construct($publicKey = null, $privateKey = null)
 	{
@@ -272,7 +272,7 @@ class ForkAPI
 	 * After this time the request will stop. You should handle any errors triggered by this.
 	 *
 	 * @return	void
-	 * @param	int $seconds	The timeout in seconds
+	 * @param	int $seconds	The timeout in seconds.
 	 */
 	public function setTimeOut($seconds)
 	{
@@ -285,7 +285,7 @@ class ForkAPI
 	 * It will be appended to ours, the result will look like: "PHP ForkAPI/<version> <your-user-agent>"
 	 *
 	 * @return	void
-	 * @param	string $userAgent	Your user-agent, it should look like <app-name>/<app-version>
+	 * @param	string $userAgent	Your user-agent, it should look like <app-name>/<app-version>.
 	 */
 	public function setUserAgent($userAgent)
 	{
@@ -333,9 +333,9 @@ class ForkAPI
 	 * @return	array								The device tokens that aren't valid.
 	 * @param	string $deviceToken					The device token for the receiver.
 	 * @param	mixed $alert						The message/dictonary to send.
-	 * @param	int[optional] $badge				The number for the badge
-	 * @param	string[optional] $sound				The sound that should be played
-	 * @param 	array[optional] $extraDictionaries	Extra dictionaries
+	 * @param	int[optional] $badge				The number for the badge.
+	 * @param	string[optional] $sound				The sound that should be played.
+	 * @param 	array[optional] $extraDictionaries	Extra dictionaries.
 	 */
 	public function applePush($deviceToken, $alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{

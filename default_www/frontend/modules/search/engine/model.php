@@ -260,7 +260,7 @@ class FrontendSearchModel
 	 * Get synonyms
 	 *
 	 * @return	array
-	 * @param	string $term				The term to get synonyms for
+	 * @param	string $term	The term to get synonyms for.
 	 */
 	public static function getSynonyms($term)
 	{

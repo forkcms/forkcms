@@ -413,7 +413,7 @@ class SpoonFeedRSS
 		if(!empty($skipHours))
 		{
 			$XML .= '	<skipHours>'."\n";
-			foreach($skipHours as $hour) 			$XML .= '	<hour>'.$hour.'</hour>'."\n";
+			foreach($skipHours as $hour) $XML .= '	<hour>'.$hour.'</hour>'."\n";
 			$XML .= '	</skipHours>'."\n";
 		}
 

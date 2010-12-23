@@ -13,7 +13,6 @@
  */
 class ModuleInstaller
 {
-<<<<<<< HEAD
 	/**
 	 * Database connection instance
 	 *
@@ -42,10 +41,10 @@ class ModuleInstaller
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	SpoonDatabase $db	The database-connection.
-	 * @param	array $languages	The selected languages
-	 * @param	bool[optional] $example		Should example data be installed
-	 * @param	array[optional] $variables	The passed variables
+	 * @param	SpoonDatabase $db			The database-connection.
+	 * @param	array $languages			The selected languages.
+	 * @param	bool[optional] $example		Should example data be installed.
+	 * @param	array[optional] $variables	The passed variables.
 	 */
 	public function __construct(SpoonDatabase $db, array $languages, $example = false, array $variables = array())
 	{
@@ -64,8 +63,8 @@ class ModuleInstaller
 	 * Inserts a new module
 	 *
 	 * @return	void
-	 * @param	string $name					The name of the module
-	 * @param	string[optional] $description	A description for the module
+	 * @param	string $name					The name of the module.
+	 * @param	string[optional] $description	A description for the module.
 	 */
 	protected function addModule($name, $description = null)
 	{
@@ -167,7 +166,7 @@ class ModuleInstaller
 	 * Get a variable
 	 *
 	 * @return	mixed
-	 * @param	string $name	The name of the variable
+	 * @param	string $name	The name of the variable.
 	 */
 	protected function getVariable($name)
 	{
@@ -183,7 +182,7 @@ class ModuleInstaller
 	 * Imports the sql file
 	 *
 	 * @return	void
-	 * @param	string $filename	The full path for the SQL-file
+	 * @param	string $filename	The full path for the SQL-file.
 	 */
 	protected function importSQL($filename)
 	{

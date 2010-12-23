@@ -206,8 +206,8 @@ class FrontendAJAXAction
 	 * You have to specify the action and module so we know what to do with this instance.
 	 *
 	 * @return	void
-	 * @param	string $action	The action that should be executed
-	 * @param	string $module	The module that wherein the action is available
+	 * @param	string $action	The action that should be executed.
+	 * @param	string $module	The module that wherein the action is available.
 	 */
 	public function __construct($action, $module)
 	{

@@ -143,7 +143,7 @@ class SpoonTemplate
 	 * @return	void
 	 * @param	array $values				This array with keys and values will be used to search and replace in the template file.
 	 * @param	string[optional] $prefix	An optional prefix eg. 'lbl' that can be used.
-	 * @param	string[optional] $suffix	An optional suffix eg. 'msg' that can be used
+	 * @param	string[optional] $suffix	An optional suffix eg. 'msg' that can be used.
 	 */
 	public function assignArray(array $values, $prefix = null, $suffix = null)
 	{

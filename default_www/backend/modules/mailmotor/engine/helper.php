@@ -277,7 +277,7 @@ class BackendMailmotorCMHelper
 	 * Returns the CM IDs for a given list of group IDs
 	 *
 	 * @return	array
-	 * @param 	array $groupIds		The IDs of the groups
+	 * @param 	array $groupIds		The IDs of the groups.
 	 */
 	public static function getCampaignMonitorIDsForGroups(array $groupIds)
 	{
@@ -681,7 +681,7 @@ class BackendMailmotorCMHelper
 	 *
 	 * @return	string
 	 * @param	string $type		The type of the record.
-	 * @param	string $id			The id in CampaignMonitor/
+	 * @param	string $id			The id in CampaignMonitor.
 	 * @param	string $otherId		The id in our tables.
 	 */
 	public static function insertCampaignMonitorID($type, $id, $otherId)
@@ -701,7 +701,7 @@ class BackendMailmotorCMHelper
 	 * Creates a list in campaignmonitor and inserts the group record in the database. Returns the group ID
 	 *
 	 * @return	int
-	 * @param	array $item		The group record to insert
+	 * @param	array $item		The group record to insert.
 	 */
 	public static function insertGroup(array $item)
 	{
