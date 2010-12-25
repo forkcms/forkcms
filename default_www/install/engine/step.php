@@ -52,7 +52,7 @@ class InstallerStep
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	int $step
+	 * @param	int $step	The step to load.
 	 */
 	public function __construct($step)
 	{
@@ -88,7 +88,7 @@ class InstallerStep
 	 * Loads spoon library
 	 *
 	 * @return	void
-	 * @param	string $pathLibrary
+	 * @param	string $pathLibrary		The path of the library.
 	 */
 	protected function loadSpoon($pathLibrary)
 	{

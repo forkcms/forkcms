@@ -186,8 +186,8 @@ class SpoonTemplateCompiler
 	 * Check the string for syntax errors
 	 *
 	 * @return	bool
-	 * @param	string $string
-	 * @param	string $type
+	 * @param	string $string		The string to check for correct syntax.
+	 * @param	string $type		The type of syntax to check, possible values are: cycle, iteration, option, variable.
 	 */
 	private function isCorrectSyntax($string, $type)
 	{

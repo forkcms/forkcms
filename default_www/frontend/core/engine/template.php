@@ -552,7 +552,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getpageinfo:404:'title'}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var			The string passed from the template.
 	 * @param	int $pageId						The id of the page to build the URL for.
 	 * @param	string[optional] $field			The field to get.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
@@ -582,7 +582,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|geturl:404}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var						The string passed from the template.
 	 * @param	int $pageId						The id of the page to build the URL for.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
@@ -603,7 +603,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|geturlforblock:<module>:<action>:<language>}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var						The string passed from the template.
 	 * @param	string $module					The module wherefor the URL should be build.
 	 * @param	string[optional] $action		A specific action wherefor the URL should be build, otherwise the default will be used.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
@@ -625,9 +625,9 @@ class FrontendTemplateModifiers
 	 * Fetch an URL based on an extraId
 	 *
 	 * @return	string
-	 * @param	string $var
-	 * @param	int $extraId
-	 * @param	string[optional] $language
+	 * @param	string $var						The string passed from the template.
+	 * @param	int $extraId					The id of the extra.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
 	public static function getURLForExtraId($var, $extraId, $language = null)
 	{
@@ -645,29 +645,29 @@ class FrontendTemplateModifiers
 	 * Highlights all strings in <code> tags.
 	 *
 	 * @return	string
-	 * @param	string $content
+	 * @param	string $var		The string passed from the template.
 	 */
-	public static function highlightCode($content)
+	public static function highlightCode($var)
 	{
 		// regex pattern
 		$pattern = '/<code>.*?<\/code>/is';
 
 		// find matches
-		if(preg_match_all($pattern, $content, $matches))
+		if(preg_match_all($pattern, $var, $matches))
 		{
 			// loop matches
 			foreach($matches[0] as $match)
 			{
 				// encase content in highlight_string
-				$content = str_replace($match, highlight_string($match, true), $content);
+				$content = str_replace($match, highlight_string($match, true), $var);
 
 				// replace highlighted code tags in match
-				$content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $content);
+				$content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $var);
 			}
 		}
 
 		// return content
-		return $content;
+		return $var;
 	}
 
 
@@ -675,9 +675,9 @@ class FrontendTemplateModifiers
 	 * Get a random var between a min and max
 	 *
 	 * @return	int
-	 * @param	string[optional] $var
-	 * @param	int $min
-	 * @param	int $max
+	 * @param	string[optional] $var	The string passed from the template.
+	 * @param	int $min				The miminum random number.
+	 * @param	int $max				The maximum random number.
 	 */
 	public static function random($var = null, $min, $max)
 	{
@@ -715,7 +715,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var		The string passed from the template.
 	 * @param	int $length					The maximum length of the truncated string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */
@@ -753,7 +753,7 @@ class FrontendTemplateModifiers
 	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var	The string passed from the template.
 	 * @param	string $setting			The name of the setting you want.
 	 * @param	int[optional] $userId	The userId, if not set by $var.
 	 */

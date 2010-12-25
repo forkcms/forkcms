@@ -223,7 +223,7 @@ class SpoonRESTClient
 	 * Set the port for the REST-server, default is 80.
 	 *
 	 * @return	void
-	 * @param	int $port
+	 * @param	int $port	The port to connect on.
 	 */
 	public function setPort($port)
 	{
@@ -235,7 +235,7 @@ class SpoonRESTClient
 	 * Set timeout.
 	 *
 	 * @return	void
-	 * @param	int $seconds
+	 * @param	int $seconds	The maximum number of seconds that the operation can last.
 	 */
 	public function setTimeout($seconds)
 	{
@@ -247,7 +247,7 @@ class SpoonRESTClient
 	 * Set a custom user-agent.
 	 *
 	 * @return	void
-	 * @param	string $userAgent
+	 * @param	string $userAgent	The UserAgent that will be used. It will look like "Spoon <Spoon version>/<your useragent>".
 	 */
 	public function setUserAgent($userAgent)
 	{

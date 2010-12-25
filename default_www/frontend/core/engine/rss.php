@@ -96,7 +96,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 * Set the author.
 	 *
 	 * @return	void
-	 * @param	string $author
+	 * @param	string $author		The author to use.
 	 */
 	public function setAuthor($author)
 	{

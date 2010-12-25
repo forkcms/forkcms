@@ -71,7 +71,7 @@ class FrontendMailmotorCMHelper
 	 * Checks if a group exists by its CampaignMonitor ID
 	 *
 	 * @return	bool
-	 * @param	string $id
+	 * @param	string $id	The id of the group on Campaign Monitor.
 	 */
 	public static function existsGroupByCampaignMonitorID($id)
 	{
@@ -142,8 +142,8 @@ class FrontendMailmotorCMHelper
 	 * Subscribes an e-mail address and send him/her to CampaignMonitor
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The e-mail address to subscribe.
+	 * @param	string[optional] $groupId		The id of the group to subscribe to.
 	 */
 	public static function subscribe($email, $groupId = null)
 	{
@@ -195,8 +195,8 @@ class FrontendMailmotorCMHelper
 	 * Unsubscribes an e-mail address from CampaignMonitor and our database
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The e-mail address to unsubscribe.
+	 * @param	string[optional] $groupId		The id of the group to unsubscribe from.
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{

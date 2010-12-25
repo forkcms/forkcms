@@ -95,10 +95,10 @@ class ForkAPI
 	 * Make the call
 	 *
 	 * @return	string
-	 * @param	string $method
-	 * @param	array[optional] $parameters
-	 * @param	bool[optional] $authenticate
-	 * @param	bool[optional] $usePOST
+	 * @param	string $method						The method to call.
+	 * @param	array[optional] $parameters			The parameters to pass.
+	 * @param	bool[optional] $authenticate		Should we authenticate?
+	 * @param	bool[optional] $usePOST				Should we use POST?
 	 */
 	private function doCall($method, $parameters = array(), $authenticate = true, $usePOST = false)
 	{
@@ -247,7 +247,7 @@ class ForkAPI
 	 * Set the public key
 	 *
 	 * @return	void
-	 * @param	string $key
+	 * @param	string $key		The public key.
 	 */
 	public function setPublicKey($key)
 	{
@@ -259,7 +259,7 @@ class ForkAPI
 	 * Set the private key
 	 *
 	 * @return	void
-	 * @param	string $key
+	 * @param	string $key		The private key.
 	 */
 	public function setPrivateKey($key)
 	{
@@ -298,8 +298,8 @@ class ForkAPI
 	 * Request public private key-pair
 	 *
 	 * @return	array
-	 * @param	string $siteUrl
-	 * @param	string $email
+	 * @param	string $siteUrl		The URL of the site.
+	 * @param	string $email		The e-mail adress of the site.
 	 */
 	public function coreRequestKeys($siteUrl, $email)
 	{

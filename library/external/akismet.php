@@ -105,9 +105,9 @@ class Akismet
 	 * Make the call
 	 *
 	 * @return	string
-	 * @param	string $url
-	 * @param	array[optional] $aParameters
-	 * @param	bool[optional] $authenticate
+	 * @param	string $url						The URL to call.
+	 * @param	array[optional] $aParameters	The parameters to pass.
+	 * @param	bool[optional] $authenticate	Should we authenticate?
 	 */
 	private function doCall($url, $aParameters = array(), $authenticate = true)
 	{
@@ -259,7 +259,7 @@ class Akismet
 	 * Set API key that has to be used
 	 *
 	 * @return	void
-	 * @param	string $apiKey
+	 * @param	string $apiKey		The API key to use.
 	 */
 	private function setApiKey($apiKey)
 	{
@@ -297,7 +297,7 @@ class Akismet
 	 * Set the url of the instance making the request
 	 *
 	 * @return	void
-	 * @param	string $url
+	 * @param	string $url		The URL making the request.
 	 */
 	private function setUrl($url)
 	{
@@ -577,8 +577,8 @@ class AkismetException extends Exception
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string[optional] $message
-	 * @param	int[optional] $code
+	 * @param	string[optional] $message	The message.
+	 * @param	int[optional] $code			The error number.
 	 */
 	public function __construct($message = null, $code = null)
 	{

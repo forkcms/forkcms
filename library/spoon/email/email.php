@@ -265,7 +265,7 @@ class SpoonEmail
 	 * Adds a single-line header to the email headers.
 	 *
 	 * @return	void
-	 * @param	string $header
+	 * @param	string $header		The full content for the header.
 	 */
 	public function addHeader($header)
 	{
@@ -720,7 +720,7 @@ class SpoonEmail
 	 * Changes the charset from standard utf-8 to your preferred value.
 	 *
 	 * @return	void
-	 * @param	string[optional] $charset
+	 * @param	string[optional] $charset	The charset to use, default is utf-8.
 	 */
 	public function setCharset($charset = 'utf-8')
 	{
@@ -732,7 +732,7 @@ class SpoonEmail
 	 * Sets the debug mode on/off.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should we enable debug-mode?
 	 */
 	public function setDebug($on = true)
 	{
@@ -829,8 +829,8 @@ class SpoonEmail
 	 * Sets authentication info for the current SMTP connection.
 	 *
 	 * @return	void
-	 * @param	string $username
-	 * @param	string $password
+	 * @param	string $username	The username to use.
+	 * @param	string $password	The password to use.
 	 */
 	public function setSMTPAuth($username, $password)
 	{

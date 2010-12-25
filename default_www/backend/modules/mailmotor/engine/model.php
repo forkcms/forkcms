@@ -202,7 +202,7 @@ class BackendMailmotorModel
 	 * Checks if a group exists
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		The id of the group to check.
 	 */
 	public static function existsGroup($id)
 	{
@@ -217,7 +217,7 @@ class BackendMailmotorModel
 	 * Checks if a group exists
 	 *
 	 * @return	bool
-	 * @param	string $name
+	 * @param	string $name	The name of the group to check.
 	 */
 	public static function existsGroupByName($name)
 	{
@@ -233,7 +233,7 @@ class BackendMailmotorModel
 	 * Checks if a mailing exists
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		The id of the mailing to check.
 	 */
 	public static function existsMailing($id)
 	{
@@ -248,7 +248,7 @@ class BackendMailmotorModel
 	 * Checks if a mailing exists by name
 	 *
 	 * @return	bool
-	 * @param	string $name
+	 * @param	string $name	The name of the mailing to check.
 	 */
 	public static function existsMailingByName($name)
 	{
@@ -277,7 +277,7 @@ class BackendMailmotorModel
 	 * Checks if a given campaign has sent mailings under it
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id	The id of the campaign to check.
 	 */
 	public static function existsSentMailingsByCampaignID($id)
 	{
@@ -1441,7 +1441,7 @@ class BackendMailmotorModel
 	 * Get the unsubscribed e-mail addresses by group ID(s)
 	 *
 	 * @return	array
-	 * @param	mixed $ids
+	 * @param	mixed $ids	The ids of the groups.
 	 */
 	public static function getUnsubscribedAddressesByGroupID($ids)
 	{

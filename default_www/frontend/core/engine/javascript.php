@@ -151,7 +151,7 @@ class FrontendJavascript
 	 * Set language
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The language.
 	 */
 	private function setLanguage($value)
 	{
@@ -170,7 +170,7 @@ class FrontendJavascript
 	 * Set module
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The module.
 	 */
 	private function setModule($value)
 	{

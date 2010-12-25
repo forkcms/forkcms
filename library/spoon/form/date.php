@@ -47,11 +47,11 @@ class SpoonFormDate extends SpoonFormInput
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	int[optional] $value
-	 * @param	string[optional] $mask
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	string[optional] $mask			The mask to use.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function __construct($name, $value = null, $mask = null, $class = 'inputDatefield', $classError = 'inputDatefieldError')
 	{
@@ -109,12 +109,12 @@ class SpoonFormDate extends SpoonFormInput
 	 * Returns a timestamp based on mask & optional fields.
 	 *
 	 * @return	int
-	 * @param	int[optional] $year
-	 * @param	int[optional] $month
-	 * @param	int[optional] $day
-	 * @param	int[optional] $hour
-	 * @param	int[optional] $minute
-	 * @param	int[optional] $second
+	 * @param	int[optional] $year		The year to use.
+	 * @param	int[optional] $month	The month to use.
+	 * @param	int[optional] $day		The day to use.
+	 * @param	int[optional] $hour		The hour to use.
+	 * @param	int[optional] $minute	The minutes to use.
+	 * @param	int[optional] $second	The seconds to use.
 	 */
 	public function getTimestamp($year = null, $month = null, $day = null, $hour = null, $minute = null, $second = null)
 	{
@@ -198,7 +198,7 @@ class SpoonFormDate extends SpoonFormInput
 	 * Checks if this field has any content (except spaces).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The errormessage to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -224,7 +224,7 @@ class SpoonFormDate extends SpoonFormInput
 	 * Checks if this field is correctly submitted.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The errormessage to set.
 	 */
 	public function isValid($error = null)
 	{
@@ -357,7 +357,7 @@ class SpoonFormDate extends SpoonFormInput
 	 * Parses the html for this date field.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -385,7 +385,7 @@ class SpoonFormDate extends SpoonFormInput
 	 * Set the input mask.
 	 *
 	 * @return	void
-	 * @param	string[optional] $mask
+	 * @param	string[optional] $mask	The date-mask.
 	 */
 	public function setMask($mask = null)
 	{
@@ -423,7 +423,7 @@ class SpoonFormDate extends SpoonFormInput
 	 * Set the value attribute for this date field.
 	 *
 	 * @return	void
-	 * @param	int $value
+	 * @param	int $value		The new value.
 	 */
 	private function setValue($value)
 	{

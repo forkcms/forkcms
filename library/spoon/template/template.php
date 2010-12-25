@@ -101,7 +101,7 @@ class SpoonTemplate
 	 * Adds a form to this template.
 	 *
 	 * @return	void
-	 * @param	SpoonForm $form
+	 * @param	SpoonForm $form		The form-instance to add.
 	 */
 	public function addForm(SpoonForm $form)
 	{

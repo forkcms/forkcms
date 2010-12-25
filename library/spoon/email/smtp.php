@@ -95,10 +95,10 @@ class SpoonEmailSMTP
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $host
-	 * @param	int $port
-	 * @param	int $timeout
-	 * @param	string[optional] $security
+	 * @param	string $host					The host to connect to.
+	 * @param	int $port						The port to connect on.
+	 * @param	int $timeout					The timeout to use.
+	 * @param	string[optional] $security		The security to use, possible values are: ssl, tls.
 	 */
 	public function __construct($host, $port, $timeout, $security = null)
 	{
@@ -134,8 +134,8 @@ class SpoonEmailSMTP
 	 * Attempts to authenticate with the smtp host. This ignores any errors before the username was sent because SMTP pretends the auth didn't happen and continues.
 	 *
 	 * @return	void
-	 * @param	string $username
-	 * @param	string $password
+	 * @param	string $username	The username to use.
+	 * @param	string $password	The password to use.
 	 */
 	public function authenticate($username, $password)
 	{
@@ -374,7 +374,7 @@ class SpoonEmailSMTP
 	 * Sets the security layer
 	 *
 	 * @return	void
-	 * @param	string $layer
+	 * @param	string $layer	The layer of security.
 	 */
 	public function setSecurity($layer)
 	{

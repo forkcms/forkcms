@@ -443,7 +443,7 @@ class BackendAnalyticsModel
 	 * Get all data for a given revision.
 	 *
 	 * @return	array
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function getLinkList($language = null)
 	{
@@ -518,7 +518,7 @@ class BackendAnalyticsModel
 	 * Fetch page by its path
 	 *
 	 * @return	array
-	 * @param	string $path
+	 * @param	string $path	The path of the page.
 	 */
 	public static function getPageByPath($path)
 	{

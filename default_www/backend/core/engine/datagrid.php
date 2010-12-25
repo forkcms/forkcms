@@ -223,11 +223,11 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Set a custom column confirm message.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	string $message
-	 * @param	string[optional] $custom
-	 * @param	string[optional] $title
-	 * @param	string[optional] $uniqueId
+	 * @param	string $column					The name of the column to set the confirm for.
+	 * @param	string $message					The message to use as a confirmmessage.
+	 * @param	string[optional] $custom		Unused parameter.
+	 * @param	string[optional] $title			The title for the column.
+	 * @param	string[optional] $uniqueId		A unique ID that will be uses.
 	 */
 	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
 	{

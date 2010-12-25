@@ -75,9 +75,9 @@ class InstallerStep2 extends InstallerStep
 	 * Check if a specific requirement is satisfied
 	 *
 	 * @return	boolean
-	 * @param	string $variable
-	 * @param	bool $requirement
-	 * @param	array[optional] $variables
+	 * @param	string $variable				The "name" of the check.
+	 * @param	bool $requirement				The result of the check.
+	 * @param	array[optional] $variables		An array that holds all the variables.
 	 */
 	public static function checkRequirement($variable, $requirement, array &$variables = null)
 	{
@@ -103,7 +103,7 @@ class InstallerStep2 extends InstallerStep
 	 * Checks the requirements
 	 *
 	 * @return	bool
-	 * @param	array[optional] $variables
+	 * @param	array[optional] $variables		An array that holds all the variables.
 	 */
 	public static function checkRequirements(array &$variables = null)
 	{
@@ -237,7 +237,7 @@ class InstallerStep2 extends InstallerStep
 	 * Define path constants
 	 *
 	 * @return	void
-	 * @param	int $step
+	 * @param	int $step	The step wherefor the constant should be defined.
 	 */
 	private static function defineConstants($step)
 	{
@@ -284,8 +284,8 @@ class InstallerStep2 extends InstallerStep
 	 * Try to guess the location of the library based on spoon library
 	 *
 	 * @return	void
-	 * @param	string $directory
-	 * @param	array[optional] $library
+	 * @param	string $directory			The directory to start from.
+	 * @param	array[optional] $library	An array to hold the paths that were guesed.
 	 */
 	private static function guessLibraryPath($directory, array &$library = null)
 	{
@@ -338,7 +338,7 @@ class InstallerStep2 extends InstallerStep
 	 * The default is_writable function has problems due to Windows ACLs "bug"
 	 *
 	 * @return	bool
-	 * @param	string $path
+	 * @param	string $path	The path to check.
 	 */
 	private static function isWritable($path)
 	{
@@ -367,7 +367,7 @@ class InstallerStep2 extends InstallerStep
 	 * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
 	 *
 	 * @return	bool
-	 * @param	string $path
+	 * @param	string $path	The path to check.
 	 */
 	private static function isRecursivelyWritable($path)
 	{

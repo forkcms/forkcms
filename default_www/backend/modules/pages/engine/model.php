@@ -49,7 +49,7 @@ class BackendPagesModel
 	 * Build the cache
 	 *
 	 * @return	void
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language	The language to build the cache for, if not passes we use the working language.
 	 */
 	public static function buildCache($language = null)
 	{
@@ -1543,7 +1543,7 @@ class BackendPagesModel
 	 * Is the provided template id in use by active versions of pages?
 	 *
 	 * @return	bool
-	 * @param	int $templateId
+	 * @param	int $templateId		The id of the template to check.
 	 */
 	public static function isTemplateInUse($templateId)
 	{

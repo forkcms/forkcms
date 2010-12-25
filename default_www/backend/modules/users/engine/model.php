@@ -50,7 +50,7 @@ class BackendUsersModel
 	 * Was a user deleted before?
 	 *
 	 * @return	bool
-	 * @param	string $email
+	 * @param	string $email	The e-mail adress to check.
 	 */
 	public static function emailDeletedBefore($email)
 	{
@@ -360,7 +360,7 @@ class BackendUsersModel
 	 * @later	this method should check if all needed data is present
 	 *
 	 * @return	bool
-	 * @param	string $email	The emailadress of the user to restore.
+	 * @param	string $email	The e-mail adress of the user to restore.
 	 */
 	public static function undoDelete($email)
 	{

@@ -166,7 +166,7 @@ class FrontendUser
 	 * Set userid
 	 *
 	 * @return	void
-	 * @param	int $value
+	 * @param	int $value	The user's id.
 	 */
 	private function setUserId($value)
 	{
@@ -178,7 +178,7 @@ class FrontendUser
 	 * Set email
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The email-address.
 	 */
 	private function setEmail($value)
 	{

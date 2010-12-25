@@ -289,7 +289,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Set the path for the template
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path to set.
 	 */
 	private function setTemplatePath($path)
 	{

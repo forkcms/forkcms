@@ -156,7 +156,7 @@ class FrontendURL
 	 * Return all the parameters
 	 *
 	 * @return	array
-	 * @param	bool[optional] $includeGET
+	 * @param	bool[optional] $includeGET		Should the GET-parameters be included?
 	 */
 	public function getParameters($includeGET = true)
 	{
@@ -403,7 +403,7 @@ class FrontendURL
 	 * Set the host
 	 *
 	 * @return	void
-	 * @param	string $host
+	 * @param	string $host	The value of the host.
 	 */
 	private function setHost($host)
 	{
@@ -415,7 +415,7 @@ class FrontendURL
 	 * Set the pages
 	 *
 	 * @return	void
-	 * @param	array[optional] $pages
+	 * @param	array[optional] $pages		An array of all the pages to set.
 	 */
 	private function setPages(array $pages = array())
 	{
@@ -427,7 +427,7 @@ class FrontendURL
 	 * Set the parameters
 	 *
 	 * @return	void
-	 * @param	array[optional] $parameters
+	 * @param	array[optional] $parameters	An array of all the parameters to set.
 	 */
 	private function setParameters(array $parameters = array())
 	{
@@ -439,7 +439,7 @@ class FrontendURL
 	 * Set the querystring
 	 *
 	 * @return	void
-	 * @param	string $queryString
+	 * @param	string $queryString		The full querystring.
 	 */
 	private function setQueryString($queryString)
 	{

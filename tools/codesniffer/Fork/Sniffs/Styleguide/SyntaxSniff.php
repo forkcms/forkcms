@@ -45,7 +45,7 @@ class Fork_Sniffs_Styleguide_SyntaxSniff implements PHP_CodeSniffer_Sniff
 				if($next['content'] != ' ') $phpcsFile->addError('After "=>" we expect exactly one space.', $stackPtr);
 			break;
 
-			// no whitespace before/after =>, ::, ->
+			// no whitespace before/after ::, ->
 			case T_DOUBLE_COLON:
 			case T_PAAMAYIM_NEKUDOTAYIM:
 			case T_OBJECT_OPERATOR:

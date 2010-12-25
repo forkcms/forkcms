@@ -219,7 +219,7 @@ class SpoonDatabase
 	 * Drops one or more tables.
 	 *
 	 * @return	void
-	 * @param	mixed $tables
+	 * @param	mixed $tables		The table(s) to drop.
 	 */
 	public function drop($tables)
 	{
@@ -652,7 +652,7 @@ class SpoonDatabase
 	 * Retrieve the type for this value
 	 *
 	 * @return	int
-	 * @param	mixed $value
+	 * @param	mixed $value		The value to retrieve the type for.
 	 */
 	private function getType($value)
 	{

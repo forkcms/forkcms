@@ -249,8 +249,8 @@ class SpoonDatagrid
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	SpoonDatagridSource $source
-	 * @param	string[optional] $template
+	 * @param	SpoonDatagridSource $source		The data-source.
+	 * @param	string[optional] $template		The template wherin teh datagrid will be parsed.
 	 */
 	public function __construct(SpoonDatagridSource $source, $template = null)
 	{
@@ -303,9 +303,9 @@ class SpoonDatagrid
 	 * Builds the requested URL.
 	 *
 	 * @return	string
-	 * @param	int $offset
-	 * @param	string $order
-	 * @param	string $sort
+	 * @param	int $offset		The offset.
+	 * @param	string $order	The order-column.
+	 * @param	string $sort	the sorting-method.
 	 */
 	private function buildURL($offset, $order, $sort)
 	{
@@ -463,7 +463,7 @@ class SpoonDatagrid
 	 * Fetch the column object for a specific column.
 	 *
 	 * @return	SpoonDatagridColumn
-	 * @param	string $column
+	 * @param	string $column			The name of the column.
 	 */
 	public function getColumn($column)
 	{
@@ -541,7 +541,7 @@ class SpoonDatagrid
 	 * Returns the html attributes based on an array.
 	 *
 	 * @return	string
-	 * @param	array[optional] $array
+	 * @param	array[optional] $array	The attributes to be converted into HTML-attributes.
 	 */
 	private function getHTMLAttributes(array $array = array())
 	{
@@ -816,7 +816,7 @@ class SpoonDatagrid
 	 * Parses the body.
 	 *
 	 * @return	void
-	 * @param	array $records
+	 * @param	array $records	The rows.
 	 */
 	private function parseBody(array $records)
 	{
@@ -993,7 +993,7 @@ class SpoonDatagrid
 	 * Parses the column functions.
 	 *
 	 * @return	array
-	 * @param	array $record
+	 * @param	array $record	The column-data.
 	 */
 	private function parseColumnFunctions($record)
 	{
@@ -1276,7 +1276,7 @@ class SpoonDatagrid
 	 * Parses the record.
 	 *
 	 * @return	array
-	 * @param	array $record
+	 * @param	array $record	The row-data.
 	 */
 	private function parseRecord(array $record)
 	{
@@ -1327,8 +1327,8 @@ class SpoonDatagrid
 	 * Parses the column functions.
 	 *
 	 * @return	void
-	 * @param	array $record
-	 * @param	array[optional] $rowAttributes
+	 * @param	array $record					The row-data.
+	 * @param	array[optional] $rowAttributes	The attributes on the row.
 	 */
 	private function parseRowFunctions($record, array $rowAttributes = null)
 	{
@@ -1398,7 +1398,7 @@ class SpoonDatagrid
 	 * Set main datagrid attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes
+	 * @param	array $attributes	The attributes to set on the datagrid.
 	 */
 	public function setAttributes(array $attributes)
 	{
@@ -1410,7 +1410,7 @@ class SpoonDatagrid
 	 * Sets the table caption or main description.
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The value for the caption-element.
 	 */
 	public function setCaption($value)
 	{
@@ -1422,8 +1422,8 @@ class SpoonDatagrid
 	 * Set one or more attributes for a specific column.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	array $attributes
+	 * @param	string $column		The column to apply the attributes on.
+	 * @param	array $attributes	The attributes for a column.
 	 */
 	public function setColumnAttributes($column, array $attributes)
 	{
@@ -1443,8 +1443,8 @@ class SpoonDatagrid
 	 * Set a custom column confirm message.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	string $message
+	 * @param	string $column				The column to apply the confirm on.
+	 * @param	string $message				The message to use.
 	 * @param	string[optional] $custom
 	 */
 	public function setColumnConfirm($column, $message, $custom = null)
@@ -1465,10 +1465,10 @@ class SpoonDatagrid
 	 * Sets the column function to be executed for every row.
 	 *
 	 * @return	void
-	 * @param	mixed $function
-	 * @param	mixed[optional] $arguments
-	 * @param	mixed $columns
-	 * @param	bool[optional] $overwrite
+	 * @param	mixed $function					The function to apply.
+	 * @param	mixed[optional] $arguments		The arguments for the function.
+	 * @param	mixed $columns					The columns wherin the result will appear.
+	 * @param	bool[optional] $overwrite		Should the result overwrite the current value?
 	 */
 	public function setColumnFunction($function, $arguments = null, $columns, $overwrite = false)
 	{
@@ -1502,8 +1502,8 @@ class SpoonDatagrid
 	 * Set one or more attributes for a columns' header.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	array $attributes
+	 * @param	string $column		The column wheron the atrributes will be set.
+	 * @param	array $attributes	The attributes for a column.
 	 */
 	public function setColumnHeaderAttributes($column, array $attributes)
 	{
@@ -1523,8 +1523,8 @@ class SpoonDatagrid
 	 * Sets a single column hidden.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	bool[optional] $on
+	 * @param	string $column		The column to hide/show.
+	 * @param	bool[optional] $on	Should the column be hidden?
 	 */
 	public function setColumnHidden($column, $on = true)
 	{
@@ -1544,7 +1544,7 @@ class SpoonDatagrid
 	 * Sets one or more columns hidden.
 	 *
 	 * @return	void
-	 * @param	array $columns
+	 * @param	array $columns		An array with the columns to hide.
 	 */
 	public function setColumnsHidden($columns)
 	{
@@ -1568,7 +1568,7 @@ class SpoonDatagrid
 	 * Sets the columns sequence.
 	 *
 	 * @return	void
-	 * @param	array $columns
+	 * @param	array $columns		The columns in the correct sequence.
 	 */
 	public function setColumnsSequence($columns)
 	{
@@ -1631,8 +1631,8 @@ class SpoonDatagrid
 	 * Set the default sorting method for a column.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	string[optional] $sort
+	 * @param	string $column				The column to set the method for.
+	 * @param	string[optional] $sort		The sorting method, possible values are: asc, desc.
 	 */
 	public function setColumnSortingMethod($column, $sort = 'asc')
 	{
@@ -1652,9 +1652,9 @@ class SpoonDatagrid
 	 * Set the URL for a column.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	string $URL
-	 * @param	string[optional] $title
+	 * @param	string $column				The column wheron the URL will be applied.
+	 * @param	string $URL					The URL.
+	 * @param	string[optional] $title		The title for the URL.
 	 */
 	public function setColumnURL($column, $URL, $title = null)
 	{
@@ -1674,7 +1674,7 @@ class SpoonDatagrid
 	 * Sets the compile directory.
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path to the compile directory.
 	 */
 	public function setCompileDirectory($path)
 	{
@@ -1686,7 +1686,7 @@ class SpoonDatagrid
 	 * Adjust the debug setting.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should we enable debug-mode.
 	 */
 	public function setDebug($on = true)
 	{
@@ -1698,7 +1698,7 @@ class SpoonDatagrid
 	 * Set the even row attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes
+	 * @param	array $attributes	The attributes for an even row.
 	 */
 	public function setEvenRowAttributes(array $attributes)
 	{
@@ -1715,7 +1715,7 @@ class SpoonDatagrid
 	 * Set the header labels.
 	 *
 	 * @return	void
-	 * @param	array $labels
+	 * @param	array $labels	An array whith the labels where the key is the name of the column.
 	 */
 	public function setHeaderLabels(array $labels)
 	{
@@ -1739,7 +1739,7 @@ class SpoonDatagrid
 	 * Set the odd row attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes
+	 * @param	array $attributes	The attributes for an odd-row.
 	 */
 	public function setOddRowAttributes(array $attributes)
 	{
@@ -1756,7 +1756,7 @@ class SpoonDatagrid
 	 * Sets the value for offset. eg from the URL.
 	 *
 	 * @return	void
-	 * @param	int[optional] $value
+	 * @param	int[optional] $value	The value from the offset-parameter.
 	 */
 	public function setOffsetParameter($value = null)
 	{
@@ -1768,7 +1768,7 @@ class SpoonDatagrid
 	 * Sets the value for the order. eg from the URL.
 	 *
 	 * @return	void
-	 * @param	string[optional] $value
+	 * @param	string[optional] $value		The value from the order-parameter.
 	 */
 	public function setOrderParameter($value = null)
 	{
@@ -1780,7 +1780,7 @@ class SpoonDatagrid
 	 * Allow/disallow showing the results on multiple pages.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Is paging enabled?
 	 */
 	public function setPaging($on = false)
 	{
@@ -1792,7 +1792,7 @@ class SpoonDatagrid
 	 * Sets an alternative paging class.
 	 *
 	 * @return	void
-	 * @param	string $class
+	 * @param	string $class	The class that should be used for paging.
 	 */
 	public function setPagingClass($class)
 	{
@@ -1815,7 +1815,7 @@ class SpoonDatagrid
 	 * Sets the number of results per page.
 	 *
 	 * @return	void
-	 * @param	int[optional] $limit
+	 * @param	int[optional] $limit	The maximum number of rows when paging is enabled.
 	 */
 	public function setPagingLimit($limit = 30)
 	{
@@ -1827,7 +1827,7 @@ class SpoonDatagrid
 	 * Sets the row attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes
+	 * @param	array $attributes	The attributes for a row.
 	 */
 	public function setRowAttributes(array $attributes)
 	{
@@ -1839,9 +1839,9 @@ class SpoonDatagrid
 	 * Sets the row function to be executed for every row.
 	 *
 	 * @return	void
-	 * @param	mixed $function
-	 * @param	mixed[optional] $arguments
-	 * @param	bool[optional] $overwrite
+	 * @param	mixed $function					The function to apply.
+	 * @param	mixed[optional] $arguments		The arguments to pass to the function.
+	 * @param	bool[optional] $overwrite		Should the result overwrite the current value?
 	 */
 	public function setRowFunction($function, $arguments = null, $overwrite = false)
 	{
@@ -1875,8 +1875,8 @@ class SpoonDatagrid
 	 * Sets the columns that may be sorted on.
 	 *
 	 * @return	void
-	 * @param	array $columns
-	 * @param	string[optional] $default
+	 * @param	array $columns				The columns wheron sorting is enabled.
+	 * @param	string[optional] $default	The column wheron will be sorted by default.
 	 */
 	public function setSortingColumns(array $columns, $default = null)
 	{
@@ -1923,10 +1923,10 @@ class SpoonDatagrid
 	 * Sets the sorting icons.
 	 *
 	 * @return	void
-	 * @param	string[optional] $asc
-	 * @param	string[optional] $ascSelected
-	 * @param	string[optional] $desc
-	 * @param	string[optional] $descSelected
+	 * @param	string[optional] $asc				The icon for ascending.
+	 * @param	string[optional] $ascSelected		The icon when ascending sort is applied.
+	 * @param	string[optional] $desc				The icon for descending.
+	 * @param	string[optional] $descSelected		The icon when descending sort is applied.
 	 */
 	public function setSortingIcons($asc = null, $ascSelected = null, $desc = null, $descSelected)
 	{
@@ -1941,10 +1941,10 @@ class SpoonDatagrid
 	 * Sets the sorting labels.
 	 *
 	 * @return	void
-	 * @param	string[optional] $asc
-	 * @param	string[optional] $ascSelected
-	 * @param	string[optional] $desc
-	 * @param	string[optional] $descSelected
+	 * @param	string[optional] $asc				The value for ascending.
+	 * @param	string[optional] $ascSelected		The value when ascending sort is applied.
+	 * @param	string[optional] $desc				The value for descending.
+	 * @param	string[optional] $descSelected		The value when descending sort is applied.
 	 */
 	public function setSortingLabels($asc = null, $ascSelected = null, $desc = null, $descSelected = null)
 	{
@@ -1959,7 +1959,7 @@ class SpoonDatagrid
 	 * Sets the value to sort.
 	 *
 	 * @return	void
-	 * @param	string[optional] $value
+	 * @param	string[optional] $value		The sorting-method.
 	 */
 	public function setSortParameter($value = 'desc')
 	{
@@ -1971,7 +1971,7 @@ class SpoonDatagrid
 	 * Sets the source for this datagrid.
 	 *
 	 * @return	void
-	 * @param	SpoonDatagridSource $source
+	 * @param	SpoonDatagridSource $source		The source for the datagrid, it should implement SpoonDatagridSource.
 	 */
 	private function setSource(SpoonDatagridSource $source)
 	{
@@ -1983,7 +1983,7 @@ class SpoonDatagrid
 	 * Sets the table summary.
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The summary-value.
 	 */
 	public function setSummary($value)
 	{
@@ -1995,7 +1995,7 @@ class SpoonDatagrid
 	 * Sets the path to the template file.
 	 *
 	 * @return	void
-	 * @param	string $template
+	 * @param	string $template	The path to the template.
 	 */
 	public function setTemplate($template)
 	{
@@ -2007,7 +2007,7 @@ class SpoonDatagrid
 	 * Defines the default URL.
 	 *
 	 * @return	void
-	 * @param	string $URL
+	 * @param	string $URL		The URL to use.
 	 */
 	public function setURL($URL)
 	{

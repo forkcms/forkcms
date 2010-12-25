@@ -215,9 +215,9 @@ class BlogInstall extends ModuleInstaller
 	 * Add the default category for a language
 	 *
 	 * @return	int
-	 * @param	string $language
-	 * @param	string $name
-	 * @param	string $url
+	 * @param	string $language	The language to use.
+	 * @param	string $name		The name of the category.
+	 * @param	string $url			The URL for the category.
 	 */
 	private function addCategory($language, $name, $url)
 	{
@@ -229,8 +229,8 @@ class BlogInstall extends ModuleInstaller
 	 * Does the category with this id exist within this language.
 	 *
 	 * @return	bool
-	 * @param	string $language
-	 * @param	int $id
+	 * @param	string $language	The langauge to use.
+	 * @param	int $id				The id to exclude.
 	 */
 	private function existsCategory($language, $id)
 	{
@@ -242,7 +242,7 @@ class BlogInstall extends ModuleInstaller
 	 * Fetch the id of the first category in this language we come across
 	 *
 	 * @return	int
-	 * @param	string $language
+	 * @param	string $language	The language to use.
 	 */
 	private function getCategory($language)
 	{
@@ -254,7 +254,7 @@ class BlogInstall extends ModuleInstaller
 	 * Install example data
 	 *
 	 * @return	void
-	 * @param	string $language
+	 * @param	string $language	The language to use.
 	 */
 	private function installExampleData($language)
 	{

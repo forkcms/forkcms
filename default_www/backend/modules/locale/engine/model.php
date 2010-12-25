@@ -126,12 +126,12 @@ class BackendLocaleModel
 	 * Does a locale exists by its name.
 	 *
 	 * @return	bool
-	 * @param	string $name
-	 * @param	string $type
-	 * @param	string $module
-	 * @param	string $language
-	 * @param	string $application
-	 * @param	int[optional] $id
+	 * @param	string $name			The name of the locale.
+	 * @param	string $type			The type of the locale.
+	 * @param	string $module			The module wherin will be searched.
+	 * @param	string $language		The language to use.
+	 * @param	string $application		The application wherin will be searched.
+	 * @param	int[optional] $id		The id to exclude in the check.
 	 */
 	public static function existsByName($name, $type, $module, $language, $application, $id = null)
 	{

@@ -18,8 +18,7 @@ class PHP_CodeSniffer_Standards_Fork_ForkCodingStandard extends PHP_CodeSniffer_
 	 */
 	public function getIncludedSniffs()
 	{
-		return array(
-						'Generic/Sniffs/Classes/DuplicateClassNameSniff.php',
+		return array('Generic/Sniffs/Classes/DuplicateClassNameSniff.php',
 						'Generic/Sniffs/CodeAnalysis/ForLoopShouldBeWhileLoopSniff.php',
 						'Generic/Sniffs/CodeAnalysis/JumbledIncrementerSniff.php',
 						'Generic/Sniffs/CodeAnalysis/UnconditionalIfStatementSniff.php',
@@ -34,8 +33,7 @@ class PHP_CodeSniffer_Standards_Fork_ForkCodingStandard extends PHP_CodeSniffer_
 						'Generic/Sniffs/NamingConventions/UpperCaseConstantNameSniff.php',
 						'Generic/Sniffs/PHP/DisallowShortOpenTagSniff.php',
 						'Generic/Sniffs/PHP/ForbiddenFunctionsSniff.php',
-						'Generic/Sniffs/PHP/LowerCaseConstantSniff.php'
-		);
+						'Generic/Sniffs/PHP/LowerCaseConstantSniff.php');
 	}
 }
 ?>

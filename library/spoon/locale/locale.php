@@ -70,8 +70,8 @@ class SpoonLocale
 	 * Fetch the name of a country based on the code.
 	 *
 	 * @return	string
-	 * @param	string $code
-	 * @param	string[optional] $language
+	 * @param	string $code					The official country-code.
+	 * @param	string[optional] $language		The language to use, possible values can be found by calling SpoonLocale::getAvailableLanguages().
 	 */
 	public static function getCountry($code, $language = 'en')
 	{
@@ -95,9 +95,9 @@ class SpoonLocale
 	 * Fetch the language specific month.
 	 *
 	 * @return	string
-	 * @param	string $month
-	 * @param	string[optional] $language
-	 * @param	bool[optional] $abbreviated
+	 * @param	string $month					The name/number of the month to retrieve.
+	 * @param	string[optional] $language		The language to use, possible values can be found by calling SpoonLocale::getAvailableLanguages().
+	 * @param	bool[optional] $abbreviated		Should the abbreviated value be used?
 	 */
 	public static function getMonth($month, $language = 'en', $abbreviated = false)
 	{
@@ -149,9 +149,9 @@ class SpoonLocale
 	 * Fetch a specific day of the week for a specific language.
 	 *
 	 * @return	string
-	 * @param	mixed $day
-	 * @param	string[optional] $language
-	 * @param	bool[optional] $abbreviated
+	 * @param	mixed $day						The name/number of the day.
+	 * @param	string[optional] $language		The language to use, possible values can be found by calling SpoonLocale::getAvailableLanguages().
+	 * @param	bool[optional] $abbreviated		Should the abbreviated value be used?
 	 */
 	public static function getWeekDay($day, $language = 'en', $abbreviated = false)
 	{

@@ -205,9 +205,9 @@ class BackendModel
 	 * Data is a key/value array. Example: array(id => 23, language => nl);
 	 *
 	 * @return	void
-	 * @param	string[optional] $module
-	 * @param	string[optional] $type
-	 * @param	array[optional] $data
+	 * @param	string[optional] $module	The module wherefore the extra exists.
+	 * @param	string[optional] $type		The type of extra, possible values are block, homepage, widget.
+	 * @param	array[optional] $data		Extra data that exists.
 	 */
 	public static function deleteExtra($module = null, $type = null, array $data = null)
 	{
@@ -255,7 +255,7 @@ class BackendModel
 	 * Delete a page extra by its id
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The id of the extra to delete.
 	 */
 	public static function deleteExtraById($id)
 	{

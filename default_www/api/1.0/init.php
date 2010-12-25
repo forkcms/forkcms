@@ -206,20 +206,20 @@ class APIInit
 	 * A custom error-handler so we can handle warnings about undefined labels
 	 *
 	 * @return	bool
-	 * @param	int $errNumber
-	 * @param	string $errString
+	 * @param	int $errorNumber		The level of the error raised, as an integer.
+	 * @param	string $errorString		The error message, as a string.
 	 */
-	public static function errorHandler($errNumber, $errString)
+	public static function errorHandler($errorNumber, $errorString)
 	{
 		// redefine
-		$errNumber = (int) $errNumber;
-		$errString = (string) $errString;
+		$errorNumber = (int) $errorNumber;
+		$errorString = (string) $errorString;
 
 		// is this an undefined index?
-		if(mb_substr_count($errString, 'Undefined index:') > 0)
+		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
 			// cleanup
-			$index = trim(str_replace('Undefined index:', '', $errString));
+			$index = trim(str_replace('Undefined index:', '', $errorString));
 
 			// get the type
 			$type = mb_substr($index, 0, 3);

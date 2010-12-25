@@ -429,8 +429,8 @@ class GoogleAnalyticsException extends Exception
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string[optional] $message
-	 * @param	int[optional] $code
+	 * @param	string[optional] $message	The errormessage.
+	 * @param	int[optional] $code			The errornumber.
 	 */
 	public function __construct($message = null, $code = null)
 	{

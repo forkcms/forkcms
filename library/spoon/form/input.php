@@ -55,7 +55,7 @@ class SpoonFormInput extends SpoonFormAttributes
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The errormessage to set.
 	 */
 	public function addError($error)
 	{
@@ -123,7 +123,7 @@ class SpoonFormInput extends SpoonFormAttributes
 	 * Overwrites the entire error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The errormessage to set.
 	 */
 	public function setError($error)
 	{

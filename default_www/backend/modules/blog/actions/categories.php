@@ -75,8 +75,8 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	 * Set class on row with the default class
 	 *
 	 * @return	array
-	 * @param	int $id
-	 * @param	array $rowAttributes
+	 * @param	int $id					The id of the category.
+	 * @param	array $rowAttributes	The current row attributes.
 	 */
 	public static function setDefault($id, $rowAttributes)
 	{

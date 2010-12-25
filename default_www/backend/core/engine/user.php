@@ -88,8 +88,8 @@ class BackendUser
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	int[optional] $userId
-	 * @param	string[optional] $email
+	 * @param	int[optional] $userId		The id of the user.
+	 * @param	string[optional] $email		The e-mail address of the user.
 	 */
 	public function __construct($userId = null, $email = null)
 	{
@@ -166,8 +166,8 @@ class BackendUser
 	 * Fetch a user setting for a specific user
 	 *
 	 * @return	mixed
-	 * @param	int $userId
-	 * @param	string $setting
+	 * @param	int $userId			The id of the user.
+	 * @param	string $setting		The name of the setting to get.
 	 */
 	public static function getSettingByUserId($userId, $setting)
 	{
@@ -284,7 +284,7 @@ class BackendUser
 
 
 	/**
-	 * Load a user by his emailadress
+	 * Load a user by his e-mail adress
 	 *
 	 * @return	void
 	 * @param	string $email		The email of the user to load.

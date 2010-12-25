@@ -36,6 +36,7 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 			case T_BREAK:
 			case T_CONTINUE:
 				if($next['code'] != T_SEMICOLON && $next['code'] != T_OPEN_PARENTHESIS) $phpcsFile->addError('After "break", "continue" we expect a semicolon or an opening brace.', $stackPtr);
+				// @todo	geen haakjes
 				if($next['code'] == T_OPEN_PARENTHESIS)
 				{
 					if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE) $phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
@@ -111,10 +112,7 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 					if($tokens[$current['scope_opener'] + 1]['content'] != "\n") $phpcsFile->addError('We expect the code to be on a new line.', $stackPtr);
 					if($tokens[$current['scope_opener'] + 1]['column'] != $tokens[$current['scope_closer']]['column'] + 1) $phpcsFile->addError('The content should be indented inside the "if", "elseif", "switch"-block.', $stackPtr);
 				}
-				else
-				{
-					if($tokens[$current['parenthesis_closer'] + 1]['content'] != ' ') $phpcsFile->addError('After the condition of an "if" (in shortsyntax) we expect exactly one space', $stackPtr);
-				}
+				elseif($tokens[$current['parenthesis_closer'] + 1]['content'] != ' ') $phpcsFile->addError('After the condition of an "if" (in shortsyntax) we expect exactly one space', $stackPtr);
 			break;
 
 			// we don't use these statements because they are confusings
@@ -144,10 +142,7 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 					if($tokens[$current['scope_opener'] + 1]['content'] != "\n") $phpcsFile->addError('We expect the code to be on a new line.', $stackPtr);
 					if($tokens[$current['scope_opener'] + 1]['column'] != $tokens[$current['scope_closer']]['column'] + 1) $phpcsFile->addError('The content should be indented inside the "for", "foreach", "while"-block.', $stackPtr);
 				}
-				else
-				{
-					if($tokens[$current['parenthesis_closer'] + 1]['content'] != ' ') $phpcsFile->addError('After the condition of an "for", "foreach", "while" (in shortsyntax) we expect exactly one space', $stackPtr);
-				}
+				elseif($tokens[$current['parenthesis_closer'] + 1]['content'] != ' ') $phpcsFile->addError('After the condition of an "for", "foreach", "while" (in shortsyntax) we expect exactly one space', $stackPtr);
 			break;
 
 			// throw statements are always followed by a space

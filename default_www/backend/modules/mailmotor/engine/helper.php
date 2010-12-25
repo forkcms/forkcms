@@ -225,7 +225,7 @@ class BackendMailmotorCMHelper
 	 * Returns all bounces
 	 *
 	 * @return	array
-	 * @param	int $id
+	 * @param	int $id		The id of the campaign.
 	 */
 	public static function getBounces($id)
 	{
@@ -951,7 +951,7 @@ class BackendMailmotorCMHelper
 	 * Updates a list with campaignmonitor and in the database. Returns the affected rows
 	 *
 	 * @return	int
-	 * @param	array $item
+	 * @param	array $item		The new data.
 	 */
 	public static function updateGroup($item)
 	{

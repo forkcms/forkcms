@@ -96,7 +96,7 @@ class FrontendSearchModel
 	 * Build the search term
 	 *
 	 * @return	string
-	 * @param	string $terms
+	 * @param	string $terms	The string to build.
 	 */
 	public static function buildTerm($terms)
 	{

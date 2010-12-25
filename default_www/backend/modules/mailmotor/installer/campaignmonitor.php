@@ -550,11 +550,13 @@ class CampaignMonitor
 	 * @param	bool[optional] $authenticate	Should we authenticate?
 	 * @param	bool[optional] $usePost			Should we use post?
 	 */
-	private function doCall($method, $parameters = array(), $authenticate = false, $usePost = true)
+	private function doCall($method, array $parameters = array(), $authenticate = false, $usePost = true)
 	{
 		// redefine
 		$method = (string) $method;
 		$parameters = (array) $parameters;
+		$authenticate = (bool) $authenticate;
+		$usePost = (bool) $usePost;
 
 		// set the API key if the url is not the method to get the API key
 		if($method != 'User.GetApiKey') $parameters['ApiKey'] = $this->apiKey;
@@ -1967,7 +1969,7 @@ class CampaignMonitor
 	 * Set the default campaign ID to use
 	 *
 	 * @return	void
-	 * @param	string $id
+	 * @param	string $id	The id of the campaign.
 	 */
 	public function setCampaignId($id)
 	{
@@ -1979,7 +1981,7 @@ class CampaignMonitor
 	 * Set the default client ID to use
 	 *
 	 * @return	void
-	 * @param	string $id
+	 * @param	string $id	The id of the client.
 	 */
 	public function setClientId($id)
 	{
@@ -1991,7 +1993,7 @@ class CampaignMonitor
 	 * Set the default list ID to use
 	 *
 	 * @return	void
-	 * @param	string $id
+	 * @param	string $id	The id of the list.
 	 */
 	public function setListId($id)
 	{
@@ -2003,7 +2005,7 @@ class CampaignMonitor
 	 * Set password
 	 *
 	 * @return	void
-	 * @param	string $password
+	 * @param	string $password	The password to use.
 	 */
 	private function setPassword($password)
 	{
@@ -2039,7 +2041,7 @@ class CampaignMonitor
 	 * Set username
 	 *
 	 * @return	void
-	 * @param	string $username
+	 * @param	string $username	The username to use.
 	 */
 	private function setUsername($username)
 	{

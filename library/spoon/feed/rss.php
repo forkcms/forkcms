@@ -1099,7 +1099,7 @@ class SpoonFeedRSS
 	 * Set the copyright.
 	 *
 	 * @return	void
-	 * @param	string $copyright
+	 * @param	string $copyright	The copyrightstatement.
 	 */
 	public function setCopyright($copyright)
 	{
@@ -1111,7 +1111,7 @@ class SpoonFeedRSS
 	 * Set the description for the feed.
 	 *
 	 * @return	void
-	 * @param	string $description
+	 * @param	string $description		The description.
 	 */
 	public function setDescription($description)
 	{
@@ -1123,7 +1123,7 @@ class SpoonFeedRSS
 	 * Set the doc for the feed.
 	 *
 	 * @return	void
-	 * @param	string $docs
+	 * @param	string $docs	The documentation-statement.
 	 */
 	public function setDocs($docs)
 	{
@@ -1135,7 +1135,7 @@ class SpoonFeedRSS
 	 * Set the generator for the feed.
 	 *
 	 * @return	void
-	 * @param	string[optional] $generator
+	 * @param	string[optional] $generator		The generator of the feed, if not given "Spoon/<SpoonVersion>" will be used.
 	 */
 	public function setGenerator($generator = null)
 	{
@@ -1178,7 +1178,7 @@ class SpoonFeedRSS
 	 * Set the language for the feed.
 	 *
 	 * @return	void
-	 * @param	string $language
+	 * @param	string $language	The language to set.
 	 */
 	public function setLanguage($language)
 	{
@@ -1202,7 +1202,7 @@ class SpoonFeedRSS
 	 * Set the link for the feed.
 	 *
 	 * @return	void
-	 * @param	string $link
+	 * @param	string $link	The link of the feed.
 	 */
 	public function setLink($link)
 	{
@@ -1221,7 +1221,7 @@ class SpoonFeedRSS
 	 * Set the managing editor for the feed.
 	 *
 	 * @return	void
-	 * @param	string $managingEditor
+	 * @param	string $managingEditor	The managing editor value.
 	 */
 	public function setManagingEditor($managingEditor)
 	{
@@ -1246,7 +1246,7 @@ class SpoonFeedRSS
 	 * Sets the rating.
 	 *
 	 * @return	void
-	 * @param	string $rating
+	 * @param	string $rating		The rating for the feed.
 	 */
 	public function setRating($rating)
 	{
@@ -1285,7 +1285,7 @@ class SpoonFeedRSS
 	 * Set the title for the feed.
 	 *
 	 * @return	void
-	 * @param	string $title
+	 * @param	string $title	The title of the feed.
 	 */
 	public function setTitle($title)
 	{
@@ -1309,7 +1309,7 @@ class SpoonFeedRSS
 	 * Sets the webmaster for the feed.
 	 *
 	 * @return	void
-	 * @param	string $webmaster
+	 * @param	string $webmaster	The webmaster of the feed.
 	 */
 	public function setWebmaster($webmaster)
 	{

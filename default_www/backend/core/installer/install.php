@@ -209,13 +209,13 @@ class ModuleInstaller
 	 * Insert an extra
 	 *
 	 * @return	int
-	 * @param	string $module
-	 * @param	string $type
-	 * @param	string $label
-	 * @param	string[optional] $action
-	 * @param	string[optional] $data
-	 * @param	bool[optional] $hidden
-	 * @param	int[optional] $sequence
+	 * @param	string $module				The module for the extra.
+	 * @param	string $type				The type, possible values are: homepage, widget, block.
+	 * @param	string $label				The label for the extra.
+	 * @param	string[optional] $action	The action.
+	 * @param	string[optional] $data		Optional data, will be passed in the extra.
+	 * @param	bool[optional] $hidden		Is this extra hidden?
+	 * @param	int[optional] $sequence		The sequence for the extra.
 	 */
 	protected function insertExtra($module, $type, $label, $action = null, $data = null, $hidden = false, $sequence = null)
 	{
@@ -263,12 +263,12 @@ class ModuleInstaller
 	 * Inserts a new locale item
 	 *
 	 * @return	void
-	 * @param	string $language
-	 * @param	string $application
-	 * @param	string $module
-	 * @param	string $type
-	 * @param	string $name
-	 * @param	string $value
+	 * @param	string $language		The language.
+	 * @param	string $application		The application, for now possible values are: backend, frontend.
+	 * @param	string $module			The module to insert the locale for.
+	 * @param	string $type			The type of locale, possible values are: act, err, lbl, msg.
+	 * @param	string $name			The name of the locale.
+	 * @param	string $value			The value.
 	 */
 	protected function insertLocale($language, $application, $module, $type, $name, $value)
 	{
@@ -307,15 +307,15 @@ class ModuleInstaller
 	 * Insert a meta item
 	 *
 	 * @return	int
-	 * @param	string $keywords
-	 * @param	string $description
-	 * @param	string $title
-	 * @param	string $url
-	 * @param	bool[optional] $keywordsOverwrite
-	 * @param	bool[optional] $descriptionOverwrite
-	 * @param	bool[optional] $titleOverwrite
-	 * @param	bool[optional] $urlOverwrite
-	 * @param	string[optional] $custom
+	 * @param	string $keywords						The keyword of the item.
+	 * @param	string $description						A description of the item.
+	 * @param	string $title							The page title for the item.
+	 * @param	string $url								The unique URL.
+	 * @param	bool[optional] $keywordsOverwrite		Should the keywords be overwritten?
+	 * @param	bool[optional] $descriptionOverwrite	Should the descriptions be overwritten?
+	 * @param	bool[optional] $titleOverwrite			Should the pagetitle be overwritten?
+	 * @param	bool[optional] $urlOverwrite			Should the URL be overwritten?
+	 * @param	string[optional] $custom				Any custom meta-data.
 	 */
 	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null)
 	{
@@ -350,9 +350,9 @@ class ModuleInstaller
 	 * Insert a page
 	 *
 	 * @return	void
-	 * @param	array $revision
-	 * @param	array[optional] $meta
-	 * @param	array[optional] $block
+	 * @param	array $revision				An array with the revision data.
+	 * @param	array[optional] $meta		The meta-data.
+	 * @param	array[optional] $block		The blocks.
 	 */
 	protected function insertPage(array $revision, array $meta = null, array $block = null)
 	{

@@ -152,7 +152,7 @@ class CSSToInlineStyles
 	 * Calculate the specifity for the CSS-selector
 	 *
 	 * @return	int
-	 * @param	string $selector
+	 * @param	string $selector	The selector to calculate the specifity for.
 	 */
 	private function calculateCSSSpecifity($selector)
 	{
@@ -440,7 +440,7 @@ class CSSToInlineStyles
 	 * Process the CSS-properties
 	 *
 	 * @return	array
-	 * @param	string $propertyString
+	 * @param	string $propertyString	The CSS-properties.
 	 */
 	private function processCSSProperties($propertyString)
 	{
@@ -475,7 +475,7 @@ class CSSToInlineStyles
 	 * Should the IDs and classes be removed?
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should we enable cleanup?
 	 */
 	public function setCleanup($on = true)
 	{
@@ -499,7 +499,7 @@ class CSSToInlineStyles
 	 * Set the encoding to use with the DOMDocument
 	 *
 	 * @return	void
-	 * @param	string $encoding
+	 * @param	string $encoding	The encoding to use.
 	 */
 	public function setEncoding($encoding)
 	{
@@ -511,7 +511,7 @@ class CSSToInlineStyles
 	 * Set HTML to process
 	 *
 	 * @return	void
-	 * @param	string $html
+	 * @param	string $html	The HTML to process.
 	 */
 	public function setHTML($html)
 	{
@@ -524,7 +524,7 @@ class CSSToInlineStyles
 	 * If this is enabled the class will use the style-block in the HTML.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should we process inline styles?
 	 */
 	public function setUseInlineStylesBlock($on = true)
 	{

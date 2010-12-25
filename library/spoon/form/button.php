@@ -47,10 +47,10 @@ class SpoonFormButton extends SpoonFormAttributes
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string $value
-	 * @param	string[optional] $type
-	 * @param	string[optional] $class
+	 * @param	string $name				The name of the button.
+	 * @param	string $value				The text that should appear on the button.
+	 * @param	string[optional] $type		The type of button.
+	 * @param	string[optional] $class		The CSS-class for the button.
 	 */
 	public function __construct($name, $value, $type = null, $class = 'inputButton')
 	{
@@ -102,7 +102,7 @@ class SpoonFormButton extends SpoonFormAttributes
 	 * Parse the html for this button.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -123,7 +123,7 @@ class SpoonFormButton extends SpoonFormAttributes
 	 * Set the button type (button, reset or submit).
 	 *
 	 * @return	void
-	 * @param	string[optional] $type
+	 * @param	string[optional] $type		The type of the button.
 	 */
 	public function setType($type = 'submit')
 	{

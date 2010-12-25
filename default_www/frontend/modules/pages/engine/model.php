@@ -16,7 +16,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 	 * Fetch a list of items for a list of ids
 	 *
 	 * @return	array
-	 * @param	array $ids
+	 * @param	array $ids	The ids of the items to grab.
 	 */
 	public static function getForTags(array $ids)
 	{
