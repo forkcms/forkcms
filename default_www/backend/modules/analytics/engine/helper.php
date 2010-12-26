@@ -798,7 +798,7 @@ class BackendAnalyticsHelper
 					elseif($newStartDate > $newEndDate) $valid = false;
 
 					// invalid range
-					if(!$valid)	$txtStartDate->setError(BL::getError('DateRangeIsInvalid'));
+					if(!$valid) $txtStartDate->setError(BL::getError('DateRangeIsInvalid'));
 				}
 			}
 

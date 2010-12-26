@@ -22,11 +22,11 @@ class FrontendMailer
 	 * @param	string[optional] $toEmail		The to-address for the email.
 	 * @param	string[optional] $toName		The to-name for the email.
 	 * @param	string[optional] $fromEmail		The from-address for the mail.
-	 * @param	string[optional] $fromName		The from-name for the mail
+	 * @param	string[optional] $fromName		The from-name for the mail.
 	 * @param	string[optional] $replyToEmail	The replyto-address for the mail.
-	 * @param	string[optional] $replyToName	The replyto-name for the mail
+	 * @param	string[optional] $replyToName	The replyto-name for the mail.
 	 * @param	bool[optional] $queue			Should the mail be queued?
-	 * @param	int[optional] $sendOn
+	 * @param	int[optional] $sendOn			The date the mail should be send. It won't be exact.
 	 */
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null)
 	{

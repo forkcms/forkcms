@@ -96,7 +96,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 * Set the author.
 	 *
 	 * @return	void
-	 * @param	string $author
+	 * @param	string $author		The author to use.
 	 */
 	public function setAuthor($author)
 	{
@@ -136,7 +136,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 * If the link is an internal link the sites URL will be prepended.
 	 *
 	 * @return	void
-	 * @param	string $link					The guid for an item
+	 * @param	string $link					The guid for an item.
 	 * @param	bool[optional] $isPermaLink		Is this link permanent?
 	 */
 	public function setGuid($link, $isPermaLink = true)

@@ -16,18 +16,15 @@ class FrontendTagsModel
 	 * Calls a method that has to be implemented though the tags interface
 	 *
 	 * @return	mixed
-	 * @param	string $module
-	 * @param	string $class
-	 * @param	string $method
-	 * @param	mixed[optional] $parameter
+	 * @param	string $module					The module wherin to search.
+	 * @param	string $class					The class that should contain the method.
+	 * @param	string $method					The method to call.
+	 * @param	mixed[optional] $parameter		The parameters to pass.
 	 */
 	public static function callFromInterface($module, $class, $method, $parameter = null)
 	{
-		// reflection of my class
-		$reflection = new ReflectionClass($class);
-
 		// check to see if the interface is implemented
-		if($reflection->implementsInterface('FrontendTagsInterface'))
+		if(in_array('FrontendTagsInterface', class_implements($class)))
 		{
 			// return result
 			return call_user_func(array($class, $method), $parameter);
@@ -184,17 +181,17 @@ class FrontendTagsModel
 	/**
 	 * Get the modules that used a tag.
 	 *
-	 * @return	array
-	 * @param	int $tagId
+	 * @return	array		An array with all the modules.
+	 * @param	int $id	The	id of the tag.
 	 */
-	public static function getModulesForTag($tagId)
+	public static function getModulesForTag($id)
 	{
 		return (array) FrontendModel::getDB()->getColumn('SELECT module
 															FROM modules_tags
 															WHERE tag_id = ?
 															GROUP BY module
 															ORDER BY module ASC',
-															array((int) $tagId));
+															array((int) $id));
 	}
 
 
@@ -202,7 +199,7 @@ class FrontendTagsModel
 	 * Fetch a specific tag name
 	 *
 	 * @return	string
-	 * @param	int $id
+	 * @param	int $id		The id of the tag to grab the name for.
 	 */
 	public static function getName($id)
 	{
@@ -216,11 +213,11 @@ class FrontendTagsModel
 	/**
 	 * Get all related items
 	 *
-	 * @return	array
-	 * @param	int $id
-	 * @param	int $module
-	 * @param	int $otherModule
-	 * @param	int[optional] $limit
+	 * @return	array					An array with all the related item-ids.
+	 * @param	int $id					The id of the item in the source-module.
+	 * @param	int $module				The source module.
+	 * @param	int $otherModule		The module wherein the related items should appear.
+	 * @param	int[optional] $limit	The maximum of related items to grab.
 	 */
 	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
 	{

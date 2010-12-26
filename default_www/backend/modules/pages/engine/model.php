@@ -49,7 +49,7 @@ class BackendPagesModel
 	 * Build the cache
 	 *
 	 * @return	void
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language	The language to build the cache for, if not passes we use the working language.
 	 */
 	public static function buildCache($language = null)
 	{
@@ -1186,7 +1186,7 @@ class BackendPagesModel
 	 * @param	array $ids					The parentIds.
 	 * @param	array[optional] $data		A holder for the generated data.
 	 * @param	int[optional] $level		The counter for the level.
-	 * @param	string[optional] $language	The language
+	 * @param	string[optional] $language	The language.
 	 */
 	private static function getTree(array $ids, array $data = null, $level = 1, $language = null)
 	{
@@ -1543,7 +1543,7 @@ class BackendPagesModel
 	 * Is the provided template id in use by active versions of pages?
 	 *
 	 * @return	bool
-	 * @param	int $templateId
+	 * @param	int $templateId		The id of the template to check.
 	 */
 	public static function isTemplateInUse($templateId)
 	{
@@ -1711,7 +1711,7 @@ class BackendPagesModel
 	 * Convert the template syntax into an array to work with
 	 *
 	 * @return	array
-	 * @param	string $syntax	The syntax
+	 * @param	string $syntax	The syntax.
 	 */
 	public static function templateSyntaxToArray($syntax)
 	{

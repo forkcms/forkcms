@@ -102,7 +102,7 @@ class FrontendURL
 	 * Get a page specified by the given index
 	 *
 	 * @return	mixed
-	 * @param	int $index	The index (0-based)
+	 * @param	int $index	The index (0-based).
 	 */
 	public function getPage($index)
 	{
@@ -134,9 +134,9 @@ class FrontendURL
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
 	 *
 	 * @return	mixed
-	 * @param	mixed $index						The index of the parameter
-	 * @param	string[optional] $type				The return type, possible values are: bool, boolean, int, integer, float, double, string, array
-	 * @param	mixed[optional] $defaultValue		The value that should be returned if the key is not available
+	 * @param	mixed $index						The index of the parameter.
+	 * @param	string[optional] $type				The return type, possible values are: bool, boolean, int, integer, float, double, string, array.
+	 * @param	mixed[optional] $defaultValue		The value that should be returned if the key is not available.
 	 */
 	public function getParameter($index, $type = 'string', $defaultValue = null)
 	{
@@ -156,7 +156,7 @@ class FrontendURL
 	 * Return all the parameters
 	 *
 	 * @return	array
-	 * @param	bool[optional] $includeGET
+	 * @param	bool[optional] $includeGET		Should the GET-parameters be included?
 	 */
 	public function getParameters($includeGET = true)
 	{
@@ -403,7 +403,7 @@ class FrontendURL
 	 * Set the host
 	 *
 	 * @return	void
-	 * @param	string $host
+	 * @param	string $host	The value of the host.
 	 */
 	private function setHost($host)
 	{
@@ -415,7 +415,7 @@ class FrontendURL
 	 * Set the pages
 	 *
 	 * @return	void
-	 * @param	array[optional] $pages
+	 * @param	array[optional] $pages		An array of all the pages to set.
 	 */
 	private function setPages(array $pages = array())
 	{
@@ -427,7 +427,7 @@ class FrontendURL
 	 * Set the parameters
 	 *
 	 * @return	void
-	 * @param	array[optional] $parameters
+	 * @param	array[optional] $parameters	An array of all the parameters to set.
 	 */
 	private function setParameters(array $parameters = array())
 	{
@@ -439,7 +439,7 @@ class FrontendURL
 	 * Set the querystring
 	 *
 	 * @return	void
-	 * @param	string $queryString
+	 * @param	string $queryString		The full querystring.
 	 */
 	private function setQueryString($queryString)
 	{

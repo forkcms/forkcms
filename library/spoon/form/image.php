@@ -31,12 +31,12 @@ class SpoonFormImage extends SpoonFormFile
 	 * Creates a thumbnail from this field
 	 *
 	 * @return	bool
-	 * @param	string $filename
-	 * @param	int[optional] $width
-	 * @param	int[optional] $height
-	 * @param	bool[optional] $allowEnlargement
-	 * @param	bool[optional] $forceOriginalAspectRatio
-	 * @param	int[optional] $quality
+	 * @param	string $filename							The name of the file.
+	 * @param	int[optional] $width						The width.
+	 * @param	int[optional] $height						The height.
+	 * @param	bool[optional] $allowEnlargement			Is enlargment allowed?
+	 * @param	bool[optional] $forceOriginalAspectRatio	Should we force the original aspect ratio?
+	 * @param	int[optional] $quality						The quality, only applies on jpg-images.
 	 */
 	public function createThumbnail($filename, $width = null, $height = null, $allowEnlargement = false, $forceOriginalAspectRatio = true, $quality = 100)
 	{
@@ -51,7 +51,7 @@ class SpoonFormImage extends SpoonFormFile
 	 * Retrieve the extension of the uploaded file (based on the MIME-type).
 	 *
 	 * @return	string
-	 * @param	bool[optional] $lowercase
+	 * @param	bool[optional] $lowercase	Should the extensions be returned in lowercase?
 	 */
 	public function getExtension($lowercase = true)
 	{
@@ -87,9 +87,9 @@ class SpoonFormImage extends SpoonFormFile
 	 * if the submitted file wasn't an image it will return false.
 	 *
 	 * @return	bool
-	 * @param	int $width
-	 * @param	int $height
-	 * @param	string[optional] $error
+	 * @param	int $width					The minimum width.
+	 * @param	int $height					The minimum height.
+	 * @param	string[optional] $error		The errormessage to set.
 	 */
 	public function hasMinimumDimensions($width, $height, $error = null)
 	{

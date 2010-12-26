@@ -63,12 +63,12 @@ class BackendNavigation
 	 * Build the HTML for a navigation item
 	 *
 	 * @return	string
-	 * @param	array $value
-	 * @param	string $key
-	 * @param	array[optional] $selectedKeys
-	 * @param	int[optional] $startDepth
-	 * @param	int[optional] $endDepth
-	 * @param	int[optional] $currentDepth
+	 * @param	array $value						The current value.
+	 * @param	string $key							The current key.
+	 * @param	array[optional] $selectedKeys		The keys that are selected.
+	 * @param	int[optional] $startDepth			The depth to start from.
+	 * @param	int[optional] $endDepth				The depth to end.
+	 * @param	int[optional] $currentDepth			The depth the method is currently on.
 	 */
 	public function buildHTML(array $value, $key, array $selectedKeys = null, $startDepth = 0, $endDepth = null, $currentDepth = 0)
 	{
@@ -131,7 +131,7 @@ class BackendNavigation
 	 * Clean the navigation
 	 *
 	 * @return	array
-	 * @param	array $navigation
+	 * @param	array $navigation	The navigation array.
 	 */
 	private function cleanup(array $navigation)
 	{

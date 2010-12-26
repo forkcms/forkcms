@@ -71,7 +71,7 @@ class SpoonXMLRPCClient
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $server	The server to communicate with
+	 * @param	string $server	The server to communicate with.
 	 */
 	public function __construct($server)
 	{
@@ -83,8 +83,8 @@ class SpoonXMLRPCClient
 	 * Build the XML to send
 	 *
 	 * @return	string
-	 * @param	string $method
-	 * @param	array[optional] $parameters
+	 * @param	string $method					The method that should be called.
+	 * @param	array[optional] $parameters		The parameters.
 	 */
 	private function buildXML($method, array $parameters = array())
 	{
@@ -122,7 +122,7 @@ class SpoonXMLRPCClient
 	 * Build XML for a value
 	 *
 	 * @return	string
-	 * @param	array $parameter
+	 * @param	array $parameter	The parameter(s) to build.
 	 */
 	private function buildValueXML(array $parameter)
 	{
@@ -219,7 +219,7 @@ class SpoonXMLRPCClient
 	 * Decode XMLRPC-response
 	 *
 	 * @return	mixed
-	 * @param	SimpleXMLElement $xml
+	 * @param	SimpleXMLElement $xml	The element to decode.
 	 */
 	private function decode($xml)
 	{
@@ -248,7 +248,7 @@ class SpoonXMLRPCClient
 	 * Decode XMLRPC fault
 	 *
 	 * @return	array
-	 * @param	SimpleXMLElement $xml
+	 * @param	SimpleXMLElement $xml	The Fault-element to decode.
 	 */
 	private function decodeFaultXML($xml)
 	{
@@ -264,7 +264,7 @@ class SpoonXMLRPCClient
 	 * Decode a value
 	 *
 	 * @return	mixed
-	 * @param	SimpleXMLElement $xml
+	 * @param	SimpleXMLElement $xml	The value to be decoded.
 	 */
 	private function decodeValue($xml)
 	{
@@ -366,8 +366,8 @@ class SpoonXMLRPCClient
 	 * Make the call.
 	 *
 	 * @return	string
-	 * @param	string $method
-	 * @param	array[optional] $parameters
+	 * @param	string $method					The method to call.
+	 * @param	array[optional] $parameters		The parameters to pass.
 	 */
 	public function execute($method, array $parameters = null)
 	{
@@ -579,7 +579,7 @@ class SpoonXMLRPCClient
 	 * Set the port for the XMLRPC-server, default is 80.
 	 *
 	 * @return	void
-	 * @param	int $port
+	 * @param	int $port	The port to connect on.
 	 */
 	public function setPort($port)
 	{
@@ -591,7 +591,7 @@ class SpoonXMLRPCClient
 	 * Set the URL for the XMLRPC-server
 	 *
 	 * @return	vois
-	 * @param	string $server
+	 * @param	string $server	The server to connect to.
 	 */
 	public function setServer($server)
 	{
@@ -603,7 +603,7 @@ class SpoonXMLRPCClient
 	 * Set timeout.
 	 *
 	 * @return	void
-	 * @param	int $seconds
+	 * @param	int $seconds	The maximum number of seconds that the operation can last.
 	 */
 	public function setTimeout($seconds)
 	{
@@ -615,7 +615,7 @@ class SpoonXMLRPCClient
 	 * Set a custom user-agent.
 	 *
 	 * @return	void
-	 * @param	string $userAgent
+	 * @param	string $userAgent	The UserAgent that will be used. It will look like "Spoon <Spoon version>/<your useragent>".
 	 */
 	public function setUserAgent($userAgent)
 	{

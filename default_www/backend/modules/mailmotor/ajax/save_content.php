@@ -72,7 +72,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * Adds Google UTM GET Parameters to all anchor links in the mailing
 	 *
 	 * @return	string
-	 * @param	string $HTML
+	 * @param	string $HTML	The HTML wherin the parameters will be added.
 	 */
 	private function addUTMParameters($HTML)
 	{
@@ -119,14 +119,19 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * Returns the fully parsed e-mail content
 	 *
 	 * @return	string
-	 * @param	string $template
-	 * @param	string $contentHTML
-	 * @param	string $fullContentHTML
+	 * @param	string $template			The template to use.
+	 * @param	string $contentHTML			The content.
+	 * @param	string $fullContentHTML		The full content.
 	 */
 	private function getEmailContent($template, $contentHTML, $fullContentHTML)
 	{
 		// require the CSSToInlineStyles class
 		require 'external/css_to_inline_styles.php';
+
+		// redefine
+		$template = (string) $template;
+		$contentHTML = (string) $contentHTML;
+		$fullContentHTML = (string) $fullContentHTML;
 
 		// fetch the template contents for this mailing
 		$template = BackendMailmotorModel::getTemplate($this->mailing['language'], $template);
@@ -168,9 +173,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * Returns the text between 2 tags
 	 *
 	 * @return	array
-	 * @param	string $tag
-	 * @param	string $html
-	 * @param	bool[optional] $strict
+	 * @param	string $tag					The tag.
+	 * @param	string $html				The HTML to search in.
+	 * @param	bool[optional] $strict		Use strictmode?
 	 */
 	private function getTextBetweenTags($tag, $html, $strict = false)
 	{
@@ -178,7 +183,8 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$dom = new domDocument;
 
 		// load HTML
-		($strict == true) ? $dom->loadXML($html) : $dom->loadHTML($html);
+		if($strict == true) $dom->loadXML($html);
+		else $dom->loadHTML($html);
 
 		// discard whitespace
 		$dom->preserveWhiteSpace = false;

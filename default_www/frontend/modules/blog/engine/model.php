@@ -287,8 +287,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Get the number of items in a date range
 	 *
 	 * @return	int
-	 * @param	int $start
-	 * @param	int $end
+	 * @param	int $start	The startdate as a UNIX-timestamp.
+	 * @param	int $end	The enddate as a UNIX-timestamp.
 	 */
 	public static function getAllForDateRangeCount($start, $end)
 	{
@@ -432,7 +432,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Fetch the list of tags for a list of items
 	 *
 	 * @return	array
-	 * @param	array $ids
+	 * @param	array $ids	The ids of the items to grab.
 	 */
 	public static function getForTags(array $ids)
 	{
@@ -464,7 +464,7 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Selects the proper part of the full URL to get the item's id from the database.
 	 *
 	 * @return	int					The id that corresponds with the given full URL.
-	 * @param	FrontendURL $URL	The current URL
+	 * @param	FrontendURL $URL	The current URL.
 	 */
 	public static function getIdForTags(FrontendURL $URL)
 	{
@@ -575,8 +575,8 @@ class FrontendBlogModel implements FrontendTagsInterface
 	 * Get related items based on tags
 	 *
 	 * @return	array
-	 * @param	int $id
-	 * @param	int[optional] $limit
+	 * @param	int $id					The id of the item to get related items for.
+	 * @param	int[optional] $limit	The maximum number of items to retrieve.
 	 */
 	public static function getRelated($id, $limit = 5)
 	{

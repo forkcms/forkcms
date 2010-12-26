@@ -15,8 +15,8 @@ class BackendException extends SpoonException
 	 * Default constructor.
 	 *
 	 * @return	void
-	 * @param	string $message
-	 * @param	int[optional] $code
+	 * @param	string $message			The message of the exception.
+	 * @param	int[optional] $code		The numeric code of the exception.
 	 */
 	public function __construct($message, $code = 0)
 	{

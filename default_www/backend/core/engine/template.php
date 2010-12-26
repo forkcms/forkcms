@@ -110,7 +110,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
 
 		// rand
-		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));
+		$this->mapModifier('rand', array('BackendTemplateModifiers', 'random'));
 
 		// string
 		$this->mapModifier('formatfloat', array('BackendTemplateModifiers', 'formatFloat'));
@@ -395,7 +395,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatdate}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatDate($var)
 	{
@@ -412,7 +412,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatdatetime}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatDateTime($var)
 	{
@@ -429,8 +429,8 @@ class BackendTemplateModifiers
 	 * @later	grab settings from database
 	 *
 	 * @return	string
-	 * @param	float $number				The number to format
-	 * @param	int[optional] $decimals		The number of decimals
+	 * @param	float $number				The number to format.
+	 * @param	int[optional] $decimals		The number of decimals.
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
@@ -447,7 +447,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatnumber}
 	 *
 	 * @return	string
-	 * @param	float $var		The number to format
+	 * @param	float $var		The number to format.
 	 */
 	public static function formatNumber($var)
 	{
@@ -476,7 +476,7 @@ class BackendTemplateModifiers
 	 * 	syntac: {$var|formatdate}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatTime($var)
 	{
@@ -519,6 +519,9 @@ class BackendTemplateModifiers
 	 */
 	public static function getMainNavigation($var = null)
 	{
+		// redefine
+		$var = (string) $var;
+
 		return Spoon::getObjectReference('navigation')->getNavigation(1, 1);
 	}
 
@@ -528,7 +531,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|getnavigation:startdepth[:maximumdepth]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
+	 * @param	string[optional] $var		A placeholder var, will be replaced with the generated HTML.
 	 * @param	int[optional] $startDepth	The start depth of the navigation to get.
 	 * @param	int[optional] $endDepth		The ending depth of the navigation to get.
 	 */
@@ -548,11 +551,11 @@ class BackendTemplateModifiers
 	 * Get a random var between a min and max
 	 *
 	 * @return	int
-	 * @param	string[optional] $var
-	 * @param	int $min
-	 * @param	int $max
+	 * @param	string[optional] $var	The string passed from the template.
+	 * @param	int $min				The minimum number.
+	 * @param	int $max				The maximim number.
 	 */
-	public static function rand($var = null, $min, $max)
+	public static function random($var = null, $min, $max)
 	{
 		// redefine
 		$var = (string) $var;

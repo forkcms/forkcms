@@ -205,9 +205,9 @@ class BackendModel
 	 * Data is a key/value array. Example: array(id => 23, language => nl);
 	 *
 	 * @return	void
-	 * @param	string[optional] $module
-	 * @param	string[optional] $type
-	 * @param	array[optional] $data
+	 * @param	string[optional] $module	The module wherefore the extra exists.
+	 * @param	string[optional] $type		The type of extra, possible values are block, homepage, widget.
+	 * @param	array[optional] $data		Extra data that exists.
 	 */
 	public static function deleteExtra($module = null, $type = null, array $data = null)
 	{
@@ -255,7 +255,7 @@ class BackendModel
 	 * Delete a page extra by its id
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The id of the extra to delete.
 	 */
 	public static function deleteExtraById($id)
 	{
@@ -836,9 +836,9 @@ class BackendModel
 	/**
 	 * Ping the known webservices
 	 *
-	 * @return	bool								If everything went fine true will be returned, otherwise false
-	 * @param	string[optional] $pageOrFeedURL		The page/feed that has changed
-	 * @param	string[optional] $category			An optional category for the site
+	 * @return	bool								If everything went fine true will be returned, otherwise false.
+	 * @param	string[optional] $pageOrFeedURL		The page/feed that has changed.
+	 * @param	string[optional] $category			An optional category for the site.
 	 */
 	public static function ping($pageOrFeedURL = null, $category = null)
 	{
@@ -992,13 +992,13 @@ class BackendModel
 	 * @param	string $userIp				IP address of the comment submitter.
 	 * @param	string $userAgent			User agent information.
 	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment
-	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $author	Submitted name with the comment.
+	 * @param	string[optional] $email		Submitted email address.
 	 * @param	string[optional] $url		Commenter URL.
 	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
 	 */
 	public static function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
@@ -1044,13 +1044,13 @@ class BackendModel
 	 * @param	string $userIp				IP address of the comment submitter.
 	 * @param	string $userAgent			User agent information.
 	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment
-	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $author	Submitted name with the comment.
+	 * @param	string[optional] $email		Submitted email address.
 	 * @param	string[optional] $url		Commenter URL.
 	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
 	 */
 	public static function submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{

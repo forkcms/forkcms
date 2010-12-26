@@ -35,7 +35,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 	 * Check if all required settings have been set
 	 *
 	 * @return	void
-	 * @param	string $module
+	 * @param	string $module	The module.
 	 */
 	public function __construct($module)
 	{

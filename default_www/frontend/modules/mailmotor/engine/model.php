@@ -46,7 +46,7 @@ class FrontendMailmotorModel
 	 * Checks if a given e-mail address exists in the mailmotor_addresses table
 	 *
 	 * @return	bool
-	 * @param	string $email
+	 * @param	string $email	The e-mail address to check.
 	 */
 	public static function exists($email)
 	{
@@ -59,7 +59,7 @@ class FrontendMailmotorModel
 	 * Checks if a group exists
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		The id of the group to check for.
 	 */
 	public static function existsGroup($id)
 	{
@@ -123,8 +123,8 @@ class FrontendMailmotorModel
 	 * Get all groups for a given e-mail address
 	 *
 	 * @return	array
-	 * @param	string $email
-	 * @param	int[optional] $excludeId
+	 * @param	string $email				The e-email address to use.
+	 * @param	int[optional] $excludeId	The id off the group to exclude.
 	 */
 	public static function getGroupIDsByEmail($email, $excludeId = null)
 	{
@@ -158,9 +158,9 @@ class FrontendMailmotorModel
 	 * Get a preview URL to the specific mailing
 	 *
 	 * @return	string
-	 * @param	int $id
-	 * @param	string[optional] $contentType
-	 * @param	bool[optional] $forCM
+	 * @param	int $id								The id of the mailing.
+	 * @param	string[optional] $contentType		The content-type to set.
+	 * @param	bool[optional] $forCM				Will this URL be used in Campaign Monitor?
 	 */
 	public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
 	{
@@ -178,7 +178,7 @@ class FrontendMailmotorModel
 	 *
 	 * @return	bool
 	 * @param	array $item						The data to insert for the address.
-	 * @param	bool[optional] $unsubscribe		@todo	@dave	complete this
+	 * @param	bool[optional] $unsubscribe
 	 */
 	public static function insertAddress(array $item, $unsubscribe = false)
 	{
@@ -223,8 +223,8 @@ class FrontendMailmotorModel
 	 * Checks if a given e-mail address is subscribed in our database
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	int[optional] $groupId
+	 * @param	string $email				The e-mail address to check.
+	 * @param	int[optional] $groupId		The id of the group that has to be checked.
 	 */
 	public static function isSubscribed($email, $groupId = null)
 	{
@@ -247,8 +247,8 @@ class FrontendMailmotorModel
 	 * Subscribes an e-mail address
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The e-mail address to subscribe.
+	 * @param	string[optional] $groupId		The id of the group to subscribe to.
 	 */
 	public static function subscribe($email, $groupId = null)
 	{
@@ -299,8 +299,8 @@ class FrontendMailmotorModel
 	 * Unsubscribes an e-mail address
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The mail address to unsubscribe.
+	 * @param	string[optional] $groupId		The id of the group to unsubscribe from.
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{

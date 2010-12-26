@@ -87,7 +87,7 @@ class BackendInit
 	 * Autoloader for the backend
 	 *
 	 * @return	void
-	 * @param	string $className	The name of the class to require
+	 * @param	string $className	The name of the class to require.
 	 */
 	public static function autoLoader($className)
 	{
@@ -211,16 +211,20 @@ class BackendInit
 	 * A custom error-handler so we can handle warnings about undefined labels
 	 *
 	 * @return	bool
-	 * @param	int $errNumber
-	 * @param	string $errString
+	 * @param	int $errorNumber		The level of the error raised, as an integer.
+	 * @param	string $errorString		The error message, as a string.
 	 */
-	public static function errorHandler($errNumber, $errString)
+	public static function errorHandler($errorNumber, $errorString)
 	{
+		// redefine
+		$errorNumber = (int) $errorNumber;
+		$errorString = (string) $errorString;
+
 		// is this an undefined index?
-		if(mb_substr_count($errString, 'Undefined index:') > 0)
+		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
 			// cleanup
-			$index = trim(str_replace('Undefined index:', '', $errString));
+			$index = trim(str_replace('Undefined index:', '', $errorString));
 
 			// get the type
 			$type = mb_substr($index, 0, 3);
@@ -246,6 +250,9 @@ class BackendInit
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
+		// redefine
+		$output = (string) $ouput;
+
 		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
 
@@ -333,10 +340,13 @@ class BackendInit
 	 *
 	 * @return	void
 	 * @param	object $exception	The exception that was thrown.
-	 * @param	string $output		The output that should be mailed.
+	 * @param	string $output		The output that would be mailed.
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
+		// redefine
+		$output = (string) $output;
+
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 

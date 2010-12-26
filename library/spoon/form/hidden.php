@@ -39,8 +39,8 @@ class SpoonFormHidden extends SpoonFormAttributes
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
 	 */
 	public function __construct($name, $value = null)
 	{
@@ -101,7 +101,7 @@ class SpoonFormHidden extends SpoonFormAttributes
 	 * Parses the html for this hidden field.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{

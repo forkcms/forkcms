@@ -320,7 +320,7 @@ class BackendTagsModel
 	 * Remark: $tag['id'] should be available.
 	 *
 	 * @return	void
-	 * @param	array $item		The new data for the tag
+	 * @param	array $item		The new data for the tag.
 	 */
 	public static function update($item)
 	{

@@ -265,7 +265,7 @@ class SpoonEmail
 	 * Adds a single-line header to the email headers.
 	 *
 	 * @return	void
-	 * @param	string $header
+	 * @param	string $header		The full content for the header.
 	 */
 	public function addHeader($header)
 	{
@@ -294,7 +294,7 @@ class SpoonEmail
 	 * Adds an array of recipients to the recipients stack.
 	 *
 	 * @return	void
-	 * @param	array $recipients		A multidimensional array with recipients. Will read the first 2 items in each subsequent array
+	 * @param	array $recipients		A multidimensional array with recipients. Will read the first 2 items in each subsequent array.
 	 */
 	public function addRecipientArray(array $recipients)
 	{
@@ -333,7 +333,7 @@ class SpoonEmail
 	 * Gets attachment content MIME type for given file extension.
 	 *
 	 * @return	string
-	 * @param	string $extension	The extension to look up
+	 * @param	string $extension	The extension to look up.
 	 */
 	private function getAttachmentContentType($extension)
 	{
@@ -635,7 +635,7 @@ class SpoonEmail
 	 * Takes the name and e-mail in the given array and separates them with commas so they fit in a header.
 	 *
 	 * @return	string
-	 * @param	array $recipients	The array with recipients to reformat into the correct string
+	 * @param	array $recipients	The array with recipients to reformat into the correct string.
 	 */
 	private function reformatRecipientString(array $recipients)
 	{
@@ -720,7 +720,7 @@ class SpoonEmail
 	 * Changes the charset from standard utf-8 to your preferred value.
 	 *
 	 * @return	void
-	 * @param	string[optional] $charset
+	 * @param	string[optional] $charset	The charset to use, default is utf-8.
 	 */
 	public function setCharset($charset = 'utf-8')
 	{
@@ -732,7 +732,7 @@ class SpoonEmail
 	 * Sets the debug mode on/off.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should we enable debug-mode?
 	 */
 	public function setDebug($on = true)
 	{
@@ -779,8 +779,8 @@ class SpoonEmail
 	 * Sets the plain text content, which can be a template or just a string.
 	 *
 	 * @return	void
-	 * @param	string $content				The plain text content for the e-mail
-	 * @param	array[optional] $variables	The variables to parse into the content
+	 * @param	string $content				The plain text content for the e-mail.
+	 * @param	array[optional] $variables	The variables to parse into the content.
 	 */
 	public function setPlainContent($content, array $variables = null)
 	{
@@ -796,7 +796,7 @@ class SpoonEmail
 	 * Sets the email priority level.
 	 *
 	 * @return	void
-	 * @param	int[optional] $level	The e-mail's priority level (1-5, where 1 is not urgent)
+	 * @param	int[optional] $level	The e-mail's priority level (1-5, where 1 is not urgent).
 	 */
 	public function setPriority($level = 3)
 	{
@@ -829,8 +829,8 @@ class SpoonEmail
 	 * Sets authentication info for the current SMTP connection.
 	 *
 	 * @return	void
-	 * @param	string $username
-	 * @param	string $password
+	 * @param	string $username	The username to use.
+	 * @param	string $password	The password to use.
 	 */
 	public function setSMTPAuth($username, $password)
 	{

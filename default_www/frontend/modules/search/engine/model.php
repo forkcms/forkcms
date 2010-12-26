@@ -96,7 +96,7 @@ class FrontendSearchModel
 	 * Build the search term
 	 *
 	 * @return	string
-	 * @param	string $terms
+	 * @param	string $terms	The string to build.
 	 */
 	public static function buildTerm($terms)
 	{
@@ -260,7 +260,7 @@ class FrontendSearchModel
 	 * Get synonyms
 	 *
 	 * @return	array
-	 * @param	string $term				The term to get synonyms for
+	 * @param	string $term	The term to get synonyms for.
 	 */
 	public static function getSynonyms($term)
 	{

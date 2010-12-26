@@ -63,7 +63,7 @@ class SpoonFormElement
 	 * Retrieve the form method or the submitted data.
 	 *
 	 * @return	string
-	 * @param	bool[optional] $array
+	 * @param	bool[optional] $array	Should we return the submitted data?
 	 */
 	public function getMethod($array = false)
 	{
@@ -118,7 +118,7 @@ class SpoonFormElement
 	 * Parse the html for the current element.
 	 *
 	 * @return	void
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -130,7 +130,7 @@ class SpoonFormElement
 	 * Set the name of the form this field is a part of.
 	 *
 	 * @return	void
-	 * @param	string $name
+	 * @param	string $name	The name of the form.
 	 */
 	public function setFormName($name)
 	{
@@ -142,7 +142,7 @@ class SpoonFormElement
 	 * Set the form method.
 	 *
 	 * @return	void
-	 * @param	string[optional] $method
+	 * @param	string[optional] $method	The method to use, possible values are: get, post.
 	 */
 	public function setMethod($method = 'post')
 	{

@@ -227,8 +227,8 @@ class BackendBaseAction
 	 *
 	 * @return	mixed
 	 * @param	string $key						The name of the parameter.
-	 * @param	string[optional] $type			The return-type, possible values are: bool, boolean, int, integer, float, double, string, array
-	 * @param	mixed[optional] $defaultValue	The value that should be returned if the key is not available
+	 * @param	string[optional] $type			The return-type, possible values are: bool, boolean, int, integer, float, double, string, array.
+	 * @param	mixed[optional] $defaultValue	The value that should be returned if the key is not available.
 	 */
 	public function getParameter($key, $type = 'string', $defaultValue = null)
 	{

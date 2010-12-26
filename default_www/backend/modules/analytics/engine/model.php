@@ -209,7 +209,7 @@ class BackendAnalyticsModel
 	 * Get attributes by type from the cache
 	 *
 	 * @return	array
-	 * @param	string $type			The type of data of which to get the attributes
+	 * @param	string $type			The type of data of which to get the attributes.
 	 * @param	int $startTimestamp		The start timestamp for the cache file.
 	 * @param	int $endTimestamp		The end timestamp for the cache file.
 	 */
@@ -443,7 +443,7 @@ class BackendAnalyticsModel
 	 * Get all data for a given revision.
 	 *
 	 * @return	array
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function getLinkList($language = null)
 	{
@@ -518,7 +518,7 @@ class BackendAnalyticsModel
 	 * Fetch page by its path
 	 *
 	 * @return	array
-	 * @param	string $path
+	 * @param	string $path	The path of the page.
 	 */
 	public static function getPageByPath($path)
 	{
@@ -533,7 +533,7 @@ class BackendAnalyticsModel
 	 * Get the page for a certain id
 	 *
 	 * @return	string
-	 * @param	int $pageId		The page id to get the page for
+	 * @param	int $pageId		The page id to get the page for.
 	 */
 	public static function getPageForId($pageId)
 	{
@@ -918,7 +918,7 @@ class BackendAnalyticsModel
 	 * Parse a XML object to an array and cast all fields to their corresponding types
 	 *
 	 * @return	array
-	 * @param	SimpleXMLElement $xml	The simpleXML to convert to an array
+	 * @param	SimpleXMLElement $xml	The simpleXML to convert to an array.
 	 */
 	private static function parseXMLToArray(SimpleXMLElement $xml)
 	{
@@ -1053,7 +1053,7 @@ class BackendAnalyticsModel
 	 *
 	 * @return	void
 	 * @param	string $action							The action to check for infinite loops.
-	 * @param	array[optional] $extraParameters		The extra parameters to append to the redirect url
+	 * @param	array[optional] $extraParameters		The extra parameters to append to the redirect url.
 	 */
 	public static function redirectToLoadingPage($action, array $extraParameters = array())
 	{

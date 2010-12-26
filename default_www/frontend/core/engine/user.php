@@ -75,7 +75,7 @@ class FrontendUser
 	 * Get a setting
 	 *
 	 * @return	mixed			The stored value, if the setting wasn't found null will be returned
-	 * @param	string $key		The name of the setting
+	 * @param	string $key		The name of the setting.
 	 */
 	public function getSetting($key)
 	{
@@ -166,7 +166,7 @@ class FrontendUser
 	 * Set userid
 	 *
 	 * @return	void
-	 * @param	int $value
+	 * @param	int $value	The user's id.
 	 */
 	private function setUserId($value)
 	{
@@ -178,7 +178,7 @@ class FrontendUser
 	 * Set email
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The email-address.
 	 */
 	private function setEmail($value)
 	{

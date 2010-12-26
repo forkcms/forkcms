@@ -258,7 +258,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	int[optional] $parentId			The parentID to start of.
 	 * @param	int[optional] $depth			The maximum depth to parse.
 	 * @param	array[optional] $excludeIds		PageIDs to be excluded.
-	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
+	 * @param	int[optional] $depthCounter		A counter that will hold the current depth.
 	 */
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
 	{
@@ -520,8 +520,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Fetch the first direct link to an extra id
 	 *
 	 * @return	string
-	 * @param	int $id
-	 * @param	string[optional] $language
+	 * @param	int $id							The id of the extra.
+	 * @param	string[optional] $language		The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
 	 */
 	public static function getURLForExtraId($id, $language = null)
 	{
@@ -599,7 +599,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Set the path for the template
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path to set.
 	 */
 	private function setTemplatePath($path)
 	{

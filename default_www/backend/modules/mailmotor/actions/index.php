@@ -293,8 +293,8 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 * Sets the correct campaign link in the datagrid
 	 *
 	 * @return	string
-	 * @param	int $id			The ID of the campaign
-	 * @param	string $name	The name of the campaign
+	 * @param	int $id			The ID of the campaign.
+	 * @param	string $name	The name of the campaign.
 	 */
 	public function setCampaignLink($id, $name)
 	{

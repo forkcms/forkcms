@@ -364,7 +364,7 @@ class SpoonDirectory
 	 * The default is_writable function has problems due to Windows ACLs "bug"
 	 *
 	 * @return	bool
-	 * @param	string $path
+	 * @param	string $path	The path to check.
 	 */
 	private static function isWritable($path)
 	{

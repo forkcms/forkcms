@@ -96,7 +96,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 	 * Clear all (or a specific) elements in the breadcrumb
 	 *
 	 * @return	void
-	 * @param	int[optional] $key	If the key is provided it will be removed from the array, otherwise the whole array will be cleared
+	 * @param	int[optional] $key	If the key is provided it will be removed from the array, otherwise the whole array will be cleared.
 	 */
 	public function clear($key = null)
 	{

@@ -268,8 +268,8 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 	 * Helper function to sort accounts
 	 *
 	 * @return	int
-	 * @param	array $account1		First account for comparison
-	 * @param	array $account2		Second account for comparison
+	 * @param	array $account1		First account for comparison.
+	 * @param	array $account2		Second account for comparison.
 	 */
 	public static function sortAccounts($account1, $account2)
 	{

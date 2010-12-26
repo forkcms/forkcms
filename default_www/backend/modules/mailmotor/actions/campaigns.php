@@ -104,7 +104,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 	 * Sets a link to the campaign statistics if it contains sent mailings
 	 *
 	 * @return	string
-	 * @param	int $id		The ID of the campaign
+	 * @param	int $id		The ID of the campaign.
 	 */
 	public function setStatisticsLink($id)
 	{

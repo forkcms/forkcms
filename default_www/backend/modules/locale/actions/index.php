@@ -133,7 +133,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 * Get the name of the languages
 	 *
 	 * @return	string
-	 * @param	string $language
+	 * @param	string $language	The language to get.
 	 */
 	public function getLanguage($language)
 	{

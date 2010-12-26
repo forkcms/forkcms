@@ -128,7 +128,10 @@ class API
 			// if we are debugging we should see the exceptions
 			if(SPOON_DEBUG)
 			{
-				if(isset($parameters['debug']) && $parameters['debug'] == 'false') {}
+				if(isset($parameters['debug']) && $parameters['debug'] == 'false')
+				{
+					// do nothing
+				}
 				else throw $e;
 			}
 
@@ -142,9 +145,9 @@ class API
 	 * Callback-method for elements in the return-array
 	 *
 	 * @return	void
-	 * @param	mixed $input		The value
-	 * @param	string $key			The key
-	 * @param	DOMElement $XML		The root-element
+	 * @param	mixed $input		The value.
+	 * @param	string $key			The key.
+	 * @param	DOMElement $XML		The root-element.
 	 */
 	private static function arrayToXML(&$input, $key, $XML)
 	{
@@ -283,8 +286,8 @@ class API
 	 * Output the return
 	 *
 	 * @return	void
-	 * @param	int $statusCode			The status code
-	 * @param	array[optional] $data	The data to return
+	 * @param	int $statusCode			The status code.
+	 * @param	array[optional] $data	The data to return.
 	 */
 	public static function output($statusCode, array $data = null)
 	{
@@ -311,8 +314,8 @@ class API
 	 * Output as JSON
 	 *
 	 * @return	void
-	 * @param	int $statusCode			The status code
-	 * @param	array[optional] $data	The data to return
+	 * @param	int $statusCode			The status code.
+	 * @param	array[optional] $data	The data to return.
 	 */
 	private static function outputJSON($statusCode, array $data = null)
 	{
@@ -349,8 +352,8 @@ class API
 	 * Output as XML
 	 *
 	 * @return	void
-	 * @param	int $statusCode			The status code
-	 * @param	array[optional] $data	The data to return
+	 * @param	int $statusCode			The status code.
+	 * @param	array[optional] $data	The data to return.
 	 */
 	private static function outputXML($statusCode, array $data = null)
 	{

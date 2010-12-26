@@ -112,8 +112,8 @@ class InstallerStep1 extends InstallerStep
 	 * Try to guess the location of the library based on spoon library
 	 *
 	 * @return	void
-	 * @param	string $directory
-	 * @param	array[optional] $library
+	 * @param	string $directory			The directory to start from.
+	 * @param	array[optional] $library	An array to hold the paths that were guesed.
 	 */
 	private static function guessLibraryPath($directory, array &$library = null)
 	{

@@ -112,9 +112,9 @@ class FrontendForm extends SpoonForm
 	 * Adds a datefield to the form
 	 *
 	 * @return	SpoonDateField
-	 * @param	string $name					Name of the element
-	 * @param	int[optional] $value			The value for the element
-	 * @param	string[optional] $type			The type (from, till, range) of the datepicker
+	 * @param	string $name					Name of the element.
+	 * @param	int[optional] $value			The value for the element.
+	 * @param	string[optional] $type			The type (from, till, range) of the datepicker.
 	 * @param	int[optional] $date				The date to use.
 	 * @param	int[optional] $date2			The second date for a rangepicker.
 	 * @param	string[optional] $class			Class(es) that have to be applied on the element.
@@ -192,7 +192,7 @@ class FrontendForm extends SpoonForm
 	 *
 	 * @return	void
 	 * @param	string $name						Name of the element.
-	 * @param	array[optional] $values				Values for the dropdown
+	 * @param	array[optional] $values				Values for the dropdown.
 	 * @param	string[optional] $selected			The selected elements.
 	 * @param	bool[optional] $multipleSelection	Is it possible to select multiple items?
 	 * @param	string[optional] $class				Class(es) that will be applied on the element.
@@ -314,8 +314,8 @@ class FrontendForm extends SpoonForm
 	 * Adds a single radiobutton.
 	 *
 	 * @return	void
-	 * @param	string $name					The name of the element
-	 * @param	array $values					The possible values for the radiobutton
+	 * @param	string $name					The name of the element.
+	 * @param	array $values					The possible values for the radiobutton.
 	 * @param	string[optional] $checked		Should the element be checked?
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.

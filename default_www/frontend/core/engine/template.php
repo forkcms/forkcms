@@ -52,9 +52,9 @@ class FrontendTemplate extends SpoonTemplate
 	 * If you want custom-headers, you should set them yourself, otherwise the content-type and charset will be set
 	 *
 	 * @return	void
-	 * @param	string $template				The path of the template to use
+	 * @param	string $template				The path of the template to use.
 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
-	 * @param	bool[optional] $parseCustom		Parse custom template
+	 * @param	bool[optional] $parseCustom		Parse custom template.
 	 */
 	public function display($template, $customHeaders = false, $parseCustom = false)
 	{
@@ -96,7 +96,7 @@ class FrontendTemplate extends SpoonTemplate
 	 * @return	string							The actual parsed content after executing this template.
 	 * @param	string $template				The location of the template file, used to display this template.
 	 * @param	bool[optional] $customHeaders	Are custom headers already set?
-	 * @param	bool[optional] $parseCustom		Parse custom template
+	 * @param	bool[optional] $parseCustom		Parse custom template.
 	 */
 	public function getContent($template, $customHeaders = false, $parseCustom = false)
 	{
@@ -423,8 +423,8 @@ class FrontendTemplateModifiers
 	 * @later	grab settings from database
 	 *
 	 * @return	string
-	 * @param	float $number				The number to format
-	 * @param	int[optional] $decimals		The number of decimals
+	 * @param	float $number				The number to format.
+	 * @param	int[optional] $decimals		The number of decimals.
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
@@ -441,7 +441,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|formatnumber}
 	 *
 	 * @return	string
-	 * @param	float $var		The number to format
+	 * @param	float $var		The number to format.
 	 */
 	public static function formatNumber($var)
 	{
@@ -470,11 +470,11 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
-	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer
-	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build
-	 * @param	int[optional] $depth			The maximum depth that has to be build
-	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -)
+	 * @param	string[optional] $var			The variable.
+	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer.
+	 * @param	int[optional] $parentId			The parent wherefore the navigation should be build.
+	 * @param	int[optional] $depth			The maximum depth that has to be build.
+	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -).
 	 */
 	public static function getNavigation($var = null, $type = 'page', $parentId = 0, $depth = null, $excludeIds = null)
 	{
@@ -497,12 +497,12 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:<excludeIds-splitted-by-dash>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
-	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer
-	 * @param	int[optional] $pageId			The parent wherefore the navigation should be build
-	 * @param	int[optional] $startDepth		The depth to strat from
-	 * @param	int[optional] $endDepth			The maximum depth that has to be build
-	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -)
+	 * @param	string[optional] $var			The variable.
+	 * @param	string[optional] $type			The type of navigation, possible values are: page, footer.
+	 * @param	int[optional] $pageId			The parent wherefore the navigation should be build.
+	 * @param	int[optional] $startDepth		The depth to strat from.
+	 * @param	int[optional] $endDepth			The maximum depth that has to be build.
+	 * @param	string[optional] $excludeIds	Which pageIds should be excluded (split them by -).
 	 */
 	public static function getSubNavigation($var = null, $type = 'page', $pageId = 0, $startDepth = 1, $endDepth = null, $excludeIds = null)
 	{
@@ -552,7 +552,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|getpageinfo:404:'title'}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var			The string passed from the template.
 	 * @param	int $pageId						The id of the page to build the URL for.
 	 * @param	string[optional] $field			The field to get.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
@@ -582,7 +582,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|geturl:404}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var						The string passed from the template.
 	 * @param	int $pageId						The id of the page to build the URL for.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
@@ -603,7 +603,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|geturlforblock:<module>:<action>:<language>}
 	 *
 	 * @return	string
-	 * @param	string $var
+	 * @param	string $var						The string passed from the template.
 	 * @param	string $module					The module wherefor the URL should be build.
 	 * @param	string[optional] $action		A specific action wherefor the URL should be build, otherwise the default will be used.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
@@ -625,9 +625,9 @@ class FrontendTemplateModifiers
 	 * Fetch an URL based on an extraId
 	 *
 	 * @return	string
-	 * @param	string $var
-	 * @param	int $extraId
-	 * @param	string[optional] $language
+	 * @param	string $var						The string passed from the template.
+	 * @param	int $extraId					The id of the extra.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
 	 */
 	public static function getURLForExtraId($var, $extraId, $language = null)
 	{
@@ -645,29 +645,29 @@ class FrontendTemplateModifiers
 	 * Highlights all strings in <code> tags.
 	 *
 	 * @return	string
-	 * @param	string $content
+	 * @param	string $var		The string passed from the template.
 	 */
-	public static function highlightCode($content)
+	public static function highlightCode($var)
 	{
 		// regex pattern
 		$pattern = '/<code>.*?<\/code>/is';
 
 		// find matches
-		if(preg_match_all($pattern, $content, $matches))
+		if(preg_match_all($pattern, $var, $matches))
 		{
 			// loop matches
 			foreach($matches[0] as $match)
 			{
 				// encase content in highlight_string
-				$content = str_replace($match, highlight_string($match, true), $content);
+				$content = str_replace($match, highlight_string($match, true), $var);
 
 				// replace highlighted code tags in match
-				$content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $content);
+				$content = str_replace(array('&lt;code&gt;', '&lt;/code&gt;'), '', $var);
 			}
 		}
 
 		// return content
-		return $content;
+		return $var;
 	}
 
 
@@ -675,9 +675,9 @@ class FrontendTemplateModifiers
 	 * Get a random var between a min and max
 	 *
 	 * @return	int
-	 * @param	string[optional] $var
-	 * @param	int $min
-	 * @param	int $max
+	 * @param	string[optional] $var	The string passed from the template.
+	 * @param	int $min				The miminum random number.
+	 * @param	int $max				The maximum random number.
 	 */
 	public static function random($var = null, $min, $max)
 	{
@@ -715,7 +715,7 @@ class FrontendTemplateModifiers
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var		The string passed from the template.
 	 * @param	int $length					The maximum length of the truncated string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */
@@ -753,7 +753,7 @@ class FrontendTemplateModifiers
 	 * 	syntax {$var|usersetting:<setting>[:<userId>]}
 	 *
 	 * @return	string
-	 * @param	string[optional] $var
+	 * @param	string[optional] $var	The string passed from the template.
 	 * @param	string $setting			The name of the setting you want.
 	 * @param	int[optional] $userId	The userId, if not set by $var.
 	 */

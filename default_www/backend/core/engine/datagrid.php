@@ -22,7 +22,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	SpoonDataGridSource $source	The datasource
+	 * @param	SpoonDataGridSource $source	The datasource.
 	 */
 	public function __construct(SpoonDataGridSource $source)
 	{
@@ -223,11 +223,11 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Set a custom column confirm message.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	string $message
-	 * @param	string[optional] $custom
-	 * @param	string[optional] $title
-	 * @param	string[optional] $uniqueId
+	 * @param	string $column					The name of the column to set the confirm for.
+	 * @param	string $message					The message to use as a confirmmessage.
+	 * @param	string[optional] $custom		Unused parameter.
+	 * @param	string[optional] $title			The title for the column.
+	 * @param	string[optional] $uniqueId		A unique ID that will be uses.
 	 */
 	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
 	{
@@ -268,7 +268,7 @@ class BackendDataGrid extends SpoonDataGrid
 				// add class for confirmation
 				if(substr_count($value, '<a') > 0)
 				{
-					if(substr_count($value, 'class="') > 0)	$value = str_replace('class="', 'data-message-id="'. $id .'" class="askConfirmation ', $value);
+					if(substr_count($value, 'class="') > 0) $value = str_replace('class="', 'data-message-id="'. $id .'" class="askConfirmation ', $value);
 					else $value = str_replace('<a ', '<a data-message-id="'. $id .'" class="askConfirmation" ', $value);
 				}
 
@@ -715,8 +715,8 @@ class BackendDataGridFunctions
 	 * Format a number as a float
 	 *
 	 * @return	string
-	 * @param	float $number				The number to format
-	 * @param	int[optional] $decimals		The number of decimals
+	 * @param	float $number				The number to format.
+	 * @param	int[optional] $decimals		The number of decimals.
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
@@ -809,9 +809,9 @@ class BackendDataGridFunctions
 	 * Returns an image tag
 	 *
 	 * @return	string
-	 * @param	string $path				The path to the image
-	 * @param	string $image				The filename of the image
-	 * @param	string[optional] $title		The title (will be used as alt)
+	 * @param	string $path				The path to the image.
+	 * @param	string $image				The filename of the image.
+	 * @param	string[optional] $title		The title (will be used as alt).
 	 */
 	public static function showImage($path, $image, $title = '')
 	{

@@ -16,7 +16,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 	 * Fetch a list of items for a list of ids
 	 *
 	 * @return	array
-	 * @param	array $ids
+	 * @param	array $ids	The ids of the items to grab.
 	 */
 	public static function getForTags(array $ids)
 	{
@@ -45,7 +45,7 @@ class FrontendPagesModel implements FrontendTagsInterface
 	 * Selects the proper part of the full URL to get the item's id from the database.
 	 *
 	 * @return	int					The id that corresponds with the given full URL.
-	 * @param	FrontendURL $URL	The current URL
+	 * @param	FrontendURL $URL	The current URL.
 	 */
 	public static function getIdForTags(FrontendURL $URL)
 	{

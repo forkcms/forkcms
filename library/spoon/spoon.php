@@ -90,8 +90,8 @@ class Spoon
 	 * Dumps the output of a variable in a more readable manner.
 	 *
 	 * @return	void
-	 * @param	mixed $var
-	 * @param	bool[optional] $exit
+	 * @param	mixed $var				The variable to dump.
+	 * @param	bool[optional] $exit	Should the code stop here?
 	 */
 	public static function dump($var, $exit = true)
 	{
@@ -126,7 +126,7 @@ class Spoon
 	 * Retrieve the whole registry or one specific instance.
 	 *
 	 * @return	mixed
-	 * @param	string[optional] $name
+	 * @param	string[optional] $name	The name of the object to grab.
 	 */
 	public static function getObjectReference($name = null)
 	{
@@ -152,7 +152,7 @@ class Spoon
 	 * Checks if an object with this name has been registered.
 	 *
 	 * @return	bool
-	 * @param	string $name
+	 * @param	string $name	The name of the object to check for existance.
 	 */
 	public static function isObjectReference($name)
 	{
@@ -164,7 +164,7 @@ class Spoon
 	 * Deletes a given object from the registry.
 	 *
 	 * @return	void
-	 * @param	string $name
+	 * @param	string $name	The name of the object to remove.
 	 */
 	public static function killObjectReference($name)
 	{
@@ -183,7 +183,7 @@ class Spoon
 	 * Spoon autoloader
 	 *
 	 * @return	void
-	 * @param	string $class
+	 * @param	string $class	The class that should be loaded.
 	 */
 	public static function autoLoader($class)
 	{
@@ -251,8 +251,8 @@ class Spoon
 	 * Registers a given object under a given name.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	object $object
+	 * @param	string $name	The name of the object to store.
+	 * @param	object $object	The real object.
 	 */
 	public static function setObjectReference($name, $object)
 	{

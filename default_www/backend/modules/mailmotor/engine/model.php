@@ -157,7 +157,7 @@ class BackendMailmotorModel
 	 * Checks if an e-mailaddress exists
 	 *
 	 * @return	bool
-	 * @param	string $email	The emailaddress to check for existance
+	 * @param	string $email	The emailaddress to check for existance.
 	 */
 	public static function existsAddress($email)
 	{
@@ -172,7 +172,7 @@ class BackendMailmotorModel
 	 * Checks if a campaign exists
 	 *
 	 * @return	bool
-	 * @param	int $id		The id of the campaign
+	 * @param	int $id		The id of the campaign.
 	 */
 	public static function existsCampaign($id)
 	{
@@ -202,7 +202,7 @@ class BackendMailmotorModel
 	 * Checks if a group exists
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		The id of the group to check.
 	 */
 	public static function existsGroup($id)
 	{
@@ -217,7 +217,7 @@ class BackendMailmotorModel
 	 * Checks if a group exists
 	 *
 	 * @return	bool
-	 * @param	string $name
+	 * @param	string $name	The name of the group to check.
 	 */
 	public static function existsGroupByName($name)
 	{
@@ -233,7 +233,7 @@ class BackendMailmotorModel
 	 * Checks if a mailing exists
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		The id of the mailing to check.
 	 */
 	public static function existsMailing($id)
 	{
@@ -248,7 +248,7 @@ class BackendMailmotorModel
 	 * Checks if a mailing exists by name
 	 *
 	 * @return	bool
-	 * @param	string $name
+	 * @param	string $name	The name of the mailing to check.
 	 */
 	public static function existsMailingByName($name)
 	{
@@ -277,7 +277,7 @@ class BackendMailmotorModel
 	 * Checks if a given campaign has sent mailings under it
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id	The id of the campaign to check.
 	 */
 	public static function existsSentMailingsByCampaignID($id)
 	{
@@ -293,7 +293,7 @@ class BackendMailmotorModel
 	 * Exports a series of e-mail address records in CSV format. This function will send headers to download the CSV and exit your script after use.
 	 *
 	 * @return	void
-	 * @param	array $emails	The data to export
+	 * @param	array $emails	The data to export.
 	 */
 	public static function exportAddresses(array $emails)
 	{
@@ -316,7 +316,7 @@ class BackendMailmotorModel
 	 * Exports a series of e-mail address records by group ID in CSV format. This function will send headers to download the CSV and exit your script after use.
 	 *
 	 * @return	void
-	 * @param	int $id		The id of the group to export
+	 * @param	int $id		The id of the group to export.
 	 */
 	public static function exportAddressesByGroupID($id)
 	{
@@ -958,7 +958,7 @@ class BackendMailmotorModel
 	 * Get all groups by their IDs
 	 *
 	 * @return	array
-	 * @param	array $ids	The ids of the required groups
+	 * @param	array $ids	The ids of the required groups.
 	 */
 	public static function getGroupsByIds($ids)
 	{
@@ -1421,7 +1421,7 @@ class BackendMailmotorModel
 	 *
 	 * @return	bool
 	 * @param	string $email				The emailaddress to check.
-	 * @param	int[optional] $groupId		The id of the group
+	 * @param	int[optional] $groupId		The id of the group.
 	 */
 	public static function isSubscribed($email, $groupId = null)
 	{
@@ -1441,7 +1441,7 @@ class BackendMailmotorModel
 	 * Get the unsubscribed e-mail addresses by group ID(s)
 	 *
 	 * @return	array
-	 * @param	mixed $ids
+	 * @param	mixed $ids	The ids of the groups.
 	 */
 	public static function getUnsubscribedAddressesByGroupID($ids)
 	{
@@ -1508,8 +1508,8 @@ class BackendMailmotorModel
 	 *
 	 * @return	int
 	 * @param	array $fields				The fields.
-	 * @param	int $groupId				The group to update
-	 * @param	string[optional] $email		The email you want to update the custom fields for
+	 * @param	int $groupId				The group to update.
+	 * @param	string[optional] $email		The email you want to update the custom fields for.
 	 */
 	public static function updateCustomFields($fields, $groupId, $email = null)
 	{
