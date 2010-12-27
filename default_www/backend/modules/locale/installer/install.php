@@ -109,6 +109,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidDomain', 'Ongeldig domein.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidEmailPasswordCombination', 'De combinatie van e-mail en wachtwoord is niet correct. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Bent u uw wachtwoord vergeten?</a>');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidName', 'Ongeldige naam.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidNumber', 'Ongeldig cijfer.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidParameters', 'Ongeldige parameters.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidURL', 'Ongeldige URL.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidValue', 'Ongeldige waarde.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'JavascriptNotEnabled', 'Om Fork CMS te gebruiken moet Javascript geactiveerd zijn in uw browser. Activeer javascript en vernieuw deze pagina.');
@@ -225,6 +227,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Group', 'groep');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Hidden', 'verborgen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Home', 'home');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Image', 'afbeelding');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Images', 'afbeeldingen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Import', 'importeer');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Interface', 'interface');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'InterfacePreferences', 'voorkeuren interface');
@@ -481,6 +485,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidDomain', 'Invalid domain.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidEmailPasswordCombination', 'Your e-mail and password combination is incorrect. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did you forget your password?</a>');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidName', 'Invalid name.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidNumber', 'Invalid number.');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidParameters', 'Invalid parameters.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidURL', 'Invalid URL.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidValue', 'Invalid value.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'JavascriptNotEnabled', 'To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.');
@@ -597,6 +603,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Group', 'group');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Hidden', 'hidden');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Home', 'home');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Image', 'image');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Images', 'images');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Import', 'import');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Interface', 'interface');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'InterfacePreferences', 'interface preferences');
@@ -851,6 +859,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'By', 'door');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Category', 'categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Categories', 'categorieën');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Close', 'sluiten');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Comment', 'reactie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'CommentedOn', 'reageerde op');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Comments', 'reacties');
@@ -913,6 +922,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'By', 'by');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Category', 'category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Categories', 'categories');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Close', 'close');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Comment', 'comment');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'CommentedOn', 'commented on');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Comments', 'comments');
