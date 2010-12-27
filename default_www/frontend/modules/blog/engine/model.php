@@ -725,16 +725,20 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// insert comment
 		$comment['id'] = (int) $db->insert('blog_comments', $comment);
 
-		// num comments
-		$numComments = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS comment_count
-																FROM blog_comments AS i
-																INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-																WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-																GROUP BY i.post_id',
-																array('published', $comment['post_id'], FRONTEND_LANGUAGE, 'active'));
+		// recalculate if published
+		if($comment['status'] == 'published')
+		{
+			// num comments
+			$numComments = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS comment_count
+																	FROM blog_comments AS i
+																	INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+																	WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
+																	GROUP BY i.post_id',
+																	array('published', $comment['post_id'], FRONTEND_LANGUAGE, 'active'));
 
-		// update num comments
-		$db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+			// update num comments
+			$db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+		}
 
 		// return new id
 		return $comment['id'];
