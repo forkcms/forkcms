@@ -53,6 +53,7 @@ class LocationInstall extends ModuleInstaller
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Address', 'adres');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'City', 'stad');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Country', 'land');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'GroupMap', 'algemene kaart: alle locaties');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Height', 'hoogte');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'IndividualMap', 'widget: individuele kaart');
@@ -69,10 +70,12 @@ class LocationInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'location', 'lbl', 'Satellite', 'satelliet');
 		$this->insertLocale('nl', 'backend', 'location', 'lbl', 'Terrain', 'terrein');
 		$this->insertLocale('nl', 'backend', 'location', 'lbl', 'ZoomLevel', 'zoom niveau');
+		$this->insertLocale('nl', 'backend', 'location', 'err', 'AddressCouldNotBeGeocoded', 'Dit adres kon niet worden omgezet naar coördinaten.');
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Address', 'address');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'City', 'city');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Country', 'land');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'GroupMap', 'general map: all locations');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Height', 'height');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'IndividualMap', 'widget: individuel map');
@@ -89,6 +92,7 @@ class LocationInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'location', 'lbl', 'Satellite', 'satellite');
 		$this->insertLocale('en', 'backend', 'location', 'lbl', 'Terrain', 'terrain');
 		$this->insertLocale('en', 'backend', 'location', 'lbl', 'ZoomLevel', 'zoom level');
+		$this->insertLocale('en', 'backend', 'location', 'err', 'AddressCouldNotBeGeocoded', 'Address couldn\'t be converted into coordinates.');
 	}
 }
 

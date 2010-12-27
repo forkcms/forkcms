@@ -217,7 +217,7 @@ class FrontendInit
 	{
 		// redefine
 		$errorNumber = (int) $errorNumber;
-		$errorString = (int) $errorString;
+		$errorString = (string) $errorString;
 
 		// is this an undefined index?
 		if(mb_substr_count($errorString, 'Undefined index:') > 0)
