@@ -16,6 +16,7 @@
 * Bugfix: widgets now also use theme templates (if available)
 * Core: using data-attribute instead of rel
 * Blog: reïmplemented drafts
+* Bugfix: recalculate num_comments so the new revision has the correct count
 
 2.0.2 (2010-11-24)
 --
