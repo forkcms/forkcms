@@ -60,7 +60,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
-		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format'));
+		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);

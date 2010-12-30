@@ -455,7 +455,7 @@ class BackendTemplateModifiers
 		$var = (float) $var;
 
 		// get setting
-		$format = BackendAuthentication::getUser()->getSetting('number_format');
+		$format = BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing');
 
 		// get amount of decimals
 		$decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);

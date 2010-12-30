@@ -1,5 +1,7 @@
 2.1.0 (xxxx-xx-xx)
 --
+* Core: improvments for numberformatting
+* Tools: scripts are now using find
 * Bugfix: Disabled the imagemanagers contectmenu because there are still issues (according to the TinyMCE developers :s)
 * Bugfix: $_GET-parameters were double urldecode, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/82
 * Bugfix: navigation used to give notices with hidden/excluded pages
