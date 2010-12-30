@@ -77,18 +77,7 @@ class BackendBaseAction
 		$this->setAction($this->URL->getAction());
 
 		// populate the parameter array, we loop GET and urldecode the values for usage later on
-		foreach((array) $_GET as $key => $value)
-		{
-			// is the value an array?
-			if(is_array($value))
-			{
-				// urldecode each element in the array
-				$this->parameters[$key] = (array) SpoonFilter::arrayMapRecursive('urldecode', $value);
-			}
-
-			// it's just a string
-			else $this->parameters[$key] = urldecode($value);
-		}
+		foreach((array) $_GET as $key => $value) $this->parameters[$key] = $value;
 	}
 
 
