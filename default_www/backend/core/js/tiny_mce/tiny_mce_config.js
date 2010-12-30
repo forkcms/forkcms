@@ -46,7 +46,8 @@ tinyMCE.init(
 
 	// image manager
 	imagemanager_handle: 'image',
-
+	imagemanager_contextmenu: false,
+	
 	// templates
 	template_templates:
 	[

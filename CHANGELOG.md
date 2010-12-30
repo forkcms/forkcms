@@ -1,6 +1,7 @@
 2.1.0 (xxxx-xx-xx)
 --
-* Bugfix: $_GET-parameters were double urldecode, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/82"
+* Bugfix: Disabled the imagemanagers contectmenu because there are still issues (according to the TinyMCE developers :s)
+* Bugfix: $_GET-parameters were double urldecode, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/82
 * Bugfix: navigation used to give notices with hidden/excluded pages
 * Bugfix: autoloader path to frontendbaseajaxaction was incorrect
 * Bugfix: setting a language for an ajax-call on non-multilanguage sites wat a bit * ehm * fubar
