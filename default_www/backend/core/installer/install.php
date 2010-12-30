@@ -680,6 +680,10 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'time_format', 'H:i');
 		$this->setSetting('core', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
 
+		// number formats
+		$this->setSetting('core', 'number_format', 'dot_nothing');
+		$this->setSetting('core', 'number_formats', array('comma_nothing' => '10000,25', 'dot_nothing' => '10000.25', 'dot_comma' => '10,000.25', 'comma_dot' => '10.000,25', 'dot_space' => '10000.25', 'comma_space' => '10 000,25'));
+
 		// e-mail settings
 		$this->setSetting('core', 'mailer_from', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
 		$this->setSetting('core', 'mailer_to', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));
