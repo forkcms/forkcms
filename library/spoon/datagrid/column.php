@@ -387,7 +387,7 @@ class SpoonDatagridColumn
 	 * Set the attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes	Teh attributes as key/value-pairs.
+	 * @param	array $attributes	The attributes as key/value pairs.
 	 */
 	public function setAttributes(array $attributes)
 	{
@@ -400,7 +400,7 @@ class SpoonDatagridColumn
 	 *
 	 * @return	void
 	 * @param	string $message				The message to show.
-	 * @param	string[optional] $custom
+	 * @param	string[optional] $custom	Custom code you wish to use to confirm.
 	 */
 	public function setConfirm($message, $custom = null)
 	{
@@ -414,7 +414,7 @@ class SpoonDatagridColumn
 	 * Set the header attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes	The attributes as key/value-pairs.
+	 * @param	array $attributes	The attributes as key/value pairs.
 	 */
 	public function setHeaderAttributes(array $attributes)
 	{
@@ -426,7 +426,7 @@ class SpoonDatagridColumn
 	 * Sets the hidden status.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on	Should the column be hidden?
+	 * @param	bool[optional] $on	Should this column be hidden?
 	 */
 	public function setHidden($on = true)
 	{

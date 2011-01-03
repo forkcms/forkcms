@@ -108,7 +108,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field contains only letters a-z and A-Z.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphabetical($error = null)
 	{
@@ -138,7 +138,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field only contains letters & numbers (without spaces).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphaNumeric($error = null)
 	{
@@ -168,7 +168,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -191,7 +191,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 *
 	 * @return	bool
 	 * @param	int $maximum				The maximum number of characters.
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMaximumCharacters($maximum, $error = null)
 	{
@@ -222,7 +222,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 *
 	 * @return	bool
 	 * @param	int $minimum				The minimum number of characters.
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMinimumCharacters($minimum, $error = null)
 	{
@@ -252,7 +252,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field contains any string that doesn't have control characters (ASCII 0 - 31) but spaces are allowed.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isString($error = null)
 	{

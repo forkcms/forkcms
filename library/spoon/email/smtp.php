@@ -123,9 +123,6 @@ class SpoonEmailSMTP
 			case 'tls':
 				$this->startTLS();
 			break;
-
-			default:
-			break;
 		}
 	}
 
@@ -252,7 +249,7 @@ class SpoonEmailSMTP
 	 */
 	private function listen()
 	{
-		return (string) @fgets($this->connection, 515).'<br />';
+		return (string) @fgets($this->connection, 515) .'<br />';
 	}
 
 
@@ -268,7 +265,7 @@ class SpoonEmailSMTP
 		if(!SpoonFilter::isEmail($email)) throw new SpoonEmailException('No valid email given for '. __METHOD__);
 
 		// push MAIL FROM command
-		$this->say('MAIL FROM:<'.$email.'>');
+		$this->say('MAIL FROM:<'. $email .'>');
 
 		// smtp code 250 means success
 		return ($this->repliedCode === 250) ? true : false;
@@ -302,7 +299,7 @@ class SpoonEmailSMTP
 		if(!SpoonFilter::isEmail($email)) throw new SpoonEmailException('No valid email given for '. __METHOD__);
 
 		// push MAIL FROM command
-		$this->say('RCPT TO: <'.$email.'>');
+		$this->say('RCPT TO: <'. $email .'>');
 
 		// smtp code 250 means success
 		return ($this->repliedCode === 250) ? true : false;
@@ -362,7 +359,7 @@ class SpoonEmailSMTP
 		if($this->repliedCode === 354)
 		{
 			// push our data
-			$this->say($data . self::CRLF . '.');
+			$this->say($data . self::CRLF .'.');
 
 			// code 250 means the mail has been sent
 			return ($this->repliedCode === 250) ? true : false;

@@ -536,7 +536,7 @@ class SpoonFeedRSSItem
 	 * @return	void
 	 * @param	string $URL		The URL of the enclosure.
 	 * @param	int $length		The length of the enclosure.
-	 * @param	string $type	The conten-type of the enclosure.
+	 * @param	string $type	The content-type of the enclosure.
 	 */
 	public function setEnclosure($URL, $length, $type)
 	{

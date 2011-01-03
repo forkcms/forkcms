@@ -34,11 +34,11 @@ interface iSpoonDatagridPaging
 	 * @param	string $URL								The URL to use for the paging.
 	 * @param	int $offset								The current offset.
 	 * @param	string $order							The current order.
-	 * @param	string $sort							The current sorting-method.
+	 * @param	string $sort							The current sorting method.
 	 * @param	int $numResults							The number of results.
 	 * @param	int $numPerPage							The number of results per page.
 	 * @param	bool[optional] $debug					Should debug-mode be enabled?
-	 * @param	string[optional] $compileDirectory		The path to the compile-directory.
+	 * @param	string[optional] $compileDirectory		The path to the compile directory.
 	 */
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null);
 }

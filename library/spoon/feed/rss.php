@@ -1099,7 +1099,7 @@ class SpoonFeedRSS
 	 * Set the copyright.
 	 *
 	 * @return	void
-	 * @param	string $copyright	The copyrightstatement.
+	 * @param	string $copyright	The copyright statement.
 	 */
 	public function setCopyright($copyright)
 	{
@@ -1123,7 +1123,7 @@ class SpoonFeedRSS
 	 * Set the doc for the feed.
 	 *
 	 * @return	void
-	 * @param	string $docs	The documentation-statement.
+	 * @param	string $docs	The documentation statement.
 	 */
 	public function setDocs($docs)
 	{

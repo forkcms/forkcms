@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		1.1.0
  */
 class SpoonLocale
@@ -88,6 +89,51 @@ class SpoonLocale
 
 		// all seems fine
 		return $locale['countries'][$code];
+	}
+
+
+	/**
+	 * Fetch the language name in the requested language.
+	 *
+	 * @return	string
+	 * @param	string $code					Language code of which we want the name.
+	 * @param	string[optional] $language		Requested language.
+	 */
+	public static function getLanguage($code, $language = 'en')
+	{
+		// init vars
+		$code = (string) $code;
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/'. $language .'.php';
+
+		// doesn't exist
+		if(!isset($locale['languages'][$code])) throw new SpoonLocaleException('There is no language with the code: '. $code);
+
+		// all seems fine
+		return $locale['languages'][$code];
+	}
+
+
+	/**
+	 * Retrieve the list of languages.
+	 *
+	 * @return	array
+	 * @param	string[optional] $language
+	 */
+	public static function getLanguages($language = 'en')
+	{
+		// init vars
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/'. $language .'.php';
+
+		// fetch languages
+		return $locale['languages'];
 	}
 
 

@@ -106,9 +106,9 @@ class SpoonDatabase
 	 *
 	 * @return	void
 	 * @param	string $driver			The driver to use. Available drivers depend on your server configuration.
-	 * @param	string $hostname		The host or IP of your database-server.
-	 * @param	string $username		The username to authenticate on your database-server.
-	 * @param	string $password		The password to authenticate on your database-server.
+	 * @param	string $hostname		The host or IP of your database server.
+	 * @param	string $username		The username to authenticate on your database server.
+	 * @param	string $password		The password to authenticate on your database server.
 	 * @param	string $database		The name of the database to use.
 	 * @param	int[optional] $port		The port to connect on.
 	 */
@@ -333,10 +333,10 @@ class SpoonDatabase
 
 
 	/**
-	 * Retrieves the possible ENUM-values
+	 * Retrieves the possible ENUM values
 	 *
-	 * @return	array			An array with all the possible ENUM-values.
-	 * @param	string $table	The table that contains the ENUM-field.
+	 * @return	array			An array with all the possible ENUM values.
+	 * @param	string $table	The table that contains the ENUM field.
 	 * @param	string $field	The name of the field.
 	 */
 	public function getEnumValues($table, $field)
@@ -720,8 +720,8 @@ class SpoonDatabase
 	 * Inserts one or more records
 	 *
 	 * @return	int				The last inserted ID.
-	 * @param	string $table	The table wherin the record will be inserted.
-	 * @param	array $values	The values for the record to insert, keys of this array should match the column-names.
+	 * @param	string $table	The table wherein the record will be inserted.
+	 * @param	array $values	The values for the record to insert, keys of this array should match the column names.
 	 */
 	public function insert($table, array $values)
 	{

@@ -249,8 +249,8 @@ class SpoonDatagrid
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	SpoonDatagridSource $source		The data-source.
-	 * @param	string[optional] $template		The template wherin teh datagrid will be parsed.
+	 * @param	SpoonDatagridSource $source		The data-source, which needs to extend from SpoonDatagridSource
+	 * @param	string[optional] $template		The template that will be used to parse the datagrid.
 	 */
 	public function __construct(SpoonDatagridSource $source, $template = null)
 	{
@@ -305,7 +305,7 @@ class SpoonDatagrid
 	 * @return	string
 	 * @param	int $offset		The offset.
 	 * @param	string $order	The order-column.
-	 * @param	string $sort	the sorting-method.
+	 * @param	string $sort	The sorting-method.
 	 */
 	private function buildURL($offset, $order, $sort)
 	{
@@ -1443,7 +1443,7 @@ class SpoonDatagrid
 	 * Set a custom column confirm message.
 	 *
 	 * @return	void
-	 * @param	string $column				The column to apply the confirm on.
+	 * @param	string $column				The column to apply the confirmation on.
 	 * @param	string $message				The message to use.
 	 * @param	string[optional] $custom
 	 */
@@ -1467,7 +1467,7 @@ class SpoonDatagrid
 	 * @return	void
 	 * @param	mixed $function					The function to apply.
 	 * @param	mixed[optional] $arguments		The arguments for the function.
-	 * @param	mixed $columns					The columns wherin the result will appear.
+	 * @param	mixed $columns					The columns wherein the result will appear.
 	 * @param	bool[optional] $overwrite		Should the result overwrite the current value?
 	 */
 	public function setColumnFunction($function, $arguments = null, $columns, $overwrite = false)
@@ -1502,7 +1502,7 @@ class SpoonDatagrid
 	 * Set one or more attributes for a columns' header.
 	 *
 	 * @return	void
-	 * @param	string $column		The column wheron the atrributes will be set.
+	 * @param	string $column		The column whereon the atrributes will be set.
 	 * @param	array $attributes	The attributes for a column.
 	 */
 	public function setColumnHeaderAttributes($column, array $attributes)
@@ -1875,8 +1875,8 @@ class SpoonDatagrid
 	 * Sets the columns that may be sorted on.
 	 *
 	 * @return	void
-	 * @param	array $columns				The columns wheron sorting is enabled.
-	 * @param	string[optional] $default	The column wheron will be sorted by default.
+	 * @param	array $columns				The columns whereon sorting is enabled.
+	 * @param	string[optional] $default	The column whereon will be sorted by default.
 	 */
 	public function setSortingColumns(array $columns, $default = null)
 	{
@@ -1983,7 +1983,7 @@ class SpoonDatagrid
 	 * Sets the table summary.
 	 *
 	 * @return	void
-	 * @param	string $value	The summary-value.
+	 * @param	string $value	The summary value.
 	 */
 	public function setSummary($value)
 	{

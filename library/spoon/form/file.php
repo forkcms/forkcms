@@ -75,7 +75,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error	The errormessage to set.
+	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -206,7 +206,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 *
 	 * @return	bool
 	 * @param	array $extensions			The allowed extensions.
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAllowedExtension(array $extensions, $error = null)
 	{
@@ -241,7 +241,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 *
 	 * @return	bool
 	 * @param	array $allowedTypes			The allowed mime-types.
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAllowedMimeType(array $allowedTypes, $error = null)
 	{
@@ -283,7 +283,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * @param	int $size					The size to use in the check.
 	 * @param	string[optional] $unit		The unit to use.
 	 * @param	string[optional] $operator	The operator to use, possible values are: smaller, equal, greater.
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilesize($size, $unit = 'kb', $operator = 'smaller', $error = null)
 	{
@@ -316,7 +316,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilename($error = null)
 	{
@@ -333,7 +333,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -363,7 +363,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 *
 	 * @return	bool
 	 * @param	string $path			The path whereto the file will be moved.
-	 * @param	int[optional] $chmod	The octal value to use on chmod-ing.
+	 * @param	int[optional] $chmod	The octal value to use for chmod.
 	 */
 	public function moveFile($path, $chmod = 0755)
 	{
@@ -422,7 +422,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Overwrites the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error	The errormessage to set.
+	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{

@@ -99,7 +99,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string $error		The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -232,7 +232,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -321,7 +321,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Overwrites the error stack.
 	 *
 	 * @return	void
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function setError($error)
 	{

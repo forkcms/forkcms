@@ -134,7 +134,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error	The errormessage to set.
+	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -365,7 +365,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 * Checks if this field was submitted & contains one more values.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The errormessage to set.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -586,7 +586,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 	 * Overwrites the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error	The errormessage to set.
+	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{

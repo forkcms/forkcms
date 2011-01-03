@@ -287,7 +287,7 @@ class SpoonForm
 	 * Adds an error to the main error stack.
 	 *
 	 * @return	void
-	 * @param	string $error	The errormessage to set.
+	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -998,7 +998,7 @@ class SpoonForm
 	 * Sets the correct value.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $correct		Was teh form submitted without errors?
+	 * @param	bool[optional] $correct		Was the form submitted without errors?
 	 */
 	private function setCorrect($correct = true)
 	{

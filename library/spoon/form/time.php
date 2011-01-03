@@ -129,7 +129,7 @@ class SpoonFormTime extends SpoonFormInput
 	 * Checks if this field has any content (except spaces).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The error-message to set if the field isn't filled.
+	 * @param	string[optional] $error		The error message to set if the field isn't filled.
 	 */
 	public function isFilled($error = null)
 	{
@@ -151,7 +151,7 @@ class SpoonFormTime extends SpoonFormInput
 	 * Checks if this field is correctly submitted.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The error-message to set if the time isn't valid.
+	 * @param	string[optional] $error		The error message to set if the time isn't valid.
 	 */
 	public function isValid($error = null)
 	{

@@ -256,6 +256,14 @@ $locale['countries']['KR'] = 'Zuid-Korea';
 $locale['countries']['SE'] = 'Zweden';
 $locale['countries']['CH'] = 'Zwitserland';
 
+// languages
+$locale['languages'] = array();
+$locale['languages']['de'] = 'duits';
+$locale['languages']['en'] = 'engels';
+$locale['languages']['fr'] = 'frans';
+$locale['languages']['nl'] = 'nederlands';
+$locale['languages']['es'] = 'spaans';
+
 // date
 $locale['date'] = array();
 
