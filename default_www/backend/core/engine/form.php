@@ -455,6 +455,18 @@ class BackendForm extends SpoonForm
 
 
 	/**
+	 * Checks to see if this form has been correctly submitted. Will revalidate by default.
+	 *
+	 * @return	bool
+	 * @param	bool[optional] $revalidate		Do we need to enforce validation again, even if it might already been done before?
+	 */
+	public function isCorrect($revalidate = true)
+	{
+		return parent::isCorrect($revalidate);
+	}
+
+
+	/**
 	 * Parse the form
 	 *
 	 * @return	void
