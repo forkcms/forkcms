@@ -349,7 +349,7 @@ class FrontendSearchModel
 				if($otherId == $result['other_id'])
 				{
 					$searchResults[$i] = array_merge(array('module' => $result['module']), $moduleResult);
-					continue(2);
+					continue 2;
 				}
 			}
 

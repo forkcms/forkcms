@@ -178,7 +178,7 @@ class FrontendMailmotorModel
 	 *
 	 * @return	bool
 	 * @param	array $item						The data to insert for the address.
-	 * @param	bool[optional] $unsubscribe
+	 * @param	bool[optional] $unsubscribe		If there are no groups the user will be added to the default group, unless this is true.
 	 */
 	public static function insertAddress(array $item, $unsubscribe = false)
 	{

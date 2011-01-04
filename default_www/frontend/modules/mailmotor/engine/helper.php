@@ -16,7 +16,7 @@ class FrontendMailmotorCMHelper
 	 * Returns the CampaignMonitor object
 	 *
 	 * @return	CampaignMonitor
-	 * @param	int[optional] $listId
+	 * @param	int[optional] $listId		The default list id to use.
 	 */
 	public static function getCM($listId = null)
 	{
@@ -90,8 +90,8 @@ class FrontendMailmotorCMHelper
 	 * Inserts a record into the mailmotor_campaignmonitor_ids table
 	 *
 	 * @return	string
-	 * @param	string $type
-	 * @param	string $otherId
+	 * @param	string $type		The type for the item.
+	 * @param	string $otherId		The id of the item.
 	 */
 	public static function getCampaignMonitorID($type, $otherId)
 	{
@@ -104,7 +104,7 @@ class FrontendMailmotorCMHelper
 	 * Returns the CM IDs for a given list of group IDs
 	 *
 	 * @return	array
-	 * @param 	array $groupIds
+	 * @param 	array $groupIds					The id of the groups.
 	 * @param	bool[optional] $unsubscribe
 	 */
 	public static function getCampaignMonitorIDsForGroups($groupIds, $unsubscribe = false)

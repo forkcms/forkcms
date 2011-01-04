@@ -16,6 +16,8 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
+		// @todo	alphabetic?
+
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];

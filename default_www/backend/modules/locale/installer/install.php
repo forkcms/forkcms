@@ -850,6 +850,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'ContactErrorWhileSending', 'Er ging iets mis tijdens het verzenden, probeer later opnieuw.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'EmailIsInvalid', 'Gelieve een geldig emailadres in te geven.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'EmailIsRequired', 'E-mail is een verplicht veld.');
+		$this->insertLocale('nl', 'frontend', 'core', 'err', 'FieldIsRequired', 'Dit veld is verplicht.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'FormError', 'Er ging iets mis, kijk de gemarkeerde velden na.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'InvalidURL', 'Dit is een ongeldige URL.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'MessageIsRequired', 'Bericht is een verplicht veld.');
@@ -913,6 +914,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'ContactErrorWhileSending', 'Something went wrong while trying to send, please try again later.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'EmailIsInvalid', 'Please provide a valid e-email.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'EmailIsRequired', 'E-mail is a required field.');
+		$this->insertLocale('en', 'frontend', 'core', 'err', 'FieldIsRequired', 'This field is required.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'FormError', 'Something went wrong, please check the marked fields.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'InvalidURL', 'This is an invalid URL.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'MessageIsRequired', 'Message is a required field.');

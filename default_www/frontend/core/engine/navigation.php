@@ -293,7 +293,7 @@ class FrontendNavigation extends FrontendBaseObject
 					$mergedHome = true;
 
 					// restart loop
-					continue(2);
+					continue 2;
 				}
 
 				// not hidden

@@ -249,7 +249,7 @@ class SpoonDatagrid
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	SpoonDatagridSource $source		The data-source, which needs to extend from SpoonDatagridSource
+	 * @param	SpoonDatagridSource $source		The data-source, which needs to extend from SpoonDatagridSource.
 	 * @param	string[optional] $template		The template that will be used to parse the datagrid.
 	 */
 	public function __construct(SpoonDatagridSource $source, $template = null)

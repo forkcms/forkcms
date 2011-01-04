@@ -83,7 +83,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				foreach($this->related as $related)
 				{
 					// already exists
-					if($item == $related) continue(2);
+					if($item == $related) continue 2;
 				}
 
 				// add to list of related items
@@ -101,7 +101,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 				if($entry['module'] == $exclude['module'] && $entry['other_id'] == $exclude['other_id'])
 				{
 					unset($this->related[$id]);
-					continue(2);
+					continue 2;
 				}
 			}
 

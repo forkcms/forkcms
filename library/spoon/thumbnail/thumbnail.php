@@ -215,7 +215,13 @@ class SpoonThumbnail
 		$filename = (string) $filename;
 		$quality = (int) $quality;
 
-		// @todo is the destination path writeable? (throw exception or just return false?)
+		//
+		if(@is_writable($filename) !== true)
+		{
+			// strict?
+			if($this->strict) throw new SpoonThumbnailException('The destination-path should be writable.');
+			return false;
+		}
 
 		// get extension
 		$extension = SpoonFile::getExtension($filename);
@@ -253,10 +259,12 @@ class SpoonThumbnail
 		$currentMime = (string) $imageProperties['mime'];
 
 		// file is the same?
-		// @todo check if mime type is the same
-		if($currentWidth == $this->width && $currentHeight == $this->height)
+		if(($currentType == IMAGETYPE_GIF && $extension == 'gif') || ($currentType == IMAGETYPE_JPEG && in_array($extension, array('jpg', 'jpeg'))) || ($currentType == IMAGETYPE_PNG && $extension == 'png'))
 		{
-			return SpoonDirectory::copy($this->filename, $filename, true, true, $chmod);
+			if($currentWidth == $this->width && $currentHeight == $this->height)
+			{
+				return SpoonDirectory::copy($this->filename, $filename, true, true, $chmod);
+			}
 		}
 
 		// resize image

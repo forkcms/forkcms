@@ -32,16 +32,10 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 		// handle all types
 		switch($current['code'])
 		{
-			// break and continue statements should be followed by a semicolon or an opening parenthesis, if it is an opening parenthesis we should check if there aren't spaces after the opening one, or spaced before the closing one
+			// break and continue statements should be followed by a semicolon or exactly one space
 			case T_BREAK:
 			case T_CONTINUE:
-				if($next['code'] != T_SEMICOLON && $next['code'] != T_OPEN_PARENTHESIS) $phpcsFile->addError('After "break", "continue" we expect a semicolon or an opening brace.', $stackPtr);
-				// @todo	geen haakjes
-				if($next['code'] == T_OPEN_PARENTHESIS)
-				{
-					if($tokens[$stackPtr + 2]['code'] == T_WHITESPACE) $phpcsFile->addError('We don\'t allow whitespaces after the opening brace', $stackPtr);
-					if(!isset($next['parenthesis_closer']) || $tokens[$next['parenthesis_closer'] - 1]['code'] == T_WHITESPACE) $phpcsFile->addError('We don\'t allow whitespaces before the closing brace.', $stackPtr);
-				}
+				if($next['code'] != T_SEMICOLON && $next['content'] != ' ') $phpcsFile->addError('After "break", "continue" we expect a semicolon or exactly one space.', $stackPtr);
 			break;
 
 			// a case statement should be folowed by a whitespace and the condition, the content should be indented inside the body and the break-statement should be at the same column as the case-statement

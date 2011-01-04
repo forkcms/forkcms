@@ -121,7 +121,7 @@ class SpoonLocale
 	 * Retrieve the list of languages.
 	 *
 	 * @return	array
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language		Requested language.
 	 */
 	public static function getLanguages($language = 'en')
 	{

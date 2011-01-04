@@ -1034,7 +1034,7 @@ class BackendAnalyticsModel
 						$data[$name] = array();
 
 						// continue
-						continue(2);
+						continue 2;
 					}
 
 					// cast and add item
