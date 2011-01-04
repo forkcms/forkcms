@@ -103,10 +103,11 @@ class FrontendBlockExtra extends FrontendBaseObject
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
-		// @later check if the action implements an interface
-
 		// create action-object
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+
+		// validate if the execute-method is callable
+		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
 		$object->execute();
@@ -226,8 +227,6 @@ class FrontendBlockExtra extends FrontendBaseObject
 
 		// require the config file, we validated before for existence.
 		require_once $frontendModulePath .'/config.php';
-
-		// @later	check if the config implements an interface
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');
@@ -394,10 +393,11 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
-		// @later	check if the action implements an interface
-
 		// create action-object
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+
+		// validate if the execute-method is callable
+		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
 		$output = $object->execute();
@@ -480,8 +480,6 @@ class FrontendBlockWidget extends FrontendBaseObject
 
 		// require the config file, we validated before for existence.
 		require_once $frontendModulePath .'/config.php';
-
-		// @later	check if the class implements an interface
 
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');

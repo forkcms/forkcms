@@ -385,6 +385,7 @@ class BackendUsersModel
 			// restore
 			$db->update('users', array('active' => 'Y', 'deleted' => 'N'), 'id = ?', (int) $id);
 
+			// return
 			return true;
 		}
 

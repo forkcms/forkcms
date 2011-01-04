@@ -426,7 +426,6 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a number as a float
-	 * @later	grab settings from database
 	 *
 	 * @return	string
 	 * @param	float $number				The number to format.
@@ -438,7 +437,17 @@ class BackendTemplateModifiers
 		$number = (float) $number;
 		$decimals = (int) $decimals;
 
-		return number_format($number, $decimals, '.', ' ');
+		// get setting
+		$format = BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing');
+
+		// get separators
+		$separators = explode('_', $format);
+		$separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+		$decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
+		$thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+
+		// format the number
+		return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
 	}
 
 

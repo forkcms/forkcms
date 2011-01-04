@@ -195,7 +195,6 @@ class ModuleInstaller
 			/**
 			 * Some versions of PHP can't handle multiple statements at once, so split them
 			 * We know this isn't the best solution, but we couldn't find a beter way.
-			 * @later: find a beter way to handle multiple-line queries
 			 */
 			$queries = preg_split("/;(\r)?\n/", $content);
 
