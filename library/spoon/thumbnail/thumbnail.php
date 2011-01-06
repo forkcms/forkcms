@@ -216,7 +216,7 @@ class SpoonThumbnail
 		$quality = (int) $quality;
 
 		//
-		if(@is_writable($filename) !== true)
+		if(@is_writable(dirname($filename)) !== true)
 		{
 			// strict?
 			if($this->strict) throw new SpoonThumbnailException('The destination-path should be writable.');
