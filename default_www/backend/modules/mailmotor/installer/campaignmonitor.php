@@ -1192,39 +1192,6 @@ class CampaignMonitor
 
 
 	/**
-	 * Returns all clients for the logged-in user.
-	 *
-	 * @return	array
-	 */
-	public function getClients()
-	{
-		// make the call
-		$records = (array) $this->doCall('User.GetClients');
-
-		// stop here if no records were set
-		if(empty($records)) return array();
-
-		// reserve variable
-		$results = array();
-		$i = 0;
-
-		// if CampaignID is set in the level below Campaign, we have 1 result, otherwise we have an array of results
-		$records = (isset($records['Client']['ClientID'])) ? $records : $records['Client'];
-
-		// loop the records
-		foreach($records as $record)
-		{
-			$results[$i]['id'] = $record['ClientID'];
-			$results[$i]['name'] = $record['Name'];
-			$i++;
-		}
-
-		// return the records
-		return $results;
-	}
-
-
-	/**
 	 * Returns a list of all campaigns that have been sent for a client
 	 *
 	 * @return	array
@@ -1278,6 +1245,39 @@ class CampaignMonitor
 	public function getClientId()
 	{
 		return (string) $this->clientId;
+	}
+
+
+	/**
+	 * Returns all clients for the logged-in user.
+	 *
+	 * @return	array
+	 */
+	public function getClients()
+	{
+		// make the call
+		$records = (array) $this->doCall('User.GetClients');
+
+		// stop here if no records were set
+		if(empty($records)) return array();
+
+		// reserve variable
+		$results = array();
+		$i = 0;
+
+		// if CampaignID is set in the level below Campaign, we have 1 result, otherwise we have an array of results
+		$records = (isset($records['Client']['ClientID'])) ? $records : $records['Client'];
+
+		// loop the records
+		foreach($records as $record)
+		{
+			$results[$i]['id'] = $record['ClientID'];
+			$results[$i]['name'] = $record['Name'];
+			$i++;
+		}
+
+		// return the records
+		return $results;
 	}
 
 
@@ -1395,60 +1395,6 @@ class CampaignMonitor
 
 
 	/**
-	 * Returns the list stats
-	 *
-	 * @return	array
-	 * @param	string[optional] $listId	The ID of the list.
-	 */
-	public function getListStatistics($listId = null)
-	{
-		// set ID
-		$listId = empty($listId) ? $this->getListId() : $listId;
-
-		// set parameters
-		$parameters['ListID'] = (string) $listId;
-
-		// make the call
-		$record = (array) $this->doCall('List.GetStats', $parameters);
-
-		// stop here if no record was set
-		if(empty($record)) return array();
-
-		// reserve variable
-		$result = array();
-
-		// basic details
-		$result['total_subscribers'] = $record['TotalActiveSubscribers'];
-		$result['total_unsubscribers'] = $record['TotalUnsubscribes'];
-		$result['total_deleted'] = $record['TotalDeleted'];
-		$result['total_bounces'] = $record['TotalBounces'];
-		$result['subscribers_today'] = $record['NewActiveSubscribersToday'];
-		$result['subscribers_yesterday'] = $record['NewActiveSubscribersYesterday'];
-		$result['subscribers_week'] = $record['NewActiveSubscribersThisWeek'];
-		$result['subscribers_month'] = $record['NewActiveSubscribersThisMonth'];
-		$result['subscribers_year'] = $record['NewActiveSubscribersThisYear'];
-		$result['unsubscribers_today'] = $record['UnsubscribesToday'];
-		$result['unsubscribers_yesterday'] = $record['UnsubscribesYesterday'];
-		$result['unsubscribers_week'] = $record['UnsubscribesThisWeek'];
-		$result['unsubscribers_month'] = $record['UnsubscribesThisMonth'];
-		$result['unsubscribers_year'] = $record['UnsubscribesThisYear'];
-		$result['deleted_today'] = $record['DeletedToday'];
-		$result['deleted_yesterday'] = $record['DeletedYesterday'];
-		$result['deleted_week'] = $record['DeletedThisWeek'];
-		$result['deleted_month'] = $record['DeletedThisMonth'];
-		$result['deleted_year'] = $record['DeletedThisYear'];
-		$result['bounces_today'] = $record['BouncesToday'];
-		$result['bounces_yesterday'] = $record['BouncesYesterday'];
-		$result['bounces_week'] = $record['BouncesThisWeek'];
-		$result['bounces_month'] = $record['BouncesThisMonth'];
-		$result['bounces_year'] = $record['BouncesThisYear'];
-
-		// return the record
-		return $result;
-	}
-
-
-	/**
 	 * Returns a list of all subscriber lists for a campaign.
 	 *
 	 * @return	array
@@ -1519,6 +1465,60 @@ class CampaignMonitor
 
 		// return the records
 		return $results;
+	}
+
+
+	/**
+	 * Returns the list stats
+	 *
+	 * @return	array
+	 * @param	string[optional] $listId	The ID of the list.
+	 */
+	public function getListStatistics($listId = null)
+	{
+		// set ID
+		$listId = empty($listId) ? $this->getListId() : $listId;
+
+		// set parameters
+		$parameters['ListID'] = (string) $listId;
+
+		// make the call
+		$record = (array) $this->doCall('List.GetStats', $parameters);
+
+		// stop here if no record was set
+		if(empty($record)) return array();
+
+		// reserve variable
+		$result = array();
+
+		// basic details
+		$result['total_subscribers'] = $record['TotalActiveSubscribers'];
+		$result['total_unsubscribers'] = $record['TotalUnsubscribes'];
+		$result['total_deleted'] = $record['TotalDeleted'];
+		$result['total_bounces'] = $record['TotalBounces'];
+		$result['subscribers_today'] = $record['NewActiveSubscribersToday'];
+		$result['subscribers_yesterday'] = $record['NewActiveSubscribersYesterday'];
+		$result['subscribers_week'] = $record['NewActiveSubscribersThisWeek'];
+		$result['subscribers_month'] = $record['NewActiveSubscribersThisMonth'];
+		$result['subscribers_year'] = $record['NewActiveSubscribersThisYear'];
+		$result['unsubscribers_today'] = $record['UnsubscribesToday'];
+		$result['unsubscribers_yesterday'] = $record['UnsubscribesYesterday'];
+		$result['unsubscribers_week'] = $record['UnsubscribesThisWeek'];
+		$result['unsubscribers_month'] = $record['UnsubscribesThisMonth'];
+		$result['unsubscribers_year'] = $record['UnsubscribesThisYear'];
+		$result['deleted_today'] = $record['DeletedToday'];
+		$result['deleted_yesterday'] = $record['DeletedYesterday'];
+		$result['deleted_week'] = $record['DeletedThisWeek'];
+		$result['deleted_month'] = $record['DeletedThisMonth'];
+		$result['deleted_year'] = $record['DeletedThisYear'];
+		$result['bounces_today'] = $record['BouncesToday'];
+		$result['bounces_yesterday'] = $record['BouncesYesterday'];
+		$result['bounces_week'] = $record['BouncesThisWeek'];
+		$result['bounces_month'] = $record['BouncesThisMonth'];
+		$result['bounces_year'] = $record['BouncesThisYear'];
+
+		// return the record
+		return $result;
 	}
 
 

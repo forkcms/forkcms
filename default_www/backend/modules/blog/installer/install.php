@@ -14,6 +14,20 @@
 class BlogInstall extends ModuleInstaller
 {
 	/**
+	 * Add the default category for a language
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
+	 * @param	string $name		The name of the category.
+	 * @param	string $url			The URL for the category.
+	 */
+	private function addCategory($language, $name, $url)
+	{
+		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
+	}
+
+
+	/**
 	 * Install the module
 	 *
 	 * @return	void
@@ -208,20 +222,6 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogEmailNotificationsNewComment', '%1$s commented on <a href="%2$s">%3$s</a>.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogEmailNotificationsNewCommentToModerate', '%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'BlogNoItems', 'There are no articles yet.');
-	}
-
-
-	/**
-	 * Add the default category for a language
-	 *
-	 * @return	int
-	 * @param	string $language	The language to use.
-	 * @param	string $name		The name of the category.
-	 * @param	string $url			The URL for the category.
-	 */
-	private function addCategory($language, $name, $url)
-	{
-		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
 	}
 
 

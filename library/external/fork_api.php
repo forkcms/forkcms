@@ -199,17 +199,6 @@ class ForkAPI
 
 
 	/**
-	 * Get the public key
-	 *
-	 * @return	string
-	 */
-	private function getPublicKey()
-	{
-		return (string) $this->publicKey;
-	}
-
-
-	/**
 	 * Get the private key
 	 *
 	 * @return	string
@@ -217,6 +206,17 @@ class ForkAPI
 	private function getPrivateKey()
 	{
 		return (string) $this->privateKey;
+	}
+
+
+	/**
+	 * Get the public key
+	 *
+	 * @return	string
+	 */
+	private function getPublicKey()
+	{
+		return (string) $this->publicKey;
 	}
 
 
@@ -244,18 +244,6 @@ class ForkAPI
 
 
 	/**
-	 * Set the public key
-	 *
-	 * @return	void
-	 * @param	string $key		The public key.
-	 */
-	public function setPublicKey($key)
-	{
-		$this->publicKey = (string) $key;
-	}
-
-
-	/**
 	 * Set the private key
 	 *
 	 * @return	void
@@ -264,6 +252,18 @@ class ForkAPI
 	public function setPrivateKey($key)
 	{
 		$this->privateKey = (string) $key;
+	}
+
+
+	/**
+	 * Set the public key
+	 *
+	 * @return	void
+	 * @param	string $key		The public key.
+	 */
+	public function setPublicKey($key)
+	{
+		$this->publicKey = (string) $key;
 	}
 
 

@@ -28,6 +28,21 @@ class FrontendTestimonialsModel
 
 
 	/**
+	 * Get all testimonials.
+	 *
+	 * @return	array
+	 */
+	public static function getAll()
+	{
+		return (array) FrontendModel::getDB()->getRecords('SELECT *
+															FROM testimonials
+															WHERE hidden = ?
+															ORDER BY sequence',
+															array('N'));
+	}
+
+
+	/**
 	 * Get a random visible testimonial.
 	 *
 	 * @return	array
@@ -45,21 +60,6 @@ class FrontendTestimonialsModel
 
 		// return the testimonial with a random ID
 		return self::get($allIds[array_rand($allIds)]);
-	}
-
-
-	/**
-	 * Get all testimonials.
-	 *
-	 * @return	array
-	 */
-	public static function getAll()
-	{
-		return (array) FrontendModel::getDB()->getRecords('SELECT *
-															FROM testimonials
-															WHERE hidden = ?
-															ORDER BY sequence',
-															array('N'));
 	}
 }
 

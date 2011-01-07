@@ -293,18 +293,6 @@ class BackendLanguage
 
 
 	/**
-	 * Set the current working language
-	 *
-	 * @return	void
-	 * @param	string $language		The language to use, if not provided we will use the working language.
-	 */
-	public static function setWorkingLanguage($language)
-	{
-		self::$currentWorkingLanguage = (string) $language;
-	}
-
-
-	/**
 	 * Set locale
 	 * It will require the correct file and init the needed vars
 	 *
@@ -358,6 +346,18 @@ class BackendLanguage
 		self::$err = (array) $err;
 		self::$lbl = (array) $lbl;
 		self::$msg = (array) $msg;
+	}
+
+
+	/**
+	 * Set the current working language
+	 *
+	 * @return	void
+	 * @param	string $language		The language to use, if not provided we will use the working language.
+	 */
+	public static function setWorkingLanguage($language)
+	{
+		self::$currentWorkingLanguage = (string) $language;
 	}
 }
 

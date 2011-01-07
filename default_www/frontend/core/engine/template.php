@@ -493,6 +493,36 @@ class FrontendTemplateModifiers
 
 
 	/**
+	 * Get a given field for a page-record
+	 * 	syntax: {$var|getpageinfo:404:'title'}
+	 *
+	 * @return	string
+	 * @param	string[optional] $var			The string passed from the template.
+	 * @param	int $pageId						The id of the page to build the URL for.
+	 * @param	string[optional] $field			The field to get.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
+	 */
+	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
+	{
+		// redefine
+		$var = (string) $var;
+		$pageId = (int) $pageId;
+		$field = (string) $field;
+		$language = ($language !== null) ? (string) $language : null;
+
+		// get page
+		$page = FrontendNavigation::getPageInfo($pageId);
+
+		// validate
+		if(empty($page)) return '';
+		if(!isset($page[$field])) return '';
+
+		// return page info
+		return $page[$field];
+	}
+
+
+	/**
 	 * Get the subnavigation html
 	 * 	syntax: {$var|getsubnavigation[:<type>][:<parentId>][:<startdepth>][:<enddepth>][:<excludeIds-splitted-by-dash>]}
 	 *
@@ -544,36 +574,6 @@ class FrontendTemplateModifiers
 
 		// fallback
 		return $var;
-	}
-
-
-	/**
-	 * Get a given field for a page-record
-	 * 	syntax: {$var|getpageinfo:404:'title'}
-	 *
-	 * @return	string
-	 * @param	string[optional] $var			The string passed from the template.
-	 * @param	int $pageId						The id of the page to build the URL for.
-	 * @param	string[optional] $field			The field to get.
-	 * @param	string[optional] $language		The language to use, if not provided we will use the loaded language.
-	 */
-	public static function getPageInfo($var = null, $pageId, $field = 'title', $language = null)
-	{
-		// redefine
-		$var = (string) $var;
-		$pageId = (int) $pageId;
-		$field = (string) $field;
-		$language = ($language !== null) ? (string) $language : null;
-
-		// get page
-		$page = FrontendNavigation::getPageInfo($pageId);
-
-		// validate
-		if(empty($page)) return '';
-		if(!isset($page[$field])) return '';
-
-		// return page info
-		return $page[$field];
 	}
 
 

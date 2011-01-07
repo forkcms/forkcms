@@ -80,45 +80,6 @@ class SpoonXMLRPCClient
 
 
 	/**
-	 * Build the XML to send
-	 *
-	 * @return	string
-	 * @param	string $method					The method that should be called.
-	 * @param	array[optional] $parameters		The parameters.
-	 */
-	private function buildXML($method, array $parameters = array())
-	{
-		// redefine
-		$method = (string) $method;
-
-		// init var
-		$xml = '<?xml version="1.0"?>'."\n";
-		$xml .= '<methodCall>'."\n";
-
-		// add method
-		$xml .= '	<methodName>'. (string) $method .'</methodName>'."\n";
-
-		if(!empty($parameters))
-		{
-			// start parameters
-			$xml .= '	<params>'."\n";
-
-			// loop parameters and build parameters
-			foreach($parameters as $parameter) $xml .= '		<param>'. $this->buildValueXML($parameter) .'</param>'."\n";
-
-			// end parameters
-			$xml .= '	</params>'."\n";
-		}
-
-		// end XML
-		$xml .= '</methodCall>'."\n";
-
-		// return
-		return $xml;
-	}
-
-
-	/**
 	 * Build XML for a value
 	 *
 	 * @return	string
@@ -212,6 +173,45 @@ class SpoonXMLRPCClient
 			default:
 				throw new SpoonXMLRPCException('Invalid type ('. $parameter['type'] .').');
 		}
+	}
+
+
+	/**
+	 * Build the XML to send
+	 *
+	 * @return	string
+	 * @param	string $method					The method that should be called.
+	 * @param	array[optional] $parameters		The parameters.
+	 */
+	private function buildXML($method, array $parameters = array())
+	{
+		// redefine
+		$method = (string) $method;
+
+		// init var
+		$xml = '<?xml version="1.0"?>'."\n";
+		$xml .= '<methodCall>'."\n";
+
+		// add method
+		$xml .= '	<methodName>'. (string) $method .'</methodName>'."\n";
+
+		if(!empty($parameters))
+		{
+			// start parameters
+			$xml .= '	<params>'."\n";
+
+			// loop parameters and build parameters
+			foreach($parameters as $parameter) $xml .= '		<param>'. $this->buildValueXML($parameter) .'</param>'."\n";
+
+			// end parameters
+			$xml .= '	</params>'."\n";
+		}
+
+		// end XML
+		$xml .= '</methodCall>'."\n";
+
+		// return
+		return $xml;
 	}
 
 

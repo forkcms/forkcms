@@ -29,6 +29,45 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 
 
 	/**
+	 * Delete addresses
+	 *
+	 * @return	void
+	 */
+	private function deleteCustomFields()
+	{
+		// set the group fields by flipping the custom fields array for this group
+		$groupFields = array_flip($this->group['custom_fields']);
+
+		// group custom fields found
+		if(!empty($groupFields))
+		{
+			// loop the group fields and empty every value
+			foreach($groupFields as &$field) $field = '';
+		}
+
+		// loop the fields
+		foreach($this->fields as $field)
+		{
+			// check if the passed field is in the group's field list
+			if(isset($groupFields[$field]))
+			{
+				// delete the custom field in CM
+				BackendMailmotorCMHelper::deleteCustomField('['. $field .']', $this->group['id']);
+
+				// remove the field from the group's field listing
+				unset($groupFields[$field]);
+			}
+		}
+
+		// update custom fields for this group
+		BackendMailmotorModel::updateCustomFields($groupFields, $this->group['id']);
+
+		// redirect
+		$this->redirect(BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'] .'&report=deleted-custom-fields&var='. $this->group['name']);
+	}
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -69,45 +108,6 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 				break;
 			}
 		}
-	}
-
-
-	/**
-	 * Delete addresses
-	 *
-	 * @return	void
-	 */
-	private function deleteCustomFields()
-	{
-		// set the group fields by flipping the custom fields array for this group
-		$groupFields = array_flip($this->group['custom_fields']);
-
-		// group custom fields found
-		if(!empty($groupFields))
-		{
-			// loop the group fields and empty every value
-			foreach($groupFields as &$field) $field = '';
-		}
-
-		// loop the fields
-		foreach($this->fields as $field)
-		{
-			// check if the passed field is in the group's field list
-			if(isset($groupFields[$field]))
-			{
-				// delete the custom field in CM
-				BackendMailmotorCMHelper::deleteCustomField('['. $field .']', $this->group['id']);
-
-				// remove the field from the group's field listing
-				unset($groupFields[$field]);
-			}
-		}
-
-		// update custom fields for this group
-		BackendMailmotorModel::updateCustomFields($groupFields, $this->group['id']);
-
-		// redirect
-		$this->redirect(BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'] .'&report=deleted-custom-fields&var='. $this->group['name']);
 	}
 }
 

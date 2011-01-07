@@ -21,6 +21,28 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
 
 	/**
+	 * Generates and downloads the example CSV file
+	 *
+	 * @return	void
+	 */
+	private function downloadExampleFile()
+	{
+		// Should we download the example file or not?
+		$downloadExample = SpoonFilter::getGetValue('example', array(0, 1), 0, 'bool');
+
+		// stop here if no download parameter was given
+		if(!$downloadExample) return false;
+
+		// build the csv
+		$csv = array();
+		$csv[] = array('email' => BackendModel::getModuleSetting('mailmotor', 'from_email'), 'name' => BackendModel::getModuleSetting('mailmotor', 'from_name'));
+
+		// download the file
+		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ';', '"', true);
+	}
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -47,28 +69,6 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
 		// display the page
 		$this->display();
-	}
-
-
-	/**
-	 * Generates and downloads the example CSV file
-	 *
-	 * @return	void
-	 */
-	private function downloadExampleFile()
-	{
-		// Should we download the example file or not?
-		$downloadExample = SpoonFilter::getGetValue('example', array(0, 1), 0, 'bool');
-
-		// stop here if no download parameter was given
-		if(!$downloadExample) return false;
-
-		// build the csv
-		$csv = array();
-		$csv[] = array('email' => BackendModel::getModuleSetting('mailmotor', 'from_email'), 'name' => BackendModel::getModuleSetting('mailmotor', 'from_name'));
-
-		// download the file
-		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ';', '"', true);
 	}
 
 

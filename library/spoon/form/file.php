@@ -277,6 +277,23 @@ class SpoonFormFile extends SpoonFormAttributes
 
 
 	/**
+	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
+	 *
+	 * @return	bool
+	 * @param	string[optional] $error		The error message to set.
+	 */
+	public function isFilename($error = null)
+	{
+		// correct filename
+		if($this->isFilled() && SpoonFilter::isFilename($this->getFileName())) return true;
+
+		// has error
+		if($error !== null) $this->setError($error);
+		return false;
+	}
+
+
+	/**
 	 * Checks of the filesize is greater, equal or smaller than the given number + units.
 	 *
 	 * @return	bool
@@ -305,23 +322,6 @@ class SpoonFormFile extends SpoonFormAttributes
 			// greater
 			if($operator == 'greater' && $actualSize > $size) return true;
 		}
-
-		// has error
-		if($error !== null) $this->setError($error);
-		return false;
-	}
-
-
-	/**
-	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
-	 *
-	 * @return	bool
-	 * @param	string[optional] $error		The error message to set.
-	 */
-	public function isFilename($error = null)
-	{
-		// correct filename
-		if($this->isFilled() && SpoonFilter::isFilename($this->getFileName())) return true;
 
 		// has error
 		if($error !== null) $this->setError($error);

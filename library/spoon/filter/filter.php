@@ -262,12 +262,8 @@ class SpoonFilter
 				$value = (bool) $value;
 			break;
 
-			// double
+			// double/float
 			case 'double':
-				$value = (double) $value;
-			break;
-
-			// float
 			case 'float':
 				$value = (float) $value;
 			break;

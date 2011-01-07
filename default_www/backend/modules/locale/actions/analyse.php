@@ -70,6 +70,21 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 
 	/**
+	 * Get the passed key should be treated as a label we add it to the array
+	 *
+	 * @return	void
+	 * @param	mixed $value	The value of the element.
+	 * @param	mixed $key		The key of the element.
+	 * @param	array $items	The array to append the found values to.
+	 */
+	private static function getLabelsFromBackendNavigation($value, $key, $items)
+	{
+		// add if needed
+		if((string) $key == 'label') $items[] = $value;
+	}
+
+
+	/**
 	 * Get the filetree
 	 *
 	 * @return	array
@@ -703,21 +718,6 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 		// return
 		return $nonExisting;
-	}
-
-
-	/**
-	 * Get the passed key should be treated as a label we add it to the array
-	 *
-	 * @return	void
-	 * @param	mixed $value	The value of the element.
-	 * @param	mixed $key		The key of the element.
-	 * @param	array $items	The array to append the found values to.
-	 */
-	private static function getLabelsFromBackendNavigation($value, $key, $items)
-	{
-		// add if needed
-		if((string) $key == 'label') $items[] = $value;
 	}
 }
 

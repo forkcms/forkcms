@@ -44,24 +44,6 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Loads the datagrids for the blogposts
-	 *
-	 * @return	void
-	 */
-	private function loadDataGrids()
-	{
-		// all blogposts
-		$this->loadDatagridAllPosts();
-
-		// drafts
-		$this->loadDatagridDrafts();
-
-		// the most recent blogposts, only shown when we have more than 1 page in total
-		if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDatagridRecentPosts();
-	}
-
-
-	/**
 	 * Loads the datagrid with all the posts
 	 *
 	 * @return	void
@@ -162,6 +144,24 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));
+	}
+
+
+	/**
+	 * Loads the datagrids for the blogposts
+	 *
+	 * @return	void
+	 */
+	private function loadDataGrids()
+	{
+		// all blogposts
+		$this->loadDatagridAllPosts();
+
+		// drafts
+		$this->loadDatagridDrafts();
+
+		// the most recent blogposts, only shown when we have more than 1 page in total
+		if($this->dgPosts->getNumResults() > $this->dgPosts->getPagingLimit()) $this->loadDatagridRecentPosts();
 	}
 
 

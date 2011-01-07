@@ -69,24 +69,6 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// validate form
-		$this->validateForm();
-
-		// display
-		$this->display();
-	}
-
-
-	/**
 	 * Display
 	 *
 	 * @return	void
@@ -108,6 +90,24 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 
 		// parse
 		$this->parse();
+	}
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// validate form
+		$this->validateForm();
+
+		// display
+		$this->display();
 	}
 
 

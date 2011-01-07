@@ -29,19 +29,6 @@
 class SpoonDirectory
 {
 	/**
-	 * Creates a folder with the given chmod settings.
-	 *
-	 * @return	bool						True if the directory was created, false if not.
-	 * @param	string $directory			The name for the directory.
-	 * @param	string[optional] $chmod		Mode that will be applied on the directory.
-	 */
-	public static function create($directory, $chmod = 0777)
-	{
-		return @mkdir((string) $directory, $chmod, true);
-	}
-
-
-	/**
 	 * Copies a file/folder.
 	 *
 	 * @return	bool						True if the file/directory was copied, false if not.
@@ -141,6 +128,19 @@ class SpoonDirectory
 
 		// return
 		return true;
+	}
+
+
+	/**
+	 * Creates a folder with the given chmod settings.
+	 *
+	 * @return	bool						True if the directory was created, false if not.
+	 * @param	string $directory			The name for the directory.
+	 * @param	string[optional] $chmod		Mode that will be applied on the directory.
+	 */
+	public static function create($directory, $chmod = 0777)
+	{
+		return @mkdir((string) $directory, $chmod, true);
 	}
 
 

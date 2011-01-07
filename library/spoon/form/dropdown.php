@@ -612,18 +612,6 @@ class SpoonFormDropdown extends SpoonFormAttributes
 
 
 	/**
-	 * Whether you can select one or more items.
-	 *
-	 * @return	void
-	 * @param	bool[optional] $single	Only selecting one element is allowed?
-	 */
-	public function setSingle($single = true)
-	{
-		$this->single = (bool) $single;
-	}
-
-
-	/**
 	 * Set the default selected item(s).
 	 *
 	 * @return	void
@@ -650,6 +638,18 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			// multiple selections
 			else $this->selected[] = (string) $selected;
 		}
+	}
+
+
+	/**
+	 * Whether you can select one or more items.
+	 *
+	 * @return	void
+	 * @param	bool[optional] $single	Only selecting one element is allowed?
+	 */
+	public function setSingle($single = true)
+	{
+		$this->single = (bool) $single;
 	}
 
 

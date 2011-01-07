@@ -29,45 +29,6 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// action to execute
-		$action = SpoonFilter::getGetValue('action', array('delete', 'export'), '');
-		$this->groupId = SpoonFilter::getGetValue('group_id', null, '');
-
-		// no id's provided
-		if(!$action) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=no-action-selected');
-		if(!isset($_GET['emails'])) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=no-items-selected');
-
-		// at least one id
-		else
-		{
-			// redefine id's
-			$this->emails = (array) $_GET['emails'];
-
-			// evaluate $action, see what action was triggered
-			switch($action)
-			{
-				case 'delete':
-					$this->deleteAddresses();
-				break;
-
-				case 'export':
-					$this->exportAddresses();
-				break;
-			}
-		}
-	}
-
-
-	/**
 	 * Delete addresses
 	 *
 	 * @return	void
@@ -115,6 +76,45 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 
 		// redirect
 		$this->redirect(BackendModel::createURLForAction('addresses') .'&report=delete_addresses'. (!empty($this->groupId) ? '&group_id='. $this->groupId : ''));
+	}
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// action to execute
+		$action = SpoonFilter::getGetValue('action', array('delete', 'export'), '');
+		$this->groupId = SpoonFilter::getGetValue('group_id', null, '');
+
+		// no id's provided
+		if(!$action) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=no-action-selected');
+		if(!isset($_GET['emails'])) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=no-items-selected');
+
+		// at least one id
+		else
+		{
+			// redefine id's
+			$this->emails = (array) $_GET['emails'];
+
+			// evaluate $action, see what action was triggered
+			switch($action)
+			{
+				case 'delete':
+					$this->deleteAddresses();
+				break;
+
+				case 'export':
+					$this->exportAddresses();
+				break;
+			}
+		}
 	}
 
 

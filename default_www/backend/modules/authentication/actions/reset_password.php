@@ -71,25 +71,6 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 
 
 	/**
-	 * Load the form
-	 *
-	 * @return	void
-	 */
-	private function loadForm()
-	{
-		// create the form
-		$this->frm = new BackendForm();
-
-		// create elements and add to the form
-		$this->frm->addPassword('backend_new_password');
-		$this->frm->addPassword('backend_new_password_repeated');
-
-		$this->frm->getField('backend_new_password')->setAttributes(array('autocomplete' => 'off'));
-		$this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
-	}
-
-
-	/**
 	 * The user is allowed on this page
 	 *
 	 * @return	bool
@@ -124,6 +105,25 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 
 		// if we made it here the user is not allowed to access this page
 		return false;
+	}
+
+
+	/**
+	 * Load the form
+	 *
+	 * @return	void
+	 */
+	private function loadForm()
+	{
+		// create the form
+		$this->frm = new BackendForm();
+
+		// create elements and add to the form
+		$this->frm->addPassword('backend_new_password');
+		$this->frm->addPassword('backend_new_password_repeated');
+
+		$this->frm->getField('backend_new_password')->setAttributes(array('autocomplete' => 'off'));
+		$this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
 	}
 
 

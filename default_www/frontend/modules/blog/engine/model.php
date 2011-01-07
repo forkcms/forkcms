@@ -640,6 +640,56 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 
 	/**
+	 * Inserts a new comment
+	 *
+	 * @return	int
+	 * @param	array $comment	The comment to add.
+	 */
+	public static function insertComment(array $comment)
+	{
+		// get db
+		$db = FrontendModel::getDB(true);
+
+		// insert comment
+		$comment['id'] = (int) $db->insert('blog_comments', $comment);
+
+		// recalculate if published
+		if($comment['status'] == 'published')
+		{
+			// num comments
+			$numComments = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS comment_count
+																	FROM blog_comments AS i
+																	INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+																	WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
+																	GROUP BY i.post_id',
+																	array('published', $comment['post_id'], FRONTEND_LANGUAGE, 'active'));
+
+			// update num comments
+			$db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
+		}
+
+		// return new id
+		return $comment['id'];
+	}
+
+
+	/**
+	 * Get moderation status for an author
+	 *
+	 * @return	bool
+	 * @param	string $author	The name for the author.
+	 * @param	string $email	The emailaddress for the author.
+	 */
+	public static function isModerated($author, $email)
+	{
+		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(c.id)
+														FROM blog_comments AS c
+														WHERE c.status = ? AND c.author = ? AND c.email = ?',
+														array('published', (string) $author, (string) $email));
+	}
+
+
+	/**
 	 * Notify the admin
 	 *
 	 * @return	void
@@ -708,56 +758,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 			// send the mail
 			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
 		}
-	}
-
-
-	/**
-	 * Inserts a new comment
-	 *
-	 * @return	int
-	 * @param	array $comment	The comment to add.
-	 */
-	public static function insertComment(array $comment)
-	{
-		// get db
-		$db = FrontendModel::getDB(true);
-
-		// insert comment
-		$comment['id'] = (int) $db->insert('blog_comments', $comment);
-
-		// recalculate if published
-		if($comment['status'] == 'published')
-		{
-			// num comments
-			$numComments = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS comment_count
-																	FROM blog_comments AS i
-																	INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-																	WHERE i.status = ? AND i.post_id = ? AND i.language = ? AND p.status = ?
-																	GROUP BY i.post_id',
-																	array('published', $comment['post_id'], FRONTEND_LANGUAGE, 'active'));
-
-			// update num comments
-			$db->update('blog_posts', array('num_comments' => $numComments), 'id = ?', $comment['post_id']);
-		}
-
-		// return new id
-		return $comment['id'];
-	}
-
-
-	/**
-	 * Get moderation status for an author
-	 *
-	 * @return	bool
-	 * @param	string $author	The name for the author.
-	 * @param	string $email	The emailaddress for the author.
-	 */
-	public static function isModerated($author, $email)
-	{
-		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(c.id)
-														FROM blog_comments AS c
-														WHERE c.status = ? AND c.author = ? AND c.email = ?',
-														array('published', (string) $author, (string) $email));
 	}
 
 

@@ -93,6 +93,53 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 
 
 	/**
+	 * Process links, will prepend SITE_URL if needed and append UTM-parameters
+	 *
+	 * @return	string
+	 * @param	string $content		The content to process.
+	 */
+	public function processLinks($content)
+	{
+		// redefine
+		$content = (string) $content;
+
+		// replace URLs and images
+		$search = array('href="/', 'src="/');
+		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
+
+		// replace links to files
+		$content = str_replace($search, $replace, $content);
+
+		// init var
+		$matches = array();
+
+		// match links
+		preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
+
+		// any links?
+		if(isset($matches[1]) && !empty($matches[1]))
+		{
+			// init vars
+			$searchLinks = array();
+			$replaceLinks = array();
+
+			// loop old links
+			foreach($matches[1] as $i => $link)
+			{
+				$searchLinks[] = $matches[0][$i];
+				$replaceLinks[] = 'href="'. FrontendModel::addURLParameters($link, $this->utm) .'"';
+			}
+
+			// replace
+			$content = str_replace($searchLinks, $replaceLinks, $content);
+		}
+
+		// return content
+		return $content;
+	}
+
+
+	/**
 	 * Set the author.
 	 *
 	 * @return	void
@@ -171,52 +218,6 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		parent::setLink($link);
 	}
 
-
-	/**
-	 * Process links, will prepend SITE_URL if needed and append UTM-parameters
-	 *
-	 * @return	string
-	 * @param	string $content		The content to process.
-	 */
-	public function processLinks($content)
-	{
-		// redefine
-		$content = (string) $content;
-
-		// replace URLs and images
-		$search = array('href="/', 'src="/');
-		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
-
-		// replace links to files
-		$content = str_replace($search, $replace, $content);
-
-		// init var
-		$matches = array();
-
-		// match links
-		preg_match_all('/href="(http:\/\/(.*))"/iU', $content, $matches);
-
-		// any links?
-		if(isset($matches[1]) && !empty($matches[1]))
-		{
-			// init vars
-			$searchLinks = array();
-			$replaceLinks = array();
-
-			// loop old links
-			foreach($matches[1] as $i => $link)
-			{
-				$searchLinks[] = $matches[0][$i];
-				$replaceLinks[] = 'href="'. FrontendModel::addURLParameters($link, $this->utm) .'"';
-			}
-
-			// replace
-			$content = str_replace($searchLinks, $replaceLinks, $content);
-		}
-
-		// return content
-		return $content;
-	}
 }
 
 ?>

@@ -69,27 +69,6 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent
-		parent::execute();
-
-		// load template
-		$this->loadTemplate();
-
-		// validate form
-		$this->validateForm();
-
-		// display
-		$this->display();
-	}
-
-
-	/**
 	 * Display
 	 *
 	 * @return	void
@@ -114,6 +93,27 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 
 		// output
 		$this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH .'/modules/search/layout/templates/results.tpl', false, true));
+	}
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent
+		parent::execute();
+
+		// load template
+		$this->loadTemplate();
+
+		// validate form
+		$this->validateForm();
+
+		// display
+		$this->display();
 	}
 
 

@@ -73,92 +73,6 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 
 
 	/**
-	 * Parses the data to make the line-chart
-	 *
-	 * @return	void
-	 */
-	private function parseLineChartData()
-	{
-		// init vars
-		$maxYAxis = 2;
-		$metrics = array('visitors', 'pageviews');
-		$graphData = array();
-
-		// get metrics per day
-		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
-
-		// loop metrics
-		foreach($metrics as $i => $metric)
-		{
-			// build graph data array
-			$graphData[$i] = array();
-			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
-			$graphData[$i]['i'] = $i + 1;
-			$graphData[$i]['data'] = array();
-
-			// loop metrics per day
-			foreach($metricsPerDay as $j => $data)
-			{
-				// cast SimpleXMLElement to array
-				$data = (array) $data;
-
-				// build array
-				$graphData[$i]['data'][$j]['date'] = (int) $data['timestamp'];
-				$graphData[$i]['data'][$j]['value'] = (string) $data[$metric];
-			}
-		}
-
-		// loop the metrics
-		foreach($graphData as $metric)
-		{
-			// loop the data
-			foreach($metric['data'] as $data)
-			{
-				// get the maximum value
-				if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
-			}
-		}
-
-		// parse
-		$this->tpl->assign('maxYAxis', $maxYAxis);
-		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
-		$this->tpl->assign('graphData', $graphData);
-	}
-
-
-	/**
-	 * Parses the data to make the pie-chart
-	 *
-	 * @return	void
-	 */
-	private function parsePieChartData()
-	{
-		// get sources
-		$sources = BackendAnalyticsModel::getTrafficSourcesGrouped($this->startTimestamp, $this->endTimestamp);
-
-		// init vars
-		$graphData = array();
-
-		// loop metrics
-		foreach($sources as $i => $source)
-		{
-			// get label
-			$label = BL::getLabel(SpoonFilter::toCamelCase($source['label']), 'analytics');
-			if($label == '{$lblAnalytics'. SpoonFilter::toCamelCase($source['label']) .'}') $label = $source['label'];
-
-			// build array
-			$graphData[$i]['label'] = ucfirst($label);
-			$graphData[$i]['value'] = (string) $source['value'];
-			$graphData[$i]['percentage'] = (string) $source['percentage'];
-		}
-
-		// parse
-		$this->tpl->assign('pieGraphData', $graphData);
-	}
-
-
-	/**
 	 * Parses the most important keywords
 	 *
 	 * @return	void
@@ -219,6 +133,61 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			// parse the datagrid
 			$this->tpl->assign('dgReferrers', $datagrid->getContent());
 		}
+	}
+
+
+	/**
+	 * Parses the data to make the line-chart
+	 *
+	 * @return	void
+	 */
+	private function parseLineChartData()
+	{
+		// init vars
+		$maxYAxis = 2;
+		$metrics = array('visitors', 'pageviews');
+		$graphData = array();
+
+		// get metrics per day
+		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
+
+		// loop metrics
+		foreach($metrics as $i => $metric)
+		{
+			// build graph data array
+			$graphData[$i] = array();
+			$graphData[$i]['title'] = $metric;
+			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['i'] = $i + 1;
+			$graphData[$i]['data'] = array();
+
+			// loop metrics per day
+			foreach($metricsPerDay as $j => $data)
+			{
+				// cast SimpleXMLElement to array
+				$data = (array) $data;
+
+				// build array
+				$graphData[$i]['data'][$j]['date'] = (int) $data['timestamp'];
+				$graphData[$i]['data'][$j]['value'] = (string) $data[$metric];
+			}
+		}
+
+		// loop the metrics
+		foreach($graphData as $metric)
+		{
+			// loop the data
+			foreach($metric['data'] as $data)
+			{
+				// get the maximum value
+				if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+			}
+		}
+
+		// parse
+		$this->tpl->assign('maxYAxis', $maxYAxis);
+		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
+		$this->tpl->assign('graphData', $graphData);
 	}
 
 
@@ -287,6 +256,37 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$this->tpl->assign('bouncesTotal', $bouncesTotal);
 			$this->tpl->assign('bouncesDifference', $bouncesDifference);
 		}
+	}
+
+
+	/**
+	 * Parses the data to make the pie-chart
+	 *
+	 * @return	void
+	 */
+	private function parsePieChartData()
+	{
+		// get sources
+		$sources = BackendAnalyticsModel::getTrafficSourcesGrouped($this->startTimestamp, $this->endTimestamp);
+
+		// init vars
+		$graphData = array();
+
+		// loop metrics
+		foreach($sources as $i => $source)
+		{
+			// get label
+			$label = BL::getLabel(SpoonFilter::toCamelCase($source['label']), 'analytics');
+			if($label == '{$lblAnalytics'. SpoonFilter::toCamelCase($source['label']) .'}') $label = $source['label'];
+
+			// build array
+			$graphData[$i]['label'] = ucfirst($label);
+			$graphData[$i]['value'] = (string) $source['value'];
+			$graphData[$i]['percentage'] = (string) $source['percentage'];
+		}
+
+		// parse
+		$this->tpl->assign('pieGraphData', $graphData);
 	}
 }
 

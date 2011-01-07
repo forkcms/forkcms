@@ -36,43 +36,6 @@ class BackendMailmotorCMHelper
 
 
 	/**
-	 * Returns the CampaignMonitor object.
-	 *
-	 * @return	CampaignMonitor
-	 */
-	public static function getCM()
-	{
-		// campaignmonitor reference exists
-		if(!Spoon::isObjectReference('campaignmonitor'))
-		{
-			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
-			{
-				// the class doesn't exist, so throw an exception
-				throw new SpoonFileException(BL::getError('ClassDoesNotExist', 'mailmotor'));
-			}
-
-			// require CampaignMonitor class
-			require_once 'external/campaignmonitor.php';
-
-			// set login data
-			$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
-			$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
-			$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
-
-			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
-
-			// set CampaignMonitor object reference
-			Spoon::setObjectReference('campaignmonitor', $cm);
-		}
-
-		// return the CampaignMonitor object
-		return Spoon::getObjectReference('campaignmonitor');
-	}
-
-
-	/**
 	 * Creates a new client
 	 *
 	 * @return	void
@@ -319,6 +282,43 @@ class BackendMailmotorCMHelper
 	public static function getClientID()
 	{
 		return (string) BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+	}
+
+
+	/**
+	 * Returns the CampaignMonitor object.
+	 *
+	 * @return	CampaignMonitor
+	 */
+	public static function getCM()
+	{
+		// campaignmonitor reference exists
+		if(!Spoon::isObjectReference('campaignmonitor'))
+		{
+			// check if the CampaignMonitor class exists
+			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
+			{
+				// the class doesn't exist, so throw an exception
+				throw new SpoonFileException(BL::getError('ClassDoesNotExist', 'mailmotor'));
+			}
+
+			// require CampaignMonitor class
+			require_once 'external/campaignmonitor.php';
+
+			// set login data
+			$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
+			$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
+			$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
+
+			// init CampaignMonitor object
+			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
+
+			// set CampaignMonitor object reference
+			Spoon::setObjectReference('campaignmonitor', $cm);
+		}
+
+		// return the CampaignMonitor object
+		return Spoon::getObjectReference('campaignmonitor');
 	}
 
 
@@ -889,6 +889,43 @@ class BackendMailmotorCMHelper
 
 
 	/**
+	 * Updates a client
+	 *
+	 * @return	void
+	 * @param	string $companyName			The client company name.
+	 * @param	string $contactName			The personal name of the principle contact for this client.
+	 * @param	string $email				An email address to which this client will be sent application-related emails.
+	 * @param	string[optional] $country	This client’s country.
+	 * @param	string[optional] $timezone	Client timezone for tracking and reporting data.
+	 */
+	public static function updateClient($companyName, $contactName, $email, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
+	{
+		// update client
+		self::getCM()->updateClientBasics($companyName, $contactName, $email, $country, $timezone);
+	}
+
+
+	/**
+	 * Updates a list with campaignmonitor and in the database. Returns the affected rows
+	 *
+	 * @return	int
+	 * @param	array $item		The new data.
+	 */
+	public static function updateGroup($item)
+	{
+		// build unsubscribe link for this list
+		$unsubscribeLink = SITE_URL . BackendModel::getURLForBlock('mailmotor', 'unsubscribe', BL::getWorkingLanguage());
+
+		// a list was updated
+		if(self::getCM()->updateList($item['name'], $unsubscribeLink .'/?group='. $item['id'] .'&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id'])))
+		{
+			// update in database
+			return (int) BackendMailmotorModel::updateGroup($item);
+		}
+	}
+
+
+	/**
 	 * Updates a mailing
 	 *
 	 * @return	void
@@ -927,43 +964,6 @@ class BackendMailmotorCMHelper
 
 		// reinsert the groups for this mailing
 		BackendMailmotorModel::updateGroupsForMailing($id, $groups);
-	}
-
-
-	/**
-	 * Updates a client
-	 *
-	 * @return	void
-	 * @param	string $companyName			The client company name.
-	 * @param	string $contactName			The personal name of the principle contact for this client.
-	 * @param	string $email				An email address to which this client will be sent application-related emails.
-	 * @param	string[optional] $country	This client’s country.
-	 * @param	string[optional] $timezone	Client timezone for tracking and reporting data.
-	 */
-	public static function updateClient($companyName, $contactName, $email, $country = 'Belgium', $timezone = '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris')
-	{
-		// update client
-		self::getCM()->updateClientBasics($companyName, $contactName, $email, $country, $timezone);
-	}
-
-
-	/**
-	 * Updates a list with campaignmonitor and in the database. Returns the affected rows
-	 *
-	 * @return	int
-	 * @param	array $item		The new data.
-	 */
-	public static function updateGroup($item)
-	{
-		// build unsubscribe link for this list
-		$unsubscribeLink = SITE_URL . BackendModel::getURLForBlock('mailmotor', 'unsubscribe', BL::getWorkingLanguage());
-
-		// a list was updated
-		if(self::getCM()->updateList($item['name'], $unsubscribeLink .'/?group='. $item['id'] .'&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id'])))
-		{
-			// update in database
-			return (int) BackendMailmotorModel::updateGroup($item);
-		}
 	}
 }
 

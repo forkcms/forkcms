@@ -118,21 +118,6 @@ class FrontendTagsModel
 
 
 	/**
-	 * Get the tag-id for a given URL
-	 *
-	 * @return	int
-	 * @param	string $URL		The URL to get the id for.
-	 */
-	public static function getIdByURL($URL)
-	{
-		return (int) FrontendModel::getDB()->getVar('SELECT id
-														FROM tags
-														WHERE url = ?',
-														array((string) $URL));
-	}
-
-
-	/**
 	 * Get tags for multiple items.
 	 *
 	 * @return	array
@@ -175,6 +160,21 @@ class FrontendTagsModel
 
 		// return
 		return $return;
+	}
+
+
+	/**
+	 * Get the tag-id for a given URL
+	 *
+	 * @return	int
+	 * @param	string $URL		The URL to get the id for.
+	 */
+	public static function getIdByURL($URL)
+	{
+		return (int) FrontendModel::getDB()->getVar('SELECT id
+														FROM tags
+														WHERE url = ?',
+														array((string) $URL));
 	}
 
 

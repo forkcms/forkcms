@@ -77,6 +77,31 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 
 	/**
+	 * Display
+	 *
+	 * @return	void
+	 */
+	private function display()
+	{
+		// set variables
+		$this->requestedPage = $this->URL->getParameter('page', 'int', 1);
+		$this->limit = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
+		$this->offset = ($this->requestedPage * $this->limit) - $this->limit;
+		$this->cacheFile = FRONTEND_CACHE_PATH .'/'. $this->getModule() .'/'. FRONTEND_LANGUAGE .'_'. md5($this->term) .'_'. $this->offset .'_'. $this->limit .'.php';
+
+		// load the cached data
+		if(!$this->getCachedData())
+		{
+			// ... or load the real data
+			$this->getRealData();
+		}
+
+		// parse
+		$this->parse();
+	}
+
+
+	/**
 	 * Execute the extra
 	 *
 	 * @return	void
@@ -100,31 +125,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 		// save statistics
 		$this->saveStatistics();
-	}
-
-
-	/**
-	 * Display
-	 *
-	 * @return	void
-	 */
-	private function display()
-	{
-		// set variables
-		$this->requestedPage = $this->URL->getParameter('page', 'int', 1);
-		$this->limit = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
-		$this->offset = ($this->requestedPage * $this->limit) - $this->limit;
-		$this->cacheFile = FRONTEND_CACHE_PATH .'/'. $this->getModule() .'/'. FRONTEND_LANGUAGE .'_'. md5($this->term) .'_'. $this->offset .'_'. $this->limit .'.php';
-
-		// load the cached data
-		if(!$this->getCachedData())
-		{
-			// ... or load the real data
-			$this->getRealData();
-		}
-
-		// parse
-		$this->parse();
 	}
 
 

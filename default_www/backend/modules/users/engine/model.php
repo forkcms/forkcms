@@ -304,6 +304,42 @@ class BackendUsersModel
 
 
 	/**
+	 * Restores a user
+	 * @later	this method should check if all needed data is present
+	 *
+	 * @return	bool
+	 * @param	string $email	The e-mail adress of the user to restore.
+	 */
+	public static function undoDelete($email)
+	{
+		// redefine
+		$email = (string) $email;
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get id
+		$id = $db->getVar('SELECT id
+							FROM users AS i
+							INNER JOIN users_settings AS s ON i.id = s.user_id
+							WHERE i.email = ? AND i.deleted = ?',
+							array($email, 'Y'));
+
+		// no valid users
+		if($id === null) return false;
+
+		else
+		{
+			// restore
+			$db->update('users', array('active' => 'Y', 'deleted' => 'N'), 'id = ?', (int) $id);
+
+			// return
+			return true;
+		}
+	}
+
+
+	/**
 	 * Save the changes for a given user
 	 * Remark: $user['id'] should be available
 	 *
@@ -352,43 +388,6 @@ class BackendUsersModel
 
 		// remove the user settings linked to the resetting of passwords
 		self::deleteResetPasswordSettings($userId);
-	}
-
-
-	/**
-	 * Restores a user
-	 * @later	this method should check if all needed data is present
-	 *
-	 * @return	bool
-	 * @param	string $email	The e-mail adress of the user to restore.
-	 */
-	public static function undoDelete($email)
-	{
-		// redefine
-		$email = (string) $email;
-
-		// get db
-		$db = BackendModel::getDB(true);
-
-		// get id
-		$id = $db->getVar('SELECT id
-							FROM users AS i
-							INNER JOIN users_settings AS s ON i.id = s.user_id
-							WHERE i.email = ? AND i.deleted = ?',
-							array($email, 'Y'));
-
-		// no valid users
-		if($id === null) return false;
-
-		else
-		{
-			// restore
-			$db->update('users', array('active' => 'Y', 'deleted' => 'N'), 'id = ?', (int) $id);
-
-			// return
-			return true;
-		}
-
 	}
 }
 

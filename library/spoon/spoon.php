@@ -87,6 +87,74 @@ class Spoon
 
 
 	/**
+	 * Spoon autoloader
+	 *
+	 * @return	void
+	 * @param	string $class	The class that should be loaded.
+	 */
+	public static function autoLoader($class)
+	{
+		// redefine class
+		$class = strtolower($class);
+
+		// list of classes and their location
+		$classes = array();
+		$classes['spooncookie'] = 'cookie/cookie.php';
+		$classes['spoondatabase'] = 'database/database.php';
+		$classes['spoondatagrid'] = 'datagrid/datagrid.php';
+		$classes['spoondatagridcolumn'] = 'datagrid/column.php';
+		$classes['ispoondatagridpaging'] = 'datagrid/paging.php';
+		$classes['spoondatagridpaging'] = 'datagrid/paging.php';
+		$classes['spoondatagridsource'] = 'datagrid/source.php';
+		$classes['spoondatagridsourcearray'] = 'datagrid/source_array.php';
+		$classes['spoondatagridsourcedb'] = 'datagrid/source_db.php';
+		$classes['spoondate'] = 'date/date.php';
+		$classes['spoondirectory'] = 'directory/directory.php';
+		$classes['spoonemail'] = 'email/email.php';
+		$classes['spoonemailsmtp'] = 'email/smtp.php';
+		$classes['spoonfeedexception'] = 'feed/exception.php';
+		$classes['spoonfeedrss'] = 'feed/rss.php';
+		$classes['spoonfeedrssitem'] = 'feed/rss_item.php';
+		$classes['spoonfile'] = 'file/file.php';
+		$classes['spoonfilecsv'] = 'file/csv.php';
+		$classes['spoonfilter'] = 'filter/filter.php';
+		$classes['spoonform'] = 'form/form.php';
+		$classes['spoonformattributes'] = 'form/attributes.php';
+		$classes['spoonformbutton'] = 'form/button.php';
+		$classes['spoonformcheckbox'] = 'form/checkbox.php';
+		$classes['spoonformdate'] = 'form/date.php';
+		$classes['spoonformdropdown'] = 'form/dropdown.php';
+		$classes['spoonformelement'] = 'form/element.php';
+		$classes['spoonformfile'] = 'form/file.php';
+		$classes['spoonformhidden'] = 'form/hidden.php';
+		$classes['spoonformimage'] = 'form/image.php';
+		$classes['spoonforminput'] = 'form/input.php';
+		$classes['spoonformmulticheckbox'] = 'form/multi_checkbox.php';
+		$classes['spoonformpassword'] = 'form/password.php';
+		$classes['spoonformradiobutton'] = 'form/radiobutton.php';
+		$classes['spoonformtext'] = 'form/text.php';
+		$classes['spoonformtextarea'] = 'form/textarea.php';
+		$classes['spoonformtime'] = 'form/time.php';
+		$classes['spoonhttp'] = 'http/http.php';
+		$classes['spoonlocale'] = 'locale/locale.php';
+		$classes['spoonlog'] = 'log/log.php';
+		$classes['spoonrestclient'] = 'rest/client.php';
+		$classes['spoonsession'] = 'session/session.php';
+		$classes['spoontemplate'] = 'template/template.php';
+		$classes['spoontemplatecompiler'] = 'template/compiler.php';
+		$classes['spoontemplatemodifiers'] = 'template/modifiers.php';
+		$classes['spoonthumbnail'] = 'thumbnail/thumbnail.php';
+		$classes['spoonxmlrpcclient'] = 'xmlrpc/client.php';
+
+		// path
+		$path = dirname(realpath(__FILE__));
+
+		// does this file exist?
+		if(isset($classes[$class]) && file_exists($path .'/'. $classes[$class])) require_once $path .'/'. $classes[$class];
+	}
+
+
+	/**
 	 * Dumps the output of a variable in a more readable manner.
 	 *
 	 * @return	void
@@ -176,74 +244,6 @@ class Spoon
 
 		// object exists
 		unset(self::$registry[$name]);
-	}
-
-
-	/**
-	 * Spoon autoloader
-	 *
-	 * @return	void
-	 * @param	string $class	The class that should be loaded.
-	 */
-	public static function autoLoader($class)
-	{
-		// redefine class
-		$class = strtolower($class);
-
-		// list of classes and their location
-		$classes = array();
-		$classes['spooncookie'] = 'cookie/cookie.php';
-		$classes['spoondatabase'] = 'database/database.php';
-		$classes['spoondatagrid'] = 'datagrid/datagrid.php';
-		$classes['spoondatagridcolumn'] = 'datagrid/column.php';
-		$classes['ispoondatagridpaging'] = 'datagrid/paging.php';
-		$classes['spoondatagridpaging'] = 'datagrid/paging.php';
-		$classes['spoondatagridsource'] = 'datagrid/source.php';
-		$classes['spoondatagridsourcearray'] = 'datagrid/source_array.php';
-		$classes['spoondatagridsourcedb'] = 'datagrid/source_db.php';
-		$classes['spoondate'] = 'date/date.php';
-		$classes['spoondirectory'] = 'directory/directory.php';
-		$classes['spoonemail'] = 'email/email.php';
-		$classes['spoonemailsmtp'] = 'email/smtp.php';
-		$classes['spoonfeedexception'] = 'feed/exception.php';
-		$classes['spoonfeedrss'] = 'feed/rss.php';
-		$classes['spoonfeedrssitem'] = 'feed/rss_item.php';
-		$classes['spoonfile'] = 'file/file.php';
-		$classes['spoonfilecsv'] = 'file/csv.php';
-		$classes['spoonfilter'] = 'filter/filter.php';
-		$classes['spoonform'] = 'form/form.php';
-		$classes['spoonformattributes'] = 'form/attributes.php';
-		$classes['spoonformbutton'] = 'form/button.php';
-		$classes['spoonformcheckbox'] = 'form/checkbox.php';
-		$classes['spoonformdate'] = 'form/date.php';
-		$classes['spoonformdropdown'] = 'form/dropdown.php';
-		$classes['spoonformelement'] = 'form/element.php';
-		$classes['spoonformfile'] = 'form/file.php';
-		$classes['spoonformhidden'] = 'form/hidden.php';
-		$classes['spoonformimage'] = 'form/image.php';
-		$classes['spoonforminput'] = 'form/input.php';
-		$classes['spoonformmulticheckbox'] = 'form/multi_checkbox.php';
-		$classes['spoonformpassword'] = 'form/password.php';
-		$classes['spoonformradiobutton'] = 'form/radiobutton.php';
-		$classes['spoonformtext'] = 'form/text.php';
-		$classes['spoonformtextarea'] = 'form/textarea.php';
-		$classes['spoonformtime'] = 'form/time.php';
-		$classes['spoonhttp'] = 'http/http.php';
-		$classes['spoonlocale'] = 'locale/locale.php';
-		$classes['spoonlog'] = 'log/log.php';
-		$classes['spoonrestclient'] = 'rest/client.php';
-		$classes['spoonsession'] = 'session/session.php';
-		$classes['spoontemplate'] = 'template/template.php';
-		$classes['spoontemplatecompiler'] = 'template/compiler.php';
-		$classes['spoontemplatemodifiers'] = 'template/modifiers.php';
-		$classes['spoonthumbnail'] = 'thumbnail/thumbnail.php';
-		$classes['spoonxmlrpcclient'] = 'xmlrpc/client.php';
-
-		// path
-		$path = dirname(realpath(__FILE__));
-
-		// does this file exist?
-		if(isset($classes[$class]) && file_exists($path .'/'. $classes[$class])) require_once $path .'/'. $classes[$class];
 	}
 
 

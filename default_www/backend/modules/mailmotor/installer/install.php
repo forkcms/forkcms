@@ -53,42 +53,6 @@ class MailmotorInstall extends ModuleInstaller
 
 
 	/**
-	 * Install settings
-	 *
-	 * @return	void
-	 */
-	private function installSettings()
-	{
-		// add 'blog' as a module
-		$this->addModule('mailmotor', 'The module to manage and send mailings.');
-
-		// get email from the session
-		$email = SpoonSession::exists('email') ? SpoonSession::get('email') : null;
-
-		// get from/replyTo core settings
-		$from = $this->getSetting('core', 'mailer_from');
-		$replyTo = $this->getSetting('core', 'mailer_reply_to');
-
-		// general settings
-		$this->setSetting('mailmotor', 'from_email', $from['email']);
-		$this->setSetting('mailmotor', 'from_name', $from['name']);
-		$this->setSetting('mailmotor', 'plain_text_editable', true);
-		$this->setSetting('mailmotor', 'reply_to_email', $replyTo['email']);
-		$this->setSetting('mailmotor', 'price_per_email', 0);
-
-		// pre-load these CM settings - these are used to obtain a client ID after the CampaignMonitor account is linked.
-		$this->setSetting('mailmotor', 'cm_client_company_name', $from['name']);
-		$this->setSetting('mailmotor', 'cm_client_contact_email', $from['email']);
-		$this->setSetting('mailmotor', 'cm_client_contact_name', $from['name']);
-		$this->setSetting('mailmotor', 'cm_client_country', 'Belgium');
-		$this->setSetting('mailmotor', 'cm_client_timezone', '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris');
-
-		// by default no account is linked yet
-		$this->setSetting('mailmotor', 'cm_account', false);
-	}
-
-
-	/**
 	 * Install locale
 	 *
 	 * @return	void
@@ -657,6 +621,42 @@ class MailmotorInstall extends ModuleInstaller
 								null,
 								array('extra_id' => $unsubscribeFormID));
 		}
+	}
+
+
+	/**
+	 * Install settings
+	 *
+	 * @return	void
+	 */
+	private function installSettings()
+	{
+		// add 'blog' as a module
+		$this->addModule('mailmotor', 'The module to manage and send mailings.');
+
+		// get email from the session
+		$email = SpoonSession::exists('email') ? SpoonSession::get('email') : null;
+
+		// get from/replyTo core settings
+		$from = $this->getSetting('core', 'mailer_from');
+		$replyTo = $this->getSetting('core', 'mailer_reply_to');
+
+		// general settings
+		$this->setSetting('mailmotor', 'from_email', $from['email']);
+		$this->setSetting('mailmotor', 'from_name', $from['name']);
+		$this->setSetting('mailmotor', 'plain_text_editable', true);
+		$this->setSetting('mailmotor', 'reply_to_email', $replyTo['email']);
+		$this->setSetting('mailmotor', 'price_per_email', 0);
+
+		// pre-load these CM settings - these are used to obtain a client ID after the CampaignMonitor account is linked.
+		$this->setSetting('mailmotor', 'cm_client_company_name', $from['name']);
+		$this->setSetting('mailmotor', 'cm_client_contact_email', $from['email']);
+		$this->setSetting('mailmotor', 'cm_client_contact_name', $from['name']);
+		$this->setSetting('mailmotor', 'cm_client_country', 'Belgium');
+		$this->setSetting('mailmotor', 'cm_client_timezone', '(GMT+01:00) Brussels, Copenhagen, Madrid, Paris');
+
+		// by default no account is linked yet
+		$this->setSetting('mailmotor', 'cm_account', false);
 	}
 
 

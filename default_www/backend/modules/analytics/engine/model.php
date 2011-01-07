@@ -290,6 +290,50 @@ class BackendAnalyticsModel
 
 
 	/**
+	 * Get the top exit pages
+	 *
+	 * @return	array
+	 * @param	string $page			The page.
+	 * @param	int $startTimestamp		The start timestamp for the cache file.
+	 * @param	int $endTimestamp		The end timestamp for the cache file.
+	 */
+	public static function getDataForPage($page, $startTimestamp, $endTimestamp)
+	{
+		// get database
+		$db = BackendModel::getDB();
+
+		// get id for this page
+		$id = (int) $db->getVar('SELECT id
+									FROM analytics_pages
+									WHERE page = ?',
+									array((string) $page));
+
+		// no id? insert this page
+		if($id === 0) $id = $db->insert('analytics_pages', array('page' => (string) $page));
+
+		// get data from cache
+		$items = array();
+		$items['aggregates'] = self::getAggregatesFromCacheByType('page_'. $id, $startTimestamp, $endTimestamp);
+		$items['entries'] = self::getDataFromCacheByType('page_'. $id, $startTimestamp, $endTimestamp);
+
+		// get current action
+		$action = Spoon::getObjectReference('url')->getAction();
+
+		// nothing in cache
+		if($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage($action, array('page_id' => $id));
+
+		// reset loop counter for the current action if we got data from cache
+		SpoonSession::set($action .'Loop', null);
+
+		// update date_viewed for this page
+		BackendAnalyticsModel::updatePageDateViewed($id);
+
+		// return results
+		return $items;
+	}
+
+
+	/**
 	 * Get data from the cache
 	 *
 	 * @return	array
@@ -645,50 +689,6 @@ class BackendAnalyticsModel
 
 		// return formatted time
 		return str_pad($timeHours, 2, '0', STR_PAD_LEFT) .':'. str_pad($timeMinutes, 2, '0', STR_PAD_LEFT) .':'. str_pad($timeSeconds, 2, '0', STR_PAD_LEFT);
-	}
-
-
-	/**
-	 * Get the top exit pages
-	 *
-	 * @return	array
-	 * @param	string $page			The page.
-	 * @param	int $startTimestamp		The start timestamp for the cache file.
-	 * @param	int $endTimestamp		The end timestamp for the cache file.
-	 */
-	public static function getDataForPage($page, $startTimestamp, $endTimestamp)
-	{
-		// get database
-		$db = BackendModel::getDB();
-
-		// get id for this page
-		$id = (int) $db->getVar('SELECT id
-									FROM analytics_pages
-									WHERE page = ?',
-									array((string) $page));
-
-		// no id? insert this page
-		if($id === 0) $id = $db->insert('analytics_pages', array('page' => (string) $page));
-
-		// get data from cache
-		$items = array();
-		$items['aggregates'] = self::getAggregatesFromCacheByType('page_'. $id, $startTimestamp, $endTimestamp);
-		$items['entries'] = self::getDataFromCacheByType('page_'. $id, $startTimestamp, $endTimestamp);
-
-		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
-
-		// nothing in cache
-		if($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage($action, array('page_id' => $id));
-
-		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
-
-		// update date_viewed for this page
-		BackendAnalyticsModel::updatePageDateViewed($id);
-
-		// return results
-		return $items;
 	}
 
 

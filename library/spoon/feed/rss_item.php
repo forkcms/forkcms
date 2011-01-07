@@ -124,6 +124,26 @@ class SpoonFeedRSSItem
 
 
 	/**
+	 * Add a category for the item.
+	 *
+	 * @return	void
+	 * @param	string $name				The name of the category.
+	 * @param	string[optional] $domain	The domain of the category.
+	 */
+	public function addCategory($name, $domain = null)
+	{
+		// create array
+		$category['name'] = (string) $name;
+
+		// has a domain
+		if($domain != null) $category['domain'] = (string) $domain;
+
+		// add property
+		$this->categories[] = $category;
+	}
+
+
+	/**
 	 * Builds the XML.
 	 *
 	 * @return	string		The fully build XML for an item.
@@ -199,26 +219,6 @@ class SpoonFeedRSSItem
 
 		// return
 		return $XML;
-	}
-
-
-	/**
-	 * Add a category for the item.
-	 *
-	 * @return	void
-	 * @param	string $name				The name of the category.
-	 * @param	string[optional] $domain	The domain of the category.
-	 */
-	public function addCategory($name, $domain = null)
-	{
-		// create array
-		$category['name'] = (string) $name;
-
-		// has a domain
-		if($domain != null) $category['domain'] = (string) $domain;
-
-		// add property
-		$this->categories[] = $category;
 	}
 
 

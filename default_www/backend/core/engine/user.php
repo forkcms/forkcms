@@ -99,6 +99,17 @@ class BackendUser
 
 
 	/**
+	 * Get email
+	 *
+	 * @return	string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
+
+
+	/**
 	 * Get groupid
 	 *
 	 * @return	int
@@ -197,17 +208,6 @@ class BackendUser
 	public function getUserId()
 	{
 		return $this->userId;
-	}
-
-
-	/**
-	 * Get email
-	 *
-	 * @return	string
-	 */
-	public function getEmail()
-	{
-		return $this->email;
 	}
 
 

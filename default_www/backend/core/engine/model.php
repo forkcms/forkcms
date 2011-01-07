@@ -424,42 +424,6 @@ class BackendModel
 
 
 	/**
-	 * Get the navigation-items
-	 *
-	 * @return	array
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
-	 */
-	public static function getNavigation($language = null)
-	{
-		// redefine
-		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
-		// does the keys exists in the cache?
-		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
-		{
-			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
-			{
-				// regenerate cache
-				BackendPagesModel::buildCache($language);
-			}
-
-			// init var
-			$navigation = array();
-
-			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
-
-			// store
-			self::$navigation[$language] = $navigation;
-		}
-
-		// return
-		return self::$navigation[$language];
-	}
-
-
-	/**
 	 * Get the modules
 	 *
 	 * @return	array
@@ -493,28 +457,6 @@ class BackendModel
 
 		// fallback
 		return self::$modules['all'];
-	}
-
-
-	/**
-	 * Fetch the list of modules, but for a dropdown
-	 *
-	 * @return	array
-	 * @param	bool[optional] $activeOnly	Only return the active modules.
-	 */
-	public static function getModulesForDropDown($activeOnly = true)
-	{
-		// init var
-		$dropdown = array('core' => 'core');
-
-		// fetch modules
-		$modules = self::getModules($activeOnly);
-
-		// loop and add into the return-array (with correct label)
-		foreach($modules as $module) $dropdown[$module] = ucfirst(BackendLanguage::getLabel(SpoonFilter::toCamelCase($module)));
-
-		// return data
-		return $dropdown;
 	}
 
 
@@ -573,6 +515,64 @@ class BackendModel
 
 		// return
 		return self::$moduleSettings;
+	}
+
+
+	/**
+	 * Fetch the list of modules, but for a dropdown
+	 *
+	 * @return	array
+	 * @param	bool[optional] $activeOnly	Only return the active modules.
+	 */
+	public static function getModulesForDropDown($activeOnly = true)
+	{
+		// init var
+		$dropdown = array('core' => 'core');
+
+		// fetch modules
+		$modules = self::getModules($activeOnly);
+
+		// loop and add into the return-array (with correct label)
+		foreach($modules as $module) $dropdown[$module] = ucfirst(BackendLanguage::getLabel(SpoonFilter::toCamelCase($module)));
+
+		// return data
+		return $dropdown;
+	}
+
+
+	/**
+	 * Get the navigation-items
+	 *
+	 * @return	array
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 */
+	public static function getNavigation($language = null)
+	{
+		// redefine
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// does the keys exists in the cache?
+		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
+		{
+			// validate file
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
+			{
+				// regenerate cache
+				BackendPagesModel::buildCache($language);
+			}
+
+			// init var
+			$navigation = array();
+
+			// require file
+			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
+
+			// store
+			self::$navigation[$language] = $navigation;
+		}
+
+		// return
+		return self::$navigation[$language];
 	}
 
 

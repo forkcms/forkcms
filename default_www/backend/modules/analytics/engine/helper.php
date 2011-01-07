@@ -111,25 +111,6 @@ class BackendAnalyticsHelper
 
 
 	/**
-	 * Get Google Analytics instance
-	 *
-	 * @return	GoogleAnalytics
-	 */
-	public static function getGoogleAnalyticsInstance()
-	{
-		// get session token and table id
-		$sessionToken = BackendModel::getModuleSetting('analytics', 'session_token', null);
-		$tableId = BackendModel::getModuleSetting('analytics', 'table_id', null);
-
-		// require the GoogleAnalytics class
-		require_once 'external/google_analytics.php';
-
-		// get and return an instance
-		return new GoogleAnalytics($sessionToken, $tableId);
-	}
-
-
-	/**
 	 * Get all needed dashboard data for certain dates
 	 *
 	 * @return	array
@@ -342,6 +323,25 @@ class BackendAnalyticsHelper
 
 		// return results
 		return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:pagePath', $parameters);
+	}
+
+
+	/**
+	 * Get Google Analytics instance
+	 *
+	 * @return	GoogleAnalytics
+	 */
+	public static function getGoogleAnalyticsInstance()
+	{
+		// get session token and table id
+		$sessionToken = BackendModel::getModuleSetting('analytics', 'session_token', null);
+		$tableId = BackendModel::getModuleSetting('analytics', 'table_id', null);
+
+		// require the GoogleAnalytics class
+		require_once 'external/google_analytics.php';
+
+		// get and return an instance
+		return new GoogleAnalytics($sessionToken, $tableId);
 	}
 
 

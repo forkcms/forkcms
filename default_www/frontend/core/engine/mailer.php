@@ -98,6 +98,21 @@ class FrontendMailer
 
 
 	/**
+	 * Get all queued mail ids
+	 *
+	 * @return	array
+	 */
+	public static function getQueuedMailIds()
+	{
+		// return the ids
+		return (array) FrontendModel::getDB()->getColumn('SELECT e.id
+															FROM emails AS e
+															WHERE e.send_on < ?',
+															array(FrontendModel::getUTCDate()));
+	}
+
+
+	/**
 	 * Returns the content from a given template
 	 *
 	 * @return	string
@@ -136,21 +151,6 @@ class FrontendMailer
 
 		// return the content
 		return (string) $cssToInlineStyles->convert();
-	}
-
-
-	/**
-	 * Get all queued mail ids
-	 *
-	 * @return	array
-	 */
-	public static function getQueuedMailIds()
-	{
-		// return the ids
-		return (array) FrontendModel::getDB()->getColumn('SELECT e.id
-															FROM emails AS e
-															WHERE e.send_on < ?',
-															array(FrontendModel::getUTCDate()));
 	}
 
 

@@ -90,33 +90,45 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Load the datagrid
+	 * Load the record
 	 *
 	 * @return	void
 	 */
-	private function loadRevisions()
+	private function loadData()
 	{
-		// create datagrid
-		$this->dgRevisions = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_REVISIONS, array($this->id, 'archive', BL::getWorkingLanguage()));
+		// get record
+		$this->id = $this->getParameter('id', 'int');
 
-		// hide columns
-		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+		// validate id
+		if($this->id !== null && BackendPagesModel::exists($this->id))
+		{
+			// get the record
+			$this->record = BackendPagesModel::get($this->id);
+			$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
 
-		// disable paging
-		$this->dgRevisions->setPaging(false);
+			// load blocks
+			$this->blocksContent = BackendPagesModel::getBlocks($this->id);
 
-		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+			// is there a revision specified?
+			$revisionToLoad = $this->getParameter('revision', 'int');
 
-		// set colum URLs
-		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]');
+			// if this is a valid revision
+			if($revisionToLoad !== null)
+			{
+				// overwrite the current record
+				$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
 
-		// set functions
-		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
-		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
+				// load blocks
+				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
 
-		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::getLabel('UseThisVersion'));
+				// show warning
+				if($this->record['status'] == 'archive') $this->tpl->assign('usingRevision', true);
+				elseif($this->record['status'] == 'draft') $this->tpl->assign('usingDraft', true);
+			}
+		}
+
+		// something went wrong
+		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
 
@@ -187,45 +199,33 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Load the record
+	 * Load the datagrid
 	 *
 	 * @return	void
 	 */
-	private function loadData()
+	private function loadRevisions()
 	{
-		// get record
-		$this->id = $this->getParameter('id', 'int');
+		// create datagrid
+		$this->dgRevisions = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_REVISIONS, array($this->id, 'archive', BL::getWorkingLanguage()));
 
-		// validate id
-		if($this->id !== null && BackendPagesModel::exists($this->id))
-		{
-			// get the record
-			$this->record = BackendPagesModel::get($this->id);
-			$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
+		// hide columns
+		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
 
-			// load blocks
-			$this->blocksContent = BackendPagesModel::getBlocks($this->id);
+		// disable paging
+		$this->dgRevisions->setPaging(false);
 
-			// is there a revision specified?
-			$revisionToLoad = $this->getParameter('revision', 'int');
+		// set headers
+		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
 
-			// if this is a valid revision
-			if($revisionToLoad !== null)
-			{
-				// overwrite the current record
-				$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
+		// set colum URLs
+		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]');
 
-				// load blocks
-				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
+		// set functions
+		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
+		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-				// show warning
-				if($this->record['status'] == 'archive') $this->tpl->assign('usingRevision', true);
-				elseif($this->record['status'] == 'draft') $this->tpl->assign('usingDraft', true);
-			}
-		}
-
-		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		// add use column
+		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::getLabel('UseThisVersion'));
 	}
 
 

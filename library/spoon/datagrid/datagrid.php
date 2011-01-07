@@ -555,6 +555,17 @@ class SpoonDatagrid
 
 
 	/**
+	 * Retrieve the number of results for this datagrids' source.
+	 *
+	 * @return	int
+	 */
+	public function getNumResults()
+	{
+		return $this->source->getNumResults();
+	}
+
+
+	/**
 	 * Retrieve the offset value.
 	 *
 	 * @return	int
@@ -624,17 +635,6 @@ class SpoonDatagrid
 		}
 
 		return $order;
-	}
-
-
-	/**
-	 * Retrieve the number of results for this datagrids' source.
-	 *
-	 * @return	int
-	 */
-	public function getNumResults()
-	{
-		return $this->source->getNumResults();
 	}
 
 
@@ -1565,6 +1565,27 @@ class SpoonDatagrid
 
 
 	/**
+	 * Set the default sorting method for a column.
+	 *
+	 * @return	void
+	 * @param	string $column				The column to set the method for.
+	 * @param	string[optional] $sort		The sorting method, possible values are: asc, desc.
+	 */
+	public function setColumnSortingMethod($column, $sort = 'asc')
+	{
+		// has results
+		if($this->source->getNumResults() > 0)
+		{
+			// column doesn't exist
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no default sorting method can be applied to it.');
+
+			// exists
+			$this->columns[(string) $column]->setSortingMethod($sort);
+		}
+	}
+
+
+	/**
 	 * Sets the columns sequence.
 	 *
 	 * @return	void
@@ -1623,27 +1644,6 @@ class SpoonDatagrid
 					$i++;
 				}
 			}
-		}
-	}
-
-
-	/**
-	 * Set the default sorting method for a column.
-	 *
-	 * @return	void
-	 * @param	string $column				The column to set the method for.
-	 * @param	string[optional] $sort		The sorting method, possible values are: asc, desc.
-	 */
-	public function setColumnSortingMethod($column, $sort = 'asc')
-	{
-		// has results
-		if($this->source->getNumResults() > 0)
-		{
-			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no default sorting method can be applied to it.');
-
-			// exists
-			$this->columns[(string) $column]->setSortingMethod($sort);
 		}
 	}
 

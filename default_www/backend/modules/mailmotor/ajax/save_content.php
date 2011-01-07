@@ -20,6 +20,53 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 
 	/**
+	 * Adds Google UTM GET Parameters to all anchor links in the mailing
+	 *
+	 * @return	string
+	 * @param	string $HTML	The HTML wherin the parameters will be added.
+	 */
+	private function addUTMParameters($HTML)
+	{
+		// init var
+		$matches = array();
+
+		// search for all hrefs
+		preg_match_all('/href="(.*)"/isU', $HTML, $matches);
+
+		// reserve searhc vars
+		$search = array();
+		$replace = array();
+
+		// check if we have matches
+		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
+
+		// build the google vars query
+		$params = array();
+		$params['utm_source'] = 'mailmotor';
+		$params['utm_medium'] = 'email';
+		$params['utm_name'] = $this->mailing['name'];
+
+		// build google vars query
+		$googleQuery = http_build_query($params);
+
+
+		// loop the matches
+		foreach($matches[1] as $match)
+		{
+			// ignore #
+			if(strpos($match, '#') > -1) continue;
+
+			// add results to search/replace stack
+			$search[] = 'href="'. $match .'"';
+			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
+		}
+
+		// replace the content HTML with the replace values
+		return str_replace($search, $replace, $HTML);
+	}
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -65,53 +112,6 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 		// output
 		$this->output(self::OK, array('mailing_id' => $mailingId), BL::getMessage('MailingEdited', 'mailmotor'));
-	}
-
-
-	/**
-	 * Adds Google UTM GET Parameters to all anchor links in the mailing
-	 *
-	 * @return	string
-	 * @param	string $HTML	The HTML wherin the parameters will be added.
-	 */
-	private function addUTMParameters($HTML)
-	{
-		// init var
-		$matches = array();
-
-		// search for all hrefs
-		preg_match_all('/href="(.*)"/isU', $HTML, $matches);
-
-		// reserve searhc vars
-		$search = array();
-		$replace = array();
-
-		// check if we have matches
-		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
-
-		// build the google vars query
-		$params = array();
-		$params['utm_source'] = 'mailmotor';
-		$params['utm_medium'] = 'email';
-		$params['utm_name'] = $this->mailing['name'];
-
-		// build google vars query
-		$googleQuery = http_build_query($params);
-
-
-		// loop the matches
-		foreach($matches[1] as $match)
-		{
-			// ignore #
-			if(strpos($match, '#') > -1) continue;
-
-			// add results to search/replace stack
-			$search[] = 'href="'. $match .'"';
-			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
-		}
-
-		// replace the content HTML with the replace values
-		return str_replace($search, $replace, $HTML);
 	}
 
 

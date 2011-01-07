@@ -29,33 +29,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// set filter
-		$this->setFilter();
-
-		// load form
-		$this->loadForm();
-
-		// load datagrids
-		$this->loadDataGrid();
-
-		// parse page
-		$this->parse();
-
-		// display the page
-		$this->display();
-	}
-
-
-	/**
 	 * Builds the query for this datagrid
 	 *
 	 * @return	array		An array with two arguments containing the query and its parameters.
@@ -118,14 +91,29 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Get a label
+	 * Execute the action
 	 *
-	 * @return	string
-	 * @param	string $type		The type to get a label for.
+	 * @return	void
 	 */
-	public function getType($type)
+	public function execute()
 	{
-		return BackendLanguage::getMessage(mb_strtoupper((string) $type), 'core');
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// set filter
+		$this->setFilter();
+
+		// load form
+		$this->loadForm();
+
+		// load datagrids
+		$this->loadDataGrid();
+
+		// parse page
+		$this->parse();
+
+		// display the page
+		$this->display();
 	}
 
 
@@ -138,6 +126,18 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	public function getLanguage($language)
 	{
 		return BackendLanguage::getMessage(mb_strtoupper((string) $language), 'core');
+	}
+
+
+	/**
+	 * Get a label
+	 *
+	 * @return	string
+	 * @param	string $type		The type to get a label for.
+	 */
+	public function getType($type)
+	{
+		return BackendLanguage::getMessage(mb_strtoupper((string) $type), 'core');
 	}
 
 

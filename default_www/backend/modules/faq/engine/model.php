@@ -192,21 +192,6 @@ class BackendFaqModel
 
 
 	/**
-	 * Is this category allowed to be deleted?
-	 *
-	 * @return	bool
-	 * @param	int $id		The category id to check.
-	 */
-	public static function isCategoryAllowedToBeDeleted($id)
-	{
-		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
-														FROM faq_questions AS i
-														WHERE i.category_id = ?',
-														array((int) $id));
-	}
-
-
-	/**
 	 * Add a new category.
 	 *
 	 * @return	int
@@ -258,6 +243,21 @@ class BackendFaqModel
 	public static function insertQuestion(array $item)
 	{
 		return BackendModel::getDB(true)->insert('faq_questions', $item);
+	}
+
+
+	/**
+	 * Is this category allowed to be deleted?
+	 *
+	 * @return	bool
+	 * @param	int $id		The category id to check.
+	 */
+	public static function isCategoryAllowedToBeDeleted($id)
+	{
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
+														FROM faq_questions AS i
+														WHERE i.category_id = ?',
+														array((int) $id));
 	}
 
 

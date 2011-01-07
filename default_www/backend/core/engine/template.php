@@ -498,28 +498,6 @@ class BackendTemplateModifiers
 
 
 	/**
-	 * Convert a var into a URL
-	 * 	syntax: {$var|geturl:<action>[:<module>]}
-	 *
-	 * @return	void
-	 * @param	string[optional] $var		A placeholder variable, it will be replaced with the URL.
-	 * @param	string[optional] $action	The action to build the URL for.
-	 * @param	string[optional] $module	The module to build the URL for.
-	 * @param	string[optional] $suffix	A string to append.
-	 */
-	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
-	{
-		// redefine
-		$var = (string) $var;
-		$action = ($action !== null) ? (string) $action : null;
-		$module = ($module !== null) ? (string) $module : null;
-
-		// build the url
-		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage()) . $suffix;
-	}
-
-
-	/**
 	 * Convert a var into main-navigation-html
 	 * 	syntax: {$var|getmainnavigation}
 	 *
@@ -553,6 +531,28 @@ class BackendTemplateModifiers
 
 		// return navigation
 		return Spoon::getObjectReference('navigation')->getNavigation($startDepth, $endDepth);
+	}
+
+
+	/**
+	 * Convert a var into a URL
+	 * 	syntax: {$var|geturl:<action>[:<module>]}
+	 *
+	 * @return	void
+	 * @param	string[optional] $var		A placeholder variable, it will be replaced with the URL.
+	 * @param	string[optional] $action	The action to build the URL for.
+	 * @param	string[optional] $module	The module to build the URL for.
+	 * @param	string[optional] $suffix	A string to append.
+	 */
+	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
+	{
+		// redefine
+		$var = (string) $var;
+		$action = ($action !== null) ? (string) $action : null;
+		$module = ($module !== null) ? (string) $module : null;
+
+		// build the url
+		return BackendModel::createURLForAction($action, $module, BackendLanguage::getWorkingLanguage()) . $suffix;
 	}
 
 

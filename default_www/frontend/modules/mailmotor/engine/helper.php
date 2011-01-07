@@ -13,61 +13,6 @@
 class FrontendMailmotorCMHelper
 {
 	/**
-	 * Returns the CampaignMonitor object
-	 *
-	 * @return	CampaignMonitor
-	 * @param	int[optional] $listId		The default list id to use.
-	 */
-	public static function getCM($listId = null)
-	{
-		// campaignmonitor reference exists
-		if(!Spoon::isObjectReference('campaignmonitor'))
-		{
-			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
-			{
-				// the class doesn't exist, so throw an exception
-				throw new SpoonFileException('The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external');
-			}
-
-			// require CampaignMonitor class
-			require_once 'external/campaignmonitor.php';
-
-			// set login data
-			$url = FrontendModel::getModuleSetting('mailmotor', 'cm_url');
-			$username = FrontendModel::getModuleSetting('mailmotor', 'cm_username');
-			$password = FrontendModel::getModuleSetting('mailmotor', 'cm_password');
-
-			// init CampaignMonitor object
-			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
-
-			// set CampaignMonitor object reference
-			Spoon::setObjectReference('campaignmonitor', $cm);
-
-			// get the default list ID
-			$listId = (!empty($listId)) ? $listId : self::getDefaultListID();
-
-			// set the default list ID
-			$cm->setListId($listId);
-		}
-
-		// return the CampaignMonitor object
-		return Spoon::getObjectReference('campaignmonitor');
-	}
-
-
-	/**
-	 * Returns the client ID from the settings
-	 *
-	 * @return	string
-	 */
-	public static function getClientID()
-	{
-		return (string) FrontendModel::getModuleSetting('mailmotor', 'cm_client_id');
-	}
-
-
-	/**
 	 * Checks if a group exists by its CampaignMonitor ID
 	 *
 	 * @return	bool
@@ -120,6 +65,61 @@ class FrontendMailmotorCMHelper
 															FROM mailmotor_campaignmonitor_ids AS mci
 															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groups) .');',
 															array('list'));
+	}
+
+
+	/**
+	 * Returns the client ID from the settings
+	 *
+	 * @return	string
+	 */
+	public static function getClientID()
+	{
+		return (string) FrontendModel::getModuleSetting('mailmotor', 'cm_client_id');
+	}
+
+
+	/**
+	 * Returns the CampaignMonitor object
+	 *
+	 * @return	CampaignMonitor
+	 * @param	int[optional] $listId		The default list id to use.
+	 */
+	public static function getCM($listId = null)
+	{
+		// campaignmonitor reference exists
+		if(!Spoon::isObjectReference('campaignmonitor'))
+		{
+			// check if the CampaignMonitor class exists
+			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
+			{
+				// the class doesn't exist, so throw an exception
+				throw new SpoonFileException('The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external');
+			}
+
+			// require CampaignMonitor class
+			require_once 'external/campaignmonitor.php';
+
+			// set login data
+			$url = FrontendModel::getModuleSetting('mailmotor', 'cm_url');
+			$username = FrontendModel::getModuleSetting('mailmotor', 'cm_username');
+			$password = FrontendModel::getModuleSetting('mailmotor', 'cm_password');
+
+			// init CampaignMonitor object
+			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
+
+			// set CampaignMonitor object reference
+			Spoon::setObjectReference('campaignmonitor', $cm);
+
+			// get the default list ID
+			$listId = (!empty($listId)) ? $listId : self::getDefaultListID();
+
+			// set the default list ID
+			$cm->setListId($listId);
+		}
+
+		// return the CampaignMonitor object
+		return Spoon::getObjectReference('campaignmonitor');
 	}
 
 

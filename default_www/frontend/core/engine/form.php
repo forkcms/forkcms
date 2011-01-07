@@ -335,30 +335,6 @@ class FrontendForm extends SpoonForm
 
 
 	/**
-	 * Adds a single textarea.
-	 *
-	 * @return	void
-	 * @param	string $name					The name of the element.
-	 * @param	string[optional] $value			The value inside the element.
-	 * @param	string[optional] $class			Class(es) that will be applied on the element.
-	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
-	 * @param	bool[optional] $HTML			Will the element contain HTML?
-	 */
-	public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
-	{
-		// redefine
-		$name = (string) $name;
-		$value = ($value !== null) ? (string) $value : null;
-		$class = ($class !== null) ? (string) $class : 'textarea';
-		$classError = ($classError !== null) ? (string) $classError : 'textareaError';
-		$HTML = (bool) $HTML;
-
-		// create and return a textarea
-		return parent::addTextarea($name, $value, $class, $classError, $HTML);
-	}
-
-
-	/**
 	 * Adds a single textfield.
 	 *
 	 * @return	void
@@ -381,6 +357,30 @@ class FrontendForm extends SpoonForm
 
 		// create and return a textfield
 		return parent::addText($name, $value, $maxlength, $class, $classError, $HTML);
+	}
+
+
+	/**
+	 * Adds a single textarea.
+	 *
+	 * @return	void
+	 * @param	string $name					The name of the element.
+	 * @param	string[optional] $value			The value inside the element.
+	 * @param	string[optional] $class			Class(es) that will be applied on the element.
+	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
+	 * @param	bool[optional] $HTML			Will the element contain HTML?
+	 */
+	public function addTextarea($name, $value = null, $class = null, $classError = null, $HTML = false)
+	{
+		// redefine
+		$name = (string) $name;
+		$value = ($value !== null) ? (string) $value : null;
+		$class = ($class !== null) ? (string) $class : 'textarea';
+		$classError = ($classError !== null) ? (string) $classError : 'textareaError';
+		$HTML = (bool) $HTML;
+
+		// create and return a textarea
+		return parent::addTextarea($name, $value, $class, $classError, $HTML);
 	}
 
 

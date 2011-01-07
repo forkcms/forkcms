@@ -154,28 +154,6 @@ class GoogleAnalytics
 
 
 	/**
-	 * Get a session token based on a one-time token.
-	 *
-	 * @return	string
-	 * @param	string $oneTimeToken	The one-time token to get a session token with.
-	 */
-	public function getSessionToken($oneTimeToken)
-	{
-		// make the call
-		$response = $this->doCall('https://www.google.com/accounts/AuthSubSessionToken', $oneTimeToken);
-
-		// a token is given in the response - save it
-		if(preg_match('/Token=(.*)/', $response, $matches)) $sessionToken = $matches[1];
-
-		// no token was given - throw an exception
-		else throw new GoogleAnalyticsException($response);
-
-		// return the session token
-		return $sessionToken;
-	}
-
-
-	/**
 	 * Get all website profiles and their account(s).
 	 *
 	 * @return	mixed
@@ -330,6 +308,28 @@ class GoogleAnalytics
 
 		// return the result
 		return $results;
+	}
+
+
+	/**
+	 * Get a session token based on a one-time token.
+	 *
+	 * @return	string
+	 * @param	string $oneTimeToken	The one-time token to get a session token with.
+	 */
+	public function getSessionToken($oneTimeToken)
+	{
+		// make the call
+		$response = $this->doCall('https://www.google.com/accounts/AuthSubSessionToken', $oneTimeToken);
+
+		// a token is given in the response - save it
+		if(preg_match('/Token=(.*)/', $response, $matches)) $sessionToken = $matches[1];
+
+		// no token was given - throw an exception
+		else throw new GoogleAnalyticsException($response);
+
+		// return the session token
+		return $sessionToken;
 	}
 
 

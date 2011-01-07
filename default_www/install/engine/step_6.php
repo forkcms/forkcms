@@ -22,42 +22,6 @@ class InstallerStep6 extends InstallerStep
 
 
 	/**
-	 * Executes this step.
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// validate all previous steps
-		if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
-
-		// delete cached data
-		$this->deleteCachedData();
-
-		// create configuration files
-		$this->createConfigurationFiles();
-
-		// install modules
-		$this->installModules();
-
-		// create locale cache
-		$this->createLocaleFiles();
-
-		// already installed
-		SpoonFile::setContent(dirname(__FILE__) .'/../cache/installed.txt', date('Y-m-d H:i:s'));
-
-		// show success message
-		$this->showSuccess();
-
-		// clear session
-		SpoonSession::destroy();
-
-		// show output
-		$this->tpl->display('layout/templates/6.tpl');
-	}
-
-
-	/**
 	 * Build the language files
 	 *
 	 * @return	void
@@ -257,6 +221,42 @@ class InstallerStep6 extends InstallerStep
 			// loop files and delete them
 			foreach($filesToDelete as $file) SpoonFile::delete($file);
 		}
+	}
+
+
+	/**
+	 * Executes this step.
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// validate all previous steps
+		if(!$this->validateForm()) SpoonHTTP::redirect('index.php?step=1');
+
+		// delete cached data
+		$this->deleteCachedData();
+
+		// create configuration files
+		$this->createConfigurationFiles();
+
+		// install modules
+		$this->installModules();
+
+		// create locale cache
+		$this->createLocaleFiles();
+
+		// already installed
+		SpoonFile::setContent(dirname(__FILE__) .'/../cache/installed.txt', date('Y-m-d H:i:s'));
+
+		// show success message
+		$this->showSuccess();
+
+		// clear session
+		SpoonSession::destroy();
+
+		// show output
+		$this->tpl->display('layout/templates/6.tpl');
 	}
 
 

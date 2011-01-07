@@ -12,87 +12,6 @@
 class FrontendSearchModel
 {
 	/**
-	 * Get total results
-	 *
-	 * Note: please be aware that this is an approximate amount. It IS possible that this is not the exact amount of search results,
-	 * since search results may vary in time (entries may not yet/no longer be shown) and we will not rebuild the entire search index
-	 * on every search (would be a great performance killer and huge scalibility loss)
-	 *
-	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
-	 * Simple search: all search index fields will be searched for the given term
-	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
-	 *
-	 * @return	int
-	 * @param	mixed $term					The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
-	 */
-	public static function getTotal($term)
-	{
-		// advanced search
-		if(is_array($term))
-		{
-			// init vars
-			$where = array();
-			$join = array();
-			$params = array();
-
-			// loop all searches
-			foreach($term as $field => $value)
-			{
-				// get all terms to search for (including synonyms)
-				$terms = self::getSynonyms((string) $value);
-
-				// build search terms
-				$terms = self::buildTerm($terms);
-
-				$queryNr = count($where);
-
-				// add query
-				$where[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i'. $queryNr .'.field = ? AND i'. $queryNr .'.language = ? AND i'. $queryNr .'.active = ? AND m'. $queryNr .'.searchable = ?';
-				$join[$queryNr] = 'search_index AS i'. $queryNr . ($join ? ' ON i'. $queryNr .'.module = i0.module AND i'. $queryNr .'.other_id = i0.other_id' : '') .' INNER JOIN search_modules AS m'. $queryNr .' ON m'. $queryNr .'.module = i'. $queryNr .'.module';
-
-				// add params
-				$params = array_merge($params, $terms, array((string) $field, FRONTEND_LANGUAGE, 'Y', 'Y'));
-			}
-
-			// prepare query and params
-			$query = 'SELECT COUNT(module)
-						FROM
-						(
-							SELECT i0.module, i0.other_id
-							FROM '. implode(' INNER JOIN ', $join) .'
-							WHERE '. implode(' AND ', $where) .'
-						) AS results';
-		}
-
-		// simple search
-		else
-		{
-			// get all terms to search for (including synonyms)
-			$terms = self::getSynonyms((string) $term);
-
-			// build search terms
-			$terms = self::buildTerm($terms);
-
-			// prepare query and params
-			$query = 'SELECT COUNT(module)
-						FROM
-						(
-							SELECT i.module
-							FROM search_index AS i
-							INNER JOIN search_modules AS m ON i.module = m.module
-							WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
-							GROUP BY i.module, i.other_id
-						) AS results';
-
-			$params = array_merge($terms, array(FRONTEND_LANGUAGE, 'Y', 'Y'));
-		}
-
-		// get the search results
-		return (int) FrontendModel::getDB()->getVar($query, $params);
-	}
-
-
-	/**
 	 * Build the search term
 	 *
 	 * @return	string
@@ -275,6 +194,87 @@ class FrontendSearchModel
 
 		// only original term
 		return array($term);
+	}
+
+
+	/**
+	 * Get total results
+	 *
+	 * Note: please be aware that this is an approximate amount. It IS possible that this is not the exact amount of search results,
+	 * since search results may vary in time (entries may not yet/no longer be shown) and we will not rebuild the entire search index
+	 * on every search (would be a great performance killer and huge scalibility loss)
+	 *
+	 * This function can be called with either a string as parameter (simple search) or an array (advanced search)
+	 * Simple search: all search index fields will be searched for the given term
+	 * Advanced search: only the given fields (keys in the array) will be matched to the corresponding values (correspinding values in the array)
+	 *
+	 * @return	int
+	 * @param	mixed $term					The searchterm (simple search) or the fields to search for (advanced search - please note that the field names may not be consistent throughout several modules).
+	 */
+	public static function getTotal($term)
+	{
+		// advanced search
+		if(is_array($term))
+		{
+			// init vars
+			$where = array();
+			$join = array();
+			$params = array();
+
+			// loop all searches
+			foreach($term as $field => $value)
+			{
+				// get all terms to search for (including synonyms)
+				$terms = self::getSynonyms((string) $value);
+
+				// build search terms
+				$terms = self::buildTerm($terms);
+
+				$queryNr = count($where);
+
+				// add query
+				$where[$queryNr] = '('. substr(str_repeat('MATCH (i'. $queryNr .'.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i'. $queryNr .'.field = ? AND i'. $queryNr .'.language = ? AND i'. $queryNr .'.active = ? AND m'. $queryNr .'.searchable = ?';
+				$join[$queryNr] = 'search_index AS i'. $queryNr . ($join ? ' ON i'. $queryNr .'.module = i0.module AND i'. $queryNr .'.other_id = i0.other_id' : '') .' INNER JOIN search_modules AS m'. $queryNr .' ON m'. $queryNr .'.module = i'. $queryNr .'.module';
+
+				// add params
+				$params = array_merge($params, $terms, array((string) $field, FRONTEND_LANGUAGE, 'Y', 'Y'));
+			}
+
+			// prepare query and params
+			$query = 'SELECT COUNT(module)
+						FROM
+						(
+							SELECT i0.module, i0.other_id
+							FROM '. implode(' INNER JOIN ', $join) .'
+							WHERE '. implode(' AND ', $where) .'
+						) AS results';
+		}
+
+		// simple search
+		else
+		{
+			// get all terms to search for (including synonyms)
+			$terms = self::getSynonyms((string) $term);
+
+			// build search terms
+			$terms = self::buildTerm($terms);
+
+			// prepare query and params
+			$query = 'SELECT COUNT(module)
+						FROM
+						(
+							SELECT i.module
+							FROM search_index AS i
+							INNER JOIN search_modules AS m ON i.module = m.module
+							WHERE ('. substr(str_repeat('MATCH (i.value) AGAINST (? IN BOOLEAN MODE) OR ', count($terms)), 0, -4) .') AND i.language = ? AND i.active = ? AND m.searchable = ?
+							GROUP BY i.module, i.other_id
+						) AS results';
+
+			$params = array_merge($terms, array(FRONTEND_LANGUAGE, 'Y', 'Y'));
+		}
+
+		// get the search results
+		return (int) FrontendModel::getDB()->getVar($query, $params);
 	}
 
 

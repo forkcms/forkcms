@@ -72,6 +72,17 @@ class FrontendUser
 
 
 	/**
+	 * Get email
+	 *
+	 * @return	string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
+
+
+	/**
 	 * Get a setting
 	 *
 	 * @return	mixed			The stored value, if the setting wasn't found null will be returned
@@ -109,17 +120,6 @@ class FrontendUser
 	public function getUserId()
 	{
 		return $this->userId;
-	}
-
-
-	/**
-	 * Get email
-	 *
-	 * @return	string
-	 */
-	public function getEmail()
-	{
-		return $this->email;
 	}
 
 
@@ -163,18 +163,6 @@ class FrontendUser
 
 
 	/**
-	 * Set userid
-	 *
-	 * @return	void
-	 * @param	int $value	The user's id.
-	 */
-	private function setUserId($value)
-	{
-		$this->userId = (int) $value;
-	}
-
-
-	/**
 	 * Set email
 	 *
 	 * @return	void
@@ -183,6 +171,18 @@ class FrontendUser
 	private function setEmail($value)
 	{
 		$this->email = (string) $value;
+	}
+
+
+	/**
+	 * Set userid
+	 *
+	 * @return	void
+	 * @param	int $value	The user's id.
+	 */
+	private function setUserId($value)
+	{
+		$this->userId = (int) $value;
 	}
 }
 

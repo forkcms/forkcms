@@ -14,33 +14,12 @@
  */
 class BackendBlogModel
 {
-	/**
-	 * Overview of the blog posts
-	 *
-	 * @var	string
-	 */
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 									FROM blog_posts AS i
 									WHERE i.status = ? AND i.language = ?';
-
-
-	/**
-	 * Overview of the categories
-	 *
-	 * @var	string
-	 */
 	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
 											FROM blog_categories AS i
 											WHERE i.language = ?';
-
-
-
-
-	/**
-	 * Overview of the comments
-	 *
-	 * @var	string
-	 */
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
 											p.id AS post_id, p.title AS post_title, m.url AS post_url
 											FROM blog_comments AS i
@@ -48,15 +27,6 @@ class BackendBlogModel
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											WHERE i.status = ? AND i.language = ?
 											GROUP BY i.id';
-
-
-
-
-	/**
-	 * Overview of the drafts - only 1 (last draft) per blog post
-	 *
-	 * @var	string
-	 */
 	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
 										FROM blog_posts AS i
 										INNER JOIN
@@ -67,42 +37,15 @@ class BackendBlogModel
 											GROUP BY i.id
 										) AS p
 										WHERE i.revision_id = p.revision_id';
-
-
-
-
-	/**
-	 * Overview of the recent blog posts
-	 *
-	 * @var	string
-	 */
 	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
 										FROM blog_posts AS i
 										WHERE i.status = ? AND i.language = ?
 										ORDER BY i.edited_on DESC
 										LIMIT ?';
-
-
-
-
-	/**
-	 * Overview of revisions belonging to a specific blog post
-	 *
-	 * @var	string
-	 */
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 											FROM blog_posts AS i
 											WHERE i.status = ? AND i.id = ? AND i.language = ?
 											ORDER BY i.edited_on DESC';
-
-
-
-
-	/**
-	 * Overview of drafts belonging to a specific blog post
-	 *
-	 * @var	string
-	 */
 	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 													FROM blog_posts AS i
 													WHERE i.status = ? AND i.id = ? AND i.language = ?
@@ -334,25 +277,6 @@ class BackendBlogModel
 
 
 	/**
-	 * Get all data for a given id
-	 *
-	 * @return	array
-	 * @param	int $id							The Id of the comment to fetch?
-	 */
-	public static function getComment($id)
-	{
-		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
-															p.id AS post_id, p.title AS post_title, m.url AS post_url
-															FROM blog_comments AS i
-															INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
-															INNER JOIN meta AS m ON p.meta_id = m.id
-															WHERE i.id = ?
-															LIMIT 1',
-															array((int) $id));
-	}
-
-
-	/**
 	 * Get all items by a given tag id
 	 *
 	 * @return	array
@@ -448,6 +372,25 @@ class BackendBlogModel
 
 
 	/**
+	 * Get all data for a given id
+	 *
+	 * @return	array
+	 * @param	int $id							The Id of the comment to fetch?
+	 */
+	public static function getComment($id)
+	{
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
+															p.id AS post_id, p.title AS post_title, m.url AS post_url
+															FROM blog_comments AS i
+															INNER JOIN blog_posts AS p ON i.post_id = p.id AND i.language = p.language
+															INNER JOIN meta AS m ON p.meta_id = m.id
+															WHERE i.id = ?
+															LIMIT 1',
+															array((int) $id));
+	}
+
+
+	/**
 	 * Get multiple comments at once
 	 *
 	 * @return	array
@@ -458,6 +401,21 @@ class BackendBlogModel
 		return (array) BackendModel::getDB()->getRecords('SELECT *
 															FROM blog_comments AS i
 															WHERE i.id IN ('. implode(',', $ids) .')');
+	}
+
+
+	/**
+	 * Get a count per comment
+	 *
+	 * @return	array
+	 */
+	public static function getCommentStatusCount()
+	{
+		return (array) BackendModel::getDB()->getPairs('SELECT i.status, COUNT(i.id)
+															FROM blog_comments AS i
+															WHERE i.language = ?
+															GROUP BY i.status',
+															array(BL::getWorkingLanguage()));
 	}
 
 
@@ -518,21 +476,6 @@ class BackendBlogModel
 															INNER JOIN meta AS m ON m.id = i.meta_id
 															WHERE i.id = ? AND i.revision_id = ?',
 															array((int) $id, (int) $revisionId));
-	}
-
-
-	/**
-	 * Get a count per comment
-	 *
-	 * @return	array
-	 */
-	public static function getCommentStatusCount()
-	{
-		return (array) BackendModel::getDB()->getPairs('SELECT i.status, COUNT(i.id)
-															FROM blog_comments AS i
-															WHERE i.language = ?
-															GROUP BY i.status',
-															array(BL::getWorkingLanguage()));
 	}
 
 

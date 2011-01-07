@@ -14,64 +14,6 @@
 class InstallerStep2 extends InstallerStep
 {
 	/**
-	 * Execute this step
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// init vars
-		$variables = array();
-
-		// head
-		$variables['head'] = file_get_contents('layout/templates/head.tpl');
-		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
-
-		// check requirements
-		$validated = self::checkRequirements($variables);
-
-		// has errors
-		if(!$validated)
-		{
-			// assign the variable
-			$variables['nextButton'] = '&nbsp;';
-			$variables['requirementsStatusError'] = '';
-			$variables['requirementsStatusOK'] = 'hidden';
-		}
-
-		// no errors detected
-		else
-		{
-			header('Location: index.php?step=3');
-			exit;
-		}
-
-		// set paths for template
-		$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
-		$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
-
-		// template contents
-		$tpl = file_get_contents('layout/templates/2.tpl');
-
-		// build the search & replace array
-		$search = array_keys($variables);
-		$replace = array_values($variables);
-
-		// loop search values
-		foreach($search as $key => $value) $search[$key] = '{$'. $value .'}';
-
-		// build output
-		$output = str_replace($search, $replace, $tpl);
-
-		// show output
-		echo $output;
-
-		// stop the script
-		exit;
-	}
-
-
-	/**
 	 * Check if a specific requirement is satisfied
 	 *
 	 * @return	boolean
@@ -281,6 +223,64 @@ class InstallerStep2 extends InstallerStep
 
 
 	/**
+	 * Execute this step
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// init vars
+		$variables = array();
+
+		// head
+		$variables['head'] = file_get_contents('layout/templates/head.tpl');
+		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
+
+		// check requirements
+		$validated = self::checkRequirements($variables);
+
+		// has errors
+		if(!$validated)
+		{
+			// assign the variable
+			$variables['nextButton'] = '&nbsp;';
+			$variables['requirementsStatusError'] = '';
+			$variables['requirementsStatusOK'] = 'hidden';
+		}
+
+		// no errors detected
+		else
+		{
+			header('Location: index.php?step=3');
+			exit;
+		}
+
+		// set paths for template
+		$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
+		$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
+
+		// template contents
+		$tpl = file_get_contents('layout/templates/2.tpl');
+
+		// build the search & replace array
+		$search = array_keys($variables);
+		$replace = array_values($variables);
+
+		// loop search values
+		foreach($search as $key => $value) $search[$key] = '{$'. $value .'}';
+
+		// build output
+		$output = str_replace($search, $replace, $tpl);
+
+		// show output
+		echo $output;
+
+		// stop the script
+		exit;
+	}
+
+
+	/**
 	 * Try to guess the location of the library based on spoon library
 	 *
 	 * @return	void
@@ -334,36 +334,6 @@ class InstallerStep2 extends InstallerStep
 
 
 	/**
-	 * Check if a directory is writable.
-	 * The default is_writable function has problems due to Windows ACLs "bug"
-	 *
-	 * @return	bool
-	 * @param	string $path	The path to check.
-	 */
-	private static function isWritable($path)
-	{
-		// redefine argument
-		$path = rtrim((string) $path, '/');
-
-		// create temporary file
-		$file = tempnam($path, 'isWritable');
-
-		// file has been created
-		if($file !== false)
-		{
-			// remove temporary file
-			@unlink($file);
-
-			// file could not be created = writable
-			return true;
-		}
-
-		// file could not be created = not writable
-		return false;
-	}
-
-
-	/**
 	 * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
 	 *
 	 * @return	bool
@@ -394,6 +364,36 @@ class InstallerStep2 extends InstallerStep
 
 		// we were able to read all sub-directories
 		return true;
+	}
+
+
+	/**
+	 * Check if a directory is writable.
+	 * The default is_writable function has problems due to Windows ACLs "bug"
+	 *
+	 * @return	bool
+	 * @param	string $path	The path to check.
+	 */
+	private static function isWritable($path)
+	{
+		// redefine argument
+		$path = rtrim((string) $path, '/');
+
+		// create temporary file
+		$file = tempnam($path, 'isWritable');
+
+		// file has been created
+		if($file !== false)
+		{
+			// remove temporary file
+			@unlink($file);
+
+			// file could not be created = writable
+			return true;
+		}
+
+		// file could not be created = not writable
+		return false;
 	}
 }
 

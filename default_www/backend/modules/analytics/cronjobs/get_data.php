@@ -20,6 +20,44 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
 
 	/**
+	 * Cleanup cache files
+	 *
+	 * @return	void
+	 */
+	private function cleanupCache()
+	{
+		// get cache files
+		$files = SpoonFile::getList($this->cachePath);
+
+		// loop items
+		foreach($files as $file)
+		{
+			// get info
+			$fileinfo = SpoonFile::getInfo($this->cachePath .'/'. $file);
+
+			// file is more than one week old
+			if($fileinfo['modification_date'] < strtotime('-1 week'))
+			{
+				// delete file
+				SpoonFile::delete($this->cachePath .'/'. $file);
+			}
+		}
+	}
+
+
+	/**
+	 * Cleanup database
+	 *
+	 * @return	void
+	 */
+	private function cleanupDatabase()
+	{
+		// cleanup pages
+		BackendModel::getDB(true)->delete('analytics_pages', 'date_viewed < ?', array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week'))));
+	}
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -96,44 +134,6 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
 		// cleanup database
 		$this->cleanupDatabase();
-	}
-
-
-	/**
-	 * Cleanup cache files
-	 *
-	 * @return	void
-	 */
-	private function cleanupCache()
-	{
-		// get cache files
-		$files = SpoonFile::getList($this->cachePath);
-
-		// loop items
-		foreach($files as $file)
-		{
-			// get info
-			$fileinfo = SpoonFile::getInfo($this->cachePath .'/'. $file);
-
-			// file is more than one week old
-			if($fileinfo['modification_date'] < strtotime('-1 week'))
-			{
-				// delete file
-				SpoonFile::delete($this->cachePath .'/'. $file);
-			}
-		}
-	}
-
-
-	/**
-	 * Cleanup database
-	 *
-	 * @return	void
-	 */
-	private function cleanupDatabase()
-	{
-		// cleanup pages
-		BackendModel::getDB(true)->delete('analytics_pages', 'date_viewed < ?', array(SpoonDate::getDate('Y-m-d H:i:s', strtotime('-1 week'))));
 	}
 
 

@@ -852,9 +852,11 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'EmailIsRequired', 'E-mail is een verplicht veld.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'FieldIsRequired', 'Dit veld is verplicht.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'FormError', 'Er ging iets mis, kijk de gemarkeerde velden na.');
+		$this->insertLocale('nl', 'frontend', 'core', 'err', 'InvalidNumber', 'Gelieve een geldig getal in te geven.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'InvalidURL', 'Dit is een ongeldige URL.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'MessageIsRequired', 'Bericht is een verplicht veld.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'NameIsRequired', 'Gelieve een naam in te geven.');
+		$this->insertLocale('nl', 'frontend', 'core', 'err', 'SomethingWentWrong', 'Er ging iets mis.');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Archive', 'archief');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Archives', 'archieven');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'By', 'door');
@@ -919,6 +921,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'InvalidURL', 'This is an invalid URL.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'MessageIsRequired', 'Message is a required field.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'NameIsRequired', 'Please provide a name.');
+		$this->insertLocale('en', 'frontend', 'core', 'err', 'SomethingWentWrong', 'Something went wrong.');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Archive', 'archive');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Archives', 'archives');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'By', 'by');

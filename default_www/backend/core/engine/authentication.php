@@ -278,22 +278,6 @@ class BackendAuthentication
 
 
 	/**
-	 * Logsout the current user
-	 *
-	 * @return	void
-	 */
-	public static function logout()
-	{
-		// remove all rows owned by the current user
-		BackendModel::getDB(true)->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
-
-		// reset values. We can't destroy the session because session-data can be used on the site.
-		SpoonSession::set('backend_logged_in', false);
-		SpoonSession::set('backend_secret_key', '');
-	}
-
-
-	/**
 	 * Login the user with the given credentials.
 	 * Will return a boolean that indicates if the user is logged in.
 	 *
@@ -354,6 +338,22 @@ class BackendAuthentication
 			// return result
 			return false;
 		}
+	}
+
+
+	/**
+	 * Logsout the current user
+	 *
+	 * @return	void
+	 */
+	public static function logout()
+	{
+		// remove all rows owned by the current user
+		BackendModel::getDB(true)->delete('users_sessions', 'session_id = ?', SpoonSession::getSessionId());
+
+		// reset values. We can't destroy the session because session-data can be used on the site.
+		SpoonSession::set('backend_logged_in', false);
+		SpoonSession::set('backend_secret_key', '');
 	}
 }
 

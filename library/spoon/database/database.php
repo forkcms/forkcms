@@ -333,6 +333,28 @@ class SpoonDatabase
 
 
 	/**
+	 * Retrieve the debug setting
+	 *
+	 * @return	bool	true if debug is enabled, false if not.
+	 */
+	public function getDebug()
+	{
+		return $this->debug;
+	}
+
+
+	/**
+	 * Fetch the name of the database driver
+	 *
+	 * @return	string	The name of the driver that is used.
+	 */
+	public function getDriver()
+	{
+		return $this->driver;
+	}
+
+
+	/**
 	 * Retrieves the possible ENUM values
 	 *
 	 * @return	array			An array with all the possible ENUM values.
@@ -363,28 +385,6 @@ class SpoonDatabase
 
 		// return
 		return (array) explode(',', $types);
-	}
-
-
-	/**
-	 * Retrieve the debug setting
-	 *
-	 * @return	bool	true if debug is enabled, false if not.
-	 */
-	public function getDebug()
-	{
-		return $this->debug;
-	}
-
-
-	/**
-	 * Fetch the name of the database driver
-	 *
-	 * @return	string	The name of the driver that is used.
-	 */
-	public function getDriver()
-	{
-		return $this->driver;
 	}
 
 

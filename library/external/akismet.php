@@ -233,6 +233,17 @@ class Akismet
 
 
 	/**
+	 * Get the url of the instance making the request
+	 *
+	 * @return	string
+	 */
+	public function getUrl()
+	{
+		return (string) $this->url;
+	}
+
+
+	/**
 	 * Get the useragent that will be used. Our version will be prepended to yours.
 	 * It will look like: "PHP Akismet/<version> <your-user-agent>"
 	 *
@@ -241,17 +252,6 @@ class Akismet
 	public function getUserAgent()
 	{
 		return (string) 'PHP Akismet/'. self::VERSION .' '. $this->userAgent;
-	}
-
-
-	/**
-	 * Get the url of the instance making the request
-	 *
-	 * @return	string
-	 */
-	public function getUrl()
-	{
-		return (string) $this->url;
 	}
 
 
@@ -281,6 +281,18 @@ class Akismet
 
 
 	/**
+	 * Set the url of the instance making the request
+	 *
+	 * @return	void
+	 * @param	string $url		The URL making the request.
+	 */
+	private function setUrl($url)
+	{
+		$this->url = (string) $url;
+	}
+
+
+	/**
 	 * Set the user-agent for you application
 	 * It will be appended to ours, the result will look like: "PHP Akismet/<version> <your-user-agent>"
 	 *
@@ -290,18 +302,6 @@ class Akismet
 	public function setUserAgent($userAgent)
 	{
 		$this->userAgent = (string) $userAgent;
-	}
-
-
-	/**
-	 * Set the url of the instance making the request
-	 *
-	 * @return	void
-	 * @param	string $url		The URL making the request.
-	 */
-	private function setUrl($url)
-	{
-		$this->url = (string) $url;
 	}
 
 

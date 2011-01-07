@@ -239,22 +239,6 @@ class BackendSearchModel
 
 
 	/**
-	 * Update a synonym
-	 *
-	 * @return	void
-	 * @param	array $item					The data to update in the db.
-	 */
-	public static function updateSynonym($item)
-	{
-		// update
-		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($item['id']));
-
-		// invalidate the cache for search
-		self::invalidateCache();
-	}
-
-
-	/**
 	 * Remove an index
 	 *
 	 * @return	void
@@ -272,6 +256,22 @@ class BackendSearchModel
 
 		// delete indexes
 		BackendModel::getDB(true)->delete('search_index', 'module = ? AND other_id = ? AND language = ?', array((string) $module, (int) $otherId, (string) $language));
+
+		// invalidate the cache for search
+		self::invalidateCache();
+	}
+
+
+	/**
+	 * Update a synonym
+	 *
+	 * @return	void
+	 * @param	array $item					The data to update in the db.
+	 */
+	public static function updateSynonym($item)
+	{
+		// update
+		BackendModel::getDB(true)->update('search_synonyms', $item, 'id = ?', array($item['id']));
 
 		// invalidate the cache for search
 		self::invalidateCache();

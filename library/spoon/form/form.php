@@ -474,26 +474,6 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single textarea.
-	 *
-	 * @return	SpoonFormTextarea
-	 * @param	string $name					The name.
-	 * @param	string[optional] $value			The initial value.
-	 * @param	string[optional] $class			The CSS-class to be used.
-	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
-	 * @param	bool[optional] $HTML			Is HTML allowed?
-	 */
-	public function addTextarea($name, $value = null, $class = 'inputTextarea', $classError = 'inputTextareaError', $HTML = false)
-	{
-		// add element
-		$this->add(new SpoonFormTextarea($name, $value, $class, $classError, $HTML));
-
-		// return element
-		return $this->getField($name);
-	}
-
-
-	/**
 	 * Adds a single textfield.
 	 *
 	 * @return	SpoonFormText
@@ -508,6 +488,26 @@ class SpoonForm
 	{
 		// add element
 		$this->add(new SpoonFormText($name, $value, $maxlength, $class, $classError, $HTML));
+
+		// return element
+		return $this->getField($name);
+	}
+
+
+	/**
+	 * Adds a single textarea.
+	 *
+	 * @return	SpoonFormTextarea
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @param	bool[optional] $HTML			Is HTML allowed?
+	 */
+	public function addTextarea($name, $value = null, $class = 'inputTextarea', $classError = 'inputTextareaError', $HTML = false)
+	{
+		// add element
+		$this->add(new SpoonFormTextarea($name, $value, $class, $classError, $HTML));
 
 		// return element
 		return $this->getField($name);
@@ -714,39 +714,6 @@ class SpoonForm
 
 
 	/**
-	 * Get a token
-	 *
-	 * @return	string
-	 */
-	public function getToken()
-	{
-		// no token available?
-		if(!SpoonSession::exists('form_token'))
-		{
-			// generate a token
-			$token = md5(SpoonSession::getSessionId() . rand(0, 999) . time());
-
-			// store in session
-			SpoonSession::set('form_token', $token);
-		}
-
-		// return
-		return SpoonSession::get('form_token');
-	}
-
-
-	/**
-	 * Get the status of the token
-	 *
-	 * @return	bool
-	 */
-	public function getUseToken()
-	{
-		return $this->useToken;
-	}
-
-
-	/**
 	 * Retrieve the parameters.
 	 *
 	 * @return	array
@@ -880,6 +847,39 @@ class SpoonForm
 
 		// close form tag
 		return $value .'{/form:'. $this->name .'}';
+	}
+
+
+	/**
+	 * Get a token
+	 *
+	 * @return	string
+	 */
+	public function getToken()
+	{
+		// no token available?
+		if(!SpoonSession::exists('form_token'))
+		{
+			// generate a token
+			$token = md5(SpoonSession::getSessionId() . rand(0, 999) . time());
+
+			// store in session
+			SpoonSession::set('form_token', $token);
+		}
+
+		// return
+		return SpoonSession::get('form_token');
+	}
+
+
+	/**
+	 * Get the status of the token
+	 *
+	 * @return	bool
+	 */
+	public function getUseToken()
+	{
+		return $this->useToken;
 	}
 
 

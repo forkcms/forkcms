@@ -1236,6 +1236,30 @@ class BackendMailmotorModel
 
 
 	/**
+	 * Get the unsubscribed e-mail addresses by group ID(s)
+	 *
+	 * @return	array
+	 * @param	mixed $ids	The ids of the groups.
+	 */
+	public static function getUnsubscribedAddressesByGroupID($ids)
+	{
+		// check input
+		if(empty($ids)) return array();
+
+		// check if an array was given
+		$ids = !is_array($ids) ? array($ids) : $ids;
+
+		// get record and return it
+		return (array) BackendModel::getDB()->getRecords('SELECT ma.email, UNIX_TIMESTAMP(ma.created_on) AS created_on
+															FROM mailmotor_addresses AS ma
+															INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
+															INNER JOIN mailmotor_groups AS mg ON mg.id = mag.group_id
+															WHERE mag.group_id IN ('. implode(',', $ids) .') AND mag.status = ?
+															GROUP BY ma.email;', array('unsubscribed'));
+	}
+
+
+	/**
 	 * Inserts a new e-mail address into the database
 	 *
 	 * @return	void
@@ -1438,59 +1462,6 @@ class BackendMailmotorModel
 
 
 	/**
-	 * Get the unsubscribed e-mail addresses by group ID(s)
-	 *
-	 * @return	array
-	 * @param	mixed $ids	The ids of the groups.
-	 */
-	public static function getUnsubscribedAddressesByGroupID($ids)
-	{
-		// check input
-		if(empty($ids)) return array();
-
-		// check if an array was given
-		$ids = !is_array($ids) ? array($ids) : $ids;
-
-		// get record and return it
-		return (array) BackendModel::getDB()->getRecords('SELECT ma.email, UNIX_TIMESTAMP(ma.created_on) AS created_on
-															FROM mailmotor_addresses AS ma
-															INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
-															INNER JOIN mailmotor_groups AS mg ON mg.id = mag.group_id
-															WHERE mag.group_id IN ('. implode(',', $ids) .') AND mag.status = ?
-															GROUP BY ma.email;', array('unsubscribed'));
-	}
-
-
-	/**
-	 * Updates a subscriber record
-	 *
-	 * @return	bool
-	 * @param	array $item			The data to update for the campaign.
-	 * @param	mixed $groupIds		The groups to subscribe the user to.
-	 */
-	public static function updateSubscriber(array $item, $groupIds)
-	{
-		// get DB
-		$db = BackendModel::getDB(true);
-
-		// update record
-		$db->update('mailmotor_addresses', $item, 'email = ?', $item['email']);
-
-		// delete groups for this subscriber
-		$db->delete('mailmotor_addresses_groups', 'email = ?', array($item['email']));
-
-		// stop here if groups are empty
-		if(empty($groupIds)) return false;
-
-		// update the groups for this email address
-		self::updateGroups($item['email'], $groupIds);
-
-		// return true
-		return true;
-	}
-
-
-	/**
 	 * Updates a campaign
 	 *
 	 * @return	int
@@ -1663,6 +1634,35 @@ class BackendMailmotorModel
 
 		// update all mailings that are queued and were sent
 		return (int) $db->update('mailmotor_mailings', array('status' => 'sent'), 'id IN ('. implode(',', $updateIds) .')');
+	}
+
+
+	/**
+	 * Updates a subscriber record
+	 *
+	 * @return	bool
+	 * @param	array $item			The data to update for the campaign.
+	 * @param	mixed $groupIds		The groups to subscribe the user to.
+	 */
+	public static function updateSubscriber(array $item, $groupIds)
+	{
+		// get DB
+		$db = BackendModel::getDB(true);
+
+		// update record
+		$db->update('mailmotor_addresses', $item, 'email = ?', $item['email']);
+
+		// delete groups for this subscriber
+		$db->delete('mailmotor_addresses_groups', 'email = ?', array($item['email']));
+
+		// stop here if groups are empty
+		if(empty($groupIds)) return false;
+
+		// update the groups for this email address
+		self::updateGroups($item['email'], $groupIds);
+
+		// return true
+		return true;
 	}
 }
 
