@@ -19,13 +19,7 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];
-
-		// get all lines
 		$lines = file($phpcsFile->getFilename());
-
-		// get previous token
-		$previous = $tokens[$stackPtr - 1];
-		// get nex token
 		$next = $tokens[$stackPtr + 1];
 
 		if($next['content'] != ' ') $phpcsFile->addError('After "function" we expect exactly one space.', $stackPtr);
@@ -133,7 +127,6 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 		unset($current);
 		unset($lines);
 		unset($next);
-		unset($previous);
 	}
 }
 

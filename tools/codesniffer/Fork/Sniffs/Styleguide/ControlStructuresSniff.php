@@ -20,13 +20,6 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];
-
-		// get all lines
-		$lines = file($phpcsFile->getFilename());
-
-		// get previous token
-		$previous = $tokens[$stackPtr - 1];
-		// get nex token
 		$next = $tokens[$stackPtr + 1];
 
 		// handle all types
@@ -157,9 +150,7 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 		// cleanup
 		unset($tokens);
 		unset($current);
-		unset($lines);
 		unset($next);
-		unset($previous);
 	}
 }
 

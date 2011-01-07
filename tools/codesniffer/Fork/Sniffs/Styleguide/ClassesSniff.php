@@ -20,19 +20,11 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
-		// @todo	no ; on end of the queries?
-		// @todo	query-formating?
-
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];
-
-		// get all lines
 		$lines = file($phpcsFile->getFilename());
-
-		// get previous token
 		$previous = $tokens[$stackPtr - 1];
-		// get nex token
 		$next = $tokens[$stackPtr + 1];
 
 		// handle all types
@@ -175,7 +167,7 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 			case T_FUNCTION:
 				$prevClass = $phpcsFile->findPrevious(T_CLASS, $stackPtr);
 
-				if(isset($tokens[$tokens[$prevClass]['scope_closer']]['line']) && $current['line'] <= $tokens[$tokens[$prevClass]['scope_closer']]['line'])
+				if(isset($tokens[$prevClass]['scope_closer']) && $current['line'] <= $tokens[$tokens[$prevClass]['scope_closer']]['line'])
 				{
 					if($prevClass != 0)
 					{
