@@ -223,7 +223,7 @@ class SpoonDatabase
 	 */
 	public function drop($tables)
 	{
-		$this->execute('DROP TABLE '. implode(', ', (array) $tables) .';');
+		$this->execute('DROP TABLE '. implode(', ', (array) $tables));
 	}
 
 
@@ -644,7 +644,7 @@ class SpoonDatabase
 	 */
 	public function getTables()
 	{
-		return (array) $this->getColumn('SHOW TABLES;');
+		return (array) $this->getColumn('SHOW TABLES');
 	}
 
 
@@ -861,7 +861,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// build & execute query
-		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables) .';');
+		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables));
 	}
 
 
@@ -983,7 +983,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// loop & truncate
-		foreach($tables as $table) $this->execute('TRUNCATE TABLE '. $table .';');
+		foreach($tables as $table) $this->execute('TRUNCATE TABLE '. $table);
 	}
 
 

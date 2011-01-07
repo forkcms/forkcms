@@ -37,8 +37,8 @@ class FrontendMailmotorModel
 		$emails = (!is_array($emails)) ? array($emails) : $emails;
 
 		// delete records
-		$db->delete('mailmotor_addresses', 'email IN("'. implode('","', $emails) .'");');
-		$db->delete('mailmotor_addresses_groups', 'email IN("'. implode('","', $emails) .'");');
+		$db->delete('mailmotor_addresses', 'email IN("'. implode('","', $emails) .'")');
+		$db->delete('mailmotor_addresses_groups', 'email IN("'. implode('","', $emails) .'")');
 	}
 
 
@@ -51,7 +51,7 @@ class FrontendMailmotorModel
 	public static function exists($email)
 	{
 		// check the results
-		return (bool) FrontendModel::getDB()->getNumRows('SELECT email FROM mailmotor_addresses WHERE email = ?;', array($email));
+		return (bool) FrontendModel::getDB()->getNumRows('SELECT email FROM mailmotor_addresses WHERE email = ?', array($email));
 	}
 
 
@@ -64,7 +64,7 @@ class FrontendMailmotorModel
 	public static function existsGroup($id)
 	{
 		// return the results
-		return (bool) (FrontendModel::getDB()->getNumRows('SELECT id FROM mailmotor_groups WHERE id = ?;', array($id)) > 0);
+		return (bool) (FrontendModel::getDB()->getNumRows('SELECT id FROM mailmotor_groups WHERE id = ?', array($id)) > 0);
 	}
 
 
@@ -79,7 +79,7 @@ class FrontendMailmotorModel
 		// get record and return it
 		$record = (array) FrontendModel::getDB()->getRecord('SELECT mm.*
 																FROM mailmotor_mailings AS mm
-																WHERE mm.id = ?;',
+																WHERE mm.id = ?',
 																array((int) $id));
 
 		// record is empty, stop here
@@ -114,7 +114,7 @@ class FrontendMailmotorModel
 		return (int) FrontendModel::getDB()->getVar('SELECT mg.id
 														FROM mailmotor_groups AS mg
 														WHERE mg.is_default = ? AND mg.language = ?
-														LIMIT 1;',
+														LIMIT 1',
 														array('Y', FRONTEND_LANGUAGE));
 	}
 
@@ -136,7 +136,7 @@ class FrontendMailmotorModel
 											FROM mailmotor_groups AS mg
 											LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
 											WHERE mag.email = ?
-											GROUP BY mg.id;',
+											GROUP BY mg.id',
 											array($email));
 
 		// excludeId set
@@ -238,7 +238,7 @@ class FrontendMailmotorModel
 		return (bool) $db->getNumRows('SELECT ma.email
 										FROM mailmotor_addresses AS ma
 										INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
-										WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?;',
+										WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?',
 										array((string) $email, $groupId, 'subscribed'));
 	}
 
@@ -269,7 +269,7 @@ class FrontendMailmotorModel
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses(email, source, created_on)
 							VALUES (?, ?, ?)
-							ON DUPLICATE KEY UPDATE source = ?, created_on = ?;',
+							ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
 							array($subscriber['email'], $subscriber['source'], $subscriber['created_on'],
 									$subscriber['source'], $subscriber['created_on']));
 
@@ -282,7 +282,7 @@ class FrontendMailmotorModel
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
 							VALUES (?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?;',
+							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
 							array($subscriberGroup['email'], $subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on'],
 									$subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on']));
 
