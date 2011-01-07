@@ -17,14 +17,14 @@ class Fork_Sniffs_CodeAnalysis_EmptyStatementsSniff implements PHP_CodeSniffer_S
 	{
 		// get tokens
 		$tokens = $phpcsFile->getTokens();
-		$token = $tokens[$stackPtr];
+		$current = $tokens[$stackPtr];
 
 		// skip for-statements without body.
-		if(isset($token['scope_opener']) === false) return;
+		if(isset($current['scope_opener']) === false) return;
 
 		// get next
-		$next = ++$token['scope_opener'];
-		$end = --$token['scope_closer'];
+		$next = ++$current['scope_opener'];
+		$end = --$current['scope_closer'];
 
 		$emptyBody = true;
 
@@ -44,6 +44,12 @@ class Fork_Sniffs_CodeAnalysis_EmptyStatementsSniff implements PHP_CodeSniffer_S
 			$error = sprintf('Empty %s statement detected', strtoupper($name));
 			$phpcsFile->addWarning($error, $stackPtr);
 		}
+
+		// cleanup
+		unset($tokens);
+		unset($current);
+		unset($next);
+		unset($end);
 	}
 
 }

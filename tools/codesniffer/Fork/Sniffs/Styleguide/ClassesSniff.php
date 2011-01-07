@@ -1,4 +1,4 @@
-m<?php
+<?php
 
 /**
  * Fork_Sniffs_Styleguide_ClassesSniff
@@ -8,15 +8,20 @@ m<?php
  */
 class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 {
+	private static $functions = array();
+	private static $classesWithErrors = array();
+
+
 	public function register()
 	{
-		return array(T_CLASS, T_EXTENDS, T_IMPLEMENTS, T_INTERFACE, T_NAMESPACE, T_NS_SEPARATOR, T_CLONE);
+		return array(T_CLASS, T_EXTENDS, T_IMPLEMENTS, T_INTERFACE, T_NAMESPACE, T_NS_SEPARATOR, T_CLONE, T_FUNCTION);
 	}
 
 
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
-		// @todo	alphabetic?
+		// @todo	no ; on end of the queries?
+		// @todo	query-formating?
 
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
@@ -42,13 +47,13 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 				if($nextClass !== false)
 				{
 					if($lines[$tokens[$current['scope_closer']]['line']] == "\n" && $lines[$tokens[$current['scope_closer']]['line'] + 1] == "\n" && trim($lines[$tokens[$current['scope_closer']]['line'] + 2]) != '') {}
-					else $phpcsFile->addWarning('Expected 2 empty lines after a class.', $stackPtr);
+					else $phpcsFile->addError('Expected 2 empty lines after a class.', $stackPtr);
 				}
 
-				if($next['code'] != T_WHITESPACE) $phpcsFile->addWarning('Space expected after class, interface', $stackPtr);
+				if($next['code'] != T_WHITESPACE) $phpcsFile->addError('Space expected after class, interface', $stackPtr);
 
 				// find comment
-				if($phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, $stackPtr - 4) === false) $phpcsFile->addWarning('PHPDoc expected before class', $stackPtr);
+				if($phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, $stackPtr - 4) === false) $phpcsFile->addError('PHPDoc expected before class', $stackPtr);
 
 				// get classname
 				$className = trim(str_replace('class', '', $lines[$current['line'] - 1]));
@@ -56,10 +61,10 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 				// exceptions may have brackets on the same line
 				if(substr_count($className, 'Exception') == 0)
 				{
-					if(($tokens[$current['scope_opener']]['line'] - $current['line']) != 1) $phpcsFile->addWarning('Opening bracket should be at the next line', $stackPtr);
-					if($tokens[$current['scope_opener']]['column'] != $tokens[$current['scope_closer']]['column']) $phpcsFile->addWarning('Closing brace should be at same column as opening brace.', $stackPtr);
-					if($tokens[$current['scope_opener'] + 1]['content'] != "\n") $phpcsFile->addWarning('Content should be on a new line.', $stackPtr);
-					if($tokens[$current['scope_opener'] + 1]['column'] != $tokens[$current['scope_closer']]['column'] + 1) $phpcsFile->addWarning('Content should be indented correctly', $stackPtr);
+					if(($tokens[$current['scope_opener']]['line'] - $current['line']) != 1) $phpcsFile->addError('Opening bracket should be at the next line', $stackPtr);
+					if($tokens[$current['scope_opener']]['column'] != $tokens[$current['scope_closer']]['column']) $phpcsFile->addError('Closing brace should be at same column as opening brace.', $stackPtr);
+					if($tokens[$current['scope_opener'] + 1]['content'] != "\n") $phpcsFile->addError('Content should be on a new line.', $stackPtr);
+					if($tokens[$current['scope_opener'] + 1]['column'] != $tokens[$current['scope_closer']]['column'] + 1) $phpcsFile->addError('Content should be indented correctly', $stackPtr);
 				}
 
 				// is it a fork class?
@@ -163,8 +168,43 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 
 			case T_EXTENDS:
 			case T_IMPLEMENTS:
-				if($previous['content'] != ' ') $phpcsFile->addWarning('Space excpected before extends, implements', $stackPtr);
-				if($next['content'] != ' ') $phpcsFile->addWarning('Space expected after extends, implements', $stackPtr);
+				if($previous['content'] != ' ') $phpcsFile->addError('Space excpected before extends, implements', $stackPtr);
+				if($next['content'] != ' ') $phpcsFile->addError('Space expected after extends, implements', $stackPtr);
+			break;
+
+			case T_FUNCTION:
+				$prevClass = $phpcsFile->findPrevious(T_CLASS, $stackPtr);
+
+				if(isset($tokens[$tokens[$prevClass]['scope_closer']]['line']) && $current['line'] <= $tokens[$tokens[$prevClass]['scope_closer']]['line'])
+				{
+					if($prevClass != 0)
+					{
+						// get class
+						$className = strtolower($tokens[$prevClass + 2]['content']);
+
+						if(!in_array($className, self::$classesWithErrors))
+						{
+							// add
+							self::$functions[$className][] = strtolower($tokens[$stackPtr + 2]['content']);
+
+							// copy to local
+							$local = self::$functions[$className];
+
+							// sort
+							sort($local);
+
+							// gte dif
+							$diff = (array) array_diff_assoc($local, self::$functions[$className]);
+
+							// check
+							if(count($diff) > 0)
+							{
+								$phpcsFile->addError('The methods should be placed in alphabetical order.', $stackPtr);
+								self::$classesWithErrors[] = $className;
+							}
+						}
+					}
+				}
 			break;
 
 			case T_CLONE:

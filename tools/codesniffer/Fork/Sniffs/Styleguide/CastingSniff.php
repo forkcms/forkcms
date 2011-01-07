@@ -20,36 +20,34 @@ class Fork_Sniffs_Styleguide_CastingSniff implements PHP_CodeSniffer_Sniff
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];
-
-		// get all lines
-		$lines = file($phpcsFile->getFilename());
-
-		// get previous token
-		$previous = $tokens[$stackPtr - 1];
-		// get nex token
 		$next = $tokens[$stackPtr + 1];
 
 		// handle all types
 		switch($current['code'])
 		{
 			// there should be exactly one space after the closing brace
-			case T_ARRAY_CAST:
 			case T_BOOL_CAST:
+				if($current['content'] != '(bool)') $phpcsFile->addError('We use (bool) instead of (boolean)', $stackPtr);
+				if($next['content'] != ' ') $phpcsFile->addError('Space excpected after cast', $stackPtr);
+			break;
+
 			case T_DOUBLE_CAST:
+				if($current['content'] != '(float)') $phpcsFile->addError('We use (float) instead of (double)', $stackPtr);
+				if($next['content'] != ' ') $phpcsFile->addError('Space excpected after cast', $stackPtr);
+			break;
+			case T_ARRAY_CAST:
 			case T_INT_CAST:
 			case T_OBJECT_CAST:
 			case T_STRING_CAST:
 			case T_UNSET_CAST:
-				if($next['content'] != ' ') $phpcsFile->addWarning('Space excpected after cast', $stackPtr);
+				if($next['content'] != ' ') $phpcsFile->addError('Space excpected after cast', $stackPtr);
 			break;
 		}
 
 		// cleanup
 		unset($tokens);
 		unset($current);
-		unset($lines);
 		unset($next);
-		unset($previous);
 	}
 }
 
