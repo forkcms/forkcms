@@ -1,14 +1,13 @@
 <?php
 
 /**
- * PagesInstall
  * Installer for the pages module
  *
  * @package		installer
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class PagesInstall extends ModuleInstaller
@@ -17,13 +16,11 @@ class PagesInstall extends ModuleInstaller
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	SpoonDatabase $db
-	 * @param	array $languages
 	 */
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/pages/installer/data/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
 
 		// add 'pages' as a module
 		$this->addModule('pages', 'The module to manage your pages and website structure.');
@@ -62,7 +59,6 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpMetaNavigation', 'Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpNavigationTitle', 'De titel die in het menu getoond wordt.');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpNoFollow', 'Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpPageTitle', 'De titel die in het browservenster staat (<code>&lt;title&gt;</code>).');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpTemplateFormat', 'vb. [1,2],[/,2]');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpTemplateLocation', 'Plaats de templates in de map <code>core/templates</code> van je thema.');
 		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'IsAction', 'Gebruik deze pagina als module-actie.');
@@ -100,7 +96,6 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpMetaNavigation', 'Extra topnavigation (above/below the menu) on every page.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpNavigationTitle', 'The title that is shown in the menu.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpNoFollow', 'Makes sure that this page doesn\'t influence the internal PageRank.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpPageTitle', 'The title in the browser window (<code>&lt;title&gt;</code>).');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpTemplateFormat', 'e.g. [1,2],[/,2]');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpTemplateLocation', 'Put your templates in the <code>core/templates</code> folder of your theme.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'IsAction', 'Use this page as a module action.');
@@ -147,7 +142,10 @@ class PagesInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// check if pages already exist for this language
-			if((int) $this->getDB()->getVar('SELECT COUNT(id) FROM pages WHERE language = ?', array($language)) == 0)
+			if(!(bool) $this->getDB()->getVar('SELECT COUNT(id)
+												FROM pages
+												WHERE language = ?',
+												array($language)))
 			{
 				// insert homepage
 				$this->insertPage(array('id' => 1,
@@ -203,6 +201,7 @@ class PagesInstall extends ModuleInstaller
 	 */
 	private function insertTemplates()
 	{
+		// insert template
 		try
 		{
 			$this->getDB()->insert('pages_templates', array('id' => 1, 'label' => 'Default', 'path' => 'core/layout/templates/default.tpl', 'num_blocks' => 3, 'active' => 'Y', 'data' => 'a:3:{s:6:"format";s:11:"[1,2],[1,3]";s:5:"names";a:3:{i:0;s:12:"Main Content";i:1;s:16:"Sidebar: block 1";i:2;s:16:"Sidebar: block 2";}s:14:"default_extras";a:3:{i:0;s:6:"editor";i:1;s:6:"editor";i:2;s:6:"editor";}}'));
@@ -213,7 +212,7 @@ class PagesInstall extends ModuleInstaller
 		}
 
 		// recalculate num_blocks
-		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'), true);
+		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates'), true);
 		$this->setSetting('pages', 'meta_navigation', false);
 	}
 
@@ -245,27 +244,23 @@ class PagesInstall extends ModuleInstaller
 								'active' => 'Y',
 								'data' => serialize(array('format' => '[1,1],[2,3]',
 															'names' => array('Main content', 'Module or secondary content', 'Widget'),
-															'default_extras' => array('editor', 'editor', $extras['blog_widget_recent_articles_list'])
-														))
-							);
+															'default_extras' => array('editor', 'editor', $extras['blog_widget_recent_articles_list']))));
+
 		$defaultTemplate = 	array('label' => 'Scratch - Default',
 									'path' => 'core/layout/templates/default.tpl',
 									'num_blocks' => 2,
 									'active' => 'Y',
 									'data' => serialize(array('format' => '[1],[2]',
 																'names' => array('Main content', 'Module or secondary content'),
-																'default_extras' => array('editor', 'editor')
-																))
-							);
+																'default_extras' => array('editor', 'editor'))));
+
 		$twoColumnsTemplate = array('label' => 'Scratch - Two columns',
 									'path' => 'core/layout/templates/twocolumns.tpl',
 									'num_blocks' => 6,
 									'active' => 'Y',
 									'data' => serialize(array('format' => '[1,1,3],[2,2,4],[2,2,5],[2,2,6]',
 																'names' => array('Main content', 'Module or secondary content', 'Sidebar item 1', 'Sidebar item 2', 'Sidebar item 3', 'Sidebar item 4'),
-																'default_extras' => array('editor', 'editor', 'editor', 'editor', 'editor', 'editor')
-														))
-							);
+																'default_extras' => array('editor', 'editor', 'editor', 'editor', 'editor', 'editor'))));
 
 		// insert templates
 		$templateIds['home'] = $this->getDB()->insert('pages_templates', $homeTemplate);
@@ -289,8 +284,7 @@ class PagesInstall extends ModuleInstaller
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_1.txt'),
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt'),
-									array('extra_id' => $extras['blog_widget_recent_articles_list'])
-								);
+									array('extra_id' => $extras['blog_widget_recent_articles_list']));
 
 				// insert blog
 				$this->insertPage(array('id' => 10,
@@ -303,8 +297,7 @@ class PagesInstall extends ModuleInstaller
 									array('extra_id' => $extras['blog_widget_recent_comments']),
 									array('extra_id' => $extras['blog_widget_categories']),
 									array('extra_id' => $extras['blog_widget_archive']),
-									array('extra_id' => $extras['blog_widget_recent_articles_list'])
-								);
+									array('extra_id' => $extras['blog_widget_recent_articles_list']));
 
 				// insert sitemap
 				$this->insertPage(array('id' => 2,
@@ -314,8 +307,7 @@ class PagesInstall extends ModuleInstaller
 										'language' => $language),
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sitemap.txt'),
-									array('extra_id' => $extras['sitemap_widget_sitemap'])
-								);
+									array('extra_id' => $extras['sitemap_widget_sitemap']));
 
 				// insert disclaimer
 				$this->insertPage(array('id' => 3,
@@ -324,8 +316,7 @@ class PagesInstall extends ModuleInstaller
 										'type' => 'footer',
 										'language' => $language),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt')
-								);
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
 
 				// insert about us page
 				$aboutUsId = $this->insertPage(array('template_id' => $templateIds['default'],
@@ -334,8 +325,7 @@ class PagesInstall extends ModuleInstaller
 													'language' => $language),
 												null,
 												array('html' => ''),
-												array('html' => '')
-											);
+												array('html' => ''));
 
 					// location
 					$this->insertPage(array('template_id' => $templateIds['default'],
@@ -344,8 +334,7 @@ class PagesInstall extends ModuleInstaller
 												'language' => $language),
 											null,
 											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3_1.txt'),
-											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt')
-										);
+											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt'));
 
 					// team
 					$this->insertPage(array('template_id' => $templateIds['default'],
@@ -354,8 +343,7 @@ class PagesInstall extends ModuleInstaller
 												'language' => $language),
 											null,
 											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3_1.txt'),
-											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt')
-										);
+											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt'));
 
 				// history
 				$this->insertPage(array('template_id' => $templateIds['default'],
@@ -364,8 +352,7 @@ class PagesInstall extends ModuleInstaller
 												'language' => $language),
 											null,
 											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample3_1.txt'),
-											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt')
-										);
+											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1_2.txt'));
 
 				// insert contact page
 				$this->insertPage(array('template_id' => $templateIds['default'],
@@ -374,8 +361,7 @@ class PagesInstall extends ModuleInstaller
 										'language' => $language),
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/contact.txt'),
-									array('extra_id' => $extras['contact_block'])
-								);
+									array('extra_id' => $extras['contact_block']));
 
 				// insert 404
 				$this->insertPage(array('id' => 404,
@@ -387,13 +373,12 @@ class PagesInstall extends ModuleInstaller
 										'allow_delete' => 'N'),
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
-									array('extra_id' => $extras['sitemap_widget_sitemap'])
-								);
+									array('extra_id' => $extras['sitemap_widget_sitemap']));
 			}
 		}
 
 		// reset blocks
-		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'), true);
+		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates'), true);
 	}
 
 
@@ -433,7 +418,7 @@ class PagesInstall extends ModuleInstaller
 	private function setSettings()
 	{
 		// general settings
-		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates;'));
+		$this->setSetting('pages', 'template_max_blocks', (int) $this->getDB()->getVar('SELECT MAX(num_blocks) FROM pages_templates'));
 		$this->setSetting('pages', 'meta_navigation', true);
 		$this->setSetting('pages', 'default_template', 1);
 	}

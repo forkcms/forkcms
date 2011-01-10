@@ -15,8 +15,31 @@
  */
 
 
+/**
+ * This interface has to be implemented by the paging-classes
+ *
+ * @package		spoon
+ * @subpackage	datagrid
+ *
+ *
+ * @author		Davy Hellemans <davy@spoon-library.com>
+ * @since		1.0.0
+ */
 interface iSpoonDatagridPaging
 {
+	/**
+	 * Builds & returns the pagination.
+	 *
+	 * @return	string
+	 * @param	string $URL								The URL to use for the paging.
+	 * @param	int $offset								The current offset.
+	 * @param	string $order							The current order.
+	 * @param	string $sort							The current sorting method.
+	 * @param	int $numResults							The number of results.
+	 * @param	int $numPerPage							The number of results per page.
+	 * @param	bool[optional] $debug					Should debug-mode be enabled?
+	 * @param	string[optional] $compileDirectory		The path to the compile directory.
+	 */
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null);
 }
 
@@ -53,14 +76,14 @@ class SpoonDatagridPaging implements iSpoonDatagridPaging
 	 * Builds & returns the pagination.
 	 *
 	 * @return	string
-	 * @param	string $URL
-	 * @param	int $offset
-	 * @param	string $order
-	 * @param	string $sort
-	 * @param	int $numResults
-	 * @param	int $numPerPage
-	 * @param	bool[optional] $debug
-	 * @param	string[optional] $compileDirectory
+	 * @param	string $URL								The URL to use for the paging.
+	 * @param	int $offset								The current offset.
+	 * @param	string $order							The current order.
+	 * @param	string $sort							The current sorting-method.
+	 * @param	int $numResults							The number of results.
+	 * @param	int $numPerPage							The number of results per page.
+	 * @param	bool[optional] $debug					Should debug-mode be enabled?
+	 * @param	string[optional] $compileDirectory		The path to the compile-directory.
 	 */
 	public static function getContent($URL, $offset, $order, $sort, $numResults, $numPerPage, $debug = true, $compileDirectory = null)
 	{

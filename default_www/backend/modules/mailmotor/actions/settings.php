@@ -36,33 +36,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// get data
-		$this->getData();
-
-		// load form
-		$this->loadForm();
-
-		// validates the form
-		$this->validateForm();
-
-		// parse
-		$this->parse();
-
-		// display the page
-		$this->display();
-	}
-
-
-	/**
 	 * Attempts to create a client
 	 *
 	 * @return	mixed
@@ -98,6 +71,33 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			// add an error to the email field
 			$this->redirect(BackendModel::createURLForAction('settings') .'&error=campaign-monitor-error&var='. $e->getMessage());
 		}
+	}
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// get data
+		$this->getData();
+
+		// load form
+		$this->loadForm();
+
+		// validates the form
+		$this->validateForm();
+
+		// parse
+		$this->parse();
+
+		// display the page
+		$this->display();
 	}
 
 

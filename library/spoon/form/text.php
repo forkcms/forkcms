@@ -47,12 +47,12 @@ class SpoonFormText extends SpoonFormInput
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	int[optional] $maxlength
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	int[optional] $maxlength		The maximum-length the value can be.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @param	bool[optional] $HTML			Is HTML allowed?
 	 */
 	public function __construct($name, $value = null, $maxlength = null, $class = 'inputText', $classError = 'inputTextError', $HTML = false)
 	{
@@ -74,7 +74,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
-	 * @param	bool[optional] $allowHTML
+	 * @param	bool[optional] $allowHTML	Is HTML allowed?
 	 */
 	public function getValue($allowHTML = null)
 	{
@@ -117,7 +117,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field contains only letters a-z and A-Z.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphabetical($error = null)
 	{
@@ -147,7 +147,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field only contains letters & numbers (without spaces).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphaNumeric($error = null)
 	{
@@ -177,9 +177,9 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if the field is between a given minimum and maximum (includes min & max).
 	 *
 	 * @return	bool
-	 * @param	int $minimum
-	 * @param	int $maximum
-	 * @param	string[optional] $error
+	 * @param	int $minimum				The minimum.
+	 * @param	int $maximum				The maximum.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isBetween($minimum, $maximum, $error = null)
 	{
@@ -209,7 +209,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks this field for a boolean (true/false | 0/1).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isBool($error = null)
 	{
@@ -239,7 +239,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field only contains numbers 0-9.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isDigital($error = null)
 	{
@@ -269,7 +269,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks this field for a valid e-mail address.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isEmail($error = null)
 	{
@@ -299,7 +299,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilename($error = null)
 	{
@@ -329,7 +329,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -351,7 +351,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFloat($error = null)
 	{
@@ -381,8 +381,8 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field is greater than another value.
 	 *
 	 * @return	bool
-	 * @param	int $minimum
-	 * @param	string[optional] $error
+	 * @param	int $minimum				The minimum.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isGreaterThan($minimum, $error = null)
 	{
@@ -412,7 +412,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isInteger($error = null)
 	{
@@ -442,7 +442,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field is a proper ip address.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isIp($error = null)
 	{
@@ -472,8 +472,8 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field does not exceed the given maximum.
 	 *
 	 * @return	bool
-	 * @param	int $maximum
-	 * @param	int[optional] $error
+	 * @param	int $maximum				The maximum.
+	 * @param	int[optional] $error		The error message to set.
 	 */
 	public function isMaximum($maximum, $error = null)
 	{
@@ -503,8 +503,8 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field's length is less (or equal) than the given maximum.
 	 *
 	 * @return	bool
-	 * @param	int $maximum
-	 * @param	string[optional] $error
+	 * @param	int $maximum				The maximum number of characters.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMaximumCharacters($maximum, $error = null)
 	{
@@ -534,8 +534,8 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field is at least a given minimum.
 	 *
 	 * @return	bool
-	 * @param	int $minimum
-	 * @param	string[optional] $error
+	 * @param	int $minimum				The minimum.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMinimum($minimum, $error = null)
 	{
@@ -565,8 +565,8 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field's length is more (or equal) than the given minimum.
 	 *
 	 * @return	bool
-	 * @param	int $minimum
-	 * @param	string[optional] $error
+	 * @param	int $minimum				The minimum number of characters.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMinimumCharacters($minimum, $error = null)
 	{
@@ -596,7 +596,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Alias for isDigital (Field may only contain numbers 0-9).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isNumeric($error = null)
 	{
@@ -608,8 +608,8 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if the field is smaller than a given maximum.
 	 *
 	 * @return	bool
-	 * @param	int $maximum
-	 * @param	string[optional] $error
+	 * @param	int $maximum				The maximum.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isSmallerThan($maximum, $error = null)
 	{
@@ -639,7 +639,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if this field contains any string that doesn't have control characters (ASCII 0 - 31) but spaces are allowed.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isString($error = null)
 	{
@@ -669,7 +669,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks this field for a valid url.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isURL($error = null)
 	{
@@ -699,8 +699,8 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks if the field validates against the regexp.
 	 *
 	 * @return	bool
-	 * @param	string $regexp
-	 * @param	string[optional] $error
+	 * @param	string $regexp				The regular expresion to test the value.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isValidAgainstRegexp($regexp, $error = null)
 	{
@@ -730,7 +730,7 @@ class SpoonFormText extends SpoonFormInput
 	 * Parses the html for this textfield.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -747,7 +747,7 @@ class SpoonFormText extends SpoonFormInput
 		if($template !== null)
 		{
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;

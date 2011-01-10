@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
@@ -59,7 +59,12 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			{
 				$clientID = $cm->createClient($companyName, $contactName, $contactEmail, $country, $timezone);
 			}
-			catch(Exception $e) {}
+
+			// ignore exceptions
+			catch(Exception $e)
+			{
+				// do nothing
+			}
 
 			// save the new data
 			BackendModel::setModuleSetting('mailmotor', 'cm_url', $url);

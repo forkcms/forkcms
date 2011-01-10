@@ -1,13 +1,13 @@
 <?php
 
 /**
- * BackendAnalyticsSettings
+ * This is the settings-action, it will display a form to set general analytics settings
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
- * @author 		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsSettings extends BackendBaseActionEdit
@@ -263,6 +263,14 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 		}
 	}
 
+
+	/**
+	 * Helper function to sort accounts
+	 *
+	 * @return	int
+	 * @param	array $account1		First account for comparison.
+	 * @param	array $account2		Second account for comparison.
+	 */
 	public static function sortAccounts($account1, $account2)
 	{
 		if(strtolower($account1) > strtolower($account2)) return 1;

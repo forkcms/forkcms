@@ -92,6 +92,10 @@
 						<label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
 						{$ddmTimeFormat} {$ddmTimeFormatError}
 					</p>
+					<p>
+						<label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
+						{$ddmNumberFormat} {$ddmNumberFormatError}
+					</p>
 				</div>
 			</div>
 		</div>
@@ -106,7 +110,7 @@
 						<label for="newPassword">{$lblPassword|ucfirst}</label>
 						{$txtNewPassword} {$txtNewPasswordError}
 					</p>
-					<table id="passwordStrengthMeter" class="passwordStrength" rel="newPassword" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword" cellspacing="0">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">/</p>
@@ -149,7 +153,7 @@
 
 	<div class="fullwidthOptions">
 		{option:deleteAllowed}
-			<a href="{$var|geturl:'delete'}&amp;id={$record['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete'}&amp;id={$record['id']}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 		{/option:deleteAllowed}

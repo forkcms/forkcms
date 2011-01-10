@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendLocaleConfig
  * This is the configuration-object for the locale module
  *
  * @package		backend
  * @subpackage	locale
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 final class BackendLocaleConfig extends BackendBaseConfig

@@ -1,5 +1,6 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
+
 /**
  * Backend related objects
  * 
@@ -10,7 +11,8 @@ jsBackend =
 {
 	// datamembers
 	debug: {option:SPOON_DEBUG}true{/option:SPOON_DEBUG}{option:!SPOON_DEBUG}false{/option:!SPOON_DEBUG},
-	current: {
+	current:
+	{
 		module: null,
 		action: null,
 		language: null
@@ -32,6 +34,7 @@ jsBackend =
 		jsBackend.initAjax();
 		jsBackend.balloons.init();
 		jsBackend.controls.init();
+		jsBackend.effects.init();
 		jsBackend.forms.init();
 		jsBackend.layout.init();
 		jsBackend.messages.init();
@@ -47,9 +50,11 @@ jsBackend =
 
 
 	// init ajax
-	initAjax: function() {
+	initAjax: function()
+	{
 		// set defaults for AJAX
-		$.ajaxSetup({
+		$.ajaxSetup(
+		{
 			cache: false,
 			type: 'POST',
 			dataType: 'json',
@@ -86,13 +91,21 @@ jsBackend =
 	eoo: true
 }
 
+
+/**
+ * Handle form messages (action feedback: success, error, ...)
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.balloons =
 {
 	// init, something like a constructor
-	init: function() {
-		$('.balloon:visible').each(function() {
+	init: function()
+	{
+		$('.balloon:visible').each(function()
+		{
 			// search linked element
-			var linkedElement = $('*[rel='+ $(this).attr('id') +']');
+			var linkedElement = $('*[data-message-id='+ $(this).attr('id') +']');
 
 			// linked item found?
 			if(linkedElement != null)
@@ -106,20 +119,22 @@ jsBackend.balloons =
 	},
 
 
-	click: function(evt) {
+	// handle the click event (make it appear/disappear)
+	click: function(evt)
+	{
 		var clickedElement = $(this);
 
 		// get linked balloon
-		var rel = clickedElement.attr('rel');
+		var id = clickedElement.data('message-id');
 
 		// rel available?
-		if(rel != '')
+		if(id != '')
 		{
 			// hide if already visible
-			if($('#'+ rel).is(':visible'))
+			if($('#'+ id).is(':visible'))
 			{
 				// hide
-				$('#'+ rel).fadeOut(500);
+				$('#'+ id).fadeOut(500);
 
 				// unbind
 				$(window).unbind('resize');
@@ -129,22 +144,24 @@ jsBackend.balloons =
 			else
 			{
 				// position
-				jsBackend.balloons.position(clickedElement, $('#'+ rel));
+				jsBackend.balloons.position(clickedElement, $('#'+ id));
 
 				// show
-				$('#'+ rel).fadeIn(500);
+				$('#'+ id).fadeIn(500);
 
 				// set focus on first visible field
-				if($('#'+ rel +' form input:visible:first').length > 0) $('#'+ rel +' form input:visible:first').focus();
+				if($('#'+ id +' form input:visible:first').length > 0) $('#'+ id +' form input:visible:first').focus();
 
 				// bind resize
-				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ rel)); });
+				$(window).resize(function() { jsBackend.balloons.position(clickedElement, $('#'+ id)); });
 			}
 		}
 	},
 
 
-	position: function(clickedElement, element) {
+	// position the balloon
+	position: function(clickedElement, element)
+	{
 		// position
 		element.css('position', 'absolute').css('top', clickedElement.offset().top + clickedElement.height() + 10).css('left', clickedElement.offset().left - 30);
 	},
@@ -155,7 +172,13 @@ jsBackend.balloons =
 }
 
 
-jsBackend.controls = {
+/**
+ * Handle form functionality
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsBackend.controls =
+{
 	// init, something like a constructor
 	init: function()
 	{
@@ -212,30 +235,32 @@ jsBackend.controls = {
 		$('.askConfirmation').each(function()
 		{
 			// get id
-			var id = $(this).attr('rel');
+			var id = $(this).data('message-id');
 			var url = $(this).attr('href');
 
 			if(id != '' && url != '')
 			{
 				// initialize
-				$('#'+ id).dialog({
+				$('#'+ id).dialog(
+				{
 					autoOpen: false,
 					draggable: false,
 					resizable: false,
 					modal: true,
-					buttons: {
+					buttons:
+					{
 						'{$lblOK|ucfirst}': function()
-							{
+						{
 								// close dialog
 								$(this).dialog('close');
 
 								// goto link
-								window.location = $(this).attr('rel');
-							},
+								window.location = url;
+						},
 						'{$lblCancel|ucfirst}': function()
-							{
+						{
 								$(this).dialog('close');
-							}
+						}
 					},
 					open: function(evt)
 					{
@@ -253,13 +278,13 @@ jsBackend.controls = {
 			evt.preventDefault();
 
 			// get id
-			var id = $(this).attr('rel');
+			var id = $(this).data('message-id');
 			
 			// bind
 			if(id != '')
 			{
 				// set target
-				$('#'+ id).attr('rel', $(this).attr('href'));
+				$('#'+ id).data('message-id', $(this).attr('href'));
 				
 				// open dialog
 				$('#'+ id).dialog('open');
@@ -268,6 +293,7 @@ jsBackend.controls = {
 	},
 
 
+	// let the fake dropdown behave nicely, like a real dropdown
 	bindFakeDropdown: function()
 	{
 		$('.fakeDropdown').bind('click', function(evt)
@@ -396,34 +422,38 @@ jsBackend.controls = {
 		$('.tableOptions .massAction option').each(function()
 		{
 			// get id
-			var id = $(this).attr('rel');
+			var id = $(this).data('message-id');
 
-			// initialize
-			$('#'+ id).dialog({
-				autoOpen: false,
-				draggable: false,
-				resizable: false,
-				modal: true,
-				buttons: {
-					'{$lblOK|ucfirst}': function()
-					{
-						// close dialog
-						$(this).dialog('close');
-
-						// submit the form
-						$($('*[rel='+ $(this).attr('id') +']').parents('form')).submit();
-					},
-					'{$lblCancel|ucfirst}': function()
-					{
-						$(this).dialog('close');
-					}
-				},
-				open: function(evt)
+			if(typeof id != 'undefined')
+			{
+				// initialize
+				$('#'+ id).dialog(
 				{
-					// set focus on first button
-					if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
-				}
-			});
+					autoOpen: false,
+					draggable: false,
+					resizable: false,
+					modal: true,
+					buttons: {
+						'{$lblOK|ucfirst}': function()
+						{
+							// close dialog
+							$(this).dialog('close');
+
+							// submit the form
+							$($('*[data-message-id='+ $(this).attr('id') +']').parents('form')).submit();
+						},
+						'{$lblCancel|ucfirst}': function()
+						{
+							$(this).dialog('close');
+						}
+					},
+					open: function(evt)
+					{
+						// set focus on first button
+						if($(this).next().find('button').length > 0) { $(this).next().find('button')[0].focus(); }
+					}
+				});
+			}
 		});
 
 		// hijack the form
@@ -442,10 +472,10 @@ jsBackend.controls = {
 					var element = $(this).parents('.massAction').find('select[name=action] option:selected');
 	
 					// if the rel-attribute exists we should show the dialog
-					if(typeof element.attr('rel') != 'undefined')
+					if(typeof element.data('message-id') != 'undefined')
 					{
 						// get id
-						var id = element.attr('rel');
+						var id = element.data('message-id');
 	
 						// open dialog
 						$('#'+ id).dialog('open');
@@ -491,6 +521,7 @@ jsBackend.controls = {
 	},
 
 
+	// bind the password strength meter to the correct inputfield(s)
 	bindPasswordStrengthMeter: function()
 	{
 		if($('.passwordStrength').length > 0)
@@ -498,7 +529,7 @@ jsBackend.controls = {
 			$('.passwordStrength').each(function()
 			{
 				// grab id
-				var id = $(this).attr('rel');
+				var id = $(this).data('id');
 				var wrapperId = $(this).attr('id');
 
 				// hide all
@@ -670,34 +701,46 @@ jsBackend.controls = {
 }
 
 
-jsBackend.effects = {
+/**
+ * Backend effects
+ *
+ * @author	Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsBackend.effects =
+{
 	// init, something like a constructor
 	init: function()
 	{
-		jsBackend.effects.bindFadeOutAfterMouseMove();
 		jsBackend.effects.bindHighlight();
 	},
 
 
-	// when the mouse is moved, all items with a class "fadeOutAfterMouseMove" will fade away
-	bindFadeOutAfterMouseMove: function()
-	{
-		$(document.body).bind('mousemove', function(evt) { $('.fadeOutAfterMouseMove').fadeOut(2500); });
-	},
-
-
-	// if a var highlightId exists it will be highlighted
+	// if a var highlight exists in the url it will be highlighted
 	bindHighlight: function()
 	{
-		if(typeof highlightId != 'undefined')
-		{
-			var selector = highlightId;
+		// get hightlight from url
+	    var highlightId = utils.url.getGetValue('highlight');
 
-			// if the element is a table-row we should highlight all cells in that row
-			if($(highlightId)[0].tagName.toLowerCase == 'tr') { selector += ' td'; }
+	    // id is set
+	    if(highlightId != '')
+	    {
+	    	// init selector of the element we want to highlight
+	    	var selector = '#'+ highlightId;
 
-			$(selector).effect('highlight', null, 5000);
-		}
+	    	// item exists
+	    	if($(selector).length > 0)
+	    	{
+		    	// if its a table row we need to highlight all cells in that row
+		    	if($(selector)[0].tagName.toLowerCase() == 'tr'){ selector += ' td'; }
+
+		    	// when we hover over the item we stop the effect, otherwise we will mess up background hover styles
+	    		$(selector).bind('mouseover', function(){ $(selector).stop(true, true); });
+
+		    	// highlight!
+		    	$(selector).effect("highlight", {}, 5000);
+	    	}
+	    }
 	},
 
 
@@ -705,6 +748,12 @@ jsBackend.effects = {
 	eoo: true
 }
 
+
+/**
+ * Backend forms
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.forms =
 {
 	// init, something like a constructor
@@ -725,14 +774,16 @@ jsBackend.forms =
 		{
 			$('.inputDatefieldNormal').each(function()
 			{
-				var data = $(this).attr('rel').split(':::');
+				// get data
+				var data = $(this).data();
 
-				$(this).datepicker({
-					dateFormat: data[0],
+				$(this).datepicker(
+				{
+					dateFormat: data.mask,
 					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
 					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
 					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data[1],
+					firstDay: data.firstday,
 					hideIfNoPrevNext: true,
 					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
 					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
@@ -748,20 +799,22 @@ jsBackend.forms =
 		{
 			$('.inputDatefieldFrom').each(function()
 			{
-				var data = $(this).attr('rel').split(':::');
+				// get data
+				var data = $(this).data();
 
-				$(this).datepicker({
-					dateFormat: data[0],
+				$(this).datepicker(
+				{
+					dateFormat: data.mask,
 					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
 					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
 					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data[1],
+					firstDay: data.firstday,
 					hideIfNoPrevNext: true,
 					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
 					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
 					nextText: '{$lblNext}',
 					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data[2].split('-')[0], 10), parseInt(data[2].split('-')[1], 10) - 1, parseInt(data[2].split('-')[2], 10)),
+					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10)),
 					showAnim: 'slideDown'
 				});
 			});
@@ -772,20 +825,22 @@ jsBackend.forms =
 		{
 			$('.inputDatefieldTill').each(function()
 			{
-				var data = $(this).attr('rel').split(':::');
+				// get data
+				var data = $(this).data();
 
-				$(this).datepicker({
-					dateFormat: data[0],
+				$(this).datepicker(
+				{
+					dateFormat: data.mask,
 					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
 					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
 					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data[1],
+					firstDay: data.firstday,
 					hideIfNoPrevNext: true,
 					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
 					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
 					nextText: '{$lblNext}',
 					prevText: '{$lblPrevious}',
-					maxDate: new Date(parseInt(data[2].split('-')[0], 10), parseInt(data[2].split('-')[1], 10) -1, parseInt(data[2].split('-')[2], 10)),
+					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) -1, parseInt(data.enddate.split('-')[2], 10)),
 					showAnim: 'slideDown'
 				});
 			});
@@ -796,21 +851,23 @@ jsBackend.forms =
 		{
 			$('.inputDatefieldRange').each(function()
 			{
-				var data = $(this).attr('rel').split(':::');
+				// get data
+				var data = $(this).data();
 
-				$(this).datepicker({
-					dateFormat: data[0],
+				$(this).datepicker(
+				{
+					dateFormat: data.mask,
 					dayNames: ['{$locDayLongSun}', '{$locDayLongMon}', '{$locDayLongTue}', '{$locDayLongWed}', '{$locDayLongThu}', '{$locDayLongFri}', '{$locDayLongSat}'],
 					dayNamesMin: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
 					dayNamesShort: ['{$locDayShortSun}', '{$locDayShortMon}', '{$locDayShortTue}', '{$locDayShortWed}', '{$locDayShortThu}', '{$locDayShortFri}', '{$locDayShortSat}'],
-					firstDay: data[1],
+					firstDay: data.firstday,
 					hideIfNoPrevNext: true,
 					monthNames: ['{$locMonthLong1}', '{$locMonthLong2}', '{$locMonthLong3}', '{$locMonthLong4}', '{$locMonthLong5}', '{$locMonthLong6}', '{$locMonthLong7}', '{$locMonthLong8}', '{$locMonthLong9}', '{$locMonthLong10}', '{$locMonthLong11}', '{$locMonthLong12}'],
 					monthNamesShort: ['{$locMonthShort1}', '{$locMonthShort2}', '{$locMonthShort3}', '{$locMonthShort4}', '{$locMonthShort5}', '{$locMonthShort6}', '{$locMonthShort7}', '{$locMonthShort8}', '{$locMonthShort9}', '{$locMonthShort10}', '{$locMonthShort11}', '{$locMonthShort12}'],
 					nextText: '{$lblNext}',
 					prevText: '{$lblPrevious}',
-					minDate: new Date(parseInt(data[2].split('-')[0], 10), parseInt(data[2].split('-')[1], 10) - 1, parseInt(data[2].split('-')[2], 10), 0, 0, 0, 0),
-					maxDate: new Date(parseInt(data[3].split('-')[0], 10), parseInt(data[3].split('-')[1], 10) - 1, parseInt(data[3].split('-')[2], 10), 23, 59, 59),
+					minDate: new Date(parseInt(data.startdate.split('-')[0], 10), parseInt(data.startdate.split('-')[1], 10) - 1, parseInt(data.startdate.split('-')[2], 10), 0, 0, 0, 0),
+					maxDate: new Date(parseInt(data.enddate.split('-')[0], 10), parseInt(data.enddate.split('-')[1], 10) - 1, parseInt(data.enddate.split('-')[2], 10), 23, 59, 59),
 					showAnim: 'slideDown'
 				});
 			});
@@ -825,6 +882,7 @@ jsBackend.forms =
 	},
 	
 	
+	// set placeholders
 	placeholders: function()
 	{
 		// detect if placeholder-attribute is supported
@@ -885,10 +943,11 @@ jsBackend.forms =
 	},
 
 
+	// replaces buttons with <a><span>'s (to allow more flexible styling) and handle the form submission for them
 	submitWithLinks: function()
 	{
 		// the html for the button that will replace the input[submit]
-		var replaceHTML = '<a class="{class}" href="#"><span>{label}</span></a>';
+		var replaceHTML = '<a class="{class}" href="#{id}"><span>{label}</span></a>';
 
 		// are there any forms that should be submitted with a link?
 		if($('form.submitWithLink').length > 0)
@@ -905,7 +964,7 @@ jsBackend.forms =
 					// loop every button to be replaced
 					$('form#'+ formId + '.submitWithLink input:submit').each(function()
 					{
-						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
+						$(this).after(replaceHTML.replace('{label}', $(this).val()).replace('{id}', $(this).attr('id')).replace('{class}', 'submitButton button ' + $(this).attr('class'))).css({position:'absolute', top:'-9000px', left: '-9000px'}).attr('tabindex', -1);
 					});
 
 					// add onclick event for button (button can't have the name submit)
@@ -930,6 +989,7 @@ jsBackend.forms =
 	},
 
 
+	// add tagbox to the correct input fields
 	tagBoxes: function()
 	{
 		if($('#sidebar input.tagBox').length > 0) { $('#sidebar input.tagBox').tagBox({ emptyMessage: '{$msgNoTags|addslashes}', errorMessage: '{$errAddTagBeforeSubmitting|addslashes}', addLabel: '{$lblAdd|ucfirst}', removeLabel: '{$lblDeleteThisTag|ucfirst}', autoCompleteUrl: '/backend/ajax.php?module=tags&action=autocomplete&language={$LANGUAGE}' }); }
@@ -942,7 +1002,13 @@ jsBackend.forms =
 }
 
 
-jsBackend.layout = {
+/**
+ * Do custom layout/interaction stuff
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+jsBackend.layout =
+{
 	// init, something like a constructor
 	init: function()
 	{
@@ -997,7 +1063,7 @@ jsBackend.layout = {
 	},
 
 
-	// if the browser isn't supported show a warning
+	// if the browser isn't supported, show a warning
 	showBrowserWarning: function()
 	{
 		var showWarning = false;
@@ -1006,9 +1072,9 @@ jsBackend.layout = {
 		if(jQuery.browser.mozilla)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3).replace(/\./g, ''));
+			var version = parseInt(jQuery.browser.version.substr(0, 3).replace(/\./g, ''));
 
-			// lower then 3?
+			// lower than 19?
 			if(version < 19) { showWarning = true; }
 		}
 
@@ -1016,9 +1082,9 @@ jsBackend.layout = {
 		if(jQuery.browser.opera)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1));
+			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
-			// lower then 9?
+			// lower than 9?
 			if(version < 9) { showWarning = true; }
 		}
 
@@ -1026,9 +1092,9 @@ jsBackend.layout = {
 		if(jQuery.browser.safari)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,3));
+			var version = parseInt(jQuery.browser.version.substr(0, 3));
 
-			// lower then 9?
+			// lower than 1.4?
 			if(version < 400) { showWarning = true; }
 		}
 
@@ -1036,9 +1102,9 @@ jsBackend.layout = {
 		if(jQuery.browser.msie)
 		{
 			// get version
-			var version = parseInt(jQuery.browser.version.substr(0,1));
+			var version = parseInt(jQuery.browser.version.substr(0, 1));
 
-			// lower or equal then 6
+			// lower or equal than 6
 			if(version <= 6) { showWarning = true; }
 		}
 
@@ -1051,6 +1117,12 @@ jsBackend.layout = {
 	eoo: true
 }
 
+
+/**
+ * Handle form messages (action feedback: success, error, ...)
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.messages =
 {
 	timers: [],
@@ -1104,6 +1176,11 @@ jsBackend.messages =
 }
 
 
+/**
+ * Apply tabs
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.tabs =
 {
 	// init, something like a constructor
@@ -1138,6 +1215,11 @@ jsBackend.tabs =
 }
 
 
+/**
+ * Apply TinyMCE
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.tinyMCE =
 {
 	// init, something like a constructor
@@ -1163,7 +1245,8 @@ jsBackend.tinyMCE =
 		});
 	},
 
-	
+
+	// format text (after retrieving it from the editor)
 	afterSave: function(editor, object)
 	{
 		// replace target _self
@@ -1194,6 +1277,7 @@ jsBackend.tinyMCE =
 	},
 	
 
+	// format text (before placing it in the editor)
 	beforeLoad: function(editor, object)
 	{
 		// get items that have the targetBlank class
@@ -1214,8 +1298,9 @@ jsBackend.tinyMCE =
 			object.content = object.content.replace(matches[i], newLink);
 		}
 	},
-	
-	
+
+
+	// custom content checks
 	checkContent: function(editor)
 	{
 		if(editor.isDirty())
@@ -1246,6 +1331,12 @@ jsBackend.tinyMCE =
 	eoo: true
 }
 
+
+/**
+ * Apply tooltip
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.tooltip =
 {
 	// init, something like a constructor
@@ -1263,16 +1354,20 @@ jsBackend.tooltip =
 }
 
 
+/**
+ * Handle browsers with impaired CSS selector support
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.selectors =
 {
 	// init, something like a constructor
 	init: function()
 	{
-		// Missing CSS selector support IE6, IE7
-		// IE6 and IE7, IE8 as IE7
-		if($.browser.msie && $.browser.version.substr(0,1)<9)
+		// missing CSS selector support IE6, IE7, IE8 as IE7
+		if($.browser.msie && $.browser.version.substr(0, 1) < 9)
 		{
-			// Nothing yet
+			// nothing yet
 		}
 	},
 
@@ -1282,6 +1377,11 @@ jsBackend.selectors =
 }
 
 
+/**
+ * Fix focus/blur events on impaired browsers
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.focusfix =
 {
 	// init, something like a constructor
@@ -1294,9 +1394,9 @@ jsBackend.focusfix =
 		}
 
 		// IE6 & IE7 focus fix
-		if($.browser.msie && $.browser.version.substr(0,1)<9)
+		if($.browser.msie && $.browser.version.substr(0, 1) < 9)
 		{
-			// Apply focusfix
+			// apply focusfix
 			focusfix('input.inputText', 'focus');
 			focusfix('textarea', 'focus');
 		}
@@ -1308,6 +1408,11 @@ jsBackend.focusfix =
 }
 
 
+/**
+ * Enable setting of sequence by drag & drop
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.tableSequenceByDragAndDrop =
 {
 	// init, something like a constructor
@@ -1315,7 +1420,8 @@ jsBackend.tableSequenceByDragAndDrop =
 	{
 		if($('.sequenceByDragAndDrop tbody').length > 0)
 		{
-			$('.sequenceByDragAndDrop tbody').sortable({
+			$('.sequenceByDragAndDrop tbody').sortable(
+			{
 				items: 'tr',
 				handle: 'td.dragAndDropHandle',
 				placeholder: 'dragAndDropPlaceholder',
@@ -1337,10 +1443,11 @@ jsBackend.tableSequenceByDragAndDrop =
 					var newIdSequence = new Array();
 
 					// loop rowIds
-					rows.each(function() { newIdSequence.push($(this).attr('rel')); });
+					rows.each(function() { newIdSequence.push($(this).data('id')); });
 
 					// make the call
-					$.ajax({
+					$.ajax(
+					{
 						cache: false,
 						type: 'POST',
 						dataType: 'json',
@@ -1365,9 +1472,9 @@ jsBackend.tableSequenceByDragAndDrop =
 
 							// alert the user
 							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
+							
 							// show message
 							jsBackend.messages.add('success', 'Changed order successfully.');
-
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown)
 						{
@@ -1390,5 +1497,6 @@ jsBackend.tableSequenceByDragAndDrop =
 	// end
 	eoo: true
 }
+
 
 $(document).ready(function() { jsBackend.init(); });

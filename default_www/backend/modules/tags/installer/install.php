@@ -1,14 +1,13 @@
 <?php
 
 /**
- * TagsInstall
  * Installer for the tags module
  *
  * @package		installer
  * @subpackage	tags
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class TagsInstall extends ModuleInstaller
@@ -21,7 +20,7 @@ class TagsInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/tags/installer/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('tags', 'The tags module.');
@@ -37,12 +36,13 @@ class TagsInstall extends ModuleInstaller
 
 		// add extra
 		$tagsID = $this->insertExtra('tags', 'block', 'Tags', null, null, 'N', 30);
-		$this->insertExtra('tags', 'widget', 'TagCloud', null, null, 'N', 31);
+		$this->insertExtra('tags', 'widget', 'TagCloud', 'tagcloud', null, 'N', 31);
+		$this->insertExtra('tags', 'widget', 'Related', 'related', null, 'N', 32);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// check if a page for contact already exists in this language
+			// check if a page for tags already exists in this language
 			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
@@ -60,6 +60,12 @@ class TagsInstall extends ModuleInstaller
 
 
 		// insert locale (nl)
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Blog', 'blog');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ItemsWithTag', 'items met tag "%1$s"');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Pages', 'pagina\'s');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Related', 'gerelateerd');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ToTagsOverview', 'naar het tags overzicht');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Related', 'gerelateerd');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'TagCloud', 'tag-cloud');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Edited', 'De tag "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'EditTag', 'bewerk tag "%1$s"');
@@ -69,6 +75,12 @@ class TagsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NoSelection', 'Er waren geen tags geselecteerd.');
 
 		// insert locale (en)
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Blog', 'blog');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ItemsWithTag', 'items with tag "%1$s"');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Pages', 'pages');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Related', 'related');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ToTagsOverview', 'to tags overview');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Related', 'related');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'TagCloud', 'tagcloud');
 		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Edited', 'The tag "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'tags', 'msg', 'EditTag', 'edit tag "%1$s"');

@@ -10,6 +10,11 @@
 
 */
 
+.tagsWrapper input.inputText {
+	width: 120px;
+}
+
+
 .tagsWrapper .tagsList {
 	padding-top: 12px;
 }
@@ -59,7 +64,6 @@
 	border-radius: 8px;
 	-moz-border-radius: 8px;
 	-webkit-border-radius: 8px;
-
 }
 
 .tagsWrapper ul,

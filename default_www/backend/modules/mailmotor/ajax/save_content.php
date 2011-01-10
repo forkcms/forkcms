@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
@@ -17,6 +17,53 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * @var	array
 	 */
 	private $mailing;
+
+
+	/**
+	 * Adds Google UTM GET Parameters to all anchor links in the mailing
+	 *
+	 * @return	string
+	 * @param	string $HTML	The HTML wherin the parameters will be added.
+	 */
+	private function addUTMParameters($HTML)
+	{
+		// init var
+		$matches = array();
+
+		// search for all hrefs
+		preg_match_all('/href="(.*)"/isU', $HTML, $matches);
+
+		// reserve searhc vars
+		$search = array();
+		$replace = array();
+
+		// check if we have matches
+		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
+
+		// build the google vars query
+		$params = array();
+		$params['utm_source'] = 'mailmotor';
+		$params['utm_medium'] = 'email';
+		$params['utm_name'] = $this->mailing['name'];
+
+		// build google vars query
+		$googleQuery = http_build_query($params);
+
+
+		// loop the matches
+		foreach($matches[1] as $match)
+		{
+			// ignore #
+			if(strpos($match, '#') > -1) continue;
+
+			// add results to search/replace stack
+			$search[] = 'href="'. $match .'"';
+			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
+		}
+
+		// replace the content HTML with the replace values
+		return str_replace($search, $replace, $HTML);
+	}
 
 
 	/**
@@ -69,64 +116,22 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 
 	/**
-	 * Adds Google UTM GET Parameters to all anchor links in the mailing
-	 *
-	 * @return	string
-	 * @param	string $HTML
-	 */
-	private function addUTMParameters($HTML)
-	{
-		// init var
-		$matches = array();
-
-		// search for all hrefs
-		preg_match_all('/href="(.*)"/isU', $HTML, $matches);
-
-		// reserve searhc vars
-		$search = array();
-		$replace = array();
-
-		// check if we have matches
-		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
-
-		// build the google vars query
-		$params = array();
-		$params['utm_source'] = 'mailmotor';
-		$params['utm_medium'] = 'email';
-		$params['utm_name'] = $this->mailing['name'];
-
-		// build google vars query
-		$googleQuery = http_build_query($params);
-
-
-		// loop the matches
-		foreach($matches[1] as $match)
-		{
-			// ignore #
-			if(strpos($match, '#') > -1) continue;
-
-			// add results to search/replace stack
-			$search[] = 'href="'. $match .'"';
-			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
-		}
-
-		// replace the content HTML with the replace values
-		return str_replace($search, $replace, $HTML);
-	}
-
-
-	/**
 	 * Returns the fully parsed e-mail content
 	 *
 	 * @return	string
-	 * @param	string $template
-	 * @param	string $fullContentHTML
-	 * $param	string $contentHTML
+	 * @param	string $template			The template to use.
+	 * @param	string $contentHTML			The content.
+	 * @param	string $fullContentHTML		The full content.
 	 */
 	private function getEmailContent($template, $contentHTML, $fullContentHTML)
 	{
 		// require the CSSToInlineStyles class
 		require 'external/css_to_inline_styles.php';
+
+		// redefine
+		$template = (string) $template;
+		$contentHTML = (string) $contentHTML;
+		$fullContentHTML = (string) $fullContentHTML;
 
 		// fetch the template contents for this mailing
 		$template = BackendMailmotorModel::getTemplate($this->mailing['language'], $template);
@@ -168,9 +173,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * Returns the text between 2 tags
 	 *
 	 * @return	array
-	 * @param	string $tag
-	 * @param	string $html
-	 * @param	bool[optional] $strict
+	 * @param	string $tag					The tag.
+	 * @param	string $html				The HTML to search in.
+	 * @param	bool[optional] $strict		Use strictmode?
 	 */
 	private function getTextBetweenTags($tag, $html, $strict = false)
 	{
@@ -178,7 +183,8 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$dom = new domDocument;
 
 		// load HTML
-		($strict == true) ? $dom->loadXML($html) : $dom->loadHTML($html);
+		if($strict == true) $dom->loadXML($html);
+		else $dom->loadHTML($html);
 
 		// discard whitespace
 		$dom->preserveWhiteSpace = false;

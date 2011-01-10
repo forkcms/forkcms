@@ -71,9 +71,9 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 	 * Class construtor.
 	 *
 	 * @return	void
-	 * @param	SpoonDatabase $dbConnection
-	 * @param	mixed $query
-	 * @param	mixed[optional] $numResultsQuery
+	 * @param	SpoonDatabase $dbConnection			The database connection.
+	 * @param	string $query						The query to execute.
+	 * @param	string[optional] $numResultsQuery	The query to use to retrieve the number of results.
 	 */
 	public function __construct(SpoonDatabase $dbConnection, $query, $numResultsQuery = null)
 	{
@@ -120,10 +120,10 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 	 * Fetch the data as an array.
 	 *
 	 * @return	array
-	 * @param	int[optional] $offset
-	 * @param	int[optional] $limit
-	 * @param	string[optional] $order
-	 * @param	string[optional] $sort
+	 * @param	int[optional] $offset		The offset to start from.
+	 * @param	int[optional] $limit		The maximum number of items to retrieve.
+	 * @param	string[optional] $order		The column to order on.
+	 * @param	string[optional] $sort		The sorting method.
 	 */
 	public function getData($offset = null, $limit = null, $order = null, $sort = null)
 	{
@@ -131,10 +131,10 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 		$query = $this->query;
 
 		// order & sort defined
-		if($order !== null && $sort !== null) $query .= " ORDER BY $order $sort";
+		if($order !== null && $sort !== null) $query .= ' ORDER BY '. $order .' '. $sort;
 
 		// offset & limit defined
-		if($offset !== null && $limit !== null) $query .= " LIMIT $offset, $limit";
+		if($offset !== null && $limit !== null) $query .= ' LIMIT '. $offset .', '. $limit;
 
 		// fetch data
 		return (array) $this->db->getRecords($query, $this->queryParameters);
@@ -160,8 +160,8 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 	 * Set the queries.
 	 *
 	 * @return	void
-	 * @param	string $query
-	 * @param	string[optional] $numResultsQuery
+	 * @param	string $query						The query to execute.
+	 * @param	string[optional] $numResultsQuery	The query to use to retrieve the number of results.
 	 */
 	private function setQuery($query, $numResultsQuery = null)
 	{

@@ -37,8 +37,8 @@ class FrontendMailmotorModel
 		$emails = (!is_array($emails)) ? array($emails) : $emails;
 
 		// delete records
-		$db->delete('mailmotor_addresses', 'email IN("'. implode('","', $emails) .'");');
-		$db->delete('mailmotor_addresses_groups', 'email IN("'. implode('","', $emails) .'");');
+		$db->delete('mailmotor_addresses', 'email IN("'. implode('","', $emails) .'")');
+		$db->delete('mailmotor_addresses_groups', 'email IN("'. implode('","', $emails) .'")');
 	}
 
 
@@ -46,12 +46,12 @@ class FrontendMailmotorModel
 	 * Checks if a given e-mail address exists in the mailmotor_addresses table
 	 *
 	 * @return	bool
-	 * @param	string $email
+	 * @param	string $email	The e-mail address to check.
 	 */
 	public static function exists($email)
 	{
 		// check the results
-		return (bool) FrontendModel::getDB()->getNumRows('SELECT email FROM mailmotor_addresses WHERE email = ?;', array($email));
+		return (bool) FrontendModel::getDB()->getNumRows('SELECT email FROM mailmotor_addresses WHERE email = ?', array($email));
 	}
 
 
@@ -59,12 +59,12 @@ class FrontendMailmotorModel
 	 * Checks if a group exists
 	 *
 	 * @return	bool
-	 * @param	int $group
+	 * @param	int $id		The id of the group to check for.
 	 */
 	public static function existsGroup($id)
 	{
 		// return the results
-		return (bool) (FrontendModel::getDB()->getNumRows('SELECT id FROM mailmotor_groups WHERE id = ?;', array($id)) > 0);
+		return (bool) (FrontendModel::getDB()->getNumRows('SELECT id FROM mailmotor_groups WHERE id = ?', array($id)) > 0);
 	}
 
 
@@ -79,7 +79,7 @@ class FrontendMailmotorModel
 		// get record and return it
 		$record = (array) FrontendModel::getDB()->getRecord('SELECT mm.*
 																FROM mailmotor_mailings AS mm
-																WHERE mm.id = ?;',
+																WHERE mm.id = ?',
 																array((int) $id));
 
 		// record is empty, stop here
@@ -114,7 +114,7 @@ class FrontendMailmotorModel
 		return (int) FrontendModel::getDB()->getVar('SELECT mg.id
 														FROM mailmotor_groups AS mg
 														WHERE mg.is_default = ? AND mg.language = ?
-														LIMIT 1;',
+														LIMIT 1',
 														array('Y', FRONTEND_LANGUAGE));
 	}
 
@@ -123,8 +123,8 @@ class FrontendMailmotorModel
 	 * Get all groups for a given e-mail address
 	 *
 	 * @return	array
-	 * @param	string $email
-	 * @param	int	$excludeId
+	 * @param	string $email				The e-email address to use.
+	 * @param	int[optional] $excludeId	The id off the group to exclude.
 	 */
 	public static function getGroupIDsByEmail($email, $excludeId = null)
 	{
@@ -136,7 +136,7 @@ class FrontendMailmotorModel
 											FROM mailmotor_groups AS mg
 											LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
 											WHERE mag.email = ?
-											GROUP BY mg.id;',
+											GROUP BY mg.id',
 											array($email));
 
 		// excludeId set
@@ -158,8 +158,9 @@ class FrontendMailmotorModel
 	 * Get a preview URL to the specific mailing
 	 *
 	 * @return	string
-	 * @param	int $id
-	 * @param	string[optional] $contentType
+	 * @param	int $id								The id of the mailing.
+	 * @param	string[optional] $contentType		The content-type to set.
+	 * @param	bool[optional] $forCM				Will this URL be used in Campaign Monitor?
 	 */
 	public static function getMailingPreviewURL($id, $contentType = 'html', $forCM = false)
 	{
@@ -176,7 +177,8 @@ class FrontendMailmotorModel
 	 * Inserts a new e-mail address into the database
 	 *
 	 * @return	bool
-	 * @param	array $item		The data to insert for the address.
+	 * @param	array $item						The data to insert for the address.
+	 * @param	bool[optional] $unsubscribe		If there are no groups the user will be added to the default group, unless this is true.
 	 */
 	public static function insertAddress(array $item, $unsubscribe = false)
 	{
@@ -221,8 +223,8 @@ class FrontendMailmotorModel
 	 * Checks if a given e-mail address is subscribed in our database
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	int[optional] $groupId
+	 * @param	string $email				The e-mail address to check.
+	 * @param	int[optional] $groupId		The id of the group that has to be checked.
 	 */
 	public static function isSubscribed($email, $groupId = null)
 	{
@@ -236,7 +238,7 @@ class FrontendMailmotorModel
 		return (bool) $db->getNumRows('SELECT ma.email
 										FROM mailmotor_addresses AS ma
 										INNER JOIN mailmotor_addresses_groups AS mag ON mag.email = ma.email
-										WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?;',
+										WHERE ma.email = ? AND mag.group_id = ? AND mag.status = ?',
 										array((string) $email, $groupId, 'subscribed'));
 	}
 
@@ -245,8 +247,8 @@ class FrontendMailmotorModel
 	 * Subscribes an e-mail address
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The e-mail address to subscribe.
+	 * @param	string[optional] $groupId		The id of the group to subscribe to.
 	 */
 	public static function subscribe($email, $groupId = null)
 	{
@@ -267,7 +269,7 @@ class FrontendMailmotorModel
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses(email, source, created_on)
 							VALUES (?, ?, ?)
-							ON DUPLICATE KEY UPDATE source = ?, created_on = ?;',
+							ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
 							array($subscriber['email'], $subscriber['source'], $subscriber['created_on'],
 									$subscriber['source'], $subscriber['created_on']));
 
@@ -280,7 +282,7 @@ class FrontendMailmotorModel
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
 							VALUES (?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?;',
+							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
 							array($subscriberGroup['email'], $subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on'],
 									$subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on']));
 
@@ -297,8 +299,8 @@ class FrontendMailmotorModel
 	 * Unsubscribes an e-mail address
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The mail address to unsubscribe.
+	 * @param	string[optional] $groupId		The id of the group to unsubscribe from.
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{

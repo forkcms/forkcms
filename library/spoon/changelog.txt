@@ -42,6 +42,7 @@
 - Rearranged the general authors/owners.
 - Bugfix: you can now use named parameters within update queries.
 - Bugfix: multiple dropdownfields weren't parsed because of the [].
+- Feature: SpoonLocale now contains the supported language names.
 
 
 1.2.0 (2010-05-18)

@@ -13,10 +13,77 @@
 class FrontendMailmotorCMHelper
 {
 	/**
+	 * Checks if a group exists by its CampaignMonitor ID
+	 *
+	 * @return	bool
+	 * @param	string $id	The id of the group on Campaign Monitor.
+	 */
+	public static function existsGroupByCampaignMonitorID($id)
+	{
+		// get DB
+		$db = FrontendModel::getDB();
+
+		// return the results
+		return (bool) $db->getNumRows('SELECT mg.*
+										FROM mailmotor_groups AS mg
+										INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
+										WHERE mci.cm_id = ? AND mci.type = ?', array($id, 'list'));
+	}
+
+
+	/**
+	 * Inserts a record into the mailmotor_campaignmonitor_ids table
+	 *
+	 * @return	string
+	 * @param	string $type		The type for the item.
+	 * @param	string $otherId		The id of the item.
+	 */
+	public static function getCampaignMonitorID($type, $otherId)
+	{
+		// insert the campaignmonitor ID
+		return FrontendModel::getDB()->getVar('SELECT cm_id FROM mailmotor_campaignmonitor_ids WHERE type = ? AND other_id = ?', array($type, $otherId));
+	}
+
+
+	/**
+	 * Returns the CM IDs for a given list of group IDs
+	 *
+	 * @return	array
+	 * @param 	array $groupIds					The id of the groups.
+	 * @param	bool[optional] $unsubscribe
+	 */
+	public static function getCampaignMonitorIDsForGroups($groupIds, $unsubscribe = false)
+	{
+		// check if groups are set,
+		$groups = (empty($groupIds) && !$unsubscribe) ? array(FrontendMailmotorModel::getDefaultGroupID()) : $groupIds;
+
+		// stop here if no groups were set
+		if(empty($groups)) return array();
+
+		// fetch campaignmonitor IDs
+		return (array) FrontendModel::getDB()->getColumn('SELECT mci.cm_id
+															FROM mailmotor_campaignmonitor_ids AS mci
+															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groups) .')',
+															array('list'));
+	}
+
+
+	/**
+	 * Returns the client ID from the settings
+	 *
+	 * @return	string
+	 */
+	public static function getClientID()
+	{
+		return (string) FrontendModel::getModuleSetting('mailmotor', 'cm_client_id');
+	}
+
+
+	/**
 	 * Returns the CampaignMonitor object
 	 *
 	 * @return	CampaignMonitor
-	 * @param	int[optional] $listId
+	 * @param	int[optional] $listId		The default list id to use.
 	 */
 	public static function getCM($listId = null)
 	{
@@ -57,72 +124,6 @@ class FrontendMailmotorCMHelper
 
 
 	/**
-	 * Returns the client ID from the settings
-	 *
-	 * @return	string
-	 */
-	public static function getClientID()
-	{
-		return (string) FrontendModel::getModuleSetting('mailmotor', 'cm_client_id');
-	}
-
-
-	/**
-	 * Checks if a group exists by its CampaignMonitor ID
-	 *
-	 * @return	bool
-	 * @param	string $id
-	 */
-	public static function existsGroupByCampaignMonitorID($id)
-	{
-		// get DB
-		$db = FrontendModel::getDB();
-
-		// return the results
-		return (bool) $db->getNumRows('SELECT mg.*
-										FROM mailmotor_groups AS mg
-										INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-										WHERE mci.cm_id = ? AND mci.type = ?;', array($id, 'list'));
-	}
-
-
-	/**
-	 * Inserts a record into the mailmotor_campaignmonitor_ids table
-	 *
-	 * @return	string
-	 * @param	string $type
-	 * @param	string $otherId
-	 */
-	public static function getCampaignMonitorID($type, $otherId)
-	{
-		// insert the campaignmonitor ID
-		return FrontendModel::getDB()->getVar('SELECT cm_id FROM mailmotor_campaignmonitor_ids WHERE type = ? AND other_id = ?;', array($type, $otherId));
-	}
-
-
-	/**
-	 * Returns the CM IDs for a given list of group IDs
-	 *
-	 * @return	array
-	 * @param 	array $groupIds
-	 */
-	public static function getCampaignMonitorIDsForGroups($groupIds, $unsubscribe = false)
-	{
-		// check if groups are set,
-		$groups = (empty($groupIds) && !$unsubscribe) ? array(FrontendMailmotorModel::getDefaultGroupID()) : $groupIds;
-
-		// stop here if no groups were set
-		if(empty($groups)) return array();
-
-		// fetch campaignmonitor IDs
-		return (array) FrontendModel::getDB()->getColumn('SELECT mci.cm_id
-															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groups) .');',
-															array('list'));
-	}
-
-
-	/**
 	 * Returns the default list ID
 	 *
 	 * @return	string
@@ -141,8 +142,8 @@ class FrontendMailmotorCMHelper
 	 * Subscribes an e-mail address and send him/her to CampaignMonitor
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The e-mail address to subscribe.
+	 * @param	string[optional] $groupId		The id of the group to subscribe to.
 	 */
 	public static function subscribe($email, $groupId = null)
 	{
@@ -164,7 +165,7 @@ class FrontendMailmotorCMHelper
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses(email, source, created_on)
 							VALUES (?, ?, ?)
-							ON DUPLICATE KEY UPDATE source = ?, created_on = ?;',
+							ON DUPLICATE KEY UPDATE source = ?, created_on = ?',
 							array($subscriber['email'], $subscriber['source'], $subscriber['created_on'],
 									$subscriber['source'], $subscriber['created_on']));
 
@@ -177,7 +178,7 @@ class FrontendMailmotorCMHelper
 			// insert/update the user
 			$db->execute('INSERT INTO mailmotor_addresses_groups(email, group_id, status, subscribed_on)
 							VALUES (?, ?, ?, ?)
-							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?;',
+							ON DUPLICATE KEY UPDATE group_id = ?, status = ?, subscribed_on = ?',
 							array($subscriberGroup['email'], $subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on'],
 									$subscriberGroup['group_id'], $subscriberGroup['status'], $subscriberGroup['subscribed_on']));
 
@@ -194,8 +195,8 @@ class FrontendMailmotorCMHelper
 	 * Unsubscribes an e-mail address from CampaignMonitor and our database
 	 *
 	 * @return	bool
-	 * @param	string $email
-	 * @param	string[optional] $groupId
+	 * @param	string $email					The e-mail address to unsubscribe.
+	 * @param	string[optional] $groupId		The id of the group to unsubscribe from.
 	 */
 	public static function unsubscribe($email, $groupId = null)
 	{

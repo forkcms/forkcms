@@ -4,7 +4,7 @@
 require_once 'init.php';
 
 // initialize components
-new Init('backend_ajax');
+new BackendInit('backend_ajax');
 
 // create backend-ajax-object
 new BackendAJAX();

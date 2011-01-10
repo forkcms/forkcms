@@ -1,9 +1,9 @@
 {*
 	variables that are available:
-	- {$widgetTagCloud}:
+	- {$widgetTagsTagCloud}: contains an array with the most popular tags
 *}
 
-{option:widgetTagCloud}
+{option:widgetTagsTagCloud}
 	<div id="TagCloudWidget" class="mod">
 		<div class="inner">
 			<div class="hd">
@@ -11,15 +11,15 @@
 			</div>
 			<div class="bd">
 				<ul>
-					{iteration:widgetTagCloud}
+					{iteration:widgetTagsTagCloud}
 						<li>
-							<a href="{$widgetTagCloud.url}">
-								{$widgetTagCloud.name} ({$widgetTagCloud.number})
+							<a href="{$widgetTagsTagCloud.url}">
+								{$widgetTagsTagCloud.name} ({$widgetTagsTagCloud.number})
 							</a>
 						</li>
-					{/iteration:widgetTagCloud}
+					{/iteration:widgetTagsTagCloud}
 				</ul>
 			</div>
 		</div>
 	</div>
-{/option:widgetTagCloud}
+{/option:widgetTagsTagCloud}

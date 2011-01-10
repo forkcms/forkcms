@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlogDetail
  * This is the detail-action
  *
  * @package		frontend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -117,7 +116,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags
-		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
+		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['revision_id']);
 
 		// get comments
 		$this->comments = FrontendBlogModel::getComments($this->record['id']);
@@ -182,7 +181,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 			// try to get an image in the content
 			$matches = array();
-			preg_match('|<img.*src="(.*)".*/>|iU', $this->record['text'], $matches);
+			preg_match('/<img.*src="(.*)".*\/>/iU', $this->record['text'], $matches);
 
 			// found an image?
 			if(isset($matches[1]))

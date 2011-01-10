@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendMeta
  * This class represents a META-object
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendMeta
@@ -283,7 +282,7 @@ class BackendMeta
 		// get item
 		$this->data = (array) BackendModel::getDB()->getRecord('SELECT *
 																FROM meta AS m
-																WHERE m.id = ?;',
+																WHERE m.id = ?',
 																array($this->id));
 
 		// validate meta-record
@@ -341,7 +340,7 @@ class BackendMeta
 		$URL = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 
 		// get meta custom
-		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue();
+		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue(true);
 		else $custom = null;
 
 		// build meta

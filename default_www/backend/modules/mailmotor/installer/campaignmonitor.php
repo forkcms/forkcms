@@ -123,7 +123,9 @@ class CampaignMonitor
 	 * @param	string $siteURL					The base URL of the site you use to login to Campaign Monitor.
 	 * @param	string $username				The username you use to login to Campaign Monitor.
 	 * @param	string $password				The password you use to login to Campaign Monitor.
+	 * @param	int[optional] $timeOut			The timeout.
 	 * @param	string[optional] $clientId		The default client ID to use throughout the class.
+	 * @param	string[optional] $listId		The default list ID to use throughout the class.
 	 * @param	string[optional] $campaignId	The default campaign ID to use throughout the class.
 	 */
 	public function __construct($siteURL, $username, $password, $timeOut = 60, $clientId = null, $listId = null, $campaignId = null)
@@ -172,8 +174,8 @@ class CampaignMonitor
 	 * @param	string $email					The email address of the new subscriber.
 	 * @param	string $name					The name of the new subscriber. If the name is unknown, an empty string can be passed in.
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
-	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
-	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
+	 * @param	string[optional] $listId		The list you want to add the subscriber to.
 	 */
 	public function addSubscriber($email, $name, $customFields = array(), $resubscribe = true, $listId = null)
 	{
@@ -221,16 +223,16 @@ class CampaignMonitor
 	 * Creates a campaign. Returns the campaign ID when succesful or false if the call failed
 	 *
 	 * @return	mixed
-	 * @param	string $name					The name of the new campaign. This must be unique across all draft campaigns for the client.
-	 * @param	string $subject					The subject of the new campaign.
-	 * @param	string $fromName				The name to appear in the From field in the recipients email client when they receive the new campaign.
-	 * @param	string $fromEmail				The email address that the new campaign will come from.
-	 * @param	string $replyToEmail			The email address that any replies to the new campaign will be sent to.
-	 * @param	string $HTMLContentURL			The URL of the HTML content for the new campaign.
-	 * @param	string $textContentURL			The URL of the text content for the new campaign.
-	 * @param	array $subscriberLists			An array of lists to send the campaign to.
-	 * @param	array $subscriberListSegments	An array of Segment Names and their appropriate List ID’s to send the campaign to.
-	 * @param	string[optional] $clientId		The ID of the client who will be owner of the campaign.
+	 * @param	string $name								The name of the new campaign. This must be unique across all draft campaigns for the client.
+	 * @param	string $subject								The subject of the new campaign.
+	 * @param	string $fromName							The name to appear in the From field in the recipients email client when they receive the new campaign.
+	 * @param	string $fromEmail							The email address that the new campaign will come from.
+	 * @param	string $replyToEmail						The email address that any replies to the new campaign will be sent to.
+	 * @param	string $HTMLContentURL						The URL of the HTML content for the new campaign.
+	 * @param	string $textContentURL						The URL of the text content for the new campaign.
+	 * @param	array $subscriberLists						An array of lists to send the campaign to.
+	 * @param	array[optional] $subscriberListSegments		An array of Segment Names and their appropriate List ID’s to send the campaign to.
+	 * @param	string[optional] $clientId					The ID of the client who will be owner of the campaign.
 	 */
 	public function createCampaign($name, $subject, $fromName, $fromEmail, $replyToEmail, $HTMLContentURL, $textContentURL, array $subscriberLists, array $subscriberListSegments = array(), $clientId = null)
 	{
@@ -306,9 +308,9 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $name				The name of the field.
-	 * @param	string $type				The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
-	 * @param	array $options				The available options for a multi-valued custom field. Options should be separated by a double pipe "||". This field must be null for Text and Number custom fields.
-	 * @param	string[optional] $listId	The list ID to create the custom field for
+	 * @param	string[optional] $type		The type of the field to create, possible values are: string, int, text, number, multiSelectOne, multiSelectMany.
+	 * @param	array[optional] $options	The available options for a multi-valued custom field. Options should be separated by a double pipe "||". This field must be null for Text and Number custom fields.
+	 * @param	string[optional] $listId	The list ID to create the custom field for.
 	 */
 	public function createCustomField($name, $type = null, $options = array(), $listId = null)
 	{
@@ -378,10 +380,16 @@ class CampaignMonitor
 		$parameters['ConfirmationSuccessPage'] = (string) $confirmationSuccessPage;
 
 		// try and create the record
-		try { $result = (string) $this->doCall('List.Create', $parameters); }
+		try
+		{
+			$result = (string) $this->doCall('List.Create', $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { $result = false; }
+		catch(Exception $e)
+		{
+			$result = false;
+		}
 
 		// if we made it here, the record exists
 		return $result;
@@ -411,10 +419,16 @@ class CampaignMonitor
 		$parameters['ScreenshotURL'] = (string) $screenshotURL;
 
 		// try and create the template record
-		try { $templateId = (string) $this->doCall('Template.Create', $parameters); }
+		try
+		{
+			$templateId = (string) $this->doCall('Template.Create', $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { $templateId = false; }
+		catch(Exception $e)
+		{
+			$templateId = false;
+		}
 
 		// if we made it here, the template exists
 		return $templateId;
@@ -536,11 +550,13 @@ class CampaignMonitor
 	 * @param	bool[optional] $authenticate	Should we authenticate?
 	 * @param	bool[optional] $usePost			Should we use post?
 	 */
-	private function doCall($method, $parameters = array(), $authenticate = false, $usePost = true)
+	private function doCall($method, array $parameters = array(), $authenticate = false, $usePost = true)
 	{
 		// redefine
 		$method = (string) $method;
 		$parameters = (array) $parameters;
+		$authenticate = (bool) $authenticate;
+		$usePost = (bool) $usePost;
 
 		// set the API key if the url is not the method to get the API key
 		if($method != 'User.GetApiKey') $parameters['ApiKey'] = $this->apiKey;
@@ -556,29 +572,93 @@ class CampaignMonitor
 		// check for getDetail
 		switch($method[1])
 		{
-			case 'Add': $callMethod = 'Add'. $method[0]; break;
-			case 'Create': $callMethod = 'Create'. $method[0]; break;
-			case 'CreateCustomField': $callMethod = 'Create'. $method[0] .'CustomField'; break;
-			case 'Delete': $callMethod = 'Delete'. $method[0]; break;
-			case 'DeleteCustomField': $callMethod = 'Delete'. $method[0] .'CustomField'; break;
-			case 'GetBounces': $callMethod = 'Get'. $method[0] .'Bounces'; break;
-			case 'GetCampaigns': $callMethod = 'Get'. $method[0] .'Campaigns'; break;
-			case 'GetCustomFields': $callMethod = 'Get'. $method[0] .'CustomFields'; break;
-			case 'GetDetail': $callMethod = 'Get'. $method[0] .'Detail'; break;
-			case 'GetLists': $callMethod = 'Get'. $method[0] .'Lists'; break;
-			case 'GetOpens': $callMethod = 'Get'. $method[0] .'Opens'; break;
-			case 'GetSubscribers': $responseKey = 'Subscribers.GetActiveResult'; break;
-			case 'GetSegments': $callMethod = 'Get'. $method[0] .'Segments'; break;
-			case 'GetStats': $callMethod = 'Get'. $method[0] .'Stats'; break;
-			case 'GetSummary': $callMethod = 'Get'. $method[0] .'Summary'; break;
-			case 'GetSuppressionList': $callMethod = 'Get'. $method[0] .'SuppressionList'; break;
-			case 'GetTemplates': $callMethod = 'Get'. $method[0] .'Templates'; break;
-			case 'GetUnsubscribes': $callMethod = 'Get'. $method[0] .'Unsubscribes'; break;
-			case 'Send': $callMethod = 'Send'. $method[0]; break;
-			case 'Update': $callMethod = 'Update'. $method[0]; break;
-			case 'UpdateBasics': $callMethod = 'Update'. $method[0] .'Basics'; break;
-			case 'UpdateAccessAndBilling': $callMethod = 'Update'. $method[0] .'AccessAndBilling'; break;
-			default;
+			case 'Add':
+				$callMethod = 'Add'. $method[0];
+			break;
+
+			case 'Create':
+				$callMethod = 'Create'. $method[0];
+			break;
+
+			case 'CreateCustomField':
+				$callMethod = 'Create'. $method[0] .'CustomField';
+			break;
+
+			case 'Delete':
+				$callMethod = 'Delete'. $method[0];
+			break;
+
+			case 'DeleteCustomField':
+				$callMethod = 'Delete'. $method[0] .'CustomField';
+			break;
+
+			case 'GetBounces':
+				$callMethod = 'Get'. $method[0] .'Bounces';
+			break;
+
+			case 'GetCampaigns':
+				$callMethod = 'Get'. $method[0] .'Campaigns';
+			break;
+
+			case 'GetCustomFields':
+				$callMethod = 'Get'. $method[0] .'CustomFields';
+			break;
+
+			case 'GetDetail':
+				$callMethod = 'Get'. $method[0] .'Detail';
+			break;
+
+			case 'GetLists':
+				$callMethod = 'Get'. $method[0] .'Lists';
+			break;
+
+			case 'GetOpens':
+				$callMethod = 'Get'. $method[0] .'Opens';
+			break;
+
+			case 'GetSubscribers':
+				$responseKey = 'Subscribers.GetActiveResult';
+			break;
+
+			case 'GetSegments':
+				$callMethod = 'Get'. $method[0] .'Segments';
+			break;
+
+			case 'GetStats':
+				$callMethod = 'Get'. $method[0] .'Stats';
+			break;
+
+			case 'GetSummary':
+				$callMethod = 'Get'. $method[0] .'Summary';
+			break;
+
+			case 'GetSuppressionList':
+				$callMethod = 'Get'. $method[0] .'SuppressionList';
+			break;
+
+			case 'GetTemplates':
+				$callMethod = 'Get'. $method[0] .'Templates';
+			break;
+
+			case 'GetUnsubscribes':
+				$callMethod = 'Get'. $method[0] .'Unsubscribes';
+			break;
+
+			case 'Send':
+				$callMethod = 'Send'. $method[0];
+			break;
+
+			case 'Update':
+				$callMethod = 'Update'. $method[0];
+			break;
+
+			case 'UpdateBasics':
+				$callMethod = 'Update'. $method[0] .'Basics';
+			break;
+
+			case 'UpdateAccessAndBilling':
+				$callMethod = 'Update'. $method[0] .'AccessAndBilling';
+			break;
 		}
 
 		// catch any timeouts that may occur
@@ -649,10 +729,16 @@ class CampaignMonitor
 	private function doSilentCall($method, $parameters)
 	{
 		// try and update the template record
-		try { $this->doCall($method, $parameters); }
+		try
+		{
+			$this->doCall($method, $parameters);
+		}
 
 		// stop here if an exception is found
-		catch(Exception $e) { return false; }
+		catch(Exception $e)
+		{
+			return false;
+		}
 
 		// if we made it here, the template was updated
 		return true;
@@ -749,7 +835,7 @@ class CampaignMonitor
 	 * Returns a list of all subscribers for a list that have hard bounced since the specified date.
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId	The list ID to fetch the bounced subscribers from
+	 * @param	string[optional] $listId	The list ID to fetch the bounced subscribers from.
 	 * @param	int[optional] $timestamp	The date to check from.
 	 */
 	public function getBouncedSubscribers($listId = null, $timestamp = null)
@@ -1073,10 +1159,21 @@ class CampaignMonitor
 		// set value of billing type
 		switch($billing['BillingType'])
 		{
-			case 'UserPaysOnClientsBehalf': $result['billing_type'] = 'user'; break;
-			case 'ClientPaysAtStandardRate': $result['billing_type'] = 'client_standard'; break;
-			case 'ClientPaysWithMarkup': $result['billing_type'] = 'client_markup'; break;
-			default: $result['billing_type'] = null;
+			case 'UserPaysOnClientsBehalf':
+				$result['billing_type'] = 'user';
+			break;
+
+			case 'ClientPaysAtStandardRate':
+				$result['billing_type'] = 'client_standard';
+			break;
+
+			case 'ClientPaysWithMarkup':
+				$result['billing_type'] = 'client_markup';
+			break;
+
+			default:
+				$result['billing_type'] = null;
+			break;
 		}
 
 		// depending on the billing type, parse these vars
@@ -1091,39 +1188,6 @@ class CampaignMonitor
 
 		// return the record
 		return $result;
-	}
-
-
-	/**
-	 * Returns all clients for the logged-in user.
-	 *
-	 * @return	array
-	 */
-	public function getClients()
-	{
-		// make the call
-		$records = (array) $this->doCall('User.GetClients');
-
-		// stop here if no records were set
-		if(empty($records)) return array();
-
-		// reserve variable
-		$results = array();
-		$i = 0;
-
-		// if CampaignID is set in the level below Campaign, we have 1 result, otherwise we have an array of results
-		$records = (isset($records['Client']['ClientID'])) ? $records : $records['Client'];
-
-		// loop the records
-		foreach($records as $record)
-		{
-			$results[$i]['id'] = $record['ClientID'];
-			$results[$i]['name'] = $record['Name'];
-			$i++;
-		}
-
-		// return the records
-		return $results;
 	}
 
 
@@ -1185,6 +1249,39 @@ class CampaignMonitor
 
 
 	/**
+	 * Returns all clients for the logged-in user.
+	 *
+	 * @return	array
+	 */
+	public function getClients()
+	{
+		// make the call
+		$records = (array) $this->doCall('User.GetClients');
+
+		// stop here if no records were set
+		if(empty($records)) return array();
+
+		// reserve variable
+		$results = array();
+		$i = 0;
+
+		// if CampaignID is set in the level below Campaign, we have 1 result, otherwise we have an array of results
+		$records = (isset($records['Client']['ClientID'])) ? $records : $records['Client'];
+
+		// loop the records
+		foreach($records as $record)
+		{
+			$results[$i]['id'] = $record['ClientID'];
+			$results[$i]['name'] = $record['Name'];
+			$i++;
+		}
+
+		// return the records
+		return $results;
+	}
+
+
+	/**
 	 * Returns all countries for the logged-in user.
 	 *
 	 * @return	array
@@ -1206,7 +1303,7 @@ class CampaignMonitor
 	 * Returns all the custom fields available for a list.
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId	The list ID to fetch the custom fields from
+	 * @param	string[optional] $listId	The list ID to fetch the custom fields from.
 	 */
 	public function getCustomFields($listId = null)
 	{
@@ -1298,60 +1395,6 @@ class CampaignMonitor
 
 
 	/**
-	 * Returns the list stats
-	 *
-	 * @return	array
-	 * @param	string[optional] $listId	The ID of the list.
-	 */
-	public function getListStatistics($listId = null)
-	{
-		// set ID
-		$listId = empty($listId) ? $this->getListId() : $listId;
-
-		// set parameters
-		$parameters['ListID'] = (string) $listId;
-
-		// make the call
-		$record = (array) $this->doCall('List.GetStats', $parameters);
-
-		// stop here if no record was set
-		if(empty($record)) return array();
-
-		// reserve variable
-		$result = array();
-
-		// basic details
-		$result['total_subscribers'] = $record['TotalActiveSubscribers'];
-		$result['total_unsubscribers'] = $record['TotalUnsubscribes'];
-		$result['total_deleted'] = $record['TotalDeleted'];
-		$result['total_bounces'] = $record['TotalBounces'];
-		$result['subscribers_today'] = $record['NewActiveSubscribersToday'];
-		$result['subscribers_yesterday'] = $record['NewActiveSubscribersYesterday'];
-		$result['subscribers_week'] = $record['NewActiveSubscribersThisWeek'];
-		$result['subscribers_month'] = $record['NewActiveSubscribersThisMonth'];
-		$result['subscribers_year'] = $record['NewActiveSubscribersThisYear'];
-		$result['unsubscribers_today'] = $record['UnsubscribesToday'];
-		$result['unsubscribers_yesterday'] = $record['UnsubscribesYesterday'];
-		$result['unsubscribers_week'] = $record['UnsubscribesThisWeek'];
-		$result['unsubscribers_month'] = $record['UnsubscribesThisMonth'];
-		$result['unsubscribers_year'] = $record['UnsubscribesThisYear'];
-		$result['deleted_today'] = $record['DeletedToday'];
-		$result['deleted_yesterday'] = $record['DeletedYesterday'];
-		$result['deleted_week'] = $record['DeletedThisWeek'];
-		$result['deleted_month'] = $record['DeletedThisMonth'];
-		$result['deleted_year'] = $record['DeletedThisYear'];
-		$result['bounces_today'] = $record['BouncesToday'];
-		$result['bounces_yesterday'] = $record['BouncesYesterday'];
-		$result['bounces_week'] = $record['BouncesThisWeek'];
-		$result['bounces_month'] = $record['BouncesThisMonth'];
-		$result['bounces_year'] = $record['BouncesThisYear'];
-
-		// return the record
-		return $result;
-	}
-
-
-	/**
 	 * Returns a list of all subscriber lists for a campaign.
 	 *
 	 * @return	array
@@ -1426,6 +1469,60 @@ class CampaignMonitor
 
 
 	/**
+	 * Returns the list stats
+	 *
+	 * @return	array
+	 * @param	string[optional] $listId	The ID of the list.
+	 */
+	public function getListStatistics($listId = null)
+	{
+		// set ID
+		$listId = empty($listId) ? $this->getListId() : $listId;
+
+		// set parameters
+		$parameters['ListID'] = (string) $listId;
+
+		// make the call
+		$record = (array) $this->doCall('List.GetStats', $parameters);
+
+		// stop here if no record was set
+		if(empty($record)) return array();
+
+		// reserve variable
+		$result = array();
+
+		// basic details
+		$result['total_subscribers'] = $record['TotalActiveSubscribers'];
+		$result['total_unsubscribers'] = $record['TotalUnsubscribes'];
+		$result['total_deleted'] = $record['TotalDeleted'];
+		$result['total_bounces'] = $record['TotalBounces'];
+		$result['subscribers_today'] = $record['NewActiveSubscribersToday'];
+		$result['subscribers_yesterday'] = $record['NewActiveSubscribersYesterday'];
+		$result['subscribers_week'] = $record['NewActiveSubscribersThisWeek'];
+		$result['subscribers_month'] = $record['NewActiveSubscribersThisMonth'];
+		$result['subscribers_year'] = $record['NewActiveSubscribersThisYear'];
+		$result['unsubscribers_today'] = $record['UnsubscribesToday'];
+		$result['unsubscribers_yesterday'] = $record['UnsubscribesYesterday'];
+		$result['unsubscribers_week'] = $record['UnsubscribesThisWeek'];
+		$result['unsubscribers_month'] = $record['UnsubscribesThisMonth'];
+		$result['unsubscribers_year'] = $record['UnsubscribesThisYear'];
+		$result['deleted_today'] = $record['DeletedToday'];
+		$result['deleted_yesterday'] = $record['DeletedYesterday'];
+		$result['deleted_week'] = $record['DeletedThisWeek'];
+		$result['deleted_month'] = $record['DeletedThisMonth'];
+		$result['deleted_year'] = $record['DeletedThisYear'];
+		$result['bounces_today'] = $record['BouncesToday'];
+		$result['bounces_yesterday'] = $record['BouncesYesterday'];
+		$result['bounces_week'] = $record['BouncesThisWeek'];
+		$result['bounces_month'] = $record['BouncesThisMonth'];
+		$result['bounces_year'] = $record['BouncesThisYear'];
+
+		// return the record
+		return $result;
+	}
+
+
+	/**
 	 * Get the password
 	 *
 	 * @return	string
@@ -1452,7 +1549,7 @@ class CampaignMonitor
 	 *
 	 * @return	array
 	 * @param	string $email				The emailaddress.
-	 * @param	string[optional] $listId	The list ID to fetch the subscriber from
+	 * @param	string[optional] $listId	The list ID to fetch the subscriber from.
 	 */
 	public function getSubscriber($email, $listId = null)
 	{
@@ -1498,8 +1595,8 @@ class CampaignMonitor
 	 * In the documentation this function is called GetActive, yet the soap methods will tell you it requires GetSubscribers
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId		The ID of the list.
-	 * @param	int[optional] $timestamp	The list ID to fetch the subscribers from
+	 * @param	string[optional] $listId	The ID of the list.
+	 * @param	int[optional] $timestamp	The list ID to fetch the subscribers from.
 	 */
 	public function getSubscribers($listId = null, $timestamp = null)
 	{
@@ -1589,7 +1686,7 @@ class CampaignMonitor
 	 * Returns all subscribers in the client-wide suppression list.
 	 *
 	 * @return	array
-	 * @param	string[optional] $clientId	The client ID to fetch the suppression list from
+	 * @param	string[optional] $clientId	The client ID to fetch the suppression list from.
 	 */
 	public function getSuppressionListByClientId($clientId = null)
 	{
@@ -1744,8 +1841,8 @@ class CampaignMonitor
 	 * Results only contain custom fields if they have values OR if they have had a value once before. CM has some funny quirks like that.
 	 *
 	 * @return	array
-	 * @param	string[optional] $listId		The list ID to fetch the unsubscribers from
-	 * @param	int[optional] $timestamp	If this is filled this method will only return unsubscribes that occured since this timestamp
+	 * @param	string[optional] $listId	The list ID to fetch the unsubscribers from.
+	 * @param	int[optional] $timestamp	If this is filled this method will only return unsubscribes that occured since this timestamp.
 	 */
 	public function getUnsubscribers($listId = null, $timestamp = null)
 	{
@@ -1810,7 +1907,7 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $email				The emailaddress.
-	 * @param	string[optional] $listId	The list ID to look in
+	 * @param	string[optional] $listId	The list ID to look in.
 	 */
 	public function isSubscribed($email, $listId = null)
 	{
@@ -1830,9 +1927,14 @@ class CampaignMonitor
 		// check for True/False
 		switch($result)
 		{
-			case 'False': return false;
-			case 'True': return true;
-			default: return false;
+			case 'False':
+				return false;
+
+			case 'True':
+				return true;
+
+			default:
+				return false;
 		}
 	}
 
@@ -1842,7 +1944,7 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $confirmationEmail		The email address that the confirmation email that the campaign has been sent will go to.
-	 * @param	string[optional] $deliveryDate	The date the campaign should be scheduled to be sent. (YYYY-MM-DD HH:MM:SS)
+	 * @param	string[optional] $deliveryDate	The date the campaign should be scheduled to be sent (YYYY-MM-DD HH:MM:SS).
 	 * @param	string[optional] $campaignId	The ID of the campaign to send.
 	 */
 	public function sendCampaign($confirmationEmail, $deliveryDate = null, $campaignId = null)
@@ -1867,7 +1969,7 @@ class CampaignMonitor
 	 * Set the default campaign ID to use
 	 *
 	 * @return	void
-	 * @param	string $id
+	 * @param	string $id	The id of the campaign.
 	 */
 	public function setCampaignId($id)
 	{
@@ -1879,7 +1981,7 @@ class CampaignMonitor
 	 * Set the default client ID to use
 	 *
 	 * @return	void
-	 * @param	string $id
+	 * @param	string $id	The id of the client.
 	 */
 	public function setClientId($id)
 	{
@@ -1891,7 +1993,7 @@ class CampaignMonitor
 	 * Set the default list ID to use
 	 *
 	 * @return	void
-	 * @param	string $id
+	 * @param	string $id	The id of the list.
 	 */
 	public function setListId($id)
 	{
@@ -1903,7 +2005,7 @@ class CampaignMonitor
 	 * Set password
 	 *
 	 * @return	void
-	 * @param	string $password
+	 * @param	string $password	The password to use.
 	 */
 	private function setPassword($password)
 	{
@@ -1915,7 +2017,7 @@ class CampaignMonitor
 	 * Set the site URL
 	 *
 	 * @return	void
-	 * @param	string $siteURL		The base URL of the site you use to login to Campaign Monitor. e.g. http://example.createsend.com/
+	 * @param	string $siteURL		The base URL of the site you use to login to Campaign Monitor. e.g. http://example.createsend.com/.
 	 */
 	private function setSiteURL($siteURL)
 	{
@@ -1939,7 +2041,7 @@ class CampaignMonitor
 	 * Set username
 	 *
 	 * @return	void
-	 * @param	string $username
+	 * @param	string $username	The username to use.
 	 */
 	private function setUsername($username)
 	{
@@ -1954,8 +2056,8 @@ class CampaignMonitor
 	 * @param	string $email					The email address of the new subscriber.
 	 * @param	string $name					The name of the new subscriber. If the name is unknown, an empty string can be passed in.
 	 * @param	array[optional] $customFields	The custom fields for this subscriber in key/value pairs.
-	 * $param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
-	 * $param	string[optional] $listId		The list you want to add the subscriber to.
+	 * @param	bool[optional] $resubscribe		Subscribes an unsubscribed email address back to the list if this is true.
+	 * @param	string[optional] $listId		The list you want to add the subscriber to.
 	 */
 	public function subscribe($email, $name, $customFields = array(), $resubscribe = true, $listId = null)
 	{
@@ -1968,7 +2070,7 @@ class CampaignMonitor
 	 *
 	 * @return	bool
 	 * @param	string $email				The emailaddress.
-	 * @param	string[optional] $listId	The list ID to unsubscribe from
+	 * @param	string[optional] $listId	The list ID to unsubscribe from.
 	 */
 	public function unsubscribe($email, $listId = null)
 	{
@@ -1999,7 +2101,7 @@ class CampaignMonitor
 	 * @param	string[optional] $deliveryFee			Flat rate delivery fee to be charged to the client for each campaign sent, expressed in the chosen currency’s major unit, but without the currency symbol. Only required if BillingType is set to ClientPaysWithMarkup.
 	 * @param	string[optional] $costPerRecipient		Additional cost added to the campaign for each email address the campaign is sent to, expressed in the chosen currency’s minor unit. Only required if BillingType is set to ClientPaysWithMarkup.
 	 * @param	string[optional] $designAndSpamTestFee	Expressed in the chosen currency’s major unit. Only required if BillingType is set to ClientPaysWithMarkup and client has access to design and spam tests.
-	 * @param	string[optional] $clientId				The client ID to update
+	 * @param	string[optional] $clientId				The client ID to update.
 	 */
 	public function updateClientAccessAndBilling($accessLevel, $username = null, $password = null, $billingType = null, $currency = null, $deliveryFee = null, $costPerRecipient = null, $designAndSpamTestFee = null, $clientId = null)
 	{
@@ -2059,7 +2161,7 @@ class CampaignMonitor
 	 * @param	string[optional] $unsubscribePage			The URL to which subscribers will be directed when unsubscribing from the list. If left blank or omitted a generic unsubscribe page is used.
 	 * @param	bool[optional] $confirmOptIn				Either true or false depending on whether the list requires email confirmation or not. Please see the help documentation for more details of what this means.
 	 * @param	string[optional] $confirmationSuccessPage	Successful email confirmations will be redirected to this URL. Ignored if ConfirmOptIn is false. If left blank or omitted a generic confirmation page is used.
-	 * @param	string[optional] $listId					The list ID to update
+	 * @param	string[optional] $listId					The list ID to update.
 	 */
 	public function updateList($title, $unsubscribePage = null, $confirmOptIn = false, $confirmationSuccessPage = null, $listId = null)
 	{
@@ -2200,4 +2302,5 @@ class CampaignMonitorException extends Exception
 		parent::__construct((string) $message, $code);
 	}
 }
+
 ?>

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendPagesConfig
  * This is the configuration-object
  *
  * @package		frontend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 final class FrontendPagesConfig extends FrontendBaseConfig

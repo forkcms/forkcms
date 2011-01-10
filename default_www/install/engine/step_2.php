@@ -1,84 +1,25 @@
 <?php
 
 /**
- * InstallerStep2
  * Step 2 of the Fork installer
  *
- * @package		installer
- * @subpackage	install
+ * @package		install
+ * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class InstallerStep2 extends InstallerStep
 {
 	/**
-	 * Execute this step
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// init vars
-		$variables = array();
-
-		// head
-		$variables['head'] = file_get_contents('layout/templates/head.tpl');
-		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
-
-		// check requirements
-		$validated = self::checkRequirements($variables);
-
-		// has errors
-		if(!$validated)
-		{
-			// assign the variable
-			$variables['nextButton'] = '&nbsp;';
-			$variables['requirementsStatusError'] = '';
-			$variables['requirementsStatusOK'] = 'hidden';
-		}
-
-		// no errors detected
-		else
-		{
-			header('Location: index.php?step=3');
-			exit;
-		}
-
-		// set paths for template
-		$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
-		$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
-
-		// template contents
-		$tpl = file_get_contents('layout/templates/2.tpl');
-
-		// build the search & replace array
-		$search = array_keys($variables);
-		$replace = array_values($variables);
-
-		// loop search values
-		foreach($search as $key => $value) $search[$key] = '{$'. $value .'}';
-
-		// build output
-		$output = str_replace($search, $replace, $tpl);
-
-		// show
-		echo $output;
-
-		// stop the script
-		exit;
-	}
-
-
-	/**
 	 * Check if a specific requirement is satisfied
 	 *
 	 * @return	boolean
-	 * @param	string $variable
-	 * @param	bool $requirement
- 	 * @param	array[optional] $variables
+	 * @param	string $variable				The "name" of the check.
+	 * @param	bool $requirement				The result of the check.
+	 * @param	array[optional] $variables		An array that holds all the variables.
 	 */
 	public static function checkRequirement($variable, $requirement, array &$variables = null)
 	{
@@ -101,10 +42,10 @@ class InstallerStep2 extends InstallerStep
 
 
 	/**
- 	 * Checks the requirements
- 	 *
- 	 * @return	bool
- 	 * @param	array[optional] $variables
+	 * Checks the requirements
+	 *
+	 * @return	bool
+	 * @param	array[optional] $variables		An array that holds all the variables.
 	 */
 	public static function checkRequirements(array &$variables = null)
 	{
@@ -197,19 +138,22 @@ class InstallerStep2 extends InstallerStep
 		 */
 
 		// check if the backend-cache-directory is writable
-		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/backend/cache/')), $variables);
+		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/backend/cache/')), $variables);
 
 		// check if the frontend-cache-directory is writable
-		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/frontend/cache/')), $variables);
+		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/frontend/cache/')), $variables);
 
 		// check if the frontend-files-directory is writable
-		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/frontend/files/')), $variables);
+		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/frontend/files/')), $variables);
 
 		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY)), $variables);
 
+		// check if the library/external-directory is writable
+		self::checkRequirement('fileSystemLibraryExternal', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY .'/external')), $variables);
+
 		// check if the installer-directory is writable
-		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/install')), $variables);
+		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/install/cache')), $variables);
 
 		// does the config.base.php file exist
 		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/config.base.php') && is_readable(PATH_LIBRARY .'/config.base.php')), $variables);
@@ -235,6 +179,7 @@ class InstallerStep2 extends InstallerStep
 	 * Define path constants
 	 *
 	 * @return	void
+	 * @param	int $step	The step wherefor the constant should be defined.
 	 */
 	private static function defineConstants($step)
 	{
@@ -278,11 +223,69 @@ class InstallerStep2 extends InstallerStep
 
 
 	/**
+	 * Execute this step
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// init vars
+		$variables = array();
+
+		// head
+		$variables['head'] = file_get_contents('layout/templates/head.tpl');
+		$variables['foot'] = file_get_contents('layout/templates/foot.tpl');
+
+		// check requirements
+		$validated = self::checkRequirements($variables);
+
+		// has errors
+		if(!$validated)
+		{
+			// assign the variable
+			$variables['nextButton'] = '&nbsp;';
+			$variables['requirementsStatusError'] = '';
+			$variables['requirementsStatusOK'] = 'hidden';
+		}
+
+		// no errors detected
+		else
+		{
+			header('Location: index.php?step=3');
+			exit;
+		}
+
+		// set paths for template
+		$variables['PATH_WWW'] = (defined('PATH_WWW')) ? PATH_WWW : '<unknown>';
+		$variables['PATH_LIBRARY'] = (defined('PATH_LIBRARY')) ? PATH_LIBRARY : '<unknown>';
+
+		// template contents
+		$tpl = file_get_contents('layout/templates/2.tpl');
+
+		// build the search & replace array
+		$search = array_keys($variables);
+		$replace = array_values($variables);
+
+		// loop search values
+		foreach($search as $key => $value) $search[$key] = '{$'. $value .'}';
+
+		// build output
+		$output = str_replace($search, $replace, $tpl);
+
+		// show output
+		echo $output;
+
+		// stop the script
+		exit;
+	}
+
+
+	/**
 	 * Try to guess the location of the library based on spoon library
 	 *
 	 * @return	void
-	 * @param	string $directory
-	 * @param	string[optional] $library
+	 * @param	string $directory			The directory to start from.
+	 * @param	array[optional] $library	An array to hold the paths that were guesed.
 	 */
 	private static function guessLibraryPath($directory, array &$library = null)
 	{
@@ -331,16 +334,50 @@ class InstallerStep2 extends InstallerStep
 
 
 	/**
+	 * Check if a directory and it's sub-directories and it's subdirectories and ... are writable.
+	 *
+	 * @return	bool
+	 * @param	string $path	The path to check.
+	 */
+	private static function isRecursivelyWritable($path)
+	{
+		// redefine argument
+		$path = rtrim((string) $path, '/');
+
+		// check if path is writable
+		if(!self::isWritable($path)) return false;
+
+		// loop child directories
+		foreach((array) scandir($path) as $file)
+		{
+			// no '.' and '..'
+			if(($file != '.') && ($file != '..'))
+			{
+				// directory
+				if(is_dir($path .'/'. $file))
+				{
+					// check if children are readable
+					if(!self::isRecursivelyWritable($path .'/'. $file)) return false;
+				}
+			}
+		}
+
+		// we were able to read all sub-directories
+		return true;
+	}
+
+
+	/**
 	 * Check if a directory is writable.
 	 * The default is_writable function has problems due to Windows ACLs "bug"
 	 *
 	 * @return	bool
-	 * @param	string $path
+	 * @param	string $path	The path to check.
 	 */
 	private static function isWritable($path)
 	{
 		// redefine argument
-		$path = (string) $path;
+		$path = rtrim((string) $path, '/');
 
 		// create temporary file
 		$file = tempnam($path, 'isWritable');

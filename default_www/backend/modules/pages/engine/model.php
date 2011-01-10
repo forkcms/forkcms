@@ -1,38 +1,55 @@
 <?php
 
 /**
- * BackendPagesModel
- *
  * In this file we store all generic functions that we will be using in the PagesModule
- *
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendPagesModel
 {
+	/**
+	 * Overview of the recent pages
+	 *
+	 * @var	string
+	 */
 	const QRY_BROWSE_RECENT = 'SELECT i.id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 								FROM pages AS i
 								WHERE i.status = ? AND i.language = ?
 								ORDER BY i.edited_on DESC
 								LIMIT ?';
+
+
+	/**
+	 * Overview of a specific page's revisions
+	 *
+	 * @var	string
+	 */
 	const QRY_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 									FROM pages AS i
 									WHERE i.id = ? AND i.status = ? AND i.language = ?
 									ORDER BY i.edited_on DESC';
+
+
+	/**
+	 * Overview of template
+	 *
+	 * @var	string
+	 */
 	const QRY_BROWSE_TEMPLATES = 'SELECT i.id, i.label AS title
-									FROM pages_templates AS i ORDER BY i.label ASC';
+									FROM pages_templates AS i
+									ORDER BY i.label ASC';
 
 
 	/**
 	 * Build the cache
 	 *
 	 * @return	void
-	 * @param	string[optional] $language
+	 * @param	string[optional] $language	The language to build the cache for, if not passes we use the working language.
 	 */
 	public static function buildCache($language = null)
 	{
@@ -441,7 +458,7 @@ class BackendPagesModel
 									<h4 class="templateBlockTitle">'. $title .'</h4>
 									<p><span class="helpTxt templateBlockCurrentType">&nbsp;</span></p>
 									<div class="buttonHolder">
-										<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" rel="'. $index .'">
+										<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" data-block-id="'. $index .'">
 											<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
 										</a>
 									</div>
@@ -621,11 +638,11 @@ class BackendPagesModel
 		$id = (int) $id;
 		$language = BackendLanguage::getWorkingLanguage();
 
-		// get number of rows, if that result is more than 0 it means the page exists
-		return (bool) ((int) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
-															FROM pages AS i
-															WHERE i.id = ? AND i.language = ? AND i.status IN("active", "draft")',
-															array($id, $language)) > 0);
+		// exists?
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(i.id)
+														FROM pages AS i
+														WHERE i.id = ? AND i.language = ? AND i.status IN (?, ?)',
+														array($id, $language, 'active', 'draft'));
 	}
 
 
@@ -641,19 +658,19 @@ class BackendPagesModel
 		$id = (int) $id;
 
 		// get data
-		return (bool) ((int) BackendModel::getDB()->getVar('SELECT i.id
-															FROM pages_templates AS i
-															WHERE i.id = ?',
-															$id) > 0);
+		return (bool) BackendModel::getDB()->getVar('SELECT i.id
+														FROM pages_templates AS i
+														WHERE i.id = ?',
+														array($id));
 	}
 
 
 	/**
 	 * Get the data for a record
 	 *
-	 * @return	mixed				false if the record can't be found, otherwise an array with all data.
-	 * @param	int $id				The Id of the page to fetch.
-	 * @param	string[optional]	The language to use while fetching the page.
+	 * @return	mixed						false if the record can't be found, otherwise an array with all data.
+	 * @param	int $id						The Id of the page to fetch.
+	 * @param	string[optional] $language	The language to use while fetching the page.
 	 */
 	public static function get($id, $language = null)
 	{
@@ -698,7 +715,8 @@ class BackendPagesModel
 	 * Get the blocks in a certain page
 	 *
 	 * @return	array
-	 * @param	int $id		The Id of the page to get the blocks for.
+	 * @param	int $id						The Id of the page to get the blocks for.
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function getBlocks($id, $language = null)
 	{
@@ -744,7 +762,7 @@ class BackendPagesModel
 	 * Get all items by a given tag id
 	 *
 	 * @return	array
-	 * @param	int	$tagId	The id of the tag.
+	 * @param	int $tagId	The id of the tag.
 	 */
 	public static function getByTag($tagId)
 	{
@@ -809,11 +827,11 @@ class BackendPagesModel
 		// any items to remove?
 		if(!empty($itemsToRemove))
 		{
-			// loop items
+			// loop and remove items
 			foreach($itemsToRemove as $id) unset($extras[$id]);
 		}
 
-		// return
+		// return extras
 		return $extras;
 	}
 
@@ -896,7 +914,8 @@ class BackendPagesModel
 														LIMIT 1',
 														array($pageId, 'active'));
 
-		if($childId != 0) return (int) $childId;
+		// return
+		if($childId != 0) return $childId;
 
 		// fallback
 		return false;
@@ -932,7 +951,7 @@ class BackendPagesModel
 			// multilanguages?
 			if(SITE_MULTILANGUAGE) $URL = '/'. BackendLanguage::getWorkingLanguage();
 
-			// return
+			// return the unique URL!
 			return $URL;
 		}
 
@@ -945,7 +964,7 @@ class BackendPagesModel
 		// just prepend with slash
 		else $URL = '/'. $URL;
 
-		// return
+		// return the unique URL!
 		return $URL;
 	}
 
@@ -981,7 +1000,7 @@ class BackendPagesModel
 																array($language));
 
 		// pages created by a user that isn't a god should have an id higher then 1000
-		// with this hack we can easily find pages added by a user
+		// with this hack we can easily find which pages are added by a user
 		if($maximumMenuId < 1000 && !BackendAuthentication::getUser()->isGod()) return $maximumMenuId + 1000;
 
 		// fallback
@@ -1025,31 +1044,31 @@ class BackendPagesModel
 		$language = BackendLanguage::getWorkingLanguage();
 
 		// get page (active version)
-		$return = (array) BackendModel::getDB()->getRecord('SELECT *, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
-															FROM pages AS i
-															WHERE i.id = ? AND i.revision_id = ? AND i.language = ?',
-															array($id, $revisionId, $language));
+		$revision = (array) BackendModel::getDB()->getRecord('SELECT *, UNIX_TIMESTAMP(i.publish_on) AS publish_on, UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on
+																FROM pages AS i
+																WHERE i.id = ? AND i.revision_id = ? AND i.language = ?',
+																array($id, $revisionId, $language));
 
 		// anything found
-		if(empty($return)) return array();
+		if(empty($revision)) return array();
 
 		// can't be deleted
-		if(in_array($return['id'], array(1, 404))) $return['allow_delete'] = 'N';
+		if(in_array($revision['id'], array(1, 404))) $revision['allow_delete'] = 'N';
 
 		// can't be moved
-		if(in_array($return['id'], array(1, 404))) $return['allow_move'] = 'N';
+		if(in_array($revision['id'], array(1, 404))) $revision['allow_move'] = 'N';
 
 		// can't have children
-		if(in_array($return['id'], array(404))) $return['allow_move'] = 'N';
+		if(in_array($revision['id'], array(404))) $revision['allow_move'] = 'N';
 
 		// convert into bools for use in template engine
-		$return['move_allowed'] = (bool) ($return['allow_move'] == 'Y');
-		$return['children_allowed'] = (bool) ($return['allow_children'] == 'Y');
-		$return['edit_allowed'] = (bool) ($return['allow_edit'] == 'Y');
-		$return['delete_allowed'] = (bool) ($return['allow_delete'] == 'Y');
+		$revision['move_allowed'] = (bool) ($revision['allow_move'] == 'Y');
+		$revision['children_allowed'] = (bool) ($revision['allow_children'] == 'Y');
+		$revision['edit_allowed'] = (bool) ($revision['allow_edit'] == 'Y');
+		$revision['delete_allowed'] = (bool) ($revision['allow_delete'] == 'Y');
 
 		// return
-		return $return;
+		return $revision;
 	}
 
 
@@ -1114,7 +1133,7 @@ class BackendPagesModel
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*
 															FROM pages_templates AS i
 															WHERE i.id = ?',
-															$id);
+															array($id));
 	}
 
 
@@ -1167,7 +1186,7 @@ class BackendPagesModel
 	 * @param	array $ids					The parentIds.
 	 * @param	array[optional] $data		A holder for the generated data.
 	 * @param	int[optional] $level		The counter for the level.
-	 * @param	string[optional] $language	The language
+	 * @param	string[optional] $language	The language.
 	 */
 	private static function getTree(array $ids, array $data = null, $level = 1, $language = null)
 	{
@@ -1340,8 +1359,7 @@ class BackendPagesModel
 	{
 		return array('rich_text' => BL::getLabel('Editor'),
 					 'block' => BL::getLabel('Module'),
-					 'widget' => BL::getLabel('Widget')
-					);
+					 'widget' => BL::getLabel('Widget'));
 	}
 
 
@@ -1352,6 +1370,7 @@ class BackendPagesModel
 	 * @param	string $URL					The URL to base on.
 	 * @param	int[optional] $id			The id to ignore.
 	 * @param	int[optional] $parentId		The parent for the page to create an url for.
+	 * @param	bool[optional] $isAction	Is this page an action.
 	 */
 	public static function getURL($URL, $id = null, $parentId = 0, $isAction = false)
 	{
@@ -1471,7 +1490,8 @@ class BackendPagesModel
 	 * Insert multiple blocks at once
 	 *
 	 * @return	void
-	 * @param	array $blocks		The blocks to insert.
+	 * @param	array $blocks				The blocks to insert.
+	 * @param	bool[optional] $hasBlock	The blocks to insert.
 	 */
 	public static function insertBlocks(array $blocks, $hasBlock = false)
 	{
@@ -1494,7 +1514,7 @@ class BackendPagesModel
 		// update page
 		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
-		// insert
+		// insert blocks
 		$db->insert('pages_blocks', $blocks);
 	}
 
@@ -1523,14 +1543,18 @@ class BackendPagesModel
 	 * Is the provided template id in use by active versions of pages?
 	 *
 	 * @return	bool
-	 * @param	int $templateId
+	 * @param	int $templateId		The id of the template to check.
 	 */
 	public static function isTemplateInUse($templateId)
 	{
-		return (bool) ((int) BackendModel::getDB(false)->getVar('SELECT COUNT(i.template_id)
-																FROM pages AS i
-																WHERE i.template_id = ? AND i.status = ?',
-																array((int) $templateId, 'active')) > 0);
+		// refedine
+		$templateId = (int) $templateId;
+
+		// return
+		return (bool) BackendModel::getDB(false)->getVar('SELECT COUNT(i.template_id)
+															FROM pages AS i
+															WHERE i.template_id = ? AND i.status = ?',
+															array((int) $templateId, 'active'));
 	}
 
 
@@ -1595,12 +1619,10 @@ class BackendPagesModel
 		// calculate new sequence for items that should be moved inside
 		if($typeOfDrop == 'inside')
 		{
-			// get highest sequence
-			$newSequence = (int) $db->getVar('SELECT i.sequence
+			// get highest sequence + 1
+			$newSequence = (int) $db->getVar('SELECT MAX(i.sequence)
 												FROM pages AS i
-												WHERE i.id = ? AND i.language = ? AND i.status = ?
-												ORDER BY i.sequence DESC
-												LIMIT 1',
+												WHERE i.id = ? AND i.language = ? AND i.status = ?',
 												array($newParent, $language, 'active')) + 1;
 
 			// update
@@ -1674,7 +1696,7 @@ class BackendPagesModel
 	 */
 	private static function setMaximumBlocks()
 	{
-		// get maxim number of blocks for active templates
+		// get maximum number of blocks for active templates
 		$maximumNumberOfBlocks = (int) BackendModel::getDB()->getVar('SELECT MAX(i.num_blocks) AS max_num_blocks
 																		FROM pages_templates AS i
 																		WHERE i.active = ?',
@@ -1689,7 +1711,7 @@ class BackendPagesModel
 	 * Convert the template syntax into an array to work with
 	 *
 	 * @return	array
-	 * @param	string $syntax	The syntax
+	 * @param	string $syntax	The syntax.
 	 */
 	public static function templateSyntaxToArray($syntax)
 	{
@@ -1715,6 +1737,7 @@ class BackendPagesModel
 			$table[$i] = (array) explode(',', $row);
 		}
 
+		// return
 		return $table;
 
 	}
@@ -1736,7 +1759,7 @@ class BackendPagesModel
 		else $db->delete('pages', 'id = ? AND user_id = ? AND status = ? AND language = ?', array((int) $page['id'], BackendAuthentication::getUser()->getUserId(), 'draft', BL::getWorkingLanguage()));
 
 		// insert
-		$id = (int) $db->insert('pages', $page);
+		$page['revision_id'] = (int) $db->insert('pages', $page);
 
 		// how many revisions should we keep
 		$rowsToKeep = (int) BackendModel::getModuleSetting('pages', 'max_num_revisions', 20);
@@ -1747,7 +1770,7 @@ class BackendPagesModel
 														WHERE i.id = ? AND i.status = ?
 														ORDER BY i.edited_on DESC
 														LIMIT ?',
-														array($page['id'], 'archive', $rowsToKeep));
+														array((int) $page['id'], 'archive', $rowsToKeep));
 
 		// delete other revisions
 		if(!empty($revisionIdsToKeep))
@@ -1767,7 +1790,7 @@ class BackendPagesModel
 		}
 
 		// return the new revision id
-		return $id;
+		return $page['revision_id'];
 	}
 
 
@@ -1775,8 +1798,8 @@ class BackendPagesModel
 	 * Update the blocks
 	 *
 	 * @return	void
-	 * @param	array $blocks	The blocks to update.
-	 * @param	bool $hasBlock	Is there a real block inside the blocks.
+	 * @param	array $blocks				The blocks to update.
+	 * @param	bool[optional] $hasBlock	Is there a real block inside the blocks.
 	 */
 	public static function updateBlocks(array $blocks, $hasBlock = false)
 	{
@@ -1800,7 +1823,7 @@ class BackendPagesModel
 		$db->update('pages', array('has_extra' => $hasExtra, 'extra_ids' => $extraIdsValue), 'revision_id = ? AND status = ?', array($blocks[0]['revision_id'], 'active'));
 
 		// update old revisions
-		$db->update('pages_blocks', array('status' => 'archive'), 'revision_id = ?', $blocks[0]['revision_id']);
+		$db->update('pages_blocks', array('status' => 'archive'), 'revision_id = ?', array($blocks[0]['revision_id']));
 
 		// insert
 		$db->insert('pages_blocks', $blocks);
@@ -1811,16 +1834,18 @@ class BackendPagesModel
 	 * Update a template
 	 *
 	 * @return	void
-	 * @param	int $id				The id for the template to update.
-	 * @param	array $template		The new data for the template.
+	 * @param	array $item			The new data for the template.
 	 */
-	public static function updateTemplate($id, array $template)
+	public static function updateTemplate(array $item)
 	{
 		// update item
-		BackendModel::getDB(true)->update('pages_templates', $template, 'id = ?', (int) $id);
+		$updated = BackendModel::getDB(true)->update('pages_templates', $item, 'id = ?', array((int) $item['id']));
 
 		// update setting for maximum blocks
 		self::setMaximumBlocks();
+
+		// return updated
+		return $updated;
 	}
 }
 

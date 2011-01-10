@@ -1,15 +1,14 @@
 <?php
 
 /**
- * ModuleInstaller
  * The base-class for the installer
  *
- * @package		installer
+ * @package		backend
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class ModuleInstaller
@@ -25,7 +24,7 @@ class ModuleInstaller
 	/**
 	 * The active languages
 	 *
-	 * @var	array
+	 * @var array
 	 */
 	private $languages = array();
 
@@ -33,7 +32,7 @@ class ModuleInstaller
 	/**
 	 * The variables passed by the installer
 	 *
-	 * @var	array
+	 * @var array
 	 */
 	private $variables = array();
 
@@ -42,10 +41,10 @@ class ModuleInstaller
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	SpoonDatabase $db	The database-connection.
-	 * @param	array $languages	The selected languages
-	 * @param	bool $example		Should example data be installed
-	 * @param	array $variables	The passed variables
+	 * @param	SpoonDatabase $db			The database-connection.
+	 * @param	array $languages			The selected languages.
+	 * @param	bool[optional] $example		Should example data be installed.
+	 * @param	array[optional] $variables	The passed variables.
 	 */
 	public function __construct(SpoonDatabase $db, array $languages, $example = false, array $variables = array())
 	{
@@ -64,8 +63,8 @@ class ModuleInstaller
 	 * Inserts a new module
 	 *
 	 * @return	void
-	 * @param	string $name					The name of the module
-	 * @param	string[optional] $description	A description for the module
+	 * @param	string $name					The name of the module.
+	 * @param	string[optional] $description	A description for the module.
 	 */
 	protected function addModule($name, $description = null)
 	{
@@ -73,7 +72,7 @@ class ModuleInstaller
 		$name = (string) $name;
 
 		// module does not yet exists
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?;', $name))
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name) FROM modules WHERE name = ?', $name))
 		{
 			// build item
 			$item = array('name' => $name,
@@ -92,7 +91,7 @@ class ModuleInstaller
 	/**
 	 * Method that will be overriden by the specific installers
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	protected function execute()
 	{
@@ -167,7 +166,7 @@ class ModuleInstaller
 	 * Get a variable
 	 *
 	 * @return	mixed
-	 * @param	string $name		The name of the variable
+	 * @param	string $name	The name of the variable.
 	 */
 	protected function getVariable($name)
 	{
@@ -183,7 +182,7 @@ class ModuleInstaller
 	 * Imports the sql file
 	 *
 	 * @return	void
-	 * @param	string $filename	The full path for the SQL-file
+	 * @param	string $filename	The full path for the SQL-file.
 	 */
 	protected function importSQL($filename)
 	{
@@ -196,9 +195,8 @@ class ModuleInstaller
 			/**
 			 * Some versions of PHP can't handle multiple statements at once, so split them
 			 * We know this isn't the best solution, but we couldn't find a beter way.
-			 * @later: find a beter way to handle multiple-line queries
 			 */
-			$queries = explode(";\n", $content);
+			$queries = preg_split("/;(\r)?\n/", $content);
 
 			// loop queries and execute them
 			foreach($queries as $query) $this->getDB()->execute($query);
@@ -210,13 +208,13 @@ class ModuleInstaller
 	 * Insert an extra
 	 *
 	 * @return	int
-	 * @param	string $module
-	 * @param	string $type
-	 * @param	string $label
-	 * @param	string $action
-	 * @param	string[optional] $data
-	 * @param	bool[optional] $hidden
-	 * @param	int[optional] $sequence
+	 * @param	string $module				The module for the extra.
+	 * @param	string $type				The type, possible values are: homepage, widget, block.
+	 * @param	string $label				The label for the extra.
+	 * @param	string[optional] $action	The action.
+	 * @param	string[optional] $data		Optional data, will be passed in the extra.
+	 * @param	bool[optional] $hidden		Is this extra hidden?
+	 * @param	int[optional] $sequence		The sequence for the extra.
 	 */
 	protected function insertExtra($module, $type, $label, $action = null, $data = null, $hidden = false, $sequence = null)
 	{
@@ -264,12 +262,12 @@ class ModuleInstaller
 	 * Inserts a new locale item
 	 *
 	 * @return	void
-	 * @param	string $language
-	 * @param	string $application
-	 * @param	string $module
-	 * @param	string $type
-	 * @param	string $name
-	 * @param	string $value
+	 * @param	string $language		The language.
+	 * @param	string $application		The application, for now possible values are: backend, frontend.
+	 * @param	string $module			The module to insert the locale for.
+	 * @param	string $type			The type of locale, possible values are: act, err, lbl, msg.
+	 * @param	string $name			The name of the locale.
+	 * @param	string $value			The value.
 	 */
 	protected function insertLocale($language, $application, $module, $type, $name, $value)
 	{
@@ -308,15 +306,15 @@ class ModuleInstaller
 	 * Insert a meta item
 	 *
 	 * @return	int
-	 * @param	string $keywords
-	 * @param	string $description
-	 * @param	string $title
-	 * @param	string $url
-	 * @param	bool[optional] $keywordsOverwrite
-	 * @param	bool[optional] $descriptionOverwrite
-	 * @param	bool[optional] $titleOverwrite
-	 * @param	bool[optional] $urlOverwrite
-	 * @param	string[optional] $custom
+	 * @param	string $keywords						The keyword of the item.
+	 * @param	string $description						A description of the item.
+	 * @param	string $title							The page title for the item.
+	 * @param	string $url								The unique URL.
+	 * @param	bool[optional] $keywordsOverwrite		Should the keywords be overwritten?
+	 * @param	bool[optional] $descriptionOverwrite	Should the descriptions be overwritten?
+	 * @param	bool[optional] $titleOverwrite			Should the pagetitle be overwritten?
+	 * @param	bool[optional] $urlOverwrite			Should the URL be overwritten?
+	 * @param	string[optional] $custom				Any custom meta-data.
 	 */
 	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null)
 	{
@@ -351,9 +349,9 @@ class ModuleInstaller
 	 * Insert a page
 	 *
 	 * @return	void
-	 * @param	array $revision
-	 * @param	array[optional] $meta
-	 * @param	array[optional] $block
+	 * @param	array $revision				An array with the revision data.
+	 * @param	array[optional] $meta		The meta-data.
+	 * @param	array[optional] $block		The blocks.
 	 */
 	protected function insertPage(array $revision, array $meta = null, array $block = null)
 	{
@@ -465,9 +463,9 @@ class ModuleInstaller
 	 * Make a module searchable
 	 *
 	 * @return	void
-	 * @param	string $module						The module to make searchable.
-	 * @param	bool[optional] $searchable			Enable/disable search for this module by default?
-	 * @param	int[optional] $weight				Set default search weight for this module.
+	 * @param	string $module					The module to make searchable.
+	 * @param	bool[optional] $searchable		Enable/disable search for this module by default?
+	 * @param	int[optional] $weight			Set default search weight for this module.
 	 */
 	protected function makeSearchable($module, $searchable = true, $weight = 1)
 	{
@@ -563,11 +561,20 @@ class ModuleInstaller
 		$value = serialize($value);
 		$overwrite = (bool) $overwrite;
 
-		// doens't already exist
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
-											FROM modules_settings
-											WHERE module = ? AND name = ?;',
-											array($module, $name)))
+		// overwrite
+		if($overwrite)
+		{
+			// insert setting
+			$this->getDB()->execute('INSERT INTO modules_settings (module, name, value)
+										VALUES (?, ?, ?)
+										ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
+		}
+
+		// doesn't already exist
+		elseif(!(bool) $this->getDB()->getVar('SELECT COUNT(name)
+												FROM modules_settings
+												WHERE module = ? AND name = ?',
+												array($module, $name)))
 		{
 			// build item
 			$item = array('module' => $module,
@@ -577,14 +584,6 @@ class ModuleInstaller
 			// insert setting
 			$this->getDB()->insert('modules_settings', $item);
 		}
-
-		// overwrite
-		elseif($overwrite)
-		{
-			// insert setting
-			$this->getDB()->execute('INSERT INTO modules_settings (module, name, value) VALUES (?, ?, ?)
-										ON DUPLICATE KEY UPDATE value = ?', array($module, $name, $value, $value));
-		}
 	}
 }
 
@@ -593,11 +592,11 @@ class ModuleInstaller
  * CoreInstall
  * Installer for the core
  *
- * @package		installer
+ * @package		backend
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class CoreInstall extends ModuleInstaller
@@ -617,7 +616,7 @@ class CoreInstall extends ModuleInstaller
 		if($this->getVariable('site_title') === null) throw new SpoonException('Site title is not provided.');
 
 		// import SQL
-		$this->importSQL(PATH_WWW .'/backend/core/installer/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/install.sql');
 
 		// add core modules
 		$this->addModule('core', 'The Fork CMS core module.');
@@ -679,6 +678,10 @@ class CoreInstall extends ModuleInstaller
 		$this->setSetting('core', 'date_formats_long', array('j F Y', 'D j F Y', 'l j F Y', 'j F, Y', 'D j F, Y', 'l j F, Y', 'd F Y', 'd F, Y', 'F j Y', 'D F j Y', 'l F j Y', 'F d, Y', 'D F d, Y', 'l F d, Y'));
 		$this->setSetting('core', 'time_format', 'H:i');
 		$this->setSetting('core', 'time_formats', array('H:i', 'H:i:s', 'g:i a', 'g:i A'));
+
+		// number formats
+		$this->setSetting('core', 'number_format', 'dot_nothing');
+		$this->setSetting('core', 'number_formats', array('comma_nothing' => '10000,25', 'dot_nothing' => '10000.25', 'dot_comma' => '10,000.25', 'comma_dot' => '10.000,25', 'dot_space' => '10000.25', 'comma_space' => '10 000,25'));
 
 		// e-mail settings
 		$this->setSetting('core', 'mailer_from', array('name' => 'Fork CMS', 'email' => $this->getVariable('spoon_debug_email')));

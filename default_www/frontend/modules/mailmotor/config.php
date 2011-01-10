@@ -10,7 +10,7 @@ require_once 'engine/helper.php';
  * @package		frontend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 final class FrontendMailmotorConfig extends FrontendBaseConfig

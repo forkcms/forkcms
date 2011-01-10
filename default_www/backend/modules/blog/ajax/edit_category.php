@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendBlogAjaxEditCategory
+ * This edit-action will update a category using Ajax
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBlogAjaxEditCategory extends BackendBaseAJAXAction
@@ -26,20 +26,20 @@ class BackendBlogAjaxEditCategory extends BackendBaseAJAXAction
 		$categoryName = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
 
 		// validate
-		if($id == 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($categoryName == '') $this->output(self::BAD_REQUEST, null, BL::getError('NameIsRequired'));
+		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
+		if($categoryName === '') $this->output(self::BAD_REQUEST, null, BL::getError('NameIsRequired'));
 
 		// build array
-		$category = array();
-		$category['name'] = SpoonFilter::htmlspecialchars($categoryName);
-		$category['language'] = BL::getWorkingLanguage();
-		$category['url'] = BackendBlogModel::getURLForCategory($category['name']);
+		$item['id'] = $id;
+		$item['name'] = SpoonFilter::htmlspecialchars($categoryName);
+		$item['language'] = BL::getWorkingLanguage();
+		$item['url'] = BackendBlogModel::getURLForCategory($item['name']);
 
 		// update
-		BackendBlogModel::updateCategory($id, $category);
+		BackendBlogModel::updateCategory($item);
 
 		// output
-		$this->output(self::OK, $category, vsprintf(BL::getMessage('EditedCategory'), array($category['name'])));
+		$this->output(self::OK, $item, vsprintf(BL::getMessage('EditedCategory'), array($item['name'])));
 	}
 }
 

@@ -101,7 +101,7 @@ class SpoonTemplate
 	 * Adds a form to this template.
 	 *
 	 * @return	void
-	 * @param	SpoonForm $form
+	 * @param	SpoonForm $form		The form-instance to add.
 	 */
 	public function addForm(SpoonForm $form)
 	{
@@ -143,7 +143,7 @@ class SpoonTemplate
 	 * @return	void
 	 * @param	array $values				This array with keys and values will be used to search and replace in the template file.
 	 * @param	string[optional] $prefix	An optional prefix eg. 'lbl' that can be used.
-	 * @param	string[optional] $suffix	An optional suffix eg. 'msg' that can be used
+	 * @param	string[optional] $suffix	An optional suffix eg. 'msg' that can be used.
 	 */
 	public function assignArray(array $values, $prefix = null, $suffix = null)
 	{
@@ -357,7 +357,7 @@ class SpoonTemplate
 	 *
 	 * @return	string					The special unique name, used for storing this file once compiled in the compile directory.
 	 * @param	string $template		The filename of the template.
-	 * @param	string[optional] $path 	The optional path to this template.
+	 * @param	string[optional] $path	The optional path to this template.
 	 */
 	private function getCompileName($template, $path = null)
 	{

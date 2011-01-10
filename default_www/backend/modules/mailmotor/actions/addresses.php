@@ -33,36 +33,6 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// set the group
-		$this->setGroup();
-
-		// set the filter
-		$this->setFilter();
-
-		// load datagrid
-		$this->loadDataGrid();
-
-		// load the filter
-		$this->loadForm();
-
-		// parse page
-		$this->parse();
-
-		// display the page
-		$this->display();
-	}
-
-
-	/**
 	 * Builds the query for this datagrid
 	 *
 	 * @return	array		An array with two arguments containing the query and its parameters.
@@ -100,6 +70,36 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 
 		// return
 		return array($query, $parameters);
+	}
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// set the group
+		$this->setGroup();
+
+		// set the filter
+		$this->setFilter();
+
+		// load datagrid
+		$this->loadDataGrid();
+
+		// load the filter
+		$this->loadForm();
+
+		// parse page
+		$this->parse();
+
+		// display the page
+		$this->display();
 	}
 
 

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendTagsMassAction
  * This action is used to perform mass actions on tags (delete, ...)
  *
  * @package		backend
  * @subpackage	tags
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendTagsMassAction extends BackendBaseAction

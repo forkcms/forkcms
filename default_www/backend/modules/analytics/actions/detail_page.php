@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsDetailPage
  * This is the detail-page-action, it will display the overview of analytics posts
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsDetailPage extends BackendAnalyticsBase

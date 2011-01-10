@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendLocaleAnalyse
  * This is the analyse-action, it will display an overview of used locale.
  *
  * @package		backend
  * @subpackage	locale
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendLocaleAnalyse extends BackendBaseActionIndex
@@ -46,7 +45,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	 * Format a serialized path-array into something that is usable in a datagrid
 	 *
 	 * @return	string
-	 * @param	string $files	The serialized array with the paths
+	 * @param	string $files	The serialized array with the paths.
 	 */
 	public static function formatFilesList($files)
 	{
@@ -71,11 +70,26 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 
 	/**
+	 * Get the passed key should be treated as a label we add it to the array
+	 *
+	 * @return	void
+	 * @param	mixed $value	The value of the element.
+	 * @param	mixed $key		The key of the element.
+	 * @param	array $items	The array to append the found values to.
+	 */
+	private static function getLabelsFromBackendNavigation($value, $key, $items)
+	{
+		// add if needed
+		if((string) $key == 'label') $items[] = $value;
+	}
+
+
+	/**
 	 * Get the filetree
 	 *
 	 * @return	array
 	 * @param	string $path			The path to get the filetree for.
-	 * @param	array[optional] $tree	An array to hold the results
+	 * @param	array[optional] $tree	An array to hold the results.
 	 */
 	private static function getTree($path, array $tree = array())
 	{
@@ -113,6 +127,9 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	 */
 	private function loadDataGrids()
 	{
+		/*
+		 * Frontend datagrid
+		 */
 		// create datagrid
 		$this->dgFrontend = new BackendDataGridArray($this->processFrontend());
 
@@ -131,6 +148,9 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		// add columns
 		$this->dgFrontend->addColumn('add', null, BL::getLabel('Add'), BackendModel::createURLForAction('add') .'&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::getLabel('Add'));
 
+		/*
+		 * Backend datagrid
+		 */
 		// create datagrid
 		$this->dgBackend = new BackendDataGridArray($this->processBackend());
 
@@ -698,21 +718,6 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 		// return
 		return $nonExisting;
-	}
-
-
-	/**
-	 * Get the passed key should be treated as a label we add it to the array
-	 *
-	 * @return	void
-	 * @param	mixed $value	The value of the element.
-	 * @param	mixed $key		The key of the element.
-	 * @param	array $items	The array to append the found values to.
-	 */
-	private static function getLabelsFromBackendNavigation($value, $key, $items)
-	{
-		// add if needed
-		if((string) $key == 'label') $items[] = $value;
 	}
 }
 

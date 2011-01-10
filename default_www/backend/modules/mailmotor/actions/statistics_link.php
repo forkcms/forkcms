@@ -71,21 +71,6 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 
 
 	/**
-	 * Load the form for the group
-	 *
-	 * @return	void
-	 */
-	private function loadForm()
-	{
-		// create form
-		$this->frm = new BackendForm('add');
-
-		// add fields
-		$this->frm->addText('group');
-	}
-
-
-	/**
 	 * Gets all data needed for this page
 	 *
 	 * @return	void
@@ -138,6 +123,21 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 
 		// set paging limit
 		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+	}
+
+
+	/**
+	 * Load the form for the group
+	 *
+	 * @return	void
+	 */
+	private function loadForm()
+	{
+		// create form
+		$this->frm = new BackendForm('add');
+
+		// add fields
+		$this->frm->addText('group');
 	}
 
 

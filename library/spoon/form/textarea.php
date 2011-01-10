@@ -39,11 +39,11 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @param	bool[optional] $HTML			Is HTML allowed?
 	 */
 	public function __construct($name, $value = null, $class = 'inputTextarea', $classError = 'inputTextareaError', $HTML = false)
 	{
@@ -65,7 +65,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
-	 * @param	bool[optional] $allowHTML
+	 * @param	bool[optional] $allowHTML	Is HTML allowed?
 	 */
 	public function getValue($allowHTML = null)
 	{
@@ -108,7 +108,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field contains only letters a-z and A-Z.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphabetical($error = null)
 	{
@@ -138,7 +138,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field only contains letters & numbers (without spaces).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphaNumeric($error = null)
 	{
@@ -168,7 +168,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -190,8 +190,8 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field's length is less than or equal to the given maximum.
 	 *
 	 * @return	bool
-	 * @param	int $maximum
-	 * @param	string[optional] $error
+	 * @param	int $maximum				The maximum number of characters.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMaximumCharacters($maximum, $error = null)
 	{
@@ -221,8 +221,8 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field's length is more than or equal to the given minimum.
 	 *
 	 * @return	bool
-	 * @param	int $minimum
-	 * @param	string[optional] $error
+	 * @param	int $minimum				The minimum number of characters.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMinimumCharacters($minimum, $error = null)
 	{
@@ -252,7 +252,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Checks if this field contains any string that doesn't have control characters (ASCII 0 - 31) but spaces are allowed.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isString($error = null)
 	{
@@ -282,7 +282,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Parses the html for this textarea.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -308,7 +308,7 @@ class SpoonFormTextarea extends SpoonFormInput
 		if($template !== null)
 		{
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;
@@ -319,7 +319,7 @@ class SpoonFormTextarea extends SpoonFormInput
 	 * Set the initial value.
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The new value.
 	 */
 	private function setValue($value)
 	{

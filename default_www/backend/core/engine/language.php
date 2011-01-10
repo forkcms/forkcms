@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendLanguage
  * This class will store the language-dependant content for the Backend, it will also store the current language for the user.
  *
  * @package		backend
- * @subpackage	language
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendLanguage
@@ -68,7 +67,6 @@ class BackendLanguage
 	}
 
 
-
 	/**
 	 * Get an error from the language-file
 	 *
@@ -115,7 +113,7 @@ class BackendLanguage
 	/**
 	 * Get the current interface language
 	 *
-	 * @return string
+	 * @return	string
 	 */
 	public static function getInterfaceLanguage()
 	{
@@ -130,17 +128,21 @@ class BackendLanguage
 	 */
 	public static function getInterfaceLanguages()
 	{
-		// grab from settings
-		$languages = BackendModel::getModuleSetting('core', 'interface_languages', array('nl'));
-
 		// init var
-		$return = array();
+		$languages = array();
 
-		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		// grab the languages from the settings & loop language to reset the label
+		foreach((array) BackendModel::getModuleSetting('core', 'interface_languages', array('nl')) as $key)
+		{
+			// fetch language's translation
+			$languages[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		}
 
-		// return
-		return $return;
+		// sort alphabetically
+		asort($languages);
+
+		// return languages
+		return $languages;
 	}
 
 
@@ -257,7 +259,7 @@ class BackendLanguage
 	/**
 	 * Get the current working language
 	 *
-	 * @return string
+	 * @return	string
 	 */
 	public static function getWorkingLanguage()
 	{
@@ -272,32 +274,21 @@ class BackendLanguage
 	 */
 	public static function getWorkingLanguages()
 	{
-		// get languages
-		$languages = BackendModel::getModuleSetting('core', 'languages', array('nl'));
-
 		// init var
-		$return = array();
+		$languages = array();
 
-		// loop language to reset the label
-		foreach($languages as $key) $return[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		// grab the languages from the settings & loop language to reset the label
+		foreach((array) BackendModel::getModuleSetting('core', 'languages', array('nl')) as $key)
+		{
+			// fetch the language's translation
+			$languages[$key] = BackendLanguage::getMessage(mb_strtoupper($key), 'core');
+		}
 
 		// sort alphabetically
-		asort($return);
+		asort($languages);
 
-		// return
-		return $return;
-	}
-
-
-	/**
-	 * Set the current working language
-	 *
-	 * @return	void
-	 * @param	string $language		The language to use, if not provided we will use the working language.
-	 */
-	public static function setWorkingLanguage($language)
-	{
-		self::$currentWorkingLanguage = (string) $language;
+		// return languages
+		return $languages;
 	}
 
 
@@ -356,17 +347,29 @@ class BackendLanguage
 		self::$lbl = (array) $lbl;
 		self::$msg = (array) $msg;
 	}
+
+
+	/**
+	 * Set the current working language
+	 *
+	 * @return	void
+	 * @param	string $language		The language to use, if not provided we will use the working language.
+	 */
+	public static function setWorkingLanguage($language)
+	{
+		self::$currentWorkingLanguage = (string) $language;
+	}
 }
 
 
 /**
- * BL (some kind of alias for BackendLanguage)
+ * Some kind of alias for BackendLanguage
  *
  *
  * @package		backend
- * @subpackage	language
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BL extends BackendLanguage

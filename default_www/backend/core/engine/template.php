@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendTemplate, this is our extended version of SpoonTemplate
+ * This is our extended version of SpoonTemplate
  * This class will handle a lot of stuff for you, for example:
  * 	- it will assign all labels
  * 	- it will map some modifiers
@@ -12,7 +12,7 @@
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplate extends SpoonTemplate
@@ -47,7 +47,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->setCacheDirectory(BACKEND_CACHE_PATH .'/cached_templates');
 
 		// set compile directory
-		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/templates');
+		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
 
 		// when debugging the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
@@ -86,7 +86,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->parseVars();
 
 		// parse headers
-		if(!$customHeaders) SpoonHTTP::setHeaders('content-type: text/html;charset=utf-8');
+		if(!$customHeaders) SpoonHTTP::setHeaders('Content-type: text/html;charset=utf-8');
 
 		// call the parent
 		parent::display($template);
@@ -110,7 +110,7 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('getmainnavigation', array('BackendTemplateModifiers', 'getMainNavigation'));
 
 		// rand
-		$this->mapModifier('rand', array('BackendTemplateModifiers', 'rand'));
+		$this->mapModifier('rand', array('BackendTemplateModifiers', 'random'));
 
 		// string
 		$this->mapModifier('formatfloat', array('BackendTemplateModifiers', 'formatFloat'));
@@ -123,6 +123,9 @@ class BackendTemplate extends SpoonTemplate
 		$this->mapModifier('formatdate', array('BackendTemplateModifiers', 'formatDate'));
 		$this->mapModifier('formattime', array('BackendTemplateModifiers', 'formatTime'));
 		$this->mapModifier('formatdatetime', array('BackendTemplateModifiers', 'formatDateTime'));
+
+		// numbers
+		$this->mapModifier('formatnumber', array('BackendTemplateModifiers', 'formatNumber'));
 	}
 
 
@@ -133,6 +136,7 @@ class BackendTemplate extends SpoonTemplate
 	 */
 	private function parseAuthenticatedUser()
 	{
+		// check if the current user is authenticated
 		if(BackendAuthentication::getUser()->isAuthenticated())
 		{
 			// show stuff that only should be visible if authenticated
@@ -165,7 +169,7 @@ class BackendTemplate extends SpoonTemplate
 	private function parseConstants()
 	{
 		// constants that should be protected from usage in the template
-		$notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_USERNAME', 'DB_PASSWORD');
+		$notPublicConstants = array('DB_TYPE', 'DB_DATABASE', 'DB_HOSTNAME', 'DB_PORT', 'DB_USERNAME', 'DB_PASSWORD');
 
 		// get all defined constants
 		$constants = get_defined_constants(true);
@@ -221,12 +225,11 @@ class BackendTemplate extends SpoonTemplate
 	/**
 	 * Assigns an option if we are in debug-mode
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function parseDebug()
 	{
-		// check if SPOON_DEBUG is true
-		if(SPOON_DEBUG) $this->assign('debug', true);
+		$this->assign('debug', SPOON_DEBUG);
 	}
 
 
@@ -341,6 +344,8 @@ class BackendTemplate extends SpoonTemplate
 	{
 		// assign a placeholder var
 		$this->assign('var', '');
+
+		// assign current timestamp
 		$this->assign('timestamp', time());
 
 		// assign body ID
@@ -362,12 +367,12 @@ class BackendTemplate extends SpoonTemplate
 
 
 /**
- * BackendTemplateModifiers, this is our class with custom modifiers.
+ * This is our class with custom modifiers.
  *
  * @package		backend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendTemplateModifiers
@@ -390,7 +395,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatdate}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatDate($var)
 	{
@@ -407,7 +412,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|formatdatetime}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatDateTime($var)
 	{
@@ -421,11 +426,10 @@ class BackendTemplateModifiers
 
 	/**
 	 * Format a number as a float
-	 * @later	grab settings from database
 	 *
 	 * @return	string
-	 * @param	float $number				The number to format
-	 * @param	int[optional] $decimals		The number of decimals
+	 * @param	float $number				The number to format.
+	 * @param	int[optional] $decimals		The number of decimals.
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
@@ -433,7 +437,46 @@ class BackendTemplateModifiers
 		$number = (float) $number;
 		$decimals = (int) $decimals;
 
-		return number_format($number, $decimals, '.', ' ');
+		// get setting
+		$format = BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing');
+
+		// get separators
+		$separators = explode('_', $format);
+		$separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+		$decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
+		$thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+
+		// format the number
+		return number_format($number, $decimals, $decimalSeparator, $thousandsSeparator);
+	}
+
+
+	/**
+	 * Format a number
+	 * 	syntax: {$var|formatnumber}
+	 *
+	 * @return	string
+	 * @param	float $var		The number to format.
+	 */
+	public static function formatNumber($var)
+	{
+		// redefine
+		$var = (float) $var;
+
+		// get setting
+		$format = BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing');
+
+		// get amount of decimals
+		$decimals = (strpos($var, '.') ? strlen(substr($var, strpos($var, '.') + 1)) : 0);
+
+		// get separators
+		$separators = explode('_', $format);
+		$separatorSymbols = array('comma' => ',', 'dot' => '.', 'space' => ' ', 'nothing' => '');
+		$decimalSeparator = (isset($separators[0], $separatorSymbols[$separators[0]]) ? $separatorSymbols[$separators[0]] : null);
+		$thousandsSeparator = (isset($separators[1], $separatorSymbols[$separators[1]]) ? $separatorSymbols[$separators[1]] : null);
+
+		// format the number
+		return number_format($var, $decimals, $decimalSeparator, $thousandsSeparator);
 	}
 
 
@@ -442,7 +485,7 @@ class BackendTemplateModifiers
 	 * 	syntac: {$var|formatdate}
 	 *
 	 * @return	string
-	 * @param	int $var	The UNIX-timestamp to format
+	 * @param	int $var	The UNIX-timestamp to format.
 	 */
 	public static function formatTime($var)
 	{
@@ -455,6 +498,43 @@ class BackendTemplateModifiers
 
 
 	/**
+	 * Convert a var into main-navigation-html
+	 * 	syntax: {$var|getmainnavigation}
+	 *
+	 * @return	string
+	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
+	 */
+	public static function getMainNavigation($var = null)
+	{
+		// redefine
+		$var = (string) $var;
+
+		return Spoon::getObjectReference('navigation')->getNavigation(1, 1);
+	}
+
+
+	/**
+	 * Convert a var into navigation-html
+	 * 	syntax: {$var|getnavigation:startdepth[:maximumdepth]}
+	 *
+	 * @return	string
+	 * @param	string[optional] $var		A placeholder var, will be replaced with the generated HTML.
+	 * @param	int[optional] $startDepth	The start depth of the navigation to get.
+	 * @param	int[optional] $endDepth		The ending depth of the navigation to get.
+	 */
+	public static function getNavigation($var = null, $startDepth = null, $endDepth = null)
+	{
+		// redefine
+		$var = (string) $var;
+		$startDepth = ($startDepth !== null) ? (int) $startDepth : 2;
+		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
+
+		// return navigation
+		return Spoon::getObjectReference('navigation')->getNavigation($startDepth, $endDepth);
+	}
+
+
+	/**
 	 * Convert a var into a URL
 	 * 	syntax: {$var|geturl:<action>[:<module>]}
 	 *
@@ -462,6 +542,7 @@ class BackendTemplateModifiers
 	 * @param	string[optional] $var		A placeholder variable, it will be replaced with the URL.
 	 * @param	string[optional] $action	The action to build the URL for.
 	 * @param	string[optional] $module	The module to build the URL for.
+	 * @param	string[optional] $suffix	A string to append.
 	 */
 	public static function getURL($var = null, $action = null, $module = null, $suffix = null)
 	{
@@ -476,42 +557,22 @@ class BackendTemplateModifiers
 
 
 	/**
-	 * Convert a var into main-navigation-html
-	 * 	syntax: {$var|getmainnavigation}
+	 * Get a random var between a min and max
 	 *
-	 * @return	string
-	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
+	 * @return	int
+	 * @param	string[optional] $var	The string passed from the template.
+	 * @param	int $min				The minimum number.
+	 * @param	int $max				The maximim number.
 	 */
-	public static function getMainNavigation($var = null)
+	public static function random($var = null, $min, $max)
 	{
-		return Spoon::getObjectReference('navigation')->getNavigation(1, 1);
-	}
+		// redefine
+		$var = (string) $var;
+		$min = (int) $min;
+		$max = (int) $max;
 
-
-	/**
-	 * Convert a var into navigation-html
-	 * 	syntax: {$var|getnavigation:startdepth[:maximumdepth]}
-	 *
-	 * @return	string
-	 * @param	string[optional] $var	A placeholder var, will be replaced with the generated HTML.
-	 */
-	public static function getNavigation($var = null)
-	{
-		return Spoon::getObjectReference('navigation')->getNavigation(2);
-	}
-
-
-	/**
- 	 * Get a random var between a min and max
- 	 *
- 	 * @return	int
- 	 * @param	string[optional] $var
- 	 * @param	int $min
- 	 * @param	int $max
-	 */
-	public static function rand($var = null, $min, $max)
-	{
-		return rand((int) $min, (int) $max);
+		// return
+		return rand($min, $max);
 	}
 
 
@@ -520,7 +581,7 @@ class BackendTemplateModifiers
 	 * 	syntax: {$var|truncate:<max-length>[:<append-hellip>]}
 	 *
 	 * @return	string
-	 * @param	string $var					A placeholder var, will be replaced with the generated HTML.
+	 * @param	string[optional] $var					A placeholder var, will be replaced with the generated HTML.
 	 * @param	int $length					The maximum length of the truncated string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended if the length exceeds the requested length?
 	 */

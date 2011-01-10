@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAuthenticationIndex
  * This is the index-action (default), it will display the login screen
  *
  * @package		backend
  * @subpackage	authentication
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendAuthenticationIndex extends BackendBaseActionIndex
@@ -230,7 +229,6 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$this->tpl->assign('showForm', true);
 			}
 		}
-
 	}
 }
 

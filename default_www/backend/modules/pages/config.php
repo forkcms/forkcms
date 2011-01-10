@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendPagesConfig
  * This is the configuration-object for the pages module
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */

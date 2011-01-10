@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBaseObject
  * This class will be the base of the objects used in onsite
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseObject
@@ -46,13 +45,12 @@ class FrontendBaseObject
 
 
 /**
- * FrontendBaseConfig
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class.
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseConfig
@@ -213,14 +211,14 @@ class FrontendBaseConfig
 
 
 /**
- * FrontendBaseBlock
  * This class implements a lot of functionality that can be extended by a specific block
  * @later Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendBaseBlock
@@ -309,8 +307,8 @@ class FrontendBaseBlock
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $action				The name of the action.
 	 * @param	string $module				The name of the module.
+	 * @param	string $action				The name of the action.
 	 * @param	string[optional] $data		The data that should be available in this block.
 	 */
 	public function __construct($module, $action, $data = null)
@@ -623,7 +621,7 @@ class FrontendBaseBlock
 	 * Redirect to a given URL
 	 *
 	 * @return	void
-	 * @param	string $URL				The URL whereto will be redirected
+	 * @param	string $URL				The URL whereto will be redirected.
 	 * @param	int[optional] $code		The redirect code, default is 307 which means this is a temporary redirect.
 	 */
 	public function redirect($URL, $code = 302)
@@ -702,14 +700,14 @@ class FrontendBaseBlock
 
 
 /**
- * FrontendBaseWidget
  * This class implements a lot of functionality that can be extended by a specific widget
  * @later Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendBaseWidget
@@ -794,6 +792,53 @@ class FrontendBaseWidget
 
 
 	/**
+	 * Add a CSS file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file					The path for the CSS-file that should be loaded.
+	 * @param	bool[optional] $overwritePath	Whether or not to add the module to this path. Module path is added by default.
+	 * @param	string[optional] $media			The media to use.
+	 * @param	string[optional] $condition		A condition for the CSS-file.
+	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 */
+	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
+	{
+		// redefine
+		$file = (string) $file;
+		$overwritePath = (bool) $overwritePath;
+
+		// use module path
+		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
+
+		// add css to the header
+		$this->header->addCSS($file, $media, $condition, $minify);
+	}
+
+
+	/**
+	 * Add a javascript file into the array
+	 *
+	 * @return	void
+	 * @param 	string $file						The path to the javascript-file that should be loaded.
+	 * @param 	bool[optional] $overwritePath		Whether or not to add the module to this path. Module path is added by default.
+	 * @param	bool[optional] $minify				Should the file be minified?
+	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 */
+	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	{
+		// redefine
+		$file = (string) $file;
+		$overwritePath = (bool) $overwritePath;
+
+		// use module path
+		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/js/'. $file;
+
+		// add js to the header
+		$this->header->addJavascript($file, $minify, $parseThroughPHP);
+	}
+
+
+	/**
 	 * Execute the action
 	 * If a javascript file with the name of the module or action exists it will be loaded.
 	 *
@@ -852,7 +897,7 @@ class FrontendBaseWidget
 	 * Load the template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template		The path for the template to use.
+	 * @param	string[optional] $path		The path for the template to use.
 	 */
 	protected function loadTemplate($path = null)
 	{
@@ -868,36 +913,6 @@ class FrontendBaseWidget
 
 		// redefine
 		else $template = (string) $path;
-
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new FrontendException('The template ('. $path .') doesn\'t exists.');
 
 		// set template
 		$this->setTemplatePath($path);
@@ -920,7 +935,7 @@ class FrontendBaseWidget
 	 * Set the data, for later use
 	 *
 	 * @return	void
-	 * @param	string $data	The data that should available.
+	 * @param	string[optional] $data	The data that should available.
 	 */
 	private function setData($data = null)
 	{
@@ -956,47 +971,18 @@ class FrontendBaseWidget
 	 */
 	private function setTemplatePath($path)
 	{
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// set template path
 		$this->templatePath = (string) $path;
 	}
 }
 
 
 /**
- * FrontendBaseAJAXAction
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseAJAXAction
@@ -1094,8 +1080,10 @@ class FrontendBaseAJAXAction
 		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
-		// output to the browser
+		// output JSON to the browser
 		echo json_encode($response);
+
+		// stop script execution
 		exit;
 	}
 

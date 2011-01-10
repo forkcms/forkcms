@@ -1,15 +1,14 @@
 <?php
 
 /**
- * InstallerStep
  * The base-class for all installer-steps
  *
- * @package		installer
- * @subpackage	install
+ * @package		install
+ * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class InstallerStep
@@ -53,7 +52,7 @@ class InstallerStep
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	int $step
+	 * @param	int $step	The step to load.
 	 */
 	public function __construct($step)
 	{
@@ -89,7 +88,7 @@ class InstallerStep
 	 * Loads spoon library
 	 *
 	 * @return	void
-	 * @param	string $pathLibrary
+	 * @param	string $pathLibrary		The path of the library.
 	 */
 	protected function loadSpoon($pathLibrary)
 	{

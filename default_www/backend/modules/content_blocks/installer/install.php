@@ -1,14 +1,13 @@
 <?php
 
 /**
- * ContentBlocksInstall
  * Installer for the content blocks module
  *
  * @package		installer
  * @subpackage	content_blocks
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class ContentBlocksInstall extends ModuleInstaller
@@ -21,7 +20,7 @@ class ContentBlocksInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/content_blocks/installer/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/install.sql');
 
 		// add 'content_blocks' as a module
 		$this->addModule('content_blocks', 'The content blocks module.');

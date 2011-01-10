@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendSearchSettings
+ * This is the settings-action, it will display a form to set general search settings
  *
  * @package		backend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchSettings extends BackendBaseActionEdit
@@ -66,6 +66,8 @@ class BackendSearchSettings extends BackendBaseActionEdit
 
 		// add field for pagination
 		$this->frm->addDropdown('overview_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'overview_num_items', 20));
+		$this->frm->addDropdown('autocomplete_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'autocomplete_num_items', 20));
+		$this->frm->addDropdown('autosuggest_num_items', array_combine(range(1, 30), range(1, 30)), BackendModel::getModuleSetting($this->URL->getModule(), 'autosuggest_num_items', 20));
 
 		// modules that, no matter what, can not be searched
 		$disallowedModules = array('search');
@@ -138,6 +140,8 @@ class BackendSearchSettings extends BackendBaseActionEdit
 			{
 				// set our settings
 				BackendModel::setModuleSetting($this->URL->getModule(), 'overview_num_items', $this->frm->getField('overview_num_items')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'autocomplete_num_items', $this->frm->getField('autocomplete_num_items')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'autosuggest_num_items', $this->frm->getField('autosuggest_num_items')->getValue());
 
 				// module search
 				foreach((array) $this->modules as $module)

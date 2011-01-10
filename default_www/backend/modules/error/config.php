@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendErrorConfig
  * This is the configuration-object
  *
  * @package		backend
  * @subpackage	error
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 final class BackendErrorConfig extends BackendBaseConfig

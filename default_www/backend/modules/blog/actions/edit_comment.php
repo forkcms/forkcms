@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendBlogEditComment
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendBlogEditComment extends BackendBaseActionEdit
@@ -110,16 +109,18 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['id'] = $this->id;
+				$item['status'] = $this->record['status'];
 				$item['author'] = $this->frm->getField('author')->getValue();
 				$item['email'] = $this->frm->getField('email')->getValue();
 				$item['website'] = ($this->frm->getField('website')->isFilled()) ? $this->frm->getField('website')->getValue() : null;
 				$item['text'] = $this->frm->getField('text')->getValue();
 
 				// insert the item
-				BackendBlogModel::updateComment($this->id, $item);
+				BackendBlogModel::updateComment($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('comments') .'&report=editedComment&id='. $this->id .'#tab'. SpoonFilter::toCamelCase($this->record['status']));
+				$this->redirect(BackendModel::createURLForAction('comments') .'&report=edited-comment&id='. $item['id'] .'&highlight=row-'. $item['id'] .'#tab'. SpoonFilter::toCamelCase($item['status']));
 			}
 		}
 	}

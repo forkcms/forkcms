@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendUsersAdd
  * This is the add-action, it will display a form to create a new user
  *
  * @package		backend
  * @subpackage	users
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -61,6 +60,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages());
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), BackendAuthentication::getUser()->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), BackendAuthentication::getUser()->getSetting('time_format'));
+		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), BackendAuthentication::getUser()->getSetting('number_format', 'dot_nothing'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('active', true);
 		$this->frm->addCheckbox('api_access', false);
@@ -110,6 +110,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			$this->frm->getField('interface_language')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('date_format')->isFilled(BL::getError('FieldIsRequired'));
 			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('number_format')->isFilled(BL::getError('FieldIsRequired'));
 			if($this->frm->getField('password')->isFilled())
 			{
 				if($this->frm->getField('password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::getError('ValuesDontMatch'));
@@ -137,6 +138,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
 				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
 				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
+				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
 				$settings['password_key'] = uniqid();
 				$settings['avatar'] = 'no-avatar.gif';
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
@@ -149,7 +151,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				// save changes
 				$user['id'] = (int) BackendUsersModel::insert($user, $settings);
 
-				// does the user submitted an avatar
+				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// create new filename
@@ -172,7 +174,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. $settings['nickname'] .'&highlight=userid-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. $settings['nickname'] .'&highlight=row-'. $user['id']);
 			}
 		}
 	}

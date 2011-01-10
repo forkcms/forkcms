@@ -3,6 +3,7 @@
 	- {$blogCategory}: contains data about the category
 	- {$blogArticles}: contains an array with all posts, each element contains data about the post
 *}
+
 {option:blogArticles}
 	<div id="blogCategory">
 		{iteration:blogArticles}

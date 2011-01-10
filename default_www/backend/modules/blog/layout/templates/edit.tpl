@@ -136,24 +136,35 @@
 		</div>
 
 		<div id="tabRevisions">
-			<div class="tableHeading">
-				<div class="oneLiner">
-					<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
-					<abbr class="help">(?)</abbr>
-					<div class="tooltip" style="display: none;">
-						<p>{$msgHelpRevisions}</p>
+			{option:drafts}
+				<div class="tableHeading">
+					<div class="oneLiner">
+						<h3 class="oneLinerElement">{$lblDrafts|ucfirst}</h3>
+						<abbr class="help">(?)</abbr>
+						<div class="tooltip" style="display: none;">
+							<p>{$msgHelpDrafts}</p>
+						</div>
 					</div>
 				</div>
-			</div>
-			{option:drafts}{$drafts}{/option:drafts}
-			{option:!drafts}
-				{option:revisions}
+				<div class="datagridHolder">
+					{$drafts}
+				</div>
+			{/option:drafts}
+			{option:revisions}
+				<div class="tableHeading">
+					<div class="oneLiner">
+						<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+						<abbr class="help">(?)</abbr>
+						<div class="tooltip" style="display: none;">
+							<p>{$msgHelpRevisions}</p>
+						</div>
+					</div>
+				</div>
 				<div class="datagridHolder">
 					{$revisions}
 				</div>
-				{/option:revisions}
-				{option:!revisions}{$msgNoRevisions}{/option:!revisions}
-			{/option:!drafts}
+			{/option:revisions}
+			{option:!revisions}{$msgNoRevisions}{/option:!revisions}
 		</div>
 
 		<div id="tabSEO">
@@ -162,11 +173,12 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
 		<div class="buttonHolderRight">
-			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
+			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
 	</div>
 

@@ -1,14 +1,13 @@
 <?php
 
 /**
- * FrontendHeader
  * This class will be used to alter the head-part of the HTML-document that will be created by the frontend
  * Therefore it will handle meta-stuff (title, including JS, including CSS, ...)
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendHeader extends FrontendBaseObject
@@ -91,6 +90,13 @@ class FrontendHeader extends FrontendBaseObject
 		$this->addJavascript('/frontend/core/js/jquery/jquery.ui.js', false);
 		$this->addJavascript('/frontend/core/js/frontend.js', true);
 		$this->addJavascript('/frontend/core/js/utils.js', true);
+
+		// facebook admins given?
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			// add Facebook
+			$this->addJavascript('http://connect.facebook.net/'. strtolower(FRONTEND_LANGUAGE) .'_'. strtoupper(FRONTEND_LANGUAGE) .'/all.js#xfbml=1', false, false);
+		}
 	}
 
 
@@ -201,7 +207,7 @@ class FrontendHeader extends FrontendBaseObject
 				$themeJS = str_replace('frontend/modules', 'frontend/themes/'. $theme .'/modules', $file);
 
 				// does this js exist
-				if(file_exists(PATH_WWW . $themeJS)) $file = $themeJS;
+				if(SpoonFile::exists(PATH_WWW . $themeJS)) $file = $themeJS;
 			}
 		}
 
@@ -396,18 +402,18 @@ class FrontendHeader extends FrontendBaseObject
 		$content = preg_replace($pattern, 'url($3'. dirname($file) .'/$2$3)', $content);
 
 		// remove comments
-		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
-		$content = preg_replace('|([\t\w]{1,})\/\/.*|i', '', $content);
+		$content = preg_replace('/\/\*(.*)\*\//iUs', '', $content);
+		$content = preg_replace('/([\t\w]{1,})\/\/.*/i', '', $content);
 
 		// remove tabs
-		$content = preg_replace('|\t|i', '', $content);
+		$content = preg_replace('/\t/i', '', $content);
 
-		// remove spaces on end off line
-		$content = preg_replace('| \n|i', "\n", $content);
+		// remove spaces on end of line
+		$content = preg_replace('/ \n/i', "\n", $content);
 
 		// match stuff between brackets
 		$matches = array();
-		preg_match_all('| \{(.*)}|iUms', $content, $aMatches);
+		preg_match_all('/ \{(.*)}/iUms', $content, $aMatches);
 
 		// are there any matches
 		if(isset($matches[0]))
@@ -416,10 +422,10 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($matches[0] as $key => $match)
 			{
 				// remove faulty newlines
-				$tempContent = preg_replace('|\r|iU', '', $matches[1][$key]);
+				$tempContent = preg_replace('|/r/iU', '', $matches[1][$key]);
 
 				// removes real newlines
-				$tempContent = preg_replace('|\n|iU', ' ', $tempContent);
+				$tempContent = preg_replace('/\n/iU', ' ', $tempContent);
 
 				// replace the new block in the general content
 				$content = str_replace($matches[0][$key], '{'. $tempContent .'}', $content);
@@ -427,7 +433,7 @@ class FrontendHeader extends FrontendBaseObject
 		}
 
 		// remove faulty newlines
-		$content = preg_replace('|\r|iU', '', $content);
+		$content = preg_replace('/\r/iU', '', $content);
 
 		// remove empty lines
 		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
@@ -463,14 +469,14 @@ class FrontendHeader extends FrontendBaseObject
 		$content = SpoonFile::getContent(PATH_WWW . $file);
 
 		// remove comments
-		$content = preg_replace('|/\*(.*)\*/|iUs', '', $content);
-		$content = preg_replace('|([\t\w]{1,})\/\/.*|i', '', $content);
+		$content = preg_replace('/\/\*(.*)\*\//iUs', '', $content);
+		$content = preg_replace('/([\t\w]{1,})\/\/.*/i', '', $content);
 
 		// remove tabs
-		$content = preg_replace('|\t|i', ' ', $content);
+		$content = preg_replace('/\t/i', ' ', $content);
 
 		// remove faulty newlines
-		$content = preg_replace('|\r|iU', '', $content);
+		$content = preg_replace('/\r/iU', '', $content);
 
 		// remove empty lines
 		$content = preg_replace('/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/', "\n", $content);
@@ -535,7 +541,7 @@ class FrontendHeader extends FrontendBaseObject
 				// some files shouldn't be uncachable
 				if(in_array($file, $ignoreCache)) $javascriptFiles[] = array('file' => $file);
 
-				// make the file uncacheble
+				// make the file uncachable
 				else
 				{
 					// if the file is processed by PHP we don't want any caching

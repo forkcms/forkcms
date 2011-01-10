@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchAddSynonym extends BackendBaseActionAdd
@@ -68,7 +68,7 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
 			// validate field
 			$this->frm->getField('synonym')->isFilled(BL::getError('SynonymIsRequired'));
 			$this->frm->getField('term')->isFilled(BL::getError('TermIsRequired'));
-			if (BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue())) $this->frm->getField('term')->addError(BL::getError('TermExists'));
+			if(BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue())) $this->frm->getField('term')->addError(BL::getError('TermExists'));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -83,7 +83,7 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
 				$id = BackendSearchModel::insertSynonym($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=added-synonym&var='. urlencode($item['term']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=added-synonym&var='. urlencode($item['term']) .'&highlight=row-'. $id);
 			}
 		}
 	}
