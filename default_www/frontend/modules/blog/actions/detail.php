@@ -203,9 +203,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			$this->header->addMetaCustom($meta);
 		}
 
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
-
 		// add into breadcrumb
 		$this->breadcrumb->addElement($this->record['title']);
 
