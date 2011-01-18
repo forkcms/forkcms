@@ -351,9 +351,10 @@ class SpoonFormText extends SpoonFormInput
 	 * Checks this field for numbers 0-9 and an optional - (minus) sign (in the beginning only).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error		The error message to set.
+	 * @param	string[optional] $error			The error message to set.
+	 * @param	bool[optional] $allowCommas		Do you want to use commas as a decimal separator?
 	 */
-	public function isFloat($error = null)
+	public function isFloat($error = null, $allowCommas = false)
 	{
 		// filled
 		if($this->isFilled())
@@ -362,7 +363,7 @@ class SpoonFormText extends SpoonFormInput
 			$data = $this->getMethod(true);
 
 			// validate
-			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isFloat($data[$this->attributes['name']]))
+			if(!isset($data[$this->attributes['name']]) || !SpoonFilter::isFloat($data[$this->attributes['name']], $allowCommas))
 			{
 				if($error !== null) $this->setError($error);
 				return false;
