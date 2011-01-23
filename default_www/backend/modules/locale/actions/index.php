@@ -8,6 +8,7 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendLocaleIndex extends BackendBaseActionIndex
@@ -239,7 +240,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = $this->getParameter('language');
+		$this->filter['language'] = (isset($_GET['language'])) ? $this->getParameter('language') : BL::getWorkingLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
 		$this->filter['type'] = $this->getParameter('type');

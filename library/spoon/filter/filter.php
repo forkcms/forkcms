@@ -456,11 +456,16 @@ class SpoonFilter
 	 * Checks if the value is a valid floating point number.
 	 *
 	 * @return	bool			true if the value is a valid float, false if not.
-	 * @param	string $value	The value to validate.
+	 * @param	string $value					The value to validate.
+	 * @param	bool[optional] $allowCommas		Do you want to use commas as a decimal separator?
 	 */
-	public static function isFloat($value)
+	public static function isFloat($value, $allowCommas = false)
 	{
-		return ((string) (float) $value == (string) $value);
+		// no commas allowed
+		if(!$allowCommas) return ((string) (float) $value == (string) $value);
+
+		// replace commas with dots
+		return ((string) (float) str_replace(',', '.', (string) $value) == str_replace(',', '.', (string) $value));
 	}
 
 
