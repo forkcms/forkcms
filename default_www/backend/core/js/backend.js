@@ -3,7 +3,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
 
 /**
  * Backend related objects
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
@@ -1198,6 +1198,17 @@ jsBackend.tabs =
 			});
 		}
 
+		// if the browser supports history.pushState(), use it to update the URL with the fragment identifier, without triggering a scroll/jump
+		if(window.history && window.history.pushState)
+		{
+			$('.ui-tabs-nav a').click(function(e)
+			{
+				// an empty state object for now — either we implement a proper popstate handler ourselves, or wait for jQuery UI upstream
+				window.history.pushState({}, document.title, this.getAttribute('href'));
+			});
+		}
+
+		// select tab
 		if($('.tabSelect').length > 0)
 		{
 			$('.tabSelect').live('click', function(evt)
