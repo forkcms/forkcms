@@ -1208,7 +1208,7 @@ jsBackend.tabs =
 			});
 		}
 
-
+		// select tab
 		if($('.tabSelect').length > 0)
 		{
 			$('.tabSelect').live('click', function(evt)
