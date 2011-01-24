@@ -172,7 +172,9 @@ jsBackend.mailmotor.linkAccount =
 		var password = $('#password');
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
+			cache: false, 
 			url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language,
 			data: 'url='+ url.val() +'&username='+ username.val() +'&password='+ password.val(),
 			success: function(data, textStatus)

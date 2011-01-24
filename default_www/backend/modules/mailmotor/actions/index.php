@@ -51,7 +51,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 		$this->getCampaign();
 
 		// load datagrid
-		$this->loadDataGrids();
+		$this->loadDatagrids();
 
 		// parse page
 		$this->parse();
@@ -143,7 +143,7 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 *
 	 * @return	void
 	 */
-	private function loadDataGrids()
+	private function loadDatagrids()
 	{
 		// load sent mailings
 		$this->loadDatagridQueuedMailings();
