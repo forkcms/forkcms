@@ -5,6 +5,7 @@ if(!jsBackend) { var jsBackend = new Object(); }
  * Interaction for the pages module
  *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend.pages =
 {
@@ -39,6 +40,7 @@ jsBackend.pages =
  * All methods related to the controls (buttons, ...)
  * 
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
  */
 jsBackend.pages.extras =
 {
@@ -262,8 +264,10 @@ jsBackend.pages.extras =
 		// empty the extraForBlock
 		$('#extraForBlock').val('');
 
+		// block exists
 		if($('#templateBlock-'+ selectedBlock).length > 0)
 		{
+			// block/widget
 			if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
 			{
 				// set description
@@ -274,6 +278,7 @@ jsBackend.pages.extras =
 				$('#blockContentWidget-'+ selectedBlock).hide();
 				$('#blockContentHTML-'+ selectedBlock).hide();
 
+				// block
 				if(extrasById[selectedExtraId].type == 'block')
 				{
 					$('#blockContentModule-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
@@ -281,12 +286,12 @@ jsBackend.pages.extras =
 					if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule-'+ selectedBlock +' .oneLiner a').hide();
 					else 
 					{
-						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show()
-																				.attr('href', extrasById[selectedExtraId].data.url);						
+						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show().attr('href', extrasById[selectedExtraId].data.url);						
 					}
 					$('#blockContentModule-'+ selectedBlock).show();
 				}
 
+				// widget
 				if(extrasById[selectedExtraId].type == 'widget')
 				{
 					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
@@ -295,10 +300,15 @@ jsBackend.pages.extras =
 					$('#blockContentWidget-'+ selectedBlock).show();
 				}
 			}
+
+			// editor
 			else
 			{
 				// set description
 				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html('{$lblEditor|ucfirst}');
+
+				// remove extra id (this happens when an extra was deleted outside pages)
+				$('#blockExtraId'+ selectedBlock).val('');
 
 				// show and hide
 				$('#blockContentModule-'+ selectedBlock).hide();
