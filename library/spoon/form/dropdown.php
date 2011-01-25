@@ -330,7 +330,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 						// external data is not allowed
 						else
 						{
-							if(isset($this->values[$value]) && !in_array($value, $values)) $values[] = $value;
+							if((isset($this->values[$value]) || (isset($this->defaultElement[1]) && $this->defaultElement[1] == $value) && !in_array($value, $values))) $values[] = $value;
 						}
 					}
 				}
@@ -375,25 +375,55 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			// post/get data
 			$data = $this->getMethod(true);
 
-			// default element has value
-			if(isset($this->defaultElement[1]) && trim($this->defaultElement[1]) != '')
+			// single
+			if($this->single)
 			{
-				// no value set and not equal to the default element
-				if($this->getValue() === null && $data[$this->getName()] != $this->defaultElement[1])
+				// default element has value
+				if(isset($this->defaultElement[1]) && trim($this->defaultElement[1]) != '')
 				{
-					if($error !== null) $this->setError($error);
-					return false;
+					// no value set and not equal to the default element
+					if($this->getValue() === null && $data[$this->getName()] != $this->defaultElement[1])
+					{
+						if($error !== null) $this->setError($error);
+						return false;
+					}
+				}
+
+				// no default element or it has no value
+				else
+				{
+					// something went wrong
+					if($this->getValue() === null)
+					{
+						if($error !== null) $this->setError($error);
+						return false;
+					}
 				}
 			}
 
-			// no default element or it has no value
+			// multiple
 			else
 			{
-				// something went wrong
-				if($this->getValue() === null)
+				// default element has value
+				if(isset($this->defaultElement[1]) && trim($this->defaultElement[1]) != '')
 				{
-					if($error !== null) $this->setError($error);
-					return false;
+					// something went wrong
+					if(!count($this->getValue()))
+					{
+						if($error !== null) $this->setError($error);
+						return false;
+					}
+				}
+
+				// no default element or it has no value
+				else
+				{
+					// something went wrong
+					if(!count($this->getValue()))
+					{
+						if($error !== null) $this->setError($error);
+						return false;
+					}
 				}
 			}
 
@@ -402,6 +432,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		}
 
 		// not submitted
+		if($error !== null) $this->setError($error);
 		return false;
 	}
 
