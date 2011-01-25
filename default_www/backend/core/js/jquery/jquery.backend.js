@@ -1214,7 +1214,7 @@
 
 				// grab code
 				var code = evt.which;
-				
+
 				// enter or splitchar should add an element
 				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
 				{

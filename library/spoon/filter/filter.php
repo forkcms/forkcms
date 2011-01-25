@@ -455,7 +455,7 @@ class SpoonFilter
 	/**
 	 * Checks if the value is a valid floating point number.
 	 *
-	 * @return	bool			true if the value is a valid float, false if not.
+	 * @return	bool							true if the value is a valid float, false if not.
 	 * @param	string $value					The value to validate.
 	 * @param	bool[optional] $allowCommas		Do you want to use commas as a decimal separator?
 	 */
