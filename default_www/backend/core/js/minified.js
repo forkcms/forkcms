@@ -1204,7 +1204,1410 @@ g(this).tooltip().onBeforeShow(function(e,f){e=this.getTip();var b=this.getConf(
 a.left);b.position[1]="left";e.addClass(c[3])}if(f[0]||f[2])b.offset[0]*=-1;if(f[1]||f[3])b.offset[1]*=-1}e.css({visibility:"visible"}).hide()});h.onBeforeShow(function(){var e=this.getConf();this.getTip();setTimeout(function(){e.position=[d[0],d[1]];e.offset=[d[2],d[3]]},0)});h.onHide(function(){var e=this.getTip();e.removeClass(a.classNames)});ret=h});return a.api?ret:this}})(jQuery);
 
 
+/*!
+ * jQuery Fork stuff
+ */
+
+
+/**
+ * Meta-handler
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+(function($)
+{
+	$.fn.doMeta = function(options)
+	{
+		// define defaults
+		var defaults = {};
+
+		// extend options
+		var options = $.extend(defaults, options);
+
+		// loop all elements
+		return this.each(function()
+		{
+			// init var
+			var element = $(this);
+
+			// bind keypress
+			$(this).bind('keyup', calculateMeta);
+
+			// bind change on the checkboxes
+			if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+			{
+				$('#pageTitleOverwrite').change(function(evt)
+				{
+					if(!$(this).is(':checked'))
+					{
+						$('#pageTitle').val(element.val());
+					}
+				});
+			}
+
+			if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+			{
+				$('#navigationTitleOverwrite').change(function(evt)
+				{
+					if(!$(this).is(':checked'))
+					{
+						$('#navigationTitle').val(element.val());
+					}
+				});
+			}
+
+			$('#metaDescriptionOverwrite').change(function(evt)
+			{
+				if(!$(this).is(':checked'))
+				{
+					$('#metaDescription').val(element.val());
+				}
+			});
+
+			$('#metaKeywordsOverwrite').change(function(evt)
+			{
+				if(!$(this).is(':checked'))
+				{
+					$('#metaKeywords').val(element.val());
+				}
+			});
+
+			$('#urlOverwrite').change(function(evt)
+			{
+				if(!$(this).is(':checked'))
+				{
+					$('#url').val(utils.string.urlise(element.val()));
+					$('#generatedUrl').html(utils.string.urlise(element.val()));
+				}
+			});
+
+			// calculate meta
+			function calculateMeta(evt, element)
+			{
+				var title = (typeof element != 'undefined') ? element.val() : $(this).val();
+
+				if($('#pageTitle').length > 0 && $('#pageTitleOverwrite').length > 0)
+				{
+					if(!$('#pageTitleOverwrite').is(':checked'))
+					{
+						$('#pageTitle').val(title);
+					}
+				}
+
+				if($('#navigationTitle').length > 0 && $('#navigationTitleOverwrite').length > 0)
+				{
+					if(!$('#navigationTitleOverwrite').is(':checked'))
+					{
+						$('#navigationTitle').val(title);
+					}
+				}
+
+				if(!$('#metaDescriptionOverwrite').is(':checked'))
+				{
+					$('#metaDescription').val(title);
+				}
+
+				if(!$('#metaKeywordsOverwrite').is(':checked'))
+				{
+					$('#metaKeywords').val(title);
+				}
+
+				if(!$('#urlOverwrite').is(':checked'))
+				{
+					if(typeof pageID == 'undefined' || pageID != 1)
+					{
+						$('#url').val(utils.string.urlise(title));
+						$('#generatedUrl').html(utils.string.urlise(title));
+					}
+				}
+			}
+		});
+	};
+})(jQuery);
+
+
+/**
+ * Inline editing
+ *
+ * @author	Dave Lens <dave@netlash.com>
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+(function($)
+{
+	$.fn.inlineTextEdit = function(options)
+	{
+		// define defaults
+		var defaults =
+		{
+			saveUrl: null,
+			current: {},
+			extraParams: {},
+			inputClasses: 'inputText',
+			allowEmpty: false,
+			tooltip: 'click to edit'
+		};
+
+		// extend options
+		var options = $.extend(defaults, options);
+
+		// init var
+		var editing = false;
+
+		// loop all elements
+		return this.each(function()
+		{
+			// add wrapper and tooltip
+			$(this).html('<span>' + $(this).html() + '</span><span style="display: none;" class="inlineEditTooltip">' + options.tooltip + '</span>');
+
+			// grab element
+			var element = $($(this).find('span')[0]);
+
+			// bind events
+			element.bind('click focus', createElement);
+
+			$('.inlineEditTooltip').bind('click', createElement);
+
+			$(this).hover(
+				function()
+				{
+					$(this).addClass('inlineEditHover');
+					$($(this).find('span')[1]).show();
+				},
+				function()
+				{
+					$(this).removeClass('inlineEditHover');
+					$($(this).find('span')[1]).hide();
+				}
+			);
+
+			// create an element
+			function createElement()
+			{
+				// already editing
+				if(editing) return;
+
+				// set var
+				editing = true;
+
+				// grab current value
+				options.current.value = element.html();
+
+				// grab extra params
+				if($(this).parent().data('id') != '')
+				{
+					options.current.extraParams = eval('(' + $(this).parent().data('id') + ')');
+				}
+
+				// add class
+				element.addClass('inlineEditing');
+
+				// remove events
+				element.unbind('click').unbind('focus');
+
+				// set html
+				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value + '" />');
+
+				// store element
+				options.current.element = $(element.find('input')[0]);
+
+				// set focus
+				options.current.element.select();
+
+				// bind events
+				options.current.element.bind('blur', saveElement);
+				options.current.element.keyup(function(evt)
+				{
+					// handle escape
+					if(evt.which == 27)
+					{
+						// reset
+						options.current.element.val(options.current.value);
+
+						// destroy
+						destroyElement();
+					}
+
+					// save when someone presses enter
+					if(evt.which == 13) saveElement();
+				});
+			}
+
+
+			// destroy the element
+			function destroyElement()
+			{
+				// get parent
+				var parent = options.current.element.parent();
+
+				// set HTML and rebind events
+				parent.html(options.current.element.val()).bind('click focus', createElement);
+
+				// add class
+				parent.removeClass('inlineEditing');
+
+				// restore
+				editing = false;
+			}
+
+
+			// save the element
+			function saveElement()
+			{
+				// if the new value is empty and that isn't allowed, we restore the original value
+				if(!options.allowEmpty && options.current.element.val() == '')
+				{
+					options.current.element.val(options.current.value);
+				}
+
+				// is the value different from the original value
+				if(options.current.element.val() != options.current.value)
+				{
+					// add element to the params
+					options.current.extraParams['value'] = options.current.element.val();
+
+					// make the call
+					$.ajax(
+					{
+						url: options.saveUrl,
+						data: options.current.extraParams,
+						success: function(data, textStatus)
+						{
+							// destroy the element
+							destroyElement();
+						}
+					});
+				}
+
+				// destroy the element
+				else destroyElement();
+			}
+		});
+	};
+})(jQuery);
+
+
+/**
+ * key-value-box
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+(function($)
+{
+	$.fn.keyValueBox = function(options)
+	{
+		// define defaults
+		var defaults =
+		{
+			splitChar: ',',
+			secondSplitChar: '|',
+			emptyMessage: '',
+			errorMessage: 'Add the item before submitting',
+			addLabel: 'add',
+			removeLabel: 'delete',
+			autoCompleteUrl: '',
+			showIconOnly: true,
+			multiple: true
+		};
+
+		// extend options
+		var options = $.extend(defaults, options);
+
+		// loop all elements
+		return this.each(function()
+		{
+			// define some vars
+			var id = $(this).attr('id');
+			var elements = get();
+			var blockSubmit = false;
+			var timer = null;
+
+			// reset label, so it points to the correct item
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
+
+			// bind submit
+			$(this.form).submit(function(evt)
+			{
+				// hide before..
+				$('#errorMessage-'+ id).remove();
+				
+				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
+				{
+					// show warning
+					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					
+					// clear other timers
+					clearTimeout(timer);
+					
+					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
+					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
+				}
+				
+				return !blockSubmit;
+			});
+
+			// build replace html
+			var html = '<div class="tagsWrapper">' + '	<div class="oneLiner">' + '		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
+
+			if(options.showIconOnly) html += ' iconOnly';
+
+			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '	<div id="elementList-' + id + '" class="tagList">' + '	</div>' + '</div>';
+
+			// hide current element
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+
+
+			// prepend html
+			$(this).before(html);
+
+			// add elements list
+			build();
+
+			$('#addValue-' + id).autocomplete(
+			{
+				delay: 200,
+				minLength: 2,
+				source: function(request, response)
+				{
+					$.ajax(
+					{
+						url: options.autoCompleteUrl,
+						type: 'GET',
+						data: 'term=' + request.term,
+						success: function(data, textStatus)
+						{
+							// init var
+							var realData = [];
+
+							// alert the user
+							if(data.code != 200 && jsBackend.debug)
+							{
+								alert(data.message);
+							}
+
+							if(data.code == 200)
+							{
+								for(var i in data.data)
+								{
+									realData.push(
+									{
+										label: data.data[i].name,
+										value: data.data[i].value + options.secondSplitChar + data.data[i].name
+									});
+								}
+							}
+
+							// set response
+							response(realData);
+						}
+					});
+				}
+			});
+
+			// bind keypress on value-field
+			$('#addValue-' + id).bind('keyup', function(evt)
+			{
+				blockSubmit = true;
+
+				// grab code
+				var code = evt.which;
+
+				// remove error message
+				$('#errorMessage-'+ id).remove();
+				
+				// enter of splitchar should add an element
+				if(code == 13 || String.fromCharCode(code) == options.splitChar)
+				{
+					// hide before..
+					$('#errorMessage-'+ id).remove();
+					
+					// prevent default behaviour
+					evt.preventDefault();
+					evt.stopPropagation();
+
+					// add element
+					add();
+				}
+
+				// disable or enable button
+				if($(this).val().replace(/^\s+|\s+$/g, '') == '')
+				{
+					blockSubmit = false;
+					$('#addButton-' + id).addClass('disabledButton');
+				}
+				else $('#addButton-' + id).removeClass('disabledButton');
+			});
+
+			// bind click on add-button
+			$('#addButton-' + id).bind('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// add element
+				add();
+			});
+
+			// bind click on delete-button
+			$('.deleteButton-' + id).live('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// remove element
+				remove($(this).attr('rel'));
+			});
+
+			// add an element
+			function add()
+			{
+				blockSubmit = false;
+
+				// init some vars
+				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '');
+				var inElements = false;
+
+				// a value should contain the split char
+				if(value.split(options.secondSplitChar).length == 1) value = '';
+				
+				// if multiple arguments aren't allowed, clear before adding
+				if(!options.multiple) elements = [];
+
+				// reset box
+				$('#addValue-' + id).val('').focus();
+				$('#addButton-' + id).addClass('disabledButton');
+
+				// remove error message
+				$('#errorMessage-'+ id).remove();
+
+				// only add new element if it isn't empty
+				if(value != '')
+				{
+					// already in elements?
+					for(var i in elements)
+					{
+						if(value == elements[i]) inElements = true;
+					}
+
+					// only add if not already in elements
+					if(!inElements)
+					{
+						// add elements
+						elements.push(value);
+
+						// set new value
+						$('#' + id).val(elements.join(options.splitChar));
+
+						// rebuild element list
+						build();
+					}
+				}
+			}
+
+			// build the list
+			function build()
+			{
+				// init var
+				var html = '';
+
+				// no items and message given?
+				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+
+				// items available
+				else
+				{
+					// start html
+					html = '<ul>';
+
+					// loop elements
+					for(var i in elements)
+					{
+						var humanValue = elements[i].split(options.secondSplitChar)[1];
+						
+						html += '	<li><span><strong>' + humanValue + '</strong>' + '		<a href="#" class="deleteButton-' + id + '" rel="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + '	</li>';
+					}
+
+					// end html
+					html += '</ul>';
+				}
+
+				// set html
+				$('#elementList-' + id).html(html);
+			}
+
+
+			// get all items
+			function get()
+			{
+				// get chunks
+				var chunks = $('#' + id).val().split(options.splitChar);
+				var elements = [];
+
+				// loop elements and trim them from spaces
+				for(var i in chunks)
+				{
+					value = chunks[i].replace(/^\s+|\s+$/g, '');
+					if(value != '') elements.push(value);
+				}
+
+				return elements;
+			}
+
+
+			// remove an item
+			function remove(value)
+			{
+				// get index for element
+				var index = $.inArray(value, elements);
+
+				// remove element
+				if(index > -1) elements.splice(index, 1);
+
+				// set new value
+				$('#' + id).val(elements.join(options.splitChar));
+
+				// rebuild element list
+				build();
+			}
+		});
+	};
+})(jQuery);
+
+
+/**
+ * Tag-box
+ *
+ * @author	Tijs Verkoyen <tijs@netlash.com>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ */
+(function($)
+{
+	$.fn.tagBox = function(options)
+	{
+		// define defaults
+		var defaults =
+		{
+			splitChar: ',',
+			emptyMessage: '',
+			errorMessage: 'Add the tag before submitting',
+			addLabel: 'add',
+			removeLabel: 'delete',
+			autoCompleteUrl: '',
+			canAddNew: false,
+			showIconOnly: true,
+			multiple: true
+		};
+
+		// extend options
+		var options = $.extend(defaults, options);
+
+		// loop all elements
+		return this.each(function()
+		{
+			// define some vars
+			var id = $(this).attr('id');
+			var elements = get();
+			var blockSubmit = false;
+			var timer = null;
+
+			// reset label, so it points to the correct item
+			$('label[for="' + id + '"]').attr('for', 'addValue-' + id);
+
+			// bind submit
+			$(this.form).submit(function(evt)
+			{
+				// hide before..
+				$('#errorMessage-'+ id).remove();
+				
+				if(blockSubmit && $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '') != '')
+				{
+					// show warning
+					$($('#addValue-'+ id).parents('.oneLiner')).append('<span style="display: none;" id="errorMessage-'+ id +'" class="formError">'+ options.errorMessage +'</span>');
+					
+					// clear other timers
+					clearTimeout(timer);
+					
+					// we need the timeout otherwise the error is show every time the user presses enter in the tagbox
+					timer = setTimeout(function() { $('#errorMessage-'+ id).show(); }, 200);
+				}
+				
+				return !blockSubmit;
+			});
+
+			// build replace html
+			var html = 	'<div class="tagsWrapper">' + 
+						'	<div class="oneLiner">' + 
+						'		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + 
+						'		<div class="buttonHolder">' + 
+						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
+
+			if(options.showIconOnly) html += ' iconOnly';
+
+			html += 	'">' + 
+						'				<span>' + options.addLabel + '</span>' + 
+						'			</a>' + 
+						'		</div>' + 
+						'	</div>' + 
+						'	<div id="elementList-' + id + '" class="tagList">' + 
+						'	</div>' + 
+						'</div>';
+
+			// hide current element
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+
+			// prepend html
+			$(this).before(html);
+
+			// add elements list
+			build();
+
+			// bind autocomplete if needed
+			if(options.autoCompleteUrl != '')
+			{
+				$('#addValue-' + id).autocomplete(
+				{
+					delay: 200,
+					minLength: 2,
+					source: function(request, response)
+					{
+						$.ajax(
+						{
+							url: options.autoCompleteUrl,
+							type: 'GET',
+							data: 'term=' + request.term,
+							success: function(data, textStatus)
+							{
+								// init var
+								var realData = [];
+
+								// alert the user
+								if(data.code != 200 && jsBackend.debug)
+								{
+									alert(data.message);
+								}
+
+								if(data.code == 200)
+								{
+									for(var i in data.data)
+									{
+										realData.push(
+										{
+											label: data.data[i].name,
+											value: data.data[i].name
+										});
+									}
+								}
+
+								// set response
+								response(realData);
+							}
+						});
+					}
+				});
+			}
+
+			// bind keypress on value-field
+			$('#addValue-' + id).bind('keyup', function(evt)
+			{
+				blockSubmit = true;
+
+				// grab code
+				var code = evt.which;
+
+				// remove error message
+				$('#errorMessage-'+ id).remove();
+				
+				// enter of splitchar should add an element
+				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
+				{
+					// hide before..
+					$('#errorMessage-'+ id).remove();
+					
+					// prevent default behaviour
+					evt.preventDefault();
+					evt.stopPropagation();
+
+					// add element
+					add();
+				}
+
+				// disable or enable button
+				if($(this).val().replace(/^\s+|\s+$/g, '') == '')
+				{
+					blockSubmit = false;
+					$('#addButton-' + id).addClass('disabledButton');
+				}
+				else $('#addButton-' + id).removeClass('disabledButton');
+			});
+
+			// bind click on add-button
+			$('#addButton-' + id).bind('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// add element
+				add();
+			});
+
+			// bind click on delete-button
+			$('.deleteButton-' + id).live('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// remove element
+				remove($(this).data('id'));
+			});
+
+			// add an element
+			function add()
+			{
+				blockSubmit = false;
+
+				// init some vars
+				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
+				var inElements = false;
+
+				// if multiple arguments aren't allowed, clear before adding
+				if(!options.multiple) elements = [];
+
+				// reset box
+				$('#addValue-' + id).val('').focus();
+				$('#addButton-' + id).addClass('disabledButton');
+
+				// remove error message
+				$('#errorMessage-'+ id).remove();
+
+				// only add new element if it isn't empty
+				if(value != '')
+				{
+					// already in elements?
+					for(var i in elements)
+					{
+						if(value == elements[i]) inElements = true;
+					}
+
+					// only add if not already in elements
+					if(!inElements)
+					{
+						// add elements
+						elements.push(value);
+
+						// set new value
+						$('#' + id).val(elements.join(options.splitChar));
+
+						// rebuild element list
+						build();
+					}
+				}
+			}
+
+			// build the list
+			function build()
+			{
+				// init var
+				var html = '';
+
+				// no items and message given?
+				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+
+				// items available
+				else
+				{
+					// start html
+					html = '<ul>';
+
+					// loop elements
+					for(var i in elements)
+					{
+						html += '	<li><span><strong>' + elements[i] + '</strong>' + 
+								'		<a href="#" class="deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '">' + options.removeLabel + '</a></span>' + 
+								'	</li>';
+					}
+
+					// end html
+					html += '</ul>';
+				}
+
+				// set html
+				$('#elementList-' + id).html(html);
+			}
+
+
+			// get all items
+			function get()
+			{
+				// get chunks
+				var chunks = $('#' + id).val().split(options.splitChar);
+				var elements = [];
+
+				// loop elements and trim them from spaces
+				for(var i in chunks)
+				{
+					value = chunks[i].replace(/^\s+|\s+$/g, '');
+					if(value != '') elements.push(value);
+				}
+
+				return elements;
+			}
+
+
+			// remove an item
+			function remove(value)
+			{
+				// get index for element
+				var index = $.inArray(value, elements);
+
+				// remove element
+				if(index > -1) elements.splice(index, 1);
+
+				// set new value
+				$('#' + id).val(elements.join(options.splitChar));
+
+				// rebuild element list
+				build();
+			}
+		});
+	};
+})(jQuery);
+
+
+/**
+ * Multiple select box
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
+(function($)
+{
+	$.fn.multipleSelectbox = function(options)
+	{
+		// define defaults
+		var defaults =
+		{
+			splitChar: ',',
+			emptyMessage: '',
+			addLabel: 'add',
+			removeLabel: 'delete',
+			showIconOnly: false,
+			afterBuild: null
+		};
+
+		// extend options
+		var options = $.extend(defaults, options);
+
+		// loop all elements
+		return this.each(function()
+		{
+			// define some vars
+			var id = $(this).attr('id');
+			var possibleOptions = $(this).find('option');
+			var elements = get();
+			var blockSubmit = false;
+			
+			// bind submit
+			$(this.form).submit(function()
+			{
+				return !blockSubmit;
+			});
+
+			// remove previous HTML
+			if($('#elementList-' + id).length > 0)
+			{
+				$('#elementList-' + id).parent('.multipleSelectWrapper').remove();
+			}
+
+			// build replace html
+			var html =	'<div class="multipleSelectWrapper">' + 
+						'	<div id="elementList-' + id + '" class="multipleSelectList">' + '	</div>' + 
+						'	<div class="oneLiner">' + 
+						'		<p>' +
+						'			<select class="select dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '">';
+			
+			
+			for(var i = 0; i < possibleOptions.length; i++)
+			{
+				html +=	'				<option value="' + $(possibleOptions[i]).attr('value') + '">' + $(possibleOptions[i]).html() + '</option>';
+			}
+			
+			html +=		'			</select>' +
+						'		</p>' + 
+						'		<div class="buttonHolder">' + 
+						'			<a href="#" id="addButton-' + id + '" class="button icon iconAdd';
+
+			if(options.showIconOnly) html += ' iconOnly';
+
+			html += 	'">' + 
+						'				<span>' + options.addLabel + '</span>' + 
+						'			</a>' + 
+						'		</div>' + 
+						'	</div>' + 
+						'</div>';
+
+			// hide current element
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+
+			// prepend html
+			$(this).before(html);
+
+			// add elements list
+			build();
+
+			// bind click on add-button
+			$('#addButton-' + id).bind('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// add element
+				add();
+			});
+
+			// bind click on delete-button
+			$('.deleteButton-' + id).live('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// remove element
+				remove($(this).data('id'));
+			});
+
+			// add an element
+			function add()
+			{
+				blockSubmit = false;
+
+				// init some vars
+				var value = $('#addValue-' + id).val();
+				var inElements = false;
+
+				// reset box
+				$('#addValue-' + id).focus();
+
+				// only add new element if it isn't empty
+				if(value != null && value != '')
+				{
+					// already in elements?
+					for(var i in elements)
+					{
+						if(value == elements[i]) inElements = true;
+					}
+
+					// only add if not already in elements
+					if(!inElements)
+					{
+						// add elements
+						elements.push(value);
+
+						// set new value
+						$('#' + id).val(elements.join(options.splitChar));
+
+						// rebuild element list
+						build();
+					}
+				}
+			}
+
+
+			// build the list
+			function build()
+			{
+				// init var
+				var html = '';
+
+				// no items and message given?
+				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+
+				// items available
+				else
+				{
+					// start html
+					html = '<ul>';
+
+					// loop elements
+					for(var i in elements)
+					{
+						html += '	<li class="oneLiner">' + 
+								'		<p><span style="width: '+ $('#' + id).width() +'px">' + $('#' + id + ' option[value=' + elements[i] + ']').html() + '</span></p>' + 
+								'		<div class="buttonHolder">' + 
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
+								'		</div>' + 
+								'	</li>';
+
+						// remove from dropdown
+						$('#addValue-' + id + ' option[value=' + elements[i] + ']').attr('disabled', 'disabled');
+					}
+
+					// end html
+					html += '</ul>';
+				}
+
+				// set html
+				$('#elementList-' + id).html(html);
+
+				// disabled?
+				$('#addButton-' + id).removeClass('disabledButton');
+				$('#addValue-' + id).removeClass('disabled').attr('disabled', '');
+				if($('#addValue-' + id + ' option:enabled').length == 0) 
+				{
+					$('#addButton-' + id).addClass('disabledButton');
+					$('#addValue-' + id).addClass('disabled').attr('disabled', 'disabled');
+				}
+				$('#addValue-' + id).val($('#addValue-'+ id +' option:enabled:first').attr('value'));
+
+				// call callback if specified
+				if(options.afterBuild != null) { options.afterBuild(id); }
+			}
+
+
+			// get all items
+			function get()
+			{
+				// get chunks
+				var chunks = $('#' + id).val();
+				var elements = [];
+
+				// loop elements and trim them from spaces
+				for(var i in chunks)
+				{
+					value = chunks[i].replace(/^\s+|\s+$/g, '');
+					if(value != '') elements.push(value);
+				}
+
+				return elements;
+			}
+
+
+			// remove an item
+			function remove(value)
+			{
+				// get index for element
+				var index = $.inArray(value, elements);
+
+				// remove element
+				if(index > -1) elements.splice(index, 1);
+
+				// set new value
+				$('#' + id).val(elements.join(options.splitChar));
+				
+				$('#addValue-' + id + ' option[value=' + value + ']').attr('disabled', '');
+
+				// rebuild element list
+				build();
+			}
+		});
+	};
+})(jQuery);
+
+
+/**
+ * Multiple text box
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ */
+(function($)
+{
+	$.fn.multipleTextbox = function(options)
+	{
+		// define defaults
+		var defaults = {
+			splitChar: ',',
+			emptyMessage: '',
+			addLabel: 'add',
+			removeLabel: 'delete',
+			autoCompleteUrl: '',
+			canAddNew: false,
+			showIconOnly: false,
+			afterBuild: null
+		};
+
+		// extend options
+		var options = $.extend(defaults, options);
+
+		// loop all elements
+		return this.each(function()
+		{
+			// define some vars
+			var id = $(this).attr('id');
+			var elements = get();
+			var blockSubmit = false;
+
+			// bind submit
+			$(this.form).submit(function()
+			{
+				return !blockSubmit;
+			});
+
+			// remove previous HTML
+			if($('#elementList-' + id).length > 0)
+			{
+				$('#elementList-' + id).parent('.multipleTextWrapper').remove();
+			}
+
+			// build replace html
+			var html = '<div class="multipleTextWrapper">' + '	<div id="elementList-' + id + '" class="multipleTextList">' + '	</div>' + '	<div class="oneLiner">' + '		<p><input class="inputText dontSubmit" id="addValue-' + id + '" name="addValue-' + id + '" type="text" /></p>' + '		<div class="buttonHolder">' + '			<a href="#" id="addButton-' + id + '" class="button icon iconAdd disabledButton';
+
+			if(options.showIconOnly) html += ' iconOnly';
+
+			html += '">' + '				<span>' + options.addLabel + '</span>' + '			</a>' + '		</div>' + '	</div>' + '</div>';
+
+			// hide current element
+			$(this).css('visibility', 'hidden').css('position', 'absolute').css('top', '-9000px').css('left', '-9000px').attr('tabindex', '-1');
+
+			// prepend html
+			$(this).before(html);
+
+			// add elements list
+			build();
+
+			// bind autocomplete if needed
+			if(options.autoCompleteUrl != '')
+			{
+				$('#addValue-' + id).autocomplete(
+				{
+					delay: 200,
+					minLength: 2,
+					source: function(request, response)
+					{
+						$.ajax(
+						{
+							url: options.autoCompleteUrl,
+							type: 'GET',
+							data: 'term=' + request.term,
+							success: function(data, textStatus)
+							{
+								// init var
+								var realData = [];
+
+								// alert the user
+								if(data.code != 200 && jsBackend.debug)
+								{
+									alert(data.message);
+								}
+
+								if(data.code == 200)
+								{
+									for(var i in data.data)
+									{
+										realData.push(
+										{
+											label: data.data[i].name,
+											value: data.data[i].name
+										});
+									}
+								}
+
+								// set response
+								response(realData);
+							}
+						});
+					}
+				});
+			}
+
+			// bind keypress on value-field
+			$('#addValue-' + id).bind('keyup', function(evt)
+			{
+				// block form submit
+				blockSubmit = true;
+
+				// grab code
+				var code = evt.which;
+
+				// enter or splitchar should add an element
+				if(code == 13 || $(this).val().indexOf(options.splitChar) != -1)
+				{
+					// prevent default behaviour
+					evt.preventDefault();
+					evt.stopPropagation();
+
+					// add element
+					add();
+				}
+
+				// disable or enable button
+				if($(this).val().replace(/^\s+|\s+$/g, '') == '')
+				{
+					blockSubmit = false;
+					$('#addButton-' + id).addClass('disabledButton');
+				}
+
+				else $('#addButton-' + id).removeClass('disabledButton');
+			});
+
+			// unblock the submit event when we lose focus
+			$('#addValue-' + id).bind('blur', function(evt) { blockSubmit = false; });
+			
+			// bind click on add-button
+			$('#addButton-' + id).bind('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// add element
+				add();
+			});
+
+			// bind click on delete-button
+			$('.deleteButton-' + id).live('click', function(evt)
+			{
+				// dont submit
+				evt.preventDefault();
+				evt.stopPropagation();
+
+				// remove element
+				remove($(this).data('id'));
+			});
+
+			// bind keypress on inputfields (we need to rebuild so new values are saved)
+			$('.inputField-' + id).live('keyup', function(evt)
+			{
+				// clear elements
+				elements = [];
+
+				// loop
+				$('.inputField-' + id).each(function()
+				{
+					// cleanup
+					var value = $(this).val().replace(/^\s+|\s+$/g, '');
+
+					// empty elements shouldn't be added
+					if(value == '')
+					{
+						$(this).parent().parent().remove();
+					}
+
+					// add
+					else elements.push(value);
+				});
+
+				// set new value
+				$('#' + id).val(elements.join(options.splitChar));
+			});
+
+			// add an element
+			function add()
+			{
+				// unblock form submit
+				blockSubmit = false;
+
+				// init some vars
+				var value = $('#addValue-' + id).val().replace(/^\s+|\s+$/g, '').replace(options.splitChar, '');
+				var inElements = false;
+
+				// reset box
+				$('#addValue-' + id).val('').focus();
+				$('#addButton-' + id).addClass('disabledButton');
+
+				// only add new element if it isn't empty
+				if(value != '')
+				{
+					// already in elements?
+					for(var i in elements)
+					{
+						if(value == elements[i]) inElements = true;
+					}
+
+					// only add if not already in elements
+					if(!inElements)
+					{
+						// add elements
+						elements.push(value);
+
+						// set new value
+						$('#' + id).val(elements.join(options.splitChar));
+
+						// rebuild element list
+						build();
+					}
+				}
+			}
+
+
+			// build the list
+			function build()
+			{
+				// init var
+				var html = '';
+
+				// no items and message given?
+				if(elements.length == 0 && options.emptyMessage != '') html = '<p class="helpTxt">' + options.emptyMessage + '</p>';
+
+				// items available
+				else
+				{
+					// start html
+					html = '<ul>';
+
+					// loop elements
+					for(var i in elements)
+					{
+						html += '	<li class="oneLiner">' + 
+								'		<p><input class="inputText dontSubmit inputField-' + id + '" name="inputField-' + id + '[]" type="text" value="' + elements[i] + '" /></p>' + 
+								'		<div class="buttonHolder">' + 
+								'			<a href="#" class="button icon iconDelete iconOnly deleteButton-' + id + '" data-id="' + elements[i] + '" title="' + options.removeLabel + '"><span>' + options.removeLabel + '</span></a>' + 
+								'		</div>' + 
+								'	</li>';
+					}
+
+					// end html
+					html += '</ul>';
+				}
+
+				// set html
+				$('#elementList-' + id).html(html);
+				
+				// call callback if specified
+				if(options.afterBuild != null) { options.afterBuild(id); }
+			}
+
+
+			// get all items
+			function get()
+			{
+				// get chunks
+				var chunks = $('#' + id).val().split(options.splitChar);
+				var elements = [];
+
+				// loop elements and trim them from spaces
+				for(var i in chunks)
+				{
+					value = chunks[i].replace(/^\s+|\s+$/g, '');
+					if(value != '') elements.push(value);
+				}
+
+				return elements;
+			}
+
+
+			// remove an item
+			function remove(value)
+			{
+				// get index for element
+				var index = $.inArray(value, elements);
+
+				// remove element
+				if(index > -1) elements.splice(index, 1);
+
+				// set new value
+				$('#' + id).val(elements.join(options.splitChar));
+
+				// rebuild element list
+				build();
+			}
+		});
+	};
+})(jQuery);
+
 /*
  * jQuery Fork stuff
  */
-(function($){$.fn.doMeta=function(options){var defaults={};var options=$.extend(defaults,options);return this.each(function(){var element=$(this);$(this).bind("keyup",calculateMeta);if($("#pageTitle").length>0&&$("#pageTitleOverwrite").length>0){$("#pageTitleOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#pageTitle").val(element.val());}});}if($("#navigationTitle").length>0&&$("#navigationTitleOverwrite").length>0){$("#navigationTitleOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#navigationTitle").val(element.val());}});}$("#metaDescriptionOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#metaDescription").val(element.val());}});$("#metaKeywordsOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#metaKeywords").val(element.val());}});$("#urlOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#url").val(utils.string.urlise(element.val()));$("#generatedUrl").html(utils.string.urlise(element.val()));}});function calculateMeta(evt,element){var title=(typeof element!="undefined")?element.val():$(this).val();if($("#pageTitle").length>0&&$("#pageTitleOverwrite").length>0){if(!$("#pageTitleOverwrite").is(":checked")){$("#pageTitle").val(title);}}if($("#navigationTitle").length>0&&$("#navigationTitleOverwrite").length>0){if(!$("#navigationTitleOverwrite").is(":checked")){$("#navigationTitle").val(title);}}if(!$("#metaDescriptionOverwrite").is(":checked")){$("#metaDescription").val(title);}if(!$("#metaKeywordsOverwrite").is(":checked")){$("#metaKeywords").val(title);}if(!$("#urlOverwrite").is(":checked")){if(typeof pageID=="undefined"||pageID!=1){$("#url").val(utils.string.urlise(title));$("#generatedUrl").html(utils.string.urlise(title));}}}});};})(jQuery);(function($){$.fn.inlineTextEdit=function(options){var defaults={saveUrl:null,current:{},extraParams:{},inputClasses:"inputText",allowEmpty:false,tooltip:"click to edit"};var options=$.extend(defaults,options);var editing=false;return this.each(function(){$(this).html("<span>"+$(this).html()+'</span><span style="display: none;" class="inlineEditTooltip">'+options.tooltip+"</span>");var element=$($(this).find("span")[0]);element.bind("click focus",createElement);$(".inlineEditTooltip").bind("click",createElement);$(this).hover(function(){$(this).addClass("inlineEditHover");$($(this).find("span")[1]).show();},function(){$(this).removeClass("inlineEditHover");$($(this).find("span")[1]).hide();});function createElement(){if(editing){return;}editing=true;options.current.value=element.html();if($(this).parent().attr("rel")!=""){options.current.extraParams=eval("("+$(this).parent().attr("rel")+")");}element.addClass("inlineEditing");element.unbind("click").unbind("focus");element.html('<input type="text" class="'+options.inputClasses+'" value="'+options.current.value+'" />');options.current.element=$(element.find("input")[0]);options.current.element.select();options.current.element.bind("blur",saveElement);options.current.element.keyup(function(evt){if(evt.which==27){options.current.element.val(options.current.value);destroyElement();}if(evt.which==13){saveElement();}});}function destroyElement(){var parent=options.current.element.parent();parent.html(options.current.element.val()).bind("click focus",createElement);parent.removeClass("inlineEditing");editing=false;}function saveElement(){if(!options.allowEmpty&&options.current.element.val()==""){options.current.element.val(options.current.value);}if(options.current.element.val()!=options.current.value){options.current.extraParams.value=options.current.element.val();$.ajax({url:options.saveUrl,data:options.current.extraParams,success:function(data,textStatus){destroyElement();}});}else{destroyElement();}}});};})(jQuery);(function($){$.fn.tagBox=function(options){var defaults={splitChar:",",emptyMessage:"",errorMessage:"Add the tag before submitting",addLabel:"add",removeLabel:"delete",autoCompleteUrl:"",canAddNew:false,showIconOnly:true,multiple:true};var options=$.extend(defaults,options);return this.each(function(){var id=$(this).attr("id");var elements=get();var blockSubmit=false;var timer=null;$('label[for="'+id+'"]').attr("for","addValue-"+id);$(this.form).submit(function(evt){$("#errorMessage-"+id).remove();if(blockSubmit&&$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"")!=""){$($("#addValue-"+id).parents(".oneLiner")).append('<span style="display: none;" id="errorMessage-'+id+'" class="formError">'+options.errorMessage+"</span>");clearTimeout(timer);timer=setTimeout(function(){$("#errorMessage-"+id).show();},200);}return !blockSubmit;});var html='<div class="tagsWrapper">	<div class="oneLiner">		<p><input class="inputText dontSubmit" id="addValue-'+id+'" name="addValue-'+id+'" type="text" /></p>		<div class="buttonHolder">			<a href="#" id="addButton-'+id+'" class="button icon iconAdd disabledButton';if(options.showIconOnly){html+=" iconOnly";}html+='">				<span>'+options.addLabel+'</span>			</a>		</div>	</div>	<div id="elementList-'+id+'" class="tagList">	</div></div>';$(this).css("visibility","hidden").css("position","absolute").css("top","-9000px").css("left","-9000px").attr("tabindex","-1");$(this).before(html);build();if(options.autoCompleteUrl!=""){$("#addValue-"+id).autocomplete({delay:200,minLength:2,source:function(request,response){$.ajax({url:options.autoCompleteUrl,type:"GET",data:"term="+request.term,success:function(data,textStatus){var realData=[];if(data.code!=200&&jsBackend.debug){alert(data.message);}if(data.code==200){for(var i in data.data){realData.push({label:data.data[i].name,value:data.data[i].name});}}response(realData);}});}});}$("#addValue-"+id).bind("keyup",function(evt){blockSubmit=true;var code=evt.which;$("#errorMessage-"+id).remove();if(code==13||String.fromCharCode(code)==options.splitChar){$("#errorMessage-"+id).remove();evt.preventDefault();evt.stopPropagation();add();}if($(this).val().replace(/^\s+|\s+$/g,"")==""){blockSubmit=false;$("#addButton-"+id).addClass("disabledButton");}else{$("#addButton-"+id).removeClass("disabledButton");}});$("#addButton-"+id).bind("click",function(evt){evt.preventDefault();evt.stopPropagation();add();});$(".deleteButton-"+id).live("click",function(evt){evt.preventDefault();evt.stopPropagation();remove($(this).attr("rel"));});function add(){blockSubmit=false;var value=$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"");var inElements=false;if(!options.multiple){elements=[];}$("#addValue-"+id).val("").focus();$("#addButton-"+id).addClass("disabledButton");$("#errorMessage-"+id).remove();if(value!=""){for(var i in elements){if(value==elements[i]){inElements=true;}}if(!inElements){elements.push(value);$("#"+id).val(elements.join(options.splitChar));build();}}}function build(){var html="";if(elements.length==0&&options.emptyMessage!=""){html='<p class="helpTxt">'+options.emptyMessage+"</p>";}else{html="<ul>";for(var i in elements){html+="	<li><span><strong>"+elements[i]+'</strong>		<a href="#" class="deleteButton-'+id+'" rel="'+elements[i]+'" title="'+options.removeLabel+'">'+options.removeLabel+"</a></span>	</li>";}html+="</ul>";}$("#elementList-"+id).html(html);}function get(){var chunks=$("#"+id).val().split(options.splitChar);var elements=[];for(var i in chunks){value=chunks[i].replace(/^\s+|\s+$/g,"");if(value!=""){elements.push(value);}}return elements;}function remove(value){var index=$.inArray(value,elements);if(index>-1){elements.splice(index,1);}$("#"+id).val(elements.join(options.splitChar));build();}});};})(jQuery);(function($){$.fn.multipleSelectbox=function(options){var defaults={splitChar:",",emptyMessage:"",addLabel:"add",removeLabel:"delete",showIconOnly:false,afterBuild:null};var options=$.extend(defaults,options);return this.each(function(){var id=$(this).attr("id");var possibleOptions=$(this).find("option");var elements=get();var blockSubmit=false;$(this.form).submit(function(){return !blockSubmit;});if($("#elementList-"+id).length>0){$("#elementList-"+id).parent(".multipleSelectWrapper").remove();}var html='<div class="multipleSelectWrapper">	<div id="elementList-'+id+'" class="multipleSelectList">	</div>	<div class="oneLiner">		<p>			<select class="select dontSubmit" id="addValue-'+id+'" name="addValue-'+id+'">';for(var i=0;i<possibleOptions.length;i++){html+='				<option value="'+$(possibleOptions[i]).attr("value")+'">'+$(possibleOptions[i]).html()+"</option>";}html+='			</select>		</p>		<div class="buttonHolder">			<a href="#" id="addButton-'+id+'" class="button icon iconAdd';if(options.showIconOnly){html+=" iconOnly";}html+='">				<span>'+options.addLabel+"</span>			</a>		</div>	</div></div>";$(this).css("visibility","hidden").css("position","absolute").css("top","-9000px").css("left","-9000px").attr("tabindex","-1");$(this).before(html);build();$("#addButton-"+id).bind("click",function(evt){evt.preventDefault();evt.stopPropagation();add();});$(".deleteButton-"+id).live("click",function(evt){evt.preventDefault();evt.stopPropagation();remove($(this).attr("rel"));});function add(){blockSubmit=false;var value=$("#addValue-"+id).val();var inElements=false;$("#addValue-"+id).focus();if(value!=null&&value!=""){for(var i in elements){if(value==elements[i]){inElements=true;}}if(!inElements){elements.push(value);$("#"+id).val(elements.join(options.splitChar));build();}}}function build(){var html="";if(elements.length==0&&options.emptyMessage!=""){html='<p class="helpTxt">'+options.emptyMessage+"</p>";}else{html="<ul>";for(var i in elements){html+='	<li class="oneLiner">		<p><span style="width: '+$("#"+id).width()+'px">'+$("#"+id+" option[value="+elements[i]+"]").html()+'</span></p>		<div class="buttonHolder">			<a href="#" class="button icon iconDelete iconOnly deleteButton-'+id+'" rel="'+elements[i]+'" title="'+options.removeLabel+'"><span>'+options.removeLabel+"</span></a>		</div>	</li>";$("#addValue-"+id+" option[value="+elements[i]+"]").attr("disabled","disabled");}html+="</ul>";}$("#elementList-"+id).html(html);$("#addButton-"+id).removeClass("disabledButton");$("#addValue-"+id).removeClass("disabled").attr("disabled","");if($("#addValue-"+id+" option:enabled").length==0){$("#addButton-"+id).addClass("disabledButton");$("#addValue-"+id).addClass("disabled").attr("disabled","disabled");}$("#addValue-"+id).val($("#addValue-"+id+" option:enabled:first").attr("value"));if(options.afterBuild!=null){options.afterBuild(id);}}function get(){var chunks=$("#"+id).val();var elements=[];for(var i in chunks){value=chunks[i].replace(/^\s+|\s+$/g,"");if(value!=""){elements.push(value);}}return elements;}function remove(value){var index=$.inArray(value,elements);if(index>-1){elements.splice(index,1);}$("#"+id).val(elements.join(options.splitChar));$("#addValue-"+id+" option[value="+value+"]").attr("disabled","");build();}});};})(jQuery);(function($){$.fn.multipleTextbox=function(options){var defaults={splitChar:",",emptyMessage:"",addLabel:"add",removeLabel:"delete",autoCompleteUrl:"",canAddNew:false,showIconOnly:false,afterBuild:null};var options=$.extend(defaults,options);return this.each(function(){var id=$(this).attr("id");var elements=get();var blockSubmit=false;$(this.form).submit(function(){return !blockSubmit;});if($("#elementList-"+id).length>0){$("#elementList-"+id).parent(".multipleTextWrapper").remove();}var html='<div class="multipleTextWrapper">	<div id="elementList-'+id+'" class="multipleTextList">	</div>	<div class="oneLiner">		<p><input class="inputText dontSubmit" id="addValue-'+id+'" name="addValue-'+id+'" type="text" /></p>		<div class="buttonHolder">			<a href="#" id="addButton-'+id+'" class="button icon iconAdd disabledButton';if(options.showIconOnly){html+=" iconOnly";}html+='">				<span>'+options.addLabel+"</span>			</a>		</div>	</div></div>";$(this).css("visibility","hidden").css("position","absolute").css("top","-9000px").css("left","-9000px").attr("tabindex","-1");$(this).before(html);build();if(options.autoCompleteUrl!=""){$("#addValue-"+id).autocomplete({delay:200,minLength:2,source:function(request,response){$.ajax({url:options.autoCompleteUrl,type:"GET",data:"term="+request.term,success:function(data,textStatus){var realData=[];if(data.code!=200&&jsBackend.debug){alert(data.message);}if(data.code==200){for(var i in data.data){realData.push({label:data.data[i].name,value:data.data[i].name});}}response(realData);}});}});}$("#addValue-"+id).bind("keyup",function(evt){blockSubmit=true;var code=evt.which;if(code==13||String.fromCharCode(code)==options.splitChar){evt.preventDefault();evt.stopPropagation();add();}if($(this).val().replace(/^\s+|\s+$/g,"")==""){blockSubmit=false;$("#addButton-"+id).addClass("disabledButton");}else{$("#addButton-"+id).removeClass("disabledButton");}});$("#addButton-"+id).bind("click",function(evt){evt.preventDefault();evt.stopPropagation();add();});$(".deleteButton-"+id).live("click",function(evt){evt.preventDefault();evt.stopPropagation();remove($(this).attr("rel"));});$(".inputField-"+id).live("blur",function(evt){elements=[];$(".inputField-"+id).each(function(){var value=$(this).val().replace(/^\s+|\s+$/g,"");if(value==""){$(this).parent().parent().remove();}else{elements.push(value);}});$("#"+id).val(elements.join(options.splitChar));});function add(){blockSubmit=false;var value=$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"");var inElements=false;$("#addValue-"+id).val("").focus();$("#addButton-"+id).addClass("disabledButton");if(value!=""){for(var i in elements){if(value==elements[i]){inElements=true;}}if(!inElements){elements.push(value);$("#"+id).val(elements.join(options.splitChar));build();}}}function build(){var html="";if(elements.length==0&&options.emptyMessage!=""){html='<p class="helpTxt">'+options.emptyMessage+"</p>";}else{html="<ul>";for(var i in elements){html+='	<li class="oneLiner">		<p><input class="inputText dontSubmit inputField-'+id+'" name="inputField-'+id+'[]" type="text" value="'+elements[i]+'" /></p>		<div class="buttonHolder">			<a href="#" class="button icon iconDelete iconOnly deleteButton-'+id+'" rel="'+elements[i]+'" title="'+options.removeLabel+'"><span>'+options.removeLabel+"</span></a>		</div>	</li>";}html+="</ul>";}$("#elementList-"+id).html(html);if(options.afterBuild!=null){options.afterBuild(id);}}function get(){var chunks=$("#"+id).val().split(options.splitChar);var elements=[];for(var i in chunks){value=chunks[i].replace(/^\s+|\s+$/g,"");if(value!=""){elements.push(value);}}return elements;}function remove(value){var index=$.inArray(value,elements);if(index>-1){elements.splice(index,1);}$("#"+id).val(elements.join(options.splitChar));build();}});};})(jQuery);
+(function($){$.fn.doMeta=function(options){var defaults={};var options=$.extend(defaults,options);return this.each(function(){var element=$(this);$(this).bind("keyup",calculateMeta);if($("#pageTitle").length>0&&$("#pageTitleOverwrite").length>0){$("#pageTitleOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#pageTitle").val(element.val());}});}if($("#navigationTitle").length>0&&$("#navigationTitleOverwrite").length>0){$("#navigationTitleOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#navigationTitle").val(element.val());}});}$("#metaDescriptionOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#metaDescription").val(element.val());}});$("#metaKeywordsOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#metaKeywords").val(element.val());}});$("#urlOverwrite").change(function(evt){if(!$(this).is(":checked")){$("#url").val(utils.string.urlise(element.val()));$("#generatedUrl").html(utils.string.urlise(element.val()));}});function calculateMeta(evt,element){var title=(typeof element!="undefined")?element.val():$(this).val();if($("#pageTitle").length>0&&$("#pageTitleOverwrite").length>0){if(!$("#pageTitleOverwrite").is(":checked")){$("#pageTitle").val(title);}}if($("#navigationTitle").length>0&&$("#navigationTitleOverwrite").length>0){if(!$("#navigationTitleOverwrite").is(":checked")){$("#navigationTitle").val(title);}}if(!$("#metaDescriptionOverwrite").is(":checked")){$("#metaDescription").val(title);}if(!$("#metaKeywordsOverwrite").is(":checked")){$("#metaKeywords").val(title);}if(!$("#urlOverwrite").is(":checked")){if(typeof pageID=="undefined"||pageID!=1){$("#url").val(utils.string.urlise(title));$("#generatedUrl").html(utils.string.urlise(title));}}}});};})(jQuery);(function($){$.fn.inlineTextEdit=function(options){var defaults={saveUrl:null,current:{},extraParams:{},inputClasses:"inputText",allowEmpty:false,tooltip:"click to edit"};var options=$.extend(defaults,options);var editing=false;return this.each(function(){$(this).html("<span>"+$(this).html()+'</span><span style="display: none;" class="inlineEditTooltip">'+options.tooltip+"</span>");var element=$($(this).find("span")[0]);element.bind("click focus",createElement);$(".inlineEditTooltip").bind("click",createElement);$(this).hover(function(){$(this).addClass("inlineEditHover");$($(this).find("span")[1]).show();},function(){$(this).removeClass("inlineEditHover");$($(this).find("span")[1]).hide();});function createElement(){if(editing){return;}editing=true;options.current.value=element.html();if($(this).parent().data("id")!=""){options.current.extraParams=eval("("+$(this).parent().data("id")+")");}element.addClass("inlineEditing");element.unbind("click").unbind("focus");element.html('<input type="text" class="'+options.inputClasses+'" value="'+options.current.value+'" />');options.current.element=$(element.find("input")[0]);options.current.element.select();options.current.element.bind("blur",saveElement);options.current.element.keyup(function(evt){if(evt.which==27){options.current.element.val(options.current.value);destroyElement();}if(evt.which==13){saveElement();}});}function destroyElement(){var parent=options.current.element.parent();parent.html(options.current.element.val()).bind("click focus",createElement);parent.removeClass("inlineEditing");editing=false;}function saveElement(){if(!options.allowEmpty&&options.current.element.val()==""){options.current.element.val(options.current.value);}if(options.current.element.val()!=options.current.value){options.current.extraParams.value=options.current.element.val();$.ajax({url:options.saveUrl,data:options.current.extraParams,success:function(data,textStatus){destroyElement();}});}else{destroyElement();}}});};})(jQuery);(function($){$.fn.keyValueBox=function(options){var defaults={splitChar:",",secondSplitChar:"|",emptyMessage:"",errorMessage:"Add the item before submitting",addLabel:"add",removeLabel:"delete",autoCompleteUrl:"",showIconOnly:true,multiple:true};var options=$.extend(defaults,options);return this.each(function(){var id=$(this).attr("id");var elements=get();var blockSubmit=false;var timer=null;$('label[for="'+id+'"]').attr("for","addValue-"+id);$(this.form).submit(function(evt){$("#errorMessage-"+id).remove();if(blockSubmit&&$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"")!=""){$($("#addValue-"+id).parents(".oneLiner")).append('<span style="display: none;" id="errorMessage-'+id+'" class="formError">'+options.errorMessage+"</span>");clearTimeout(timer);timer=setTimeout(function(){$("#errorMessage-"+id).show();},200);}return !blockSubmit;});var html='<div class="tagsWrapper">	<div class="oneLiner">		<p><input class="inputText dontSubmit" id="addValue-'+id+'" name="addValue-'+id+'" type="text" /></p>		<div class="buttonHolder">			<a href="#" id="addButton-'+id+'" class="button icon iconAdd disabledButton';if(options.showIconOnly){html+=" iconOnly";}html+='">				<span>'+options.addLabel+'</span>			</a>		</div>	</div>	<div id="elementList-'+id+'" class="tagList">	</div></div>';$(this).css("visibility","hidden").css("position","absolute").css("top","-9000px").css("left","-9000px").attr("tabindex","-1");$(this).before(html);build();$("#addValue-"+id).autocomplete({delay:200,minLength:2,source:function(request,response){$.ajax({url:options.autoCompleteUrl,type:"GET",data:"term="+request.term,success:function(data,textStatus){var realData=[];if(data.code!=200&&jsBackend.debug){alert(data.message);}if(data.code==200){for(var i in data.data){realData.push({label:data.data[i].name,value:data.data[i].value+options.secondSplitChar+data.data[i].name});}}response(realData);}});}});$("#addValue-"+id).bind("keyup",function(evt){blockSubmit=true;var code=evt.which;$("#errorMessage-"+id).remove();if(code==13||String.fromCharCode(code)==options.splitChar){$("#errorMessage-"+id).remove();evt.preventDefault();evt.stopPropagation();add();}if($(this).val().replace(/^\s+|\s+$/g,"")==""){blockSubmit=false;$("#addButton-"+id).addClass("disabledButton");}else{$("#addButton-"+id).removeClass("disabledButton");}});$("#addButton-"+id).bind("click",function(evt){evt.preventDefault();evt.stopPropagation();add();});$(".deleteButton-"+id).live("click",function(evt){evt.preventDefault();evt.stopPropagation();remove($(this).attr("rel"));});function add(){blockSubmit=false;var value=$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"");var inElements=false;if(value.split(options.secondSplitChar).length==1){value="";}if(!options.multiple){elements=[];}$("#addValue-"+id).val("").focus();$("#addButton-"+id).addClass("disabledButton");$("#errorMessage-"+id).remove();if(value!=""){for(var i in elements){if(value==elements[i]){inElements=true;}}if(!inElements){elements.push(value);$("#"+id).val(elements.join(options.splitChar));build();}}}function build(){var html="";if(elements.length==0&&options.emptyMessage!=""){html='<p class="helpTxt">'+options.emptyMessage+"</p>";}else{html="<ul>";for(var i in elements){var humanValue=elements[i].split(options.secondSplitChar)[1];html+="	<li><span><strong>"+humanValue+'</strong>		<a href="#" class="deleteButton-'+id+'" rel="'+elements[i]+'" title="'+options.removeLabel+'">'+options.removeLabel+"</a></span>	</li>";}html+="</ul>";}$("#elementList-"+id).html(html);}function get(){var chunks=$("#"+id).val().split(options.splitChar);var elements=[];for(var i in chunks){value=chunks[i].replace(/^\s+|\s+$/g,"");if(value!=""){elements.push(value);}}return elements;}function remove(value){var index=$.inArray(value,elements);if(index>-1){elements.splice(index,1);}$("#"+id).val(elements.join(options.splitChar));build();}});};})(jQuery);(function($){$.fn.tagBox=function(options){var defaults={splitChar:",",emptyMessage:"",errorMessage:"Add the tag before submitting",addLabel:"add",removeLabel:"delete",autoCompleteUrl:"",canAddNew:false,showIconOnly:true,multiple:true};var options=$.extend(defaults,options);return this.each(function(){var id=$(this).attr("id");var elements=get();var blockSubmit=false;var timer=null;$('label[for="'+id+'"]').attr("for","addValue-"+id);$(this.form).submit(function(evt){$("#errorMessage-"+id).remove();if(blockSubmit&&$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"")!=""){$($("#addValue-"+id).parents(".oneLiner")).append('<span style="display: none;" id="errorMessage-'+id+'" class="formError">'+options.errorMessage+"</span>");clearTimeout(timer);timer=setTimeout(function(){$("#errorMessage-"+id).show();},200);}return !blockSubmit;});var html='<div class="tagsWrapper">	<div class="oneLiner">		<p><input class="inputText dontSubmit" id="addValue-'+id+'" name="addValue-'+id+'" type="text" /></p>		<div class="buttonHolder">			<a href="#" id="addButton-'+id+'" class="button icon iconAdd disabledButton';if(options.showIconOnly){html+=" iconOnly";}html+='">				<span>'+options.addLabel+'</span>			</a>		</div>	</div>	<div id="elementList-'+id+'" class="tagList">	</div></div>';$(this).css("visibility","hidden").css("position","absolute").css("top","-9000px").css("left","-9000px").attr("tabindex","-1");$(this).before(html);build();if(options.autoCompleteUrl!=""){$("#addValue-"+id).autocomplete({delay:200,minLength:2,source:function(request,response){$.ajax({url:options.autoCompleteUrl,type:"GET",data:"term="+request.term,success:function(data,textStatus){var realData=[];if(data.code!=200&&jsBackend.debug){alert(data.message);}if(data.code==200){for(var i in data.data){realData.push({label:data.data[i].name,value:data.data[i].name});}}response(realData);}});}});}$("#addValue-"+id).bind("keyup",function(evt){blockSubmit=true;var code=evt.which;$("#errorMessage-"+id).remove();if(code==13||$(this).val().indexOf(options.splitChar)!=-1){$("#errorMessage-"+id).remove();evt.preventDefault();evt.stopPropagation();add();}if($(this).val().replace(/^\s+|\s+$/g,"")==""){blockSubmit=false;$("#addButton-"+id).addClass("disabledButton");}else{$("#addButton-"+id).removeClass("disabledButton");}});$("#addButton-"+id).bind("click",function(evt){evt.preventDefault();evt.stopPropagation();add();});$(".deleteButton-"+id).live("click",function(evt){evt.preventDefault();evt.stopPropagation();remove($(this).data("id"));});function add(){blockSubmit=false;var value=$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"").replace(options.splitChar,"");var inElements=false;if(!options.multiple){elements=[];}$("#addValue-"+id).val("").focus();$("#addButton-"+id).addClass("disabledButton");$("#errorMessage-"+id).remove();if(value!=""){for(var i in elements){if(value==elements[i]){inElements=true;}}if(!inElements){elements.push(value);$("#"+id).val(elements.join(options.splitChar));build();}}}function build(){var html="";if(elements.length==0&&options.emptyMessage!=""){html='<p class="helpTxt">'+options.emptyMessage+"</p>";}else{html="<ul>";for(var i in elements){html+="	<li><span><strong>"+elements[i]+'</strong>		<a href="#" class="deleteButton-'+id+'" data-id="'+elements[i]+'" title="'+options.removeLabel+'">'+options.removeLabel+"</a></span>	</li>";}html+="</ul>";}$("#elementList-"+id).html(html);}function get(){var chunks=$("#"+id).val().split(options.splitChar);var elements=[];for(var i in chunks){value=chunks[i].replace(/^\s+|\s+$/g,"");if(value!=""){elements.push(value);}}return elements;}function remove(value){var index=$.inArray(value,elements);if(index>-1){elements.splice(index,1);}$("#"+id).val(elements.join(options.splitChar));build();}});};})(jQuery);(function($){$.fn.multipleSelectbox=function(options){var defaults={splitChar:",",emptyMessage:"",addLabel:"add",removeLabel:"delete",showIconOnly:false,afterBuild:null};var options=$.extend(defaults,options);return this.each(function(){var id=$(this).attr("id");var possibleOptions=$(this).find("option");var elements=get();var blockSubmit=false;$(this.form).submit(function(){return !blockSubmit;});if($("#elementList-"+id).length>0){$("#elementList-"+id).parent(".multipleSelectWrapper").remove();}var html='<div class="multipleSelectWrapper">	<div id="elementList-'+id+'" class="multipleSelectList">	</div>	<div class="oneLiner">		<p>			<select class="select dontSubmit" id="addValue-'+id+'" name="addValue-'+id+'">';for(var i=0;i<possibleOptions.length;i++){html+='				<option value="'+$(possibleOptions[i]).attr("value")+'">'+$(possibleOptions[i]).html()+"</option>";}html+='			</select>		</p>		<div class="buttonHolder">			<a href="#" id="addButton-'+id+'" class="button icon iconAdd';if(options.showIconOnly){html+=" iconOnly";}html+='">				<span>'+options.addLabel+"</span>			</a>		</div>	</div></div>";$(this).css("visibility","hidden").css("position","absolute").css("top","-9000px").css("left","-9000px").attr("tabindex","-1");$(this).before(html);build();$("#addButton-"+id).bind("click",function(evt){evt.preventDefault();evt.stopPropagation();add();});$(".deleteButton-"+id).live("click",function(evt){evt.preventDefault();evt.stopPropagation();remove($(this).data("id"));});function add(){blockSubmit=false;var value=$("#addValue-"+id).val();var inElements=false;$("#addValue-"+id).focus();if(value!=null&&value!=""){for(var i in elements){if(value==elements[i]){inElements=true;}}if(!inElements){elements.push(value);$("#"+id).val(elements.join(options.splitChar));build();}}}function build(){var html="";if(elements.length==0&&options.emptyMessage!=""){html='<p class="helpTxt">'+options.emptyMessage+"</p>";}else{html="<ul>";for(var i in elements){html+='	<li class="oneLiner">		<p><span style="width: '+$("#"+id).width()+'px">'+$("#"+id+" option[value="+elements[i]+"]").html()+'</span></p>		<div class="buttonHolder">			<a href="#" class="button icon iconDelete iconOnly deleteButton-'+id+'" data-id="'+elements[i]+'" title="'+options.removeLabel+'"><span>'+options.removeLabel+"</span></a>		</div>	</li>";$("#addValue-"+id+" option[value="+elements[i]+"]").attr("disabled","disabled");}html+="</ul>";}$("#elementList-"+id).html(html);$("#addButton-"+id).removeClass("disabledButton");$("#addValue-"+id).removeClass("disabled").attr("disabled","");if($("#addValue-"+id+" option:enabled").length==0){$("#addButton-"+id).addClass("disabledButton");$("#addValue-"+id).addClass("disabled").attr("disabled","disabled");}$("#addValue-"+id).val($("#addValue-"+id+" option:enabled:first").attr("value"));if(options.afterBuild!=null){options.afterBuild(id);}}function get(){var chunks=$("#"+id).val();var elements=[];for(var i in chunks){value=chunks[i].replace(/^\s+|\s+$/g,"");if(value!=""){elements.push(value);}}return elements;}function remove(value){var index=$.inArray(value,elements);if(index>-1){elements.splice(index,1);}$("#"+id).val(elements.join(options.splitChar));$("#addValue-"+id+" option[value="+value+"]").attr("disabled","");build();}});};})(jQuery);(function($){$.fn.multipleTextbox=function(options){var defaults={splitChar:",",emptyMessage:"",addLabel:"add",removeLabel:"delete",autoCompleteUrl:"",canAddNew:false,showIconOnly:false,afterBuild:null};var options=$.extend(defaults,options);return this.each(function(){var id=$(this).attr("id");var elements=get();var blockSubmit=false;$(this.form).submit(function(){return !blockSubmit;});if($("#elementList-"+id).length>0){$("#elementList-"+id).parent(".multipleTextWrapper").remove();}var html='<div class="multipleTextWrapper">	<div id="elementList-'+id+'" class="multipleTextList">	</div>	<div class="oneLiner">		<p><input class="inputText dontSubmit" id="addValue-'+id+'" name="addValue-'+id+'" type="text" /></p>		<div class="buttonHolder">			<a href="#" id="addButton-'+id+'" class="button icon iconAdd disabledButton';if(options.showIconOnly){html+=" iconOnly";}html+='">				<span>'+options.addLabel+"</span>			</a>		</div>	</div></div>";$(this).css("visibility","hidden").css("position","absolute").css("top","-9000px").css("left","-9000px").attr("tabindex","-1");$(this).before(html);build();if(options.autoCompleteUrl!=""){$("#addValue-"+id).autocomplete({delay:200,minLength:2,source:function(request,response){$.ajax({url:options.autoCompleteUrl,type:"GET",data:"term="+request.term,success:function(data,textStatus){var realData=[];if(data.code!=200&&jsBackend.debug){alert(data.message);}if(data.code==200){for(var i in data.data){realData.push({label:data.data[i].name,value:data.data[i].name});}}response(realData);}});}});}$("#addValue-"+id).bind("keyup",function(evt){blockSubmit=true;var code=evt.which;if(code==13||$(this).val().indexOf(options.splitChar)!=-1){evt.preventDefault();evt.stopPropagation();add();}if($(this).val().replace(/^\s+|\s+$/g,"")==""){blockSubmit=false;$("#addButton-"+id).addClass("disabledButton");}else{$("#addButton-"+id).removeClass("disabledButton");}});$("#addValue-"+id).bind("blur",function(evt){blockSubmit=false;});$("#addButton-"+id).bind("click",function(evt){evt.preventDefault();evt.stopPropagation();add();});$(".deleteButton-"+id).live("click",function(evt){evt.preventDefault();evt.stopPropagation();remove($(this).data("id"));});$(".inputField-"+id).live("keyup",function(evt){elements=[];$(".inputField-"+id).each(function(){var value=$(this).val().replace(/^\s+|\s+$/g,"");if(value==""){$(this).parent().parent().remove();}else{elements.push(value);}});$("#"+id).val(elements.join(options.splitChar));});function add(){blockSubmit=false;var value=$("#addValue-"+id).val().replace(/^\s+|\s+$/g,"").replace(options.splitChar,"");var inElements=false;$("#addValue-"+id).val("").focus();$("#addButton-"+id).addClass("disabledButton");if(value!=""){for(var i in elements){if(value==elements[i]){inElements=true;}}if(!inElements){elements.push(value);$("#"+id).val(elements.join(options.splitChar));build();}}}function build(){var html="";if(elements.length==0&&options.emptyMessage!=""){html='<p class="helpTxt">'+options.emptyMessage+"</p>";}else{html="<ul>";for(var i in elements){html+='	<li class="oneLiner">		<p><input class="inputText dontSubmit inputField-'+id+'" name="inputField-'+id+'[]" type="text" value="'+elements[i]+'" /></p>		<div class="buttonHolder">			<a href="#" class="button icon iconDelete iconOnly deleteButton-'+id+'" data-id="'+elements[i]+'" title="'+options.removeLabel+'"><span>'+options.removeLabel+"</span></a>		</div>	</li>";}html+="</ul>";}$("#elementList-"+id).html(html);if(options.afterBuild!=null){options.afterBuild(id);}}function get(){var chunks=$("#"+id).val().split(options.splitChar);var elements=[];for(var i in chunks){value=chunks[i].replace(/^\s+|\s+$/g,"");if(value!=""){elements.push(value);}}return elements;}function remove(value){var index=$.inArray(value,elements);if(index>-1){elements.splice(index,1);}$("#"+id).val(elements.join(options.splitChar));build();}});};})(jQuery);
