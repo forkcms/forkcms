@@ -2,7 +2,7 @@
 --
 * Core: improvments for numberformatting
 * Tools: scripts are now using find
-* Bugfix: Disabled the imagemanagers contectmenu because there are still issues (according to the TinyMCE developers :s)
+* Bugfix: Disabled the imagemanagers contextmenu because there are still issues (according to the TinyMCE developers :s)
 * Bugfix: $_GET-parameters were double urldecode, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/82
 * Bugfix: navigation used to give notices with hidden/excluded pages
 * Bugfix: autoloader path to frontendbaseajaxaction was incorrect
@@ -21,6 +21,11 @@
 * Core: using data-attribute instead of rel
 * Blog: reimplemented drafts
 * Bugfix: recalculate num_comments so the new revision has the correct count
+* Core: fixed a lot of code to reflect the styleguide
+* Testimonials: made the module language-dependant (as it should be)
+* Bugfix: SpoonFileCSV was triggering a warning when no exclude-columns were provided.
+* Core: backendMailer will remove tags from the subject
+* Core: added the passwordword generator into the frontend
 
 2.0.2 (2010-11-24)
 --
