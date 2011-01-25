@@ -342,7 +342,7 @@ class SpoonTemplateCompiler
 	private function parseForms($content)
 	{
 		// regex pattern
-		$pattern = '/\{form:([a-z0-9_]+?)\}?/is';
+		$pattern = '/\{form:([a-z0-9_]+)\}?/is';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -382,7 +382,7 @@ class SpoonTemplateCompiler
 	{
 		// regex pattern
 		// no unified restriction can be done on the allowed characters, that differs from one OS to another (see http://www.comentum.com/File-Systems-HFS-FAT-UFS.html)
-		$pattern = '/\{include:(("[^"]*?"|\'[^\']*?\')|[^:]*)\}/i';
+		$pattern = '/\{include:(("[^"]*?"|\'[^\']*?\')|[^:]*?)\}/i';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches, PREG_SET_ORDER))
@@ -614,6 +614,7 @@ class SpoonTemplateCompiler
 					// not yet used
 					$options[] = $match;
 
+					// set option
 					$option = $match[1] . $match[2] . (isset($match[5]) ? $match[5] : '');
 
 					// search for
