@@ -11,7 +11,8 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @since		0.1.1
+ * @author		Matthias Mullie <matthias@spoon-library.com>
+ * @since		1.0.0
  */
 
 
@@ -69,6 +70,14 @@ class SpoonTemplate
 	 * @var	array
 	 */
 	private $forms = array();
+
+
+	/**
+	 * Stack of iterations (used in compiled template)
+	 *
+	 * @var	array
+	 */
+	private $iterations = array();
 
 
 	/**
@@ -227,7 +236,10 @@ class SpoonTemplate
 	public function compile($path, $template)
 	{
 		// redefine template
-		if(realpath($template) === false) $template = $path .'/'. $template; // @todo: Davy: check dit
+		if(realpath($template) === false) $template = $path .'/'. $template;
+
+		// source file does not exist
+		if(!SpoonFile::exists($template)) return false;
 
 		// create object
 		$compiler = new SpoonTemplateCompiler($template, $this->variables);
@@ -240,6 +252,9 @@ class SpoonTemplate
 
 		// compile & save
 		$compiler->parseToFile();
+
+		// status
+		return true;
 	}
 
 
@@ -257,9 +272,6 @@ class SpoonTemplate
 
 		// calculate modulus
 		$modulus = $counter % $numElements;
-
-		// update counter
-		$counter += 1;
 
 		// leftovers?
 		if($modulus == 0) return $elements[$numElements - 1];
@@ -362,7 +374,7 @@ class SpoonTemplate
 	private function getCompileName($template, $path = null)
 	{
 		// redefine template
-		if($path !== null && realpath($template) === false) $template = $path .'/'. $template; // @todo: Davy: check dit
+		if($path !== null && realpath($template) === false) $template = $path .'/'. $template;
 
 		// return the correct full path
 		return md5(realpath($template)) .'_'. basename($template) .'.php';
