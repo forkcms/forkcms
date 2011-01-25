@@ -31,7 +31,7 @@ class FrontendMailer
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null)
 	{
 		// redefine
-		$subject = (string) $subject;
+		$subject = (string) strip_tags($subject);
 		$template = (string) $template;
 
 		// set defaults
