@@ -16,6 +16,8 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
+		// @todo	no empty lines after { and before }
+
 		// get the tokens
 		$tokens = $phpcsFile->getTokens();
 		$current = $tokens[$stackPtr];
