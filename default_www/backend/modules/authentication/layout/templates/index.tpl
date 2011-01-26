@@ -1,10 +1,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
 <body id="login">
-
 	{include:{$BACKEND_MODULES_PATH}/{$MODULE}/layout/templates/ie6.tpl}
-
 	{option:debug}<div id="debugnotify">Debug mode</div>{/option:debug}
-
 	<table border="0" cellspacing="0" cellpadding="0" id="loginHolder">
 		<tr>
 			<td>
@@ -51,6 +48,7 @@
 						<li><a href="#" id="forgotPasswordLink" class="toggleBalloon" data-message-id="forgotPasswordHolder">{$msgForgotPassword}</a></li>
 					</ul>
 				</div>
+
 				<div id="forgotPasswordHolder" class="balloon {option:!showForm}balloonNoMessage{/option:!showForm}"{option:!showForm} style="display: none;"{/option:!showForm}>
 					<div id="forgotPasswordBox">
 
@@ -86,5 +84,4 @@
 			</td>
 		</tr>
 	</table>
-
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
