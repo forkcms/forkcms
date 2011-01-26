@@ -183,7 +183,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$campaigns = BackendMailmotorModel::getCampaignsAsPairs();
 
 		// fetch the groups
-		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
+		$groups = BackendMailmotorModel::getGroupsWithRecipientsForCheckboxes();
 
 		// fetch the languages
 		$languages = BackendMailmotorModel::getLanguagesForCheckboxes();
@@ -290,6 +290,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		// get preview URL
 		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
 
+		// @todo add check for preview URL
 		if(BackendModel::getURLForBlock('mailmotor', 'detail') == BackendModel::getURL(404)) $previewURL = false;
 
 		// parse the preview URL

@@ -982,6 +982,20 @@ class BackendMailmotorModel
 	public static function getGroupsForCheckboxes()
 	{
 		// fetch the records
+		return (array) BackendModel::getDB()->getRecords('SELECT mg.id AS value, mg.name AS label
+																FROM mailmotor_groups AS mg
+																GROUP BY mg.id');
+	}
+
+
+	/**
+	 * Get all groups with recipients in a format acceptable for SpoonForm::addRadioButton() and SpoonForm::addMultiCheckbox()
+	 *
+	 * @return	array
+	 */
+	public static function getGroupsWithRecipientsForCheckboxes()
+	{
+		// fetch the records
 		$records = (array) BackendModel::getDB()->getRecords('SELECT
 															mg.id AS value, mg.name AS label, COUNT(mag.email) AS recipients
 															FROM mailmotor_groups AS mg
