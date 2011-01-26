@@ -36,9 +36,9 @@ class FrontendTestimonialsModel
 	{
 		return (array) FrontendModel::getDB()->getRecords('SELECT *
 															FROM testimonials
-															WHERE hidden = ?
+															WHERE hidden = ? AND language = ?
 															ORDER BY sequence',
-															array('N'));
+															array('N', FRONTEND_LANGUAGE));
 	}
 
 
@@ -52,8 +52,8 @@ class FrontendTestimonialsModel
 		// get a random ID
 		$allIds = FrontendModel::getDB()->getColumn('SELECT id
 														FROM testimonials
-														WHERE hidden = ?',
-														array('N'));
+														WHERE hidden = ? AND language = ?',
+														array('N', FRONTEND_LANGUAGE));
 
 		// return an empty array when there are no visible testimonials
 		if(empty($allIds)) return array();

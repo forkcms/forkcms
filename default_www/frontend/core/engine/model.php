@@ -126,6 +126,49 @@ class FrontendModel
 
 
 	/**
+	 * Generate a totally random but readable/speakable password
+	 *
+	 * @return	string
+	 * @param	int[optional] $length				The maximum length for the password to generate.
+	 * @param	bool[optional] $uppercaseAllowed	Are uppercase letters allowed?
+	 * @param	bool[optional] $lowercaseAllowed	Are lowercase letters allowed?
+	 */
+	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
+	{
+		// list of allowed vowels and vowelsounds
+		$vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
+
+		// list of allowed consonants and consonant sounds
+		$consonants = array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
+
+		// init vars
+		$consonantsCount = count($consonants);
+		$vowelsCount = count($vowels);
+		$pass = '';
+		$tmp = '';
+
+		// create temporary pass
+		for($i = 0; $i < $length; $i++) $tmp .= ($consonants[rand(0, $consonantsCount - 1)] . $vowels[rand(0, $vowelsCount - 1)]);
+
+		// reformat the pass
+		for($i = 0; $i < $length; $i++)
+		{
+			if(rand(0, 1) == 1) $pass .= strtoupper(substr($tmp, $i, 1));
+			else $pass .= substr($tmp, $i, 1);
+		}
+
+		// reformat it again, if uppercase isn't allowed
+		if(!$uppercaseAllowed) $pass = strtolower($pass);
+
+		// reformat it again, if uppercase isn't allowed
+		if(!$lowercaseAllowed) $pass = strtoupper($pass);
+
+		// return pass
+		return $pass;
+	}
+
+
+	/**
 	 * Get a module setting
 	 *
 	 * @return	mixed
