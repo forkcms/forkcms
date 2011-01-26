@@ -615,7 +615,7 @@ class SpoonTemplateCompiler
 					$options[] = $match;
 
 					// set option
-					$option = $match[1] . $match[2] . (isset($match[5]) ? $match[5] : '');
+					$option = $match[2] . (isset($match[5]) ? $match[5] : '');
 
 					// search for
 					$search[] = '{option:'. $option .'}';
