@@ -96,7 +96,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single checkbox.
 	 *
-	 * @return	void
+	 * @return	SpoonFormCheckbox
 	 * @param	string $name					The name of the element.
 	 * @param	bool[optional] $checked			Should the checkbox be checked?
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
@@ -198,7 +198,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single dropdown.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $name						Name of the element.
 	 * @param	array[optional] $values				Values for the dropdown.
 	 * @param	string[optional] $selected			The selected elements.
@@ -231,7 +231,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Add an editor field
 	 *
-	 * @return	void
+	 * @return	SpoonFormTextarea
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $value			The value inside the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
@@ -259,7 +259,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single file field.
 	 *
-	 * @return	void
+	 * @return	SpoonFormFile
 	 * @param	string $name					Name of the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
@@ -279,7 +279,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single image field.
 	 *
-	 * @return	void
+	 * @return	SpoonFormImage
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
@@ -299,7 +299,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a multiple checkbox.
 	 *
-	 * @return	void
+	 * @return	SpoonFormMultiCheckbox
 	 * @param	string $name					The name of the element.
 	 * @param	array $values					The values for the checkboxes.
 	 * @param	mixed[optional] $checked		Should the checkboxes be checked?
@@ -323,7 +323,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single password field.
 	 *
-	 * @return	void
+	 * @return	SpoonFormPassword
 	 * @param	string $name					The name of the field.
 	 * @param	string[optional] $value			The value for the field.
 	 * @param	int[optional] $maxlength		The maximum length for the field.
@@ -349,7 +349,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single radiobutton.
 	 *
-	 * @return	void
+	 * @return	SpoonFormRadiobutton
 	 * @param	string $name					The name of the element.
 	 * @param	array $values					The possible values for the radiobutton.
 	 * @param	string[optional] $checked		Should the element be checked?
@@ -373,7 +373,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single textfield.
 	 *
-	 * @return	void
+	 * @return	SpoonFormText
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $value			The value inside the element.
 	 * @param	int[optional] $maxlength		The maximum length for the value.
@@ -399,7 +399,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single textarea.
 	 *
-	 * @return	void
+	 * @return	SpoonFormTextarea
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $value			The value inside the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
@@ -423,7 +423,7 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a single timefield.
 	 *
-	 * @return	void
+	 * @return	SpoonFormTime
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $value			The value inside the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.

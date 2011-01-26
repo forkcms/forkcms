@@ -225,7 +225,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $item['active'] = 'Y';
 
 				// if the template is in use we can't alter the number of blocks or de-activate it
-				if(BackendPagesModel::isTemplateInUse($item))
+				if(BackendPagesModel::isTemplateInUse($item['id']))
 				{
 					$item['num_blocks'] = $this->record['num_blocks'];
 					$item['active'] = 'Y';
