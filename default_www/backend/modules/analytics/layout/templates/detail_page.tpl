@@ -12,7 +12,7 @@
 {/option:!dataAvailable}
 
 <div class="box">
-	{include:file='{$BACKEND_MODULE_PATH}/layout/templates/period.tpl'}
+	{include:{$BACKEND_MODULE_PATH}/layout/templates/period.tpl}
 
 	<div class="options content">
 		<div class="analyticsColWrapper">
