@@ -128,11 +128,6 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		// require the CSSToInlineStyles class
 		require 'external/css_to_inline_styles.php';
 
-		// redefine
-		$template = (string) $template;
-		$contentHTML = (string) $contentHTML;
-		$fullContentHTML = (string) $fullContentHTML;
-
 		// fetch the template contents for this mailing
 		$template = BackendMailmotorModel::getTemplate($this->mailing['language'], $template);
 
@@ -141,6 +136,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 		// remove TinyMCE
 		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);
+
+		// replace bracketed entities with their proper counterpart
+		$fullContentHTML = preg_replace('/\[(.*?)]/', '&${1};', $fullContentHTML);
 
 		// add Google UTM parameters to all anchors
 		$fullContentHTML = $this->addUTMParameters($fullContentHTML);
@@ -183,8 +181,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$dom = new domDocument;
 
 		// load HTML
-		if($strict == true) $dom->loadXML($html);
-		else $dom->loadHTML($html);
+		($strict == true) ? $dom->loadXML($html) : $dom->loadHTML($html);
 
 		// discard whitespace
 		$dom->preserveWhiteSpace = false;
