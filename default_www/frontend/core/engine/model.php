@@ -95,34 +95,6 @@ class FrontendModel
 	}
 
 
-	/**
-	 * Get (or create and get) a database-connection
-	 * @later split the write and read connection
-	 *
-	 * @return	SpoonDatabase
-	 * @param	bool[optional] $write	Do you want the write-connection or not?
-	 */
-	public static function getDB($write = false)
-	{
-		// redefine
-		$write = (bool) $write;
-
-		// do we have a db-object ready?
-		if(!Spoon::isObjectReference('database'))
-		{
-			// create instance
-			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
-
-			// utf8 compliance & MySQL-timezone
-			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
-
-			// store
-			Spoon::setObjectReference('database', $db);
-		}
-
-		// return db-object
-		return Spoon::getObjectReference('database');
-	}
 
 
 	/**
@@ -165,6 +137,36 @@ class FrontendModel
 
 		// return pass
 		return $pass;
+	}
+
+
+	/**
+	 * Get (or create and get) a database-connection
+	 * @later split the write and read connection
+	 *
+	 * @return	SpoonDatabase
+	 * @param	bool[optional] $write	Do you want the write-connection or not?
+	 */
+	public static function getDB($write = false)
+	{
+		// redefine
+		$write = (bool) $write;
+
+		// do we have a db-object ready?
+		if(!Spoon::isObjectReference('database'))
+		{
+			// create instance
+			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
+
+			// utf8 compliance & MySQL-timezone
+			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
+
+			// store
+			Spoon::setObjectReference('database', $db);
+		}
+
+		// return db-object
+		return Spoon::getObjectReference('database');
 	}
 
 
