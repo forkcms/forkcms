@@ -25,9 +25,9 @@
 			var variables = new Array();
 			variables =
 			{
-				mailingId: '{$mailing['id']}',
-				templateCSSPath: '{$template['path_css']}',
-				templateCSSURL: '{$template['url_css']}'
+				mailingId: '{$mailing.id}',
+				templateCSSPath: '{$template.path_css}',
+				templateCSSURL: '{$template.url_css}'
 			};
 
 			function getTinyMCEContent()

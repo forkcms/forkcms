@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$url}</h2>
@@ -42,10 +42,10 @@
 {/option:datagrid}
 
 <div class="buttonHolderLeft">
-	<a href="{$var|geturl:'statistics'}&amp;id={$mailing['id']}" class="button" title="{$lblAddGroup|ucfirst}">
-		<span>{$msgBackToMailings|sprintf:{$mailing['name']}}</span>
+	<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="button" title="{$lblAddGroup|ucfirst}">
+		<span>{$msgBackToMailings|sprintf:{$mailing.name}}</span>
 	</a>
 </div>
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

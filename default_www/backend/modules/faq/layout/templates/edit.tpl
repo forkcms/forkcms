@@ -1,8 +1,8 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h3>{$lblFaq|ucfirst}: {$msgEditQuestion|sprintf:{$item['question']}}</h3>
+	<h3>{$lblFaq|ucfirst}: {$msgEditQuestion|sprintf:{$item.question}}</h3>
 </div>
 
 {form:edit}
@@ -67,7 +67,7 @@
 		</table>
 
 		<div class="fullwidthOptions">
-			<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 			<div class="buttonHolderRight">
@@ -77,7 +77,7 @@
 
 		<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 			<p>
-				{$msgConfirmDelete|sprintf:{$item['question']}}
+				{$msgConfirmDelete|sprintf:{$item.question}}
 			</p>
 		</div>
 	{/option:categories}
@@ -87,5 +87,5 @@
 	{/option:!categories}
 {/form:edit}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

@@ -1,12 +1,12 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblEmailAddresses|ucfirst}{option:group} {$lblFor} {$lblGroup} &ldquo;{$group['name']}&rdquo;{/option:group}</h2>
+	<h2>{$lblEmailAddresses|ucfirst}{option:group} {$lblFor} {$lblGroup} &ldquo;{$group.name}&rdquo;{/option:group}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$var|geturl:'add_address'}{option:group}&amp;group_id={$group['id']}{/option:group}" class="button icon iconMailAdd"><span>{$lblAddEmail|ucfirst}</span></a>
-		<a href="{$var|geturl:'import_addresses'}{option:group}&amp;group_id={$group['id']}{/option:group}" class="button icon iconFolderAdd"><span>{$lblImportAddresses|ucfirst}</span></a>
-		<a href="{$var|geturl:'export_addresses'}&amp;id={option:!group}all{/option:!group}{option:group}{$group['id']}{/option:group}" class="button icon iconExport"><span>{$lblExportAddresses|ucfirst}</span></a>
+		<a href="{$var|geturl:'add_address'}{option:group}&amp;group_id={$group.id}{/option:group}" class="button icon iconMailAdd"><span>{$lblAddEmail|ucfirst}</span></a>
+		<a href="{$var|geturl:'import_addresses'}{option:group}&amp;group_id={$group.id}{/option:group}" class="button icon iconFolderAdd"><span>{$lblImportAddresses|ucfirst}</span></a>
+		<a href="{$var|geturl:'export_addresses'}&amp;id={option:!group}all{/option:!group}{option:group}{$group.id}{/option:group}" class="button icon iconExport"><span>{$lblExportAddresses|ucfirst}</span></a>
 	</div>
 </div>
 
@@ -49,7 +49,7 @@
 			<input type="hidden" name="order" value="{$order}" />
 			<input type="hidden" name="sort" value="{$sort}" />
 			<input type="hidden" name="email" value="{$email}" />
-			{option:group}<input type="hidden" name="group_id" value="{$group['id']}" />{/option:group}
+			{option:group}<input type="hidden" name="group_id" value="{$group.id}" />{/option:group}
 			{$datagrid}
 		</fieldset>
 	</form>
@@ -61,5 +61,5 @@
 	{option:!oPost}<p>{$msgNoSubscriptions}</p>{/option:!oPost}
 {/option:!datagrid}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

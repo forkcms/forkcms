@@ -1,8 +1,8 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblTestimonials|ucfirst}: {$msgEdit|sprintf:{$item['name']}}</h2>
+	<h2>{$lblTestimonials|ucfirst}: {$msgEdit|sprintf:{$item.name}}</h2>
 </div>
 
 {form:edit}
@@ -54,7 +54,7 @@
 	</table>
 
 	<div class="fullwidthOptions">
-		<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
 		<div class="buttonHolderRight">
@@ -64,10 +64,10 @@
 
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 		<p>
-			{$msgConfirmDelete|sprintf:{$item['name']}}
+			{$msgConfirmDelete|sprintf:{$item.name}}
 		</p>
 	</div>
 {/form:edit}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
