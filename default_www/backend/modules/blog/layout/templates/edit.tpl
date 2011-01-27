@@ -1,10 +1,10 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item['title']}}</h2>
+	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
 	<div class="buttonHolderRight">
-		<a href="{$detailURL}/{$item['url']}{option:item['revision_id']}?revision={$item['revision_id']}{/option:item['revision_id']}" class="button icon iconZoom previewButton targetBlank">
+		<a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="button icon iconZoom previewButton targetBlank">
 			<span>{$lblView|ucfirst}</span>
 		</a>
 	</div>
@@ -17,7 +17,7 @@
 	{$txtTitle} {$txtTitleError}
 	<div id="pageUrl">
 		<div class="oneLiner">
-			{option:detailURL}<p><span><a href="{$detailURL}/{$item['url']}">{$detailURL}/<span id="generatedUrl">{$item['url']}</span></a></span></p>{/option:detailURL}
+			{option:detailURL}<p><span><a href="{$detailURL}/{$item.url}">{$detailURL}/<span id="generatedUrl">{$item.url}</span></a></span></p>{/option:detailURL}
 		</div>
 	</div>
 
@@ -71,7 +71,7 @@
 							{option:usingDraft}
 							<div class="options">
 								<div class="buttonHolder">
-									<a href="{$detailURL}/{$item['url']}?draft={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
+									<a href="{$detailURL}/{$item.url}?draft={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
 								</div>
 							</div>
 							{/option:usingDraft}
@@ -168,12 +168,12 @@
 		</div>
 
 		<div id="tabSEO">
-			{include:file='{$BACKEND_CORE_PATH}/layout/templates/seo.tpl'}
+			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
 		</div>
 	</div>
 
 	<div class="fullwidthOptions">
-		<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
 		<div class="buttonHolderRight">
@@ -184,10 +184,10 @@
 
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 		<p>
-			{$msgConfirmDelete|sprintf:{$item['title']}}
+			{$msgConfirmDelete|sprintf:{$item.title}}
 		</p>
 	</div>
 {/form:edit}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

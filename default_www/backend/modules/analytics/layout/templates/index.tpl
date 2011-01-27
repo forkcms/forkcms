@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblAnalytics|ucfirst}</h2>
@@ -12,7 +12,7 @@
 {/option:!dataAvailable}
 
 <div class="box">
-	{include:file='{$BACKEND_MODULE_PATH}/layout/templates/period.tpl'}
+	{include:{$BACKEND_MODULE_PATH}/layout/templates/period.tpl}
 
 	<div class="options content">
 		<div class="analyticsColWrapper">
@@ -54,9 +54,9 @@
 											<ul class="data">
 												{iteration:graphData.data}
 													<li>
-														<span class="fulldate">{$data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
-														<span class="date">{$data.date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
-														<span class="value">{$data.value}</span>
+														<span class="fulldate">{$graphData.data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+														<span class="date">{$graphData.data.date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+														<span class="value">{$graphData.data.value}</span>
 													</li>
 												{/iteration:graphData.data}
 											</ul>
@@ -144,5 +144,5 @@
 	{/option:!dgKeywords}
 </div>
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

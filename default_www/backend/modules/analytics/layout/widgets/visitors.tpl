@@ -23,9 +23,9 @@
 							<ul class="data">
 								{iteration:analyticsGraphData.data}
 									<li>
-										<span class="fulldate">{$data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
-										<span class="date">{$data.date|date:'D':{$INTERFACE_LANGUAGE}|ucfirst}</span>
-										<span class="value">{$data.value}</span>
+										<span class="fulldate">{$analyticsGraphData.data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+										<span class="date">{$analyticsGraphData.data.date|date:'D':{$INTERFACE_LANGUAGE}|ucfirst}</span>
+										<span class="value">{$analyticsGraphData.data.value}</span>
 									</li>
 								{/iteration:analyticsGraphData.data}
 							</ul>
