@@ -89,7 +89,10 @@ class FrontendBlogModel implements FrontendTagsInterface
 		$tags = FrontendTagsModel::getForMultipleItems('blog', $revisionIds);
 
 		// loop tags and add to correct item
-		foreach($tags as $postId => $tags) $items[$postId]['tags'] = $tags;
+		foreach($tags as $postId => $tags)
+		{
+			if(isset($items[$postId])) $items[$postId]['tags'] = $tags;
+		}
 
 		// return
 		return $items;

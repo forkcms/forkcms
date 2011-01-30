@@ -1445,7 +1445,7 @@ class SpoonDatagrid
 	 * @return	void
 	 * @param	string $column				The column to apply the confirmation on.
 	 * @param	string $message				The message to use.
-	 * @param	string[optional] $custom
+	 * @param	string[optional] $custom	Custom code you wish to use to confirm.
 	 */
 	public function setColumnConfirm($column, $message, $custom = null)
 	{

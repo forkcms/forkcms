@@ -335,8 +335,9 @@ class FrontendBaseBlock
 	 * @param	string[optional] $media			The media to use.
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
+	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -346,7 +347,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
 
 		// add css to the header
-		$this->header->addCSS($file, $media, $condition, $minify);
+		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
 	}
 
 
@@ -358,8 +359,9 @@ class FrontendBaseBlock
 	 * @param 	bool[optional] $overwritePath		Whether or not to add the module to this path. Module path is added by default.
 	 * @param	bool[optional] $minify				Should the file be minified?
 	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 * @param	bool[optional] $addTimestamp		May we add a timestamp for caching purposes?
 	 */
-	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -369,7 +371,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/js/'. $file;
 
 		// add js to the header
-		$this->header->addJavascript($file, $minify, $parseThroughPHP);
+		$this->header->addJavascript($file, $minify, $parseThroughPHP, $addTimestamp);
 	}
 
 
@@ -800,8 +802,9 @@ class FrontendBaseWidget
 	 * @param	string[optional] $media			The media to use.
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
+	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -811,7 +814,7 @@ class FrontendBaseWidget
 		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
 
 		// add css to the header
-		$this->header->addCSS($file, $media, $condition, $minify);
+		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
 	}
 
 

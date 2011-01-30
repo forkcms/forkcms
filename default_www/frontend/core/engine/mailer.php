@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -26,9 +26,11 @@ class FrontendMailer
 	 * @param	string[optional] $replyToEmail	The replyto-address for the mail.
 	 * @param	string[optional] $replyToName	The replyto-name for the mail.
 	 * @param	bool[optional] $queue			Should the mail be queued?
-	 * @param	int[optional] $sendOn			The date the mail should be send. It won't be exact.
+	 * @param	int[optional] $sendOn			When should the email be send, only used when $queue is true.
+	 * @param	bool[optional] $isRawHTML		If this is true $template will be handled as raw HTML, so no parsing of $variables is done.
+	 * @param	string[optional] $plainText		The plain text version.
 	 */
-	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null)
+	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null)
 	{
 		// redefine
 		$subject = (string) strip_tags($subject);
@@ -55,8 +57,58 @@ class FrontendMailer
 
 		// build array
 		$email['subject'] = SpoonFilter::htmlentitiesDecode($subject);
-		$email['html'] = self::getTemplateContent($template, $variables);
+		if($isRawHTML) $email['html'] = $template;
+		else $email['html'] = self::getTemplateContent($template, $variables);
+		if($plainText !== null) $email['plain_text'] = $plainText;
 		$email['created_on'] = FrontendModel::getUTCDate();
+
+		// init var
+		$matches = array();
+
+		// get internal links
+		preg_match_all('|href="/(.*)"|i', $email['html'], $matches);
+
+		// any links?
+		if(!empty($matches[0]))
+		{
+			// init vars
+			$search = array();
+			$replace = array();
+
+			// loop the links
+			foreach($matches[0] as $key => $link)
+			{
+				$search[] = $link;
+				$replace[] = 'href="'. SITE_URL .'/'. $matches[1][$key] .'"';
+			}
+
+			// replace
+			$email['html'] = str_replace($search, $replace, $email['html']);
+		}
+
+		// init var
+		$matches = array();
+
+		// get internal urls
+		preg_match_all('|src="/(.*)"|i', $email['html'], $matches);
+
+		// any links?
+		if(!empty($matches[0]))
+		{
+			// init vars
+			$search = array();
+			$replace = array();
+
+			// loop the links
+			foreach($matches[0] as $key => $link)
+			{
+				$search[] = $link;
+				$replace[] = 'src="'. SITE_URL .'/'. $matches[1][$key] .'"';
+			}
+
+			// replace
+			$email['html'] = str_replace($search, $replace, $email['html']);
+		}
 
 		// init var
 		$matches = array();
