@@ -31,6 +31,8 @@
 * Core: non-absolute urls are replaced when using Backend/Frontend-mailer
 * Bugfix: multipleSelectbox is now working as it was intended
 * Core: it is now possible to tell the code not to add a timestamp on the url for CSS/JS
+* Bugfix: changing the working language was redirecting to dashboard instead of the module, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/91
+* Bugfix: editing a tag was calling an non existing method
 
 2.0.2 (2010-11-24)
 --
