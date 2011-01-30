@@ -384,7 +384,7 @@ class BackendMailmotorCMHelper
 	 *
 	 * @return	array
 	 * @param	string $cmId				The id of the mailing in CampaignMonitor.
-	 * @param	bool[optional] $getColumn
+	 * @param	bool[optional] $getColumn	@todo @dave document me.
 	 */
 	public static function getMailingOpens($cmId, $getColumn = false)
 	{
