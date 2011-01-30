@@ -23,10 +23,11 @@
 * Bugfix: recalculate num_comments so the new revision has the correct count
 * Core: fixed a lot of code to reflect the styleguide
 * Testimonials: made the module language-dependant (as it should be)
-* Bugfix: SpoonFileCSV was triggering a warning when no exclude-columns were provided.
+* Bugfix: SpoonFileCSV was triggering a warning when no exclude-columns were provided
 * Core: backendMailer will remove tags from the subject
 * Core: added the passwordword generator into the frontend
-* Bugfix: selecting a template in teh mailmotor wasn't working in IE
+* Bugfix: selecting a template in teh mailmotor wasn't working in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/99
+* Bugfix: non-existing items were included in the getAll-method.
 
 2.0.2 (2010-11-24)
 --
