@@ -1604,7 +1604,7 @@ class BackendPagesModel
 
 		// decide new type
 		$newType = 'page';
-		if($droppedOn == 0) $newType = 'meta';
+		if($droppedOn == 0 || $droppedOnPage['type'] == 'meta') $newType = 'meta';
 		if($droppedOnPage['type'] == 'footer') $newType = 'footer';
 		if($droppedOnPage['type'] == 'root')
 		{
