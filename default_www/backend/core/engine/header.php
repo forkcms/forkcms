@@ -69,8 +69,9 @@ class BackendHeader
 	 * @param	string $fileName				The name of the file to load.
 	 * @param	string[optional] $module		The module wherin the file is located.
 	 * @param	bool[optional] $overwritePath	Should we overwrite the full path?
+	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($fileName, $module = null, $overwritePath = false)
+	public function addCSS($fileName, $module = null, $overwritePath = false, $addTimestamp = null)
 	{
 		// redefine
 		$fileName = (string) $fileName;
@@ -90,7 +91,7 @@ class BackendHeader
 		else $realPath = '/backend/core/layout/css/'. $fileName;
 
 		// add if not already added
-		if(!in_array($realPath, $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath);
+		if(!in_array($realPath, $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
 
@@ -105,8 +106,9 @@ class BackendHeader
 	 * @param	string[optional] $module			The module wherin the file is located.
 	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed by PHP?
 	 * @param	bool[optional] $overwritePath		Should we overwrite the full path?
+	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addJavascript($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false)
+	public function addJavascript($fileName, $module = null, $parseThroughPHP = false, $overwritePath = false, $addTimestamp = null)
 	{
 		// redefine
 		$fileName = (string) $fileName;
@@ -133,7 +135,7 @@ class BackendHeader
 		else $realPath = '/backend/core/js/'. $fileName;
 
 		// add if not already added
-		if(!in_array($realPath, $this->javascriptFiles)) $this->javascriptFiles[] = $realPath;
+		if(!in_array($realPath, $this->javascriptFiles)) $this->javascriptFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
 
@@ -158,7 +160,14 @@ class BackendHeader
 		if(!empty($this->cssFiles))
 		{
 			// loop the CSS-files and add the modified-time
-			foreach($this->cssFiles as $file) $cssFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
+			foreach($this->cssFiles as $file)
+			{
+				// add lastmodified time
+				if($file['add_timestamp'] !== false) $file['path'] .= (strpos($file['path'], '?') !== false) ? '&m='. $lastModifiedTime : '?m='. $lastModifiedTime;
+
+				// add
+				$cssFiles[] = array('path' => $file['path']);
+			}
 		}
 
 		// assign CSS-files
@@ -178,16 +187,16 @@ class BackendHeader
 			foreach($this->javascriptFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if(in_array($file, $ignoreCache)) $javascriptFiles[] = array('path' => $file);
+				if(in_array($file['path'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('path' => $file['path']);
 
 				// make the file uncacheble
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file, 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => $file .'&amp;m='. time());
+					if(substr($file['path'], 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => $file['path'] .'&amp;m='. time());
 
 					// add lastmodified time
-					else $javascriptFiles[] = array('path' => $file .'?m='. $lastModifiedTime);
+					else $javascriptFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
 				}
 			}
 		}

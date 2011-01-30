@@ -30,6 +30,7 @@
 * Bugfix: non-existing items were included in the getAll-method
 * Core: non-absolute urls are replaced when using Backend/Frontend-mailer
 * Bugfix: multipleSelectbox is now working as it was intended
+* Core: it is now possible to tell the code not to add a timestamp on the url for CSS/JS
 
 2.0.2 (2010-11-24)
 --

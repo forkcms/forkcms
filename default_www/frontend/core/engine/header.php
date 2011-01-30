@@ -108,8 +108,9 @@ class FrontendHeader extends FrontendBaseObject
 	 * @param	string[optional] $media			The media to use.
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $media = 'screen', $condition = null, $minify = true)
+	public function addCSS($file, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -163,6 +164,7 @@ class FrontendHeader extends FrontendBaseObject
 			$temp['file'] = (string) $file;
 			$temp['media'] = (string) $media;
 			$temp['condition'] = (string) $condition;
+			$temp['add_timestamp'] = $addTimestamp;
 
 			// add to files
 			$this->cssFiles[] = $temp;
@@ -177,8 +179,9 @@ class FrontendHeader extends FrontendBaseObject
 	 * @param 	string $file						The path to the javascript-file that should be loaded.
 	 * @param	bool[optional] $minify				Should the file be minified?
 	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 * @param	bool[optional] $addTimestamp		May we add a timestamp for caching purposes?
 	 */
-	public function addJavascript($file, $minify = true, $parseThroughPHP = false)
+	public function addJavascript($file, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -230,14 +233,14 @@ class FrontendHeader extends FrontendBaseObject
 			$file = '/frontend/js.php?module='. $chunks[0] .'&amp;file='. $chunks[2] .'&amp;language='. FRONTEND_LANGUAGE;
 		}
 
-		// try to modify
+		// try to minify
 		if($minify) $file = $this->minifyJavascript($file);
 
 		// already in array?
 		if(!in_array($file, $this->javascriptFiles))
 		{
 			// add to files
-			$this->javascriptFiles[] = $file;
+			$this->javascriptFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
 		}
 	}
 
@@ -514,7 +517,7 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($existingCSSFiles as $file)
 			{
 				// add lastmodified time
-				$file['file'] .= (strpos($file['file'], '?') !== false) ? '&m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
+				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
 
 				// add
 				$cssFiles[] = $file;
@@ -539,19 +542,19 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($existingJavascriptFiles as $file)
 			{
 				// some files shouldn't be uncachable
-				if(in_array($file, $ignoreCache)) $javascriptFiles[] = array('file' => $file);
+				if(in_array($file['file'], $ignoreCache) || $file['add_timestamp'] === false) $javascriptFiles[] = array('file' => $file['file']);
 
 				// make the file uncachable
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file, 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file .'&amp;m='. time());
+					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] .'&amp;m='. time());
 
 					// add lastmodified time
 					else
 					{
-						$modifiedTime = (strpos($file, '?') !== false) ? '&amp;m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
-						$javascriptFiles[] = array('file' => $file . $modifiedTime);
+						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
+						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
 					}
 				}
 			}
