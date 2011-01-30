@@ -27,7 +27,8 @@
 * Core: backendMailer will remove tags from the subject
 * Core: added the passwordword generator into the frontend
 * Bugfix: selecting a template in teh mailmotor wasn't working in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/99
-* Bugfix: non-existing items were included in the getAll-method.
+* Bugfix: non-existing items were included in the getAll-method
+* Core: non-absolute urls are replaced when using Backend/Frontend-mailer
 
 2.0.2 (2010-11-24)
 --
