@@ -36,6 +36,7 @@
 * Content blocks: make sure you add an extra column "extra_id"
 * Bugfix: Blog was using the revision-id instead of the id for retrieving tags
 * Core: Facebook should be add in the footer instead of the header because Facebook sucks
+* Core: improvment for pagination (should fix http://forkcms.lighthouseapp.com/projects/61890/tickets/88)
 
 2.0.2 (2010-11-24)
 --
