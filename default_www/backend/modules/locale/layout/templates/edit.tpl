@@ -13,33 +13,27 @@
 					{$txtName} {$txtNameError}
 					<span class="helpTxt">{$msgHelpEditName}</span>
 				</p>
-
 				<p>
 					<label for="value">{$lblTranslation|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtValue} {$txtValueError}
 					<span class="helpTxt">{$msgHelpEditValue}</span>
 				</p>
-
 				<p>
 					<label for="language">{$lblLanguage|ucfirst}</label>
 					{$ddmLanguage} {$ddmLanguageError}
 				</p>
-
 				<p>
 					<label for="application">{$lblApplication|ucfirst}</label>
 					{$ddmApplication} {$ddmApplicationError}
 				</p>
-
 				<p>
 					<label for="module">{$lblModule|ucfirst}</label>
 					{$ddmModule} {$ddmModuleError}
 				</p>
-
 				<p>
 					<label for="type">{$lblType|ucfirst}</label>
 					{$ddmType} {$ddmTypeError}
 				</p>
-
 			</div>
 		</div>
 
