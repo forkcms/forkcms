@@ -35,6 +35,7 @@
 * Bugfix: editing a tag was calling an non existing method
 * Content blocks: make sure you add an extra column "extra_id"
 * Bugfix: Blog was using the revision-id instead of the id for retrieving tags
+* Core: Facebook should be add in the footer instead of the header because Facebook sucks
 
 2.0.2 (2010-11-24)
 --
