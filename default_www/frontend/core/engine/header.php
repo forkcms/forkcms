@@ -224,6 +224,9 @@ class FrontendHeader extends FrontendBaseObject
 			// validate
 			if(!isset($chunks[2])) throw new FrontendException('Invalid file ('. $file .').');
 
+			// reset module for core
+			if($chunks[0] == '') $chunks[0] = 'core';
+
 			// alter the file
 			$file = '/frontend/js.php?module='. $chunks[0] .'&amp;file='. $chunks[2] .'&amp;language='. FRONTEND_LANGUAGE;
 		}
