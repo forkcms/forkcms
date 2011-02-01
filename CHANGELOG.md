@@ -33,6 +33,8 @@
 * Core: it is now possible to tell the code not to add a timestamp on the url for CSS/JS
 * Bugfix: changing the working language was redirecting to dashboard instead of the module, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/91
 * Bugfix: editing a tag was calling an non existing method
+* Content blocks: make sure you add an extra column "extra_id"
+* Bugfix: Blog was using the revision-id instead of the id for retrieving tags
 
 2.0.2 (2010-11-24)
 --
