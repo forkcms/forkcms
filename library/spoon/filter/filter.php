@@ -24,6 +24,7 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		0.1.1
  */
 class SpoonFilter
@@ -289,14 +290,16 @@ class SpoonFilter
 	 * @return	string						The string with HTML-entities.
 	 * @param	string $value				The value that should HTML-entityfied.
 	 * @param	string[optional] $charset	The charset to use, default wil be based on SPOON_CHARSET.
+	 * @param	int[optional] $quoteStyle	Which quotes should be decoded, default ENT_NOQUOTES.
 	 */
-	public static function htmlentities($value, $charset = null)
+	public static function htmlentities($value, $charset = null, $quoteStyle = ENT_NOQUOTES)
 	{
-		// define charset
+		// init vars
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
 		// apply method
-		$return = htmlentities($value, ENT_QUOTES, $charset);
+		$return = htmlentities($value, $quoteStyle, $charset);
 
 		/**
 		 * PHP doesn't replace a backslash to its html entity since this is something
@@ -314,14 +317,16 @@ class SpoonFilter
 	 * @return	string						The string with no HTML-entities.
 	 * @param	string $value				The value that should be decoded.
 	 * @param	string[optional] $charset	The charset to use, default will be based on SPOON_CHARSET.
+	 * @param	int[optional] $quoteStyle	Which quotes should be decoded, default ENT_NOQUOTES.
 	 */
-	public static function htmlentitiesDecode($value, $charset = null)
+	public static function htmlentitiesDecode($value, $charset = null, $quoteStyle = ENT_NOQUOTES)
 	{
-		// define charset
+		// init vars
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
 		// apply method
-		return html_entity_decode($value, ENT_NOQUOTES, $charset);
+		return html_entity_decode($value, $quoteStyle, $charset);
 	}
 
 

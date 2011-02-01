@@ -74,13 +74,15 @@ class FrontendHeader extends FrontendBaseObject
 		Spoon::setObjectReference('header', $this);
 
 		// add some default CSS files
-		$this->addCSS('/frontend/core/layout/css/screen.css');
-		$this->addCSS('/frontend/core/layout/css/print.css', 'print');
 		$this->addCSS('/frontend/core/layout/css/jquery_ui/ui-lightness/jquery_ui.css');
+		$this->addCSS('/frontend/core/layout/css/screen.css');
 
 		// add default IE stylesheets
 		$this->addCSS('/frontend/core/layout/css/ie6.css', 'screen', 'lte IE 6');
 		$this->addCSS('/frontend/core/layout/css/ie7.css', 'screen', 'IE 7');
+
+		// print stylesheet
+		$this->addCSS('/frontend/core/layout/css/print.css', 'print');
 
 		// debug stylesheet
 		if(SPOON_DEBUG) $this->addCSS('/frontend/core/layout/css/debug.css');
@@ -264,16 +266,19 @@ class FrontendHeader extends FrontendBaseObject
 		// loop files
 		foreach($this->cssFiles as $file)
 		{
+			// debug should be the last file
+			if(strpos($file['file'], 'debug.css') !== false) $aTemp['e'. $i][] = $file;
+
 			// if condition is not empty, add to lowest key
-			if($file['condition'] != '') $aTemp['z'.$i][] = $file;
+			elseif($file['condition'] != '') $aTemp['y'. $i][] = $file;
 
 			else
 			{
 				// if media == screen, add to highest key
-				if($file['media'] == 'screen') $aTemp['a'.$i][] = $file;
+				if($file['media'] == 'screen') $aTemp['a'. $i][] = $file;
 
 				// fallback
-				else $aTemp['b'. $file['media'] .$i][] = $file;
+				else $aTemp['b'. $file['media'] . $i][] = $file;
 
 				// increase
 				$i++;
