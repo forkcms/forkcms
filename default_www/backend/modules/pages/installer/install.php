@@ -82,7 +82,7 @@ class PagesInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Footer', 'footer navigation');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'MainNavigation', 'main navigation');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Meta', 'meta navigation');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Root', 'loose pages');
+		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Root', 'single pages');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Added', 'The page "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'AddedTemplate', 'The template "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'pages', 'msg', 'BlockAttached', 'The module <strong>%1$s</strong> is attached to this section.');
