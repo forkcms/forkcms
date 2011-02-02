@@ -382,7 +382,7 @@ class BL extends BackendLanguage
 	 * @param	string $key					The key to get.
 	 * @param	string[optional] $module	The module wherein we should search.
 	 */
-	public static function err($key, $module)
+	public static function err($key, $module = null)
 	{
 		return BackendLanguage::getError($key, $module);
 	}
