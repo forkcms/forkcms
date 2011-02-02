@@ -47,7 +47,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('name'), 'name');
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::lbl('Edit'));
 
 		// row function
 		$this->datagrid->setRowFunction(array('BackendBlogCategories', 'setDefault'), array('[id]'));

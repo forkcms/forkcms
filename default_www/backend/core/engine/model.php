@@ -88,24 +88,24 @@ class BackendModel
 		if(!empty($akismetModules) && self::getModuleSetting('core', 'akismet_key', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => BL::getError('AkismetKey'));
+			$warnings[] = array('message' => BL::err('AkismetKey'));
 		}
 
 		// check if the google maps key is available if there are modules that require it
 		if(!empty($googleMapsModules) && self::getModuleSetting('core', 'google_maps_key', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => BL::getError('GoogleMapsKey'));
+			$warnings[] = array('message' => BL::err('GoogleMapsKey'));
 		}
 
 		// check if the fork API keys are available
 		if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
 		{
-			$warnings[] = array('message' => BL::getError('ForkAPIKeys'));
+			$warnings[] = array('message' => BL::err('ForkAPIKeys'));
 		}
 
 		// check if debug-mode is active
-		if(SPOON_DEBUG) $warnings[] = array('message' => BL::getError('DebugModeIsActive'));
+		if(SPOON_DEBUG) $warnings[] = array('message' => BL::err('DebugModeIsActive'));
 /*
 		// @note: robots.txt are removed
 		// 	indexability is now based on meta noindex (SPOON_DEBUG true = not noindex)
@@ -138,7 +138,7 @@ class BackendModel
 			}
 
 			// add warning
-			if(!$isOK) $warnings[] = array('message' => BL::getError('RobotsFileIsNotOK'));
+			if(!$isOK) $warnings[] = array('message' => BL::err('RobotsFileIsNotOK'));
 		}
 */
 		// return
@@ -533,7 +533,7 @@ class BackendModel
 		$modules = self::getModules($activeOnly);
 
 		// loop and add into the return-array (with correct label)
-		foreach($modules as $module) $dropdown[$module] = ucfirst(BackendLanguage::getLabel(SpoonFilter::toCamelCase($module)));
+		foreach($modules as $module) $dropdown[$module] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module)));
 
 		// return data
 		return $dropdown;

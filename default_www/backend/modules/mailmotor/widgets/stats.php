@@ -74,15 +74,15 @@ class BackendMailmotorWidgetStats extends BackendBaseWidget
 		$stats = BackendMailmotorCMHelper::getStatistics($mailing[0]['id'], true);
 
 		// reformat the send date
-		$mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) .' '. BL::getLabel('At') .' '. SpoonDate::getDate('H:i', $mailing);
+		$mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) .' '. BL::lbl('At') .' '. SpoonDate::getDate('H:i', $mailing);
 
 		// get results
 		$results = array();
-		$results[] = array('label' => BL::getLabel('MailmotorLatestMailing'), 'value' => $mailing[0]['name']);
-		$results[] = array('label' => BL::getLabel('MailmotorSendDate'), 'value' => $mailing[0]['sent']);
-		$results[] = array('label' => BL::getLabel('MailmotorSent'), 'value' => $stats['recipients'] .' ('. $stats['recipients_percentage'] .')');
-		$results[] = array('label' => BL::getLabel('MailmotorOpened'), 'value' => $stats['unique_opens'] .' ('. $stats['unique_opens_percentage'] .')');
-		$results[] = array('label' => BL::getLabel('MailmotorClicks'), 'value' => $stats['clicks_total']);
+		$results[] = array('label' => BL::lbl('MailmotorLatestMailing'), 'value' => $mailing[0]['name']);
+		$results[] = array('label' => BL::lbl('MailmotorSendDate'), 'value' => $mailing[0]['sent']);
+		$results[] = array('label' => BL::lbl('MailmotorSent'), 'value' => $stats['recipients'] .' ('. $stats['recipients_percentage'] .')');
+		$results[] = array('label' => BL::lbl('MailmotorOpened'), 'value' => $stats['unique_opens'] .' ('. $stats['unique_opens_percentage'] .')');
+		$results[] = array('label' => BL::lbl('MailmotorClicks'), 'value' => $stats['clicks_total']);
 
 		// there are some results
 		if(!empty($results))

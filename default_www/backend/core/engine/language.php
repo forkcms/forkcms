@@ -363,17 +363,55 @@ class BackendLanguage
 
 
 /**
- * Some kind of alias for BackendLanguage
+ * An alias for BackendLanguage with some extras.
  *
  *
  * @package		backend
  * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BL extends BackendLanguage
 {
+	/**
+	 * Get an error from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module wherein we should search.
+	 */
+	public static function err($key, $module)
+	{
+		return BackendLanguage::getError($key, $module);
+	}
+
+
+	/**
+	 * Get a label from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module wherein we should search.
+	 */
+	public static function lbl($key, $module = null)
+	{
+		return BackendLanguage::getLabel($key, $module);
+	}
+
+
+	/**
+	 * Get a message from the language-file
+	 *
+	 * @return	string
+	 * @param	string $key					The key to get.
+	 * @param	string[optional] $module	The module wherein we should search.
+	 */
+	public static function msg($key, $module = null)
+	{
+		return BackendLanguage::getMessage($key, $module);
+	}
 }
 
 ?>

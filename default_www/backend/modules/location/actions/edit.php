@@ -102,7 +102,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		$this->tpl->assign('settings', $settings['location']);
 
 		// assign message if address was not be geocoded
-		if($this->record['lat'] == null || $this->record['lng'] == null) $this->tpl->assign('errorMessage', BackendLanguage::getError('AddressCouldNotBeGeocoded'));
+		if($this->record['lat'] == null || $this->record['lng'] == null) $this->tpl->assign('errorMessage', BL::err('AddressCouldNotBeGeocoded'));
 	}
 
 
@@ -120,11 +120,11 @@ class BackendLocationEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('street')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('number')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('zip')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('city')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

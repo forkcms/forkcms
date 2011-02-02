@@ -459,7 +459,7 @@ class BackendPagesModel
 									<p><span class="helpTxt templateBlockCurrentType">&nbsp;</span></p>
 									<div class="buttonHolder">
 										<a href="#chooseExtra" class="button icon iconEdit iconOnly chooseExtra" data-block-id="'. $index .'">
-											<span>'. ucfirst(BL::getLabel('Edit')) .'</span>
+											<span>'. ucfirst(BL::lbl('Edit')) .'</span>
 										</a>
 									</div>
 								</td>'."\n";
@@ -816,12 +816,12 @@ class BackendPagesModel
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
 
 			// build name
-			$name = ucfirst(BL::getLabel($row['label']));
+			$name = ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 
 			// add human readable name
-			$row['human_name'] = BackendLanguage::getLabel(SpoonFilter::toCamelCase('ExtraType_'. $row['type'])) .': '. $name;
-			$row['message'] = sprintf(BackendLanguage::getMessage(SpoonFilter::toCamelCase($row['type'] . '_attached'), 'pages'), $name);
+			$row['human_name'] = BL::lbl(SpoonFilter::toCamelCase('ExtraType_'. $row['type'])) .': '. $name;
+			$row['message'] = sprintf(BL::msg(SpoonFilter::toCamelCase($row['type'] . '_attached'), 'pages'), $name);
 		}
 
 		// any items to remove?
@@ -870,11 +870,11 @@ class BackendPagesModel
 			if(!isset($row['data']['url'])) $row['data']['url'] = BackendModel::createURLForAction('index', $row['module']);
 
 			// build name
-			$name = ucfirst(BL::getLabel($row['label']));
+			$name = ucfirst(BL::lbl($row['label']));
 			if(isset($row['data']['extra_label'])) $name = $row['data']['extra_label'];
 
 			// create modulename
-			$moduleName = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module'])));
+			$moduleName = ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module'])));
 
 			// build array
 			if(!isset($values[$row['module']])) $values[$row['module']] = array('value' => $row['module'], 'name' => $moduleName, 'items' => array());
@@ -1236,13 +1236,13 @@ class BackendPagesModel
 		require_once FRONTEND_CACHE_PATH .'/navigation/navigation_'. BackendLanguage::getWorkingLanguage() .'.php';
 
 		// start HTML
-		$html = '<h4>'. ucfirst(BL::getLabel('MainNavigation')) .'</h4>'."\n";
+		$html = '<h4>'. ucfirst(BL::lbl('MainNavigation')) .'</h4>'."\n";
 		$html .= '<div class="clearfix">'."\n";
 		$html .= '	<ul>'."\n";
 		$html .= '		<li id="page-1" rel="home">';
 
 		// homepage should
-		$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => 1)) .'"><ins>&#160;</ins>'. ucfirst(BL::getLabel('Home')) .'</a>'."\n";
+		$html .= '			<a href="'. BackendModel::createURLForAction('edit', null, null, array('id' => 1)) .'"><ins>&#160;</ins>'. ucfirst(BL::lbl('Home')) .'</a>'."\n";
 
 		// add subpages
 		$html .= self::getSubTree($navigation, 1);
@@ -1256,7 +1256,7 @@ class BackendPagesModel
 		if(BackendModel::getModuleSetting('pages', 'meta_navigation', false))
 		{
 			// meta pages
-			$html .= '<h4>'. ucfirst(BL::getLabel('Meta')) .'</h4>'."\n";
+			$html .= '<h4>'. ucfirst(BL::lbl('Meta')) .'</h4>'."\n";
 			$html .= '<div class="clearfix">'."\n";
 			$html .= '	<ul>'."\n";
 
@@ -1286,7 +1286,7 @@ class BackendPagesModel
 		}
 
 		// footer pages
-		$html .= '<h4>'. ucfirst(BL::getLabel('Footer')) .'</h4>'."\n";
+		$html .= '<h4>'. ucfirst(BL::lbl('Footer')) .'</h4>'."\n";
 
 		// start
 		$html .= '<div class="clearfix">'."\n";
@@ -1318,7 +1318,7 @@ class BackendPagesModel
 		if(isset($navigation['root'][0]) && !empty($navigation['root'][0]))
 		{
 			// meta pages
-			$html .= '<h4>'. ucfirst(BL::getLabel('Root')) .'</h4>'."\n";
+			$html .= '<h4>'. ucfirst(BL::lbl('Root')) .'</h4>'."\n";
 
 			// start
 			$html .= '<div class="clearfix">'."\n";
@@ -1357,9 +1357,9 @@ class BackendPagesModel
 	 */
 	public static function getTypes()
 	{
-		return array('rich_text' => BL::getLabel('Editor'),
-					 'block' => BL::getLabel('Module'),
-					 'widget' => BL::getLabel('Widget'));
+		return array('rich_text' => BL::lbl('Editor'),
+					 'block' => BL::lbl('Module'),
+					 'widget' => BL::lbl('Widget'));
 	}
 
 

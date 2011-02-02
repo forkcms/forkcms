@@ -70,11 +70,11 @@ class BackendLocationAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('street')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('number')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('zip')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('city')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->frm->getField('street')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('number')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('zip')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('city')->isFilled(BL::err('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

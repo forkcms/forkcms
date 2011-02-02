@@ -116,9 +116,9 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 			else $page = (SITE_MULTILANGUAGE ? substr($pageList, strpos($pageList, '/', 1)) : $pageList);
 
 			// validate fields
-			if(isset($page) && !SpoonFilter::isURL(SITE_URL . $page)) $this->frm->getField('page_path')->addError(BL::getError('InvalidURL'));
-			if(!isset($page)) $this->frm->getField('page_path')->addError(BL::getError('FieldIsRequired'));
-			if(!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) $this->frm->getField('page_path')->addError(BL::getError('FieldIsRequired'));
+			if(isset($page) && !SpoonFilter::isURL(SITE_URL . $page)) $this->frm->getField('page_path')->addError(BL::err('InvalidURL'));
+			if(!isset($page)) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
+			if(!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

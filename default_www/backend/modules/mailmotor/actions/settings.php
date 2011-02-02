@@ -218,17 +218,17 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			// account is linked but no client ID is set yet
 			if($this->accountLinked && empty($this->clientID))
 			{
-				$this->frm->getField('company_name')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('contact_email')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('contact_name')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('countries')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('timezones')->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('company_name')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('contact_email')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('contact_name')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('countries')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('timezones')->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// user is god
 			elseif(BackendAuthentication::getUser()->isGod())
 			{
-				$this->frm->getField('price_per_email')->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// form is validated

@@ -115,7 +115,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// create elements
 		$this->frm->addText('title');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
-		$this->frm->addRadiobutton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
+		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 		$this->frm->addCheckbox('no_follow');
 
 		// get maximum number of blocks
@@ -191,7 +191,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
 			// validate meta
 			$this->meta->validate();

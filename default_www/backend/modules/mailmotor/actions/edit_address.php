@@ -214,9 +214,9 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 			if(!empty($this->subscriptions)) $ddmGroups = $this->frm->getField('subscriptions');
 
 			// validate fields
-			if($txtEmail->isFilled(BL::getError('EmailIsRequired')))
+			if($txtEmail->isFilled(BL::err('EmailIsRequired')))
 			{
-				$txtEmail->isEmail(BL::getError('EmailIsInvalid'));
+				$txtEmail->isEmail(BL::err('EmailIsInvalid'));
 			}
 
 			// no errors?

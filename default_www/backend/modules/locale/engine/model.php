@@ -185,7 +185,7 @@ class BackendLocaleModel
 		$labels = $types;
 
 		// loop and build labels
-		foreach($labels as &$row) $row = ucfirst(BackendLanguage::getMessage(mb_strtoupper($row), 'core'));
+		foreach($labels as &$row) $row = ucfirst(BL::msg(mb_strtoupper($row), 'core'));
 
 		// build array
 		return array_combine($types, $labels);

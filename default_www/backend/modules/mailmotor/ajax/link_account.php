@@ -28,9 +28,9 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 		$password = SpoonFilter::getPostValue('password', null, '');
 
 		// check input
-		if(empty($url)) $this->output(900, array('field' => 'url'), BL::getError('FieldIsRequired'));
-		if(empty($username)) $this->output(900, array('field' => 'username'), BL::getError('FieldIsRequired'));
-		if(empty($password)) $this->output(900, array('field' => 'password'), BL::getError('FieldIsRequired'));
+		if(empty($url)) $this->output(900, array('field' => 'url'), BL::err('FieldIsRequired'));
+		if(empty($username)) $this->output(900, array('field' => 'username'), BL::err('FieldIsRequired'));
+		if(empty($password)) $this->output(900, array('field' => 'password'), BL::err('FieldIsRequired'));
 
 		try
 		{
@@ -38,7 +38,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so stop here
-				$this->output(self::BAD_REQUEST, null, BL::getError('ClassDoesNotExist', 'mailmotor'));
+				$this->output(self::BAD_REQUEST, null, BL::err('ClassDoesNotExist', 'mailmotor'));
 			}
 
 			// require CampaignMonitor class
@@ -81,14 +81,14 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 		catch(Exception $e)
 		{
 			// timeout occured
-			if($e->getMessage() == 'Error Fetching http headers') $this->output(self::BAD_REQUEST, null, BL::getError('CmTimeout', 'mailmotor'));
+			if($e->getMessage() == 'Error Fetching http headers') $this->output(self::BAD_REQUEST, null, BL::err('CmTimeout', 'mailmotor'));
 
 			// other error
-			$this->output(900, array('field' => 'url'), sprintf(BL::getError('CampaignMonitorError', 'mailmotor'), $e->getMessage()));
+			$this->output(900, array('field' => 'url'), sprintf(BL::err('CampaignMonitorError', 'mailmotor'), $e->getMessage()));
 		}
 
 		// CM was successfully initialized
-		$this->output(self::OK, array('client_id' => (!empty($clientID) ? $clientID : null), 'message' => 'account-linked'), BL::getMessage('AccountLinked', 'mailmotor'));
+		$this->output(self::OK, array('client_id' => (!empty($clientID) ? $clientID : null), 'message' => 'account-linked'), BL::msg('AccountLinked', 'mailmotor'));
 	}
 }
 

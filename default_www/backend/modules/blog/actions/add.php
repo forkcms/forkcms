@@ -53,8 +53,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Hidden', $this->URL->getModule()), 'value' => 'Y');
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Published'), 'value' => 'N');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
 		// create elements
 		$this->frm->addText('title');
@@ -109,10 +109,10 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('text')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('publish_on_date')->isValid(BL::getError('DateIsInvalid'));
-			$this->frm->getField('publish_on_time')->isValid(BL::getError('TimeIsInvalid'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
+			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 
 			// validate meta
 			$this->meta->validate();

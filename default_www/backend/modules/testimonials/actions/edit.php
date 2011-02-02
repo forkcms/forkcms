@@ -71,8 +71,8 @@ class BackendTestimonialsEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// set hidden values
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Hidden'), 'value' => 'Y');
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Published'), 'value' => 'N');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
 		// create elements
 		$this->frm->addText('name', $this->record['name'])->setAttribute('id', 'title');
@@ -110,8 +110,8 @@ class BackendTestimonialsEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BackendLanguage::getError('NameIsRequired'));
-			$this->frm->getField('testimonial')->isFilled(BackendLanguage::getError('TestimonialIsRequired'));
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('testimonial')->isFilled(BL::err('TestimonialIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

@@ -109,7 +109,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 						if(isset($row['url'], $row['name'], $row['module']))
 						{
 							// add
-							$items[] = array('module' => ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
+							$items[] = array('module' => ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
 						}
 					}
 				}
@@ -126,13 +126,13 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		$this->dgUsage->setColumnsHidden(array('url'));
 
 		// set headers
-		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Title')), 'url' => ''));
+		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::lbl('Title')), 'url' => ''));
 
 		// set url
-		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::getLabel('Edit')));
+		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::lbl('Edit')));
 
 		// add use column
-		$this->dgUsage->addColumn('edit', null, ucfirst(BL::getLabel('Edit')), '[url]', BL::getLabel('Edit'));
+		$this->dgUsage->addColumn('edit', null, ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
 	}
 
 
@@ -184,7 +184,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
