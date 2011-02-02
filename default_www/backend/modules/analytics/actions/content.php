@@ -89,7 +89,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 
@@ -171,7 +171,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			$datagrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
 
 			// set headers values
-			$headers['page_path'] = ucfirst(BL::getLabel('Page'));
+			$headers['page_path'] = ucfirst(BL::lbl('Page'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);
@@ -205,7 +205,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			$datagrid->setColumnHidden('page_encoded');
 
 			// set headers values
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::getLabel('Pageviews'));
+			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Pageviews'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);

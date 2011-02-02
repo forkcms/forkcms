@@ -130,7 +130,7 @@ class BackendSearchSettings extends BackendBaseActionEdit
 				if($this->frm->getField('search_'. $module['module'])->getChecked())
 				{
 					// valid weight?
-					$this->frm->getField('search_'. $module['module'] .'_weight')->isDigital(BL::getError('WeightNotNumeric'));
+					$this->frm->getField('search_'. $module['module'] .'_weight')->isDigital(BL::err('WeightNotNumeric'));
 					$this->modules[$i]['txtError'] = $this->frm->getField('search_'. $module['module'] .'_weight')->getErrors();
 				}
 			}

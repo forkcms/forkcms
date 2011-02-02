@@ -103,7 +103,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->datagrid->setColumnsHidden(array('campaign_id', 'campaign_name', 'status'));
 
 		// set headers values
-		$headers['send_on'] = ucfirst(BL::getLabel('Sent'));
+		$headers['send_on'] = ucfirst(BL::lbl('Sent'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels($headers);

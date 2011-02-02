@@ -252,7 +252,7 @@ class BackendAnalyticsHelper
 			// store dimension in correct format
 			$entry = array();
 			if($result['keyword'] != '(not set)') $entry['source'] = $result['keyword'];
-			elseif($result['source'] == '(direct)') $entry['source'] = BL::getLabel('DirectTraffic');
+			elseif($result['source'] == '(direct)') $entry['source'] = BL::lbl('DirectTraffic');
 			elseif($result['referralPath'] != '(not set)') $entry['source'] = $result['source'] . $result['referralPath'];
 			else $entry['source'] = $result['source'];
 
@@ -772,14 +772,14 @@ class BackendAnalyticsHelper
 			$txtEndDate = $frm->getField('end_date');
 
 			// required fields
-			$txtStartDate->isFilled(BL::getError('StartDateIsInvalid'));
-			$txtEndDate->isFilled(BL::getError('EndDateIsInvalid'));
+			$txtStartDate->isFilled(BL::err('StartDateIsInvalid'));
+			$txtEndDate->isFilled(BL::err('EndDateIsInvalid'));
 
 			// dates within valid range
 			if($txtStartDate->isFilled() && $txtEndDate->isFilled())
 			{
 				// valid dates
-				if($txtStartDate->isValid(BL::getError('StartDateIsInvalid')) && $txtEndDate->isValid(BL::getError('EndDateIsInvalid')))
+				if($txtStartDate->isValid(BL::err('StartDateIsInvalid')) && $txtEndDate->isValid(BL::err('EndDateIsInvalid')))
 				{
 					// get timestamps
 					$newStartDate = BackendModel::getUTCTimestamp($txtStartDate);
@@ -798,7 +798,7 @@ class BackendAnalyticsHelper
 					elseif($newStartDate > $newEndDate) $valid = false;
 
 					// invalid range
-					if(!$valid) $txtStartDate->setError(BL::getError('DateRangeIsInvalid'));
+					if(!$valid) $txtStartDate->setError(BL::err('DateRangeIsInvalid'));
 				}
 			}
 

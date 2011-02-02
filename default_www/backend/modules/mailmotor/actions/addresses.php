@@ -123,7 +123,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		if(!empty($this->group)) $this->datagrid->setURL('&group_id='. $this->group['id'], true);
 
 		// set headers values
-		$headers['created_on'] = ucfirst(BL::getLabel('Created'));
+		$headers['created_on'] = ucfirst(BL::lbl('Created'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels($headers);
@@ -136,7 +136,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		$this->datagrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('export' => BL::getLabel('Export'), 'delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('export' => BL::lbl('Export'), 'delete' => BL::lbl('Delete')), 'delete');
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// set column functions
@@ -145,7 +145,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		// add edit column
 		$editURL = BackendModel::createURLForAction('edit_address') .'&amp;email=[email]';
 		if(!empty($this->group)) $editURL .= '&amp;group_id='. $this->group['id'];
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), $editURL, BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), $editURL, BL::lbl('Edit'));
 
 		// set paging limit
 		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);

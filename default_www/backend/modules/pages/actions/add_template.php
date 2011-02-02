@@ -66,11 +66,11 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		// loop extras to populate the default extras
 		foreach($extras as $item)
 		{
-			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
 			if($item['type'] == 'widget')
 			{
-				$widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::getLabel($item['label']));
-				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
+				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
 			}
 		}
 
@@ -79,9 +79,9 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		asort($widgets, SORT_STRING);
 
 		// create array
-		$defaultExtras = array('' => array('editor' => BL::getLabel('Editor')),
-								ucfirst(BL::getLabel('Modules')) => $blocks,
-								ucfirst(BL::getLabel('Widgets')) => $widgets);
+		$defaultExtras = array('' => array('editor' => BL::lbl('Editor')),
+								ucfirst(BL::lbl('Modules')) => $blocks,
+								ucfirst(BL::lbl('Widgets')) => $widgets);
 
 		// add some fields
 		for($i = 1; $i <= $maximumBlocks; $i++)
@@ -110,14 +110,14 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// required fields
-			$this->frm->getField('file')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('label')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('file')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
 			// loop the know fields and validate them
 			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 			{
-				$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('name_'. $i)->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// validate syntax
@@ -138,7 +138,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				if(count($row) != $cellCount)
 				{
 					// add error
-					$this->frm->getField('format')->addError(BL::getError('InvalidTemplateSyntax'));
+					$this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
 
 					// stop
 					break;

@@ -100,10 +100,10 @@ class BackendBlogEditComment extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('author')->isFilled(BL::getError('AuthorIsRequired'));
-			$this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
-			$this->frm->getField('text')->isFilled(BL::getError('FieldIsRequired'));
-			if($this->frm->getField('website')->isFilled()) $this->frm->getField('website')->isURL(BL::getError('InvalidURL'));
+			$this->frm->getField('author')->isFilled(BL::err('AuthorIsRequired'));
+			$this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid'));
+			$this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
+			if($this->frm->getField('website')->isFilled()) $this->frm->getField('website')->isURL(BL::err('InvalidURL'));
 
 			// no errors?
 			if($this->frm->isCorrect())

@@ -49,7 +49,7 @@ class BackendTestimonialsIndex extends BackendBaseActionIndex
 		$this->datagrid->enableSequenceByDragAndDrop();
 
 		// create the "edit" button for each row
-		$this->datagrid->addColumn('edit', null, BackendLanguage::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BackendLanguage::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BackendLanguage::getLabel('Edit'));
 	}
 
 

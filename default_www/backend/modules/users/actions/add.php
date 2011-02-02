@@ -86,44 +86,44 @@ class BackendUsersAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// email is present
-			if($this->frm->getField('email')->isFilled(BL::getError('EmailIsRequired')))
+			if($this->frm->getField('email')->isFilled(BL::err('EmailIsRequired')))
 			{
 				// is this an email-address
-				if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
+				if($this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid')))
 				{
 					// was this emailaddress deleted before
-					if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(sprintf(BL::getError('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
+					if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(sprintf(BL::err('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
 
 					else
 					{
 						// email already exists
-						if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
+						if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(BL::err('EmailAlreadyExists'));
 					}
 				}
 			}
 
 			// required fields
-			$this->frm->getField('password')->isFilled(BL::getError('PasswordIsRequired'));
-			$this->frm->getField('nickname')->isFilled(BL::getError('NicknameIsRequired'));
-			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
-			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
-			$this->frm->getField('interface_language')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('date_format')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('number_format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('password')->isFilled(BL::err('PasswordIsRequired'));
+			$this->frm->getField('nickname')->isFilled(BL::err('NicknameIsRequired'));
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('surname')->isFilled(BL::err('SurnameIsRequired'));
+			$this->frm->getField('interface_language')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('date_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
 			if($this->frm->getField('password')->isFilled())
 			{
-				if($this->frm->getField('password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::getError('ValuesDontMatch'));
+				if($this->frm->getField('password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::err('ValuesDontMatch'));
 			}
 
 			// validate avatar
 			if($this->frm->getField('avatar')->isFilled())
 			{
 				// correct extension
-				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::getError('JPGGIFAndPNGOnly')))
+				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
 				{
 					// correct mimetype?
-					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::getError('JPGGIFAndPNGOnly'));
+					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
 			}
 

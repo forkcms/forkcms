@@ -80,7 +80,7 @@ class BackendNavigation
 		{
 			// init some vars
 			$selected = (isset($selectedKeys[$currentDepth]) && $selectedKeys[$currentDepth] == $key);
-			$label = ucfirst(BL::getLabel($value['label']));
+			$label = ucfirst(BL::lbl($value['label']));
 			$URL = $value['url'];
 
 			// append extra parameters if needed

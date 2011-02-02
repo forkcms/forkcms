@@ -126,7 +126,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	public function getLanguage($language)
 	{
-		return BackendLanguage::getMessage(mb_strtoupper((string) $language), 'core');
+		return BL::msg(mb_strtoupper((string) $language), 'core');
 	}
 
 
@@ -138,7 +138,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	public function getType($type)
 	{
-		return BackendLanguage::getMessage(mb_strtoupper((string) $type), 'core');
+		return BL::msg(mb_strtoupper((string) $type), 'core');
 	}
 
 
@@ -165,13 +165,13 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
 		// column titles
-		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::getLabel('ReferenceCode')), 'value' => ucfirst(BL::getLabel('Translation'))));
+		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::lbl('ReferenceCode')), 'value' => ucfirst(BL::lbl('Translation'))));
 
 		// add the multicheckbox column
 		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// update value
@@ -180,7 +180,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array(__CLASS__, 'getType'), array('[type]'), 'type', true);
 
 		// add columns
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
@@ -198,13 +198,13 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->frm->addText('name', $this->filter['name']);
 		$this->frm->addText('value', $this->filter['value']);
 		$this->frm->addDropdown('language', BL::getLocaleLanguages(), $this->filter['language']);
-		$this->frm->getField('language')->setDefaultElement(ucfirst(BL::getLabel('ChooseALanguage')));
+		$this->frm->getField('language')->setDefaultElement(ucfirst(BL::lbl('ChooseALanguage')));
 		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
-		$this->frm->getField('application')->setDefaultElement(ucfirst(BL::getLabel('ChooseAnApplication')));
+		$this->frm->getField('application')->setDefaultElement(ucfirst(BL::lbl('ChooseAnApplication')));
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::getLabel('ChooseAModule')));
+		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::lbl('ChooseAModule')));
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
-		$this->frm->getField('type')->setDefaultElement(ucfirst(BL::getLabel('ChooseAType')));
+		$this->frm->getField('type')->setDefaultElement(ucfirst(BL::lbl('ChooseAType')));
 
 		// manually parse fields
 		$this->frm->parse($this->tpl);
