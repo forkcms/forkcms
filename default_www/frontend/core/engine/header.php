@@ -92,13 +92,6 @@ class FrontendHeader extends FrontendBaseObject
 		$this->addJavascript('/frontend/core/js/jquery/jquery.ui.js', false);
 		$this->addJavascript('/frontend/core/js/frontend.js', true);
 		$this->addJavascript('/frontend/core/js/utils.js', true);
-
-		// facebook admins given?
-		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
-		{
-			// add Facebook
-			$this->addJavascript('http://connect.facebook.net/'. strtolower(FRONTEND_LANGUAGE) .'_'. strtoupper(FRONTEND_LANGUAGE) .'/all.js#xfbml=1', false, false);
-		}
 	}
 
 
@@ -230,6 +223,9 @@ class FrontendHeader extends FrontendBaseObject
 
 			// validate
 			if(!isset($chunks[2])) throw new FrontendException('Invalid file ('. $file .').');
+
+			// reset module for core
+			if($chunks[0] == '') $chunks[0] = 'core';
 
 			// alter the file
 			$file = '/frontend/js.php?module='. $chunks[0] .'&amp;file='. $chunks[2] .'&amp;language='. FRONTEND_LANGUAGE;

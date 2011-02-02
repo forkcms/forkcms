@@ -164,6 +164,9 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// set colum URLs
 		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
+		// column titles
+		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::getLabel('ReferenceCode')), 'value' => ucfirst(BL::getLabel('Translation'))));
+
 		// add the multicheckbox column
 		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]');
 

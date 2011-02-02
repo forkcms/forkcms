@@ -504,14 +504,14 @@ class FrontendBaseBlock
 		$pagination['current_page'] = $this->pagination['requested_page'];
 
 		// as long as we are below page 5 we should show all pages starting from 1
-		if($this->pagination['requested_page'] < 6)
+		if($this->pagination['requested_page'] <= 6)
 		{
 			// init vars
 			$pagesStart = 1;
-			$pagesEnd = ($this->pagination['num_pages'] >= 6) ? 6 : $this->pagination['num_pages'];
+			$pagesEnd = ($this->pagination['num_pages'] >= 6) ? 7 : $this->pagination['num_pages'];
 
 			// show last pages
-			if($this->pagination['num_pages'] > 5) $showLastPages = true;
+			if($this->pagination['num_pages'] > 6) $showLastPages = true;
 		}
 
 		// as long as we are 5 pages from the end we should show all pages till the end

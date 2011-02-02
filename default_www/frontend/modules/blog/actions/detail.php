@@ -117,7 +117,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags
-		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['revision_id']);
+		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
 
 		// get comments
 		$this->comments = FrontendBlogModel::getComments($this->record['id']);
@@ -331,9 +331,18 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$comment['id'] = FrontendBlogModel::insertComment($comment);
 
 				// append a parameter to the URL so we can show moderation
-				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
-				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
-				if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
+				if(strpos($redirectLink, '?') === false)
+				{
+					if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
+				}
+				else
+				{
+					if($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#'.FL::getAction('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '&comment=spam#'.FL::getAction('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-'. $comment['id'];
+				}
 
 				// set title
 				$comment['post_title'] = $this->record['title'];
