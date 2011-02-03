@@ -208,7 +208,7 @@ a.icon span {
 
 .buttonHolderSingle .button {
 	margin: 0;
-	float: none;
+	float: none !important;
 	/* Used for single buttons so the focus lines are nice and clean */
 }
 

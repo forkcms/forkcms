@@ -171,6 +171,32 @@ class BackendBlogModel
 
 
 	/**
+	 * Delete all spam
+	 *
+	 * @return	void
+	 */
+	public static function deleteSpamComments()
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get blogpost ids
+		$postIds = (array) $db->getColumn('SELECT i.post_id
+											FROM blog_comments AS i
+											WHERE status = ? AND i.language = ?', array('spam', BL::getWorkingLanguage()));
+
+		// update record
+		$db->delete('blog_comments', 'status = ? AND language = ?', array('spam', BL::getWorkingLanguage()));
+
+		// recalculate the comment count
+		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+	}
+
+
+	/**
 	 * Checks if a blogpost exists
 	 *
 	 * @return	bool

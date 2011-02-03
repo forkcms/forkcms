@@ -41,6 +41,11 @@
 			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsSpam">
 				<div class="datagridHolder">
 					<input type="hidden" name="from" value="spam" />
+					<div class="generalMessage infoMessage">
+							{$msgDeleteAllSpam}
+							<a href="{$var|geturl:'delete_spam'}">{$lblDelete|ucfirst}</a>
+						</p>
+					</div>
 					{$dgSpam}
 				</div>
 			</form>
