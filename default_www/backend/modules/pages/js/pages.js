@@ -189,15 +189,21 @@ jsBackend.pages.extras =
 			var id = $(this).val();
 			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
-
+		
 		// blocks linked?
 		if(hasModules)
 		{
 			// show warning
 			$('#extraWarningAlreadyBlock').show();
-
+			
 			// disable blocks
 			$('#extraType option[value="block"]').attr('disabled', 'disabled');
+			
+			// get id
+			var id = $('#blockExtraId'+ blockId).val();
+			
+			// reenable
+			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').attr('disabled', '');
 		}
 		else
 		{
