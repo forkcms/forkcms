@@ -37,7 +37,8 @@
 * Bugfix: Blog was using the revision-id instead of the id for retrieving tags
 * Core: Facebook should be add in the footer instead of the header because Facebook sucks
 * Core: improvment for pagination (should fix http://forkcms.lighthouseapp.com/projects/61890/tickets/88)
-* Blog: it is now possible to remove all spam at once.
+* Blog: it is now possible to remove all spam at once
+* Pages: extra validation, so home can't have any blocks
 
 2.0.2 (2010-11-24)
 --

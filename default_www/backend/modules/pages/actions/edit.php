@@ -63,6 +63,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// set the default template as checked
 		$this->templates[$this->record['template_id']]['checked'] = true;
 
+		// homepage?
+		if($this->id == 1)
+		{
+			// loop and set disabled state
+			foreach($this->templates as &$row) $row['disabled'] = ($row['has_block']);
+		}
+
 		// get the extras
 		$this->extras = BackendPagesModel::getExtras();
 
@@ -282,6 +289,31 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// init var
+			$templateId = (int) $this->frm->getField('template_id')->getValue();
+
+			// loop blocks in template
+			for($i = 0; $i < $this->templates[$templateId]['num_blocks']; $i++)
+			{
+				// get the extra id
+				$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
+
+				// reset some stuff
+				if($extraId > 0)
+				{
+					// type of block
+					if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
+					{
+						// home can't have blocks
+						if($this->record['id'] == 1)
+						{
+							$this->frm->getField('block_html_'. $i)->addError(BL::err('HomeCantHaveBlocks'));
+							$this->frm->addError(BL::err('HomeCantHaveBlocks'));
+						}
+					}
+				}
+			}
+
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()));
 

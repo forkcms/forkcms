@@ -281,7 +281,7 @@ jsBackend.pages.extras =
 				// block
 				if(extrasById[selectedExtraId].type == 'block')
 				{
-					$('#blockContentModule-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
+					$('#blockContentModule-'+ selectedBlock +' .oneLiner span.oneLinerElement').html(extrasById[selectedExtraId].message);
 
 					if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule-'+ selectedBlock +' .oneLiner a').hide();
 					else 
@@ -294,7 +294,7 @@ jsBackend.pages.extras =
 				// widget
 				if(extrasById[selectedExtraId].type == 'widget')
 				{
-					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
+					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span.oneLinerElement').html(extrasById[selectedExtraId].message);
 					if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').hide();
 					else $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').attr('href', extrasById[selectedExtraId].data.edit_url).show();
 					$('#blockContentWidget-'+ selectedBlock).show();
