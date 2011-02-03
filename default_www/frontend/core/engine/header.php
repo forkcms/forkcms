@@ -235,7 +235,7 @@ class FrontendHeader extends FrontendBaseObject
 		if($minify) $file = $this->minifyJavascript($file);
 
 		// already in array?
-		if(!in_array($file, $this->javascriptFiles))
+		if(!in_array(array('file' => $file, 'add_timestamp' => $addTimestamp), $this->javascriptFiles))
 		{
 			// add to files
 			$this->javascriptFiles[] = array('file' => $file, 'add_timestamp' => $addTimestamp);
