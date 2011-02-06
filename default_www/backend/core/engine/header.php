@@ -91,7 +91,7 @@ class BackendHeader
 		else $realPath = '/backend/core/layout/css/'. $fileName;
 
 		// add if not already added
-		if(!in_array($realPath, $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
+		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
 
@@ -135,7 +135,7 @@ class BackendHeader
 		else $realPath = '/backend/core/js/'. $fileName;
 
 		// add if not already added
-		if(!in_array($realPath, $this->javascriptFiles)) $this->javascriptFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
+		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->javascriptFiles)) $this->javascriptFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
 	}
 
 

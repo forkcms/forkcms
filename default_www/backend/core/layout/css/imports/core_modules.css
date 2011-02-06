@@ -167,6 +167,7 @@
 		top: -2px;
 		left: -2px;
 	}
+	
 
 /*
 	Template visual shared code
@@ -211,6 +212,17 @@
 	.templateVisual td a {
 		color: #000;
 	}
+	
+	
+	.disabled .templateVisual td {
+		border-color: #CCC;
+		background: #FCFCFC;
+	}
+	
+		.disabled .templateVisual td a {
+			color: #999;
+			cursor: default;
+		}
 
 /*
 	Template visual large

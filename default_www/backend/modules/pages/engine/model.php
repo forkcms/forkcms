@@ -1144,11 +1144,17 @@ class BackendPagesModel
 	 */
 	public static function getTemplates()
 	{
+		// get db
+		$db = BackendModel::getDB();
+
 		// get templates
-		$templates = (array) BackendModel::getDB()->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
+		$templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
 																FROM pages_templates AS i
 																WHERE i.active = ?',
 																array('Y'), 'id');
+
+		// get extras
+		$extras = (array) self::getExtras();
 
 		// init var
 		$half = (int) ceil(count($templates) / 2);
@@ -1159,10 +1165,22 @@ class BackendPagesModel
 		{
 			// unserialize
 			$row['data'] = unserialize($row['data']);
+			$row['has_block'] = false;
+
+			// any extras?
+			if(isset($row['data']['default_extras']))
+			{
+				// loop extras
+				foreach($row['data']['default_extras'] as $value)
+				{
+					// store if the module has blocks
+					if(SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type']) $row['has_block'] = true;
+				}
+			}
 
 			// build template HTML
-			$row['html'] = self::buildTemplateHTML($templates[$key]);
-			$row['htmlLarge'] = self::buildTemplateHTML($templates[$key], true);
+			$row['html'] = self::buildTemplateHTML($row);
+			$row['htmlLarge'] = self::buildTemplateHTML($row, true);
 
 			// add all data as json
 			$row['json'] = json_encode($row);

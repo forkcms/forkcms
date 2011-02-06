@@ -37,7 +37,7 @@
 				{iteration:blocks}
 					<div id="block-{$blocks.index}" class="box contentBlock">
 						<div class="heading">
-							<table border="0" cellpadding="0" cellspacing="0">
+							<table border="0" cellpadding="0" cellspaciong="0">
 								<tbody>
 									<tr>
 										<td>
@@ -60,6 +60,7 @@
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
 								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
+								{$blocks.txtHTMLError}
 							</div>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
@@ -67,13 +68,16 @@
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
 								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
+								{$blocks.txtHTMLError}
 							</div>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
 							<fieldset>
 								{$blocks.txtHTML}
+								{$blocks.txtHTMLError}
 							</fieldset>
 						</div>
+
 					</div>
 				{/iteration:blocks}
 			</div>
@@ -255,8 +259,8 @@
 					</ul>
 					<ul class="lastChild">
 					{/option:templates.break}
-							<li>
-								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
+							<li{option:templates.disabled} class="disabled"{/option:templates.disabled}>
+								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}</label>
 								<div class="templateVisual current">
 									{$templates.html}
 								</div>
