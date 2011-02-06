@@ -83,7 +83,7 @@ class SpoonFileCSV
 		if($enclosure === null) $enclosure = self::DEFAULT_ENCLOSURE;
 
 		// unset the excluded columns
-		foreach($excludeColumns as $column) unset($columns[array_search($column, $columns)]);
+		if(!empty($excludeColumns)) foreach($excludeColumns as $column) unset($columns[array_search($column, $columns)]);
 
 		// start the string with the columns
 		$csv = $enclosure . implode($enclosure . $delimiter . $enclosure, $columns) . $enclosure . PHP_EOL;

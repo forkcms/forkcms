@@ -299,7 +299,7 @@ class BackendMailmotorCMHelper
 			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
-				throw new SpoonFileException(BL::getError('ClassDoesNotExist', 'mailmotor'));
+				throw new SpoonFileException(BL::err('ClassDoesNotExist', 'mailmotor'));
 			}
 
 			// require CampaignMonitor class
@@ -384,7 +384,7 @@ class BackendMailmotorCMHelper
 	 *
 	 * @return	array
 	 * @param	string $cmId				The id of the mailing in CampaignMonitor.
-	 * @param	bool[optional] $getColumn
+	 * @param	bool[optional] $getColumn	@todo @dave document me.
 	 */
 	public static function getMailingOpens($cmId, $getColumn = false)
 	{
@@ -422,7 +422,7 @@ class BackendMailmotorCMHelper
 		// set the name if it is present in the custom fields
 		if(isset($fields['name'])) $name = $fields['name'];
 		elseif(isset($fields['Name'])) $name = $fields['Name'];
-		elseif(isset($fields[BL::getLabel('Name')])) $name = $fields[BL::getLabel('Name')];
+		elseif(isset($fields[BL::lbl('Name')])) $name = $fields[BL::lbl('Name')];
 
 		// return the value
 		return $name;

@@ -111,9 +111,9 @@ class BackendMailmotorEditCampaign extends BackendBaseActionEdit
 			$txtName = $this->frm->getField('name');
 
 			// validate fields
-			if($txtName->isFilled(BL::getError('NameIsRequired')))
+			if($txtName->isFilled(BL::err('NameIsRequired')))
 			{
-				if($txtName->getValue() != $this->record['name'] && BackendMailmotorModel::existsCampaignByName($txtName->getValue())) $txtName->addError(BL::getError('CampaignExists'));
+				if($txtName->getValue() != $this->record['name'] && BackendMailmotorModel::existsCampaignByName($txtName->getValue())) $txtName->addError(BL::err('CampaignExists'));
 			}
 
 			// no errors?

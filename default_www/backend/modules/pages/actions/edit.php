@@ -63,6 +63,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// set the default template as checked
 		$this->templates[$this->record['template_id']]['checked'] = true;
 
+		// homepage?
+		if($this->id == 1)
+		{
+			// loop and set disabled state
+			foreach($this->templates as &$row) $row['disabled'] = ($row['has_block']);
+		}
+
 		// get the extras
 		$this->extras = BackendPagesModel::getExtras();
 
@@ -151,7 +158,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addHidden('template_id', $this->record['template_id']);
-		$this->frm->addRadiobutton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), $this->record['hidden']);
+		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
 		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));
 
 		// get maximum number of blocks
@@ -215,7 +222,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]');
@@ -225,7 +232,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::getLabel('UseThisVersion'));
+		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
 
@@ -282,6 +289,31 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// init var
+			$templateId = (int) $this->frm->getField('template_id')->getValue();
+
+			// loop blocks in template
+			for($i = 0; $i < $this->templates[$templateId]['num_blocks']; $i++)
+			{
+				// get the extra id
+				$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
+
+				// reset some stuff
+				if($extraId > 0)
+				{
+					// type of block
+					if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
+					{
+						// home can't have blocks
+						if($this->record['id'] == 1)
+						{
+							$this->frm->getField('block_html_'. $i)->addError(BL::err('HomeCantHaveBlocks'));
+							$this->frm->addError(BL::err('HomeCantHaveBlocks'));
+						}
+					}
+				}
+			}
+
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()));
 
@@ -289,7 +321,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
 			// validate meta
 			$this->meta->validate();

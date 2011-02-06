@@ -146,6 +146,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'CommentOnWithURL', 'Reactie op: <a href="%1$s">%2$s</a>');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het artikel "%1$s" wil verwijderen?');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Deleted', 'De geselecteerde artikels werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'DeletedSpam', 'Alle spamberichten werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'DeleteAllSpam', 'Verwijdere all spam:');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditArticle', 'bewerk artikel "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditCommentOn', 'bewerk reactie op "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Edited', 'Het artikel "%1$s" werd opgeslagen.');
@@ -188,6 +190,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'CommentOnWithURL', 'Comment on: <a href="%1$s">%2$s</a>');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the article "%1$s"?');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Deleted', 'The selected articles were deleted.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'DeletedSpam', 'All spam-comments were deleted.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'DeleteAllSpam', 'Delete all spam:');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditArticle', 'edit article "%1$s"');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditCommentOn', 'edit comment on "%1$s"');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Edited', 'The article "%1$s" was saved.');

@@ -52,7 +52,7 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 		$this->datagrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') .'&amp;id=[id]');
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_synonym') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') .'&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 

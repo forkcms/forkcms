@@ -122,7 +122,7 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		$timestamp = mktime(0, 0, 0, substr($date, 5, 2), substr($date, 8, 2), substr($date, 0, 4));
 
 		// assign date label
-		$this->tpl->assign('analyticsTrafficSourcesDate', ($date != date('Y-m-d') ? BackendModel::getUTCDate('d-m', $timestamp) : BL::getLabel('Today')));
+		$this->tpl->assign('analyticsTrafficSourcesDate', ($date != date('Y-m-d') ? BackendModel::getUTCDate('d-m', $timestamp) : BL::lbl('Today')));
 	}
 
 

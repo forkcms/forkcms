@@ -50,7 +50,7 @@ class FrontendMailmotorCMHelper
 	 *
 	 * @return	array
 	 * @param 	array $groupIds					The id of the groups.
-	 * @param	bool[optional] $unsubscribe
+	 * @param	bool[optional] $unsubscribe		@todo @dave document me.
 	 */
 	public static function getCampaignMonitorIDsForGroups($groupIds, $unsubscribe = false)
 	{

@@ -429,26 +429,26 @@ class BackendMeta
 		// page title overwrite is checked
 		if($this->frm->getField('page_title_overwrite')->isChecked())
 		{
-			$this->frm->getField('page_title')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('page_title')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// meta description overwrite is checked
 		if($this->frm->getField('meta_description_overwrite')->isChecked())
 		{
-			$this->frm->getField('meta_description')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('meta_description')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// meta keywords overwrite is checked
 		if($this->frm->getField('meta_keywords_overwrite')->isChecked())
 		{
-			$this->frm->getField('meta_keywords')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('meta_keywords')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// URL overwrite is checked
 		if($this->frm->getField('url_overwrite')->isChecked())
 		{
 			// filled
-			$this->frm->getField('url')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 
 			// fetch url
 			$URL = SpoonFilter::urlise($this->frm->getField('url')->getValue());
@@ -466,7 +466,7 @@ class BackendMeta
 			$generatedUrl = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 
 			// check if urls are different
-			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::getError('URLAlreadyExists'));
+			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
 		}
 
 		// if the form was submitted correctly the data array should be populated

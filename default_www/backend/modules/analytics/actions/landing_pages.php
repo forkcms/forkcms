@@ -53,7 +53,7 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 			$datagrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
 
 			// set headers values
-			$headers['page_path'] = ucfirst(BL::getLabel('Page'));
+			$headers['page_path'] = ucfirst(BL::lbl('Page'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);
@@ -65,7 +65,7 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 			$datagrid->setMassActionCheckboxes('checkbox', '[id]');
 
 			// add mass action dropdown
-			$ddmMassAction = new SpoonFormDropdown('action', array('delete_landing_page' => BL::getLabel('Delete')), 'delete');
+			$ddmMassAction = new SpoonFormDropdown('action', array('delete_landing_page' => BL::lbl('Delete')), 'delete');
 			$datagrid->setMassAction($ddmMassAction);
 
 			// parse the datagrid

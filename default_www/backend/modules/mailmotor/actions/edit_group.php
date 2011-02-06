@@ -111,9 +111,9 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 			$txtName = $this->frm->getField('name');
 
 			// validate fields
-			if($txtName->isFilled(BL::getError('NameIsRequired')))
+			if($txtName->isFilled(BL::err('NameIsRequired')))
 			{
-				if($txtName->getValue() != $this->record['name'] && BackendMailmotorModel::existsGroupByName($txtName->getValue())) $txtName->addError(BL::getError('GroupAlreadyExists'));
+				if($txtName->getValue() != $this->record['name'] && BackendMailmotorModel::existsGroupByName($txtName->getValue())) $txtName->addError(BL::err('GroupAlreadyExists'));
 			}
 
 			// no errors?

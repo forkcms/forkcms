@@ -99,30 +99,30 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 			$rbtLanguages = $this->frm->getField('languages');
 
 			// validate fields
-			if($txtName->isFilled(BL::getError('NameIsRequired')))
+			if($txtName->isFilled(BL::err('NameIsRequired')))
 			{
-				if(BackendMailmotorModel::existsMailingByName($txtName->getValue())) $txtName->addError(BL::getError('MailingAlreadyExists'));
+				if(BackendMailmotorModel::existsMailingByName($txtName->getValue())) $txtName->addError(BL::err('MailingAlreadyExists'));
 			}
-			$txtFromName->isFilled(BL::getError('NameIsRequired'));
-			$txtFromEmail->isFilled(BL::getError('EmailIsRequired'));
-			$txtReplyToEmail->isFilled(BL::getError('EmailIsRequired'));
+			$txtFromName->isFilled(BL::err('NameIsRequired'));
+			$txtFromEmail->isFilled(BL::err('EmailIsRequired'));
+			$txtReplyToEmail->isFilled(BL::err('EmailIsRequired'));
 
 			// set form values
 			$values = $this->frm->getValues();
 
 			// check if at least one recipient group is chosen
-			if(empty($values['groups'])) $chkGroups->addError(BL::getError('ChooseAtLeastOneGroup'));
+			if(empty($values['groups'])) $chkGroups->addError(BL::err('ChooseAtLeastOneGroup'));
 			else
 			{
 				// fetch the recipients for these groups
 				$recipients = BackendMailmotorModel::getAddressesByGroupID($values['groups']);
 
 				// if no recipients were found, throw an error
-				if(empty($recipients)) $chkGroups->addError(BL::getError('GroupsNoRecipients'));
+				if(empty($recipients)) $chkGroups->addError(BL::err('GroupsNoRecipients'));
 			}
 
 			// check if at least one language is chosen
-			if(empty($values['languages'])) $rbtLanguages->isFilled(BL::getError('FieldIsRequired'));
+			if(empty($values['languages'])) $rbtLanguages->isFilled(BL::err('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

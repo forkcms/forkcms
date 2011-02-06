@@ -142,8 +142,8 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 			$newPasswordRepeated = $this->frm->getField('backend_new_password_repeated');
 
 			// required fields
-			$newPassword->isFilled(BL::getError('PasswordIsRequired'));
-			$newPasswordRepeated->isFilled(BL::getError('PasswordRepeatIsRequired'));
+			$newPassword->isFilled(BL::err('PasswordIsRequired'));
+			$newPasswordRepeated->isFilled(BL::err('PasswordRepeatIsRequired'));
 
 			// all fields are ok?
 			if($newPassword->isFilled() && $newPasswordRepeated->isFilled())
@@ -152,10 +152,10 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 				if($newPassword->getValue() !== $newPasswordRepeated->getValue())
 				{
 					// add error
-					$this->frm->addError(BL::getError('PasswordsDontMatch'));
+					$this->frm->addError(BL::err('PasswordsDontMatch'));
 
 					// show error
-					$this->tpl->assign('error', BL::getError('PasswordsDontMatch'));
+					$this->tpl->assign('error', BL::err('PasswordsDontMatch'));
 				}
 			}
 

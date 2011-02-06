@@ -24,8 +24,20 @@ class FrontendFooter extends FrontendBaseObject
 		// assign footer links
 		$this->tpl->assign('footerLinks', $footerLinks);
 
+		// initial value for footer HTML
+		$siteHTMLFooter = (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null);
+
+		// facebook admins given?
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			// add Facebook container
+			$siteHTMLFooter .= "\n" . '<div id="fb-root"></div>';
+			// add facebook JS
+			$siteHTMLFooter .= "\n" . '<script src="http://connect.facebook.net/'. strtolower(FRONTEND_LANGUAGE) .'_'. strtoupper(FRONTEND_LANGUAGE) .'/all.js"></script>';
+		}
+
 		// assign site wide html
-		$this->tpl->assign('siteHTMLFooter', (string) FrontendModel::getModuleSetting('core', 'site_html_footer', null));
+		$this->tpl->assign('siteHTMLFooter', $siteHTMLFooter);
 	}
 }
 

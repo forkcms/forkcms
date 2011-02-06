@@ -27,7 +27,7 @@ class BackendBlogAjaxEditCategory extends BackendBaseAJAXAction
 
 		// validate
 		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($categoryName === '') $this->output(self::BAD_REQUEST, null, BL::getError('NameIsRequired'));
+		if($categoryName === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
 
 		// build array
 		$item['id'] = $id;
@@ -39,7 +39,7 @@ class BackendBlogAjaxEditCategory extends BackendBaseAJAXAction
 		BackendBlogModel::updateCategory($item);
 
 		// output
-		$this->output(self::OK, $item, vsprintf(BL::getMessage('EditedCategory'), array($item['name'])));
+		$this->output(self::OK, $item, vsprintf(BL::msg('EditedCategory'), array($item['name'])));
 	}
 }
 

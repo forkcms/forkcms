@@ -45,7 +45,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGridDB(BackendTagsModel::QRY_DATAGRID_BROWSE, BL::getWorkingLanguage());
 
 		// header labels
-		$this->datagrid->setHeaderLabels(array('tag' => ucfirst(BL::getLabel('Name')), 'num_tags' => ucfirst(BL::getLabel('Amount'))));
+		$this->datagrid->setHeaderLabels(array('tag' => ucfirst(BL::lbl('Name')), 'num_tags' => ucfirst(BL::lbl('Amount'))));
 
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('tag', 'num_tags'), 'num_tags');
@@ -55,12 +55,12 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
 		$ddmMassAction->setOptionAttributes('delete', array('message-id' => 'confirmDelete'));
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
 
 		// add attributes, so the inline editing has all the needed data
 		$this->datagrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));

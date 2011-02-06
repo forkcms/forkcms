@@ -51,7 +51,7 @@ class BackendDataGrid extends SpoonDataGrid
 			$this->setColumnHeaderAttributes($column, array('class' => $column));
 
 			// set default label
-			$this->setHeaderLabels(array($column => ucfirst(BL::getLabel(SpoonFilter::toCamelCase($column)))));
+			$this->setHeaderLabels(array($column => ucfirst(BL::lbl(SpoonFilter::toCamelCase($column)))));
 		}
 
 		// set paging class
@@ -176,7 +176,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setColumnHidden('sequence');
 
 		// add a column for the handle, so users have something to hold while draging
-		$this->addColumn('dragAndDropHandle', null, '<span>'. BL::getLabel('Move') .'</span>');
+		$this->addColumn('dragAndDropHandle', null, '<span>'. BL::lbl('Move') .'</span>');
 
 		// make sure the column with the handler is the first one
 		$this->setColumnsSequence('dragAndDropHandle');
@@ -260,7 +260,7 @@ class BackendDataGrid extends SpoonDataGrid
 				$id = 'confirm-'. (string) $uniqueId;
 
 				// set title if there wasn't one provided
-				if($title === null) $title = ucfirst(BL::getLabel('Delete') .'?');
+				if($title === null) $title = ucfirst(BL::lbl('Delete') .'?');
 
 				// grab current value
 				$value = $this->columns[$column]->getValue();
@@ -338,13 +338,13 @@ class BackendDataGrid extends SpoonDataGrid
 	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
 		// buid HTML
-		$HTML = '<p><label for="'. $actionDropDown->getAttribute('id') .'">'. ucfirst(BL::getLabel('WithSelected')) .'</label></p>
+		$HTML = '<p><label for="'. $actionDropDown->getAttribute('id') .'">'. ucfirst(BL::lbl('WithSelected')) .'</label></p>
 				<p>
 					'. $actionDropDown->parse() .'
 				</p>
 				<div class="buttonHolder">
 					<a href="#" class="submitButton button">
-						<span>'. ucfirst(BL::getLabel('Execute')) .'</span>
+						<span>'. ucfirst(BL::lbl('Execute')) .'</span>
 					</a>
 				</div>';
 
@@ -406,7 +406,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if(Spoon::isObjectReference('url')) $this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
 
 		// sorting labels
-		$this->setSortingLabels(BL::getLabel('SortAscending'), BL::getLabel('SortedAscending'), BL::getLabel('SortDescending'), BL::getLabel('SortedDescending'));
+		$this->setSortingLabels(BL::lbl('SortAscending'), BL::lbl('SortedAscending'), BL::lbl('SortDescending'), BL::lbl('SortedDescending'));
 	}
 
 
@@ -415,7 +415,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 *
 	 * @return	void
 	 * @param	string $column					The name of the column to set the tooltop for.
-	 * @param	string $message					The key for the message (will be parsed through BackendLanguage::getMessage).
+	 * @param	string $message					The key for the message (will be parsed through BL::msg).
 	 */
 	public function setTooltip($column, $message)
 	{
@@ -423,7 +423,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$instance = $this->getColumn($column);
 
 		// build the value for the tooltip
-		$value = BL::getMessage($message);
+		$value = BL::msg($message);
 
 		// reset the label
 		$instance->setLabel($instance->getLabel() .'<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">'. $value .'</span>');
@@ -598,9 +598,9 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		$tpl->assign('pagination', $pagination);
 
 		// assign labels
-		$tpl->assign('previousLabel', BL::getLabel('PreviousPage'));
-		$tpl->assign('nextLabel', BL::getLabel('NextPage'));
-		$tpl->assign('goToLabel', BL::getLabel('GoToPage'));
+		$tpl->assign('previousLabel', BL::lbl('PreviousPage'));
+		$tpl->assign('nextLabel', BL::lbl('NextPage'));
+		$tpl->assign('goToLabel', BL::lbl('GoToPage'));
 
 		// cough it up
 		return $tpl->getContent(BACKEND_CORE_PATH .'/layout/templates/datagrid_paging.tpl');

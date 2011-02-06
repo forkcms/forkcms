@@ -19,25 +19,3 @@
 img {
 	-moz-force-broken-image-icon: 1;
 }
-
-/*
-	To test drag/drop
-
-	model.php blog l20:
-		const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name, "" as sequence
-	categories.php ;add
-	$this->datagrid->enableSequenceByDragAndDrop();
-	to loadDataGrid()
-	
-*/
-
-thead th.dragAndDropHandle, tr td.dragAndDropHandle { width: 16px; padding: 0; cursor: move; }
-thead th.dragAndDropHandle span { padding: 0; }
-
-/*
-	Alt warning
-*/
-
-.editorWarning { display: inline-block; margin-top: 3px; }
-
-.placeholder { color: #AAA !important; }

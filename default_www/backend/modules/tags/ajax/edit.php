@@ -27,7 +27,7 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 
 		// validate
 		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($tag === '') $this->output(self::BAD_REQUEST, null, BL::getError('NameIsRequired'));
+		if($tag === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
 
 		// build array
 		$item['id'] = $id;
@@ -38,7 +38,7 @@ class BackendTagsAjaxEdit extends BackendBaseAJAXAction
 		BackendTagsModel::update($item);
 
 		// output
-		$this->output(self::OK, $item, vsprintf(BL::getMessage('Edited'), array($item['tag'])));
+		$this->output(self::OK, $item, vsprintf(BL::msg('Edited'), array($item['tag'])));
 	}
 }
 
