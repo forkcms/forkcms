@@ -221,7 +221,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			if(!empty($this->profiles) && $this->profiles !== 'UNAUTHORIZED')
 			{
 				// init var
-				$accounts[''][0] = BL::getMessage('ChooseWebsiteProfile');
+				$accounts[''][0] = BL::msg('ChooseWebsiteProfile');
 
 				// prepare accounts array
 				foreach((array) $this->profiles as $profile)

@@ -51,14 +51,14 @@ class BackendAnalyticsModel
 		if(BackendModel::getModuleSetting('analytics', 'session_token', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => sprintf(BL::getError('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+			$warnings[] = array('message' => sprintf(BL::err('AnalyseNoSessionToken', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
 		}
 
 		// analytics table id (only show this error if no other exist)
 		if(empty($warnings) && BackendModel::getModuleSetting('analytics', 'table_id', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => sprintf(BL::getError('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
+			$warnings[] = array('message' => sprintf(BL::err('AnalyseNoTableId', 'analytics'), BackendModel::createURLForAction('settings', 'analytics')));
 		}
 
 		// return

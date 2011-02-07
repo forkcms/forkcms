@@ -80,7 +80,7 @@ class BackendAnalyticsExitPages extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['data'] = array();
 
 			// loop metrics per day

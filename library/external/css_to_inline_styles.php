@@ -236,7 +236,6 @@ class CSSToInlineStyles
 		// process css
 		$this->processCSS();
 
-
 		// create new DOMDocument
 		$document = new DOMDocument('1.0', $this->getEncoding());
 

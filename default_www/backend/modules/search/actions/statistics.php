@@ -46,11 +46,11 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 		$this->datagrid->setColumnsHidden('data');
 
 		// create column
-		$this->datagrid->addColumn('ip', BL::getLabel('IP'));
-		$this->datagrid->addColumn('referrer', BL::getLabel('Referrer'));
+		$this->datagrid->addColumn('ip', BL::lbl('IP'));
+		$this->datagrid->addColumn('referrer', BL::lbl('Referrer'));
 
 		// header labels
-		$this->datagrid->setHeaderLabels(array('time' => ucfirst(BL::getLabel('SearchedOn'))));
+		$this->datagrid->setHeaderLabels(array('time' => ucfirst(BL::lbl('SearchedOn'))));
 
 		// set column function
 		$this->datagrid->setColumnFunction(array(__CLASS__, 'setIp'), '[data]', 'ip');

@@ -167,8 +167,8 @@ class BackendBaseAction
 			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), array('-', '_'));
 
 			// if we have data to use it will be passed as the var parameter
-			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BackendLanguage::getMessage($messageName), $var));
-			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
+			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
+			else $this->tpl->assign('reportMessage', BL::msg($messageName));
 
 			// highlight an element with the given id if needed
 			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
@@ -181,8 +181,8 @@ class BackendBaseAction
 			$errorName = SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'));
 
 			// if we have data to use it will be passed as the var parameter
-			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BackendLanguage::getError($errorName), $var));
-			else $this->tpl->assign('errorMessage', BackendLanguage::getError($errorName));
+			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
+			else $this->tpl->assign('errorMessage', BL::err($errorName));
 		}
 	}
 

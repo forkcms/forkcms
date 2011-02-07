@@ -70,8 +70,8 @@ class BackendFaqAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add');
 
 		// set hidden values
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Hidden', $this->URL->getModule()), 'value' => 'Y');
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Published'), 'value' => 'N');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
 		// create elements
 		$this->frm->addText('question')->setAttribute('id', 'title');
@@ -110,9 +110,9 @@ class BackendFaqAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('question')->isFilled(BL::getError('QuestionIsRequired'));
-			$this->frm->getField('answer')->isFilled(BL::getError('AnswerIsRequired'));
-			$this->frm->getField('categories')->isFilled(BL::getError('CategoryIsRequired'));
+			$this->frm->getField('question')->isFilled(BL::err('QuestionIsRequired'));
+			$this->frm->getField('answer')->isFilled(BL::err('AnswerIsRequired'));
+			$this->frm->getField('categories')->isFilled(BL::err('CategoryIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

@@ -89,8 +89,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$datagrid = new BackendDataGridArray($results);
 
 			// set headers values
-			$headers['pageviews'] = ucfirst(BL::getLabel('Views'));
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::getLabel('Views'));
+			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
+			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Views'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);
@@ -121,8 +121,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$datagrid->setColumnsHidden(array('referral_long'));
 
 			// set headers values
-			$headers['pageviews'] = ucfirst(BL::getLabel('Views'));
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::getLabel('Views'));
+			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
+			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Views'));
 
 			// set column url
 			$datagrid->setColumnURL('referral', 'http://[referral_long]', '[referral_long]');
@@ -157,7 +157,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 
@@ -276,7 +276,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		foreach($sources as $i => $source)
 		{
 			// get label
-			$label = BL::getLabel(SpoonFilter::toCamelCase($source['label']), 'analytics');
+			$label = BL::lbl(SpoonFilter::toCamelCase($source['label']), 'analytics');
 			if($label == '{$lblAnalytics'. SpoonFilter::toCamelCase($source['label']) .'}') $label = $source['label'];
 
 			// build array

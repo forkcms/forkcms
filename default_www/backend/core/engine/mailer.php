@@ -7,7 +7,7 @@
  * @subpackage	core
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
@@ -34,7 +34,7 @@ class BackendMailer
 	public static function addEmail($subject, $template, array $variables = null, $toEmail = null, $toName = null, $fromEmail = null, $fromName = null, $replyToEmail = null, $replyToName = null, $queue = false, $sendOn = null, $isRawHTML = false, $plainText = null)
 	{
 		// redefine
-		$subject = (string) $subject;
+		$subject = (string) strip_tags($subject);
 		$template = (string) $template;
 
 		// set defaults
@@ -61,6 +61,54 @@ class BackendMailer
 		else $email['html'] = self::getTemplateContent($template, $variables);
 		if($plainText !== null) $email['plain_text'] = $plainText;
 		$email['created_on'] = BackendModel::getUTCDate();
+
+		// init var
+		$matches = array();
+
+		// get internal links
+		preg_match_all('|href="/(.*)"|i', $email['html'], $matches);
+
+		// any links?
+		if(!empty($matches[0]))
+		{
+			// init vars
+			$search = array();
+			$replace = array();
+
+			// loop the links
+			foreach($matches[0] as $key => $link)
+			{
+				$search[] = $link;
+				$replace[] = 'href="'. SITE_URL .'/'. $matches[1][$key] .'"';
+			}
+
+			// replace
+			$email['html'] = str_replace($search, $replace, $email['html']);
+		}
+
+		// init var
+		$matches = array();
+
+		// get internal urls
+		preg_match_all('|src="/(.*)"|i', $email['html'], $matches);
+
+		// any links?
+		if(!empty($matches[0]))
+		{
+			// init vars
+			$search = array();
+			$replace = array();
+
+			// loop the links
+			foreach($matches[0] as $key => $link)
+			{
+				$search[] = $link;
+				$replace[] = 'src="'. SITE_URL .'/'. $matches[1][$key] .'"';
+			}
+
+			// replace
+			$email['html'] = str_replace($search, $replace, $email['html']);
+		}
 
 		// set send date
 		if($queue)

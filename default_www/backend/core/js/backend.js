@@ -685,7 +685,7 @@ jsBackend.controls =
 			urlChunks[2] = $(this).val();
 
 			// remove action
-			urlChunks.pop();
+			if(urlChunks.length > 4) urlChunks.pop();
 
 			var url = urlChunks.join('/');
 			if(newChunks.length > 0) url += '?token=true&' + newChunks.join('&');

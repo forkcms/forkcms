@@ -1000,7 +1000,7 @@
 						elements.push(value);
 
 						// set new value
-						$('#' + id).val(elements.join(options.splitChar));
+						$('#' + id).val(elements);
 
 						// rebuild element list
 						build();
@@ -1082,7 +1082,7 @@
 			function remove(value)
 			{
 				// get index for element
-				var index = $.inArray(value, elements);
+				var index = $.inArray(value.toString(), elements);
 
 				// remove element
 				if(index > -1) elements.splice(index, 1);

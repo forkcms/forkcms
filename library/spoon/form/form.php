@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		0.1.1
  */
 class SpoonForm
@@ -639,6 +640,18 @@ class SpoonForm
 			// create needed keys
 			foreach($this->fields as $field) if(!isset($_GET[$field])) $_GET[$field] = '';
 		}
+	}
+
+
+	/**
+	 * Check a field for existence.
+	 *
+	 * @return	bool
+	 * @param	string $name
+	 */
+	public function existsField($name)
+	{
+		return (isset($this->objects[(string) $name]));
 	}
 
 

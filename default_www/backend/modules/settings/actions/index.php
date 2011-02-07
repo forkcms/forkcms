@@ -107,7 +107,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$redirectAttributes['id'] = 'redirect_language_'. $abbreviation;
 
 			// fetch label
-			$label = BackendLanguage::getMessage(mb_strtoupper($abbreviation), 'core');
+			$label = BL::msg(mb_strtoupper($abbreviation), 'core');
 
 			// default may not be unselected
 			if($defaultLanguage)
@@ -183,15 +183,15 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		if($this->frm->isSubmitted())
 		{
 			// validate required fields
-			$this->frm->getField('site_title')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('site_title')->isFilled(BL::err('FieldIsRequired'));
 
 			// date & time
-			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('date_format_short')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('date_format_long')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('date_format_short')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('date_format_long')->isFilled(BL::err('FieldIsRequired'));
 
 			// number
-			$this->frm->getField('number_format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
 
 			// akismet key may be filled in
 			if($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled())
@@ -206,7 +206,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 					$akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
 
 					// invalid key
-					if(!$akismet->verifyKey()) $this->frm->getField('akismet_key')->setError(BL::getError('InvalidAPIKey'));
+					if(!$akismet->verifyKey()) $this->frm->getField('akismet_key')->setError(BL::err('InvalidAPIKey'));
 				}
 			}
 
@@ -226,7 +226,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 					if(!SpoonFilter::isURL('http://'. $domain))
 					{
 						// set error
-						$this->frm->getField('site_domains')->setError(BL::getError('InvalidDomain'));
+						$this->frm->getField('site_domains')->setError(BL::err('InvalidDomain'));
 
 						// stop looping domains
 						break;
@@ -288,7 +288,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 				// assign report
 				$this->tpl->assign('report', true);
-				$this->tpl->assign('reportMessage', BL::getMessage('Saved'));
+				$this->tpl->assign('reportMessage', BL::msg('Saved'));
 			}
 		}
 	}

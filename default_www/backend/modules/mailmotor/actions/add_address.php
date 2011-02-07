@@ -88,14 +88,14 @@ class BackendMailmotorAddAddress extends BackendBaseActionAdd
 			$txtEmail = $this->frm->getField('email');
 
 			// validate fields
-			$txtEmail->isFilled(BL::getError('EmailIsRequired'));
+			$txtEmail->isFilled(BL::err('EmailIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
 				$item = $this->frm->getValues();
-				$item['source'] = BL::getLabel('Manual');
+				$item['source'] = BL::lbl('Manual');
 				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 				// groups found

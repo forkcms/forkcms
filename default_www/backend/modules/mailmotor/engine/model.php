@@ -54,12 +54,12 @@ class BackendMailmotorModel
 		if(BackendModel::getModuleSetting('mailmotor', 'cm_account') == false)
 		{
 			// add warning
-			$warnings[] = array('message' => sprintf(BL::getError('AnalysisNoCMAccount', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmotor')));
+			$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMAccount', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmotor')));
 		}
 		elseif(BackendModel::getModuleSetting('mailmotor', 'cm_client_id') == '')
 		{
 			// add warning
-			$warnings[] = array('message' => sprintf(BL::getError('AnalysisNoCMClientID', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmtor')));
+			$warnings[] = array('message' => sprintf(BL::err('AnalysisNoCMClientID', 'mailmotor'), BackendModel::createURLForAction('settings', 'mailmtor')));
 		}
 
 		// return
@@ -308,7 +308,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $emails, array(BL::getLabel('Email'), BL::getLabel('Created')), null, ',', null, true);
+		SpoonFileCSV::arrayToFile($path, $emails, array(BL::lbl('Email'), BL::lbl('Created')), null, ',', null, true);
 	}
 
 
@@ -360,7 +360,7 @@ class BackendMailmotorModel
 		}
 
 		// generate the CSV and download the file
-		SpoonFileCSV::arrayToFile($path, $records, array(BL::getLabel('Email'), BL::getLabel('Created')), null, ',', null, true);
+		SpoonFileCSV::arrayToFile($path, $records, array(BL::lbl('Email'), BL::lbl('Created')), null, ',', null, true);
 	}
 
 
@@ -387,14 +387,14 @@ class BackendMailmotorModel
 
 		// set columns
 		$columns = array();
-		$columns[] = BL::getMessage('MailingCSVRecipients');
-		$columns[] = BL::getMessage('MailingCSVUniqueOpens');
-		$columns[] = BL::getMessage('MailingCSVUnsubscribes');
-		$columns[] = BL::getMessage('MailingCSVBounces');
-		$columns[] = BL::getMessage('MailingCSVUnopens');
-		$columns[] = BL::getMessage('MailingCSVBouncesPercentage');
-		$columns[] = BL::getMessage('MailingCSVUniqueOpensPercentage');
-		$columns[] = BL::getMessage('MailingCSVUnopensPercentage');
+		$columns[] = BL::msg('MailingCSVRecipients');
+		$columns[] = BL::msg('MailingCSVUniqueOpens');
+		$columns[] = BL::msg('MailingCSVUnsubscribes');
+		$columns[] = BL::msg('MailingCSVBounces');
+		$columns[] = BL::msg('MailingCSVUnopens');
+		$columns[] = BL::msg('MailingCSVBouncesPercentage');
+		$columns[] = BL::msg('MailingCSVUniqueOpensPercentage');
+		$columns[] = BL::msg('MailingCSVUnopensPercentage');
 
 		// set start of the CSV
 		$csv = SpoonFileCSV::arrayToString($records, $columns);
@@ -449,14 +449,14 @@ class BackendMailmotorModel
 
 		// set columns
 		$columns = array();
-		$columns[] = BL::getMessage('MailingCSVRecipients');
-		$columns[] = BL::getMessage('MailingCSVUniqueOpens');
-		$columns[] = BL::getMessage('MailingCSVUnsubscribes');
-		$columns[] = BL::getMessage('MailingCSVBounces');
-		$columns[] = BL::getMessage('MailingCSVUnopens');
-		$columns[] = BL::getMessage('MailingCSVBouncesPercentage');
-		$columns[] = BL::getMessage('MailingCSVUniqueOpensPercentage');
-		$columns[] = BL::getMessage('MailingCSVUnopensPercentage');
+		$columns[] = BL::msg('MailingCSVRecipients');
+		$columns[] = BL::msg('MailingCSVUniqueOpens');
+		$columns[] = BL::msg('MailingCSVUnsubscribes');
+		$columns[] = BL::msg('MailingCSVBounces');
+		$columns[] = BL::msg('MailingCSVUnopens');
+		$columns[] = BL::msg('MailingCSVBouncesPercentage');
+		$columns[] = BL::msg('MailingCSVUniqueOpensPercentage');
+		$columns[] = BL::msg('MailingCSVUnopensPercentage');
 
 		// set start of the CSV
 		$csv = SpoonFileCSV::arrayToString($records, $columns);
@@ -469,8 +469,8 @@ class BackendMailmotorModel
 		{
 			// set mailings columns
 			$mailingColumns = array();
-			$mailingColumns['name'] = BL::getLabel('Name');
-			$mailingColumns['language'] = BL::getLabel('Language');
+			$mailingColumns['name'] = BL::lbl('Name');
+			$mailingColumns['language'] = BL::lbl('Language');
 
 			// add the records to the csv string
 			$csv .= PHP_EOL .'Mailings:'. PHP_EOL . SpoonFileCSV::arrayToString($mailings, $mailingColumns, array('id', 'campaign_id', 'campaign_name', 'send_on', 'status'));
@@ -694,7 +694,7 @@ class BackendMailmotorModel
 													FROM mailmotor_campaigns AS mc');
 
 		// prepend an additional option
-		array_unshift($record, ucfirst(BL::getLabel('NoCampaign')));
+		array_unshift($record, ucfirst(BL::lbl('NoCampaign')));
 
 		// return the record
 		return $record;
@@ -1042,7 +1042,7 @@ class BackendMailmotorModel
 		foreach($languages as $abbreviation)
 		{
 			// build new value
-			$results[] = array('value' => $abbreviation, 'label' => BL::getLabel(strtoupper($abbreviation)));
+			$results[] = array('value' => $abbreviation, 'label' => BL::lbl(strtoupper($abbreviation)));
 		}
 
 		// return results
@@ -1204,7 +1204,7 @@ class BackendMailmotorModel
 		$record = array();
 		$record['name'] = $name;
 		$record['language'] = $language;
-		$record['label'] = BL::getLabel('Template'. SpoonFilter::toCamelCase($record, array('-', '_')));
+		$record['label'] = BL::lbl('Template'. SpoonFilter::toCamelCase($record, array('-', '_')));
 		$record['path_content'] = $path .'/'. $name .'/template.tpl';
 		$record['path_css'] = $path .'/'. $name .'/css/screen.css';
 		$record['url_css'] = SITE_URL . '/backend/modules/mailmotor/templates/'. $language .'/'. $name .'/css/screen.css';
@@ -1238,7 +1238,7 @@ class BackendMailmotorModel
 			// add additional values
 			$records[$record]['language'] = $language;
 			$records[$record]['value'] = $record;
-			$records[$record]['label'] = BL::getLabel('Template'. SpoonFilter::toCamelCase($record, array('-', '_')));
+			$records[$record]['label'] = BL::lbl('Template'. SpoonFilter::toCamelCase($record, array('-', '_')));
 
 			// unset the key
 			unset($records[$key]);

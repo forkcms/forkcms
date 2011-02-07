@@ -109,7 +109,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 			$feedburnerURL = $this->frm->getField('feedburner_url');
 
 			// validation
-			$this->frm->getField('rss_title')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('rss_title')->isFilled(BL::err('FieldIsRequired'));
 
 			// feedburner URL is set
 			if($feedburnerURL->isFilled())
@@ -118,7 +118,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				$feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://'. $feedburnerURL->getValue() : $feedburnerURL->getValue();
 
 				// check if feedburner URL is valid
-				if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::getError('InvalidURL'));
+				if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::err('InvalidURL'));
 			}
 
 			// init variable

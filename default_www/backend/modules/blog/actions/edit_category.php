@@ -116,7 +116,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

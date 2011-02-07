@@ -123,7 +123,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		// show report
 		if($this->getParameter('password_reset') == 'success')
 		{
-			$this->tpl->assign('reportMessage', BL::getMessage('PasswordResetSuccess', 'core'));
+			$this->tpl->assign('reportMessage', BL::msg('PasswordResetSuccess', 'core'));
 			$this->tpl->assign('report', true);
 		}
 

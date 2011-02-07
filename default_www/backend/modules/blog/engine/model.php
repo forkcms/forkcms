@@ -66,14 +66,14 @@ class BackendBlogModel
 		if(BackendModel::getModuleSetting('blog', 'rss_title_'. BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => sprintf(BL::getError('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			$warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
 		}
 
 		// blog rss description
 		if(BackendModel::getModuleSetting('blog', 'rss_description_'. BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => sprintf(BL::getError('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
+			$warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'blog'), BackendModel::createURLForAction('settings', 'blog')));
 		}
 
 		// return
@@ -161,6 +161,32 @@ class BackendBlogModel
 
 		// update record
 		$db->delete('blog_comments', 'id IN ('. implode(',', $ids) .') AND language = ?', array(BL::getWorkingLanguage()));
+
+		// recalculate the comment count
+		if(!empty($postIds)) self::reCalculateCommentCount($postIds);
+
+		// invalidate the cache for blog
+		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+	}
+
+
+	/**
+	 * Delete all spam
+	 *
+	 * @return	void
+	 */
+	public static function deleteSpamComments()
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get blogpost ids
+		$postIds = (array) $db->getColumn('SELECT i.post_id
+											FROM blog_comments AS i
+											WHERE status = ? AND i.language = ?', array('spam', BL::getWorkingLanguage()));
+
+		// update record
+		$db->delete('blog_comments', 'status = ? AND language = ?', array('spam', BL::getWorkingLanguage()));
 
 		// recalculate the comment count
 		if(!empty($postIds)) self::reCalculateCommentCount($postIds);

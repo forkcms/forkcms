@@ -23,9 +23,23 @@
 * Bugfix: recalculate num_comments so the new revision has the correct count
 * Core: fixed a lot of code to reflect the styleguide
 * Testimonials: made the module language-dependant (as it should be)
-* Bugfix: SpoonFileCSV was triggering a warning when no exclude-columns were provided.
+* Bugfix: SpoonFileCSV was triggering a warning when no exclude-columns were provided
 * Core: backendMailer will remove tags from the subject
 * Core: added the passwordword generator into the frontend
+* Bugfix: selecting a template in teh mailmotor wasn't working in IE, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/99
+* Bugfix: non-existing items were included in the getAll-method
+* Core: non-absolute urls are replaced when using Backend/Frontend-mailer
+* Bugfix: multipleSelectbox is now working as it was intended
+* Core: it is now possible to tell the code not to add a timestamp on the url for CSS/JS
+* Bugfix: changing the working language was redirecting to dashboard instead of the module, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/91
+* Bugfix: editing a tag was calling an non existing method
+* Content blocks: make sure you add an extra column "extra_id"
+* Bugfix: Blog was using the revision-id instead of the id for retrieving tags
+* Core: Facebook should be add in the footer instead of the header because Facebook sucks
+* Core: improvment for pagination (should fix http://forkcms.lighthouseapp.com/projects/61890/tickets/88)
+* Blog: it is now possible to remove all spam at once
+* Pages: extra validation, so home can't have any blocks
+* Pages: improvement for changing extra's, as requested on http://forkcms.lighthouseapp.com/projects/61890/tickets/77
 
 2.0.2 (2010-11-24)
 --
