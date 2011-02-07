@@ -1150,7 +1150,8 @@ class BackendPagesModel
 		// get templates
 		$templates = (array) $db->getRecords('SELECT i.id, i.label, i.path, i.num_blocks, i.data
 																FROM pages_templates AS i
-																WHERE i.active = ?',
+																WHERE i.active = ?
+																ORDER BY i.label ASC',
 																array('Y'), 'id');
 
 		// get extras
