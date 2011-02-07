@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendPagesEditTemplate
  * This is the edit-action, it will display a form to edit an item
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendPagesEditTemplate extends BackendBaseActionEdit
@@ -123,11 +122,11 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// loop extras to populate the default extras
 		foreach($extras as $item)
 		{
-			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
 			if($item['type'] == 'widget')
 			{
-				$widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::getLabel($item['label']));
-				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
+				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
 			}
 		}
 
@@ -136,9 +135,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		asort($widgets, SORT_STRING);
 
 		// create array
-		$defaultExtras = array('' => array('editor' => BL::getLabel('Editor')),
-								ucfirst(BL::getLabel('Modules')) => $blocks,
-								ucfirst(BL::getLabel('Widgets')) => $widgets);
+		$defaultExtras = array('' => array('editor' => BL::lbl('Editor')),
+								ucfirst(BL::lbl('Modules')) => $blocks,
+								ucfirst(BL::lbl('Widgets')) => $widgets);
 
 		// add some fields
 		for($i = 1; $i <= $maximumBlocks; $i++)
@@ -172,14 +171,14 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// required fields
-			$this->frm->getField('file')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('label')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('file')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
 			// loop the know fields and validate them
 			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 			{
-				$this->frm->getField('name_'. $i)->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('name_'. $i)->isFilled(BL::err('FieldIsRequired'));
 			}
 
 
@@ -201,7 +200,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if(count($row) != $cellCount)
 				{
 					// add error
-					$this->frm->getField('format')->addError(BL::getError('InvalidTemplateSyntax'));
+					$this->frm->getField('format')->addError(BL::err('InvalidTemplateSyntax'));
 
 					// stop
 					break;
@@ -215,41 +214,41 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build array
-				$template = array();
-				$template['label'] = $this->frm->getField('label')->getValue();
-				$template['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
-				$template['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
-				$template['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$template['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
+				$item['id'] = $this->id;
+				$item['label'] = $this->frm->getField('label')->getValue();
+				$item['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
+				$item['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
+				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
+				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
 				// if this is the default template make the template active
-				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $template['active'] = 'Y';
+				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $item['active'] = 'Y';
 
 				// if the template is in use we can't alter the number of blocks or de-activate it
-				if(BackendPagesModel::isTemplateInUse($this->id))
+				if(BackendPagesModel::isTemplateInUse($item['id']))
 				{
-					$template['num_blocks'] = $this->record['num_blocks'];
-					$template['active'] = 'Y';
+					$item['num_blocks'] = $this->record['num_blocks'];
+					$item['active'] = 'Y';
 				}
 
 				// loop fields
-				for($i = 1; $i <= $template['num_blocks']; $i++)
+				for($i = 1; $i <= $item['num_blocks']; $i++)
 				{
-					$template['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
-					$template['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
+					$item['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
 				// serialize
-				$template['data'] = serialize($template['data']);
+				$item['data'] = serialize($item['data']);
 
 				// insert the item
-				BackendPagesModel::updateTemplate($this->id, $template);
+				BackendPagesModel::updateTemplate($item);
 
 				// set default template
-				if($this->frm->getField('default')->getChecked() || BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) BackendModel::setModuleSetting('pages', 'default_template', $this->id);
+				if($this->frm->getField('default')->getChecked() || BackendModel::getModuleSetting('pages', 'default_template') == $item['id']) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited-template&var='. urlencode($template['label']));
+				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited-template&var='. urlencode($item['label']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

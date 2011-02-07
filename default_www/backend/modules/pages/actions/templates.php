@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendPagesTemplates
  * This is the templates-action, it will display the templates-overview
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendPagesTemplates extends BackendBaseActionIndex
@@ -48,7 +47,7 @@ class BackendPagesTemplates extends BackendBaseActionIndex
 		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit_template') .'&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_template') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_template') .'&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 

@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -44,7 +44,7 @@ class FrontendRSS extends SpoonFeedRSS
 			// theme rss image exists
 			if(SpoonFile::exists(PATH_WWW .'/frontend/themes/'. $theme .'/core/images/rss_image.png'))
 			{
-				// rss
+				// set rss image
 				$this->setImage(SITE_URL . '/frontend/themes/'. $theme .'/core/images/rss_image.png', $title, $link);
 			}
 		}
@@ -58,7 +58,7 @@ class FrontendRSS extends SpoonFeedRSS
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendRSSItem extends SpoonFeedRSSItem
@@ -89,86 +89,6 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 
 		// set some properties
 		$this->setGuid($link, true);
-	}
-
-
-	/**
-	 * Set the author.
-	 *
-	 * @return	void
-	 * @param	string $author
-	 */
-	public function setAuthor($author)
-	{
-		// redefine
-		$author = (string) $author;
-
-		// add fake-emailaddress
-		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) .'@example.com ('. $author .')';
-
-		// set author
-		parent::setAuthor($author);
-	}
-
-
-	/**
-	 * Set the description.
-	 * All links and images that link to internal files will be prepended with the sites URL
-	 *
-	 * @return	void
-	 * @param	string $description		The content of the item.
-	 */
-	public function setDescription($description)
-	{
-		// remove special chars
-		$description = SpoonFilter::htmlspecialcharsDecode($description);
-
-		// process links
-		$description = $this->processLinks($description);
-
-		// call parent
-		parent::setDescription($description);
-	}
-
-
-	/**
-	 * Set the guid.
-	 * If the link is an internal link the sites URL will be prepended.
-	 *
-	 * @return	void
-	 * @param	string $link					The guid for an item
-	 * @param	bool[optional] $isPermaLink		Is this link permanent?
-	 */
-	public function setGuid($link, $isPermaLink = true)
-	{
-		// redefine var
-		$link = (string) $link;
-
-		// if link doesn't start with http, we prepend the URL of the site
-		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
-
-		// call parent
-		parent::setGuid($link, $isPermaLink);
-	}
-
-
-	/**
-	 * Set the link.
-	 * If the link is an internal link the sites URL will be prepended.
-	 *
-	 * @return	void
-	 * @param	string $link	The link for the item.
-	 */
-	public function setLink($link)
-	{
-		// redefine var
-		$link = (string) $link;
-
-		// if link doesn't start with http, we prepend the URL of the site
-		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
-
-		// call parent
-		parent::setLink($link);
 	}
 
 
@@ -214,9 +134,90 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 			$content = str_replace($searchLinks, $replaceLinks, $content);
 		}
 
-		// return
+		// return content
 		return $content;
 	}
+
+
+	/**
+	 * Set the author.
+	 *
+	 * @return	void
+	 * @param	string $author		The author to use.
+	 */
+	public function setAuthor($author)
+	{
+		// redefine
+		$author = (string) $author;
+
+		// add fake-emailaddress
+		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) .'@example.com ('. $author .')';
+
+		// set author
+		parent::setAuthor($author);
+	}
+
+
+	/**
+	 * Set the description.
+	 * All links and images that link to internal files will be prepended with the sites URL
+	 *
+	 * @return	void
+	 * @param	string $description		The content of the item.
+	 */
+	public function setDescription($description)
+	{
+		// remove special chars
+		$description = SpoonFilter::htmlspecialcharsDecode($description);
+
+		// process links
+		$description = $this->processLinks($description);
+
+		// call parent
+		parent::setDescription($description);
+	}
+
+
+	/**
+	 * Set the guid.
+	 * If the link is an internal link the sites URL will be prepended.
+	 *
+	 * @return	void
+	 * @param	string $link					The guid for an item.
+	 * @param	bool[optional] $isPermaLink		Is this link permanent?
+	 */
+	public function setGuid($link, $isPermaLink = true)
+	{
+		// redefine var
+		$link = (string) $link;
+
+		// if link doesn't start with http, we prepend the URL of the site
+		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
+
+		// call parent
+		parent::setGuid($link, $isPermaLink);
+	}
+
+
+	/**
+	 * Set the link.
+	 * If the link is an internal link the sites URL will be prepended.
+	 *
+	 * @return	void
+	 * @param	string $link	The link for the item.
+	 */
+	public function setLink($link)
+	{
+		// redefine var
+		$link = (string) $link;
+
+		// if link doesn't start with http, we prepend the URL of the site
+		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
+
+		// call parent
+		parent::setLink($link);
+	}
+
 }
 
 ?>

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * UsersConfig
  * This is the configuration-object for the users module
  *
  * @package		backend
  * @subpackage	users
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 final class BackendUsersConfig extends BackendBaseConfig

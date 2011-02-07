@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
@@ -20,59 +20,10 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// get parameters
-		$mailingId = SpoonFilter::getPostValue('mailing_id', null, '', 'int');
-		$subject = SpoonFilter::getPostValue('subject', null, '');
-		$contentHTML = urldecode(SpoonFilter::getPostValue('content_html', null, ''));
-		$contentPlain = SpoonFilter::getPostValue('content_plain', null, '');
-		$fullContentHTML = SpoonFilter::getPostValue('full_content_html', null, '');
-
-		// validate mailing ID
-		if($mailingId == '') $this->output(self::BAD_REQUEST, null, 'No mailing ID provided');
-
-		// get mailing record
-		$this->mailing = BackendMailmotorModel::getMailing($mailingId);
-
-		// record is empty
-		if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::getError('MailingDoesNotExist', 'mailmotor'));
-
-		// validate other fields
-		if($subject == '') $this->output(900, array('element' => 'subject', 'element_error' => BL::getError('NoSubject', 'mailmotor')), BL::getError('FormError'));
-
-		// set full HTML
-		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
-
-		// build data
-		$item = array();
-		$item['id'] = $this->mailing['id'];
-		$item['subject'] = $subject;
-		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
-		$item['content_html'] = $contentHTML;
-		$item['data'] = serialize(array('full_content_html' => $HTML));
-		$item['edited_on'] = date('Y-m-d H:i:s');
-
-		// update mailing
-		BackendMailmotorModel::updateMailing($item);
-
-		// output
-		$this->output(self::OK, array('mailing_id' => $mailingId), BL::getMessage('MailingEdited', 'mailmotor'));
-	}
-
-
-	/**
 	 * Adds Google UTM GET Parameters to all anchor links in the mailing
 	 *
 	 * @return	string
-	 * @param	string $HTML
+	 * @param	string $HTML	The HTML wherin the parameters will be added.
 	 */
 	private function addUTMParameters($HTML)
 	{
@@ -116,12 +67,61 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 
 
 	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// get parameters
+		$mailingId = SpoonFilter::getPostValue('mailing_id', null, '', 'int');
+		$subject = SpoonFilter::getPostValue('subject', null, '');
+		$contentHTML = urldecode(SpoonFilter::getPostValue('content_html', null, ''));
+		$contentPlain = SpoonFilter::getPostValue('content_plain', null, '');
+		$fullContentHTML = SpoonFilter::getPostValue('full_content_html', null, '');
+
+		// validate mailing ID
+		if($mailingId == '') $this->output(self::BAD_REQUEST, null, 'No mailing ID provided');
+
+		// get mailing record
+		$this->mailing = BackendMailmotorModel::getMailing($mailingId);
+
+		// record is empty
+		if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', 'mailmotor'));
+
+		// validate other fields
+		if($subject == '') $this->output(900, array('element' => 'subject', 'element_error' => BL::err('NoSubject', 'mailmotor')), BL::err('FormError'));
+
+		// set full HTML
+		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
+
+		// build data
+		$item = array();
+		$item['id'] = $this->mailing['id'];
+		$item['subject'] = $subject;
+		$item['content_plain'] = empty($contentPlain) ? SpoonFilter::stripHTML($HTML) : $contentPlain;
+		$item['content_html'] = $contentHTML;
+		$item['data'] = serialize(array('full_content_html' => $HTML));
+		$item['edited_on'] = date('Y-m-d H:i:s');
+
+		// update mailing
+		BackendMailmotorModel::updateMailing($item);
+
+		// output
+		$this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', 'mailmotor'));
+	}
+
+
+	/**
 	 * Returns the fully parsed e-mail content
 	 *
 	 * @return	string
-	 * @param	string $template
-	 * @param	string $fullContentHTML
-	 * $param	string $contentHTML
+	 * @param	string $template			The template to use.
+	 * @param	string $contentHTML			The content.
+	 * @param	string $fullContentHTML		The full content.
 	 */
 	private function getEmailContent($template, $contentHTML, $fullContentHTML)
 	{
@@ -132,10 +132,13 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$template = BackendMailmotorModel::getTemplate($this->mailing['language'], $template);
 
 		// template content is empty
-		if(!isset($template['content'])) $this->output(self::ERROR, array('mailing_id' => $this->mailing['id'], 'error' => true), BL::getError('TemplateDoesNotExist', 'mailmotor'));
+		if(!isset($template['content'])) $this->output(self::ERROR, array('mailing_id' => $this->mailing['id'], 'error' => true), BL::err('TemplateDoesNotExist', 'mailmotor'));
 
 		// remove TinyMCE
 		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);
+
+		// replace bracketed entities with their proper counterpart
+		$fullContentHTML = preg_replace('/\[(.*?)]/', '&${1};', $fullContentHTML);
 
 		// add Google UTM parameters to all anchors
 		$fullContentHTML = $this->addUTMParameters($fullContentHTML);
@@ -168,9 +171,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * Returns the text between 2 tags
 	 *
 	 * @return	array
-	 * @param	string $tag
-	 * @param	string $html
-	 * @param	bool[optional] $strict
+	 * @param	string $tag					The tag.
+	 * @param	string $html				The HTML to search in.
+	 * @param	bool[optional] $strict		Use strictmode?
 	 */
 	private function getTextBetweenTags($tag, $html, $strict = false)
 	{

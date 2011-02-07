@@ -7,7 +7,7 @@ require_once 'init.php';
 if(!defined('APPLICATION')) define('APPLICATION', 'api');
 
 // initialize components
-new Init(APPLICATION);
+new APIInit(APPLICATION);
 
 // create backend
 new API();

@@ -1,18 +1,63 @@
 <?php
 
 /**
- * FrontendTagsModel
- * In this file we store all generic functions
+ * In this file we store all generic functions that we will be using in the tags module
  *
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendTagsModel
 {
+	/**
+	 * Calls a method that has to be implemented though the tags interface
+	 *
+	 * @return	mixed
+	 * @param	string $module					The module wherin to search.
+	 * @param	string $class					The class that should contain the method.
+	 * @param	string $method					The method to call.
+	 * @param	mixed[optional] $parameter		The parameters to pass.
+	 */
+	public static function callFromInterface($module, $class, $method, $parameter = null)
+	{
+		// check to see if the interface is implemented
+		if(in_array('FrontendTagsInterface', class_implements($class)))
+		{
+			// return result
+			return call_user_func(array($class, $method), $parameter);
+		}
+
+		// interface is not implemented
+		else
+		{
+			// when debug is on throw an exception
+			if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $module .').');
+
+			// when debug is off show a descent message
+			else exit(SPOON_DEBUG_MESSAGE);
+		}
+	}
+
+
+	/**
+	 * Get the tag for a given URL
+	 *
+	 * @return	array
+	 * @param	string $URL		The URL to get the tag for.
+	 */
+	public static function get($URL)
+	{
+		// exists
+		return (array) FrontendModel::getDB()->getRecord('SELECT id, language, tag AS name, number, url
+															FROM tags
+															WHERE url = ?',
+															array((string) $URL));
+	}
+
+
 	/**
 	 * Fetch the list of all tags, ordered by their occurence
 	 *
@@ -20,11 +65,11 @@ class FrontendTagsModel
 	 */
 	public static function getAll()
 	{
-		// fetch items
 		return (array) FrontendModel::getDB()->getRecords('SELECT t.tag AS name, t.url, t.number
 															FROM tags AS t
 															WHERE t.language = ? AND t.number > 0
-															ORDER BY number DESC, t.tag', FRONTEND_LANGUAGE);
+															ORDER BY number DESC, t.tag',
+															array(FRONTEND_LANGUAGE));
 	}
 
 
@@ -73,22 +118,6 @@ class FrontendTagsModel
 
 
 	/**
-	 * Get the tag-id for a given URL
-	 *
-	 * @return	int
-	 * @param	string $URL		The URL to get the id for.
-	 */
-	public static function getIdByURL($URL)
-	{
-		// exists
-		return (int) FrontendModel::getDB()->getVar('SELECT id
-													FROM tags
-													WHERE url = ?',
-													(string) $URL);
-	}
-
-
-	/**
 	 * Get tags for multiple items.
 	 *
 	 * @return	array
@@ -110,7 +139,7 @@ class FrontendTagsModel
 		$linkedTags = (array) $db->getRecords('SELECT mt.other_id, t.tag AS name, t.url
 												FROM modules_tags AS mt
 												INNER JOIN tags AS t ON mt.tag_id = t.id
-												WHERE mt.module = ? AND mt.other_id IN('. implode(', ', $otherIds) .')',
+												WHERE mt.module = ? AND mt.other_id IN ('. implode(', ', $otherIds) .')',
 												array($module));
 
 		// return
@@ -135,20 +164,34 @@ class FrontendTagsModel
 
 
 	/**
+	 * Get the tag-id for a given URL
+	 *
+	 * @return	int
+	 * @param	string $URL		The URL to get the id for.
+	 */
+	public static function getIdByURL($URL)
+	{
+		return (int) FrontendModel::getDB()->getVar('SELECT id
+														FROM tags
+														WHERE url = ?',
+														array((string) $URL));
+	}
+
+
+	/**
 	 * Get the modules that used a tag.
 	 *
-	 * @return	array
-	 * @param	int $tagId
+	 * @return	array		An array with all the modules.
+	 * @param	int $id	The	id of the tag.
 	 */
-	public static function getModulesForTag($tagId)
+	public static function getModulesForTag($id)
 	{
-		// get modules
 		return (array) FrontendModel::getDB()->getColumn('SELECT module
 															FROM modules_tags
 															WHERE tag_id = ?
 															GROUP BY module
 															ORDER BY module ASC',
-															(int) $tagId);
+															array((int) $id));
 	}
 
 
@@ -156,22 +199,25 @@ class FrontendTagsModel
 	 * Fetch a specific tag name
 	 *
 	 * @return	string
-	 * @param	int $id
+	 * @param	int $id		The id of the tag to grab the name for.
 	 */
 	public static function getName($id)
 	{
-		return FrontendModel::getDB()->getVar('SELECT tag FROM tags WHERE id = ?', (int) $id);
+		return FrontendModel::getDB()->getVar('SELECT tag
+												FROM tags
+												WHERE id = ?',
+												array((int) $id));
 	}
 
 
 	/**
 	 * Get all related items
 	 *
-	 * @param	int $id
-	 * @param	int $moduleId
-	 * @param	int $otherModuleId
-	 * @param	int[optional] $limit
-	 * @return	array
+	 * @return	array					An array with all the related item-ids.
+	 * @param	int $id					The id of the item in the source-module.
+	 * @param	int $module				The source module.
+	 * @param	int $otherModule		The module wherein the related items should appear.
+	 * @param	int[optional] $limit	The maximum of related items to grab.
 	 */
 	public static function getRelatedItemsByTags($id, $module, $otherModule, $limit = 5)
 	{
@@ -182,7 +228,7 @@ class FrontendTagsModel
 														GROUP BY t2.other_id
 														ORDER BY COUNT(t2.tag_id) DESC
 														LIMIT ?',
-														array($id, $module, $otherModule, $limit));
+														array((int) $id, (string) $module, (string) $otherModule, (int) $limit));
 	}
 }
 

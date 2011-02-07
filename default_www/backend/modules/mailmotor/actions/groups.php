@@ -63,16 +63,16 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		$this->datagrid->setColumnsSequence('checkbox', 'name', 'created_on', 'language');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// set column functions
 		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 		// add delete column
-		$this->datagrid->addColumnAction('custom_fields', null, BL::getLabel('CustomFields'), BackendModel::createURLForAction('custom_fields') .'&amp;group_id=[id]', BL::getLabel('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
-		$this->datagrid->addColumnAction('export', null, BL::getLabel('Export'), BackendModel::createURLForAction('export_addresses') .'&amp;id=[id]', BL::getLabel('Export'), array('class' => 'button icon iconExport linkButton'));
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_group') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') .'&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
+		$this->datagrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') .'&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') .'&amp;id=[id]', BL::lbl('Edit'));
 
 		// add styles
 		$this->datagrid->setColumnAttributes('name', array('class' => 'title'));

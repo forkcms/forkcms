@@ -32,7 +32,7 @@ class SpoonFormAttributes extends SpoonFormElement
 	 * Retrieve the value for a specific attribute.
 	 *
 	 * @return	string
-	 * @param	string $name
+	 * @param	string $name	The name of the attribute to grab the value for.
 	 */
 	public function getAttribute($name)
 	{
@@ -55,7 +55,7 @@ class SpoonFormAttributes extends SpoonFormElement
 	 * Retrieves the custom attributes as HTML.
 	 *
 	 * @return	string
-	 * @param	array $variables
+	 * @param	array $variables	The variables that should be converted into HTML.
 	 */
 	protected function getAttributesHTML(array $variables)
 	{
@@ -87,8 +87,8 @@ class SpoonFormAttributes extends SpoonFormElement
 	 * Set a custom attribute and its value.
 	 *
 	 * @return	void
-	 * @param	string $key
-	 * @param	string[optional] $value
+	 * @param	string $key					The name of the attribute.
+	 * @param	string[optional] $value		The value for the attribute.
 	 */
 	public function setAttribute($key, $value = null)
 	{
@@ -108,7 +108,7 @@ class SpoonFormAttributes extends SpoonFormElement
 	 * Set multiple custom attributes at once.
 	 *
 	 * @return	void
-	 * @param	array $attributes
+	 * @param	array $attributes	The attributes as key/value-pairs.
 	 */
 	public function setAttributes(array $attributes)
 	{

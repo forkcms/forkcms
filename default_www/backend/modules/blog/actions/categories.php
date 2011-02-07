@@ -1,13 +1,13 @@
 <?php
 
 /**
- * BackendBlogCategories
  * This is the categories-action, it will display the overview of blog categories
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogCategories extends BackendBaseActionIndex
@@ -36,7 +36,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	/**
 	 * Loads the datagrids
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -47,7 +47,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('name'), 'name');
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::lbl('Edit'));
 
 		// row function
 		$this->datagrid->setRowFunction(array('BackendBlogCategories', 'setDefault'), array('[id]'));
@@ -56,7 +56,7 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		$this->datagrid->setPaging(false);
 
 		// add attributes, so the inline editing has all the needed data
-		$this->datagrid->setColumnAttributes('name', array('rel' => '{id:[id]}'));
+		$this->datagrid->setColumnAttributes('name', array('data-id' => '{id:[id]}'));
 	}
 
 
@@ -75,8 +75,8 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	 * Set class on row with the default class
 	 *
 	 * @return	array
-	 * @param	int $id
-	 * @param	array $rowAttributes
+	 * @param	int $id					The id of the category.
+	 * @param	array $rowAttributes	The current row attributes.
 	 */
 	public static function setDefault($id, $rowAttributes)
 	{

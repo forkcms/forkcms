@@ -215,6 +215,14 @@ class SpoonThumbnail
 		$filename = (string) $filename;
 		$quality = (int) $quality;
 
+		//
+		if(@is_writable(dirname($filename)) !== true)
+		{
+			// strict?
+			if($this->strict) throw new SpoonThumbnailException('The destination-path should be writable.');
+			return false;
+		}
+
 		// get extension
 		$extension = SpoonFile::getExtension($filename);
 
@@ -251,10 +259,12 @@ class SpoonThumbnail
 		$currentMime = (string) $imageProperties['mime'];
 
 		// file is the same?
-		// @todo check if mime type is the same
-		if($currentWidth == $this->width && $currentHeight == $this->height)
+		if(($currentType == IMAGETYPE_GIF && $extension == 'gif') || ($currentType == IMAGETYPE_JPEG && in_array($extension, array('jpg', 'jpeg'))) || ($currentType == IMAGETYPE_PNG && $extension == 'png'))
 		{
-			return SpoonDirectory::copy($this->filename, $filename, true, true, $chmod);
+			if($currentWidth == $this->width && $currentHeight == $this->height)
+			{
+				return SpoonDirectory::copy($this->filename, $filename, true, true, $chmod);
+			}
 		}
 
 		// resize image
@@ -294,8 +304,8 @@ class SpoonThumbnail
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
-	 * @param	int $currentType		Current type of image
-	 * @param	string $currentMime		Current mime-type
+	 * @param	int $currentType		Current type of image.
+	 * @param	string $currentMime		Current mime-type.
 	 */
 	private function resizeImage($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -313,8 +323,8 @@ class SpoonThumbnail
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
-	 * @param	int $currentType		Current type of image
-	 * @param	string $currentMime		Current mime-type
+	 * @param	int $currentType		Current type of image.
+	 * @param	string $currentMime		Current mime-type.
 	 */
 	private function resizeImageWithForceAspectRatio($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -416,7 +426,7 @@ class SpoonThumbnail
 		}
 
 		// read current image
-		switch ($currentType)
+		switch($currentType)
 		{
 			case IMG_GIF:
 				$currentImage = @imagecreatefromgif($this->filename);
@@ -510,8 +520,8 @@ class SpoonThumbnail
 	 * @return	void
 	 * @param	int $currentWidth		Original width.
 	 * @param	int $currentHeight		Original height.
-	 * @param	int $currentType		Current type of image
-	 * @param	string $currentMime		Current mime-type
+	 * @param	int $currentType		Current type of image.
+	 * @param	string $currentMime		Current mime-type.
 	 */
 	private function resizeImageWithoutForceAspectRatio($currentWidth, $currentHeight, $currentType, $currentMime)
 	{
@@ -523,7 +533,7 @@ class SpoonThumbnail
 		$newHeight = $this->height;
 
 		// read current image
-		switch ($currentType)
+		switch($currentType)
 		{
 			case IMG_GIF:
 				$currentImage = @imagecreatefromgif($this->filename);

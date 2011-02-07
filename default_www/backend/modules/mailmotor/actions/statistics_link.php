@@ -71,21 +71,6 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 
 
 	/**
-	 * Load the form for the group
-	 *
-	 * @return	void
-	 */
-	private function loadForm()
-	{
-		// create form
-		$this->frm = new BackendForm('add');
-
-		// add fields
-		$this->frm->addText('group');
-	}
-
-
-	/**
 	 * Gets all data needed for this page
 	 *
 	 * @return	void
@@ -128,7 +113,7 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGrid($source);
 
 		// set headers values
-		$headers['clicks'] = ucfirst(BL::getMessage('ClicksAmount'));
+		$headers['clicks'] = ucfirst(BL::msg('ClicksAmount'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels($headers);
@@ -138,6 +123,21 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 
 		// set paging limit
 		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);
+	}
+
+
+	/**
+	 * Load the form for the group
+	 *
+	 * @return	void
+	 */
+	private function loadForm()
+	{
+		// create form
+		$this->frm = new BackendForm('add');
+
+		// add fields
+		$this->frm->addText('group');
 	}
 
 
@@ -182,9 +182,9 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 			$txtGroup = $this->frm->getField('group');
 
 			// validate fields
-			if($txtGroup->isFilled(BL::getError('NameIsRequired')))
+			if($txtGroup->isFilled(BL::err('NameIsRequired')))
 			{
-				if(BackendMailmotorModel::existsGroupByName($txtGroup->getValue())) $txtGroup->addError(BL::getError('GroupAlreadyExists'));
+				if(BackendMailmotorModel::existsGroupByName($txtGroup->getValue())) $txtGroup->addError(BL::err('GroupAlreadyExists'));
 			}
 
 			// no errors?

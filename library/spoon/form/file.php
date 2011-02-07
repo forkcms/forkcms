@@ -55,9 +55,9 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function __construct($name, $class = 'inputFilefield', $classError = 'inputFilefieldError')
 	{
@@ -75,7 +75,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -132,7 +132,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Retrieve the extension of the uploaded file.
 	 *
 	 * @return	string
-	 * @param	bool[optional] $lowercase
+	 * @param	bool[optional] $lowercase	Should the extension be returned in lowercase?
 	 */
 	public function getExtension($lowercase = true)
 	{
@@ -144,7 +144,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Retrieve the filename of the uploade file.
 	 *
 	 * @return	string
-	 * @param	bool[optional] $includeExtension
+	 * @param	bool[optional] $includeExtension	Should the extension be included in the file name?
 	 */
 	public function getFileName($includeExtension = true)
 	{
@@ -157,8 +157,8 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Retrieve the filesize of the file in a specified unit.
 	 *
 	 * @return	int
-	 * @param	string[optional] $unit
-	 * @param	int[optional] $precision
+	 * @param	string[optional] $unit			The unit to return the size in, possible values are: b, kb, mb, gb.
+	 * @param	int[optional] $precision		Teh precision to use.
 	 */
 	public function getFileSize($unit = 'kb', $precision = null)
 	{
@@ -205,8 +205,8 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Checks if the extension is allowed.
 	 *
 	 * @return	bool
-	 * @param	array $extensions
-	 * @param	string[optional] $error
+	 * @param	array $extensions			The allowed extensions.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAllowedExtension(array $extensions, $error = null)
 	{
@@ -240,8 +240,8 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * @see	http://www.w3schools.com/media/media_mimeref.asp
 	 *
 	 * @return	bool
-	 * @param	array $allowedTypes
-	 * @param	string[optional] $error
+	 * @param	array $allowedTypes			The allowed mime-types.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAllowedMimeType(array $allowedTypes, $error = null)
 	{
@@ -277,13 +277,30 @@ class SpoonFormFile extends SpoonFormAttributes
 
 
 	/**
+	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
+	 *
+	 * @return	bool
+	 * @param	string[optional] $error		The error message to set.
+	 */
+	public function isFilename($error = null)
+	{
+		// correct filename
+		if($this->isFilled() && SpoonFilter::isFilename($this->getFileName())) return true;
+
+		// has error
+		if($error !== null) $this->setError($error);
+		return false;
+	}
+
+
+	/**
 	 * Checks of the filesize is greater, equal or smaller than the given number + units.
 	 *
 	 * @return	bool
-	 * @param	int $size
-	 * @param	string[optional] $unit
-	 * @param	string[optional] $operator
-	 * @param	string[optional] $error
+	 * @param	int $size					The size to use in the check.
+	 * @param	string[optional] $unit		The unit to use.
+	 * @param	string[optional] $operator	The operator to use, possible values are: smaller, equal, greater.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilesize($size, $unit = 'kb', $operator = 'smaller', $error = null)
 	{
@@ -313,27 +330,10 @@ class SpoonFormFile extends SpoonFormAttributes
 
 
 	/**
-	 * Checks for a valid file name (including dots but no slashes and other forbidden characters).
-	 *
-	 * @return	bool
-	 * @param	string[optional] $error
-	 */
-	public function isFilename($error = null)
-	{
-		// correct filename
-		if($this->isFilled() && SpoonFilter::isFilename($this->getFileName())) return true;
-
-		// has error
-		if($error !== null) $this->setError($error);
-		return false;
-	}
-
-
-	/**
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -362,8 +362,8 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Attemps to move the uploaded file to the new location.
 	 *
 	 * @return	bool
-	 * @param	string $path
-	 * @param	int[optional] $chmod
+	 * @param	string $path			The path whereto the file will be moved.
+	 * @param	int[optional] $chmod	The octal value to use for chmod.
 	 */
 	public function moveFile($path, $chmod = 0755)
 	{
@@ -382,7 +382,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Parses the html for this filefield.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -399,7 +399,7 @@ class SpoonFormFile extends SpoonFormAttributes
 		if($template !== null)
 		{
 			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;
@@ -410,7 +410,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Set the class on error.
 	 *
 	 * @return	void
-	 * @param	string $class
+	 * @param	string $class	The CSS-class.
 	 */
 	public function setClassOnError($class)
 	{
@@ -422,7 +422,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 * Overwrites the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{

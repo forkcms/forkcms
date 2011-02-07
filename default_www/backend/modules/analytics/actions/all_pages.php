@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendAnalyticsAllPages
  * This is the all-pages-action, it will display the overview of analytics posts
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Dieter Vanden Eynde <dieter@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsAllPages extends BackendAnalyticsBase
@@ -81,7 +80,7 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['i'] = $i + 1;
 			$graphData[$i]['data'] = array();
 

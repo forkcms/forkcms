@@ -1,59 +1,29 @@
 {*
 	variables that are available:
 	- {$searchResults}: contains an array with all items, each element contains data about the item
+	- {$searchTerm}: the term that has been searched for
 *}
 
-{cache:{$cacheName}}
-	<div id="searchIndex" class="mod">
-		<div class="inner">
-			<div class="hd">
-				<h3>{$lblSearchAgain|ucfirst}</h3>
-			</div>
-			<div class="bd">
-				{form:search}
-					<p>
-						<label for="q">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-						{$txtQ} {$txtQError}
-					</p>
-					<p>
-						<input id="submit" class="inputSubmit" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
-					</p>
-				{/form:search}
-			</div>
+<div id="searchIndex" class="mod">
+	<div class="inner">
+		<div class="hd">
+			<h3>{$lblSearchAgain|ucfirst}</h3>
+		</div>
+		<div class="bd">
+			{form:search}
+				<p>
+					<label for="q">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					{$txtQ} {$txtQError}
+				</p>
+				<p>
+					<input id="submit" class="inputSubmit" type="submit" name="submit" value="{$lblSearch|ucfirst}" />
+				</p>
+			{/form:search}
 		</div>
 	</div>
+</div>
 
-	{option:searchTerm}
-		<div id="searchResults" class="mod">
-			<div class="inner">
-				{option:!searchResults}
-					<div class="bd content">
-						<p>{$msgSearchNoItems}</p>
-					</div>
-				{/option:!searchResults}
-				{option:searchResults}
-					{iteration:searchResults}
-						<div class="bd">
-							<div class="mod result">
-								<div class="inner">
-									<div class="hd">
-										<h3>
-											<a href="{$searchResults.full_url}" title="{$searchResults.title}">
-												{$searchResults.title}
-											</a>
-										</h3>
-									</div>
-									<div class="bd content">
-										{option:!searchResults.introduction}{$searchResults.text|truncate:200}{/option:!searchResults.introduction}
-										{option:searchResults.introduction}{$searchResults.introduction}{/option:searchResults.introduction}
-									</div>
-								</div>
-							</div>
-						</div>
-					{/iteration:searchResults}
-				{/option:searchResults}
-			</div>
-		</div>
-		{include:file='{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl'}
-	{/option:searchTerm}
-{/cache:{$cacheName}}
+{* don't remove this container nor replace the id - it'll be used to populate the search results live as you type *}
+<div id="searchContainer">
+	{include:file='{$FRONTEND_MODULES_PATH}/search/layout/templates/results.tpl'}
+</div>

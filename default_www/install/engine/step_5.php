@@ -1,15 +1,14 @@
 <?php
 
 /**
- * InstallerStep5
  * Step 5 of the Fork installer
  *
- * @package		installer
- * @subpackage	install
+ * @package		install
+ * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class InstallerStep5 extends InstallerStep
@@ -64,6 +63,7 @@ class InstallerStep5 extends InstallerStep
 		$this->frm->getField('password')->setAttributes(array('autocomplete' => 'off'));
 		$this->frm->getField('confirm')->setAttributes(array('autocomplete' => 'off'));
 	}
+
 
 	/**
 	 * Validate the form based on the variables in $_POST

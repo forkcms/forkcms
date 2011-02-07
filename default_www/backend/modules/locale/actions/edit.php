@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendLocaleEdit
  * This is the edit action, it will display a form to edit an existing locale item.
  *
  * @package		backend
  * @subpackage	locale
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendLocaleEdit extends BackendBaseActionEdit
@@ -144,13 +143,13 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 			$txtValue = $this->frm->getField('value');
 
 			// name checks
-			if($txtName->isFilled(BL::getError('FieldIsRequired')))
+			if($txtName->isFilled(BL::err('FieldIsRequired')))
 			{
 				// allowed regex (a-z and 0-9)
-				if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::getError('InvalidName')))
+				if($txtName->isValidAgainstRegexp('|^([a-z0-9])+$|i', BL::err('InvalidName')))
 				{
 					// first letter does not seem to be a capital one
-					if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::getError('InvalidName'));
+					if(!in_array(substr($txtName->getValue(), 0, 1), range('A', 'Z'))) $txtName->setError(BL::err('InvalidName'));
 
 					// syntax is completely fine
 					else
@@ -158,47 +157,47 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 						// check if exists
 						if(BackendLocaleModel::existsByName($txtName->getValue(), $this->frm->getField('type')->getValue(), $this->frm->getField('module')->getValue(), $this->frm->getField('language')->getValue(), $this->frm->getField('application')->getValue(), $this->id))
 						{
-							$txtName->setError(BL::getError('AlreadyExists'));
+							$txtName->setError(BL::err('AlreadyExists'));
 						}
 					}
 				}
 			}
 
 			// value checks
-			if($txtValue->isFilled(BL::getError('FieldIsRequired')))
+			if($txtValue->isFilled(BL::err('FieldIsRequired')))
 			{
 				// in case this is a 'act' type, there are special rules concerning possible values
 				if($this->frm->getField('type')->getValue() == 'act')
 				{
-					$txtValue->isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', BL::getError('InvalidValue'));
+					$txtValue->isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', BL::err('InvalidValue'));
 				}
 			}
 
 			// module should be 'core' for any other application than backend
 			if($this->frm->getField('application')->getValue() != 'backend' && $this->frm->getField('module')->getValue() != 'core')
 			{
-				$this->frm->getField('module')->setError(BL::getError('ModuleHasToBeCore', 'locale'));
+				$this->frm->getField('module')->setError(BL::err('ModuleHasToBeCore', 'locale'));
 			}
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$locale = array();
-				$locale['user_id'] = BackendAuthentication::getUser()->getUserId();
-				$locale['language'] = $this->frm->getField('language')->getValue();
-				$locale['application'] = $this->frm->getField('application')->getValue();
-				$locale['module'] = $this->frm->getField('module')->getValue();
-				$locale['type'] = $this->frm->getField('type')->getValue();
-				$locale['name'] = $this->frm->getField('name')->getValue();
-				$locale['value'] = $this->frm->getField('value')->getValue();
-				$locale['edited_on'] = BackendModel::getUTCDate();
+				$item['id'] = $this->id;
+				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['language'] = $this->frm->getField('language')->getValue();
+				$item['application'] = $this->frm->getField('application')->getValue();
+				$item['module'] = $this->frm->getField('module')->getValue();
+				$item['type'] = $this->frm->getField('type')->getValue();
+				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['value'] = $this->frm->getField('value')->getValue();
+				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// update item
-				BackendLocaleModel::update($this->id, $locale);
+				BackendLocaleModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=edited&var='. urlencode($locale['name']));
+				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=edited&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

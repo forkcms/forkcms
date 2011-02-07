@@ -1,5 +1,6 @@
 # Tools
-Tools are tiny bash-scripts that enable you to perform tasks that recure on a regular base. For now these tools are only available on *NIX-systems. In the future they may be ported to Windows.
+In the tools folder you will find scripts, stuff that can come in handy.
+There are some scripts that enable you to perform tasks that recure on a regular base. For now these scripts are only available on *NIX-systems. In the future they may be ported to Windows.
 
 ## Install
 Their is no real installation of the scripts the only thing you should do is make them executable, this can be done with the following command. Make sure to replace `<script_name>` with the name of the script.
@@ -36,4 +37,12 @@ It can be executed with the following command
 The remove_cache-script will clear folders that contain cached files. And can be executed with the following command:
 
 	./remove_cache
+	
+## CodeSniffer
+The folder codesniffer contains the Sniffs specific for Fork. When you have installed PHP CodeSniffer you can use the command below (from the root folder, one level above this folder).
 
+	phpcs -v --standard=./tools/codesniffer/Fork --ignore=.git,cache,codesniffer,tiny_mce,docs --extensions=php ./
+	
+If you don't want to see the warnings, use
+
+	phpcs -v -n --standard=./tools/codesniffer/Fork --ignore=.git,cache,codesniffer,tiny_mce,docs --extensions=php ./

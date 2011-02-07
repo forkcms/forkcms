@@ -87,103 +87,10 @@ class Spoon
 
 
 	/**
-	 * Dumps the output of a variable in a more readable manner.
-	 *
-	 * @return	void
-	 * @param	mixed $var
-	 * @param	bool[optional] $exit
-	 */
-	public static function dump($var, $exit = true)
-	{
-		// fetch var
-		ob_start();
-		var_dump($var);
-		$output = ob_get_clean();
-
-		// cleanup the output
-		$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
-
-		// print
-		echo '<pre>'. htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) .'</pre>';
-
-		// stop script
-		if($exit) exit;
-	}
-
-
-	/**
-	 * Retrieve the list of available charsets.
-	 *
-	 * @return	array
-	 */
-	public static function getCharsets()
-	{
-		return array('utf-8', 'iso-8859-1', 'iso-8859-15');
-	}
-
-
-	/**
-	 * Retrieve the whole registry or one specific instance.
-	 *
-	 * @return	mixed
-	 * @param	string[optional] $name
-	 */
-	public static function getObjectReference($name = null)
-	{
-		// name defined
-		if($name !== null)
-		{
-			// redefine
-			$name = (string) $name;
-
-			// item doesn't exist
-			if(!isset(self::$registry[$name])) throw new SpoonException('An item with reference name "'. $name .'" doesn\'t exist in the registry.');
-
-			// item exists
-			return self::$registry[$name];
-		}
-
-		// whole registry
-		return self::$registry;
-	}
-
-
-	/**
-	 * Checks if an object with this name has been registered.
-	 *
-	 * @return	bool
-	 * @param	string $name
-	 */
-	public static function isObjectReference($name)
-	{
-		return isset(self::$registry[(string) $name]);
-	}
-
-
-	/**
-	 * Deletes a given object from the registry.
-	 *
-	 * @return	void
-	 * @param	string $name
-	 */
-	public static function killObjectReference($name)
-	{
-		// name
-		$name = (string) $name;
-
-		// object doesn't exist
-		if(!isset(self::$registry[$name])) throw new SpoonException('The given object "'. $name .'" doesn\'t exist in the registry.');
-
-		// object exists
-		unset(self::$registry[$name]);
-	}
-
-
-	/**
 	 * Spoon autoloader
 	 *
 	 * @return	void
-	 * @param	string $class
+	 * @param	string $class	The class that should be loaded.
 	 */
 	public static function autoLoader($class)
 	{
@@ -248,11 +155,104 @@ class Spoon
 
 
 	/**
+	 * Dumps the output of a variable in a more readable manner.
+	 *
+	 * @return	void
+	 * @param	mixed $var				The variable to dump.
+	 * @param	bool[optional] $exit	Should the code stop here?
+	 */
+	public static function dump($var, $exit = true)
+	{
+		// fetch var
+		ob_start();
+		var_dump($var);
+		$output = ob_get_clean();
+
+		// cleanup the output
+		$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
+
+		// print
+		echo '<pre>'. htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) .'</pre>';
+
+		// stop script
+		if($exit) exit;
+	}
+
+
+	/**
+	 * Retrieve the list of available charsets.
+	 *
+	 * @return	array
+	 */
+	public static function getCharsets()
+	{
+		return array('utf-8', 'iso-8859-1', 'iso-8859-15');
+	}
+
+
+	/**
+	 * Retrieve the whole registry or one specific instance.
+	 *
+	 * @return	mixed
+	 * @param	string[optional] $name	The name of the object to grab.
+	 */
+	public static function getObjectReference($name = null)
+	{
+		// name defined
+		if($name !== null)
+		{
+			// redefine
+			$name = (string) $name;
+
+			// item doesn't exist
+			if(!isset(self::$registry[$name])) throw new SpoonException('An item with reference name "'. $name .'" doesn\'t exist in the registry.');
+
+			// item exists
+			return self::$registry[$name];
+		}
+
+		// whole registry
+		return self::$registry;
+	}
+
+
+	/**
+	 * Checks if an object with this name has been registered.
+	 *
+	 * @return	bool
+	 * @param	string $name	The name of the object to check for existance.
+	 */
+	public static function isObjectReference($name)
+	{
+		return isset(self::$registry[(string) $name]);
+	}
+
+
+	/**
+	 * Deletes a given object from the registry.
+	 *
+	 * @return	void
+	 * @param	string $name	The name of the object to remove.
+	 */
+	public static function killObjectReference($name)
+	{
+		// name
+		$name = (string) $name;
+
+		// object doesn't exist
+		if(!isset(self::$registry[$name])) throw new SpoonException('The given object "'. $name .'" doesn\'t exist in the registry.');
+
+		// object exists
+		unset(self::$registry[$name]);
+	}
+
+
+	/**
 	 * Registers a given object under a given name.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	object $object
+	 * @param	string $name	The name of the object to store.
+	 * @param	object $object	The real object.
 	 */
 	public static function setObjectReference($name, $object)
 	{

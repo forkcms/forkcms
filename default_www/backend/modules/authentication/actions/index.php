@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAuthenticationIndex
  * This is the index-action (default), it will display the login screen
  *
  * @package		backend
  * @subpackage	authentication
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendAuthenticationIndex extends BackendBaseActionIndex
@@ -104,8 +103,8 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			$txtPassword = $this->frm->getField('backend_password');
 
 			// required fields
-			$txtEmail->isFilled(BL::getError('EmailIsRequired'));
-			$txtPassword->isFilled(BL::getError('PasswordIsRequired'));
+			$txtEmail->isFilled(BL::err('EmailIsRequired'));
+			$txtPassword->isFilled(BL::err('PasswordIsRequired'));
 
 			// invalid form-token?
 			if($this->frm->getToken() != $this->frm->getField('form_token')->getValue())
@@ -189,10 +188,10 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 			$email = $this->frmForgotPassword->getField('backend_email_forgot')->getValue();
 
 			// required fields
-			if($this->frmForgotPassword->getField('backend_email_forgot')->isEmail(BL::getError('EmailIsInvalid')))
+			if($this->frmForgotPassword->getField('backend_email_forgot')->isEmail(BL::err('EmailIsInvalid')))
 			{
 				// check if there is a user with the given emailaddress
-				if(!BackendUsersModel::existsEmail($email)) $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::getError('EmailIsUnknown'));
+				if(!BackendUsersModel::existsEmail($email)) $this->frmForgotPassword->getField('backend_email_forgot')->addError(BL::err('EmailIsUnknown'));
 			}
 
 			// no errors in the form?
@@ -211,7 +210,7 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$variables['resetLink'] = SITE_URL . BackendModel::createURLForAction('reset_password') .'&email='. $email .'&key='. $key;
 
 				// send e-mail to user
-				BackendMailer::addEmail(ucfirst(BL::getMessage('ResetYourPasswordMailSubject')), BACKEND_MODULE_PATH .'/layout/templates/mails/reset_password.tpl', $variables, $email);
+				BackendMailer::addEmail(ucfirst(BL::msg('ResetYourPasswordMailSubject')), BACKEND_MODULE_PATH .'/layout/templates/mails/reset_password.tpl', $variables, $email);
 
 				// clear post-values
 				$_POST['backend_email_forgot'] = '';
@@ -230,7 +229,6 @@ class BackendAuthenticationIndex extends BackendBaseActionIndex
 				$this->tpl->assign('showForm', true);
 			}
 		}
-
 	}
 }
 

@@ -1,15 +1,14 @@
 <?php
 
 /**
- * InstallerStep3
  * Step 3 of the Fork installer
  *
- * @package		installer
- * @subpackage	install
+ * @package		install
+ * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class InstallerStep3 extends InstallerStep
@@ -66,6 +65,7 @@ class InstallerStep3 extends InstallerStep
 		// create base
 		$base = implode('_', $chunks);
 
+		// create input fields
 		$this->frm->addText('hostname', SpoonSession::exists('db_hostname') ? SpoonSession::get('db_hostname') : $dbHost);
 		$this->frm->addText('port', SpoonSession::exists('db_port') ? SpoonSession::get('db_port') : 3306, 10);
 		$this->frm->addText('database', SpoonSession::exists('db_database') ? SpoonSession::get('db_database') : $base);
@@ -106,8 +106,8 @@ class InstallerStep3 extends InstallerStep
 					$table = 'test'. time();
 
 					// attempt to create table
-					$db->execute('DROP TABLE IF EXISTS '. $table .';');
-					$db->execute('CREATE TABLE '. $table .' (id int(11) NOT NULL) ENGINE=MyISAM;');
+					$db->execute('DROP TABLE IF EXISTS '. $table);
+					$db->execute('CREATE TABLE '. $table .' (id int(11) NOT NULL) ENGINE=MyISAM');
 
 					// drop table
 					$db->drop($table);

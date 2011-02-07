@@ -5,24 +5,24 @@
 # @version	1.0.0
 # @author	Tijs Verkoyen <tijs@sumocoders.be>
 
-rm -f `ls ../default_www/install/cache | grep -v ".gitignore"`
+rm -f `find ../default_www/install/cache/ ! -name ".gitignore" -type f`
 rm -f ../default_www/install/installed.txt
 
-rm -f `ls ../default_www/frontend/cache/cached_templates | grep -v ".gitignore"`
-rm -f `ls ../default_www/frontend/cache/config | grep -v ".gitignore"`
-rm -f `ls ../default_www/frontend/cache/locale | grep -v ".gitignore"`
-rm -f `ls ../default_www/frontend/cache/minified_css | grep -v ".gitignore"`
-rm -f `ls ../default_www/frontend/cache/minified_js | grep -v ".gitignore"`
-rm -f `ls ../default_www/frontend/cache/navigation | grep -v ".gitignore"`
-rm -f `ls ../default_www/frontend/cache/statistics | grep -v ".gitignore"`
-rm -f `ls ../default_www/frontend/cache/templates | grep -v ".gitignore"`
+rm -f `find ../default_www/frontend/cache/cached_templates/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/frontend/cache/config/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/frontend/cache/locale/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/frontend/cache/minified_css/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/frontend/cache/minified_js/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/frontend/cache/navigation/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/frontend/cache/statistics/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/frontend/cache/compiled_templates/ ! -name ".gitignore" -type f`
 
-rm -f `ls ../default_www/backend/cache/analytics | grep -v ".gitignore"`
-rm -f `ls ../default_www/backend/cache/config | grep -v ".gitignore"`
-rm -f `ls ../default_www/backend/cache/cronjobs | grep -v ".gitignore"`
-rm -f `ls ../default_www/backend/cache/locale | grep -v ".gitignore"`
-rm -f `ls ../default_www/backend/cache/mailmotor | grep -v ".gitignore"`
-rm -f `ls ../default_www/backend/cache/templates | grep -v ".gitignore"`
+rm -f `find ../default_www/backend/cache/analytics/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/backend/cache/config/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/backend/cache/cronjobs/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/backend/cache/locale/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/backend/cache/mailmotor/ ! -name ".gitignore" -type f`
+rm -f `find ../default_www/backend/cache/compiled_templates/ ! -name ".gitignore" -type f`
 
 rm -f ../library/globals.php
 rm -f ../library/globals.frontend.php

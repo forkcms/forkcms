@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsAjaxCheckStatus
+ * This edit-action will check the status using Ajax
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction

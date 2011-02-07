@@ -32,7 +32,7 @@ class SpoonHTTP
 	 *
 	 * @return	string							The content.
 	 * @param	string $URL						The URL of the webpage that should be retrieved.
-	 * @param	array[optional] $cURLOptions	Extra options to be passed on with the cURL-request
+	 * @param	array[optional] $cURLoptions	Extra options to be passed on with the cURL-request.
 	 */
 	public static function getContent($URL, array $cURLoptions = null)
 	{

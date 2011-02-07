@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
@@ -32,7 +32,7 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
 		$existingId = BackendMailmotorModel::getCampaignId($name);
 
 		// existing campaign
-		if($existingId !== 0 && $id !== $existingId) $this->output(self::ERROR, array('id' => $existingId, 'error' => true), BL::getError('CampaignExists', 'mailmotor'));
+		if($existingId !== 0 && $id !== $existingId) $this->output(self::ERROR, array('id' => $existingId, 'error' => true), BL::err('CampaignExists', 'mailmotor'));
 
 		// build array
 		$record = array();
@@ -44,8 +44,8 @@ class BackendMailmotorAjaxEditCampaign extends BackendBaseAJAXAction
 		$rows = BackendMailmotorModel::updateCampaign($record);
 
 		// output
-		if($rows !== 0) $this->output(self::OK, array('id' => $id), BL::getMessage('CampaignEdited', 'mailmotor'));
-		else $this->output(self::ERROR, null, BL::getError('CampaignNotEdited', 'mailmotor'));
+		if($rows !== 0) $this->output(self::OK, array('id' => $id), BL::msg('CampaignEdited', 'mailmotor'));
+		else $this->output(self::ERROR, null, BL::err('CampaignNotEdited', 'mailmotor'));
 	}
 }
 

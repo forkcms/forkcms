@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendPagesAdd
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -116,7 +115,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// create elements
 		$this->frm->addText('title');
 		$this->frm->addHidden('template_id', $defaultTemplateId);
-		$this->frm->addRadiobutton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), 'N');
+		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), 'N');
 		$this->frm->addCheckbox('no_follow');
 
 		// get maximum number of blocks
@@ -192,7 +191,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
 			// validate meta
 			$this->meta->validate();
@@ -204,7 +203,6 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				$parentId = 0;
 
 				// build page record
-				$page = array();
 				$page['id'] = BackendPagesModel::getMaximumPageId() + 1;
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $parentId;
@@ -282,7 +280,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					$block['html'] = $html;
 					$block['status'] = 'active';
 					$block['created_on'] = BackendModel::getUTCDate();
-					$block['edited_on'] = BackendModel::getUTCDate();
+					$block['edited_on'] = $block['created_on'];
 
 					// add block
 					$blocks[] = $block;
@@ -301,7 +299,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					foreach($blocks as $block) $text .= ' '. $block['html'];
 
 					// add
-					BackendSearchModel::addIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text));
+					BackendSearchModel::addIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
 				}
 
 				// save tags
@@ -311,7 +309,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=added&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=added&var='. urlencode($page['title']) .'&highlight=row-'. $page['id']);
 			}
 		}
 	}

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendDashboardIndex
  * This is the index-action (default), it will display the login screen
  *
  * @package		backend
  * @subpackage	dashboard
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendDashboardIndex extends BackendBaseActionIndex
@@ -88,6 +87,9 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// create instance
 						$instance = new $className();
 
+						// has rights
+						if(!$instance->isAllowed()) continue;
+
 						// execute instance
 						$instance->execute();
 
@@ -121,7 +123,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		// show report
 		if($this->getParameter('password_reset') == 'success')
 		{
-			$this->tpl->assign('reportMessage', BL::getMessage('PasswordResetSuccess', 'core'));
+			$this->tpl->assign('reportMessage', BL::msg('PasswordResetSuccess', 'core'));
 			$this->tpl->assign('report', true);
 		}
 

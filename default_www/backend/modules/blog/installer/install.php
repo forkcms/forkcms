@@ -1,19 +1,32 @@
 <?php
 
 /**
- * BlogInstall
  * Installer for the blog module
  *
  * @package		installer
  * @subpackage	blog
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BlogInstall extends ModuleInstaller
 {
+	/**
+	 * Add the default category for a language
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
+	 * @param	string $name		The name of the category.
+	 * @param	string $url			The URL for the category.
+	 */
+	private function addCategory($language, $name, $url)
+	{
+		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
+	}
+
+
 	/**
 	 * Install the module
 	 *
@@ -22,7 +35,7 @@ class BlogInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/blog/installer/data/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('blog', 'The blog module.');
@@ -108,10 +121,11 @@ class BlogInstall extends ModuleInstaller
 
 
 			// check if a page for blog already exists in this language
-			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
+			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id
-												WHERE b.extra_id = ? AND p.language = ?', array($blogID, $language)) == 0)
+												WHERE b.extra_id = ? AND p.language = ?',
+												array($blogID, $language)))
 			{
 				// insert page
 				$this->insertPage(array('title' => 'Blog',
@@ -132,6 +146,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'CommentOnWithURL', 'Reactie op: <a href="%1$s">%2$s</a>');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het artikel "%1$s" wil verwijderen?');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Deleted', 'De geselecteerde artikels werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'DeletedSpam', 'Alle spamberichten werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'DeleteAllSpam', 'Verwijdere all spam:');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditArticle', 'bewerk artikel "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditCommentOn', 'bewerk reactie op "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Edited', 'Het artikel "%1$s" werd opgeslagen.');
@@ -174,6 +190,8 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'CommentOnWithURL', 'Comment on: <a href="%1$s">%2$s</a>');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the article "%1$s"?');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Deleted', 'The selected articles were deleted.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'DeletedSpam', 'All spam-comments were deleted.');
+		$this->insertLocale('en', 'backend', 'blog', 'msg', 'DeleteAllSpam', 'Delete all spam:');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditArticle', 'edit article "%1$s"');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'EditCommentOn', 'edit comment on "%1$s"');
 		$this->insertLocale('en', 'backend', 'blog', 'msg', 'Edited', 'The article "%1$s" was saved.');
@@ -212,41 +230,27 @@ class BlogInstall extends ModuleInstaller
 
 
 	/**
-	 * Add the default category for a language
-	 *
-	 * @return	int
-	 * @param	string $language
-	 * @param	string $name
-	 * @param	string $url
-	 */
-	private function addCategory($language, $name, $url)
-	{
-		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
-	}
-
-
-	/**
 	 * Does the category with this id exist within this language.
 	 *
 	 * @return	bool
-	 * @param	string $language
-	 * @param	int $id
+	 * @param	string $language	The langauge to use.
+	 * @param	int $id				The id to exclude.
 	 */
 	private function existsCategory($language, $id)
 	{
-		return (bool) ($this->getDB()->getVar('SELECT COUNT(id) FROM blog_categories WHERE id = ? AND language = ?;', array((int) $id, (string) $language)) > 0);
+		return (bool) $this->getDB()->getVar('SELECT COUNT(id) FROM blog_categories WHERE id = ? AND language = ?', array((int) $id, (string) $language));
 	}
 
 
 	/**
- 	 * Fetch the id of the first category in this language we come across
- 	 *
- 	 * @return	int
- 	 * @param	string $language
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
 	 */
 	private function getCategory($language)
 	{
-		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?;', (string) $language);
+		return (int) $this->getDB()->getVar('SELECT id FROM blog_categories WHERE language = ?', array((string) $language));
 	}
 
 
@@ -254,7 +258,7 @@ class BlogInstall extends ModuleInstaller
 	 * Install example data
 	 *
 	 * @return	void
-	 * @param	string $language
+	 * @param	string $language	The language to use.
 	 */
 	private function installExampleData($language)
 	{
@@ -262,7 +266,7 @@ class BlogInstall extends ModuleInstaller
 		$db = $this->getDB();
 
 		// check if blogposts already exist in this language
-		if((int) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)) == 0)
+		if(!(bool) $db->getVar('SELECT COUNT(id) FROM blog_posts WHERE language = ?', array($language)))
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array('id' => 1,
@@ -328,7 +332,7 @@ class BlogInstall extends ModuleInstaller
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Tijs Verkoyen',
 												'email' => 'tijs@spoon-library.com',
-												'website' => 'http://www.sumocoders.com',
+												'website' => 'http://www.sumocoders.be',
 												'text' => 'wicked!',
 												'type' => 'comment',
 												'status' => 'published',

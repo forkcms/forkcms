@@ -65,6 +65,8 @@ function minifyJS {
 	echo -e "\n" >> minified.tmp.js
 	cat ../default_www/backend/core/js/jquery/jquery.tools.js >> minified.tmp.js
 	echo -e "\n" >> minified.tmp.js
+	cat ../default_www/backend/core/js/jquery/jquery.backend.js >> minified.tmp.js
+	echo -e "\n" >> minified.tmp.js
 	java -jar ./library/yuicompressor.jar --type js --charset utf8 --nomunge --preserve-semi ../default_www/backend/core/js/jquery/jquery.backend.js >> minified.tmp.js
 	
 	echo "* Combined jQuery files and minified our Fork-plugin"

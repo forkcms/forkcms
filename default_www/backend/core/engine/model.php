@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendModel
  * In this file we store all generic functions that we will be using in the backend.
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
@@ -18,7 +17,8 @@ class BackendModel
 	 *
 	 * @var	array
 	 */
-	private static $keys = array(), $navigation = array();
+	private static $keys = array(),
+					$navigation = array();
 
 
 	/**
@@ -88,24 +88,27 @@ class BackendModel
 		if(!empty($akismetModules) && self::getModuleSetting('core', 'akismet_key', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => BL::getError('AkismetKey'));
+			$warnings[] = array('message' => BL::err('AkismetKey'));
 		}
 
 		// check if the google maps key is available if there are modules that require it
 		if(!empty($googleMapsModules) && self::getModuleSetting('core', 'google_maps_key', null) == '')
 		{
 			// add warning
-			$warnings[] = array('message' => BL::getError('GoogleMapsKey'));
+			$warnings[] = array('message' => BL::err('GoogleMapsKey'));
 		}
 
 		// check if the fork API keys are available
 		if(self::getModuleSetting('core', 'fork_api_private_key') == '' || self::getModuleSetting('core', 'fork_api_public_key') == '')
 		{
-			$warnings[] = array('message' => BL::getError('ForkAPIKeys'));
+			$warnings[] = array('message' => BL::err('ForkAPIKeys'));
 		}
 
 		// check if debug-mode is active
-		if(SPOON_DEBUG) $warnings[] = array('message' => BL::getError('DebugModeIsActive'));
+		if(SPOON_DEBUG) $warnings[] = array('message' => BL::err('DebugModeIsActive'));
+/*
+		// @note: robots.txt are removed
+		// 	indexability is now based on meta noindex (SPOON_DEBUG true = not noindex)
 
 		// try to validate robots.txt
 		if(SpoonFile::exists(PATH_WWW .'/robots.txt'))
@@ -135,9 +138,9 @@ class BackendModel
 			}
 
 			// add warning
-			if(!$isOK) $warnings[] = array('message' => BL::getError('RobotsFileIsNotOK'));
+			if(!$isOK) $warnings[] = array('message' => BL::err('RobotsFileIsNotOK'));
 		}
-
+*/
 		// return
 		return $warnings;
 	}
@@ -202,9 +205,9 @@ class BackendModel
 	 * Data is a key/value array. Example: array(id => 23, language => nl);
 	 *
 	 * @return	void
-	 * @param	string[optional] $module
-	 * @param	string[optional] $type
-	 * @param	array[optional] $data
+	 * @param	string[optional] $module	The module wherefore the extra exists.
+	 * @param	string[optional] $type		The type of extra, possible values are block, homepage, widget.
+	 * @param	array[optional] $data		Extra data that exists.
 	 */
 	public static function deleteExtra($module = null, $type = null, array $data = null)
 	{
@@ -252,7 +255,7 @@ class BackendModel
 	 * Delete a page extra by its id
 	 *
 	 * @return	void
-	 * @param	int $id
+	 * @param	int $id		The id of the extra to delete.
 	 */
 	public static function deleteExtraById($id)
 	{
@@ -278,7 +281,7 @@ class BackendModel
 	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
 	{
 		// list of allowed vowels and vowelsounds
-		$vowels = array('a', 'e','u', 'ae', 'ea');
+		$vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
 
 		// list of allowed consonants and consonant sounds
 		$consonants = array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
@@ -323,9 +326,11 @@ class BackendModel
 		// loop available formats
 		foreach((array) self::getModuleSetting('core', 'date_formats_long') as $format)
 		{
+			// get date based on given format
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -343,9 +348,11 @@ class BackendModel
 		// loop available formats
 		foreach((array) self::getModuleSetting('core', 'date_formats_short') as $format)
 		{
+			// get date based on given format
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -375,7 +382,7 @@ class BackendModel
 			Spoon::setObjectReference('database', $db);
 		}
 
-		// return it
+		// return
 		return Spoon::getObjectReference('database');
 	}
 
@@ -411,43 +418,8 @@ class BackendModel
 			self::$keys[$language] = $keys;
 		}
 
-		return self::$keys[$language];
-	}
-
-
-	/**
-	 * Get the navigation-items
-	 *
-	 * @return	array
-	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
-	 */
-	public static function getNavigation($language = null)
-	{
-		// redefine
-		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
-
-		// does the keys exists in the cache?
-		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
-		{
-			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
-			{
-				// regenerate cache
-				BackendPagesModel::buildCache($language);
-			}
-
-			// init var
-			$navigation = array();
-
-			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
-
-			// store
-			self::$navigation[$language] = $navigation;
-		}
-
 		// return
-		return self::$navigation[$language];
+		return self::$keys[$language];
 	}
 
 
@@ -485,28 +457,6 @@ class BackendModel
 
 		// fallback
 		return self::$modules['all'];
-	}
-
-
-	/**
-	 * Fetch the list of modules, but for a dropdown
-	 *
-	 * @return	array
-	 * @param	bool[optional] $activeOnly	Only return the active modules.
-	 */
-	public static function getModulesForDropDown($activeOnly = true)
-	{
-		// init var
-		$dropdown = array('core' => 'core');
-
-		// fetch modules
-		$modules = self::getModules($activeOnly);
-
-		// loop and add into the return-array (with correct label)
-		foreach($modules as $module) $dropdown[$module] = ucfirst(BackendLanguage::getLabel(SpoonFilter::toCamelCase($module)));
-
-		// return data
-		return $dropdown;
 	}
 
 
@@ -569,9 +519,89 @@ class BackendModel
 
 
 	/**
+	 * Fetch the list of modules, but for a dropdown
+	 *
+	 * @return	array
+	 * @param	bool[optional] $activeOnly	Only return the active modules.
+	 */
+	public static function getModulesForDropDown($activeOnly = true)
+	{
+		// init var
+		$dropdown = array('core' => 'core');
+
+		// fetch modules
+		$modules = self::getModules($activeOnly);
+
+		// loop and add into the return-array (with correct label)
+		foreach($modules as $module) $dropdown[$module] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module)));
+
+		// return data
+		return $dropdown;
+	}
+
+
+	/**
+	 * Get the navigation-items
+	 *
+	 * @return	array
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 */
+	public static function getNavigation($language = null)
+	{
+		// redefine
+		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
+
+		// does the keys exists in the cache?
+		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
+		{
+			// validate file
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
+			{
+				// regenerate cache
+				BackendPagesModel::buildCache($language);
+			}
+
+			// init var
+			$navigation = array();
+
+			// require file
+			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
+
+			// store
+			self::$navigation[$language] = $navigation;
+		}
+
+		// return
+		return self::$navigation[$language];
+	}
+
+
+	/**
+	 * Fetch the list of number formats including examples of these formats.
+	 *
+	 * @return	array
+	 */
+	public static function getNumberFormats()
+	{
+		// init var
+		$possibleFormats = array();
+
+		// loop available formats
+		foreach((array) self::getModuleSetting('core', 'number_formats') as $format => $example)
+		{
+			// reformat array
+			$possibleFormats[$format] = $example;
+		}
+
+		// return
+		return $possibleFormats;
+	}
+
+
+	/**
 	 * Fetch the list of available themes
 	 *
-	 * @return array
+	 * @return	array
 	 */
 	public static function getThemes()
 	{
@@ -596,9 +626,11 @@ class BackendModel
 		// loop available formats
 		foreach(self::getModuleSetting('core', 'time_formats') as $format)
 		{
+			// get time based on given format
 			$possibleFormats[$format] = SpoonDate::getDate($format, null, BackendAuthentication::getUser()->getSetting('interface_language'));
 		}
 
+		// return
 		return $possibleFormats;
 	}
 
@@ -628,7 +660,7 @@ class BackendModel
 		// add URL
 		else $URL .= $keys[$pageId];
 
-		// return
+		// return the unique URL!
 		return $URL;
 	}
 
@@ -700,7 +732,7 @@ class BackendModel
 			// append action
 			$URL .= '/'. FrontendLanguage::getAction(SpoonFilter::toCamelCase($action));
 
-			// return the URL
+			// return the unique URL!
 			return $URL;
 		}
 
@@ -733,7 +765,7 @@ class BackendModel
 	 * Get the UTC timestamp for a date/time object combination.
 	 *
 	 * @return	int
-	 * @param	SpoonformDate $date					An instance of SpoonFormDate.
+	 * @param	SpoonFormDate $date					An instance of SpoonFormDate.
 	 * @param	SpoonFormTime[optional] $time		An instance of SpoonFormTime.
 	 */
 	public static function getUTCTimestamp(SpoonFormDate $date, SpoonFormTime $time = null)
@@ -760,6 +792,7 @@ class BackendModel
 			$minute = 0;
 		}
 
+		// make and return timestamp
 		return mktime($hour, $minute, 0, $month, $day, $year);
 	}
 
@@ -769,6 +802,7 @@ class BackendModel
 	 *
 	 * @return	void
 	 * @param	string[optional] $module	A specific module to clear the cache for.
+	 * @param	string[optional] $language	The language to use.
 	 */
 	public static function invalidateFrontendCache($module = null, $language = null)
 	{
@@ -802,9 +836,9 @@ class BackendModel
 	/**
 	 * Ping the known webservices
 	 *
-	 * @return	bool								If everything went fine true will be returned, otherwise false
-	 * @param	string[optional] $pageOrFeedURL		The page/feed that has changed
-	 * @param	string[optional] $category			An optional category for the site
+	 * @return	bool								If everything went fine true will be returned, otherwise false.
+	 * @param	string[optional] $pageOrFeedURL		The page/feed that has changed.
+	 * @param	string[optional] $category			An optional category for the site.
 	 */
 	public static function ping($pageOrFeedURL = null, $category = null)
 	{
@@ -958,13 +992,13 @@ class BackendModel
 	 * @param	string $userIp				IP address of the comment submitter.
 	 * @param	string $userAgent			User agent information.
 	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment
-	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $author	Submitted name with the comment.
+	 * @param	string[optional] $email		Submitted email address.
 	 * @param	string[optional] $url		Commenter URL.
 	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
 	 */
 	public static function submitHam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
@@ -982,7 +1016,7 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.0');
+		$akismet->setUserAgent('Fork CMS/2.1');
 
 		// try it to decide it the item is spam
 		try
@@ -1010,13 +1044,13 @@ class BackendModel
 	 * @param	string $userIp				IP address of the comment submitter.
 	 * @param	string $userAgent			User agent information.
 	 * @param	string[optional] $content	The content that was submitted.
-	 * @param	string[optional] $author	Submitted name with the comment
-	 * @param	string[optional] $email		Submitted email address
+	 * @param	string[optional] $author	Submitted name with the comment.
+	 * @param	string[optional] $email		Submitted email address.
 	 * @param	string[optional] $url		Commenter URL.
 	 * @param	string[optional] $permalink	The permanent location of the entry the comment was submitted to.
 	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 * @param	string[optional] $referrer	The content of the HTTP_REFERER header should be sent here.
-	 * @param	array[optional] $others		Other data (the variables from $_SERVER)
+	 * @param	array[optional] $others		Other data (the variables from $_SERVER).
 	 */
 	public static function submitSpam($userIp, $userAgent, $content, $author = null, $email = null, $url = null, $permalink = null, $type = null, $referrer = null, $others = null)
 	{
@@ -1034,7 +1068,7 @@ class BackendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.0');
+		$akismet->setUserAgent('Fork CMS/2.1');
 
 		// try it to decide it the item is spam
 		try

@@ -21,7 +21,7 @@
  * @subpackage	feed
  *
  *
- * @author 		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		1.1.0
  */
 class SpoonFeedRSSItem
@@ -124,6 +124,26 @@ class SpoonFeedRSSItem
 
 
 	/**
+	 * Add a category for the item.
+	 *
+	 * @return	void
+	 * @param	string $name				The name of the category.
+	 * @param	string[optional] $domain	The domain of the category.
+	 */
+	public function addCategory($name, $domain = null)
+	{
+		// create array
+		$category['name'] = (string) $name;
+
+		// has a domain
+		if($domain != null) $category['domain'] = (string) $domain;
+
+		// add property
+		$this->categories[] = $category;
+	}
+
+
+	/**
 	 * Builds the XML.
 	 *
 	 * @return	string		The fully build XML for an item.
@@ -199,26 +219,6 @@ class SpoonFeedRSSItem
 
 		// return
 		return $XML;
-	}
-
-
-	/**
-	 * Add a category for the item.
-	 *
-	 * @return	void
-	 * @param	string $name				The name of the category.
-	 * @param	string[optional] $domain	The domain of the category.
-	 */
-	public function addCategory($name, $domain = null)
-	{
-		// create array
-		$category['name'] = (string) $name;
-
-		// has a domain
-		if($domain != null) $category['domain'] = (string) $domain;
-
-		// add property
-		$this->categories[] = $category;
 	}
 
 
@@ -491,7 +491,7 @@ class SpoonFeedRSSItem
 	 * Set the author.
 	 *
 	 * @return	void
-	 * @param	string $author
+	 * @param	string $author	The author of the item.
 	 */
 	public function setAuthor($author)
 	{
@@ -534,9 +534,9 @@ class SpoonFeedRSSItem
 	 * Set the enclosure
 	 *
 	 * @return	void
-	 * @param	string $URL
-	 * @param	int $length
-	 * @param	string $type
+	 * @param	string $URL		The URL of the enclosure.
+	 * @param	int $length		The length of the enclosure.
+	 * @param	string $type	The content-type of the enclosure.
 	 */
 	public function setEnclosure($URL, $length, $type)
 	{
@@ -560,8 +560,8 @@ class SpoonFeedRSSItem
 	 * Set the guid.
 	 *
 	 * @return	void
-	 * @param	string $URL
-	 * @param	bool[optional] $isPermaLink
+	 * @param	string $URL						The URL of the item.
+	 * @param	bool[optional] $isPermaLink		Is this the permalink?
 	 */
 	public function setGuid($URL, $isPermaLink = true)
 	{
@@ -584,7 +584,7 @@ class SpoonFeedRSSItem
 	 * Set the link.
 	 *
 	 * @return	void
-	 * @param	string $link
+	 * @param	string $link	The link of the item.
 	 */
 	public function setLink($link)
 	{
@@ -603,7 +603,7 @@ class SpoonFeedRSSItem
 	 * Set the publication date.
 	 *
 	 * @return	void
-	 * @param	int $publicationDate
+	 * @param	int $publicationDate	The publication date as a UNIX-timestamp.
 	 */
 	public function setPublicationDate($publicationDate)
 	{
@@ -615,8 +615,8 @@ class SpoonFeedRSSItem
 	 * Set source.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string $URL
+	 * @param	string $name	The name of the source.
+	 * @param	string $URL		The URL of the source.
 	 */
 	public function setSource($name, $URL)
 	{
@@ -639,7 +639,7 @@ class SpoonFeedRSSItem
 	 * Set the title.
 	 *
 	 * @return	void
-	 * @param	string $title
+	 * @param	string $title	The title of the item.
 	 */
 	public function setTitle($title)
 	{

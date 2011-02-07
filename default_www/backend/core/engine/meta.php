@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendMeta
  * This class represents a META-object
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendMeta
@@ -283,7 +282,7 @@ class BackendMeta
 		// get item
 		$this->data = (array) BackendModel::getDB()->getRecord('SELECT *
 																FROM meta AS m
-																WHERE m.id = ?;',
+																WHERE m.id = ?',
 																array($this->id));
 
 		// validate meta-record
@@ -341,7 +340,7 @@ class BackendMeta
 		$URL = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 
 		// get meta custom
-		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue();
+		if($this->custom && $this->frm->getField('meta_custom')->isFilled()) $custom = $this->frm->getField('meta_custom')->getValue(true);
 		else $custom = null;
 
 		// build meta
@@ -430,26 +429,26 @@ class BackendMeta
 		// page title overwrite is checked
 		if($this->frm->getField('page_title_overwrite')->isChecked())
 		{
-			$this->frm->getField('page_title')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('page_title')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// meta description overwrite is checked
 		if($this->frm->getField('meta_description_overwrite')->isChecked())
 		{
-			$this->frm->getField('meta_description')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('meta_description')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// meta keywords overwrite is checked
 		if($this->frm->getField('meta_keywords_overwrite')->isChecked())
 		{
-			$this->frm->getField('meta_keywords')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('meta_keywords')->isFilled(BL::err('FieldIsRequired'));
 		}
 
 		// URL overwrite is checked
 		if($this->frm->getField('url_overwrite')->isChecked())
 		{
 			// filled
-			$this->frm->getField('url')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('url')->isFilled(BL::err('FieldIsRequired'));
 
 			// fetch url
 			$URL = SpoonFilter::urlise($this->frm->getField('url')->getValue());
@@ -467,7 +466,7 @@ class BackendMeta
 			$generatedUrl = call_user_func_array(array($this->callback['class'], $this->callback['method']), $parameters);
 
 			// check if urls are different
-			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::getError('URLAlreadyExists'));
+			if($URL != $generatedUrl) $this->frm->getField('url')->addError(BL::err('URLAlreadyExists'));
 		}
 
 		// if the form was submitted correctly the data array should be populated

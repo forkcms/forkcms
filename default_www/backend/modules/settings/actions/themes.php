@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendSettingsThemes
+ * This is the themes-action, it will display a form to set theme settings
  *
  * @package		backend
  * @subpackage	settings
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSettingsThemes extends BackendBaseActionIndex
@@ -55,7 +55,7 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 
 		// theme
 		$this->frm->addDropdown('theme', BackendModel::getThemes(), BackendModel::getModuleSetting('core', 'theme', null));
-		$this->frm->getField('theme')->setDefaultElement(BL::getLabel('NoTheme'));
+		$this->frm->getField('theme')->setDefaultElement(BL::lbl('NoTheme'));
 	}
 
 
@@ -89,7 +89,7 @@ class BackendSettingsThemes extends BackendBaseActionIndex
 
 				// assign report
 				$this->tpl->assign('report', true);
-				$this->tpl->assign('reportMessage', BL::getMessage('Saved'));
+				$this->tpl->assign('reportMessage', BL::msg('Saved'));
 			}
 		}
 	}

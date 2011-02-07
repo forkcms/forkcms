@@ -1,21 +1,19 @@
 <?php
 
 /**
- * BackendSettingsModel
  * In this file we store all generic functions that we will be using in the settings module.
- *
  *
  * @package		backend
  * @subpackage	settings
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendSettingsModel
 {
 	/**
-	 * Fetch the list of modules that require akismet
+	 * Fetch the list of modules that require Akismet API key
 	 *
 	 * @return	array
 	 */
@@ -35,12 +33,13 @@ class BackendSettingsModel
 			if($setting) $modules[] = $module;
 		}
 
+		// return
 		return $modules;
 	}
 
 
 	/**
-	 * Fetch the list of modules that require google maps
+	 * Fetch the list of modules that require Google Maps API key
 	 *
 	 * @return	array
 	 */
@@ -60,6 +59,7 @@ class BackendSettingsModel
 			if($setting) $modules[] = $module;
 		}
 
+		// return
 		return $modules;
 	}
 
@@ -99,6 +99,7 @@ class BackendSettingsModel
 			}
 		}
 
+		// return
 		return (array) $warnings;
 	}
 }

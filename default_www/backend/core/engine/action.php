@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendBaseAction
  * This class is the real code, it creates an action, loads the configfile, ...
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */

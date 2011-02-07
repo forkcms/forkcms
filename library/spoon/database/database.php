@@ -106,11 +106,11 @@ class SpoonDatabase
 	 *
 	 * @return	void
 	 * @param	string $driver			The driver to use. Available drivers depend on your server configuration.
-	 * @param	string $hostname		The host or IP of your database-server.
-	 * @param	string $username		The username to authenticate on your database-server.
-	 * @param	string $password		The password to authenticate on your database-server.
+	 * @param	string $hostname		The host or IP of your database server.
+	 * @param	string $username		The username to authenticate on your database server.
+	 * @param	string $password		The password to authenticate on your database server.
 	 * @param	string $database		The name of the database to use.
-	 * @param	int[optional] $port		The port to connect on
+	 * @param	int[optional] $port		The port to connect on.
 	 */
 	public function __construct($driver, $hostname, $username, $password, $database, $port = null)
 	{
@@ -219,11 +219,11 @@ class SpoonDatabase
 	 * Drops one or more tables.
 	 *
 	 * @return	void
-	 * @param	mixed $tables
+	 * @param	mixed $tables		The table(s) to drop.
 	 */
 	public function drop($tables)
 	{
-		$this->execute('DROP TABLE '. implode(', ', (array) $tables) .';');
+		$this->execute('DROP TABLE '. implode(', ', (array) $tables));
 	}
 
 
@@ -231,7 +231,7 @@ class SpoonDatabase
 	 * Executes a query.
 	 *
 	 * @return	void
-	 * @param	string $query					The query to execute, only use with queries that don't return a result
+	 * @param	string $query					The query to execute, only use with queries that don't return a result.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
 	public function execute($query, $parameters = array())
@@ -333,10 +333,32 @@ class SpoonDatabase
 
 
 	/**
-	 * Retrieves the possible ENUM-values
+	 * Retrieve the debug setting
 	 *
-	 * @return	array			An array with all the possible ENUM-values.
-	 * @param	string $table	The table that contains the ENUM-field
+	 * @return	bool	true if debug is enabled, false if not.
+	 */
+	public function getDebug()
+	{
+		return $this->debug;
+	}
+
+
+	/**
+	 * Fetch the name of the database driver
+	 *
+	 * @return	string	The name of the driver that is used.
+	 */
+	public function getDriver()
+	{
+		return $this->driver;
+	}
+
+
+	/**
+	 * Retrieves the possible ENUM values
+	 *
+	 * @return	array			An array with all the possible ENUM values.
+	 * @param	string $table	The table that contains the ENUM field.
 	 * @param	string $field	The name of the field.
 	 */
 	public function getEnumValues($table, $field)
@@ -363,28 +385,6 @@ class SpoonDatabase
 
 		// return
 		return (array) explode(',', $types);
-	}
-
-
-	/**
-	 * Retrieve the debug setting
-	 *
-	 * @return	bool	true if debug is enabled, false if not.
-	 */
-	public function getDebug()
-	{
-		return $this->debug;
-	}
-
-
-	/**
-	 * Fetch the name of the database driver
-	 *
-	 * @return	string	The name of the driver that is used.
-	 */
-	public function getDriver()
-	{
-		return $this->driver;
 	}
 
 
@@ -644,7 +644,7 @@ class SpoonDatabase
 	 */
 	public function getTables()
 	{
-		return (array) $this->getColumn('SHOW TABLES;');
+		return (array) $this->getColumn('SHOW TABLES');
 	}
 
 
@@ -652,7 +652,7 @@ class SpoonDatabase
 	 * Retrieve the type for this value
 	 *
 	 * @return	int
-	 * @param	mixed $value
+	 * @param	mixed $value		The value to retrieve the type for.
 	 */
 	private function getType($value)
 	{
@@ -720,8 +720,8 @@ class SpoonDatabase
 	 * Inserts one or more records
 	 *
 	 * @return	int				The last inserted ID.
-	 * @param	string $table	The table wherin the record will be inserted
-	 * @param	array $values	The values for the record to insert, keys of this array should match the column-names.
+	 * @param	string $table	The table wherein the record will be inserted.
+	 * @param	array $values	The values for the record to insert, keys of this array should match the column names.
 	 */
 	public function insert($table, array $values)
 	{
@@ -861,7 +861,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// build & execute query
-		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables) .';');
+		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables));
 	}
 
 
@@ -983,7 +983,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// loop & truncate
-		foreach($tables as $table) $this->execute('TRUNCATE TABLE '. $table .';');
+		foreach($tables as $table) $this->execute('TRUNCATE TABLE '. $table);
 	}
 
 
@@ -991,8 +991,8 @@ class SpoonDatabase
 	 * Builds a query for updating records
 	 *
 	 * @return	int								The number of affected rows.
-	 * @param	string $table					The table to run the UPDATE-statement on
-	 * @param	array $values					The values to update, use the key(s) as columnnames
+	 * @param	string $table					The table to run the UPDATE-statement on.
+	 * @param	array $values					The values to update, use the key(s) as columnnames.
 	 * @param	string[optional] $where			The WHERE-clause.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */

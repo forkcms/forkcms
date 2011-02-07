@@ -39,12 +39,12 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	int[optional] $maxlength
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	int[optional] $maxlength		The maximum-length the value can be.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @param	bool[optional] $HTML			Is HTML allowed?
 	 */
 	public function __construct($name, $value = null, $maxlength = null, $class = 'inputPassword', $classError = 'inputPasswordError', $HTML = false)
 	{
@@ -65,7 +65,7 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Retrieve the initial or submitted value.
 	 *
 	 * @return	string
-	 * @param	bool[optional] $allowHTML
+	 * @param	bool[optional] $allowHTML	Is HTML allowed?
 	 */
 	public function getValue($allowHTML = null)
 	{
@@ -108,7 +108,7 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Checks if this field contains only letters a-z and A-Z.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphabetical($error = null)
 	{
@@ -138,7 +138,7 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Checks if this field only contains letters & numbers (without spaces).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isAlphaNumeric($error = null)
 	{
@@ -168,7 +168,7 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -190,8 +190,8 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Checks if this field's length is less (or equal) than the given maximum.
 	 *
 	 * @return	bool
-	 * @param	int $maximum
-	 * @param	string[optional] $error
+	 * @param	int $maximum				The maximum number of characters.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMaximumCharacters($maximum, $error = null)
 	{
@@ -221,8 +221,8 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Checks if this field's length is more (or equal) than the given minimum.
 	 *
 	 * @return	bool
-	 * @param	int $minimum
-	 * @param	string[optional] $error
+	 * @param	int $minimum				The minimum number of characters.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isMinimumCharacters($minimum, $error = null)
 	{
@@ -252,8 +252,8 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Checks if the field validates against the regexp.
 	 *
 	 * @return	bool
-	 * @param	string $regexp
-	 * @param	string[optional] $error
+	 * @param	string $regexp				The regexp to test the value on.
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isValidAgainstRegexp($regexp, $error = null)
 	{
@@ -283,7 +283,7 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Parses the html for this textfield.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -300,7 +300,7 @@ class SpoonFormPassword extends SpoonFormInput
 		if($template !== null)
 		{
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;
@@ -311,7 +311,7 @@ class SpoonFormPassword extends SpoonFormInput
 	 * Set the initial value.
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The new value.
 	 */
 	private function setValue($value)
 	{

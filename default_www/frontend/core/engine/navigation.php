@@ -1,13 +1,13 @@
 <?php
 
 /**
- * FrontendNavigation
  * This class will be used to build the navigation
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendNavigation extends FrontendBaseObject
@@ -17,7 +17,7 @@ class FrontendNavigation extends FrontendBaseObject
 	 *
 	 * @var	array
 	 */
-	private static	$keys = array(),
+	private static $keys = array(),
 					$navigation = array();
 
 
@@ -167,6 +167,7 @@ class FrontendNavigation extends FrontendBaseObject
 			$return[] = $temp;
 		}
 
+		// return footer links
 		return $return;
 	}
 
@@ -244,7 +245,7 @@ class FrontendNavigation extends FrontendBaseObject
 			self::$navigation[$language] = $navigation;
 		}
 
-		// return
+		// return from cache
 		return self::$navigation[$language];
 	}
 
@@ -256,8 +257,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	string[optional] $type			The type of navigation the HTML should be build for.
 	 * @param	int[optional] $parentId			The parentID to start of.
 	 * @param	int[optional] $depth			The maximum depth to parse.
-	 * @param	array[optional] $excludedIds	PageIDs to be excluded.
-	 * @param	int[optional] $depthCounter		A counter that will hold the current depth
+	 * @param	array[optional] $excludeIds		PageIDs to be excluded.
+	 * @param	int[optional] $depthCounter		A counter that will hold the current depth.
 	 */
 	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
 	{
@@ -321,6 +322,12 @@ class FrontendNavigation extends FrontendBaseObject
 				if(isset($navigation[$type][$page['page_id']]) && $navigation[$type][$parentId][$id]['selected'] == true && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $depthCounter + 1);
 				else $navigation[$type][$parentId][$id]['children'] = false;
 
+				// add parent id
+				$navigation[$type][$parentId][$id]['parent_id'] = $parentId;
+
+				// add depth
+				$navigation[$type][$parentId][$id]['depth'] = $depth;
+
 				// set link
 				$navigation[$type][$parentId][$id]['link'] = FrontendNavigation::getURL($page['page_id']);
 			}
@@ -330,15 +337,13 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// create template
-		$tpl = new SpoonTemplate();
-		$tpl->setForceCompile(SPOON_DEBUG);
-		$tpl->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$tpl = new FrontendTemplate(false);
 
 		// assign navigation to template
 		$tpl->assign('navigation', $navigation[$type][$parentId]);
 
 		// return parsed content
-		return $tpl->getContent(self::$templatePath);
+		return $tpl->getContent(self::$templatePath, true, true);
 	}
 
 
@@ -428,12 +433,12 @@ class FrontendNavigation extends FrontendBaseObject
 		$keys = self::getKeys($language);
 
 		// get the URL, if it doens't exist return 404
-		if(!isset($keys[$pageId])) return self::getURL(404);
+		if(!isset($keys[$pageId])) return self::getURL(404, $language);
 
 		// add URL
 		else $URL .= $keys[$pageId];
 
-		// return
+		// return the URL
 		return $URL;
 	}
 
@@ -477,8 +482,8 @@ class FrontendNavigation extends FrontendBaseObject
 							// direct link?
 							if($extra['module'] == $module && $extra['action'] == $action)
 							{
-								// exacte page was found, so return
-								return self::getURL($properties['page_id']);
+								// exact page was found, so return
+								return self::getURL($properties['page_id'], $language);
 							}
 
 							// correct module but no action
@@ -507,7 +512,7 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// fallback
-		return self::getURL(404);
+		return self::getURL(404, $language);
 	}
 
 
@@ -515,8 +520,8 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Fetch the first direct link to an extra id
 	 *
 	 * @return	string
-	 * @param	int $id
-	 * @param	string[optional] $language
+	 * @param	int $id							The id of the extra.
+	 * @param	string[optional] $language		The language wherein the URL should be retrieved, if not provided we will load the language that was provided in the URL.
 	 */
 	public static function getURLForExtraId($id, $language = null)
 	{
@@ -545,8 +550,8 @@ class FrontendNavigation extends FrontendBaseObject
 							// direct link?
 							if($extra['id'] == $id)
 							{
-								// exacte page was found, so return
-								return self::getURL($properties['page_id']);
+								// exact page was found, so return
+								return self::getURL($properties['page_id'], $language);
 							}
 						}
 					}
@@ -555,7 +560,7 @@ class FrontendNavigation extends FrontendBaseObject
 		}
 
 		// fallback
-		return self::getURL(404);
+		return self::getURL(404, $language);
 	}
 
 
@@ -594,38 +599,10 @@ class FrontendNavigation extends FrontendBaseObject
 	 * Set the path for the template
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path to set.
 	 */
 	private function setTemplatePath($path)
 	{
-		// theme in use
-		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
-		{
-			// theme name
-			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
-
-			// core template
-			if(strpos($path, 'frontend/core/') !== false)
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-
-			// module template
-			else
-			{
-				// path to possible theme template
-				$themeTemplate = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $path);
-
-				// does this template exist
-				if(SpoonFile::exists($themeTemplate)) $path = $themeTemplate;
-			}
-		}
-
-		// set path
 		self::$templatePath = (string) $path;
 	}
 }

@@ -1,14 +1,12 @@
 <?php
 
 /**
- * BackendContentBlocksConfig
- *
  * This is the configuration-object for the content_blocks module
  *
  * @package		backend
  * @subpackage	content_blocks
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 final class BackendContentBlocksConfig extends BackendBaseConfig

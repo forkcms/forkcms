@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendBlogSettings
+ * This is the settings-action, it will display a form to set general blog settings
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
@@ -54,7 +54,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		// add fields for spam
 		$this->frm->addCheckbox('spamfilter', BackendModel::getModuleSetting($this->URL->getModule(), 'spamfilter', false));
 
-		// no Akismet-key, so we can't enable SPAM-filtering
+		// no Akismet-key, so we can't enable spam-filter
 		if(BackendModel::getModuleSetting('core', 'akismet_key') == '')
 		{
 			$this->frm->getField('spamfilter')->setAttribute('disabled', 'disabled');
@@ -109,7 +109,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 			$feedburnerURL = $this->frm->getField('feedburner_url');
 
 			// validation
-			$this->frm->getField('rss_title')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('rss_title')->isFilled(BL::err('FieldIsRequired'));
 
 			// feedburner URL is set
 			if($feedburnerURL->isFilled())
@@ -118,7 +118,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				$feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://'. $feedburnerURL->getValue() : $feedburnerURL->getValue();
 
 				// check if feedburner URL is valid
-				if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::getError('InvalidURL'));
+				if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::err('InvalidURL'));
 			}
 
 			// init variable

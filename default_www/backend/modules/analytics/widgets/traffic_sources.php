@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsWidgetTrafficSources
+ * This widget will show the latest traffic sources
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
@@ -69,7 +69,8 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		curl_exec($curl);
 
 		// close
-		curl_close($curl);	}
+		curl_close($curl);
+	}
 
 
 	/**
@@ -121,7 +122,7 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 		$timestamp = mktime(0, 0, 0, substr($date, 5, 2), substr($date, 8, 2), substr($date, 0, 4));
 
 		// assign date label
-		$this->tpl->assign('analyticsTrafficSourcesDate', ($date != date('Y-m-d') ? BackendModel::getUTCDate('d-m', $timestamp) : BL::getLabel('Today')));
+		$this->tpl->assign('analyticsTrafficSourcesDate', ($date != date('Y-m-d') ? BackendModel::getUTCDate('d-m', $timestamp) : BL::lbl('Today')));
 	}
 
 

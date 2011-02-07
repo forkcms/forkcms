@@ -154,28 +154,6 @@ class GoogleAnalytics
 
 
 	/**
-	 * Get a session token based on a one-time token.
-	 *
-	 * @return	string
-	 * @param	string $oneTimeToken	The one-time token to get a session token with.
-	 */
-	public function getSessionToken($oneTimeToken)
-	{
-		// make the call
-		$response = $this->doCall('https://www.google.com/accounts/AuthSubSessionToken', $oneTimeToken);
-
-		// a token is given in the response - save it
-		if(preg_match('/Token=(.*)/', $response, $matches)) $sessionToken = $matches[1];
-
-		// no token was given - throw an exception
-		else throw new GoogleAnalyticsException($response);
-
-		// return the session token
-		return $sessionToken;
-	}
-
-
-	/**
 	 * Get all website profiles and their account(s).
 	 *
 	 * @return	mixed
@@ -184,10 +162,16 @@ class GoogleAnalytics
 	public function getAnalyticsAccountList($sessionToken)
 	{
 		// try to make the call
-		try { $response = $this->doCall(self::API_URL .'/accounts/default', $sessionToken); }
+		try
+		{
+			$response = $this->doCall(self::API_URL .'/accounts/default', $sessionToken);
+		}
 
 		// catch possible exception
-		catch(Exception $e) { return array(); }
+		catch(Exception $e)
+		{
+			return array();
+		}
 
 		// no accounts - return an empty array
 		if($response == 'No Analytics account was found for the currently logged-in user') return array();
@@ -235,7 +219,7 @@ class GoogleAnalytics
 	 * Makes a call to Google.
 	 *
 	 * @return	array
-	 * @param	mixed $metrics					The metrics as string or as array
+	 * @param	mixed $metrics					The metrics as string or as array.
 	 * @param	int $startTimestamp				The start date from where data must be collected.
 	 * @param	int $endTimestamp				The end date to where data must be collected.
 	 * @param	mixed[optional] $dimensions		The optional diminsions as string or as array.
@@ -264,7 +248,7 @@ class GoogleAnalytics
 		if(count($parameters) > 0)
 		{
 			// loop them and combine key and urlencoded value (but don't encode the colons)
-			foreach ($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace('%3A', ':', urlencode($value));
+			foreach($parameters as $key => $value) $parameters[$key] = $key .'='. str_replace('%3A', ':', urlencode($value));
 
 			// append to array
 			$URL .= '&'. implode('&', $parameters);
@@ -312,14 +296,10 @@ class GoogleAnalytics
 			foreach($simpleXML->entry as $entry)
 			{
 				// loop the dimensions
-				foreach ($entry->dimension as $dimension) {
-					$results['entries'][$i][(string) $dimension['name']] = (string) $dimension['value'];
-				}
+				foreach($entry->dimension as $dimension) $results['entries'][$i][(string) $dimension['name']] = (string) $dimension['value'];
 
 				// loop the metrics
-				foreach ($entry->metric as $metric) {
-					$results['entries'][$i][(string) $metric['name']] = (string) $metric['value'];
-				}
+				foreach($entry->metric as $metric) $results['entries'][$i][(string) $metric['name']] = (string) $metric['value'];
 
 				// increase counter
 				$i++;
@@ -328,6 +308,28 @@ class GoogleAnalytics
 
 		// return the result
 		return $results;
+	}
+
+
+	/**
+	 * Get a session token based on a one-time token.
+	 *
+	 * @return	string
+	 * @param	string $oneTimeToken	The one-time token to get a session token with.
+	 */
+	public function getSessionToken($oneTimeToken)
+	{
+		// make the call
+		$response = $this->doCall('https://www.google.com/accounts/AuthSubSessionToken', $oneTimeToken);
+
+		// a token is given in the response - save it
+		if(preg_match('/Token=(.*)/', $response, $matches)) $sessionToken = $matches[1];
+
+		// no token was given - throw an exception
+		else throw new GoogleAnalyticsException($response);
+
+		// return the session token
+		return $sessionToken;
 	}
 
 
@@ -346,7 +348,7 @@ class GoogleAnalytics
 	 * Set the session token to make calls with
 	 *
 	 * @return	void
-	 * @param	string $sessionToken	The session token to make calls with
+	 * @param	string $sessionToken	The session token to make calls with.
 	 */
 	public function setSessionToken($sessionToken)
 	{
@@ -427,8 +429,8 @@ class GoogleAnalyticsException extends Exception
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string[optional] $message
-	 * @param	int[optional] $code
+	 * @param	string[optional] $message	The errormessage.
+	 * @param	int[optional] $code			The errornumber.
 	 */
 	public function __construct($message = null, $code = null)
 	{

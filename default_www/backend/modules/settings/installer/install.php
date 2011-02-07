@@ -1,14 +1,13 @@
 <?php
 
 /**
- * SettingsInstall
  * Installer for the settings module
  *
  * @package		installer
- * @subpackage	contact
+ * @subpackage	settings
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class SettingsInstall extends ModuleInstaller
@@ -40,6 +39,7 @@ class SettingsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpEmailWebmaster', 'Stuur notificaties van het CMS naar dit e-mailadres.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpFacebookAdminIds', 'Een door komma\'s gescheiden lijst met de Facebook-gebruikers hun ID en/of het id van de Facebook-applicatie die de paginas mogen beheren.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpLanguages', 'Duid aan welke talen toegankelijk zijn voor bezoekers');
+		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpNumberFormat', 'Dit formaat wordt gehanteerd bij het weergeven van getallen in de frontend.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpRedirectLanguages', 'Duid aan in welke talen mensen op basis van hun browser mogen terechtkomen.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpSendingEmails', 'Je kan e-mails versturen op 2 manieren. Door de ingebouwd mail functie van PHP of via SMTP. We raden je aan om SMTP te gebruiken, aangezien e-mails hierdoor minder snel in de spamfilter zullen terechtkomen.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpScriptsFoot', 'Plaats hier code die onderaan elke pagina geladen moet worden. (bvb. Google Analytics)');
@@ -58,6 +58,7 @@ class SettingsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpEmailWebmaster', 'Send CMS notifications to this e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpFacebookAdminIds', 'A comma-separated list of either Facebook user IDs or a Facebook Platform application ID that administers this website.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpLanguages', 'Select the languages that are accessible for visitors.');
+		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpNumberFormat', 'This format is used to display numbers on the website.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpRedirectLanguages', 'Select the languages that people may automatically be redirect to by their browser.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpSendingEmails', 'You can send emails in 2 ways. By using PHP\'s built-in mail method or via SMTP. We advice you to use SMTP, since this ensures that e-mails are less frequently marked as spam.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpScriptsFoot', 'Paste code that needs to be loaded at the end of the <code>&lt;body&gt;</code> tag here (e.g. Google Analytics).');

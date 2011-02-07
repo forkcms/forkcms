@@ -1,14 +1,13 @@
 <?php
 
 /**
- * Frontend
  * This class defines the frontend, it is the core. Everything starts here.
  * We create all needed instances.
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class Frontend

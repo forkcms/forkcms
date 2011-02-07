@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAuthenticationResetPassword
  * This is the reset password action, it will display a form that allows the user to reset his/her password.
  *
  * @package		backend
  * @subpackage	authentication
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendAuthenticationResetPassword extends BackendBaseActionAdd
@@ -39,7 +38,7 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 	/**
 	 * User record
 	 *
-	 * @return array
+	 * @return	array
 	 */
 	private $user;
 
@@ -68,25 +67,6 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 
 		// display the page
 		$this->display();
-	}
-
-
-	/**
-	 * Load the form
-	 *
-	 * @return	void
-	 */
-	private function loadForm()
-	{
-		// create the form
-		$this->frm = new BackendForm();
-
-		// create elements and add to the form
-		$this->frm->addPassword('backend_new_password');
-		$this->frm->addPassword('backend_new_password_repeated');
-
-		$this->frm->getField('backend_new_password')->setAttributes(array('autocomplete' => 'off'));
-		$this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
 	}
 
 
@@ -129,6 +109,25 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 
 
 	/**
+	 * Load the form
+	 *
+	 * @return	void
+	 */
+	private function loadForm()
+	{
+		// create the form
+		$this->frm = new BackendForm();
+
+		// create elements and add to the form
+		$this->frm->addPassword('backend_new_password');
+		$this->frm->addPassword('backend_new_password_repeated');
+
+		$this->frm->getField('backend_new_password')->setAttributes(array('autocomplete' => 'off'));
+		$this->frm->getField('backend_new_password_repeated')->setAttributes(array('autocomplete' => 'off'));
+	}
+
+
+	/**
 	 * Validate the form
 	 *
 	 * @return	void
@@ -143,8 +142,8 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 			$newPasswordRepeated = $this->frm->getField('backend_new_password_repeated');
 
 			// required fields
-			$newPassword->isFilled(BL::getError('PasswordIsRequired'));
-			$newPasswordRepeated->isFilled(BL::getError('PasswordRepeatIsRequired'));
+			$newPassword->isFilled(BL::err('PasswordIsRequired'));
+			$newPasswordRepeated->isFilled(BL::err('PasswordRepeatIsRequired'));
 
 			// all fields are ok?
 			if($newPassword->isFilled() && $newPasswordRepeated->isFilled())
@@ -153,10 +152,10 @@ class BackendAuthenticationResetPassword extends BackendBaseActionAdd
 				if($newPassword->getValue() !== $newPasswordRepeated->getValue())
 				{
 					// add error
-					$this->frm->addError(BL::getError('PasswordsDontMatch'));
+					$this->frm->addError(BL::err('PasswordsDontMatch'));
 
 					// show error
-					$this->tpl->assign('error', BL::getError('PasswordsDontMatch'));
+					$this->tpl->assign('error', BL::err('PasswordsDontMatch'));
 				}
 			}
 

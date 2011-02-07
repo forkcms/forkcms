@@ -160,12 +160,13 @@ class SpoonDatagridColumn
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $label
-	 * @param	string[optional] $value
-	 * @param	string[optional] $URL
-	 * @param	string[optional] $image
-	 * @param	string[optional] $sequence
+	 * @param	string $name				The name of the column.
+	 * @param	string[optional] $label		The label to use for the column.
+	 * @param	string[optional] $value		The value of the column.
+	 * @param	string[optional] $URL		An URL for the column (the value will become a link).
+	 * @param	string[optional] $title		The title for the URL.
+	 * @param	string[optional] $image		An image instead of a value.
+	 * @param	string[optional] $sequence	The sequence of the column.
 	 */
 	public function __construct($name, $label = null, $value = null, $URL = null, $title = null, $image = null, $sequence = null)
 	{
@@ -386,7 +387,7 @@ class SpoonDatagridColumn
 	 * Set the attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes
+	 * @param	array $attributes	The attributes as key/value pairs.
 	 */
 	public function setAttributes(array $attributes)
 	{
@@ -398,8 +399,8 @@ class SpoonDatagridColumn
 	 * Sets the confirm message.
 	 *
 	 * @return	void
-	 * @param	string $message
-	 * @param	string[optional] $custom
+	 * @param	string $message				The message to show.
+	 * @param	string[optional] $custom	Custom code you wish to use to confirm.
 	 */
 	public function setConfirm($message, $custom = null)
 	{
@@ -413,7 +414,7 @@ class SpoonDatagridColumn
 	 * Set the header attributes.
 	 *
 	 * @return	void
-	 * @param	array $attributes
+	 * @param	array $attributes	The attributes as key/value pairs.
 	 */
 	public function setHeaderAttributes(array $attributes)
 	{
@@ -425,7 +426,7 @@ class SpoonDatagridColumn
 	 * Sets the hidden status.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should this column be hidden?
 	 */
 	public function setHidden($on = true)
 	{
@@ -437,8 +438,8 @@ class SpoonDatagridColumn
 	 * Sets the image.
 	 *
 	 * @return	void
-	 * @param	string $image
-	 * @param	string $title
+	 * @param	string $image		The path to the image.
+	 * @param	string $title		The title for the image.
 	 */
 	public function setImage($image, $title)
 	{
@@ -451,7 +452,7 @@ class SpoonDatagridColumn
 	 * Sets the label.
 	 *
 	 * @return	void
-	 * @param	string $label
+	 * @param	string $label	The label for the column.
 	 */
 	public function setLabel($label)
 	{
@@ -463,7 +464,7 @@ class SpoonDatagridColumn
 	 * Sets the overwrite status.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should the current value be overwriten?
 	 */
 	public function setOverwrite($on = true)
 	{
@@ -475,7 +476,7 @@ class SpoonDatagridColumn
 	 * Sets the sequence.
 	 *
 	 * @return	void
-	 * @param	int $sequence
+	 * @param	int $sequence	The new sequence of the column (0-based).
 	 */
 	public function setSequence($sequence)
 	{
@@ -487,7 +488,7 @@ class SpoonDatagridColumn
 	 * Sets the sorting.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Is this column sortable?
 	 */
 	public function setSorting($on = true)
 	{
@@ -499,7 +500,7 @@ class SpoonDatagridColumn
 	 * Sets the default sorting method for this column.
 	 *
 	 * @return	void
-	 * @param	string[optional] $sort
+	 * @param	string[optional] $sort	The default sorting method, possible values are: asc, desc.
 	 */
 	public function setSortingMethod($sort = 'asc')
 	{
@@ -511,8 +512,8 @@ class SpoonDatagridColumn
 	 * Sets the URL.
 	 *
 	 * @return	void
-	 * @param	string $URL
-	 * @param	string[optional] $title
+	 * @param	string $URL					The URL to set.
+	 * @param	string[optional] $title		The title of the URL.
 	 */
 	public function setURL($URL, $title = null)
 	{
@@ -525,8 +526,8 @@ class SpoonDatagridColumn
 	 * Sets the value & its overwrite setting.
 	 *
 	 * @return	void
-	 * @param	string $value
-	 * @param	bool[optional] $overwrite
+	 * @param	string $value				The new value.
+	 * @param	bool[optional] $overwrite	Should the current value be overwritten?
 	 */
 	public function setValue($value, $overwrite = false)
 	{

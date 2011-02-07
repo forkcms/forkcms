@@ -79,10 +79,10 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	array $values
-	 * @param	string[optional] $checked
-	 * @param	string[optional] $class
+	 * @param	string $name					The name.
+	 * @param	array $values					The possible values. Each value should have a label and value-key.
+	 * @param	string[optional] $checked		The value of the check radiobutton.
+	 * @param	string[optional] $class			The CSS-class to be used.
 	 */
 	public function __construct($name, array $values, $checked = null, $class = 'inputRadiobutton')
 	{
@@ -99,7 +99,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error		The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -111,8 +111,8 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Retrieves the custom attributes as HTML.
 	 *
 	 * @return	string
-	 * @param	string $element
-	 * @param	array $variables
+	 * @param	string $element		The element.
+	 * @param	array $variables	The variables to convert into HTML-attributes.
 	 */
 	private function getAttributesHTML($element, array $variables)
 	{
@@ -187,6 +187,17 @@ class SpoonFormRadiobutton extends SpoonFormElement
 
 
 	/**
+	 * Fetch the list of values as provided in the constructor.
+	 *
+	 * @return	array
+	 */
+	public function getRawValues()
+	{
+		return $this->variables;
+	}
+
+
+	/**
 	 * Retrieves the initial or submitted value.
 	 *
 	 * @return	string
@@ -221,7 +232,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Checks if this field was submitted & filled.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -245,7 +256,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Parse the html for this button.
 	 *
 	 * @return	array
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -261,7 +272,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 			$element[$name] = '<input type="radio" name="'. $this->name .'" value="'. $value .'"';
 
 			// checked status
-			if($value === $this->getChecked()) $element[$name] .= ' checked="checked"';
+			if($value == $this->getChecked()) $element[$name] .= ' checked="checked"';
 
 			// add attributes
 			$element[$name] .= $this->getAttributesHTML($value, array('[id]' => $this->variables[$value]['id'], '[value]' => $value));
@@ -283,7 +294,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 		if($template !== null)
 		{
 			$template->assign($this->name, $radiobuttons);
-			$template->assign('rbt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('rbt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $radiobuttons;
@@ -294,7 +305,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Set the checked value.
 	 *
 	 * @return	void
-	 * @param	string $checked
+	 * @param	string $checked		Set the radiobutton as checked.
 	 */
 	public function setChecked($checked)
 	{
@@ -310,7 +321,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Overwrites the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function setError($error)
 	{
@@ -322,9 +333,10 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	 * Set the labels and their values.
 	 *
 	 * @return	void
-	 * @param	array $values
+	 * @param	array $values						The values to set.
+	 * @param	string[optional] $defaultClass		The CSS-class to use.
 	 */
-	private function setValues(array $values, $defaultClass = 'inputRadio')
+	public function setValues(array $values, $defaultClass = 'inputRadio')
 	{
 		// empty values not allowed
 		if(empty($values)) throw new SpoonFormException('The list with values should not be empty.');

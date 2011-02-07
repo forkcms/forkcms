@@ -1,14 +1,14 @@
 <?php
 
 /**
- * FrontendBlogDetail
  * This is the detail-action
  *
  * @package		frontend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class FrontendBlogDetail extends FrontendBaseBlock
@@ -117,7 +117,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags
-		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['id']);
+		$this->record['tags'] = FrontendTagsModel::getForItem('blog', $this->record['revision_id']);
 
 		// get comments
 		$this->comments = FrontendBlogModel::getComments($this->record['id']);
@@ -182,7 +182,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 
 			// try to get an image in the content
 			$matches = array();
-			preg_match('|<img.*src="(.*)".*/>|iU', $this->record['text'], $matches);
+			preg_match('/<img.*src="(.*)".*\/>/iU', $this->record['text'], $matches);
 
 			// found an image?
 			if(isset($matches[1]))
@@ -203,9 +203,6 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			// add
 			$this->header->addMetaCustom($meta);
 		}
-
-		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
 
 		// add into breadcrumb
 		$this->breadcrumb->addElement($this->record['title']);
@@ -334,9 +331,18 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$comment['id'] = FrontendBlogModel::insertComment($comment);
 
 				// append a parameter to the URL so we can show moderation
-				if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
-				if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
-				if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
+				if(strpos($redirectLink, '?') === false)
+				{
+					if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::getAction('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::getAction('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
+				}
+				else
+				{
+					if($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#'.FL::getAction('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '&comment=spam#'.FL::getAction('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-'. $comment['id'];
+				}
 
 				// set title
 				$comment['post_title'] = $this->record['title'];

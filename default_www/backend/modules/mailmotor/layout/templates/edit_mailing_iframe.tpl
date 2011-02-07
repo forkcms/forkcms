@@ -23,11 +23,15 @@
 	<script type="text/javascript">
 		//<![CDATA[
 			var variables = new Array();
-			variables = { mailingId: '{$mailing['id']}',
-							templateCSSPath: '{$template['path_css']}',
-							templateCSSURL: '{$template['url_css']}' };
+			variables =
+			{
+				mailingId: '{$mailing['id']}',
+				templateCSSPath: '{$template['path_css']}',
+				templateCSSURL: '{$template['url_css']}'
+			};
 
-			function getTinyMCEContent() {
+			function getTinyMCEContent()
+			{
 				// this cleans the tinyMCE and moves the current content to the textarea
 				tinyMCE.triggerSave(false, true);
 

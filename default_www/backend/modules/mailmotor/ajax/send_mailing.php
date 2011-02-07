@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
@@ -34,7 +34,7 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 			mailing was already sent
 			We use a custom status code 900 because we want to do more with JS than triggering an error
 		*/
-		if($mailing['status'] == 'sent') $this->output(900, null, BL::getError('MailingAlreadySent', 'mailmotor'));
+		if($mailing['status'] == 'sent') $this->output(900, null, BL::err('MailingAlreadySent', 'mailmotor'));
 
 		// make a regular date out of the send_on timestamp
 		$mailing['delivery_date'] = date('Y-m-d H:i:s', $mailing['send_on']);
@@ -67,15 +67,15 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 			switch($e->getMessage())
 			{
 				case 'HTML Content URL Required':
-					$message = BL::getError('HTMLContentURLRequired', 'mailmotor');
+					$message = BL::err('HTMLContentURLRequired', 'mailmotor');
 				break;
 
 				case 'Payment details required':
-					$message = sprintf(BL::getError('PaymentDetailsRequired', 'mailmotor'), BackendModel::getModuleSetting('mailmotor', 'cm_username'));
+					$message = sprintf(BL::err('PaymentDetailsRequired', 'mailmotor'), BackendModel::getModuleSetting('mailmotor', 'cm_username'));
 				break;
 
 				case 'Duplicate Campaign Name':
-					$message = BL::getError('DuplicateCampaignName', 'mailmotor');
+					$message = BL::err('DuplicateCampaignName', 'mailmotor');
 				break;
 
 				default:
@@ -96,7 +96,7 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		BackendMailmotorModel::updateMailing($item);
 
 		// we made it \o/
-		$this->output(self::OK, array('mailing_id' => $id), BL::getMessage('MailingSent', 'mailmotor'));
+		$this->output(self::OK, array('mailing_id' => $id), BL::msg('MailingSent', 'mailmotor'));
 	}
 }
 

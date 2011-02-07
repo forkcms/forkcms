@@ -1,12 +1,12 @@
 <?php
 
 /**
- * FrontendPage
+ * Frontend page class, this class will handle everything on a page
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendPage extends FrontendBaseObject
@@ -316,12 +316,8 @@ class FrontendPage extends FrontendBaseObject
 						$this->tpl->assign($templateVariable, $data);
 					}
 
-					// regular widget
-					else
-					{
-						// assign the templatepath so it will be included
-						$this->tpl->assign($templateVariable, $widget->getTemplatePath());
-					}
+					// regular widget, assign the templatepath so it will be included
+					else $this->tpl->assign($templateVariable, $widget->getTemplatePath());
 				}
 			}
 

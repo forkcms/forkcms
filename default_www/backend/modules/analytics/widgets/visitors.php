@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsWidgetVisitors
+ * This widget will show the latest visitors
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
@@ -69,7 +69,7 @@ class BackendAnalyticsWidgetVisitors extends BackendBaseWidget
 				// build graph data array
 				$graphData[$i] = array();
 				$graphData[$i]['title'] = $metric;
-				$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
+				$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 				$graphData[$i]['i'] = $i + 1;
 				$graphData[$i]['data'] = array();
 

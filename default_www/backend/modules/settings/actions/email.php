@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendSettingsEmail
+ * This is the email-action, it will display a form to set email settings
  *
  * @package		backend
  * @subpackage	settings
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendSettingsEmail extends BackendBaseActionIndex
@@ -97,19 +97,19 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 		if($this->frm->isSubmitted())
 		{
 			// validate required fields
-			$this->frm->getField('mailer_from_name')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('mailer_from_email')->isEmail(BL::getError('EmailIsInvalid'));
-			$this->frm->getField('mailer_to_name')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('mailer_to_email')->isEmail(BL::getError('EmailIsInvalid'));
-			$this->frm->getField('mailer_reply_to_name')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('mailer_reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frm->getField('mailer_from_name')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('mailer_from_email')->isEmail(BL::err('EmailIsInvalid'));
+			$this->frm->getField('mailer_to_name')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('mailer_to_email')->isEmail(BL::err('EmailIsInvalid'));
+			$this->frm->getField('mailer_reply_to_name')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('mailer_reply_to_email')->isEmail(BL::err('EmailIsInvalid'));
 
 			// SMTP type was chosen
 			if($this->frm->getField('mailer_type')->getValue() == 'smtp')
 			{
 				// server & port are required
-				$this->frm->getField('smtp_server')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('smtp_port')->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('smtp_server')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('smtp_port')->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// no errors ?
@@ -129,7 +129,7 @@ class BackendSettingsEmail extends BackendBaseActionIndex
 
 				// assign report
 				$this->tpl->assign('report', true);
-				$this->tpl->assign('reportMessage', BL::getMessage('Saved'));
+				$this->tpl->assign('reportMessage', BL::msg('Saved'));
 			}
 		}
 	}

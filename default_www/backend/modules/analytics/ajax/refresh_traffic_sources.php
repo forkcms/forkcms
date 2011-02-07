@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsAjaxCheckStatus
+ * This edit-action will refresh the traffic sources using Ajax
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
@@ -37,7 +37,7 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 			BackendAnalyticsModel::clearTables();
 
 			// return status
-			$this->output(self::OK, array('status' => 'unauthorized', 'message' => BL::getMessage('Redirecting')), 'No longer authorized.');
+			$this->output(self::OK, array('status' => 'unauthorized', 'message' => BL::msg('Redirecting')), 'No longer authorized.');
 		}
 
 		// get data
@@ -48,7 +48,7 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		$keywordsHtml = $this->parseKeywords();
 
 		// return status
-		$this->output(self::OK, array('status' => 'success', 'referrersHtml' => $referrersHtml, 'keywordsHtml' => $keywordsHtml, 'date' => BL::getLabel('Today'), 'message' => BL::getMessage('RefreshedTrafficSources')), 'Data has been retrieved.');
+		$this->output(self::OK, array('status' => 'success', 'referrersHtml' => $referrersHtml, 'keywordsHtml' => $keywordsHtml, 'date' => BL::lbl('Today'), 'message' => BL::msg('RefreshedTrafficSources')), 'Data has been retrieved.');
 	}
 
 
@@ -102,7 +102,7 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		}
 
 		// parse the datagrid
-		return (!empty($results) ? $datagrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="datagrid"><tr><td>'. BL::getMessage('NoReferrers') .'</td></tr></table>');
+		return (!empty($results) ? $datagrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="datagrid"><tr><td>'. BL::msg('NoReferrers') .'</td></tr></table>');
 	}
 
 
@@ -133,7 +133,7 @@ class BackendAnalyticsAjaxRefreshTrafficSources extends BackendBaseAJAXAction
 		}
 
 		// parse the datagrid
-		return (!empty($results) ? $datagrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="datagrid"><tr><td>'. BL::getMessage('NoKeywords') .'</td></tr></table>');
+		return (!empty($results) ? $datagrid->getContent() : '<table border="0" cellspacing="0" cellpadding="0" class="datagrid"><tr><td>'. BL::msg('NoKeywords') .'</td></tr></table>');
 	}
 }
 

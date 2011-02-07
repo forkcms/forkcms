@@ -1,8 +1,7 @@
 <?php
 
 /**
- * BackendDatagrid,
- * this is our extended version of SpoonDatagrid
+ * This is our extended version of SpoonDatagrid
  *
  * This class will handle a lot of stuff for you, for example:
  * 	- it will set debugmode
@@ -10,10 +9,11 @@
  * 	- ...
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class BackendDataGrid extends SpoonDataGrid
@@ -22,7 +22,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param SpoonDataGridSource $source	The datasource
+	 * @param	SpoonDataGridSource $source	The datasource.
 	 */
 	public function __construct(SpoonDataGridSource $source)
 	{
@@ -33,7 +33,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setDebug(SPOON_DEBUG);
 
 		// set the compile-directory, so compiled templates will be in a folder that is writable
-		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/templates');
+		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
 
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'datagrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
@@ -51,11 +51,14 @@ class BackendDataGrid extends SpoonDataGrid
 			$this->setColumnHeaderAttributes($column, array('class' => $column));
 
 			// set default label
-			$this->setHeaderLabels(array($column => ucfirst(BL::getLabel(SpoonFilter::toCamelCase($column)))));
+			$this->setHeaderLabels(array($column => ucfirst(BL::lbl(SpoonFilter::toCamelCase($column)))));
 		}
 
 		// set paging class
 		$this->setPagingClass('BackendDatagridPaging');
+
+		// our JS needs to know an id, so we can highlight it
+		$this->setRowAttributes(array('id' => 'row-[id]'));
 
 		// set default template
 		$this->setTemplate(BACKEND_CORE_PATH .'/layout/templates/datagrid.tpl');
@@ -70,6 +73,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 * @param	string[optional] $label		The label for the column.
 	 * @param	string[optional] $value		The value for the column.
 	 * @param	string[optional] $URL		The URL for the link inside the column.
+	 * @param	string[optional] $title		A title for the image inside the column.
 	 * @param	string[optional] $image		An URL to the image inside the column.
 	 * @param	int[optional] $sequence		The sequence for the column.
 	 */
@@ -118,12 +122,14 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Adds a new column with a custom action button
 	 *
 	 * @return	void
-	 * @param	string $name				The name for the new column.
-	 * @param	string[optional] $label		The label for the column.
-	 * @param	string[optional] $value		The value for the column.
-	 * @param	string[optional] $URL		The URL for the link inside the column.
-	 * @param	string[optional] $image		An URL to the image inside the column.
-	 * @param	int[optional] $sequence		The sequence for the column.
+	 * @param	string $name						The name for the new column.
+	 * @param	string[optional] $label				The label for the column.
+	 * @param	string[optional] $value				The value for the column.
+	 * @param	string[optional] $URL				The URL for the link inside the column.
+	 * @param	string[optional] $title				The title for the link inside the column.
+	 * @param	array[optional] $anchorAttributes	The attributes for the anchor inside the column.
+	 * @param	string[optional] $image				An URL to the image inside the column.
+	 * @param	int[optional] $sequence				The sequence for the column.
 	 */
 	public function addColumnAction($name, $label = null, $value = null, $URL = null, $title = null, $anchorAttributes = null, $image = null, $sequence = null)
 	{
@@ -170,7 +176,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setColumnHidden('sequence');
 
 		// add a column for the handle, so users have something to hold while draging
-		$this->addColumn('dragAndDropHandle', null, '<span>'. BL::getLabel('Move') .'</span>');
+		$this->addColumn('dragAndDropHandle', null, '<span>'. BL::lbl('Move') .'</span>');
 
 		// make sure the column with the handler is the first one
 		$this->setColumnsSequence('dragAndDropHandle');
@@ -179,7 +185,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setColumnAttributes('dragAndDropHandle', array('class' => 'dragAndDropHandle'));
 
 		// our JS needs to know an id, so we can send the new order
-		$this->setRowAttributes(array('rel' => '[id]'));
+		$this->setRowAttributes(array('data-id' => '[id]'));
 	}
 
 
@@ -202,10 +208,10 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 	/**
- 	 * Sets the active tab for this datagrid
- 	 *
- 	 * @return	void
- 	 * @param	string $tab		The name of the tab to show.
+	 * Sets the active tab for this datagrid
+	 *
+	 * @return	void
+	 * @param	string $tab		The name of the tab to show.
 	 */
 	public function setActiveTab($tab)
 	{
@@ -217,9 +223,11 @@ class BackendDataGrid extends SpoonDataGrid
 	 * Set a custom column confirm message.
 	 *
 	 * @return	void
-	 * @param	string $column
-	 * @param	string $message
-	 * @param	string[optional] $custom
+	 * @param	string $column					The name of the column to set the confirm for.
+	 * @param	string $message					The message to use as a confirmmessage.
+	 * @param	string[optional] $custom		Unused parameter.
+	 * @param	string[optional] $title			The title for the column.
+	 * @param	string[optional] $uniqueId		A unique ID that will be uses.
 	 */
 	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
 	{
@@ -227,7 +235,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no confirm message/script can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no confirm message/script can be added.');
 
 			// exists
 			else
@@ -252,7 +260,7 @@ class BackendDataGrid extends SpoonDataGrid
 				$id = 'confirm-'. (string) $uniqueId;
 
 				// set title if there wasn't one provided
-				if($title === null) $title = ucfirst(BL::getLabel('Delete') .'?');
+				if($title === null) $title = ucfirst(BL::lbl('Delete') .'?');
 
 				// grab current value
 				$value = $this->columns[$column]->getValue();
@@ -260,8 +268,8 @@ class BackendDataGrid extends SpoonDataGrid
 				// add class for confirmation
 				if(substr_count($value, '<a') > 0)
 				{
-					if(substr_count($value, 'class="') > 0)	$value = str_replace('class="', 'rel="'. $id .'" class="askConfirmation ', $value);
-					else $value = str_replace('<a ', '<a class="askConfirmation" ', $value);
+					if(substr_count($value, 'class="') > 0) $value = str_replace('class="', 'data-message-id="'. $id .'" class="askConfirmation ', $value);
+					else $value = str_replace('<a ', '<a data-message-id="'. $id .'" class="askConfirmation" ', $value);
 				}
 
 				// is it a link?
@@ -330,13 +338,13 @@ class BackendDataGrid extends SpoonDataGrid
 	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
 		// buid HTML
-		$HTML = '<p><label for="'. $actionDropDown->getAttribute('id') .'">'. ucfirst(BL::getLabel('WithSelected')) .'</label></p>
+		$HTML = '<p><label for="'. $actionDropDown->getAttribute('id') .'">'. ucfirst(BL::lbl('WithSelected')) .'</label></p>
 				<p>
 					'. $actionDropDown->parse() .'
 				</p>
 				<div class="buttonHolder">
 					<a href="#" class="submitButton button">
-						<span>'. ucfirst(BL::getLabel('Execute')) .'</span>
+						<span>'. ucfirst(BL::lbl('Execute')) .'</span>
 					</a>
 				</div>';
 
@@ -398,7 +406,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if(Spoon::isObjectReference('url')) $this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
 
 		// sorting labels
-		$this->setSortingLabels(BL::getLabel('SortAscending'), BL::getLabel('SortedAscending'), BL::getLabel('SortDescending'), BL::getLabel('SortedDescending'));
+		$this->setSortingLabels(BL::lbl('SortAscending'), BL::lbl('SortedAscending'), BL::lbl('SortDescending'), BL::lbl('SortedDescending'));
 	}
 
 
@@ -407,7 +415,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 *
 	 * @return	void
 	 * @param	string $column					The name of the column to set the tooltop for.
-	 * @param	string $message					The key for the message (will be parsed through BackendLanguage::getMessage).
+	 * @param	string $message					The key for the message (will be parsed through BL::msg).
 	 */
 	public function setTooltip($column, $message)
 	{
@@ -415,7 +423,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$instance = $this->getColumn($column);
 
 		// build the value for the tooltip
-		$value = BL::getMessage($message);
+		$value = BL::msg($message);
 
 		// reset the label
 		$instance->setLabel($instance->getLabel() .'<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">'. $value .'</span>');
@@ -438,12 +446,12 @@ class BackendDataGrid extends SpoonDataGrid
 
 
 /**
- * BackendDatagridPaging
+ * This is our implementation of iSpoonDatagridPaging
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -590,9 +598,9 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		$tpl->assign('pagination', $pagination);
 
 		// assign labels
-		$tpl->assign('previousLabel', BL::getLabel('PreviousPage'));
-		$tpl->assign('nextLabel', BL::getLabel('NextPage'));
-		$tpl->assign('goToLabel', BL::getLabel('GoToPage'));
+		$tpl->assign('previousLabel', BL::lbl('PreviousPage'));
+		$tpl->assign('nextLabel', BL::lbl('NextPage'));
+		$tpl->assign('goToLabel', BL::lbl('GoToPage'));
 
 		// cough it up
 		return $tpl->getContent(BACKEND_CORE_PATH .'/layout/templates/datagrid_paging.tpl');
@@ -601,13 +609,12 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 
 
 /**
- * BackendDatagridArray
  * A datagrid with an array as source
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendDataGridArray extends BackendDataGrid
@@ -630,13 +637,12 @@ class BackendDataGridArray extends BackendDataGrid
 
 
 /**
- * BackendDatagridDB
  * A datagrid with a DB-connection as source
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendDataGridDB extends BackendDataGrid
@@ -665,13 +671,12 @@ class BackendDataGridDB extends BackendDataGrid
 
 
 /**
- * BackendDatagridFunctions
  * A set of common used functions that will be applied on rows or columns
  *
  * @package		backend
- * @subpackage	datagrid
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendDataGridFunctions
@@ -710,8 +715,8 @@ class BackendDataGridFunctions
 	 * Format a number as a float
 	 *
 	 * @return	string
-	 * @param	float $number				The number to format
-	 * @param	int[optional] $decimals		The number of decimals
+	 * @param	float $number				The number to format.
+	 * @param	int[optional] $decimals		The number of decimals.
 	 */
 	public static function formatFloat($number, $decimals = 2)
 	{
@@ -804,9 +809,9 @@ class BackendDataGridFunctions
 	 * Returns an image tag
 	 *
 	 * @return	string
-	 * @param	string $path		The path to the image
-	 * @param	string $image		The filename of the image
-	 * @param	string[optional]	The title (will be used as alt)
+	 * @param	string $path				The path to the image.
+	 * @param	string $image				The filename of the image.
+	 * @param	string[optional] $title		The title (will be used as alt).
 	 */
 	public static function showImage($path, $image, $title = '')
 	{
@@ -824,7 +829,7 @@ class BackendDataGridFunctions
 	 * Truncate a string
 	 *
 	 * @return	string
-	 * @param	string $string				The string to truncate.
+	 * @param	string[optional] $string	The string to truncate.
 	 * @param	int $length					The maximumlength for the string.
 	 * @param	bool[optional] $useHellip	Should a hellip be appended?
 	 */

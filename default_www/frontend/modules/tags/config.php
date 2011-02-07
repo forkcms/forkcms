@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendTagsConfig
  * This is the configuration-object
  *
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 final class FrontendTagsConfig extends FrontendBaseConfig

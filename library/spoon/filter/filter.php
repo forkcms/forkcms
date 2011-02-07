@@ -24,6 +24,7 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		0.1.1
  */
 class SpoonFilter
@@ -56,17 +57,14 @@ class SpoonFilter
 	 * This method will map functions to an array with one or more dimensions
 	 *
 	 * @return	array
-	 * @param	mixed $callback						The callback function(s) you wish to map
-	 * @param	array $array						The array you wish to map callback functions on
-	 * $param	mixed[optional] $allowedKeys		The list of keys you want to map the callback to. All other keys will be ignored.
+	 * @param	mixed $callback						The callback function(s) you wish to map.
+	 * @param	array $array						The array you wish to map callback functions on.
+	 * @param	mixed[optional] $allowedKeys		The list of keys you want to map the callback to. All other keys will be ignored.
 	 */
 	public static function arrayMapRecursive($callback, array $array, $allowedKeys = null)
 	{
 		// has no elements
 		if(empty($array)) return array();
-
-		// just call the function once if this isn't an array
-		if(!is_array($array)) return($callback($array));
 
 		// check if there is a key restriction
 		if(!empty($allowedKeys))
@@ -115,9 +113,8 @@ class SpoonFilter
 	 *
 	 * @return	array					The sorted array.
 	 * @param	array $array			The array that will be sorted.
-	 * @param	int[optional] $start	The index will start from this value.
 	 */
-	public static function arraySortKeys(array $array, $start = 0)
+	public static function arraySortKeys(array $array)
 	{
 		// has no elements
 		if(empty($array)) throw new SpoonFilterException('The array needs to contain at least one element.');
@@ -192,7 +189,7 @@ class SpoonFilter
 	 *
 	 * @return	mixed							The value that was stored in $_POST or the default when the field wasn't found.
 	 * @param	string $field					The field to retrieve.
-	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned
+	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned.
 	 * @param	mixed $defaultValue				The default-value.
 	 * @param	string[optional] $returnType	The type that should be returned.
 	 */
@@ -214,7 +211,7 @@ class SpoonFilter
 	 *
 	 * @return	mixed							The validated value or the default when the value wasn't found.
 	 * @param	string $variable				The variable that should be validated.
-	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned
+	 * @param	array[optional] $values			The possible values. If the value isn't present the default will be returned.
 	 * @param	mixed $defaultValue				The default-value.
 	 * @param	string[optional] $returnType	The type that should be returned.
 	 */
@@ -266,12 +263,8 @@ class SpoonFilter
 				$value = (bool) $value;
 			break;
 
-			// double
+			// double/float
 			case 'double':
-				$value = (double) $value;
-			break;
-
-			// float
 			case 'float':
 				$value = (float) $value;
 			break;
@@ -297,14 +290,16 @@ class SpoonFilter
 	 * @return	string						The string with HTML-entities.
 	 * @param	string $value				The value that should HTML-entityfied.
 	 * @param	string[optional] $charset	The charset to use, default wil be based on SPOON_CHARSET.
+	 * @param	int[optional] $quoteStyle	Which quotes should be decoded, default ENT_NOQUOTES.
 	 */
-	public static function htmlentities($value, $charset = null)
+	public static function htmlentities($value, $charset = null, $quoteStyle = ENT_NOQUOTES)
 	{
-		// define charset
+		// init vars
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
 		// apply method
-		$return = htmlentities($value, ENT_QUOTES, $charset);
+		$return = htmlentities($value, $quoteStyle, $charset);
 
 		/**
 		 * PHP doesn't replace a backslash to its html entity since this is something
@@ -322,14 +317,16 @@ class SpoonFilter
 	 * @return	string						The string with no HTML-entities.
 	 * @param	string $value				The value that should be decoded.
 	 * @param	string[optional] $charset	The charset to use, default will be based on SPOON_CHARSET.
+	 * @param	int[optional] $quoteStyle	Which quotes should be decoded, default ENT_NOQUOTES.
 	 */
-	public static function htmlentitiesDecode($value, $charset = null)
+	public static function htmlentitiesDecode($value, $charset = null, $quoteStyle = ENT_NOQUOTES)
 	{
-		// define charset
+		// init vars
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
+		$quoteStyle = self::getValue($quoteStyle, array(ENT_COMPAT, ENT_QUOTES, ENT_NOQUOTES), ENT_NOQUOTES);
 
 		// apply method
-		return html_entity_decode($value, ENT_NOQUOTES, $charset);
+		return html_entity_decode($value, $quoteStyle, $charset);
 	}
 
 
@@ -463,12 +460,17 @@ class SpoonFilter
 	/**
 	 * Checks if the value is a valid floating point number.
 	 *
-	 * @return	bool			true if the value is a valid float, false if not.
-	 * @param	string $value	The value to validate.
+	 * @return	bool							true if the value is a valid float, false if not.
+	 * @param	string $value					The value to validate.
+	 * @param	bool[optional] $allowCommas		Do you want to use commas as a decimal separator?
 	 */
-	public static function isFloat($value)
+	public static function isFloat($value, $allowCommas = false)
 	{
-		return ((string) (float) $value == (string) $value);
+		// no commas allowed
+		if(!$allowCommas) return ((string) (float) $value == (string) $value);
+
+		// replace commas with dots
+		return ((string) (float) str_replace(',', '.', (string) $value) == str_replace(',', '.', (string) $value));
 	}
 
 
@@ -655,18 +657,7 @@ class SpoonFilter
 	 */
 	public static function isURL($value)
 	{
-		// validate url
-		$return = (bool) preg_match('/(((http|ftp|https):\/{2})+(([0-9a-z_-]+\.)+('. implode('|', self::$tlds) .')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu', (string) $value);
-
-		// invalid url
-		if(!$return)
-		{
-			// check if isn't an IP
-			$return = (bool) preg_match('/(((http|ftp|https):\/{2})+(([0-9a-f]+(\:|\.))(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu', (string) $value);
-		}
-
-		// return
-		return $return;
+		return (bool) preg_match('_^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}-\x{ffff}0-9]+-?)*[a-z\x{00a1}-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}-\x{ffff}]{2,})))(?::\d{2,5})?(?:/[^\s]*)?$_iuS', (string) $value);
 	}
 
 
@@ -756,12 +747,12 @@ class SpoonFilter
 	 * Strips HTML from a string
 	 *
 	 * @return	string										A string with all HTML elements stripped.
-	 * @param string $string								The string with HTML in it.
-	 * @param mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'
-	 * @param bool[optional] $replaceAnchorsWithURL			If this is true it will replace all anchor elements with their href value.
-	 * @param bool[optional] $replaceImagesWithAltText		If this is true it will replace all img elements with their alt text.
-	 * @param bool[optional] $preserveParagraphLinebreaks	If this is true it will generate an additional EOL for paragraphs.
-	 * @param bool[optional] $stripTabs						If this is true it will strip all tabs from the string.
+	 * @param	string $string								The string with HTML in it.
+	 * @param	mixed[optional] $exceptions					The HTML elements you want to exclude from stripping. Notation example: '<table><tr><td>'.
+	 * @param	bool[optional] $replaceAnchorsWithURL			If this is true it will replace all anchor elements with their href value.
+	 * @param	bool[optional] $replaceImagesWithAltText		If this is true it will replace all img elements with their alt text.
+	 * @param	bool[optional] $preserveParagraphLinebreaks	If this is true it will generate an additional EOL for paragraphs.
+	 * @param	bool[optional] $stripTabs						If this is true it will strip all tabs from the string.
 	 */
 	public static function stripHTML($string, $exceptions = null, $replaceAnchorsWithURL = false, $replaceImagesWithAltText = false, $preserveParagraphLinebreaks = false, $stripTabs = true)
 	{
@@ -879,7 +870,12 @@ class SpoonFilter
 		$charset = ($charset !== null) ? self::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET) : SPOON_CHARSET;
 
 		// allowed characters
-		$characters = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '-', '_', ' ');
+		$characters = array('a', 'b', 'c', 'd', 'e', 'f', 'g',
+							'h', 'i', 'j', 'k', 'l', 'm', 'n',
+							'o', 'p', 'q', 'r', 's', 't', 'u',
+							'v', 'w', 'x', 'y', 'z', '0', '1',
+							'2', '3', '4', '5', '6', '7', '8',
+							'9', '-', '_', ' ');
 
 		// redefine value
 		$value = mb_strtolower($value, $charset);
@@ -891,6 +887,7 @@ class SpoonFilter
 		$replace['©'] = ' copyright ';
 		$replace['€'] = ' euro ';
 		$replace['™'] = ' tm ';
+		$replace['&'] = ' and ';
 
 		// replace special characters
 		$value = str_replace(array_keys($replace), array_values($replace), $value);

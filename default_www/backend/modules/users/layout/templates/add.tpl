@@ -26,7 +26,7 @@
 						<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtPassword} {$txtPasswordError}
 					</p>
-					<table id="passwordStrengthMeter" class="passwordStrength" rel="password" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">{$lblNone|ucfirst}</p>
@@ -88,6 +88,10 @@
 					<p>
 						<label for="timeFormat">{$lblTimeFormat|ucfirst}</label>
 						{$ddmTimeFormat} {$ddmTimeFormatError}
+					</p>
+					<p>
+						<label for="numberFormat">{$lblNumberFormat|ucfirst}</label>
+						{$ddmNumberFormat} {$ddmNumberFormatError}
 					</p>
 				</div>
 			</div>

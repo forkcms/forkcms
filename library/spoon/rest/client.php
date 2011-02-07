@@ -64,11 +64,12 @@ class SpoonRESTClient
 	 * Make the call.
 	 *
 	 * @return	string
-	 * @param	string $url
-	 * @param	array[optional] $parameters
-	 * @param	string[optional] $method
+	 * @param	string $url						The url to call.
+	 * @param	array[optional] $parameters		The parameters to pass.
+	 * @param	string[optional] $method		The HTTP-method to use, possible values are: GET, POST.
+	 * @param	array[optional] $cURLOptions	Optional extra cURL-options.
 	 */
-	public function execute($url, array $parameters = null, $method = 'GET', array $cURLoptions = null)
+	public function execute($url, array $parameters = null, $method = 'GET', array $cURLOptions = null)
 	{
 		// check if curl is available
 		if(!function_exists('curl_init')) throw new SpoonFileException('This method requires cURL (http://php.net/curl), it seems like the extension isn\'t installed.');
@@ -91,10 +92,10 @@ class SpoonRESTClient
 		$options[CURLOPT_RETURNTRANSFER] = true;
 
 		// any extra curl options provided?
-		if($cURLoptions !== null)
+		if($cURLOptions !== null)
 		{
 			// loop the extra options, and set 'm
-			foreach($cURLoptions as $key => $value) $options[$key] = $value;
+			foreach($cURLOptions as $key => $value) $options[$key] = $value;
 		}
 
 		// set headers
@@ -222,7 +223,7 @@ class SpoonRESTClient
 	 * Set the port for the REST-server, default is 80.
 	 *
 	 * @return	void
-	 * @param	int $port
+	 * @param	int $port	The port to connect on.
 	 */
 	public function setPort($port)
 	{
@@ -234,7 +235,7 @@ class SpoonRESTClient
 	 * Set timeout.
 	 *
 	 * @return	void
-	 * @param	int $seconds
+	 * @param	int $seconds	The maximum number of seconds that the operation can last.
 	 */
 	public function setTimeout($seconds)
 	{
@@ -246,7 +247,7 @@ class SpoonRESTClient
 	 * Set a custom user-agent.
 	 *
 	 * @return	void
-	 * @param	string $userAgent
+	 * @param	string $userAgent	The UserAgent that will be used. It will look like "Spoon <Spoon version>/<your useragent>".
 	 */
 	public function setUserAgent($userAgent)
 	{

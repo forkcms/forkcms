@@ -111,8 +111,8 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGrid($source);
 
 		// set headers values
-		$headers['link'] = strtoupper(BL::getLabel('URL'));
-		$headers['clicks'] = ucfirst(BL::getMessage('ClicksAmount'));
+		$headers['link'] = strtoupper(BL::lbl('URL'));
+		$headers['clicks'] = ucfirst(BL::msg('ClicksAmount'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels($headers);
@@ -125,7 +125,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 
 		// add edit column
-		$this->datagrid->addColumnAction('users', null, BL::getLabel('Who'), BackendModel::createURLForAction('statistics_link') .'&amp;url=[link]&amp;mailing_id='. $this->id, BL::getLabel('Who'));
+		$this->datagrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') .'&amp;url=[link]&amp;mailing_id='. $this->id, BL::lbl('Who'));
 
 		// set paging limit
 		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);

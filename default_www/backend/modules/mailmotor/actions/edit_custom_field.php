@@ -111,9 +111,9 @@ class BackendMailmotorEditCustomField extends BackendBaseActionAdd
 			$txtName = $this->frm->getField('name');
 
 			// validate fields
-			if($txtName->isFilled(BL::getError('NameIsRequired')))
+			if($txtName->isFilled(BL::err('NameIsRequired')))
 			{
-				if(in_array($txtName->getValue(), $this->group['custom_fields']) && $txtName->getValue() != $this->field) $txtName->addError(BL::getError('CustomFieldExists'));
+				if(in_array($txtName->getValue(), $this->group['custom_fields']) && $txtName->getValue() != $this->field) $txtName->addError(BL::err('CustomFieldExists'));
 			}
 
 			// no errors?

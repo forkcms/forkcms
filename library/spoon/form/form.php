@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		0.1.1
  */
 class SpoonForm
@@ -150,7 +151,7 @@ class SpoonForm
 	 * Add one or more objects to the stack.
 	 *
 	 * @return	void
-	 * @param	object $object
+	 * @param	object $object	The object to add.
 	 */
 	public function add($object)
 	{
@@ -185,11 +186,11 @@ class SpoonForm
 	/**
 	 * Adds a single button.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string $value
-	 * @param	string[optional] $type
-	 * @param	string[optional] $class
+	 * @return	SpoonFormButton
+	 * @param	string $name				The name of the button.
+	 * @param	string $value				The text that should appear on the button.
+	 * @param	string[optional] $type		The type of button.
+	 * @param	string[optional] $class		The CSS-class for the button.
 	 */
 	public function addButton($name, $value, $type = null, $class = 'inputButton')
 	{
@@ -204,11 +205,11 @@ class SpoonForm
 	/**
 	 * Adds a single checkbox.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	bool[optional] $checked
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @return	SpoonFormCheckbox
+	 * @param	string $name					The name.
+	 * @param	bool[optional] $checked			Should the checkbox be checked?
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function addCheckbox($name, $checked = false, $class = 'inputCheckbox', $classError = 'inputCheckboxError')
 	{
@@ -245,12 +246,12 @@ class SpoonForm
 	/**
 	 * Adds a single datefield.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	int[optional] $value
-	 * @param	string[optional] $mask
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @return	SpoonFormDate
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	string[optional] $mask			The mask to use.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function addDate($name, $value = null, $mask = null, $class = 'inputDate', $classError = 'inputDateError')
 	{
@@ -265,13 +266,13 @@ class SpoonForm
 	/**
 	 * Adds a single dropdown.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	array[optional] $values
-	 * @param	string[optional] $selected
-	 * @param	bool[optional] $multipleSelection
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @return	SpoonFormDropdown
+	 * @param	string $name						The name.
+	 * @param	array[optional] $values				The possible values. Each value should have a label and value-key.
+	 * @param	mixed[optional] $selected			The selected value.
+	 * @param	bool[optional] $multipleSelection	Can multiple elements be selected?
+	 * @param	string[optional] $class				The CSS-class to be used.
+	 * @param	string[optional] $classError		The CSS-class to be used when there is an error.
 	 */
 	public function addDropdown($name, array $values = null, $selected = null, $multipleSelection = false, $class = 'inputDropdown', $classError = 'inputDropdownError')
 	{
@@ -287,7 +288,7 @@ class SpoonForm
 	 * Adds an error to the main error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -298,10 +299,10 @@ class SpoonForm
 	/**
 	 * Adds a single file field.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @return	SpoonFormFile
+	 * @param	string $name					The name.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function addFile($name, $class = 'inputFile', $classError = 'inputFileError')
 	{
@@ -327,9 +328,9 @@ class SpoonForm
 	/**
 	 * Adds a single hidden field.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
+	 * @return	SpoonFormHidden
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
 	 */
 	public function addHidden($name, $value = null)
 	{
@@ -366,10 +367,10 @@ class SpoonForm
 	/**
 	 * Adds a single image field.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @return	SpoonFormImage
+	 * @param	string $name					The name.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function addImage($name, $class = 'inputFile', $classError = 'inputFileError')
 	{
@@ -395,11 +396,11 @@ class SpoonForm
 	/**
 	 * Adds a single multiple checkbox.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	array $values
-	 * @param	bool[optional] $checked
-	 * @param	string[optional] $class
+	 * @return	SpoonFormMultiCheckbox
+	 * @param	string $name					The name.
+	 * @param	array $values					The possible values. Each value should have a label and value-key.
+	 * @param	mixed[optional] $checked		The value that should be checked.
+	 * @param	string[optional] $class			The CSS-class to be used.
 	 */
 	public function addMultiCheckbox($name, array $values, $checked = null, $class = 'inputCheckbox')
 	{
@@ -414,13 +415,13 @@ class SpoonForm
 	/**
 	 * Adds a single password field.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	int[optional] $maxlength
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @return	SpoonFormPassword
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	int[optional] $maxlength		The maximum-length the value can be.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @param	bool[optional] $HTML			Is HTML allowed?
 	 */
 	public function addPassword($name, $value = null, $maxlength = null, $class = 'inputPassword', $classError = 'inputPasswordError', $HTML = false)
 	{
@@ -457,11 +458,11 @@ class SpoonForm
 	/**
 	 * Adds a single radiobutton.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	array $values
-	 * @param	string[optional] $checked
-	 * @param	string[optional] $class
+	 * @return	SpoonFormRadiobutton
+	 * @param	string $name					The name.
+	 * @param	array $values					The possible values. Each value should have a label and value-key.
+	 * @param	string[optional] $checked		The value of the check radiobutton.
+	 * @param	string[optional] $class			The CSS-class to be used.
 	 */
 	public function addRadiobutton($name, array $values, $checked = null, $class = 'inputRadio')
 	{
@@ -474,14 +475,35 @@ class SpoonForm
 
 
 	/**
+	 * Adds a single textfield.
+	 *
+	 * @return	SpoonFormText
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	int[optional] $maxlength		The maximum-length the value can be.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @param	bool[optional] $HTML			Is HTML allowed?
+	 */
+	public function addText($name, $value = null, $maxlength = null, $class = 'inputText', $classError = 'inputTextError', $HTML = false)
+	{
+		// add element
+		$this->add(new SpoonFormText($name, $value, $maxlength, $class, $classError, $HTML));
+
+		// return element
+		return $this->getField($name);
+	}
+
+
+	/**
 	 * Adds a single textarea.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
+	 * @return	SpoonFormTextarea
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
+	 * @param	bool[optional] $HTML			Is HTML allowed?
 	 */
 	public function addTextarea($name, $value = null, $class = 'inputTextarea', $classError = 'inputTextareaError', $HTML = false)
 	{
@@ -516,27 +538,6 @@ class SpoonForm
 
 
 	/**
-	 * Adds a single textfield.
-	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	int[optional] $maxlength
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
-	 * @param	bool[optional] $HTML
-	 */
-	public function addText($name, $value = null, $maxlength = null, $class = 'inputText', $classError = 'inputTextError', $HTML = false)
-	{
-		// add element
-		$this->add(new SpoonFormText($name, $value, $maxlength, $class, $classError, $HTML));
-
-		// return element
-		return $this->getField($name);
-	}
-
-
-	/**
 	 * Adds one or more textfields.
 	 *
 	 * @return	void
@@ -561,11 +562,11 @@ class SpoonForm
 	/**
 	 * Adds a single timefield.
 	 *
-	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @return	SpoonFormTime
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function addTime($name, $value = null, $class = 'inputTime', $classError = 'inputTimeError')
 	{
@@ -643,6 +644,18 @@ class SpoonForm
 
 
 	/**
+	 * Check a field for existence.
+	 *
+	 * @return	bool
+	 * @param	string $name
+	 */
+	public function existsField($name)
+	{
+		return (isset($this->objects[(string) $name]));
+	}
+
+
+	/**
 	 * Retrieve the action.
 	 *
 	 * @return	string
@@ -668,7 +681,7 @@ class SpoonForm
 	 * Fetches a field.
 	 *
 	 * @return	SpoonFormElement
-	 * @param	string $name
+	 * @param	string $name		The name of the field.
 	 */
 	public function getField($name)
 	{
@@ -710,39 +723,6 @@ class SpoonForm
 	public function getName()
 	{
 		return $this->name;
-	}
-
-
-	/**
-	 * Get a token
-	 *
-	 * @return	string
-	 */
-	public function getToken()
-	{
-		// no token available?
-		if(!SpoonSession::exists('form_token'))
-		{
-			// generate a token
-			$token = md5(SpoonSession::getSessionId() . rand(0, 999) . time());
-
-			// store in session
-			SpoonSession::set('form_token', $token);
-		}
-
-		// return
-		return SpoonSession::get('form_token');
-	}
-
-
-	/**
-	 * Get the status of the token
-	 *
-	 * @return	bool
-	 */
-	public function getUseToken()
-	{
-		return $this->useToken;
 	}
 
 
@@ -884,10 +864,43 @@ class SpoonForm
 
 
 	/**
+	 * Get a token
+	 *
+	 * @return	string
+	 */
+	public function getToken()
+	{
+		// no token available?
+		if(!SpoonSession::exists('form_token'))
+		{
+			// generate a token
+			$token = md5(SpoonSession::getSessionId() . rand(0, 999) . time());
+
+			// store in session
+			SpoonSession::set('form_token', $token);
+		}
+
+		// return
+		return SpoonSession::get('form_token');
+	}
+
+
+	/**
+	 * Get the status of the token
+	 *
+	 * @return	bool
+	 */
+	public function getUseToken()
+	{
+		return $this->useToken;
+	}
+
+
+	/**
 	 * Fetches all the values for this form as key/value pairs.
 	 *
 	 * @return	array
-	 * @param	mixed[optional] $excluded
+	 * @param	mixed[optional] $excluded	The keys that should be removed.
 	 */
 	public function getValues($excluded = null)
 	{
@@ -923,7 +936,7 @@ class SpoonForm
 	 * Returns the form's status.
 	 *
 	 * @return	bool
-	 * @param	bool[optional] $revalidate
+	 * @param	bool[optional] $revalidate	Should the form be revalidated?
 	 */
 	public function isCorrect($revalidate = false)
 	{
@@ -966,7 +979,7 @@ class SpoonForm
 	 * Parse this form in the given template.
 	 *
 	 * @return	void
-	 * @param	SpoonTemplate $template
+	 * @param	SpoonTemplate $template		The template to parse the form in.
 	 */
 	public function parse(SpoonTemplate $template)
 	{
@@ -986,7 +999,7 @@ class SpoonForm
 	 * Set the action.
 	 *
 	 * @return	void
-	 * @param	string $action
+	 * @param	string $action	Set the action-value.
 	 */
 	public function setAction($action)
 	{
@@ -998,7 +1011,7 @@ class SpoonForm
 	 * Sets the correct value.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $correct
+	 * @param	bool[optional] $correct		Was the form submitted without errors?
 	 */
 	private function setCorrect($correct = true)
 	{
@@ -1010,7 +1023,7 @@ class SpoonForm
 	 * Set the form method.
 	 *
 	 * @return	void
-	 * @param	string[optional] $method
+	 * @param	string[optional] $method	The method to use, possible values are: get, post.
 	 */
 	public function setMethod($method = 'post')
 	{
@@ -1022,7 +1035,7 @@ class SpoonForm
 	 * Set the name.
 	 *
 	 * @return	void
-	 * @param	string $name
+	 * @param	string $name	The name of the form.
 	 */
 	private function setName($name)
 	{
@@ -1034,8 +1047,8 @@ class SpoonForm
 	 * Set a parameter for the form tag.
 	 *
 	 * @return	void
-	 * @param	string $key
-	 * @param	string $value
+	 * @param	string $key			The name of the parameter.
+	 * @param	string $value		The value of the parameter.
 	 */
 	public function setParameter($key, $value)
 	{
@@ -1047,7 +1060,7 @@ class SpoonForm
 	 * Set multiple form parameters.
 	 *
 	 * @return	void
-	 * @param	array $parameters
+	 * @param	array $parameters	The parameters as key/value-pairs.
 	 */
 	public function setParameters(array $parameters)
 	{
@@ -1071,7 +1084,7 @@ class SpoonForm
 	 * Should we use a form token?
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should we use a token?
 	 */
 	private function setUseToken($on = true)
 	{

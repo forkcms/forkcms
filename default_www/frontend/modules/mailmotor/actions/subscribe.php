@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class FrontendMailmotorSubscribe extends FrontendBaseBlock

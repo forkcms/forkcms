@@ -1,14 +1,13 @@
 <?php
 
 /**
- * FrontendContactIndex
  * This is the index-action
  *
  * @package		frontend
  * @subpackage	contact
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendContactIndex extends FrontendBaseBlock
@@ -112,9 +111,9 @@ class FrontendContactIndex extends FrontendBaseBlock
 				$message = FrontendTemplateModifiers::cleanupPlainText($message);
 
 				// build variables
-				$variables['author'] = $author;
-				$variables['email'] = $email;
-				$variables['message'] = $message;
+				$item['author'] = $author;
+				$item['email'] = $email;
+				$item['message'] = $message;
 
 				// store author-data in cookies
 				try
@@ -131,7 +130,7 @@ class FrontendContactIndex extends FrontendBaseBlock
 				try
 				{
 					// add email
-					FrontendMailer::addEmail(FL::getMessage('ContactSubject') .': '. $author, FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $variables, null, null, null, null, $email, $author);
+					FrontendMailer::addEmail(FL::getMessage('ContactSubject') .': '. $author, FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $item, null, null, null, null, $email, $author);
 
 					// redirect
 					$this->redirect(FrontendNavigation::getURLForBlock('contact') .'?sent=true');
