@@ -38,7 +38,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$csv[] = array('email' => BackendModel::getModuleSetting('mailmotor', 'from_email'), 'name' => BackendModel::getModuleSetting('mailmotor', 'from_name'));
 
 		// download the file
-		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ';', '"', true);
+		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ',', '"', true);
 	}
 
 
