@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		0.1.1
  */
 class SpoonFormDate extends SpoonFormInput
@@ -254,14 +255,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid year
 					if(!checkdate(1, 1, $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -275,14 +276,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid year
 					if(!checkdate(1, 1, '19'. $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -296,14 +297,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($month))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid month
 					if(!checkdate($month, 1, $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -317,14 +318,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($day))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid day
 					if(!checkdate($month, $day, $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -333,7 +334,7 @@ class SpoonFormDate extends SpoonFormInput
 			// maximum length doesn't check out
 			else
 			{
-				$this->setError($error);
+				if($error !== null) $this->setError($error);
 				return false;
 			}
 		}
@@ -341,7 +342,7 @@ class SpoonFormDate extends SpoonFormInput
 		// not filled out
 		else
 		{
-			$this->setError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
