@@ -62,8 +62,8 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 				// is it a fork class?
 				if(substr_count($className, 'Frontend') > 0 || substr_count($className, 'Backend') > 0 || substr_count($className, 'Api') > 0 || substr_count($className, 'Installer') > 0)
 				{
-					$folder = substr($phpcsFile->getFilename(), strpos($phpcsFile->getFilename(), '/default_www') + 1);
-					$chunks = explode('/', $folder);
+					$folder = substr($phpcsFile->getFilename(), strpos($phpcsFile->getFilename(), DIRECTORY_SEPARATOR . 'default_www') + 1);
+					$chunks = explode(DIRECTORY_SEPARATOR, $folder);
 					$correctPackage = $chunks[1];
 					$correctSubPackage = $chunks[2];
 
