@@ -123,7 +123,12 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// loop extras to populate the default extras
 		foreach($extras as $item)
 		{
-			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
+			if($item['type'] == 'block')
+			{
+				$blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
+			}
+
 			if($item['type'] == 'widget')
 			{
 				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
