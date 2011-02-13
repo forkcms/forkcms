@@ -230,11 +230,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// if the template is in use we can't de-activate it
 				if(BackendPagesModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
 
+				// init template data
+				$item['data'] = $this->record['data'];
+
 				// loop fields
 				for($i = 1; $i <= $item['num_blocks']; $i++)
 				{
 					$item['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
 					$item['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
 				// serialize
