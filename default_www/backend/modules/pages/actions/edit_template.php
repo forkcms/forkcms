@@ -123,8 +123,13 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// loop extras to populate the default extras
 		foreach($extras as $item)
 		{
-			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
-			if($item['type'] == 'widget')
+			if($item['type'] == 'block')
+			{
+				$blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
+			}
+
+			elseif($item['type'] == 'widget')
 			{
 				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
 				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
@@ -230,11 +235,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// if the template is in use we can't de-activate it
 				if(BackendPagesModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
 
+				// init template data
+				$item['data'] = $this->record['data'];
+
 				// loop fields
 				for($i = 1; $i <= $item['num_blocks']; $i++)
 				{
 					$item['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
 					$item['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
 				// serialize
