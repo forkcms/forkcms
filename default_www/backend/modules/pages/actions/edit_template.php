@@ -129,7 +129,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
 			}
 
-			if($item['type'] == 'widget')
+			elseif($item['type'] == 'widget')
 			{
 				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
 				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
