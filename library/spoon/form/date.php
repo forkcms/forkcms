@@ -49,7 +49,7 @@ class SpoonFormDate extends SpoonFormInput
 	 *
 	 * @return	void
 	 * @param	string $name					The name.
-	 * @param	string[optional] $value			The initial value.
+	 * @param	mixed[optional] $value			The initial value.
 	 * @param	string[optional] $mask			The mask to use.
 	 * @param	string[optional] $class			The CSS-class to be used.
 	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
@@ -72,7 +72,7 @@ class SpoonFormDate extends SpoonFormInput
 		 * The value will be filled based on the default input mask
 		 * if no value has been defined.
 		 */
-		$this->defaultValue = ($value !== null) ? (int) $value : time();
+		$this->defaultValue = ($value !== null) ? (($value !== '') ? (int) $value : '') : time();
 		$this->setValue($this->defaultValue);
 
 		// custom optional fields
@@ -424,11 +424,11 @@ class SpoonFormDate extends SpoonFormInput
 	 * Set the value attribute for this date field.
 	 *
 	 * @return	void
-	 * @param	int $value		The new value.
+	 * @param	mixed $value		The new value.
 	 */
 	private function setValue($value)
 	{
-		$this->value = date($this->mask, (int) $value);
+		$this->value = ($value === '' ? '' : date($this->mask, (int) $value));
 	}
 }
 
