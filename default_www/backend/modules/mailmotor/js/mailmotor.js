@@ -293,6 +293,9 @@ jsBackend.mailmotor.step3 =
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
 
+				// remove tiny fields added to the body by naughty tinyMCE
+				body.find('div.mceListBoxMenu').remove();
+				
 				// set iframe variables
 				var textareaValue = encodeURIComponent(iframe[0].contentWindow.getTinyMCEContent());
 				var bodyHTML = encodeURIComponent(body.html());
