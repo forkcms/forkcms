@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	locale
  *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class BackendLocaleImport extends BackendBaseActionAdd
@@ -47,6 +47,7 @@ class BackendLocaleImport extends BackendBaseActionAdd
 
 		// create and add elements
 		$this->frm->addFile('file');
+		$this->frm->addCheckbox('overwrite');
 	}
 
 
@@ -65,19 +66,30 @@ class BackendLocaleImport extends BackendBaseActionAdd
 
 			// redefine fields
 			$fileFile = $this->frm->getField('file');
+			$chkOverwrite = $this->frm->getField('overwrite');
 
 			// name checks
 			if($fileFile->isFilled(BL::err('FieldIsRequired')))
 			{
-				$fileFile->isAllowedExtension(array('xml'), sprintf(BL::getError('ExtensionNotAllowed'), 'xml'));
+				// only xml files allowed
+				if($fileFile->isAllowedExtension(array('xml', 'png'), sprintf(BL::getError('ExtensionNotAllowed'), 'xml')))
+				{
+					// load xml
+					$xml = @simplexml_load_file($fileFile->getTempFileName());
+
+					// invalid xml
+					if($xml === false) $fileFile->addError(BL::getError('InvalidXML'));
+				}
 			}
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
+				// import
+				BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 
-				// everything is saved, so redirect to the overview
-//				$this->redirect(BackendModel::createURLForAction('index', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&report=added&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
+				// everything is imported, so redirect to the overview
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=imported');
 			}
 		}
 	}

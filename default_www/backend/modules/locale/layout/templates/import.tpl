@@ -12,6 +12,9 @@
 					<label for="file">{$lblFile|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$fileFile} {$fileFileError}
 				</p>
+				<ul class="inputList">
+					<li><label for="overwrite">{$chkOverwrite} {$msgOverwriteConflicts}</label></li>
+				</ul>
 			</div>
 		</div>
 

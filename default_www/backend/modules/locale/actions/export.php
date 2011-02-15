@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	locale
  *
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class BackendLocaleExport extends BackendBaseActionIndex
@@ -114,36 +114,6 @@ class BackendLocaleExport extends BackendBaseActionIndex
 
 
 	/**
-	 * Get full type name.
-	 *
-	 * @return	string
-	 * @param	string $type
-	 */
-	private function getType($type)
-	{
-		// get full type name
-		switch($type)
-		{
-			case 'act':
-				$type = 'action';
-				break;
-			case 'err':
-				$type = 'error';
-				break;
-			case 'lbl':
-				$type = 'label';
-				break;
-			case 'msg':
-				$type = 'message';
-				break;
-		}
-
-		// cough up full name
-		return $type;
-	}
-
-
-	/**
 	 * Create the XML based on the locale items.
 	 *
 	 * @return	void
@@ -186,7 +156,7 @@ class BackendLocaleExport extends BackendBaseActionIndex
 						$moduleElement->appendChild($itemElement);
 
 						// attributes
-						$itemElement->setAttribute('type', $this->getType($type));
+						$itemElement->setAttribute('type', BackendLocaleModel::getTypeName($type));
 						$itemElement->setAttribute('name', $name);
 
 						// loop translations
