@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendMailmotorCMHelper
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
  * @package		frontend
@@ -20,14 +19,10 @@ class FrontendMailmotorCMHelper
 	 */
 	public static function existsGroupByCampaignMonitorID($id)
 	{
-		// get DB
-		$db = FrontendModel::getDB();
-
-		// return the results
-		return (bool) $db->getNumRows('SELECT mg.*
-										FROM mailmotor_groups AS mg
-										INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-										WHERE mci.cm_id = ? AND mci.type = ?', array($id, 'list'));
+		return (bool) FrontendModel::getDB()->getNumRows('SELECT mg.*
+															FROM mailmotor_groups AS mg
+															INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
+															WHERE mci.cm_id = ? AND mci.type = ?', array($id, 'list'));
 	}
 
 
@@ -40,7 +35,6 @@ class FrontendMailmotorCMHelper
 	 */
 	public static function getCampaignMonitorID($type, $otherId)
 	{
-		// insert the campaignmonitor ID
 		return FrontendModel::getDB()->getVar('SELECT cm_id FROM mailmotor_campaignmonitor_ids WHERE type = ? AND other_id = ?', array($type, $otherId));
 	}
 
