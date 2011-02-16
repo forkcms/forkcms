@@ -251,7 +251,7 @@ class BackendInit
 	public static function exceptionAJAXHandler($exception, $output)
 	{
 		// redefine
-		$output = (string) $ouput;
+		$output = (string) $output;
 
 		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
