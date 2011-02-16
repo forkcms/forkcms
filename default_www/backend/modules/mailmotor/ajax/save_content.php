@@ -44,11 +44,10 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$params = array();
 		$params['utm_source'] = 'mailmotor';
 		$params['utm_medium'] = 'email';
-		$params['utm_name'] = $this->mailing['name'];
+		$params['utm_campaign'] = SpoonFilter::urlise($this->mailing['name']);
 
 		// build google vars query
 		$googleQuery = http_build_query($params);
-
 
 		// loop the matches
 		foreach($matches[1] as $match)

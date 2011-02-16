@@ -76,8 +76,8 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 					}
 
 					// get comment
-					$startComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '/**'."\n");
-					$endComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, ' */');
+					$startComment = (int) $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '/**'."\n");
+					$endComment = (int) $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, ' */');
 
 					$hasPackage = false;
 					$hasSubPackage = false;
