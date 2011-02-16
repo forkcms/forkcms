@@ -14,7 +14,7 @@
 
 			<ul class="inputList">
 				<li>
-					<label for="isDefault">{$msgMakeDefaultCategory|sprintf:{$name}}</label>
+					<label for="isDefault">{$msgMakeDefaultCategory|sprintf:{$defaultCategory}}</label>
 					{$chkIsDefault} {$chkIsDefaultError}
 				</li>
 			</ul>
