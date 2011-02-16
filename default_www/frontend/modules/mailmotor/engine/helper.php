@@ -40,29 +40,6 @@ class FrontendMailmotorCMHelper
 
 
 	/**
-	 * Returns the CM IDs for a given list of group IDs
-	 *
-	 * @return	array
-	 * @param 	array $groupIds					The id of the groups.
-	 * @param	bool[optional] $unsubscribe		@todo @dave document me.
-	 */
-	public static function getCampaignMonitorIDsForGroups($groupIds, $unsubscribe = false)
-	{
-		// check if groups are set,
-		$groups = (empty($groupIds) && !$unsubscribe) ? array(FrontendMailmotorModel::getDefaultGroupID()) : $groupIds;
-
-		// stop here if no groups were set
-		if(empty($groups)) return array();
-
-		// fetch campaignmonitor IDs
-		return (array) FrontendModel::getDB()->getColumn('SELECT mci.cm_id
-															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groups) .')',
-															array('list'));
-	}
-
-
-	/**
 	 * Returns the client ID from the settings
 	 *
 	 * @return	string
