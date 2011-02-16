@@ -196,14 +196,8 @@ class SpoonEmail
 		// no name was found in the input
 		if(empty($newName))
 		{
-			// split up path to find the current filename
-			$temp = explode('/', $filename);
-
-			// sort by key in reverse order so the current file is in the first element
-			krsort($temp);
-
-			// store first element
-			$newName = reset($temp);
+			// use the source file's base name
+			$newName = basename($filename);
 		}
 
 		// store file extension

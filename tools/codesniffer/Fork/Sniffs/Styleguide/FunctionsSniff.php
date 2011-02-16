@@ -58,8 +58,8 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 		if(isset($tokens[$stackPtr - 2]) && in_array($tokens[$stackPtr - 2]['code'], array(T_PRIVATE, T_PUBLIC, T_PROTECTED, T_STATIC)))
 		{
 			// get comment
-			$startComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '/**'."\n");
-			$endComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '	 */');
+			$startComment = (int) $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '/**'."\n");
+			$endComment = (int) $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '	 */');
 
 			$parameters = $phpcsFile->getMethodParameters($stackPtr);
 
