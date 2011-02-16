@@ -1,7 +1,8 @@
 <?php
 
+// @todo dave - this file should be statistics.php and not stats.php
+
 /**
- * BackendMailmotorWidgetStats
  * This is the classic fork cayenne mailmotor widget
  *
  * @package		backend
