@@ -342,7 +342,7 @@ class SpoonTemplateCompiler
 	private function parseForms($content)
 	{
 		// regex pattern
-		$pattern = '/\{form:([a-z0-9_]+)\}?/is';
+		$pattern = '/\{form:([a-z0-9_]+?)\}?/siU';
 
 		// find matches
 		if(preg_match_all($pattern, $content, $matches))
@@ -350,21 +350,25 @@ class SpoonTemplateCompiler
 			// loop matches
 			foreach($matches[1] as $name)
 			{
-				// form object with that name exists
-				if(isset($this->forms[$name]))
+				// init vars
+				$search = array();
+				$replace = array();
+
+				// start & close tag
+				$search = array('{form:'. $name .'}', '{/form:'. $name .'}');
+				$replace[0] = '<?php
+				if(isset($this->forms[\''. $name .'\']))
 				{
-					// start & close tag
-					$search = array('{form:'. $name .'}', '{/form:'. $name .'}');
-					$replace[0] = '<form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersHTML(); ?>>' ."\n";
-					$replace[0] .= $this->forms[$name]->getField('form')->parse();
+					?><form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersHTML(); ?>>
+					<?php echo $this->forms[\''. $name .'\']->getField(\'form\')->parse();
+					if($this->forms[\''. $name .'\']->getUseToken())
+					{
+						?><input type="hidden" name="form_token" id="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getValue(); ?>" />
+					<?php } ?>';
+				$replace[1] = '</form>
+				<?php } ?>';
 
-					// form tokens were used
-					if($this->forms[$name]->getUseToken()) $replace[0] .= "\n". '<input type="hidden" name="form_token" id="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getValue(); ?>" />';
-
-					// close form & replace it
-					$replace[1] = "\n".'</form>';
-					$content = str_replace($search, $replace, $content);
-				}
+				$content = str_replace($search, $replace, $content);
 			}
 		}
 
