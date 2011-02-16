@@ -93,27 +93,6 @@ class BackendLocaleExport extends BackendBaseActionIndex
 
 
 	/**
-	 * Execute the action.
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// set filter
-		$this->setFilter();
-
-		// set items
-		$this->setItems();
-
-		// create XML
-		$this->createXML();
-	}
-
-
-	/**
 	 * Create the XML based on the locale items.
 	 *
 	 * @return	void
@@ -185,6 +164,27 @@ class BackendLocaleExport extends BackendBaseActionIndex
 
 		// stop script
 		exit;
+	}
+
+
+	/**
+	 * Execute the action.
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// set filter
+		$this->setFilter();
+
+		// set items
+		$this->setItems();
+
+		// create XML
+		$this->createXML();
 	}
 
 

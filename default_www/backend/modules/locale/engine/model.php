@@ -173,6 +173,36 @@ class BackendLocaleModel
 
 
 	/**
+	 * Get full type name.
+	 *
+	 * @return	string
+	 * @param	string $type
+	 */
+	public static function getTypeName($type)
+	{
+		// get full type name
+		switch($type)
+		{
+			case 'act':
+				$type = 'action';
+			break;
+			case 'err':
+				$type = 'error';
+			break;
+			case 'lbl':
+				$type = 'label';
+			break;
+			case 'msg':
+				$type = 'message';
+			break;
+		}
+
+		// cough up full name
+		return $type;
+	}
+
+
+	/**
 	 * Get all locale types.
 	 *
 	 * @return	array
@@ -194,41 +224,11 @@ class BackendLocaleModel
 
 
 	/**
-	 * Get full type name.
-	 *
-	 * @return	string
-	 * @param	string $type
-	 */
-	public static function getTypeName($type)
-	{
-		// get full type name
-		switch($type)
-		{
-			case 'act':
-				$type = 'action';
-				break;
-			case 'err':
-				$type = 'error';
-				break;
-			case 'lbl':
-				$type = 'label';
-				break;
-			case 'msg':
-				$type = 'message';
-				break;
-		}
-
-		// cough up full name
-		return $type;
-	}
-
-
-	/**
 	 * Import a locale XML file.
 	 *
 	 * @return	void
-	 * @param	SimpleXMLElement $xml			The locale XML.
-	 * @param	bool $overwriteConflicts		Should we overwrite when there is a conflict?
+	 * @param	SimpleXMLElement $xml				The locale XML.
+	 * @param	bool[optional] $overwriteConflicts	Should we overwrite when there is a conflict?
 	 */
 	public static function importXML(SimpleXMLElement $xml, $overwriteConflicts = false)
 	{
