@@ -263,7 +263,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 					$matchesURL = array();
 
 					// get matches
-					preg_match_all('/(BackendLanguage|BL)::get(Label|Error|Message)\(\'(.*)\'(.*)?\)/iU', $content, $matches); // @todo regex needs to be improved
+					preg_match_all('/(BackendLanguage|BL)::get(Label|Error|Message)\(\'(.*)\'(.*)?\)/iU', $content, $matches); // @todo tijs - regex needs to be improved
 
 					// match errors
 					preg_match_all('/&(amp;)?(error|report)=([A-Z0-9-_]+)/i', $content, $matchesURL);
