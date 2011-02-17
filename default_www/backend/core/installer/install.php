@@ -318,27 +318,16 @@ class ModuleInstaller
 	 */
 	protected function insertMeta($keywords, $description, $title, $url, $keywordsOverwrite = false, $descriptionOverwrite = false, $titleOverwrite = false, $urlOverwrite = false, $custom = null)
 	{
-		// redefine
-		$keywords = (string) $keywords;
-		$keywordsOverwrite = $keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N';
-		$description = (string) $description;
-		$descriptionOverwrite = $titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N';
-		$title = (string) $title;
-		$titleOverwrite = $titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N';
-		$url = (string) $url;
-		$urlOverwrite = $urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N';
-		$custom = !is_null($custom) ? (string) $custom : null;
-
 		// build item
-		$item = array('keywords' => $keywords,
-						'keywords_overwrite' => $keywordsOverwrite,
-						'description' => $description,
-						'description_overwrite' => $descriptionOverwrite,
-						'title' => $title,
-						'title_overwrite' => $titleOverwrite,
-						'url' => $url,
-						'url_overwrite' => $urlOverwrite,
-						'custom' => $custom);
+		$item = array('keywords' => (string) $keywords,
+						'keywords_overwrite' => ($keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N'),
+						'description' => (string) $description,
+						'description_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
+						'title' => (string) $title,
+						'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
+						'url' => (string) $url,
+						'url_overwrite' => ($urlOverwrite && $urlOverwrite !== 'N' ? 'Y' : 'N'),
+						'custom' => (!is_null($custom) ? (string) $custom : null));
 
 		// insert meta and return id
 		return (int) $this->getDB()->insert('meta', $item);
