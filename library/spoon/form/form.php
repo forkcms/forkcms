@@ -647,7 +647,7 @@ class SpoonForm
 	 * Check a field for existence.
 	 *
 	 * @return	bool
-	 * @param	string $name
+	 * @param	string $name	The name of the field that you want to check.
 	 */
 	public function existsField($name)
 	{

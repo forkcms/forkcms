@@ -251,7 +251,7 @@ class BackendInit
 	public static function exceptionAJAXHandler($exception, $output)
 	{
 		// redefine
-		$output = (string) $ouput;
+		$output = (string) $output;
 
 		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
@@ -288,7 +288,7 @@ class BackendInit
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured ('. SITE_DOMAIN .')', $output, $headers);
 		}
 
 		// build HTML for nice error
