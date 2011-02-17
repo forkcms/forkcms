@@ -8,12 +8,15 @@
  */
 class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 {
-	public function register()
-	{
-		return array(T_FUNCTION);
-	}
 
 
+	/**
+	 * Process the code
+	 *
+	 * @return	void
+	 * @param 	PHP_CodeSniffer_File $phpcsFile	The file.
+	 * @param 	unknown_type $stackPtr			The stackpointer.
+	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
 		// @todo	no empty lines after { and before }
@@ -44,10 +47,10 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 				// not last method?
 				if($nextFunction != false && isset($tokens[$stackPtr - 2]) && in_array($tokens[$stackPtr - 2]['code'], array(T_PRIVATE, T_PUBLIC, T_PROTECTED, T_STATIC)))
 				{
-					if($lines[$tokens[$current['scope_closer']]['line']] == "\n" && $lines[$tokens[$current['scope_closer']]['line'] + 1] == "\n" && trim($lines[$tokens[$current['scope_closer']]['line'] + 2]) != '') {}
-
-					// no 2 empty lines
-					else $phpcsFile->addError('After a function/method we expect 2 empty lines.', $stackPtr);
+					if(!($lines[$tokens[$current['scope_closer']]['line']] == "\n" && $lines[$tokens[$current['scope_closer']]['line'] + 1] == "\n" && trim($lines[$tokens[$current['scope_closer']]['line'] + 2]) != ''))
+					{
+						$phpcsFile->addError('After a function/method we expect 2 empty lines.', $stackPtr);
+					}
 				}
 			}
 		}
@@ -67,7 +70,7 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 			$returnFirst = false;
 			$paramCounter = 0;
 
-			for($i = $startComment; $i<= $endComment; $i++)
+			for($i = $startComment; $i <= $endComment; $i++)
 			{
 				// package
 				if(trim(substr($tokens[$i]['content'], 0, 11)) == '* @return')
@@ -129,6 +132,17 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 		unset($current);
 		unset($lines);
 		unset($next);
+	}
+
+
+	/**
+	 * Register
+	 *
+	 * @return	void
+	 */
+	public function register()
+	{
+		return array(T_FUNCTION);
 	}
 }
 
