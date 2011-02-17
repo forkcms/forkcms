@@ -40,6 +40,7 @@
 * Blog: it is now possible to remove all spam at once
 * Pages: extra validation, so home can't have any blocks
 * Pages: improvement for changing extra's, as requested on http://forkcms.lighthouseapp.com/projects/61890/tickets/77
+* Bugfix: deleting a page was impossible when the page id had children in another language
 
 2.0.2 (2010-11-24)
 --
