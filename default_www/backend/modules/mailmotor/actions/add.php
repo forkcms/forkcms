@@ -50,7 +50,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		$campaigns = BackendMailmotorModel::getCampaignsAsPairs();
 
 		// fetch the groups
-		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
+		$groups = BackendMailmotorModel::getGroupsWithRecipientsForCheckboxes();
 
 		// no groups set yet, so give the user a hand
 		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('add_group') .'&error=add-mailing-no-groups');
