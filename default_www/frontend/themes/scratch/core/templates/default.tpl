@@ -1,4 +1,4 @@
-{include:file='{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:{$FRONTEND_CORE_PATH}/layout/templates/head.tpl}
 
 <body id="default" class="{$LANGUAGE} frontend">
 	<div id="container">
@@ -6,7 +6,7 @@
 		<div id="header">
 			<h1><a href="/">{$siteTitle}</a></h1>
 			<div id="language">
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
+				{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
 			</div>
 			<div id="navigation">
 				{$var|getnavigation:'page':0:1}
@@ -15,16 +15,16 @@
 
 		<div id="main">
 			<div id="subnavigation">
-				{$var|getsubnavigation:'page':{$page['id']}:2}
+				{$var|getsubnavigation:'page':{$page.id}:2}
 				&nbsp;
 			</div>
 
 			<div id="content">
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
+				{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
 
 				{option:!hideContentTitle}
 					<div class="pageTitle">
-						<h2>{$page['title']}</h2>
+						<h2>{$page.title}</h2>
 					</div>
 				{/option:!hideContentTitle}
 
@@ -41,7 +41,7 @@
 					{/option:block1}
 				{/option:block1IsHTML}
 				{option:!block1IsHTML}
-					{include:file='{$block1}'}
+					{include:{$block1}}
 				{/option:!block1IsHTML}
 
 				{* Block 2 (default: Module) *}
@@ -57,7 +57,7 @@
 					{/option:block2}
 				{/option:block2IsHTML}
 				{option:!block2IsHTML}
-					{include:file='{$block2}'}
+					{include:{$block2}}
 				{/option:!block2IsHTML}
 			</div>
 			<div id="sidebar">
@@ -66,7 +66,7 @@
 		</div>
 
 		<div id="footer">
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+			{include:{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl}
 		</div>
 	</div>
 </body>

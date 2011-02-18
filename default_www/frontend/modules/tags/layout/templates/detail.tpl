@@ -6,7 +6,7 @@
 <div id="tagsDetail" class="mod">
 	<div class="inner">
 		<div class="hd">
-			<h1>{$lblItemsWithTag|sprintf:{$tag['name']}|ucfirst}</h1>
+			<h1>{$lblItemsWithTag|sprintf:{$tag.name}|ucfirst}</h1>
 		</div>
 		<div class="bd">
 			{option:tagsModules}
@@ -14,7 +14,7 @@
 					<h2>{$tagsModules.label}</h2>
 					<ul>
 						{iteration:tagsModules.items}
-							<li><a href="{$items.full_url}">{$items.title}</a></li>
+							<li><a href="{$tagsModules.items.full_url}">{$tagsModules.items.title}</a></li>
 						{/iteration:tagsModules.items}
 					</ul>
 				{/iteration:tagsModules}

@@ -1,4 +1,4 @@
-{include:file='{$PATH_WWW}/install/layout/templates/head.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/head.tpl}
 
 <h2>Your login info</h2>
 {form:step5}
@@ -36,4 +36,4 @@
 	</p>
 {/form:step5}
 
-{include:file='{$PATH_WWW}/install/layout/templates/foot.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/foot.tpl}

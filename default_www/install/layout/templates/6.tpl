@@ -1,4 +1,4 @@
-{include:file='{$PATH_WWW}/install/layout/templates/head.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/head.tpl}
 
 <h2>Installation complete</h2>
 <p>Fork CMS is installed! You can now log in using:</p>
@@ -23,4 +23,4 @@
 	<a class="button" href="../private">Log in to Fork CMS</a>
 </div>
 
-{include:file='{$PATH_WWW}/install/layout/templates/foot.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/foot.tpl}
