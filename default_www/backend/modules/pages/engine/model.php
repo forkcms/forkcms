@@ -909,10 +909,10 @@ class BackendPagesModel
 		// get child
 		$childId = (int) BackendModel::getDB()->getVar('SELECT i.id
 														FROM pages AS i
-														WHERE i.parent_id = ? AND i.status = ?
+														WHERE i.parent_id = ? AND i.status = ? AND i.language = ?
 														ORDER BY i.sequence ASC
 														LIMIT 1',
-														array($pageId, 'active'));
+														array($pageId, 'active', BL::getWorkingLanguage()));
 
 		// return
 		if($childId != 0) return $childId;
