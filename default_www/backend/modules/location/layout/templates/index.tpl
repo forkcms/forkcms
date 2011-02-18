@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblLocation|ucfirst}</h2>
@@ -17,7 +17,7 @@
 
 	<div class="content">
 		{option:items}
-			<div id="map" style="height: {$settings['height']}px; width: {$settings['width']}px;"></div>
+			<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;"></div>
 
 			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 			<script type="text/javascript">
@@ -28,9 +28,9 @@
 				var options =
 				{
 					// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
-					zoom: '{$settings['zoom_level']}' == 'auto' ? 0 : {$settings['zoom_level']},
+					zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
 					// set default center as first item's location
-					center: new google.maps.LatLng({$items[0]['lat']}, {$items[0]['lng']}),
+					center: new google.maps.LatLng({$items.0.lat}, {$items.0.lng}),
 					// no interface, just the map
 					disableDefaultUI: true,
 					// no dragging the map around
@@ -40,7 +40,7 @@
 					// no double click zoom
 					disableDoubleClickZoom: true,
 					// set map type
-					mapTypeId: google.maps.MapTypeId.{$settings['map_type']}
+					mapTypeId: google.maps.MapTypeId.{$settings.map_type}
 				};
 
 				// create map
@@ -83,7 +83,7 @@
 				map.setCenter(latlngBounds.getCenter());
 
 				// set zoom automatically, defined by points (if allowed)
-				if('{$settings['zoom_level']}' == 'auto') map.fitBounds(latlngBounds);
+				if('{$settings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
 			</script>
 		{/option:items}
 	</div>
@@ -91,5 +91,5 @@
 
 {option:!datagrid}<p>{$msgNoItems|sprintf:{$var|geturl:'add'}}</p>{/option:!datagrid}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

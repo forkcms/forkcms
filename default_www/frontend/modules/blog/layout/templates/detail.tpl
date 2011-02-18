@@ -10,21 +10,21 @@
 	<div class="mod article">
 		<div class="inner">
 			<div class="hd">
-				<h1>{$blogArticle['title']}</h1>
+				<h1>{$blogArticle.title}</h1>
 				<p>
-					{$blogArticle['publish_on']|date:{$dateFormatLong}:{$LANGUAGE}} -
-					{option:!blogComments}<a href="{$blogArticle['full_url']}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogComments}
+					{$blogArticle.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} -
+					{option:!blogComments}<a href="{$blogArticle.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogComments}
 					{option:blogComments}
-						{option:blogCommentsMultiple}<a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogCommentsCount}}</a>{/option:blogCommentsMultiple}
-						{option:!blogCommentsMultiple}<a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
+						{option:blogCommentsMultiple}<a href="{$blogArticle.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogCommentsCount}}</a>{/option:blogCommentsMultiple}
+						{option:!blogCommentsMultiple}<a href="{$blogArticle.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 					{/option:blogComments}
 				</p>
 			</div>
 			<div class="bd content">
-				{$blogArticle['text']}
+				{$blogArticle.text}
 			</div>
 			<div class="ft">
-				{$msgWrittenBy|ucfirst|sprintf:{$blogArticle['user_id']|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$blogArticle['category_full_url']}" title="{$blogArticle['category_name']">{$blogArticle['category_name']}</a>. {$lblTags|ucfirst}: {iteration:blogArticleTags}<a href="{$blogArticleTags.full_url}" rel="tag" title="{$blogArticleTags.name}">{$blogArticleTags.name}</a>{option:!blogArticleTags.last}, {/option:!blogArticleTags.last}{/iteration:blogArticleTags}
+				{$msgWrittenBy|ucfirst|sprintf:{$blogArticle.user_id|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$blogArticle.category_full_url}" title="{$blogArticle.category_name}">{$blogArticle.category_name}</a>. {$lblTags|ucfirst}: {iteration:blogArticleTags}<a href="{$blogArticleTags.full_url}" rel="tag" title="{$blogArticleTags.name}">{$blogArticleTags.name}</a>{option:!blogArticleTags.last}, {/option:!blogArticleTags.last}{/iteration:blogArticleTags}
 			</div>
 		</div>
 	</div>
@@ -32,16 +32,16 @@
 		<div class="inner">
 			<div class="bd">
 				<ul>
-					{option:blogNavigation['previous']}
+					{option:blogNavigation.previous}
 					<li class="previousLink">
-						<a href="{$blogNavigation['previous']['url']}" rel="prev">{$lblPreviousArticle|ucfirst}: <em>{$blogNavigation['previous']['title']}</em></a>
+						<a href="{$blogNavigation.previous.url}" rel="prev">{$lblPreviousArticle|ucfirst}: <em>{$blogNavigation.previous.title}</em></a>
 					</li>
-					{/option:blogNavigation['previous']}
-					{option:blogNavigation['next']}
+					{/option:blogNavigation.previous}
+					{option:blogNavigation.next}
 					<li class="nextLink">
-						<a href="{$blogNavigation['next']['url']}" rel="next">{$lblNextArticle|ucfirst}: <em>{$blogNavigation['next']['title']}</em></a>
+						<a href="{$blogNavigation.next.url}" rel="next">{$lblNextArticle|ucfirst}: <em>{$blogNavigation.next.title}</em></a>
 					</li>
-					{/option:blogNavigation['next']}
+					{/option:blogNavigation.next}
 				</ul>
 			</div>
 		</div>
@@ -76,7 +76,7 @@
 		</div>
 	</div>
 	{/option:blogComments}
-	{option:blogArticle['allow_comments']}
+	{option:blogArticle.allow_comments}
 		<div id="blogCommentForm" class="mod">
 			<div class="inner">
 				<div class="hd">
@@ -110,5 +110,5 @@
 				</div>
 			</div>
 		</div>
-	{/option:blogArticle['allow_comments']}
+	{/option:blogArticle.allow_comments}
 </div>

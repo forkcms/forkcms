@@ -1,4 +1,4 @@
-{include:file='{$PATH_WWW}/install/layout/templates/head.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/head.tpl}
 
 <h2>Database configuration</h2>
 {form:step3}
@@ -30,4 +30,4 @@
 	</p>
 {/form:step3}
 
-{include:file='{$PATH_WWW}/install/layout/templates/foot.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/foot.tpl}

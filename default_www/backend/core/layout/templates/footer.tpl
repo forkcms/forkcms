@@ -1,4 +1,4 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/messaging.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/messaging.tpl}
 
 	<script type="text/javascript">
 		//<![CDATA[

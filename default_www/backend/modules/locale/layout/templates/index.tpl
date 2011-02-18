@@ -1,10 +1,16 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblTranslations|ucfirst}</h2>
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
+	</div>
+	<div class="buttonHolderRight">
+		<a href="{$var|geturl:'export'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+	</div>
+	<div class="buttonHolderRight">
+		<a href="{$var|geturl:'import'}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
 	</div>
 </div>
 
@@ -114,5 +120,5 @@
 	{option:!filter}<p>{$msgNoItems|sprintf:{$addUrl}}</p>{/option:!filter}
 {/option:!datagrid}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

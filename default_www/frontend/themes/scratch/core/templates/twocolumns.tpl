@@ -1,4 +1,4 @@
-{include:file='{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:{$FRONTEND_CORE_PATH}/layout/templates/head.tpl}
 
 <body id="twocolumns" class="{$LANGUAGE} frontend">
 	<div id="container">
@@ -6,7 +6,7 @@
 		<div id="header">
 			<h2><a href="/">{$siteTitle}</a></h2>
 			<div id="language">
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
+				{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
 			</div>
 			<div id="navigation">
 				{$var|getnavigation:'page':0:1}
@@ -16,11 +16,11 @@
 		<div id="main">
 
 			<div id="content">
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
+				{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
 
 				{option:!hideContentTitle}
 					<div class="pageTitle">
-						<h2>{$page['title']}</h2>
+						<h2>{$page.title}</h2>
 					</div>
 				{/option:!hideContentTitle}
 
@@ -37,7 +37,7 @@
 					{/option:block1}
 				{/option:block1IsHTML}
 				{option:!block1IsHTML}
-					{include:file='{$block1}'}
+					{include:{$block1}}
 				{/option:!block1IsHTML}
 
 				{* Block 2 (default: Module) *}
@@ -53,7 +53,7 @@
 					{/option:block2}
 				{/option:block2IsHTML}
 				{option:!block2IsHTML}
-					{include:file='{$block2}'}
+					{include:{$block2}}
 				{/option:!block2IsHTML}
 			</div>
 			<div id="sidebar">
@@ -71,7 +71,7 @@
 					{/option:block3}
 				{/option:block3IsHTML}
 				{option:!block3IsHTML}
-					{include:file='{$block3}'}
+					{include:{$block3}}
 				{/option:!block3IsHTML}
 
 				{* Block 4 (default: Archive) *}
@@ -87,7 +87,7 @@
 					{/option:block4}
 				{/option:block4IsHTML}
 				{option:!block4IsHTML}
-					{include:file='{$block4}'}
+					{include:{$block4}}
 				{/option:!block4IsHTML}
 
 				{* Block 5 (default: Recent articles) *}
@@ -103,7 +103,7 @@
 					{/option:block5}
 				{/option:block5IsHTML}
 				{option:!block5IsHTML}
-					{include:file='{$block5}'}
+					{include:{$block5}}
 				{/option:!block5IsHTML}
 
 				{* Block 6 (default: Editor) *}
@@ -119,13 +119,13 @@
 					{/option:block6}
 				{/option:block6IsHTML}
 				{option:!block6IsHTML}
-					{include:file='{$block6}'}
+					{include:{$block6}}
 				{/option:!block6IsHTML}
 			</div>
 		</div>
 
 		<div id="footer">
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+			{include:{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl}
 		</div>
 	</div>
 </body>

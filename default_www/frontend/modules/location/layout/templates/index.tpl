@@ -5,7 +5,7 @@
 *}
 
 {option:locationItems}
-	<div id="map" style="height: {$locationSettings['height']}px; width: {$locationSettings['width']}px;"></div>
+	<div id="map" style="height: {$locationSettings.height}px; width: {$locationSettings.width}px;"></div>
 
 	<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
 	<script type="text/javascript">
@@ -16,9 +16,9 @@
 		var options =
 		{
 			// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
-			zoom: '{$locationSettings['zoom_level']}' == 'auto' ? 0 : {$locationSettings['zoom_level']},
+			zoom: '{$locationSettings.zoom_level}' == 'auto' ? 0 : {$locationSettings.zoom_level},
 			// set default center as first item's location
-			center: new google.maps.LatLng({$locationItems[0]['lat']}, {$locationItems[0]['lng']}),
+			center: new google.maps.LatLng({$locationItems.0.lat}, {$locationItems.0.lng}),
 			// no interface, just the map
 			disableDefaultUI: true,
 			// no dragging the map around
@@ -28,7 +28,7 @@
 			// no double click zoom
 			disableDoubleClickZoom: true,
 			// set map type
-			mapTypeId: google.maps.MapTypeId.{$locationSettings['map_type']}
+			mapTypeId: google.maps.MapTypeId.{$locationSettings.map_type}
 		};
 
 		// create map
@@ -71,6 +71,6 @@
 		map.setCenter(latlngBounds.getCenter());
 
 		// set zoom automatically, defined by points (if allowed)
-		if('{$locationSettings['zoom_level']}' == 'auto') map.fitBounds(latlngBounds);
+		if('{$locationSettings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
 	</script>
 {/option:locationItems}

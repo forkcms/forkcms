@@ -24,7 +24,7 @@
 
 				<h3 id="templatesTitle">Page title</h3>
 
-				<p>To display the current page's title in templates, use <code>{$page['title']}</code>.</p>
+				<p>To display the current page's title in templates, use <code>{$page.title}</code>.</p>
 
 				<h4>Hide the page title</h4>
 
