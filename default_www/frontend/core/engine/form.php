@@ -113,7 +113,7 @@ class FrontendForm extends SpoonForm
 	 *
 	 * @return	SpoonDateField
 	 * @param	string $name					Name of the element.
-	 * @param	int[optional] $value			The value for the element.
+	 * @param	mixed[optional] $value			The value for the element.
 	 * @param	string[optional] $type			The type (from, till, range) of the datepicker.
 	 * @param	int[optional] $date				The date to use.
 	 * @param	int[optional] $date2			The second date for a rangepicker.
@@ -124,7 +124,7 @@ class FrontendForm extends SpoonForm
 	{
 		// redefine
 		$name = (string) $name;
-		$value = ($value !== null) ? (int) $value : null;
+		$value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
 		$type = SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
 		$date = ($date !== null) ? (int) $date : null;
 		$date2 = ($date2 !== null) ? (int) $date2 : null;

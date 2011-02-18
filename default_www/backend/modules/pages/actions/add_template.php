@@ -163,6 +163,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				{
 					$item['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
 					$item['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
 				// serialize the data

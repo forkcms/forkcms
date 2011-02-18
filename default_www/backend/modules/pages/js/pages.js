@@ -454,13 +454,13 @@ jsBackend.pages.template =
 		// bind events
 		$('#changeTemplate').bind('click', jsBackend.pages.template.showTemplateDialog);
 
-		// load to initialize
-		jsBackend.pages.template.changeTemplate();
+		// load to initialize when adding a page
+		jsBackend.pages.template.changeTemplate($('#changeTemplate').parents('form').attr('id') == 'add');
 	},
 
 
 	// method to change a template
-	changeTemplate: function()
+	changeTemplate: function(changeExtras)
 	{
 		// get checked
 		var selected = $('#templateList input:radio:checked').val();
@@ -492,21 +492,27 @@ jsBackend.pages.template =
 		$('#templateId').val(selected);
 		$('#templateLabel, #tabTemplateLabel').html(current.label);
 
-		// loop blocks and set extra's, to initialize the page
-		$('.contentBlock').each(function()
+		// only init when specified
+		if(changeExtras === true)
 		{
-			var index = $(this).attr('id').replace('block-', '');
-			var extraId = $('#blockExtraId'+ index).val();
-
-			// no extra specified, we should grab the default
-			if(typeof current.data.default_extras != 'undefined' && (typeof extraId == 'undefined' || extraId == ''))
+			// loop blocks and set extra's, to initialize the page
+			$('.contentBlock').each(function()
 			{
-				if(current.data.default_extras[index] != 'editor') { extraId = parseInt(current.data.default_extras[index]); }
-			}
+				// init vars
+				var index = $(this).attr('id').replace('block-', '');
+				var extraId = $('#blockExtraId'+ index).val();
+				var defaultExtras = current.data['default_extras_{$LANGUAGE}'] == 'undefined' ? current.data['default_extras'] : current.data['default_extras_{$LANGUAGE}'];
 
-			// change the extra
-			jsBackend.pages.extras.changeExtra(extraId, index);
-		});
+				// no extra specified, we should grab the default
+				if(typeof defaultExtras != 'undefined' && (typeof extraId == 'undefined' || extraId == ''))
+				{
+					if(defaultExtras[index] != 'editor') { extraId = parseInt(defaultExtras[index]); }
+				}
+
+				// change the extra
+				jsBackend.pages.extras.changeExtra(extraId, index);
+			});
+		}
 	},
 
 
