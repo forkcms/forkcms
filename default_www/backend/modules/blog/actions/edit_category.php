@@ -95,10 +95,10 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null);
 
 		// get default category
-		$category = BackendBlogModel::getCategory($defaultCategoryId);
+		$defaultCategory = BackendBlogModel::getCategory($defaultCategoryId);
 
 		// assign
-		if($defaultCategoryId !== null) $this->tpl->assign('defaultCategory', $category['name']);
+		if($defaultCategoryId !== null) $this->tpl->assign('defaultCategory', $defaultCategory);
 
 		// the default category may not be deleted
 		if($defaultCategoryId != $this->id) $this->tpl->assign('deleteAllowed', true);
