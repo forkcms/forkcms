@@ -31,7 +31,7 @@ class Fork_Sniffs_PHP_DeprecatedIniDirectivesSniff implements PHP_CodeSniffer_Sn
         'define_syslog_variables',
         'register_globals',
         'register_long_arrays',
-        'safe_mode',
+//        'safe_mode',	// I know safe_mode is deprecated, but in our files it is just a check, nothing else
         'magic_quotes_gpc',
         'magic_quotes_runtime',
         'magic_quotes_sybase',
