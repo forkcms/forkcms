@@ -52,6 +52,8 @@ class FaqInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'faq', 'msg', 'NoQuestionInCategory', 'Er zijn geen vragen in deze categorie.');
 		$this->insertLocale('nl', 'backend', 'faq', 'msg', 'NoCategories', 'Er zijn nog geen categorieën, gelieve eerst een <a href="%s$1">categorie toe te voegen</a>.');
 
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NoQuestionsInCategory', 'Er zijn geen vragen in deze categorie.');
+
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Faq', 'FAQ');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Questions', 'questions');
@@ -64,6 +66,8 @@ class FaqInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'faq', 'msg', 'NoQuestionInCategory', 'There are no questions in this category.');
 		$this->insertLocale('en', 'backend', 'faq', 'msg', 'EditQuestion', 'Edit question "%1$s');
 		$this->insertLocale('en', 'backend', 'faq', 'msg', 'NoCategories', 'There are no categories yet, please <a href="%s$1">create a category</a> first.');
+
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'NoQuestionsInCategory', 'There are no questions in this category.');
 	}
 }
 
