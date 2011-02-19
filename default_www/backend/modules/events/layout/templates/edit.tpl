@@ -1,0 +1,209 @@
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
+
+<div class="pageTitle">
+	<h2>{$lblEvents|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
+	<div class="buttonHolderRight">
+		<a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="button icon iconZoom previewButton targetBlank">
+			<span>{$lblView|ucfirst}</span>
+		</a>
+	</div>
+</div>
+
+{form:edit}
+	{$txtTitle} {$txtTitleError}
+
+	<div id="pageUrl">
+		<div class="oneLiner">
+			{option:detailURL}<p><span><a href="{$detailURL}/{$item.url}">{$detailURL}/<span id="generatedUrl">{$item.url}</span></a></span></p>{/option:detailURL}
+			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
+		</div>
+	</div>
+
+	<div class="tabs">
+		<ul>
+			<li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+			<li><a href="#tabRevisions">{$lblPreviousVersions|ucfirst}</a></li>
+			<li><a href="#tabPermissions">{$lblComments|ucfirst}</a></li>
+			<li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
+		</ul>
+
+		<div id="tabContent">
+			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+				<tr>
+					<td id="leftColumn">
+						<div class="box">
+							<div class="heading">
+								<h3>{$lblDates|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<p class="p0"><label for="startsOnDate">{$lblStartOn|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label></p>
+								<div class="oneLiner">
+									<p>
+										{$txtStartsOnDate} {$txtStartsOnDateError}
+									</p>
+									<p>
+										<label for="startsOnTime">{$lblAt}</label>
+									</p>
+									<p>
+										{$txtStartsOnTime} {$txtStartsOnTimeError}
+									</p>
+								</div>
+							</div>
+							<div class="options">
+								<p class="p0"><label for="endsOnDate">{$lblEndsOn|ucfirst}</label></p>
+								<div class="oneLiner">
+									<p>
+										{$txtEndsOnDate} {$txtEndsOnDateError}
+									</p>
+									<p>
+										<label for="endsOnTime">{$lblAt}</label>
+									</p>
+									<p>
+										{$txtEndsOnTime} {$txtEndsOnTimeError}
+									</p>
+								</div>
+							</div>
+						</div>
+
+						{* Main content *}
+						<div class="box">
+							<div class="heading">
+								<h3>{$lblMainContent|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></h3>
+							</div>
+							<div class="optionsRTE">
+								{$txtText} {$txtTextError}
+							</div>
+						</div>
+
+						{* Summary *}
+						<div class="box">
+							<div class="heading">
+								<div class="oneLiner">
+									<h3>{$lblSummary|ucfirst}</h3>
+									<abbr class="help">(?)</abbr>
+									<div class="tooltip" style="display: none;">
+										<p>{$msgHelpSummary}</p>
+									</div>
+								</div>
+							</div>
+							<div class="optionsRTE">
+								{$txtIntroduction} {$txtIntroductionError}
+							</div>
+						</div>
+
+					</td>
+
+					<td id="sidebar">
+						<div id="publishOptions" class="box">
+							<div class="heading">
+								<h3>{$lblStatus|ucfirst}</h3>
+							</div>
+
+							<div class="options">
+								<ul class="inputList">
+									{iteration:hidden}
+									<li>
+										{$hidden.rbtHidden}
+										<label for="{$hidden.id}">{$hidden.label}</label>
+									</li>
+									{/iteration:hidden}
+								</ul>
+							</div>
+
+							<div class="options">
+								<p class="p0"><label for="publishOnDate">{$lblPublishOn|ucfirst}</label></p>
+								<div class="oneLiner">
+									<p>
+										{$txtPublishOnDate} {$txtPublishOnDateError}
+									</p>
+									<p>
+										<label for="publishOnTime">{$lblAt}</label>
+									</p>
+									<p>
+										{$txtPublishOnTime} {$txtPublishOnTimeError}
+									</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="box" id="articleMeta">
+							<div class="heading">
+								<h3>{$lblMetaData|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<label for="tags">{$lblTags|ucfirst}</label>
+								{$txtTags} {$txtTagsError}
+							</div>
+						</div>
+
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="tabPermissions">
+			<table border="0" cellspacing="0" cellpadding="0" width="100%">
+				<tr>
+					<td>
+						{$chkAllowComments} <label for="allowComments">{$lblAllowComments|ucfirst}</label>
+					</td>
+				</tr>
+			</table>
+		</div>
+
+		<div id="tabRevisions">
+			{option:drafts}
+				<div class="tableHeading">
+					<div class="oneLiner">
+						<h3 class="oneLinerElement">{$lblDrafts|ucfirst}</h3>
+						<abbr class="help">(?)</abbr>
+						<div class="tooltip" style="display: none;">
+							<p>{$msgHelpDrafts}</p>
+						</div>
+					</div>
+				</div>
+				<div class="datagridHolder">
+					{$drafts}
+				</div>
+			{/option:drafts}
+			{option:revisions}
+				<div class="tableHeading">
+					<div class="oneLiner">
+						<h3 class="oneLinerElement">{$lblPreviousVersions|ucfirst}</h3>
+						<abbr class="help">(?)</abbr>
+						<div class="tooltip" style="display: none;">
+							<p>{$msgHelpRevisions}</p>
+						</div>
+					</div>
+				</div>
+				<div class="datagridHolder">
+					{$revisions}
+				</div>
+			{/option:revisions}
+			{option:!revisions}{$msgNoRevisions}{/option:!revisions}
+		</div>
+
+		<div id="tabSEO">
+			{include:file='{$BACKEND_CORE_PATH}/layout/templates/seo.tpl'}
+		</div>
+	</div>
+
+	<div class="fullwidthOptions">
+		<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<span>{$lblDelete|ucfirst}</span>
+		</a>
+		<div class="buttonHolderRight">
+			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
+		</div>
+	</div>
+
+	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+		<p>
+			{$msgConfirmDelete|sprintf:{$item.title}}
+		</p>
+	</div>
+{/form:edit}
+
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
