@@ -18,6 +18,13 @@ For example
 
 ## Scripts
 
+### check_code
+The check_code-script will run PHP CodeSniffer with all settings that are needed. It will check your code against the styleguide, will detect wierd/faulty code, ...
+
+It can be executed with the following command
+
+	./check_code
+
 ### minify
 The minify-script will minify the CSS and JS used by the backend. These files will be used by the backend when not in DEBUG-mode.
 **This script should be executed before putting a release in the wild.**
