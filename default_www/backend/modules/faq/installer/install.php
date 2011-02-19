@@ -41,10 +41,10 @@ class FaqInstall extends ModuleInstaller
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Faq', 'FAQ');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Questions', 'vragen');
 		$this->insertLocale('nl', 'backend', 'faq', 'lbl', 'AddQuestion', 'vraag toevoegen');
 		$this->insertLocale('nl', 'backend', 'faq', 'lbl', 'Answer', 'antwoord');
 		$this->insertLocale('nl', 'backend', 'faq', 'lbl', 'Question', 'vraag');
-		$this->insertLocale('nl', 'backend', 'faq', 'lbl', 'Questions', 'vragen');
 		$this->insertLocale('nl', 'backend', 'faq', 'err', 'AnswerIsRequired', 'Het antwoord is verplicht.');
 		$this->insertLocale('nl', 'backend', 'faq', 'err', 'CategoryIsRequired', 'Gelieve een categorie te selecteren.');
 		$this->insertLocale('nl', 'backend', 'faq', 'err', 'QuestionIsRequired', 'De vraag is verplicht.');
@@ -54,10 +54,10 @@ class FaqInstall extends ModuleInstaller
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Faq', 'FAQ');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Questions', 'questions');
 		$this->insertLocale('en', 'backend', 'faq', 'lbl', 'Answer', 'answer');
 		$this->insertLocale('en', 'backend', 'faq', 'lbl', 'AddQuestion', 'add question');
 		$this->insertLocale('en', 'backend', 'faq', 'lbl', 'Question', 'question');
-		$this->insertLocale('en', 'backend', 'faq', 'lbl', 'Questions', 'questions');
 		$this->insertLocale('en', 'backend', 'faq', 'err', 'AnswerIsRequired', 'The answer is required.');
 		$this->insertLocale('en', 'backend', 'faq', 'err', 'CategoryIsRequired', 'Please select a category.');
 		$this->insertLocale('en', 'backend', 'faq', 'err', 'QuestionIsRequired', 'The question is required.');
