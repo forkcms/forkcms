@@ -27,6 +27,9 @@ $navigation[2]['children'][5] = array('url' => 'testimonials/index', 'label' => 
 $navigation[2]['children'][6] = array('url' => 'faq/index', 'label' => 'Faq');
 $navigation[2]['children'][6]['children'][0] = array('url' => 'faq/index', 'label' => 'Questions', 'selected_for' => array('faq/add', 'faq/edit'));
 $navigation[2]['children'][6]['children'][1] = array('url' => 'faq/categories', 'label' => 'Categories', 'selected_for' => array('faq/add_category', 'faq/edit_category'));
+$navigation[2]['children'][7] = array('url' => 'events/index', 'label' => 'Events');
+$navigation[2]['children'][7]['children'][0] = array('url' => 'events/index', 'label' => 'Events', 'selected_for' => array('events/add', 'events/edit'));
+$navigation[2]['children'][7]['children'][1] = array('url' => 'events/comments', 'label' => 'Comments', 'selected_for' => array('events/edit_comment'));
 $navigation[3] = array('url' => 'analytics/index', 'label' => 'Marketing');
 $navigation[3]['children'][0] = array('url' => 'analytics/index', 'label' => 'Analytics', 'selected_for' => 'analytics/loading');
 $navigation[3]['children'][0]['children'][0] = array('url' => 'analytics/content', 'label' => 'Content');
@@ -54,5 +57,6 @@ $navigation[5]['children'][5]['children'][2] = array('url' => 'search/settings',
 $navigation[5]['children'][5]['children'][3] = array('url' => 'pages/settings', 'label' => 'Pages');
 $navigation[5]['children'][5]['children'][4] = array('url' => 'mailmotor/settings', 'label' => 'Mailmotor');
 $navigation[5]['children'][5]['children'][5] = array('url' => 'location/settings', 'label' => 'Location');
+$navigation[5]['children'][5]['children'][6] = array('url' => 'events/settings', 'label' => 'Events');
 
 ?>
