@@ -322,7 +322,7 @@ class ModuleInstaller
 		$item = array('keywords' => (string) $keywords,
 						'keywords_overwrite' => ($keywordsOverwrite && $keywordsOverwrite !== 'N' ? 'Y' : 'N'),
 						'description' => (string) $description,
-						'description_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
+						'description_overwrite' => ($descriptionOverwrite && $descriptionOverwrite !== 'N' ? 'Y' : 'N'),
 						'title' => (string) $title,
 						'title_overwrite' => ($titleOverwrite && $titleOverwrite !== 'N' ? 'Y' : 'N'),
 						'url' => (string) $url,

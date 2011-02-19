@@ -904,7 +904,7 @@ class SpoonTemplateCompiler
 	 * Prepare iterations: callback function.
 	 *
 	 * @return	string				The updated iteration, containing a reworked (unique) iteration tag.
-	 * @param	string $match		The regex-match for an iteration
+	 * @param	string $match		The regex-match for an iteration.
 	 */
 	private function prepareIterationsCallback($match)
 	{
