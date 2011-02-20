@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -16,27 +16,27 @@ class Moxiecode_FileTreeHandler {
 	/**
 	 * Continue tree search.
 	 *
-	 * @var int $CONTINUE 
+	 * @var int $CONTINUE
 	 */
 	var $CONTINUE = 1;
 
 	/**
 	 * Abort tree search.
 	 *
-	 * @var int $ABORT 
+	 * @var int $ABORT
 	 */
 	var $ABORT = 2;
 
 	/**
 	 * Abort tree search on the current folder/directory.
 	 *
-	 * @var int $ABORT_FOLDER 
+	 * @var int $ABORT_FOLDER
 	 */
 	var $ABORT_FOLDER = 3;
 
 	/**
 	 * Handles a file instance while looping an tree of directories.
-	 * 
+	 *
 	 * @param MCE_File $file File object reference
 	 * @param int $level Current level of tree parse
 	 * @return int State of what to do next can be CONTINUE, ABORT or ABORTFOLDER.
@@ -145,7 +145,7 @@ class Moxiecode_BasicFileTreeHandler extends Moxiecode_FileTreeHandler {
 
 	/**
 	 * Handles a file instance while looping an tree of directories.
-	 * 
+	 *
 	 * @param MCE_File $file File object reference
 	 * @param int $level Current level of tree parse
 	 * @return int State of what to do next can be CONTINUE, ABORT or ABORTFOLDER.
@@ -176,7 +176,7 @@ class Moxiecode_ConfigFilteredFileTreeHandler extends Moxiecode_BasicFileTreeHan
 
 	/**
 	 * Handles a file instance while looping an tree of directories.
-	 * 
+	 *
 	 * @param MCE_File $file File object reference
 	 * @param int $level Current level of tree parse
 	 * @return int State of what to do next can be CONTINUE, ABORT or ABORTFOLDER.

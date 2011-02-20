@@ -4,7 +4,7 @@
  *
  * @package Moxiecode.utils
  * @author Moxiecode
- * @copyright Copyright © 2007, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2007, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -33,7 +33,7 @@ class Moxiecode_LanguagePack {
 		$this->_currentTarget = "";
 		$this->_currentLanguage = "en";
 		$this->_currentDir = "ltr";
-		
+
 		$this->_header["major"] = 0;
 		$this->_header["minor"] = 1;
 		$this->_header["releasedate"] = date("Y-m-d");
@@ -184,7 +184,7 @@ class Moxiecode_LanguagePack {
 		$this->_items[$lang]["dir"] = $dir;
 		$this->_items[$lang]["title"] = $title;
 		$this->_cdataArr[$lang] = $this->_cdataArr[$target];
-		unset($this->_cdataArr[$target]);		
+		unset($this->_cdataArr[$target]);
 	}
 
 	// * * Private methods
