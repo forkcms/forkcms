@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Akismet class
  *
@@ -18,8 +17,12 @@
  * Changelog since 1.0.2
  * - when authenticating the key will be validate if it is not empty
  *
+ * Changelog since 1.0.3
+ * - added a check for safe-mode
+ * - fixed some code-styling issues
+ *
  * License
- * Copyright (c) 2008, Tijs Verkoyen. All rights reserved.
+ * Copyright (c) Tijs Verkoyen. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
@@ -30,9 +33,9 @@
  * This software is provided by the author "as is" and any express or implied warranties, including, but not limited to, the implied warranties of merchantability and fitness for a particular purpose are disclaimed. In no event shall the author be liable for any direct, indirect, incidental, special, exemplary, or consequential damages (including, but not limited to, procurement of substitute goods or services; loss of use, data, or profits; or business interruption) however caused and on any theory of liability, whether in contract, strict liability, or tort (including negligence or otherwise) arising in any way out of the use of this software, even if advised of the possibility of such damage.
  *
  * @author			Tijs Verkoyen <php-akismet@verkoyen.eu>
- * @version			1.0.1
+ * @version			1.0.4
  *
- * @copyright		Copyright (c) 2008, Tijs Verkoyen. All rights reserved.
+ * @copyright		Copyright (c) Tijs Verkoyen. All rights reserved.
  * @license			BSD License
  */
 class Akismet
@@ -50,7 +53,7 @@ class Akismet
 	const API_VERSION = '1.1';
 
 	// current version
-	const VERSION = '1.0.3';
+	const VERSION = '1.0.4';
 
 
 	/**
