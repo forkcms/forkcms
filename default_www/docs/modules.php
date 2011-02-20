@@ -94,7 +94,7 @@
 
 				<ul>
 					<li>in templates: {$lblTitle|ucfirst}</li>
-					<li>in frontend PHP: FrontendLanguage::getLabel(&#8216;Title&#8217;);</li>
+					<li>in frontend PHP: FL::lbl(&#8216;Title&#8217;);</li>
 				</ul>
 
 				<h4 id="msg_message">msg (message):</h4>
@@ -139,7 +139,7 @@
 
 				<ul>
 					<li>in templates: {$msgNewsletterSuccess}</li>
-					<li>in frontend PHP: FrontendLanguage::getMessage(&#8216;NewsletterSuccess&#8217;);</li>
+					<li>in frontend PHP: FL::msg(&#8216;NewsletterSuccess&#8217;);</li>
 				</ul>
 
 				<h4 id="act_action">act (action):</h4>
@@ -167,7 +167,7 @@
 
 				<ul>
 					<li>In templates: {$actCategory}</li>
-					<li>In frontend PHP: FrontendLanguage::getAction(&#8216;Category&#8217;);</li>
+					<li>In frontend PHP: FL::act(&#8216;Category&#8217;);</li>
 				</ul>
 
 				<p>Please note: it&#8217;s not possible for a page&#8217;s URL to be the same as one of the existing actions translations. E.g. you can&#8217;t set a page&#8217;s URL to &#8216;detail&#8217; when the translation for the action &#8216;detail&#8217; already exists in the translations module.</p>
@@ -212,7 +212,7 @@
 
 				<ul>
 					<li>in templates: {$errInvalidEmail}</li>
-					<li>in frontend PHP: FrontendLanguage::getError(&#8216;InvalidEmail&#8217;);</li>
+					<li>in frontend PHP: FL::err(&#8216;InvalidEmail&#8217;);</li>
 				</ul>
 
 				<h4 id="backend_translations">Backend translations</h4>

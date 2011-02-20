@@ -117,11 +117,11 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
 
 		// add into breadcrumb
-		$this->breadcrumb->addElement(ucfirst(FL::getLabel('Category')));
+		$this->breadcrumb->addElement(ucfirst(FL::lbl('Category')));
 		$this->breadcrumb->addElement($this->category['label']);
 
 		// set pageTitle
-		$this->header->setPageTitle(ucfirst(FL::getLabel('Category')));
+		$this->header->setPageTitle(ucfirst(FL::lbl('Category')));
 		$this->header->setPageTitle($this->category['label']);
 
 		// assign category

@@ -105,7 +105,7 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// user sequence provided?
 						$column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
 						$position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
-						$title = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) .': '. BL::getLabel(SpoonFilter::toCamelCase($widgetName));
+						$title = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) .': '. BL::lbl(SpoonFilter::toCamelCase($widgetName));
 						$templatePath = $instance->getTemplatePath();
 
 						// reset template path

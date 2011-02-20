@@ -92,9 +92,9 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 			$email = $this->frm->getField('email');
 
 			// validate required fields
-			if($email->isEmail(FL::getError('EmailIsInvalid')))
+			if($email->isEmail(FL::err('EmailIsInvalid')))
 			{
-				if(FrontendMailmotorModel::isSubscribed($email->getValue())) $email->addError(FL::getError('AlreadySubscribed'));
+				if(FrontendMailmotorModel::isSubscribed($email->getValue())) $email->addError(FL::err('AlreadySubscribed'));
 			}
 
 			// no errors

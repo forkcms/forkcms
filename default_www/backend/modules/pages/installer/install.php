@@ -37,6 +37,7 @@ class PagesInstall extends ModuleInstaller
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'pages', 'err', 'CantBeMoved', 'Pagina kan niet verplaatst worden.');
 		$this->insertLocale('nl', 'backend', 'pages', 'err', 'DeleteTemplate', 'Je kan deze template niet verwijderen.');
+		$this->insertLocale('nl', 'backend', 'pages', 'err', 'HomeCantHaveBlocks', 'Je kan geen modules aan de homepage koppelen.');
 		$this->insertLocale('nl', 'backend', 'pages', 'err', 'InvalidTemplateSyntax', 'Ongeldige syntax.');
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Add', 'pagina toevoegen');
 		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'EditModuleContent', 'wijzig module inhoud');
@@ -74,6 +75,7 @@ class PagesInstall extends ModuleInstaller
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'pages', 'err', 'CantBeMoved', 'Page can\'t be moved.');
 		$this->insertLocale('en', 'backend', 'pages', 'err', 'DeletedTemplate', 'You can\'t delete this template.');
+		$this->insertLocale('en', 'backend', 'pages', 'err', 'HomeCantHaveBlocks', 'You can\'t link a module to the homepage.');
 		$this->insertLocale('en', 'backend', 'pages', 'err', 'InvalidTemplateSyntax', 'Invalid syntax.');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Add', 'add page');
 		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'EditModuleContent', 'edit module content');

@@ -125,7 +125,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		{
 			if($item['type'] == 'block')
 			{
-				$blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+				$blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
 				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
 			}
 
