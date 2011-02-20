@@ -44,12 +44,5 @@ It can be executed with the following command
 The remove_cache-script will clear folders that contain cached files. And can be executed with the following command:
 
 	./remove_cache
-	
-## CodeSniffer
-The folder codesniffer contains the Sniffs specific for Fork. When you have installed PHP CodeSniffer you can use the command below (from the root folder, one level above this folder).
 
-	phpcs -v --standard=./tools/codesniffer/Fork --ignore=.git,cache,codesniffer,tiny_mce,docs --extensions=php ./
 	
-If you don't want to see the warnings, use
-
-	phpcs -v -n --standard=./tools/codesniffer/Fork --ignore=.git,cache,codesniffer,tiny_mce,docs --extensions=php ./
