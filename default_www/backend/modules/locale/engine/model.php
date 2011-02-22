@@ -237,7 +237,7 @@ class BackendLocaleModel
 
 		// possible values
 		$possibleApplications = array('frontend', 'backend');
-		$possibleModules = BackendModel::getModules();
+		$possibleModules = BackendModel::getModules(false);
 		$possibleLanguages = BL::getActiveLanguages();
 		$possibleTypes = array();
 
