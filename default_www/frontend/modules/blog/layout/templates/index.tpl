@@ -1,9 +1,9 @@
 {*
 	variables that are available:
-	- {$blogArticles}: contains an array with all posts, each element contains data about the post
+	- {$items}: contains an array with all posts, each element contains data about the post
 *}
 
-{option:!blogArticles}
+{option:!items}
 	<div id="blogIndex">
 		<div class="mod">
 			<div class="inner">
@@ -13,34 +13,41 @@
 			</div>
 		</div>
 	</div>
-{/option:!blogArticles}
-{option:blogArticles}
+{/option:!items}
+{option:items}
 	<div id="blogIndex">
-		{iteration:blogArticles}
+		{iteration:items}
 			<div class="mod article">
 				<div class="inner">
 					<div class="hd">
-						<h2><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a></h2>
-						<p>{$blogArticles.publish_on|date:{$dateFormatLong}:{$LANGUAGE}|ucfirst} -
-						{option:!blogArticles.comments}<a href="{$blogArticles.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogArticles.comments}
-						{option:blogArticles.comments}
-							{option:blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogArticles.comments_count}}</a>{/option:blogArticles.comments_multiple}
-							{option:!blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogArticles.comments_multiple}
-						{/option:blogArticles.comments}
+						<h2><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h2>
+						<p>{$items.publish_on|date:{$dateFormatLong}:{$LANGUAGE}|ucfirst} -
+						{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
+						{option:items.comments}
+							{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+							{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
+						{/option:items.comments}
 						</p>
 					</div>
 					<div class="bd content">
-						{option:!blogArticles.introduction}{$blogArticles.text}{/option:!blogArticles.introduction}
-						{option:blogArticles.introduction}{$blogArticles.introduction}{/option:blogArticles.introduction}
+						{option:!items.introduction}{$items.text}{/option:!items.introduction}
+						{option:items.introduction}{$items.introduction}{/option:items.introduction}
 					</div>
 					<div class="ft">
 						<p>
-							{$msgWrittenBy|ucfirst|sprintf:{$blogArticles.user_id|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$blogArticles.category_full_url}" title="{$blogArticles.category_name}">{$blogArticles.category_name}</a>. {option:blogArticles.tags}{$lblTags|ucfirst}: {iteration:blogArticles.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:blogArticles.tags}{/option:blogArticles.tags}
+							{$msgWrittenBy|ucfirst|sprintf:{$items.user_id|usersetting:'nickname'}}
+							{$lblInTheCategory}: <a href="{$items.category_full_url}" title="{$items.category_name}">{$items.category_name}</a>.
+							{option:items.tags}
+								{$lblTags|ucfirst}:
+								{iteration:items.tags}
+									<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.name}">{$items.tags.name}</a>{option:!items.tags.last}, {/option:!items.tags.last}
+								{/iteration:items.tags}
+							{/option:items.tags}
 						</p>
 					</div>
 				</div>
 			</div>
-		{/iteration:blogArticles}
+		{/iteration:items}
 	</div>
-	{include:file='{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl'}
-{/option:blogArticles}
+	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
+{/option:items}

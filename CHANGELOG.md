@@ -40,6 +40,10 @@
 * Blog: it is now possible to remove all spam at once
 * Pages: extra validation, so home can't have any blocks
 * Pages: improvement for changing extra's, as requested on http://forkcms.lighthouseapp.com/projects/61890/tickets/77
+* Bugfix: mailmotor was reporting empty groups when adding a newsletter, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/111
+* Bugfix: minifying the CSS files should replace path to images, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/108
+* Core: dashboard can now be customized by the user
+* Tools: added a script to generate statistics for the codebase
 
 2.0.2 (2010-11-24)
 --

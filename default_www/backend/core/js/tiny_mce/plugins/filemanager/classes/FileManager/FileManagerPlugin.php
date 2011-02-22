@@ -4,7 +4,7 @@
  *
  * @package MCFileManager
  * @author Moxiecode
- * @copyright Copyright © 2007, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2007, Moxiecode Systems AB, All rights reserved.
  */
 
 require_once(MCMANAGER_ABSPATH . "FileManager/FileSystems/ZipFileImpl.php");
@@ -408,17 +408,17 @@ class Moxiecode_FileManagerPlugin extends Moxiecode_ManagerPlugin {
 		}
 
 		if (!checkBool($config["filesystem.writable"])) {
-			trigger_error("{#error.no_write_access}", FATAL); 
+			trigger_error("{#error.no_write_access}", FATAL);
 			die();
 		}
 
 		if ($man->verifyFile($file, "edit") < 0) {
-			trigger_error($man->getInvalidFileMsg(), FATAL); 
+			trigger_error($man->getInvalidFileMsg(), FATAL);
 			die();
 		}
 
 		if (!$file->canWrite()) {
-			trigger_error("{#error.no_write_access}", FATAL); 
+			trigger_error("{#error.no_write_access}", FATAL);
 			die();
 		}
 
@@ -427,7 +427,7 @@ class Moxiecode_FileManagerPlugin extends Moxiecode_ManagerPlugin {
 			$content = $reader->readToEnd();
 			$reader->close();
 		} else {
-			trigger_error("{#error.no_read_access}", FATAL); 
+			trigger_error("{#error.no_read_access}", FATAL);
 			die();
 		}
 
@@ -444,22 +444,22 @@ class Moxiecode_FileManagerPlugin extends Moxiecode_ManagerPlugin {
 		}
 
 		if (checkBool($config['general.demo'])) {
-			trigger_error("{#error.demo}", FATAL); 
+			trigger_error("{#error.demo}", FATAL);
 			die();
 		}
 
 		if (!checkBool($config["filesystem.writable"])) {
-			trigger_error("{#error.no_write_access}", FATAL); 
+			trigger_error("{#error.no_write_access}", FATAL);
 			die();
 		}
 
 		if ($man->verifyFile($file, "edit") < 0) {
-			trigger_error($man->getInvalidFileMsg(), FATAL); 
+			trigger_error($man->getInvalidFileMsg(), FATAL);
 			die();
 		}
 
 		if (!$file->canWrite()) {
-			trigger_error("{#error.no_write_access}", FATAL); 
+			trigger_error("{#error.no_write_access}", FATAL);
 			die();
 		}
 
@@ -468,7 +468,7 @@ class Moxiecode_FileManagerPlugin extends Moxiecode_ManagerPlugin {
 			$writer->write($input["content"]);
 			$writer->close();
 		} else {
-			trigger_error("{#error.no_write_access}", FATAL); 
+			trigger_error("{#error.no_write_access}", FATAL);
 			die();
 		}
 

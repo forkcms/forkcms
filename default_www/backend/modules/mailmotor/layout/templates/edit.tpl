@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblAddNewMailing|ucfirst}</h2>
@@ -8,7 +8,7 @@
 <div class="wizard">
 	<ul>
 		{iteration:wizard}
-			<li{option:wizard.selected} class="selected"{/option:wizard.selected}{option:wizard.beforeSelected} class="beforeSelected"{/option:wizard.beforeSelected}>{option:wizard.stepLink}<a href="{$var|geturl:'edit'}&amp;id={$mailing['id']}&amp;step={$wizard.id}">{/option:wizard.stepLink}<b><span>{$wizard.id}.</span> {$wizard.label|ucfirst}</b>{option:wizard.stepLink}</a>{/option:wizard.stepLink}</li>
+			<li{option:wizard.selected} class="selected"{/option:wizard.selected}{option:wizard.beforeSelected} class="beforeSelected"{/option:wizard.beforeSelected}>{option:wizard.stepLink}<a href="{$var|geturl:'edit'}&amp;id={$mailing.id}&amp;step={$wizard.id}">{/option:wizard.stepLink}<b><span>{$wizard.id}.</span> {$wizard.label|ucfirst}</b>{option:wizard.stepLink}</a>{/option:wizard.stepLink}</li>
 		{/iteration:wizard}
 	</ul>
 </div>
@@ -157,7 +157,7 @@
 				<h3>{$lblContent|ucfirst} <abbr title="{$lblRequiredField}">*</abbr></h3>
 			</div>
 			<div id="iframeBox">
-				<iframe id="contentBox" src="{$var|geturl:'edit_mailing_iframe'}&amp;id={$mailing['id']}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
+				<iframe id="contentBox" src="{$var|geturl:'edit_mailing_iframe'}&amp;id={$mailing.id}" height="100%" width="100%" style="border-right: 1px solid rgb(221, 221, 221); border-width: medium 1px 1px; border-style: none solid solid; border-color: -moz-use-text-color rgb(221, 221, 221) rgb(221, 221, 221); -moz-box-sizing: border-box;"></iframe>
 			</div>
 		</div>
 
@@ -277,9 +277,9 @@
 <script type="text/javascript">
 	//<![CDATA[
 		var variables = new Array();
-		variables = { mailingId: '{$mailing['id']}' };
+		variables = { mailingId: '{$mailing.id}' };
 	//]]>
 </script>
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

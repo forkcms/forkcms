@@ -435,27 +435,27 @@ jsBackend.analytics.loading =
 
 jsBackend.analytics.resize =
 {
+	interval: 1000,
+	timeout: false,
+		
 	init: function()
 	{
-		var interval = 1000;
-		var timeout = false;
-
 		$(window).resize(function()
 		{
 			resizeTime = new Date();
-			if(timeout === false)
+			if(jsBackend.analytics.resize.timeout === false)
 			{
 				timeout = true;
-				setTimeout(jsBackend.analytics.resize.resizeEnd, interval);
+				setTimeout(jsBackend.analytics.resize.resizeEnd, jsBackend.analytics.resize.interval);
 			}
 		});
 	},
 		
 	resizeEnd: function()
 	{
-		if(new Date() - resizeTime < interval)
+		if(new Date() - resizeTime < jsBackend.analytics.resize.interval)
 		{
-			setTimeout(jsBackend.analytics.resize.resizeEnd, interval);
+			setTimeout(jsBackend.analytics.resize.resizeEnd, jsBackend.analytics.resize.interval);
 		}
 		else
 		{

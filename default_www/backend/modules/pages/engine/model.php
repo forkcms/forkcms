@@ -909,10 +909,10 @@ class BackendPagesModel
 		// get child
 		$childId = (int) BackendModel::getDB()->getVar('SELECT i.id
 														FROM pages AS i
-														WHERE i.parent_id = ? AND i.status = ?
+														WHERE i.parent_id = ? AND i.status = ? AND i.language = ?
 														ORDER BY i.sequence ASC
 														LIMIT 1',
-														array($pageId, 'active'));
+														array($pageId, 'active', BL::getWorkingLanguage()));
 
 		// return
 		if($childId != 0) return $childId;
@@ -1395,7 +1395,10 @@ class BackendPagesModel
 	{
 		// redefine
 		$URL = (string) $URL;
-		$parentId = (int) $parentId;
+		$parentIds = array((int) $parentId);
+
+		// 0, 1, 2, 3, 4 are all toplevels, so we should place them on the same level
+		if($parentId == 0 || $parentId == 1 || $parentId == 2 || $parentId == 3 || $parentId == 4) $parentIds = array(0, 1, 2, 3, 4);
 
 		// get db
 		$db = BackendModel::getDB();
@@ -1407,8 +1410,8 @@ class BackendPagesModel
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM pages AS i
 										INNER JOIN meta AS m ON i.meta_id = m.id
-										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.language = ?',
-										array($parentId, 'active', $URL, BL::getWorkingLanguage()));
+										WHERE i.parent_id IN('. implode(',', $parentIds) .') AND i.status = ? AND m.url = ? AND i.language = ?',
+										array('active', $URL, BL::getWorkingLanguage()));
 
 			// no items?
 			if($number != 0)
@@ -1428,8 +1431,8 @@ class BackendPagesModel
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 										FROM pages AS i
 										INNER JOIN meta AS m ON i.meta_id = m.id
-										WHERE i.parent_id = ? AND i.status = ? AND m.url = ? AND i.id != ? AND i.language = ?',
-										array($parentId, 'active', $URL, $id, BL::getWorkingLanguage()));
+										WHERE i.parent_id IN('. implode(',', $parentIds) .') AND i.status = ? AND m.url = ? AND i.id != ? AND i.language = ?',
+										array('active', $URL, $id, BL::getWorkingLanguage()));
 
 			// there are items so, call this method again.
 			if($number != 0)

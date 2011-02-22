@@ -12,12 +12,13 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 	private static $classesWithErrors = array();
 
 
-	public function register()
-	{
-		return array(T_CLASS, T_EXTENDS, T_IMPLEMENTS, T_INTERFACE, T_NAMESPACE, T_NS_SEPARATOR, T_CLONE, T_FUNCTION);
-	}
-
-
+	/**
+	 * Process the code
+	 *
+	 * @return	void
+	 * @param	PHP_CodeSniffer_File $phpcsFile	The codesniffer file.
+	 * @param	mixed $stackPtr					The stackpointer.
+	 */
 	public function process(PHP_CodeSniffer_File $phpcsFile, $stackPtr)
 	{
 		// get the tokens
@@ -38,8 +39,10 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 				// multiple classes in one file
 				if($nextClass !== false)
 				{
-					if($lines[$tokens[$current['scope_closer']]['line']] == "\n" && $lines[$tokens[$current['scope_closer']]['line'] + 1] == "\n" && trim($lines[$tokens[$current['scope_closer']]['line'] + 2]) != '') {}
-					else $phpcsFile->addError('Expected 2 empty lines after a class.', $stackPtr);
+					if(!($lines[$tokens[$current['scope_closer']]['line']] == "\n" && $lines[$tokens[$current['scope_closer']]['line'] + 1] == "\n" && trim($lines[$tokens[$current['scope_closer']]['line'] + 2]) != ''))
+					{
+						$phpcsFile->addError('Expected 2 empty lines after a class.', $stackPtr);
+					}
 				}
 
 				if($next['code'] != T_WHITESPACE) $phpcsFile->addError('Space expected after class, interface', $stackPtr);
@@ -62,8 +65,8 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 				// is it a fork class?
 				if(substr_count($className, 'Frontend') > 0 || substr_count($className, 'Backend') > 0 || substr_count($className, 'Api') > 0 || substr_count($className, 'Installer') > 0)
 				{
-					$folder = substr($phpcsFile->getFilename(), strpos($phpcsFile->getFilename(), '/default_www') + 1);
-					$chunks = explode('/', $folder);
+					$folder = substr($phpcsFile->getFilename(), strpos($phpcsFile->getFilename(), DIRECTORY_SEPARATOR . 'default_www') + 1);
+					$chunks = explode(DIRECTORY_SEPARATOR, $folder);
 					$correctPackage = $chunks[1];
 					$correctSubPackage = $chunks[2];
 
@@ -76,15 +79,15 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 					}
 
 					// get comment
-					$startComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '/**'."\n");
-					$endComment = $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, ' */');
+					$startComment = (int) $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, '/**'."\n");
+					$endComment = (int) $phpcsFile->findPrevious(T_DOC_COMMENT, $stackPtr, null, null, ' */');
 
 					$hasPackage = false;
 					$hasSubPackage = false;
 					$hasAuthor = false;
 					$hasSince = false;
 
-					for($i = $startComment; $i<= $endComment; $i++)
+					for($i = $startComment; $i <= $endComment; $i++)
 					{
 						// package
 						if(substr($tokens[$i]['content'], 0, 11) == ' * @package')
@@ -213,6 +216,17 @@ class Fork_Sniffs_Styleguide_ClassesSniff implements PHP_CodeSniffer_Sniff
 		unset($next);
 		unset($previous);
 
+	}
+
+
+	/**
+	 * Register
+	 *
+	 * @return	void
+	 */
+	public function register()
+	{
+		return array(T_CLASS, T_EXTENDS, T_IMPLEMENTS, T_INTERFACE, T_NAMESPACE, T_NS_SEPARATOR, T_CLONE, T_FUNCTION);
 	}
 }
 

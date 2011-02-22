@@ -730,7 +730,7 @@ class BackendModel
 			FrontendLanguage::setLocale($language);
 
 			// append action
-			$URL .= '/'. FrontendLanguage::getAction(SpoonFilter::toCamelCase($action));
+			$URL .= '/'. FL::act(SpoonFilter::toCamelCase($action));
 
 			// return the unique URL!
 			return $URL;

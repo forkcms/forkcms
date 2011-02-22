@@ -4,7 +4,7 @@
  *
  * @licence GPL
  * @author Moxiecode
- * @copyright Copyright © 2003-2008, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2003-2008, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -589,7 +589,7 @@ class Moxiecode_ZipFile {
 	function _extractEntry(&$entry, $path) {
 		// Make parent dir
 		$ar = explode('/', $path);
-		array_pop($ar);	
+		array_pop($ar);
 		$this->_mkdirs(implode('/', $ar));
 
 		// Extract file contents

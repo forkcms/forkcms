@@ -1,16 +1,16 @@
 <?php
 
 /**
- * BackendMailmotorWidgetStats
  * This is the classic fork cayenne mailmotor widget
  *
  * @package		backend
  * @subpackage	mailmotor
  *
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
-class BackendMailmotorWidgetStats extends BackendBaseWidget
+class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 {
 	// max number of items to show per page
 	const PAGING_LIMIT = 10;

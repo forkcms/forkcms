@@ -35,5 +35,5 @@
 			</div>
 		</div>
 	</div>
-	{include:file='{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl'}
+	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
 {/option:blogArticles}

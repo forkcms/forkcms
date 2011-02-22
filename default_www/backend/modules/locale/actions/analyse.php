@@ -263,7 +263,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 					$matchesURL = array();
 
 					// get matches
-					preg_match_all('/(BackendLanguage|BL)::get(Label|Error|Message)\(\'(.*)\'(.*)?\)/iU', $content, $matches); // @todo regex needs to be improved
+					preg_match_all('/(BackendLanguage|BL)::(get(Label|Error|Message)|act|err|lbl|msg)\(\'(.*)\'(.*)?\)/iU', $content, $matches);
 
 					// match errors
 					preg_match_all('/&(amp;)?(error|report)=([A-Z0-9-_]+)/i', $content, $matchesURL);
@@ -280,28 +280,29 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 
 							$matches[0][] = '';
 							$matches[1][] = 'BL';
-							$matches[2][] = $type;
-							$matches[3][] = SpoonFilter::toCamelCase($match, array('-', '_'));
-							$matches[4][] = '';
+							$matches[2][] = '';
+							$matches[3][] = $type;
+							$matches[4][] = SpoonFilter::toCamelCase($match, array('-', '_'));
+							$matches[5][] = '';
 						}
 					}
 
 					// any matches?
-					if(isset($matches[3]))
+					if(!empty($matches[4]))
 					{
 						// loop matches
-						foreach($matches[3] as $key => $match)
+						foreach($matches[4] as $key => $match)
 						{
 							// set type
 							$type = 'lbl';
-							if($matches[2][$key] == 'Error') $type = 'err';
-							if($matches[2][$key] == 'Message') $type = 'msg';
+							if($matches[3][$key] == 'Error' || $matches[2][$key] == 'err') $type = 'err';
+							if($matches[3][$key] == 'Message' || $matches[2][$key] == 'msg') $type = 'msg';
 
 							// specific module?
-							if($matches[4][$key] != '')
+							if(isset($matches[5][$key]) && $matches[5][$key] != '')
 							{
 								// try to grab the module
-								$specificModule = $matches[4][$key];
+								$specificModule = $matches[5][$key];
 								$specificModule = trim(str_replace(array(',', '\''), '', $specificModule));
 
 								// not core?
@@ -625,18 +626,21 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 					$matches = array();
 
 					// get matches
-					preg_match_all('/(FrontendLanguage|FL)::get(Action|Label|Error|Message)\(\'(.*)\'\)/iU', $content, $matches);
+					preg_match_all('/(FrontendLanguage|FL)::(get(Action|Label|Error|Message)|act|lbl|err|msg)\(\'(.*)\'\)/iU', $content, $matches);
 
 					// any matches?
-					if(isset($matches[3]))
+					if(!empty($matches[4]))
 					{
 						// loop matches
-						foreach($matches[3] as $key => $match)
+						foreach($matches[4] as $key => $match)
 						{
 							$type = 'lbl';
-							if($matches[2][$key] == 'Action') $type = 'act';
-							if($matches[2][$key] == 'Error') $type = 'err';
-							if($matches[2][$key] == 'Message') $type = 'msg';
+							if($matches[3][$key] == 'Action') $type = 'act';
+							if($matches[2][$key] == 'act') $type = 'act';
+							if($matches[3][$key] == 'Error') $type = 'err';
+							if($matches[2][$key] == 'err') $type = 'err';
+							if($matches[3][$key] == 'Message') $type = 'msg';
+							if($matches[2][$key] == 'msg') $type = 'msg';
 
 							// init if needed
 							if(!isset($used[$type][$match])) $used[$type][$match] = array('files' => array());
@@ -692,25 +696,25 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 					// action
 					case 'act':
 						// if the action isn't available add it to the list
-						if(FrontendLanguage::getAction($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::act($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 
 					// error
 					case 'err':
 						// if the error isn't available add it to the list
-						if(FrontendLanguage::getError($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::err($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 
 					// label
 					case 'lbl':
 						// if the label isn't available add it to the list
-						if(FrontendLanguage::getLabel($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::lbl($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 
 					// message
 					case 'msg':
 						// if the message isn't available add it to the list
-						if(FrontendLanguage::getMessage($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::msg($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 				}
 			}

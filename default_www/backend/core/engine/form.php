@@ -131,7 +131,7 @@ class BackendForm extends SpoonForm
 	{
 		// redefine
 		$name = (string) $name;
-		$value = ($value !== null) ? (int) $value : null;
+		$value = ($value !== null) ? (($value !== '') ? (int) $value : '') : null;
 		$type = SpoonFilter::getValue($type, array('from', 'till', 'range'), 'none');
 		$date = ($date !== null) ? (int) $date : null;
 		$date2 = ($date2 !== null) ? (int) $date2 : null;

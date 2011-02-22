@@ -79,10 +79,16 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'dashboard', 'lbl', 'AllStatistics', 'alle statistieken');
 		$this->insertLocale('nl', 'backend', 'dashboard', 'lbl', 'TopKeywords', 'top zoekwoorden');
 		$this->insertLocale('nl', 'backend', 'dashboard', 'lbl', 'TopReferrers', 'top verwijzende sites');
+		$this->insertLocale('nl', 'backend', 'dashboard', 'msg', 'EditYourDashboard', 'Personaliseer je dashboard');
+		$this->insertLocale('nl', 'backend', 'dashboard', 'msg', 'HelpEditDashboard', 'Personaliseer je dashboard door de verschillende items te verslepen. Sluit de items om ze te verwijderen.');
+		$this->insertLocale('nl', 'backend', 'dashboard', 'msg', 'WillBeEnabledOnSave', 'Deze widget zal geactiveerd worden bij het opslaan.');
 		// --
 		$this->insertLocale('en', 'backend', 'dashboard', 'lbl', 'AllStatistics', 'all statistics');
 		$this->insertLocale('en', 'backend', 'dashboard', 'lbl', 'TopKeywords', 'top keywords');
 		$this->insertLocale('en', 'backend', 'dashboard', 'lbl', 'TopReferrers', 'top referrers');
+		$this->insertLocale('en', 'backend', 'dashboard', 'msg', 'EditYourDashboard', 'Personalize your dashboard');
+		$this->insertLocale('en', 'backend', 'dashboard', 'msg', 'HelpEditDashboard', 'Personalize your dashboard by dragging the boxes in the way you want. Close the boxes to remove them.');
+		$this->insertLocale('en', 'backend', 'dashboard', 'msg', 'WillBeEnabledOnSave', 'This widget wil be reenabled on save.');
 
 		// insert locale for backend core
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'ActionNotAllowed', 'Je hebt onvoldoende rechten voor deze actie.');
@@ -200,6 +206,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Description', 'beschrijving');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Developer', 'developer');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Domains', 'domeinen');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Done', 'klaar');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Draft', 'kladversie');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Drafts', 'kladversies');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Edit', 'wijzigen');
@@ -576,6 +583,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Description', 'description');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Developer', 'developer');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Domains', 'domains');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Done', 'done');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Draft', 'draft');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Drafts', 'drafts');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Edit', 'edit');

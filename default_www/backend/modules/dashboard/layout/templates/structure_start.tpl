@@ -3,7 +3,7 @@
 	<table border="0" cellspacing="0" cellpadding="0" id="encloser">
 		<tr>
 			<td>
-				{include:file='{$BACKEND_CORE_PATH}/layout/templates/header.tpl'}
+				{include:{$BACKEND_CORE_PATH}/layout/templates/header.tpl}
 			</td>
 		</tr>
 		<tr>

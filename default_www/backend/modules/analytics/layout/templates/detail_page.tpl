@@ -50,9 +50,9 @@
 										<ul class="data">
 											{iteration:lineGraphData.data}
 												<li>
-													<span class="fulldate">{$graphData.data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
-													<span class="date">{$graphData.data.date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
-													<span class="value">{$graphData.data.value}</span>
+													<span class="fulldate">{$lineGraphData.data.date|date:'D d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+													<span class="date">{$lineGraphData.data.date|date:'d M':{$INTERFACE_LANGUAGE}|ucwords}</span>
+													<span class="value">{$lineGraphData.data.value}</span>
 												</li>
 											{/iteration:lineGraphData.data}
 										</ul>

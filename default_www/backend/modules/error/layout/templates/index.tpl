@@ -1,4 +1,4 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
 <body id="{$bodyID}" class="{$bodyClass}">
 
 <div id="genericBox">
@@ -10,4 +10,4 @@
 	</div>
 </div>
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

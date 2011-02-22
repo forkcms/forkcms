@@ -6,7 +6,8 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendBlogAPI
@@ -115,9 +116,6 @@ class BackendBlogAPI
 
 			// change the status if needed
 			if($status !== null) BackendBlogModel::updateCommentStatuses(array($id), $status);
-
-			// return
-			return;
 		}
 	}
 
@@ -140,12 +138,8 @@ class BackendBlogAPI
 
 			// update statuses
 			BackendBlogModel::updateCommentStatuses($id, $status);
-
-			// return
-			return;
 		}
 	}
-
 }
 
 ?>

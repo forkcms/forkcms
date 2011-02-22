@@ -8,6 +8,7 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendPagesEditTemplate extends BackendBaseActionEdit
@@ -122,8 +123,13 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		// loop extras to populate the default extras
 		foreach($extras as $item)
 		{
-			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
-			if($item['type'] == 'widget')
+			if($item['type'] == 'block')
+			{
+				$blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
+			}
+
+			elseif($item['type'] == 'widget')
 			{
 				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
 				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
@@ -170,17 +176,19 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
+			// num blocks cant be altered when the template is in use
+			$numBlocks = (BackendPagesModel::isTemplateInUse($this->id)) ? $this->record['num_blocks'] : (int) $this->frm->getField('num_blocks')->getValue();
+
 			// required fields
 			$this->frm->getField('file')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('label')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('format')->isFilled(BL::err('FieldIsRequired'));
 
 			// loop the know fields and validate them
-			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
+			for($i = 1; $i <= $numBlocks; $i++)
 			{
 				$this->frm->getField('name_'. $i)->isFilled(BL::err('FieldIsRequired'));
 			}
-
 
 			// validate syntax
 			$syntax = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
@@ -217,19 +225,15 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['label'] = $this->frm->getField('label')->getValue();
 				$item['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
-				$item['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
+				$item['num_blocks'] = $numBlocks;
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
 				// if this is the default template make the template active
 				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $item['active'] = 'Y';
 
-				// if the template is in use we can't alter the number of blocks or de-activate it
-				if(BackendPagesModel::isTemplateInUse($item['id']))
-				{
-					$item['num_blocks'] = $this->record['num_blocks'];
-					$item['active'] = 'Y';
-				}
+				// if the template is in use we can't de-activate it
+				if(BackendPagesModel::isTemplateInUse($item['id'])) $item['active'] = 'Y';
 
 				// init template data
 				$item['data'] = $this->record['data'];

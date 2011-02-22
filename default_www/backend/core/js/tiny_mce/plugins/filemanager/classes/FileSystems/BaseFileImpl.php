@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -122,7 +122,7 @@ class Moxiecode_BaseFileImpl extends Moxiecode_BaseFile {
 	}
 
 	/**
-	 * Lists the file as an tree and calls the specified FileTreeHandler instance on each file. 
+	 * Lists the file as an tree and calls the specified FileTreeHandler instance on each file.
 	 *
 	 * @param FileTreeHandler &$file_tree_handler FileTreeHandler to invoke on each file.
 	 */
