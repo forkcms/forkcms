@@ -199,7 +199,7 @@ class BackendFormBuilderModel
 	 * Does the data item exist.
 	 *
 	 * @return	bool
-	 * @param	int $id
+	 * @param	int $id		Id of the data item.
 	 */
 	public static function existsData($id)
 	{
@@ -231,7 +231,7 @@ class BackendFormBuilderModel
 	 * Does an identifier exist.
 	 *
 	 * @return	bool
-	 * @param	string $identifier
+	 * @param	string $identifier			Identifier.
 	 * @param	in[optional] $ignoreId		Field id to ignore.
 	 */
 	public static function existsIdentifier($identifier, $ignoreId = null)
@@ -295,7 +295,7 @@ class BackendFormBuilderModel
 	 * Get errors (optional by type).
 	 *
 	 * @return	mixed
-	 * @param	string[optional] $type
+	 * @param	string[optional] $type		Type of error.
 	 */
 	public static function getErrors($type = null)
 	{
@@ -391,9 +391,9 @@ class BackendFormBuilderModel
 	 * Used as datagridfunction.
 	 *
 	 * @return	string
-	 * @param	string $name
-	 * @param	string[optional] $type
-	 * @param	string[optional] $application
+	 * @param	string $name					Name of the locale item.
+	 * @param	string[optional] $type			Type of locale item.
+	 * @param	string[optional] $application	Name of the application.
 	 */
 	public static function getLocale($name, $type = 'label', $application = 'backend')
 	{
@@ -411,7 +411,7 @@ class BackendFormBuilderModel
 	 * Get the maximum sequence for fields in a form.
 	 *
 	 * @return	int
-	 * @param	int $formId
+	 * @param	int $formId		Id of the form.
 	 */
 	public static function getMaximumSequence($formId)
 	{
@@ -532,7 +532,7 @@ class FormBuilderHelper
 	 * Parse a field and return the HTML.
 	 *
 	 * @return	string
-	 * @param	array $field
+	 * @param	array $field	Field data.
 	 */
 	public static function parseField(array $field)
 	{
