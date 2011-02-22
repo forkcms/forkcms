@@ -45,6 +45,7 @@
 * Core: dashboard can now be customized by the user
 * Tools: added a script to generate statistics for the codebase
 * Core: isCached now always returns false when SPOON_DEBUG is true
+* FormBuilder: added the formbuilder module.
 
 2.0.2 (2010-11-24)
 --
