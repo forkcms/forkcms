@@ -301,7 +301,7 @@ class BackendTagsModel
 		}
 
 		// add to search index
-		if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)));
+		if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
 
 		// decrement number
 		foreach($currentTags as $tag => $tagId)
