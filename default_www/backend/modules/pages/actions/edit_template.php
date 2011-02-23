@@ -241,8 +241,8 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// loop fields
 				for($i = 1; $i <= $item['num_blocks']; $i++)
 				{
-					$item['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
-					$item['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['names'][$i - 1] = $this->frm->getField('name_'. $i)->getValue();
+					$item['data']['default_extras'][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 				}
 
