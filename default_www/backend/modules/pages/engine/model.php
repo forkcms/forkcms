@@ -1178,7 +1178,7 @@ class BackendPagesModel
 				foreach($row['data']['default_extras'] as $value)
 				{
 					// store if the module has blocks
-					if(SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type']) $row['has_block'] = true;
+					if(SpoonFilter::isInteger($value) && isset($extras[$value]) && $extras[$value]['type'] == 'block') $row['has_block'] = true;
 				}
 			}
 
