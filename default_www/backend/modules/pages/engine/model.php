@@ -358,7 +358,7 @@ class BackendPagesModel
 	 * @param	array $template			The template data.
 	 * @param	bool[optional] $large	Will the HTML be used in a large version?
 	 */
-	public static function buildTemplateHTML($template, $large = false)
+	private static function buildTemplateHTML($template, $large = false)
 	{
 		// validate
 		if(!isset($template['data']['format'])) throw new BackendException('Invalid template-format.');
@@ -1167,6 +1167,9 @@ class BackendPagesModel
 			// unserialize
 			$row['data'] = unserialize($row['data']);
 			$row['has_block'] = false;
+
+			// reset
+			if(isset($row['data']['default_extras_'. BL::getWorkingLanguage()])) $row['data']['default_extras'] = $row['data']['default_extras_'. BL::getWorkingLanguage()];
 
 			// any extras?
 			if(isset($row['data']['default_extras']))
