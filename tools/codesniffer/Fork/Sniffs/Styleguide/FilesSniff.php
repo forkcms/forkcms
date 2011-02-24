@@ -37,7 +37,7 @@ class Fork_Sniffs_Styleguide_FilesSniff implements PHP_CodeSniffer_Sniff
 			$lines = file($phpcsFile->getFilename());
 
 			// check if line before tag is empty
-			if($lines[$tokens[$stackPtr]['line'] - 2] != "\n") $phpcsFile->addError('Before "?>" we expext an empty line.', $stackPtr);
+			if(isset($lines[$tokens[$stackPtr]['line'] - 2]) && $lines[$tokens[$stackPtr]['line'] - 2] != "\n") $phpcsFile->addError('Before "?>" we expect an empty line.', $stackPtr);
 		}
 
 		// cleanup

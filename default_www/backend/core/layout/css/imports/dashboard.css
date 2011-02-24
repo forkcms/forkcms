@@ -28,8 +28,8 @@
 #dashboardWidgets .middleColumn,
 #dashboardWidgets .rightColumn {
 	float: left;
-	max-width: 407px;
-	width: 33.3%;
+	width: 407px;
+	min-height: 100px;
 }
 
 #dashboardWidgets .middleColumn {
@@ -103,3 +103,36 @@
 	#datagridStatistics p {
 		padding: 0 10px 6px;
 	}
+	
+/*
+ 	Drag'n drop for widgets
+ */
+.dragAndDropPlaceholder {
+	margin: 12px;
+	border: 1px dotted #444;
+	border-radius: 4px;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+}
+
+.sortableWidget {
+	position: relative;
+}
+
+.isDraggable {
+	cursor: move;
+}
+
+.isRemoved {
+	-moz-opacity:.40; 
+	filter:alpha(opacity=40); 
+	opacity:.40;
+}
+
+.editDashboardClose {
+	position: absolute;
+	right: 14px;
+	top: 14px;
+	
+}
+	

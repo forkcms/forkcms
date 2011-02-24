@@ -40,6 +40,7 @@ final class BackendAnalyticsConfig extends BackendBaseConfig
 
 		// init
 		$error = false;
+		$action = Spoon::isObjectReference('url') ? Spoon::getObjectReference('url')->getAction() : null;
 
 		// analytics session token
 		if(BackendModel::getModuleSetting('analytics', 'session_token') === null) $error = true;
@@ -47,8 +48,8 @@ final class BackendAnalyticsConfig extends BackendBaseConfig
 		// analytics table id
 		if(BackendModel::getModuleSetting('analytics', 'table_id') === null) $error = true;
 
-		// missing settings, so redirect to the settings-page
-		if($error && Spoon::isObjectReference('url') && Spoon::getObjectReference('url')->getAction() != 'settings') SpoonHTTP::redirect(BackendModel::createURLForAction('settings'));
+		// missing settings, so redirect to the index-page to show a message (except on the index- and settings-page)
+		if($error && $action != 'settings' && $action != 'index') SpoonHTTP::redirect(BackendModel::createURLForAction('index'));
 	}
 }
 

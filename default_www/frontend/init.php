@@ -276,6 +276,7 @@ class FrontendInit
 	public static function exceptionHandler($exception, $output)
 	{
 		// redefine
+		$exception = $exception;
 		$output = (string) $output;
 
 		// mail it?

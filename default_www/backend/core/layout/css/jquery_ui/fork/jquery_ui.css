@@ -177,7 +177,7 @@ background: -moz-linear-gradient(top, #DE3636, #FF2626); color: #fff; }
 	height: 200px; /*must have*/
 }/* Dialog
 ----------------------------------*/
-.ui-dialog { position: relative; padding: .2em; width: 300px; background: white;}
+.ui-dialog { position: relative; padding: .2em; width: 300px; background: white; margin: 0 auto; }
 .ui-dialog .ui-dialog-titlebar { padding: 6px; position: relative; font-weight: 700; color: #000; background: #EEE; }
 .ui-dialog .ui-dialog-title { float: left; margin: .1em 0 .2em; }
 .ui-dialog .ui-dialog-titlebar-close { position: absolute; right: 4px; top: 4px; width: 24px; margin: 0; padding: 0; height: 24px; }

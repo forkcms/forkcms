@@ -231,6 +231,13 @@ class BackendDataGrid extends SpoonDataGrid
 	 */
 	public function setColumnConfirm($column, $message, $custom = null, $title = null, $uniqueId = '[id]')
 	{
+		// redefine
+		$column = (string) $column;
+		$message = (string) $message;
+		$custom = $custom;
+		$title = ($title !== null) ? (string) $title : null;
+		$uniqueId = (string) $uniqueId;
+
 		// has results
 		if($this->source->getNumResults() > 0)
 		{

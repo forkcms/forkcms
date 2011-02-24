@@ -148,7 +148,7 @@ jsBackend.pages.extras =
 							for(var i in tinyMCE.editors) { tinyMCE.editors[i].setContent(''); }
 
 							// change the template for real
-							jsBackend.pages.template.changeTemplate();
+							jsBackend.pages.template.changeTemplate(true);
 						}
 
 						// close dialog
@@ -501,7 +501,7 @@ jsBackend.pages.template =
 				// init vars
 				var index = $(this).attr('id').replace('block-', '');
 				var extraId = $('#blockExtraId'+ index).val();
-				var defaultExtras = current.data['default_extras_{$LANGUAGE}'] == 'undefined' ? current.data['default_extras'] : current.data['default_extras_{$LANGUAGE}'];
+				var defaultExtras = current.data['default_extras'];
 
 				// no extra specified, we should grab the default
 				if(typeof defaultExtras != 'undefined' && (typeof extraId == 'undefined' || extraId == ''))

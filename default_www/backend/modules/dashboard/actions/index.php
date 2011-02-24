@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	dashboard
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendDashboardIndex extends BackendBaseActionIndex
@@ -50,6 +50,9 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 		// get all active modules
 		$modules = BackendModel::getModules(true);
 
+		// get user sequence
+		$userSequence = BackendAuthentication::getUser()->getSetting('dashboard_sequence');
+
 		// loop all modules
 		foreach($modules as $module)
 		{
@@ -71,8 +74,11 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// require the class
 						require_once $pathName .'/widgets/'. $widget;
 
+						// init var
+						$widgetName = str_replace('.php', '', $widget);
+
 						// build classname
-						$className = 'Backend'. SpoonFilter::toCamelCase($module) .'Widget'. SpoonFilter::toCamelCase(str_replace('.php', '', $widget));
+						$className = 'Backend'. SpoonFilter::toCamelCase($module) .'Widget'. SpoonFilter::toCamelCase($widgetName);
 
 						// validate if the class exists
 						if(!class_exists($className)) throw new BackendException('The widgetfile is present, but the classname should be: '. $className .'.');
@@ -90,26 +96,36 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// has rights
 						if(!$instance->isAllowed()) continue;
 
-						// execute instance
-						$instance->execute();
+						// hidden?
+						$hidden = (isset($userSequence[$module][$widgetName]['hidden'])) ? $userSequence[$module][$widgetName]['hidden'] : false;
 
-						// add to correct column and position
-						$column = $instance->getColumn();
-						$position = $instance->getPosition();
+						// execute instance if it is not hidden
+						if(!$hidden) $instance->execute();
+
+						// user sequence provided?
+						$column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
+						$position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
+						$title = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) .': '. BL::lbl(SpoonFilter::toCamelCase($widgetName));
 						$templatePath = $instance->getTemplatePath();
 
 						// reset template path
-						if($templatePath == null) $templatePath = BACKEND_PATH .'/modules/'. $module .'/layout/widgets/'. str_replace('.php', '.tpl', $widget);
+						if($templatePath == null) $templatePath = BACKEND_PATH .'/modules/'. $module .'/layout/widgets/'. $widgetName .'.tpl';
+
+						// build item
+						$item = array('template' => $templatePath, 'module' => $module, 'widget' => $widgetName, 'title' => $title, 'hidden' => $hidden);
 
 						// add on new position
-						if($position === null) $this->widgets[$column][] = array('template' => $templatePath);
+						if($position === null) $this->widgets[$column][] = $item;
 
 						// add on requested position
-						else $this->widgets[$column][$position] = array('template' => $templatePath);
+						else $this->widgets[$column][$position] = $item;
 					}
 				}
 			}
 		}
+
+		// sort the widgets
+		foreach($this->widgets as &$column) ksort($column);
 	}
 
 

@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -106,7 +106,7 @@ class Moxiecode_LocalFileImpl extends Moxiecode_BaseFile {
 
 	/**
 	 * Imports a local file to the file system, for example when users upload files.
-	 *											   
+	 *
 	 * @param String $local_absolute_path Absolute path to local file to import.
 	 */
 	function importFile($local_absolute_path = "") {
@@ -439,7 +439,7 @@ class Moxiecode_LocalFileImpl extends Moxiecode_BaseFile {
 	}
 
 	/**
-	 * Lists the file as an tree and calls the specified FileTreeHandler instance on each file. 
+	 * Lists the file as an tree and calls the specified FileTreeHandler instance on each file.
 	 *
 	 * @param FileTreeHandler &$file_tree_handler FileTreeHandler to invoke on each file.
 	 */
@@ -787,7 +787,7 @@ class Moxiecode_LocalFileImpl extends Moxiecode_BaseFile {
 	 */
 	function _getConfigValue($key, $default_value = "") {
 		$config = $this->getConfig();
-		
+
 		if (isset($config[$key]))
 			return $config[$key] ? $config[$key] : $default_value;
 		else
@@ -843,7 +843,7 @@ class _LocalCopyDirTreeHandler extends Moxiecode_FileTreeHandler {
 
 	/**
 	 * Handles a file instance while looping an tree of directories.
-	 * 
+	 *
 	 * @param File $file File object reference
 	 * @param int $level Current level of tree parse
 	 * @return int State of what to do next can be CONTINUE, ABORT or ABORTFOLDER.
@@ -887,7 +887,7 @@ class _LocalDeleteDirTreeHandler extends Moxiecode_FileTreeHandler {
 
 	/**
 	 * Handles a file instance while looping an tree of directories.
-	 * 
+	 *
 	 * @param File $file File object reference
 	 * @param int $level Current level of tree parse
 	 * @return int State of what to do next can be CONTINUE, ABORT or ABORTFOLDER.

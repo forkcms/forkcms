@@ -2,7 +2,11 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 {form:edit_category}
-	<div class="box">
+	<div class="pageTitle">
+		<h2>{$lblFaq|ucfirst}: {$msgEditCategory|sprintf:{$name}}</h2>
+	</div>
+
+	<div class="box horizontal">
 		<div class="heading">
 			<h3>{$lblFaq|ucfirst}: {$msgEditCategory|sprintf:{$name}}</h3>
 		</div>

@@ -18,7 +18,7 @@
 					<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtTitle} {$txtTitleError}
 				</p>
-				<p>
+				<p style="position: relative;">
 					<label for="text">{$lblContent|ucfirst}</label>
 					{$txtText} {$txtTextError}
 				</p>

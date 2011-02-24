@@ -1,7 +1,6 @@
-if(!jsBackend) { var jsBackend = new Object(); }
+if(!jsBackend) { jsBackend = new Object; }
 
-
-jsBackend.dashboard =
+jsBackend.analyticsDashboard =
 {
 	init: function()
 	{
@@ -59,4 +58,4 @@ jsBackend.dashboard =
 }
 
 
-$(document).ready(function() { jsBackend.dashboard.init(); });
+$(document).ready(function() { jsBackend.analyticsDashboard.init(); });

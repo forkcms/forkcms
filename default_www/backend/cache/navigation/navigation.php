@@ -23,7 +23,6 @@ $navigation[2]['children'][3] = array('url' => 'search/statistics', 'label' => '
 $navigation[2]['children'][3]['children'][0] = array('url' => 'search/statistics', 'label' => 'Statistics');
 $navigation[2]['children'][3]['children'][1] = array('url' => 'search/synonyms', 'label' => 'Synonyms', 'selected_for' => array('search/add_synonym', 'search/edit_synonym'));
 $navigation[2]['children'][4] = array('url' => 'location/index', 'label' => 'Location', 'selected_for' => array('location/add', 'location/edit'));
-$navigation[2]['children'][5] = array('url' => 'testimonials/index', 'label' => 'Testimonials', 'selected_for' => array('testimonials/add', 'testimonials/edit'));
 $navigation[2]['children'][6] = array('url' => 'faq/index', 'label' => 'Faq');
 $navigation[2]['children'][6]['children'][0] = array('url' => 'faq/index', 'label' => 'Questions', 'selected_for' => array('faq/add', 'faq/edit'));
 $navigation[2]['children'][6]['children'][1] = array('url' => 'faq/categories', 'label' => 'Categories', 'selected_for' => array('faq/add_category', 'faq/edit_category'));

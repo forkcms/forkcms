@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 require_once(MCMANAGER_ABSPATH . "FileManager/Utils/ZipFile.class.php");
@@ -92,7 +92,7 @@ class Moxiecode_ZipFileImpl extends Moxiecode_BaseFileImpl {
 
 	/**
 	 * Imports a local file to the file system, for example when users upload files.
-	 *											   
+	 *
 	 * @param String $local_absolute_path Absolute path to local file to import.
 	 */
 	function importFile($local_absolute_path = "") {
@@ -472,7 +472,7 @@ class _ZipFileCopyDirTreeHandler extends Moxiecode_FileTreeHandler {
 
 	/**
 	 * Handles a file instance while looping an tree of directories.
-	 * 
+	 *
 	 * @param File $file File object reference
 	 * @param int $level Current level of tree parse
 	 * @return int State of what to do next can be CONTINUE, ABORT or ABORTFOLDER.

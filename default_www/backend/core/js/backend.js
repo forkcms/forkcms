@@ -75,7 +75,7 @@ jsBackend =
 
 				// get real message
 				if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
-
+				
 				// show message
 				jsBackend.messages.add('error', textStatus);
 			}
@@ -1502,11 +1502,17 @@ jsBackend.tableSequenceByDragAndDrop =
 						},
 						error: function(XMLHttpRequest, textStatus, errorThrown)
 						{
+							// init var
+							var textStatus = 'alter sequence failed.';
+
+							// get real message
+							if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
+							
+							// show message
+							jsBackend.messages.add('error', textStatus);
+
 							// revert
 							table.sortable('cancel');
-
-							// show message
-							jsBackend.messages.add('error', 'alter sequence failed.');
 
 							// alert the user
 							if(jsBackend.debug) alert(textStatus);

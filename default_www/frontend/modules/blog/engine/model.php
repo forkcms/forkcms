@@ -738,28 +738,28 @@ class FrontendBlogModel implements FrontendTagsInterface
 			if($comment['status'] == 'moderation')
 			{
 				// set variables
-				$variables['message'] = vsprintf(FL::getMessage('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
+				$variables['message'] = vsprintf(FL::msg('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
 			}
 
 			// comment was published
 			elseif($comment['status'] == 'published')
 			{
 				// set variables
-				$variables['message'] = vsprintf(FL::getMessage('BlogEmailNotificationsNewComment'), array($comment['author'], $URL, $comment['post_title']));
+				$variables['message'] = vsprintf(FL::msg('BlogEmailNotificationsNewComment'), array($comment['author'], $URL, $comment['post_title']));
 			}
 
 			// send the mail
-			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
+			FrontendMailer::addEmail(FL::msg('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
 		}
 
 		// only notify on new comments to moderate and if the comment is one to moderate
 		elseif($notifyByMailOnCommentToModerate && $comment['status'] == 'moderation')
 		{
 				// set variables
-				$variables['message'] = vsprintf(FL::getMessage('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
+				$variables['message'] = vsprintf(FL::msg('BlogEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['post_title'], $backendURL));
 
 			// send the mail
-			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
+			FrontendMailer::addEmail(FL::msg('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
 		}
 	}
 

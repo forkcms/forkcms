@@ -125,7 +125,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		{
 			if($item['type'] == 'block')
 			{
-				$blocks[$item['id']] = ucfirst(BL::getLabel($item['label']));
+				$blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
 				if(isset($item['data']['extra_label'])) $blocks[$item['id']] = ucfirst($item['data']['extra_label']);
 			}
 
@@ -241,8 +241,8 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// loop fields
 				for($i = 1; $i <= $item['num_blocks']; $i++)
 				{
-					$item['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
-					$item['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['names'][$i - 1] = $this->frm->getField('name_'. $i)->getValue();
+					$item['data']['default_extras'][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 				}
 

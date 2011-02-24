@@ -194,8 +194,8 @@ class FrontendSearchAjaxAutosuggest extends FrontendBaseAJAXAction
 			array_pop($this->items);
 
 			// add reference to full search results page
-			$this->items[] = array('title' => FrontendLanguage::getLabel('More'),
-									'text' => FrontendLanguage::getMessage('MoreResults'),
+			$this->items[] = array('title' => FL::lbl('More'),
+									'text' => FL::msg('MoreResults'),
 									'full_url' => FrontendNavigation::getURLForBlock('search') .'?form=search&q='. $this->term);
 		}
 

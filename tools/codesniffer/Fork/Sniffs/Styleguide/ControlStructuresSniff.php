@@ -129,7 +129,19 @@ class Fork_Sniffs_Styleguide_ControlStructuresSniff implements PHP_CodeSniffer_S
 					if($tokens[$current['scope_opener'] + 1]['content'] != "\n") $phpcsFile->addError('We expect the code to be on a new line.', $stackPtr);
 					if($tokens[$current['scope_opener'] + 1]['column'] != $tokens[$current['scope_closer']]['column'] + 1) $phpcsFile->addError('The content should be indented inside the "for", "foreach", "while"-block.', $stackPtr);
 				}
-				elseif($tokens[$current['parenthesis_closer'] + 1]['content'] != ' ') $phpcsFile->addError('After the condition of an "for", "foreach", "while" (in shortsyntax) we expect exactly one space', $stackPtr);
+				elseif($tokens[$current['parenthesis_closer'] + 1]['content'] != ' ')
+				{
+					if($current['code'] == T_WHILE)
+					{
+						// search for a do-statement
+						$var = $phpcsFile->findPrevious(T_DO, $stackPtr);
+
+						// nothing found?
+						if(!isset($tokens[$var])) $phpcsFile->addError('After the condition of an "for", "foreach", "while" (in shortsyntax) we expect exactly one space', $stackPtr);
+					}
+
+					else $phpcsFile->addError('After the condition of an "for", "foreach", "while" (in shortsyntax) we expect exactly one space', $stackPtr);
+				}
 			break;
 
 			// throw statements are always followed by a space

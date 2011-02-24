@@ -4,7 +4,7 @@
  *
  * @package MCFileManager.filesystems
  * @author Moxiecode
- * @copyright Copyright © 2005, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2005, Moxiecode Systems AB, All rights reserved.
  */
 
 /**
@@ -15,7 +15,7 @@
 class Moxiecode_FileFilter {
 	/**
 	 * Returns true or false if the file is accepted or not.
-	 * 
+	 *
 	 * @param MCE_File $file File to grant or deny.
 	 * @return boolean true or false if the file is accepted or not.
 	 */
@@ -50,7 +50,7 @@ class Moxiecode_CombinedFileFilter {
 
 	/**
 	 * Returns true or false if the file is accepted or not.
-	 * 
+	 *
 	 * @param MCE_File $file File to grant or deny.
 	 * @return boolean true or false if the file is accepted or not.
 	 */
@@ -75,7 +75,7 @@ class Moxiecode_DummyFileFilter extends Moxiecode_FileFilter {
 	/**
 	 * Returns true or false if the file is accepted or not.
 	 * Note: This dummb method allways returns true.
-	 * 
+	 *
 	 * @param MCE_File $file File to grant or deny.
 	 * @return boolean true or false if the file is accepted or not.
 	 */
@@ -130,7 +130,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets if debug mode is on or off, default off.
-	 * 
+	 *
 	 * @param boolean $state if true debug mode is enabled.
 	 */
 	function setDebugMode($state) {
@@ -139,7 +139,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets if only files are to be accepted in result.
-	 * 
+	 *
 	 * @param boolean $files_only True if only files are to be accepted.
 	 */
 	function setOnlyFiles($files_only) {
@@ -148,7 +148,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets if only dirs are to be accepted in result.
-	 * 
+	 *
 	 * @param boolean $dirs_only True if only dirs are to be accepted.
 	 */
 	function setOnlyDirs($dirs_only) {
@@ -157,7 +157,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets maximum number of directory levels to accept.
-	 * 
+	 *
 	 * @param int $max_levels Maximum number of directory levels to accept.
 	 */
 	function setMaxLevels($max_levels) {
@@ -178,7 +178,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets comma separated string list of filenames to exclude.
-	 * 
+	 *
 	 * @param String $files separated string list of filenames to exclude.
 	 */
 	function setExcludeFiles($files) {
@@ -188,7 +188,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets comma separated string list of filenames to include.
-	 * 
+	 *
 	 * @param String $files separated string list of filenames to include.
 	 */
 	function setIncludeFiles($files) {
@@ -198,7 +198,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets comma separated string list of foldernames to exclude.
-	 * 
+	 *
 	 * @param String $folders separated string list of foldernames to exclude.
 	 */
 	function setExcludeFolders($folders) {
@@ -208,7 +208,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets comma separated string list of foldernames to include.
-	 * 
+	 *
 	 * @param String $folders separated string list of foldernames to include.
 	 */
 	function setIncludeFolders($folders) {
@@ -218,7 +218,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets a regexp pattern that is used to accept files path parts.
-	 * 
+	 *
 	 * @param String $pattern regexp pattern that is used to accept files path parts.
 	 */
 	function setIncludeFilePattern($pattern) {
@@ -227,7 +227,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets a regexp pattern that is used to deny files path parts.
-	 * 
+	 *
 	 * @param String $pattern regexp pattern that is used to deny files path parts.
 	 */
 	function setExcludeFilePattern($pattern) {
@@ -236,7 +236,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets a regexp pattern that is used to accept directory path parts.
-	 * 
+	 *
 	 * @param String $pattern regexp pattern that is used to accept directory path parts.
 	 */
 	function setIncludeDirectoryPattern($pattern) {
@@ -245,7 +245,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets a regexp pattern that is used to deny directory path parts.
-	 * 
+	 *
 	 * @param String $pattern regexp pattern that is used to deny directory path parts.
 	 */
 	function setExcludeDirectoryPattern($pattern) {
@@ -254,7 +254,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets a wildcard pattern that is used to accept files path parts.
-	 * 
+	 *
 	 * @param String $pattern wildcard pattern that is used to accept files path parts.
 	 */
 	function setIncludeWildcardPattern($pattern) {
@@ -264,7 +264,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Sets a wildcard pattern that is used to deny files path parts.
-	 * 
+	 *
 	 * @param String $pattern wildcard pattern that is used to deny files path parts.
 	 */
 	function setExcludeWildcardPattern($pattern) {
@@ -274,7 +274,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 
 	/**
 	 * Returns true or false if the file is accepted or not.
-	 * 
+	 *
 	 * @param MCE_File $file File to grant or deny.
 	 * @return boolean true or false if the file is accepted or not.
 	 */
@@ -441,7 +441,7 @@ class Moxiecode_BasicFileFilter extends Moxiecode_FileFilter {
 			$c = $str{$i};
 			if ($c =='?')
 				$s .= '.'; // any character
-			else if ($c == '*')  
+			else if ($c == '*')
 				$s .= '.*'; // 0 or more any characters
 			else if ($c == '[' || $c == ']')
 				$s .= $c;  // one of characters within []

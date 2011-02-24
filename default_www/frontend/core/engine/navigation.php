@@ -505,7 +505,7 @@ class FrontendNavigation extends FrontendBaseObject
 			$URL = self::getURL($pageIdForURL, $language);
 
 			// append action
-			$URL .= '/'. FrontendLanguage::getAction(SpoonFilter::toCamelCase($action));
+			$URL .= '/'. FL::act(SpoonFilter::toCamelCase($action));
 
 			// return the URL
 			return $URL;

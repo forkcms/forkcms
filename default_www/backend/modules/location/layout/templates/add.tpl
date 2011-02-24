@@ -2,45 +2,50 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 {form:add}
+	<div class="pageTitle">
+		<h2>{$lblLocation|ucfirst}: {$lblAdd}</h2>
+	</div>
+
+	<p>
+		{$txtTitle} {$txtTitleError}
+	</p>
+
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblLocation|ucfirst}: {$lblAdd}</h3>
+			<h3>{$lblContent|ucfirst}</h3>
 		</div>
-		<div class="content">
-			<fieldset>
-				<p>
-					<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtTitle} {$txtTitleError}
-				</p>
-				<p>
-					<label for="text">{$lblContent|ucfirst}</label>
-					{$txtText} {$txtTextError}
-				</p>
-			</fieldset>
+		<div class="options">
+			<p>
+				{$txtText} {$txtTextError}
+			</p>
 		</div>
-		<div class="content">
-			<fieldset>
-				<p>
-					<label for="street">{$lblStreet|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtStreet} {$txtStreetError}
-				</p>
-				<p>
-					<label for="number">{$lblNumber|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtNumber} {$txtNumberError}
-				</p>
-				<p>
-					<label for="zip">{$lblZip|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtZip} {$txtZipError}
-				</p>
-				<p>
-					<label for="city">{$lblCity|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtCity} {$txtCityError}
-				</p>
-				<p>
-					<label for="country">{$lblCountry|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$ddmCountry} {$ddmCountryError}
-				</p>
-			</fieldset>
+	</div>
+
+	<div class="box horizontal">
+		<div class="heading">
+			<h3>{$lblAddress|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<p>
+				<label for="street">{$lblStreet|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtStreet} {$txtStreetError}
+			</p>
+			<p>
+				<label for="number">{$lblNumber|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtNumber} {$txtNumberError}
+			</p>
+			<p>
+				<label for="zip">{$lblZip|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtZip} {$txtZipError}
+			</p>
+			<p>
+				<label for="city">{$lblCity|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtCity} {$txtCityError}
+			</p>
+			<p>
+				<label for="country">{$lblCountry|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$ddmCountry} {$ddmCountryError}
+			</p>
 		</div>
 	</div>
 

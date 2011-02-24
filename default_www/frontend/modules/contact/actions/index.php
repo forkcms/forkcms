@@ -95,9 +95,9 @@ class FrontendContactIndex extends FrontendBaseBlock
 		if($this->frm->isSubmitted())
 		{
 			// validate required fields
-			$this->frm->getField('author')->isFilled(FL::getError('NameIsRequired'));
-			$this->frm->getField('email')->isEmail(FL::getError('EmailIsInvalid'));
-			$this->frm->getField('message')->isFilled(FL::getError('MessageIsRequired'));
+			$this->frm->getField('author')->isFilled(FL::err('NameIsRequired'));
+			$this->frm->getField('email')->isEmail(FL::err('EmailIsInvalid'));
+			$this->frm->getField('message')->isFilled(FL::err('MessageIsRequired'));
 
 			// no errors
 			if($this->frm->isCorrect())
@@ -130,7 +130,7 @@ class FrontendContactIndex extends FrontendBaseBlock
 				try
 				{
 					// add email
-					FrontendMailer::addEmail(FL::getMessage('ContactSubject') .': '. $author, FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $item, null, null, null, null, $email, $author);
+					FrontendMailer::addEmail(FL::msg('ContactSubject') .': '. $author, FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $item, null, null, null, null, $email, $author);
 
 					// redirect
 					$this->redirect(FrontendNavigation::getURLForBlock('contact') .'?sent=true');

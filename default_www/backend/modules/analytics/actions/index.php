@@ -40,35 +40,45 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		// call parent parse
 		parent::parse();
 
-		// get and parse overview data
-		$this->parseOverviewData();
+		// get warnings
+		$warnings = BackendAnalyticsModel::checkSettings();
 
-		// get and parse data for chart
-		$this->parseLineChartData();
-		$this->parsePieChartData();
+		// assign warnings
+		$this->tpl->assign('warnings', $warnings);
 
-		// get and parse important referrals
-		$this->parseImportantReferrals();
+		// no warnings
+		if(empty($warnings))
+		{
+			// get and parse overview data
+			$this->parseOverviewData();
 
-		// get and parse important keywords
-		$this->parseImportantKeywords();
+			// get and parse data for chart
+			$this->parseLineChartData();
+			$this->parsePieChartData();
 
-		// init google url
-		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
-		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
-		$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+			// get and parse important referrals
+			$this->parseImportantReferrals();
 
-		// parse links to google
-		$this->tpl->assign('googleTopReferrersURL', sprintf($googleURL, 'referring_sources', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTopKeywordsURL', sprintf($googleURL, 'keywords', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTrafficSourcesURL', sprintf($googleURL, 'sources', $googleTableId, $googleDate));
-		$this->tpl->assign('googleVisitorsURL', sprintf($googleURL, 'visitors', $googleTableId, $googleDate));
-		$this->tpl->assign('googlePageviewsURL', sprintf($googleURL, 'pageviews', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTimeOnSiteURL', sprintf($googleURL, 'time_on_site', $googleTableId, $googleDate));
-		$this->tpl->assign('googleVisitorTypesURL', sprintf($googleURL, 'visitor_types', $googleTableId, $googleDate));
-		$this->tpl->assign('googleBouncesURL', sprintf($googleURL, 'bounce_rate', $googleTableId, $googleDate));
-		$this->tpl->assign('googleAveragePageviewsURL', sprintf($googleURL, 'average_pageviews', $googleTableId, $googleDate));
+			// get and parse important keywords
+			$this->parseImportantKeywords();
+
+			// init google url
+			$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
+			$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
+			$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+
+			// parse links to google
+			$this->tpl->assign('googleTopReferrersURL', sprintf($googleURL, 'referring_sources', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTopKeywordsURL', sprintf($googleURL, 'keywords', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTrafficSourcesURL', sprintf($googleURL, 'sources', $googleTableId, $googleDate));
+			$this->tpl->assign('googleVisitorsURL', sprintf($googleURL, 'visitors', $googleTableId, $googleDate));
+			$this->tpl->assign('googlePageviewsURL', sprintf($googleURL, 'pageviews', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTimeOnSiteURL', sprintf($googleURL, 'time_on_site', $googleTableId, $googleDate));
+			$this->tpl->assign('googleVisitorTypesURL', sprintf($googleURL, 'visitor_types', $googleTableId, $googleDate));
+			$this->tpl->assign('googleBouncesURL', sprintf($googleURL, 'bounce_rate', $googleTableId, $googleDate));
+			$this->tpl->assign('googleAveragePageviewsURL', sprintf($googleURL, 'average_pageviews', $googleTableId, $googleDate));
+		}
 	}
 
 

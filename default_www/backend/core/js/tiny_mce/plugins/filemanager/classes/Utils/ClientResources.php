@@ -5,7 +5,7 @@
  * @version 1.0
  * @author Moxiecode
  * @site http://www.moxieforge.com/
- * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2004-2008, Moxiecode Systems AB, All rights reserved.
  * @licence LGPL
  * @ignore
  */
