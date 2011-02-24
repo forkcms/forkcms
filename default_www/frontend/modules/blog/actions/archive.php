@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendBlogArchive extends FrontendBaseBlock
@@ -153,10 +153,10 @@ class FrontendBlogArchive extends FrontendBaseBlock
 		if($this->month !== null) $this->header->setPageTitle(SpoonDate::getDate('F', $this->startDate, FRONTEND_LANGUAGE, true));
 
 		// assign category
-		$this->tpl->assign('blogArchive', array('start_date' => $this->startDate, 'end_date' => $this->endDate, 'year' => $this->year, 'month' => $this->month));
+		$this->tpl->assign('archive', array('start_date' => $this->startDate, 'end_date' => $this->endDate, 'year' => $this->year, 'month' => $this->month));
 
 		// assign items
-		$this->tpl->assign('blogArticles', $this->items);
+		$this->tpl->assign('items', $this->items);
 
 		// parse the pagination
 		$this->parsePagination();

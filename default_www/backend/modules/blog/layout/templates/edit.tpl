@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
+e	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
 	<div class="buttonHolderRight">
 		<a href="{$detailURL}/{$item.url}{option:item.revision_id}?revision={$item.revision_id}{/option:item.revision_id}" class="button icon iconZoom previewButton targetBlank">
 			<span>{$lblView|ucfirst}</span>
@@ -11,13 +11,12 @@
 </div>
 
 {form:edit}
-
-	{option:!detailURL}<div class="generalMessage infoMessage singleMessage"><p>{$errNoModuleLinked}</p></div>{/option:!detailURL}
-
 	{$txtTitle} {$txtTitleError}
+
 	<div id="pageUrl">
 		<div class="oneLiner">
 			{option:detailURL}<p><span><a href="{$detailURL}/{$item.url}">{$detailURL}/<span id="generatedUrl">{$item.url}</span></a></span></p>{/option:detailURL}
+			{option:!detailURL}<p class="infoMessage">{$errNoModuleLinked}</p>{/option:!detailURL}
 		</div>
 	</div>
 
@@ -88,18 +87,19 @@
 							</div>
 
 							<div class="options">
-								<p class="p0"><label for="publishOnDate">{$lblPublishOn|ucfirst}:</label></p>
+								<p class="p0"><label for="publishOnDate">{$lblPublishOn|ucfirst}</label></p>
 								<div class="oneLiner">
 									<p>
 										{$txtPublishOnDate} {$txtPublishOnDateError}
 									</p>
 									<p>
 										<label for="publishOnTime">{$lblAt}</label>
+									</p>
+									<p>
 										{$txtPublishOnTime} {$txtPublishOnTimeError}
 									</p>
 								</div>
 							</div>
-
 						</div>
 
 						<div class="box" id="articleMeta">

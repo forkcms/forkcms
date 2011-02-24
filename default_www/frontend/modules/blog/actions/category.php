@@ -125,10 +125,10 @@ class FrontendBlogCategory extends FrontendBaseBlock
 		$this->header->setPageTitle($this->category['label']);
 
 		// assign category
-		$this->tpl->assign('blogCategory', $this->category);
+		$this->tpl->assign('category', $this->category);
 
 		// assign articles
-		$this->tpl->assign('blogArticles', $this->items);
+		$this->tpl->assign('items', $this->items);
 
 		// parse the pagination
 		$this->parsePagination();
