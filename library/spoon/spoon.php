@@ -136,6 +136,9 @@ class Spoon
 		$classes['spoonformtextarea'] = 'form/textarea.php';
 		$classes['spoonformtime'] = 'form/time.php';
 		$classes['spoonhttp'] = 'http/http.php';
+		$classes['spoonicalexception'] = 'ical/exception.php';
+		$classes['spoonical'] = 'ical/ical.php';
+		$classes['spoonicalitem'] = 'ical/ical_item.php';
 		$classes['spoonlocale'] = 'locale/locale.php';
 		$classes['spoonlog'] = 'log/log.php';
 		$classes['spoonrestclient'] = 'rest/client.php';
