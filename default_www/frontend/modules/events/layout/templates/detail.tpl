@@ -10,11 +10,13 @@
 	<div class="mod article">
 		<div class="inner">
 			<div class="hd">
-				<h1>{$item.title}</h1>
-				<h2>
-					{$item.starts_on}
-					{option:item.ends_on} - {$item.starts_on}{/option:item.ends_on}
-				</h2>
+				<h1>
+					{$item.title}
+					<small>
+						{$item.starts_on|date:{$dateFormatLong}:{$LANGUAGE}}
+						{option:item.ends_on} - {$item.ends_on|date:{$dateFormatLong}:{$LANGUAGE}}}{/option:item.ends_on}
+					</small>
+				</h1>
 				<p>
 					{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} -
 					{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
@@ -36,7 +38,6 @@
 						<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
 					{/iteration:item.tags}
 				{/option:item.tags}
-
 			</div>
 		</div>
 	</div>
@@ -45,14 +46,14 @@
 			<div class="bd">
 				<ul>
 					{option:navigation.previous}
-					<li class="previousLink">
-						<a href="{$navigation.previous.url}" rel="prev">{$lblPreviousArticle|ucfirst}: <em>{$navigation.previous.title}</em></a>
-					</li>
+						<li class="previousLink">
+							<a href="{$navigation.previous.url}" rel="prev">{$lblPreviousEvent|ucfirst}: <em>{$navigation.previous.title}</em></a>
+						</li>
 					{/option:navigation.previous}
 					{option:navigation.next}
-					<li class="nextLink">
-						<a href="{$navigation.next.url}" rel="next">{$lblNextArticle|ucfirst}: <em>{$navigation.next.title}</em></a>
-					</li>
+						<li class="nextLink">
+							<a href="{$navigation.next.url}" rel="next">{$lblNextEvent|ucfirst}: <em>{$navigation.next.title}</em></a>
+						</li>
 					{/option:navigation.next}
 				</ul>
 			</div>

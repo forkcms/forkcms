@@ -32,6 +32,8 @@ class EventsInstall extends ModuleInstaller
 		$this->setSetting('events', 'ping_services', true);
 		$this->setSetting('events', 'overview_num_items', 10);
 		$this->setSetting('events', 'max_num_revisions', 20);
+		$this->setSetting('events', 'notify_by_email_on_new_comment_to_moderate', true);
+		$this->setSetting('events', 'notify_by_email_on_new_comment', true);
 
 		// make module searchable
 		$this->makeSearchable('events');
@@ -40,12 +42,18 @@ class EventsInstall extends ModuleInstaller
 		$this->setModuleRights(1, 'events');
 
 		// action rights
-		$this->setActionRights(1, 'events', 'add');
-		$this->setActionRights(1, 'events', 'comments');
-		$this->setActionRights(1, 'events', 'delete');
-		$this->setActionRights(1, 'events', 'edit_comment');
-		$this->setActionRights(1, 'events', 'edit');
+		$this->setActionRights(1, 'events', 'categories');
+		$this->setActionRights(1, 'events', 'add_category');
+		$this->setActionRights(1, 'events', 'edit_category');
+		$this->setActionRights(1, 'events', 'delete_category');
+		$this->setActionRights(1, 'events', 'add_category');
 		$this->setActionRights(1, 'events', 'index');
+		$this->setActionRights(1, 'events', 'add');
+		$this->setActionRights(1, 'events', 'edit');
+		$this->setActionRights(1, 'events', 'delete');
+		$this->setActionRights(1, 'events', 'comments');
+		$this->setActionRights(1, 'events', 'edit_comment');
+		$this->setActionRights(1, 'events', 'delete_spam');
 		$this->setActionRights(1, 'events', 'mass_comment_action');
 		$this->setActionRights(1, 'events', 'settings');
 
@@ -79,7 +87,7 @@ class EventsInstall extends ModuleInstaller
 			}
 
 			// install example data if requested
-			if($this->installExample()) $this->installExampleData($language);
+//			if($this->installExample()) $this->installExampleData($language);
 		}
 
 
@@ -101,6 +109,7 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpPingServices', 'Laat verschillende blogservices weten wanneer je een nieuw event plaatst.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het evenementenoverzicht.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'MakeDefaultCategory', 'Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NoItems', 'Er zijn nog geen evenementen. <a href="%1$s">Voeg het eerste evenement toe</a>.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewComment', 'Verwittig via email als er een nieuwe reactie is.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewCommentToModerate', 'Verwittig via email als er een nieuwe reactie te modereren is.');
@@ -109,23 +118,25 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Event', 'evenement');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Events', 'evenementen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'StartsOn', 'start op');
-//		$this->insertLocale('nl', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'reacties-op-rss');
-//		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
-//		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EventsArchive', 'eventsarchief');
-//		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextEvent', 'volgend evenement');
-//		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousArticle', 'vorig bericht');
-//		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentArticles', 'recente artikels');
-//		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllComments', 'Alle reacties op je events.');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoComments', 'Reageer als eerste');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNumberOfComments', 'Al %1$s reacties');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsOneComment', 'Al 1 reactie');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentIsAdded', 'Je reactie werd toegevoegd.');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentInModeration', 'Je reactie wacht op goedkeuring.');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Je reactie werd gemarkeerd als spam.');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s reageerde op <a href="%2$s">%3$s</a>.');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.');
-//		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoItems', 'Er zijn nog geen eventsposts.');
+		$this->insertLocale('nl', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'reacties-op-rss');
+//		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Ical', 'ical');
+//		$this->insertLocale('nl', 'frontend', 'core', 'act', 'IcalAll', 'ical-allemaal');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EventsArchive', 'eventsarchief');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextEvent', 'volgend evenement');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousEvent', 'vorig evenement');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentEvents', 'recente events');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllComments', 'Alle reacties op je events.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoComments', 'Reageer als eerste');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNumberOfComments', 'Al %1$s reacties');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsOneComment', 'Al 1 reactie');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentIsAdded', 'Je reactie werd toegevoegd.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentInModeration', 'Je reactie wacht op goedkeuring.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Je reactie werd gemarkeerd als spam.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s reageerde op <a href="%2$s">%3$s</a>.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoItems', 'Er zijn nog geen eventsposts.');
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'events', 'err', 'RSSDescription', 'Events RSS description is not yet provided. <a href="%1$s">Configure</a>');
@@ -145,32 +156,35 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpPingServices', 'Let various blogservices know when you\'ve posted a new event.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpSpamFilter', 'Enable the built-in spamfilter (Akismet) to help avoid spam comments.');
+		$this->insertLocale('en', 'backend', 'events', 'msg', 'MakeDefaultCategory', 'Make default category (current default category is: %1$s).');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'NoItems', 'There are no event yet. <a href="%1$s">Add the first event</a>.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewComment', 'Notify by email when there is a new comment.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewCommentToModerate', 'Notify by email when there is a new comment to moderate.');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Dates', 'dates');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EndsOn', 'ends on');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Event', 'event');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Events', 'events');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'StartsOn', 'starts on');
-//		$this->insertLocale('en', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'comments-on-rss');
-//		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
-//		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');
-//		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'EventsArchive', 'events archive');
-//		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NextArticle', 'next article');
-//		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'PreviousArticle', 'previous article');
-//		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentArticles', 'recent articles');
-//		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Wrote', 'wrote');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsAllComments', 'All comments on your events.');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoComments', 'Be the first to comment');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNumberOfComments', '%1$s comments');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsOneComment', '1 comment already');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentIsAdded', 'Your comment was added.');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentInModeration', 'Your comment is awaiting moderation.');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Your comment was marked as spam.');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s commented on <a href="%2$s">%3$s</a>.');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.');
-//		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoItems', 'There are no articles yet.');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Dates', 'dates');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EndsOn', 'ends on');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Event', 'event');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Events', 'events');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'StartsOn', 'starts on');
+		$this->insertLocale('en', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'comments-on-rss');
+//		$this->insertLocale('en', 'frontend', 'core', 'act', 'Ical', 'ical');
+//		$this->insertLocale('en', 'frontend', 'core', 'act', 'IcalAll', 'ical-all');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'EventsArchive', 'events archive');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NextEvent', 'next event');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'PreviousEvent', 'previous event');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentEvents', 'recent events');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Wrote', 'wrote');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsAllComments', 'All comments on your events.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoComments', 'Be the first to comment');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNumberOfComments', '%1$s comments');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsOneComment', '1 comment already');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentIsAdded', 'Your comment was added.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentInModeration', 'Your comment is awaiting moderation.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Your comment was marked as spam.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s commented on <a href="%2$s">%3$s</a>.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoItems', 'There are no articles yet.');
 	}
 
 

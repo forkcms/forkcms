@@ -37,7 +37,7 @@
 								<h3>{$lblDates|ucfirst}</h3>
 							</div>
 							<div class="options">
-								<p class="p0"><label for="startsOnDate">{$lblStartOn|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label></p>
+								<p class="p0"><label for="startsOnDate">{$lblStartsOn|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label></p>
 								<div class="oneLiner">
 									<p>
 										{$txtStartsOnDate} {$txtStartsOnDateError}
