@@ -100,6 +100,14 @@
 								<h3>{$lblStatus|ucfirst}</h3>
 							</div>
 
+							{option:usingDraft}
+							<div class="options">
+								<div class="buttonHolder">
+									<a href="{$detailURL}/{$item.url}?draft={$draftId}" class="button icon iconZoom targetBlank"><span>{$lblPreview|ucfirst}</span></a>
+								</div>
+							</div>
+							{/option:usingDraft}
+
 							<div class="options">
 								<ul class="inputList">
 									{iteration:hidden}
@@ -130,6 +138,14 @@
 						<div class="box" id="articleMeta">
 							<div class="heading">
 								<h3>{$lblMetaData|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<label for="categoryId">{$lblCategory|ucfirst}</label>
+								{$ddmCategoryId} {$ddmCategoryIdError}
+							</div>
+							<div class="options">
+								<label for="userId">{$lblAuthor|ucfirst}</label>
+								{$ddmUserId} {$ddmUserIdError}
 							</div>
 							<div class="options">
 								<label for="tags">{$lblTags|ucfirst}</label>
@@ -185,7 +201,7 @@
 		</div>
 
 		<div id="tabSEO">
-			{include:file='{$BACKEND_CORE_PATH}/layout/templates/seo.tpl'}
+			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
 		</div>
 	</div>
 
@@ -195,6 +211,7 @@
 		</a>
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblPublish|ucfirst}" />
+			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
 	</div>
 

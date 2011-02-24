@@ -6,10 +6,7 @@
  * @package		backend
  * @subpackage	events
  *
- * @author		Davy Hellemans <davy@netlash.com>
- * @author		Dave Lens <dave@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
- * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendEventsModel
@@ -17,17 +14,39 @@ class BackendEventsModel
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.num_comments AS comments
 									FROM events AS i
 									WHERE i.status = ? AND i.language = ?';
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
+											FROM events_categories AS i
+											WHERE i.language = ?';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
-											p.id AS event_id, p.title AS post_title, m.url AS post_url
+											p.id AS event_id, p.title AS event_title, m.url AS event_url
 											FROM events_comments AS i
 											INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											WHERE i.status = ? AND i.language = ?
 											GROUP BY i.id';
-	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on
-											FROM blog_posts AS i
+	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
+										FROM events AS i
+										INNER JOIN
+										(
+											SELECT MAX(i.revision_id) AS revision_id
+											FROM events AS i
+											WHERE i.status = ? AND i.user_id = ? AND i.language = ?
+											GROUP BY i.id
+										) AS p
+										WHERE i.revision_id = p.revision_id';
+	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
+										FROM events AS i
+										WHERE i.status = ? AND i.language = ?
+										ORDER BY i.edited_on DESC
+										LIMIT ?';
+	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+											FROM events AS i
 											WHERE i.status = ? AND i.id = ? AND i.language = ?
 											ORDER BY i.edited_on DESC';
+	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+													FROM events AS i
+													WHERE i.status = ? AND i.id = ? AND i.language = ?
+													ORDER BY i.edited_on DESC';
 
 
 	/**
@@ -40,14 +59,14 @@ class BackendEventsModel
 		// init var
 		$warnings = array();
 
-		// events rss title
+		// rss title
 		if(BackendModel::getModuleSetting('events', 'rss_title_'. BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'events'), BackendModel::createURLForAction('settings', 'events')));
 		}
 
-		// events rss description
+		// rss description
 		if(BackendModel::getModuleSetting('events', 'rss_description_'. BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
@@ -73,7 +92,7 @@ class BackendEventsModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// delete eventspost records
+		// delete records
 		$db->delete('events', 'id IN ('. implode(',', $ids) .') AND language = ?', array(BL::getWorkingLanguage()));
 		$db->delete('events_comments', 'event_id IN ('. implode(',', $ids) .') AND language = ?', array(BL::getWorkingLanguage()));
 
@@ -84,6 +103,34 @@ class BackendEventsModel
 
 		// delete meta
 		if(!empty($metaIds)) $db->delete('meta', 'id IN ('. implode(',', $metaIds) .')');
+
+		// invalidate the cache for events
+		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+	}
+
+
+	/**
+	 * Deletes a category
+	 *
+	 * @return	void
+	 * @param	int $id		The id of the category to delete.
+	 */
+	public static function deleteCategory($id)
+	{
+		// redefine
+		$id = (int) $id;
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// delete category
+		$db->delete('events_categories', 'id = ?', array($id));
+
+		// default category
+		$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null);
+
+		// update category for the items that might be in this category
+		$db->update('events', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
 
 		// invalidate the cache for events
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
@@ -104,7 +151,7 @@ class BackendEventsModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// get eventspost ids
+		// get ids
 		$itemIds = (array) $db->getColumn('SELECT i.event_id
 											FROM events_comments AS i
 											WHERE i.id IN ('. implode(',', $ids) .') AND i.language = ?', array(BL::getWorkingLanguage()));
@@ -130,7 +177,7 @@ class BackendEventsModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// get eventspost ids
+		// get ids
 		$itemIds = (array) $db->getColumn('SELECT i.event_id
 											FROM events_comments AS i
 											WHERE status = ? AND i.language = ?', array('spam', BL::getWorkingLanguage()));
@@ -150,12 +197,27 @@ class BackendEventsModel
 	 * Checks if an item exists
 	 *
 	 * @return	bool
-	 * @param	int $id		The id of the eventspost to check for existence.
+	 * @param	int $id		The id of the item to check for existence.
 	 */
 	public static function exists($id)
 	{
 		return (bool) BackendModel::getDB()->getVar('SELECT i.id
 														FROM events AS i
+														WHERE i.id = ? AND i.language = ?',
+														array((int) $id, BL::getWorkingLanguage()));
+	}
+
+
+	/**
+	 * Checks if a category exists
+	 *
+	 * @return	int
+	 * @param	int $id		The id of the category to check for existence.
+	 */
+	public static function existsCategory($id)
+	{
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM events_categories AS i
 														WHERE i.id = ? AND i.language = ?',
 														array((int) $id, BL::getWorkingLanguage()));
 	}
@@ -180,7 +242,7 @@ class BackendEventsModel
 	 * Get all data for a given id
 	 *
 	 * @return	array
-	 * @param	int $id		The Id of the eventspost to fetch?
+	 * @param	int $id		The Id of the item to fetch?
 	 */
 	public static function get($id)
 	{
@@ -213,7 +275,7 @@ class BackendEventsModel
 		{
 			// get data and return it
 			return (array) BackendModel::getDB()->getRecords('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
-																p.id AS event_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
+																p.id AS event_id, p.title AS event_title, m.url AS event_url, p.language AS event_language
 																FROM events_comments AS i
 																INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
 																INNER JOIN meta AS m ON p.meta_id = m.id
@@ -225,7 +287,7 @@ class BackendEventsModel
 
 		// get data and return it
 		return (array) BackendModel::getDB()->getRecords('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.email, i.website, i.text, i.type, i.status,
-															p.id AS event_id, p.title AS post_title, m.url AS post_url, p.language AS post_language
+															p.id AS event_id, p.title AS event_title, m.url AS event_url, p.language AS event_language
 															FROM events_comments AS i
 															INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
 															INNER JOIN meta AS m ON p.meta_id = m.id
@@ -260,6 +322,76 @@ class BackendEventsModel
 	}
 
 
+	/**
+	 * Get all categories
+	 *
+	 * @return	array
+	 */
+	public static function getCategories()
+	{
+		// get records and return them
+		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
+																FROM events_categories AS i
+																WHERE i.language = ?', array(BL::getWorkingLanguage()));
+
+		// no categories?
+		if(empty($categories))
+		{
+			// build array
+			$category['language'] = BL::getWorkingLanguage();
+			$category['name'] = 'default';
+			$category['url'] = 'default';
+
+			// insert category
+			$id = self::insertCategory($category);
+
+			// store in settings
+			BackendModel::setModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), $id);
+
+			// recall
+			return self::getCategories();
+		}
+
+		// return the categories
+		return $categories;
+	}
+
+
+	/**
+	 * Get all data for a given id
+	 *
+	 * @return	array
+	 * @param	int $id		The id of the category to fetch.
+	 */
+	public static function getCategory($id)
+	{
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*
+															FROM events_categories AS i
+															WHERE i.id = ? AND i.language = ?',
+															array((int) $id, BL::getWorkingLanguage()));
+	}
+
+
+	/**
+	 * Get a category id by name
+	 *
+	 * @return	int
+	 * @param	string $name					The name of the category.
+	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
+	 */
+	public static function getCategoryId($name, $language = null)
+	{
+		// redefine
+		$name = (string) $name;
+		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
+
+		// exists?
+		return (int) BackendModel::getDB()->getVar('SELECT i.id
+													FROM events_categories AS i
+													WHERE i.name = ? AND i.language = ?',
+													array($name, $language));
+	}
+
 
 	/**
 	 * Get all data for a given id
@@ -270,7 +402,7 @@ class BackendEventsModel
 	public static function getComment($id)
 	{
 		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
-															p.id AS event_id, p.title AS post_title, m.url AS post_url
+															p.id AS event_id, p.title AS event_title, m.url AS event_url
 															FROM events_comments AS i
 															INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
 															INNER JOIN meta AS m ON p.meta_id = m.id
@@ -356,7 +488,7 @@ class BackendEventsModel
 	 * Get all data for a given revision
 	 *
 	 * @return	array
-	 * @param	int $id				The id of the eventspost.
+	 * @param	int $id				The id of the item.
 	 * @param	int $revisionId		The revision to get.
 	 */
 	public static function getRevision($id, $revisionId)
@@ -374,7 +506,7 @@ class BackendEventsModel
 	 *
 	 * @return	string
 	 * @param	string $URL			The URL to base on.
-	 * @param	int[optional] $id	The id of the eventspost to ignore.
+	 * @param	int[optional] $id	The id of the item to ignore.
 	 */
 	public static function getURL($URL, $id = null)
 	{
@@ -432,6 +564,66 @@ class BackendEventsModel
 
 
 	/**
+	 * Retrieve the unique URL for a category
+	 *
+	 * @return	string
+	 * @param	string $URL						The string wheron the URL will be based.
+	 * @param	int[optional] $categoryId		The id of the category to ignore.
+	 */
+	public static function getURLForCategory($URL, $categoryId = null)
+	{
+		// redefine URL
+		$URL = SpoonFilter::urlise((string) $URL);
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// new category
+		if($categoryId === null)
+		{
+			// get number of categories with this URL
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+											FROM events_categories AS i
+											WHERE i.language = ? AND i.url = ?',
+											array(BL::getWorkingLanguage(), $URL));
+
+			// already exists
+			if($number != 0)
+			{
+				// add number
+				$URL = BackendModel::addNumber($URL);
+
+				// try again
+				return self::getURLForCategory($URL);
+			}
+		}
+
+		// current category should be excluded
+		else
+		{
+			// get number of items with this URL
+			$number = (int) $db->getVar('SELECT COUNT(i.id)
+											FROM events_categories AS i
+											WHERE i.language = ? AND i.url = ? AND i.id != ?',
+											array(BL::getWorkingLanguage(), $URL, $categoryId));
+
+			// already exists
+			if($number != 0)
+			{
+				// add number
+				$URL = BackendModel::addNumber($URL);
+
+				// try again
+				return self::getURLForCategory($URL, $categoryId);
+			}
+		}
+
+		// return the unique URL!
+		return $URL;
+	}
+
+
+	/**
 	 * Inserts an item into the database
 	 *
 	 * @return	int
@@ -447,6 +639,25 @@ class BackendEventsModel
 
 		// return the new revision id
 		return $item['revision_id'];
+	}
+
+
+	/**
+	 * Inserts a new category into the database
+	 *
+	 * @return	int
+	 * @param	array $item		The data for the category to insert.
+	 */
+	public static function insertCategory(array $item)
+	{
+		// create category
+		$item['id'] = BackendModel::getDB(true)->insert('events_categories', $item);
+
+		// invalidate the cache for events
+		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+
+		// return the id
+		return $item['id'];
 	}
 
 
@@ -475,7 +686,7 @@ class BackendEventsModel
 												GROUP BY i.event_id',
 												array('published', BL::getWorkingLanguage(), 'active'));
 
-		// loop posts
+		// loop items
 		foreach($ids as $id)
 		{
 			// get count
@@ -542,6 +753,25 @@ class BackendEventsModel
 
 
 	/**
+	 * Update an existing category
+	 *
+	 * @return	int
+	 * @param	array $item		The new data.
+	 */
+	public static function updateCategory(array $item)
+	{
+		// update category
+		$updated = BackendModel::getDB(true)->update('events_categories', $item, 'id = ?', array((int) $item['id']));
+
+		// invalidate the cache for events
+		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+
+		// return
+		return $updated;
+	}
+
+
+	/**
 	 * Update an existing comment
 	 *
 	 * @return	int
@@ -566,7 +796,7 @@ class BackendEventsModel
 		// make sure $ids is an array
 		$ids = (array) $ids;
 
-		// get eventspost ids
+		// get ids
 		$itemIds = (array) BackendModel::getDB()->getColumn('SELECT i.event_id
 																FROM events_comments AS i
 																WHERE i.id IN ('. implode(',', $ids) .')');

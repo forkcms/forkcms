@@ -6,11 +6,19 @@
  * @package		backend
  * @subpackage	events
  *
- * @author		Tijs Verkoyen <tijs@sumucoders.be>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendEventsEdit extends BackendBaseActionEdit
 {
+	/**
+	 * Datagrid for the drafts
+	 *
+	 * @var	BackendDatagrid
+	 */
+	private $dgDrafts;
+
+
 	/**
 	 * Execute the action
 	 *
@@ -29,6 +37,9 @@ class BackendEventsEdit extends BackendBaseActionEdit
 
 			// get all data for the item we want to edit
 			$this->getData();
+
+			// load drafts
+			$this->loadDrafts();
 
 			// load the datagrid with revisions
 			$this->loadRevisions();
@@ -97,6 +108,40 @@ class BackendEventsEdit extends BackendBaseActionEdit
 
 
 	/**
+	 * Load the datagrid with drafts
+	 *
+	 * @return	void
+	 */
+	private function loadDrafts()
+	{
+		// create datagrid
+		$this->dgDrafts = new BackendDataGridDB(BackendEventsModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS, array('draft', $this->record['id'], BL::getWorkingLanguage()));
+
+		// hide columns
+		$this->dgDrafts->setColumnsHidden(array('id', 'revision_id'));
+
+		// disable paging
+		$this->dgDrafts->setPaging(false);
+
+		// set headers
+		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+
+		// set colum URLs
+		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]');
+
+		// set column-functions
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
+
+		// add use column
+		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+
+		// our JS needs to know an id, so we can highlight it
+		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
+	}
+
+
+	/**
 	 * Load the form
 	 *
 	 * @return	void
@@ -120,6 +165,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->frm->addEditor('introduction', $this->record['introduction']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
+		$this->frm->addDropdown('category_id', BackendEventsModel::getCategories(), $this->record['category_id']);
+		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['revision_id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
@@ -183,6 +230,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
+		$this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 	}
 
 
@@ -228,6 +276,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['revision_id'] = $this->record['revision_id']; // this is used to let our model know the status (active, archive, draft) of the edited item
 				$item['meta_id'] = $this->meta->save();
+				$item['category_id'] = $this->frm->getField('category_id')->getValue();
+				$item['user_id'] = $this->frm->getField('user_id')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['starts_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('starts_on_date'), $this->frm->getField('starts_on_time')));

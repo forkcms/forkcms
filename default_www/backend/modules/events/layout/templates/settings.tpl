@@ -55,7 +55,7 @@
 		<div class="options">
 			<p>{$msgHelpPingServices}:</p>
 			<ul class="inputList p0">
-				<li><label for="pingServices">{$chkPingServices} {$lblPingBlogsServices|ucfirst}</label></li>
+				<li><label for="pingServices">{$chkPingServices} {$lblPingEventssServices|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>

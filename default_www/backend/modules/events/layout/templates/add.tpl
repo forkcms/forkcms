@@ -127,6 +127,14 @@
 								<h3>{$lblMetaData|ucfirst}</h3>
 							</div>
 							<div class="options">
+								<label for="categoryId">{$lblCategory|ucfirst}</label>
+								{$ddmCategoryId} {$ddmCategoryIdError}
+							</div>
+							<div class="options">
+								<label for="userId">{$lblAuthor|ucfirst}</label>
+								{$ddmUserId} {$ddmUserIdError}
+							</div>
+							<div class="options">
 								<label for="tags">{$lblTags|ucfirst}</label>
 								{$txtTags} {$txtTagsError}
 							</div>
@@ -148,13 +156,14 @@
 		</div>
 
 		<div id="tabSEO">
-			{include:file='{$BACKEND_CORE_PATH}/layout/templates/seo.tpl'}
+			{include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
 		</div>
 	</div>
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
 			<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="{$lblPublish|ucfirst}" />
+			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
 	</div>
 {/form:add}

@@ -1,12 +1,16 @@
 {*
 	variables that are available:
-	- {$items}: contains an array with all posts, each element contains data about the post
+	- {$category}: contains data about the category
+	- {$items}: contains an array with all items, each element contains data about the item
 *}
 
 {option:!items}
-	<div id="eventsIndex">
+	<div id="eventsCategory">
 		<div class="mod">
 			<div class="inner">
+				<div class="hd">
+					{$category|dump}
+				</div>
 				<div class="bd">
 					<p>{$msgEventsNoItems}</p>
 				</div>
@@ -16,6 +20,10 @@
 {/option:!items}
 {option:items}
 	<div id="eventsIndex">
+		<h1>
+			{$category.label}
+		</h1>
+
 		{iteration:items}
 			<div class="mod article">
 				<div class="inner">

@@ -43,6 +43,9 @@ class BackendEventsAdd extends BackendBaseActionAdd
 	 */
 	private function loadForm()
 	{
+		// get default category id
+		$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage());
+
 		// create form
 		$this->frm = new BackendForm('add');
 
@@ -60,6 +63,8 @@ class BackendEventsAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('events', 'allow_comments', false));
+		$this->frm->addDropdown('category_id', BackendEventsModel::getCategories(), $defaultCategoryId);
+		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
 		$this->frm->addTime('publish_on_time');
@@ -126,6 +131,8 @@ class BackendEventsAdd extends BackendBaseActionAdd
 				// build item
 				$item['id'] = (int) BackendEventsModel::getMaximumId() + 1;
 				$item['meta_id'] = $this->meta->save();
+				$item['category_id'] = $this->frm->getField('category_id')->getValue();
+				$item['user_id'] = $this->frm->getField('user_id')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['starts_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('starts_on_date'), $this->frm->getField('starts_on_time')));
