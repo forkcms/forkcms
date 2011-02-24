@@ -11,81 +11,86 @@
 </div>
 
 {option:datagrid}
-	<div class="datagridHolder">
-		{$datagrid}
+	<div class="box">
+		<div class="heading">
+			<h3>{$lblMap|ucfirst}</h3>
+		</div>
+		<div class="options">
+			{option:items}
+				<div id="map" style="height: {$settings.height}px; width: 100%;"></div>
+    	
+				<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+				<script type="text/javascript">
+					// create boundaries
+					var latlngBounds = new google.maps.LatLngBounds();
+    	
+					// set options
+					var options =
+					{
+						// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
+						zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
+						// set default center as first item's location
+						center: new google.maps.LatLng({$items.0.lat}, {$items.0.lng}),
+						// no interface, just the map
+						disableDefaultUI: true,
+						// no dragging the map around
+						draggable: false,
+						// no zooming in/out using scrollwheel
+						scrollwheel: false,
+						// no double click zoom
+						disableDoubleClickZoom: true,
+						// set map type
+						mapTypeId: google.maps.MapTypeId.{$settings.map_type}
+					};
+    	
+					// create map
+					var map = new google.maps.Map(document.getElementById('map'), options);
+    	
+					// function to add markers to the map
+					function addMarker(lat, lng, title, text)
+					{
+						// create position
+						position = new google.maps.LatLng(lat, lng);
+    	
+						// add to boundaries
+						latlngBounds.extend(position);
+    	
+						// add marker
+						var marker = new google.maps.Marker(
+						{
+							// set position
+							position: position,
+							// add to map
+							map: map,
+							// set title
+							title: title
+						});
+    	
+						// add click event on marker
+						google.maps.event.addListener(marker, 'click', function()
+						{
+							// create infowindow
+							new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker);
+						});
+					}
+    	
+					// loop items and add to map
+					{iteration:items}
+						{option:items.lat}{option:items.lng}addMarker({$items.lat}, {$items.lng}, '{$items.title}', '{$items.text}');{/option:items.lat}{/option:items.lng}
+					{/iteration:items}
+    	
+					// set center to the middle of our boundaries
+					map.setCenter(latlngBounds.getCenter());
+    	
+					// set zoom automatically, defined by points (if allowed)
+					if('{$settings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
+				</script>
+			{/option:items}
+		</div>
 	</div>
 
-	<div class="content">
-		{option:items}
-			<div id="map" style="height: {$settings.height}px; width: {$settings.width}px;"></div>
-
-			<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-			<script type="text/javascript">
-				// create boundaries
-				var latlngBounds = new google.maps.LatLngBounds();
-
-				// set options
-				var options =
-				{
-					// set zoom as defined by user, or as 0 if to be done automatically based on boundaries
-					zoom: '{$settings.zoom_level}' == 'auto' ? 0 : {$settings.zoom_level},
-					// set default center as first item's location
-					center: new google.maps.LatLng({$items.0.lat}, {$items.0.lng}),
-					// no interface, just the map
-					disableDefaultUI: true,
-					// no dragging the map around
-					draggable: false,
-					// no zooming in/out using scrollwheel
-					scrollwheel: false,
-					// no double click zoom
-					disableDoubleClickZoom: true,
-					// set map type
-					mapTypeId: google.maps.MapTypeId.{$settings.map_type}
-				};
-
-				// create map
-				var map = new google.maps.Map(document.getElementById('map'), options);
-
-				// function to add markers to the map
-				function addMarker(lat, lng, title, text)
-				{
-					// create position
-					position = new google.maps.LatLng(lat, lng);
-
-					// add to boundaries
-					latlngBounds.extend(position);
-
-					// add marker
-					var marker = new google.maps.Marker(
-					{
-						// set position
-						position: position,
-						// add to map
-						map: map,
-						// set title
-						title: title
-					});
-
-					// add click event on marker
-					google.maps.event.addListener(marker, 'click', function()
-					{
-						// create infowindow
-						new google.maps.InfoWindow({ content: '<h1>'+ title +'</h1>' + text }).open(map, marker);
-					});
-				}
-
-				// loop items and add to map
-				{iteration:items}
-					{option:items.lat}{option:items.lng}addMarker({$items.lat}, {$items.lng}, '{$items.title}', '{$items.text}');{/option:items.lat}{/option:items.lng}
-				{/iteration:items}
-
-				// set center to the middle of our boundaries
-				map.setCenter(latlngBounds.getCenter());
-
-				// set zoom automatically, defined by points (if allowed)
-				if('{$settings.zoom_level}' == 'auto') map.fitBounds(latlngBounds);
-			</script>
-		{/option:items}
+	<div class="datagridHolder">
+		{$datagrid}
 	</div>
 {/option:datagrid}
 
