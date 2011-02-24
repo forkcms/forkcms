@@ -12,6 +12,20 @@
 class EventsInstall extends ModuleInstaller
 {
 	/**
+	 * Add the default category for a language
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
+	 * @param	string $name		The name of the category.
+	 * @param	string $url			The URL for the category.
+	 */
+	private function addCategory($language, $name, $url)
+	{
+		return (int) $this->getDB()->insert('events_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
+	}
+
+
+	/**
 	 * Install the module
 	 *
 	 * @return	void
@@ -60,10 +74,39 @@ class EventsInstall extends ModuleInstaller
 		// add extra's
 		$eventsID = $this->insertExtra('events', 'block', 'Events', null, null, 'N', 5000);
 		$this->insertExtra('events', 'widget', 'RecentComments', 'recent_comments', null, 'N', 5001);
+		$this->insertExtra('events', 'widget', 'Categories', 'categories', null, 'N', 5002);
+		$this->insertExtra('events', 'widget', 'Archive', 'archive', null, 'N', 5003);
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
+			// fetch current categoryId
+			$currentCategoryId = $this->getCategory($language);
+
+			// no category exists
+			if($currentCategoryId == 0)
+			{
+				// add default category
+				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+
+				// insert default category setting
+				$this->setSetting('events', 'default_category_'. $language, $defaultCategoryId, true);
+			}
+
+			// category exists
+			else
+			{
+				// current default categoryId
+				$currentDefaultCategoryId = $this->getSetting('events', 'default_category_'. $language);
+
+				// does not exist
+				if(!$this->existsCategory($language, $currentDefaultCategoryId))
+				{
+					// insert default category setting
+					$this->setSetting('events', 'default_category_'. $language, $currentCategoryId, true);
+				}
+			}
+
 			// feedburner URL
 			$this->setSetting('events', 'feedburner_url_'. $language, '');
 
@@ -87,26 +130,26 @@ class EventsInstall extends ModuleInstaller
 			}
 
 			// install example data if requested
-//			if($this->installExample()) $this->installExampleData($language);
+			if($this->installExample()) $this->installExampleData($language);
 		}
 
 
 		// insert locale (nl)
-		$this->insertLocale('nl', 'backend', 'events', 'err', 'RSSDescription', 'Events RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>');
-		$this->insertLocale('nl', 'backend', 'events', 'lbl', 'Add', 'event toevoegen');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Added', 'Het event "%1$s" werd toegevoegd.');
+		$this->insertLocale('nl', 'backend', 'events', 'err', 'RSSDescription', 'Evenementen RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>');
+		$this->insertLocale('nl', 'backend', 'events', 'lbl', 'Add', 'evenement toevoegen');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Added', 'Het evenement "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'CommentOnWithURL', 'Reactie op: <a href="%1$s">%2$s</a>');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het event "%1$s" wil verwijderen?');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Deleted', 'De geselecteerde events werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het evenement "%1$s" wil verwijderen?');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Deleted', 'De geselecteerde evenementen werden verwijderd.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'DeletedSpam', 'Alle spamberichten werden verwijderd.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'DeleteAllSpam', 'Verwijdere all spam:');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'EditArticle', 'bewerk event "%1$s"');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'EditArticle', 'bewerk evenement "%1$s"');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'EditCommentOn', 'bewerk reactie op "%1$s"');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Edited', 'Het event "%1$s" werd opgeslagen.');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Edited', 'Het evenement "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'EditedComment', 'De reactie werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'FollowAllCommentsInRSS', 'Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpMeta', 'Toon de meta informatie van de events in de RSS feed (categorie, tags, ...)');
-		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpPingServices', 'Laat verschillende blogservices weten wanneer je een nieuw event plaatst.');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpMeta', 'Toon de meta informatie van de evenementen in de RSS feed (categorie, tags, ...)');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpPingServices', 'Laat verschillende blogservices weten wanneer je een nieuw evenement plaatst.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het evenementenoverzicht.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'MakeDefaultCategory', 'Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).');
@@ -122,12 +165,12 @@ class EventsInstall extends ModuleInstaller
 //		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Ical', 'ical');
 //		$this->insertLocale('nl', 'frontend', 'core', 'act', 'IcalAll', 'ical-allemaal');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EventsArchive', 'eventsarchief');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EventsArchive', 'evenementenarchief');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextEvent', 'volgend evenement');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousEvent', 'vorig evenement');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentEvents', 'recente events');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentEvents', 'recente evenement');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllComments', 'Alle reacties op je events.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllComments', 'Alle reacties op je evenementen.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoComments', 'Reageer als eerste');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNumberOfComments', 'Al %1$s reacties');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsOneComment', 'Al 1 reactie');
@@ -136,7 +179,7 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Je reactie werd gemarkeerd als spam.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s reageerde op <a href="%2$s">%3$s</a>.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoItems', 'Er zijn nog geen eventsposts.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoItems', 'Er zijn nog geen evenementen.');
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'events', 'err', 'RSSDescription', 'Events RSS description is not yet provided. <a href="%1$s">Configure</a>');
@@ -184,7 +227,32 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsCommentIsSpam', 'Your comment was marked as spam.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s commented on <a href="%2$s">%3$s</a>.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.');
-		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoItems', 'There are no articles yet.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoItems', 'There are no events yet.');
+	}
+
+
+	/**
+	 * Does the category with this id exist within this language.
+	 *
+	 * @return	bool
+	 * @param	string $language	The langauge to use.
+	 * @param	int $id				The id to exclude.
+	 */
+	private function existsCategory($language, $id)
+	{
+		return (bool) $this->getDB()->getVar('SELECT COUNT(id) FROM events_categories WHERE id = ? AND language = ?', array((int) $id, (string) $language));
+	}
+
+
+	/**
+	 * Fetch the id of the first category in this language we come across
+	 *
+	 * @return	int
+	 * @param	string $language	The language to use.
+	 */
+	private function getCategory($language)
+	{
+		return (int) $this->getDB()->getVar('SELECT id FROM events_categories WHERE language = ?', array((string) $language));
 	}
 
 
@@ -200,14 +268,15 @@ class EventsInstall extends ModuleInstaller
 		$db = $this->getDB();
 
 		// check if eventsposts already exist in this language
-		if(!(bool) $db->getVar('SELECT COUNT(id) FROM events_posts WHERE language = ?', array($language)))
+		if(!(bool) $db->getVar('SELECT COUNT(id) FROM events WHERE language = ?', array($language)))
 		{
 			// insert sample eventspost 1
-			$db->insert('events_posts', array('id' => 1,
+			$db->insert('events', array('id' => 1,
 											'category_id' => $this->getSetting('events', 'default_category_'. $language),
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
+											'starts_on' => gmdate('Y-06-20 11:24:00'),
 											'title' => 'Nunc sediam est',
 											'introduction' => SpoonFile::getContent(PATH_WWW .'/backend/modules/events/installer/data/'. $language .'/sample1.txt'),
 											'text' => SpoonFile::getContent(PATH_WWW .'/backend/modules/events/installer/data/'. $language .'/sample1.txt'),
@@ -220,11 +289,13 @@ class EventsInstall extends ModuleInstaller
 											'num_comments' => '3'));
 
 			// insert sample eventspost 2
-			$db->insert('events_posts', array('id' => 2,
+			$db->insert('events', array('id' => 2,
 											'category_id' => $this->getSetting('events', 'default_category_'. $language),
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
 											'language' => $language,
+											'starts_on' => gmdate('Y-10-11 09:i:00'),
+											'ends_on' => gmdate('Y-10-11 18:i:00'),
 											'title' => 'Lorem ipsum',
 											'introduction' => SpoonFile::getContent(PATH_WWW .'/backend/modules/events/installer/data/'. $language .'/sample1.txt'),
 											'text' => SpoonFile::getContent(PATH_WWW .'/backend/modules/events/installer/data/'. $language .'/sample1.txt'),
@@ -237,7 +308,7 @@ class EventsInstall extends ModuleInstaller
 											'num_comments' => '0'));
 
 			// insert example comment 1
-			$db->insert('events_comments', array('post_id' => 1,
+			$db->insert('events_comments', array('event_id' => 1,
 												'language' => $language,
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Matthias Mullie',
@@ -249,7 +320,7 @@ class EventsInstall extends ModuleInstaller
 												'data' => null));
 
 			// insert example comment 2
-			$db->insert('events_comments', array('post_id' => 1,
+			$db->insert('events_comments', array('event_id' => 1,
 												'language' => $language,
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Davy Hellemans',
@@ -261,7 +332,7 @@ class EventsInstall extends ModuleInstaller
 												'data' => null));
 
 			// insert example comment 3
-			$db->insert('events_comments', array('post_id' => 1,
+			$db->insert('events_comments', array('event_id' => 1,
 												'language' => $language,
 												'created_on' => gmdate('Y-m-d H:i:00'),
 												'author' => 'Tijs Verkoyen',

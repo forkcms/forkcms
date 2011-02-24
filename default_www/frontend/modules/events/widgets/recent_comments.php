@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	events
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class FrontendEventsWidgetRecentComments extends FrontendBaseWidget

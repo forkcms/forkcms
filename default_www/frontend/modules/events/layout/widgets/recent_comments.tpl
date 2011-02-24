@@ -1,26 +1,26 @@
 {*
 	variables that are available:
-	- {$widgetBlogRecentComments}: contains an array with the recent comments. Each element contains data about the comment.
+	- {$widgetEventsRecentComments}: contains an array with the recent comments. Each element contains data about the comment.
 *}
 
-{option:widgetBlogRecentComments}
-	<div id="blogRecentCommentsWidget" class="mod">
+{option:widgetEventsRecentComments}
+	<div id="eventsRecentCommentsWidget" class="mod">
 		<div class="inner">
 			<div class="hd">
 				<h3>{$lblRecentComments|ucfirst}</h3>
 			</div>
 			<div class="bd">
 				<ul>
-					{iteration:widgetBlogRecentComments}
+					{iteration:widgetEventsRecentComments}
 					<li>
-						{option:widgetBlogRecentComments.website}<a href="{$widgetBlogRecentComments.website}" rel="nofollow">{/option:widgetBlogRecentComments.website}
-							{$widgetBlogRecentComments.author}
-						{option:widgetBlogRecentComments.website}</a>{/option:widgetBlogRecentComments.website}
-						{$lblCommentedOn} <a href="{$widgetBlogRecentComments.full_url}">{$widgetBlogRecentComments.post_title}</a>
+						{option:widgetEventsRecentComments.website}<a href="{$widgetEventsRecentComments.website}" rel="nofollow">{/option:widgetEventsRecentComments.website}
+							{$widgetEventsRecentComments.author}
+						{option:widgetEventsRecentComments.website}</a>{/option:widgetEventsRecentComments.website}
+						{$lblCommentedOn} <a href="{$widgetEventsRecentComments.full_url}">{$widgetEventsRecentComments.event_title}</a>
 					</li>
-					{/iteration:widgetBlogRecentComments}
+					{/iteration:widgetEventsRecentComments}
 				</ul>
 			</div>
 		</div>
 	</div>
-{/option:widgetBlogRecentComments}
+{/option:widgetEventsRecentComments}

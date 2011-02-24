@@ -1,6 +1,6 @@
 <div class="box" id="widgetEventsComments">
 	<div class="heading">
-		<h3><a href="{$var|geturl:'comments':'events'}">{$lblLatestComments|ucfirst}</a></h3>
+		<h3><a href="{$var|geturl:'comments':'events'}">{$lblEvents|ucfirst}: {$lblLatestComments|ucfirst}</a></h3>
 	</div>
 
 	{option:eventsNumCommentsToModerate}

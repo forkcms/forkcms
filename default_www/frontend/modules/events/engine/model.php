@@ -109,7 +109,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 	public static function getAllComments($limit = 10, $offset = 0)
 	{
 		return (array) FrontendModel::getDB()->getRecords('SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
-															p.id AS post_id, p.title AS post_title, m.url AS post_url
+															p.id AS event_id, p.title AS event_title, m.url AS event_url
 															FROM events_comments AS i
 															INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
 															INNER JOIN meta AS m ON p.meta_id = m.id
@@ -231,6 +231,78 @@ class FrontendEventsModel implements FrontendTagsInterface
 														FROM events AS i
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.starts_on BETWEEN ? AND ?',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', FrontendModel::getUTCDate('Y-m-d H:i:s', $start), FrontendModel::getUTCDate('Y-m-d H:i:s', $end)));
+	}
+
+
+	/**
+	 * Get the statistics for the archive
+	 *
+	 * @return	array
+	 */
+	public static function getArchiveNumbers()
+	{
+		// grab stats
+		$numbers = FrontendModel::getDB()->getPairs('SELECT DATE_FORMAT(i.starts_on, "%Y%m") AS month, COUNT(i.id)
+														FROM events AS i
+														INNER JOIN meta AS m ON i.meta_id = m.id
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
+														GROUP BY month',
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
+
+		// init vars
+		$stats = array();
+		$link = FrontendNavigation::getURLForBlock('events', 'archive');
+		$firstYear = (int) date('Y');
+		$lastYear = 0;
+
+		// loop the numbers
+		foreach($numbers as $key => $count)
+		{
+			// init vars
+			$year = substr($key, 0, 4);
+			$month = substr($key, 4, 2);
+
+			// reset
+			if($year < $firstYear) $firstYear = $year;
+			if($year > $lastYear) $lastYear = $year;
+
+			// generate timestamp
+			$timestamp = gmmktime(00, 00, 00, $month, 01, $year);
+
+			// initialize if needed
+			if(!isset($stats[$year])) $stats[$year] = array('url' => $link .'/'. $year, 'label' => $year, 'total' => 0, 'months' => null);
+
+			// increment the total
+			$stats[$year]['total'] += (int) $count;
+			$stats[$year]['months'][$key] = array('url' => $link .'/'. $year .'/'. $month, 'label' => $timestamp, 'total' => $count);
+		}
+
+		// loop years
+		for($i = $firstYear; $i <= $lastYear; $i++)
+		{
+			// year missing
+			if(!isset($stats[$i])) $stats[$i] = array('url' => null, 'label' => $i, 'total' => 0, 'months' => null);
+		}
+
+		// sort
+		krsort($stats);
+
+		// reset stats
+		foreach($stats as &$row)
+		{
+			// remove url for empty years
+			if($row['total'] == 0) $row['url'] = null;
+
+			// any months?
+			if(!empty($row['months']))
+			{
+				// sort months
+				ksort($row['months']);
+			}
+		}
+
+		// return
+		return $stats;
 	}
 
 
@@ -384,13 +456,17 @@ class FrontendEventsModel implements FrontendTagsInterface
 			$return[$items[$id]['revision_id']] = $items[$id];
 		}
 
-		// get all tags
-		$tags = FrontendTagsModel::getForMultipleItems('events', $revisionIds);
-
-		// loop tags and add to correct item
-		foreach($tags as $postId => $tags)
+		// any revision ids
+		if(!empty($revisionIds))
 		{
-			if(isset($return[$postId])) $return[$postId]['tags'] = $tags;
+			// get all tags
+			$tags = FrontendTagsModel::getForMultipleItems('events', $revisionIds);
+
+			// loop tags and add to correct item
+			foreach($tags as $postId => $tags)
+			{
+				if(isset($return[$postId])) $return[$postId]['tags'] = $tags;
+			}
 		}
 
 		// return
@@ -447,52 +523,52 @@ class FrontendEventsModel implements FrontendTagsInterface
 	}
 
 
-//	/**
-//	 * Get recent comments
-//	 *
-//	 * @return	array
-//	 * @param	int[optional] $limit	The number of comments to get.
-//	 */
-//	public static function getRecentComments($limit = 5)
-//	{
-//		// redefine
-//		$limit = (int) $limit;
-//
-//		// init var
-//		$return = array();
-//
-//		// get comments
-//		$comments = (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
-//																i.id AS post_id, i.title AS post_title,
-//																m.url AS post_url
-//																FROM events_comments AS c
-//																INNER JOIN events_posts AS i ON c.post_id = i.id AND c.language = i.language
-//																INNER JOIN meta AS m ON i.meta_id = m.id
-//																WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
-//																ORDER BY c.created_on DESC
-//																LIMIT ?',
-//																array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit));
-//
-//		// validate
-//		if(empty($comments)) return $return;
-//
-//		// get link
-//		$link = FrontendNavigation::getURLForBlock('events', 'detail');
-//
-//		// loop comments
-//		foreach($comments as &$row)
-//		{
-//			// add some URLs
-//			$row['post_full_url'] = $link .'/'. $row['post_url'];
-//			$row['full_url'] = $link .'/'. $row['post_url'] .'#comment-'. $row['id'];
-//			$row['gravatar_id'] = md5($row['email']);
-//		}
-//
-//		// return
-//		return $comments;
-//	}
-//
-//
+	/**
+	 * Get recent comments
+	 *
+	 * @return	array
+	 * @param	int[optional] $limit	The number of comments to get.
+	 */
+	public static function getRecentComments($limit = 5)
+	{
+		// redefine
+		$limit = (int) $limit;
+
+		// init var
+		$return = array();
+
+		// get comments
+		$comments = (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.author, c.website, c.email, UNIX_TIMESTAMP(c.created_on) AS created_on, c.text,
+																i.id AS event_id, i.title AS event_title,
+																m.url AS event_url
+																FROM events_comments AS c
+																INNER JOIN events AS i ON c.event_id = i.id AND c.language = i.language
+																INNER JOIN meta AS m ON i.meta_id = m.id
+																WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
+																ORDER BY c.created_on DESC
+																LIMIT ?',
+																array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit));
+
+		// validate
+		if(empty($comments)) return $return;
+
+		// get link
+		$link = FrontendNavigation::getURLForBlock('events', 'detail');
+
+		// loop comments
+		foreach($comments as &$row)
+		{
+			// add some URLs
+			$row['event_full_url'] = $link .'/'. $row['event_url'];
+			$row['full_url'] = $link .'/'. $row['event_url'] .'#comment-'. $row['id'];
+			$row['gravatar_id'] = md5($row['email']);
+		}
+
+		// return
+		return $comments;
+	}
+
+
 //	/**
 //	 * Get related items based on tags
 //	 *

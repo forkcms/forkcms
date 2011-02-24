@@ -14,7 +14,7 @@
 					{$item.title}
 					<small>
 						{$item.starts_on|date:{$dateFormatLong}:{$LANGUAGE}}
-						{option:item.ends_on} - {$item.ends_on|date:{$dateFormatLong}:{$LANGUAGE}}}{/option:item.ends_on}
+						{option:item.ends_on} - {$item.ends_on|date:{$dateFormatLong}:{$LANGUAGE}}{/option:item.ends_on}
 					</small>
 				</h1>
 				<p>
