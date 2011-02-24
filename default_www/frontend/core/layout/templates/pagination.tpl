@@ -12,23 +12,23 @@
 					</li>
 
 					{option:pagination.first}
-						{iteration:pagination.first}<li><a href="{$paginationFirst.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationFirst.label}">{$paginationFirst.label}</a></li>{/iteration:pagination.first}
+						{iteration:pagination.first}<li><a href="{$pagination.first.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$pagination.first.label}">{$pagination.first.label}</a></li>{/iteration:pagination.first}
 						<li class="ellipsis"><span>&hellip;</span></li>
 					{/option:pagination.first}
 
 					{iteration:pagination.pages}
-						<li{option:paginationPages.current} class="currentPage"{/option:paginationPages.current}>
-							{option:!paginationPages.current}<a href="{$paginationPages.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationPages.label}">{/option:!paginationPages.current}
-							{option:paginationPages.current}<span>{/option:paginationPages.current}
-								{$paginationPages.label}
-							{option:paginationPages.current}</span>{/option:paginationPages.current}
-							{option:!paginationPages.current}</a>{/option:!paginationPages.current}
+						<li{option:pagination.pages.current} class="currentPage"{/option:pagination.pages.current}>
+							{option:!pagination.pages.current}<a href="{$pagination.pages.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$pagination.pages.label}">{/option:!pagination.pages.current}
+							{option:pagination.pages.current}<span>{/option:pagination.pages.current}
+								{$pagination.pages.label}
+							{option:pagination.pages.current}</span>{/option:pagination.pages.current}
+							{option:!pagination.pages.current}</a>{/option:!pagination.pages.current}
 						</li>
 					{/iteration:pagination.pages}
 
 					{option:pagination.last}
 						<li class="ellipsis"><span>&hellip;</span></li>
-						{iteration:pagination.last}<li><a href="{$paginationLast.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$paginationLast.label}">{$paginationLast.label}</a></li>{/iteration:pagination.last}
+						{iteration:pagination.last}<li><a href="{$pagination.last.url}" rel="nofollow" title="{$lblGoToPage|ucfirst} {$pagination.last.label}">{$pagination.last.label}</a></li>{/iteration:pagination.last}
 					{/option:pagination.last}
 
 					<li class="nextPage">
