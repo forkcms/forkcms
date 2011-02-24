@@ -336,7 +336,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 	 * Get multiple items
 	 *
 	 * @return	array
-	 * @param	array $ids	The ids of the items to retrieve
+	 * @param	array $ids	The ids of the items to retrieve.
 	 */
 	public static function getMultiple(array $ids)
 	{

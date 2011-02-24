@@ -1,15 +1,15 @@
 <?php
 
 /**
- * This is a widget with recent comments on all blog-articles
+ * This is a widget with recent comments on all events-articles
  *
  * @package		frontend
- * @subpackage	blog
+ * @subpackage	events
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
-class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
+class FrontendEventsWidgetRecentComments extends FrontendBaseWidget
 {
 	/**
 	 * Execute the extra
@@ -37,7 +37,7 @@ class FrontendBlogWidgetRecentComments extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign comments
-		$this->tpl->assign('widgetBlogRecentComments', FrontendBlogModel::getRecentComments(5));
+		$this->tpl->assign('widgetEventsRecentComments', FrontendEventsModel::getRecentComments(5));
 	}
 }
 

@@ -1,12 +1,12 @@
 <?php
 
 /**
- * This is the configuration-object for the blog module
+ * This is the configuration-object for the events module
  *
  * @package		backend
- * @subpackage	blog
+ * @subpackage	events
  *
- * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 final class BackendEventsConfig extends BackendBaseConfig
