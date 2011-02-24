@@ -72,11 +72,9 @@
 	{/option:categories}
 
 	{option:!categories}
-		<div class="generalMessage infoMessage content singleMessage">
-			<p>
-				{$msgNoCategories|sprintf:{$var|geturl:'add_category'}}
-			</p>
-		</div>
+		<p>
+			{$msgNoCategories|sprintf:{$var|geturl:'add_category'}}
+		</p>
 	{/option:!categories}
 {/form:add}
 
