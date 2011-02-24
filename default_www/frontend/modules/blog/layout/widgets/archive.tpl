@@ -18,15 +18,15 @@
 									{$widgetBlogArchive.label}
 									{option:widgetBlogArchive.url}({$widgetBlogArchive.total}){/option:widgetBlogArchive.url}
 								{option:widgetBlogArchive.url}</a>{/option:widgetBlogArchive.url}
-            	
+
 								{option:widgetBlogArchive.months}
 									<ul>
 										{iteration:widgetBlogArchive.months}
 											<li>
-												{option:months.url}<a href="{$months.url}">{/option:months.url}
-													{$months.label|date:'F':{$LANGUAGE}}
-													{option:months.url}({$months.total}){/option:months.url}
-												{option:months.url}</a>{/option:months.url}
+												{option:widgetBlogArchive.months.url}<a href="{$widgetBlogArchive.months.url}">{/option:widgetBlogArchive.months.url}
+													{$widgetBlogArchive.months.label|date:'F':{$LANGUAGE}}
+													{option:widgetBlogArchive.months.url}({$widgetBlogArchive.months.total}){/option:widgetBlogArchive.months.url}
+												{option:widgetBlogArchive.months.url}</a>{/option:widgetBlogArchive.months.url}
 											</li>
 										{/iteration:widgetBlogArchive.months}
 									</ul>

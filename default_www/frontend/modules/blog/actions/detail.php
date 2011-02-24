@@ -213,17 +213,14 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		$this->header->setMetaKeywords($this->record['meta_keywords'], ($this->record['meta_keywords_overwrite'] == 'Y'));
 
 		// assign article
-		$this->tpl->assign('blogArticle', $this->record);
-
-		// assign article tags
-		$this->tpl->assign('blogArticleTags', $this->record['tags']);
+		$this->tpl->assign('item', $this->record);
 
 		// count comments
 		$commentCount = count($this->comments);
 
 		// assign the comments
-		$this->tpl->assign('blogCommentsCount', $commentCount);
-		$this->tpl->assign('blogComments', $this->comments);
+		$this->tpl->assign('commentsCount', $commentCount);
+		$this->tpl->assign('comments', $this->comments);
 
 		// options
 		if($commentCount > 1) $this->tpl->assign('blogCommentsMultiple', true);
@@ -237,10 +234,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if($this->URL->getParameter('comment', 'string') == 'true') $this->tpl->assign('commentIsAdded', true);
 
 		// assign settings
-		$this->tpl->assign('blogSettings', $this->settings);
+		$this->tpl->assign('settings', $this->settings);
 
 		// assign navigation
-		$this->tpl->assign('blogNavigation', FrontendBlogModel::getNavigation($this->record['id']));
+		$this->tpl->assign('navigation', FrontendBlogModel::getNavigation($this->record['id']));
 	}
 
 
