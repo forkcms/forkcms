@@ -2,13 +2,19 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 {form:add_category}
-	<div class="box">
+	<div class="pageTitle">
+		<h2>{$lblFaq|ucfirst}: {$lblAddCategory}</h2>
+	</div>
+
+	<div class="box horizontal">
 		<div class="heading">
 			<h3>{$lblFaq|ucfirst}: {$lblAddCategory}</h3>
 		</div>
 		<div class="options">
-			<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-			{$txtName} {$txtNameError}
+			<p>
+				<label for="name">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+				{$txtName} {$txtNameError}
+			</p>
 		</div>
 	</div>
 
