@@ -29,6 +29,7 @@ $navigation[2]['children'][6]['children'][1] = array('url' => 'faq/categories', 
 $navigation[2]['children'][7] = array('url' => 'events/index', 'label' => 'Events');
 $navigation[2]['children'][7]['children'][0] = array('url' => 'events/index', 'label' => 'Events', 'selected_for' => array('events/add', 'events/edit'));
 $navigation[2]['children'][7]['children'][1] = array('url' => 'events/comments', 'label' => 'Comments', 'selected_for' => array('events/edit_comment'));
+$navigation[2]['children'][7]['children'][2] = array('url' => 'events/categories', 'label' => 'Categories', 'selected_for' => array('events/add_category', 'events/edit_category'));
 $navigation[3] = array('url' => 'analytics/index', 'label' => 'Marketing');
 $navigation[3]['children'][0] = array('url' => 'analytics/index', 'label' => 'Analytics', 'selected_for' => 'analytics/loading');
 $navigation[3]['children'][0]['children'][0] = array('url' => 'analytics/content', 'label' => 'Content');
