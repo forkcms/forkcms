@@ -78,7 +78,7 @@ class LocationInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Country', 'country');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'GroupMap', 'general map: all locations');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Height', 'height');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'IndividualMap', 'widget: individuel map');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'IndividualMap', 'widget: individual map');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Location', 'location');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Number', 'number');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Street', 'street');
