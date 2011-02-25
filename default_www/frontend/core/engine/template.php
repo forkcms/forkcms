@@ -152,6 +152,22 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Is the cache for this item still valid.
+	 *
+	 * @return	bool			Is this template block cached?
+	 * @param	string $name	The name of the cached block.
+	 */
+	public function isCached($name)
+	{
+		// never cached in debug
+		if(SPOON_DEBUG) return false;
+
+		// let parent do the actual check
+		else parent::isCached($name);
+	}
+
+
+	/**
 	 * Map the frontend-specific modifiers
 	 *
 	 * @return	void
