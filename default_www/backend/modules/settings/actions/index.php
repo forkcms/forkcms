@@ -81,6 +81,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 		// facebook settings
 		$this->frm->addText('facebook_admin_ids', BackendModel::getModuleSetting('core', 'facebook_admin_ids', null));
+		$this->frm->addText('facebook_application_id', BackendModel::getModuleSetting('core', 'facebook_app_id', null));
+		$this->frm->addText('facebook_api_key', BackendModel::getModuleSetting('core', 'facebook_api_key', null));
+		$this->frm->addText('facebook_application_secret', BackendModel::getModuleSetting('core', 'facebook_app_secret', null));
 
 		// api keys
 		$this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('core', 'fork_api_public_key', null));
@@ -244,6 +247,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 				// facebook settings
 				BackendModel::setModuleSetting('core', 'facebook_admin_ids', ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField('facebook_admin_ids')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'facebook_app_id', ($this->frm->getField('facebook_application_id')->isFilled()) ? $this->frm->getField('facebook_application_id')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'facebook_api_key', ($this->frm->getField('facebook_api_key')->isFilled()) ? $this->frm->getField('facebook_api_key')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'facebook_app_secret', ($this->frm->getField('facebook_application_secret')->isFilled()) ? $this->frm->getField('facebook_application_secret')->getValue() : null);
 
 				// api keys
 				BackendModel::setModuleSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());

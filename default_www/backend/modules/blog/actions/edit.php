@@ -140,7 +140,6 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
-//		$this->dgDrafts->setRowAttributes(array('data-id' => '[revision_id]')); // sequence of drafts can not be set
 	}
 
 

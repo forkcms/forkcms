@@ -1,10 +1,19 @@
 {*
 	variables that are available:
-	- {$blogCategory}: contains data about the category
-	- {$blogArticles}: contains an array with all posts, each element contains data about the post
+	- {$archive}: contains an array with some dates
+	- {$items}: contains an array with all items, each element contains data about the itme
 *}
 
-{option:blogArticles}
+{option:!items}
+	<div id="blogArchive" class="mod">
+		<div class="inner">
+			<div class="bd content">
+				<p>{$msgBlogNoItems}</p>
+			</div>
+		</div>
+	</div>
+{/option:!items}
+{option:items}
 	<div id="blogArchive" class="mod">
 		<div class="inner">
 			<div class="bd content">
@@ -17,23 +26,23 @@
 						</tr>
 					</thead>
 					<tbody>
-						{iteration:blogArticles}
+						{iteration:items}
 							<tr>
-								<td class="date">{$blogArticles.publish_on|date:{$dateFormatShort}:{$LANGUAGE}}</td>
-								<td class="title"><a href="{$blogArticles.full_url}" title="{$blogArticles.title}">{$blogArticles.title}</a></td>
+								<td class="date">{$items.publish_on|date:{$dateFormatShort}:{$LANGUAGE}}</td>
+								<td class="title"><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></td>
 								<td class="comments">
-									{option:!blogArticles.comments}<a href="{$blogArticles.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogArticles.comments}
-									{option:blogArticles.comments}
-										{option:blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogArticles.comments_count}}</a>{/option:blogArticles.comments_multiple}
-										{option:!blogArticles.comments_multiple}<a href="{$blogArticles.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogArticles.comments_multiple}
-									{/option:blogArticles.comments}
+									{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
+									{option:items.comments}
+										{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+										{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
+									{/option:items.comments}
 								</td>
 							</tr>
-						{/iteration:blogArticles}
+						{/iteration:items}
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
 	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
-{/option:blogArticles}
+{/option:items}

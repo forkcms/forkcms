@@ -150,13 +150,33 @@
 		</div>
 	</div>
 
-	<div class="box">
+	<div class="box horizontal">
 		<div class="heading">
 			<h3>Facebook</h3>
 		</div>
-		<div class="options">
-			<p>{$msgHelpFacebookAdminIds}</p>
-			<p>{$txtFacebookAdminIds} {$txtFacebookAdminIdsError}</p>
+		<div class="options labelWidthLong">
+			<p>
+				<label for="facebookAdminIds">{$lblAdminIds|ucfirst}</label>
+				<span style="float: left;">
+					{$txtFacebookAdminIds} {$txtFacebookAdminIdsError}
+				</span>
+				<span class="helpTxt" style="clear: left;">{$msgHelpFacebookAdminIds}</span>
+			</p>
+			<p>
+				<label for="facebookApplicationId">{$lblApplicationId|ucfirst}</label>
+				{$txtFacebookApplicationId} {$txtFacebookApplicationIdError}
+				<span class="helpTxt">{$msgHelpFacebookApplicationId}</span>
+			</p>
+			<p>
+				<label for="facebookApiKey">{$lblAPIKey|ucfirst}</label>
+				{$txtFacebookApiKey} {$txtFacebookApiKeyError}
+				<span class="helpTxt">{$msgHelpFacebookApiKey}</span>
+			</p>
+			<p>
+				<label for="facebookAppId">{$lblApplicationSecret|ucfirst}</label>
+				{$txtFacebookApplicationSecret} {$txtFacebookApplicationSecretError}
+				<span class="helpTxt">{$msgHelpFacebookApplicationSecret}</span>
+			</p>
 		</div>
 	</div>
 

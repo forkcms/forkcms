@@ -152,6 +152,22 @@ class FrontendTemplate extends SpoonTemplate
 
 
 	/**
+	 * Is the cache for this item still valid.
+	 *
+	 * @return	bool			Is this template block cached?
+	 * @param	string $name	The name of the cached block.
+	 */
+	public function isCached($name)
+	{
+		// never cached in debug
+		if(SPOON_DEBUG) return false;
+
+		// let parent do the actual check
+		else parent::isCached($name);
+	}
+
+
+	/**
 	 * Map the frontend-specific modifiers
 	 *
 	 * @return	void
@@ -235,6 +251,12 @@ class FrontendTemplate extends SpoonTemplate
 
 		// settings
 		$this->assign('SITE_TITLE', FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+
+		// facebook stuff
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->assign('FACEBOOK_ADMIN_IDS', FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null));
+		if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null) $this->assign('FACEBOOK_APP_ID', FrontendModel::getModuleSetting('core', 'facebook_app_id', null));
+		if(FrontendModel::getModuleSetting('core', 'facebook_app_secret', null) !== null) $this->assign('FACEBOOK_APP_SECRET', FrontendModel::getModuleSetting('core', 'facebook_app_secret', null));
+		if(FrontendModel::getModuleSetting('core', 'facebook_api_key', null) !== null) $this->assign('FACEBOOK_API_KEY', FrontendModel::getModuleSetting('core', 'facebook_api_key', null));
 
 		// theme
 		if(FrontendModel::getModuleSetting('core', 'theme') !== null)

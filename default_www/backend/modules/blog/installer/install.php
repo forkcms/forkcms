@@ -63,6 +63,7 @@ class BlogInstall extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'categories');
 		$this->setActionRights(1, 'blog', 'comments');
 		$this->setActionRights(1, 'blog', 'delete_category');
+		$this->setActionRights(1, 'blog', 'delete_spam');
 		$this->setActionRights(1, 'blog', 'delete');
 		$this->setActionRights(1, 'blog', 'edit_category');
 		$this->setActionRights(1, 'blog', 'edit_comment');
@@ -79,7 +80,6 @@ class BlogInstall extends ModuleInstaller
 		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
-
 
 		// loop languages
 		foreach($this->getLanguages() as $language)

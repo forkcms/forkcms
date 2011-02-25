@@ -20,13 +20,18 @@
 			<div class="mod article">
 				<div class="inner">
 					<div class="hd">
-						<h2><a href="{$items.full_url}" title="{$items.title}">{$items.title}</a></h2>
-						<p>{$items.publish_on|date:{$dateFormatLong}:{$LANGUAGE}|ucfirst} -
-						{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
-						{option:items.comments}
-							{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
-							{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
-						{/option:items.comments}
+						<h2>
+							<a href="{$items.full_url}" title="{$items.title}">
+								{$items.title}
+							</a>
+						</h2>
+						<p>
+							{$items.publish_on|date:{$dateFormatLong}:{$LANGUAGE}|ucfirst} -
+							{option:!items.comments}<a href="{$items.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!items.comments}
+							{option:items.comments}
+								{option:items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$items.comments_count}}</a>{/option:items.comments_multiple}
+								{option:!items.comments_multiple}<a href="{$items.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!items.comments_multiple}
+							{/option:items.comments}
 						</p>
 					</div>
 					<div class="bd content">
@@ -40,7 +45,7 @@
 							{option:items.tags}
 								{$lblTags|ucfirst}:
 								{iteration:items.tags}
-									<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.name}">{$items.tags.name}</a>{option:!items.tags.last}, {/option:!items.tags.last}
+									<a href="{$items.tags.full_url}" rel="tag" title="{$items.tags.name}">{$items.tags.name}</a>{option:!items.tags.last}, {/option:!items.tags.last}{option:items.tags.last}.{/option:items.tags.last}
 								{/iteration:items.tags}
 							{/option:items.tags}
 						</p>
