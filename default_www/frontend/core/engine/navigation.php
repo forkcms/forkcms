@@ -258,9 +258,10 @@ class FrontendNavigation extends FrontendBaseObject
 	 * @param	int[optional] $parentId			The parentID to start of.
 	 * @param	int[optional] $depth			The maximum depth to parse.
 	 * @param	array[optional] $excludeIds		PageIDs to be excluded.
+	 * @param	bool[optional] $expandAll		Expand all navigation children.
 	 * @param	int[optional] $depthCounter		A counter that will hold the current depth.
 	 */
-	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $depthCounter = 1)
+	public static function getNavigationHTML($type = 'page', $parentId = 0, $depth = null, $excludeIds = array(), $expandAll = false, $depthCounter = 1)
 	{
 		// get navigation
 		$navigation = self::getNavigation();
@@ -320,6 +321,10 @@ class FrontendNavigation extends FrontendBaseObject
 
 				// has children and is selected and is desired?
 				if(isset($navigation[$type][$page['page_id']]) && $navigation[$type][$parentId][$id]['selected'] == true && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $depthCounter + 1);
+				else $navigation[$type][$parentId][$id]['children'] = false;
+
+				// has children is not selected but forces expanding all
+				if(isset($navigation[$type][$page['page_id']]) && $expandAll == true && ($depth == null || $depthCounter + 1 <= $depth)) $navigation[$type][$parentId][$id]['children'] = self::getNavigationHTML($type, $page['page_id'], $depth, $excludeIds, $depthCounter + 1);
 				else $navigation[$type][$parentId][$id]['children'] = false;
 
 				// add parent id
