@@ -40,9 +40,6 @@ class Frontend
 	 */
 	private function initializeFacebook()
 	{
-		// init var
-		$facebook = null;
-
 		// get settings
 		$facebookApplicationId = FrontendModel::getModuleSetting('core', 'facebook_app_id');
 		$facebookApplicationSecret = FrontendModel::getModuleSetting('core', 'facebook_app_secret');
@@ -62,10 +59,10 @@ class Frontend
 
 			// set the token if available
 			if(isset($data['access_token'])) $facebook->setToken($data['access_token']);
-		}
 
-		// store in reference
-		Spoon::setObjectReference('facebook', $facebook);
+			// store in reference
+			Spoon::setObjectReference('facebook', $facebook);
+		}
 	}
 }
 
