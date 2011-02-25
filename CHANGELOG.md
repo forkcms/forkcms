@@ -46,6 +46,8 @@
 * Tools: added a script to generate statistics for the codebase
 * Core: isCached now always returns false when SPOON_DEBUG is true
 * FormBuilder: added the formbuilder module.
+* Core: Integrated Facebook in the frontend, when an Facebook-app is configured, a facebook-instance will be available in the reference (Spoon::getObjectReference('facebook')). When the user has granted the correct permission you will be able to communicate with Facebook as that user.
+
 
 2.0.2 (2010-11-24)
 --
