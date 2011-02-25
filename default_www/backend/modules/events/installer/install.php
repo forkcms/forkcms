@@ -135,6 +135,7 @@ class EventsInstall extends ModuleInstaller
 
 
 		// insert locale (nl)
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'IntegerIsInvalid', 'Dit is een ongeldig geheel getal.');
 		$this->insertLocale('nl', 'backend', 'events', 'err', 'RSSDescription', 'Evenementen RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>');
 		$this->insertLocale('nl', 'backend', 'events', 'lbl', 'Add', 'evenement toevoegen');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Added', 'Het evenement "%1$s" werd toegevoegd.');
@@ -182,6 +183,7 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoItems', 'Er zijn nog geen evenementen.');
 
 		// insert locale (en)
+		$this->insertLocale('en', 'backend', 'core', 'err', 'IntegerIsInvalid', 'Invalid integer.');
 		$this->insertLocale('en', 'backend', 'events', 'err', 'RSSDescription', 'Events RSS description is not yet provided. <a href="%1$s">Configure</a>');
 		$this->insertLocale('en', 'backend', 'events', 'lbl', 'Add', 'add event');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'Added', 'The event "%1$s" was added.');

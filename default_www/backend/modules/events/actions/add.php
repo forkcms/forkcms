@@ -62,6 +62,8 @@ class BackendEventsAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('text');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
+		$this->frm->addCheckbox('allow_subscriptions', false);
+		$this->frm->addText('max_subscriptions');
 		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('events', 'allow_comments', false));
 		$this->frm->addDropdown('category_id', BackendEventsModel::getCategories(), $defaultCategoryId);
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
@@ -144,6 +146,8 @@ class BackendEventsAdd extends BackendBaseActionAdd
 				$item['edited_on'] = $item['created_on'];
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
+				$item['allow_subscriptions'] = $this->frm->getField('allow_subscriptions')->getChecked() ? 'Y' : 'N';
+				$item['max_subscriptions'] = ($item['allow_subscriptions'] == 'Y' && $this->frm->getField('max_subscriptions')->isFilled()) ? (int) $this->frm->getField('max_subscriptions')->getValue() : null;
 				$item['num_comments'] = 0;
 				$item['status'] = $status;
 

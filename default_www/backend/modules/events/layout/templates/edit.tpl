@@ -135,6 +135,25 @@
 							</div>
 						</div>
 
+						<div class="box" id="subscriptions">
+							<div class="heading">
+								<h3>{$lblSubscriptions|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<ul class="inputList">
+									<li>
+										<label for="subscriptionsOpen">
+											{$chkAllowSubscriptions} {$lblEnabled|ucfirst} {$chkAllowSubscriptionsError}
+										</label>
+									</li>
+								</ul>
+								<p>
+									<label for="maximumSubscriptions">{$lblMaxmimumSubscriptions|ucfirst}</label>
+									{$txtMaxSubscriptions} {$txtMaxSubscriptionsError}
+								</p>
+							</div>
+						</div>
+
 						<div class="box" id="articleMeta">
 							<div class="heading">
 								<h3>{$lblMetaData|ucfirst}</h3>

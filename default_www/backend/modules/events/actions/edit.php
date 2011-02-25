@@ -164,6 +164,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addEditor('introduction', $this->record['introduction']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
+		$this->frm->addCheckbox('allow_subscriptions', ($this->record['allow_subscriptions'] === 'Y'));
+		$this->frm->addText('max_subscriptions', ($this->record['max_subscriptions'] != null) ? $this->record['max_subscriptions'] : '');
 		$this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
 		$this->frm->addDropdown('category_id', BackendEventsModel::getCategories(), $this->record['category_id']);
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
@@ -265,6 +267,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 			$this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
+			if($this->frm->getField('max_subscriptions')->isFilled()) $this->frm->getField('max_subscriptions')->isInteger(BL::err('IntegerIsInvalid'));
 
 			// validate meta
 			$this->meta->validate();
@@ -288,6 +291,8 @@ class BackendEventsEdit extends BackendBaseActionEdit
 				$item['edited_on'] = BackendModel::getUTCDate();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
+				$item['allow_subscriptions'] = $this->frm->getField('allow_subscriptions')->getChecked() ? 'Y' : 'N';
+				$item['max_subscriptions'] = ($item['allow_subscriptions'] == 'Y' && $this->frm->getField('max_subscriptions')->isFilled()) ? (int) $this->frm->getField('max_subscriptions')->getValue() : null;
 				$item['status'] = $status;
 
 				// update the item

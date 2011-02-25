@@ -26,7 +26,6 @@
 			<table border="0" cellspacing="0" cellpadding="0" width="100%">
 				<tr>
 					<td id="leftColumn">
-
 						<div class="box">
 							<div class="heading">
 								<h3>{$lblDates|ucfirst}</h3>
@@ -119,6 +118,25 @@
 										{$txtPublishOnTime} {$txtPublishOnTimeError}
 									</p>
 								</div>
+							</div>
+						</div>
+
+						<div class="box" id="subscriptions">
+							<div class="heading">
+								<h3>{$lblSubscriptions|ucfirst}</h3>
+							</div>
+							<div class="options">
+								<ul class="inputList">
+									<li>
+										<label for="subscriptionsOpen">
+											{$chkAllowSubscriptions} {$lblEnabled|ucfirst} {$chkAllowSubscriptionsError}
+										</label>
+									</li>
+								</ul>
+								<p>
+									<label for="maximumSubscriptions">{$lblMaxmimumSubscriptions|ucfirst}</label>
+									{$txtMaxSubscriptions} {$txtMaxSubscriptionsError}
+								</p>
 							</div>
 						</div>
 
