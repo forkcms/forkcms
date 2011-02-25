@@ -77,8 +77,8 @@ class BackendFormBuilderIndex extends BackendBaseActionIndex
 	 * Parse amount of forms sent for the datagrid
 	 *
 	 * @return	string
-	 * @param	int $formId
-	 * @param	int $sentForms
+	 * @param	int $formId			Id of the form.
+	 * @param	int $sentForms		Amount of sent forms.
 	 */
 	public static function parseNumForms($formId, $sentForms)
 	{
