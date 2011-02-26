@@ -112,6 +112,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EmailIsRequired', 'Gelieve een e-mailadres in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EmailIsUnknown', 'Dit e-mailadres zit niet in onze database.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EndDateIsInvalid', 'Ongeldige einddatum');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'ExtensionNotAllowed', 'Ongeldig bestandstype. (toegelaten: %1$s)');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'FieldIsRequired', 'Dit veld is verplicht.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'ForkAPIKeys', 'Fork API-keys nog niet geconfigureerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'FormError', 'Er ging iets mis, kijk de gemarkeerde velden na.');
@@ -226,6 +227,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Example', 'voorbeeld');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Execute', 'uitvoeren');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ExitPages', 'uitstappagina\'s');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Export', 'exporteer');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ExtraMetaTags', 'extra metatags');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'FeedburnerURL', 'feedburner URL');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'File', 'bestand');
@@ -489,6 +491,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsInvalid', 'Please provide a valid e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsRequired', 'Please provide a valid e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsUnknown', 'This e-mailaddress is not in our database.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'ExtensionNotAllowed', 'Invalid file type. (allowed: %1$s)');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'FieldIsRequired', 'This field is required.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'ForkAPIKeys', 'Fork API-keys are not configured.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'FormError', 'Something went wrong, check the marked fields.');
@@ -603,6 +606,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Example', 'example');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Execute', 'execute');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ExitPages', 'exit pages');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Export', 'export');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ExtraMetaTags', 'extra metatags');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'FeedburnerURL', 'feedburner URL');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'File', 'file');
