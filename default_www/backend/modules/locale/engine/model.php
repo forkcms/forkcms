@@ -176,7 +176,7 @@ class BackendLocaleModel
 	 * Get full type name.
 	 *
 	 * @return	string
-	 * @param	string $type
+	 * @param	string $type		The type of the locale.
 	 */
 	public static function getTypeName($type)
 	{
