@@ -26,6 +26,14 @@
 class SpoonIcal
 {
 	/**
+	 * The calendar scale
+	 *
+	 * @var	string
+	 */
+	private $calendarScale = 'GREGORIAN';
+
+
+	/**
 	 * Items
 	 *
 	 * @var	array
@@ -34,31 +42,23 @@ class SpoonIcal
 
 
 	/**
-	 * Method
+	 * The method
 	 *
 	 * @var	string
 	 */
-	private $method = 'PUBLISH';
+	private $method;
 
 
 	/**
-	 * Product Identifier
+	 * The product identifier
 	 *
 	 * @var	string
 	 */
-	private $prodId;
+	private $productIdentifier;
 
 
 	/**
-	 * Scale
-	 *
-	 * @var	string
-	 */
-	private $scale = 'GREGORIAN';
-
-
-	/**
-	 * Version
+	 * The version
 	 *
 	 * @var	string
 	 */
@@ -66,10 +66,18 @@ class SpoonIcal
 
 
 	/**
-	 * Add an even
+	 * The properties
+	 *
+	 * @var array
+	 */
+	private $xProperties;
+
+
+	/**
+	 * Add an event
 	 *
 	 * @return	void
-	 * @param	SpoonICalendarEvent $item
+	 * @param	SpoonIcalItem $item		The item to add.
 	 */
 	public function addItem(SpoonIcalItem $item)
 	{
@@ -94,18 +102,39 @@ class SpoonIcal
 		$string .= 'VERSION:'. $this->getVersion() ."\n";
 
 		// set product identifier
-		$string .= 'PRODID:-//'. $this->getProductIdentifier() .'//EN' ."\n";
-		$string .= 'CALSCALE:'. $this->getScale() ."\n";
+		$string .= 'PRODID:'. $this->getProductIdentifier() ."\n";
+		$string .= 'CALSCALE:'. $this->getCalendarScale() ."\n";
 		if($this->getMethod() != '') $string .= 'METHOD:'. $this->getMethod() ."\n";
 
+		// get extensions
+		$xProperties = $this->getXProperties();
+
+		// any extensions?
+		if(!empty($xProperties))
+		{
+			// loop
+			foreach($xProperties as $key => $value) $string .= $key .':'. $value ."\n";
+		}
+
 		// loop all events
-		foreach($this->getItems() as $item) $string .= $ievent->parse();
+		foreach($this->getItems() as $item) $string .= $item->parse() ."\n";
 
 		// end string
 		$string .= 'END:VCALENDAR';
 
 		// return
 		return $string;
+	}
+
+
+	/**
+	 * Get the calendar scale
+	 *
+	 * @return	string
+	 */
+	public function getCalendarScale()
+	{
+		return $this->calendarScale;
 	}
 
 
@@ -133,15 +162,7 @@ class SpoonIcal
 	 */
 	public function getProductIdentifier()
 	{
-		if($this->prodId == '') return 'Spoon v'. SPOON_VERSION;
-		return $this->prodId;
-	}
-
-
-
-	public function getScale()
-	{
-		return $this->scale;
+		return '-//Spoon v'. SPOON_VERSION .'//'. $this->productIdentifier;
 	}
 
 
@@ -153,6 +174,12 @@ class SpoonIcal
 	public function getVersion()
 	{
 		return $this->version;
+	}
+
+
+	public function getXProperties()
+	{
+		return $this->xProperties;
 	}
 
 
@@ -192,10 +219,22 @@ class SpoonIcal
 
 
 	/**
+	 * Set the scale.
+	 *
+	 * @return	void
+	 * @param	string $scale	The scale.
+	 */
+	public function setCalendarScale($scale)
+	{
+		$this->scale = (string) $scale;
+	}
+
+
+	/**
 	 * The method
 	 *
 	 * @return	void
-	 * @param	string $method
+	 * @param	string $method		The method of the calendar.
 	 */
 	public function setMethod($method)
 	{
@@ -207,7 +246,7 @@ class SpoonIcal
 	 * Set product identifier
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value		The product identifier, our will be prepended.
 	 */
 	public function setProductIdentifier($value)
 	{
@@ -216,27 +255,28 @@ class SpoonIcal
 
 
 	/**
-	 * Set the scale.
-	 *
-	 * @return	void
-	 * @param	string $scale	The scale.
-	 */
-	public function setScale($scale)
-	{
-		$this->scale = (string) $scale;
-	}
-
-
-	/**
 	 * Set version
 	 *
 	 * @return	void
-	 * @param	string[optional] $value
+	 * @param	string[optional] $value		The version.
 	 */
 	public function setVersion($value = '2.0')
 	{
 		$this->version = (string) $value;
 	}
+
+
+	/**
+	 * Set the X-properties
+	 *
+	 * @return	void
+	 * @param 	array $properties	The properties as a key-value-pairs.
+	 */
+	public function setXProperties(array $properties)
+	{
+		foreach($properties as $key => $value) $this->xProperties[(string) $key] = $value;
+	}
+
 }
 
 ?>

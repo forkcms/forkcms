@@ -15,27 +15,19 @@
 
 
 /**
- * This base class provides all the methods used by RSS-items.
+ * This base class provides all the methods used by iCal-items.
  *
  * @package		spoon
- * @subpackage	feed
+ * @subpackage	ical
  *
  *
  * @author		Tijs Verkoyen <tijs@spoon-library.com>
- * @since		1.1.0
+ * @since		1.3.0
  */
 class SpoonIcalItem
 {
 	/**
-	 * Specifies the author of the item
-	 *
-	 * @var	string
-	 */
-	private $author;
-
-
-	/**
-	 * Defines the categories the item belongs to
+	 * The categories
 	 *
 	 * @var	array
 	 */
@@ -43,15 +35,31 @@ class SpoonIcalItem
 
 
 	/**
-	 * The link to the comments about that item
+	 * The classification
 	 *
 	 * @var	string
 	 */
-	private $commentsLink;
+	private $classification;
 
 
 	/**
-	 * Describes the item
+	 * The comments
+	 *
+	 * @var	array
+	 */
+	private $comments = array();
+
+
+	/**
+	 * The contact
+	 *
+	 * @var	array
+	 */
+	private $contact = array();
+
+
+	/**
+	 * The description
 	 *
 	 * @var	string
 	 */
@@ -59,184 +67,97 @@ class SpoonIcalItem
 
 
 	/**
-	 * An included media file for the item
-	 *
-	 * @var	array
-	 */
-	private $enclosure;
-
-
-	/**
-	 * Defines a unique identifier for the item
-	 *
-	 * @var	array
-	 */
-	private $guid = array();
-
-
-	/**
-	 * Defines the hyperlink to the item
-	 *
-	 * @var	string
-	 */
-	private $link;
-
-
-	/**
-	 * Defines the last-publication date for the item
+	 * The creation date
 	 *
 	 * @var	int
 	 */
-	private $publicationDate;
+	private $datetimeCreated;
 
 
 	/**
-	 * Specifies a third-party source for the item
+	 * The end date
+	 *
+	 * @var	int
+	 */
+	private $datetimeStamp;
+
+
+	/**
+	 * The start date
+	 *
+	 * @var	int
+	 */
+	private $datetimeStart;
+
+
+	/**
+	 * The last modifief date
+	 *
+	 * @var	int
+	 */
+	private $datetimeLastModified;
+
+
+	/**
+	 * The organizer
 	 *
 	 * @var	array
 	 */
-	private $source = array();
+	private $organizer = array();
 
 
 	/**
-	 * Defines the title of the item
+	 * The sequence
+	 *
+	 * @var	int
+	 */
+	private $sequence;
+
+
+	/**
+	 * The status
 	 *
 	 * @var	string
 	 */
-	private $title;
+	private $status;
 
 
 	/**
-	 * Default constructor.
+	 * The summary
 	 *
-	 * @return	void
-	 * @param	string $title			The title for the item.
-	 * @param	string $link			The link for the item.
-	 * @param	string $description		The content for the item.
+	 * @var	string
 	 */
-	public function __construct($title, $link, $description)
-	{
-		// set properties
-		$this->setTitle($title);
-		$this->setLink($link);
-		$this->setDescription($description);
-	}
+	private $summary;
 
 
 	/**
-	 * Add a category for the item.
+	 * The unqiue identifier
 	 *
-	 * @return	void
-	 * @param	string $name				The name of the category.
-	 * @param	string[optional] $domain	The domain of the category.
+	 * @var	string
 	 */
-	public function addCategory($name, $domain = null)
-	{
-		// create array
-		$category['name'] = (string) $name;
-
-		// has a domain
-		if($domain != null) $category['domain'] = (string) $domain;
-
-		// add property
-		$this->categories[] = $category;
-	}
+	private $uniqueIdentifier;
 
 
 	/**
-	 * Builds the XML.
+	 * The url
 	 *
-	 * @return	string		The fully build XML for an item.
+	 * @var	string
 	 */
-	public function buildXML()
-	{
-		// init xmlstring
-		$XML = '<item>'."\n";
-
-		// insert title
-		$XML .= '	<title><![CDATA['. $this->getTitle() .']]></title>'."\n";
-
-		// insert link
-		$XML .= '	<link>'. $this->getLink() .'</link>'."\n";
-
-		// insert description
-		$XML .= '	<description>'."\n";
-		$XML .= '		<![CDATA['."\n";
-		$XML .= '			'. $this->getDescription() ."\n";
-		$XML .= '		]]>'."\n";
-		$XML .= '	</description>'."\n";
-
-		// insert item publication date
-		$publicationDate = $this->getPublicationDate();
-		if($publicationDate != '') $XML .= '	<pubDate>'. date('r', $publicationDate) .'</pubDate>'."\n";
-
-		// insert author
-		$author = $this->getAuthor();
-		if($author != '') $XML .= '	<author><![CDATA['. $author .']]></author>'."\n";
-
-		// insert source
-		$source = $this->getSource();
-		if(!empty($source))
-		{
-			$XML .= '	<source url="'. $source['url'] .'"><![CDATA['. $source['name'] .']]></source>'."\n";
-		}
-
-		// insert categories
-		$categories = $this->getCategories();
-		if(!empty($categories))
-		{
-			foreach($categories as $category)
-			{
-				if(isset($category['domain'])) $XML .= '	<category domain="'. $category['domain'] .'"><![CDATA['. $category['name'] .']]></category>'."\n";
-				else $XML .= '	<category><![CDATA['. $category['name'] .']]></category>'."\n";
-			}
-		}
-
-		// insert guid
-		$guid = $this->getGuid();
-		if(!empty($guid))
-		{
-			// reformat
-			$isPermaLink = ($guid['isPermaLink']) ? 'true' : 'false';
-
-			// build xml
-			$XML .= '	<guid isPermaLink="'. $isPermaLink .'">'. $guid['url'] .'</guid>'."\n";
-		}
-
-		// insert enclosure
-		$enclosure = $this->getEnclosure();
-		if(!empty($enclosure))
-		{
-			if(isset($enclosure['url']) && isset($enclosure['length']) && isset($enclosure['type'])) $XML .= '	<enclosure url="'. $enclosure['url'] .'" length="'. $enclosure['length'] .'" type="'. $enclosure['type'] .'" />'."\n";
-		}
-
-		// insert comments
-		$commentsLink = $this->getCommentsLink();
-		if($commentsLink != '') $XML .= '	<comments>'. $commentsLink .'</comments>'."\n";
-
-		// close item
-		$XML .= '	</item>'."\n";
-
-		// return
-		return $XML;
-	}
+	private $url;
 
 
 	/**
-	 * Get the author.
+	 * The vendor-specific properties
 	 *
-	 * @return	string
+	 * @var	array
 	 */
-	public function getAuthor()
-	{
-		return $this->author;
-	}
+	private $xProperties = array();
 
 
 	/**
-	 * Get the categories.
+	 * Get the categories
 	 *
-	 * @return	array	An array with all categories.
+	 * @return	array
 	 */
 	public function getCategories()
 	{
@@ -245,18 +166,84 @@ class SpoonIcalItem
 
 
 	/**
-	 * Get the comment link.
+	 * Get the classicifation
 	 *
 	 * @return	string
 	 */
-	public function getCommentsLink()
+	public function getClassification()
 	{
-		return $this->commentsLink;
+		return $this->classification;
 	}
 
 
 	/**
-	 * Get the description.
+	 * Get the comments
+	 *
+	 * @return	array
+	 */
+	public function getComments()
+	{
+		return $this->comments;
+	}
+
+
+	/**
+	 * Get the contact
+	 *
+	 * @return	array
+	 */
+	public function getContact()
+	{
+		return $this->contact;
+	}
+
+
+	/**
+	 * Get the creation date
+	 *
+	 * @return	int
+	 */
+	public function getDatetimeCreated()
+	{
+		return $this->datetimeCreated;
+	}
+
+
+	/**
+	 * Get the last-modified-date
+	 *
+	 * @return	int
+	 */
+	public function getDatetimeLastModified()
+	{
+		return $this->$datetimeLastModified;
+	}
+
+
+	/**
+	 * Get the creation/revised-date
+	 *
+	 * @return	int
+	 */
+	public function getDatetimeStamp()
+	{
+		return $this->datetimeStamp;
+	}
+
+
+	/**
+	 * Get the start date
+	 *
+	 * @return	int
+	 */
+	public function getDatetimeStart()
+	{
+		return $this->datetimeStart;
+	}
+
+
+	/**
+	 * Get the description
 	 *
 	 * @return	string
 	 */
@@ -267,262 +254,180 @@ class SpoonIcalItem
 
 
 	/**
-	 * Get the enclosure properties.
+	 * Get the organizer
 	 *
 	 * @return	array
 	 */
-	public function getEnclosure()
+	public function getOrganizer()
 	{
-		return $this->enclosure;
+		return $this->organizer;
 	}
 
 
 	/**
-	 * Get the guid properties.
-	 *
-	 * @return	array
-	 */
-	public function getGuid()
-	{
-		return $this->guid;
-	}
-
-
-	/**
-	 * Get the link.
-	 *
-	 * @return	string
-	 */
-	public function getLink()
-	{
-		return $this->link;
-	}
-
-
-	/**
-	 * Get the publication date.
+	 * Get the sequence
 	 *
 	 * @return	int
 	 */
-	public function getPublicationDate()
+	public function getSequence()
 	{
-		return $this->publicationDate;
+		return $this->sequence;
+	}
+
+
+	public function getStatus()
+	{
+		return $this->status;
 	}
 
 
 	/**
-	 * Get the raw XML.
+	 * Get the summary
 	 *
 	 * @return	string
 	 */
-	public function getRawXML()
+	public function getSummary()
 	{
-		return $this->buildXML();
+		return $this->summary;
 	}
 
 
 	/**
-	 * Get the source properties.
+	 * Get the unique identifier
+	 *
+	 * @return	string
+	 */
+	public function getUniqueIdentifier()
+	{
+		return $this->uniqueIdentifier;
+	}
+
+
+	/**
+	 * Get the URL
+	 *
+	 * @return	string
+	 */
+	public function getUrl()
+	{
+		return $this->url;
+	}
+
+
+	/**
+	 * Get the properties
 	 *
 	 * @return	array
 	 */
-	public function getSource()
+	public function getXProperties()
 	{
-		return $this->source;
+		return $this->xProperties;
 	}
 
 
 	/**
-	 * Get the title.
-	 *
-	 * @return	string
-	 */
-	public function getTitle()
-	{
-		return $this->title;
-	}
-
-
-	/**
-	 * Validate if the given XML is valid.
-	 *
-	 * @return	bool						True if the item is valid, otherwise false.
-	 * @param	SimpleXMLElement $item		An item/article from the whole feed.
-	 */
-	public static function isValid(SimpleXMLElement $item)
-	{
-		// are all needed elements present?
-		if(!isset($item->title) || !isset($item->link) || !isset($item->description)) return false;
-
-		// fallback
-		return true;
-	}
-
-
-	/**
-	 * Parse the item
-	 *
-	 * @return	string	The XML for the item
-	 */
-	public function parse()
-	{
-		return $this->buildXML();
-	}
-
-
-	/**
-	 * Read an item from a SimpleXMLElement.
-	 *
-	 * @return	SpoonRSSItem				An instance of SpoonRSS.
-	 * @param	SimpleXMLElement $item		The XML-element that represents a single item in the feed.
-	 */
-	public static function readFromXML(SimpleXMLElement $item)
-	{
-		// get title, link and description
-		$title = (string) $item->title;
-		$link = (string) $item->link;
-		$description = (string) $item->description;
-
-		// create instance
-		$rssItem = new SpoonFeedRSSItem($title, $link, $description);
-
-		// add categories
-		if(isset($item->category))
-		{
-			foreach($item->category as $category)
-			{
-				// set property
-				$rssItem->addCategory((string) $category, $category['domain']);
-			}
-		}
-
-		// set author
-		if(isset($item->author)) $rssItem->setAuthor((string) $item->author);
-
-		// set commentslink
-		if(isset($item->comments))
-		{
-			// try to set the commentslink
-			try
-			{
-				// set commentslink
-				$rssItem->setCommentsLink((string) $item->comments);
-			}
-
-			// catch exceptions
-			catch(Exception $e)
-			{
-				// ignore exceptions
-			}
-		}
-
-		// set enclosure
-		if(isset($item->enclosure['url']) && isset($item->enclosure['length']) && isset($item->enclosure['type']))
-		{
-			// read data
-			$URL = (string) $item->enclosure['url'];
-			$length = (int) $item->enclosure['length'];
-			$type = (string) $item->enclosure['type'];
-
-			// try to set enclosure
-			try
-			{
-				// set enclosure
-				$rssItem->setEnclosure($URL, $length, $type);
-			}
-
-			// catch exceptions
-			catch(Exception $e)
-			{
-				// ignore exceptions
-			}
-		}
-
-		// set guid
-		if(isset($item->guid))
-		{
-			// read data
-			$URL = (string) $item->guid;
-			$isPermaLink = (bool) $item->guid['isPermaLink'];
-
-			// try to set GUID
-			try
-			{
-				// set GUID
-				$rssItem->setGuid($URL, $isPermaLink);
-			}
-
-			// catch exceptions
-			catch(Exception $e)
-			{
-				// ignore exceptions
-			}
-		}
-
-		// set publication date
-		if(isset($item->pubDate)) $rssItem->setPublicationDate((int) strtotime($item->pubDate));
-
-		// set source
-		if(isset($item->source))
-		{
-			// read data
-			$name = (string) $item->source;
-			$URL = (string) $item->source['url'];
-
-			// try to set source
-			try
-			{
-				// set source
-				$rssItem->setSource($name, $URL);
-			}
-
-			// catch exceptions
-			catch(Exception $e)
-			{
-				// ignore exceptions
-			}
-		}
-
-		return $rssItem;
-	}
-
-
-	/**
-	 * Set the author.
+	 * Set the categories
 	 *
 	 * @return	void
-	 * @param	string $author	The author of the item.
+	 * @param	array $categories	The categories.
 	 */
-	public function setAuthor($author)
+	public function setCategories(array $categories)
 	{
-		$this->author = (string) $author;
+		$this->categories = $categories;
 	}
 
 
 	/**
-	 * Set the comments link.
+	 * Set the classification
 	 *
 	 * @return	void
-	 * @param	string $link	The link where the comments are available.
+	 * @param	string $classification		The classification for an object.
 	 */
-	public function setCommentsLink($link)
+	public function setClassification($classification)
 	{
-		// redefine var
-		$link = (string) $link;
-
-		// validate
-		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid comments link.');
-
-		// set property
-		$this->commentsLink = $link;
+		$this->classification = $$classification;
 	}
 
 
 	/**
-	 * Set the description.
+	 * Set the comments
 	 *
 	 * @return	void
-	 * @param	string $description		The content of the item.
+	 * @param	array $comments		The comments.
+	 */
+	public function setComments(array $comments)
+	{
+		$this->comments = $comments;
+	}
+
+
+	/**
+	 * Set the contact
+	 *
+	 * @return	void
+	 * @param	string $contact				Textual contact information.
+	 * @param	string[optional] $uri		URI to alternate representation.
+	 */
+	public function setContact($contact, $uri = null)
+	{
+		$this->contact['value'] = (string) $contact;
+		$this->contact['uri'] = $uri;
+	}
+
+
+	/**
+	 * Set the date created
+	 *
+	 * @return	void
+	 * @param	int $timestamp		The creation date.
+	 */
+	public function setDatetimeCreated($timestamp)
+	{
+		$this->datetimeCreated = (int) $timestamp;
+	}
+
+
+	/**
+	 * Set the date the instance was created/last revised
+	 *
+	 * @return	void
+	 * @param	int $timestamp		The creation date.
+	 */
+	public function setDatetimeStamp($timestamp)
+	{
+		$this->datetimeStamp = (int) $timestamp;
+	}
+
+
+	/**
+	 * Set the last modified date
+	 *
+	 * @return	void
+	 * @param	int $timestamp		The modified date.
+	 */
+	public function setDatetimeLastModified($timestamp)
+	{
+		$this->datetimeLastModified = (int) $timestamp;
+	}
+
+
+	/**
+	 * Set the datestart
+	 *
+	 * @return	void
+	 * @param	int $timestamp		The start date.
+	 */
+	public function setDatetimeStart($timestamp)
+	{
+		$this->datetimeStart = (int) $timestamp;
+	}
+
+
+	/**
+	 * Set the description
+	 *
+	 * @return	void
+	 * @param	string $description		A more complete description.
 	 */
 	public function setDescription($description)
 	{
@@ -531,119 +436,467 @@ class SpoonIcalItem
 
 
 	/**
-	 * Set the enclosure
+	 * Set the organizer
 	 *
 	 * @return	void
-	 * @param	string $URL		The URL of the enclosure.
-	 * @param	int $length		The length of the enclosure.
-	 * @param	string $type	The content-type of the enclosure.
+	 * @param	string $email					Email of the organisor.
+	 * @param	string[optional] $cn			The common name or display name.
+	 * @param	string[optional] $dir			Points to the directory information containing information about the organizor.
+	 * @param	string[optional] $sentBy		Specifies another user that acts on behalf the organisor.
+	 * @param	string[optional] $language		Language for the CN-field.
 	 */
-	public function setEnclosure($URL, $length, $type)
+	public function setOrganizer($email, $cn = null, $dir = null, $sentBy = null, $language = null)
 	{
-		// redefine var
-		$URL = (string) $URL;
-
-		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\'t a valid URL for an enclosure.');
-
-		// create array
-		$enclosure['url'] = $URL;
-		$enclosure['length'] = (int) $length;
-		$enclosure['type'] = (string) $type;
+		// build
+		$property = array();
+		$property['email'] = (string) $email;
+		$property['cn'] = ($cn !== null) ? (string) $cn : null;
+		$property['dir'] = ($dir !== null) ? (string) $dir : null;
+		$property['sentby'] = ($sentBy !== null) ? (string) $sentBy : null;
+		$property['language'] = ($language !== null) ? (string) $language : null;
 
 		// set property
-		$this->enclosure = $enclosure;
+		$this->organizer = $property;
 	}
 
 
 	/**
-	 * Set the guid.
+	 * Set the revision sequence
 	 *
 	 * @return	void
-	 * @param	string $URL						The URL of the item.
-	 * @param	bool[optional] $isPermaLink		Is this the permalink?
+	 * @param	int $sequence		The sequence within the revisions.
 	 */
-	public function setGuid($URL, $isPermaLink = true)
+	public function setSequence($sequence)
 	{
-		// redefine var
-		$URL = (string) $URL;
+		$this->sequence = (int) $sequence;
+	}
+
+
+	/**
+	 * Set the status
+	 *
+	 * @return	void
+	 * @param	string $status		The overall status/confirmation.
+	 */
+	public function setStatus($status)
+	{
+		$this->status = (string) $status;
+	}
+
+
+	/**
+	 * Set the summary
+	 *
+	 * @return	void
+	 * @param	string $summary		A short summary.
+	 */
+	public function setSummary($summary)
+	{
+		$this->summary = (string) $summary;
+	}
+
+
+	/**
+	 * Set the unique identifier
+	 *
+	 * @return	void
+	 * @param	string $identifier	The identifier.
+	 */
+	public function setUniqueIdentifier($identifier)
+	{
+		$this->uniqueIdentifier = (string) $identifier;
+	}
+
+
+	/**
+	 * Set the url
+	 *
+	 * @return	void
+	 * @param	string $url		The url to assiociate the item with.
+	 */
+	public function setUrl($url)
+	{
+		$this->url = (string) $url;
+	}
+
+
+	/**
+	 * Set the X-properties
+	 *
+	 * @return	void
+	 * @param 	array $properties	The properties as a key-value-pairs.
+	 */
+	public function setXProperties(array $properties)
+	{
+		foreach($properties as $key => $value) $this->xProperties[(string) $key] = $value;
+	}
+}
+
+
+/**
+ * This base class provides all the methods used by iCalEvent-items.
+ *
+ * @package		spoon
+ * @subpackage	ical
+ *
+ *
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @since		1.3.0
+ */
+class SpoonIcalItemEvent extends SpoonIcalItem
+{
+	/**
+	 * End datetime
+	 *
+	 * @var	int
+	 */
+	private $datetimeEnd;
+
+
+	/**
+	 * Duration
+	 *
+	 * @var	string
+	 */
+	private $duration;
+
+
+	/**
+	 * The GEO information
+	 *
+	 * @var	array
+	 */
+	private $geo = array();
+
+
+	/**
+	 * The location
+	 *
+	 * @var	string
+	 */
+	private $location;
+
+
+	/**
+	 * The priority
+	 *
+	 * @var	string
+	 */
+	private $priority;
+
+
+	/**
+	 * The needed resources
+	 *
+	 * @var	array
+	 */
+	private $resources = array();
+
+
+	/**
+	 * Defines if the event is transparent to busy time searches
+	 *
+	 * @var	string
+	 */
+	private $timeTransparency;
+
+
+	/**
+	 * Get the end datetime
+	 *
+	 * @return	string
+	 */
+	public function getDatetimeEnd()
+	{
+		return	$this->datetimeEnd;
+	}
+
+
+	/**
+	 * Get the duration
+	 *
+	 * @return	void
+	 */
+	public function getDuration()
+	{
+		return $this->duration;
+	}
+
+
+	/**
+	 * Get the GEO-information
+	 *
+	 * @return	array
+	 */
+	public function getGeo()
+	{
+		return $this->geo;
+	}
+
+
+	/**
+	 * Get the location
+	 *
+	 * @return	string
+	 */
+	public function getLocation()
+	{
+		return $this->location;
+	}
+
+
+	/**
+	 * Get the priority
+	 *
+	 * @return	string
+	 */
+	public function getPriority()
+	{
+		return $this->priority;
+	}
+
+
+	/**
+	 * Get the resources
+	 *
+	 * @return	array
+	 */
+	public function getResources()
+	{
+		return $this->resources;
+	}
+
+
+	/**
+	 * Get the time transparencey
+	 *
+	 * @return	string
+	 */
+	public function getTimeTransparency()
+	{
+		return $this->timeTransparency;
+	}
+
+
+	/**
+	 * Parse the event to iCal-format
+	 *
+	 * @return	string
+	 */
+	public function parse()
+	{
+		// init var
+		$string = '';
+
+		// start string
+		$string .= 'BEGIN:VEVENT'."\n";
+
+		// categories
+		$categories = $this->getCategories();
+		if(!empty($categories)) $string .= 'CATEGORIES:'. implode(',', $categories) ."\n";
+
+		// classification
+		if($this->getClassification() != '') $string .= 'CLASS:'. $this->getClassification() ."\n";
+
+		// comments
+		$comments = $this->getComments();
+		if(!empty($comments))
+		{
+			foreach($xProperties as $value) $string .= 'COMMENT:'. $value ."\n";
+		}
+
+		// contact
+		$contact = $this->getContact();
+		if(!empty($contact))
+		{
+			if(isset($contact['alternative'])) $string .= 'CONTACT;ALTREP="'. $contact['alternative'] .'":'. $contact['value'] ."\n";
+			else $string .= 'CONTACT:'. $contact['value'] ."\n";
+		}
+
+		// datetime-created
+		if($this->getDatetimeCreated() != 0) $string .= 'CREATED:'. date('YmdTHisZ', $this->getDatetimeCreated());
+
+		// datetime-end
+		if($this->getDatetimeEnd() != 0) $string .= 'DTEND:'. date('YmdTHisZ', $this->getDatetimeEnd());
+
+		// lastmodified
+		if($this->getDatetimeLastModified() != 0) $string .= 'DTSTART:'. date('YmdTHisZ', $this->getDatetimeLastModified());
+
+		// datetimestamp
+		if($this->getDatetimeStamp() != 0) $string .= 'DTSTAMP:'. date('YmdTHisZ', $this->getDatetimeStamp());
+
+		// datetime-start
+		if($this->getDatetimeStart() != 0) $string .= 'DTSTART:'. date('YmdTHisZ', $this->getDatetimeStart());
+
+		// description
+		if($this->getDescription() != '') $string .= 'DESCRIPTION:'. $this->getDescription() ."\n";
+
+		// duration
+		if($this->getDuration() != '') $string .= 'DURATION:'. $this->getDuration() ."\n";
+
+		// geo
+		$geo = $this->getGeo();
+		if(!empty($geo)) $string .= 'GEO:'. $geo['lat'] .';'. $geo['long'] ."\n";
+
+		// location
+		if($this->getLocation() != '') $string .= 'LOCATION:'. $this->getLocation() ."\n";
+
+		// organizer
+		$organizer = $this->getOrganizer();
+		if(!empty($organizer))
+		{
+			$string .= 'ORGANIZER';
+			if(isset($organizer['cn'])) $string .= ';CN="'. $organizer['cn'] .'"';
+			if(isset($organizer['dir'])) $string .= ';DIR="'. $organizer['dir'] .'"';
+			if(isset($organizer['sentby'])) $string .= ';SENT-BY="'. $organizer['sentby'] .'"';
+			if(isset($organizer['language'])) $string .= ';LANGUAGE="'. $organizer['language'] .'"';
+			$string .= 'mailto:'. $organizer['email'] ."\n";
+		}
+
+		// priority
+		if($this->getPriority() != '') $string .= 'PRIORITY:'. $this->getPriority() ."\n";
+
+		// resources
+		$resources = $this->getResources();
+		if(!empty($resources)) $string .= 'RESOURCES:'. implode(',', $resources) ."\n";
+
+		// sequence
+		if($this->getSequence() != '') $string .= 'SEQUENCE:'. $this->getSequence() ."\n";
+
+		// status
+		if($this->getStatus() != '') $string .= 'STATUS:'. $this->getStatus() ."\n";
+
+		// summary
+		if($this->getSummary() != '') $string .= 'SUMMARY:'. $this->getSummary() ."\n";
+
+		// time transparency
+		if($this->getTimeTransparency() != '') $string .= 'TRANSP:'. $this->getTimeTransparency() ."\n";
+
+		// unique identifier
+		if($this->getUniqueIdentifier() != '') $string .= 'UID:'. $this->getUniqueIdentifier() ."\n";
+
+		// url
+		if($this->getUrl() != '') $string .= 'URL:'. $this->getUrl() ."\n";
+
+		// xProperties
+		$xProperties = $this->getXProperties();
+		if(!empty($xProperties))
+		{
+			foreach($xProperties as $key => $value) $string .= $key .':'. $value ."\n";
+		}
+
+		// end string
+		$string .= 'END:VEVENT';
+
+		// return
+		return $string;
+	}
+
+
+	/**
+	 * Set the datetime end
+	 *
+	 * @return	void
+	 * @param	int $timestamp		The end date and time.
+	 */
+	public function setDatetimeEnd($timestamp)
+	{
+		$this->datetimeEnd = (int) $timestamp;
+	}
+
+
+	/**
+	 * Set the duration
+	 *
+	 * @return	void
+	 * @param	string $duration	The positive duration.
+	 */
+	public function setDuration($duration)
+	{
+		$this->duration = (string) $duration;
+	}
+
+
+	/**
+	 * Set GEO information
+	 *
+	 * @return	void
+	 * @param	string $latitude		The latitude.
+	 * @param	string $longitude		The longitude.
+	 */
+	public function setGeo($latitude, $longitude)
+	{
+		$this->geo = array('lat' => $latitude, 'long' => $longitude);
+	}
+
+
+	/**
+	 * Set the location
+	 *
+	 * @return	void
+	 * @param	string $location	The location.
+	 */
+	public function setLocation($location)
+	{
+		$this->location = (string) $location;
+	}
+
+
+	/**
+	 * Set the priority
+	 *
+	 * @return	void
+	 * @param	string $priority	The priority.
+	 */
+	public function setPriority($priority)
+	{
+		$this->priority = (string) $priority;
+	}
+
+
+	/**
+	 * Set the resources
+	 *
+	 * @return	void
+	 * @param	array $resources	An array containing the resources.
+	 */
+	public function setResources(array $resources)
+	{
+		$this->resources = $resources;
+	}
+
+
+	/**
+	 * Set the status
+	 *
+	 * @return	void
+	 * @param	string $status	The status of the event, possible values are: TENTATIVE, CONFIRMED, CANCELLED.
+	 */
+	public function setStatus($status)
+	{
+		// init var
+		$possibleValues = array('TENTATIVE', 'CONFIRMED', 'CANCELLED');
+
+		// redefine
+		$status = (string) $status;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\t a valid URL for guid.');
+		if(!in_array($status, $possibleValues)) throw new SpoonIcalException('Invalid status for event. Possible values are: '. implode(',', $possibleValues));
 
-		// create array
-		$guid['url'] = $URL;
-		$guid['isPermaLink'] = (bool) $isPermaLink;
-
-		// set property
-		$this->guid = $guid;
+		// set
+		$this->status = $status;
 	}
 
 
 	/**
-	 * Set the link.
+	 * Set the time transparency
 	 *
 	 * @return	void
-	 * @param	string $link	The link of the item.
+	 * @param	string $transparency	The transparency.
 	 */
-	public function setLink($link)
+	public function setTimeTransparency($transparency)
 	{
-		// redefine var
-		$link = (string) $link;
-
-		// validate
-		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid link.');
-
-		// set property
-		$this->link = $link;
-	}
-
-
-	/**
-	 * Set the publication date.
-	 *
-	 * @return	void
-	 * @param	int $publicationDate	The publication date as a UNIX-timestamp.
-	 */
-	public function setPublicationDate($publicationDate)
-	{
-		$this->publicationDate = (int) $publicationDate;
-	}
-
-
-	/**
-	 * Set source.
-	 *
-	 * @return	void
-	 * @param	string $name	The name of the source.
-	 * @param	string $URL		The URL of the source.
-	 */
-	public function setSource($name, $URL)
-	{
-		// redefine var
-		$URL = (string) $URL;
-
-		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\'t a valid URL for a source.');
-
-		// create array
-		$source['name'] = (string) $name;
-		$source['url'] = $URL;
-
-		// set property
-		$this->source = $source;
-	}
-
-
-	/**
-	 * Set the title.
-	 *
-	 * @return	void
-	 * @param	string $title	The title of the item.
-	 */
-	public function setTitle($title)
-	{
-		$this->title = (string) $title;
+		$this->timeTransparency = (string) $transparency;
 	}
 }
 
