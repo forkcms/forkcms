@@ -156,11 +156,19 @@ class BackendLocaleExport extends BackendBaseActionIndex
 			}
 		}
 
+		// save xml output
+		$xmlOutput = $xml->saveXML();
+
 		// xml headers
-		SpoonHTTP::setHeaders('content-type: text/xml;charset=utf-8');
+		$headers[] = 'Content-Disposition: attachment; filename="locale_'. BackendModel::getUTCDate('d-m-Y') .'.xml"';
+		$headers[] = 'Content-Type: application/octet-stream;charset=utf-8';
+		$headers[] = 'Content-Length: '. mb_strlen($xmlOutput, SPOON_CHARSET);
+
+		// set headers
+		SpoonHTTP::setHeaders($headers);
 
 		// output XML
-		echo $xml->saveXML();
+		echo $xmlOutput;
 
 		// stop script
 		exit;
