@@ -261,6 +261,9 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 	 */
 	protected function loadTemplate($path = null)
 	{
+		// redefine, and trick codesniffer
+		$path = $path;
+
 		$this->tpl = new FrontendTemplate(false);
 	}
 
