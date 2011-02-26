@@ -216,7 +216,7 @@ class SpoonIcalItem
 	 */
 	public function getDatetimeLastModified()
 	{
-		return $this->$datetimeLastModified;
+		return $this->datetimeLastModified;
 	}
 
 
