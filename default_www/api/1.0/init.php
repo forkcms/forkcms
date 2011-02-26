@@ -272,6 +272,7 @@ class APIInit
 	public static function exceptionHandler($exception, $output)
 	{
 		// redefine
+		$exception = $exception;
 		$output = (string) $output;
 
 		// mail it?
@@ -286,7 +287,7 @@ class APIInit
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured ('. SITE_DOMAIN .')', $output, $headers);
 		}
 
 		// build HTML for nice error

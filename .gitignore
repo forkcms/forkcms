@@ -2,3 +2,4 @@
 .cache
 .buildpath
 .settings
+.*.swp

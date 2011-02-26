@@ -11,7 +11,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @since		0.1.1
+ * @since		1.0.0
  */
 
 
@@ -32,8 +32,7 @@ class SpoonTemplateModifiers
 	 *
 	 * @var	array
 	 */
-	private static $modifiers = array(
-										'addslashes' => 'addslashes',
+	private static $modifiers = array('addslashes' => 'addslashes',
 										'createhtmllinks' => array('SpoonTemplateModifiers', 'createHTMLLinks'),
 										'date' => array('SpoonTemplateModifiers', 'date'),
 										'htmlentities' => array('SpoonFilter', 'htmlentities'),

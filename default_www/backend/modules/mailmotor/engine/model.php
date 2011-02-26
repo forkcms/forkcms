@@ -983,8 +983,8 @@ class BackendMailmotorModel
 	{
 		// fetch the records
 		return (array) BackendModel::getDB()->getRecords('SELECT mg.id AS value, mg.name AS label
-																FROM mailmotor_groups AS mg
-																GROUP BY mg.id');
+															FROM mailmotor_groups AS mg
+															GROUP BY mg.id');
 	}
 
 
@@ -997,11 +997,11 @@ class BackendMailmotorModel
 	{
 		// fetch the records
 		$records = (array) BackendModel::getDB()->getRecords('SELECT
-															mg.id AS value, mg.name AS label, COUNT(mag.email) AS recipients
-															FROM mailmotor_groups AS mg
-															LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
-															WHERE status = ?
-															GROUP BY mg.id', array('subscribed'));
+																mg.id AS value, mg.name AS label, COUNT(mag.email) AS recipients
+																FROM mailmotor_groups AS mg
+																LEFT OUTER JOIN mailmotor_addresses_groups AS mag ON mag.group_id = mg.id
+																WHERE status = ?
+																GROUP BY mg.id', array('subscribed'));
 
 		// no records found
 		if(empty($records)) return array();

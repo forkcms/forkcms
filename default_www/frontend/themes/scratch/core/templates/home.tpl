@@ -1,4 +1,4 @@
-{include:file='{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:{$FRONTEND_CORE_PATH}/layout/templates/head.tpl}
 
 <body id="home" class="{$LANGUAGE} frontend">
 	<div id="container">
@@ -6,7 +6,7 @@
 		<div id="header">
 			<h2><a href="/">{$siteTitle}</a></h2>
 			<div id="language">
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
+				{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
 			</div>
 			<div id="navigation">
 				{$var|getnavigation:'page':0:1}
@@ -29,7 +29,7 @@
 					{/option:block1}
 				{/option:block1IsHTML}
 				{option:!block1IsHTML}
-					{include:file='{$block1}'}
+					{include:{$block1}}
 				{/option:!block1IsHTML}
 			</div>
 			<div id="content">
@@ -47,7 +47,7 @@
 					{/option:block2}
 				{/option:block2IsHTML}
 				{option:!block2IsHTML}
-					{include:file='{$block2}'}
+					{include:{$block2}}
 				{/option:!block2IsHTML}
 
 				{* Block 3 (default: Recent articles) *}
@@ -63,13 +63,13 @@
 					{/option:block3}
 				{/option:block3IsHTML}
 				{option:!block3IsHTML}
-					{include:file='{$block3}'}
+					{include:{$block3}}
 				{/option:!block3IsHTML}
 			</div>
 		</div>
 
 		<div id="footer">
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+			{include:{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl}
 		</div>
 	</div>
 </body>

@@ -216,6 +216,8 @@ body {
 				float: left;
 				padding: 0 7px;
 				line-height: 22px;
+				height: 22px;
+				overflow: hidden;
 			}
 
 			#openAccountDropdown .avatar {

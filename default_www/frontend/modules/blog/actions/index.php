@@ -98,7 +98,7 @@ class FrontendBlogIndex extends FrontendBaseBlock
 		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
 
 		// assign articles
-		$this->tpl->assign('blogArticles', $this->items);
+		$this->tpl->assign('items', $this->items);
 
 		// parse the pagination
 		$this->parsePagination();

@@ -91,7 +91,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 			$items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);
 
 			// add into results array
-			if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::getLabel(ucfirst($module)), 'items' => $items);
+			if(!empty($items)) $this->results[] = array('name' => $module, 'label' => FL::lbl(ucfirst($module)), 'items' => $items);
 		}
 	}
 

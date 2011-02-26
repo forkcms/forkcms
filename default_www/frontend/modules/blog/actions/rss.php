@@ -6,7 +6,7 @@
  * @package		frontend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -89,14 +89,14 @@ class FrontendBlogRSS extends FrontendBaseBlock
 			{
 				// append meta
 				$description .= '<div class="meta">'."\n";
-				$description .= '	<p><a href="'. $link .'" title="'. $title .'">'. $title .'</a> ' . sprintf(FL::getMessage('WrittenBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
-				$description .= ' '. FL::getLabel('In') .' <a href="'. $item['category_full_url'] .'" title="'. $item['category_name'] .'">'. $item['category_name'] .'</a>.</p>'."\n";
+				$description .= '	<p><a href="'. $link .'" title="'. $title .'">'. $title .'</a> ' . sprintf(FL::msg('WrittenBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
+				$description .= ' '. FL::lbl('In') .' <a href="'. $item['category_full_url'] .'" title="'. $item['category_name'] .'">'. $item['category_name'] .'</a>.</p>'."\n";
 
 				// any tags
 				if(isset($item['tags']))
 				{
 					// append tags-paragraph
-					$description .= '	<p>'. ucfirst(FL::getLabel('Tags')) .': ';
+					$description .= '	<p>'. ucfirst(FL::lbl('Tags')) .': ';
 					$first = true;
 
 					// loop tags

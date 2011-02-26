@@ -4,7 +4,7 @@
  *
  * @package MCManager
  * @author Moxiecode
- * @copyright Copyright © 2007, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2007, Moxiecode Systems AB, All rights reserved.
  */
 
 // Get base path
@@ -842,7 +842,7 @@ class Moxiecode_ManagerEngine {
 	 *
 	 * @param String $parent_path Parent path that must contain the path.
 	 * @param String $path Path that must contained the parent path.
-	 * @return Bool true if it's valid, false if it's not. 
+	 * @return Bool true if it's valid, false if it's not.
 	 */
 	function isChildPath($parent_path, $path) {
 		return strpos(strtolower($path), strtolower($parent_path)) === 0;

@@ -5,7 +5,7 @@
  * @version 1.0
  * @author Moxiecode
  * @site http://www.moxieforge.com/
- * @copyright Copyright © 2004-2008, Moxiecode Systems AB, All rights reserved.
+ * @copyright Copyright ï¿½ 2004-2008, Moxiecode Systems AB, All rights reserved.
  * @licence LGPL
  * @ignore
  */
@@ -201,8 +201,8 @@ class Moxiecode_JSCompressor {
 		$content = preg_replace('/\s+/', ' ', $content);
 
 		// Restore strings and regexps
-		$content = preg_replace_callback('/¤@([^¤]+)¤/', array(&$this, '_itemsToStr'), $content);
-		$content = preg_replace_callback('/¤#([^¤]+)¤/', array(&$this, '_decode'), $content); // Restore all \/, \", \'
+		$content = preg_replace_callback('/ï¿½@([^ï¿½]+)ï¿½/', array(&$this, '_itemsToStr'), $content);
+		$content = preg_replace_callback('/ï¿½#([^ï¿½]+)ï¿½/', array(&$this, '_decode'), $content); // Restore all \/, \", \'
 
 		return $content;
 	}
@@ -246,7 +246,7 @@ class Moxiecode_JSCompressor {
 	function _strToItems($matches) {
 		$this->_strings[] = $matches[0];
 
-		return '¤@' . ($this->_count++) . '¤';
+		return 'ï¿½@' . ($this->_count++) . 'ï¿½';
 	}
 
 	function _itemsToStr($matches) {
@@ -256,7 +256,7 @@ class Moxiecode_JSCompressor {
 	function _encode($matches) {
 		$this->_strings[] = $matches[0];
 
-		return '¤#' . ($this->_count++) . '¤';
+		return 'ï¿½#' . ($this->_count++) . 'ï¿½';
 	}
 
 	function _decode($matches) {

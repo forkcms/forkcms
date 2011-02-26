@@ -17,7 +17,7 @@
  * This is the version number for the current version of the
  * Spoon Library.
  */
-define('SPOON_VERSION', '1.2.0');
+define('SPOON_VERSION', '1.3.0');
 
 /**
  * This setting will intervene when an exception occures. If enabled the exception will be

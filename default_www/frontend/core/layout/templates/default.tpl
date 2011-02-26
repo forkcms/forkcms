@@ -1,4 +1,4 @@
-{include:file='{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
+{include:{$FRONTEND_CORE_PATH}/layout/templates/head.tpl}
 <body class="{$LANGUAGE}">
 	<div id="container">
 
@@ -6,7 +6,7 @@
 			<h1><a href="/">{$siteTitle}</a></h1>
 
 			<div id="language">
-				{include:file='{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl'}
+				{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
 			</div>
 			<div id="navigation">
 				{$var|getnavigation:'page':0:1}
@@ -14,11 +14,11 @@
 		</div>
 
 		<div id="main">
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl'}
+			{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
 
 			{option:!hideContentTitle}
 				<div class="pageTitle">
-					<h2>{$page['title']}</h2>
+					<h2>{$page.title}</h2>
 				</div>
 			{/option:!hideContentTitle}
 
@@ -35,12 +35,12 @@
 				{/option:block1}
 			{/option:block1IsHTML}
 			{option:!block1IsHTML}
-				{include:file='{$block1}'}
+				{include:{$block1}}
 			{/option:!block1IsHTML}
 		</div>
 
 		<div id="footer">
-			{include:file='{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl'}
+			{include:{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl}
 		</div>
 	</div>
 </body>

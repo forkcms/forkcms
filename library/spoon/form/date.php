@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		0.1.1
  */
 class SpoonFormDate extends SpoonFormInput
@@ -48,7 +49,7 @@ class SpoonFormDate extends SpoonFormInput
 	 *
 	 * @return	void
 	 * @param	string $name					The name.
-	 * @param	string[optional] $value			The initial value.
+	 * @param	mixed[optional] $value			The initial value.
 	 * @param	string[optional] $mask			The mask to use.
 	 * @param	string[optional] $class			The CSS-class to be used.
 	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
@@ -71,7 +72,7 @@ class SpoonFormDate extends SpoonFormInput
 		 * The value will be filled based on the default input mask
 		 * if no value has been defined.
 		 */
-		$this->defaultValue = ($value !== null) ? (int) $value : time();
+		$this->defaultValue = ($value !== null) ? (($value !== '') ? (int) $value : '') : time();
 		$this->setValue($this->defaultValue);
 
 		// custom optional fields
@@ -254,14 +255,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid year
 					if(!checkdate(1, 1, $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -275,14 +276,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid year
 					if(!checkdate(1, 1, '19'. $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -296,14 +297,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($month))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid month
 					if(!checkdate($month, 1, $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -317,14 +318,14 @@ class SpoonFormDate extends SpoonFormInput
 					// not an int
 					if(!SpoonFilter::isInteger($day))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 
 					// invalid day
 					if(!checkdate($month, $day, $year))
 					{
-						$this->setError($error);
+						if($error !== null) $this->setError($error);
 						return false;
 					}
 				}
@@ -333,7 +334,7 @@ class SpoonFormDate extends SpoonFormInput
 			// maximum length doesn't check out
 			else
 			{
-				$this->setError($error);
+				if($error !== null) $this->setError($error);
 				return false;
 			}
 		}
@@ -341,7 +342,7 @@ class SpoonFormDate extends SpoonFormInput
 		// not filled out
 		else
 		{
-			$this->setError($error);
+			if($error !== null) $this->setError($error);
 			return false;
 		}
 
@@ -423,11 +424,11 @@ class SpoonFormDate extends SpoonFormInput
 	 * Set the value attribute for this date field.
 	 *
 	 * @return	void
-	 * @param	int $value		The new value.
+	 * @param	mixed $value		The new value.
 	 */
 	private function setValue($value)
 	{
-		$this->value = date($this->mask, (int) $value);
+		$this->value = ($value === '' ? '' : date($this->mask, (int) $value));
 	}
 }
 

@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblFaq|ucfirst}</h2>
@@ -13,40 +13,40 @@
 <div id="datagridQuestionsHolder">
 	{option:datagrids}
 		{iteration:datagrids}
-				<h3>{$datagrids.name}</h3>
+			<div class="datagridHolder" id="datagrid-{$datagrids.id}">
+				<div class="tableHeading">
+					<h3>{$datagrids.name}</h3>
+				</div>
 				{option:datagrids.content}
-					<div class="datagridHolder" id="datagrid-{$datagrids.id}">
-						{$datagrids.content}
-					</div>
+					{$datagrids.content}
 				{/option:datagrids.content}
 
 				{option:!datagrids.content}
-					<div class="datagridHolder" id="datagrid-{$datagrids.id}">
-						<table class="datagrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
-							<thead>
-								<tr>
-									<th class="dragAndDropHandle">
-										<span>&#160;</span>
-									</th>
-									<th class="question">
-										<span>{$lblQuestion|ucfirst}</span>
-									</th>
-									<th class="hidden">
-										<span>{$lblHidden|ucfirst}</span>
-									</th>
-									<th class="edit">
-										<span>&#160;</span>
-									</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="noQuestions">
-									<td colspan="3">{$msgNoQuestionInCategory}</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<table class="datagrid sequenceByDragAndDrop" cellspacing="0" cellpadding="0" border="0">
+						<thead>
+							<tr>
+								<th class="dragAndDropHandle">
+									<span>&#160;</span>
+								</th>
+								<th class="question">
+									<span>{$lblQuestion|ucfirst}</span>
+								</th>
+								<th class="hidden">
+									<span>{$lblHidden|ucfirst}</span>
+								</th>
+								<th class="edit">
+									<span>&#160;</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="noQuestions">
+								<td colspan="3">{$msgNoQuestionInCategory}</td>
+							</tr>
+						</tbody>
+					</table>
 				{/option:!datagrids.content}
+			</div>
 		{/iteration:datagrids}
 	{/option:datagrids}
 </div>
@@ -55,5 +55,5 @@
 	<p>{$msgNoItems}</p>
 {/option:!datagrids}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

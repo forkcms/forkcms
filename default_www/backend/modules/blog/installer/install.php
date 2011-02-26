@@ -63,6 +63,7 @@ class BlogInstall extends ModuleInstaller
 		$this->setActionRights(1, 'blog', 'categories');
 		$this->setActionRights(1, 'blog', 'comments');
 		$this->setActionRights(1, 'blog', 'delete_category');
+		$this->setActionRights(1, 'blog', 'delete_spam');
 		$this->setActionRights(1, 'blog', 'delete');
 		$this->setActionRights(1, 'blog', 'edit_category');
 		$this->setActionRights(1, 'blog', 'edit_comment');
@@ -79,7 +80,6 @@ class BlogInstall extends ModuleInstaller
 		$this->insertExtra('blog', 'widget', 'Archive', 'archive', null, 'N', 1003);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesFull', 'recent_articles_full', null, 'N', 1004);
 		$this->insertExtra('blog', 'widget', 'RecentArticlesList', 'recent_articles_list', null, 'N', 1005);
-
 
 		// loop languages
 		foreach($this->getLanguages() as $language)
@@ -147,7 +147,7 @@ class BlogInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het artikel "%1$s" wil verwijderen?');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Deleted', 'De geselecteerde artikels werden verwijderd.');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'DeletedSpam', 'Alle spamberichten werden verwijderd.');
-		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'DeleteAllSpam', 'Verwijdere all spam:');
+		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'DeleteAllSpam', 'Alle spam verwijderen:');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditArticle', 'bewerk artikel "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'EditCommentOn', 'bewerk reactie op "%1$s"');
 		$this->insertLocale('nl', 'backend', 'blog', 'msg', 'Edited', 'Het artikel "%1$s" werd opgeslagen.');
