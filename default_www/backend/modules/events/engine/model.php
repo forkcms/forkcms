@@ -712,7 +712,7 @@ class BackendEventsModel
 		if($item['status'] == 'active')
 		{
 			// archive all older active versions
-			BackendModel::getDB(true)->update('events', array('status' => 'archived'), 'id = ? AND status = ?', array($item['id'], $item['status']));
+			BackendModel::getDB(true)->update('events', array('status' => 'archived'), 'id = ? AND status = ? AND language = ?', array($item['id'], $item['status'], BL::getWorkingLanguage()));
 
 			// get the record of the exact item we're editing
 			$revision = self::getRevision($item['id'], $item['revision_id']);
@@ -739,7 +739,7 @@ class BackendEventsModel
 																		 array($item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep));
 
 		// delete other revisions
-		if(!empty($revisionIdsToKeep)) BackendModel::getDB(true)->delete('events', 'id = ? AND status = ? AND revision_id NOT IN ('. implode(', ', $revisionIdsToKeep) .')', array($item['id'], $archiveType));
+		if(!empty($revisionIdsToKeep)) BackendModel::getDB(true)->delete('events', 'id = ? AND status = ? AND language = ? AND revision_id NOT IN ('. implode(', ', $revisionIdsToKeep) .')', array($item['id'], BL::getWorkingLanguage(), $archiveType));
 
 		// insert new version
 		$item['revision_id'] = BackendModel::getDB(true)->insert('events', $item);
