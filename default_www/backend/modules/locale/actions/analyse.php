@@ -194,6 +194,13 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		// init some vars
 		$tree = self::getTree(BACKEND_PATH);
 		$modules = BackendModel::getModules(false);
+
+		// search fo the error module
+		$key = array_search('error', $modules);
+
+		// remove error module
+		if($key !== false) unset($modules[$key]);
+
 		$used = array();
 		$navigation = Spoon::getObjectReference('navigation');
 		$lbl = array();
