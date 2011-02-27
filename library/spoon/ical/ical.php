@@ -26,11 +26,27 @@
 class SpoonIcal
 {
 	/**
+	 * iCal header
+	 *
+	 * @var	string
+	 */
+	const HEADER = "Content-Type: text/calendar; charset=";
+
+
+	/**
 	 * The calendar scale
 	 *
 	 * @var	string
 	 */
 	private $calendarScale = 'GREGORIAN';
+
+
+	/**
+	 * The charset
+	 *
+	 * @var	string
+	 */
+	private $charset = 'utf-8';
 
 
 	/**
@@ -122,6 +138,42 @@ class SpoonIcal
 		// end string
 		$string .= 'END:VCALENDAR';
 
+		// explode into lines
+		$lines = explode("\n",$string);
+
+		// loop lines
+		foreach($lines as &$line)
+		{
+			// longer the 75 chars?
+			if(mb_strlen($line) > 75)
+			{
+				// split line
+				$line = trim(chunk_split($line, 75, "\n "));
+			}
+		}
+
+		// recreate
+		$string = implode("\n", $lines);
+
+		// return
+		return $string;
+	}
+
+
+	/**
+	 * Format as a valid iCal-string
+	 *
+	 * @return	string
+	 * @param	string $string	The string that should be converted.
+	 */
+	public static function formatAsString($string)
+	{
+		// redefine
+		$string = (string) $string;
+
+		// remove newlines
+		$string = str_replace(array("\r", "\n"), array('', '\n'), $string);
+
 		// return
 		return $string;
 	}
@@ -135,6 +187,17 @@ class SpoonIcal
 	public function getCalendarScale()
 	{
 		return $this->calendarScale;
+	}
+
+
+	/**
+	 * Get the charset.
+	 *
+	 * @return	string
+	 */
+	public function getCharset()
+	{
+		return $this->charset;
 	}
 
 
@@ -231,6 +294,18 @@ class SpoonIcal
 
 
 	/**
+	 * Set the charset.
+	 *
+	 * @return	void
+	 * @param	string[optional] $charset	The charset that should be used. Possible charsets can be found in spoon.php.
+	 */
+	public function setCharset($charset = 'utf-8')
+	{
+		$this->charset = SpoonFilter::getValue($charset, Spoon::getCharsets(), SPOON_CHARSET);
+	}
+
+
+	/**
 	 * The method
 	 *
 	 * @return	void
@@ -250,7 +325,7 @@ class SpoonIcal
 	 */
 	public function setProductIdentifier($value)
 	{
-		$this->prodId = (string) $value;
+		$this->productIdentifier = (string) $value;
 	}
 
 

@@ -702,7 +702,7 @@ class SpoonIcalItemEvent extends SpoonIcalItem
 		$comments = $this->getComments();
 		if(!empty($comments))
 		{
-			foreach($xProperties as $value) $string .= 'COMMENT:'. $value ."\n";
+			foreach($xProperties as $value) $string .= 'COMMENT:'. SpoonIcal::formatAsString($value) ."\n";
 		}
 
 		// contact
@@ -714,22 +714,22 @@ class SpoonIcalItemEvent extends SpoonIcalItem
 		}
 
 		// datetime-created
-		if($this->getDatetimeCreated() != 0) $string .= 'CREATED:'. date('YmdTHisZ', $this->getDatetimeCreated());
+		if($this->getDatetimeCreated() != 0) $string .= 'CREATED:'. date('Ymd\THis', $this->getDatetimeCreated()) ."\n";
 
 		// datetime-end
-		if($this->getDatetimeEnd() != 0) $string .= 'DTEND:'. date('YmdTHisZ', $this->getDatetimeEnd());
+		if($this->getDatetimeEnd() != 0) $string .= 'DTEND:'. date('Ymd\THis', $this->getDatetimeEnd()) ."\n";
 
 		// lastmodified
-		if($this->getDatetimeLastModified() != 0) $string .= 'DTSTART:'. date('YmdTHisZ', $this->getDatetimeLastModified());
+		if($this->getDatetimeLastModified() != 0) $string .= 'LAST-MODIFIED:'. date('Ymd\THis', $this->getDatetimeLastModified()) ."\n";
 
 		// datetimestamp
-		if($this->getDatetimeStamp() != 0) $string .= 'DTSTAMP:'. date('YmdTHisZ', $this->getDatetimeStamp());
+		if($this->getDatetimeStamp() != 0) $string .= 'DTSTAMP:'. date('Ymd\THis', $this->getDatetimeStamp()) ."\n";
 
 		// datetime-start
-		if($this->getDatetimeStart() != 0) $string .= 'DTSTART:'. date('YmdTHisZ', $this->getDatetimeStart());
+		if($this->getDatetimeStart() != 0) $string .= 'DTSTART:'. date('Ymd\THis', $this->getDatetimeStart()) ."\n";
 
 		// description
-		if($this->getDescription() != '') $string .= 'DESCRIPTION:'. $this->getDescription() ."\n";
+		if($this->getDescription() != '') $string .= 'DESCRIPTION:'. SpoonIcal::formatAsString($this->getDescription()) ."\n";
 
 		// duration
 		if($this->getDuration() != '') $string .= 'DURATION:'. $this->getDuration() ."\n";
@@ -739,7 +739,7 @@ class SpoonIcalItemEvent extends SpoonIcalItem
 		if(!empty($geo)) $string .= 'GEO:'. $geo['lat'] .';'. $geo['long'] ."\n";
 
 		// location
-		if($this->getLocation() != '') $string .= 'LOCATION:'. $this->getLocation() ."\n";
+		if($this->getLocation() != '') $string .= 'LOCATION:'. SpoonIcal::formatAsString($this->getLocation()) ."\n";
 
 		// organizer
 		$organizer = $this->getOrganizer();
@@ -750,7 +750,7 @@ class SpoonIcalItemEvent extends SpoonIcalItem
 			if(isset($organizer['dir'])) $string .= ';DIR="'. $organizer['dir'] .'"';
 			if(isset($organizer['sentby'])) $string .= ';SENT-BY="'. $organizer['sentby'] .'"';
 			if(isset($organizer['language'])) $string .= ';LANGUAGE="'. $organizer['language'] .'"';
-			$string .= 'mailto:'. $organizer['email'] ."\n";
+			$string .= ':mailto:'. $organizer['email'] ."\n";
 		}
 
 		// priority
@@ -767,7 +767,7 @@ class SpoonIcalItemEvent extends SpoonIcalItem
 		if($this->getStatus() != '') $string .= 'STATUS:'. $this->getStatus() ."\n";
 
 		// summary
-		if($this->getSummary() != '') $string .= 'SUMMARY:'. $this->getSummary() ."\n";
+		if($this->getSummary() != '') $string .= 'SUMMARY:'. SpoonIcal::formatAsString($this->getSummary()) ."\n";
 
 		// time transparency
 		if($this->getTimeTransparency() != '') $string .= 'TRANSP:'. $this->getTimeTransparency() ."\n";
