@@ -28,7 +28,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 
 	/**
-	 * The eventspost
+	 * The item
 	 *
 	 * @var	array
 	 */
@@ -110,8 +110,6 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 
 		// overwrite URLs
-		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('events', 'category') .'/'. $this->record['category_url'];
-		$this->record['full_url'] = FrontendNavigation::getURLForBlock('events', 'detail') .'/'. $this->record['url'];
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags

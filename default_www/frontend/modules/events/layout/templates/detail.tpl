@@ -12,11 +12,11 @@
 			<div class="hd">
 				<h1>
 					{$item.title}
-					<small>
-						{$item.starts_on|date:{$dateFormatLong}:{$LANGUAGE}}
-						{option:item.ends_on} - {$item.ends_on|date:{$dateFormatLong}:{$LANGUAGE}}{/option:item.ends_on}
-					</small>
 				</h1>
+				<h3>
+					{$item.starts_on|date:{$dateFormatShort}:{$LANGUAGE}} {$item.starts_on|date:{$timeFormat}:{$LANGUAGE}}
+					{option:item.ends_on} - {$item.ends_on|date:{$dateFormatShort}:{$LANGUAGE}} {$item.ends_on|date:{$timeFormat}:{$LANGUAGE}}{/option:item.ends_on}
+				</h3>
 				<p>
 					{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} -
 					{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
@@ -24,6 +24,9 @@
 						{option:commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:commentsMultiple}
 						{option:!commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!commentsMultiple}
 					{/option:comments}
+					{option:!item.in_past}
+						<a href="{$item.ical_url}">{$msgEventsDownloadIcal}</a>
+					{/option:!item.in_past}
 				</p>
 			</div>
 			<div class="bd content">

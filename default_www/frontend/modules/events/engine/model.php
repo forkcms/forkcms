@@ -22,6 +22,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 		$return = (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.introduction, i.text, i.num_comments AS comments_count,
 															c.name AS category_name, c.url AS category_url,
 															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
+															UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
 															i.allow_comments,
 															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
@@ -38,15 +39,20 @@ class FrontendEventsModel implements FrontendTagsInterface
 
 		// init var
 		$link = FrontendNavigation::getURLForBlock('events', 'detail');
+		$iCalLink = FrontendNavigation::getURLForBlock('events', 'ical');
 		$categoryLink = FrontendNavigation::getURLForBlock('events', 'category');
 
 		// urls
 		$return['full_url'] = $link .'/'. $return['url'];
+		$return['ical_url'] = $iCalLink .'/'. $return['url'];
 		$return['category_full_url'] = $categoryLink .'/'. $return['category_url'];
 
 		// comments
 		if($return['comments_count'] > 0) $return['comments'] = true;
 		if($return['comments_count'] > 1) $return['comments_multiple'] = true;
+
+		// in the past?
+		$return['in_past'] = ($return['starts_on'] < time());
 
 		// get all tags
 		$return['tags'] = FrontendTagsModel::getForItem('events', $return['revision_id']);
@@ -416,9 +422,10 @@ class FrontendEventsModel implements FrontendTagsInterface
 		if(empty($ids)) return array();
 
 		// get items
-		$items = FrontendModel::getDB()->getRecords('SELECT i.id, i.revision_id, i.language, i.title, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.introduction, i.text, i.num_comments AS comments_count,
+		$items = FrontendModel::getDB()->getRecords('SELECT i.id, i.revision_id, i.language, i.title, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.introduction, i.text, i.num_comments AS comments_count, i.user_id,
 														c.name AS category_name, c.url AS category_url,
 														UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
+														UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
 														m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 														m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 														m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
@@ -432,6 +439,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 		// init var
 		$revisionIds = array();
 		$link = FrontendNavigation::getURLForBlock('events', 'detail');
+		$iCalLink = FrontendNavigation::getURLForBlock('events', 'ical');
 		$categoryLink = FrontendNavigation::getURLForBlock('events', 'category');
 		$return = array();
 
@@ -446,11 +454,15 @@ class FrontendEventsModel implements FrontendTagsInterface
 
 			// URLs
 			$items[$id]['full_url'] = $link .'/'. $items[$id]['url'];
+			$items[$id]['ical_url'] = $iCalLink .'/'. $items[$id]['url'];
 			$items[$id]['category_full_url'] = $categoryLink .'/'. $items[$id]['category_url'];
 
 			// comments
 			if($items[$id]['comments_count'] > 0) $items[$id]['comments'] = true;
 			if($items[$id]['comments_count'] > 1) $items[$id]['comments_multiple'] = true;
+
+			// in the past?
+			$items[$id]['in_past'] = ($items[$id]['starts_on'] < time());
 
 			// add
 			$return[$items[$id]['revision_id']] = $items[$id];

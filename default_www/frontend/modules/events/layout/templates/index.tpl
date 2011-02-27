@@ -55,4 +55,11 @@
 		{/iteration:items}
 	</div>
 	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
+
+	<p>
+		<a href="{$var|geturlforblock:'events':'ical_all'}">
+			{$msgEventsAllIcal}
+		</a>
+	</p>
+
 {/option:items}
