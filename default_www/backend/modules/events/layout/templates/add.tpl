@@ -134,7 +134,7 @@
 									</li>
 								</ul>
 								<p>
-									<label for="maximumSubscriptions">{$lblMaxmimumSubscriptions|ucfirst}</label>
+									<label for="maximumSubscriptions">{$lblMaximumSubscriptions|ucfirst}</label>
 									{$txtMaxSubscriptions} {$txtMaxSubscriptionsError}
 								</p>
 							</div>

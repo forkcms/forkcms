@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS `events` (
  `hidden` enum('Y','N') NOT NULL DEFAULT 'N',
  `allow_comments` enum('Y','N') NOT NULL DEFAULT 'N',
  `num_comments` int(11) NOT NULL,
+ `allow_subscriptions` enum('N','Y') NOT NULL DEFAULT 'N',
+ `max_subscriptions` int(11) DEFAULT NULL,
+ `num_subscriptions` int(11) DEFAULT NULL,
  PRIMARY KEY (`revision_id`),
  KEY `idx_status_language_hidden` (`status`,`language`,`hidden`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
