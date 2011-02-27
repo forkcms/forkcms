@@ -17,7 +17,7 @@ jsBackend.settings =
 		{ 
 			emptyMessage: '{$msgNoAdminIds}', 
 			addLabel: '{$lblAdd|ucfirst}', 
-			removeLabel: '{$lblDeleteSynonym|ucfirst}',
+			removeLabel: '{$lblDelete|ucfirst}',
 			canAddNew: true
 		}); 
 	},
