@@ -24,7 +24,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 *
 	 * @var FrontendForm
 	 */
-	private $frm;
+	private $frmComment, $frmSubscription;
 
 
 	/**
@@ -41,6 +41,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 * @var	array
 	 */
 	private $settings;
+
+
+	/**
+	 * The subscriptions
+	 *
+	 * @var	array
+	 */
+	private $subscriptions;
 
 
 	/**
@@ -63,10 +71,10 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->getData();
 
 		// load form
-		$this->loadForm();
+		$this->loadForms();
 
 		// validate form
-		$this->validateForm();
+		$this->validateForms();
 
 		// parse
 		$this->parse();
@@ -111,6 +119,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 		// overwrite URLs
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
+		$this->record['allow_subscriptions'] = ($this->record['allow_subscriptions'] == 'Y');
 
 		// get tags
 		$this->record['tags'] = FrontendTagsModel::getForItem('events', $this->record['revision_id']);
@@ -118,11 +127,15 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		// get comments
 		$this->comments = FrontendEventsModel::getComments($this->record['id']);
 
+		// get subscriptions
+		$this->subscriptions = FrontendEventsModel::getSubscriptions($this->record['id']);
+
 		// get settings
 		$this->settings = FrontendModel::getModuleSettings('events');
 
 		// reset allow comments
 		if(!$this->settings['allow_comments']) $this->record['allow_comments'] = false;
+		if(!$this->settings['allow_subscriptions']) $this->record['allow_subscriptions'] = false;
 	}
 
 
@@ -131,22 +144,30 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 *
 	 * @return	void
 	 */
-	private function loadForm()
+	private function loadForms()
 	{
-		// create form
-		$this->frm = new FrontendForm('comment');
-		$this->frm->setAction($this->frm->getAction() .'#'. FL::act('Comment'));
-
 		// init vars
 		$author = (SpoonCookie::exists('comment_author')) ? SpoonCookie::get('comment_author') : null;
 		$email = (SpoonCookie::exists('comment_email')) ? SpoonCookie::get('comment_email') : null;
 		$website = (SpoonCookie::exists('comment_website')) ? SpoonCookie::get('comment_website') : 'http://';
 
+		// create from
+		$this->frmSubscription = new FrontendForm('subscription');
+		$this->frmSubscription->setAction($this->frmSubscription->getAction() .'#'. FL::act('Subscription'));
+
 		// create elements
-		$this->frm->addText('author', $author);
-		$this->frm->addText('email', $email);
-		$this->frm->addText('website', $website);
-		$this->frm->addTextarea('message');
+		$this->frmSubscription->addText('author', $author);
+		$this->frmSubscription->addText('email', $email);
+
+		// create form
+		$this->frmComment = new FrontendForm('comment');
+		$this->frmComment->setAction($this->frmComment->getAction() .'#'. FL::act('Comment'));
+
+		// create elements
+		$this->frmComment->addText('author', $author);
+		$this->frmComment->addText('email', $email);
+		$this->frmComment->addText('website', $website);
+		$this->frmComment->addTextarea('message');
 	}
 
 
@@ -215,19 +236,34 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$commentCount = count($this->comments);
 
 		// assign the comments
-		$this->tpl->assign('eventsCommentsCount', $commentCount);
+		$this->tpl->assign('commentsCount', $commentCount);
 		$this->tpl->assign('comments', $this->comments);
 
 		// options
 		if($commentCount > 1) $this->tpl->assign('eventsCommentsMultiple', true);
 
-		// parse the form
-		$this->frm->parse($this->tpl);
+		// count comments
+		$subscriptionCount = count($this->subscriptions);
+
+		// assign the comments
+		$this->tpl->assign('subscriptionsCount', $subscriptionCount);
+		$this->tpl->assign('subscriptions', $this->subscriptions);
+
+		// options
+		if($subscriptionCount > 1) $this->tpl->assign('eventsSubscriptionsMultiple', true);
+
+		// parse the forms
+		$this->frmComment->parse($this->tpl);
+		$this->frmSubscription->parse($this->tpl);
 
 		// some options
 		if($this->URL->getParameter('comment', 'string') == 'moderation') $this->tpl->assign('commentIsInModeration', true);
 		if($this->URL->getParameter('comment', 'string') == 'spam') $this->tpl->assign('commentIsSpam', true);
 		if($this->URL->getParameter('comment', 'string') == 'true') $this->tpl->assign('commentIsAdded', true);
+
+		if($this->URL->getParameter('subscription', 'string') == 'moderation') $this->tpl->assign('subscriptionIsInModeration', true);
+		if($this->URL->getParameter('subscription', 'string') == 'spam') $this->tpl->assign('subscriptionIsSpam', true);
+		if($this->URL->getParameter('subscription', 'string') == 'true') $this->tpl->assign('subscriptionIsAdded', true);
 
 		// assign settings
 		$this->tpl->assign('settings', $this->settings);
@@ -238,11 +274,11 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 
 	/**
-	 * Validate the form
+	 * Validate the comment form
 	 *
 	 * @return	void
 	 */
-	private function validateForm()
+	private function validateFormComment()
 	{
 		// get settings
 		$commentsAllowed = (isset($this->settings['allow_comments']) && $this->settings['allow_comments']);
@@ -251,10 +287,10 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if(!$commentsAllowed) return false;
 
 		// is the form submitted
-		if($this->frm->isSubmitted())
+		if($this->frmComment->isSubmitted())
 		{
 			// cleanup the submitted fields, ignore fields that were added by hackers
-			$this->frm->cleanupFields();
+			$this->frmComment->cleanupFields();
 
 			// does the key exists?
 			if(SpoonSession::exists('events_comment_'. $this->record['id']))
@@ -263,33 +299,33 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$diff = time() - (int) SpoonSession::get('events_comment_'. $this->record['id']);
 
 				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
-				if($diff < 10 && $diff != 0) $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
+				if($diff < 10 && $diff != 0) $this->frmComment->getField('message')->addError(FL::err('CommentTimeout'));
 			}
 
 			// validate required fields
-			$this->frm->getField('author')->isFilled(FL::err('AuthorIsRequired'));
-			$this->frm->getField('email')->isEmail(FL::err('EmailIsRequired'));
-			$this->frm->getField('message')->isFilled(FL::err('MessageIsRequired'));
+			$this->frmComment->getField('author')->isFilled(FL::err('AuthorIsRequired'));
+			$this->frmComment->getField('email')->isEmail(FL::err('EmailIsRequired'));
+			$this->frmComment->getField('message')->isFilled(FL::err('MessageIsRequired'));
 
 			// validate optional fields
-			if($this->frm->getField('website')->isFilled() && $this->frm->getField('website')->getValue() != 'http://')
+			if($this->frmComment->getField('website')->isFilled() && $this->frmComment->getField('website')->getValue() != 'http://')
 			{
-				$var = $this->frm->getField('website')->isURL(FL::err('InvalidURL'));
+				$var = $this->frmComment->getField('website')->isURL(FL::err('InvalidURL'));
 			}
 
 			// no errors?
-			if($this->frm->isCorrect())
+			if($this->frmComment->isCorrect())
 			{
 				// get module setting
-				$spamFilterEnabled = (isset($this->settings['spamfilter']) && $this->settings['spamfilter']);
-				$moderationEnabled = (isset($this->settings['moderation']) && $this->settings['moderation']);
+				$spamFilterEnabled = (isset($this->settings['spamfilter_comments']) && $this->settings['spamfilter_comments']);
+				$moderationEnabled = (isset($this->settings['moderation_comments']) && $this->settings['moderation_comments']);
 
 				// reformat data
-				$author = $this->frm->getField('author')->getValue();
-				$email = $this->frm->getField('email')->getValue();
-				$website = $this->frm->getField('website')->getValue();
+				$author = $this->frmComment->getField('author')->getValue();
+				$email = $this->frmComment->getField('email')->getValue();
+				$website = $this->frmComment->getField('website')->getValue();
 				if(trim($website) == '' || $website == 'http://') $website = null;
-				$text = $this->frm->getField('message')->getValue();
+				$text = $this->frmComment->getField('message')->getValue();
 
 				// build array
 				$comment['event_id'] = $this->record['id'];
@@ -354,6 +390,138 @@ class FrontendEventsDetail extends FrontendBaseBlock
 					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
 					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
 					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+				}
+				catch(Exception $e)
+				{
+					// settings cookies isn't allowed, but because this isn't a real problem we ignore the exception
+				}
+
+				// redirect
+				$this->redirect($redirectLink);
+			}
+		}
+	}
+
+
+	/**
+	 * Validate the form
+	 *
+	 * @return	void
+	 */
+	private function validateForms()
+	{
+		// validate subscription
+		$this->validateFormSubscription();
+
+		// validate comment
+		$this->validateFormComment();
+	}
+
+
+	/**
+	 * Validate the subscription form
+	 *
+	 * @return	void
+	 */
+	private function validateFormSubscription()
+	{
+		// @todo	moderation
+		// @todo	attendees
+		// @todo	notifications
+		// @todo	labels
+
+		// get settings
+		$subscriptionsAllowed = (isset($this->settings['allow_subscriptions']) && $this->settings['allow_subscriptions']);
+
+		// comments aren't allowed so we don't have to validate
+		if(!$subscriptionsAllowed) return false;
+
+		// is the form submitted
+		if($this->frmSubscription->isSubmitted())
+		{
+			// cleanup the submitted fields, ignore fields that were added by hackers
+			$this->frmSubscription->cleanupFields();
+
+			// does the key exists?
+			if(SpoonSession::exists('events_subscription_'. $this->record['id']))
+			{
+				// calculate difference
+				$diff = time() - (int) SpoonSession::get('events_subscription_'. $this->record['id']);
+
+				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
+				if($diff < 10 && $diff != 0) $this->frmSubscription->getField('email')->addError(FL::err('SubscriptionTimeout'));
+			}
+
+			// validate required fields
+			$this->frmSubscription->getField('author')->isFilled(FL::err('AuthorIsRequired'));
+			$this->frmSubscription->getField('email')->isEmail(FL::err('EmailIsRequired'));
+
+			// @todo	validate email
+
+			// no errors?
+			if($this->frmSubscription->isCorrect())
+			{
+				// get module setting
+				$spamFilterEnabled = (isset($this->settings['spamfilter_subscriptions']) && $this->settings['spamfilter_subscriptions']);
+				$moderationEnabled = (isset($this->settings['moderation_subscriptions']) && $this->settings['moderation_subscriptions']);
+
+				// reformat data
+				$author = $this->frmComment->getField('author')->getValue();
+				$email = $this->frmComment->getField('email')->getValue();
+
+				// build array
+				$subscription['event_id'] = $this->record['id'];
+				$subscription['language'] = FRONTEND_LANGUAGE;
+				$subscription['created_on'] = FrontendModel::getUTCDate();
+				$subscription['author'] = $author;
+				$subscription['email'] = $email;
+				$subscription['status'] = 'published';
+				$subscription['data'] = serialize(array('server' => $_SERVER));
+
+				// get URL for article
+				$permaLink = FrontendNavigation::getURLForBlock('events', 'detail') .'/'. $this->record['url'];
+				$redirectLink = $permaLink;
+
+				// should we check if the item is spam
+				if($spamFilterEnabled)
+				{
+					// if the subscription is spam alter the subscription status so it will appear in the spam queue
+					if(FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website)) $subscription['status'] = 'spam';
+				}
+
+				// insert subscription
+				$subscription['id'] = FrontendEventsModel::insertSubscription($subscription);
+
+				// append a parameter to the URL so we can show moderation
+				if(strpos($redirectLink, '?') === false)
+				{
+					if($subscription['status'] == 'moderation') $redirectLink .= '?subscription=moderation#'.FL::act('Comment');
+					if($subscription['status'] == 'spam') $redirectLink .= '?subscription=spam#'.FL::act('Comment');
+					if($subscription['status'] == 'published') $redirectLink .= '?subscription=true#subscription-'. $subscription['id'];
+				}
+				else
+				{
+					if($subscription['status'] == 'moderation') $redirectLink .= '&subscription=moderation#'.FL::act('Comment');
+					if($subscription['status'] == 'spam') $redirectLink .= '&subscription=spam#'.FL::act('Comment');
+					if($subscription['status'] == 'published') $redirectLink .= '&subscription=true#subscription-'. $subscription['id'];
+				}
+
+				// set title
+				$subscription['event_title'] = $this->record['title'];
+				$subscription['event_url'] = $this->record['url'];
+
+				// notify the admin
+				FrontendEventsModel::notifyAdmin($subscription);
+
+				// store timestamp in session so we can block excesive usage
+				SpoonSession::set('events_subscription_'. $this->record['id'], time());
+
+				// store author-data in cookies
+				try
+				{
+					// set cookies
+					SpoonCookie::set('subscription_author', $author, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('subscription_email', $email, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
 				}
 				catch(Exception $e)
 				{

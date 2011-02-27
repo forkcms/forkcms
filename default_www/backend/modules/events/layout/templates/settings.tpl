@@ -23,9 +23,9 @@
 		<div class="options">
 			<ul class="inputList">
 				<li><label for="allowComments">{$chkAllowComments} {$lblAllowComments|ucfirst}</label></li>
-				<li><label for="moderation">{$chkModeration} {$lblEnableModeration|ucfirst}</label></li>
+				<li><label for="moderationComments">{$chkModerationComments} {$lblEnableModeration|ucfirst}</label></li>
 				<li>
-					<label for="spamfilter">{$chkSpamfilter} {$lblFilterCommentsForSpam|ucfirst}</label>
+					<label for="spamfilterComments">{$chkSpamfilterComments} {$lblFilterCommentsForSpam|ucfirst}</label>
 					<span class="helpTxt">
 						{$msgHelpSpamFilter}
 						{option:noAkismetKey}<span class="infoMessage"><br />{$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}</span>{/option:noAkismetKey}
@@ -38,12 +38,32 @@
 
 	<div class="box">
 		<div class="heading">
+			<h3>{$lblSubscriptions|ucfirst}</h3>
+		</div>
+		<div class="options">
+			<ul class="inputList">
+				<li><label for="allowSubscriptions">{$chkAllowSubscriptions} {$lblAllowSubscriptions|ucfirst}</label></li>
+				<li><label for="moderationSubscriptions">{$chkModerationSubscriptions} {$lblEnableModeration|ucfirst}</label></li>
+				<li>
+					<label for="spamfilterSubscriptions">{$chkSpamfilterSubscriptions} {$lblFilterSubscriptionsForSpam|ucfirst}</label>
+					<span class="helpTxt">
+						{$msgHelpSpamFilter}
+						{option:noAkismetKey}<span class="infoMessage"><br />{$msgNoAkismetKey|sprintf:{$var|geturl:'index':'settings'}}</span>{/option:noAkismetKey}
+					</span>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<div class="box">
+		<div class="heading">
 			<h3>{$lblNotifications|ucfirst}</h3>
 		</div>
 		<div class="options">
 			<ul class="inputList p0">
 				<li><label for="notifyOnNewCommentToModerate">{$chkNotifyByEmailOnNewCommentToModerate} {$msgNotifyByEmailOnNewCommentToModerate|ucfirst}</label></li>
 				<li><label for="notifyOnNewComment">{$chkNotifyByEmailOnNewComment} {$msgNotifyByEmailOnNewComment|ucfirst}</label></li>
+				<li><label for="notifyOnNewSubscription">{$chkNotifyByEmailOnNewSubscription} {$msgNotifyByEmailOnNewSubscription|ucfirst}</label></li>
 			</ul>
 		</div>
 	</div>

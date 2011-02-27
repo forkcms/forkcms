@@ -23,7 +23,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 															c.name AS category_name, c.url AS category_url,
 															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 															UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
-															i.allow_comments,
+															i.allow_comments, i.allow_subscriptions, i.max_subscriptions, i.num_subscriptions,
 															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
 															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
 															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
@@ -647,8 +647,32 @@ class FrontendEventsModel implements FrontendTagsInterface
 //															LIMIT 1',
 //															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
 //	}
-//
-//
+
+
+	/**
+	 * Get the subscriptions for an item
+	 *
+	 * @return	array
+	 * @param	int $id		The ID of the item to get the subscriptions for.
+	 */
+	public static function getSubscriptions($id)
+	{
+		// get the subscriptions
+		$subscriptions = (array) FrontendModel::getDB()->getRecords('SELECT c.id, UNIX_TIMESTAMP(c.created_on) AS created_on, c.data,
+																c.author, c.email
+																FROM events_subscriptions AS c
+																WHERE c.event_id = ? AND c.status = ? AND c.language = ?
+																ORDER BY c.created_on ASC',
+																array((int) $id, 'published', FRONTEND_LANGUAGE));
+
+		// loop subscriptions and create gravatar id
+		foreach($subscriptions as &$row) $row['gravatar_id'] = md5($row['email']);
+
+		// return
+		return $subscriptions;
+	}
+
+
 	/**
 	 * Inserts a new comment
 	 *
@@ -680,6 +704,40 @@ class FrontendEventsModel implements FrontendTagsInterface
 
 		// return new id
 		return $comment['id'];
+	}
+
+
+	/**
+	 * Inserts a new subscription
+	 *
+	 * @return	int
+	 * @param	array $subscription		The new subscription to add.
+	 */
+	public static function insertSubscription(array $subscription)
+	{
+		// get db
+		$db = FrontendModel::getDB(true);
+
+		// insert comment
+		$subscription['id'] = (int) $db->insert('events_subscriptions', $subscription);
+
+		// recalculate if published
+		if($subscription['status'] == 'published')
+		{
+			// num comments
+			$numSubscriptions = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS subscription_count
+																	FROM events_subscriptions AS i
+																	INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
+																	WHERE i.status = ? AND i.event_id = ? AND i.language = ? AND p.status = ?
+																	GROUP BY i.event_id',
+																	array('published', $subscription['event_id'], FRONTEND_LANGUAGE, 'active'));
+
+			// update num comments
+			$db->update('events', array('num_subscriptions' => $numSubscriptions), 'id = ?', $subscription['event_id']);
+		}
+
+		// return new id
+		return $subscription['id'];
 	}
 
 

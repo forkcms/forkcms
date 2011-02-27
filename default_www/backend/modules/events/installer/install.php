@@ -167,11 +167,16 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'reacties-op-rss');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Ical', 'ical');
 		$this->insertLocale('nl', 'frontend', 'core', 'act', 'IcalAll', 'ical-allemaal');
+		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Subscription', 'inschrijving');
+		$this->insertLocale('nl', 'frontend', 'core', 'act', 'Subscriptions', 'inschrijvingen');
+		$this->insertLocale('nl', 'frontend', 'core', 'err', 'SubscriptionTimeout', 'Slow down cowboy, er moeten wat tijd tussen iedere inschrijving zijn.');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'schrijf je in op de RSS-feed');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EventsArchive', 'evenementenarchief');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'NextEvent', 'volgend evenement');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'PreviousEvent', 'vorig evenement');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'RecentEvents', 'recente evenement');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Subscribe', 'inschrijven');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Subscriptions', 'inschrijvingen');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Wrote', 'schreef');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllComments', 'Alle reacties op je evenementen.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsAllIcal', 'Download evenementen-kalender <small>(ical)</small>.');
@@ -185,6 +190,10 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s reageerde op <a href="%2$s">%3$s</a>.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsNoItems', 'Er zijn nog geen evenementen.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsSubscriptionIsAdded', 'Je inschrijving werd doorgegeven.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsSubscriptionInModeration', 'Je inschrijving wacht op goedkeuring.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EventsSubscriptionIsSpam', 'Je inschrijving werd gemarkeerd als spam.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'Subscribe', 'inschrijven');
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'core', 'err', 'IntegerIsInvalid', 'Invalid integer.');
@@ -219,12 +228,17 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'ArticleCommentsRss', 'comments-on-rss');
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'Ical', 'ical');
 		$this->insertLocale('en', 'frontend', 'core', 'act', 'IcalAll', 'ical-all');
+		$this->insertLocale('en', 'frontend', 'core', 'act', 'Subscription', 'subscription');
+		$this->insertLocale('en', 'frontend', 'core', 'act', 'Subscriptions', 'subscriptions');
+		$this->insertLocale('en', 'frontend', 'core', 'err', 'SubscriptionTimeout', 'Slow down cowboy, er moeten wat tijd tussen iedere inschrijving zijn.');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'InTheCategory', 'in category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SubscribeToTheRSSFeed', 'subscribe to the RSS feed');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'EventsArchive', 'events archive');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'NextEvent', 'next event');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'PreviousEvent', 'previous event');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'RecentEvents', 'recent events');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Subscribe', 'subscribe');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Subscriptions', 'subscriptions');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Wrote', 'wrote');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsAllComments', 'All comments on your events.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsAllIcal', 'Download events-feed <small>(ical)</small>.');
@@ -238,6 +252,10 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewComment', '%1$s commented on <a href="%2$s">%3$s</a>.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsEmailNotificationsNewCommentToModerate', '%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsNoItems', 'There are no events yet.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsSubscriptionIsAdded', 'Your subscription was added.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsSubscriptionInModeration', 'Your subscription is awaiting moderation.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EventsSubscriptionIsSpam', 'Your subscription was marked as spam.');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'Subscribe', 'subscribe');
 	}
 
 

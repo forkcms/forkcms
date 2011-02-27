@@ -49,3 +49,18 @@ CREATE TABLE IF NOT EXISTS `events_comments` (
  PRIMARY KEY (`id`),
  KEY `idx_id_status` (`event_id`,`status`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+
+
+CREATE TABLE IF NOT EXISTS `events_subscriptions` (
+ `id` int(11) NOT NULL auto_increment,
+ `event_id` int(11) NOT NULL,
+ `language` varchar(5) NOT NULL,
+ `created_on` datetime NOT NULL,
+ `author` varchar(255) NOT NULL,
+ `email` varchar(255) NOT NULL,
+ `num_attendees` int(11) NOT NULL DEFAULT '1',
+ `status` enum('published','moderation','spam') NOT NULL DEFAULT 'moderation',
+ `data` text COMMENT 'Serialized array with extra data',
+ PRIMARY KEY (`id`),
+ KEY `idx_id_status` (`event_id`,`status`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
