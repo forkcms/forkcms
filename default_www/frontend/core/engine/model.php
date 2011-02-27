@@ -99,7 +99,7 @@ class FrontendModel
 	 * Gets plain text for a given text
 	 *
 	 * @return	string
-	 * @param	string $text	The text to convert
+	 * @param	string $text	The text to convert.
 	 */
 	public static function convertToPlainText($text)
 	{

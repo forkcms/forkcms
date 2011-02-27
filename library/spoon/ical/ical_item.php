@@ -388,18 +388,6 @@ class SpoonIcalItem
 
 
 	/**
-	 * Set the date the instance was created/last revised
-	 *
-	 * @return	void
-	 * @param	int $timestamp		The creation date.
-	 */
-	public function setDatetimeStamp($timestamp)
-	{
-		$this->datetimeStamp = (int) $timestamp;
-	}
-
-
-	/**
 	 * Set the last modified date
 	 *
 	 * @return	void
@@ -408,6 +396,18 @@ class SpoonIcalItem
 	public function setDatetimeLastModified($timestamp)
 	{
 		$this->datetimeLastModified = (int) $timestamp;
+	}
+
+
+	/**
+	 * Set the date the instance was created/last revised
+	 *
+	 * @return	void
+	 * @param	int $timestamp		The creation date.
+	 */
+	public function setDatetimeStamp($timestamp)
+	{
+		$this->datetimeStamp = (int) $timestamp;
 	}
 
 

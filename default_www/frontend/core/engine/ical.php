@@ -22,6 +22,7 @@ class FrontendIcal extends SpoonIcal
 	/**
 	 * Default constructor
 	 *
+	 * @return	void
 	 * @param	string $title			The title for the calendar.
 	 * @param	string $description		A description for the calendar.
 	 */
@@ -80,6 +81,7 @@ class FrontendIcal extends SpoonIcal
 	/**
 	 * Set the title
 	 *
+	 * @return	void
 	 * @param	string $title	The title for the calendar.
 	 */
 	public function setTitle($title)
