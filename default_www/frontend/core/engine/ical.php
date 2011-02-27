@@ -11,6 +11,81 @@
  */
 class FrontendIcal extends SpoonIcal
 {
+	/**
+	 * The title
+	 *
+	 * @var	string
+	 */
+	private $title;
+
+
+	/**
+	 * Default constructor
+	 *
+	 * @param	string $title			The title for the calendar.
+	 * @param	string $description		A description for the calendar.
+	 */
+	public function __construct($title, $description)
+	{
+		// redefine
+		$title = (string) $title;
+		$description = (string) $description;
+
+		// convert to plain text
+		$description = FrontendModel::convertToPlainText($description);
+
+		// set some basic stuf
+		$this->setProductIdentifier('Fork v'. FORK_VERSION);
+
+		// build properties
+		$properties['X-WR-CALNAME;VALUE=TEXT'] = $title;
+		$properties['X-WR-CALDESC'] = $description;
+		$properties['X-WR-TIMEZONE'] = date_default_timezone_get();
+
+		// set the title
+		$this->setTitle($title);
+
+		// set properties
+		$this->setXProperties($properties);
+	}
+
+
+	/**
+	 * Get the title
+	 *
+	 * @return	string
+	 */
+	public function getTitle()
+	{
+		return $this->title;
+	}
+
+
+	/**
+	 * Parse the ical and output into the browser.
+	 *
+	 * @return	void
+	 * @param	bool[optional] $headers		Should the headers be set? (Use false if you're debugging).
+	 */
+	public function parse($headers = true)
+	{
+		// set headers
+		if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename='. SpoonFilter::urlise($this->getTitle()) . '.ics');
+
+		// call the parent
+		parent::parse($headers);
+	}
+
+
+	/**
+	 * Set the title
+	 *
+	 * @param	string $title	The title for the calendar.
+	 */
+	public function setTitle($title)
+	{
+		$this->title = (string) $title;
+	}
 }
 
 
@@ -23,7 +98,7 @@ class FrontendIcal extends SpoonIcal
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
-class FrontendIcalItem extends SpoonIcalItem
+class FrontendIcalItemEvent extends SpoonIcalItemEvent
 {
 	/**
 	 * Initial values for UTM-parameters
@@ -46,11 +121,35 @@ class FrontendIcalItem extends SpoonIcalItem
 		// set UTM-campaign
 		$this->utm['utm_campaign'] = SpoonFilter::urlise($title);
 
-		// call parent
-		parent::__construct($title, FrontendModel::addURLParameters($link, $this->utm), $description);
+		// convert to plain text
+		$description = FrontendModel::convertToPlainText($description);
 
-		// set some properties
-		$this->setGuid($link, true);
+		// set title
+		$this->setSummary($title);
+
+		// set url
+		$this->setUrl(FrontendModel::addURLParameters($link, $this->utm));
+
+		// set description
+		$this->setDescription($this->processLinks($description));
+
+		// set organiser
+		$siteTitle = FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+		$from = FrontendModel::getModuleSetting('core', 'mailer_reply_to');
+		$sentBy = FrontendModel::getModuleSetting('core', 'mailer_from');
+		$this->setOrganizer($from['email'], $siteTitle, null, $sentBy['email'], FRONTEND_LANGUAGE);
+
+		// set identifier
+		$this->setUniqueIdentifier(md5($link));
+
+		// build properties
+		$properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = SpoonIcal::formatAsString($title);
+		$properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SpoonIcal::formatAsString(SITE_URL .'/favicon.ico');
+		$properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = SpoonIcal::formatAsString($this->getUrl());
+		$properties['X-GOOGLE-CALENDAR-CONTENT-TYPE'] = 'text/html';
+
+		// set properties
+		$this->setXProperties($properties);
 	}
 
 
@@ -102,84 +201,22 @@ class FrontendIcalItem extends SpoonIcalItem
 
 
 	/**
-	 * Set the author.
+	 * Set the url
 	 *
 	 * @return	void
-	 * @param	string $author		The author to use.
+	 * @param	string $url		The url to assiociate the item with.
 	 */
-	public function setAuthor($author)
-	{
-		// redefine
-		$author = (string) $author;
-
-		// add fake-emailaddress
-		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) .'@example.com ('. $author .')';
-
-		// set author
-		parent::setAuthor($author);
-	}
-
-
-	/**
-	 * Set the description.
-	 * All links and images that link to internal files will be prepended with the sites URL
-	 *
-	 * @return	void
-	 * @param	string $description		The content of the item.
-	 */
-	public function setDescription($description)
-	{
-		// remove special chars
-		$description = SpoonFilter::htmlspecialcharsDecode($description);
-
-		// process links
-		$description = $this->processLinks($description);
-
-		// call parent
-		parent::setDescription($description);
-	}
-
-
-	/**
-	 * Set the guid.
-	 * If the link is an internal link the sites URL will be prepended.
-	 *
-	 * @return	void
-	 * @param	string $link					The guid for an item.
-	 * @param	bool[optional] $isPermaLink		Is this link permanent?
-	 */
-	public function setGuid($link, $isPermaLink = true)
+	public function setUrl($url)
 	{
 		// redefine var
-		$link = (string) $link;
+		$url = (string) $url;
 
 		// if link doesn't start with http, we prepend the URL of the site
-		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
+		if(substr($url, 0, 7) != 'http://') $url = SITE_URL . $url;
 
 		// call parent
-		parent::setGuid($link, $isPermaLink);
+		parent::setUrl(FrontendModel::addURLParameters($url, $this->utm));
 	}
-
-
-	/**
-	 * Set the link.
-	 * If the link is an internal link the sites URL will be prepended.
-	 *
-	 * @return	void
-	 * @param	string $link	The link for the item.
-	 */
-	public function setLink($link)
-	{
-		// redefine var
-		$link = (string) $link;
-
-		// if link doesn't start with http, we prepend the URL of the site
-		if(substr($link, 0, 7) != 'http://') $link = SITE_URL . $link;
-
-		// call parent
-		parent::setLink($link);
-	}
-
 }
 
 ?>
