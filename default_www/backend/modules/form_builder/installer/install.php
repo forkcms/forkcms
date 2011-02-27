@@ -47,6 +47,7 @@ class FormBuilderInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'form_builder', 'err', 'InvalidIdentifier', 'Gelieve een geldige identifier op te geven (enkel . - _ en alphanumerieke karakters)');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'err', 'LabelIsRequired', 'Gelieve een label in te geven.');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'err', 'SuccessMessageIsRequired', 'Gelieve een succes boodschap in te geven.');
+		$this->insertLocale('nl', 'backend', 'form_builder', 'err', 'UniqueIdentifier', 'Deze identifier is al in gebruik.');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'err', 'ValueIsRequired', 'Gelieve een waarde in te geven.');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'Add', 'formulier toevoegen');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'AddFields', 'velden toevoegen');
@@ -73,6 +74,7 @@ class FormBuilderInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'OneMinuteAgo', '1 minuut geleden');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'OneSecondAgo', '1 seconde geleden');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'Paragraph', 'paragraaf');
+		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'Parameter', 'argument');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'Properties', 'eigenschappen');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'Radiobutton', 'keuzerondje');
 		$this->insertLocale('nl', 'backend', 'form_builder', 'lbl', 'Recipient', 'bestemmeling');
@@ -122,6 +124,7 @@ class FormBuilderInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'form_builder', 'err', 'InvalidIdentifier', 'Please provide a valid identifier. (only . - _ and alphanumeric characters)');
 		$this->insertLocale('en', 'backend', 'form_builder', 'err', 'LabelIsRequired', 'Please provide a label.');
 		$this->insertLocale('en', 'backend', 'form_builder', 'err', 'SuccessMessageIsRequired', 'Please provide a success message.');
+		$this->insertLocale('en', 'backend', 'form_builder', 'err', 'UniqueIdentifier', 'This identiefier is already in use.');
 		$this->insertLocale('en', 'backend', 'form_builder', 'err', 'ValueIsRequired', 'Please provide a value.');
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'Add', 'add form');
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'AddFields', 'add fields');
@@ -148,6 +151,7 @@ class FormBuilderInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'OneMinuteAgo', '1 minute ago');
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'OneSecondAgo', '1 second ago');
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'Paragraph', 'paragraph');
+		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'Parameter', 'parameter');
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'Properties', 'properties');
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'Radiobutton', 'radiobutton');
 		$this->insertLocale('en', 'backend', 'form_builder', 'lbl', 'Recipient', 'recipient');

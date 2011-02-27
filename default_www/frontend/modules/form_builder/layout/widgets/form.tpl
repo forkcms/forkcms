@@ -15,8 +15,8 @@
 			{/option:formBuilderError}
 
 			{option:fields}
-				<form id="{$name}" method="post" action="{$action}">
-					<input type="hidden" name="form" value="{$name}" />
+				<form id="{$formName}" method="post" action="{$formAction}">
+					<input type="hidden" name="form" value="{$formName}" />
 
 					{iteration:fields}
 						{* Headings and paragraphs *}
