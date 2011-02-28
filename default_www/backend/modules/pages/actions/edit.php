@@ -409,7 +409,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;
 					$block['status'] = 'active';
-					if(!isset($this->blocksContent[$i]['created_on'])) $block['created_on'] = BackendModel::getUTCDate();
+					$block['created_on'] = (isset($this->blocksContent[$i]['created_on'])) ? BackendModel::getUTCDate(null, $this->blocksContent[$i]['created_on']) : BackendModel::getUTCDate();
 					$block['edited_on'] = BackendModel::getUTCDate();
 
 					// add block
