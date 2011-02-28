@@ -227,7 +227,6 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				$item['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
 				$item['num_blocks'] = $numBlocks;
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
-				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
 				// if this is the default template make the template active
 				if(BackendModel::getModuleSetting('pages', 'default_template') == $this->record['id']) $item['active'] = 'Y';
@@ -245,6 +244,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 					$item['data']['default_extras'][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
 				}
+
+				// blocks layout
+				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
 
 				// serialize
 				$item['data'] = serialize($item['data']);
