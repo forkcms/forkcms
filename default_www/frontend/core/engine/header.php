@@ -74,7 +74,7 @@ class FrontendHeader extends FrontendBaseObject
 		Spoon::setObjectReference('header', $this);
 
 		// add some default CSS files
-		$this->addCSS('/frontend/core/layout/css/jquery_ui/ui-lightness/jquery_ui.css');
+		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css');
 		$this->addCSS('/frontend/core/layout/css/screen.css');
 
 		// add default IE stylesheets
