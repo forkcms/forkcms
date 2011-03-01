@@ -3,16 +3,8 @@
 <section class="mod">
 	<div class="innner">
 		<div class="bd">
-			{option:successMessage}
-				<div class="message success">
-					{$successMessage}
-				</div>
-			{/option:successMessage}
-			{option:formBuilderError}
-				<div class="message error">
-					<p>{$formBuilderError}</p>
-				</div>
-			{/option:formBuilderError}
+			{option:successMessage}<div class="message success">{$successMessage}</div>{/option:successMessage}
+			{option:formBuilderError}<div class="message error"><p>{$formBuilderError}</p></div>{/option:formBuilderError}
 
 			{option:fields}
 				<form id="{$formName}" method="post" action="{$formAction}">
