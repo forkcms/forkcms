@@ -1128,7 +1128,7 @@ label,
 	box-shadow: 0 0 3px #d00c00;
 }
 
-.errorArea .inlineError {
+.errorArea .formError {
 	font-size: 11px;
 	line-height: 1.636;
 	color: #d00c00;
@@ -1249,7 +1249,7 @@ label,
 	.horizontal .alignFields,
 	.horizontal .alignButtons,
 	.horizontal .helpTxt,
-	.horizontal .inlineError {
+	.horizontal .formError {
 		padding-left: 134px; /* This value should be the same as the width value in "Normal width" */
 	}
 
@@ -1382,14 +1382,14 @@ label,
 	/* Floating blocks */
 
 	.horizontal .alignBlocks .helpTxt,
-	.horizontal .alignBlocks .inlineError {
+	.horizontal .alignBlocks .formError {
 		padding-left: 0;
 	}
 
 	/* Floating fields */
 
 	.horizontal .alignFields .helpTxt,
-	.horizontal .alignFields .inlineError {
+	.horizontal .alignFields .formError {
 		padding-left: 0;
 	}
 
@@ -1495,7 +1495,7 @@ label,
 	.horizontal .formSectionContent .alignFields,
 	.horizontal .formSectionContent .alignButtons,
 	.horizontal .formSectionContent .helpTxt,
-	.horizontal .formSectionContent .inlineError {
+	.horizontal .formSectionContent .formError {
 		padding-left: 0;
 	}
 
