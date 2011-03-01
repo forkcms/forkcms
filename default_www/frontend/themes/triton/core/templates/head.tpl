@@ -23,15 +23,20 @@
 
 	{* Stylesheets *}
 	{iteration:cssFiles}
-		{option:!cssFiles.condition}<link rel="stylesheet" media="{$cssFiles.media}" href="{$cssFiles.file}" />{/option:!cssFiles.condition}
+		<link rel="stylesheet" media="{$cssFiles.media}" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
 
-	{* Javascript *}
+	{* HTML5 Javascript *}
+	<!--[if lt IE 9]> <script src="{$THEME_PATH}/core/js/html5.js"></script> <![endif]-->
+
+	{* General Javascript *}
 	{iteration:javascriptFiles}
 		<script src="{$javascriptFiles.file}"></script>
 	{/iteration:javascriptFiles}
-	<!--[if lt IE 9]> <script src="{$THEME_PATH}/core/js/html5.js"></script> <![endif]-->
-
+	
+	{* Module specific Javascript *}
+	<script src="{$THEME_PATH}/core/js/triton.js"></script>
+	
 	{* Site wide HTML *}
 	{$siteHTMLHeader}
 </head>
