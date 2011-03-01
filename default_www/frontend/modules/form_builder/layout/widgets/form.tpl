@@ -1,6 +1,6 @@
 {* Note: we can use general variables names here since this template is parsed within its own scope *}
 
-<div class="mod">
+<section class="mod">
 	<div class="innner">
 		<div class="bd">
 			{option:successMessage}
@@ -60,4 +60,4 @@
 			{/option:fields}
 		</div>
 	</div>
-</div>
+</section>
