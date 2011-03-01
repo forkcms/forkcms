@@ -2,8 +2,7 @@
 	variables that are available:
 	- {$faqCategories}: contains all categories, along with all questions inside a category
 *}
-
-<div id="faq" class="mod">
+<section id="faq" class="mod">
 	<div class="inner">
 		<div class="bd">
 			{iteration:faqCategories}
@@ -23,4 +22,4 @@
 			{/iteration:faqCategories}
 		</div>
 	</div>
-</div>
+</section>

@@ -92,8 +92,8 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('textarea_required');
 		$this->frm->addText('textarea_required_error_message');
 		$this->frm->addDropdown('textarea_validation', array('' => ''));
-		$this->frm->addText('textbox_validation_parameter');
-		$this->frm->addText('textbox_error_message');
+		$this->frm->addText('textarea_validation_parameter');
+		$this->frm->addText('textarea_error_message');
 
 		// dropdown dialog
 		$this->frm->addText('dropdown_label');

@@ -1,47 +1,59 @@
 {include:{$FRONTEND_CORE_PATH}/layout/templates/head.tpl}
+
 <body class="{$LANGUAGE}">
 	<div id="container">
+		<header id="header">
+			{* Logo *}
+			<h2>
+				<a href="/">{$siteTitle}</a>
+			</h2>
 
-		<div id="header">
-			<h1><a href="/">{$siteTitle}</a></h1>
-
-			<div id="language">
+			{* Language *}
+			<div>
 				{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
 			</div>
-			<div id="navigation">
-				{$var|getnavigation:'page':0:1}
-			</div>
-		</div>
+		</header>
 
-		<div id="main">
+		{* Navigation *}
+		<nav>
+			{$var|getnavigation:'page':0:1}
+		</nav>
+
+		<section>
+			{* Breadcrumb *}
 			{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
 
+			{* Page title *}
 			{option:!hideContentTitle}
-				<div class="pageTitle">
-					<h2>{$page.title}</h2>
-				</div>
+				<header class="mainTitle">
+					<h1>{$page.title}</h1>
+				</header>
 			{/option:!hideContentTitle}
 
 			{* Block 1 (default: Editor) *}
 			{option:block1IsHTML}
 				{option:block1}
-					<div class="mod">
+					<section class="mod">
 						<div class="inner">
-							<div class="bd">
+							<div class="bd content">
 								{$block1}
 							</div>
 						</div>
-					</div>
+					</section>
 				{/option:block1}
 			{/option:block1IsHTML}
 			{option:!block1IsHTML}
 				{include:{$block1}}
 			{/option:!block1IsHTML}
-		</div>
+		</section>
 
-		<div id="footer">
+		<footer>
 			{include:{$FRONTEND_CORE_PATH}/layout/templates/footer.tpl}
-		</div>
+		</footer>
 	</div>
+
+	{* Site wide HTML *}
+	{$siteHTMLFooter}
+
 </body>
 </html>

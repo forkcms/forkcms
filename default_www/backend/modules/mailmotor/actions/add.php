@@ -73,7 +73,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		$this->frm->addMultiCheckbox('groups', $groups, ((count($groups) == 1 && isset($groups[0])) ? $groups[0]['value'] : false));
 
 		// languages
-		$this->frm->addRadiobutton('languages', $languages, 'nl');
+		$this->frm->addRadiobutton('languages', $languages, BL::getWorkingLanguage());
 	}
 
 

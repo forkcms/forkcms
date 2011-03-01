@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class InstallerStep2 extends InstallerStep
@@ -74,7 +75,10 @@ class InstallerStep2 extends InstallerStep
 		// check for cURL extension
 		self::checkRequirement('extensionCURL', extension_loaded('curl'), $variables);
 
-		// check for cURL extension
+		// check for libxml extension
+		self::checkRequirement('extensionLibXML', extension_loaded('libxml'), $variables);
+
+		// check for DOM extension
 		self::checkRequirement('extensionDOM', extension_loaded('dom'), $variables);
 
 		// check for SimpleXML extension

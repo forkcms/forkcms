@@ -5,7 +5,7 @@
 *}
 
 {option:searchTerm}
-	<div id="searchResults" class="mod">
+	<section id="searchResults" class="mod">
 		<div class="inner">
 			{option:!searchResults}
 				<div class="bd content">
@@ -15,7 +15,7 @@
 			{option:searchResults}
 				{iteration:searchResults}
 					<div class="bd">
-						<div class="mod result">
+						<section class="mod">
 							<div class="inner">
 								<div class="hd">
 									<h3>
@@ -29,11 +29,11 @@
 									{option:searchResults.introduction}{$searchResults.introduction}{/option:searchResults.introduction}
 								</div>
 							</div>
-						</div>
+						</section>
 					</div>
 				{/iteration:searchResults}
 			{/option:searchResults}
 		</div>
-	</div>
+	</section>
 	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
 {/option:searchTerm}

@@ -54,7 +54,6 @@
 		</div>
 
 		<div id="tabFields">
-			{* @todo labels *}
 			<div class="generalMessage infoMessage singleMessage content">
 				<p class="lastChild">{$msgImportantImmediateUpdate}</p>
 			</div>
@@ -62,7 +61,7 @@
 				<div id="leftColumn">
 					<div class="box boxLevel2">
 						<div class="heading">
-							<h3>Preview</h3>
+							<h3>{$lblPreview|ucfirst}</h3>
 						</div>
 						<div id="fieldsHolder" cellspacing="0" cellpadding="0" border="0" class="sequenceByDragAndDrop">
 							{option:fields}
@@ -98,7 +97,7 @@
 							<ul>
 								<li id="textboxSelector"><a href="#textbox" rel="textboxDialog" class="openFieldDialog">{$lblTextbox|ucfirst}</a></li>
 								<li id="textareaSelector"><a href="#textarea" rel="textareaDialog" class="openFieldDialog">{$lblTextarea|ucfirst}</a></li>
-								<li id="dropdownSelector"><a href=#dropdown rel="dropdownDialog" class="openFieldDialog">{$lblDropdown|ucfirst}</a></li>
+								<li id="dropdownSelector"><a href="#dropdown" rel="dropdownDialog" class="openFieldDialog">{$lblDropdown|ucfirst}</a></li>
 								<li id="checkboxSelector"><a href="#checkbox" rel="checkboxDialog" class="openFieldDialog">{$lblCheckbox|ucfirst}</a></li>
 								<li id="radiobuttonSelector"><a href="#radiobutton" rel="radiobuttonDialog" class="openFieldDialog">{$lblRadiobutton|ucfirst}</a></li>
 							</ul>
@@ -144,11 +143,6 @@
 	{* Dialog for confirming deletion *}
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 		<p>{$msgConfirmDelete|sprintf:{$name}}</p>
-	</div>
-
-	{* Dialog for confirming field deletion *}
-	<div id="confirmFieldDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-		<p>{$msgConfirmFieldDelete|sprintf:{$name}}</p>
 	</div>
 
 	{* Dialog for a textbox *}
@@ -251,6 +245,21 @@
 							<label for="textareaRequiredErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtTextareaRequiredErrorMessage}
 							<span id="textareaRequiredErrorMessageError" class="formError" style="display: none;"></span>
+						</p>
+					</div>
+					<div class="validation options" style="display: none;">
+						<p class="p0">
+							<label for="textareaValidation">{$lblValidation|ucfirst}</label>
+							{$ddmTextareaValidation}
+						</p>
+						<p class="validationParameter" style="display: none;">
+							<label for="textareaValidationParameter">{$lblParameter|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtTextareaValidationParameter}
+						</p>
+						<p class="validationErrorMessage" style="display: none;">
+							<label for="textareaErrorMessage">{$lblErrorMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+							{$txtTextareaErrorMessage}
+							<span id="textareaErrorMessageError" class="formError" style="display: none;"></span>
 						</p>
 					</div>
 				</div>
