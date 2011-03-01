@@ -41,7 +41,7 @@
 					<div class="ft">
 						<p>
 							{$msgWrittenBy|ucfirst|sprintf:{$items.user_id|usersetting:'nickname'}}
-							{$lblInTheCategory}: <a href="{$items.category_full_url}" title="{$items.category_name}">{$items.category_name}</a>.
+							{$lblInTheCategory}: <a href="{$items.category_full_url}" title="{$items.category_title}">{$items.category_title}</a>.
 							{option:items.tags}
 								{$lblTags|ucfirst}:
 								{iteration:items.tags}

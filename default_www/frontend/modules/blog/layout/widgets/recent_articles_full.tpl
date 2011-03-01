@@ -29,7 +29,7 @@
 							</div>
 							<div class="ft">
 								<p>
-									{$msgWrittenBy|ucfirst|sprintf:{$widgetBlogRecentArticlesFull.user_id|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$widgetBlogRecentArticlesFull.category_full_url}" title="{$widgetBlogRecentArticlesFull.category_name}">{$widgetBlogRecentArticlesFull.category_name}</a>. {option:widgetBlogRecentArticlesFull.tags}{$lblTags|ucfirst}: {iteration:widgetBlogRecentArticlesFull.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:widgetBlogRecentArticlesFull.tags}{/option:widgetBlogRecentArticlesFull.tags}
+									{$msgWrittenBy|ucfirst|sprintf:{$widgetBlogRecentArticlesFull.user_id|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$widgetBlogRecentArticlesFull.category_full_url}" title="{$widgetBlogRecentArticlesFull.category_title}">{$widgetBlogRecentArticlesFull.category_title}</a>. {option:widgetBlogRecentArticlesFull.tags}{$lblTags|ucfirst}: {iteration:widgetBlogRecentArticlesFull.tags}<a href="{$tags.full_url}" rel="tag" title="{$tags.name}">{$tags.name}</a>{option:!tags.last}, {/option:!tags.last}{/iteration:widgetBlogRecentArticlesFull.tags}{/option:widgetBlogRecentArticlesFull.tags}
 								</p>
 							</div>
 						</div>

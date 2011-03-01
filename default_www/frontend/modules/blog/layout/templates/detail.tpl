@@ -24,7 +24,7 @@
 			</div>
 			<div class="ft">
 				{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
-				{$lblInTheCategory}: <a href="{$item.category_full_url}" title="{$item.category_name}">{$item.category_name}</a>.
+				{$lblInTheCategory}: <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>.
 				{option:item.tags}
 					{$lblTags|ucfirst}:
 					{iteration:item.tags}
