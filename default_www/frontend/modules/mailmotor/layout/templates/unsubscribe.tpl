@@ -1,4 +1,4 @@
-<div id="unsubscribeIndex" class="mod">
+<section id="unsubscribeIndex" class="mod">
 	<div class="inner">
 		<div class="bd">
 			{option:unsubscribeHasFormError}<div class="message error"><p>{$errFormError}</p></div>{/option:unsubscribeHasFormError}
@@ -7,7 +7,7 @@
 
 			{option:!unsubscribeHideForm}
 				{form:unsubscribe}
-					<p>
+					<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
 						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
@@ -18,4 +18,4 @@
 			{/option:!unsubscribeHideForm}
 		</div>
 	</div>
-</div>
+</section>
