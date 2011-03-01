@@ -102,8 +102,8 @@ class BackendLocaleModel
 		BackendModel::getDB(true)->delete('locale', 'id IN ('. implode(',', $ids) .')');
 
 		// rebuild cache
-		self::buildCache('nl', 'backend');
-		self::buildCache('nl', 'frontend');
+		self::buildCache(BL::getWorkingLanguage(), 'backend');
+		self::buildCache(BL::getWorkingLanguage(), 'frontend');
 	}
 
 
