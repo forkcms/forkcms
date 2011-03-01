@@ -39,6 +39,10 @@ class FaqInstall extends ModuleInstaller
 		$this->setActionRights(1, 'faq', 'delete_category');
 		$this->setActionRights(1, 'faq', 'sequence_questions');
 
+		// extras
+		$this->insertExtra('faq', 'block', 'Faq', 'index', null, 'N', 9001);
+		$this->insertExtra('faq', 'block', 'Category', 'category', null, 'N', 9002);
+
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Faq', 'FAQ');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Questions', 'vragen');
