@@ -44,7 +44,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'NoSelection', 'Er waren geen vertalingen geselecteerd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Add', 'vertaling toevoegen');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Added', 'De vertaling "%1$s" werd toegevoegd.');
-		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertalingen werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertaling(en) werd(en) verwijderd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Edited', 'De vertaling "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'EditTranslation', 'bewerk vertaling "%1$s"');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpAddName', 'De Engelstalige referentie naar de vertaling, bvb. "Add". Deze waarde moet beginnen met een hoofdletter en mag geen spaties bevatten.');
