@@ -7,8 +7,5 @@
 			</a>
 		</li>
 	{/iteration:footerLinks}
-	<li>Powered by <a href="http://www.fork-cms.be" title="Fork CMS">Fork CMS</a></li>
+	<li><a href="http://www.fork-cms.be" title="Fork CMS">Fork CMS</a></li>
 </ul>
-
-{* Site wide HTML *}
-{$siteHTMLFooter}

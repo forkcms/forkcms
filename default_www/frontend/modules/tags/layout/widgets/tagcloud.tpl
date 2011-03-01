@@ -4,12 +4,12 @@
 *}
 
 {option:widgetTagsTagCloud}
-	<div id="TagCloudWidget" class="mod">
+	<section id="tagCloudWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblTags|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
 					{iteration:widgetTagsTagCloud}
 						<li>
@@ -21,5 +21,5 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</section>
 {/option:widgetTagsTagCloud}

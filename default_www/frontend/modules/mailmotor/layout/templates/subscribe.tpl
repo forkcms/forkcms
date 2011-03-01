@@ -1,4 +1,4 @@
-<div id="subscribeIndex" class="mod">
+<section id="subscribeIndex" class="mod">
 	<div class="inner">
 		<div class="bd">
 			{option:subscribeHasFormError}<div class="message error"><p>{$errFormError}</p></div>{/option:subscribeHasFormError}
@@ -7,7 +7,7 @@
 
 			{option:!subscribeHideForm}
 				{form:subscribe}
-					<p>
+					<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
 						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
@@ -18,4 +18,4 @@
 			{/option:!subscribeHideForm}
 		</div>
 	</div>
-</div>
+</section>

@@ -5,12 +5,12 @@
 
 {cache:{$LANGUAGE}_blogWidgetArchiveCache}
 	{option:widgetBlogArchive}
-		<div id="blogArchiveWidget" class="mod">
+		<section id="blogArchiveWidget" class="mod">
 			<div class="inner">
-				<div class="hd">
+				<header class="hd">
 					<h3>{$lblArchive|ucfirst}</h3>
-				</div>
-				<div class="bd">
+				</header>
+				<div class="bd content">
 					<ul>
 						{iteration:widgetBlogArchive}
 							<li>
@@ -36,6 +36,6 @@
 					</ul>
 				</div>
 			</div>
-		</div>
+		</section>
 	{/option:widgetBlogArchive}
 {/cache:{$LANGUAGE}_blogWidgetArchiveCache}

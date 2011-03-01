@@ -44,7 +44,7 @@ h2,
 h3,
 h4 {
 	font-family: 'Qlassik bold', Helvetica, Arial, sans-serif;
-	line-height: 1.1;
+	line-height: 1;
 	font-weight: 300;
 	color: #1c4f6f;
 }
@@ -499,10 +499,6 @@ a.linkedImage {
 					color: #666;
 				}
 
-				#main header .iconWrapper {
-					line-height: 1.636;
-				}
-
 				#main header ul:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 				.ie6 #main header ul, .ie7 #main header ul { zoom: 1; }
 
@@ -517,14 +513,20 @@ a.linkedImage {
 		.ft:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
 		.ie6 .ft, .ie7 .ft { zoom: 1; }
 
-			#main .ft p {
-				padding: 0;
+			#main footer p,
+			#main footer ul {
 				font-size: 11px;
-				color: #999;
-				text-align: right;
-				position: relative;
-				top: 5px;
+				padding: 2px 0 0 0;
+				color: #666;
 			}
+
+			#main footer ul:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+			.ie6 #main footer ul, .ie7 #main footer ul { zoom: 1; }
+
+				#main footer li {
+					float: left;
+					padding-right: 10px;
+				}
 
 	/* White module */
 
@@ -741,6 +743,70 @@ a.linkedImage {
 									.sideNavigation li.selected li.selected li.selected li.selected a:focus {
 										color: #fff;
 									}
+
+	/* Blog */
+
+	#main .pageNavigation {
+		font-size: 11px;
+		background: #fff;
+		padding: 10px;
+		border: 1px solid #ddd;
+		-moz-border-radius: 5px;
+		-webkit-border-radius: 5px;
+		border-radius: 5px;
+	}
+
+	.pageNavigation:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.ie6 .pageNavigation, .ie7 .pageNavigation { zoom: 1; }
+
+		.pageNavigation .previousLink {
+			float: left;
+			width: 48%;
+			text-align: left;
+		}
+
+		.pageNavigation .nextLink {
+			float: right;
+			width: 48%;
+			text-align: right;
+		}
+
+	.comment {
+		border-bottom: 1px solid #ddd;
+		margin-bottom: 12px;
+	}
+
+	.comment:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
+	.ie6 .comment, .ie7 .comment { zoom: 1; }
+
+		.comment .imageHolder {
+			float: left;
+			padding: 0 12px 10px 0;
+			width: 48px;
+			height: 48px;
+		}
+
+			.comment .imageHolder a {
+				border: 0;
+				width: 48px;
+				height: 48px;
+			}
+
+		.comment .commentContent {
+			float: left;
+		}
+
+		.col-2 .comment .commentContent { width: 80px; }
+		.col-3 .comment .commentContent { width: 160px; }
+		.col-4 .comment .commentContent { width: 240px; }
+		.col-5 .comment .commentContent { width: 320px; }
+		.col-6 .comment .commentContent { width: 400px; }
+		.col-7 .comment .commentContent { width: 480px; }
+		.col-8 .comment .commentContent { width: 560px; }
+		.col-9 .comment .commentContent { width: 640px; }
+		.col-10 .comment .commentContent { width: 720px; }
+		.col-11 .comment .commentContent { width: 800px; }
+		.col-12 .comment .commentContent { width: 880px; }
 
 	/* Pagination */
 
@@ -1128,7 +1194,7 @@ label,
 	box-shadow: 0 0 3px #d00c00;
 }
 
-.errorArea .inlineError {
+.errorArea .formError {
 	font-size: 11px;
 	line-height: 1.636;
 	color: #d00c00;
@@ -1249,7 +1315,7 @@ label,
 	.horizontal .alignFields,
 	.horizontal .alignButtons,
 	.horizontal .helpTxt,
-	.horizontal .inlineError {
+	.horizontal .formError {
 		padding-left: 134px; /* This value should be the same as the width value in "Normal width" */
 	}
 
@@ -1382,14 +1448,14 @@ label,
 	/* Floating blocks */
 
 	.horizontal .alignBlocks .helpTxt,
-	.horizontal .alignBlocks .inlineError {
+	.horizontal .alignBlocks .formError {
 		padding-left: 0;
 	}
 
 	/* Floating fields */
 
 	.horizontal .alignFields .helpTxt,
-	.horizontal .alignFields .inlineError {
+	.horizontal .alignFields .formError {
 		padding-left: 0;
 	}
 
@@ -1495,7 +1561,7 @@ label,
 	.horizontal .formSectionContent .alignFields,
 	.horizontal .formSectionContent .alignButtons,
 	.horizontal .formSectionContent .helpTxt,
-	.horizontal .formSectionContent .inlineError {
+	.horizontal .formSectionContent .formError {
 		padding-left: 0;
 	}
 

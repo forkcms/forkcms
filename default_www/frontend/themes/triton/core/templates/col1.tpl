@@ -1,4 +1,4 @@
-{include:'{$THEME_PATH}/core/templates/head.tpl'}
+{include:'{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
 
 <body class="{$LANGUAGE}">
 	<div id="topWrapper">
