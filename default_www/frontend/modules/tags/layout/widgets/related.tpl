@@ -4,12 +4,12 @@
 *}
 
 {option:widgetTagsRelated}
-	<div id="TagCloudWidget" class="mod">
+	<section id="tagRelatedWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblRelated|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
 					{iteration:widgetTagsRelated}
 						<li>
@@ -21,5 +21,5 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</section>
 {/option:widgetTagsRelated}
