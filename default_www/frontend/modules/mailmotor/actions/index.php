@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class FrontendMailmotorIndex extends FrontendBaseBlock
@@ -60,14 +60,14 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 
 		// create datagrid
 		$this->datagrid = new SpoonDataGrid($source);
-		$this->datagrid->setCompileDirectory(FRONTEND_CACHE_PATH .'/templates');
+		$this->datagrid->setCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
 
 		// set hidden columns
 		$this->datagrid->setColumnsHidden(array('id', 'status'));
 
 		// set headers values
-		$headers['name'] = ucfirst(FL::getLabel('Name'));
-		$headers['send_on'] = ucfirst(FL::getLabel('Sent'));
+		$headers['name'] = ucfirst(FL::lbl('Name'));
+		$headers['send_on'] = ucfirst(FL::lbl('Sent'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels($headers);

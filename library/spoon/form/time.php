@@ -31,10 +31,10 @@ class SpoonFormTime extends SpoonFormInput
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	string[optional] $value
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name.
+	 * @param	string[optional] $value			The initial value.
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function __construct($name, $value = null, $class = 'inputTimefield', $classError = 'inputTimefieldError')
 	{
@@ -63,9 +63,9 @@ class SpoonFormTime extends SpoonFormInput
 	 * Returns a timestamp based on the value & optional fields.
 	 *
 	 * @return	int
-	 * @param	int[optional] $year
-	 * @param	int[optional] $month
-	 * @param	int[optional] $day
+	 * @param	int[optional] $year		The year to use.
+	 * @param	int[optional] $month	The month to use.
+	 * @param	int[optional] $day		The day to use.
 	 */
 	public function getTimestamp($year = null, $month = null, $day = null)
 	{
@@ -129,7 +129,7 @@ class SpoonFormTime extends SpoonFormInput
 	 * Checks if this field has any content (except spaces).
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set if the field isn't filled.
 	 */
 	public function isFilled($error = null)
 	{
@@ -151,7 +151,7 @@ class SpoonFormTime extends SpoonFormInput
 	 * Checks if this field is correctly submitted.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set if the time isn't valid.
 	 */
 	public function isValid($error = null)
 	{
@@ -203,7 +203,7 @@ class SpoonFormTime extends SpoonFormInput
 	 * Parses the html for this time field.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -220,7 +220,7 @@ class SpoonFormTime extends SpoonFormInput
 		if($template !== null)
 		{
 			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;
@@ -231,7 +231,7 @@ class SpoonFormTime extends SpoonFormInput
 	 * Set the value attribute for this time field.
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The new value for the element.
 	 */
 	public function setValue($value)
 	{

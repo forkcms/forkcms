@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblRecentlyEdited|ucfirst}</h2>
@@ -15,5 +15,5 @@
 	{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
 </div>
 
-{include:file='{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

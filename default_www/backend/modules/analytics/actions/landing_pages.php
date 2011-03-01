@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendAnalyticsLanding
  * This is the landing-pages-action, it will display the overview of analytics posts
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Dieter Vanden Eynde <dieter@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsLandingPages extends BackendAnalyticsBase
@@ -54,7 +53,7 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 			$datagrid->setColumnsHidden('start_date', 'end_date', 'updated_on', 'page_encoded');
 
 			// set headers values
-			$headers['page_path'] = ucfirst(BL::getLabel('Page'));
+			$headers['page_path'] = ucfirst(BL::lbl('Page'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);
@@ -66,7 +65,7 @@ class BackendAnalyticsLandingPages extends BackendAnalyticsBase
 			$datagrid->setMassActionCheckboxes('checkbox', '[id]');
 
 			// add mass action dropdown
-			$ddmMassAction = new SpoonFormDropdown('action', array('delete_landing_page' => BL::getLabel('Delete')), 'delete');
+			$ddmMassAction = new SpoonFormDropdown('action', array('delete_landing_page' => BL::lbl('Delete')), 'delete');
 			$datagrid->setMassAction($ddmMassAction);
 
 			// parse the datagrid

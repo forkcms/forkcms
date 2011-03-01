@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl}
 
 {form:add}
 	{$hidTemplateId}
@@ -56,19 +56,22 @@
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" rel="external">{$lblEditModuleContent|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
+								{$blocks.txtHTMLError}
 							</div>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" rel="external">{$lblEdit|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
+								{$blocks.txtHTMLError}
 							</div>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
 							<fieldset>
 								{$blocks.txtHTML}
+								{$blocks.txtHTMLError}
 							</fieldset>
 						</div>
 					</div>
@@ -233,8 +236,8 @@
 					</ul>
 					<ul class="lastChild">
 					{/option:templates.break}
-							<li>
-								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
+							<li{option:templates.disabled} class="disabled"{/option:templates.disabled}>
+								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}</label>
 								<div class="templateVisual current">
 									{$templates.html}
 								</div>
@@ -290,5 +293,5 @@
 	//]]>
 </script>
 
-{include:file='{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

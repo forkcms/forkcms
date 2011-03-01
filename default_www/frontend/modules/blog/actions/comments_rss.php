@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlogCommentsRSS
  * This is the RSS-feed with all the comments
  *
  * @package		frontend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBlogCommentsRSS extends FrontendBaseBlock
@@ -58,7 +57,7 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
 	private function parse()
 	{
 		// get vars
-		$title = ucfirst(FL::getMessage('BlogAllComments'));
+		$title = ucfirst(FL::msg('BlogAllComments'));
 		$link = SITE_URL . FrontendNavigation::getURLForBlock('blog');
 		$detailLink = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail');
 		$description = null;
@@ -70,7 +69,7 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
 		foreach($this->items as $item)
 		{
 			// init vars
-			$title = $item['author'] .' '. FL::getLabel('On') .' '. $item['post_title'];
+			$title = $item['author'] .' '. FL::lbl('On') .' '. $item['post_title'];
 			$link = $detailLink .'/'. $item['post_url'] .'/#comment-'. $item['id'];
 			$description = $item['text'];
 

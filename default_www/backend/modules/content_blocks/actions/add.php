@@ -1,14 +1,14 @@
 <?php
 
 /**
- * BackendContentBlocksAdd
  * This is the add-action, it will display a form to create a new item
  *
  * @package		backend
  * @subpackage	content_blocks
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendContentBlocksAdd extends BackendBaseActionAdd
@@ -68,21 +68,27 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['id'] = BackendContentBlocksModel::getMaximumId() + 1;
+				$item['user_id'] = BackendAuthentication::getUser()->getUserId();
+				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
-				$item['hidden'] = $this->frm->getField('hidden')->getValue();
+				$item['hidden'] = $this->frm->getField('hidden')->getValue() ? 'N' : 'Y';
+				$item['status'] = 'active';
+				$item['created_on'] = BackendModel::getUTCDate();
+				$item['edited_on'] = BackendModel::getUTCDate();
 
 				// insert the item
-				$id = BackendContentBlocksModel::insert($item);
+				$item['revision_id'] = BackendContentBlocksModel::insert($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

@@ -1,4 +1,4 @@
-<div id="subscribeFormWidget" class="mod">
+<section id="subscribeFormWidget" class="mod">
 	<div class="inner">
 		<div class="bd">
 			<form action="{$var|geturlforblock:'mailmotor':'subscribe'}" method="post">
@@ -13,4 +13,4 @@
 			</form>
 		</div>
 	</div>
-</div>
+</section>

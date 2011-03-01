@@ -68,10 +68,10 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 			$txtName = $this->frm->getField('name');
 
 			// validate fields
-			if($txtName->isFilled(BL::getError('NameIsRequired')))
+			if($txtName->isFilled(BL::err('NameIsRequired')))
 			{
 				// check if the group exists by name
-				if(BackendMailmotorModel::existsGroupByName($txtName->getValue())) $txtName->addError(BL::getError('GroupAlreadyExists'));
+				if(BackendMailmotorModel::existsGroupByName($txtName->getValue())) $txtName->addError(BL::err('GroupAlreadyExists'));
 			}
 
 			// no errors?

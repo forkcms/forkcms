@@ -1,15 +1,14 @@
 <?php
 
 /**
- * InstallerStep1
  * Step 1 of the Fork installer
  *
- * @package		installer
- * @subpackage	install
+ * @package		install
+ * @subpackage	installer
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class InstallerStep1 extends InstallerStep
@@ -101,7 +100,7 @@ class InstallerStep1 extends InstallerStep
 		// build output
 		$output = str_replace($search, $replace, $tpl);
 
-		// show
+		// show output
 		echo $output;
 
 		// stop the script
@@ -113,8 +112,8 @@ class InstallerStep1 extends InstallerStep
 	 * Try to guess the location of the library based on spoon library
 	 *
 	 * @return	void
-	 * @param	string $directory
-	 * @param	string[optional] $library
+	 * @param	string $directory			The directory to start from.
+	 * @param	array[optional] $library	An array to hold the paths that were guesed.
 	 */
 	private static function guessLibraryPath($directory, array &$library = null)
 	{

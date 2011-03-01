@@ -39,7 +39,7 @@ class SpoonDatagridSourceArray extends SpoonDatagridSource
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	array $array
+	 * @param	array $array	The data.
 	 */
 	public function __construct(array $array)
 	{
@@ -55,8 +55,8 @@ class SpoonDatagridSourceArray extends SpoonDatagridSource
 	 * Apply the sorting method.
 	 *
 	 * @return	int
-	 * @param	array $firstArray
-	 * @param	array $secondArray
+	 * @param	array $firstArray	The first element.
+	 * @param	array $secondArray	The second element.
 	 */
 	public static function applySorting($firstArray, $secondArray)
 	{
@@ -88,10 +88,10 @@ class SpoonDatagridSourceArray extends SpoonDatagridSource
 	 * Fetch the data as an array.
 	 *
 	 * @return	array
-	 * @param	int[optional] $offset
-	 * @param	int[optional] $limit
-	 * @param	string[optional] $order
-	 * @param	string[optional] $sort
+	 * @param	int[optional] $offset		The offset to start from.
+	 * @param	int[optional] $limit		The maximum number of items to retrieve.
+	 * @param	string[optional] $order		The column to order on.
+	 * @param	string[optional] $sort		The sorting method.
 	 */
 	public function getData($offset = null, $limit = null, $order = null, $sort = null)
 	{

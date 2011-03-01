@@ -87,7 +87,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGridArray($this->group['custom_fields']);
 
 		// set headers values
-		$headers['name'] = ucfirst(BL::getLabel('Title'));
+		$headers['name'] = ucfirst(BL::lbl('Title'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels($headers);
@@ -100,14 +100,14 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_custom_field') .'&group_id='. $this->group['id'] .'&field=[name]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_custom_field') .'&group_id='. $this->group['id'] .'&field=[name]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_custom_field') .'&group_id='. $this->group['id'] .'&field=[name]', BL::lbl('Edit'));
 
 		// add the multicheckbox column
 		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>');
 		$this->datagrid->setColumnsSequence('checkbox');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// add styles
@@ -137,12 +137,12 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 	 * Sets a link to the campaign statistics if it contains sent mailings
 	 *
 	 * @return	string
-	 * @param	int $id		The ID of the campaign
+	 * @param	int $id		The ID of the campaign.
 	 */
 	public function setStatisticsLink($id)
 	{
 		// build the link HTML
-		$html = '<a href="'. BackendModel::createURLForAction('statistics_campaign') .'&id='. $id .'" class="button icon iconStats linkButton"><span><span><span>'. BL::getLabel('Statistics') .'</span></span></span></a>';
+		$html = '<a href="'. BackendModel::createURLForAction('statistics_campaign') .'&id='. $id .'" class="button icon iconStats linkButton"><span><span><span>'. BL::lbl('Statistics') .'</span></span></span></a>';
 
 		// check if this campaign has sent mailings
 		$hasSentMailings = (BackendMailmotorModel::existsSentMailingsByCampaignID($id) > 0) ? true : false;

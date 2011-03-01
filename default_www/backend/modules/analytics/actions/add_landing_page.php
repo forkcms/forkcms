@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsAddLandingPage
  * This is the add-landing-page-action, it will display a form to create a new landing page
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
@@ -117,9 +116,9 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 			else $page = (SITE_MULTILANGUAGE ? substr($pageList, strpos($pageList, '/', 1)) : $pageList);
 
 			// validate fields
-			if(isset($page) && !SpoonFilter::isURL(SITE_URL . $page)) $this->frm->getField('page_path')->addError(BL::getError('InvalidURL'));
-			if(!isset($page)) $this->frm->getField('page_path')->addError(BL::getError('FieldIsRequired'));
-			if(!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) $this->frm->getField('page_path')->addError(BL::getError('FieldIsRequired'));
+			if(isset($page) && !SpoonFilter::isURL(SITE_URL . $page)) $this->frm->getField('page_path')->addError(BL::err('InvalidURL'));
+			if(!isset($page)) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
+			if(!$this->frm->getField('page_path')->isFilled() && !$this->frm->getfield('page_list')->isFilled()) $this->frm->getField('page_path')->addError(BL::err('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -137,7 +136,7 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 				$item['updated_on'] = date('Y-m-d H:i:s');
 
 				// insert the item
-				$id = (int) BackendAnalyticsModel::insertLandingPage($item);
+				$item['id'] = (int) BackendAnalyticsModel::insertLandingPage($item);
 
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('landing_pages') .'&report=saved&var='. urlencode($item['page_path']));

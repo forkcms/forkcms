@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlogConfig
  * This is the configuration-object
  *
  * @package		frontend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 final class FrontendBlogConfig extends FrontendBaseConfig

@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblModuleSettings|ucfirst}: {$lblSearch}</h2>
@@ -11,8 +11,18 @@
 			<h3>{$lblPagination|ucfirst}</h3>
 		</div>
 		<div class="options">
-			<label for="overviewNumItems">{$lblItemsPerPage|ucfirst}</label>
-			{$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
+			<p>
+				<label for="overviewNumItems">{$lblItemsPerPage|ucfirst}</label>
+				{$ddmOverviewNumItems} {$ddmOverviewNumItemsError}
+			</p>
+			<p>
+				<label for="autocompleteNumItems">{$lblItemsForAutocomplete|ucfirst}</label>
+				{$ddmAutocompleteNumItems} {$ddmAutocompleteNumItemsError}
+			</p>
+			<p>
+				<label for="autosuggestNumItems">{$lblItemsForAutosuggest|ucfirst}</label>
+				{$ddmAutosuggestNumItems} {$ddmAutosuggestNumItemsError}
+			</p>
 		</div>
 	</div>
 
@@ -61,5 +71,5 @@
 	</div>
 {/form:settings}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendSettingsIndex
  * This is the index-action (default), it will display the setting-overview
  *
  * @package		backend
  * @subpackage	settings
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendSettingsIndex extends BackendBaseActionIndex
@@ -82,6 +81,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 		// facebook settings
 		$this->frm->addText('facebook_admin_ids', BackendModel::getModuleSetting('core', 'facebook_admin_ids', null));
+		$this->frm->addText('facebook_application_id', BackendModel::getModuleSetting('core', 'facebook_app_id', null));
+		$this->frm->addText('facebook_api_key', BackendModel::getModuleSetting('core', 'facebook_api_key', null));
+		$this->frm->addText('facebook_application_secret', BackendModel::getModuleSetting('core', 'facebook_app_secret', null));
 
 		// api keys
 		$this->frm->addText('fork_api_public_key', BackendModel::getModuleSetting('core', 'fork_api_public_key', null));
@@ -108,7 +110,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			$redirectAttributes['id'] = 'redirect_language_'. $abbreviation;
 
 			// fetch label
-			$label = BackendLanguage::getMessage(mb_strtoupper($abbreviation), 'core');
+			$label = BL::msg(mb_strtoupper($abbreviation), 'core');
 
 			// default may not be unselected
 			if($defaultLanguage)
@@ -184,15 +186,15 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		if($this->frm->isSubmitted())
 		{
 			// validate required fields
-			$this->frm->getField('site_title')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('site_title')->isFilled(BL::err('FieldIsRequired'));
 
 			// date & time
-			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('date_format_short')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('date_format_long')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('date_format_short')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('date_format_long')->isFilled(BL::err('FieldIsRequired'));
 
 			// number
-			$this->frm->getField('number_format')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
 
 			// akismet key may be filled in
 			if($this->needsAkismet && $this->frm->getField('akismet_key')->isFilled())
@@ -207,7 +209,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 					$akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
 
 					// invalid key
-					if(!$akismet->verifyKey()) $this->frm->getField('akismet_key')->setError(BL::getError('InvalidAPIKey'));
+					if(!$akismet->verifyKey()) $this->frm->getField('akismet_key')->setError(BL::err('InvalidAPIKey'));
 				}
 			}
 
@@ -227,7 +229,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 					if(!SpoonFilter::isURL('http://'. $domain))
 					{
 						// set error
-						$this->frm->getField('site_domains')->setError(BL::getError('InvalidDomain'));
+						$this->frm->getField('site_domains')->setError(BL::err('InvalidDomain'));
 
 						// stop looping domains
 						break;
@@ -245,6 +247,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 				// facebook settings
 				BackendModel::setModuleSetting('core', 'facebook_admin_ids', ($this->frm->getField('facebook_admin_ids')->isFilled()) ? $this->frm->getField('facebook_admin_ids')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'facebook_app_id', ($this->frm->getField('facebook_application_id')->isFilled()) ? $this->frm->getField('facebook_application_id')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'facebook_api_key', ($this->frm->getField('facebook_api_key')->isFilled()) ? $this->frm->getField('facebook_api_key')->getValue() : null);
+				BackendModel::setModuleSetting('core', 'facebook_app_secret', ($this->frm->getField('facebook_application_secret')->isFilled()) ? $this->frm->getField('facebook_application_secret')->getValue() : null);
 
 				// api keys
 				BackendModel::setModuleSetting('core', 'fork_api_public_key', $this->frm->getField('fork_api_public_key')->getValue());
@@ -289,7 +294,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 				// assign report
 				$this->tpl->assign('report', true);
-				$this->tpl->assign('reportMessage', BL::getMessage('Saved'));
+				$this->tpl->assign('reportMessage', BL::msg('Saved'));
 			}
 		}
 	}

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlockExtra
  * This class will handle all stuff related to blocks
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -104,17 +103,18 @@ class FrontendBlockExtra extends FrontendBaseObject
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
-		// @later check if the action implements an interface
-
 		// create action-object
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+
+		// validate if the execute-method is callable
+		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
 		$object->execute();
 
 		// set some properties
 		$this->setOverwrite($object->getOverwrite());
-		$this->setTemplatePath($object->getTemplatePath());
+		if($object->getTemplatePath() !== null) $this->setTemplatePath($object->getTemplatePath());
 	}
 
 
@@ -142,7 +142,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 				foreach($this->config->getPossibleActions() as $actionName)
 				{
 					// get action that should be passed as parameter
-					$actionURL = FrontendLanguage::getAction(SpoonFilter::toCamelCase($actionName));
+					$actionURL = FL::act(SpoonFilter::toCamelCase($actionName));
 
 					// the action is the requested one
 					if($actionURL == $actionParameter)
@@ -157,6 +157,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 			}
 		}
 
+		// return
 		return $this->action;
 	}
 
@@ -227,8 +228,6 @@ class FrontendBlockExtra extends FrontendBaseObject
 		// require the config file, we validated before for existence.
 		require_once $frontendModulePath .'/config.php';
 
-		// @later	check if the config implements an interface
-
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');
 
@@ -241,7 +240,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action	The action to load.
+	 * @param	string[optional] $action	The action to load.
 	 */
 	private function setAction($action = null)
 	{
@@ -289,7 +288,7 @@ class FrontendBlockExtra extends FrontendBaseObject
 	 * Set the path for the template
 	 *
 	 * @return	void
-	 * @param	string $path
+	 * @param	string $path	The path to set.
 	 */
 	private function setTemplatePath($path)
 	{
@@ -305,7 +304,7 @@ class FrontendBlockExtra extends FrontendBaseObject
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -394,10 +393,11 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// validate if class exists (aka has correct name)
 		if(!class_exists($actionClassName)) throw new FrontendException('The actionfile is present, but the classname should be: '. $actionClassName .'.');
 
-		// @later	check if the action implements an interface
-
 		// create action-object
 		$object = new $actionClassName($this->getModule(), $this->getAction(), $this->getData());
+
+		// validate if the execute-method is callable
+		if(!is_callable(array($object, 'execute'))) throw new FrontendException('The actionfile should contain a callable method "execute".');
 
 		// call the execute method of the real action (defined in the module)
 		$output = $object->execute();
@@ -481,8 +481,6 @@ class FrontendBlockWidget extends FrontendBaseObject
 		// require the config file, we validated before for existence.
 		require_once $frontendModulePath .'/config.php';
 
-		// @later	check if the class implements an interface
-
 		// validate if class exists (aka has correct name)
 		if(!class_exists($configClassName)) throw new FrontendException('The config file is present, but the classname should be: '. $configClassName .'.');
 
@@ -495,7 +493,7 @@ class FrontendBlockWidget extends FrontendBaseObject
 	 * Set the action
 	 *
 	 * @return	void
-	 * @param	string $action		The action to load.
+	 * @param	string[optional] $action		The action to load.
 	 */
 	private function setAction($action = null)
 	{

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBlogArticleCommentsRSS
- * This is the RSS-feed
+ * This is the RSS-feed for comments on a certain article.
  *
  * @package		frontend
  * @subpackage	blog
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -76,7 +75,7 @@ class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 	private function parse()
 	{
 		// get vars
-		$title = vsprintf(FL::getMessage('CommentsOn'), array($this->record['title']));
+		$title = vsprintf(FL::msg('CommentsOn'), array($this->record['title']));
 		$link = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') .'/'. $this->record['url'];
 		$detailLink = SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail');
 		$description = null;
@@ -88,7 +87,7 @@ class FrontendBlogArticleCommentsRSS extends FrontendBaseBlock
 		foreach($this->items as $item)
 		{
 			// init vars
-			$title = $item['author'] .' '. FL::getLabel('On') .' '. $this->record['title'];
+			$title = $item['author'] .' '. FL::lbl('On') .' '. $this->record['title'];
 			$link = $detailLink .'/'. $this->record['url'] .'/#comment-'. $item['id'];
 			$description = $item['text'];
 

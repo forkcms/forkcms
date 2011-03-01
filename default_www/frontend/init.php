@@ -1,17 +1,16 @@
 <?php
 
 /**
- * Init
  * This class will initiate the frontend-application
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
-class Init
+class FrontendInit
 {
 	/**
 	 * Current type
@@ -40,7 +39,7 @@ class Init
 		$this->type = $type;
 
 		// register the autoloader
-		spl_autoload_register(array('Init', 'autoLoader'));
+		spl_autoload_register(array('FrontendInit', 'autoLoader'));
 
 		// set some ini-options
 		ini_set('pcre.backtrack_limit', 999999999);
@@ -98,7 +97,7 @@ class Init
 	 * Autoloader for the frontend
 	 *
 	 * @return	void
-	 * @param	string $className	The name of the class to require
+	 * @param	string $className	The name of the class to require.
 	 */
 	public static function autoLoader($className)
 	{
@@ -211,16 +210,20 @@ class Init
 	 * A custom error-handler so we can handle warnings about undefined labels
 	 *
 	 * @return	bool
-	 * @param	int $errNumber
-	 * @param	string $errString
+	 * @param	int $errorNumber		The level of the error raised, as an integer.
+	 * @param	string $errorString		The error message, as a string.
 	 */
-	public static function errorHandler($errNumber, $errString)
+	public static function errorHandler($errorNumber, $errorString)
 	{
+		// redefine
+		$errorNumber = (int) $errorNumber;
+		$errorString = (string) $errorString;
+
 		// is this an undefined index?
-		if(mb_substr_count($errString, 'Undefined index:') > 0)
+		if(mb_substr_count($errorString, 'Undefined index:') > 0)
 		{
 			// cleanup
-			$index = trim(str_replace('Undefined index:', '', $errString));
+			$index = trim(str_replace('Undefined index:', '', $errorString));
 
 			// get the type
 			$type = mb_substr($index, 0, 3);
@@ -246,6 +249,9 @@ class Init
 	 */
 	public static function exceptionAJAXHandler($exception, $output)
 	{
+		// redefine
+		$output = (string) $output;
+
 		// set headers
 		SpoonHTTP::setHeaders('content-type: application/json');
 
@@ -269,6 +275,10 @@ class Init
 	 */
 	public static function exceptionHandler($exception, $output)
 	{
+		// redefine
+		$exception = $exception;
+		$output = (string) $output;
+
 		// mail it?
 		if(SPOON_DEBUG_EMAIL != '')
 		{
@@ -281,7 +291,7 @@ class Init
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured ('. SITE_DOMAIN .')', $output, $headers);
 		}
 
 		// build HTML for nice error
@@ -304,6 +314,9 @@ class Init
 	 */
 	public static function exceptionJSHandler($exception, $output)
 	{
+		// redefine
+		$output = (string) $output;
+
 		// set correct headers
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
@@ -337,6 +350,7 @@ class Init
 		switch($this->type)
 		{
 			case 'frontend':
+			case 'frontend_ajax':
 				require_once FRONTEND_CORE_PATH .'/engine/template_custom.php';
 				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
 			break;
@@ -363,7 +377,7 @@ class Init
 		if(in_array(false, $installed))
 		{
 			// installation folder
-			$installer = dirname(dirname(__FILE__)) .'/install';
+			$installer = dirname(__FILE__) .'/../install/cache';
 
 			// Fork has not yet been installed
 			if(file_exists($installer) && is_dir($installer) && !file_exists($installer .'/installed.txt'))
@@ -373,7 +387,10 @@ class Init
 			}
 
 			// we can nog load configuration file, however we can not run installer
-			exit('Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.');
+			echo 'Required configuration files are missing. Try deleting current files, clearing your database, re-uploading <a href="http://www.fork-cms.be">Fork CMS</a> and <a href="/install">rerun the installer</a>.';
+
+			// stop script execution
+			exit;
 		}
 	}
 
@@ -395,7 +412,7 @@ class Init
 			ini_set('display_errors', 'On');
 
 			// in debug mode notices are triggered when using non existing locale, so we use a custom errorhandler to cleanup the message
-			set_error_handler(array('Init', 'errorHandler'));
+			set_error_handler(array('FrontendInit', 'errorHandler'));
 		}
 
 		// debugging disabled
@@ -416,7 +433,7 @@ class Init
 
 				case 'backend_js':
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionJSHandler');
-					break;
+				break;
 
 				default:
 					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionHandler');

@@ -118,13 +118,13 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$stats = array();
 		$stats['recipients'] = count($this->record['recipients']);
 		$stats['mailing'] = $this->record['name'];
-		$stats['label_persons'] = ($stats['recipients'] > 1) ? BL::getLabel('Persons', 'core') : BL::getLabel('Person', 'core');
+		$stats['label_persons'] = ($stats['recipients'] > 1) ? BL::lbl('Persons', 'core') : BL::lbl('Person', 'core');
 
 		// campaign was set
 		if(!empty($campaign))
 		{
 			// set data
-			$stats['message'] = BL::getMessage('RecipientStatisticsCampaign', 'mailmotor');
+			$stats['message'] = BL::msg('RecipientStatisticsCampaign', 'mailmotor');
 			$stats['campaign'] = $campaign['name'];
 
 			// assign the recipient statistics variable
@@ -135,7 +135,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		else
 		{
 			// set data
-			$stats['message'] = BL::getMessage('RecipientStatisticsNoCampaign', 'mailmotor');
+			$stats['message'] = BL::msg('RecipientStatisticsNoCampaign', 'mailmotor');
 
 			// assign the recipient statistics variable
 			$this->tpl->assign('recipientStatistics', sprintf($stats['message'], $stats['mailing'], $stats['recipients'], $stats['label_persons']));
@@ -159,7 +159,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->tpl->assign('groups', $groups);
 
 		// assign the template language
-		$this->tpl->assign('templateLanguage', ucfirst(BL::getLabel(strtoupper($template['language']))));
+		$this->tpl->assign('templateLanguage', ucfirst(BL::lbl(strtoupper($template['language']))));
 
 		// get the price setting
 		$price = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
@@ -183,7 +183,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$campaigns = BackendMailmotorModel::getCampaignsAsPairs();
 
 		// fetch the groups
-		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
+		$groups = BackendMailmotorModel::getGroupsWithRecipientsForCheckboxes();
 
 		// fetch the languages
 		$languages = BackendMailmotorModel::getLanguagesForCheckboxes();
@@ -290,6 +290,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		// get preview URL
 		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
 
+		// @todo dave - add check for preview URL
 		if(BackendModel::getURLForBlock('mailmotor', 'detail') == BackendModel::getURL(404)) $previewURL = false;
 
 		// parse the preview URL
@@ -380,10 +381,10 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 
 		// set wizard values
 		$wizard = array();
-		$wizard[1] = array('id' => 1, 'label' => BL::getLabel('WizardInformation'));
-		$wizard[2] = array('id' => 2, 'label' => BL::getLabel('WizardTemplate'));
-		$wizard[3] = array('id' => 3, 'label' => BL::getLabel('WizardContent'));
-		$wizard[4] = array('id' => 4, 'label' => BL::getLabel('WizardSend'));
+		$wizard[1] = array('id' => 1, 'label' => BL::lbl('WizardInformation'));
+		$wizard[2] = array('id' => 2, 'label' => BL::lbl('WizardTemplate'));
+		$wizard[3] = array('id' => 3, 'label' => BL::lbl('WizardContent'));
+		$wizard[4] = array('id' => 4, 'label' => BL::lbl('WizardSend'));
 
 		// load the appropriate selected classes
 		$wizard[$this->stepId]['selected'] = true;
@@ -449,30 +450,30 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			$rbtLanguages = $this->frm->getField('languages');
 
 			// validate fields
-			if($txtName->isFilled(BL::getError('NameIsRequired')))
+			if($txtName->isFilled(BL::err('NameIsRequired')))
 			{
-				if(BackendMailmotorModel::existsMailingByName($txtName->getValue()) && $txtName->getValue() != $this->record['name']) $txtName->addError(BL::getError('MailingAlreadyExists'));
+				if(BackendMailmotorModel::existsMailingByName($txtName->getValue()) && $txtName->getValue() != $this->record['name']) $txtName->addError(BL::err('MailingAlreadyExists'));
 			}
-			$txtFromName->isFilled(BL::getError('NameIsRequired'));
-			$txtFromEmail->isFilled(BL::getError('EmailIsRequired'));
-			$txtReplyToEmail->isFilled(BL::getError('EmailIsRequired'));
+			$txtFromName->isFilled(BL::err('NameIsRequired'));
+			$txtFromEmail->isFilled(BL::err('EmailIsRequired'));
+			$txtReplyToEmail->isFilled(BL::err('EmailIsRequired'));
 
 			// set form values
 			$values = $this->frm->getValues();
 
 			// check if at least one recipient group is chosen
-			if(empty($values['groups'])) $chkGroups->addError(BL::getError('ChooseAtLeastOneGroup'));
+			if(empty($values['groups'])) $chkGroups->addError(BL::err('ChooseAtLeastOneGroup'));
 			else
 			{
 				// fetch the recipients for these groups
 				$recipients = BackendMailmotorModel::getAddressesByGroupID($values['groups']);
 
 				// if no recipients were found, throw an error
-				if(empty($recipients)) $chkGroups->addError(BL::getError('GroupsNoRecipients'));
+				if(empty($recipients)) $chkGroups->addError(BL::err('GroupsNoRecipients'));
 			}
 
 			// check if at least one language is chosen
-			if(empty($values['languages'])) $rbtLanguages->isFilled(BL::getError('FieldIsRequired'));
+			if(empty($values['languages'])) $rbtLanguages->isFilled(BL::err('FieldIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -521,7 +522,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			$values = $this->frm->getValues();
 
 			// check if at least one language is chosen
-			if(empty($values['templates'])) $rbtTemplates->isFilled(BL::getError('TemplateIsRequired'));
+			if(empty($values['templates'])) $rbtTemplates->isFilled(BL::err('TemplateIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -561,12 +562,12 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			$txtSendOnTime = $this->frm->getField('send_on_time');
 
 			// validation
-			if($txtEmail->isFilled(BL::getError('FieldIsRequired')))
+			if($txtEmail->isFilled(BL::err('FieldIsRequired')))
 			{
-				$txtEmail->isEmail(BL::getError('EmailIsInvalid'));
+				$txtEmail->isEmail(BL::err('EmailIsInvalid'));
 			}
-			$txtSendOnDate->isValid(BL::getError('DateIsInvalid'));
-			$txtSendOnTime->isValid(BL::getError('TimeIsInvalid'));
+			$txtSendOnDate->isValid(BL::err('DateIsInvalid'));
+			$txtSendOnTime->isValid(BL::err('TimeIsInvalid'));
 
 			// set form values
 			$values = $this->frm->getValues();

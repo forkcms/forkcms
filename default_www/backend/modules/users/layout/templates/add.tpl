@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblUsers|ucfirst}: {$lblAdd}</h2>
@@ -26,7 +26,7 @@
 						<label for="password">{$lblPassword|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtPassword} {$txtPasswordError}
 					</p>
-					<table id="passwordStrengthMeter" class="passwordStrength" rel="password" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">{$lblNone|ucfirst}</p>
@@ -123,5 +123,5 @@
 	</div>
 {/form:add}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

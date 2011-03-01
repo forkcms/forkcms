@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl}
 
 {form:edit}
 	{$hidTemplateId}
@@ -8,7 +8,7 @@
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			<a href="{$SITE_URL}{$item['full_url']}" class="button icon iconZoom previewButton" rel="external"><span>{$lblView|ucfirst}</span></a>
+			<a href="{$SITE_URL}{$item.full_url}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
 	</div>
@@ -17,7 +17,7 @@
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 		<span class="oneLiner">
-			<span><a href="{$SITE_URL}{$prefixURL}/{$item['url']}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item['url']}</span></a></span>
+			<span><a href="{$SITE_URL}{$prefixURL}/{$item.url}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></a></span>
 		</span>
 	</p>
 
@@ -37,7 +37,7 @@
 				{iteration:blocks}
 					<div id="block-{$blocks.index}" class="box contentBlock">
 						<div class="heading">
-							<table border="0" cellpadding="0" cellspacing="0">
+							<table border="0" cellpadding="0" cellspaciong="0">
 								<tbody>
 									<tr>
 										<td>
@@ -59,21 +59,25 @@
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" rel="external">{$lblEditModuleContent|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEditModuleContent|ucfirst}</a>
+								{$blocks.txtHTMLError}
 							</div>
 						</div>
 						<div id="blockContentWidget-{$blocks.index}" class="options">
 							{* do not alter markup *}
 							<div class="oneLiner">
 								<span class="oneLinerElement"></span>
-								<a href="#" class="button" rel="external">{$lblEdit|ucfirst}</a>
+								<a href="#" class="button targetBlank">{$lblEdit|ucfirst}</a>
+								{$blocks.txtHTMLError}
 							</div>
 						</div>
 						<div id="blockContentHTML-{$blocks.index}" class="optionsRTE">
 							<fieldset>
 								{$blocks.txtHTML}
+								{$blocks.txtHTMLError}
 							</fieldset>
 						</div>
+
 					</div>
 				{/iteration:blocks}
 			</div>
@@ -255,8 +259,8 @@
 					</ul>
 					<ul class="lastChild">
 					{/option:templates.break}
-							<li>
-								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked} />{$templates.label}</label>
+							<li{option:templates.disabled} class="disabled"{/option:templates.disabled}>
+								<label for="template{$templates.id}"><input type="radio" id="template{$templates.id}" value="{$templates.id}" name="template_id_chooser" class="inputRadio"{option:templates.checked} checked="checked"{/option:templates.checked}{option:templates.disabled} disabled="disabled"{/option:templates.disabled} />{$templates.label}</label>
 								<div class="templateVisual current">
 									{$templates.html}
 								</div>
@@ -291,12 +295,12 @@
 	</div>
 	<div class="fullwidthOptions">
 		{option:showDelete}
-			<a href="{$var|geturl:'delete'}&amp;id={$item['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 			<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 				<p>
-					{$msgConfirmDelete|sprintf:{$item['title']}}
+					{$msgConfirmDelete|sprintf:{$item.title}}
 				</p>
 			</div>
 		{/option:showDelete}
@@ -310,7 +314,7 @@
 <script type="text/javascript">
 	//<![CDATA[
 		// the ID of the page
-		var pageID = {$item['id']};
+		var pageID = {$item.id};
 
 		// all the possible templates
 		var templates = {};
@@ -329,5 +333,5 @@
 	//]]>
 </script>
 
-{include:file='{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

@@ -1,4 +1,4 @@
-1.3.0 (xxxx-xx-xx)
+1.3.0 (2011-02-18)
 ----
 - Template options may now start with an integer e.g. {option:404}
 - The WHERE clause in SpoonDatabase::update and SpoonDatabase::delete may now be null instead of an empty string.
@@ -42,6 +42,13 @@
 - Rearranged the general authors/owners.
 - Bugfix: you can now use named parameters within update queries.
 - Bugfix: multiple dropdownfields weren't parsed because of the [].
+- Feature: SpoonLocale now contains the supported language names.
+- Template-syntax changed for include, iterations & variables
+- Unassigned variables don't trigger a notice but gracefully degrade to the template-syntax when SPOON_DEBUG is enabled
+- Unassigned forms don't need template recompilation to work when they are in a later stadium assigned
+- Cycle-tags now work correctly when nesting an iteration inside itself
+- Variables can now go infinitely deep inside associative arrays
+- Nearly every character is now allowed as a parameter for parameter-modifiers
 
 
 1.2.0 (2010-05-18)

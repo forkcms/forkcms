@@ -1,25 +1,25 @@
 {*
 	variables that are available:
-	- {$widgetRelated}:
+	- {$widgetTagsRelated}: contains an array with all related items
 *}
 
-{option:widgetRelated}
-	<div id="TagCloudWidget" class="mod">
+{option:widgetTagsRelated}
+	<section id="tagRelatedWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblRelated|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
-					{iteration:widgetRelated}
+					{iteration:widgetTagsRelated}
 						<li>
-							<a href="{$widgetRelated.full_url}" title="{$widgetRelated.title}">
-								{$widgetRelated.title}
+							<a href="{$widgetTagsRelated.full_url}" title="{$widgetTagsRelated.title}">
+								{$widgetTagsRelated.title}
 							</a>
 						</li>
-					{/iteration:widgetRelated}
+					{/iteration:widgetTagsRelated}
 				</ul>
 			</div>
 		</div>
-	</div>
-{/option:widgetRelated}
+	</section>
+{/option:widgetTagsRelated}

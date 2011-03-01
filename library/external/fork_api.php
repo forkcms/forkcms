@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ForkAPI class
  *
@@ -80,8 +81,8 @@ class ForkAPI
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string[optional] $publicKey		The public-key of the keypair
-	 * @param	string[optional] $privateKey	The private-key of the keypair
+	 * @param	string[optional] $publicKey		The public-key of the keypair.
+	 * @param	string[optional] $privateKey	The private-key of the keypair.
 	 */
 	public function __construct($publicKey = null, $privateKey = null)
 	{
@@ -94,8 +95,10 @@ class ForkAPI
 	 * Make the call
 	 *
 	 * @return	string
-	 * @param	string $url
-	 * @param	array[optional] $aParameters
+	 * @param	string $method						The method to call.
+	 * @param	array[optional] $parameters			The parameters to pass.
+	 * @param	bool[optional] $authenticate		Should we authenticate?
+	 * @param	bool[optional] $usePOST				Should we use POST?
 	 */
 	private function doCall($method, $parameters = array(), $authenticate = true, $usePOST = false)
 	{
@@ -196,17 +199,6 @@ class ForkAPI
 
 
 	/**
-	 * Get the public key
-	 *
-	 * @return	string
-	 */
-	private function getPublicKey()
-	{
-		return (string) $this->publicKey;
-	}
-
-
-	/**
 	 * Get the private key
 	 *
 	 * @return	string
@@ -214,6 +206,17 @@ class ForkAPI
 	private function getPrivateKey()
 	{
 		return (string) $this->privateKey;
+	}
+
+
+	/**
+	 * Get the public key
+	 *
+	 * @return	string
+	 */
+	private function getPublicKey()
+	{
+		return (string) $this->publicKey;
 	}
 
 
@@ -241,22 +244,10 @@ class ForkAPI
 
 
 	/**
-	 * Set the public key
-	 *
-	 * @return	void
-	 * @param	string $key
-	 */
-	public function setPublicKey($key)
-	{
-		$this->publicKey = (string) $key;
-	}
-
-
-	/**
 	 * Set the private key
 	 *
 	 * @return	void
-	 * @param	string $key
+	 * @param	string $key		The private key.
 	 */
 	public function setPrivateKey($key)
 	{
@@ -265,11 +256,23 @@ class ForkAPI
 
 
 	/**
+	 * Set the public key
+	 *
+	 * @return	void
+	 * @param	string $key		The public key.
+	 */
+	public function setPublicKey($key)
+	{
+		$this->publicKey = (string) $key;
+	}
+
+
+	/**
 	 * Set the timeout
 	 * After this time the request will stop. You should handle any errors triggered by this.
 	 *
 	 * @return	void
-	 * @param	int $seconds	The timeout in seconds
+	 * @param	int $seconds	The timeout in seconds.
 	 */
 	public function setTimeOut($seconds)
 	{
@@ -282,7 +285,7 @@ class ForkAPI
 	 * It will be appended to ours, the result will look like: "PHP ForkAPI/<version> <your-user-agent>"
 	 *
 	 * @return	void
-	 * @param	string $userAgent	Your user-agent, it should look like <app-name>/<app-version>
+	 * @param	string $userAgent	Your user-agent, it should look like <app-name>/<app-version>.
 	 */
 	public function setUserAgent($userAgent)
 	{
@@ -295,8 +298,8 @@ class ForkAPI
 	 * Request public private key-pair
 	 *
 	 * @return	array
-	 * @param	string $siteUrl
-	 * @param	string $email
+	 * @param	string $siteUrl		The URL of the site.
+	 * @param	string $email		The e-mail adress of the site.
 	 */
 	public function coreRequestKeys($siteUrl, $email)
 	{
@@ -330,9 +333,9 @@ class ForkAPI
 	 * @return	array								The device tokens that aren't valid.
 	 * @param	string $deviceToken					The device token for the receiver.
 	 * @param	mixed $alert						The message/dictonary to send.
-	 * @param	int[optional] $badge				The number for the badge
-	 * @param	string[optional] $sound				The sound that should be played
-	 * @param 	array[optional] $extraDictionaries	Extra dictionaries
+	 * @param	int[optional] $badge				The number for the badge.
+	 * @param	string[optional] $sound				The sound that should be played.
+	 * @param 	array[optional] $extraDictionaries	Extra dictionaries.
 	 */
 	public function applePush($deviceToken, $alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{

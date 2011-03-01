@@ -1,12 +1,12 @@
 <?php
 
 /**
- * FrontendModel
+ * In this file we store all generic functions that we will be using in the frontend.
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendModel
@@ -59,7 +59,7 @@ class FrontendModel
 	 *
 	 * @return	string
 	 * @param	string $URL			The URL to append the parameters too.
-	 * @param	array $parameters	The parameters as key-value-pairs
+	 * @param	array $parameters	The parameters as key-value-pairs.
 	 */
 	public static function addURLParameters($URL, array $parameters)
 	{
@@ -96,6 +96,49 @@ class FrontendModel
 
 
 	/**
+	 * Generate a totally random but readable/speakable password
+	 *
+	 * @return	string
+	 * @param	int[optional] $length				The maximum length for the password to generate.
+	 * @param	bool[optional] $uppercaseAllowed	Are uppercase letters allowed?
+	 * @param	bool[optional] $lowercaseAllowed	Are lowercase letters allowed?
+	 */
+	public static function generatePassword($length = 6, $uppercaseAllowed = true, $lowercaseAllowed = true)
+	{
+		// list of allowed vowels and vowelsounds
+		$vowels = array('a', 'e', 'i', 'u', 'ae', 'ea');
+
+		// list of allowed consonants and consonant sounds
+		$consonants = array('b', 'c', 'd', 'g', 'h', 'j', 'k', 'm', 'n', 'p', 'r', 's', 't', 'u', 'v', 'w', 'tr', 'cr', 'fr', 'dr', 'wr', 'pr', 'th', 'ch', 'ph', 'st');
+
+		// init vars
+		$consonantsCount = count($consonants);
+		$vowelsCount = count($vowels);
+		$pass = '';
+		$tmp = '';
+
+		// create temporary pass
+		for($i = 0; $i < $length; $i++) $tmp .= ($consonants[rand(0, $consonantsCount - 1)] . $vowels[rand(0, $vowelsCount - 1)]);
+
+		// reformat the pass
+		for($i = 0; $i < $length; $i++)
+		{
+			if(rand(0, 1) == 1) $pass .= strtoupper(substr($tmp, $i, 1));
+			else $pass .= substr($tmp, $i, 1);
+		}
+
+		// reformat it again, if uppercase isn't allowed
+		if(!$uppercaseAllowed) $pass = strtolower($pass);
+
+		// reformat it again, if uppercase isn't allowed
+		if(!$lowercaseAllowed) $pass = strtoupper($pass);
+
+		// return pass
+		return $pass;
+	}
+
+
+	/**
 	 * Get (or create and get) a database-connection
 	 * @later split the write and read connection
 	 *
@@ -120,6 +163,7 @@ class FrontendModel
 			Spoon::setObjectReference('database', $db);
 		}
 
+		// return db-object
 		return Spoon::getObjectReference('database');
 	}
 
@@ -145,7 +189,8 @@ class FrontendModel
 			$settings = (array) self::getDB()->getRecords('SELECT ms.module, ms.name, ms.value
 															FROM modules_settings AS ms
 															INNER JOIN modules AS m ON ms.module = m.name
-															WHERE m.active = ?', 'Y');
+															WHERE m.active = ?',
+															array('Y'));
 
 			// loop settings and cache them, also unserialize the values
 			foreach($settings as $row) self::$moduleSettings[$row['module']][$row['name']] = unserialize($row['value']);
@@ -241,6 +286,7 @@ class FrontendModel
 			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
 		}
 
+		// return page record
 		return $record;
 	}
 
@@ -269,12 +315,12 @@ class FrontendModel
 	 * General method to check if something is spam
 	 *
 	 * @return	bool
-	 * @param	string $content				The content that was submitted
-	 * @param	string $permalink			The permanent location of the entry the comment was submitted to
-	 * @param	string[optional] $author	Commenters name
-	 * @param	string[optional] $email		Commenters email address
-	 * @param	string[optional] $url		Commenters URL
-	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration"
+	 * @param	string $content				The content that was submitted.
+	 * @param	string $permaLink			The permanent location of the entry the comment was submitted to.
+	 * @param	string[optional] $author	Commenters name.
+	 * @param	string[optional] $email		Commenters email address.
+	 * @param	string[optional] $URL		Commenters URL.
+	 * @param	string[optional] $type		May be blank, comment, trackback, pingback, or a made up value like "registration".
 	 */
 	public static function isSpam($content, $permaLink, $author = null, $email = null, $URL = null, $type = 'comment')
 	{
@@ -292,9 +338,9 @@ class FrontendModel
 
 		// set properties
 		$akismet->setTimeOut(10);
-		$akismet->setUserAgent('Fork CMS/2.0');
+		$akismet->setUserAgent('Fork CMS/2.1');
 
-		// try it to decide it the item is spam
+		// try it to decide if the item is spam
 		try
 		{
 			// check with Akismet if the item is spam
@@ -318,9 +364,9 @@ class FrontendModel
 	 *
 	 * @return	void
 	 * @param	mixed $alert						The message/dictonary to send.
-	 * @param	int[optional] $badge				The number for the badge
-	 * @param	string[optional] $sound				The sound that should be played
-	 * @param 	array[optional] $extraDictionaries	Extra dictionaries
+	 * @param	int[optional] $badge				The number for the badge.
+	 * @param	string[optional] $sound				The sound that should be played.
+	 * @param 	array[optional] $extraDictionaries	Extra dictionaries.
 	 */
 	public static function pushToAppleApp($alert, $badge = null, $sound = null, array $extraDictionaries = null)
 	{

@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 {form:edit}
 	<div class="box horizontal labelWidthLong">
@@ -51,7 +51,7 @@
 
 	<div class="fullwidthOptions">
 		{option:deleteAllowed}
-			<a href="{$var|geturl:'delete_template'}&amp;id={$template['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete_template'}&amp;id={$template.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 		{/option:deleteAllowed}
@@ -61,9 +61,9 @@
 	</div>
 
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
-		<p>{$msgConfirmDeleteTemplate|sprintf:{$template['label']}}</p>
+		<p>{$msgConfirmDeleteTemplate|sprintf:{$template.label}}</p>
 	</div>
 {/form:edit}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

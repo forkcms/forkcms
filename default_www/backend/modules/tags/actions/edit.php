@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendTagsEdit
  * This is the edit action, it will display a form to edit an existing tag.
  *
  * @package		backend
  * @subpackage	tags
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -101,7 +100,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				if(method_exists($className, 'getByTag'))
 				{
 					// make the call and get the item
-					$moduleItems = (array) call_user_func_array(array($className, 'getByTag'), $this->id);
+					$moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
 
 					// loop items
 					foreach($moduleItems as $row)
@@ -110,7 +109,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 						if(isset($row['url'], $row['name'], $row['module']))
 						{
 							// add
-							$items[] = array('module' => ucfirst(BL::getLabel(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
+							$items[] = array('module' => ucfirst(BL::lbl(SpoonFilter::toCamelCase($row['module']))), 'name' => $row['name'], 'url' => $row['url']);
 						}
 					}
 				}
@@ -127,13 +126,13 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		$this->dgUsage->setColumnsHidden(array('url'));
 
 		// set headers
-		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::getLabel('Title')), 'url' => ''));
+		$this->dgUsage->setHeaderLabels(array('name' => ucfirst(BL::lbl('Title')), 'url' => ''));
 
 		// set url
-		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::getLabel('Edit')));
+		$this->dgUsage->setColumnURL('name', '[url]', ucfirst(BL::lbl('Edit')));
 
 		// add use column
-		$this->dgUsage->addColumn('edit', null, ucfirst(BL::getLabel('Edit')), '[url]', BL::getLabel('Edit'));
+		$this->dgUsage->addColumn('edit', null, ucfirst(BL::lbl('Edit')), '[url]', BL::lbl('Edit'));
 	}
 
 
@@ -185,22 +184,21 @@ class BackendTagsEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build tag
-				$tag = array();
-				$tag['id'] = $this->id;
-				$tag['tag'] = $this->frm->getField('name')->getValue();
-				$tag['url'] = BackendTagsModel::getURL($tag['tag'], $this->id);
+				$item['id'] = $this->id;
+				$item['tag'] = $this->frm->getField('name')->getValue();
+				$item['url'] = BackendTagsModel::getURL($item['tag'], $this->id);
 
 				// upate the item
-				BackendTagsModel::updateTag($tag);
+				$item['id'] = BackendTagsModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($tag['tag']));
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['tag']) .'&highlight=row-'. $item['id']);
 			}
 		}
 	}

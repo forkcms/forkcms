@@ -36,33 +36,6 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// get data
-		$this->getData();
-
-		// load form
-		$this->loadForm();
-
-		// validates the form
-		$this->validateForm();
-
-		// parse
-		$this->parse();
-
-		// display the page
-		$this->display();
-	}
-
-
-	/**
 	 * Attempts to create a client
 	 *
 	 * @return	mixed
@@ -98,6 +71,33 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			// add an error to the email field
 			$this->redirect(BackendModel::createURLForAction('settings') .'&error=campaign-monitor-error&var='. $e->getMessage());
 		}
+	}
+
+
+	/**
+	 * Execute the action
+	 *
+	 * @return	void
+	 */
+	public function execute()
+	{
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// get data
+		$this->getData();
+
+		// load form
+		$this->loadForm();
+
+		// validates the form
+		$this->validateForm();
+
+		// parse
+		$this->parse();
+
+		// display the page
+		$this->display();
 	}
 
 
@@ -218,17 +218,17 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 			// account is linked but no client ID is set yet
 			if($this->accountLinked && empty($this->clientID))
 			{
-				$this->frm->getField('company_name')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('contact_email')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('contact_name')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('countries')->isFilled(BL::getError('FieldIsRequired'));
-				$this->frm->getField('timezones')->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('company_name')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('contact_email')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('contact_name')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('countries')->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('timezones')->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// user is god
 			elseif(BackendAuthentication::getUser()->isGod())
 			{
-				$this->frm->getField('price_per_email')->isFilled(BL::getError('FieldIsRequired'));
+				$this->frm->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// form is validated

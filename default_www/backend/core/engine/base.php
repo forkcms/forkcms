@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendBaseAction
  * This class implements a lot of functionality that can be extended by a specific action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseAction
@@ -78,18 +77,7 @@ class BackendBaseAction
 		$this->setAction($this->URL->getAction());
 
 		// populate the parameter array, we loop GET and urldecode the values for usage later on
-		foreach((array) $_GET as $key => $value)
-		{
-			// is the value an array?
-			if(is_array($value))
-			{
-				// urldecode each element in the array
-				$this->parameters[$key] = (array) SpoonFilter::arrayMapRecursive('urldecode', $value);
-			}
-
-			// it's just a string
-			else $this->parameters[$key] = urldecode($value);
-		}
+		foreach((array) $_GET as $key => $value) $this->parameters[$key] = $value;
 	}
 
 
@@ -179,8 +167,8 @@ class BackendBaseAction
 			$messageName = SpoonFilter::toCamelCase($this->getParameter('report'), array('-', '_'));
 
 			// if we have data to use it will be passed as the var parameter
-			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BackendLanguage::getMessage($messageName), $var));
-			else $this->tpl->assign('reportMessage', BackendLanguage::getMessage($messageName));
+			if(!empty($var)) $this->tpl->assign('reportMessage', vsprintf(BL::msg($messageName), $var));
+			else $this->tpl->assign('reportMessage', BL::msg($messageName));
 
 			// highlight an element with the given id if needed
 			if($this->getParameter('highlight')) $this->tpl->assign('highlight', $this->getParameter('highlight'));
@@ -193,8 +181,8 @@ class BackendBaseAction
 			$errorName = SpoonFilter::toCamelCase($this->getParameter('error'), array('-', '_'));
 
 			// if we have data to use it will be passed as the var parameter
-			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BackendLanguage::getError($errorName), $var));
-			else $this->tpl->assign('errorMessage', BackendLanguage::getError($errorName));
+			if(!empty($var)) $this->tpl->assign('errorMessage', vsprintf(BL::err($errorName), $var));
+			else $this->tpl->assign('errorMessage', BL::err($errorName));
 		}
 	}
 
@@ -227,9 +215,9 @@ class BackendBaseAction
 	 * By default we will cast the return value into a string, if you want something else specify it by passing the wanted type.
 	 *
 	 * @return	mixed
-	 * @param	string $key					The name of the parameter.
-	 * @param	string[optional] $type		The return-type, possible values are: bool, boolean, int, integer, float, double, string, array
-	 * @param	mixed $defaultValue			The value that should be returned if the key is not available
+	 * @param	string $key						The name of the parameter.
+	 * @param	string[optional] $type			The return-type, possible values are: bool, boolean, int, integer, float, double, string, array.
+	 * @param	mixed[optional] $defaultValue	The value that should be returned if the key is not available.
 	 */
 	public function getParameter($key, $type = 'string', $defaultValue = null)
 	{
@@ -282,14 +270,13 @@ class BackendBaseAction
 
 
 /**
- * BackendBaseActionIndex
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the index action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionIndex extends BackendBaseAction
@@ -317,14 +304,13 @@ class BackendBaseActionIndex extends BackendBaseAction
 
 
 /**
- * BackendBaseActionAdd
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the add action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionAdd extends BackendBaseAction
@@ -359,14 +345,13 @@ class BackendBaseActionAdd extends BackendBaseAction
 
 
 /**
- * BackendBaseActionEdit
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the edit action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionEdit extends BackendBaseAction
@@ -424,14 +409,13 @@ class BackendBaseActionEdit extends BackendBaseAction
 
 
 /**
- * BackendBaseActionDelete
  * This class implements a lot of functionality that can be extended by the real action.
  * In this case this is the base class for the delete action
  *
- * @package		Backend
+ * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseActionDelete extends BackendBaseAction
@@ -460,18 +444,18 @@ class BackendBaseActionDelete extends BackendBaseAction
 	 */
 	public function execute()
 	{
+		// this method will be overwritten by the children
 	}
 }
 
 
 /**
- * BackendBaseAJAXAction
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseAJAXAction
@@ -521,7 +505,7 @@ class BackendBaseAJAXAction
 	 */
 	public function execute()
 	{
-		// this method will be overwritten by the childs so
+		// this method will be overwritten by the children
 	}
 
 
@@ -568,8 +552,10 @@ class BackendBaseAJAXAction
 		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json');
 
-		// output to the browser
+		// output JSON to the browser
 		echo json_encode($response);
+
+		// stop script execution
 		exit;
 	}
 
@@ -600,13 +586,12 @@ class BackendBaseAJAXAction
 
 
 /**
- * BackendBaseConfig
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseConfig
@@ -764,13 +749,12 @@ class BackendBaseConfig
 
 
 /**
- * BackendBaseCronjob
  * This is the base-object for cronjobs. The module-specific cronjob-files can extend the functionality from this class
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseCronjob
@@ -818,7 +802,7 @@ class BackendBaseCronjob
 	/**
 	 * Clear/removed the busy file
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	protected function clearBusyFile()
 	{
@@ -932,7 +916,7 @@ class BackendBaseCronjob
 		// store content
 		SpoonFile::setContent($path, $counter, true, false);
 
-		// if the cronjob is busy we shoul NOT proceed.
+		// if the cronjob is busy we should NOT proceed
 		if($isBusy) exit;
 	}
 
@@ -951,13 +935,12 @@ class BackendBaseCronjob
 
 
 /**
- * BackendBaseWidget
  * This is the base-object for widgets
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBaseWidget
@@ -979,11 +962,19 @@ class BackendBaseWidget
 
 
 	/**
-	 * The position in the column the widget should be shown
+	 * The position in the column where the widget should be shown
 	 *
 	 * @var	int
 	 */
 	private $position;
+
+
+	/**
+	 * Required rights needed for this widget.
+	 *
+	 * @var	array
+	 */
+	protected $rights = array();
 
 
 	/**
@@ -1059,6 +1050,31 @@ class BackendBaseWidget
 	public function getTemplatePath()
 	{
 		return $this->templatePath;
+	}
+
+
+	/**
+	 * Is this widget allowed for this user?
+	 *
+	 * @return	bool
+	 */
+	public function isAllowed()
+	{
+		// loop all rights
+		foreach($this->rights as $rights)
+		{
+			// define vars
+			list($module, $action) = explode('/', $rights);
+
+			// not exactly 2 vars
+			if(isset($module) && isset($action))
+			{
+				if(!BackendAuthentication::isAllowedAction($action, $module)) return false;
+			}
+		}
+
+		// everything turned out just fine
+		return true;
 	}
 
 

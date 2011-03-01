@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendUsersUndoDelete
  * This is the undo-delete-action, it will restore a deleted user
  *
  * @package		backend
  * @subpackage	users
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendUsersUndoDelete extends BackendBaseAction
@@ -35,7 +34,7 @@ class BackendUsersUndoDelete extends BackendBaseAction
 				$user = new BackendUser(null, $email);
 
 				// item was deleted, so redirect
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $user->getUserId() .'&report=restored&var='. $user->getSetting('nickname'));
+				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $user->getUserId() .'&report=restored&var='. $user->getSetting('nickname') .'&highlight=row-'. $user->getUserId());
 			}
 
 			// invalid user

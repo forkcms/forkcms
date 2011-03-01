@@ -1,13 +1,13 @@
 <?php
 
 /**
- * BackendBlogAPI
  * In this file we store all generic functions that we will be available through the API
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 class BackendBlogAPI
@@ -79,12 +79,12 @@ class BackendBlogAPI
 	 * Update a comment
 	 *
 	 * @return	void
-	 * @param	int $id						The id of the comment.
-	 * @param	string[optional] $status	The new status for the comment. Possible values are: published, moderation, spam.
-	 * @param	string[optional] $text		The new text for the comment.
-	 * @param	string[optional] $author	The new author for the comment.
-	 * @param	string[optional] $email		The new email for the comment.
-	 * @param	string[optional] $website	The new website for the comment.
+	 * @param	int $id								The id of the comment.
+	 * @param	string[optional] $status			The new status for the comment. Possible values are: published, moderation, spam.
+	 * @param	string[optional] $text				The new text for the comment.
+	 * @param	string[optional] $authorName		The new author for the comment.
+	 * @param	string[optional] $authorEmail		The new email for the comment.
+	 * @param	string[optional] $authorWebsite		The new website for the comment.
 	 */
 	public static function commentsUpdate($id, $status = null, $text = null, $authorName = null, $authorEmail = null, $authorWebsite = null)
 	{
@@ -116,9 +116,6 @@ class BackendBlogAPI
 
 			// change the status if needed
 			if($status !== null) BackendBlogModel::updateCommentStatuses(array($id), $status);
-
-			// return
-			return;
 		}
 	}
 
@@ -141,12 +138,8 @@ class BackendBlogAPI
 
 			// update statuses
 			BackendBlogModel::updateCommentStatuses($id, $status);
-
-			// return
-			return;
 		}
 	}
-
 }
 
 ?>

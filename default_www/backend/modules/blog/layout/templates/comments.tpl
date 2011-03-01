@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
 	<h2>{$lblBlog|ucfirst}: {$lblComments}</h2>
@@ -41,6 +41,11 @@
 			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsSpam">
 				<div class="datagridHolder">
 					<input type="hidden" name="from" value="spam" />
+					<div class="generalMessage infoMessage">
+							{$msgDeleteAllSpam}
+							<a href="{$var|geturl:'delete_spam'}">{$lblDelete|ucfirst}</a>
+						</p>
+					</div>
 					{$dgSpam}
 				</div>
 			</form>
@@ -57,5 +62,5 @@
 </div>
 
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

@@ -68,7 +68,7 @@ class BackendMailmotorAddCampaign extends BackendBaseActionAdd
 			$txtName = $this->frm->getField('name');
 
 			// validate fields
-			$txtName->isFilled(BL::getError('NameIsRequired'));
+			$txtName->isFilled(BL::err('NameIsRequired'));
 
 			// no errors?
 			if($this->frm->isCorrect())

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendURL
- * This class will handle the incomming URL.
+ * This class will handle the incoming URL.
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendURL

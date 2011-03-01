@@ -1,14 +1,14 @@
 <?php
 
 /**
- * BackendLocaleIndex
  * This is the index-action, it will display the overview of locale items.
  *
  * @package		backend
  * @subpackage	locale
  *
- * @author 		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendLocaleIndex extends BackendBaseActionIndex
@@ -30,33 +30,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Execute the action
-	 *
-	 * @return	void
-	 */
-	public function execute()
-	{
-		// call parent, this will probably add some general CSS/JS or other required files
-		parent::execute();
-
-		// set filter
-		$this->setFilter();
-
-		// load form
-		$this->loadForm();
-
-		// load datagrids
-		$this->loadDataGrid();
-
-		// parse page
-		$this->parse();
-
-		// display the page
-		$this->display();
-	}
-
-
-	/**
 	 * Builds the query for this datagrid
 	 *
 	 * @return	array		An array with two arguments containing the query and its parameters.
@@ -66,8 +39,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// init var
 		$parameters = array();
 
-		// start query, as you can see this query is build in the wrong place, because of the filter it is a special case
-		// wherin we allow the query to be in the actionfile itself
+		// start query, as you can see this query is build in the wrong place, because of the filter
+		// it is a special case wherein we allow the query to be in the actionfile itself
 		$query = 'SELECT l.id, l.language, l.application, l.module, l.type, l.name, l.value
 					FROM locale AS l
 					WHERE 1';
@@ -119,14 +92,29 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Get a label
+	 * Execute the action
 	 *
-	 * @return	string
-	 * @param	string $type		The type to get a label for.
+	 * @return	void
 	 */
-	public function getType($type)
+	public function execute()
 	{
-		return BackendLanguage::getMessage(mb_strtoupper((string) $type), 'core');
+		// call parent, this will probably add some general CSS/JS or other required files
+		parent::execute();
+
+		// set filter
+		$this->setFilter();
+
+		// load form
+		$this->loadForm();
+
+		// load datagrids
+		$this->loadDataGrid();
+
+		// parse page
+		$this->parse();
+
+		// display the page
+		$this->display();
 	}
 
 
@@ -134,18 +122,30 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 * Get the name of the languages
 	 *
 	 * @return	string
-	 * @param	string $language
+	 * @param	string $language	The language to get.
 	 */
 	public function getLanguage($language)
 	{
-		return BackendLanguage::getMessage(mb_strtoupper((string) $language), 'core');
+		return BL::msg(mb_strtoupper((string) $language), 'core');
+	}
+
+
+	/**
+	 * Get a label
+	 *
+	 * @return	string
+	 * @param	string $type		The type to get a label for.
+	 */
+	public function getType($type)
+	{
+		return BL::msg(mb_strtoupper((string) $type), 'core');
 	}
 
 
 	/**
 	 * Load the datagrid
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -164,11 +164,14 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// set colum URLs
 		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
 
+		// column titles
+		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::lbl('ReferenceCode')), 'value' => ucfirst(BL::lbl('Translation'))));
+
 		// add the multicheckbox column
 		$this->datagrid->setMassActionCheckboxes('checkbox', '[id]');
 
 		// add mass action dropdown
-		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::getLabel('Delete')), 'delete');
+		$ddmMassAction = new SpoonFormDropdown('action', array('delete' => BL::lbl('Delete')), 'delete');
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// update value
@@ -177,7 +180,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array(__CLASS__, 'getType'), array('[type]'), 'type', true);
 
 		// add columns
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
@@ -195,13 +198,13 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->frm->addText('name', $this->filter['name']);
 		$this->frm->addText('value', $this->filter['value']);
 		$this->frm->addDropdown('language', BL::getLocaleLanguages(), $this->filter['language']);
-		$this->frm->getField('language')->setDefaultElement(ucfirst(BL::getLabel('ChooseALanguage')));
+		$this->frm->getField('language')->setDefaultElement(ucfirst(BL::lbl('ChooseALanguage')));
 		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
-		$this->frm->getField('application')->setDefaultElement(ucfirst(BL::getLabel('ChooseAnApplication')));
+		$this->frm->getField('application')->setDefaultElement(ucfirst(BL::lbl('ChooseAnApplication')));
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
-		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::getLabel('ChooseAModule')));
+		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::lbl('ChooseAModule')));
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $this->filter['type']);
-		$this->frm->getField('type')->setDefaultElement(ucfirst(BL::getLabel('ChooseAType')));
+		$this->frm->getField('type')->setDefaultElement(ucfirst(BL::lbl('ChooseAType')));
 
 		// manually parse fields
 		$this->frm->parse($this->tpl);
@@ -240,7 +243,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 */
 	private function setFilter()
 	{
-		$this->filter['language'] = ($this->getParameter('language') != '') ? $this->getParameter('language') : BL::getWorkingLanguage();
+		$this->filter['language'] = (isset($_GET['language'])) ? $this->getParameter('language') : BL::getWorkingLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
 		$this->filter['type'] = $this->getParameter('type');

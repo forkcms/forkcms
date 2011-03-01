@@ -55,10 +55,10 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	bool[optional] $checked
-	 * @param	string[optional] $class
-	 * @param	string[optional] $classError
+	 * @param	string $name					The name.
+	 * @param	bool[optional] $checked			Should the checkbox be checked?
+	 * @param	string[optional] $class			The CSS-class to be used.
+	 * @param	string[optional] $classError	The CSS-class to be used when there is an error.
 	 */
 	public function __construct($name, $checked = false, $class = 'inputCheckbox', $classError = 'inputCheckboxError')
 	{
@@ -80,7 +80,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -92,7 +92,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Retrieve the attributes as HTML.
 	 *
 	 * @return	string
-	 *.@param	array $variables
+	 * @param	array $variables	The variables to get the attribute-HTML for.
 	 */
 	protected function getAttributesHTML(array $variables)
 	{
@@ -216,7 +216,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Is this specific field checked.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isChecked($error = null)
 	{
@@ -236,7 +236,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Checks if this field was submitted & contains one more values.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -256,7 +256,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Parses the html for this dropdown.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -273,7 +273,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 		if($template !== null)
 		{
 			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $output;
@@ -284,7 +284,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Sets the checked status.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $checked
+	 * @param	bool[optional] $checked		Should the element be checked?
 	 */
 	public function setChecked($checked = true)
 	{
@@ -296,7 +296,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 	 * Overwrites the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{

@@ -1,4 +1,4 @@
-{include:file='{$PATH_WWW}/install/layout/templates/head.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/head.tpl}
 
 <h2>Your login info</h2>
 {form:step5}
@@ -12,7 +12,7 @@
 			<label for="password">Password <abbr title="Required field">*</abbr></label>
 			{$txtPassword} {$txtPasswordError}
 		</p>
-		<table id="passwordStrengthMeter" class="passwordStrength" rel="password" cellspacing="0">
+		<table id="passwordStrengthMeter" class="passwordStrength" data-id="password" cellspacing="0">
 			<tr>
 				<td class="strength" id="passwordStrength">
 					<p class="strength none">/</p>
@@ -36,4 +36,4 @@
 	</p>
 {/form:step5}
 
-{include:file='{$PATH_WWW}/install/layout/templates/foot.tpl'}
+{include:{$PATH_WWW}/install/layout/templates/foot.tpl}

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAJAX
  * This class will handle AJAX-related stuff
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -159,6 +158,12 @@ class BackendAJAX
 			$fakeAction = new BackendBaseAJAXAction('', '');
 			$fakeAction->output(BackendBaseAJAXAction::FORBIDDEN, null, 'Module not allowed.');
 		}
+
+		// create URL instance, the templatemodifiers need this object
+		$URL = new BackendURL();
+
+		// set the module
+		$URL->setModule($this->module);
 	}
 
 

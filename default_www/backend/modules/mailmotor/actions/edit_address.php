@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorEditAddress extends BackendBaseActionEdit
@@ -214,9 +214,9 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 			if(!empty($this->subscriptions)) $ddmGroups = $this->frm->getField('subscriptions');
 
 			// validate fields
-			if($txtEmail->isFilled(BL::getError('EmailIsRequired')))
+			if($txtEmail->isFilled(BL::err('EmailIsRequired')))
 			{
-				$txtEmail->isEmail(BL::getError('EmailIsInvalid'));
+				$txtEmail->isEmail(BL::err('EmailIsInvalid'));
 			}
 
 			// no errors?

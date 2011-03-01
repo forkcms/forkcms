@@ -23,6 +23,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		1.1.0
  */
 class SpoonLocale
@@ -70,8 +71,8 @@ class SpoonLocale
 	 * Fetch the name of a country based on the code.
 	 *
 	 * @return	string
-	 * @param	string $code
-	 * @param	string[optional] $language
+	 * @param	string $code					The official country-code.
+	 * @param	string[optional] $language		The language to use, possible values can be found by calling SpoonLocale::getAvailableLanguages().
 	 */
 	public static function getCountry($code, $language = 'en')
 	{
@@ -92,12 +93,57 @@ class SpoonLocale
 
 
 	/**
+	 * Fetch the language name in the requested language.
+	 *
+	 * @return	string
+	 * @param	string $code					Language code of which we want the name.
+	 * @param	string[optional] $language		Requested language.
+	 */
+	public static function getLanguage($code, $language = 'en')
+	{
+		// init vars
+		$code = (string) $code;
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/'. $language .'.php';
+
+		// doesn't exist
+		if(!isset($locale['languages'][$code])) throw new SpoonLocaleException('There is no language with the code: '. $code);
+
+		// all seems fine
+		return $locale['languages'][$code];
+	}
+
+
+	/**
+	 * Retrieve the list of languages.
+	 *
+	 * @return	array
+	 * @param	string[optional] $language		Requested language.
+	 */
+	public static function getLanguages($language = 'en')
+	{
+		// init vars
+		$language = SpoonFilter::getValue($language, self::$languages, 'en');
+		$locale = array();
+
+		// fetch file
+		require 'data/'. $language .'.php';
+
+		// fetch languages
+		return $locale['languages'];
+	}
+
+
+	/**
 	 * Fetch the language specific month.
 	 *
 	 * @return	string
-	 * @param	string $month
-	 * @param	string[optional] $language
-	 * @param	bool[optional] $abbreviated
+	 * @param	string $month					The name/number of the month to retrieve.
+	 * @param	string[optional] $language		The language to use, possible values can be found by calling SpoonLocale::getAvailableLanguages().
+	 * @param	bool[optional] $abbreviated		Should the abbreviated value be used?
 	 */
 	public static function getMonth($month, $language = 'en', $abbreviated = false)
 	{
@@ -149,9 +195,9 @@ class SpoonLocale
 	 * Fetch a specific day of the week for a specific language.
 	 *
 	 * @return	string
-	 * @param	mixed $day
-	 * @param	string[optional] $language
-	 * @param	bool[optional] $abbreviated
+	 * @param	mixed $day						The name/number of the day.
+	 * @param	string[optional] $language		The language to use, possible values can be found by calling SpoonLocale::getAvailableLanguages().
+	 * @param	bool[optional] $abbreviated		Should the abbreviated value be used?
 	 */
 	public static function getWeekDay($day, $language = 'en', $abbreviated = false)
 	{

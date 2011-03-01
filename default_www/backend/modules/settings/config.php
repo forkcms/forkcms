@@ -1,14 +1,12 @@
 <?php
 
 /**
- * BackendSettingsConfig
- *
  * This is the configuration-object for the settings module
  *
  * @package		backend
  * @subpackage	settings
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */

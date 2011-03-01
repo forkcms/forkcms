@@ -1,7 +1,15 @@
 if(!jsBackend) { var jsBackend = new Object(); }
 
+
+/**
+ * Interaction for the pages module
+ *
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ */
 jsBackend.pages =
 {
+	// init, something like a constructor
 	init: function()
 	{
 		// load the tree
@@ -28,9 +36,15 @@ jsBackend.pages =
 }
 
 
-// all methods related to the controls (buttons, ...)
+/**
+ * All methods related to the controls (buttons, ...)
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ * @author	Dieter Vanden Eynde <dieter@netlash.com>
+ */
 jsBackend.pages.extras =
 {
+	// init, something like a constructor
 	init: function()
 	{
 		// bind events
@@ -38,7 +52,6 @@ jsBackend.pages.extras =
 		{
 			if($(this).val() != 'block') 
 			{
-				
 				var hasModules = false;
 
 				// check if there already blocks linked
@@ -69,6 +82,7 @@ jsBackend.pages.extras =
 		jsBackend.pages.extras.load();
 	},
 
+	
 	// load initial data, or initialize the dialogs
 	load: function()
 	{
@@ -83,64 +97,68 @@ jsBackend.pages.extras =
 		// initialize the modal for choosing an extra
 		if($('#chooseExtra').length > 0)
 		{
-			$('#chooseExtra').dialog({
+			$('#chooseExtra').dialog(
+			{
 				autoOpen: false,
 				draggable: false,
 				resizable: false,
 				modal: true,
 				width: 500,
-				buttons: {
+				buttons:
+				{
 					'{$lblOK|ucfirst}': function()
-						{
-							// change the extra for real
-							jsBackend.pages.extras.changeExtra();
+					{
+						// change the extra for real
+						jsBackend.pages.extras.changeExtra();
 
-							// close dialog
-							$(this).dialog('close');
-						},
+						// close dialog
+						$(this).dialog('close');
+					},
 					'{$lblCancel|ucfirst}': function()
-						{
-							// empty the extraForBlock
-							$('#extraForBlock').val('');
+					{
+						// empty the extraForBlock
+						$('#extraForBlock').val('');
 
-							// close the dialog
-							$(this).dialog('close');
-						}
+						// close the dialog
+						$(this).dialog('close');
 					}
+				}
 			 });
 		}
 
 		if($('#chooseTemplate').length > 0)
 		{
-			$('#chooseTemplate').dialog({
+			$('#chooseTemplate').dialog(
+			{
 				autoOpen: false,
 				draggable: false,
 				resizable: false,
 				modal: true,
 				width: 940,
-				buttons: {
+				buttons:
+				{
 					'{$lblOK|ucfirst}': function()
+					{
+						if($('#templateList input:radio:checked').val() != $('#templateId').val())
 						{
-							if($('#templateList input:radio:checked').val() != $('#templateId').val())
-							{
-								// empty extra's
-								$('.block_extra_id').val('');
+							// empty extra's
+							$('.block_extra_id').val('');
 
-								// clear content
-								for(var i in tinyMCE.editors) { tinyMCE.editors[i].setContent(''); }
+							// clear content
+							for(var i in tinyMCE.editors) { tinyMCE.editors[i].setContent(''); }
 
-								// change the template for real
-								jsBackend.pages.template.changeTemplate();
-							}
-
-							// close dialog
-							$(this).dialog('close');
-						},
-					'{$lblCancel|ucfirst}': function()
-						{
-							// close the dialog
-							$(this).dialog('close');
+							// change the template for real
+							jsBackend.pages.template.changeTemplate(true);
 						}
+
+						// close dialog
+						$(this).dialog('close');
+					},
+					'{$lblCancel|ucfirst}': function()
+					{
+						// close the dialog
+						$(this).dialog('close');
+					}
 				 }
 			 });
 		}
@@ -154,7 +172,7 @@ jsBackend.pages.extras =
 		evt.preventDefault();
 
 		// get the block wherefor we will change the extra
-		var blockId = $(this).attr('rel');
+		var blockId = $(this).data('block-id');
 
 		// get selected extra id
 		var selectedExtraId = $('#blockExtraId'+ blockId).val();
@@ -171,15 +189,21 @@ jsBackend.pages.extras =
 			var id = $(this).val();
 			if(id != '' && typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') hasModules = true;
 		});
-
+		
 		// blocks linked?
 		if(hasModules)
 		{
 			// show warning
 			$('#extraWarningAlreadyBlock').show();
-
+			
 			// disable blocks
 			$('#extraType option[value="block"]').attr('disabled', 'disabled');
+			
+			// get id
+			var id = $('#blockExtraId'+ blockId).val();
+			
+			// reenable
+			if(typeof extrasById[id] != 'undefined' && extrasById[id].type == 'block') $('#extraType option[value="block"]').attr('disabled', '');
 		}
 		else
 		{
@@ -246,8 +270,10 @@ jsBackend.pages.extras =
 		// empty the extraForBlock
 		$('#extraForBlock').val('');
 
+		// block exists
 		if($('#templateBlock-'+ selectedBlock).length > 0)
 		{
+			// block/widget
 			if(typeof extrasById != 'undefined' && typeof extrasById[selectedExtraId] != 'undefined')
 			{
 				// set description
@@ -258,32 +284,37 @@ jsBackend.pages.extras =
 				$('#blockContentWidget-'+ selectedBlock).hide();
 				$('#blockContentHTML-'+ selectedBlock).hide();
 
+				// block
 				if(extrasById[selectedExtraId].type == 'block')
 				{
-					$('#blockContentModule-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
+					$('#blockContentModule-'+ selectedBlock +' .oneLiner span.oneLinerElement').html(extrasById[selectedExtraId].message);
 
 					if(extrasById[selectedExtraId].data.url == '') $('#blockContentModule-'+ selectedBlock +' .oneLiner a').hide();
 					else 
 					{
-						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show()
-																				.attr('href', extrasById[selectedExtraId].data.url);						
+						$('#blockContentModule-'+ selectedBlock +' .oneLiner a').show().attr('href', extrasById[selectedExtraId].data.url);						
 					}
 					$('#blockContentModule-'+ selectedBlock).show();
 				}
 
+				// widget
 				if(extrasById[selectedExtraId].type == 'widget')
 				{
-					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span').html(extrasById[selectedExtraId].message);
+					$('#blockContentWidget-'+ selectedBlock +' .oneLiner span.oneLinerElement').html(extrasById[selectedExtraId].message);
 					if(typeof extrasById[selectedExtraId].data.edit_url == 'undefined' || extrasById[selectedExtraId].data.edit_url == '') $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').hide();
 					else $('#blockContentWidget-'+ selectedBlock +' .oneLiner a').attr('href', extrasById[selectedExtraId].data.edit_url).show();
 					$('#blockContentWidget-'+ selectedBlock).show();
 				}
-
 			}
+
+			// editor
 			else
 			{
 				// set description
 				$('#templateBlock-'+ selectedBlock +' .templateBlockCurrentType').html('{$lblEditor|ucfirst}');
+
+				// remove extra id (this happens when an extra was deleted outside pages)
+				$('#blockExtraId'+ selectedBlock).val('');
 
 				// show and hide
 				$('#blockContentModule-'+ selectedBlock).hide();
@@ -362,9 +393,14 @@ jsBackend.pages.extras =
 }
 
 
-// all methods related to managing the templates
+/**
+ * All methods related to managing the templates
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.pages.manageTemplates =
 {
+	// init, something like a constructor
 	init: function()
 	{
 		// check if we need to do something
@@ -405,20 +441,26 @@ jsBackend.pages.manageTemplates =
 }
 
 
-// all methods related to the templates
+/**
+ * All methods related to the templates
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.pages.template =
 {
+	// init, something like a constructor
 	init: function()
 	{
 		// bind events
 		$('#changeTemplate').bind('click', jsBackend.pages.template.showTemplateDialog);
 
-		// load to initialize
-		jsBackend.pages.template.changeTemplate();
+		// load to initialize when adding a page
+		jsBackend.pages.template.changeTemplate($('#changeTemplate').parents('form').attr('id') == 'add');
 	},
 
 
-	changeTemplate: function()
+	// method to change a template
+	changeTemplate: function(changeExtras)
 	{
 		// get checked
 		var selected = $('#templateList input:radio:checked').val();
@@ -450,21 +492,27 @@ jsBackend.pages.template =
 		$('#templateId').val(selected);
 		$('#templateLabel, #tabTemplateLabel').html(current.label);
 
-		// loop blocks and set extra's, to initialize the page
-		$('.contentBlock').each(function()
+		// only init when specified
+		if(changeExtras === true)
 		{
-			var index = $(this).attr('id').replace('block-', '');
-			var extraId = $('#blockExtraId'+ index).val();
-
-			// no extra specified, we should grab the default
-			if(typeof current.data.default_extras != 'undefined' && (typeof extraId == 'undefined' || extraId == ''))
+			// loop blocks and set extra's, to initialize the page
+			$('.contentBlock').each(function()
 			{
-				if(current.data.default_extras[index] != 'editor') { extraId = parseInt(current.data.default_extras[index]); }
-			}
+				// init vars
+				var index = $(this).attr('id').replace('block-', '');
+				var extraId = $('#blockExtraId'+ index).val();
+				var defaultExtras = current.data['default_extras'];
 
-			// change the extra
-			jsBackend.pages.extras.changeExtra(extraId, index);
-		});
+				// no extra specified, we should grab the default
+				if(typeof defaultExtras != 'undefined' && (typeof extraId == 'undefined' || extraId == ''))
+				{
+					if(defaultExtras[index] != 'editor') { extraId = parseInt(defaultExtras[index]); }
+				}
+
+				// change the extra
+				jsBackend.pages.extras.changeExtra(extraId, index);
+			});
+		}
 	},
 
 
@@ -484,8 +532,14 @@ jsBackend.pages.template =
 }
 
 
+/**
+ * All methods related to the tree
+ * 
+ * @author	Tijs Verkoyen <tijs@sumocoders.be>
+ */
 jsBackend.pages.tree =
 {
+	// init, something like a constructor
 	init: function()
 	{
 		if($('#tree div').length == 0) return false;
@@ -509,34 +563,39 @@ jsBackend.pages.tree =
 		// add home if needed
 		if(!utils.array.inArray('page-1', openedIds)) openedIds.push('page-1');
 
-		var options = {
-				ui: { theme_name: 'fork' },
-				opened: openedIds,
-				rules: {
-					multiple: false,
-					multitree: 'all',
-					drag_copy: false
-				},
-				lang: { loading: '{$lblLoading|ucfirst}' },
-				callback: {
-					beforemove: jsBackend.pages.tree.beforeMove,
-					onselect: jsBackend.pages.tree.onSelect,
-					onmove: jsBackend.pages.tree.onMove
-				},
-				types: {
-					'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/backend/modules/pages/js/jstree/themes/fork/icons.gif' } },
-					'page': { icon: { position: '0 -80px' } },
-					'folder': { icon: { position: false } },
-					'hidden': { icon: { position: false } },
-					'home': { draggable: false, icon: { position: '0 -112px' } },
-					'pages': { icon: { position: false } },
-					'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
-					'sitemap': { max_children: 0, icon: { position: '0 -176px' } }
-				},
-				plugins: {
-					cookie: { prefix: 'jstree_', types: { selected: false }, options: { path: '/' } }
-				}
-			};
+		var options =
+		{
+			ui: { theme_name: 'fork' },
+			opened: openedIds,
+			rules:
+			{
+				multiple: false,
+				multitree: 'all',
+				drag_copy: false
+			},
+			lang: { loading: '{$lblLoading|ucfirst}' },
+			callback:
+			{
+				beforemove: jsBackend.pages.tree.beforeMove,
+				onselect: jsBackend.pages.tree.onSelect,
+				onmove: jsBackend.pages.tree.onMove
+			},
+			types:
+			{
+				'default': { renameable: false, deletable: false, creatable: false, icon: { image: '/backend/modules/pages/js/jstree/themes/fork/icons.gif' } },
+				'page': { icon: { position: '0 -80px' } },
+				'folder': { icon: { position: false } },
+				'hidden': { icon: { position: false } },
+				'home': { draggable: false, icon: { position: '0 -112px' } },
+				'pages': { icon: { position: false } },
+				'error': { draggable: false, max_children: 0, icon: { position: '0 -160px' } },
+				'sitemap': { max_children: 0, icon: { position: '0 -176px' } }
+			},
+			plugins:
+			{
+				cookie: { prefix: 'jstree_', types: { selected: false }, options: { path: '/' } }
+			}
+		};
 
 		// create tree
 		$('#tree div').tree(options);
@@ -569,7 +628,8 @@ jsBackend.pages.tree =
 		var result = false;
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
 			async: false, // important that this isn't asynchronous
 			url: '/backend/ajax.php?module=pages&action=get_info&language={$LANGUAGE}',
 			data: 'id=' + currentPageID,
@@ -609,6 +669,7 @@ jsBackend.pages.tree =
 	},
 
 
+	// when an item is moved
 	onMove: function(node, refNode, type, tree, rollback)
 	{
 		// get pageID that has to be moved
@@ -619,7 +680,8 @@ jsBackend.pages.tree =
 		else var droppedOnPageID = $(refNode).attr('id').replace('page-', '')
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
 			url: '/backend/ajax.php?module=pages&action=move&language={$LANGUAGE}',
 			data: 'id=' + currentPageID + '&dropped_on='+ droppedOnPageID +'&type='+ type,
 			success: function(json, textStatus)

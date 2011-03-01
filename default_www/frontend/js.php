@@ -4,7 +4,7 @@
 require_once 'init.php';
 
 // initialize components
-new Init('frontend_js');
+new FrontendInit('frontend_js');
 
 // create backend-javascript-object
 new FrontendJavascript();

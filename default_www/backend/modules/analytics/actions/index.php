@@ -1,14 +1,13 @@
 <?php
 
 /**
- * BackendAnalyticsIndex
  * This is the index-action (default), it will display the overview of analytics posts
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
- * @author 		Dieter Vanden Eynde <dieter@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsIndex extends BackendAnalyticsBase
@@ -41,121 +40,45 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		// call parent parse
 		parent::parse();
 
-		// get and parse overview data
-		$this->parseOverviewData();
+		// get warnings
+		$warnings = BackendAnalyticsModel::checkSettings();
 
-		// get and parse data for chart
-		$this->parseLineChartData();
-		$this->parsePieChartData();
+		// assign warnings
+		$this->tpl->assign('warnings', $warnings);
 
-		// get and parse important referrals
-		$this->parseImportantReferrals();
-
-		// get and parse important keywords
-		$this->parseImportantKeywords();
-
-		// init google url
-		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
-		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
-		$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
-
-		// parse links to google
-		$this->tpl->assign('googleTopReferrersURL', sprintf($googleURL, 'referring_sources', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTopKeywordsURL', sprintf($googleURL, 'keywords', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTrafficSourcesURL', sprintf($googleURL, 'sources', $googleTableId, $googleDate));
-		$this->tpl->assign('googleVisitorsURL', sprintf($googleURL, 'visitors', $googleTableId, $googleDate));
-		$this->tpl->assign('googlePageviewsURL', sprintf($googleURL, 'pageviews', $googleTableId, $googleDate));
-		$this->tpl->assign('googleTimeOnSiteURL', sprintf($googleURL, 'time_on_site', $googleTableId, $googleDate));
-		$this->tpl->assign('googleVisitorTypesURL', sprintf($googleURL, 'visitor_types', $googleTableId, $googleDate));
-		$this->tpl->assign('googleBouncesURL', sprintf($googleURL, 'bounce_rate', $googleTableId, $googleDate));
-		$this->tpl->assign('googleAveragePageviewsURL', sprintf($googleURL, 'average_pageviews', $googleTableId, $googleDate));
-	}
-
-
-	/**
-	 * Parses the data to make the line-chart
-	 *
-	 * @return	void
-	 */
-	private function parseLineChartData()
-	{
-		// init vars
-		$maxYAxis = 2;
-		$metrics = array('visitors', 'pageviews');
-		$graphData = array();
-
-		// get metrics per day
-		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
-
-		// loop metrics
-		foreach($metrics as $i => $metric)
+		// no warnings
+		if(empty($warnings))
 		{
-			// build graph data array
-			$graphData[$i] = array();
-			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
-			$graphData[$i]['i'] = $i + 1;
-			$graphData[$i]['data'] = array();
+			// get and parse overview data
+			$this->parseOverviewData();
 
-			// loop metrics per day
-			foreach($metricsPerDay as $j => $data)
-			{
-				// cast SimpleXMLElement to array
-				$data = (array) $data;
+			// get and parse data for chart
+			$this->parseLineChartData();
+			$this->parsePieChartData();
 
-				// build array
-				$graphData[$i]['data'][$j]['date'] = (int) $data['timestamp'];
-				$graphData[$i]['data'][$j]['value'] = (string) $data[$metric];
-			}
+			// get and parse important referrals
+			$this->parseImportantReferrals();
+
+			// get and parse important keywords
+			$this->parseImportantKeywords();
+
+			// init google url
+			$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
+			$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
+			$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+
+			// parse links to google
+			$this->tpl->assign('googleTopReferrersURL', sprintf($googleURL, 'referring_sources', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTopKeywordsURL', sprintf($googleURL, 'keywords', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTrafficSourcesURL', sprintf($googleURL, 'sources', $googleTableId, $googleDate));
+			$this->tpl->assign('googleVisitorsURL', sprintf($googleURL, 'visitors', $googleTableId, $googleDate));
+			$this->tpl->assign('googlePageviewsURL', sprintf($googleURL, 'pageviews', $googleTableId, $googleDate));
+			$this->tpl->assign('googleTimeOnSiteURL', sprintf($googleURL, 'time_on_site', $googleTableId, $googleDate));
+			$this->tpl->assign('googleVisitorTypesURL', sprintf($googleURL, 'visitor_types', $googleTableId, $googleDate));
+			$this->tpl->assign('googleBouncesURL', sprintf($googleURL, 'bounce_rate', $googleTableId, $googleDate));
+			$this->tpl->assign('googleAveragePageviewsURL', sprintf($googleURL, 'average_pageviews', $googleTableId, $googleDate));
 		}
-
-		// loop the metrics
-		foreach($graphData as $metric)
-		{
-			// loop the data
-			foreach($metric['data'] as $data)
-			{
-				// get the maximum value
-				if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
-			}
-		}
-
-		// parse
-		$this->tpl->assign('maxYAxis', $maxYAxis);
-		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
-		$this->tpl->assign('graphData', $graphData);
-	}
-
-
-	/**
-	 * Parses the data to make the pie-chart
-	 *
-	 * @return	void
-	 */
-	private function parsePieChartData()
-	{
-		// get sources
-		$sources = BackendAnalyticsModel::getTrafficSourcesGrouped($this->startTimestamp, $this->endTimestamp);
-
-		// init vars
-		$graphData = array();
-
-		// loop metrics
-		foreach($sources as $i => $source)
-		{
-			// get label
-			$label = BL::getLabel(SpoonFilter::toCamelCase($source['label']), 'analytics');
-			if($label == '{$lblAnalytics'. SpoonFilter::toCamelCase($source['label']) .'}') $label = $source['label'];
-
-			// build array
-			$graphData[$i]['label'] = ucfirst($label);
-			$graphData[$i]['value'] = (string) $source['value'];
-			$graphData[$i]['percentage'] = (string) $source['percentage'];
-		}
-
-		// parse
-		$this->tpl->assign('pieGraphData', $graphData);
 	}
 
 
@@ -176,8 +99,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$datagrid = new BackendDataGridArray($results);
 
 			// set headers values
-			$headers['pageviews'] = ucfirst(BL::getLabel('Views'));
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::getLabel('Views'));
+			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
+			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Views'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);
@@ -208,8 +131,8 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$datagrid->setColumnsHidden(array('referral_long'));
 
 			// set headers values
-			$headers['pageviews'] = ucfirst(BL::getLabel('Views'));
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::getLabel('Views'));
+			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
+			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Views'));
 
 			// set column url
 			$datagrid->setColumnURL('referral', 'http://[referral_long]', '[referral_long]');
@@ -220,6 +143,61 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			// parse the datagrid
 			$this->tpl->assign('dgReferrers', $datagrid->getContent());
 		}
+	}
+
+
+	/**
+	 * Parses the data to make the line-chart
+	 *
+	 * @return	void
+	 */
+	private function parseLineChartData()
+	{
+		// init vars
+		$maxYAxis = 2;
+		$metrics = array('visitors', 'pageviews');
+		$graphData = array();
+
+		// get metrics per day
+		$metricsPerDay = BackendAnalyticsModel::getMetricsPerDay($metrics, $this->startTimestamp, $this->endTimestamp);
+
+		// loop metrics
+		foreach($metrics as $i => $metric)
+		{
+			// build graph data array
+			$graphData[$i] = array();
+			$graphData[$i]['title'] = $metric;
+			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['i'] = $i + 1;
+			$graphData[$i]['data'] = array();
+
+			// loop metrics per day
+			foreach($metricsPerDay as $j => $data)
+			{
+				// cast SimpleXMLElement to array
+				$data = (array) $data;
+
+				// build array
+				$graphData[$i]['data'][$j]['date'] = (int) $data['timestamp'];
+				$graphData[$i]['data'][$j]['value'] = (string) $data[$metric];
+			}
+		}
+
+		// loop the metrics
+		foreach($graphData as $metric)
+		{
+			// loop the data
+			foreach($metric['data'] as $data)
+			{
+				// get the maximum value
+				if((int) $data['value'] > $maxYAxis) $maxYAxis = (int) $data['value'];
+			}
+		}
+
+		// parse
+		$this->tpl->assign('maxYAxis', $maxYAxis);
+		$this->tpl->assign('tickInterval', ($maxYAxis == 2 ? '1' : ''));
+		$this->tpl->assign('graphData', $graphData);
 	}
 
 
@@ -288,6 +266,37 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$this->tpl->assign('bouncesTotal', $bouncesTotal);
 			$this->tpl->assign('bouncesDifference', $bouncesDifference);
 		}
+	}
+
+
+	/**
+	 * Parses the data to make the pie-chart
+	 *
+	 * @return	void
+	 */
+	private function parsePieChartData()
+	{
+		// get sources
+		$sources = BackendAnalyticsModel::getTrafficSourcesGrouped($this->startTimestamp, $this->endTimestamp);
+
+		// init vars
+		$graphData = array();
+
+		// loop metrics
+		foreach($sources as $i => $source)
+		{
+			// get label
+			$label = BL::lbl(SpoonFilter::toCamelCase($source['label']), 'analytics');
+			if($label == '{$lblAnalytics'. SpoonFilter::toCamelCase($source['label']) .'}') $label = $source['label'];
+
+			// build array
+			$graphData[$i]['label'] = ucfirst($label);
+			$graphData[$i]['value'] = (string) $source['value'];
+			$graphData[$i]['percentage'] = (string) $source['percentage'];
+		}
+
+		// parse
+		$this->tpl->assign('pieGraphData', $graphData);
 	}
 }
 

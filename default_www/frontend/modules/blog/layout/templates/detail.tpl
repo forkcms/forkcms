@@ -1,82 +1,88 @@
 {*
 	variables that are available:
-	- {$blogArticle}: contains data about the post
-	- {$blogComments}: contains an array with the comments for the post, each element contains data about the comment.
-	- {$blogCommentsCount}: contains a variable with the number of comments for this blog post.
-	- {$blogNavigation}: contains an array with data for previous and next post
+	- {$item}: contains data about the post
+	- {$comments}: contains an array with the comments for the post, each element contains data about the comment.
+	- {$commentsCount}: contains a variable with the number of comments for this blog post.
+	- {$navigation}: contains an array with data for previous and next post
 *}
-
 <div id="blogDetail">
 	<div class="mod article">
 		<div class="inner">
 			<div class="hd">
-				<h1>{$blogArticle['title']}</h1>
+				<h1>{$item.title}</h1>
 				<p>
-					{$blogArticle['publish_on']|date:{$dateFormatLong}:{$LANGUAGE}} -
-					{option:!blogComments}<a href="{$blogArticle['full_url']}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!blogComments}
-					{option:blogComments}
-						{option:blogCommentsMultiple}<a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$blogCommentsCount}}</a>{/option:blogCommentsMultiple}
-						{option:!blogCommentsMultiple}<a href="{$blogArticle['full_url']}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
-					{/option:blogComments}
+					{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} -
+					{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
+					{option:comments}
+						{option:commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:commentsMultiple}
+						{option:!commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!commentsMultiple}
+					{/option:comments}
 				</p>
 			</div>
 			<div class="bd content">
-				{$blogArticle['text']}
+				{$item.text}
 			</div>
 			<div class="ft">
-				{$msgWrittenBy|ucfirst|sprintf:{$blogArticle['user_id']|usersetting:'nickname'}} {$lblInTheCategory}: <a href="{$blogArticle['category_full_url']}" title="{$blogArticle['category_name']">{$blogArticle['category_name']}</a>. {$lblTags|ucfirst}: {iteration:blogArticleTags}<a href="{$blogArticleTags.full_url}" rel="tag" title="{$blogArticleTags.name}">{$blogArticleTags.name}</a>{option:!blogArticleTags.last}, {/option:!blogArticleTags.last}{/iteration:blogArticleTags}
+				{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
+				{$lblInTheCategory}: <a href="{$item.category_full_url}" title="{$item.category_name}">{$item.category_name}</a>.
+				{option:item.tags}
+					{$lblTags|ucfirst}:
+					{iteration:item.tags}
+						<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
+					{/iteration:item.tags}
+				{/option:item.tags}
 			</div>
 		</div>
 	</div>
-	<div id="blogNavigation" class="mod">
+	<div id="navigation" class="mod">
 		<div class="inner">
 			<div class="bd">
 				<ul>
-					{option:blogNavigation['previous']}
-					<li class="previousLink">
-						<a href="{$blogNavigation['previous']['url']}" rel="prev">{$lblPreviousArticle|ucfirst}: <em>{$blogNavigation['previous']['title']}</em></a>
-					</li>
-					{/option:blogNavigation['previous']}
-					{option:blogNavigation['next']}
-					<li class="nextLink">
-						<a href="{$blogNavigation['next']['url']}" rel="next">{$lblNextArticle|ucfirst}: <em>{$blogNavigation['next']['title']}</em></a>
-					</li>
-					{/option:blogNavigation['next']}
+					{option:navigation.previous}
+						<li class="previousLink">
+							<a href="{$navigation.previous.url}" rel="prev">{$lblPreviousArticle|ucfirst}: <em>{$navigation.previous.title}</em></a>
+						</li>
+					{/option:navigation.previous}
+					{option:navigation.next}
+						<li class="nextLink">
+							<a href="{$navigation.next.url}" rel="next">{$lblNextArticle|ucfirst}: <em>{$navigation.next.title}</em></a>
+						</li>
+					{/option:navigation.next}
 				</ul>
 			</div>
 		</div>
 	</div>
 
-	{option:blogComments}
-	<div id="blogComments" class="mod">
-		<div class="inner">
-			<div class="hd">
-				<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
-			</div>
-			{iteration:blogComments}
-				{* Do not alter the id! It is used as an anchor *}
-				<div id="comment-{$blogComments.id}" class="bd comment">
-					<div class="imageHolder">
-						{option:blogComments.website}<a href="{$blogComments.website}">{/option:blogComments.website}
-							<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$blogComments.author}" class="replaceWithGravatar" rel="{$blogComments.gravatar_id}" />
-						{option:blogComments.website}</a>{/option:blogComments.website}
-					</div>
-					<div class="commentContent">
-						<p class="commentAuthor">
-							{option:blogComments.website}<a href="{$blogComments.website}">{/option:blogComments.website}{$blogComments.author}{option:blogComments.website}</a>{/option:blogComments.website}
-							{$lblWrote}
-							{$blogComments.created_on|timeago}
-						</p>
-						<div class="commentText content">
-							{$blogComments.text|cleanupplaintext}
+	{option:comments}
+		<div id="comments" class="mod">
+			<div class="inner">
+				<div class="hd">
+					<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
+				</div>
+				{iteration:comments}
+					{* Do not alter the id! It is used as an anchor *}
+					<div id="comment-{$comments.id}" class="bd comment">
+						<div class="imageHolder">
+							{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
+								<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
+							{option:comments.website}</a>{/option:comments.website}
+						</div>
+						<div class="commentContent">
+							<p class="commentAuthor">
+								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}{$comments.author}{option:comments.website}</a>{/option:comments.website}
+								{$lblWrote}
+								{$comments.created_on|timeago}
+							</p>
+							<div class="commentText content">
+								{$comments.text|cleanupplaintext}
+							</div>
 						</div>
 					</div>
-				</div>
-			{/iteration:blogComments}
+				{/iteration:comments}
+			</div>
 		</div>
-	</div>
-	{/option:blogComments}
-	{option:blogArticle['allow_comments']}
+	{/option:comments}
+	{option:item.allow_comments}
 		<div id="blogCommentForm" class="mod">
 			<div class="inner">
 				<div class="hd">
@@ -110,5 +116,5 @@
 				</div>
 			</div>
 		</div>
-	{/option:blogArticle['allow_comments']}
+	{/option:item.allow_comments}
 </div>

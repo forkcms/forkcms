@@ -1,8 +1,8 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblUsers|ucfirst}: {$msgEditUser|sprintf:{$record['settings']['nickname']}}</h2>
+	<h2>{$lblUsers|ucfirst}: {$msgEditUser|sprintf:{$record.settings.nickname}}</h2>
 </div>
 
 {form:edit}
@@ -10,24 +10,24 @@
 		<tr>
 			<td>
 				<div class="avatar av48">
-					{option:record['settings']['avatar']}
-						<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record['settings']['avatar']}" width="48" height="48" alt="" />
-					{/option:record['settings']['avatar']}
+					{option:record.settings.avatar}
+						<img src="{$FRONTEND_FILES_URL}/backend_users/avatars/64x64/{$record.settings.avatar}" width="48" height="48" alt="" />
+					{/option:record.settings.avatar}
 				</div>
 			</td>
 			<td>
 				<table class="infoGrid" border="0" cellspacing="0" cellpadding="0">
 					<tr>
 						<th>{$lblName|ucfirst}:</th>
-						<td><strong>{$record['settings']['name']} {$record['settings']['surname']}</strong></td>
+						<td><strong>{$record.settings.name} {$record.settings.surname}</strong></td>
 					</tr>
 					<tr>
 						<th>{$lblNickname|ucfirst}:</th>
-						<td>{$record['settings']['nickname']}</td>
+						<td>{$record.settings.nickname}</td>
 					</tr>
 					<tr>
 						<th>{$lblEmail|ucfirst}:</th>
-						<td>{$record['email']}</td>
+						<td>{$record.email}</td>
 					</tr>
 				</table>
 			</td>
@@ -110,7 +110,7 @@
 						<label for="newPassword">{$lblPassword|ucfirst}</label>
 						{$txtNewPassword} {$txtNewPasswordError}
 					</p>
-					<table id="passwordStrengthMeter" class="passwordStrength" rel="newPassword" cellspacing="0">
+					<table id="passwordStrengthMeter" class="passwordStrength" data-id="newPassword" cellspacing="0">
 						<tr>
 							<td class="strength" id="passwordStrength">
 								<p class="strength none">/</p>
@@ -153,7 +153,7 @@
 
 	<div class="fullwidthOptions">
 		{option:deleteAllowed}
-			<a href="{$var|geturl:'delete'}&amp;id={$record['id']}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+			<a href="{$var|geturl:'delete'}&amp;id={$record.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 				<span>{$lblDelete|ucfirst}</span>
 			</a>
 		{/option:deleteAllowed}
@@ -165,10 +165,10 @@
 
 	<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
 		<p>
-			{$msgConfirmDelete|sprintf:{$record['settings']['nickname']}}
+			{$msgConfirmDelete|sprintf:{$record.settings.nickname}}
 		</p>
 	</div>
 {/form:edit}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

@@ -1,5 +1,5 @@
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/head.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 {form:editItem}
 <div class="box">
@@ -20,7 +20,7 @@
 	</div>
 
 	<div class="fullwidthOptions">
-		<a href="{$var|geturl:'delete_synonym'}&amp;id={$id}" rel="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+		<a href="{$var|geturl:'delete_synonym'}&amp;id={$id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
 			<span>{$lblDelete|ucfirst}</span>
 		</a>
 		<div class="buttonHolderRight">
@@ -32,5 +32,5 @@
 	</div>
 {/form:editItem}
 
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl'}
-{include:file='{$BACKEND_CORE_PATH}/layout/templates/footer.tpl'}
+{include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
+{include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

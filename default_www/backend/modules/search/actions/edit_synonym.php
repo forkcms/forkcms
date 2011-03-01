@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendSearchEditSynonym
  * This is the edit synonym action, it will display a form to edit an existing synonym.
  *
  * @package		backend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchEditSynonym extends BackendBaseActionEdit
@@ -106,24 +105,24 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('synonym')->isFilled(BL::getError('SynonymIsRequired'));
-			$this->frm->getField('term')->isFilled(BL::getError('TermIsRequired'));
-			if (BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue(), $this->id)) $this->frm->getField('term')->addError(BL::getError('TermExists'));
+			$this->frm->getField('synonym')->isFilled(BL::err('SynonymIsRequired'));
+			$this->frm->getField('term')->isFilled(BL::err('TermIsRequired'));
+			if(BackendSearchModel::existsSynonymByTerm($this->frm->getField('term')->getValue(), $this->id)) $this->frm->getField('term')->addError(BL::err('TermExists'));
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$item = array();
+				$item['id'] = $this->id;
 				$item['term'] = $this->frm->getField('term')->getValue();
 				$item['synonym'] = $this->frm->getField('synonym')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 
 				// upate the item
-				BackendSearchModel::updateSynonym($this->id, $item);
+				BackendSearchModel::updateSynonym($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=edited-synonym&var='. urlencode($item['term']));
+				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=edited-synonym&var='. urlencode($item['term']).'&highlight=row-'. $item['id']);
 			}
 		}
 	}

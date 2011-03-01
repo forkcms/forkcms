@@ -36,7 +36,7 @@
 	<tbody>
 		{iteration:rows}
 			<tr{$rows.attributes}{$rows.oddAttributes}{$rows.evenAttributes}>
-				{iteration:rows.columns}<td{$columns.attributes}>{$columns.value}</td>{/iteration:rows.columns}
+				{iteration:rows.columns}<td{$rows.columns.attributes}>{$rows.columns.value}</td>{/iteration:rows.columns}
 			</tr>
 		{/iteration:rows}
 	</tbody>

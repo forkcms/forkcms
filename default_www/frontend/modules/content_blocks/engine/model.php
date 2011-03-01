@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendContentBlocksModel
  * In this file we store all generic functions that we will be using in the content_blocks module
  *
  * @package		frontend
@@ -22,7 +21,6 @@ class FrontendContentBlocksModel
 	 */
 	public static function get($id)
 	{
-		// get data
 		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.title, i.text
 															FROM content_blocks AS i
 															WHERE i.id = ? AND i.status = ? AND i.hidden = ? AND i.language = ?',

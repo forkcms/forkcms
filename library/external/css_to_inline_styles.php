@@ -11,6 +11,10 @@
  * The class is documented in the file itself. If you find any bugs help me out and report them. Reporting can be done by sending an email to php-css-to-inline-styles-bugs[at]verkoyen[dot]eu.
  * If you report a bug, make sure you give me enough information (include your code).
  *
+ * Changelog since 1.0.3
+ * - fixed some code-styling issues
+ * - added support for multiple values
+ *
  * Changelog since 1.0.2
  * - .class are matched from now on.
  * - fixed issue with #id
@@ -96,8 +100,8 @@ class CSSToInlineStyles
 	 * Creates an instance, you could set the HTML and CSS here, or load it later.
 	 *
 	 * @return	void
-	 * @param	string[optional] $html	The HTML to process
-	 * @param	string[optional] $css	The CSS to use
+	 * @param	string[optional] $html	The HTML to process.
+	 * @param	string[optional] $css	The CSS to use.
 	 */
 	public function __construct($html = null, $css = null)
 	{
@@ -110,7 +114,7 @@ class CSSToInlineStyles
 	 * Convert a CSS-selector into an xPath-query
 	 *
 	 * @return	string
-	 * @param	string $selector	The CSS-selector
+	 * @param	string $selector	The CSS-selector.
 	 */
 	private function buildXPathQuery($selector)
 	{
@@ -152,7 +156,7 @@ class CSSToInlineStyles
 	 * Calculate the specifity for the CSS-selector
 	 *
 	 * @return	int
-	 * @param	string $selector
+	 * @param	string $selector	The selector to calculate the specifity for.
 	 */
 	private function calculateCSSSpecifity($selector)
 	{
@@ -187,7 +191,7 @@ class CSSToInlineStyles
 	 * Cleanup the generated HTML
 	 *
 	 * @return	string
-	 * @param	string $html	The HTML to cleanup
+	 * @param	string $html	The HTML to cleanup.
 	 */
 	private function cleanupHTML($html)
 	{
@@ -206,7 +210,7 @@ class CSSToInlineStyles
 	 * Converts the loaded HTML into an HTML-string with inline styles based on the loaded CSS
 	 *
 	 * @return	string
-	 * @param	bool $outputXHTML	Should we output valid XHTML?
+	 * @param	bool[optional] $outputXHTML		Should we output valid XHTML?
 	 */
 	public function convert($outputXHTML = false)
 	{
@@ -235,7 +239,6 @@ class CSSToInlineStyles
 
 		// process css
 		$this->processCSS();
-
 
 		// create new DOMDocument
 		$document = new DOMDocument('1.0', $this->getEncoding());
@@ -309,7 +312,13 @@ class CSSToInlineStyles
 					$propertyChunks = array();
 
 					// build chunks
-					foreach($properties as $key => $value) $propertyChunks[] = $key .': '. $value .';';
+					foreach($properties as $key => $values)
+					{
+						foreach((array) $values as $value)
+						{
+							$propertyChunks[] = $key .': '. $value .';';
+						}
+					}
 
 					// build properties string
 					$propertiesString = implode(' ', $propertyChunks);
@@ -440,7 +449,7 @@ class CSSToInlineStyles
 	 * Process the CSS-properties
 	 *
 	 * @return	array
-	 * @param	string $propertyString
+	 * @param	string $propertyString	The CSS-properties.
 	 */
 	private function processCSSProperties($propertyString)
 	{
@@ -459,6 +468,10 @@ class CSSToInlineStyles
 			// validate
 			if(!isset($chunks[1])) continue;
 
+			// cleanup
+			$chunks[0] = trim($chunks[0]);
+			$chunks[1] = trim($chunks[1]);
+
 			// add to pairs array
 			$pairs[trim($chunks[0])] = trim($chunks[1]);
 		}
@@ -475,7 +488,7 @@ class CSSToInlineStyles
 	 * Should the IDs and classes be removed?
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Should we enable cleanup?
 	 */
 	public function setCleanup($on = true)
 	{
@@ -487,7 +500,7 @@ class CSSToInlineStyles
 	 * Set CSS to use
 	 *
 	 * @return	void
-	 * @param	string $css		The CSS to use
+	 * @param	string $css		The CSS to use.
 	 */
 	public function setCSS($css)
 	{
@@ -499,7 +512,7 @@ class CSSToInlineStyles
 	 * Set the encoding to use with the DOMDocument
 	 *
 	 * @return	void
-	 * @param	string $encoding
+	 * @param	string $encoding	The encoding to use.
 	 */
 	public function setEncoding($encoding)
 	{
@@ -511,7 +524,7 @@ class CSSToInlineStyles
 	 * Set HTML to process
 	 *
 	 * @return	void
-	 * @param	string $html
+	 * @param	string $html	The HTML to process.
 	 */
 	public function setHTML($html)
 	{
@@ -523,7 +536,8 @@ class CSSToInlineStyles
 	 * Set use of inline styles block
 	 * If this is enabled the class will use the style-block in the HTML.
 	 *
-	 * @param	bool[optional] $on
+	 * @return	void
+	 * @param	bool[optional] $on	Should we process inline styles?
 	 */
 	public function setUseInlineStylesBlock($on = true)
 	{
@@ -535,8 +549,8 @@ class CSSToInlineStyles
 	 * Sort an array on the specifity element
 	 *
 	 * @return	int
-	 * @param	array $e1	The first element
-	 * @param	array $e2	The second element
+	 * @param	array $e1	The first element.
+	 * @param	array $e2	The second element.
 	 */
 	private static function sortOnSpecifity($e1, $e2)
 	{

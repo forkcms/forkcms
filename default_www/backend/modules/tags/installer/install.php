@@ -1,14 +1,13 @@
 <?php
 
 /**
- * TagsInstall
  * Installer for the tags module
  *
  * @package		installer
  * @subpackage	tags
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class TagsInstall extends ModuleInstaller
@@ -21,7 +20,7 @@ class TagsInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/tags/installer/install.sql');
+		$this->importSQL(dirname(__FILE__) .'/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('tags', 'The tags module.');
@@ -43,7 +42,7 @@ class TagsInstall extends ModuleInstaller
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
-			// check if a page for contact already exists in this language
+			// check if a page for tags already exists in this language
 			if((int) $this->getDB()->getVar('SELECT COUNT(p.id)
 												FROM pages AS p
 												INNER JOIN pages_blocks AS b ON b.revision_id = p.revision_id

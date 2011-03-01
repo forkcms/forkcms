@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendBlogConfig
  * This is the configuration-object for the blog module
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Davy Hellemans <davy@netlash.com>
+ * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
 final class BackendBlogConfig extends BackendBaseConfig

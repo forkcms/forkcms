@@ -1,14 +1,14 @@
 <?php
 
 /**
- * BackendBlogEdit
  * This is the edit-action, it will display a form to edit an existing item
  *
  * @package		backend
  * @subpackage	blog
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendBlogEdit extends BackendBaseActionEdit
@@ -95,7 +95,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		if($draftToLoad !== null)
 		{
 			// overwrite the current record
-			$this->record = (array) BackendBlogModel::getDraft($this->id, $draftToLoad);
+			$this->record = (array) BackendBlogModel::getRevision($this->id, $draftToLoad);
 
 			// show warning
 			$this->tpl->assign('usingDraft', true);
@@ -117,7 +117,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 	private function loadDrafts()
 	{
 		// create datagrid
-		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS, array('draft', $this->record['id'], BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
+		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS, array('draft', $this->record['id'], BL::getWorkingLanguage()));
 
 		// hide columns
 		$this->dgDrafts->setColumnsHidden(array('id', 'revision_id'));
@@ -126,13 +126,20 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgDrafts->setPaging(false);
 
 		// set headers
-		$this->dgDrafts->setHeaderLabels(array('edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
+
+		// set colum URLs
+		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]');
 
 		// set column-functions
-		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::getLabel('UseThisDraft')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]', BL::getLabel('UseThisDraft'));
+		$this->dgDrafts->addColumn('use_draft', null, ucfirst(BL::lbl('UseThisDraft')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('UseThisDraft'));
+
+		// our JS needs to know an id, so we can highlight it
+		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
 	}
 
 
@@ -147,8 +154,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// set hidden values
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Hidden'), 'value' => 'Y');
-		$rbtHiddenValues[] = array('label' => BL::getLabel('Published'), 'value' => 'N');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
+		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
@@ -158,7 +165,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
 		$this->frm->addDropdown('category_id', BackendBlogModel::getCategories(), $this->record['category_id']);
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
-		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->id), null, 'inputText tagBox', 'inputTextError tagBox');
+		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['revision_id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
 		$this->frm->addTime('publish_on_time', date('H:i', $this->record['publish_on']));
 
@@ -184,7 +191,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setPaging(false);
 
 		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
 		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]');
@@ -194,7 +201,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::getLabel('UseThisVersion'));
+		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
 
@@ -217,7 +224,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 
 		// assign the active record and additional variables
 		$this->tpl->assign('item', $this->record);
-		$this->tpl->assign('status', BL::getLabel(ucfirst($this->record['status'])));
+		$this->tpl->assign('status', BL::lbl(ucfirst($this->record['status'])));
 
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
@@ -245,10 +252,10 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
-			$this->frm->getField('text')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('publish_on_date')->isValid(BL::getError('DateIsInvalid'));
-			$this->frm->getField('publish_on_time')->isValid(BL::getError('TimeIsInvalid'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+			$this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
+			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
 
 			// validate meta
 			$this->meta->validate();
@@ -257,6 +264,8 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build item
+				$item['id'] = $this->id;
+				$item['revision_id'] = $this->record['revision_id']; // this is used to let our model know the status (active, archive, draft) of the edited item
 				$item['meta_id'] = $this->meta->save();
 				$item['category_id'] = $this->frm->getField('category_id')->getValue();
 				$item['user_id'] = $this->frm->getField('user_id')->getValue();
@@ -265,41 +274,38 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['introduction'] = $this->frm->getField('introduction')->getValue();
 				$item['text'] = $this->frm->getField('text')->getValue();
 				$item['publish_on'] = BackendModel::getUTCDate(null, BackendModel::getUTCTimestamp($this->frm->getField('publish_on_date'), $this->frm->getField('publish_on_time')));
-				$item['created_on'] = BackendModel::getUTCDate(null, $this->record['created_on']);
+				$item['edited_on'] = BackendModel::getUTCDate();
 				$item['hidden'] = $this->frm->getField('hidden')->getValue();
 				$item['allow_comments'] = $this->frm->getField('allow_comments')->getChecked() ? 'Y' : 'N';
 				$item['status'] = $status;
 
+				// update the item
+				$item['revision_id'] = BackendBlogModel::update($item);
+
+				// recalculate comment count so the new revision has the correct count
+				BackendBlogModel::reCalculateCommentCount(array($this->id));
+
+				// save the tags
+				BackendTagsModel::saveTags($item['revision_id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());
+
 				// active
-				if($status == 'active')
+				if($item['status'] == 'active')
 				{
-					// insert the item
-					$id = BackendBlogModel::update($this->id, $item);
-
-					// save the tags
-					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
-
 					// edit search index
-					if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex('blog', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+					if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex('blog', $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
 					if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') .'/'. $this->meta->getURL());
 
 					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('edit') .'&report=edited&var='. urlencode($item['title']) .'&id='. $this->id);
+					$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&id='. $this->id .'&highlight=row-'. $item['revision_id']);
 				}
 
 				// draft
-				else
+				elseif($item['status'] == 'draft')
 				{
-					// insert the item
-					$id = BackendBlogModel::insertDraft($this->id, $item);
-
-					// save the tags
-					BackendTagsModel::saveTags($id, $this->frm->getField('tags')->getValue(), $this->URL->getModule());
-
-					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $this->id .'&draft='. $id .'&report=saved_as_draft&var='. urlencode($item['title']) .'&highlight=id-'. $id);
+					// everything is saved, so redirect to the edit action
+					$this->redirect(BackendModel::createURLForAction('edit') .'&report=saved_as_draft&var='. urlencode($item['title']) .'&id='. $item['id'] .'&draft='. $item['revision_id'] .'&highlight=row-'. $item['revision_id']);
 				}
 			}
 		}

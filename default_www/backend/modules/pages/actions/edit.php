@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendPagesEdit
  * This is the edit-action, it will display a form to update an item
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @since		2.0
  */
@@ -64,6 +63,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// set the default template as checked
 		$this->templates[$this->record['template_id']]['checked'] = true;
 
+		// homepage?
+		if($this->id == 1)
+		{
+			// loop and set disabled state
+			foreach($this->templates as &$row) $row['disabled'] = ($row['has_block']);
+		}
+
 		// get the extras
 		$this->extras = BackendPagesModel::getExtras();
 
@@ -91,33 +97,45 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Load the datagrid
+	 * Load the record
 	 *
 	 * @return	void
 	 */
-	private function loadRevisions()
+	private function loadData()
 	{
-		// create datagrid
-		$this->dgRevisions = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_REVISIONS, array($this->id, 'archive', BL::getWorkingLanguage()));
+		// get record
+		$this->id = $this->getParameter('id', 'int');
 
-		// hide columns
-		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
+		// validate id
+		if($this->id !== null && BackendPagesModel::exists($this->id))
+		{
+			// get the record
+			$this->record = BackendPagesModel::get($this->id);
+			$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
 
-		// disable paging
-		$this->dgRevisions->setPaging(false);
+			// load blocks
+			$this->blocksContent = BackendPagesModel::getBlocks($this->id);
 
-		// set headers
-		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::getLabel('By')), 'edited_on' => ucfirst(BL::getLabel('LastEditedOn'))));
+			// is there a revision specified?
+			$revisionToLoad = $this->getParameter('revision', 'int');
 
-		// set colum URLs
-		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]');
+			// if this is a valid revision
+			if($revisionToLoad !== null)
+			{
+				// overwrite the current record
+				$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
 
-		// set functions
-		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
-		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
+				// load blocks
+				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
 
-		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::getLabel('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::getLabel('UseThisVersion'));
+				// show warning
+				if($this->record['status'] == 'archive') $this->tpl->assign('usingRevision', true);
+				elseif($this->record['status'] == 'draft') $this->tpl->assign('usingDraft', true);
+			}
+		}
+
+		// something went wrong
+		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
 	}
 
 
@@ -140,7 +158,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addHidden('template_id', $this->record['template_id']);
-		$this->frm->addRadiobutton('hidden', array(array('label' => BL::getLabel('Hidden'), 'value' => 'Y'), array('label' => BL::getLabel('Published'), 'value' => 'N')), $this->record['hidden']);
+		$this->frm->addRadiobutton('hidden', array(array('label' => BL::lbl('Hidden'), 'value' => 'Y'), array('label' => BL::lbl('Published'), 'value' => 'N')), $this->record['hidden']);
 		$this->frm->addCheckbox('no_follow', ($this->record['no_follow'] == 'Y'));
 
 		// get maximum number of blocks
@@ -188,41 +206,33 @@ class BackendPagesEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Load the record
+	 * Load the datagrid
 	 *
 	 * @return	void
 	 */
-	private function loadData()
+	private function loadRevisions()
 	{
-		// get record
-		$this->id = $this->getParameter('id', 'int');
+		// create datagrid
+		$this->dgRevisions = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_REVISIONS, array($this->id, 'archive', BL::getWorkingLanguage()));
 
-		// validate id
-		if($this->id === null || !BackendPagesModel::exists($this->id)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		// hide columns
+		$this->dgRevisions->setColumnsHidden(array('id', 'revision_id'));
 
-		// get the record
-		$this->record = BackendPagesModel::get($this->id);
-		$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
+		// disable paging
+		$this->dgRevisions->setPaging(false);
 
-		// load blocks
-		$this->blocksContent = BackendPagesModel::getBlocks($this->id);
+		// set headers
+		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
 
-		// is there a revision specified?
-		$revisionToLoad = $this->getParameter('revision', 'int');
+		// set colum URLs
+		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]');
 
-		// if this is a valid revision
-		if($revisionToLoad !== null)
-		{
-			// overwrite the current record
-			$this->record = (array) BackendPagesModel::getRevision($this->id, $revisionToLoad);
+		// set functions
+		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
+		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
-			// load blocks
-			$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
-
-			// show warning
-			if($this->record['status'] == 'archive') $this->tpl->assign('usingRevision', true);
-			elseif($this->record['status'] == 'draft') $this->tpl->assign('usingDraft', true);
-		}
+		// add use column
+		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
 
@@ -279,6 +289,31 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// init var
+			$templateId = (int) $this->frm->getField('template_id')->getValue();
+
+			// loop blocks in template
+			for($i = 0; $i < $this->templates[$templateId]['num_blocks']; $i++)
+			{
+				// get the extra id
+				$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
+
+				// reset some stuff
+				if($extraId > 0)
+				{
+					// type of block
+					if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
+					{
+						// home can't have blocks
+						if($this->record['id'] == 1)
+						{
+							$this->frm->getField('block_html_'. $i)->addError(BL::err('HomeCantHaveBlocks'));
+							$this->frm->addError(BL::err('HomeCantHaveBlocks'));
+						}
+					}
+				}
+			}
+
 			// set callback for generating an unique URL
 			$this->meta->setURLCallback('BackendPagesModel', 'getURL', array($this->record['id'], $this->record['parent_id'], $this->frm->getField('is_action')->getChecked()));
 
@@ -286,7 +321,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('title')->isFilled(BL::getError('TitleIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
 
 			// validate meta
 			$this->meta->validate();
@@ -295,7 +330,6 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build page record
-				$page = array();
 				$page['id'] = $this->record['id'];
 				$page['user_id'] = BackendAuthentication::getUser()->getUserId();
 				$page['parent_id'] = $this->record['parent_id'];
@@ -375,7 +409,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					$block['extra_id'] = $extraId;
 					$block['html'] = $html;
 					$block['status'] = 'active';
-					$block['created_on'] = BackendModel::getUTCDate();
+					$block['created_on'] = (isset($this->blocksContent[$i]['created_on'])) ? BackendModel::getUTCDate(null, $this->blocksContent[$i]['created_on']) : BackendModel::getUTCDate();
 					$block['edited_on'] = BackendModel::getUTCDate();
 
 					// add block
@@ -395,7 +429,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					foreach($blocks as $block) $text .= ' '. $block['html'];
 
 					// add
-					BackendSearchModel::editIndex('pages', (int) $page['id'], array('title' => $page['title'], 'text' => $text));
+					BackendSearchModel::editIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
 				}
 
 				// save tags
@@ -405,7 +439,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&highlight=id-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&highlight=row-'. $page['id']);
 			}
 		}
 	}

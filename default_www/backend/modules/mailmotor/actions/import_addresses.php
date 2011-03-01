@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorImportAddresses extends BackendBaseActionEdit
@@ -18,6 +18,28 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 	 * @var	int
 	 */
 	private $groupId;
+
+
+	/**
+	 * Generates and downloads the example CSV file
+	 *
+	 * @return	void
+	 */
+	private function downloadExampleFile()
+	{
+		// Should we download the example file or not?
+		$downloadExample = SpoonFilter::getGetValue('example', array(0, 1), 0, 'bool');
+
+		// stop here if no download parameter was given
+		if(!$downloadExample) return false;
+
+		// build the csv
+		$csv = array();
+		$csv[] = array('email' => BackendModel::getModuleSetting('mailmotor', 'from_email'), 'name' => BackendModel::getModuleSetting('mailmotor', 'from_name'));
+
+		// download the file
+		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ',', '"', true);
+	}
 
 
 	/**
@@ -47,28 +69,6 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
 		// display the page
 		$this->display();
-	}
-
-
-	/**
-	 * Generates and downloads the example CSV file
-	 *
-	 * @return	void
-	 */
-	private function downloadExampleFile()
-	{
-		// Should we download the example file or not?
-		$downloadExample = SpoonFilter::getGetValue('example', array(0, 1), 0, 'bool');
-
-		// stop here if no download parameter was given
-		if(!$downloadExample) return false;
-
-		// build the csv
-		$csv = array();
-		$csv[] = array('email' => BackendModel::getModuleSetting('mailmotor', 'from_email'), 'name' => BackendModel::getModuleSetting('mailmotor', 'from_name'));
-
-		// download the file
-		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ';', '"', true);
 	}
 
 
@@ -117,13 +117,13 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			$chkGroups = $this->frm->getField('groups');
 
 			// validate fields
-			$fileCSV->isFilled(BL::getError('CSVIsRequired'));
+			$fileCSV->isFilled(BL::err('CSVIsRequired'));
 
 			// convert the CSV file to an array
 			$csv = SpoonFileCSV::fileToArray($fileCSV->getTempFileName());
 
 			// check if the csv is valid
-			if($csv === false || empty($csv) || !isset($csv[0])) $fileCSV->addError(BL::getError('InvalidCSV'));
+			if($csv === false || empty($csv) || !isset($csv[0])) $fileCSV->addError(BL::err('InvalidCSV'));
 
 			// fetch the columns of the first row
 			$columns = array_keys($csv[0]);
@@ -138,7 +138,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 				if($rowColumns != $columns)
 				{
 					// add an error to the CSV files
-					$fileCSV->addError(BL::getError('InvalidCSV'));
+					$fileCSV->addError(BL::err('InvalidCSV'));
 
 					// exit loop
 					break;
@@ -149,7 +149,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			$values = $this->frm->getValues();
 
 			// check if at least one recipient group is chosen
-			if(empty($values['groups'])) $chkGroups->addError(BL::getError('ChooseAtLeastOneGroup'));
+			if(empty($values['groups'])) $chkGroups->addError(BL::err('ChooseAtLeastOneGroup'));
 
 			// no errors?
 			if($this->frm->isCorrect())
@@ -166,7 +166,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 					// build record to insert
 					$item = array();
 					$item['email'] = $record['email'];
-					$item['source'] = BL::getLabel('ImportNoun');
+					$item['source'] = BL::lbl('ImportNoun');
 					$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 					// unset the email (for the custom fields)

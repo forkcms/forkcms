@@ -1,14 +1,13 @@
 <?php
 
 /**
- * FrontendTagsWidgetRelated
  * This is a widget with the related items based on tags
  *
  * @package		frontend
  * @subpackage	tags
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class FrontendTagsWidgetRelated extends FrontendBaseWidget
@@ -72,10 +71,10 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		foreach($this->tags as $tag)
 		{
 			// fetch entries
-			$items = FrontendModel::getDB()->retrieve('SELECT mt.module, mt.other_id
-														FROM modules_tags AS mt
-														INNER JOIN tags AS t ON t.id = mt.tag_id
-														WHERE t.tag = ?;', array($tag));
+			$items = FrontendModel::getDB()->getRecords('SELECT mt.module, mt.other_id
+															FROM modules_tags AS mt
+															INNER JOIN tags AS t ON t.id = mt.tag_id
+															WHERE t.tag = ?', array($tag));
 
 			// loop items
 			foreach($items as $i => $item)
@@ -125,7 +124,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	/**
 	 * Get tags for current "page"
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function getTags()
 	{
@@ -172,7 +171,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 	private function parse()
 	{
 		// assign
-		$this->tpl->assign('widgetRelated', $this->related);
+		$this->tpl->assign('widgetTagsRelated', $this->related);
 	}
 }
 

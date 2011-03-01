@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendSearchWidgetForm
  * This is a widget with the search form
  *
  * @package		frontend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchWidgetForm extends FrontendBaseWidget
@@ -44,7 +43,7 @@ class FrontendSearchWidgetForm extends FrontendBaseWidget
 		$this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('search'), 'get', null, false);
 
 		// create elements
-		$this->frm->addText('q');
+		$this->frm->addText('q', null, 255, 'inputText autoSuggest', 'inputTextError autoSuggest');
 	}
 
 

@@ -10,7 +10,7 @@ require_once 'engine/helper.php';
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 final class BackendMailmotorConfig extends BackendBaseConfig
@@ -35,6 +35,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 	 * Check if all required settings have been set
 	 *
 	 * @return	void
+	 * @param	string $module	The module.
 	 */
 	public function __construct($module)
 	{
@@ -45,7 +46,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$url = Spoon::isObjectReference('url') ? Spoon::getObjectReference('url') : null;
 
 		// do the client ID check if we're not in the settings page
-		if($url != null && $url->getAction() != 'settings')
+		if($url != null && $url->getAction() != 'settings' && strpos($url->getQueryString(), 'link_account') === false)
 		{
 			// check for CM account
 			$this->checkForAccount();
@@ -81,7 +82,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$clientId = BackendMailmotorCMHelper::getClientID();
 
 		// no client ID set, so redirect to settings with an appropriate error message.
-		if(empty($clientId)) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));	
+		if(empty($clientId)) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));
 
 		// get price per email
 		$pricePerEmail = BackendModel::getModuleSetting('mailmotor', 'price_per_email');

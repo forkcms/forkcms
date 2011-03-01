@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
@@ -17,6 +17,52 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * @var	array
 	 */
 	private $mailing;
+
+
+	/**
+	 * Adds Google UTM GET Parameters to all anchor links in the mailing
+	 *
+	 * @return	string
+	 * @param	string $HTML	The HTML wherin the parameters will be added.
+	 */
+	private function addUTMParameters($HTML)
+	{
+		// init var
+		$matches = array();
+
+		// search for all hrefs
+		preg_match_all('/href="(.*)"/isU', $HTML, $matches);
+
+		// reserve searhc vars
+		$search = array();
+		$replace = array();
+
+		// check if we have matches
+		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
+
+		// build the google vars query
+		$params = array();
+		$params['utm_source'] = 'mailmotor';
+		$params['utm_medium'] = 'email';
+		$params['utm_campaign'] = SpoonFilter::urlise($this->mailing['name']);
+
+		// build google vars query
+		$googleQuery = http_build_query($params);
+
+		// loop the matches
+		foreach($matches[1] as $match)
+		{
+			// ignore #
+			if(strpos($match, '#') > -1) continue;
+
+			// add results to search/replace stack
+			$search[] = 'href="'. $match .'"';
+			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
+		}
+
+		// replace the content HTML with the replace values
+		return str_replace($search, $replace, $HTML);
+	}
 
 
 	/**
@@ -43,10 +89,10 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$this->mailing = BackendMailmotorModel::getMailing($mailingId);
 
 		// record is empty
-		if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::getError('MailingDoesNotExist', 'mailmotor'));
+		if(empty($this->mailing)) $this->output(self::BAD_REQUEST, null, BL::err('MailingDoesNotExist', 'mailmotor'));
 
 		// validate other fields
-		if($subject == '') $this->output(900, array('element' => 'subject', 'element_error' => BL::getError('NoSubject', 'mailmotor')), BL::getError('FormError'));
+		if($subject == '') $this->output(900, array('element' => 'subject', 'element_error' => BL::err('NoSubject', 'mailmotor')), BL::err('FormError'));
 
 		// set full HTML
 		$HTML = $this->getEmailContent($this->mailing['template'], $contentHTML, $fullContentHTML);
@@ -64,54 +110,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		BackendMailmotorModel::updateMailing($item);
 
 		// output
-		$this->output(self::OK, array('mailing_id' => $mailingId), BL::getMessage('MailingEdited', 'mailmotor'));
-	}
-
-
-	/**
-	 * Adds Google UTM GET Parameters to all anchor links in the mailing
-	 *
-	 * @return	string
-	 * @param	string $HTML
-	 */
-	private function addUTMParameters($HTML)
-	{
-		// init var
-		$matches = array();
-
-		// search for all hrefs
-		preg_match_all('/href="(.*)"/isU', $HTML, $matches);
-
-		// reserve searhc vars
-		$search = array();
-		$replace = array();
-
-		// check if we have matches
-		if(!isset($matches[1]) || empty($matches[1])) return $HTML;
-
-		// build the google vars query
-		$params = array();
-		$params['utm_source'] = 'mailmotor';
-		$params['utm_medium'] = 'email';
-		$params['utm_name'] = $this->mailing['name'];
-
-		// build google vars query
-		$googleQuery = http_build_query($params);
-
-
-		// loop the matches
-		foreach($matches[1] as $match)
-		{
-			// ignore #
-			if(strpos($match, '#') > -1) continue;
-
-			// add results to search/replace stack
-			$search[] = 'href="'. $match .'"';
-			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
-		}
-
-		// replace the content HTML with the replace values
-		return str_replace($search, $replace, $HTML);
+		$this->output(self::OK, array('mailing_id' => $mailingId), BL::msg('MailingEdited', 'mailmotor'));
 	}
 
 
@@ -119,9 +118,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * Returns the fully parsed e-mail content
 	 *
 	 * @return	string
-	 * @param	string $template
-	 * @param	string $fullContentHTML
-	 * $param	string $contentHTML
+	 * @param	string $template			The template to use.
+	 * @param	string $contentHTML			The content.
+	 * @param	string $fullContentHTML		The full content.
 	 */
 	private function getEmailContent($template, $contentHTML, $fullContentHTML)
 	{
@@ -132,10 +131,13 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$template = BackendMailmotorModel::getTemplate($this->mailing['language'], $template);
 
 		// template content is empty
-		if(!isset($template['content'])) $this->output(self::ERROR, array('mailing_id' => $this->mailing['id'], 'error' => true), BL::getError('TemplateDoesNotExist', 'mailmotor'));
+		if(!isset($template['content'])) $this->output(self::ERROR, array('mailing_id' => $this->mailing['id'], 'error' => true), BL::err('TemplateDoesNotExist', 'mailmotor'));
 
 		// remove TinyMCE
 		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);
+
+		// replace bracketed entities with their proper counterpart
+		$fullContentHTML = preg_replace('/\[(.*?)]/', '&${1};', $fullContentHTML);
 
 		// add Google UTM parameters to all anchors
 		$fullContentHTML = $this->addUTMParameters($fullContentHTML);
@@ -168,9 +170,9 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 	 * Returns the text between 2 tags
 	 *
 	 * @return	array
-	 * @param	string $tag
-	 * @param	string $html
-	 * @param	bool[optional] $strict
+	 * @param	string $tag					The tag.
+	 * @param	string $html				The HTML to search in.
+	 * @param	bool[optional] $strict		Use strictmode?
 	 */
 	private function getTextBetweenTags($tag, $html, $strict = false)
 	{

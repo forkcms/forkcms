@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendAnalyticsDetailPage
  * This is the detail-page-action, it will display the overview of analytics posts
  *
  * @package		backend
  * @subpackage	analytics
  *
- * @author 		Annelies Van Extergem <annelies@netlash.com>
+ * @author		Annelies Van Extergem <annelies@netlash.com>
  * @since		2.0
  */
 class BackendAnalyticsDetailPage extends BackendAnalyticsBase
@@ -87,7 +86,7 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			// build graph data array
 			$graphData[$i] = array();
 			$graphData[$i]['title'] = $metric;
-			$graphData[$i]['label'] = ucfirst(BL::getLabel(SpoonFilter::toCamelCase($metric)));
+			$graphData[$i]['label'] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($metric)));
 			$graphData[$i]['data'] = array();
 
 			// loop metrics per day

@@ -7,7 +7,7 @@
  * @package		backend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class BackendMailmotorMassAddressAction extends BackendBaseAction
@@ -26,6 +26,57 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 	 * @var	int
 	 */
 	private $groupId;
+
+
+	/**
+	 * Delete addresses
+	 *
+	 * @return	void
+	 */
+	private function deleteAddresses()
+	{
+		// no group set
+		if($this->groupId == '') $this->groupId = null;
+
+		// get all groups
+		$groupIds = BackendMailmotorModel::getGroupIDs();
+
+		// loop the emails
+		foreach($this->emails as $email)
+		{
+			// the group ID is not set
+			if($this->groupId == null)
+			{
+				// if no groups were set, break here
+				if(empty($groupIds)) break;
+
+				// loop the group IDs
+				foreach($groupIds as $groupId)
+				{
+					// try to unsubscribe this address
+					try
+					{
+						BackendMailmotorCMHelper::unsubscribe($email, $groupId);
+					}
+
+					// ignore exceptions
+					catch(Exception $e)
+					{
+						// do nothing
+					}
+				}
+
+				// delete all addresses
+				BackendMailmotorModel::deleteAddresses($email);
+			}
+
+			// group ID was set, unsubscribe the address for this group
+			else BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
+		}
+
+		// redirect
+		$this->redirect(BackendModel::createURLForAction('addresses') .'&report=delete_addresses'. (!empty($this->groupId) ? '&group_id='. $this->groupId : ''));
+	}
 
 
 	/**
@@ -64,52 +115,6 @@ class BackendMailmotorMassAddressAction extends BackendBaseAction
 				break;
 			}
 		}
-	}
-
-
-	/**
-	 * Delete addresses
-	 *
-	 * @return	void
-	 */
-	private function deleteAddresses()
-	{
-		// no group set
-		if($this->groupId == '') $this->groupId = null;
-
-		// get all groups
-		$groupIds = BackendMailmotorModel::getGroupIDs();
-
-		// loop the emails
-		foreach($this->emails as $email)
-		{
-			// the group ID is not set
-			if($this->groupId == null)
-			{
-				// if no groups were set, break here
-				if(empty($groupIds)) break;
-
-				// loop the group IDs
-				foreach($groupIds as $groupId)
-				{
-					// try to unsubscribe this address
-					try
-					{
-						BackendMailmotorCMHelper::unsubscribe($email, $groupId);
-					}
-					catch(Exception $e){}
-				}
-
-				// delete all addresses
-				BackendMailmotorModel::deleteAddresses($email);
-			}
-
-			// group ID was set, unsubscribe the address for this group
-			else BackendMailmotorCMHelper::unsubscribe($email, $this->groupId);
-		}
-
-		// redirect
-		$this->redirect(BackendModel::createURLForAction('addresses') .'&report=delete_addresses'. (!empty($this->groupId) ? '&group_id='. $this->groupId : ''));
 	}
 
 

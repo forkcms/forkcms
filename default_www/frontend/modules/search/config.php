@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendSearchConfig
  * This is the configuration-object
  *
  * @package		frontend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 final class FrontendSearchConfig extends FrontendBaseConfig

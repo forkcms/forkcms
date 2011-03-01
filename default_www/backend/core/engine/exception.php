@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendException
  * This exception is used to handle backend related exceptions.
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendException extends SpoonException
@@ -16,8 +15,8 @@ class BackendException extends SpoonException
 	 * Default constructor.
 	 *
 	 * @return	void
-	 * @param	string $message
-	 * @param	int[optional] $code
+	 * @param	string $message			The message of the exception.
+	 * @param	int[optional] $code		The numeric code of the exception.
 	 */
 	public function __construct($message, $code = 0)
 	{

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendBaseObject
  * This class will be the base of the objects used in onsite
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseObject
@@ -46,13 +45,12 @@ class FrontendBaseObject
 
 
 /**
- * FrontendBaseConfig
  * This is the base-object for config-files. The module-specific config-files can extend the functionality from this class.
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseConfig
@@ -213,14 +211,13 @@ class FrontendBaseConfig
 
 
 /**
- * FrontendBaseBlock
  * This class implements a lot of functionality that can be extended by a specific block
  * @later Check which methods are the same in FrontendBaseWidget, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -310,8 +307,8 @@ class FrontendBaseBlock
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	string $action				The name of the action.
 	 * @param	string $module				The name of the module.
+	 * @param	string $action				The name of the action.
 	 * @param	string[optional] $data		The data that should be available in this block.
 	 */
 	public function __construct($module, $action, $data = null)
@@ -338,8 +335,9 @@ class FrontendBaseBlock
 	 * @param	string[optional] $media			The media to use.
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
+	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -349,7 +347,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
 
 		// add css to the header
-		$this->header->addCSS($file, $media, $condition, $minify);
+		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
 	}
 
 
@@ -361,8 +359,9 @@ class FrontendBaseBlock
 	 * @param 	bool[optional] $overwritePath		Whether or not to add the module to this path. Module path is added by default.
 	 * @param	bool[optional] $minify				Should the file be minified?
 	 * @param	bool[optional] $parseThroughPHP		Should the file be parsed through PHP?
+	 * @param	bool[optional] $addTimestamp		May we add a timestamp for caching purposes?
 	 */
-	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false)
+	public function addJavascript($file, $overwritePath = false, $minify = true, $parseThroughPHP = false, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -372,7 +371,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/js/'. $file;
 
 		// add js to the header
-		$this->header->addJavascript($file, $minify, $parseThroughPHP);
+		$this->header->addJavascript($file, $minify, $parseThroughPHP, $addTimestamp);
 	}
 
 
@@ -505,14 +504,14 @@ class FrontendBaseBlock
 		$pagination['current_page'] = $this->pagination['requested_page'];
 
 		// as long as we are below page 5 we should show all pages starting from 1
-		if($this->pagination['requested_page'] < 6)
+		if($this->pagination['requested_page'] <= 6)
 		{
 			// init vars
 			$pagesStart = 1;
-			$pagesEnd = ($this->pagination['num_pages'] >= 6) ? 6 : $this->pagination['num_pages'];
+			$pagesEnd = ($this->pagination['num_pages'] >= 6) ? 7 : $this->pagination['num_pages'];
 
 			// show last pages
-			if($this->pagination['num_pages'] > 5) $showLastPages = true;
+			if($this->pagination['num_pages'] > 6) $showLastPages = true;
 		}
 
 		// as long as we are 5 pages from the end we should show all pages till the end
@@ -624,7 +623,7 @@ class FrontendBaseBlock
 	 * Redirect to a given URL
 	 *
 	 * @return	void
-	 * @param	string $URL				The URL whereto will be redirected
+	 * @param	string $URL				The URL whereto will be redirected.
 	 * @param	int[optional] $code		The redirect code, default is 307 which means this is a temporary redirect.
 	 */
 	public function redirect($URL, $code = 302)
@@ -703,14 +702,13 @@ class FrontendBaseBlock
 
 
 /**
- * FrontendBaseWidget
  * This class implements a lot of functionality that can be extended by a specific widget
  * @later Check which methods are the same in FrontendBaseBlock, maybe we should extend from a general class
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
@@ -804,8 +802,9 @@ class FrontendBaseWidget
 	 * @param	string[optional] $media			The media to use.
 	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
+	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true)
+	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -815,7 +814,7 @@ class FrontendBaseWidget
 		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
 
 		// add css to the header
-		$this->header->addCSS($file, $media, $condition, $minify);
+		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
 	}
 
 
@@ -901,7 +900,7 @@ class FrontendBaseWidget
 	 * Load the template
 	 *
 	 * @return	void
-	 * @param	string[optional] $template		The path for the template to use.
+	 * @param	string[optional] $path		The path for the template to use.
 	 */
 	protected function loadTemplate($path = null)
 	{
@@ -939,7 +938,7 @@ class FrontendBaseWidget
 	 * Set the data, for later use
 	 *
 	 * @return	void
-	 * @param	string $data	The data that should available.
+	 * @param	string[optional] $data	The data that should available.
 	 */
 	private function setData($data = null)
 	{
@@ -981,13 +980,12 @@ class FrontendBaseWidget
 
 
 /**
- * FrontendBaseAJAXAction
  * This class implements a lot of functionality that can be extended by a specific AJAX action
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendBaseAJAXAction
@@ -1085,8 +1083,10 @@ class FrontendBaseAJAXAction
 		SpoonHTTP::setHeadersByCode($statusCode);
 		SpoonHTTP::setHeaders('content-type: application/json;charset=utf-8');
 
-		// output to the browser
+		// output JSON to the browser
 		echo json_encode($response);
+
+		// stop script execution
 		exit;
 	}
 

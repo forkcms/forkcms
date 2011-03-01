@@ -1,12 +1,12 @@
 <?php
 
 /**
- * FrontendPage
+ * Frontend page class, this class will handle everything on a page
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendPage extends FrontendBaseObject
@@ -220,7 +220,7 @@ class FrontendPage extends FrontendBaseObject
 				$temp = array();
 				$temp['url'] = '/'. $language;
 				$temp['label'] = $language;
-				$temp['name'] = FL::getMessage(strtoupper($language));
+				$temp['name'] = FL::msg(strtoupper($language));
 				$temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
 
 				// add
@@ -295,7 +295,6 @@ class FrontendPage extends FrontendBaseObject
 
 					// assign the templatepath so it will be included
 					else $this->tpl->assign($templateVariable, $extra->getTemplatePath());
-
 				}
 
 				// widget

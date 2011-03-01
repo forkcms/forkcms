@@ -24,7 +24,7 @@
 	<tbody>
 		{iteration:rows}
 			<tr{$rows.attributes}{$rows.oddAttributes}{$rows.evenAttributes} class="{cycle:'odd':'even'}">
-				{iteration:rows.columns}<td{$columns.attributes}>{$columns.value}</td>{/iteration:rows.columns}
+				{iteration:rows.columns}<td{$rows.columns.attributes}>{$rows.columns.value}</td>{/iteration:rows.columns}
 			</tr>
 		{/iteration:rows}
 	</tbody>
@@ -48,12 +48,10 @@
 <script type="text/javascript">
 //<![CDATA[
 	if(typeof excludedCheckboxesData != undefined) var excludedCheckboxesData = new Array();
-	excludedCheckboxesData['{$excludedCheckboxesData['id']}'] = {$excludedCheckboxesData['JSON']};
+	excludedCheckboxesData['{$excludedCheckboxesData.id}'] = {$excludedCheckboxesData.JSON};
 
 	// loop and remove elements
-	for(var i in excludedCheckboxesData['{$excludedCheckboxesData['id']}']) {
-		$('#{$excludedCheckboxesData['id']} input[value='+ excludedCheckboxesData['{$excludedCheckboxesData['id']}'][i] +']').remove();
-	}
+	for(var i in excludedCheckboxesData['{$excludedCheckboxesData.id}']) $('#{$excludedCheckboxesData.id} input[value='+ excludedCheckboxesData['{$excludedCheckboxesData.id}'][i] +']').remove();
 //]]>
 </script>
 {/option:excludedCheckboxesData}

@@ -172,7 +172,9 @@ jsBackend.mailmotor.linkAccount =
 		var password = $('#password');
 
 		// make the call
-		$.ajax({
+		$.ajax(
+		{
+			cache: false, 
 			url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=link_account&language=' + jsBackend.current.language,
 			data: 'url='+ url.val() +'&username='+ username.val() +'&password='+ password.val(),
 			success: function(data, textStatus)
@@ -291,6 +293,9 @@ jsBackend.mailmotor.step3 =
 				var subject = $('#subject').val();
 				var plainText = ($('#contentPlain').length > 0) ? $('#contentPlain').val() : '';
 
+				// remove tiny fields added to the body by naughty tinyMCE
+				body.find('div.mceListBoxMenu').remove();
+				
 				// set iframe variables
 				var textareaValue = encodeURIComponent(iframe[0].contentWindow.getTinyMCEContent());
 				var bodyHTML = encodeURIComponent(body.html());
@@ -506,13 +511,19 @@ jsBackend.mailmotor.templateSelection =
 	init: function()
 	{
 		// store the list items
-		var listItems = $('#templateSelection').children('li');
+		var listItems = $('#templateSelection li');
 
 		// one of the templates (ie. hidden radiobuttons) in the templateSelection <ul> are clicked
-		listItems.children('input[type="radio"]').click(function()
+		listItems.click(function(evt)
 		{
+			// prevent default
+			evt.preventDefault();
+			
 			// store the object
-			var radiobutton = $(this);
+			var radiobutton = $(this).find('input:radio:first');
+			
+			// set checked
+			radiobutton.attr('checked', 'checked');
 
 			// if the radiobutton is checked
 			if(radiobutton.is(':checked'))

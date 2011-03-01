@@ -1,12 +1,12 @@
 <?php
+
 /**
- * FrontendTemplateCustom
  * Add all custom stuff here.
  *
  * @package		frontend
- * @subpackage	template
+ * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class FrontendTemplateCustom
@@ -23,7 +23,7 @@ class FrontendTemplateCustom
 	 * Default constructor
 	 *
 	 * @return	void
-	 * @param	FrontendTemplate $tpl	The template instance
+	 * @param	FrontendTemplate $tpl	The template instance.
 	 */
 	public function __construct($tpl)
 	{

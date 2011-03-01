@@ -22,6 +22,11 @@ $navigation[2]['children'][2]['children'][2] = array('url' => 'blog/categories',
 $navigation[2]['children'][3] = array('url' => 'search/statistics', 'label' => 'Search');
 $navigation[2]['children'][3]['children'][0] = array('url' => 'search/statistics', 'label' => 'Statistics');
 $navigation[2]['children'][3]['children'][1] = array('url' => 'search/synonyms', 'label' => 'Synonyms', 'selected_for' => array('search/add_synonym', 'search/edit_synonym'));
+$navigation[2]['children'][4] = array('url' => 'location/index', 'label' => 'Location', 'selected_for' => array('location/add', 'location/edit'));
+$navigation[2]['children'][6] = array('url' => 'faq/index', 'label' => 'Faq');
+$navigation[2]['children'][6]['children'][0] = array('url' => 'faq/index', 'label' => 'Questions', 'selected_for' => array('faq/add', 'faq/edit'));
+$navigation[2]['children'][6]['children'][1] = array('url' => 'faq/categories', 'label' => 'Categories', 'selected_for' => array('faq/add_category', 'faq/edit_category'));
+$navigation[2]['children'][7] = array('url' => 'form_builder/index', 'label' => 'FormBuilder', 'selected_for' => array('form_builder/add', 'form_builder/edit', 'form_builder/data', 'form_builder/data_details'));
 $navigation[3] = array('url' => 'analytics/index', 'label' => 'Marketing');
 $navigation[3]['children'][0] = array('url' => 'analytics/index', 'label' => 'Analytics', 'selected_for' => 'analytics/loading');
 $navigation[3]['children'][0]['children'][0] = array('url' => 'analytics/content', 'label' => 'Content');
@@ -41,12 +46,13 @@ $navigation[5]['children'][2] = array('url' => 'users/index', 'label' => 'Users'
 $navigation[5]['children'][3] = array('url' => 'settings/themes', 'label' => 'Themes');
 $navigation[5]['children'][3]['children'][0] = array('url' => 'settings/themes', 'label' => 'ThemesSelection');
 $navigation[5]['children'][3]['children'][1] = array('url' => 'pages/templates', 'label' => 'Templates', 'selected_for' => array('pages/add_template', 'pages/edit_template'));
-$navigation[5]['children'][4] = array('url' => 'locale/index', 'label' => 'Translations', 'selected_for' => array('locale/add', 'locale/edit', 'locale/analyse'));
+$navigation[5]['children'][4] = array('url' => 'locale/index', 'label' => 'Translations', 'selected_for' => array('locale/add', 'locale/edit', 'locale/analyse', 'locale/import'));
 $navigation[5]['children'][5] = array('url' => 'analytics/settings', 'label' => 'Modules');
 $navigation[5]['children'][5]['children'][0] = array('url' => 'analytics/settings', 'label' => 'Analytics');
 $navigation[5]['children'][5]['children'][1] = array('url' => 'blog/settings', 'label' => 'Blog');
 $navigation[5]['children'][5]['children'][2] = array('url' => 'search/settings', 'label' => 'Search');
 $navigation[5]['children'][5]['children'][3] = array('url' => 'pages/settings', 'label' => 'Pages');
 $navigation[5]['children'][5]['children'][4] = array('url' => 'mailmotor/settings', 'label' => 'Mailmotor');
+$navigation[5]['children'][5]['children'][5] = array('url' => 'location/settings', 'label' => 'Location');
 
 ?>

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendSearchSynonyms
  * This is the synonyms-action, it will display the overview of search synonyms
  *
  * @package		backend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BackendSearchSynonyms extends BackendBaseActionIndex
@@ -36,7 +35,7 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 	/**
 	 * Loads the datagrids
 	 *
-	 * @return void
+	 * @return	void
 	 */
 	private function loadDataGrid()
 	{
@@ -53,7 +52,7 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 		$this->datagrid->setColumnURL('term', BackendModel::createURLForAction('edit_synonym') .'&amp;id=[id]');
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit_synonym') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_synonym') .'&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 
@@ -64,6 +63,7 @@ class BackendSearchSynonyms extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// assign the datagrid
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 	}
 }

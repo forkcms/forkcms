@@ -7,7 +7,7 @@
  * @package		frontend
  * @subpackage	mailmotor
  *
- * @author 		Dave Lens <dave@netlash.com>
+ * @author		Dave Lens <dave@netlash.com>
  * @since		2.0
  */
 class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
@@ -133,13 +133,13 @@ class FrontendMailmotorUnsubscribe extends FrontendBaseBlock
 			$email = $this->frm->getField('email');
 
 			// validate required fields
-			if($email->isEmail(FL::getError('EmailIsInvalid')))
+			if($email->isEmail(FL::err('EmailIsInvalid')))
 			{
 				// email does not exist
-				if(!FrontendMailmotorModel::exists($email->getValue())) $email->addError(FL::getError('EmailNotInDatabase'));
+				if(!FrontendMailmotorModel::exists($email->getValue())) $email->addError(FL::err('EmailNotInDatabase'));
 
 				// user is already unsubscribed
-				if(!FrontendMailmotorModel::isSubscribed($email->getValue(), $this->group)) $email->addError(FL::getError('AlreadyUnsubscribed'));
+				if(!FrontendMailmotorModel::isSubscribed($email->getValue(), $this->group)) $email->addError(FL::err('AlreadyUnsubscribed'));
 			}
 
 			// no errors and email address does not exist

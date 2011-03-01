@@ -11,7 +11,7 @@
  *
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
- * @since		0.1.1
+ * @since		1.0.0
  */
 
 
@@ -32,8 +32,7 @@ class SpoonTemplateModifiers
 	 *
 	 * @var	array
 	 */
-	private static $modifiers = array(
-										'addslashes' => 'addslashes',
+	private static $modifiers = array('addslashes' => 'addslashes',
 										'createhtmllinks' => array('SpoonTemplateModifiers', 'createHTMLLinks'),
 										'date' => array('SpoonTemplateModifiers', 'date'),
 										'htmlentities' => array('SpoonFilter', 'htmlentities'),
@@ -81,7 +80,7 @@ class SpoonTemplateModifiers
 	 * @return	string						The formatted date according to the timestamp, format and provided language.
 	 * @param	int $timestamp				The timestamp that you want to apply the format to.
 	 * @param	string[optional] $format	The optional format that you want to apply on the provided timestamp.
-	 * @param	string[optional] $language	The optional language that you want this format in. (Check SpoonLocale for the possible languages)
+	 * @param	string[optional] $language	The optional language that you want this format in (Check SpoonLocale for the possible languages).
 	 */
 	public static function date($timestamp, $format = 'Y-m-d H:i:s', $language = 'en')
 	{

@@ -256,6 +256,14 @@ $locale['countries']['EH'] = 'Westsahara';
 $locale['countries']['CF'] = 'Zentralafrikanische Republik';
 $locale['countries']['CY'] = 'Zypern';
 
+// languages
+$locale['languages'] = array();
+$locale['languages']['de'] = 'deutsch';
+$locale['languages']['en'] = 'englisch';
+$locale['languages']['fr'] = 'französisch';
+$locale['languages']['nl'] = 'niederländisch';
+$locale['languages']['es'] = 'spanisch';
+
 // date
 $locale['date'] = array();
 

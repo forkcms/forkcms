@@ -1,23 +1,46 @@
 <?php
 
 /**
- * FrontendSearchIndex
- * This is the overview-action
+ * This action will display a form to search
  *
  * @package		frontend
  * @subpackage	search
  *
- * @author 		Matthias Mullie <matthias@netlash.com>
+ * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class FrontendSearchIndex extends FrontendBaseBlock
 {
 	/**
+	 * Name of the cachefile
+	 *
+	 * @var	string
+	 */
+	private $cacheFile;
+
+
+	/**
 	 * The items
 	 *
 	 * @var	array
 	 */
-	private $items = array();
+	private $items;
+
+
+	/**
+	 * Limit of data to fetch
+	 *
+	 * @var	int
+	 */
+	private $limit;
+
+
+	/**
+	 * Offset of data to fetch
+	 *
+	 * @var	int
+	 */
+	private $offset;
 
 
 	/**
@@ -50,7 +73,32 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 *
 	 * @var	array
 	 */
-	private $statistics = array();
+	private $statistics;
+
+
+	/**
+	 * Display
+	 *
+	 * @return	void
+	 */
+	private function display()
+	{
+		// set variables
+		$this->requestedPage = $this->URL->getParameter('page', 'int', 1);
+		$this->limit = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
+		$this->offset = ($this->requestedPage * $this->limit) - $this->limit;
+		$this->cacheFile = FRONTEND_CACHE_PATH .'/'. $this->getModule() .'/'. FRONTEND_LANGUAGE .'_'. md5($this->term) .'_'. $this->offset .'_'. $this->limit .'.php';
+
+		// load the cached data
+		if(!$this->getCachedData())
+		{
+			// ... or load the real data
+			$this->getRealData();
+		}
+
+		// parse
+		$this->parse();
+	}
 
 
 	/**
@@ -81,58 +129,62 @@ class FrontendSearchIndex extends FrontendBaseBlock
 
 
 	/**
-	 * Display
+	 * Load the cached data
 	 *
-	 * @return	void
+	 * @return	bool
 	 */
-	private function display()
+	private function getCachedData()
 	{
-		// requested page
-		$this->requestedPage = $this->URL->getParameter('page', 'int', 1);
+		// no search term = no search
+		if(!$this->term) return false;
 
-		// cache name
-		$cacheName = FRONTEND_LANGUAGE .'_searchTermCache_'. md5($this->term) . '_'. $this->requestedPage;
+		// debug mode = no cache
+		if(SPOON_DEBUG) return false;
 
-		// assign cache
-		$this->tpl->assign('cacheName', $cacheName);
+		// check if cachefile exists
+		if(!SpoonFile::exists($this->cacheFile)) return false;
 
-		// set cache directory
-		$this->tpl->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
+		// get cachefile modification time
+		$cacheInfo = @filemtime($this->cacheFile);
 
-		// we will cache this result for 15 minutes
-		$this->tpl->cache($cacheName, SPOON_DEBUG ? 10 : (15 * 60));
+		// check if cache file is recent enough (1 hour)
+		if(!$cacheInfo || $cacheInfo < strtotime('-1 hour')) return false;
 
-		// if the widget isn't cached, assign the variables
-		if(!$this->tpl->isCached($cacheName))
-		{
-			// load the data
-			$this->getData();
+		// include cache file
+		require_once $this->cacheFile;
 
-			// parse
-			$this->parse();
-		}
+		// set info (received from cache)
+		$this->pagination = $pagination;
+		$this->items = $items;
+
+		return true;
 	}
 
 
 	/**
-	 * Load the data, don't forget to validate the incoming data
+	 * Load the data
 	 *
 	 * @return	void
 	 */
-	private function getData()
+	private function getRealData()
 	{
 		// no search term = no search
 		if(!$this->term) return;
 
-		// get amount of results
-		$this->statistics['num_results'] = FrontendSearchModel::getTotal($this->term);
-
 		// set url
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q='. $this->term;
-		$this->pagination['limit'] = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') .'?form=search&q='. $this->term;
+
+		// populate calculated fields in pagination
+		$this->pagination['limit'] = $this->limit;
+		$this->pagination['offset'] = $this->offset;
+		$this->pagination['requested_page'] = $this->requestedPage;
+
+		// get items
+		$this->items = FrontendSearchModel::search($this->term, $this->pagination['limit'], $this->pagination['offset']);
 
 		// populate count fields in pagination
-		$this->pagination['num_items'] = $this->statistics['num_results'];
+		// this is done after actual search because some items might be activated/deactivated (getTotal only does rough checking)
+		$this->pagination['num_items'] = FrontendSearchModel::getTotal($this->term);
 		$this->pagination['num_pages'] = (int) ceil($this->pagination['num_items'] / $this->pagination['limit']);
 
 		// num pages is always equal to at least 1
@@ -141,12 +193,12 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		// redirect if the request page doesn't exist
 		if($this->requestedPage > $this->pagination['num_pages'] || $this->requestedPage < 1) $this->redirect(FrontendNavigation::getURL(404));
 
-		// populate calculated fields in pagination
-		$this->pagination['requested_page'] = $this->requestedPage;
-		$this->pagination['offset'] = ($this->pagination['requested_page'] * $this->pagination['limit']) - $this->pagination['limit'];
-
-		// get articles
-		$this->items = FrontendSearchModel::search($this->term, $this->pagination['limit'], $this->pagination['offset']);
+		// debug mode = no cache
+		if(!SPOON_DEBUG)
+		{
+			// set cache content
+			SpoonFile::setContent($this->cacheFile, "<?php\n".'$pagination = '. var_export($this->pagination, true) .";\n".'$items = '. var_export($this->items, true) .";\n?>");
+		}
 	}
 
 
@@ -161,7 +213,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->frm = new FrontendForm('search', null, 'get', null, false);
 
 		// create elements
-		$this->frm->addText('q');
+		$this->frm->addText('q', null, 255, 'inputText liveSuggest autoComplete', 'inputTextError liveSuggest autoComplete');
 	}
 
 
@@ -213,11 +265,30 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private function saveStatistics()
 	{
-		// don't save?
-		if(!isset($this->statistics['term'])) return;
+		// no search term = no search
+		if(!$this->term) return;
 
-		// save data
-		FrontendSearchModel::save($this->statistics);
+		// previous search result
+		$previousTerm = SpoonSession::exists('searchTerm') ? SpoonSession::get('searchTerm') : '';
+		SpoonSession::set('searchTerm', '');
+
+		// save this term?
+		if($previousTerm != $this->term)
+		{
+			// format data
+			$this->statistics = array();
+			$this->statistics['term'] = $this->term;
+			$this->statistics['language'] = FRONTEND_LANGUAGE;
+			$this->statistics['time'] = FrontendModel::getUTCDate();
+			$this->statistics['data'] = serialize(array('server' => $_SERVER));
+			$this->statistics['num_results'] = $this->pagination['num_items'];
+
+			// save data
+			FrontendSearchModel::save($this->statistics);
+		}
+
+		// save current search term in cookie
+		SpoonSession::set('searchTerm', $this->term);
 	}
 
 
@@ -228,10 +299,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 	 */
 	private function validateForm()
 	{
-		// previous search result
-		$previousTerm = SpoonSession::exists('searchTerm') ? SpoonSession::get('searchTerm') : '';
-		SpoonSession::set('searchTerm', '');
-
 		// is the form submitted
 		if($this->frm->isSubmitted())
 		{
@@ -246,19 +313,6 @@ class FrontendSearchIndex extends FrontendBaseBlock
 			{
 				// get search term
 				$this->term = $this->frm->getField('q')->getValue();
-
-				// save this term?
-				if($previousTerm != $this->term)
-				{
-					// format data
-					$this->statistics['term'] = $this->term;
-					$this->statistics['language'] = FRONTEND_LANGUAGE;
-					$this->statistics['time'] = FrontendModel::getUTCDate();
-					$this->statistics['data'] = serialize(array('server' => $_SERVER));
-				}
-
-				// save in cookie
-				SpoonSession::set('searchTerm', $this->term);
 			}
 		}
 	}

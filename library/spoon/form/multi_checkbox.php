@@ -79,10 +79,10 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Class constructor.
 	 *
 	 * @return	void
-	 * @param	string $name
-	 * @param	array $values
-	 * @param	mixed[optional] $checked
-	 * @param	string[optional] $class
+	 * @param	string $name					The name.
+	 * @param	array $values					The possible values. Each value should have a label and value-key.
+	 * @param	mixed[optional] $checked		The value that should be checked.
+	 * @param	string[optional] $class			The CSS-class to be used.
 	 */
 	public function __construct($name, array $values, $checked = null, $class = 'inputCheckbox')
 	{
@@ -100,7 +100,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Adds an error to the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The error message to set.
 	 */
 	public function addError($error)
 	{
@@ -112,8 +112,8 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Retrieves the custom attributes as HTML.
 	 *
 	 * @return	string
-	 * @param	string $element
-	 * @param	array $variables
+	 * @param	string $element		The element.
+	 * @param	array $variables	The variables that should be converted into HTML-attributes.
 	 */
 	private function getAttributesHTML($element, array $variables)
 	{
@@ -225,7 +225,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Checks if this field was submitted & contains one more values.
 	 *
 	 * @return	bool
-	 * @param	string[optional] $error
+	 * @param	string[optional] $error		The error message to set.
 	 */
 	public function isFilled($error = null)
 	{
@@ -252,7 +252,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Parses the html for this dropdown.
 	 *
 	 * @return	string
-	 * @param	SpoonTemplate[optional] $template
+	 * @param	SpoonTemplate[optional] $template	The template to parse the element in.
 	 */
 	public function parse(SpoonTemplate $template = null)
 	{
@@ -290,7 +290,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 		if($template !== null)
 		{
 			$template->assign(SpoonFilter::toCamelCase($this->name, '_', true), $checkboxes);
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors!= '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
 		}
 
 		return $checkboxes;
@@ -301,7 +301,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Should we allow external data.
 	 *
 	 * @return	void
-	 * @param	bool[optional] $on
+	 * @param	bool[optional] $on	Is external data (through Javascript) allowed?
 	 */
 	public function setAllowExternalData($on = true)
 	{
@@ -313,7 +313,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Sets the checked status.
 	 *
 	 * @return	void
-	 * @param	mixed $checked
+	 * @param	mixed $checked		Set the value that should be checked.
 	 */
 	public function setChecked($checked)
 	{
@@ -336,7 +336,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Overwrites the error stack.
 	 *
 	 * @return	void
-	 * @param	string $error
+	 * @param	string $error	The error message to set.
 	 */
 	public function setError($error)
 	{
@@ -348,8 +348,8 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 	 * Set the initial values.
 	 *
 	 * @return	void
-	 * @param	mixed $values
-	 * @param	string[optional] $defaultClass
+	 * @param	array $values						The values.
+	 * @param	string[optional] $defaultClass		The CSS-class to use.
 	 */
 	public function setValues(array $values, $defaultClass = 'inputCheckbox')
 	{

@@ -124,6 +124,18 @@ class SpoonFile
 
 
 	/**
+	 * Fetch the content from a file or URL.
+	 *
+	 * @return	string				The content.
+	 * @param	string $filename	The path or URL to the file. URLs will only work if fopen-wrappers are enabled.
+	 */
+	public static function getContent($filename)
+	{
+		return @file_get_contents((string) $filename);
+	}
+
+
+	/**
 	 * Fetch the extension for a filename.
 	 *
 	 * @return	string						The extension.
@@ -150,18 +162,6 @@ class SpoonFile
 
 		// no extension
 		return '';
-	}
-
-
-	/**
-	 * Fetch the content from a file or URL.
-	 *
-	 * @return	string				The content.
-	 * @param	string $filename	The path or URL to the file. URLs will only work if fopen-wrappers are enabled.
-	 */
-	public static function getContent($filename)
-	{
-		return @file_get_contents((string) $filename);
 	}
 
 

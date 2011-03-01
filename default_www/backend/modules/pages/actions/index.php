@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendPagesIndex
  * This is the index-action (default), it will display the pages-overview
  *
  * @package		backend
  * @subpackage	pages
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendPagesIndex extends BackendBaseActionIndex
@@ -66,14 +65,14 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// set column URL
-		$this->datagrid->setColumnUrl('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->setColumnUrl('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::getLabel('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::getLabel('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels(array(	'user_id' => ucfirst(BL::getLabel('By')),
-												'edited_on' => ucfirst(BL::getLabel('LastEdited'))));
+		$this->datagrid->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')),
+												'edited_on' => ucfirst(BL::lbl('LastEdited'))));
 	}
 
 

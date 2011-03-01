@@ -98,7 +98,9 @@ a.icon span {
 		background-position: 0 -110px !important; }
 	a.iconExpanded span {
 		background-position: 0 -132px !important; }
-	a.iconZoom span, a.iconDetail span, a.iconDetails span {
+	a.iconZoom span,
+	a.iconDetail span,
+	a.iconDetails span {
 		background-position: 0 -154px !important; }
 	a.iconSettings span {
 		background-position: 0 -176px !important; }
@@ -208,7 +210,7 @@ a.icon span {
 
 .buttonHolderSingle .button {
 	margin: 0;
-	float: none;
+	float: none !important;
 	/* Used for single buttons so the focus lines are nice and clean */
 }
 

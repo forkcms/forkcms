@@ -1,13 +1,12 @@
 <?php
 
 /**
- * FrontendJavascript
  * This class will handle files JS-files that have to be parsed by PHP
  *
  * @package		frontend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
@@ -152,7 +151,7 @@ class FrontendJavascript
 	 * Set language
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The language.
 	 */
 	private function setLanguage($value)
 	{
@@ -171,7 +170,7 @@ class FrontendJavascript
 	 * Set module
 	 *
 	 * @return	void
-	 * @param	string $value
+	 * @param	string $value	The module.
 	 */
 	private function setModule($value)
 	{

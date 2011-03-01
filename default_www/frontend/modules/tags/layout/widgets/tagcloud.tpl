@@ -1,25 +1,25 @@
 {*
 	variables that are available:
-	- {$widgetTagCloud}:
+	- {$widgetTagsTagCloud}: contains an array with the most popular tags
 *}
 
-{option:widgetTagCloud}
-	<div id="TagCloudWidget" class="mod">
+{option:widgetTagsTagCloud}
+	<section id="tagCloudWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblTags|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
-					{iteration:widgetTagCloud}
+					{iteration:widgetTagsTagCloud}
 						<li>
-							<a href="{$widgetTagCloud.url}">
-								{$widgetTagCloud.name} ({$widgetTagCloud.number})
+							<a href="{$widgetTagsTagCloud.url}">
+								{$widgetTagsTagCloud.name} ({$widgetTagsTagCloud.number})
 							</a>
 						</li>
-					{/iteration:widgetTagCloud}
+					{/iteration:widgetTagsTagCloud}
 				</ul>
 			</div>
 		</div>
-	</div>
-{/option:widgetTagCloud}
+	</section>
+{/option:widgetTagsTagCloud}

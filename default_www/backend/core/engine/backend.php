@@ -1,14 +1,13 @@
 <?php
 
 /**
- * Backend
  * This class defines the backend, it is the core. Everything starts here.
  * We create all needed instances and execute the requested action
  *
  * @package		backend
  * @subpackage	core
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class Backend

@@ -1,13 +1,12 @@
 <?php
 
 /**
- * BackendUsersEdit
  * This is the edit-action, it will display a form to alter the user-details and settings
  *
  * @package		backend
  * @subpackage	users
  *
- * @author 		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@netlash.com>
  * @since		2.0
  */
 class BackendUsersEdit extends BackendBaseActionEdit
@@ -81,7 +80,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		$this->frm->addDropdown('interface_language', BackendLanguage::getInterfaceLanguages(), $this->record['settings']['interface_language']);
 		$this->frm->addDropdown('date_format', BackendUsersModel::getDateFormats(), $this->user->getSetting('date_format'));
 		$this->frm->addDropdown('time_format', BackendUsersModel::getTimeFormats(), $this->user->getSetting('time_format'));
-		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), $this->user->getSetting('number_format'));
+		$this->frm->addDropdown('number_format', BackendUsersModel::getNumberFormats(), $this->user->getSetting('number_format', 'dot_nothing'));
 		$this->frm->addImage('avatar');
 		$this->frm->addCheckbox('api_access', (isset($this->record['settings']['api_access']) && $this->record['settings']['api_access'] == 'Y'));
 		$this->frm->addCheckbox('active', ($this->record['active'] == 'Y'));
@@ -134,46 +133,49 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			// email is present
 			if(!$this->user->isGod())
 			{
-				if($this->frm->getField('email')->isFilled(BL::getError('EmailIsRequired')))
+				if($this->frm->getField('email')->isFilled(BL::err('EmailIsRequired')))
 				{
 					// is this an email-address
-					if($this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid')))
+					if($this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid')))
 					{
 						// was this emailaddress deleted before
-						if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue())) $this->frm->getField('email')->addError(sprintf(BL::getError('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
-
-						else
+						if(BackendUsersModel::emailDeletedBefore($this->frm->getField('email')->getValue()))
 						{
-							// email already exists
-							if(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id)) $this->frm->getField('email')->addError(BL::getError('EmailAlreadyExists'));
+							$this->frm->getField('email')->addError(sprintf(BL::err('EmailWasDeletedBefore'), BackendModel::createURLForAction('undo_delete', null, null, array('email' => $this->frm->getField('email')->getValue()))));
+						}
+
+						// email already exists
+						elseif(BackendUsersModel::existsEmail($this->frm->getField('email')->getValue(), $this->id))
+						{
+							$this->frm->getField('email')->addError(BL::err('EmailAlreadyExists'));
 						}
 					}
 				}
 			}
 
 			// required fields
-			if($this->user->isGod() && $this->frm->getField('email')->getValue() != '' && $this->user->getEmail() != $this->frm->getField('email')->getValue()) $this->frm->getField('email')->addError(BL::getError('CantChangeGodsEmail'));
-			if(!$this->user->isGod()) $this->frm->getField('email')->isEmail(BL::getError('EmailIsInvalid'));
-			$this->frm->getField('nickname')->isFilled(BL::getError('NicknameIsRequired'));
-			$this->frm->getField('name')->isFilled(BL::getError('NameIsRequired'));
-			$this->frm->getField('surname')->isFilled(BL::getError('SurnameIsRequired'));
-			$this->frm->getField('interface_language')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('date_format')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('time_format')->isFilled(BL::getError('FieldIsRequired'));
-			$this->frm->getField('number_format')->isFilled(BL::getError('FieldIsRequired'));
+			if($this->user->isGod() && $this->frm->getField('email')->getValue() != '' && $this->user->getEmail() != $this->frm->getField('email')->getValue()) $this->frm->getField('email')->addError(BL::err('CantChangeGodsEmail'));
+			if(!$this->user->isGod()) $this->frm->getField('email')->isEmail(BL::err('EmailIsInvalid'));
+			$this->frm->getField('nickname')->isFilled(BL::err('NicknameIsRequired'));
+			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('surname')->isFilled(BL::err('SurnameIsRequired'));
+			$this->frm->getField('interface_language')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('date_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('time_format')->isFilled(BL::err('FieldIsRequired'));
+			$this->frm->getField('number_format')->isFilled(BL::err('FieldIsRequired'));
 			if($this->frm->getField('new_password')->isFilled())
 			{
-				if($this->frm->getField('new_password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::getError('ValuesDontMatch'));
+				if($this->frm->getField('new_password')->getValue() !== $this->frm->getField('confirm_password')->getValue()) $this->frm->getField('confirm_password')->addError(BL::err('ValuesDontMatch'));
 			}
 
 			// validate avatar
 			if($this->frm->getField('avatar')->isFilled())
 			{
 				// correct extension
-				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::getError('JPGGIFAndPNGOnly')))
+				if($this->frm->getField('avatar')->isAllowedExtension(array('jpg', 'jpeg', 'gif', 'png'), BL::err('JPGGIFAndPNGOnly')))
 				{
 					// correct mimetype?
-					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::getError('JPGGIFAndPNGOnly'));
+					$this->frm->getField('avatar')->isAllowedMimeType(array('image/gif', 'image/jpg', 'image/jpeg', 'image/png'), BL::err('JPGGIFAndPNGOnly'));
 				}
 
 			}
@@ -182,7 +184,6 @@ class BackendUsersEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// build user-array
-				$user = array();
 				$user['id'] = $this->id;
 				$user['group_id'] = $this->frm->getField('group')->getValue();
 				if(!$this->user->isGod()) $user['email'] = $this->frm->getField('email')->getValue(true);
@@ -202,7 +203,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
-				// is there a file given
+				// has the user submitted an avatar?
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// delete old avatar if it isn't the default-image
@@ -234,7 +235,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. $settings['nickname'] .'&highlight=userid-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. $settings['nickname'] .'&highlight=row-'. $user['id']);
 			}
 		}
 	}
