@@ -19,7 +19,9 @@
 	{iteration:cssFiles}
 		<link rel="stylesheet" type="text/css" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
-	<link rel="stylesheet" type="text/css" media="print" href="{$FRONTEND_CORE_URL}/layout/css/print.css" />
+	<!--[if IE 6]><link rel="stylesheet" type="text/css" href="{$THEME_URL}/core/css/ie6.css" /><![endif]-->
+	<!--[if IE 7]><link rel="stylesheet" type="text/css" href="{$THEME_URL}/core/css/ie7.css" /><![endif]-->
+	<link rel="stylesheet" type="text/css" media="print" href="{$THEME_URL}/core/css/print.css" />
 
 	{* Javascript *}
 	{iteration:javascriptFiles}
