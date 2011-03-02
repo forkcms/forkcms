@@ -17,13 +17,13 @@
 					<div class="bd">
 						<section class="mod">
 							<div class="inner">
-								<div class="hd">
+								<header class="hd">
 									<h3>
 										<a href="{$searchResults.full_url}" title="{$searchResults.title}">
 											{$searchResults.title}
 										</a>
 									</h3>
-								</div>
+								</header>
 								<div class="bd content">
 									{option:!searchResults.introduction}{$searchResults.text|truncate:200}{/option:!searchResults.introduction}
 									{option:searchResults.introduction}{$searchResults.introduction}{/option:searchResults.introduction}
