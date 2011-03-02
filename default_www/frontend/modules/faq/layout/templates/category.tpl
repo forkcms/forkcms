@@ -22,7 +22,7 @@
 					<section class="mod">
 						<div class="inner">
 							<header class="hd">
-								<h3><a name="question-{$faqQuestions.id}">{$faqQuestions.question}</a></h3>
+								<h4><a name="question-{$faqQuestions.id}">{$faqQuestions.question}</a></h4>
 							</header>
 							<div class="bd content">
 								{$faqQuestions.answer}
