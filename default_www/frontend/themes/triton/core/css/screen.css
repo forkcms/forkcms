@@ -750,6 +750,7 @@ a.linkedImage {
 		font-size: 11px;
 		background: #fff;
 		padding: 10px;
+		margin-bottom: 12px;
 		border: 1px solid #ddd;
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
