@@ -40,7 +40,7 @@ if(empty($_SERVER['argv'][1]) || $_SERVER['argv'][1] === '--help')
 
 // load the current navigation
 $navigationFile = $_SERVER['argv'][1];
-require_once($navigationFile);
+require_once $navigationFile;
 if(!isset($navigation))
 {
 	usage();
@@ -163,3 +163,4 @@ else
 // if we got here, something was not right
 exit(1);
 
+?>
