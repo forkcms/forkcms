@@ -3,7 +3,7 @@
 
 /**
  * Optimise Fork CMS' back-end navigation cache (which will one day be automagically generated) to use
- * nested arrays instead of assigning to the numeric indexes, which is prone to errors.
+ * nested arrays instead of assigning to the numeric indexes, which is prone to errors and difficult to edit.
  *
  * @author Jan Moesen <janmoesen@github.invalid>
  */
@@ -66,7 +66,7 @@ foreach(token_get_all(file_get_contents($navigationFile)) as $token)
  * @return  string
  * @param   array $var  At first, the entire $navigation array. As the function recurses, $var will become the leaves.
  */
-function flatten_array($var)
+function flattenArray($var)
 {
 	// single string
 	if(is_string($var))
@@ -88,7 +88,7 @@ function flatten_array($var)
 		foreach($var as $key => $value)
 		{
 			// recursively call this function
-			$result = flatten_array($value);
+			$result = flattenArray($value);
 			if(is_array($value))
 			{
 				// indent the recursive results
@@ -107,7 +107,7 @@ function flatten_array($var)
 	// unknown; this should never happen
 	echo 'Unsupported type: ', gettype($var), ': ';
 	var_dump($var);
-	die(1);
+	exit(1);
 };
 
 // create the new navigation code
