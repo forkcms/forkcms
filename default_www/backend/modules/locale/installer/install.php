@@ -880,7 +880,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Date', 'datum');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Email', 'e-mail');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EN', 'Engels');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EnableJavascript', 'enable javascript');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EnableJavascript', 'javascript inschakelen');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'FooterNavigation', 'voet navigatie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'FR', 'Frans');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'GoTo', 'ga naar');
