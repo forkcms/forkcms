@@ -77,9 +77,9 @@
 	{option:item.allow_comments}
 		<section id="blogCommentForm" class="mod">
 			<div class="inner">
-				<div class="hd">
+				<header class="hd">
 					<h3>{$msgComment|ucfirst}</h3>
-				</div>
+				</header>
 				<div class="bd">
 					{option:commentIsInModeration}<div class="message warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
 					{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
