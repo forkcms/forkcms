@@ -54,5 +54,6 @@ $navigation[5]['children'][5]['children'][2] = array('url' => 'search/settings',
 $navigation[5]['children'][5]['children'][3] = array('url' => 'pages/settings', 'label' => 'Pages');
 $navigation[5]['children'][5]['children'][4] = array('url' => 'mailmotor/settings', 'label' => 'Mailmotor');
 $navigation[5]['children'][5]['children'][5] = array('url' => 'location/settings', 'label' => 'Location');
+$navigation[5]['children'][6] = array('url' => 'module_manager/index', 'label' => 'ModuleManager', 'selected_for' => array('module_manager/index','module_manager/add_action','module_manager/edit','module_manager/edit_action','module_manager/actions'));
 
 ?>
