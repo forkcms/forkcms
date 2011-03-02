@@ -111,7 +111,7 @@ function flattenArray($var)
 };
 
 // create the new navigation code
-$output .= '$navigation = ' . flatten_array($navigation) . ";\n\n?" . '>';
+$output .= '$navigation = ' . flattenArray($navigation) . ";\n\n?" . '>';
 
 // keep track of the changes — the end effect should be the same
 // note: the current Fork navigation.php unnecessarily skips an index between "location/index" and "faq/index", so the var_export is NOT the same
