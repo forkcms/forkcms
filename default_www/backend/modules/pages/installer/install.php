@@ -193,6 +193,26 @@ class PagesInstall extends ModuleInstaller
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
 									array('extra_id' => $sitemapID));
+
+				// insert lorem ipsum test page
+				$this->insertPage(array('id' => 404,
+										'title' => '404',
+										'type' => 'root',
+										'language' => $language,
+										'allow_move' => 'N',
+										'allow_delete' => 'N'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
+									array('extra_id' => $sitemapID));
+
+				// insert lorem ipsum test page
+				$this->insertPage(array('title' => 'Lorem ipsum',
+										'type' => 'root',
+										'language' => $language,
+										'no_follow' => 'Y'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/lorem_ipsum.txt'),
+									array('html' => ''));
 			}
 		}
 	}
@@ -456,6 +476,24 @@ class PagesInstall extends ModuleInstaller
 									null,
 									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
 									array('extra_id' => $extras['sitemap_widget_sitemap']),
+									array('html' => ''),
+									array('html' => ''),
+									array('html' => ''),
+									array('html' => ''),
+									array('html' => ''),
+									array('html' => ''),
+									array('extra_id' => $extras['search_form']));
+
+				// insert lorem ipsum test page
+				$this->insertPage(array('template_id' => $templateIds['default'],
+										'title' => 'Lorem ipsum',
+										'type' => 'root',
+										'language' => $language,
+										'no_follow' => 'Y'),
+									null,
+									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/lorem_ipsum.txt'),
+									array('html' => ''),
+									array('html' => ''),
 									array('html' => ''),
 									array('html' => ''),
 									array('html' => ''),
