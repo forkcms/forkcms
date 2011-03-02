@@ -489,7 +489,7 @@ class FrontendTemplateModifiers
 
 	/**
 	 * Get the navigation html
-	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<excludeIds-splitted-by-dash>][:<expandAll>]}
+	 * 	syntax: {$var|getnavigation[:<type>][:<parentId>][:<depth>][:<expandAll>][:<excludeIds-splitted-by-dash>]}
 	 *
 	 * @return	string
 	 * @param	string[optional] $var			The variable.
@@ -505,7 +505,7 @@ class FrontendTemplateModifiers
 		if($excludeIds !== null) $excludeIds = (array) explode('-', $excludeIds);
 
 		// get HTML
-		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $excludeIds, $expandAll);
+		$return = (string) FrontendNavigation::getNavigationHtml($type, $parentId, $depth, $expandAll, $excludeIds);
 
 		// return the var
 		if($return != '') return $return;
