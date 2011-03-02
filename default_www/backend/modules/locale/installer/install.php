@@ -913,7 +913,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EN', 'Engels');
-		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EnableJavascript', 'Javascript inschakelen is aangeraden om deze site te gebruiken.');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EnableJavascript', 'Om deze site te gebruiken, is het aangeraden om javascript in te schakelen.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'FR', 'Frans');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'MoreResults', 'Vind meer resultaten…');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NL', 'Nederlands');
