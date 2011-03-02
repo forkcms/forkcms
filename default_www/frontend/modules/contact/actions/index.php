@@ -8,6 +8,7 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class FrontendContactIndex extends FrontendBaseBlock
@@ -27,6 +28,9 @@ class FrontendContactIndex extends FrontendBaseBlock
 	 */
 	public function execute()
 	{
+		// call the parent
+		parent::execute();
+
 		// load template
 		$this->loadTemplate();
 

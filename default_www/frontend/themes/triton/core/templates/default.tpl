@@ -12,18 +12,18 @@
 
 				{* Skip link *}
 				<div id="skip">
-					<p><a href="#main">{$msgSkipToContent}</a></p>
+					<p><a href="#main">{$lblSkipToContent|ucfirst}</a></p>
 				</div>
 
 				{* Navigation *}
 				<nav id="headerNavigation">
-					<h4>{$lblMainNavigation}</h4>
+					<h4>{$lblMainNavigation|ucfirst}</h4>
 					{$var|getnavigation:'page':0:1}
 				</nav>
 
 				{* Language *}
 				<aside id="headerLanguage">
-					<h4>{$lblLanguage}</h4>
+					<h4>{$lblLanguage|ucfirst}</h4>
 					{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
 				</aside>
 
@@ -35,7 +35,7 @@
 				{/option:block10IsHTML}
 				{option:!block10IsHTML}
 					<aside id="headerSearch">
-						<h4>{$lblSearch}</h4>
+						<h4>{$lblSearch|ucfirst}</h4>
 						{include:{$block10}}
 					</aside>
 				{/option:!block10IsHTML}
@@ -50,7 +50,7 @@
 				{option:block9IsHTML}
 					{option:block9}
 						<aside id="headerAd">
-							<h4>{$lblAdvertisement}</h4>
+							<h4>{$lblAdvertisement|ucfirst}</h4>
 							{$block9}
 						</aside>
 					{/option:block9}
@@ -69,7 +69,7 @@
 
 					{* Subnavigation *}
 					<nav class="sideNavigation">
-						<h4>{$lblSubnavigation}</h4>
+						<h4>{$lblSubnavigation|ucfirst}</h4>
 						{$var|getsubnavigation:'page':{$page.id}:2}
 					</nav>
 
@@ -218,7 +218,7 @@
 		</div>
 		<noscript>
 			<div class="message notice">
-				<h4>{$lblEnableJavascript}</h4>
+				<h4>{$lblEnableJavascript|ucfirst}</h4>
 				<p>{$msgEnableJavascript}</p>
 			</div>
 		</noscript>

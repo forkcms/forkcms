@@ -15,8 +15,8 @@
 					<li>
 						{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
 						{option:comments}
-							{option:commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:commentsMultiple}
-							{option:!commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!commentsMultiple}
+							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
 					<li><a href="{$item.category_full_url}" title="{$item.category_name}">{$item.category_name}</a></li>
