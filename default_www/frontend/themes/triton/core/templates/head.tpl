@@ -35,7 +35,7 @@
 	{/iteration:javascriptFiles}
 	
 	{* Module specific Javascript *}
-	<script src="{$THEME_PATH}/core/js/triton.js"></script>
+	<script src="{$THEME_URL}/core/js/triton.js"></script>
 	
 	{* Site wide HTML *}
 	{$siteHTMLHeader}
