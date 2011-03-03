@@ -27,4 +27,4 @@ jsBackend.tags =
 }
 
 
-$(document).ready(function() { jsBackend.tags.init(); });
+$(document).ready(jsBackend.tags.init);

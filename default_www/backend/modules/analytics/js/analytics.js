@@ -489,4 +489,4 @@ jsBackend.analytics.resize =
 }
 
 
-$(document).ready(function() { jsBackend.analytics.init(); });
+$(document).ready(jsBackend.analytics.init);
