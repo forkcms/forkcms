@@ -55,5 +55,10 @@
 	{* Site wide HTML *}
 	{$siteHTMLFooter}
 
+	{* General Javascript *}
+	{iteration:javascriptFiles}
+		<script src="{$javascriptFiles.file}"></script>
+	{/iteration:javascriptFiles}
+
 </body>
 </html>

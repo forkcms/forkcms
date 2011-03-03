@@ -22,10 +22,10 @@
 				</nav>
 
 				{* Language *}
-				<aside id="headerLanguage">
+				<nav id="headerLanguage">
 					<h4>{$lblLanguage|ucfirst}</h4>
 					{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
-				</aside>
+				</nav>
 
 				{* Block 10 (default: Search) *}
 				{option:block10IsHTML}
@@ -34,17 +34,17 @@
 					{/option:block10}
 				{/option:block10IsHTML}
 				{option:!block10IsHTML}
-					<aside id="headerSearch">
+					<div id="headerSearch">
 						<h4>{$lblSearch|ucfirst}</h4>
 						{include:{$block10}}
-					</aside>
+					</div>
 				{/option:!block10IsHTML}
 
 				{* Breadcrumb *}
-				<aside id="breadcrumb">
+				<div id="breadcrumb">
 					<h4>{$lblBreadcrumb}</h4>
 					{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
-				</aside>
+				</div>
 
 				{* Block 9 (default: Editor) *}
 				{option:block9IsHTML}
@@ -226,5 +226,16 @@
 	<div id="bottomWrapper">
 		{include:{$THEME_PATH}/core/templates/footer.tpl}
 	</div>
+
+	{* Site wide HTML *}
+	{$siteHTMLFooter}
+
+	{* General Javascript *}
+	{iteration:javascriptFiles}
+		<script src="{$javascriptFiles.file}"></script>
+	{/iteration:javascriptFiles}
+
+	{* Module specific Javascript *}
+	<script src="{$THEME_URL}/core/js/triton.js"></script>
 </body>
 </html>
