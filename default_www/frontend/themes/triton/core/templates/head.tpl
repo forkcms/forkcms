@@ -27,7 +27,7 @@
 	{/iteration:cssFiles}
 
 	{* HTML5 Javascript *}
-	<!--[if lt IE 9]> <script src="{$THEME_PATH}/core/js/html5.js"></script> <![endif]-->
+	<!--[if lt IE 9]> <script src="{$THEME_URL}/core/js/html5.js"></script> <![endif]-->
 
 	{* General Javascript *}
 	{iteration:javascriptFiles}
