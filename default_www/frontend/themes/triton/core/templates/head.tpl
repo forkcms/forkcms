@@ -33,10 +33,10 @@
 	{iteration:javascriptFiles}
 		<script src="{$javascriptFiles.file}"></script>
 	{/iteration:javascriptFiles}
-	
+
 	{* Module specific Javascript *}
 	<script src="{$THEME_URL}/core/js/triton.js"></script>
-	
+
 	{* Site wide HTML *}
 	{$siteHTMLHeader}
 </head>
