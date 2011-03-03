@@ -49,10 +49,10 @@
 				{* Block 9 (default: Editor) *}
 				{option:block9IsHTML}
 					{option:block9}
-						<aside id="headerAd">
+						<div id="headerAd">
 							<h4>{$lblAdvertisement|ucfirst}</h4>
 							{$block9}
-						</aside>
+						</div>
 					{/option:block9}
 				{/option:block9IsHTML}
 				{option:!block9IsHTML}
