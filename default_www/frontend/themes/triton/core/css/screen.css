@@ -761,13 +761,13 @@ a.linkedImage {
 	.ie6 .pageNavigation, .ie7 .pageNavigation { zoom: 1; }
 
 		.pageNavigation .previousLink {
-			float: left;
+			float: left !important;
 			width: 48%;
 			text-align: left;
 		}
 
 		.pageNavigation .nextLink {
-			float: right;
+			float: right !important;
 			width: 48%;
 			text-align: right;
 		}
