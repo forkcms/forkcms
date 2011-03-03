@@ -449,7 +449,7 @@ a.linkedImage {
 
 #main {
 	position: relative;
-	padding-top: 30px;
+	padding-top: 20px;
 }
 
 #main:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
