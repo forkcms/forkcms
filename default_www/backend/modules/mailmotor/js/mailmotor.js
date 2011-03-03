@@ -543,4 +543,4 @@ jsBackend.mailmotor.templateSelection =
 }
 
 
-$(document).ready(function() { jsBackend.mailmotor.init(); });
+$(document).ready(jsBackend.mailmotor.init);

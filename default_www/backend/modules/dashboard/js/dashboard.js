@@ -172,4 +172,4 @@ jsBackend.dashboard =
 }
 
 
-$(document).ready(function() { jsBackend.dashboard.init(); });
+$(document).ready(jsBackend.dashboard.init);
