@@ -70,6 +70,5 @@
 	<p>{$msgConfirmMassDelete}</p>
 </div>
 
-
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}
