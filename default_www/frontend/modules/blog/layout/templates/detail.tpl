@@ -13,11 +13,10 @@
 				<ul>
 					<li>{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}} {$lblOn} {$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</li>
 					<li>
-						{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} -
 						{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
 						{option:comments}
-							{option:commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:commentsMultiple}
-							{option:!commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!commentsMultiple}
+							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
 					<li><a href="{$item.category_full_url}" title="{$item.category_name}">{$item.category_name}</a></li>
@@ -44,7 +43,7 @@
 	</article>
 
 	{option:comments}
-		<div id="blogComments" class="mod">
+		<section id="blogComments" class="mod">
 			<div class="inner">
 				<header class="hd">
 					<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
@@ -72,32 +71,34 @@
 					{/iteration:comments}
 				</div>
 			</div>
-		</div>
+		</section>
 	{/option:comments}
 	{option:item.allow_comments}
-		<div id="blogCommentForm" class="mod">
+		<section id="blogCommentForm" class="mod">
 			<div class="inner">
-				<div class="hd">
+				<header class="hd">
 					<h3>{$msgComment|ucfirst}</h3>
-				</div>
+				</header>
 				<div class="bd">
 					{option:commentIsInModeration}<div class="message warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
 					{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
 					{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
 					{form:comment}
-						<p>
-							<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtAuthor} {$txtAuthorError}
-						</p>
-						<p>
-							<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtEmail} {$txtEmailError}
-						</p>
-						<p>
+						<div class="alignBlocks">
+							<p {option:txtAuthorError}class="errorArea"{/option:txtAuthorError}>
+								<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								{$txtAuthor} {$txtAuthorError}
+							</p>
+							<p {option:txtEmailError}class="errorArea"{/option:txtEmailError}>
+								<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								{$txtEmail} {$txtEmailError}
+							</p>
+						</div>
+						<p class="bigInput{option:txtWebsiteError} errorArea{/option:txtWebsiteError}">
 							<label for="website">{$lblWebsite|ucfirst}</label>
 							{$txtWebsite} {$txtWebsiteError}
 						</p>
-						<p>
+						<p class="bigInput{option:txtMessageError} errorArea{/option:txtMessageError}">
 							<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtMessage} {$txtMessageError}
 						</p>
@@ -107,6 +108,6 @@
 					{/form:comment}
 				</div>
 			</div>
-		</div>
+		</section>
 	{/option:item.allow_comments}
 </div>

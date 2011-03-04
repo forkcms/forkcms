@@ -29,11 +29,6 @@
 	{* HTML5 Javascript *}
 	<!--[if lt IE 9]> <script src="{$FRONTEND_CORE_URL}/js/html5.js"></script> <![endif]-->
 
-	{* General Javascript *}
-	{iteration:javascriptFiles}
-		<script src="{$javascriptFiles.file}"></script>
-	{/iteration:javascriptFiles}
-
 	{* Site wide HTML *}
 	{$siteHTMLHeader}
 </head>

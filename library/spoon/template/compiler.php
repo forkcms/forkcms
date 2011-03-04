@@ -517,7 +517,7 @@ class SpoonTemplateCompiler
 					}';
 				}
 				$templateContent .= '
-				if(isset('. $iteration .')) '. $iteration .'[\'old\'] = '. $iteration .';
+				if(isset('. $internalVariable .')) '. $iteration .'[\'old\'] = '. $internalVariable .';
 				'. $iteration .'[\'iteration\'] = '. $variable .';
 				'. $iteration .'[\'i\'] = 1;
 				'. $iteration .'[\'count\'] = count('. $iteration .'[\'iteration\']);
@@ -547,11 +547,12 @@ class SpoonTemplateCompiler
 					if(isset('. $iteration .'[\'fail\']) && '. $iteration .'[\'fail\'] == true)
 					{
 						?>{/iteration:'. $match[3] . $match[4] . $match[6] .'}<?php
-					}
-					if(isset('. $iteration .'[\'old\'])) '. $iteration .' = '. $iteration .'[\'old\'];
-					else unset('. $iteration .');';
+					}';
 				}
-				$templateContent .= '?>';
+				$templateContent .= '
+				if(isset('. $iteration .'[\'old\'])) '. $internalVariable .' = '. $iteration .'[\'old\'];
+				else unset('. $iteration .');
+				?>';
 
 				// replace!
 				$content = str_replace($match[0], $templateContent, $content);
