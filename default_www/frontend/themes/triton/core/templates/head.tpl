@@ -8,9 +8,7 @@
 	<title>{$pageTitle}</title>
 
 	{* Meta *}
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta http-equiv="content-language" content="{$LANGUAGE}" />
+	<meta charset="utf-8" />
 	<meta name="generator" content="Fork CMS" />
 	<meta name="description" content="{$metaDescription}" />
 	<meta name="keywords" content="{$metaKeywords}" />
