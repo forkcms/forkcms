@@ -37,10 +37,10 @@ class BackendNavigation
 	public function __construct()
 	{
 		// store in reference so we can access it from everywhere
-		Spoon::setObjectReference('navigation', $this);
+		Spoon::set('navigation', $this);
 
 		// grab from the reference
-		$this->URL = Spoon::getObjectReference('url');
+		$this->URL = Spoon::get('url');
 
 		// init var
 		$navigation = array();
