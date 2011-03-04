@@ -36,10 +36,10 @@ class FrontendBaseObject
 	public function __construct()
 	{
 		// get template from reference
-		$this->tpl = Spoon::getObjectReference('template');
+		$this->tpl = Spoon::get('template');
 
 		// get URL from reference
-		$this->URL = Spoon::getObjectReference('url');
+		$this->URL = Spoon::get('url');
 	}
 }
 
@@ -314,10 +314,10 @@ class FrontendBaseBlock
 	public function __construct($module, $action, $data = null)
 	{
 		// get objects from the reference so they are accessable
-		$this->tpl = Spoon::getObjectReference('template');
-		$this->header = Spoon::getObjectReference('header');
-		$this->URL = Spoon::getObjectReference('url');
-		$this->breadcrumb = Spoon::getObjectReference('breadcrumb');
+		$this->tpl = Spoon::get('template');
+		$this->header = Spoon::get('header');
+		$this->URL = Spoon::get('url');
+		$this->breadcrumb = Spoon::get('breadcrumb');
 
 		// set properties
 		$this->setModule($module);
@@ -782,9 +782,9 @@ class FrontendBaseWidget
 	public function __construct($module, $action, $data = null)
 	{
 		// get objects from the reference so they are accessable
-		$this->tpl = Spoon::getObjectReference('template');
-		$this->header = Spoon::getObjectReference('header');
-		$this->URL = Spoon::getObjectReference('url');
+		$this->tpl = Spoon::get('template');
+		$this->header = Spoon::get('header');
+		$this->URL = Spoon::get('url');
 
 		// set properties
 		$this->setModule($module);

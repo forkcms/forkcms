@@ -53,7 +53,7 @@ class FrontendURL
 	public function __construct()
 	{
 		// add ourself to the reference so other classes can retrieve us
-		Spoon::setObjectReference('url', $this);
+		Spoon::set('url', $this);
 
 		// if there is a trailing slash we permanent redirect to the page without slash
 		if(mb_strlen($_SERVER['REQUEST_URI']) != 1 && mb_substr($_SERVER['REQUEST_URI'], -1) == '/') SpoonHTTP::redirect(mb_substr($_SERVER['REQUEST_URI'], 0, -1), 301);

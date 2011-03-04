@@ -41,8 +41,8 @@ class FrontendForm extends SpoonForm
 	public function __construct($name, $action = null, $method = 'post', $hash = null, $useToken = true)
 	{
 		// init some properties
-		$this->URL = Spoon::getObjectReference('url');
-		$this->header = Spoon::getObjectReference('header');
+		$this->URL = Spoon::get('url');
+		$this->header = Spoon::get('header');
 
 		// redefine
 		$name = (string) $name;

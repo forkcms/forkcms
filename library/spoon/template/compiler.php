@@ -27,6 +27,7 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		Matthias Mullie <matthias@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		1.3.0
  */
 class SpoonTemplateCompiler
@@ -448,7 +449,7 @@ class SpoonTemplateCompiler
 			foreach($matches as $match)
 			{
 				// base variable names
-				$iteration = '$this->iterations['. $match[2] .']';
+				$iteration = '$this->iterations[\''. $this->getCompileName($this->template) . '_' . $match[2] .'\']';
 				$internalVariable = '${\''. $match[3] .'\'}';
 
 				// variable within iteration

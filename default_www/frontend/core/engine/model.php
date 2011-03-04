@@ -151,7 +151,7 @@ class FrontendModel
 		$write = (bool) $write;
 
 		// do we have a db-object ready?
-		if(!Spoon::isObjectReference('database'))
+		if(!Spoon::exists('database'))
 		{
 			// create instance
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
@@ -160,11 +160,11 @@ class FrontendModel
 			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
 
 			// store
-			Spoon::setObjectReference('database', $db);
+			Spoon::set('database', $db);
 		}
 
 		// return db-object
-		return Spoon::getObjectReference('database');
+		return Spoon::get('database');
 	}
 
 

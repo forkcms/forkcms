@@ -30,7 +30,7 @@ class FrontendTemplate extends SpoonTemplate
 		parent::__construct();
 
 		// store in reference so we can access it from everywhere
-		if($addToReference) Spoon::setObjectReference('template', $this);
+		if($addToReference) Spoon::set('template', $this);
 
 		// set cache directory
 		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');

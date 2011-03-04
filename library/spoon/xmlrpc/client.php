@@ -93,14 +93,14 @@ class SpoonXMLRPCClient
 			// array
 			case 'array':
 				// start
-				$xml = '<array>'."\n";
-				$xml .= '	<data>'."\n";
+				$xml = '<array>' . "\n";
+				$xml .= '	<data>' . "\n";
 
 				// loop values
-				foreach($parameter['value'] as $item) $xml .= '		<value>'. $this->buildValueXML($item) .'</value>'."\n";
+				foreach($parameter['value'] as $item) $xml .= '		<value>' . $this->buildValueXML($item) . "</value>\n";
 
 				// end
-				$xml .= '	</data>'."\n";
+				$xml .= '	</data>' . "\n";
 				$xml .= '</array>';
 
 				// return
@@ -109,7 +109,7 @@ class SpoonXMLRPCClient
 
 			// base64
 			case 'base64':
-				return '<base64>'. (string) $parameter['value'] .'</base64>';
+				return '<base64>' . (string) $parameter['value'] . '</base64>';
 			break;
 
 			// boolean
@@ -120,41 +120,41 @@ class SpoonXMLRPCClient
 			// date/time
 			case 'date/time':
 				if(is_integer($parameter['value'])) $parameter['value'] = date('c', (int) $parameter['value']);
-				return '<dateTime.iso8601>'. (string) $parameter['value'] .'</dateTime.iso8601>';
+				return '<dateTime.iso8601>' . (string) $parameter['value'] . '</dateTime.iso8601>';
 			break;
 
 			// double
 			case 'double':
-				return '<double>'. (float) $parameter['value'] .'</double>';
+				return '<double>' . (float) $parameter['value'] . '</double>';
 			break;
 
 			// int
 			case 'int':
-				return '<int>'. (int) $parameter['value'] .'</int>';
+				return '<int>' . (int) $parameter['value'] . '</int>';
 			break;
 
 			// i4
 			case 'i4':
-				return '<i4>'. (int) $parameter['value'] .'</i4>';
+				return '<i4>' . (int) $parameter['value'] . '</i4>';
 			break;
 
 			// string
 			case 'string':
-				return '<string>'. (string) $parameter['value'] .'</string>';
+				return '<string>' . (string) $parameter['value'] . '</string>';
 			break;
 
 			// struct
 			case 'struct':
 				// start
-				$xml = '<struct>'."\n";
+				$xml = '<struct>' . "\n";
 
 				// loop values
 				foreach($parameter['value'] as $item)
 				{
-					$xml .= '	<member>'."\n";
-					$xml .= '		<name>'. (string) $item['name'] .'</name>' ."\n";
-					$xml .= '		<value>'. $this->buildValueXML($item) .'</value>'."\n";
-					$xml .= '	</member>'."\n";
+					$xml .= '	<member>' . "\n";
+					$xml .= '		<name>' . (string) $item['name'] . '</name>' . "\n";
+					$xml .= '		<value>' . $this->buildValueXML($item) . '</value>' . "\n";
+					$xml .= '	</member>' . "\n";
 				}
 
 				// end
@@ -171,7 +171,7 @@ class SpoonXMLRPCClient
 
 			// unknwon type
 			default:
-				throw new SpoonXMLRPCException('Invalid type ('. $parameter['type'] .').');
+				throw new SpoonXMLRPCException('Invalid type (' . $parameter['type'] . ').');
 		}
 	}
 
@@ -189,26 +189,26 @@ class SpoonXMLRPCClient
 		$method = (string) $method;
 
 		// init var
-		$xml = '<?xml version="1.0"?>'."\n";
-		$xml .= '<methodCall>'."\n";
+		$xml = '<?xml version="1.0"?>' . "\n";
+		$xml .= '<methodCall>' . "\n";
 
 		// add method
-		$xml .= '	<methodName>'. (string) $method .'</methodName>'."\n";
+		$xml .= '	<methodName>' . (string) $method . '</methodName>' . "\n";
 
 		if(!empty($parameters))
 		{
 			// start parameters
-			$xml .= '	<params>'."\n";
+			$xml .= '	<params>' . "\n";
 
 			// loop parameters and build parameters
-			foreach($parameters as $parameter) $xml .= '		<param>'. $this->buildValueXML($parameter) .'</param>'."\n";
+			foreach($parameters as $parameter) $xml .= '		<param>' . $this->buildValueXML($parameter) . '</param>' . "\n";
 
 			// end parameters
-			$xml .= '	</params>'."\n";
+			$xml .= '	</params>' . "\n";
 		}
 
 		// end XML
-		$xml .= '</methodCall>'."\n";
+		$xml .= '</methodCall>' . "\n";
 
 		// return
 		return $xml;
@@ -356,7 +356,7 @@ class SpoonXMLRPCClient
 				break;
 
 				default:
-					throw new SpoonXMLRPCException('Invalid type ('. $type .').');
+					throw new SpoonXMLRPCException('Invalid type (' . $type . ').');
 			}
 		}
 	}
@@ -389,7 +389,7 @@ class SpoonXMLRPCClient
 			if($parameter['type'] !== 'nil' && !isset($parameter['value'])) throw new SpoonXMLRPCException('Invalid parameter. A parameter needs type and value as keys.');
 
 			// validate type
-			if(!in_array($parameter['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type ('. $parameter['type'] .'). Possible types are: '. implode(', ', $allowedTypes).'.');
+			if(!in_array($parameter['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type (' . $parameter['type'] . '). Possible types are: ' . implode(', ', $allowedTypes) . '.');
 
 			// extra checks for array-type
 			if($parameter['type'] == 'array')
@@ -401,7 +401,7 @@ class SpoonXMLRPCClient
 					if(!isset($value['type']) || !isset($value['value'])) throw new SpoonXMLRPCException('Invalid parameter, an array-type needs the value to be an array wherein each item needs type and value as keys.');
 
 					// validate types
-					if(!in_array($value['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type ('. $value['type'] .'). Possible types are: '. implode(', ', $allowedTypes).'.');
+					if(!in_array($value['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type (' . $value['type'] . '). Possible types are: ' . implode(', ', $allowedTypes) . '.');
 				}
 			}
 
@@ -415,7 +415,7 @@ class SpoonXMLRPCClient
 					if(!isset($value['type']) || !isset($value['value']) || !isset($value['name'])) throw new SpoonXMLRPCException('Invalid parameter, a struct-type needs value to be an array wherin each items needs type, value and name as keys.');
 
 					// validate types
-					if(!in_array($value['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type ('. $value['type'] .'). Possible types are: '. implode(', ', $allowedTypes).'.');
+					if(!in_array($value['type'], $allowedTypes)) throw new SpoonXMLRPCException('Invalid parameter-type (' . $value['type'] . '). Possible types are: ' . implode(', ', $allowedTypes) . '.');
 				}
 			}
 		}
@@ -438,7 +438,7 @@ class SpoonXMLRPCClient
 		$headers[] = 'Content-type: text/xml';
 
 		// set content-length
-		$headers[] = 'Content-length: '. mb_strlen($xml) ."\r\n";
+		$headers[] = 'Content-length: ' . mb_strlen($xml) . "\r\n";
 
 		// add XML
 		$headers[] = $xml;
@@ -464,10 +464,10 @@ class SpoonXMLRPCClient
 		curl_close($curl);
 
 		// validate errors
-		if($errorNumber != 0) throw new SpoonXMLRPCException('An error occured with the following message: ('. $errorNumber .')'. $errorMessage .'.');
+		if($errorNumber != 0) throw new SpoonXMLRPCException('An error occured with the following message: (' . $errorNumber . ')' . $errorMessage . '.');
 
 		// validate headers
-		if($headers['http_code'] != 200) throw new SpoonXMLRPCException('Invalid headers, a header with status-code '. $headers['http_code'] .' was returned.');
+		if($headers['http_code'] != 200) throw new SpoonXMLRPCException('Invalid headers, a header with status-code ' . $headers['http_code'] . ' was returned.');
 
 		// we expect XML so decode it
 		$xml = @simplexml_load_string($response, null, LIBXML_NOCDATA);
@@ -555,7 +555,7 @@ class SpoonXMLRPCClient
 	public function getUserAgent()
 	{
 		// prepend SpoonHeader
-		$userAgent = 'Spoon '. SPOON_VERSION .'/';
+		$userAgent = 'Spoon ' . SPOON_VERSION . '/';
 		$userAgent .= ($this->userAgent === null) ? 'SpoonXMLRPCClient' : $this->userAgent;
 
 		// return

@@ -79,7 +79,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}
@@ -158,7 +158,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}
@@ -225,7 +225,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}

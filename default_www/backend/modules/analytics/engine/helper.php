@@ -824,7 +824,7 @@ class BackendAnalyticsHelper
 		if($endTimestamp == mktime(0, 0, 0, date('n'), date('j'), date('Y')))
 		{
 			// url of current action
-			$liveDataUrl = BackendModel::createURLForAction('loading') .'&amp;redirect_action='. Spoon::getObjectReference('url')->getAction();
+			$liveDataUrl = BackendModel::createURLForAction('loading') .'&amp;redirect_action='. Spoon::get('url')->getAction();
 
 			// page id set
 			if(isset($_GET['page_id']) && $_GET['page_id'] != '') $liveDataUrl .= '&amp;page_id='. (int) $_GET['page_id'];

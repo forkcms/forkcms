@@ -293,7 +293,7 @@ class BackendMailmotorCMHelper
 	public static function getCM()
 	{
 		// campaignmonitor reference exists
-		if(!Spoon::isObjectReference('campaignmonitor'))
+		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
 			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
@@ -314,11 +314,11 @@ class BackendMailmotorCMHelper
 			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
 
 			// set CampaignMonitor object reference
-			Spoon::setObjectReference('campaignmonitor', $cm);
+			Spoon::set('campaignmonitor', $cm);
 		}
 
 		// return the CampaignMonitor object
-		return Spoon::getObjectReference('campaignmonitor');
+		return Spoon::get('campaignmonitor');
 	}
 
 

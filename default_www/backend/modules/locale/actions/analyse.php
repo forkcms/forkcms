@@ -202,7 +202,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		if($key !== false) unset($modules[$key]);
 
 		$used = array();
-		$navigation = Spoon::getObjectReference('navigation');
+		$navigation = Spoon::get('navigation');
 		$lbl = array();
 
 		// get labels from navigation

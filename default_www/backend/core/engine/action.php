@@ -55,7 +55,7 @@ class BackendAction
 	public function __construct($action, $module)
 	{
 		// grab stuff from the reference and store them in this object (for later/easy use)
-		$this->tpl = Spoon::getObjectReference('template');
+		$this->tpl = Spoon::get('template');
 
 		// set properties
 		$this->setModule($module);

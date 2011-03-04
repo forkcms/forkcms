@@ -280,7 +280,7 @@ class SpoonFeedRSS
 		$day = (string) SpoonFilter::getValue(strtolower($day), $allowedDays, 'sunday');
 
 		// validate
-		if(in_array($day, $this->skipDays)) throw new SpoonFeedException('This ('. $day .') day is already added.');
+		if(in_array($day, $this->skipDays)) throw new SpoonFeedException('This (' . $day . ') day was already added.');
 
 		// set property
 		$this->skipDays[] = ucfirst($day);
@@ -302,8 +302,8 @@ class SpoonFeedRSS
 		$hour = (int) SpoonFilter::getValue($hour, $allowedHours, 0);
 
 		// validate
-		if(!in_array($hour, $allowedHours)) throw new SpoonFeedException('This ('. $hour .') isn\'t a valid hour. Only '. join(', ', $allowedHours) .' are allowed.)');
-		if(in_array($hour, $this->skipHours)) throw new SpoonFeedException('This ('. $hour .') hour is already added.');
+		if(!in_array($hour, $allowedHours)) throw new SpoonFeedException('This (' . $hour . ') isn\'t a valid hour. Only ' . join(', ', $allowedHours) . ' are allowed.)');
+		if(in_array($hour, $this->skipHours)) throw new SpoonFeedException('This (' . $hour . ') hour is already added.');
 
 		// set property
 		$this->skipHours[] = (int) $hour;
@@ -321,22 +321,22 @@ class SpoonFeedRSS
 		if($this->getSorting()) $this->sort();
 
 		// init xml
-		$XML = '<?xml version="1.0" encoding="'. strtolower($this->getCharset()) .'" ?>'."\n";
-		$XML .= '<rss version="2.0">'."\n";
-		$XML .= '<channel>'."\n";
+		$XML = '<?xml version="1.0" encoding="' . strtolower($this->getCharset()) . '" ?>' . "\n";
+		$XML .= '<rss version="2.0">' . "\n";
+		$XML .= '<channel>' . "\n";
 
 		// insert title
-		$XML .= '	<title><![CDATA['. $this->getTitle() .']]></title>'."\n";
+		$XML .= '	<title><![CDATA[' . $this->getTitle() . ']]></title>' . "\n";
 
 		// insert link
-		$XML .= '	<link>'. $this->getLink() .'</link>'."\n";
+		$XML .= '	<link>' . $this->getLink() . '</link>' . "\n";
 
 		// insert description
-		$XML .= '	<description>'."\n";
-		$XML .= '		<![CDATA['."\n";
-		$XML .= '		'. $this->getDescription() ."\n";
-		$XML .= '		]]>'."\n";
-		$XML .= '</description>'."\n";
+		$XML .= '	<description>' . "\n";
+		$XML .= '		<![CDATA[' . "\n";
+		$XML .= '		' . $this->getDescription() . "\n";
+		$XML .= '		]]>' . "\n";
+		$XML .= '</description>' . "\n";
 
 		// fetch image properties
 		$imageProperties = $this->getImage();
@@ -346,33 +346,33 @@ class SpoonFeedRSS
 		{
 			$image = $this->getImage();
 
-			$XML .= '	<image>'."\n";
-			$XML .= '		<title><![CDATA['. $image['title'] .']]></title>'."\n";
-			$XML .= '		<url>'. $image['url'] .'</url>'."\n";
-			$XML .= '		<link>'. $image['link'] .'</link>'."\n";
-			if(isset($image['width']) && $image['width'] != '') $XML .= '		<width>'. $image['title'] .'</width>'."\n";
-			if(isset($image['height']) && $image['height'] != '') $XML .= '		<height>'. $image['title'] .'</height>'."\n";
-			if(isset($image['description']) && $image['description'] != '') $XML .= '		<description><![CDATA['. $image['title'] .']]></description>'."\n";
-			$XML .= '	</image>'."\n";
+			$XML .= '	<image>' . "\n";
+			$XML .= '		<title><![CDATA[' . $image['title'] . ']]></title>' . "\n";
+			$XML .= '		<url>' . $image['url'] . '</url>' . "\n";
+			$XML .= '		<link>' . $image['link'] . '</link>' . "\n";
+			if(isset($image['width']) && $image['width'] != '') $XML .= '		<width>' . $image['title'] . '</width>' . "\n";
+			if(isset($image['height']) && $image['height'] != '') $XML .= '		<height>' . $image['title'] . '</height>' . "\n";
+			if(isset($image['description']) && $image['description'] != '') $XML .= '		<description><![CDATA[' . $image['title'] . ']]></description>' . "\n";
+			$XML .= '	</image>' . "\n";
 		}
 
 		// insert last build date
-		if($this->getLastBuildDate() != '') $XML .= '	<lastBuildDate>'. $this->getLastBuildDate('r') .'</lastBuildDate>'."\n";
+		if($this->getLastBuildDate() != '') $XML .= '	<lastBuildDate>' . $this->getLastBuildDate('r') . '</lastBuildDate>' . "\n";
 
 		// insert publication date
-		if($this->getPublicationDate() != '') $XML .= '	<pubDate>'. $this->getPublicationDate('r') .'</pubDate>'."\n";
+		if($this->getPublicationDate() != '') $XML .= '	<pubDate>' . $this->getPublicationDate('r') . '</pubDate>' . "\n";
 
 		// insert time to live
-		if($this->getTTL() != '') $XML .= '	<ttl>'. $this->getTTL() .'</ttl>'."\n";
+		if($this->getTTL() != '') $XML .= '	<ttl>' . $this->getTTL() . '</ttl>' . "\n";
 
 		// insert managing editor
-		if($this->getManagingEditor() != '') $XML .= '	<managingEditor>'. $this->getManagingEditor() .'</managingEditor>>'."\n";
+		if($this->getManagingEditor() != '') $XML .= '	<managingEditor>' . $this->getManagingEditor() . '</managingEditor>' . "\n";
 
 		// insert webmaster
-		if($this->getWebmaster() != '') $XML .= '	<webmaster>'. $this->getWebmaster() .'></webmaster>'."\n";
+		if($this->getWebmaster() != '') $XML .= '	<webmaster>' . $this->getWebmaster() . '></webmaster>' . "\n";
 
 		// insert copyright
-		if($this->getCopyright() != '') $XML .= '	<copyright>'. $this->getCopyright() .'</copyright>'."\n";
+		if($this->getCopyright() != '') $XML .= '	<copyright>' . $this->getCopyright() . '</copyright>' . "\n";
 
 		// fetch categories
 		$categories = $this->getCategories();
@@ -382,39 +382,39 @@ class SpoonFeedRSS
 		{
 			foreach($this->getCategories() as $category)
 			{
-				if(isset($category['domain']) && $category['domain'] != '') $XML .= '	<category domain="'. $category['domain'] .'"><![CDATA['. $category['category'] .']]></category>'."\n";
-				else $XML .= '	<category><![CDATA['. $category['category'] .']]</category>'."\n";
+				if(isset($category['domain']) && $category['domain'] != '') $XML .= '	<category domain="' . $category['domain'] . '"><![CDATA[' . $category['category'] . ']]></category>' . "\n";
+				else $XML .= '	<category><![CDATA[' . $category['category'] . ']]</category>' . "\n";
 			}
 		}
 
 		// insert rating
-		if($this->getRating() != '') $XML .= '	<rating>'. $this->getRating() .'</rating>'."\n";
+		if($this->getRating() != '') $XML .= '	<rating>' . $this->getRating() . '</rating>' . "\n";
 
 		// insert generator
-		if($this->getGenerator() != '') $XML .= '	<generator><![CDATA['. $this->getGenerator() .']]></generator>'."\n";
+		if($this->getGenerator() != '') $XML .= '	<generator><![CDATA[' . $this->getGenerator() . ']]></generator>' . "\n";
 
 		// insert language
-		if($this->getLanguage() != '') $XML .= '	<language>'. $this->getLanguage() .'</language>'."\n";
+		if($this->getLanguage() != '') $XML .= '	<language>' . $this->getLanguage() . '</language>' . "\n";
 
 		// insert docs
-		if($this->getDocs() != '') $XML .= '	<docs>'. $this->getDocs() .'</docs>'."\n";
+		if($this->getDocs() != '') $XML .= '	<docs>' . $this->getDocs() . '</docs>' . "\n";
 
 		// insert skipdays
 		$skipDays = $this->getSkipDays();
 		if(!empty($skipDays))
 		{
-			$XML .= '	<skipDays>'."\n";
-			foreach($skipDays as $day) $XML .= '	<day>'.$day.'</day>'."\n";
-			$XML .= '	</skipDays>'."\n";
+			$XML .= '	<skipDays>' . "\n";
+			foreach($skipDays as $day) $XML .= '	<day>' . $day . '</day>' . "\n";
+			$XML .= '	</skipDays>' . "\n";
 		}
 
 		// insert skiphours
 		$skipHours = $this->getSkipHours();
 		if(!empty($skipHours))
 		{
-			$XML .= '	<skipHours>'."\n";
-			foreach($skipHours as $hour) $XML .= '	<hour>'.$hour.'</hour>'."\n";
-			$XML .= '	</skipHours>'."\n";
+			$XML .= '	<skipHours>' . "\n";
+			foreach($skipHours as $hour) $XML .= '	<hour>' . $hour . '</hour>' . "\n";
+			$XML .= '	</skipHours>' . "\n";
 		}
 
 		// insert cloud
@@ -422,7 +422,7 @@ class SpoonFeedRSS
 		if(!empty($cloudProperties))
 		{
 			$cloud = $this->getCloud();
-			$XML .= '	<cloud domain="'. $cloud['domain'] .'" port="'. $cloud['port'] .'" path="'. $cloud['path'] .'" registerProce-dure="'. $cloud['register_procedure'] .'" protocol="'. $cloud['protocol'] .'" />'."\n";
+			$XML .= '	<cloud domain="' . $cloud['domain'] . '" port="' . $cloud['port'] . '" path="' . $cloud['path'] . '" registerProce-dure="' . $cloud['register_procedure'] . '" protocol="' . $cloud['protocol'] . '" />' . "\n";
 		}
 
 		// insert items
@@ -432,8 +432,8 @@ class SpoonFeedRSS
 		}
 
 		// add endtags
-		$XML .= '</channel>'."\n";
-		$XML .= '</rss>'."\n";
+		$XML .= '</channel>' . "\n";
+		$XML .= '</rss>' . "\n";
 
 		return $XML;
 	}
@@ -758,7 +758,7 @@ class SpoonFeedRSS
 		$type = (string) SpoonFilter::getValue($type, array('url', 'string'), 'url');
 
 		// validate
-		if($type == 'url' && !SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\'t a valid url.');
+		if($type == 'url' && !SpoonFilter::isURL($URL)) throw new SpoonFeedException('This (' . $URL . ') isn\'t a valid url.');
 
 		// load xmlstring
 		if($type == 'url')
@@ -852,7 +852,7 @@ class SpoonFeedRSS
 		$type = (string) SpoonFilter::getValue($type, array('url', 'string'), 'url');
 
 		// validate
-		if($type == 'url' && !SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. SpoonFilter::htmlentities($URL) .') isn\'t a valid URL.');
+		if($type == 'url' && !SpoonFilter::isURL($URL)) throw new SpoonFeedException('This (' . SpoonFilter::htmlentities($URL) . ') isn\'t a valid URL.');
 		if(!self::isValid($URL, $type)) throw new SpoonFeedException('Invalid feed');
 
 		// load xmlstring
@@ -1139,7 +1139,7 @@ class SpoonFeedRSS
 	 */
 	public function setGenerator($generator = null)
 	{
-		$this->generator = ($generator == null) ? 'Spoon/'. SPOON_VERSION : (string) $generator;
+		$this->generator = ($generator == null) ? 'Spoon/' . SPOON_VERSION : (string) $generator;
 	}
 
 
@@ -1161,8 +1161,8 @@ class SpoonFeedRSS
 		$link = (string) $link;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .')isn\'t a valid URL.');
-		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid link.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This (' . $URL . ')isn\'t a valid URL.');
+		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This (' . $link . ') isn\'t a valid link.');
 
 		// set properties
 		$this->image['url'] = $URL;
@@ -1210,7 +1210,7 @@ class SpoonFeedRSS
 		$link = (string) $link;
 
 		// validate
-		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid link');
+		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This (' . $link . ') isn\'t a valid link');
 
 		// set property
 		$this->link = $link;
