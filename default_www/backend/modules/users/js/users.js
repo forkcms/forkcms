@@ -65,4 +65,4 @@ jsBackend.users.controls =
 }
 
 
-$(document).ready(function() { jsBackend.users.init(); });
+$(document).ready(jsBackend.users.init);

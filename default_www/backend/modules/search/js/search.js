@@ -36,4 +36,4 @@ jsBackend.search =
 }
 
 
-$(document).ready(function() { jsBackend.search.init(); });
+$(document).ready(jsBackend.search.init);

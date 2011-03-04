@@ -27,4 +27,4 @@ jsBackend.settings =
 }
 
 
-$(document).ready(function() { jsBackend.settings.init(); });
+$(document).ready(jsBackend.settings.init);

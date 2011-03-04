@@ -1197,4 +1197,4 @@ jsBackend.formBuilder.fields =
 	eoo: true
 }
 
-$(document).ready(function() { jsBackend.formBuilder.init(); });
+$(document).ready(jsBackend.formBuilder.init);
