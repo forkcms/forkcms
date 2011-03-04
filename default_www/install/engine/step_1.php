@@ -68,7 +68,7 @@ class InstallerStep1 extends InstallerStep
 			// loop locations
 			foreach($possiblePaths as $path)
 			{
-				$variables['content'] .= '<option value="'. $path .'">'. $path .'</option>';
+				$variables['content'] .= '<option value="' . $path . '">' . $path . '</option>';
 			}
 
 
@@ -95,7 +95,7 @@ class InstallerStep1 extends InstallerStep
 		$replace = array_values($variables);
 
 		// loop search values
-		foreach($search as $key => $value) $search[$key] = '{$'. $value .'}';
+		foreach($search as $key => $value) $search[$key] = '{$' . $value . '}';
 
 		// build output
 		$output = str_replace($search, $replace, $tpl);
@@ -121,7 +121,7 @@ class InstallerStep1 extends InstallerStep
 		$location = '';
 
 		// loop directories
-		foreach((array) glob($directory .'/*') as $filename)
+		foreach((array) glob($directory . '/*') as $filename)
 		{
 			// not a directory and equals 'spoon.php'
 			if(!is_dir($filename) && substr($filename, -9) == 'spoon.php')

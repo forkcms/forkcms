@@ -66,18 +66,18 @@ class InstallerStep
 			set_include_path($_SESSION['path_library'] . PATH_SEPARATOR . get_include_path());
 
 			// load spoon
-			require_once $_SESSION['path_library'] .'/spoon/spoon.php';
+			require_once $_SESSION['path_library'] . '/spoon/spoon.php';
 
 			// create template
 			$this->tpl = new SpoonTemplate();
 			$this->tpl->setForceCompile(true);
-			$this->tpl->setCompileDirectory(dirname(__FILE__) .'/../cache/');
+			$this->tpl->setCompileDirectory(dirname(__FILE__) . '/../cache/');
 
 			// assign the path
 			if(defined('PATH_WWW')) $this->tpl->assign('PATH_WWW', PATH_WWW);
 
 			// create form
-			$this->frm = new SpoonForm('step'. $step, 'index.php?step='. $step);
+			$this->frm = new SpoonForm('step' . $step, 'index.php?step=' . $step);
 			$this->frm->setParameter('class', 'forkForms submitWithLink');
 			$this->frm->setParameter('id', 'installForm');
 		}
@@ -92,7 +92,7 @@ class InstallerStep
 	 */
 	protected function loadSpoon($pathLibrary)
 	{
-		require_once $pathLibrary .'/spoon/spoon.php';
+		require_once $pathLibrary . '/spoon/spoon.php';
 	}
 
 
