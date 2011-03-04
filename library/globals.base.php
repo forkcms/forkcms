@@ -54,7 +54,7 @@ define('SITE_DOMAIN', isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '<s
 // the default title
 define('SITE_DEFAULT_TITLE', '<site-default-title>');
 // the url
-define('SITE_URL', 'http://'. SITE_DOMAIN);
+define('SITE_URL', 'http://' . SITE_DOMAIN);
 // is the site multilanguage?
 define('SITE_MULTILANGUAGE', '<site-multilanguage>');
 

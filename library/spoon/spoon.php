@@ -195,7 +195,7 @@ class Spoon
 	 * Fetch an item from the registry.
 	 *
 	 * @return	mixed
-	 * @param	string $name
+	 * @param	string $name	The name of the item to fetch.
 	 */
 	public static function get($name)
 	{

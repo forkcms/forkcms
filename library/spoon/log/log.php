@@ -115,7 +115,7 @@ class SpoonLog
 	 * Set the location where to save the logfile.
 	 *
 	 * @return	SpoonLog
-	 * @param	string[optional] $path		The path where you want to store the logfile. If null it will be saved in 'spoon/log/*'
+	 * @param	string[optional] $path		The path where you want to store the logfile. If null it will be saved in 'spoon/log/*'.
 	 */
 	public function setPath($path = null)
 	{
