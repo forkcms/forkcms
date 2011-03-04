@@ -97,20 +97,20 @@ class SpoonFormFile extends SpoonFormAttributes
 		if($this->errors != '')
 		{
 			// class & classOnError defined
-			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="'. $this->attributes['class'] .' '. $this->classError .'"';
+			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="' . $this->attributes['class'] . ' ' . $this->classError . '"';
 
 			// only class defined
-			elseif($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			elseif($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 
 			// only error defined
-			elseif($this->classError != '') $value = ' class="'. $this->classError .'"';
+			elseif($this->classError != '') $value = ' class="' . $this->classError . '"';
 		}
 
 		// no errors
 		else
 		{
 			// class defined
-			if($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			if($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 		}
 
 		return $value;
@@ -148,7 +148,7 @@ class SpoonFormFile extends SpoonFormAttributes
 	 */
 	public function getFileName($includeExtension = true)
 	{
-		if($this->isFilled()) return (!$includeExtension) ? substr($_FILES[$this->attributes['name']]['name'], 0, strripos($_FILES[$this->attributes['name']]['name'], '.'. SpoonFile::getExtension($_FILES[$this->attributes['name']]['name'], false))) : $_FILES[$this->attributes['name']]['name'];
+		if($this->isFilled()) return (!$includeExtension) ? substr($_FILES[$this->attributes['name']]['name'], 0, strripos($_FILES[$this->attributes['name']]['name'], '.' . SpoonFile::getExtension($_FILES[$this->attributes['name']]['name'], false))) : $_FILES[$this->attributes['name']]['name'];
 		return '';
 	}
 
@@ -393,13 +393,13 @@ class SpoonFormFile extends SpoonFormAttributes
 		$output = '<input type="file"';
 
 		// add attributes
-		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) .' />';
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
 
 		// parse to template
 		if($template !== null)
 		{
-			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('file'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
+			$template->assign('file' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
 		}
 
 		return $output;

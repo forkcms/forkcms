@@ -119,7 +119,7 @@ class SpoonCookie
 		$actualValue = @unserialize($value);
 
 		// unserialize failed
-		if($actualValue === false && serialize(false) != $value) throw new SpoonCookieException('The value of the cookie "'. $key .'" could not be retrieved. This might indicate that it has been tampered with OR the cookie was not initially set using SpoonCookie.');
+		if($actualValue === false && serialize(false) != $value) throw new SpoonCookieException('The value of the cookie "' . $key . '" could not be retrieved. This might indicate that it has been tampered with OR the cookie was initially not set using SpoonCookie.');
 
 		// everything is fine
 		return $actualValue;

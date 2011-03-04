@@ -41,7 +41,7 @@ class SpoonHTTP
 
 		// set options
 		$options[CURLOPT_URL] = (string) $URL;
-		$options[CURLOPT_USERAGENT] = 'Spoon '. SPOON_VERSION;
+		$options[CURLOPT_USERAGENT] = 'Spoon ' . SPOON_VERSION;
 		if(ini_get('open_basedir') == '' && ini_get('safe_mode' == 'Off')) $options[CURLOPT_FOLLOWLOCATION] = true;
 		$options[CURLOPT_RETURNTRANSFER] = true;
 		$options[CURLOPT_TIMEOUT] = 10;
@@ -167,25 +167,25 @@ class SpoonHTTP
 	public static function setHeadersByCode($code = 200)
 	{
 		// allowed status codes
-		$aCodes[200] = '200 OK';
-		$aCodes[301] = '301 Moved Permanently';
-		$aCodes[302] = '302 Found';
-		$aCodes[304] = '304 Not Modified';
-		$aCodes[307] = '307 Temporary Redirect';
-		$aCodes[400] = '400 Bad Request';
-		$aCodes[401] = '401 Unauthorized';
-		$aCodes[403] = '403 Forbidden';
-		$aCodes[404] = '404 Not Found';
-		$aCodes[410] = '410 Gone';
-		$aCodes[500] = '500 Internal Server Error';
-		$aCodes[501] = '501 Not Implemented';
+		$codes[200] = '200 OK';
+		$codes[301] = '301 Moved Permanently';
+		$codes[302] = '302 Found';
+		$codes[304] = '304 Not Modified';
+		$codes[307] = '307 Temporary Redirect';
+		$codes[400] = '400 Bad Request';
+		$codes[401] = '401 Unauthorized';
+		$codes[403] = '403 Forbidden';
+		$codes[404] = '404 Not Found';
+		$codes[410] = '410 Gone';
+		$codes[500] = '500 Internal Server Error';
+		$codes[501] = '501 Not Implemented';
 
 		// code
 		$code = (int) $code;
-		if(!isset($aCodes[$code])) $code = 200;
+		if(!isset($codes[$code])) $code = 200;
 
 		// set header
-		self::setHeaders('HTTP/1.1 '. $aCodes[$code]);
+		self::setHeaders('HTTP/1.1 ' . $codes[$code]);
 	}
 }
 

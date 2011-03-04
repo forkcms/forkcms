@@ -109,7 +109,7 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 			if($key == 'class') $html .= $this->getClassHTML();
 
 			// other elements
-			else $html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+			else $html .= ' ' . $key . '="' . str_replace(array_keys($variables), array_values($variables), $value) . '"';
 		}
 
 		return $html;
@@ -157,20 +157,20 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 		if($this->errors != '')
 		{
 			// class & classOnError defined
-			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="'. $this->attributes['class'] .' '. $this->classError .'"';
+			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="' . $this->attributes['class'] . ' ' . $this->classError . '"';
 
 			// only class defined
-			elseif($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			elseif($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 
 			// only error defined
-			elseif($this->classError != '') $value = ' class="'. $this->classError .'"';
+			elseif($this->classError != '') $value = ' class="' . $this->classError . '"';
 		}
 
 		// no errors
 		else
 		{
 			// class defined
-			if($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			if($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 		}
 
 		return $value;
@@ -267,13 +267,13 @@ class SpoonFormCheckbox extends SpoonFormAttributes
 		$output = '<input type="checkbox" value="Y"';
 
 		// add attributes
-		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) .' />';
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'])) . ' />';
 
 		// template
 		if($template !== null)
 		{
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('chk' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
+			$template->assign('chk' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error', ($this->errors != '') ? '<span class="formError"> ' . $this->errors . ' </span>' : '');
 		}
 
 		return $output;
