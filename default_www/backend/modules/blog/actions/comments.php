@@ -103,8 +103,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('moderation' => BL::lbl('MoveToModeration'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'spam');
 		$ddmMassAction->setAttribute('id', 'actionPublished');
-		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
-		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
+		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeletePublished'));
+		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamPublished'));
 		$this->dgPublished->setMassAction($ddmMassAction);
 
 		// datagrid for the comments that are awaiting moderation
@@ -141,8 +141,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'published');
 		$ddmMassAction->setAttribute('id', 'actionModeration');
-		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
-		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
+		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
+		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamModeration'));
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		/*
@@ -180,8 +180,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'moderation' => BL::lbl('MoveToModeration'), 'delete' => BL::lbl('Delete')), 'published');
 		$ddmMassAction->setAttribute('id', 'actionSpam');
-		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
-		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
+		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteSpam'));
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 
