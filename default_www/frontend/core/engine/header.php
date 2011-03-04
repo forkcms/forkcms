@@ -123,7 +123,7 @@ class FrontendHeader extends FrontendBaseObject
 			if(strpos($file, 'frontend/core/') !== false)
 			{
 				// path to possible theme css
-				$themeCSS = str_replace('frontend/core/layout', 'frontend/themes/'. $theme .'/core', $file);
+				$themeCSS = str_replace('frontend/core/layout', 'frontend/themes/' . $theme . '/core', $file);
 
 				// does this css exist?
 				if(SpoonFile::exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
@@ -133,7 +133,7 @@ class FrontendHeader extends FrontendBaseObject
 			else
 			{
 				// path to possible theme css
-				$themeCSS = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/'. $theme .'/modules', ''), $file);
+				$themeCSS = str_replace(array('frontend/modules', 'layout/'), array('frontend/themes/' . $theme . '/modules', ''), $file);
 
 				// does this css exist
 				if(SpoonFile::exists(PATH_WWW . $themeCSS)) $file = $themeCSS;
@@ -192,7 +192,7 @@ class FrontendHeader extends FrontendBaseObject
 			if(strpos($file, 'frontend/core/') !== false)
 			{
 				// path to possible theme js
-				$themeJS = str_replace('frontend/core', 'frontend/themes/'. $theme .'/core', $file);
+				$themeJS = str_replace('frontend/core', 'frontend/themes/' . $theme . '/core', $file);
 
 				// does this js exist?
 				if(SpoonFile::exists(PATH_WWW . $themeJS)) $file = $themeJS;
@@ -202,7 +202,7 @@ class FrontendHeader extends FrontendBaseObject
 			else
 			{
 				// path to possible theme js
-				$themeJS = str_replace('frontend/modules', 'frontend/themes/'. $theme .'/modules', $file);
+				$themeJS = str_replace('frontend/modules', 'frontend/themes/' . $theme . '/modules', $file);
 
 				// does this js exist
 				if(SpoonFile::exists(PATH_WWW . $themeJS)) $file = $themeJS;
@@ -222,13 +222,13 @@ class FrontendHeader extends FrontendBaseObject
 			$chunks = explode('/', str_replace(array('/frontend/modules/', '/frontend/core'), '', $file));
 
 			// validate
-			if(!isset($chunks[2])) throw new FrontendException('Invalid file ('. $file .').');
+			if(!isset($chunks[2])) throw new FrontendException('Invalid file (' . $file . ').');
 
 			// reset module for core
 			if($chunks[0] == '') $chunks[0] = 'core';
 
 			// alter the file
-			$file = '/frontend/js.php?module='. $chunks[0] .'&amp;file='. $chunks[2] .'&amp;language='. FRONTEND_LANGUAGE;
+			$file = '/frontend/js.php?module=' . $chunks[0] . '&amp;file=' . $chunks[2] . '&amp;language=' . FRONTEND_LANGUAGE;
 		}
 
 		// try to minify
@@ -270,18 +270,18 @@ class FrontendHeader extends FrontendBaseObject
 		foreach($this->cssFiles as $file)
 		{
 			// debug should be the last file
-			if(strpos($file['file'], 'debug.css') !== false) $aTemp['e'. $i][] = $file;
+			if(strpos($file['file'], 'debug.css') !== false) $aTemp['e' . $i][] = $file;
 
 			// if condition is not empty, add to lowest key
-			elseif($file['condition'] != '') $aTemp['y'. $i][] = $file;
+			elseif($file['condition'] != '') $aTemp['y' . $i][] = $file;
 
 			else
 			{
 				// if media == screen, add to highest key
-				if($file['media'] == 'screen') $aTemp['a'. $i][] = $file;
+				if($file['media'] == 'screen') $aTemp['a' . $i][] = $file;
 
 				// fallback
-				else $aTemp['b'. $file['media'] . $i][] = $file;
+				else $aTemp['b' . $file['media'] . $i][] = $file;
 
 				// increase
 				$i++;
@@ -385,9 +385,9 @@ class FrontendHeader extends FrontendBaseObject
 	private function minifyCSS($file)
 	{
 		// create unique filename
-		$fileName = md5($file) .'.css';
-		$finalURL = FRONTEND_CACHE_URL .'/minified_css/'. $fileName;
-		$finalPath = FRONTEND_CACHE_PATH .'/minified_css/'. $fileName;
+		$fileName = md5($file) . '.css';
+		$finalURL = FRONTEND_CACHE_URL . '/minified_css/' . $fileName;
+		$finalPath = FRONTEND_CACHE_PATH . '/minified_css/' . $fileName;
 
 		// file already exists (if SPOON_DEBUG is true, we should reminify every time)
 		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
@@ -403,7 +403,7 @@ class FrontendHeader extends FrontendBaseObject
 		$pattern .= 	'("|\'){0,1}';
 		$pattern .= 	'\)/iUs';
 
-		$content = preg_replace($pattern, 'url($3'. dirname($file) .'/$2$3)', $content);
+		$content = preg_replace($pattern, 'url($3' . dirname($file) . '/$2$3)', $content);
 
 		// remove comments
 		$content = preg_replace('/\/\*(.*)\*\//iUs', '', $content);
@@ -432,7 +432,7 @@ class FrontendHeader extends FrontendBaseObject
 				$tempContent = preg_replace('/\n/iU', ' ', $tempContent);
 
 				// replace the new block in the general content
-				$content = str_replace($matches[0][$key], '{'. $tempContent .'}', $content);
+				$content = str_replace($matches[0][$key], '{' . $tempContent . '}', $content);
 			}
 		}
 
@@ -462,9 +462,9 @@ class FrontendHeader extends FrontendBaseObject
 	private function minifyJavascript($file)
 	{
 		// create unique filename
-		$fileName = md5($file) .'.js';
-		$finalURL = FRONTEND_CACHE_URL .'/minified_js/'. $fileName;
-		$finalPath = FRONTEND_CACHE_PATH .'/minified_js/'. $fileName;
+		$fileName = md5($file) . '.js';
+		$finalURL = FRONTEND_CACHE_URL . '/minified_js/' . $fileName;
+		$finalPath = FRONTEND_CACHE_PATH . '/minified_js/' . $fileName;
 
 		// file already exists (if SPOON_DEBUG is true, we should reminify every time
 		if(SpoonFile::exists($finalPath) && !SPOON_DEBUG) return $finalURL;
@@ -518,7 +518,7 @@ class FrontendHeader extends FrontendBaseObject
 			foreach($existingCSSFiles as $file)
 			{
 				// add lastmodified time
-				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
+				if($file['add_timestamp'] !== false) $file['file'] .= (strpos($file['file'], '?') !== false) ? '&m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
 
 				// add
 				$cssFiles[] = $file;
@@ -549,12 +549,12 @@ class FrontendHeader extends FrontendBaseObject
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] .'&amp;m='. time());
+					if(substr($file['file'], 0, 11) == '/frontend/js') $javascriptFiles[] = array('file' => $file['file'] . '&amp;m=' . time());
 
 					// add lastmodified time
 					else
 					{
-						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m='. LAST_MODIFIED_TIME : '?m='. LAST_MODIFIED_TIME;
+						$modifiedTime = (strpos($file['file'], '?') !== false) ? '&amp;m=' . LAST_MODIFIED_TIME : '?m=' . LAST_MODIFIED_TIME;
 						$javascriptFiles[] = array('file' => $file['file'] . $modifiedTime);
 					}
 				}
@@ -565,7 +565,7 @@ class FrontendHeader extends FrontendBaseObject
 		$this->tpl->assign('javascriptFiles', $javascriptFiles);
 
 		// assign site title
-		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+		$this->tpl->assign('siteTitle', (string) FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 
 		// assign site wide html
 		$this->tpl->assign('siteHTMLHeader', (string) FrontendModel::getModuleSetting('core', 'site_html_header', null));
@@ -607,7 +607,7 @@ class FrontendHeader extends FrontendBaseObject
 			if($this->metaDescription == '') $this->metaDescription = $value;
 
 			// append to current value
-			else $this->metaDescription .= ', '. $value;
+			else $this->metaDescription .= ', ' . $value;
 		}
 	}
 
@@ -635,7 +635,7 @@ class FrontendHeader extends FrontendBaseObject
 			if($this->metaKeywords == '') $this->metaKeywords = $value;
 
 			// append to current value
-			else $this->metaKeywords .= ', '. $value;
+			else $this->metaKeywords .= ', ' . $value;
 		}
 	}
 
@@ -660,13 +660,13 @@ class FrontendHeader extends FrontendBaseObject
 		else
 		{
 			// empty value given?
-			if(empty($value)) $this->pageTitle = FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+			if(empty($value)) $this->pageTitle = FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 
 			// value isn't empty
 			else
 			{
 				// if the current pagetitle is empty we should add the sitetitle
-				if($this->pageTitle == '') $this->pageTitle = $value . SITE_TITLE_SEPERATOR . FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+				if($this->pageTitle == '') $this->pageTitle = $value . SITE_TITLE_SEPERATOR . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 
 				// prepend the value to the current pagetitle
 				else $this->pageTitle = $value . SITE_TITLE_SEPERATOR . $this->pageTitle;

@@ -33,10 +33,10 @@ class FrontendTemplate extends SpoonTemplate
 		if($addToReference) Spoon::set('template', $this);
 
 		// set cache directory
-		$this->setCacheDirectory(FRONTEND_CACHE_PATH .'/cached_templates');
+		$this->setCacheDirectory(FRONTEND_CACHE_PATH . '/cached_templates');
 
 		// set compile directory
-		$this->setCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
+		$this->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
 
 		// when debugging the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
@@ -133,10 +133,10 @@ class FrontendTemplate extends SpoonTemplate
 			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
 
 			// theme not yet specified
-			if(stripos($template, 'frontend/themes/'. $theme) === false)
+			if(stripos($template, 'frontend/themes/' . $theme) === false)
 			{
 				// add theme location
-				$themeTemplate = str_replace(array('frontend', 'layout/'), array('frontend/themes/'. $theme, ''), $template);
+				$themeTemplate = str_replace(array('frontend', 'layout/'), array('frontend/themes/' . $theme, ''), $template);
 
 				// does this template exist
 				if(SpoonFile::exists($themeTemplate)) $template = $themeTemplate;
@@ -144,7 +144,7 @@ class FrontendTemplate extends SpoonTemplate
 		}
 
 		// check if the file exists
-		if(!SpoonFile::exists($template)) throw new FrontendException('The template ('. $template .') doesn\'t exists.');
+		if(!SpoonFile::exists($template)) throw new FrontendException('The template (' . $template . ') doesn\'t exists.');
 
 		// return template path
 		return $template;
@@ -247,10 +247,10 @@ class FrontendTemplate extends SpoonTemplate
 
 		// aliases
 		$this->assign('LANGUAGE', FRONTEND_LANGUAGE);
-		$this->assign('is'. strtoupper(FRONTEND_LANGUAGE), true);
+		$this->assign('is' . strtoupper(FRONTEND_LANGUAGE), true);
 
 		// settings
-		$this->assign('SITE_TITLE', FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+		$this->assign('SITE_TITLE', FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 
 		// facebook stuff
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null) $this->assign('FACEBOOK_ADMIN_IDS', FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null));
@@ -262,8 +262,8 @@ class FrontendTemplate extends SpoonTemplate
 		if(FrontendModel::getModuleSetting('core', 'theme') !== null)
 		{
 			$this->assign('THEME', FrontendModel::getModuleSetting('core', 'theme', 'default'));
-			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default'));
-			$this->assign('THEME_URL', '/frontend/themes/'. FrontendModel::getModuleSetting('core', 'theme', 'default'));
+			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
+			$this->assign('THEME_URL', '/frontend/themes/' . FrontendModel::getModuleSetting('core', 'theme', 'default'));
 		}
 	}
 
@@ -335,10 +335,10 @@ class FrontendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(FRONTEND_LANGUAGE, true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $locale['locMonthLong'. ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $locale['locMonthShort'. ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $locale['locDayLong'. ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $locale['locDayShort'. ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $locale['locMonthLong' . ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $locale['locMonthShort' . ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $locale['locDayLong' . ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $locale['locDayShort' . ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($locale);
@@ -392,7 +392,7 @@ class FrontendTemplateModifiers
 		$var = preg_replace('/(?<!.)(\r\n|\r|\n){3,}$/m', '', $var);
 
 		// replace br's into p's
-		$var = '<p>'. str_replace("\n", '</p><p>', $var) .'</p>';
+		$var = '<p>' . str_replace("\n", '</p><p>', $var) . '</p>';
 
 		// cleanup
 		$var = str_replace("\n", '', $var);
@@ -434,7 +434,7 @@ class FrontendTemplateModifiers
 				$decimals = ($decimals === null) ? 2 : (int) $decimals;
 
 				// format as Euro
-				return '€ '. number_format((float) $var, $decimals, ',', ' ');
+				return '€ ' . number_format((float) $var, $decimals, ',', ' ');
 			break;
 		}
 	}
@@ -574,7 +574,7 @@ class FrontendTemplateModifiers
 		$parentURL = '';
 
 		// build url
-		for($i = 0; $i < $startDepth - 1; $i++) $parentURL .= $chunks[$i] .'/';
+		for($i = 0; $i < $startDepth - 1; $i++) $parentURL .= $chunks[$i] . '/';
 
 		// get parent ID
 		$parentID = FrontendNavigation::getPageId($parentURL);
@@ -728,7 +728,7 @@ class FrontendTemplateModifiers
 		if($var == 0) return '';
 
 		// return
-		return '<abbr title="'. SpoonDate::getDate(FrontendModel::getModuleSetting('core', 'date_format_long') .', '. FrontendModel::getModuleSetting('core', 'time_format'), $var, FRONTEND_LANGUAGE) .'">'. SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) .'</abbr>';
+		return '<abbr title="' . SpoonDate::getDate(FrontendModel::getModuleSetting('core', 'date_format_long') . ', ' . FrontendModel::getModuleSetting('core', 'time_format'), $var, FRONTEND_LANGUAGE) . '">' . SpoonDate::getTimeAgo($var, FRONTEND_LANGUAGE) . '</abbr>';
 	}
 
 

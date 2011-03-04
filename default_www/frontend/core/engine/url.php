@@ -68,7 +68,7 @@ class FrontendURL
 		$this->processQueryString();
 
 		// set constant
-		define('SELF', SITE_URL .'/'. $this->queryString);
+		define('SELF', SITE_URL . '/' . $this->queryString);
 	}
 
 
@@ -195,7 +195,7 @@ class FrontendURL
 			$get = explode('&', $getChunks[1]);
 
 			// remove from querystring
-			$queryString = str_replace('?'. $getChunks[1], '', $this->getQueryString());
+			$queryString = str_replace('?' . $getChunks[1], '', $this->getQueryString());
 
 			// loop pairs
 			foreach($get as $getItem)
@@ -245,7 +245,7 @@ class FrontendURL
 				try
 				{
 					// set cookie
-					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
+					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.' . $this->getDomain());
 				}
 
 				// fetch failed cookie
@@ -281,7 +281,7 @@ class FrontendURL
 				try
 				{
 					// set cookie
-					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.'. $this->getDomain());
+					SpoonCookie::set('frontend_language', $language, (7 * 24 * 60 * 60), '/', '.' . $this->getDomain());
 				}
 
 				// fetch failed cookie
@@ -298,7 +298,7 @@ class FrontendURL
 			if($mustRedirect)
 			{
 				// build URL
-				$URL = rtrim('/'. $language .'/'. $this->getQueryString(), '/');
+				$URL = rtrim('/' . $language . '/' . $this->getQueryString(), '/');
 
 				// set header & redirect
 				SpoonHTTP::redirect($URL, 301);
@@ -338,7 +338,7 @@ class FrontendURL
 			$URL = FrontendNavigation::getURL(404);
 
 			// remove language
-			if(SITE_MULTILANGUAGE) $URL = str_replace('/'. $language, '', $URL);
+			if(SITE_MULTILANGUAGE) $URL = str_replace('/' . $language, '', $URL);
 		}
 
 		// set pages
@@ -381,7 +381,7 @@ class FrontendURL
 			$URL = FrontendNavigation::getURL(404);
 
 			// remove language
-			if(SITE_MULTILANGUAGE) $URL = trim(str_replace('/'. $language, '', $URL), '/');
+			if(SITE_MULTILANGUAGE) $URL = trim(str_replace('/' . $language, '', $URL), '/');
 
 			// currently not in the homepage
 			if($URL != '')

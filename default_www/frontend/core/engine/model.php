@@ -43,7 +43,7 @@ class FrontendModel
 			array_pop($chunks);
 
 			// join together, and increment the last one
-			$string = implode('-', $chunks ) .'-'. ((int) $last + 1);
+			$string = implode('-', $chunks ) . '-' . ((int) $last + 1);
 		}
 
 		// not numeric, so add -2
@@ -81,17 +81,17 @@ class FrontendModel
 			$URL = $chunks[0];
 
 			// store has
-			$hash = '#'. $chunks[1];
+			$hash = '#' . $chunks[1];
 		}
 
 		// build querystring
 		$queryString = http_build_query($parameters, null, '&amp;');
 
 		// already GET parameters?
-		if(mb_strpos($URL, '?') !== false) return $URL .= '&'. $queryString . $hash;
+		if(mb_strpos($URL, '?') !== false) return $URL .= '&' . $queryString . $hash;
 
 		// no GET-parameters defined before
-		else return $URL .= '?'. $queryString . $hash;
+		else return $URL .= '?' . $queryString . $hash;
 	}
 
 
@@ -331,7 +331,7 @@ class FrontendModel
 		if($akismetKey === '') return false;
 
 		// require the class
-		require_once PATH_LIBRARY .'/external/akismet.php';
+		require_once PATH_LIBRARY . '/external/akismet.php';
 
 		// create new instance
 		$akismet = new Akismet($akismetKey, SITE_URL);
@@ -404,7 +404,7 @@ class FrontendModel
 				if(!empty($tokens))
 				{
 					// require the class
-					require_once PATH_LIBRARY .'/external/fork_api.php';
+					require_once PATH_LIBRARY . '/external/fork_api.php';
 
 					// create instance
 					$forkAPI = new ForkAPI($publicKey, $privateKey);
@@ -426,7 +426,7 @@ class FrontendModel
 								$row = $db->getRecord('SELECT i.*
 														FROM users_settings AS i
 														WHERE i.name = ? AND i.value LIKE ?',
-														array('apple_device_token', '%'. $deviceToken .'%'));
+														array('apple_device_token', '%' . $deviceToken . '%'));
 
 								// any rows?
 								if(!empty($row))

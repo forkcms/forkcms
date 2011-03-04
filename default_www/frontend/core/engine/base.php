@@ -115,10 +115,10 @@ class FrontendBaseConfig
 		$this->module = (string) $module;
 
 		// check if model exists
-		if(SpoonFile::exists(FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php'))
+		if(SpoonFile::exists(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
 		{
 			// the model exists, so we require it
-			require_once FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php';
+			require_once FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
 		}
 
 		// read the possible actions based on the files
@@ -179,10 +179,10 @@ class FrontendBaseConfig
 	protected function setPossibleActions()
 	{
 		// build path to the module
-		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList($frontendModulePath .'/actions', '/(.*).php/');
+		$actionFiles = (array) SpoonFile::getList($frontendModulePath . '/actions', '/(.*).php/');
 
 		// loop filelist
 		foreach($actionFiles as $file)
@@ -195,7 +195,7 @@ class FrontendBaseConfig
 		}
 
 		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList($frontendModulePath .'/ajax', '/(.*).php/');
+		$AJAXActionFiles = (array) SpoonFile::getList($frontendModulePath . '/ajax', '/(.*).php/');
 
 		// loop filelist
 		foreach($AJAXActionFiles as $file)
@@ -344,7 +344,7 @@ class FrontendBaseBlock
 		$overwritePath = (bool) $overwritePath;
 
 		// use module path
-		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
+		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
 
 		// add css to the header
 		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
@@ -368,7 +368,7 @@ class FrontendBaseBlock
 		$overwritePath = (bool) $overwritePath;
 
 		// use module path
-		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/js/'. $file;
+		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
 		$this->header->addJavascript($file, $minify, $parseThroughPHP, $addTimestamp);
@@ -384,16 +384,16 @@ class FrontendBaseBlock
 	public function execute()
 	{
 		// build path to the module
-		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// buil URL to the module
-		$frontendModuleURL = '/frontend/modules/'. $this->getModule() .'/js';
+		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getModule() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getAction() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
 	}
 
 
@@ -457,10 +457,10 @@ class FrontendBaseBlock
 		if($template === null)
 		{
 			// build path to the module
-			$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+			$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 			// build template path
-			$template = $frontendModulePath .'/layout/templates/'. $this->getAction() .'.tpl';
+			$template = $frontendModulePath . '/layout/templates/' . $this->getAction() . '.tpl';
 		}
 
 		// redefine
@@ -539,8 +539,8 @@ class FrontendBaseBlock
 		if($this->pagination['requested_page'] > 1)
 		{
 			// build URL
-			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] - 1);
-			else $URL = $this->pagination['url'] .'&amp;page='. ($this->pagination['requested_page'] - 1);
+			if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+			else $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
 
 			// set
 			$pagination['show_previous'] = true;
@@ -558,8 +558,8 @@ class FrontendBaseBlock
 			for($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++)
 			{
 				// build URL
-				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-				else $URL = $this->pagination['url'] .'&amp;page='. $i;
+				if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
+				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
 				$pagination['first'][] = array('url' => $URL, 'label' => $i);
@@ -573,8 +573,8 @@ class FrontendBaseBlock
 			$current = ($i == $this->pagination['requested_page']);
 
 			// build URL
-			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-			else $URL = $this->pagination['url'] .'&amp;page='. $i;
+			if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
+			else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 			// add
 			$pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
@@ -591,8 +591,8 @@ class FrontendBaseBlock
 			for($i = $pagesLastStart; $i <= $pagesLastEnd; $i++)
 			{
 				// build URL
-				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-				else $URL = $this->pagination['url'] .'&amp;page='. $i;
+				if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
+				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
 				$pagination['last'][] = array('url' => $URL, 'label' => $i);
@@ -603,8 +603,8 @@ class FrontendBaseBlock
 		if($this->pagination['requested_page'] < $this->pagination['num_pages'])
 		{
 			// build URL
-			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] + 1);
-			else $URL = $this->pagination['url'] .'&amp;page='. ($this->pagination['requested_page'] + 1);
+			if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
+			else $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
 
 			// set
 			$pagination['show_next'] = true;
@@ -811,7 +811,7 @@ class FrontendBaseWidget
 		$overwritePath = (bool) $overwritePath;
 
 		// use module path
-		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/layout/css/'. $file;
+		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
 
 		// add css to the header
 		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
@@ -834,7 +834,7 @@ class FrontendBaseWidget
 		$overwritePath = (bool) $overwritePath;
 
 		// use module path
-		if(!$overwritePath) $file = '/frontend/modules/'. $this->getModule() .'/js/'. $file;
+		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/js/' . $file;
 
 		// add js to the header
 		$this->header->addJavascript($file, $minify, $parseThroughPHP);
@@ -850,16 +850,16 @@ class FrontendBaseWidget
 	public function execute()
 	{
 		// build path to the module
-		$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+		$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 		// buil URL to the module
-		$frontendModuleURL = '/frontend/modules/'. $this->getModule() .'/js';
+		$frontendModuleURL = '/frontend/modules/' . $this->getModule() . '/js';
 
 		// add javascriptfile with same name as module (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getModule() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getModule() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getModule() . '.js', false, true);
 
 		// add javascriptfile with same name as the action (if the file exists)
-		if(SpoonFile::exists($frontendModulePath .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($frontendModuleURL .'/'. $this->getAction() .'.js', false, true);
+		if(SpoonFile::exists($frontendModulePath . '/js/' . $this->getAction() . '.js')) $this->header->addJavascript($frontendModuleURL . '/' . $this->getAction() . '.js', false, true);
 	}
 
 
@@ -908,10 +908,10 @@ class FrontendBaseWidget
 		if($path === null)
 		{
 			// build path to the module
-			$frontendModulePath = FRONTEND_MODULES_PATH .'/'. $this->getModule();
+			$frontendModulePath = FRONTEND_MODULES_PATH . '/' . $this->getModule();
 
 			// build template path
-			$path = $frontendModulePath .'/layout/widgets/'. $this->getAction() .'.tpl';
+			$path = $frontendModulePath . '/layout/widgets/' . $this->getAction() . '.tpl';
 		}
 
 		// redefine

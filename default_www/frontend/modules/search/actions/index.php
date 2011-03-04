@@ -87,7 +87,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		$this->requestedPage = $this->URL->getParameter('page', 'int', 1);
 		$this->limit = FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
 		$this->offset = ($this->requestedPage * $this->limit) - $this->limit;
-		$this->cacheFile = FRONTEND_CACHE_PATH .'/'. $this->getModule() .'/'. FRONTEND_LANGUAGE .'_'. md5($this->term) .'_'. $this->offset .'_'. $this->limit .'.php';
+		$this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' . FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' . $this->offset . '_' . $this->limit . '.php';
 
 		// load the cached data
 		if(!$this->getCachedData())
@@ -172,7 +172,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		if(!$this->term) return;
 
 		// set url
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') .'?form=search&q='. $this->term;
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term;
 
 		// populate calculated fields in pagination
 		$this->pagination['limit'] = $this->limit;
@@ -197,7 +197,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 		if(!SPOON_DEBUG)
 		{
 			// set cache content
-			SpoonFile::setContent($this->cacheFile, "<?php\n".'$pagination = '. var_export($this->pagination, true) .";\n".'$items = '. var_export($this->items, true) .";\n?>");
+			SpoonFile::setContent($this->cacheFile, "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>");
 		}
 	}
 
@@ -237,7 +237,7 @@ class FrontendSearchIndex extends FrontendBaseBlock
 			if(!isset($item['full_url'])) continue;
 
 			// build utm array
-			$utm['utm_source'] = SpoonFilter::urlise(FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+			$utm['utm_source'] = SpoonFilter::urlise(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 			$utm['utm_medium'] = 'fork-search';
 			$utm['utm_term'] = $this->term;
 

@@ -37,8 +37,8 @@ class FrontendMailmotorModel
 		$emails = (!is_array($emails)) ? array($emails) : $emails;
 
 		// delete records
-		$db->delete('mailmotor_addresses', 'email IN("'. implode('","', $emails) .'")');
-		$db->delete('mailmotor_addresses_groups', 'email IN("'. implode('","', $emails) .'")');
+		$db->delete('mailmotor_addresses', 'email IN("' . implode('","', $emails) . '")');
+		$db->delete('mailmotor_addresses_groups', 'email IN("' . implode('","', $emails) . '")');
 	}
 
 
@@ -169,7 +169,7 @@ class FrontendMailmotorModel
 		$forCM = SpoonFilter::getValue($forCM, array(false, true), false, 'int');
 
 		// return the URL
-		return SITE_URL . FrontendNavigation::getURLForBlock('mailmotor', 'detail') .'/'. $id .'?type='. $contentType . (($forCM == 1) ? '&cm='. $forCM : '');
+		return SITE_URL . FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/' . $id . '?type=' . $contentType . (($forCM == 1) ? '&cm=' . $forCM : '');
 	}
 
 

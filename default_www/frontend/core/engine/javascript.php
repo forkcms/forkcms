@@ -62,8 +62,8 @@ class FrontendJavascript
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
 		// output the template
-		if($this->module == 'core') $tpl->display(FRONTEND_CORE_PATH .'/js/'. $this->getFile(), true);
-		else $tpl->display(FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->getFile(), true);
+		if($this->module == 'core') $tpl->display(FRONTEND_CORE_PATH . '/js/' . $this->getFile(), true);
+		else $tpl->display(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile(), true);
 	}
 
 
@@ -115,7 +115,7 @@ class FrontendJavascript
 		if($this->module == 'core')
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(FRONTEND_CORE_PATH .'/js/'. $this->filename))
+			if(!SpoonFile::exists(FRONTEND_CORE_PATH . '/js/' . $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);
@@ -132,7 +132,7 @@ class FrontendJavascript
 		else
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->filename))
+			if(!SpoonFile::exists(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);

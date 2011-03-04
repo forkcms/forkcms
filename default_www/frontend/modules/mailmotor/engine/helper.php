@@ -62,7 +62,7 @@ class FrontendMailmotorCMHelper
 		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
+			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
 				throw new SpoonFileException('The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external');

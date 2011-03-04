@@ -123,8 +123,8 @@ class FrontendContactIndex extends FrontendBaseBlock
 				try
 				{
 					// set cookies
-					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
+					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
 				}
 				catch(Exception $e)
 				{
@@ -134,10 +134,10 @@ class FrontendContactIndex extends FrontendBaseBlock
 				try
 				{
 					// add email
-					FrontendMailer::addEmail(FL::msg('ContactSubject') .': '. $author, FRONTEND_MODULES_PATH .'/contact/layout/templates/mails/contact.tpl', $item, null, null, null, null, $email, $author);
+					FrontendMailer::addEmail(FL::msg('ContactSubject') . ': ' . $author, FRONTEND_MODULES_PATH . '/contact/layout/templates/mails/contact.tpl', $item, null, null, null, null, $email, $author);
 
 					// redirect
-					$this->redirect(FrontendNavigation::getURLForBlock('contact') .'?sent=true');
+					$this->redirect(FrontendNavigation::getURLForBlock('contact') . '?sent=true');
 				}
 				catch(Exception $e)
 				{
