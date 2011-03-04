@@ -1,3 +1,2 @@
-* Blog: categories should use meta
 * Mailmotor: update code to work with new API
 * ...
