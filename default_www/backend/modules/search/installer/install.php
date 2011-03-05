@@ -20,7 +20,7 @@ class SearchInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'search' as a module
 		$this->addModule('search', 'The search module.');
@@ -67,7 +67,7 @@ class SearchInstall extends ModuleInstaller
 		$this->searchPages();
 
 		// create module cache path
-		if(!SpoonDirectory::exists(PATH_WWW .'/frontend/cache/search')) SpoonDirectory::create(PATH_WWW .'/frontend/cache/search');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/cache/search')) SpoonDirectory::create(PATH_WWW . '/frontend/cache/search');
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht.');

@@ -68,7 +68,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			$this->loadWizardSteps();
 
 			// load the appropriate step
-			$this->{'loadStep'. $this->stepId}();
+			$this->{'loadStep' . $this->stepId}();
 
 			// parse the datagrid
 			$this->parse();
@@ -78,7 +78,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
 	}
 
 
@@ -94,7 +94,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$this->record = (array) BackendMailmotorModel::getMailing($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=non-existing');
+		if(empty($this->record) || $this->record['status'] == 'sent') $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=non-existing');
 	}
 
 
@@ -224,7 +224,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$templates = BackendMailmotorModel::getTemplatesForCheckboxes($this->record['language']);
 
 		// no templates found
-		if(empty($templates)) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=1&amp;error=no-templates');
+		if(empty($templates)) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=1&amp;error=no-templates');
 
 		// loop the templates
 		foreach($templates as &$record)
@@ -255,7 +255,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadFormForStep3()
 	{
 		// check if we have to redirect back to step 2 (template is not set)
-		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=2&amp;error=complete-step-2');
+		if(empty($this->record['template'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=2&amp;error=complete-step-2');
 
 		// check if we should show the plain text box
 		$this->showPlainTextBox = BackendModel::getModuleSetting('mailmotor', 'plain_text_editable');
@@ -285,7 +285,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadFormForStep4()
 	{
 		// check if we have to redirect back to step 3 (HTML content is not set)
-		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3&amp;error=complete-step-3');
+		if(empty($this->record['content_html'])) $this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=3&amp;error=complete-step-3');
 
 		// get preview URL
 		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
@@ -377,7 +377,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 	private function loadWizardSteps()
 	{
 		// check if this template path exists
-		$templatePath = SpoonDirectory::exists(BACKEND_MODULE_PATH .'/templates/'. $this->record['language'] .'/'. $this->record['template']);
+		$templatePath = SpoonDirectory::exists(BACKEND_MODULE_PATH . '/templates/' . $this->record['language'] . '/' . $this->record['template']);
 
 		// set wizard values
 		$wizard = array();
@@ -496,7 +496,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				BackendMailmotorModel::updateGroupsForMailing($this->id, $values['groups']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=2');
 			}
 		}
 	}
@@ -537,7 +537,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				BackendMailmotorModel::updateMailing($variables);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=3');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=3');
 			}
 		}
 	}
@@ -586,9 +586,9 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				$replyToEmail = empty($this->record['reply_to_email']) ? BackendModel::getModuleSetting('mailmotor', 'reply_to_email') : $this->record['reply_to_email'];
 
 				// build URL
-				$url = BackendModel::createURLForAction('edit') .'&amp;id='. $this->id .'&amp;step=4';
+				$url = BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=4';
 
-				$subject = '[TEST] '. $this->record['subject'];
+				$subject = '[TEST] ' . $this->record['subject'];
 				$HTML = $this->record['data']['full_content_html'];
 				$plainText = (!empty($this->record['content_plain'])) ? $this->record['content_plain'] : null;
 
@@ -596,7 +596,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 				BackendMailer::addEmail($subject, $HTML, null, $txtEmail->getValue(), null, $fromEmail, $fromName, $replyToEmail, null, false, null, true);
 
 				// send the preview
-				$this->redirect($url .'&amp;report=preview-sent&amp;var='. $txtEmail->getValue());
+				$this->redirect($url . '&amp;report=preview-sent&amp;var=' . $txtEmail->getValue());
 			}
 		}
 	}

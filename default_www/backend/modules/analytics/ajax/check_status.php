@@ -29,7 +29,7 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 		if($page == '' || $identifier == '') $this->output(self::BAD_REQUEST, null, 'No page provided.');
 
 		// init vars
-		$filename = BACKEND_CACHE_PATH .'/analytics/'. $page .'_'. $identifier .'.txt';
+		$filename = BACKEND_CACHE_PATH . '/analytics/' . $page . '_' . $identifier . '.txt';
 
 		// does the temporary file still exits?
 		$status = SpoonFile::getContent($filename);
@@ -61,10 +61,10 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			}
 
 			// change file content to increase counter
-			SpoonFile::setContent($filename, 'busy'. $counter);
+			SpoonFile::setContent($filename, 'busy' . $counter);
 
 			// return status
-			$this->output(self::OK, array('status' => 'busy'), 'Data is being retrieved. ('. $counter .')');
+			$this->output(self::OK, array('status' => 'busy'), 'Data is being retrieved. (' . $counter . ')');
 		}
 
 		// unauthorized status
@@ -116,10 +116,10 @@ class BackendAnalyticsAjaxCheckStatus extends BackendBaseAJAXAction
 			}
 
 			// change file content to increase counter
-			SpoonFile::setContent($filename, 'missing'. $counter);
+			SpoonFile::setContent($filename, 'missing' . $counter);
 
 			// return status
-			$this->output(self::OK, array('status' => 'busy'), 'Temporary file was still in status missing. ('. $counter .')');
+			$this->output(self::OK, array('status' => 'busy'), 'Temporary file was still in status missing. (' . $counter . ')');
 		}
 
 		/* FALLBACK - SOMETHING WENT WRONG */

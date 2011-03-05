@@ -21,7 +21,7 @@ class LocaleInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'locale' as a module
 		$this->addModule('locale', 'The module to manage your website/cms locale.');

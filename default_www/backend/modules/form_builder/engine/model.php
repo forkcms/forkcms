@@ -45,7 +45,7 @@ class BackendFormBuilderModel
 		if($timestamp >= $todayStart)
 		{
 			// today
-			if($hours >= 1) return BL::getLabel('Today') .' '. date('H:i', $timestamp);
+			if($hours >= 1) return BL::getLabel('Today') . ' ' . date('H:i', $timestamp);
 
 			// more then one minute
 			elseif($minutes > 1) return sprintf(BL::getLabel('MinutesAgo'), $minutes);
@@ -61,7 +61,7 @@ class BackendFormBuilderModel
 		}
 
 		// yesterday
-		elseif($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) return BL::getLabel('Yesterday') .' '. date('H:i', $timestamp);
+		elseif($timestamp < $todayStart && $timestamp >= ($todayStart - 86400)) return BL::getLabel('Yesterday') . ' ' . date('H:i', $timestamp);
 
 		// older
 		else return date('d/m/Y H:i', $timestamp);
@@ -85,7 +85,7 @@ class BackendFormBuilderModel
 			$id++;
 
 			// create identifier
-			$identifier = 'form'. $id;
+			$identifier = 'form' . $id;
 		}
 
 		// keep trying till its unique
@@ -118,7 +118,7 @@ class BackendFormBuilderModel
 		{
 			// delete all fields
 			$db->delete('forms_fields', 'form_id = ?', $id);
-			$db->delete('forms_fields_validation', 'field_id IN('. implode(',', $fieldIds) .');');
+			$db->delete('forms_fields_validation', 'field_id IN(' . implode(',', $fieldIds) . ');');
 		}
 
 		// get data ids
@@ -147,8 +147,8 @@ class BackendFormBuilderModel
 		$db = BackendModel::getDB(true);
 
 		// update record
-		$db->delete('forms_data', 'id IN('. implode(',', $ids) .')');
-		$db->delete('forms_data_fields', 'data_id IN('. implode(',', $ids) .')');
+		$db->delete('forms_data', 'id IN(' . implode(',', $ids) . ')');
+		$db->delete('forms_data_fields', 'data_id IN(' . implode(',', $ids) . ')');
 	}
 
 
@@ -399,8 +399,8 @@ class BackendFormBuilderModel
 	{
 		// init name
 		$name = SpoonFilter::toCamelCase($name);
-		$class = ucfirst($application) .'Language';
-		$function = 'get'. ucfirst($type);
+		$class = ucfirst($application) . 'Language';
+		$function = 'get' . ucfirst($type);
 
 		// execute and return value
 		return ucfirst(call_user_func_array(array($class, $function), array($name)));
@@ -438,9 +438,9 @@ class BackendFormBuilderModel
 		$extra['type'] = 'widget';
 		$extra['label'] = 'FormBuilder';
 		$extra['action'] = 'form';
-		$extra['data'] = serialize(array('language' => $values['language'], 'extra_label' => $values['name'], 'id' => $insertId, 'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $insertId));
+		$extra['data'] = serialize(array('language' => $values['language'], 'extra_label' => $values['name'], 'id' => $insertId, 'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $insertId));
 		$extra['hidden'] = 'N';
-		$extra['sequence'] = '400'. $insertId;
+		$extra['sequence'] = '400' . $insertId;
 
 		// insert extra
 		BackendModel::getDB(true)->insert('pages_extras', $extra);
@@ -496,7 +496,7 @@ class BackendFormBuilderModel
 		$extra['data'] = serialize(array('extra_label' => $values['name'], 'id' => $id));
 
 		// update extra
-		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('form_builder', 'widget', '400'. $id));
+		$db->update('pages_extras', $extra, 'module = ? AND type = ? AND sequence = ?', array('form_builder', 'widget', '400' . $id));
 
 		// return id
 		return $id;
@@ -543,7 +543,7 @@ class FormBuilderHelper
 			$frm = new BackendForm('tmp', '');
 			$tpl = (Spoon::exists('template') ? Spoon::get('template') : new BackendTemplate());
 			$fieldHTML = '';
-			$fieldName = 'field'. $field['id'];
+			$fieldName = 'field' . $field['id'];
 			$values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);
 			$defaultValues = (isset($field['settings']['default_values']) ? $field['settings']['default_values'] : null);
 
@@ -617,7 +617,7 @@ class FormBuilderHelper
 			}
 
 			// heading
-			elseif($field['type'] == 'heading') $fieldHTML = '<h3>'. $values .'</h3>';
+			elseif($field['type'] == 'heading') $fieldHTML = '<h3>' . $values . '</h3>';
 
 			// paragraph
 			elseif($field['type'] == 'paragraph') $fieldHTML = $values;
@@ -644,7 +644,7 @@ class FormBuilderHelper
 			elseif($field['type'] == 'checkbox' || $field['type'] == 'radiobutton')
 			{
 				// name (prefixed by type)
-				$name = ($field['type'] == 'checkbox') ? 'chk'. ucfirst($fieldName) : 'rbt'. ucfirst($fieldName);
+				$name = ($field['type'] == 'checkbox') ? 'chk' . ucfirst($fieldName) : 'rbt' . ucfirst($fieldName);
 
 				// rebuild so the html is stored in a general name (and not rbtName)
 				foreach($fieldHTML as &$item) $item['field'] = $item[$name];
@@ -665,7 +665,7 @@ class FormBuilderHelper
 			}
 
 			// cough up created html
-			return $tpl->getContent(BACKEND_MODULE_PATH .'/layout/templates/field.tpl');
+			return $tpl->getContent(BACKEND_MODULE_PATH . '/layout/templates/field.tpl');
 		}
 
 		// empty field so return empty string

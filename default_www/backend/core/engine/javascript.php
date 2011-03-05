@@ -62,8 +62,8 @@ class BackendJavascript
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
 		// output the template
-		if($this->module == 'core') $tpl->display(BACKEND_CORE_PATH .'/js/'. $this->getFile(), true);
-		else $tpl->display(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->getFile(), true);
+		if($this->module == 'core') $tpl->display(BACKEND_CORE_PATH . '/js/' . $this->getFile(), true);
+		else $tpl->display(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->getFile(), true);
 	}
 
 
@@ -115,7 +115,7 @@ class BackendJavascript
 		if($this->module == 'core')
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(BACKEND_CORE_PATH .'/js/'. $this->filename))
+			if(!SpoonFile::exists(BACKEND_CORE_PATH . '/js/' . $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);
@@ -132,7 +132,7 @@ class BackendJavascript
 		else
 		{
 			// check if the path exists, if not whe should given an error
-			if(!SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/js/'. $this->filename))
+			if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/js/' . $this->filename))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(404);

@@ -21,7 +21,7 @@ class PagesInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'pages' as a module
 		$this->addModule('pages', 'The module to manage your pages and website structure.');
@@ -173,7 +173,7 @@ class PagesInstall extends ModuleInstaller
 										'type' => 'footer',
 										'language' => $language),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'));
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/disclaimer.txt'));
 
 				// insert about
 				$this->insertPage(array('id' => 4,
@@ -191,7 +191,7 @@ class PagesInstall extends ModuleInstaller
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/404.txt'),
 									array('extra_id' => $sitemapID));
 
 				// insert lorem ipsum test page
@@ -202,7 +202,7 @@ class PagesInstall extends ModuleInstaller
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/404.txt'),
 									array('extra_id' => $sitemapID));
 
 				// insert lorem ipsum test page
@@ -212,7 +212,7 @@ class PagesInstall extends ModuleInstaller
 										'hidden' => 'Y',
 										'no_follow' => 'Y'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/lorem_ipsum.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/lorem_ipsum.txt'),
 									array('html' => ''));
 			}
 		}
@@ -300,7 +300,7 @@ class PagesInstall extends ModuleInstaller
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
 									array('html' => ''),
 									array('extra_id' => $extras['blog_widget_recent_articles_list']),
 									array('html' => ''),
@@ -335,7 +335,7 @@ class PagesInstall extends ModuleInstaller
 										'type' => 'footer',
 										'language' => $language),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sitemap.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sitemap.txt'),
 									array('extra_id' => $extras['sitemap_widget_sitemap']),
 									array('html' => ''),
 									array('html' => ''),
@@ -353,7 +353,7 @@ class PagesInstall extends ModuleInstaller
 										'type' => 'footer',
 										'language' => $language),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/disclaimer.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/disclaimer.txt'),
 									array('html' => ''),
 									array('html' => ''),
 									array('html' => ''),
@@ -387,8 +387,8 @@ class PagesInstall extends ModuleInstaller
 											'parent_id' => $aboutUsId,
 											'language' => $language),
 										null,
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1.txt'),
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample2.txt'),
+										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
 										array('html' => ''),
 										array('html' => ''),
 										array('html' => ''),
@@ -404,8 +404,8 @@ class PagesInstall extends ModuleInstaller
 											'parent_id' => $aboutUsId,
 											'language' => $language),
 										null,
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1.txt'),
-										array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample2.txt'),
+										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+										array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
 										array('html' => ''),
 										array('html' => ''),
 										array('html' => ''),
@@ -421,8 +421,8 @@ class PagesInstall extends ModuleInstaller
 												'parent_id' => 1,
 												'language' => $language),
 											null,
-											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample1.txt'),
-											array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/sample2.txt'),
+											array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample1.txt'),
+											array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/sample2.txt'),
 											array('html' => ''),
 											array('html' => ''),
 											array('html' => ''),
@@ -438,7 +438,7 @@ class PagesInstall extends ModuleInstaller
 										'parent_id' => 1,
 										'language' => $language),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/contact.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/contact.txt'),
 									array('extra_id' => $extras['contact_block']),
 									array('html' => ''),
 									array('html' => ''),
@@ -475,7 +475,7 @@ class PagesInstall extends ModuleInstaller
 										'allow_move' => 'N',
 										'allow_delete' => 'N'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/404.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/404.txt'),
 									array('extra_id' => $extras['sitemap_widget_sitemap']),
 									array('html' => ''),
 									array('html' => ''),
@@ -493,7 +493,7 @@ class PagesInstall extends ModuleInstaller
 										'hidden' => 'Y',
 										'no_follow' => 'Y'),
 									null,
-									array('html' => PATH_WWW .'/backend/modules/pages/installer/data/'. $language .'/lorem_ipsum.txt'),
+									array('html' => PATH_WWW . '/backend/modules/pages/installer/data/' . $language . '/lorem_ipsum.txt'),
 									array('html' => ''),
 									array('html' => ''),
 									array('html' => ''),

@@ -257,7 +257,7 @@ class BackendUser
 											array(SpoonSession::getSessionId(), $userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) throw new BackendException('user ('. $userId .') can\'t be loaded.');
+		if(empty($userData)) throw new BackendException('user (' . $userId . ') can\'t be loaded.');
 
 		// set properties
 		$this->setUserId($userData['id']);
@@ -279,7 +279,7 @@ class BackendUser
 		foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
 
 		// nickname available?
-		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] .' '. $this->settings['surname']);
+		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
 	}
 
 
@@ -307,7 +307,7 @@ class BackendUser
 											array(SpoonSession::getSessionId(), $email));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) throw new BackendException('user ('. $email .') can\'t be loaded.');
+		if(empty($userData)) throw new BackendException('user (' . $email . ') can\'t be loaded.');
 
 		// set properties
 		$this->setUserId($userData['id']);
@@ -330,7 +330,7 @@ class BackendUser
 		foreach($settings as $key => $value) $this->settings[$key] = unserialize($value);
 
 		// nickname available?
-		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] .' '. $this->settings['surname']);
+		if(!isset($this->settings['nickname']) || $this->settings['nickname'] == '') $this->setSetting('nickname', $this->settings['name'] . ' ' . $this->settings['surname']);
 	}
 
 

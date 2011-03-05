@@ -234,7 +234,7 @@ class BackendSearchModel
 	 */
 	public static function invalidateCache()
 	{
-		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH .'/search/') as $file) SpoonFile::delete(FRONTEND_CACHE_PATH .'/search/'. $file);
+		foreach(SpoonFile::getList(FRONTEND_CACHE_PATH . '/search/') as $file) SpoonFile::delete(FRONTEND_CACHE_PATH . '/search/' . $file);
 	}
 
 

@@ -45,7 +45,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -72,8 +72,8 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 
 		// create elements
 		$this->frm->addText('name', $this->record['name']);
-		$this->frm->addCheckbox('is_default', (BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) == $this->id));
-		if((BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) == $this->id)) $this->frm->getField('is_default')->setAttribute('disabled', 'disabled');
+		$this->frm->addCheckbox('is_default', (BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) == $this->id));
+		if((BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) == $this->id)) $this->frm->getField('is_default')->setAttribute('disabled', 'disabled');
 	}
 
 
@@ -92,7 +92,7 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 		$this->tpl->assign('name', $this->record['name']);
 
 		// get default category id
-		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null);
+		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null);
 
 		// get default category
 		$defaultCategory = BackendBlogModel::getCategory($defaultCategoryId);
@@ -133,14 +133,14 @@ class BackendBlogEditCategory extends BackendBaseActionEdit
 				BackendBlogModel::updateCategory($item);
 
 				// it isn't the default category but it should be.
-				if(BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), null) != $item['id'] && $this->frm->getField('is_default')->getChecked())
+				if(BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) != $item['id'] && $this->frm->getField('is_default')->getChecked())
 				{
 					// store
-					BackendModel::setModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage(), $item['id']);
+					BackendModel::setModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), $item['id']);
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

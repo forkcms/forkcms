@@ -69,7 +69,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		catch(Exception $e)
 		{
 			// add an error to the email field
-			$this->redirect(BackendModel::createURLForAction('settings') .'&error=campaign-monitor-error&var='. $e->getMessage());
+			$this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage());
 		}
 	}
 
@@ -241,7 +241,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 					$this->createClient();
 
 					// redirect to a custom success message
-					$this->redirect($settingsURL .'&report=client-linked&var='. $this->frm->getField('company_name')->getValue());
+					$this->redirect($settingsURL . '&report=client-linked&var=' . $this->frm->getField('company_name')->getValue());
 				}
 
 				// set sender info
@@ -254,7 +254,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 				if(BackendAuthentication::getUser()->isGod()) BackendModel::setModuleSetting('mailmotor', 'price_per_email', $this->frm->getField('price_per_email')->getValue());
 
 				// redirect to the settings page
-				$this->redirect($settingsURL .'&report=saved');
+				$this->redirect($settingsURL . '&report=saved');
 			}
 		}
 	}

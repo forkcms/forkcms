@@ -55,15 +55,15 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 		$this->parseLineChartData($data['entries']['metrics_per_day']);
 
 		// parse the page path
-		$this->tpl->assign('pagePath', 'http://'. $data['entries']['hostname'] . $this->pagePath);
+		$this->tpl->assign('pagePath', 'http://' . $data['entries']['hostname'] . $this->pagePath);
 
 		// init google url
-		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
+		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
-		$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+		$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
 
 		// parse links to google
-		$this->tpl->assign('googleContentDetailURL', sprintf($googleURL, 'content_detail', $googleTableId, $googleDate) .'&amp;d1='. urlencode($this->pagePath));
+		$this->tpl->assign('googleContentDetailURL', sprintf($googleURL, 'content_detail', $googleTableId, $googleDate) . '&amp;d1=' . urlencode($this->pagePath));
 	}
 
 
@@ -144,25 +144,25 @@ class BackendAnalyticsDetailPage extends BackendAnalyticsBase
 			$timeOnPage = ($results['pageviews'] - $results['exits'] == 0) ? 0 : ($results['timeOnPage'] / ($results['pageviews'] - $results['exits']));
 			$timeOnPageTotal = ($results['pageviews'] - $results['exits'] == 0) ? 0 : ($resultsTotal['timeOnPage'] / ($resultsTotal['pageviews'] - $resultsTotal['exits']));
 			$timeOnPageDifference = ($timeOnPageTotal == 0) ? 0 : number_format((($timeOnPage - $timeOnPageTotal) / $timeOnPageTotal) * 100, 0);
-			if($timeOnPageDifference > 0) $timeOnPageDifference = '+'. $timeOnPageDifference;
+			if($timeOnPageDifference > 0) $timeOnPageDifference = '+' . $timeOnPageDifference;
 
 			// pages / visit
 			$pagesPerVisit = ($results['visits'] == 0) ? 0 : number_format(($results['pageviews'] / $results['visits']), 2);
 			$pagesPerVisitTotal = ($resultsTotal['visits'] == 0) ? 0 : number_format(($resultsTotal['pageviews'] / $resultsTotal['visits']), 2);
 			$pagesPerVisitDifference = ($pagesPerVisitTotal == 0) ? 0 : number_format((($pagesPerVisit - $pagesPerVisitTotal) / $pagesPerVisitTotal) * 100, 0);
-			if($pagesPerVisitDifference > 0) $pagesPerVisitDifference = '+'. $pagesPerVisitDifference;
+			if($pagesPerVisitDifference > 0) $pagesPerVisitDifference = '+' . $pagesPerVisitDifference;
 
 			// new visits
 			$newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 0);
 			$newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 0);
 			$newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 0);
-			if($newVisitsDifference > 0) $newVisitsDifference = '+'. $newVisitsDifference;
+			if($newVisitsDifference > 0) $newVisitsDifference = '+' . $newVisitsDifference;
 
 			// bounces
 			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
 			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-			if($bouncesDifference > 0) $bouncesDifference = '+'. $bouncesDifference;
+			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
 			// percentages relative to total
 			$pageviewsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? '0' : number_format(($results['pageviews'] / $resultsTotal['pageviews']) * 100, 2);

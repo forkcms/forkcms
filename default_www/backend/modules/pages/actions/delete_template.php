@@ -44,12 +44,12 @@ class BackendPagesDeleteTemplate extends BackendBaseActionDelete
 			}
 
 			// page is deleted, so redirect to the overview
-			if($success) $this->redirect(BackendModel::createURLForAction('templates') .'&report=deleted-template&var='. urlencode($template['label']));
-			else $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
+			if($success) $this->redirect(BackendModel::createURLForAction('templates') . '&report=deleted-template&var=' . urlencode($template['label']));
+			else $this->redirect(BackendModel::createURLForAction('templates') . '&error=non-existing');
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('templates') . '&error=non-existing');
 	}
 }
 

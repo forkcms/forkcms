@@ -88,7 +88,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$pricePerEmail = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
 
 		// check if a price per e-mail is set
-		if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) .'&error=no-price-per-email');
+		if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '&error=no-price-per-email');
 	}
 
 
@@ -115,7 +115,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 			if(!isset($groups[$language]))
 			{
 				// set group record
-				$group['name'] = 'Website ('. strtoupper($language) .')';
+				$group['name'] = 'Website (' . strtoupper($language) . ')';
 				$group['language'] = $language;
 				$group['is_default'] = 'Y';
 				$group['created_on'] = date('Y-m-d H:i:s');

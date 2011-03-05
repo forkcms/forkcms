@@ -47,10 +47,10 @@ class BackendLocationIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortParameter('ASC');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 

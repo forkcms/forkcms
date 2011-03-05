@@ -137,7 +137,7 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				$settings['interface_language'] = $this->frm->getField('interface_language')->getValue();
 				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
 				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
-				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
+				$settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
 				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
 				$settings['password_key'] = uniqid();
 				$settings['avatar'] = 'no-avatar.gif';
@@ -155,26 +155,26 @@ class BackendUsersAdd extends BackendBaseActionAdd
 				if($this->frm->getField('avatar')->isFilled())
 				{
 					// create new filename
-					$filename = rand(0,3) .'_'. $user['id'] .'.'. $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) . '_' . $user['id'] . '.' . $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
 					$settings['avatar'] = $filename;
 
 					// resize (128x128)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $filename, 128, 128, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $filename, 64, 64, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename, 32, 32, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
 				// update settings (in this case the avatar)
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. $settings['nickname'] .'&highlight=row-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
 			}
 		}
 	}

@@ -52,7 +52,7 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 			if(isset($groupFields[$field]))
 			{
 				// delete the custom field in CM
-				BackendMailmotorCMHelper::deleteCustomField('['. $field .']', $this->group['id']);
+				BackendMailmotorCMHelper::deleteCustomField('[' . $field . ']', $this->group['id']);
 
 				// remove the field from the group's field listing
 				unset($groupFields[$field]);
@@ -63,7 +63,7 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 		BackendMailmotorModel::updateCustomFields($groupFields, $this->group['id']);
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'] .'&report=deleted-custom-fields&var='. $this->group['name']);
+		$this->redirect(BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'] . '&report=deleted-custom-fields&var=' . $this->group['name']);
 	}
 
 
@@ -87,12 +87,12 @@ class BackendMailmotorMassCustomFieldAction extends BackendBaseAction
 		$this->group = BackendMailmotorModel::getGroup($id);
 
 		// set redirect URL
-		$redirectURL = BackendModel::createURLForAction('custom_fields') .'&group_id='. $this->group['id'];
+		$redirectURL = BackendModel::createURLForAction('custom_fields') . '&group_id=' . $this->group['id'];
 
 		// no id's provided
-		if(!$action) $this->redirect($redirectURL .'&error=no-action-selected');
-		if(!isset($_GET['fields'])) $this->redirect($redirectURL .'&error=no-items-selected');
-		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') .'&error=non-existing');
+		if(!$action) $this->redirect($redirectURL . '&error=no-action-selected');
+		if(!isset($_GET['fields'])) $this->redirect($redirectURL . '&error=no-items-selected');
+		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 
 		// at least one id
 		else

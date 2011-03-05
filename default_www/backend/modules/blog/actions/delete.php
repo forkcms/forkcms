@@ -38,11 +38,11 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			if(method_exists('BackendSearchModel', 'removeIndex')) BackendSearchModel::removeIndex('blog', $this->id);
 
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
 

@@ -19,7 +19,7 @@ class FaqInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'search' as a module
 		$this->addModule('faq', 'The faq module.');

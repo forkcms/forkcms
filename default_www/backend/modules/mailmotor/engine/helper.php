@@ -250,7 +250,7 @@ class BackendMailmotorCMHelper
 		// fetch campaignmonitor IDs
 		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
 															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groupIds) .')',
+															WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $groupIds) . ')',
 															array('list'));
 	}
 
@@ -269,7 +269,7 @@ class BackendMailmotorCMHelper
 		// fetch campaignmonitor IDs
 		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
 															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $templates) .')',
+															WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $templates) . ')',
 															array('template'));
 	}
 
@@ -296,7 +296,7 @@ class BackendMailmotorCMHelper
 		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
+			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
 				throw new SpoonFileException(BL::err('ClassDoesNotExist', 'mailmotor'));
@@ -440,7 +440,7 @@ class BackendMailmotorCMHelper
 	public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
 	{
 		// check if the mailing exists
-		if(!BackendMailmotorModel::existsMailing($id)) throw new SpoonException('No mailing found for id '. $id);
+		if(!BackendMailmotorModel::existsMailing($id)) throw new SpoonException('No mailing found for id ' . $id);
 
 		// fetch cmID
 		$cmId = self::getCampaignMonitorID('campaign', $id);
@@ -465,10 +465,10 @@ class BackendMailmotorCMHelper
 			$stats['clicks_total'] = 0;
 
 			// add percentages to these stats
-			$stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['bounces'] / $stats['recipients_total']) * 100) .'%';
-			$stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['recipients'] / $stats['recipients_total']) * 100) .'%';
-			$stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['unique_opens'] / $stats['recipients']) * 100) .'%';
-			$stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['unopens'] / $stats['recipients']) * 100) .'%';
+			$stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+			$stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+			$stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+			$stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
 			$stats['clicks_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
 			// fetch clicks or not?
@@ -593,10 +593,10 @@ class BackendMailmotorCMHelper
 		}
 
 		// add percentages to these stats
-		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) .'%';
-		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) .'%';
-		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) .'%';
-		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) .'%';
+		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
 		$stats['clicks_percentage'] = ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
 		// return the stats
@@ -647,10 +647,10 @@ class BackendMailmotorCMHelper
 		}
 
 		// add percentages to these stats
-		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) .'%';
-		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) .'%';
-		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) .'%';
-		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) .'%';
+		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
 		$stats['clicks_percentage'] = ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
 		// return the stats
@@ -712,7 +712,7 @@ class BackendMailmotorCMHelper
 		$groupId = BackendMailmotorModel::getMaximumIdForGroups() + 1;
 
 		// create list
-		$cmId = self::getCM()->createList($item['name'], $unsubscribeLink .'/?group='. $groupId .'&email=[email]');
+		$cmId = self::getCM()->createList($item['name'], $unsubscribeLink . '/?group=' . $groupId . '&email=[email]');
 
 		// a list was created
 		if($cmId)
@@ -917,7 +917,7 @@ class BackendMailmotorCMHelper
 		$unsubscribeLink = SITE_URL . BackendModel::getURLForBlock('mailmotor', 'unsubscribe', BL::getWorkingLanguage());
 
 		// a list was updated
-		if(self::getCM()->updateList($item['name'], $unsubscribeLink .'/?group='. $item['id'] .'&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id'])))
+		if(self::getCM()->updateList($item['name'], $unsubscribeLink . '/?group=' . $item['id'] . '&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id'])))
 		{
 			// update in database
 			return (int) BackendMailmotorModel::updateGroup($item);
@@ -947,7 +947,7 @@ class BackendMailmotorCMHelper
 		if(!isset($item['content_plain_url'])) $item['content_plain_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'plain', true);
 
 		// overwrite the name, because the previous one is taken -.-
-		$item['name'] .= ' (#'. rand(0, 999) .')';
+		$item['name'] .= ' (#' . rand(0, 999) . ')';
 
 		// re-insert the mailing in CM
 		self::insertMailing($item);

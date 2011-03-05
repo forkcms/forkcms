@@ -120,7 +120,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'email' => $this->filter['email']), false));
 
 		// add the group to the URL if one is set
-		if(!empty($this->group)) $this->datagrid->setURL('&group_id='. $this->group['id'], true);
+		if(!empty($this->group)) $this->datagrid->setURL('&group_id=' . $this->group['id'], true);
 
 		// set headers values
 		$headers['created_on'] = ucfirst(BL::lbl('Created'));
@@ -143,8 +143,8 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 		// add edit column
-		$editURL = BackendModel::createURLForAction('edit_address') .'&amp;email=[email]';
-		if(!empty($this->group)) $editURL .= '&amp;group_id='. $this->group['id'];
+		$editURL = BackendModel::createURLForAction('edit_address') . '&amp;email=[email]';
+		if(!empty($this->group)) $editURL .= '&amp;group_id=' . $this->group['id'];
 		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), $editURL, BL::lbl('Edit'));
 
 		// set paging limit

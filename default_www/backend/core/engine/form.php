@@ -54,10 +54,10 @@ class BackendForm extends SpoonForm
 		$this->useGlobalError = (bool) $useGlobalError;
 
 		// build a name if there wasn't one provided
-		$name = ($name === null) ? SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true) : (string) $name;
+		$name = ($name === null) ? SpoonFilter::toCamelCase($this->URL->getModule() . '_' . $this->URL->getAction(), '_', true) : (string) $name;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/'. str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
+		$action = ($action === null) ? '/' . str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);
@@ -243,8 +243,8 @@ class BackendForm extends SpoonForm
 		// redefine
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
-		$class = 'inputEditor '. (string) $class;
-		$classError = 'inputEditorError '. (string) $classError;
+		$class = 'inputEditor ' . (string) $class;
+		$classError = 'inputEditorError ' . (string) $classError;
 		$HTML = (bool) $HTML;
 
 		// we add JS because we need TinyMCE

@@ -19,7 +19,7 @@ class FormBuilderInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(PATH_WWW .'/backend/modules/form_builder/installer/data/install.sql');
+		$this->importSQL(PATH_WWW . '/backend/modules/form_builder/installer/data/install.sql');
 
 		// add as a module
 		$this->addModule('form_builder', 'The module to create and manage forms.');

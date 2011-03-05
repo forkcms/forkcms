@@ -85,7 +85,7 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 				$id = BackendMailmotorCMHelper::insertGroup($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('groups') .'&report=added&var='. urlencode($item['name']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $id);
 			}
 		}
 	}

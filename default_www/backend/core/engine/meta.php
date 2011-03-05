@@ -305,7 +305,7 @@ class BackendMeta
 		if(empty($this->callback))
 		{
 			// build class- & method-name
-			$className = 'Backend'. SpoonFilter::toCamelCase($this->URL->getModule()) .'Model';
+			$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
 			$methodName = 'getURL';
 
 			// set
@@ -419,7 +419,7 @@ class BackendMeta
 		if(empty($this->callback))
 		{
 			// build class- & method-name
-			$className = 'Backend'. SpoonFilter::toCamelCase($this->URL->getModule()) .'Model';
+			$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
 			$methodName = 'getURL';
 
 			// set
@@ -476,7 +476,7 @@ class BackendMeta
 			if(empty($this->callback))
 			{
 				// build class- & method-name
-				$className = 'Backend'. SpoonFilter::toCamelCase($this->URL->getModule()) .'Model';
+				$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
 				$methodName = 'getURL';
 
 				// set

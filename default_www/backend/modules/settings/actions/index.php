@@ -74,7 +74,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 		$this->frm = new BackendForm('settingsIndex');
 
 		// general settings
-		$this->frm->addText('site_title', BackendModel::getModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+		$this->frm->addText('site_title', BackendModel::getModuleSetting('core', 'site_title_' . BL::getWorkingLanguage(), SITE_DEFAULT_TITLE));
 		$this->frm->addTextarea('site_html_header', BackendModel::getModuleSetting('core', 'site_html_header', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_html_footer', BackendModel::getModuleSetting('core', 'site_html_footer', null), 'textarea code', 'textareaError code', true);
 		$this->frm->addTextarea('site_domains', implode("\n", (array) BackendModel::getModuleSetting('core', 'site_domains', $defaultDomains)), 'textarea code', 'textareaError code');
@@ -105,9 +105,9 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 
 			// attributes
 			$activeAttributes = array();
-			$activeAttributes['id'] = 'active_language_'. $abbreviation;
+			$activeAttributes['id'] = 'active_language_' . $abbreviation;
 			$redirectAttributes = array();
-			$redirectAttributes['id'] = 'redirect_language_'. $abbreviation;
+			$redirectAttributes['id'] = 'redirect_language_' . $abbreviation;
 
 			// fetch label
 			$label = BL::msg(mb_strtoupper($abbreviation), 'core');
@@ -203,7 +203,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 				if($this->frm->getField('akismet_key')->getValue() != BackendModel::getModuleSetting('core', 'akismet_key', null))
 				{
 					 // load akismet
-					 require_once PATH_LIBRARY .'/external/akismet.php';
+					 require_once PATH_LIBRARY . '/external/akismet.php';
 
 					 // create instance
 					$akismet = new Akismet($this->frm->getField('akismet_key')->getValue(), SITE_URL);
@@ -226,7 +226,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 					$domain = trim(str_replace(array('www.', 'http://', 'https://'), '', $domain));
 
 					// invalid URL
-					if(!SpoonFilter::isURL('http://'. $domain))
+					if(!SpoonFilter::isURL('http://' . $domain))
 					{
 						// set error
 						$this->frm->getField('site_domains')->setError(BL::err('InvalidDomain'));
@@ -241,7 +241,7 @@ class BackendSettingsIndex extends BackendBaseActionIndex
 			if($this->frm->isCorrect())
 			{
 				// general settings
-				BackendModel::setModuleSetting('core', 'site_title_'. BL::getWorkingLanguage(), $this->frm->getField('site_title')->getValue());
+				BackendModel::setModuleSetting('core', 'site_title_' . BL::getWorkingLanguage(), $this->frm->getField('site_title')->getValue());
 				BackendModel::setModuleSetting('core', 'site_html_header', $this->frm->getField('site_html_header')->getValue());
 				BackendModel::setModuleSetting('core', 'site_html_footer', $this->frm->getField('site_html_footer')->getValue());
 

@@ -60,34 +60,34 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 			if(BackendAuthentication::isAllowedModule($module))
 			{
 				// build pathName
-				$pathName = BACKEND_MODULES_PATH .'/'. $module;
+				$pathName = BACKEND_MODULES_PATH . '/' . $module;
 
 				// check if the folder exists
-				if(SpoonDirectory::exists($pathName .'/widgets'))
+				if(SpoonDirectory::exists($pathName . '/widgets'))
 				{
 					// get widgets
-					$widgets = (array) SpoonFile::getList($pathName .'/widgets', '/(.*)\.php/i');
+					$widgets = (array) SpoonFile::getList($pathName . '/widgets', '/(.*)\.php/i');
 
 					// loop widgets
 					foreach($widgets as $widget)
 					{
 						// require the class
-						require_once $pathName .'/widgets/'. $widget;
+						require_once $pathName . '/widgets/' . $widget;
 
 						// init var
 						$widgetName = str_replace('.php', '', $widget);
 
 						// build classname
-						$className = 'Backend'. SpoonFilter::toCamelCase($module) .'Widget'. SpoonFilter::toCamelCase($widgetName);
+						$className = 'Backend' . SpoonFilter::toCamelCase($module) . 'Widget' . SpoonFilter::toCamelCase($widgetName);
 
 						// validate if the class exists
-						if(!class_exists($className)) throw new BackendException('The widgetfile is present, but the classname should be: '. $className .'.');
+						if(!class_exists($className)) throw new BackendException('The widgetfile is present, but the classname should be: ' . $className . '.');
 
 						// check if model file exists
-						if(SpoonFile::exists($pathName .'/engine/model.php'))
+						if(SpoonFile::exists($pathName . '/engine/model.php'))
 						{
 							// require model
-							require_once $pathName .'/engine/model.php';
+							require_once $pathName . '/engine/model.php';
 						}
 
 						// create instance
@@ -105,11 +105,11 @@ class BackendDashboardIndex extends BackendBaseActionIndex
 						// user sequence provided?
 						$column = (isset($userSequence[$module][$widgetName]['column'])) ? $userSequence[$module][$widgetName]['column'] : $instance->getColumn();
 						$position = (isset($userSequence[$module][$widgetName]['position'])) ? $userSequence[$module][$widgetName]['position'] : $instance->getPosition();
-						$title = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) .': '. BL::lbl(SpoonFilter::toCamelCase($widgetName));
+						$title = ucfirst(BL::lbl(SpoonFilter::toCamelCase($module))) . ': ' . BL::lbl(SpoonFilter::toCamelCase($widgetName));
 						$templatePath = $instance->getTemplatePath();
 
 						// reset template path
-						if($templatePath == null) $templatePath = BACKEND_PATH .'/modules/'. $module .'/layout/widgets/'. $widgetName .'.tpl';
+						if($templatePath == null) $templatePath = BACKEND_PATH . '/modules/' . $module . '/layout/widgets/' . $widgetName . '.tpl';
 
 						// build item
 						$item = array('template' => $templatePath, 'module' => $module, 'widget' => $widgetName, 'title' => $title, 'hidden' => $hidden);
