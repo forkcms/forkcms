@@ -145,7 +145,7 @@ class BackendAnalyticsModel
 		$aggregates = self::getDataFromCacheByType('aggregates', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($aggregates === false) self::redirectToLoadingPage($action);
@@ -192,7 +192,7 @@ class BackendAnalyticsModel
 		$aggregates = self::getDataFromCacheByType('aggregates_total', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($aggregates === false) self::redirectToLoadingPage($action);
@@ -320,7 +320,7 @@ class BackendAnalyticsModel
 		$items['entries'] = self::getDataFromCacheByType('page_'. $id, $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage($action, array('page_id' => $id));
@@ -391,7 +391,7 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('exit_pages', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
@@ -551,7 +551,7 @@ class BackendAnalyticsModel
 		if($forceCache) return $items;
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
@@ -607,7 +607,7 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('pages', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
@@ -715,7 +715,7 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
@@ -759,7 +759,7 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
@@ -805,7 +805,7 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
@@ -852,7 +852,7 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
@@ -895,7 +895,7 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('traffic_sources', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);

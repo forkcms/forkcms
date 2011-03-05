@@ -63,4 +63,4 @@ jsBackend.blog.controls =
 }
 
 
-$(document).ready(function() { jsBackend.blog.init(); });
+$(document).ready(jsBackend.blog.init);

@@ -34,7 +34,7 @@ class FrontendTagsModel
 		else
 		{
 			// when debug is on throw an exception
-			if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module ('. $module .').');
+			if(SPOON_DEBUG) throw new FrontendException('To use the tags module you need to implement the FrontendTagsInterface in the model of your module (' . $module . ').');
 
 			// when debug is off show a descent message
 			else exit(SPOON_DEBUG_MESSAGE);
@@ -106,7 +106,7 @@ class FrontendTagsModel
 		foreach($linkedTags as $row)
 		{
 			// add full URL
-			$row['full_url'] = $tagLink .'/'. $row['url'];
+			$row['full_url'] = $tagLink . '/' . $row['url'];
 
 			// add
 			$return[] = $row;
@@ -139,7 +139,7 @@ class FrontendTagsModel
 		$linkedTags = (array) $db->getRecords('SELECT mt.other_id, t.tag AS name, t.url
 												FROM modules_tags AS mt
 												INNER JOIN tags AS t ON mt.tag_id = t.id
-												WHERE mt.module = ? AND mt.other_id IN ('. implode(', ', $otherIds) .')',
+												WHERE mt.module = ? AND mt.other_id IN (' . implode(', ', $otherIds) . ')',
 												array($module));
 
 		// return
@@ -152,7 +152,7 @@ class FrontendTagsModel
 		foreach($linkedTags as $row)
 		{
 			// add full URL
-			$row['full_url'] = $tagLink .'/'. $row['url'];
+			$row['full_url'] = $tagLink . '/' . $row['url'];
 
 			// add
 			$return[$row['other_id']][] = $row;

@@ -60,7 +60,7 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 
 		// create datagrid
 		$this->datagrid = new SpoonDataGrid($source);
-		$this->datagrid->setCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
+		$this->datagrid->setCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
 
 		// set hidden columns
 		$this->datagrid->setColumnsHidden(array('id', 'status'));
@@ -77,7 +77,7 @@ class FrontendMailmotorIndex extends FrontendBaseBlock
 		$this->datagrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') .'/[id]');
+		$this->datagrid->setColumnURL('name', FrontendNavigation::getURLForBlock('mailmotor', 'detail') . '/[id]');
 
 		// set column functions
 		$this->datagrid->setColumnFunction(array('SpoonDate', 'getTimeAgo'), array('[send_on]'), 'send_on', true);

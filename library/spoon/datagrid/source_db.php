@@ -99,11 +99,11 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 			switch($this->db->getDriver())
 			{
 				case 'mysql':
-					$query = (substr_count($this->query, 'LIMIT ') > 0) ? $this->query : $this->query .' LIMIT 1';
+					$query = (substr_count($this->query, 'LIMIT ') > 0) ? $this->query : $this->query . ' LIMIT 1';
 				break;
 
 				default:
-					throw new SpoonDataGridException('No datagrid support has been written for this database backend ('. $this->db->getDriver() .')');
+					throw new SpoonDataGridException('No datagrid support has been written for this database backend (' . $this->db->getDriver() . ')');
 				break;
 			}
 
@@ -131,10 +131,10 @@ class SpoonDatagridSourceDB extends SpoonDatagridSource
 		$query = $this->query;
 
 		// order & sort defined
-		if($order !== null && $sort !== null) $query .= ' ORDER BY '. $order .' '. $sort;
+		if($order !== null && $sort !== null) $query .= ' ORDER BY ' . $order . ' ' . $sort;
 
 		// offset & limit defined
-		if($offset !== null && $limit !== null) $query .= ' LIMIT '. $offset .', '. $limit;
+		if($offset !== null && $limit !== null) $query .= ' LIMIT ' . $offset . ', ' . $limit;
 
 		// fetch data
 		return (array) $this->db->getRecords($query, $this->queryParameters);

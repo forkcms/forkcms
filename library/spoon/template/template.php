@@ -189,7 +189,7 @@ class SpoonTemplate
 	public function clearCache($name = null)
 	{
 		// specific cache
-		if($name !== null) SpoonFile::delete($this->cacheDirectory .'/'. (string) $name .'_cache.tpl');
+		if($name !== null) SpoonFile::delete($this->cacheDirectory . '/' . (string) $name . '_cache.tpl');
 
 		// all cache files
 		else
@@ -198,7 +198,7 @@ class SpoonTemplate
 			$files = SpoonFile::getList($this->cacheDirectory, '|.*\_cache\.tpl|');
 
 			// delete
-			foreach($files as $file) SpoonFile::delete($this->cacheDirectory .'/'. $file);
+			foreach($files as $file) SpoonFile::delete($this->cacheDirectory . '/' . $file);
 		}
 	}
 
@@ -212,7 +212,7 @@ class SpoonTemplate
 	public function clearCompiled($template = null)
 	{
 		// specific template
-		if($template !== null) SpoonFile::delete($this->compileDirectory .'/'. $this->getCompileName($template));
+		if($template !== null) SpoonFile::delete($this->compileDirectory . '/' . $this->getCompileName($template));
 
 		// all compiled templates
 		else
@@ -221,7 +221,7 @@ class SpoonTemplate
 			$files = SpoonFile::getList($this->compileDirectory, '|.*\.tpl\.php|');
 
 			// delete
-			foreach($files as $file) SpoonFile::delete($this->compileDirectory .'/'. $file);
+			foreach($files as $file) SpoonFile::delete($this->compileDirectory . '/' . $file);
 		}
 	}
 
@@ -236,7 +236,7 @@ class SpoonTemplate
 	public function compile($path, $template)
 	{
 		// redefine template
-		if(realpath($template) === false) $template = $path .'/'. $template;
+		if(realpath($template) === false) $template = $path . '/' . $template;
 
 		// source file does not exist
 		if(!SpoonFile::exists($template)) return false;
@@ -309,7 +309,7 @@ class SpoonTemplate
 		$compileName = $this->getCompileName((string) $template);
 
 		// compiled if needed
-		if($this->forceCompile || !SpoonFile::exists($this->compileDirectory .'/'. $compileName))
+		if($this->forceCompile || !SpoonFile::exists($this->compileDirectory . '/' . $compileName))
 		{
 			// create compiler
 			$compiler = new SpoonTemplateCompiler((string) $template, $this->variables);
@@ -325,7 +325,7 @@ class SpoonTemplate
 		}
 
 		// load template
-		require $this->compileDirectory .'/'. $compileName;
+		require $this->compileDirectory . '/' . $compileName;
 	}
 
 
@@ -374,10 +374,10 @@ class SpoonTemplate
 	private function getCompileName($template, $path = null)
 	{
 		// redefine template
-		if($path !== null && realpath($template) === false) $template = $path .'/'. $template;
+		if($path !== null && realpath($template) === false) $template = $path . '/' . $template;
 
 		// return the correct full path
-		return md5(realpath($template)) .'_'. basename($template) .'.php';
+		return md5(realpath($template)) . '_' . basename($template) . '.php';
 	}
 
 
@@ -392,7 +392,6 @@ class SpoonTemplate
 		// cache tags can not be combined with this method
 		if(!empty($this->cache)) throw new SpoonTemplateException('You can not use this method when the template uses cache tags.');
 
-		// all is fine
 		// turn on output buffering
 		ob_start();
 
@@ -424,10 +423,10 @@ class SpoonTemplate
 	public function isCached($name)
 	{
 		// doesnt exist
-		if(!isset($this->cache[(string) $name])) throw new SpoonTemplateException('No cache with the name "'. (string) $name .'" is known.');
+		if(!isset($this->cache[(string) $name])) throw new SpoonTemplateException('No cache with the name "' . (string) $name . '" is known.');
 
 		// last modification date
-		$time = @filemtime($this->cacheDirectory .'/'. (string) $name .'_cache.tpl');
+		$time = @filemtime($this->cacheDirectory . '/' . (string) $name . '_cache.tpl');
 
 		// doesn't exist
 		if($time === false) return false;

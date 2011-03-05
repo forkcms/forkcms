@@ -130,7 +130,7 @@ class SpoonForm
 		// required field
 		$this->setName($name);
 		$this->add(new SpoonFormHidden('form', $this->name));
-		$this->objects['form']->setAttribute('id', SpoonFilter::toCamelCase('form_'. $this->name, '_', true));
+		$this->objects['form']->setAttribute('id', SpoonFilter::toCamelCase('form_' . $this->name, '_', true));
 
 		// optional fields
 		$this->setAction($action);
@@ -142,7 +142,7 @@ class SpoonForm
 		{
 			// add a hidden field
 			$this->add(new SpoonFormHidden('form_token', $this->getToken()));
-			$this->objects['form_token']->setAttribute('id', SpoonFilter::toCamelCase('form_token_'. $this->name, '_', true));
+			$this->objects['form_token']->setAttribute('id', SpoonFilter::toCamelCase('form_token_' . $this->name, '_', true));
 		}
 	}
 
@@ -686,7 +686,7 @@ class SpoonForm
 	public function getField($name)
 	{
 		// doesn't exist?
-		if(!isset($this->objects[(string) $name])) throw new SpoonFormException('The field "'. (string) $name .'" does not exist.');
+		if(!isset($this->objects[(string) $name])) throw new SpoonFormException('The field "' . (string) $name . '" does not exist.');
 
 		// all is fine
 		return $this->objects[(string) $name];
@@ -748,7 +748,7 @@ class SpoonForm
 		$HTML = '';
 
 		// build & return html
-		foreach($this->parameters as $key => $value) $HTML .= ' '. $key .'="'. $value .'"';
+		foreach($this->parameters as $key => $value) $HTML .= ' ' . $key . '="' . $value . '"';
 		return $HTML;
 	}
 
@@ -762,7 +762,7 @@ class SpoonForm
 	{
 		// start form
 		$value = "\n";
-		$value .= '{form:'. $this->name ."}\n";
+		$value .= '{form:' . $this->name . "}\n";
 
 		/**
 		 * At first all the hidden fields need to be added to this form, since
@@ -773,7 +773,7 @@ class SpoonForm
 			// is a hidden field
 			if(($object instanceof SpoonFormHidden) && $object->getName() != 'form')
 			{
-				$value .= "\t". '{$hid'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."}\n";
+				$value .= "\t" . '{$hid' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) . "}\n";
 			}
 		}
 
@@ -789,16 +789,16 @@ class SpoonForm
 				// buttons
 				if($object instanceof SpoonFormButton)
 				{
-					$value .= "\t<p>{\$btn". SpoonFilter::toCamelCase($object->getName()) ."}</p>\n";
+					$value .= "\t<p>{\$btn" . SpoonFilter::toCamelCase($object->getName()) . "}</p>\n";
 				}
 
 				// single checkboxes
 				elseif($object instanceof SpoonFormCheckbox)
 				{
-					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t" . '<label for="' . $object->getAttribute('id') . '">' . SpoonFilter::toCamelCase($object->getName()) . "</label>\n";
 					$value .= "\t<p>\n";
-					$value .= "\t\t{\$chk". SpoonFilter::toCamelCase($object->getName()) ."}\n";
-					$value .= "\t\t{\$chk". SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
+					$value .= "\t\t{\$chk" . SpoonFilter::toCamelCase($object->getName()) . "}\n";
+					$value .= "\t\t{\$chk" . SpoonFilter::toCamelCase($object->getName()) . "Error}\n";
 					$value .= "\t</p>\n";
 				}
 
@@ -806,31 +806,31 @@ class SpoonForm
 				elseif($object instanceof SpoonFormMultiCheckbox)
 				{
 					$value .= "\t<p>\n";
-					$value .= "\t\t". SpoonFilter::toCamelCase($object->getName()) ."<br />\n";
-					$value .= "\t\t{iteration:". $object->getName() ."}\n";
-					$value .= "\t\t\t". '<label for="{$'. $object->getName() .'.id}">{$'. $object->getName() .'.chk'. SpoonFilter::toCamelCase($object->getName()) .'} {$'. $object->getName() .'.label}</label>' ."\n";
-					$value .= "\t\t{/iteration:". $object->getName() ."}\n";
-					$value .= "\t\t". '{$chk'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
+					$value .= "\t\t" . SpoonFilter::toCamelCase($object->getName()) . "<br />\n";
+					$value .= "\t\t{iteration:" . $object->getName() . "}\n";
+					$value .= "\t\t\t" . '<label for="{$' . $object->getName() . '.id}">{$' . $object->getName() . '.chk' . SpoonFilter::toCamelCase($object->getName()) . '} {$' . $object->getName() . '.label}</label>' . "\n";
+					$value .= "\t\t{/iteration:" . $object->getName() . "}\n";
+					$value .= "\t\t" . '{$chk' . SpoonFilter::toCamelCase($object->getName()) . "Error}\n";
 					$value .= "\t</p>\n";
 				}
 
 				// dropdowns
 				elseif($object instanceof SpoonFormDropdown)
 				{
-					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."</label>\n";
+					$value .= "\t" . '<label for="' . $object->getAttribute('id') . '">' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) . "</label>\n";
 					$value .= "\t<p>\n";
-					$value .= "\t\t". '{$ddm'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."}\n";
-					$value .= "\t\t". '{$ddm'. str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) ."Error}\n";
+					$value .= "\t\t" . '{$ddm' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) . "}\n";
+					$value .= "\t\t" . '{$ddm' . str_replace('[]', '', SpoonFilter::toCamelCase($object->getName())) . "Error}\n";
 					$value .= "\t</p>\n";
 				}
 
 				// filefields
 				elseif($object instanceof SpoonFormFile)
 				{
-					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t" . '<label for="' . $object->getAttribute('id') . '">' . SpoonFilter::toCamelCase($object->getName()) . "</label>\n";
 					$value .= "\t<p>\n";
-					$value .= "\t\t". '{$file'. SpoonFilter::toCamelCase($object->getName()) ."}\n";
-					$value .= "\t\t". '{$file'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
+					$value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) . "}\n";
+					$value .= "\t\t" . '{$file' . SpoonFilter::toCamelCase($object->getName()) . "Error}\n";
 					$value .= "\t</p>\n";
 				}
 
@@ -838,28 +838,28 @@ class SpoonForm
 				elseif($object instanceof SpoonFormRadiobutton)
 				{
 					$value .= "\t<p>\n";
-					$value .= "\t\t". SpoonFilter::toCamelCase($object->getName()) ."<br />\n";
-					$value .= "\t\t{iteration:". $object->getName() ."}\n";
-					$value .= "\t\t\t". '<label for="{$'. $object->getName() .'.id}">{$'. $object->getName() .'.rbt'. SpoonFilter::toCamelCase($object->getName()) .'} {$'. $object->getName() .'.label}</label>' ."\n";
-					$value .= "\t\t{/iteration:". $object->getName() ."}\n";
-					$value .= "\t\t". '{$rbt'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
+					$value .= "\t\t" . SpoonFilter::toCamelCase($object->getName()) . "<br />\n";
+					$value .= "\t\t{iteration:" . $object->getName() . "}\n";
+					$value .= "\t\t\t" . '<label for="{$' . $object->getName() . '.id}">{$' . $object->getName() . '.rbt' . SpoonFilter::toCamelCase($object->getName()) . '} {$' . $object->getName() . '.label}</label>' . "\n";
+					$value .= "\t\t{/iteration:" . $object->getName() . "}\n";
+					$value .= "\t\t" . '{$rbt' . SpoonFilter::toCamelCase($object->getName()) . "Error}\n";
 					$value .= "\t</p>\n";
 				}
 
 				// textfields
 				elseif(($object instanceof SpoonFormDate) || ($object instanceof SpoonFormPassword) || ($object instanceof SpoonFormTextarea) || ($object instanceof SpoonFormText) || ($object instanceof SpoonFormTime))
 				{
-					$value .= "\t". '<label for="'. $object->getAttribute('id') .'">'. SpoonFilter::toCamelCase($object->getName()) ."</label>\n";
+					$value .= "\t" . '<label for="' . $object->getAttribute('id') . '">' . SpoonFilter::toCamelCase($object->getName()) . "</label>\n";
 					$value .= "\t<p>\n";
-					$value .= "\t\t". '{$txt'. SpoonFilter::toCamelCase($object->getName()) ."}\n";
-					$value .= "\t\t". '{$txt'. SpoonFilter::toCamelCase($object->getName()) ."Error}\n";
+					$value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) . "}\n";
+					$value .= "\t\t" . '{$txt' . SpoonFilter::toCamelCase($object->getName()) . "Error}\n";
 					$value .= "\t</p>\n";
 				}
 			}
 		}
 
 		// close form tag
-		return $value .'{/form:'. $this->name .'}';
+		return $value . '{/form:' . $this->name . '}';
 	}
 
 

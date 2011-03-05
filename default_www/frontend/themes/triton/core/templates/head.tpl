@@ -1,16 +1,14 @@
 <!DOCTYPE html>
-<!--[if lt IE 7 ]> <html lang="nl" class="ie6"> <![endif]-->
-<!--[if IE 7 ]> <html lang="nl" class="ie7"> <![endif]-->
-<!--[if IE 8 ]> <html lang="nl" class="ie8"> <![endif]-->
-<!--[if IE 9 ]> <html lang="nl" class="ie9"> <![endif]-->
-<!--[if (gt IE 9)|!(IE)]><!--> <html lang="nl"> <!--<![endif]-->
+<!--[if lt IE 7 ]> <html lang="{$LANGUAGE}" class="ie6"> <![endif]-->
+<!--[if IE 7 ]> <html lang="{$LANGUAGE}" class="ie7"> <![endif]-->
+<!--[if IE 8 ]> <html lang="{$LANGUAGE}" class="ie8"> <![endif]-->
+<!--[if IE 9 ]> <html lang="{$LANGUAGE}" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{$LANGUAGE}"> <!--<![endif]-->
 <head>
 	<title>{$pageTitle}</title>
 
 	{* Meta *}
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-	<meta http-equiv="content-language" content="{$LANGUAGE}" />
+	<meta charset="utf-8" />
 	<meta name="generator" content="Fork CMS" />
 	<meta name="description" content="{$metaDescription}" />
 	<meta name="keywords" content="{$metaKeywords}" />

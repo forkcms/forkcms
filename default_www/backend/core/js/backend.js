@@ -1529,4 +1529,4 @@ jsBackend.tableSequenceByDragAndDrop =
 }
 
 
-$(document).ready(function() { jsBackend.init(); });
+$(document).ready(jsBackend.init);

@@ -41,7 +41,7 @@ class ApplicationRouting
 		$this->processQueryString();
 
 		// require correct app
-		require_once APPLICATION .'/index.php';
+		require_once APPLICATION . '/index.php';
 	}
 
 

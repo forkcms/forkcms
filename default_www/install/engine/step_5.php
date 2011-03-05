@@ -55,7 +55,7 @@ class InstallerStep5 extends InstallerStep
 		// guess email
 		$host = $_SERVER['HTTP_HOST'];
 
-		$this->frm->addText('email', (SpoonSession::exists('email') ? SpoonSession::get('email') : 'info@'. $host));
+		$this->frm->addText('email', (SpoonSession::exists('email') ? SpoonSession::get('email') : 'info@' . $host));
 		$this->frm->addPassword('password', (SpoonSession::exists('password') ? SpoonSession::get('password') : null), null, 'inputPassword', 'inputPasswordError', true);
 		$this->frm->addPassword('confirm', (SpoonSession::exists('confirm') ? SpoonSession::get('confirm') : null), null, 'inputPassword', 'inputPasswordError', true);
 

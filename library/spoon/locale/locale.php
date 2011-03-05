@@ -60,7 +60,7 @@ class SpoonLocale
 		$locale = array();
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// fetch countries
 		return $locale['countries'];
@@ -82,10 +82,10 @@ class SpoonLocale
 		$locale = array();
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// doesn't exist
-		if(!isset($locale['countries'][$code])) throw new SpoonLocaleException('There is no country with the code: '. $code);
+		if(!isset($locale['countries'][$code])) throw new SpoonLocaleException('There is no country with the code: ' . $code);
 
 		// all seems fine
 		return $locale['countries'][$code];
@@ -107,10 +107,10 @@ class SpoonLocale
 		$locale = array();
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// doesn't exist
-		if(!isset($locale['languages'][$code])) throw new SpoonLocaleException('There is no language with the code: '. $code);
+		if(!isset($locale['languages'][$code])) throw new SpoonLocaleException('There is no language with the code: ' . $code);
 
 		// all seems fine
 		return $locale['languages'][$code];
@@ -130,7 +130,7 @@ class SpoonLocale
 		$locale = array();
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// fetch languages
 		return $locale['languages'];
@@ -163,7 +163,7 @@ class SpoonLocale
 		}
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// abbreviated?
 		return ($abbreviated) ? $locale['date']['months']['abbreviated'][$month] : $locale['date']['months']['full'][$month];
@@ -184,7 +184,7 @@ class SpoonLocale
 		$locale = array();
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// abbreviated?
 		return ($abbreviated) ? $locale['date']['months']['abbreviated'] : $locale['date']['months']['full'];
@@ -212,7 +212,7 @@ class SpoonLocale
 		else $day = $dayNames[SpoonFilter::getValue(strtolower($day), array_keys($dayNames), 'sunday')];
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// abbreviated?
 		return ($abbreviated) ? $locale['date']['days']['abbreviated'][$day] : $locale['date']['days']['full'][$day];
@@ -235,7 +235,7 @@ class SpoonLocale
 		$locale = array();
 
 		// fetch file
-		require 'data/'. $language .'.php';
+		require 'data/' . $language . '.php';
 
 		// data array
 		$days = ($abbreviated) ? $locale['date']['days']['abbreviated'] : $locale['date']['days']['full'];

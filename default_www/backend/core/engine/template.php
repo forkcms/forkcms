@@ -38,10 +38,10 @@ class BackendTemplate extends SpoonTemplate
 		parent::__construct();
 
 		// get URL instance
-		if(Spoon::isObjectReference('url')) $this->URL = Spoon::getObjectReference('url');
+		if(Spoon::exists('url')) $this->URL = Spoon::get('url');
 
 		// store in reference so we can access it from everywhere
-		if($addToReference) Spoon::setObjectReference('template', $this);
+		if($addToReference) Spoon::set('template', $this);
 
 		// set cache directory
 		$this->setCacheDirectory(BACKEND_CACHE_PATH .'/cached_templates');
@@ -509,7 +509,7 @@ class BackendTemplateModifiers
 		// redefine
 		$var = (string) $var;
 
-		return Spoon::getObjectReference('navigation')->getNavigation(1, 1);
+		return Spoon::get('navigation')->getNavigation(1, 1);
 	}
 
 
@@ -530,7 +530,7 @@ class BackendTemplateModifiers
 		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
 
 		// return navigation
-		return Spoon::getObjectReference('navigation')->getNavigation($startDepth, $endDepth);
+		return Spoon::get('navigation')->getNavigation($startDepth, $endDepth);
 	}
 
 

@@ -79,7 +79,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		$this->requestedPage = 1;
 		$this->limit = (int) FrontendModel::getModuleSetting('search', 'overview_num_items', 20);
 		$this->offset = ($this->requestedPage * $this->limit) - $this->limit;
-		$this->cacheFile = FRONTEND_CACHE_PATH .'/'. $this->getModule() .'/'. FRONTEND_LANGUAGE .'_'. md5($this->term) .'_'. $this->offset .'_'. $this->limit .'.php';
+		$this->cacheFile = FRONTEND_CACHE_PATH . '/' . $this->getModule() . '/' . FRONTEND_LANGUAGE . '_' . md5($this->term) . '_' . $this->offset . '_' . $this->limit . '.php';
 
 		// load the cached data
 		if(!$this->getCachedData())
@@ -92,7 +92,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		$this->parse();
 
 		// output
-		$this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH .'/modules/search/layout/templates/results.tpl', false, true));
+		$this->output(self::OK, $this->tpl->getContent(FRONTEND_PATH . '/modules/search/layout/templates/results.tpl', false, true));
 	}
 
 
@@ -161,7 +161,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if(!$this->term) return;
 
 		// set url
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') .'?form=search&q='. $this->term;
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('search') . '?form=search&q=' . $this->term;
 
 		// populate calculated fields in pagination
 		$this->pagination['limit'] = $this->limit;
@@ -186,7 +186,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if(!SPOON_DEBUG)
 		{
 			// set cache content
-			SpoonFile::setContent($this->cacheFile, "<?php\n".'$pagination = '. var_export($this->pagination, true) .";\n".'$items = '. var_export($this->items, true) .";\n?>");
+			SpoonFile::setContent($this->cacheFile, "<?php\n" . '$pagination = ' . var_export($this->pagination, true) . ";\n" . '$items = ' . var_export($this->items, true) . ";\n?>");
 		}
 	}
 
@@ -220,7 +220,7 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 			if(!isset($item['full_url'])) continue;
 
 			// build utm array
-			$utm['utm_source'] = SpoonFilter::urlise(FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
+			$utm['utm_source'] = SpoonFilter::urlise(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE));
 			$utm['utm_medium'] = 'fork-search';
 			$utm['utm_term'] = $this->term;
 
@@ -308,8 +308,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if($this->pagination['requested_page'] > 1)
 		{
 			// build URL
-			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] - 1);
-			else $URL = $this->pagination['url'] .'&amp;page='. ($this->pagination['requested_page'] - 1);
+			if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] - 1);
+			else $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] - 1);
 
 			// set
 			$pagination['show_previous'] = true;
@@ -327,8 +327,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 			for($i = $pagesFirstStart; $i <= $pagesFirstEnd; $i++)
 			{
 				// build URL
-				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-				else $URL = $this->pagination['url'] .'&amp;page='. $i;
+				if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
+				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
 				$pagination['first'][] = array('url' => $URL, 'label' => $i);
@@ -342,8 +342,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 			$current = ($i == $this->pagination['requested_page']);
 
 			// build URL
-			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-			else $URL = $this->pagination['url'] .'&amp;page='. $i;
+			if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
+			else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 			// add
 			$pagination['pages'][] = array('url' => $URL, 'label' => $i, 'current' => $current);
@@ -360,8 +360,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 			for($i = $pagesLastStart; $i <= $pagesLastEnd; $i++)
 			{
 				// build URL
-				if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. $i;
-				else $URL = $this->pagination['url'] .'&amp;page='. $i;
+				if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . $i;
+				else $URL = $this->pagination['url'] . '&amp;page=' . $i;
 
 				// add
 				$pagination['last'][] = array('url' => $URL, 'label' => $i);
@@ -372,8 +372,8 @@ class FrontendSearchAjaxLivesuggest extends FrontendBaseAJAXAction
 		if($this->pagination['requested_page'] < $this->pagination['num_pages'])
 		{
 			// build URL
-			if($useQuestionMark) $URL = $this->pagination['url'] .'?page='. ($this->pagination['requested_page'] + 1);
-			else $URL = $this->pagination['url'] .'&amp;page='. ($this->pagination['requested_page'] + 1);
+			if($useQuestionMark) $URL = $this->pagination['url'] . '?page=' . ($this->pagination['requested_page'] + 1);
+			else $URL = $this->pagination['url'] . '&amp;page=' . ($this->pagination['requested_page'] + 1);
 
 			// set
 			$pagination['show_next'] = true;

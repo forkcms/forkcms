@@ -145,7 +145,7 @@ class FrontendUser
 											array($userId));
 
 		// if there is no data we have to destroy this object, I know this isn't a realistic situation
-		if(empty($userData)) throw new FrontendException('The user ('. $userId .') doesn\'t exist.');
+		if(empty($userData)) throw new FrontendException('The user (' . $userId . ') doesn\'t exist.');
 
 		// set properties
 		$this->setUserId($userData['id']);

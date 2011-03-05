@@ -541,7 +541,7 @@ class FormBuilderHelper
 		{
 			// init
 			$frm = new BackendForm('tmp', '');
-			$tpl = (Spoon::isObjectReference('template') ? Spoon::getObjectReference('template') : new BackendTemplate());
+			$tpl = (Spoon::exists('template') ? Spoon::get('template') : new BackendTemplate());
 			$fieldHTML = '';
 			$fieldName = 'field'. $field['id'];
 			$values = (isset($field['settings']['values']) ? $field['settings']['values'] : null);

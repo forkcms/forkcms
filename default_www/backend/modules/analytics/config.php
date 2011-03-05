@@ -40,7 +40,7 @@ final class BackendAnalyticsConfig extends BackendBaseConfig
 
 		// init
 		$error = false;
-		$action = Spoon::isObjectReference('url') ? Spoon::getObjectReference('url')->getAction() : null;
+		$action = Spoon::exists('url') ? Spoon::get('url')->getAction() : null;
 
 		// analytics session token
 		if(BackendModel::getModuleSetting('analytics', 'session_token') === null) $error = true;

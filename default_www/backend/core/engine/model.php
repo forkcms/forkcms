@@ -162,7 +162,7 @@ class BackendModel
 	public static function createURLForAction($action = null, $module = null, $language = null, array $parameters = null, $urlencode = true)
 	{
 		// grab the URL from the reference
-		$URL = Spoon::getObjectReference('url');
+		$URL = Spoon::get('url');
 
 		// redefine parameters
 		$action = ($action !== null) ? (string) $action : $URL->getAction();
@@ -370,7 +370,7 @@ class BackendModel
 		$write = (bool) $write;
 
 		// do we have a db-object ready?
-		if(!Spoon::isObjectReference('database'))
+		if(!Spoon::exists('database'))
 		{
 			// create instance
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
@@ -379,11 +379,11 @@ class BackendModel
 			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
 
 			// store
-			Spoon::setObjectReference('database', $db);
+			Spoon::set('database', $db);
 		}
 
 		// return
-		return Spoon::getObjectReference('database');
+		return Spoon::get('database');
 	}
 
 

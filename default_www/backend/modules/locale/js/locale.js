@@ -52,4 +52,4 @@ jsBackend.locale.controls =
 }
 
 
-$(document).ready(function() { jsBackend.locale.init(); });
+$(document).ready(jsBackend.locale.init);

@@ -384,4 +384,4 @@ jsFrontend.search =
 }
 
 
-$(document).ready(function() { jsFrontend.init(); });
+$(document).ready(jsFrontend.init);
