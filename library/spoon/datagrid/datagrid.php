@@ -1489,7 +1489,7 @@ class SpoonDatagrid
 				if(count($function) != 2) throw new SpoonDatagridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
 
 				// method doesn't exist
-				elseif(!method_exists($function[0], $function[1])) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
+				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
 			}
 
 			// add to function stack
@@ -1862,7 +1862,7 @@ class SpoonDatagrid
 				if(count($function) != 2) throw new SpoonDatagridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
 
 				// method doesn't exist
-				elseif(!method_exists($function[0], $function[1])) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
+				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
 			}
 
 			// add to function stack

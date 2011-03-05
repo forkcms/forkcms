@@ -99,7 +99,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				$id = BackendLocationModel::insert($item);
 
 				// add search index
-//				if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+//				if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
 				if($item['lat'] && $item['lng']) $this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $id);

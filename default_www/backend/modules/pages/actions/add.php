@@ -290,7 +290,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 				// check if the method exists
-				if(method_exists('BackendSearchModel', 'addIndex'))
+				if(is_callable(array('BackendSearchModel', 'addIndex')))
 				{
 					// init var
 					$text = '';

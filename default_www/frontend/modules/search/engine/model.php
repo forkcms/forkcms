@@ -329,7 +329,7 @@ class FrontendSearchModel
 		foreach($moduleResults as $module => $otherIds)
 		{
 			// check if this module actually is prepared to handle searches (well it should, because else there shouldn't be any search indices)
-			if(method_exists('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'))
+			if(is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search')))
 			{
 				// get the required info from our module
 				$moduleResults[$module] = call_user_func(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search'), $otherIds);
@@ -418,7 +418,7 @@ class FrontendSearchModel
 			foreach($moduleResults as $module => $otherIds)
 			{
 				// check if this module actually is prepared to handle searches (well it should, because else there shouldn't be any search indices)
-				if(method_exists('Frontend' . ucfirst($module) . 'Model', 'search'))
+				if(is_callable(array('Frontend' . ucfirst($module) . 'Model', 'search')))
 				{
 					$moduleResults[$module] = call_user_func(array('Frontend' . ucfirst($module) . 'Model', 'search'), $otherIds);
 

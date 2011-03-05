@@ -92,7 +92,7 @@ class BackendSettingsModel
 			}
 
 			// method exists
-			if(method_exists($class, 'checkSettings'))
+			if(is_callable(array($class, 'checkSettings')))
 			{
 				// add possible warnings
 				$warnings = array_merge($warnings, call_user_func(array($class, 'checkSettings')));

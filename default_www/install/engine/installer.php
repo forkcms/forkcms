@@ -83,7 +83,7 @@ class Installer
 		if(class_exists('InstallerStep' . $step))
 		{
 			// isAllowed exists
-			if(method_exists('InstallerStep' . $step, 'isAllowed'))
+			if(is_callable(array('InstallerStep' . $step, 'isAllowed')))
 			{
 				// step is actually allowed
 				if(call_user_func(array('InstallerStep' . $step, 'isAllowed')))

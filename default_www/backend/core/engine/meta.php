@@ -400,7 +400,7 @@ class BackendMeta
 		$parameters = (array) $parameters;
 
 		// validate (check if the function exists)
-		if(!method_exists($className, $methodName)) throw new BackendException('The callback-method doesn\'t exist.');
+		if(!is_callable(array($className, $methodName))) throw new BackendException('The callback-method doesn\'t exist.');
 
 		// store in property
 		$this->callback = array('class' => $className, 'method' => $methodName, 'parameters' => $parameters);

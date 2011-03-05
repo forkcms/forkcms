@@ -97,7 +97,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				$className = SpoonFilter::toCamelCase('backend_' . $module . '_model');
 
 				// check if the getByTag-method is available
-				if(method_exists($className, 'getByTag'))
+				if(is_callable(array($className, 'getByTag')))
 				{
 					// make the call and get the item
 					$moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);

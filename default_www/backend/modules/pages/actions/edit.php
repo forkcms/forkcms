@@ -420,7 +420,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
 				// check if the method exists
-				if(method_exists('BackendSearchModel', 'editIndex'))
+				if(is_callable(array('BackendSearchModel', 'editIndex')))
 				{
 					// init var
 					$text = '';
