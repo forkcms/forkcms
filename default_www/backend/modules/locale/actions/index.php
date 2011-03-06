@@ -124,7 +124,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 * @return	string
 	 * @param	string $language	The language to get.
 	 */
-	public function getLanguage($language)
+	public static function getLanguage($language)
 	{
 		return BL::msg(mb_strtoupper((string) $language), 'core');
 	}
@@ -136,7 +136,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 * @return	string
 	 * @param	string $type		The type to get a label for.
 	 */
-	public function getType($type)
+	public static function getType($type)
 	{
 		return BL::msg(mb_strtoupper((string) $type), 'core');
 	}
