@@ -8,7 +8,7 @@
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			<a href="{$SITE_URL}{$item.full_url}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>
+			{option:!item.is_hidden}<a href="{$SITE_URL}{$item.full_url}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>{/option:!item.is_hidden}
 			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
 		</div>
 	</div>
