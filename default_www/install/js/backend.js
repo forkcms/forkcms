@@ -298,4 +298,4 @@ jsBackend.layout =
 }
 
 
-$(document).ready(function() { jsBackend.init(); });
+$(document).ready(jsBackend.init);

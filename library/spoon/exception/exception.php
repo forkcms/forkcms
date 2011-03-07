@@ -103,12 +103,12 @@ function exceptionHandler($exception)
 	$trace = $exception->getTrace();
 
 	// specific name
-	$name = (method_exists($exception, 'getName')) ? $exception->getName() : 'UnknownException';
+	$name = (is_callable(array($exception, 'getName'))) ? $exception->getName() : 'UnknownException';
 
 	// spoon type exception
-	if(method_exists($exception, 'getName') && strtolower(substr($exception->getName(), 0, 5)) == 'spoon' && $exception->getCode() != 0)
+	if(is_callable(array($exception, 'getName')) && strtolower(substr($exception->getName(), 0, 5)) == 'spoon' && $exception->getCode() != 0)
 	{
-		$documentation = '&raquo; <a href="http://www.spoon-library.com/exceptions/detail/'. $exception->getCode() .'">view documentation</a>';
+		$documentation = '&raquo; <a href="http://www.spoon-library.com/exceptions/detail/' . $exception->getCode() . '">view documentation</a>';
 	}
 
 	// request uri?
@@ -122,7 +122,7 @@ function exceptionHandler($exception)
 	$output = '
 	<html>
 		<head>
-			<title>'. $name .'</title>
+			<title>' . $name . '</title>
 		</head>
 		<body style="background-color: #F2F2F2; color: #0000000, font-family: Verdana, Tahoma, Arial; font-size 10px; margin: 0; padding: 0;">
 			<table width="100%">
@@ -132,57 +132,57 @@ function exceptionHandler($exception)
 						<table width="550px;">
 							<tr>
 								<td style="background-color: #EEEEEE; border: 1px solid #B2B2B2;">
-									<h1 style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">'. $name .' &raquo; Main</h1>
+									<h1 style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">' . $name . ' &raquo; Main</h1>
 									<table width="550px">
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Message</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $exception->getMessage() .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $exception->getMessage() . '</td>
 										</tr>
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">File</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. wordwrap($exception->getFile(), 70, '<br />', true) .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . wordwrap($exception->getFile(), 70, '<br />', true) . '</td>
 										</tr>
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Line</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $exception->getLine() .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $exception->getLine() . '</td>
 										</tr>
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Date</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. date('r') .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . date('r') . '</td>
 										</tr>
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">URL</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'."\n";
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . "\n";
 		// request URL
-		$output .= '							<a href="http://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] .'">http://'. $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] .'</a>'."\n";
+		$output .= '							<a href="http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '">http://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . '</a>' . "\n";
 		$output .= '						</td>
 										</tr>
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Referring URL</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'."\n";
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . "\n";
 		// referring URL
 		if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] != '')
 		{
-			$output .= '						<a href="'. $_SERVER['HTTP_REFERER'] .'">'. $_SERVER['HTTP_REFERER'] .'</a>'."\n";
+			$output .= '						<a href="' . $_SERVER['HTTP_REFERER'] . '">' . $_SERVER['HTTP_REFERER'] . '</a>' . "\n";
 		}
-		else $output .= '						Unknown Referrer'."\n";
+		else $output .= '						Unknown Referrer' . "\n";
 
 		$output .= '						</td>
 										</tr>
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Request Method</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $_SERVER['REQUEST_METHOD'] .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $_SERVER['REQUEST_METHOD'] . '</td>
 										</tr>
 										<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">User-agent</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $userAgent .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $userAgent . '</td>
 										</tr>';
 		// no documentation ?
 		if(isset($documentation))
 		{
 			$output .= '				<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Documentation</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $documentation .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $documentation . '</td>
 										</tr>';
 		}
 
@@ -195,7 +195,7 @@ function exceptionHandler($exception)
 			// show output
 			$output .= '				<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">PHP error</th>
-											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'. $error['message'] .'</td>
+											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $error['message'] . '</td>
 										</tr>';
 		}
 
@@ -209,8 +209,8 @@ function exceptionHandler($exception)
 							<!-- variables -->
 							<tr>
 								<td style="background-color: #EEEEEE; border: 1px solid #B2B2B2;">
-									<h1 style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">'. $name .' &raquo; Variables</h1>
-									<table width="550px;">'."\n";
+									<h1 style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">' . $name . ' &raquo; Variables</h1>
+									<table width="550px;">' . "\n";
 
 		// $_GET has items
 		if(isset($_GET))
@@ -218,9 +218,9 @@ function exceptionHandler($exception)
 			$output .= '				<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">$_GET</th>
 											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">
-												<pre style="font-family: Courier; margin-bottom: 10px;">'. print_r($_GET, true) .'</pre>
+												<pre style="font-family: Courier; margin-bottom: 10px;">' . print_r($_GET, true) . '</pre>
 											</td>
-										</tr>'."\n";
+										</tr>' . "\n";
 		}
 
 		// $_POST has items
@@ -229,7 +229,7 @@ function exceptionHandler($exception)
 			$output .= '				<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">$_POST</th>
 											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">
-												<pre style="font-family: Courier; margin-bottom: 10px;">'.print_r($_POST, true) .'</pre>
+												<pre style="font-family: Courier; margin-bottom: 10px;">' . print_r($_POST, true) . '</pre>
 											</td>
 										</tr>';
 		}
@@ -240,7 +240,7 @@ function exceptionHandler($exception)
 			$output .= '				<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">$_SESSION</th>
 											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">
-												<pre style="font-family: Courier; margin-bottom: 10px;">'. print_r($_SESSION, true) .'</pre>
+												<pre style="font-family: Courier; margin-bottom: 10px;">' . print_r($_SESSION, true) . '</pre>
 											</td>
 										</tr>';
 		}
@@ -251,7 +251,7 @@ function exceptionHandler($exception)
 			$output .= '				<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">$_COOKIE</th>
 											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">
-												<pre style="font-family: Courier; margin-bottom: 10px;">'. print_r($_COOKIE, true) .'</pre>
+												<pre style="font-family: Courier; margin-bottom: 10px;">' . print_r($_COOKIE, true) . '</pre>
 											</td>
 										</tr>';
 		}
@@ -262,7 +262,7 @@ function exceptionHandler($exception)
 			$output .= '				<tr>
 											<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">$_FILES</th>
 											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">
-												<pre style="font-family: Courier; margin-bottom: 10px;">'. print_r($_FILES, true) .'</pre>
+												<pre style="font-family: Courier; margin-bottom: 10px;">' . print_r($_FILES, true) . '</pre>
 											</td>
 										</tr>';
 		}
@@ -276,8 +276,8 @@ function exceptionHandler($exception)
 							<!-- stack -->
 							<tr>
 								<td style="background-color: #EEEEEE; border: 1px solid #B2B2B2;">
-									<h1 style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">'. $name .' &raquo; Trace</h1>
-									<table width="550px;">' ."\n";
+									<h1 style="font-size: 12px; margin: 5px 5px 12px 5px; padding: 0 0 5px 0; color: #000000; font-family: Verdana, Tahoma, Arial; border-bottom: 1px solid #999999;">' . $name . ' &raquo; Trace</h1>
+									<table width="550px;">' . "\n";
 
 		// trace has items
 		if(count($exception->getTrace()) != 0)
@@ -294,14 +294,12 @@ function exceptionHandler($exception)
 												<table width="550px;">
 													<tr>
 														<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">File</th>
-														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'.
-															((isset($traceStack['file'])) ? wordwrap($traceStack['file'], 70, '<br />', true) : 'Unknown') .'
+														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . ((isset($traceStack['file'])) ? wordwrap($traceStack['file'], 70, '<br />', true) : 'Unknown') . '
 														</td>
 													</tr>
 													<tr>
 														<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Line</th>
-														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'.
-															 ((isset($traceStack['line'])) ? $traceStack['line'] : 'Unknown') .'
+														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . ((isset($traceStack['line'])) ? $traceStack['line'] : 'Unknown') . '
 														</td>
 													</tr>';
 
@@ -310,8 +308,7 @@ function exceptionHandler($exception)
 				{
 					$output .= '					<tr>
 														<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Class</th>
-														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'.
-															$traceStack['class'] .'
+														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $traceStack['class'] . '
 														</td>
 													</tr>';
 				}
@@ -319,9 +316,7 @@ function exceptionHandler($exception)
 				{
 					$output .= '					<tr>
 														<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Function</th>
-														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">'.
-															$traceStack['function'] .'
-														</td>
+														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">' . $traceStack['function'] . '													</td>
 													</tr>';
 				}
 
@@ -332,7 +327,7 @@ function exceptionHandler($exception)
 					$output .= '					<tr>
 														<th width="110px" style="vertical-align: top; text-align: left; font-weight: 700; padding: 0 0 0 10px; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">Argument(s)</th>
 														<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">
-															<pre style="font-family: Courier; margin-bottom: 10px;">'. print_r($traceStack['args'], true) .'</pre>
+															<pre style="font-family: Courier; margin-bottom: 10px;">' . print_r($traceStack['args'], true) . '</pre>
 														</td>
 													</tr>';
 				}
@@ -348,7 +343,7 @@ function exceptionHandler($exception)
 		else $output .= '				<tr>
 											<td style="vertical-align: top; font-family: Verdana, Tahoma, Arial; font-size: 10px; color: #000000;">No trace available.</td>
 										</tr>';
-								// continue output generation
+		// continue output generation
 		$output .= '				</table>
 								</td>
 							</tr>
@@ -362,7 +357,7 @@ function exceptionHandler($exception)
 	';
 
 	// obfuscate
-	if(method_exists($exception, 'getObfuscate') && count($exception->getObfuscate()) != 0)
+	if(is_callable(array($exception, 'getObfuscate')) && count($exception->getObfuscate()) != 0)
 	{
 		$output = str_replace($exception->getObfuscate(), '***', $output);
 	}
@@ -380,7 +375,7 @@ function exceptionHandler($exception)
 			}
 
 			// something went wrong
-			else exit('The function stored in SPOON_EXCEPTION_CALLBACK ('. SPOON_EXCEPTION_CALLBACK .') could not be found.');
+			else exit('The function stored in SPOON_EXCEPTION_CALLBACK (' . SPOON_EXCEPTION_CALLBACK . ') could not be found.');
 		}
 
 		// method
@@ -390,13 +385,13 @@ function exceptionHandler($exception)
 			$method = explode('::', SPOON_EXCEPTION_CALLBACK);
 
 			// 2 parameters and exists
-			if(count($method) == 2 && method_exists($method[0], $method[1]))
+			if(count($method) == 2 && is_callable(array($method[0], $method[1])))
 			{
 				call_user_func_array(array($method[0], $method[1]), array($exception, $output));
 			}
 
 			// something went wrong
-			else exit('The method stored in SPOON_EXCEPTION_CALLBACK ('. SPOON_EXCEPTION_CALLBACK .') cound not be found.');
+			else exit('The method stored in SPOON_EXCEPTION_CALLBACK (' . SPOON_EXCEPTION_CALLBACK . ') cound not be found.');
 		}
 
 	}

@@ -51,7 +51,7 @@ class BackendURL
 	public function __construct()
 	{
 		// add ourself to the reference so other classes can retrieve us
-		Spoon::setObjectReference('url', $this);
+		Spoon::set('url', $this);
 
 		// set query-string for later use
 		$this->setQueryString($_SERVER['REQUEST_URI']);
@@ -143,7 +143,7 @@ class BackendURL
 			array_shift($chunks);
 
 			// redirect to login
-			SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. SITE_DEFAULT_LANGUAGE .'/'. implode('/', $chunks));
+			SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . SITE_DEFAULT_LANGUAGE . '/' . implode('/', $chunks));
 		}
 
 		// get the module, null will be the default
@@ -156,19 +156,19 @@ class BackendURL
 		elseif(!$isJS && !$isAJAX)
 		{
 			// build path to the module and define it. This is a constant because we can use this in templates.
-			if(!defined('BACKEND_MODULE_PATH')) define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH .'/'. $module);
+			if(!defined('BACKEND_MODULE_PATH')) define('BACKEND_MODULE_PATH', BACKEND_MODULES_PATH . '/' . $module);
 
 			// check if the config is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_MODULE_PATH .'/config.php')) throw new BackendException('The configfile for the module ('. $module .') can\'t be found.');
+			if(!SpoonFile::exists(BACKEND_MODULE_PATH . '/config.php')) throw new BackendException('The configfile for the module (' . $module . ') can\'t be found.');
 
 			// build config-object-name
-			$configClassName = 'Backend'. SpoonFilter::toCamelCase($module .'_config');
+			$configClassName = 'Backend' . SpoonFilter::toCamelCase($module . '_config');
 
 			// require the config file, we validated before for existence.
-			require_once BACKEND_MODULE_PATH .'/config.php';
+			require_once BACKEND_MODULE_PATH . '/config.php';
 
 			// validate if class exists (aka has correct name)
-			if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: '. $configClassName .'.');
+			if(!class_exists($configClassName)) throw new BackendException('The config file is present, but the classname should be: ' . $configClassName . '.');
 
 			// create config-object, the constructor will do some magic
 			$config = new $configClassName($module);
@@ -197,7 +197,7 @@ class BackendURL
 			if(!BackendAuthentication::isLoggedIn() && !BackendAuthentication::isAllowedModule($module))
 			{
 				// redirect to login
-				SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/authentication/?querystring='. urlencode('/'. $this->getQueryString()));
+				SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/authentication/?querystring=' . urlencode('/' . $this->getQueryString()));
 			}
 
 			// the person is logged in
@@ -207,7 +207,7 @@ class BackendURL
 				if(!BackendAuthentication::isAllowedModule($module))
 				{
 					// the user doesn't have access, redirect to error page
-					SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=module-not-allowed&querystring='. urlencode('/'. $this->getQueryString()));
+					SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=module-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
 				}
 
 				// we have access
@@ -217,7 +217,7 @@ class BackendURL
 					if(!BackendAuthentication::isAllowedAction($action, $module))
 					{
 						// the user hasn't access, redirect to error page
-						SpoonHTTP::redirect('/'. NAMED_APPLICATION .'/'. $language .'/error?type=action-not-allowed&querystring='. urlencode('/'. $this->getQueryString()));
+						SpoonHTTP::redirect('/' . NAMED_APPLICATION . '/' . $language . '/error?type=action-not-allowed&querystring=' . urlencode('/' . $this->getQueryString()));
 					}
 
 					// let's do it

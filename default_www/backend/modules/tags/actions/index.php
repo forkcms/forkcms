@@ -60,7 +60,7 @@ class BackendTagsIndex extends BackendBaseActionIndex
 		$this->datagrid->setMassAction($ddmMassAction);
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// add attributes, so the inline editing has all the needed data
 		$this->datagrid->setColumnAttributes('tag', array('data-id' => '{id:[id]}'));

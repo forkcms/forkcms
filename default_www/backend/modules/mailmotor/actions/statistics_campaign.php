@@ -78,7 +78,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if(!BackendMailmotorModel::existsCampaign($this->id)) $this->redirect(BackendModel::createURLForAction('campaigns') .'&error=campaign-does-not-exist');
+		if(!BackendMailmotorModel::existsCampaign($this->id)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
 
 		// store mailing
 		$this->campaign = BackendMailmotorModel::getCampaign($this->id);
@@ -87,7 +87,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->statistics = BackendMailmotorCMHelper::getStatisticsByCampaignID($this->id, true);
 
 		// no stats found
-		if($this->statistics === false || empty($this->statistics)) $this->redirect(BackendModel::createURLForAction('campaigns') .'&error=no-statistics-loaded');
+		if($this->statistics === false || empty($this->statistics)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=no-statistics-loaded');
 	}
 
 
@@ -112,7 +112,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('name', 'send_on'), 'name');
 
 		// set url for mailing name
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('statistics') .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
 
 		// set column functions
 		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[send_on]'), 'send_on', true);

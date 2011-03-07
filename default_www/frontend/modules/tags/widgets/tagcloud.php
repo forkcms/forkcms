@@ -49,7 +49,7 @@ class FrontendTagsWidgetTagcloud extends FrontendBaseWidget
 		if(!empty($tags))
 		{
 			// loop and reset url
-			foreach($tags as &$row) $row['url'] = $link .'/'. $row['url'];
+			foreach($tags as &$row) $row['url'] = $link . '/' . $row['url'];
 		}
 
 		// assign comments

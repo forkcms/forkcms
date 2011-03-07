@@ -7,7 +7,7 @@
 <section id="searchIndex" class="mod">
 	<div class="inner">
 		<header class="hd">
-			<h3>{$lblSearchAgain|ucfirst}</h3>
+			<h4>{$lblSearchAgain|ucfirst}</h4>
 		</header>
 		<div class="bd">
 			{form:search}

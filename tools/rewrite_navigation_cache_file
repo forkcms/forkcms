@@ -1,0 +1,166 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Optimise Fork CMS' back-end navigation cache (which will one day be automagically generated) to use
+ * nested arrays instead of assigning to the numeric indexes, which is prone to errors and difficult to edit.
+ *
+ * @author Jan Moesen <janmoesen@github.invalid>
+ */
+
+/**
+ * Show the command line usage.
+ *
+ * @return void
+ */
+function usage()
+{
+	ob_start();
+	echo 'You need to specify the location of the navigation cache file.', PHP_EOL;
+	echo 'E.g.:', PHP_EOL;
+	echo PHP_EOL;
+	echo 'php ', $_SERVER['argv'][0], ' default_www/backend/cache/navigation/navigation.php', PHP_EOL;
+	echo PHP_EOL;
+	file_put_contents('php://stderr', ob_get_clean());
+}
+
+
+// check the command line parameters
+if(empty($_SERVER['argv'][1]) || $_SERVER['argv'][1] === '--help')
+{
+	usage();
+
+	// exit with a non-zero status unless --help is used
+	if(isset($_SERVER['argv'][1]) && $_SERVER['argv'][1] === '--help')
+	{
+		exit(0);
+	}
+	exit(1);
+}
+
+// load the current navigation
+$navigationFile = $_SERVER['argv'][1];
+require_once $navigationFile;
+if(!isset($navigation))
+{
+	usage();
+	exit(1);
+}
+
+// copy the preamble as-is
+$output = '';
+foreach(token_get_all(file_get_contents($navigationFile)) as $token)
+{
+	// stop when we have reached "$navigation"
+	if(is_array($token) && $token[1] === '$navigation')
+	{
+		break;
+	}
+
+	$output .= is_array($token) ? $token[1] : $token;
+}
+
+/**
+ * Recursively construct the PHP code to create the navigation array.
+ *
+ * @return  string
+ * @param   array $var  At first, the entire $navigation array. As the function recurses, $var will become the leaves.
+ */
+function flattenArray($var)
+{
+	// single string
+	if(is_string($var))
+	{
+		return sprintf("'%s'", str_replace("'", "\\'", $var));
+	}
+
+	// array
+	if(is_array($var))
+	{
+		// do not explicitly define numeric keys
+		$isAllNumeric = true;
+		foreach($var as $key => $value)
+		{
+			$isAllNumeric &= is_numeric($key);
+		}
+
+		// loop through all key/value pairs
+		foreach($var as $key => $value)
+		{
+			// recursively call this function
+			$result = flattenArray($value);
+			if(is_array($value))
+			{
+				// indent the recursive results
+				$result = str_replace("\n", "\n\t", $result);
+			}
+
+			// add the non-numeric key if necessary
+			$var[$key] = ($isAllNumeric ? $result : sprintf("'%s' => %s", $key, $result));
+		}
+
+		// glue everything together
+		$result = sprintf("array(\n\t%s\n)", implode(",\n\t", $var));
+		return $result;
+	}
+
+	// unknown; this should never happen
+	echo 'Unsupported type: ', gettype($var), ': ';
+	var_dump($var);
+	exit(1);
+};
+
+// create the new navigation code
+$output .= '$navigation = ' . flattenArray($navigation) . ";\n\n?" . '>';
+
+// keep track of the changes — the end effect should be the same
+// note: the current Fork navigation.php unnecessarily skips an index between "location/index" and "faq/index", so the var_export is NOT the same
+$before = var_export($navigation, true);
+eval(implode("\n", array_slice(explode("\n", $output), 1)));
+$after = var_export($navigation, true);
+
+// only write when there were no structural changes
+if($before === $after)
+{
+	if(file_put_contents($navigationFile, $output))
+	{
+		echo 'Success! I wrote the new $navigation array to ', $navigationFile, '.', PHP_EOL;
+		exit(0);
+	}
+	else
+	{
+		ob_start();
+		echo 'The conversion was successful, but I could not write the code below to ', $navigationFile, ':', PHP_EOL;
+		echo PHP_EOL;
+		file_put_contents('php://stderr', ob_get_clean());
+		echo $output;
+	}
+}
+
+// otherwise, make it easy to diff
+else
+{
+	if(file_put_contents($navigationFile . '.before', $before) && file_put_contents($navigationFile . '.after', $after) && file_put_contents($navigationFile . '.new', $output))
+	{
+		ob_start();
+		echo 'The "before" and "after" var_export were different! Check their difference:', PHP_EOL;
+		echo '  diff -U4 ', escapeshellarg($navigationFile . '.before'), ' ', escapeshellarg($navigationFile . '.after'), PHP_EOL;
+		echo PHP_EOL;
+		echo 'I saved the rewritten code to ', $navigationFile . '.new.', PHP_EOL;
+		file_put_contents('php://stderr', ob_get_clean());
+	}
+	else
+	{
+		ob_start();
+		echo 'The conversion was unsuccessful and I could not write the "before" and "after" var_export to ', $navigationFile, '.{before,after}.', PHP_EOL;
+		echo 'Here is the new code:', PHP_EOL;
+		echo PHP_EOL;
+		file_put_contents('php://stderr', ob_get_clean());
+		echo $output;
+	}
+}
+
+// if we got here, something was not right
+exit(1);
+
+?>

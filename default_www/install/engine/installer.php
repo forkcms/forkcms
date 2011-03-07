@@ -55,7 +55,7 @@ class Installer
 	private function execute()
 	{
 		// step class name
-		$class = 'InstallerStep'. $this->step;
+		$class = 'InstallerStep' . $this->step;
 
 		// create & execute instance
 		$instance = new $class($this->step);
@@ -80,13 +80,13 @@ class Installer
 		}
 
 		// installer step class exists
-		if(class_exists('InstallerStep'. $step))
+		if(class_exists('InstallerStep' . $step))
 		{
 			// isAllowed exists
-			if(method_exists('InstallerStep'. $step, 'isAllowed'))
+			if(is_callable(array('InstallerStep' . $step, 'isAllowed')))
 			{
 				// step is actually allowed
-				if(call_user_func(array('InstallerStep'. $step, 'isAllowed')))
+				if(call_user_func(array('InstallerStep' . $step, 'isAllowed')))
 				{
 					// step has been validated
 					$this->step = $step;

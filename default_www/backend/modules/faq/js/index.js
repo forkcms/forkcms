@@ -129,4 +129,4 @@ jsBackend.faq =
 }
 
 
-$(document).ready(function() { jsBackend.faq.init(); });
+$(document).ready(jsBackend.faq.init);

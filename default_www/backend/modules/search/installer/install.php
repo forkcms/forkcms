@@ -7,6 +7,7 @@
  * @subpackage	search
  *
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class SearchInstall extends ModuleInstaller
@@ -19,7 +20,7 @@ class SearchInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'search' as a module
 		$this->addModule('search', 'The search module.');
@@ -66,7 +67,7 @@ class SearchInstall extends ModuleInstaller
 		$this->searchPages();
 
 		// create module cache path
-		if(!SpoonDirectory::exists(PATH_WWW .'/frontend/cache/search')) SpoonDirectory::create(PATH_WWW .'/frontend/cache/search');
+		if(!SpoonDirectory::exists(PATH_WWW . '/frontend/cache/search')) SpoonDirectory::create(PATH_WWW . '/frontend/cache/search');
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synoniemen zijn verplicht.');
@@ -92,6 +93,7 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'search', 'msg', 'NoSynonymsBox', 'Er zijn nog geen synoniemen.');
 
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'TermIsRequired', 'De zoekterm is verplicht.');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken');
 
 		// insert locale (en)
 		$this->insertLocale('en', 'backend', 'search', 'err', 'SynonymIsRequired', 'Synonyms are required.');
@@ -117,6 +119,7 @@ class SearchInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'search', 'msg', 'NoSynonymsBox', 'There are no synonyms yet.');
 
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'TermIsRequired', 'The searchterm is required.');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Search', 'search');
 	}
 
 

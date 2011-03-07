@@ -241,38 +241,38 @@ class BackendCronjobAction
 	public function execute()
 	{
 		// build action-class-name
-		$actionClassName = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_cronjob_'. $this->getAction());
+		$actionClassName = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_cronjob_' . $this->getAction());
 
 		if($this->getModule() == 'core')
 		{
 			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_CORE_PATH .'/cronjobs/'. $this->getAction() .'.php'))
+			if(!SpoonFile::exists(BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php'))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(500);
 
 				// throw exception
-				throw new BackendException('The cronjobfile for the module ('. $this->getAction() .'.php) can\'t be found.');
+				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
 			}
 
 			// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
-			require_once BACKEND_CORE_PATH .'/cronjobs/'. $this->getAction() .'.php';
+			require_once BACKEND_CORE_PATH . '/cronjobs/' . $this->getAction() . '.php';
 		}
 
 		else
 		{
 			// check if the file is present? If it isn't present there is a huge problem, so we will stop our code by throwing an error
-			if(!SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/cronjobs/'. $this->getAction() .'.php'))
+			if(!SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php'))
 			{
 				// set correct headers
 				SpoonHTTP::setHeadersByCode(500);
 
 				// throw exception
-				throw new BackendException('The cronjobfile for the module ('. $this->getAction() .'.php) can\'t be found.');
+				throw new BackendException('The cronjobfile for the module (' . $this->getAction() . '.php) can\'t be found.');
 			}
 
 			// require the config file, we know it is there because we validated it before (possible actions are defined by existance of the file).
-			require_once BACKEND_MODULES_PATH .'/'. $this->getModule() .'/cronjobs/'. $this->getAction() .'.php';
+			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/cronjobs/' . $this->getAction() . '.php';
 		}
 
 		// validate if class exists (aka has correct name)
@@ -282,7 +282,7 @@ class BackendCronjobAction
 			SpoonHTTP::setHeadersByCode(500);
 
 			// throw exception
-			throw new BackendException('The cronjobfile is present, but the classname should be: '. $actionClassName .'.');
+			throw new BackendException('The cronjobfile is present, but the classname should be: ' . $actionClassName . '.');
 		}
 
 		// create action-object

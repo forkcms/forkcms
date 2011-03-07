@@ -163,10 +163,10 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			if($key == 'class') $html .= $this->getClassHTML();
 
 			// name
-			elseif($key == 'name' && !$this->single) $html .= ' name="'. $value .'"';
+			elseif($key == 'name' && !$this->single) $html .= ' name="' . $value . '"';
 
 			// other elements
-			else $html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+			else $html .= ' ' . $key . '="' . str_replace(array_keys($variables), array_values($variables), $value) . '"';
 		}
 
 		return $html;
@@ -187,20 +187,20 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		if($this->errors != '')
 		{
 			// class & classOnError defined
-			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="'. $this->attributes['class'] .' '. $this->classError .'"';
+			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="' . $this->attributes['class'] . ' ' . $this->classError . '"';
 
 			// only class defined
-			elseif($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			elseif($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 
 			// only error defined
-			elseif($this->classError != '') $value = ' class="'. $this->classError .'"';
+			elseif($this->classError != '') $value = ' class="' . $this->classError . '"';
 		}
 
 		// no errors
 		else
 		{
 			// class defined
-			if($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			if($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 		}
 
 		return $value;
@@ -222,7 +222,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			if(array_key_exists((string) $key, $this->values)) return $this->values[$key];
 
 			// something went wrong
-			throw new SpoonFormException('You can\'t fetch the value ('. $key .') from the dropdown values based on its key if it doesn\'t exist.');
+			throw new SpoonFormException('You can\'t fetch the value (' . $key . ') from the dropdown values based on its key if it doesn\'t exist.');
 		}
 
 		// everything by default
@@ -467,7 +467,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		if(count($this->defaultElement) != 0)
 		{
 			// create option
-			$output .= "\t". '<option value="'. $this->defaultElement[1] .'"';
+			$output .= "\t" . '<option value="' . $this->defaultElement[1] . '"';
 
 			// multiple
 			if(!$this->single)
@@ -484,7 +484,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			}
 
 			// end option
-			$output .= '>'. $this->defaultElement[0] ."</option>\r\n";
+			$output .= '>' . $this->defaultElement[0] . "</option>\r\n";
 		}
 
 		// has option groups
@@ -493,13 +493,13 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			foreach($this->values as $groupName => $group)
 			{
 				// create optgroup
-				$output .= "\t" .'<optgroup label="'. $groupName .'">'."\n";
+				$output .= "\t" . '<optgroup label="' . $groupName . '">' . "\n";
 
 				// loop valuesgoo
 				foreach($group as $value => $label)
 				{
 					// create option
-					$output .= "\t\t" . '<option value="'. $value .'"';
+					$output .= "\t\t" . '<option value="' . $value . '"';
 
 					// multiple
 					if(!$this->single)
@@ -522,7 +522,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 						foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
 						{
 							// add to the output
-							$output .= ' '. $attrKey .'="'. $attrValue .'"';
+							$output .= ' ' . $attrKey . '="' . $attrValue . '"';
 						}
 					}
 
@@ -531,7 +531,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 				}
 
 				// end optgroup
-				$output .= "\t" .'</optgroup>'."\n";
+				$output .= "\t" . '</optgroup>' . "\n";
 			}
 		}
 
@@ -542,7 +542,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 			foreach($this->values as $value => $label)
 			{
 				// create option
-				$output .= "\t". '<option value="'. $value .'"';
+				$output .= "\t" . '<option value="' . $value . '"';
 
 				// multiple
 				if(!$this->single)
@@ -565,7 +565,7 @@ class SpoonFormDropdown extends SpoonFormAttributes
 					foreach($this->optionAttributes[(string) $value] as $attrKey => $attrValue)
 					{
 						// add to the output
-						$output .= ' '. $attrKey .'="'. $attrValue .'"';
+						$output .= ' ' . $attrKey . '="' . $attrValue . '"';
 					}
 				}
 
@@ -580,8 +580,8 @@ class SpoonFormDropdown extends SpoonFormAttributes
 		// parse to template
 		if($template !== null)
 		{
-			$template->assign('ddm'. SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])), $output);
-			$template->assign('ddm'. SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('ddm' . SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])), $output);
+			$template->assign('ddm' . SpoonFilter::toCamelCase(str_replace('[]', '', $this->attributes['name'])) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
 		}
 
 		return $output;

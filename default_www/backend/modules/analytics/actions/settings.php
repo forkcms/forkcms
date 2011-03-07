@@ -199,7 +199,7 @@ class BackendAnalyticsSettings extends BackendBaseActionEdit
 			$this->tpl->assign('Wizard', true);
 
 			// build the link to the google account authentication form
-			$redirectUrl = SITE_URL .'/'. (strpos($this->URL->getQueryString(), '?') === false ? $this->URL->getQueryString() : substr($this->URL->getQueryString(), 0, strpos($this->URL->getQueryString(), '?')));
+			$redirectUrl = SITE_URL . '/' . (strpos($this->URL->getQueryString(), '?') === false ? $this->URL->getQueryString() : substr($this->URL->getQueryString(), 0, strpos($this->URL->getQueryString(), '?')));
 			$googleAccountAuthenticationForm = sprintf(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_URL, urlencode($redirectUrl), urlencode(BackendAnalyticsModel::GOOGLE_ACCOUNT_AUTHENTICATION_SCOPE));
 
 			// parse the link to the google account authentication form

@@ -19,7 +19,7 @@ class LocationInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'location' as a module
 		$this->addModule('location', 'The location module.');

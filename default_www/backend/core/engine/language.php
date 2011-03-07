@@ -79,7 +79,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}
@@ -95,7 +95,7 @@ class BackendLanguage
 		if(isset(self::$err['core'][$key])) return self::$err['core'][$key];
 
 		// otherwise return the key in label-format
-		return '{$err'. SpoonFilter::toCamelCase($module) . $key .'}';
+		return '{$err' . SpoonFilter::toCamelCase($module) . $key . '}';
 	}
 
 
@@ -158,7 +158,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}
@@ -174,7 +174,7 @@ class BackendLanguage
 		if(isset(self::$lbl['core'][$key])) return self::$lbl['core'][$key];
 
 		// otherwise return the key in label-format
-		return '{$lbl'. SpoonFilter::toCamelCase($module) . $key .'}';
+		return '{$lbl' . SpoonFilter::toCamelCase($module) . $key . '}';
 	}
 
 
@@ -225,7 +225,7 @@ class BackendLanguage
 		// do we know the module
 		if($module === null)
 		{
-			if(Spoon::isObjectReference('url')) $module = Spoon::getObjectReference('url')->getModule();
+			if(Spoon::exists('url')) $module = Spoon::get('url')->getModule();
 			elseif(isset($_GET['module']) && $_GET['module'] != '') $module = (string) $_GET['module'];
 			else $module = 'core';
 		}
@@ -241,7 +241,7 @@ class BackendLanguage
 		if(isset(self::$msg['core'][$key])) return self::$msg['core'][$key];
 
 		// otherwise return the key in label-format
-		return '{$msg'. SpoonFilter::toCamelCase($module) . $key .'}';
+		return '{$msg' . SpoonFilter::toCamelCase($module) . $key . '}';
 	}
 
 
@@ -305,10 +305,10 @@ class BackendLanguage
 		$language = (string) $language;
 
 		// check if file exists
-		if(!SpoonFile::exists(BACKEND_CACHE_PATH .'/locale/'. $language .'.php'))
+		if(!SpoonFile::exists(BACKEND_CACHE_PATH . '/locale/' . $language . '.php'))
 		{
 			// require the BackendLocaleModel
-			require_once BACKEND_MODULES_PATH .'/locale/engine/model.php';
+			require_once BACKEND_MODULES_PATH . '/locale/engine/model.php';
 
 			// build locale file
 			BackendLocaleModel::buildCache($language, APPLICATION);
@@ -340,7 +340,7 @@ class BackendLanguage
 		$msg = array();
 
 		// require file
-		require BACKEND_CACHE_PATH .'/locale/'. $language .'.php';
+		require BACKEND_CACHE_PATH . '/locale/' . $language . '.php';
 
 		// set language specific labels
 		self::$err = (array) $err;

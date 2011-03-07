@@ -48,7 +48,7 @@ class MailmotorInstall extends ModuleInstaller
 	private function installDatabase()
 	{
 		// load install.sql and labels.sql
-		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 	}
 
 
@@ -673,13 +673,13 @@ class MailmotorInstall extends ModuleInstaller
 	private function moveClasses()
 	{
 		// set source var
-		$source = PATH_WWW .'/backend/modules/mailmotor/installer/campaignmonitor.php';
+		$source = PATH_WWW . '/backend/modules/mailmotor/installer/campaignmonitor.php';
 
 		// check if the campaignmonitor class exists in the installer folder for this module
 		if(!SpoonFile::exists($source)) return false;
 
 		// move the file to library/external
-		copy($source, PATH_LIBRARY .'/external/campaignmonitor.php');
+		copy($source, PATH_LIBRARY . '/external/campaignmonitor.php');
 	}
 }
 

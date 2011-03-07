@@ -53,7 +53,7 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		$this->datagrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('addresses') .'&amp;group_id=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('addresses') . '&amp;group_id=[id]');
 
 		// set the datagrid ID so we don't run into trouble with multiple datagrids that use mass actions
 		$this->datagrid->setAttributes(array('id' => 'dgGroups'));
@@ -70,9 +70,9 @@ class BackendMailmotorGroups extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
 
 		// add delete column
-		$this->datagrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') .'&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
-		$this->datagrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') .'&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumnAction('custom_fields', null, BL::lbl('CustomFields'), BackendModel::createURLForAction('custom_fields') . '&amp;group_id=[id]', BL::lbl('CustomFields'), array('class' => 'button icon iconEdit linkButton'));
+		$this->datagrid->addColumnAction('export', null, BL::lbl('Export'), BackendModel::createURLForAction('export_addresses') . '&amp;id=[id]', BL::lbl('Export'), array('class' => 'button icon iconExport linkButton'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_group') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// add styles
 		$this->datagrid->setColumnAttributes('name', array('class' => 'title'));

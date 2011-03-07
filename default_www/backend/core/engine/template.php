@@ -38,16 +38,16 @@ class BackendTemplate extends SpoonTemplate
 		parent::__construct();
 
 		// get URL instance
-		if(Spoon::isObjectReference('url')) $this->URL = Spoon::getObjectReference('url');
+		if(Spoon::exists('url')) $this->URL = Spoon::get('url');
 
 		// store in reference so we can access it from everywhere
-		if($addToReference) Spoon::setObjectReference('template', $this);
+		if($addToReference) Spoon::set('template', $this);
 
 		// set cache directory
-		$this->setCacheDirectory(BACKEND_CACHE_PATH .'/cached_templates');
+		$this->setCacheDirectory(BACKEND_CACHE_PATH . '/cached_templates');
 
 		// set compile directory
-		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
+		$this->setCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
 
 		// when debugging the template should be recompiled every time
 		$this->setForceCompile(SPOON_DEBUG);
@@ -152,7 +152,7 @@ class BackendTemplate extends SpoonTemplate
 				$setting = ($setting === null) ? '' : $setting;
 
 				// assign setting
-				$this->assign('authenticatedUser'. SpoonFilter::toCamelCase($key), $setting);
+				$this->assign('authenticatedUser' . SpoonFilter::toCamelCase($key), $setting);
 			}
 
 			// assign special vars
@@ -209,15 +209,15 @@ class BackendTemplate extends SpoonTemplate
 		}
 
 		// assign some variable constants (such as site-title)
-		$this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
+		$this->assign('SITE_TITLE', BackendModel::getModuleSetting('core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE));
 
 		// theme
 		if(BackendModel::getModuleSetting('core', 'theme') !== null)
 		{
 			$this->assign('THEME', BackendModel::getModuleSetting('core', 'theme'));
-			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/'. BackendModel::getModuleSetting('core', 'theme'));
-			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/'. BackendModel::getModuleSetting('core', 'theme') .'/core/css/screen.css')));
-			$this->assign('THEME_HAS_EDITOR_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/'. BackendModel::getModuleSetting('core', 'theme') .'/core/css/editor_content.css')));
+			$this->assign('THEME_PATH', FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme'));
+			$this->assign('THEME_HAS_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/css/screen.css')));
+			$this->assign('THEME_HAS_EDITOR_CSS', (SpoonFile::exists(FRONTEND_PATH . '/themes/' . BackendModel::getModuleSetting('core', 'theme') . '/core/css/editor_content.css')));
 		}
 	}
 
@@ -265,9 +265,9 @@ class BackendTemplate extends SpoonTemplate
 
 		// loop all errors, label, messages and add them again, but prefixed with Core. So we can decide in the
 		// template to use the core-value instead of the one set by the module
-		foreach($errors['core'] as $key => $value) $realErrors['Core'. $key] = $value;
-		foreach($labels['core'] as $key => $value) $realLabels['Core'. $key] = $value;
-		foreach($messages['core'] as $key => $value) $realMessages['Core'. $key] = $value;
+		foreach($errors['core'] as $key => $value) $realErrors['Core' . $key] = $value;
+		foreach($labels['core'] as $key => $value) $realLabels['Core' . $key] = $value;
+		foreach($messages['core'] as $key => $value) $realMessages['Core' . $key] = $value;
 
 		// are there errors for the current module?
 		if(isset($errors[$currentModule]))
@@ -325,10 +325,10 @@ class BackendTemplate extends SpoonTemplate
 		$daysShort = SpoonLocale::getWeekDays(BackendLanguage::getInterfaceLanguage(), true, 'sunday');
 
 		// build labels
-		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong'. ucfirst($key)] = $value;
-		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort'. ucfirst($key)] = $value;
-		foreach($daysLong as $key => $value) $localeToAssign['locDayLong'. ucfirst($key)] = $value;
-		foreach($daysShort as $key => $value) $localeToAssign['locDayShort'. ucfirst($key)] = $value;
+		foreach($monthsLong as $key => $value) $localeToAssign['locMonthLong' . ucfirst($key)] = $value;
+		foreach($monthsShort as $key => $value) $localeToAssign['locMonthShort' . ucfirst($key)] = $value;
+		foreach($daysLong as $key => $value) $localeToAssign['locDayLong' . ucfirst($key)] = $value;
+		foreach($daysShort as $key => $value) $localeToAssign['locDayShort' . ucfirst($key)] = $value;
 
 		// assign
 		$this->assignArray($localeToAssign);
@@ -354,10 +354,10 @@ class BackendTemplate extends SpoonTemplate
 			$this->assign('bodyID', SpoonFilter::toCamelCase($this->URL->getModule(), '_', true));
 
 			// build classes
-			$bodyClass = SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true);
+			$bodyClass = SpoonFilter::toCamelCase($this->URL->getModule() . '_' . $this->URL->getAction(), '_', true);
 
 			// special occasions
-			if($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit') $bodyClass = $this->URL->getModule() .'AddEdit';
+			if($this->URL->getAction() == 'add' || $this->URL->getAction() == 'edit') $bodyClass = $this->URL->getModule() . 'AddEdit';
 
 			// assign
 			$this->assign('bodyClass', $bodyClass);
@@ -509,7 +509,7 @@ class BackendTemplateModifiers
 		// redefine
 		$var = (string) $var;
 
-		return Spoon::getObjectReference('navigation')->getNavigation(1, 1);
+		return Spoon::get('navigation')->getNavigation(1, 1);
 	}
 
 
@@ -530,7 +530,7 @@ class BackendTemplateModifiers
 		$endDepth = ($endDepth !== null) ? (int) $endDepth : null;
 
 		// return navigation
-		return Spoon::getObjectReference('navigation')->getNavigation($startDepth, $endDepth);
+		return Spoon::get('navigation')->getNavigation($startDepth, $endDepth);
 	}
 
 

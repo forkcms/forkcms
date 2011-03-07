@@ -1,4 +1,4 @@
-{include:'{$THEME_PATH}/core/templates/head.tpl'}
+{include:'{$FRONTEND_CORE_PATH}/layout/templates/head.tpl'}
 
 <body class="{$LANGUAGE}">
 	<div id="topWrapper">
@@ -12,52 +12,52 @@
 
 				{* Skip link *}
 				<div id="skip">
-					<p><a href="#main">{$msgSkipToContent}</a></p>
+					<p><a href="#main">{$lblSkipToContent|ucfirst}</a></p>
 				</div>
 
 				{* Navigation *}
 				<nav id="headerNavigation">
-					<h4>{$lblMainNavigation}</h4>
+					<h4>{$lblMainNavigation|ucfirst}</h4>
 					{$var|getnavigation:'page':0:1}
 				</nav>
 
 				{* Language *}
-				<aside id="headerLanguage">
-					<h4>{$lblLanguage}</h4>
+				<nav id="headerLanguage">
+					<h4>{$lblLanguage|ucfirst}</h4>
 					{include:{$FRONTEND_CORE_PATH}/layout/templates/languages.tpl}
-				</aside>
+				</nav>
 
-				{* Block 12 (default: Search) *}
-				{option:block12IsHTML}
-					{option:block12}
-						{$block12}
-					{/option:block12}
-				{/option:block12IsHTML}
-				{option:!block12IsHTML}
-					<aside id="headerSearch">
-						<h4>{$lblSearch}</h4>
-						{include:{$block12}}
-					</aside>
-				{/option:!block12IsHTML}
+				{* Block 10 (default: Search) *}
+				{option:block10IsHTML}
+					{option:block10}
+						{$block10}
+					{/option:block10}
+				{/option:block10IsHTML}
+				{option:!block10IsHTML}
+					<div id="headerSearch">
+						<h4>{$lblSearch|ucfirst}</h4>
+						{include:{$block10}}
+					</div>
+				{/option:!block10IsHTML}
 
 				{* Breadcrumb *}
-				<aside id="breadcrumb">
-					<h4>{$lblBreadcrumb}</h4>
+				<div id="breadcrumb">
+					<h4>{$lblBreadcrumb|ucfirst}</h4>
 					{include:{$FRONTEND_CORE_PATH}/layout/templates/breadcrumb.tpl}
-				</aside>
+				</div>
 
-				{* Block 11 (default: Editor) *}
-				{option:block1IsHTML}
-					{option:block11}
-						<aside id="headerAd">
-							<h4>{$lblAdvertisement}</h4>
-							{$block11}
-						</aside>
-					{/option:block11}
-				{/option:block11IsHTML}
-				{option:!block11IsHTML}
-					{include:{$block11}}
-				{/option:!block11IsHTML}
+				{* Block 9 (default: Editor) *}
+				{option:block9IsHTML}
+					{option:block9}
+						<div id="headerAd">
+							<h4>{$lblAdvertisement|ucfirst}</h4>
+							{$block9}
+						</div>
+					{/option:block9}
+				{/option:block9IsHTML}
+				{option:!block9IsHTML}
+					{include:{$block9}}
+				{/option:!block9IsHTML}
 			</div>
 
 		</header>
@@ -107,7 +107,9 @@
 					{/option:!block2IsHTML}
 
 				</div>
-				<div class="col col-3">
+
+				{* Left column *}
+				<div class="col col-6">
 
 					{* Block 3 (default: Editor) *}
 					{option:block3IsHTML}
@@ -141,9 +143,6 @@
 						{include:{$block4}}
 					{/option:!block4IsHTML}
 
-				</div>
-				<div class="col col-3">
-
 					{* Block 5 (default: Editor) *}
 					{option:block5IsHTML}
 						{option:block5}
@@ -160,6 +159,11 @@
 						{include:{$block5}}
 					{/option:!block5IsHTML}
 
+				</div>
+
+				{* Right column *}
+				<div class="col col-6 lastCol">
+
 					{* Block 6 (default: Editor) *}
 					{option:block6IsHTML}
 						{option:block6}
@@ -175,9 +179,6 @@
 					{option:!block6IsHTML}
 						{include:{$block6}}
 					{/option:!block6IsHTML}
-
-				</div>
-				<div class="col col-3">
 
 					{* Block 7 (default: Editor) *}
 					{option:block7IsHTML}
@@ -212,46 +213,11 @@
 					{/option:!block8IsHTML}
 
 				</div>
-				<div class="col col-3 lastCol">
-
-					{* Block 9 (default: Editor) *}
-					{option:block9IsHTML}
-						{option:block9}
-							<section class="mod">
-								<div class="inner">
-									<div class="bd content">
-										{$block9}
-									</div>
-								</div>
-							</section>
-						{/option:block9}
-					{/option:block9IsHTML}
-					{option:!block9IsHTML}
-						{include:{$block9}}
-					{/option:!block9IsHTML}
-
-					{* Block 10 (default: Editor) *}
-					{option:block10IsHTML}
-						{option:block10}
-							<section class="mod">
-								<div class="inner">
-									<div class="bd content">
-										{$block10}
-									</div>
-								</div>
-							</section>
-						{/option:block10}
-					{/option:block10IsHTML}
-					{option:!block10IsHTML}
-						{include:{$block10}}
-					{/option:!block10IsHTML}
-
-				</div>
 			</div>
 		</div>
 		<noscript>
 			<div class="message notice">
-				<h4>{$lblEnableJavascript}</h4>
+				<h4>{$lblEnableJavascript|ucfirst}</h4>
 				<p>{$msgEnableJavascript}</p>
 			</div>
 		</noscript>
@@ -259,5 +225,16 @@
 	<div id="bottomWrapper">
 		{include:{$THEME_PATH}/core/templates/footer.tpl}
 	</div>
+
+	{* Site wide HTML *}
+	{$siteHTMLFooter}
+
+	{* General Javascript *}
+	{iteration:javascriptFiles}
+		<script src="{$javascriptFiles.file}"></script>
+	{/iteration:javascriptFiles}
+
+	{* Module specific Javascript *}
+	<script src="{$THEME_URL}/core/js/triton.js"></script>
 </body>
 </html>

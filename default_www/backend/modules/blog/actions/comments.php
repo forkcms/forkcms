@@ -32,10 +32,10 @@ class BackendBlogComments extends BackendBaseActionIndex
 	public static function addPostData($text, $title, $URL, $id)
 	{
 		// reset URL
-		$URL = BackendModel::getURLForBlock('blog', 'detail') .'/'. $URL .'#comment-'. $id;
+		$URL = BackendModel::getURLForBlock('blog', 'detail') . '/' . $URL . '#comment-' . $id;
 
 		// build HTML
-		return '<p><em>'. sprintf(BL::msg('CommentOnWithURL'), $URL, $title) .'</em></p>'."\n". (string) $text;
+		return '<p><em>' . sprintf(BL::msg('CommentOnWithURL'), $URL, $title) . '</em></p>' . "\n" . (string) $text;
 	}
 
 
@@ -94,8 +94,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgPublished->setSortParameter('desc');
 
 		// add column
-		$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
+		$this->dgPublished->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgPublished->addColumn('mark_as_spam', null, BL::lbl('MarkAsSpam'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=spam', BL::lbl('MarkAsSpam'));
 
 		// hide columns
 		$this->dgPublished->setColumnsHidden('post_id', 'post_title', 'post_url');
@@ -103,8 +103,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('moderation' => BL::lbl('MoveToModeration'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'spam');
 		$ddmMassAction->setAttribute('id', 'actionPublished');
-		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
-		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
+		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeletePublished'));
+		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamPublished'));
 		$this->dgPublished->setMassAction($ddmMassAction);
 
 		// datagrid for the comments that are awaiting moderation
@@ -132,8 +132,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgModeration->setSortParameter('desc');
 
 		// add column
-		$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') .'&amp;id=[id]', BL::lbl('Edit'));
-		$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
+		$this->dgModeration->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_comment') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgModeration->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=published&amp;action=published', BL::lbl('Approve'));
 
 		// hide columns
 		$this->dgModeration->setColumnsHidden('post_id', 'post_title', 'post_url');
@@ -141,8 +141,8 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'spam' => BL::lbl('MoveToSpam'), 'delete' => BL::lbl('Delete')), 'published');
 		$ddmMassAction->setAttribute('id', 'actionModeration');
-		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
-		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
+		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteModeration'));
+		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpamModeration'));
 		$this->dgModeration->setMassAction($ddmMassAction);
 
 		/*
@@ -172,7 +172,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		$this->dgSpam->setSortParameter('desc');
 
 		// add column
-		$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') .'&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
+		$this->dgSpam->addColumn('approve', null, BL::lbl('Approve'), BackendModel::createURLForAction('mass_comment_action') . '&amp;id=[id]&amp;from=spam&amp;action=published', BL::lbl('Approve'));
 
 		// hide columns
 		$this->dgSpam->setColumnsHidden('post_id', 'post_title', 'post_url');
@@ -180,8 +180,7 @@ class BackendBlogComments extends BackendBaseActionIndex
 		// add mass action dropdown
 		$ddmMassAction = new SpoonFormDropdown('action', array('published' => BL::lbl('MoveToPublished'), 'moderation' => BL::lbl('MoveToModeration'), 'delete' => BL::lbl('Delete')), 'published');
 		$ddmMassAction->setAttribute('id', 'actionSpam');
-		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDelete'));
-		$ddmMassAction->setOptionAttributes('spam', array('data-message-id' => 'confirmSpam'));
+		$ddmMassAction->setOptionAttributes('delete', array('data-message-id' => 'confirmDeleteSpam'));
 		$this->dgSpam->setMassAction($ddmMassAction);
 	}
 

@@ -77,7 +77,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
+		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i,);
 
 		// load the form
 		$this->loadForm();
@@ -135,7 +135,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -179,11 +179,11 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			}
 
 			// create elements
-			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_'. $i, $selectedExtra);
-			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, $html);
+			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $i, $selectedExtra);
+			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_' . $i, $html);
 
 			// add class
-			$this->frm->getField('block_extra_id_'. $i)->setAttribute('class', 'block_extra_id');
+			$this->frm->getField('block_extra_id_' . $i)->setAttribute('class', 'block_extra_id');
 		}
 
 		// page info
@@ -225,14 +225,14 @@ class BackendPagesEdit extends BackendBaseActionEdit
 		$this->dgRevisions->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEditedOn'))));
 
 		// set colum URLs
-		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]');
+		$this->dgRevisions->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]');
 
 		// set functions
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
 		$this->dgRevisions->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
 
 		// add use column
-		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
+		$this->dgRevisions->addColumn('use_revision', null, ucfirst(BL::lbl('UseThisVersion')), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;revision=[revision_id]', BL::lbl('UseThisVersion'));
 	}
 
 
@@ -296,7 +296,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			for($i = 0; $i < $this->templates[$templateId]['num_blocks']; $i++)
 			{
 				// get the extra id
-				$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
+				$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
 
 				// reset some stuff
 				if($extraId > 0)
@@ -307,7 +307,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 						// home can't have blocks
 						if($this->record['id'] == 1)
 						{
-							$this->frm->getField('block_html_'. $i)->addError(BL::err('HomeCantHaveBlocks'));
+							$this->frm->getField('block_html_' . $i)->addError(BL::err('HomeCantHaveBlocks'));
 							$this->frm->addError(BL::err('HomeCantHaveBlocks'));
 						}
 					}
@@ -369,7 +369,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				for($i = 0; $i < $this->templates[$page['template_id']]['num_blocks']; $i++)
 				{
 					// get the extra id
-					$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
+					$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
 
 					// reset some stuff
 					if($extraId <= 0) $extraId = null;
@@ -382,7 +382,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 					{
 						// reset vars
 						$extraId = null;
-						$html = (string) $this->frm->getField('block_html_'. $i)->getValue();
+						$html = (string) $this->frm->getField('block_html_' . $i)->getValue();
 					}
 
 					// not HTML
@@ -420,13 +420,13 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::updateBlocks($blocks, $hasBlock);
 
 				// check if the method exists
-				if(method_exists('BackendSearchModel', 'editIndex'))
+				if(is_callable(array('BackendSearchModel', 'editIndex')))
 				{
 					// init var
 					$text = '';
 
 					// build search-text
-					foreach($blocks as $block) $text .= ' '. $block['html'];
+					foreach($blocks as $block) $text .= ' ' . $block['html'];
 
 					// add
 					BackendSearchModel::editIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
@@ -439,7 +439,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=edited&var='. urlencode($page['title']) .'&highlight=row-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=edited&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);
 			}
 		}
 	}

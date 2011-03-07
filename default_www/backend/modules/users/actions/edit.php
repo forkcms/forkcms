@@ -52,7 +52,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -106,7 +106,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 		parent::parse();
 
 		// reset avatar URL
-		if($this->record['settings']['avatar'] != '') $this->record['settings']['avatar'] .= '?time='. time();
+		if($this->record['settings']['avatar'] != '') $this->record['settings']['avatar'] .= '?time=' . time();
 
 		// only allow deletion of other users
 		if(BackendAuthentication::getUser()->getUserId() != $this->id) $this->tpl->assign('deleteAllowed', true);
@@ -199,7 +199,7 @@ class BackendUsersEdit extends BackendBaseActionEdit
 				$settings['interface_language'] = $this->frm->getField('interface_language')->getValue();
 				$settings['date_format'] = $this->frm->getField('date_format')->getValue();
 				$settings['time_format'] = $this->frm->getField('time_format')->getValue();
-				$settings['datetime_format'] = $settings['date_format'] .' '. $settings['time_format'];
+				$settings['datetime_format'] = $settings['date_format'] . ' ' . $settings['time_format'];
 				$settings['number_format'] = $this->frm->getField('number_format')->getValue();
 				$settings['api_access'] = (bool) $this->frm->getField('api_access')->getChecked();
 
@@ -209,33 +209,33 @@ class BackendUsersEdit extends BackendBaseActionEdit
 					// delete old avatar if it isn't the default-image
 					if($this->record['settings']['avatar'] != 'no-avatar.jpg')
 					{
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users/avatars/source/'. $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $this->record['settings']['avatar']);
-						SpoonFile::delete(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $this->record['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/source/' . $this->record['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $this->record['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $this->record['settings']['avatar']);
+						SpoonFile::delete(FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $this->record['settings']['avatar']);
 					}
 
 					// create new filename
-					$filename = rand(0,3) .'_'. $user['id'] .'.'. $this->frm->getField('avatar')->getExtension();
+					$filename = rand(0,3) . '_' . $user['id'] . '.' . $this->frm->getField('avatar')->getExtension();
 
 					// add into settings to update
 					$settings['avatar'] = $filename;
 
 					// resize (128x128)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/128x128/'. $filename, 128, 128, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/128x128/' . $filename, 128, 128, true, false, 100);
 
 					// resize (64x64)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/64x64/'. $filename, 64, 64, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/64x64/' . $filename, 64, 64, true, false, 100);
 
 					// resize (32x32)
-					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH .'/backend_users/avatars/32x32/'. $filename, 32, 32, true, false, 100);
+					$this->frm->getField('avatar')->createThumbnail(FRONTEND_FILES_PATH . '/backend_users/avatars/32x32/' . $filename, 32, 32, true, false, 100);
 				}
 
 				// save changes
 				BackendUsersModel::update($user, $settings);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. $settings['nickname'] .'&highlight=row-'. $user['id']);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . $settings['nickname'] . '&highlight=row-' . $user['id']);
 			}
 		}
 	}

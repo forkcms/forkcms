@@ -44,7 +44,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -254,7 +254,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 				$id = (int) BackendFormBuilderModel::update($this->id, $values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($values['name']) .'&highlight=row-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($values['name']) . '&highlight=row-' . $id);
 			}
 		}
 	}

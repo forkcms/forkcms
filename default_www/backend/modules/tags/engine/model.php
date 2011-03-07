@@ -39,8 +39,8 @@ class BackendTagsModel
 		$ids = (array) $ids;
 
 		// delete tags
-		$db->delete('tags', 'id IN ('. implode(',', $ids) .')');
-		$db->delete('modules_tags', 'tag_id IN ('. implode(',', $ids) .')');
+		$db->delete('tags', 'id IN (' . implode(',', $ids) . ')');
+		$db->delete('modules_tags', 'tag_id IN (' . implode(',', $ids) . ')');
 	}
 
 
@@ -86,7 +86,7 @@ class BackendTagsModel
 															FROM tags AS i
 															WHERE i.tag LIKE ?
 															ORDER BY i.tag ASC',
-															array((string) $term .'%'));
+															array((string) $term . '%'));
 	}
 
 
@@ -245,7 +245,7 @@ class BackendTagsModel
 												array($module, $otherId, $language));
 
 		// remove old links
-		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN ('. implode(', ', array_values($currentTags)) .') AND other_id = ?', $otherId);
+		if(!empty($currentTags)) $db->delete('modules_tags', 'tag_id IN (' . implode(', ', array_values($currentTags)) . ') AND other_id = ?', $otherId);
 
 		// tags provided
 		if(!empty($tags))
@@ -266,7 +266,7 @@ class BackendTagsModel
 			// get tag ids
 			$tagsAndIds = (array) $db->getPairs('SELECT i.tag, i.id
 													FROM tags AS i
-													WHERE i.tag IN ("'. implode('", "', $tags) .'") AND i.language = ?',
+													WHERE i.tag IN ("' . implode('", "', $tags) . '") AND i.language = ?',
 													array($language));
 
 			// loop again and create tags that don't exist already
@@ -301,7 +301,7 @@ class BackendTagsModel
 		}
 
 		// add to search index
-		if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
+		if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex($module, $otherId, array('tags' => implode(' ', (array) $tags)), $language);
 
 		// decrement number
 		foreach($currentTags as $tag => $tagId)

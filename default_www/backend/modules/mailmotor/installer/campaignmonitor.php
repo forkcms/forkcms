@@ -489,7 +489,7 @@ class CampaignMonitor
 		$listId = empty($listId) ? $this->getListId() : $listId;
 
 		// keys need to be wrapped in []
-		if(!preg_match('/\[.*\]/', $name)) $name = '['. $name .']';
+		if(!preg_match('/\[.*\]/', $name)) $name = '[' . $name . ']';
 
 		// set parameters
 		$parameters['ListID'] = (string) $listId;
@@ -567,53 +567,53 @@ class CampaignMonitor
 		// explode the called method
 		$method = explode('.', $method);
 		$callMethod = isset($method[1]) ? $method[1] : $method[0];
-		$responseKey = $method[0] .'.'. $method[1] .'Result';
+		$responseKey = $method[0] . '.' . $method[1] . 'Result';
 
 		// check for getDetail
 		switch($method[1])
 		{
 			case 'Add':
-				$callMethod = 'Add'. $method[0];
+				$callMethod = 'Add' . $method[0];
 			break;
 
 			case 'Create':
-				$callMethod = 'Create'. $method[0];
+				$callMethod = 'Create' . $method[0];
 			break;
 
 			case 'CreateCustomField':
-				$callMethod = 'Create'. $method[0] .'CustomField';
+				$callMethod = 'Create' . $method[0] . 'CustomField';
 			break;
 
 			case 'Delete':
-				$callMethod = 'Delete'. $method[0];
+				$callMethod = 'Delete' . $method[0];
 			break;
 
 			case 'DeleteCustomField':
-				$callMethod = 'Delete'. $method[0] .'CustomField';
+				$callMethod = 'Delete' . $method[0] . 'CustomField';
 			break;
 
 			case 'GetBounces':
-				$callMethod = 'Get'. $method[0] .'Bounces';
+				$callMethod = 'Get' . $method[0] . 'Bounces';
 			break;
 
 			case 'GetCampaigns':
-				$callMethod = 'Get'. $method[0] .'Campaigns';
+				$callMethod = 'Get' . $method[0] . 'Campaigns';
 			break;
 
 			case 'GetCustomFields':
-				$callMethod = 'Get'. $method[0] .'CustomFields';
+				$callMethod = 'Get' . $method[0] . 'CustomFields';
 			break;
 
 			case 'GetDetail':
-				$callMethod = 'Get'. $method[0] .'Detail';
+				$callMethod = 'Get' . $method[0] . 'Detail';
 			break;
 
 			case 'GetLists':
-				$callMethod = 'Get'. $method[0] .'Lists';
+				$callMethod = 'Get' . $method[0] . 'Lists';
 			break;
 
 			case 'GetOpens':
-				$callMethod = 'Get'. $method[0] .'Opens';
+				$callMethod = 'Get' . $method[0] . 'Opens';
 			break;
 
 			case 'GetSubscribers':
@@ -621,43 +621,43 @@ class CampaignMonitor
 			break;
 
 			case 'GetSegments':
-				$callMethod = 'Get'. $method[0] .'Segments';
+				$callMethod = 'Get' . $method[0] . 'Segments';
 			break;
 
 			case 'GetStats':
-				$callMethod = 'Get'. $method[0] .'Stats';
+				$callMethod = 'Get' . $method[0] . 'Stats';
 			break;
 
 			case 'GetSummary':
-				$callMethod = 'Get'. $method[0] .'Summary';
+				$callMethod = 'Get' . $method[0] . 'Summary';
 			break;
 
 			case 'GetSuppressionList':
-				$callMethod = 'Get'. $method[0] .'SuppressionList';
+				$callMethod = 'Get' . $method[0] . 'SuppressionList';
 			break;
 
 			case 'GetTemplates':
-				$callMethod = 'Get'. $method[0] .'Templates';
+				$callMethod = 'Get' . $method[0] . 'Templates';
 			break;
 
 			case 'GetUnsubscribes':
-				$callMethod = 'Get'. $method[0] .'Unsubscribes';
+				$callMethod = 'Get' . $method[0] . 'Unsubscribes';
 			break;
 
 			case 'Send':
-				$callMethod = 'Send'. $method[0];
+				$callMethod = 'Send' . $method[0];
 			break;
 
 			case 'Update':
-				$callMethod = 'Update'. $method[0];
+				$callMethod = 'Update' . $method[0];
 			break;
 
 			case 'UpdateBasics':
-				$callMethod = 'Update'. $method[0] .'Basics';
+				$callMethod = 'Update' . $method[0] . 'Basics';
 			break;
 
 			case 'UpdateAccessAndBilling':
-				$callMethod = 'Update'. $method[0] .'AccessAndBilling';
+				$callMethod = 'Update' . $method[0] . 'AccessAndBilling';
 			break;
 		}
 
@@ -673,7 +673,7 @@ class CampaignMonitor
 			switch(strtolower($e->getMessage()))
 			{
 				case 'error fetching http headers':
-					throw new CampaignMonitorException('The request to '. API_URL .' timed out.');
+					throw new CampaignMonitorException('The request to ' . API_URL . ' timed out.');
 				break;
 			}
 		}

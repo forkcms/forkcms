@@ -48,7 +48,7 @@ class FrontendNavigation extends FrontendBaseObject
 		parent::__construct();
 
 		// set template path
-		$this->setTemplatePath(FRONTEND_PATH .'/core/layout/templates/navigation.tpl');
+		$this->setTemplatePath(FRONTEND_PATH . '/core/layout/templates/navigation.tpl');
 
 		// set selected ids
 		$this->setSelectedPageIds();
@@ -84,17 +84,17 @@ class FrontendNavigation extends FrontendBaseObject
 		foreach($parameters as $key => $value)
 		{
 			// first element
-			if($i == 1) $querystring .= '?'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+			if($i == 1) $querystring .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// other elements
-			else $querystring .= '&amp;'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+			else $querystring .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// update counter
 			$i++;
 		}
 
 		// build the URL and return it
-		return '/private/'. $language .'/'. $module .'/'. $action . $querystring;
+		return '/private/' . $language . '/' . $module . '/' . $action . $querystring;
 	}
 
 
@@ -187,11 +187,11 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php'))
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// require BackendPagesModel
-				require_once PATH_WWW .'/backend/core/engine/model.php';
-				require_once PATH_WWW .'/backend/modules/pages/engine/model.php';
+				require_once PATH_WWW . '/backend/core/engine/model.php';
+				require_once PATH_WWW . '/backend/modules/pages/engine/model.php';
 
 				// generate the cache
 				BackendPagesModel::buildCache($language);
@@ -204,10 +204,10 @@ class FrontendNavigation extends FrontendBaseObject
 			$keys = array();
 
 			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php';
+			require FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php';
 
 			// validate keys
-			if(empty($keys)) throw new FrontendException('No pages for '. $language .'.');
+			if(empty($keys)) throw new FrontendException('No pages for ' . $language . '.');
 
 			// store
 			self::$keys[$language] = $keys;
@@ -233,13 +233,13 @@ class FrontendNavigation extends FrontendBaseObject
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file @later: the file should be regenerated
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php')) throw new FrontendException('No navigation-file (navigation_'. $language .'.php) found.');
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php')) throw new FrontendException('No navigation-file (navigation_' . $language . '.php) found.');
 
 			// init var
 			$navigation = array();
 
 			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
+			require FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php';
 
 			// store
 			self::$navigation[$language] = $navigation;
@@ -269,8 +269,8 @@ class FrontendNavigation extends FrontendBaseObject
 		if($type == 'meta' && !FrontendModel::getModuleSetting('pages', 'meta_navigation', true)) return '';
 
 		// validate
-		if(!isset($navigation[$type])) throw new FrontendException('This type ('. $type .') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
-		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent ('. $parentId .') doesn\'t exists.');
+		if(!isset($navigation[$type])) throw new FrontendException('This type (' . $type . ') isn\'t a valid navigation type. Possible values are: page, footer, meta.');
+		if(!isset($navigation[$type][$parentId])) throw new FrontendException('The parent (' . $parentId . ') doesn\'t exists.');
 
 		// special construction to merge home with it's immediate children
 		$mergedHome = false;
@@ -427,7 +427,7 @@ class FrontendNavigation extends FrontendBaseObject
 		$language = ($language !== null) ? (string) $language : FRONTEND_LANGUAGE;
 
 		// init URL
-		$URL = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
+		$URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
 
 		// get the menuItems
 		$keys = self::getKeys($language);
@@ -505,7 +505,7 @@ class FrontendNavigation extends FrontendBaseObject
 			$URL = self::getURL($pageIdForURL, $language);
 
 			// append action
-			$URL .= '/'. FL::act(SpoonFilter::toCamelCase($action));
+			$URL .= '/' . FL::act(SpoonFilter::toCamelCase($action));
 
 			// return the URL
 			return $URL;

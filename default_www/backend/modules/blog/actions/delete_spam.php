@@ -25,7 +25,7 @@ class BackendBlogDeleteSpam extends BackendBaseActionDelete
 		BackendBlogModel::deleteSpamComments($this->id);
 
 		// item was deleted, so redirect
-		$this->redirect(BackendModel::createURLForAction('comments') .'&report=deleted-spam#tabSpam');
+		$this->redirect(BackendModel::createURLForAction('comments') . '&report=deleted-spam#tabSpam');
 	}
 }
 

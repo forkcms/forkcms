@@ -61,7 +61,7 @@ class FrontendInit
 		$this->requireGlobals();
 
 		// get last modified time for globals
-		$lastModifiedTime = @filemtime(PATH_LIBRARY .'/globals.php');
+		$lastModifiedTime = @filemtime(PATH_LIBRARY . '/globals.php');
 
 		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
 		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
@@ -109,18 +109,18 @@ class FrontendInit
 
 		// exceptions
 		$exceptions = array();
-		$exceptions['frontend'] = FRONTEND_CORE_PATH .'/engine/frontend.php';
-		$exceptions['frontendbaseajaxaction'] = FRONTEND_CORE_PATH .'/engine/base.php';
-		$exceptions['frontendbaseconfig'] = FRONTEND_CORE_PATH .'/engine/base.php';
-		$exceptions['frontendbaseobject'] = FRONTEND_CORE_PATH .'/engine/base.php';
-		$exceptions['frontendblockextra'] = FRONTEND_CORE_PATH .'/engine/block.php';
-		$exceptions['frontendblockwidget'] = FRONTEND_CORE_PATH .'/engine/block.php';
+		$exceptions['frontend'] = FRONTEND_CORE_PATH . '/engine/frontend.php';
+		$exceptions['frontendbaseajaxaction'] = FRONTEND_CORE_PATH . '/engine/base.php';
+		$exceptions['frontendbaseconfig'] = FRONTEND_CORE_PATH . '/engine/base.php';
+		$exceptions['frontendbaseobject'] = FRONTEND_CORE_PATH . '/engine/base.php';
+		$exceptions['frontendblockextra'] = FRONTEND_CORE_PATH . '/engine/block.php';
+		$exceptions['frontendblockwidget'] = FRONTEND_CORE_PATH . '/engine/block.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
 
 		// frontend
-		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH .'/engine/'. str_replace('frontend', '', $className) .'.php';
+		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH . '/engine/' . str_replace('frontend', '', $className) . '.php';
 
 		// file check in core
 		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
@@ -151,14 +151,14 @@ class FrontendInit
 
 						// module
 						$module = '';
-						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) .'_';
+						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
 						$action = str_replace($module, '', $action);
 						$module = substr($module, 0, -1);
 
 						// file to be loaded
-						$pathToLoad = FRONTEND_PATH .'/modules/'. $module .'/engine/'. $action .'.php';
+						$pathToLoad = FRONTEND_PATH . '/modules/' . $module . '/engine/' . $action . '.php';
 
 						// if it exists, load it!
 						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
@@ -185,11 +185,11 @@ class FrontendInit
 		elseif($this->type == 'frontend_ajax') define('APPLICATION', 'frontend');
 
 		// general paths
-		define('FRONTEND_PATH', PATH_WWW .'/'. APPLICATION);
-		define('FRONTEND_CACHE_PATH', FRONTEND_PATH .'/cache');
-		define('FRONTEND_CORE_PATH', FRONTEND_PATH .'/core');
-		define('FRONTEND_MODULES_PATH', FRONTEND_PATH .'/modules');
-		define('FRONTEND_FILES_PATH', FRONTEND_PATH .'/files');
+		define('FRONTEND_PATH', PATH_WWW . '/' . APPLICATION);
+		define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
+		define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
+		define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
+		define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
 	}
 
 
@@ -200,8 +200,8 @@ class FrontendInit
 	 */
 	private function defineURLs()
 	{
-		define('FRONTEND_CORE_URL', '/'. APPLICATION .'/core');
-		define('FRONTEND_CACHE_URL', '/'. APPLICATION .'/cache');
+		define('FRONTEND_CORE_URL', '/' . APPLICATION . '/core');
+		define('FRONTEND_CACHE_URL', '/' . APPLICATION . '/cache');
 		define('FRONTEND_FILES_URL', '/frontend/files');
 	}
 
@@ -229,7 +229,7 @@ class FrontendInit
 			$type = mb_substr($index, 0, 3);
 
 			// is the index locale?
-			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$'. $index .'}';
+			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$' . $index . '}';
 
 			// return false, so the standard error handler isn't bypassed
 			else return false;
@@ -291,7 +291,7 @@ class FrontendInit
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured ('. SITE_DOMAIN .')', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
 		}
 
 		// build HTML for nice error
@@ -321,7 +321,7 @@ class FrontendInit
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
 		// output
-		echo '// '. $exception->getMessage();
+		echo '// ' . $exception->getMessage();
 
 		// stop script execution
 		exit;
@@ -351,8 +351,8 @@ class FrontendInit
 		{
 			case 'frontend':
 			case 'frontend_ajax':
-				require_once FRONTEND_CORE_PATH .'/engine/template_custom.php';
-				require_once FRONTEND_PATH .'/modules/tags/engine/model.php';
+				require_once FRONTEND_CORE_PATH . '/engine/template_custom.php';
+				require_once FRONTEND_PATH . '/modules/tags/engine/model.php';
 			break;
 		}
 	}
@@ -366,21 +366,21 @@ class FrontendInit
 	private function requireGlobals()
 	{
 		// fetch config
-		$installed[] = @include_once dirname(__FILE__) .'/cache/config/config.php';
+		$installed[] = @include_once dirname(__FILE__) . '/cache/config/config.php';
 
 		// load the globals
-		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals_backend.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals_frontend.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_backend.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_frontend.php';
 
 		// something could not be loaded
 		if(in_array(false, $installed))
 		{
 			// installation folder
-			$installer = dirname(__FILE__) .'/../install/cache';
+			$installer = dirname(__FILE__) . '/../install/cache';
 
 			// Fork has not yet been installed
-			if(file_exists($installer) && is_dir($installer) && !file_exists($installer .'/installed.txt'))
+			if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
 			{
 				// redirect to installer
 				header('Location: /install');
@@ -428,15 +428,15 @@ class FrontendInit
 			switch($this->type)
 			{
 				case 'backend_ajax':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionAJAXHandler');
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
 				break;
 
 				case 'backend_js':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionJSHandler');
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
 				break;
 
 				default:
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionHandler');
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
 				break;
 			}
 		}

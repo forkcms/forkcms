@@ -61,7 +61,7 @@ class Frontend
 			if(isset($data['access_token'])) $facebook->setToken($data['access_token']);
 
 			// store in reference
-			Spoon::setObjectReference('facebook', $facebook);
+			Spoon::set('facebook', $facebook);
 		}
 	}
 }

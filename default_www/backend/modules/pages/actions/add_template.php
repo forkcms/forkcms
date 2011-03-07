@@ -69,8 +69,8 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			if($item['type'] == 'block') $blocks[$item['id']] = ucfirst(BL::lbl($item['label']));
 			if($item['type'] == 'widget')
 			{
-				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
-				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
+				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
 			}
 		}
 
@@ -87,8 +87,8 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 		for($i = 1; $i <= $maximumBlocks; $i++)
 		{
 			$names[$i]['i'] = $i;
-			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i);
-			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_'. $i, $defaultExtras);
+			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_' . $i);
+			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $i, $defaultExtras);
 		}
 
 		// assign
@@ -117,7 +117,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			// loop the know fields and validate them
 			for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 			{
-				$this->frm->getField('name_'. $i)->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('name_' . $i)->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// validate syntax
@@ -153,7 +153,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 			{
 				// build array
 				$item['label'] = $this->frm->getField('label')->getValue();
-				$item['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
+				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['num_blocks'] = $this->frm->getField('num_blocks')->getValue();
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 				$item['data']['format'] = trim(str_replace(array("\n", "\r"), '', $this->frm->getField('format')->getValue()));
@@ -161,9 +161,9 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				// loop fields
 				for($i = 1; $i <= $this->frm->getField('num_blocks')->getValue(); $i++)
 				{
-					$item['data']['names'][] = $this->frm->getField('name_'. $i)->getValue();
-					$item['data']['default_extras'][] = $this->frm->getField('type_'. $i)->getValue();
-					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['names'][] = $this->frm->getField('name_' . $i)->getValue();
+					$item['data']['default_extras'][] = $this->frm->getField('type_' . $i)->getValue();
+					$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()][] = $this->frm->getField('type_' . $i)->getValue();
 				}
 
 				// serialize the data
@@ -176,7 +176,7 @@ class BackendPagesAddTemplate extends BackendBaseActionAdd
 				if($this->frm->getField('default')->getChecked()) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('templates') .'&report=added-template&var='. urlencode($item['label']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('templates') . '&report=added-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

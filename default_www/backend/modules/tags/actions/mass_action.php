@@ -25,7 +25,7 @@ class BackendTagsMassAction extends BackendBaseAction
 		$action = SpoonFilter::getGetValue('action', array('delete'), 'delete');
 
 		// no id's provided
-		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') .'&error=no-selection');
+		if(!isset($_GET['id'])) $this->redirect(BackendModel::createURLForAction('index') . '&error=no-selection');
 
 		// at least one id
 		else
@@ -38,7 +38,7 @@ class BackendTagsMassAction extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted');
+		$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted');
 	}
 }
 

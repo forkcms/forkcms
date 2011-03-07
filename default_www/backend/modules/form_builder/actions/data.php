@@ -69,7 +69,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		if($this->filter['ip'] !== null)
 		{
 			$query .= ' AND i.ip LIKE ?';
-			$parameters[] = '%'. $this->filter['ip'] .'%';
+			$parameters[] = '%' . $this->filter['ip'] . '%';
 		}
 
 		// new query
@@ -113,7 +113,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -142,7 +142,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGridDB($query, $parameters);
 
 		// overrule default URL
-		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'ip' => $this->filter['ip'], 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) .'&amp;id='. $this->id);
+		$this->datagrid->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]', 'ip' => $this->filter['ip'], 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=' . $this->id);
 
 		// set headers
 		$this->datagrid->setHeaderLabels(array('ip' => ucfirst(BL::getLabel('IP'))));
@@ -152,10 +152,10 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 		$this->datagrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('sent_on', BackendModel::createURLForAction('data_details', null, null, array('ip' => $this->filter['ip'], 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('sent_on', BackendModel::createURLForAction('data_details', null, null, array('ip' => $this->filter['ip'], 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date']), false) . '&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('details', null, BL::getLabel('Details'), BackendModel::createURLForAction('data_details', null, null, array('ip' => $this->filter['ip'], 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date'])) .'&amp;id=[id]', BL::getLabel('Details'));
+		$this->datagrid->addColumn('details', null, BL::getLabel('Details'), BackendModel::createURLForAction('data_details', null, null, array('ip' => $this->filter['ip'], 'start_date' => $this->filter['start_date'], 'end_date' => $this->filter['end_date'])) . '&amp;id=[id]', BL::getLabel('Details'));
 
 		// date
 		$this->datagrid->setColumnFunction(array('BackendFormBuilderModel', 'calculateTimeAgo'), '[sent_on]', 'sent_on', false);
@@ -179,7 +179,7 @@ class BackendFormBuilderData extends BackendBaseActionIndex
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('filter', BackendModel::createURLForAction() .'&amp;id='. $this->id, 'get');
+		$this->frm = new BackendForm('filter', BackendModel::createURLForAction() . '&amp;id=' . $this->id, 'get');
 
 		// add fields
 		$this->frm->addDate('start_date', $this->filter['start_date']);

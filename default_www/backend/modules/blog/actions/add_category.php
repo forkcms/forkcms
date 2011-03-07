@@ -87,7 +87,7 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 				$item['id'] = BackendBlogModel::insertCategory($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=added-category&var='. urlencode($item['title']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

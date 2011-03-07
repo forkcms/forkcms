@@ -51,7 +51,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 		$this->id = $this->getParameter('id', 'int');
 
 		// validate id
-		if($this->id === null || !BackendPagesModel::existsTemplate($this->id)) $this->redirect(BackendModel::createURLForAction('templates') .'&error=non-existing');
+		if($this->id === null || !BackendPagesModel::existsTemplate($this->id)) $this->redirect(BackendModel::createURLForAction('templates') . '&error=non-existing');
 
 		// get the record
 		$this->record = BackendPagesModel::getTemplate($this->id);
@@ -131,8 +131,8 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 			elseif($item['type'] == 'widget')
 			{
-				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. ucfirst(BL::lbl($item['label']));
-				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) .': '. $item['data']['extra_label'];
+				$widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . ucfirst(BL::lbl($item['label']));
+				if(isset($item['data']['extra_label'])) $widgets[$item['id']] = ucfirst(BL::lbl(SpoonFilter::toCamelCase($item['module']))) . ': ' . $item['data']['extra_label'];
 			}
 		}
 
@@ -154,8 +154,8 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 
 			// build array
 			$names[$i]['i'] = $i;
-			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_'. $i, $name);
-			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_'. $i, $defaultExtras, $extra);
+			$names[$i]['formElements']['txtName'] = $this->frm->addText('name_' . $i, $name);
+			$names[$i]['formElements']['ddmType'] = $this->frm->addDropdown('type_' . $i, $defaultExtras, $extra);
 		}
 
 		// assign
@@ -187,7 +187,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 			// loop the know fields and validate them
 			for($i = 1; $i <= $numBlocks; $i++)
 			{
-				$this->frm->getField('name_'. $i)->isFilled(BL::err('FieldIsRequired'));
+				$this->frm->getField('name_' . $i)->isFilled(BL::err('FieldIsRequired'));
 			}
 
 			// validate syntax
@@ -224,7 +224,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// build array
 				$item['id'] = $this->id;
 				$item['label'] = $this->frm->getField('label')->getValue();
-				$item['path'] = 'core/layout/templates/'. $this->frm->getField('file')->getValue();
+				$item['path'] = 'core/layout/templates/' . $this->frm->getField('file')->getValue();
 				$item['num_blocks'] = $numBlocks;
 				$item['active'] = ($this->frm->getField('active')->getChecked()) ? 'Y' : 'N';
 
@@ -240,9 +240,9 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				// loop fields
 				for($i = 1; $i <= $item['num_blocks']; $i++)
 				{
-					$item['data']['names'][$i - 1] = $this->frm->getField('name_'. $i)->getValue();
-					$item['data']['default_extras'][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
-					$item['data']['default_extras_'. BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_'. $i)->getValue();
+					$item['data']['names'][$i - 1] = $this->frm->getField('name_' . $i)->getValue();
+					$item['data']['default_extras'][$i - 1] = $this->frm->getField('type_' . $i)->getValue();
+					$item['data']['default_extras_' . BackendLanguage::getWorkingLanguage()][$i - 1] = $this->frm->getField('type_' . $i)->getValue();
 				}
 
 				// blocks layout
@@ -258,7 +258,7 @@ class BackendPagesEditTemplate extends BackendBaseActionEdit
 				if($this->frm->getField('default')->getChecked() || BackendModel::getModuleSetting('pages', 'default_template') == $item['id']) BackendModel::setModuleSetting('pages', 'default_template', $item['id']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('templates') .'&report=edited-template&var='. urlencode($item['label']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('templates') . '&report=edited-template&var=' . urlencode($item['label']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

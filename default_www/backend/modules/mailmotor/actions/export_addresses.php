@@ -26,7 +26,7 @@ class BackendMailmotorExportAddresses extends BackendBaseAction
 		$id = SpoonFilter::getGetValue('id', null, 0);
 
 		// no id's provided
-		if(empty($id)) $this->redirect(BackendModel::createURLForAction('groups') .'&error=no-items-selected');
+		if(empty($id)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=no-items-selected');
 
 		// at least one id
 		else
@@ -46,7 +46,7 @@ class BackendMailmotorExportAddresses extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('groups') .'&report=export-failed');
+		$this->redirect(BackendModel::createURLForAction('groups') . '&report=export-failed');
 	}
 }
 

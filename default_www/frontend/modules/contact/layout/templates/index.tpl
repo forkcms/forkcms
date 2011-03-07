@@ -15,7 +15,7 @@
 						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
-					<p{option:txtMessageError} class="errorArea"{/option:txtEmailError}>
+					<p{option:txtMessageError} class="errorArea"{/option:txtMessageError}>
 						<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtMessage} {$txtMessageError}
 					</p>

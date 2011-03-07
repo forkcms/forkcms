@@ -20,7 +20,7 @@ class TagsInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('tags', 'The tags module.');

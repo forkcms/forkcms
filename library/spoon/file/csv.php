@@ -125,7 +125,7 @@ class SpoonFileCSV
 	private static function download($path)
 	{
 		// check if the file exists
-		if(!SpoonFile::exists($path)) throw new SpoonFileException('The file '. $path .' doesn\'t exist.');
+		if(!SpoonFile::exists($path)) throw new SpoonFileException('The file ' . $path . ' doesn\'t exist.');
 
 		// fetch the filename from the path string
 		$explodedFilename = explode('/', $path);
@@ -134,7 +134,7 @@ class SpoonFileCSV
 		// set headers for download
 		$headers = array();
 		$headers[] = 'Content-type: text/csv; charset=utf-8';
-		$headers[] = 'Content-Disposition: attachment; filename="'. $filename .'"';
+		$headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
 
 		// overwrite the headers
 		SpoonHTTP::setHeaders($headers);
@@ -340,7 +340,7 @@ class SpoonFileCSV
 	{
 		// reset variables
 		$string = (string) $string;
-		$filename = dirname(__FILE__) .'/'. uniqid();
+		$filename = dirname(__FILE__) . '/' . uniqid();
 
 		// save a tempfile
 		SpoonFile::setContent($filename, $string);

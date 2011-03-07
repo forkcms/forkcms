@@ -76,23 +76,23 @@ class BackendSearchSettings extends BackendBaseActionEdit
 		foreach(BackendModel::getModulesForDropDown() as $module => $label)
 		{
 			// check if module is searchable
-			if(!in_array($module, $disallowedModules) && method_exists('Frontend'. SpoonFilter::toCamelCase($module) .'Model', 'search'))
+			if(!in_array($module, $disallowedModules) && is_callable(array('Frontend' . SpoonFilter::toCamelCase($module) . 'Model', 'search')))
 			{
 				// add field to decide wether or not this module is searchable
-				$this->frm->addCheckbox('search_'. $module, isset($this->settings[$module]) ? $this->settings[$module]['searchable'] == 'Y' : false);
+				$this->frm->addCheckbox('search_' . $module, isset($this->settings[$module]) ? $this->settings[$module]['searchable'] == 'Y' : false);
 
 				// add field to decide weight for this module
-				$this->frm->addText('search_'. $module .'_weight', isset($this->settings[$module]) ? $this->settings[$module]['weight'] : 1);
+				$this->frm->addText('search_' . $module . '_weight', isset($this->settings[$module]) ? $this->settings[$module]['weight'] : 1);
 
 				// field disabled?
 				if(!isset($this->settings[$module]) || $this->settings[$module]['searchable'] != 'Y')
 				{
-					$this->frm->getField('search_'. $module .'_weight')->setAttribute('disabled', 'disabled');
-					$this->frm->getField('search_'. $module .'_weight')->setAttribute('class', 'inputText disabled');
+					$this->frm->getField('search_' . $module . '_weight')->setAttribute('disabled', 'disabled');
+					$this->frm->getField('search_' . $module . '_weight')->setAttribute('class', 'inputText disabled');
 				}
 
 				// add to list of modules
-				$this->modules[] = array('module' => $module, 'id' => $this->frm->getField('search_'. $module)->getAttribute('id'), 'label' => $label, 'chk' => $this->frm->getField('search_'. $module)->parse(), 'txt' => $this->frm->getField('search_'. $module .'_weight')->parse(), 'txtError' => '');
+				$this->modules[] = array('module' => $module, 'id' => $this->frm->getField('search_' . $module)->getAttribute('id'), 'label' => $label, 'chk' => $this->frm->getField('search_' . $module)->parse(), 'txt' => $this->frm->getField('search_' . $module . '_weight')->parse(), 'txtError' => '');
 			}
 		}
 	}
@@ -127,11 +127,11 @@ class BackendSearchSettings extends BackendBaseActionEdit
 			foreach($this->modules as $i => $module)
 			{
 				// only if this module is enabled
-				if($this->frm->getField('search_'. $module['module'])->getChecked())
+				if($this->frm->getField('search_' . $module['module'])->getChecked())
 				{
 					// valid weight?
-					$this->frm->getField('search_'. $module['module'] .'_weight')->isDigital(BL::err('WeightNotNumeric'));
-					$this->modules[$i]['txtError'] = $this->frm->getField('search_'. $module['module'] .'_weight')->getErrors();
+					$this->frm->getField('search_' . $module['module'] . '_weight')->isDigital(BL::err('WeightNotNumeric'));
+					$this->modules[$i]['txtError'] = $this->frm->getField('search_' . $module['module'] . '_weight')->getErrors();
 				}
 			}
 
@@ -146,15 +146,15 @@ class BackendSearchSettings extends BackendBaseActionEdit
 				// module search
 				foreach((array) $this->modules as $module)
 				{
-					$searchable = $this->frm->getField('search_'. $module['module'])->getChecked() ? 'Y' : 'N';
-					$weight = $this->frm->getField('search_'. $module['module'] .'_weight')->getValue();
+					$searchable = $this->frm->getField('search_' . $module['module'])->getChecked() ? 'Y' : 'N';
+					$weight = $this->frm->getField('search_' . $module['module'] . '_weight')->getValue();
 
 					// insert, or update
 					BackendSearchModel::insertModuleSettings($module, $searchable, $weight);
 				}
 
 				// redirect to the settings page
-				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}
 		}
 	}

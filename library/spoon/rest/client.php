@@ -83,7 +83,7 @@ class SpoonRESTClient
 		$method = strtoupper((string) $method);
 
 		// validate
-		if(!in_array($method, $allowedMethods)) throw new SpoonRESTException('Invalid method ('. $method .'). Possible methods are: '. implode(', ', $allowedMethods).'.');
+		if(!in_array($method, $allowedMethods)) throw new SpoonRESTException('Invalid method (' . $method . '). Possible methods are: ' . implode(', ', $allowedMethods) . '.');
 
 		// init curl options
 		$options[CURLOPT_PORT] = $this->getPort();
@@ -109,7 +109,7 @@ class SpoonRESTClient
 			$queryString = '';
 
 			// loop parameters and append them to the url
-			foreach($parameters as $key => $value) $queryString .= '&'. $key .'='. urlencode($value);
+			foreach($parameters as $key => $value) $queryString .= '&' . $key . '=' . urlencode($value);
 
 			// cleanup
 			$queryString = trim($queryString, '&');
@@ -118,8 +118,8 @@ class SpoonRESTClient
 			if($queryString != '')
 			{
 				// find ? in url
-				if(strpos($url, '?') > 0) $url .= '&'. $queryString;
-				else $url .= '?'. $queryString;
+				if(strpos($url, '?') > 0) $url .= '&' . $queryString;
+				else $url .= '?' . $queryString;
 			}
 		}
 
@@ -148,10 +148,10 @@ class SpoonRESTClient
 		curl_close($curl);
 
 		// validate errors
-		if($errorNumber != 0) throw new SpoonRESTException('An error occured with the following message: ('. $errorNumber .')'. $errorMessage .'.');
+		if($errorNumber != 0) throw new SpoonRESTException('An error occured with the following message: (' . $errorNumber . ')' . $errorMessage . '.');
 
 		// validate headers
-		if($headers['http_code'] != 200) throw new SpoonRESTException('Invalid headers, a header with status-code '. $headers['http_code'] .' was returned.');
+		if($headers['http_code'] != 200) throw new SpoonRESTException('Invalid headers, a header with status-code ' . $headers['http_code'] . ' was returned.');
 
 		// return the response
 		return (string) $response;
@@ -199,7 +199,7 @@ class SpoonRESTClient
 	public function getUserAgent()
 	{
 		// prepend SpoonHeader
-		$userAgent = 'Spoon '. SPOON_VERSION .'/';
+		$userAgent = 'Spoon ' . SPOON_VERSION . '/';
 		$userAgent .= ($this->userAgent === null) ? 'SpoonRESTClient' : $this->userAgent;
 
 		// return

@@ -130,16 +130,16 @@ class BackendAnalyticsAddLandingPage extends BackendBaseActionAdd
 				$item['page_path'] = $page;
 				$item['entrances'] = (isset($metrics['entrances']) ? $metrics['entrances'] : 0);
 				$item['bounces'] = (isset($metrics['bounces']) ? $metrics['bounces'] : 0);
-				$item['bounce_rate'] = ($metrics['entrances'] == 0 ? 0 : number_format(((int) $metrics['bounces'] / $metrics['entrances']) * 100, 2)) .'%';
-				$item['start_date'] = date('Y-m-d', $this->startTimestamp) .' 00:00:00';
-				$item['end_date'] = date('Y-m-d', $this->endTimestamp) .' 00:00:00';
+				$item['bounce_rate'] = ($metrics['entrances'] == 0 ? 0 : number_format(((int) $metrics['bounces'] / $metrics['entrances']) * 100, 2)) . '%';
+				$item['start_date'] = date('Y-m-d', $this->startTimestamp) . ' 00:00:00';
+				$item['end_date'] = date('Y-m-d', $this->endTimestamp) . ' 00:00:00';
 				$item['updated_on'] = date('Y-m-d H:i:s');
 
 				// insert the item
 				$item['id'] = (int) BackendAnalyticsModel::insertLandingPage($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('landing_pages') .'&report=saved&var='. urlencode($item['page_path']));
+				$this->redirect(BackendModel::createURLForAction('landing_pages') . '&report=saved&var=' . urlencode($item['page_path']));
 			}
 		}
 	}

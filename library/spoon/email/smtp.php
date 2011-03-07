@@ -109,10 +109,10 @@ class SpoonEmailSMTP
 		$this->security = (string) $security;
 
 		// make connection
-		if(!$this->connect()) throw new SpoonEmailException('Connection to host '. $this->host .':'. $this->port .' failed.');
+		if(!$this->connect()) throw new SpoonEmailException('Connection to host ' . $this->host . ':' . $this->port . ' failed.');
 
 		// say hi to the host
-		if(!$this->helo()) throw new SpoonEmailException('HELO went wrong: SMTP code '.$this->repliedCode);
+		if(!$this->helo()) throw new SpoonEmailException('HELO went wrong: SMTP code ' . $this->repliedCode);
 
 		// initialize security layer
 		switch($this->security)
@@ -166,7 +166,7 @@ class SpoonEmailSMTP
 	private function connect()
 	{
 		// check if we need to add ssl:// to the host
-		if($this->security === 'ssl') $this->host = 'ssl://'. $this->host;
+		if($this->security === 'ssl') $this->host = 'ssl://' . $this->host;
 
 		// open connection
 		$this->connection = @fsockopen($this->host, $this->port, $errno, $errstr, $this->timeout);
@@ -194,7 +194,7 @@ class SpoonEmailSMTP
 	private function getCode($reply)
 	{
 		// check input
-		if($reply === null) throw new SpoonEmailException('No input given for '. __METHOD__ .', fix this.');
+		if($reply === null) throw new SpoonEmailException('No input given for ' . __METHOD__ . ', fix this.');
 
 		// return the status code
 		return (int) substr($reply, 0, 3);
@@ -235,7 +235,7 @@ class SpoonEmailSMTP
 		if($host === null) $host = $_SERVER['HTTP_HOST'];
 
 		// push HELO command
-		$this->say('HELO '. $host);
+		$this->say('HELO ' . $host);
 
 		// check if HELO failed
 		return ($this->repliedCode === 250) ? true : false;
@@ -249,7 +249,7 @@ class SpoonEmailSMTP
 	 */
 	private function listen()
 	{
-		return (string) @fgets($this->connection, 515) .'<br />';
+		return (string) @fgets($this->connection, 515) . '<br />';
 	}
 
 
@@ -262,10 +262,10 @@ class SpoonEmailSMTP
 	public function mailFrom($email)
 	{
 		// check input
-		if(!SpoonFilter::isEmail($email)) throw new SpoonEmailException('No valid email given for '. __METHOD__);
+		if(!SpoonFilter::isEmail($email)) throw new SpoonEmailException('No valid email given for ' . __METHOD__);
 
 		// push MAIL FROM command
-		$this->say('MAIL FROM:<'. $email .'>');
+		$this->say('MAIL FROM:<' . $email . '>');
 
 		// smtp code 250 means success
 		return ($this->repliedCode === 250) ? true : false;
@@ -296,10 +296,10 @@ class SpoonEmailSMTP
 	public function rcptTo($email)
 	{
 		// check input
-		if(!SpoonFilter::isEmail($email)) throw new SpoonEmailException('No valid email given for '. __METHOD__);
+		if(!SpoonFilter::isEmail($email)) throw new SpoonEmailException('No valid email given for ' . __METHOD__);
 
 		// push MAIL FROM command
-		$this->say('RCPT TO: <'. $email .'>');
+		$this->say('RCPT TO: <' . $email . '>');
 
 		// smtp code 250 means success
 		return ($this->repliedCode === 250) ? true : false;
@@ -359,7 +359,7 @@ class SpoonEmailSMTP
 		if($this->repliedCode === 354)
 		{
 			// push our data
-			$this->say($data . self::CRLF .'.');
+			$this->say($data . self::CRLF . '.');
 
 			// code 250 means the mail has been sent
 			return ($this->repliedCode === 250) ? true : false;

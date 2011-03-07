@@ -53,7 +53,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		$groups = BackendMailmotorModel::getGroupsWithRecipientsForCheckboxes();
 
 		// no groups set yet, so give the user a hand
-		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('add_group') .'&error=add-mailing-no-groups');
+		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('add_group') . '&error=add-mailing-no-groups');
 
 		// fetch the languages
 		$languages = BackendMailmotorModel::getLanguagesForCheckboxes();
@@ -146,7 +146,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 				BackendMailmotorModel::updateGroupsForMailing($id, $values['groups']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $id .'&step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $id . '&step=2');
 			}
 		}
 	}

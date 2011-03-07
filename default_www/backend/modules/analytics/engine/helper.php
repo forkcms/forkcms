@@ -122,7 +122,7 @@ class BackendAnalyticsHelper
 		// get metrics
 		$metrics = array('pageviews', 'visitors');
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// get dimensions
 		$dimensions = 'ga:date';
@@ -197,14 +197,14 @@ class BackendAnalyticsHelper
 		// get metrics
 		$metrics = array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnPage', 'timeOnSite', 'visits');
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// get dimensions
 		$dimensions = 'ga:date';
 
 		// get parameters
 		$parameters = array();
-		$parameters['filters'] = 'ga:pagePath=='. $page;
+		$parameters['filters'] = 'ga:pagePath==' . $page;
 
 		// get results
 		$results = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, $dimensions, $parameters);
@@ -232,7 +232,7 @@ class BackendAnalyticsHelper
 		// get metrics
 		$metrics = array('bounces', 'entrances', 'exits', 'newVisits', 'pageviews', 'timeOnPage', 'timeOnSite', 'visits');
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// get dimensions
 		$dimensions = array('ga:source', 'ga:referralPath', 'ga:keyword');
@@ -240,7 +240,7 @@ class BackendAnalyticsHelper
 		// get parameters
 		$parameters = array();
 		$parameters['max-results'] = 50;
-		$parameters['filters'] = 'ga:pagePath=='. $page .';ga:pageviews>0';
+		$parameters['filters'] = 'ga:pagePath==' . $page . ';ga:pageviews>0';
 		$parameters['sort'] = '-ga:pageviews';
 
 		// get results
@@ -260,8 +260,8 @@ class BackendAnalyticsHelper
 			$entry['pageviews'] = (int) $result['pageviews'];
 			$entry['pages_per_visit'] = ($result['visits'] == 0 ? 0 : number_format(((int) $result['pageviews'] / $result['visits']), 2));
 			$entry['time_on_site'] = BackendAnalyticsModel::getTimeFromSeconds(($result['entrances'] == 0 ? 0 : number_format(((int) $result['timeOnSite'] / $result['entrances']), 2)));
-			$entry['new_visits'] = ($result['visits'] == 0 ? 0 : number_format(((int) $result['newVisits'] / $result['visits']) * 100, 2)) .'%';
-			$entry['bounce_rate'] = ($result['entrances'] == 0 ? 0 : number_format(((int) $result['bounces'] / $result['entrances']) * 100, 2)) .'%';
+			$entry['new_visits'] = ($result['visits'] == 0 ? 0 : number_format(((int) $result['newVisits'] / $result['visits']) * 100, 2)) . '%';
+			$entry['bounce_rate'] = ($result['entrances'] == 0 ? 0 : number_format(((int) $result['bounces'] / $result['entrances']) * 100, 2)) . '%';
 
 			// add to entries array
 			$data['sources'][] = $entry;
@@ -269,7 +269,7 @@ class BackendAnalyticsHelper
 
 		// set parameters
 		$parameters = array();
-		$parameters['filters'] = 'ga:pagePath=='. $page;
+		$parameters['filters'] = 'ga:pagePath==' . $page;
 		$parameters['sort'] = '-ga:pageviews';
 
 		// get results for sources grouped
@@ -284,7 +284,7 @@ class BackendAnalyticsHelper
 			// add to sources array
 			$data['sources_grouped'][$i]['label'] = $result['medium'];
 			$data['sources_grouped'][$i]['value'] = $result['pageviews'];
-			$data['sources_grouped'][$i]['percentage'] = ($totalPageviews == 0 ? 0 : number_format(((int) $result['pageviews'] / $totalPageviews) * 100, 2)) .'%';
+			$data['sources_grouped'][$i]['percentage'] = ($totalPageviews == 0 ? 0 : number_format(((int) $result['pageviews'] / $totalPageviews) * 100, 2)) . '%';
 		}
 
 		// return metrics
@@ -310,7 +310,7 @@ class BackendAnalyticsHelper
 
 		// set metrics
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// set parameters
 		$parameters = array();
@@ -319,7 +319,7 @@ class BackendAnalyticsHelper
 		$parameters['filters'] = 'ga:exits>0';
 
 		// sort if needed
-		if($sort !== null) $parameters['sort'] = '-ga:'. $sort;
+		if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
 
 		// return results
 		return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:pagePath', $parameters);
@@ -363,7 +363,7 @@ class BackendAnalyticsHelper
 
 		// set metrics
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// set parameters
 		$parameters = array();
@@ -372,7 +372,7 @@ class BackendAnalyticsHelper
 		$parameters['filters'] = 'ga:keyword!=(not set)';
 
 		// sort if needed
-		if($sort !== null) $parameters['sort'] = '-ga:'. $sort;
+		if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
 
 		// fetch and return
 		return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:keyword', $parameters);
@@ -392,11 +392,11 @@ class BackendAnalyticsHelper
 		// get metrics
 		$metrics = array('bounces', 'entrances');
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// get parameters
 		$parameters = array();
-		$parameters['filters'] = 'ga:pagePath=='. $page;
+		$parameters['filters'] = 'ga:pagePath==' . $page;
 		$parameters['max-results'] = 1; // no results are needed only the aggregate
 
 		// get results
@@ -419,7 +419,7 @@ class BackendAnalyticsHelper
 		// get metrics
 		$metrics = array('bounces', 'entrances', 'exits', 'pageviews', 'visits', 'visitors');
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// get dimensions
 		$dimensions = 'ga:date';
@@ -470,7 +470,7 @@ class BackendAnalyticsHelper
 
 		// set metrics
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// set parameters
 		$parameters = array();
@@ -478,7 +478,7 @@ class BackendAnalyticsHelper
 		$parameters['start-index'] = (int) $index;
 
 		// sort if needed
-		if($sort !== null) $parameters['sort'] = '-ga:'. $sort;
+		if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
 
 		// return results
 		return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:pagePath', $parameters);
@@ -518,7 +518,7 @@ class BackendAnalyticsHelper
 			$insertRecord = array();
 			$insertRecord['keyword'] = $entry['keyword'];
 			$insertRecord['entrances'] = $entry['entrances'];
-			$insertRecord['date'] = $results['startDate'] .' 00:00:00';
+			$insertRecord['date'] = $results['startDate'] . ' 00:00:00';
 
 			// add record to insert array
 			$insertArray[] = $insertRecord;
@@ -570,7 +570,7 @@ class BackendAnalyticsHelper
 			$insertRecord = array();
 			$insertRecord['referrer'] = $entry['source'] . $entry['referralPath'];
 			$insertRecord['entrances'] = $entry['entrances'];
-			$insertRecord['date'] = $results['startDate'] .' 00:00:00';
+			$insertRecord['date'] = $results['startDate'] . ' 00:00:00';
 
 			// add record to insert array
 			$insertArray[] = $insertRecord;
@@ -607,7 +607,7 @@ class BackendAnalyticsHelper
 
 		// set metrics
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// set parameters
 		$parameters = array();
@@ -616,7 +616,7 @@ class BackendAnalyticsHelper
 		$parameters['filters'] = 'ga:medium==referral';
 
 		// sort if needed
-		if($sort !== null) $parameters['sort'] = '-ga:'. $sort;
+		if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
 
 		// fetch and return
 		return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, array('ga:source', 'ga:referralPath'), $parameters);
@@ -660,7 +660,7 @@ class BackendAnalyticsHelper
 
 		// set metrics
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// set parameters
 		$parameters = array();
@@ -668,7 +668,7 @@ class BackendAnalyticsHelper
 		$parameters['start-index'] = (int) $index;
 
 		// sort if needed
-		if($sort !== null) $parameters['sort'] = '-ga:'. $sort;
+		if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
 
 		// fetch and return
 		return self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, array('ga:source', 'ga:medium', 'ga:keyword'), $parameters);
@@ -696,7 +696,7 @@ class BackendAnalyticsHelper
 
 		// set metrics
 		$gaMetrics = array();
-		foreach($metrics as $metric) $gaMetrics[] = 'ga:'. $metric;
+		foreach($metrics as $metric) $gaMetrics[] = 'ga:' . $metric;
 
 		// set parameters
 		$parameters = array();
@@ -704,7 +704,7 @@ class BackendAnalyticsHelper
 		$parameters['start-index'] = (int) $index;
 
 		// sort if needed
-		if($sort !== null) $parameters['sort'] = '-ga:'. $sort;
+		if($sort !== null) $parameters['sort'] = '-ga:' . $sort;
 
 		// fetch
 		$gaResults = self::getGoogleAnalyticsInstance()->getAnalyticsResults($gaMetrics, $startTimestamp, $endTimestamp, 'ga:medium', $parameters);
@@ -724,7 +724,7 @@ class BackendAnalyticsHelper
 			// redefine
 			$items[] = array('label' => $trafficSource,
 							'value' => $entry['pageviews'],
-							'percentage' => ($totalPageviews == 0 ? 0 : number_format(((int) $entry['pageviews'] / $totalPageviews) * 100, 2)) .'%');
+							'percentage' => ($totalPageviews == 0 ? 0 : number_format(((int) $entry['pageviews'] / $totalPageviews) * 100, 2)) . '%');
 		}
 
 		// return 'em
@@ -824,13 +824,13 @@ class BackendAnalyticsHelper
 		if($endTimestamp == mktime(0, 0, 0, date('n'), date('j'), date('Y')))
 		{
 			// url of current action
-			$liveDataUrl = BackendModel::createURLForAction('loading') .'&amp;redirect_action='. Spoon::getObjectReference('url')->getAction();
+			$liveDataUrl = BackendModel::createURLForAction('loading') . '&amp;redirect_action=' . Spoon::get('url')->getAction();
 
 			// page id set
-			if(isset($_GET['page_id']) && $_GET['page_id'] != '') $liveDataUrl .= '&amp;page_id='. (int) $_GET['page_id'];
+			if(isset($_GET['page_id']) && $_GET['page_id'] != '') $liveDataUrl .= '&amp;page_id=' . (int) $_GET['page_id'];
 
 			// page path set
-			if(isset($_GET['page_path']) && $_GET['page_path'] != '') $liveDataUrl .= '&amp;page_path='. (string) $_GET['page_path'];
+			if(isset($_GET['page_path']) && $_GET['page_path'] != '') $liveDataUrl .= '&amp;page_path=' . (string) $_GET['page_path'];
 
 			// assign
 			$tpl->assign('liveDataURL', $liveDataUrl);
@@ -900,7 +900,7 @@ class BackendAnalyticsHelper
 			if($interval == 'week') $interval .= ' -1 days';
 
 			// set sessions
-			SpoonSession::set('analytics_start_timestamp', strtotime('-1'. $interval, mktime(0, 0, 0)));
+			SpoonSession::set('analytics_start_timestamp', strtotime('-1' . $interval, mktime(0, 0, 0)));
 			SpoonSession::set('analytics_end_timestamp', mktime(0, 0, 0));
 		}
 	}
