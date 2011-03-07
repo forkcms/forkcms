@@ -112,6 +112,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 			// get the record
 			$this->record = BackendPagesModel::get($this->id);
 			$this->record['full_url'] = BackendPagesModel::getFullURL($this->record['id']);
+			$this->record['is_hidden'] = ($this->record['hidden'] == 'Y');
 
 			// load blocks
 			$this->blocksContent = BackendPagesModel::getBlocks($this->id);
