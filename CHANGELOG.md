@@ -1,3 +1,10 @@
+2.1.0dev (merge this with 2.1.0 below)
+--
+* IE-stylesheets aren't loaded by default, this is the task of the slices (as requested/indicated by Yoni)
+* Force forms to use UTF-8
+* Blog categories now use the meta-object
+
+
 2.1.0 (xxxx-xx-xx)
 --
 * Core: improvments for numberformatting

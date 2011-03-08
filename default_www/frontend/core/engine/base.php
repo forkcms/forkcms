@@ -332,12 +332,10 @@ class FrontendBaseBlock
 	 * @return	void
 	 * @param 	string $file					The path for the CSS-file that should be loaded.
 	 * @param	bool[optional] $overwritePath	Whether or not to add the module to this path. Module path is added by default.
-	 * @param	string[optional] $media			The media to use.
-	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
 	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
+	public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -347,7 +345,7 @@ class FrontendBaseBlock
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
 
 		// add css to the header
-		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
+		$this->header->addCSS($file, $minify, $addTimestamp);
 	}
 
 
@@ -799,12 +797,10 @@ class FrontendBaseWidget
 	 * @return	void
 	 * @param 	string $file					The path for the CSS-file that should be loaded.
 	 * @param	bool[optional] $overwritePath	Whether or not to add the module to this path. Module path is added by default.
-	 * @param	string[optional] $media			The media to use.
-	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
 	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $overwritePath = false, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
+	public function addCSS($file, $overwritePath = false, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
@@ -814,7 +810,7 @@ class FrontendBaseWidget
 		if(!$overwritePath) $file = '/frontend/modules/' . $this->getModule() . '/layout/css/' . $file;
 
 		// add css to the header
-		$this->header->addCSS($file, $media, $condition, $minify, $addTimestamp);
+		$this->header->addCSS($file, $minify, $addTimestamp);
 	}
 
 
