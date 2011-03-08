@@ -77,10 +77,6 @@ class FrontendHeader extends FrontendBaseObject
 		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css');
 		$this->addCSS('/frontend/core/layout/css/screen.css');
 
-		// add default IE stylesheets
-		$this->addCSS('/frontend/core/layout/css/ie6.css', 'screen', 'lte IE 6');
-		$this->addCSS('/frontend/core/layout/css/ie7.css', 'screen', 'IE 7');
-
 		// print stylesheet
 		$this->addCSS('/frontend/core/layout/css/print.css', 'print');
 
