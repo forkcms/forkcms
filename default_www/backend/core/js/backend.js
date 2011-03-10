@@ -75,7 +75,7 @@ jsBackend =
 
 				// get real message
 				if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
-				
+
 				// show message
 				jsBackend.messages.add('error', textStatus);
 			}
@@ -94,7 +94,7 @@ jsBackend =
 
 /**
  * Handle form messages (action feedback: success, error, ...)
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.balloons =
@@ -174,7 +174,7 @@ jsBackend.balloons =
 
 /**
  * Handle form functionality
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.controls =
@@ -279,13 +279,13 @@ jsBackend.controls =
 
 			// get id
 			var id = $(this).data('message-id');
-			
+
 			// bind
 			if(id != '')
 			{
 				// set target
 				$('#'+ id).data('message-id', $(this).attr('href'));
-				
+
 				// open dialog
 				$('#'+ id).dialog('open');
 			}
@@ -409,7 +409,7 @@ jsBackend.controls =
 				table.find('.massAction select').removeClass('disabled').attr('disabled', '');
 				table.find('.massAction .submitButton').removeClass('disabledButton').attr('disabled', '');
 			}
-			
+
 			// nothing checked
 			else
 			{
@@ -461,7 +461,7 @@ jsBackend.controls =
 		{
 			// prevent default action
 			evt.preventDefault();
-			
+
 			// not disabled
 			if(!$(this).is('.disabledButton'))
 			{
@@ -470,17 +470,17 @@ jsBackend.controls =
 				{
 					// get action element
 					var element = $(this).parents('.massAction').find('select[name=action] option:selected');
-	
+
 					// if the rel-attribute exists we should show the dialog
 					if(typeof element.data('message-id') != 'undefined')
 					{
 						// get id
 						var id = element.data('message-id');
-	
+
 						// open dialog
 						$('#'+ id).dialog('open');
 					}
-	
+
 					// no confirm
 					else $($(this).parents('form')).submit();
 				}
@@ -505,16 +505,16 @@ jsBackend.controls =
 			if($(this).is(':checked')) $($(this).parents().filter('table')[0]).find('tbody tr').addClass('selected');
 			else $($(this).parents().filter('table')[0]).find('tbody tr').removeClass('selected');
 		});
-		
+
 		// single checkbox changed
 		$('td.checkbox input:checkbox').bind('change', function(evt)
 		{
 			// check mass checkbox
 			if($(this).closest('table').find('td.checkbox input:checkbox').length == $(this).closest('table').find('td.checkbox input:checkbox:checked').length)
 			{
-				$(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', 'checked'); 
+				$(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', 'checked');
 			}
-			
+
 			// uncheck mass checkbox
 			else{ $(this).closest('table').find('th .checkboxHolder input:checkbox').attr('checked', ''); }
 		});
@@ -567,7 +567,7 @@ jsBackend.controls =
 
 		// no chars means no password
 		if(string.length == 0) return 'none';
-		
+
 		// less then 4 chars is just a weak password
 		if(string.length <= 4) return 'weak';
 
@@ -751,7 +751,7 @@ jsBackend.effects =
 
 /**
  * Backend forms
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.forms =
@@ -880,61 +880,61 @@ jsBackend.forms =
 	{
 		$('form input:visible:not(.noFocus):first').focus();
 	},
-	
-	
+
+
 	// set placeholders
 	placeholders: function()
 	{
 		// detect if placeholder-attribute is supported
 		jQuery.support.placeholder = ('placeholder' in document.createElement('input'));
-		
+
 		if(!jQuery.support.placeholder)
 		{
 			// bind focus
-			$('input[placeholder]').focus(function() 
+			$('input[placeholder]').focus(function()
 			{
 				// grab element
 				var input = $(this);
-				
+
 				// only do something when the current value and the placeholder are the same
 				if(input.val() == input.attr('placeholder'))
 				{
 					// clear
 					input.val('');
-					
+
 					// remove class
 					input.removeClass('placeholder');
 				}
 			});
-			
-			$('input[placeholder]').blur(function() 
+
+			$('input[placeholder]').blur(function()
 			{
 				// grab element
 				var input = $(this);
-				
+
 				// only do something when the input is empty or the value is the same as the placeholder
 				if(input.val() == '' || input.val() == input.attr('placeholder'))
 				{
 					// set placeholder
 					input.val(input.attr('placeholder'));
-					
+
 					// add class
 					input.addClass('placeholder');
 				}
 			});
-			
+
 			// call blur to initialize
 			$('input[placeholder]').blur();
-			
+
 			// hijack the form so placeholders aren't submitted as values
-			$('input[placeholder]').parents('form').submit(function() 
+			$('input[placeholder]').parents('form').submit(function()
 			{
 				// find elements with placeholders
-				$(this).find('input[placeholder]').each(function() 
+				$(this).find('input[placeholder]').each(function()
 				{
 					// grab element
 					var input = $(this);
-					
+
 					// if the value and the placeholder are the same reset the value
 					if(input.val() == input.attr('placeholder')) input.val('');
 				});
@@ -1004,7 +1004,7 @@ jsBackend.forms =
 
 /**
  * Do custom layout/interaction stuff
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.layout =
@@ -1120,7 +1120,7 @@ jsBackend.layout =
 
 /**
  * Handle form messages (action feedback: success, error, ...)
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.messages =
@@ -1178,7 +1178,7 @@ jsBackend.messages =
 
 /**
  * Apply tabs
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tabs =
@@ -1241,7 +1241,7 @@ jsBackend.tabs =
 
 /**
  * Apply TinyMCE
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tinyMCE =
@@ -1275,7 +1275,7 @@ jsBackend.tinyMCE =
 	{
 		// replace target _self
 		object.content = object.content.replace(new RegExp('<a(.*)target="_self"(.*)>', 'gim'), '<a$1$2>');
-		
+
 		// get items with the target _blank
 		var matches = object.content.match(new RegExp('<a(.*)target="_blank"(.*)>', 'gim'));
 
@@ -1283,7 +1283,7 @@ jsBackend.tinyMCE =
 		for(var i in matches)
 		{
 			// already classes defined?
-			if(matches[i].indexOf('class="') > 0) 
+			if(matches[i].indexOf('class="') > 0)
 			{
 				// remove target and add the class
 				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1$2>')
@@ -1294,19 +1294,19 @@ jsBackend.tinyMCE =
 				// remove target and set class
 				var newLink = matches[i].replace(new RegExp('<a(.*)target="_blank"(.*)>', 'gi'), '<a$1class="targetBlank"$2>')
 			}
-			
+
 			// replace
 			object.content = object.content.replace(matches[i], newLink.replace(/ {2,}/g, ' '));
 		}
 	},
-	
+
 
 	// format text (before placing it in the editor)
 	beforeLoad: function(editor, object)
 	{
 		// get items that have the targetBlank class
 		var matches = object.content.match(new RegExp('<a(.*)class="(.*)?targetBlank(.*)>', 'gim'));
-		
+
 		// loop the matches
 		for(var i in matches)
 		{
@@ -1358,7 +1358,7 @@ jsBackend.tinyMCE =
 
 /**
  * Apply tooltip
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tooltip =
@@ -1380,7 +1380,7 @@ jsBackend.tooltip =
 
 /**
  * Handle browsers with impaired CSS selector support
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.selectors =
@@ -1403,7 +1403,7 @@ jsBackend.selectors =
 
 /**
  * Fix focus/blur events on impaired browsers
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.focusfix =
@@ -1434,7 +1434,7 @@ jsBackend.focusfix =
 
 /**
  * Enable setting of sequence by drag & drop
- * 
+ *
  * @author	Tijs Verkoyen <tijs@sumocoders.be>
  */
 jsBackend.tableSequenceByDragAndDrop =
@@ -1458,10 +1458,10 @@ jsBackend.tableSequenceByDragAndDrop =
 
 					// buil ajax-url
 					var url = '/backend/ajax.php?module=' + jsBackend.current.module + '&action='+ action +'&language=' + jsBackend.current.language;
-					
+
 					// append
 					if(typeof $(table.parents('table.datagrid')).data('extra-params') != 'undefined') url += $(table.parents('table.datagrid')).data('extra-params');
-					
+
 					// init var
 					var rows = $(this).find('tr');
 					var newIdSequence = new Array();
@@ -1496,7 +1496,7 @@ jsBackend.tableSequenceByDragAndDrop =
 
 							// alert the user
 							if(data.code != 200 && jsBackend.debug) { alert(data.message); }
-							
+
 							// show message
 							jsBackend.messages.add('success', 'Changed order successfully.');
 						},
@@ -1507,7 +1507,7 @@ jsBackend.tableSequenceByDragAndDrop =
 
 							// get real message
 							if(typeof XMLHttpRequest.responseText != 'undefined') textStatus = $.parseJSON(XMLHttpRequest.responseText).message;
-							
+
 							// show message
 							jsBackend.messages.add('error', textStatus);
 
