@@ -18,8 +18,8 @@
 <div class="tabs">
 	<ul>
 		<li><a href="#tabSettingsGeneral">{$lblGeneral|ucfirst}</a></li>
-		<li><a href="#tabSettingsAccount">CampaignMonitor - {$lblSettingsAccount|ucfirst}</a></li>
-		{option:account}<li><a href="#tabSettingsClient">CampaignMonitor - {$lblSettingsClient|ucfirst}</a></li>{/option:account}
+		<li><a href="#tabSettingsAccount">CampaignMonitor - {$lblAccountSettings|ucfirst}</a></li>
+		{option:account}<li><a href="#tabSettingsClient">CampaignMonitor - {$lblClientSettings|ucfirst}</a></li>{/option:account}
 	</ul>
 
 	<div id="tabSettingsGeneral">

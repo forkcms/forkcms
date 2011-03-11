@@ -80,12 +80,13 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'NoSentMailings', 'So far, no mailings have been sent.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'SubscribeSuccess', 'You have successfully subscribed to the newsletter.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'UnsubscribeSuccess', 'You have successfully unsubscribed from the newsletter.');
-
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AccountSettings', 'account settings');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Addresses', 'e-mail addresses');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'AllAddresses', 'all e-mail addresses');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Bounces', 'bounces');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'BounceType', 'bounce type');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Campaigns', 'campaigns');
+		$this->insertLocale('en', 'backend', 'core', 'lbl', 'ClientSettings', 'client settings');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Copy', 'copy');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Country', 'country');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Created', 'created');
@@ -332,12 +333,13 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NoSentMailings', 'Er zijn tot dusver nog geen nieuwsbrieven verzonden.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'SubscribeSuccess', 'Je bent met success ingeschreven op de nieuwsbrief.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'UnsubscribeSuccess', 'Je bent met success uitgeschreven uit de nieuwsbrief.');
-
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AccountSettings', 'account instellingen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Addresses', 'e-mailadressen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'AllAddresses', 'alle e-mailadressen,');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Bounces', 'bounces');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'BounceType', 'bounce type');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Campaigns', 'campagnes');
+		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'ClientSettings', 'client instellingen');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Copy', 'kopieer');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Country', 'land');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Created', 'aangemaakt');
