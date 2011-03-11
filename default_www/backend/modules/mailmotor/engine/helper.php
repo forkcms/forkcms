@@ -732,6 +732,13 @@ class BackendMailmotorCMHelper
 		// a list was created
 		if($cmId)
 		{
+			// check if we have a default group set
+			if($item['is_default'] === 'Y' && $item['language'] != '0')
+			{
+				// set all defaults to N.
+				BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
+			}
+
 			// insert in database
 			$id = BackendMailmotorModel::insertGroup($item);
 
@@ -931,12 +938,18 @@ class BackendMailmotorCMHelper
 		// build unsubscribe link for this list
 		$unsubscribeLink = SITE_URL . BackendModel::getURLForBlock('mailmotor', 'unsubscribe', BL::getWorkingLanguage());
 
-		// a list was updated
-		if(self::getCM()->updateList($item['name'], $unsubscribeLink . '/?group=' . $item['id'] . '&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id'])))
+		// update the group with CM
+		self::getCM()->updateList($item['name'], $unsubscribeLink . '/?group=' . $item['id'] . '&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id']));
+
+		// check if we have a default group set
+		if($item['is_default'] === 'Y' && $item['language'] != '0')
 		{
-			// update in database
-			return (int) BackendMailmotorModel::updateGroup($item);
+			// set all defaults to N
+			BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
 		}
+
+		// update the group in our database
+		return (int) BackendMailmotorModel::updateGroup($item);
 	}
 
 

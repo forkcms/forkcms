@@ -74,8 +74,18 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 		// create form
 		$this->frm = new BackendForm('edit');
 
+		// add "no default group" option for radiobuttons
+		$chkDefaultForLanguageValues[] = array('label' => ucfirst(BL::lbl('NoDefault')), 'value' => '0');
+
+		// set default for language radiobutton values
+		foreach(BL::getWorkingLanguages() as $key => $value)
+		{
+			$chkDefaultForLanguageValues[] = array('label' => $value, 'value' => $key);
+		}
+
 		// create elements
 		$this->frm->addText('name', $this->record['name']);
+		$this->frm->addRadiobutton('default', $chkDefaultForLanguageValues, $this->record['language']);
 	}
 
 
@@ -109,6 +119,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 
 			// shorten fields
 			$txtName = $this->frm->getField('name');
+			$rbtDefaultForLanguage = $this->frm->getField('default');
 
 			// validate fields
 			if($txtName->isFilled(BL::err('NameIsRequired')))
@@ -122,7 +133,8 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 				// build item
 				$item['id'] = $this->id;
 				$item['name'] = $txtName->getValue();
-				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				$item['language'] = $rbtDefaultForLanguage->getValue() === '0' ? null : $rbtDefaultForLanguage->getValue();
+				$item['is_default'] = $rbtDefaultForLanguage->getChecked() ? 'Y' : 'N';
 
 				// update the item
 				BackendMailmotorCMHelper::updateGroup($item);

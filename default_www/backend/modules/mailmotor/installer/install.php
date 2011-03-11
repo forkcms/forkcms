@@ -205,9 +205,11 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Groups', 'groups');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'ImportAddresses', 'import addresses');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Ip', 'IP address');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'IsDefault', 'mark as the default group for the current working language');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'Manual', 'manual');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'MailingsWithoutCampaign', 'mailings without campaign');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'NoCampaign', 'no campaign');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'NoDefault', 'this is not a default group.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'OpenedMailings', 'opened mailings');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'PlainTextVersion', 'plain text version');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'lbl', 'PricePerEmail', 'price per sent mailing');
@@ -252,6 +254,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'ClicksOpened', 'times opened');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'ClientLinked', 'The client &ldquo;%1$s&rdquo; is now linked to Fork.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'CreateGroupByAddresses', 'Create a new group with the addresses below.');
+		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'DefaultGroup', 'Selecting a language here will mark this as the default group for that language. This means visitors who subscribe in this language version of your website will end up in this group. Only one default group can be set for each language.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'DeleteAddresses', 'The address(es) have been deleted successfully.');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'DeleteBounces', 'Delete all hard bounces');
 		$this->insertLocale('en', 'backend', 'mailmotor', 'msg', 'DeletedBounces', 'The hard bounces for this mailing have been deleted.');
@@ -462,6 +465,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'Manual', 'manueel');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'MailingsWithoutCampaign', 'mailings zonder campagne');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'NoCampaign', 'geen campagne');
+		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'NoDefault', 'Dit is geen standaard doelgroep.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'OpenedMailings', 'geopende mailings');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'PlainTextVersion', 'plain text versie');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'lbl', 'PricePerEmail', 'prijs per verzonden e-mail');
@@ -506,6 +510,7 @@ class MailmotorInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'ClicksOpened', 'aantal keer geopend');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'ClientLinked', 'De client &ldquo;%1$s&rdquo; is met succes gekoppeld aan Fork.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'CreateGroupByAddresses', 'Maak een nieuwe doelgroep aan met onderstaande e-mailadressen');
+		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'DefaultGroup', 'Een taal selecteren markeert deze doelgroep als de standaard groep voor die taal. Dit betekent dat bezoekers die zich inschrijven voor de mailinglist in deze taal-versie van je website terechtkomen in deze groep. Er kan maar &eacute;&eacute; doelgroep gekozen worden per taal.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'DeleteAddresses', 'De e-mail(s) werd(en) met succes verwijderd.');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'DeleteBounces', 'Verwijder alle hard bounces');
 		$this->insertLocale('nl', 'backend', 'mailmotor', 'msg', 'DeletedBounces', 'De hard bounces voor deze mailing zijn verwijderd.');
