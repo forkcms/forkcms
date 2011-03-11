@@ -18,7 +18,7 @@ class BlogInstall extends ModuleInstaller
 	 *
 	 * @return	int
 	 * @param	string $language	The language to use.
-	 * @param	string $name		The name of the category.
+	 * @param	string $title		The title of the category.
 	 * @param	string $url			The URL for the category.
 	 */
 	private function addCategory($language, $title, $url)
