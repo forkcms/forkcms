@@ -260,11 +260,14 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// try and update the client info
 		try
 		{
+			// fetch complete list of timezones as pairs
+			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
+
 			// init CampaignMonitor object
 			$cm = new CampaignMonitor($url, $username, $password, 10, $this->clientID);
 
 			// update the client
-			$cm->updateClientBasics($record['company_name'], $record['contact_name'], $record['contact_email'], $record['country'], $record['timezone']);
+			$cm->updateClientBasics($record['company_name'], $record['contact_name'], $record['contact_email'], $record['country'], $timezones[$record['timezone']]);
 		}
 		catch(Exception $e)
 		{
