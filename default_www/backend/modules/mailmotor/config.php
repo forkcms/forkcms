@@ -138,6 +138,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 				}
 				catch(CampaignMonitorException $e)
 				{
+					// ignore
 				}
 			}
 		}

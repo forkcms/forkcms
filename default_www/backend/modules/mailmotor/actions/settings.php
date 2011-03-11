@@ -74,7 +74,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		catch(Exception $e)
 		{
 			// add an error to the email field
-			$this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() .'#tabSettingsClient');
+			$this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
 		}
 	}
 
@@ -272,7 +272,7 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		catch(Exception $e)
 		{
 			// add an error to the email field
-			$this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() .'#tabSettingsClient');
+			$this->redirect(BackendModel::createURLForAction('settings') . '&error=campaign-monitor-error&var=' . $e->getMessage() . '#tabSettingsClient');
 		}
 	}
 

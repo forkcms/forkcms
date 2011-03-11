@@ -286,6 +286,34 @@ class BackendMailmotorCMHelper
 
 
 	/**
+	 * Returns the clients for use in a dropdown
+	 *
+	 * @return	array
+	 */
+	public static function getClientsAsPairs()
+	{
+		// get the base stack of clients
+		$clients = self::getCM()->getClients();
+
+		// stop here if no clients were found
+		if(empty($clients)) return array();
+
+		// reserve results stack
+		$results = array();
+		$results[0] = ucfirst(BL::lbl('CreateNewClient', 'mailmotor'));
+
+		// loop the clients
+		foreach($clients as $client)
+		{
+			$results[$client['id']] = $client['name'];
+		}
+
+		// return the results
+		return $results;
+	}
+
+
+	/**
 	 * Returns the CampaignMonitor object.
 	 *
 	 * @return	CampaignMonitor
@@ -319,34 +347,6 @@ class BackendMailmotorCMHelper
 
 		// return the CampaignMonitor object
 		return Spoon::get('campaignmonitor');
-	}
-
-
-	/**
-	 * Returns the clients for use in a dropdown
-	 *
-	 * @return	array
-	 */
-	public static function getClientsAsPairs()
-	{
-		// get the base stack of clients
-		$clients = self::getCM()->getClients();
-
-		// stop here if no clients were found
-		if(empty($clients)) return array();
-
-		// reserve results stack
-		$results = array();
-		$results[0] = ucfirst(BL::lbl('CreateNewClient', 'mailmotor'));
-
-		// loop the clients
-		foreach($clients as $client)
-		{
-			$results[$client['id']] = $client['name'];
-		}
-
-		// return the results
-		return $results;
 	}
 
 
