@@ -16,8 +16,8 @@ jsBackend.dashboard =
 		$('#editDashboard').click(jsBackend.dashboard.load);
 		$('#doneEditingDashboard').click(jsBackend.dashboard.save);
 		$('.editDashboardClose').click(jsBackend.dashboard.close);
-		
 	},
+
 
 	close: function(evt) {
 		// prevent default
