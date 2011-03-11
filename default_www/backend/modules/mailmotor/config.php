@@ -131,8 +131,14 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 				$group['is_default'] = 'Y';
 				$group['created_on'] = date('Y-m-d H:i:s');
 
-				// insert the group in CampaignMonitor
-				BackendMailmotorCMHelper::insertGroup($group);
+				try
+				{
+					// insert the group in CampaignMonitor
+					BackendMailmotorCMHelper::insertGroup($group);
+				}
+				catch(CampaignMonitorException $e)
+				{
+				}
 			}
 		}
 
