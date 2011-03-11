@@ -31,6 +31,8 @@ class SettingsInstall extends ModuleInstaller
 		$this->setActionRights(1, 'settings', 'email');
 
 		// insert locale (nl)
+		$this->insertLocale('nl', 'backend', 'settings', 'err', 'PortIsRequired', 'Poort is verplicht.');
+		$this->insertLocale('nl', 'backend', 'settings', 'err', 'ServerIsRequired', 'Server is verplicht.');
 		$this->insertLocale('nl', 'backend', 'settings', 'lbl', 'AdminIds', 'admin-ids');
 		$this->insertLocale('nl', 'backend', 'settings', 'lbl', 'ApplicationId', 'toepassings-id');
 		$this->insertLocale('nl', 'backend', 'settings', 'lbl', 'ApplicationSecret', 'app secret');
@@ -55,8 +57,13 @@ class SettingsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpThemes', 'Duid aan welk thema je wil gebruiken.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'HelpTimeFormat', 'Dit formaat wordt gehanteerd bij het weergeven van datums in de frontend.');
 		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'NoAdminIds', 'Nog geen admin-ids');
+		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'SendTestMail', 'verstuur testmail');
+		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'TestMessage', 'dit is een test');
+		$this->insertLocale('nl', 'backend', 'settings', 'msg', 'TestWasSent', 'De testmail is verzonden.');
 
 		// insert locale (en)
+		$this->insertLocale('en', 'backend', 'settings', 'err', 'PortIsRequired', 'Port is required..');
+		$this->insertLocale('en', 'backend', 'settings', 'err', 'ServerIsRequired', 'Server is required.');
 		$this->insertLocale('en', 'backend', 'settings', 'lbl', 'AdminIds', 'admin ids');
 		$this->insertLocale('en', 'backend', 'settings', 'lbl', 'ApplicationId', 'application id');
 		$this->insertLocale('en', 'backend', 'settings', 'lbl', 'ApplicationSecret', 'app secret');
@@ -81,6 +88,9 @@ class SettingsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpThemes', 'Select the theme you wish to use.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'HelpTimeFormat', 'This format is used to display dates on the website.');
 		$this->insertLocale('en', 'backend', 'settings', 'msg', 'NoAdminIds', 'No admin ids yet.');
+		$this->insertLocale('en', 'backend', 'settings', 'msg', 'SendTestMail', 'send test email');
+		$this->insertLocale('en', 'backend', 'settings', 'msg', 'TestMessage', 'this is just a test');
+		$this->insertLocale('en', 'backend', 'settings', 'msg', 'TestWasSent', 'The test email was sent.');
 	}
 }
 
