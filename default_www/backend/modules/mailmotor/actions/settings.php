@@ -59,11 +59,14 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// create a client
 		try
 		{
+			// fetch complete list of timezones as pairs
+			$timezones = BackendMailmotorCMHelper::getTimezonesAsPairs();
+
 			// init CampaignMonitor object
 			$cm = new CampaignMonitor($url, $username, $password, 10);
 
 			// create client
-			$clientID = $cm->createClient($record['company_name'], $record['contact_name'], $record['contact_email'], $record['country'], $record['timezone']);
+			$clientID = $cm->createClient($record['company_name'], $record['contact_name'], $record['contact_email'], $record['country'], $timezones[$record['timezone']]);
 
 			// store ID in a setting
 			if(!empty($clientID)) BackendModel::setModuleSetting('mailmotor', 'cm_client_id', $clientID);
