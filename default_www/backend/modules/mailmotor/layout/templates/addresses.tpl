@@ -10,6 +10,13 @@
 	</div>
 </div>
 
+{option:csvURL}
+<div class="generalMessage infoMessage content">
+	<p><strong>{$msgImportRecentlyFailed}</strong></p>
+	<p>{$msgImportFailedDownloadCSV|sprintf:{$csvURL}}</p>
+</div>
+{/option:csvURL}
+
 <div class="datagridHolder">
 	{form:filter}
 		{$hidGroupId}
