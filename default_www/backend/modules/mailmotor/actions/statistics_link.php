@@ -111,15 +111,10 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 
 		// call the parent, as in create a new datagrid with the created source
 		$this->datagrid = new BackendDataGrid($source);
-
-		// set headers values
-		$headers['clicks'] = ucfirst(BL::msg('ClicksAmount'));
-
-		// set headers
-		$this->datagrid->setHeaderLabels($headers);
+		$this->datagrid->setColumnsHidden(array('list_id', 'url'));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('email', 'clicks'), 'email');
+		$this->datagrid->setSortingColumns(array('email'), 'email');
 
 		// set paging limit
 		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);

@@ -382,8 +382,8 @@ class BackendMailmotorModel
 
 		// unset multi-dimensional arrays
 		unset($records[0]['clicked_links'], $records[0]['clicked_links_by'], $records[0]['opens'],
-				$records[0]['clicks'], $records[0]['clicks_percentage'],
-				$records[0]['recipients_total'], $records[0]['recipients_percentage']);
+				$records[0]['clicks'], $records[0]['clicks_percentage'], $records[0]['clicks_total'],
+				$records[0]['recipients_total'], $records[0]['recipients_percentage'], $records[0]['online_version']);
 
 		// set columns
 		$columns = array();
@@ -1476,6 +1476,47 @@ class BackendMailmotorModel
 
 
 	/**
+	 * Inserts or updates a subscriber record.
+	 *
+	 * @return	bool
+	 * @param	array $item					The data to update for the e-mail address.
+	 * @param	int $groupId				The group to subscribe the address to.
+	 * @param	array[optional] $fields		The custom fields for the address in the given group.
+	 */
+	public static function saveAddress(array $item, $groupId, $fields = array())
+	{
+		// get DB
+		$db = BackendModel::getDB(true);
+
+		// set record values
+		$record = array();
+		$record['email'] = $item['email'];
+		$record['source'] = $item['source'];
+		$record['created_on'] = $item['created_on'];
+
+		// insert/update the user
+		$db->execute('INSERT INTO mailmotor_addresses(email, source, created_on)
+						VALUES (?, ?, ?)
+						ON DUPLICATE KEY UPDATE email = ?',
+						array($record['email'], $record['source'], $record['created_on'],
+								$record['email']));
+
+		// set values
+		$subscription = array();
+		$subscription['email'] = $item['email'];
+		$subscription['custom_fields'] = serialize($fields);
+		$subscription['group_id'] = $groupId;
+
+		// insert/update the user
+		$db->execute('INSERT INTO mailmotor_addresses_groups(email, custom_fields, group_id, status, subscribed_on)
+						VALUES (?, ?, ?, ?, ?)
+						ON DUPLICATE KEY UPDATE custom_fields = ?',
+						array($subscription['email'], $subscription['custom_fields'], $subscription['group_id'], 'subscribed', BackendModel::getUTCDate(),
+								$subscription['custom_fields']));
+	}
+
+
+	/**
 	 * Updates a campaign
 	 *
 	 * @return	int
@@ -1648,35 +1689,6 @@ class BackendMailmotorModel
 
 		// update all mailings that are queued and were sent
 		return (int) $db->update('mailmotor_mailings', array('status' => 'sent'), 'id IN (' . implode(',', $updateIds) . ')');
-	}
-
-
-	/**
-	 * Updates a subscriber record
-	 *
-	 * @return	bool
-	 * @param	array $item			The data to update for the campaign.
-	 * @param	mixed $groupIds		The groups to subscribe the user to.
-	 */
-	public static function updateSubscriber(array $item, $groupIds)
-	{
-		// get DB
-		$db = BackendModel::getDB(true);
-
-		// update record
-		$db->update('mailmotor_addresses', $item, 'email = ?', $item['email']);
-
-		// delete groups for this subscriber
-		$db->delete('mailmotor_addresses_groups', 'email = ?', array($item['email']));
-
-		// stop here if groups are empty
-		if(empty($groupIds)) return false;
-
-		// update the groups for this email address
-		self::updateGroups($item['email'], $groupIds);
-
-		// return true
-		return true;
 	}
 }
 

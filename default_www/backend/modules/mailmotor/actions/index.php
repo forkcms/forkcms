@@ -122,7 +122,6 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// set column functions
 		$this->dgQueuedMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
-		$this->dgQueuedMailings->setColumnFunction(array(__CLASS__, 'setFancybox'), array('[name]', BackendMailmotorModel::getMailingPreviewURL('[id]')), 'name', true);
 		$this->dgQueuedMailings->setColumnFunction('date', array('Y-m-d @ H:i', '[send_on]'), 'sent', true);
 
 		// add delete column
@@ -196,7 +195,6 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 
 		// set column functions
 		$this->dgSentMailings->setColumnFunction(array(__CLASS__, 'setCampaignLink'), array('[campaign_id]', '[campaign_name]'), 'campaign_name', true);
-		$this->dgSentMailings->setColumnFunction(array(__CLASS__, 'setFancybox'), array('[name]', BackendMailmotorModel::getMailingPreviewURL('[id]')), 'name', true);
 		$this->dgSentMailings->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
 
 		// add delete column
@@ -296,22 +294,9 @@ class BackendMailmotorIndex extends BackendBaseActionIndex
 	 * @param	int $id			The ID of the campaign.
 	 * @param	string $name	The name of the campaign.
 	 */
-	public function setCampaignLink($id, $name)
+	public static function setCampaignLink($id, $name)
 	{
 		return !empty($name) ? '<a href="' . SITE_URL . BackendModel::createURLForAction('index') . '&amp;campaign=' . $id . '">' . $name . '</a>' : ucfirst(BL::lbl('NoCampaign'));
-	}
-
-
-	/**
-	 * Returns a link to an external page that will open in a fancybox modal
-	 *
-	 * @return	string
-	 * @param	string $value		The value of the anchor element.
-	 * @param	string $url			The URL of the external page you want to open in fancybox.
-	 */
-	public function setFancybox($value, $url)
-	{
-		return '<a class="title externalPage" href="' . $url . '" title="' . $value . '">' . $value . '</a>';
 	}
 }
 
