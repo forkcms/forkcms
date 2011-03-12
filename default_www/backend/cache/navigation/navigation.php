@@ -201,7 +201,6 @@ $navigation = array(
 					'mailmotor/edit_group',
 					'mailmotor/custom_fields',
 					'mailmotor/add_custom_field',
-					'mailmotor/edit_custom_field',
 					'mailmotor/import_groups'
 				)
 			),
