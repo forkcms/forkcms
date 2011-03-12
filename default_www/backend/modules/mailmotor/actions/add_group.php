@@ -97,6 +97,9 @@ class BackendMailmotorAddGroup extends BackendBaseActionAdd
 				// insert the item
 				$id = BackendMailmotorCMHelper::insertGroup($item);
 
+				// check if all default groups were set
+				BackendMailmotorModel::checkDefaultGroups();
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('groups') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $id);
 			}

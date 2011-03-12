@@ -139,6 +139,9 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 				// update the item
 				BackendMailmotorCMHelper::updateGroup($item);
 
+				// check if all default groups were set
+				BackendMailmotorModel::checkDefaultGroups();
+
 				// everything is saved, so redirect to the overview
 				$this->redirect(BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $this->id);
 			}

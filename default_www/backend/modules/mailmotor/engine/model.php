@@ -41,6 +41,34 @@ class BackendMailmotorModel
 
 
 	/**
+	 * Returns true if every working language has a default group set, false if at least one is missing.
+	 *
+	 * @return	bool
+	 */
+	public static function checkDefaultGroups()
+	{
+		// check if the defaults were set already, and return true if they were
+		if(BackendModel::getModuleSetting('mailmotor', 'cm_groups_defaults_set')) return true;
+
+		// get all default groups
+		$defaults = self::getDefaultGroups();
+
+		// if the total amount of working languages do not add up to the total amount of default groups not all default groups were set.
+		if(count(BL::getWorkingLanguages()) === count($defaults))
+		{
+			// cm_groups_defaults_set status is now true
+			BackendModel::setModuleSetting('mailmotor', 'cm_groups_defaults_set', true);
+
+			// return true
+			return true;
+		}
+
+		// if we made it here, not all default groups were set; return false
+		return false;
+	}
+
+
+	/**
 	 * Checks the settings and optionally returns an array with warnings
 	 *
 	 * @return	array

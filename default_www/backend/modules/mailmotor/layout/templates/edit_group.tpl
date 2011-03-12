@@ -15,7 +15,7 @@
 			{$txtName} {$txtNameError}
 		</div>
 		<div class="options">
-			<p class="note">{$msgDefaultGroup|ucfirst}</p>
+			<p class="helpTxt">{$msgDefaultGroup|ucfirst}</p>
 			<ul class="inputList">
 				{iteration:default}
 				<li>
