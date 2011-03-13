@@ -51,7 +51,7 @@ class BackendURL
 	public function __construct()
 	{
 		// add ourself to the reference so other classes can retrieve us
-		Spoon::setObjectReference('url', $this);
+		Spoon::set('url', $this);
 
 		// set query-string for later use
 		$this->setQueryString($_SERVER['REQUEST_URI']);

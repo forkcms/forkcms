@@ -43,7 +43,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		parent::__construct($module);
 
 		// get url object reference
-		$url = Spoon::isObjectReference('url') ? Spoon::getObjectReference('url') : null;
+		$url = Spoon::exists('url') ? Spoon::get('url') : null;
 
 		// do the client ID check if we're not in the settings page
 		if($url != null && $url->getAction() != 'settings' && strpos($url->getQueryString(), 'link_account') === false)

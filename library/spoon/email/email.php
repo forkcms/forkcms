@@ -437,82 +437,81 @@ class SpoonEmail
 	{
 		// create boundaries
 		$uniqueId = md5(uniqid(time()));
-		$boundary = 'SEB1_'. $uniqueId;
-		$secondBoundary = 'SEB2_'. $uniqueId;
+		$boundary = 'SEB1_' . $uniqueId;
+		$secondBoundary = 'SEB2_' . $uniqueId;
 
 		// if plain body is not set, we'll strip the HTML tags from the HTML body
 		if(empty($this->content['plain'])) $this->content['plain'] = SpoonFilter::stripHTML($this->content['html'], null, true);
 
 		// build headers
-		$this->addHeader('Date: '. SpoonDate::getDate('r'));
-		$this->addHeader('From: '. $this->from['name'] .' <'. $this->from['email'] .'>');
+		$this->addHeader('Date: ' . SpoonDate::getDate('r'));
+		$this->addHeader('From: ' . $this->from['name'] . ' <' . $this->from['email'] . '>');
 
 		// check mailmethod, some media don't need these (like mail())
 		if($this->method == 'smtp')
 		{
 			// set subject
-			$this->addHeader('Subject: '. $this->subject);
+			$this->addHeader('Subject: ' . $this->subject);
 
 			// set general To: header. useful if you prefer to customize it
-			if(!empty($this->to['name'])) $this->addHeader('To: '. $this->to['name'] .' <'. $this->to['email'] .'>');
+			if(!empty($this->to['name'])) $this->addHeader('To: ' . $this->to['name'] . ' <' . $this->to['email'] . '>');
 
 			// no To: set so we add recipients to the headers
-			else $this->addHeader('To: '. $this->reformatRecipientString($this->recipients));
+			else $this->addHeader('To: ' . $this->reformatRecipientString($this->recipients));
 		}
 
 		// loop and add CCs to headers
-		if(!empty($this->CC)) $this->addHeader('cc: '. $this->reformatRecipientString($this->CC));
+		if(!empty($this->CC)) $this->addHeader('cc: ' . $this->reformatRecipientString($this->CC));
 
 		// loop and add BCCs to headers
-		if(!empty($this->BCC)) $this->addHeader('bcc: '. $this->reformatRecipientString($this->BCC));
+		if(!empty($this->BCC)) $this->addHeader('bcc: ' . $this->reformatRecipientString($this->BCC));
 
 		// add Reply-To header to headers
-		if(!empty($this->replyTo)) $this->addHeader('Reply-To: '. $this->reformatRecipientString($this->replyTo));
+		if(!empty($this->replyTo)) $this->addHeader('Reply-To: ' . $this->reformatRecipientString($this->replyTo));
 
 		// if attachments are set, change the mail content type
 		if(!empty($this->attachments)) $this->contentType = 'multipart/mixed';
 
 		// continue the rest of the headers
-		//$this->addHeader('Return-Path: '. $this->from['email']);
-		$this->addHeader('X-Priority: '. $this->priority);
+		$this->addHeader('X-Priority: ' . $this->priority);
 		$this->addHeader('X-Mailer: SpoonEmail (part of Spoon library - http://www.spoon-library.com)');
 		$this->addHeader('MIME-Version: 1.0');
-		$this->addHeader('Content-Type: '. $this->contentType .'; charset="'. $this->charset .'"; boundary="'. $boundary .'"'. self::LF);
+		$this->addHeader('Content-Type: ' . $this->contentType . '; charset="' . $this->charset . '"; boundary="' . $boundary . '"' . self::LF);
 		$this->addHeader('Importance: normal');
 		$this->addHeader('Priority: normal');
-		$this->addHeader('This is a multi-part message in MIME format.'. self::LF);
-		$this->addHeader('--'. $boundary);
+		$this->addHeader('This is a multi-part message in MIME format.' . self::LF);
+		$this->addHeader('--' . $boundary);
 
 		// attachments found
 		if(!empty($this->attachments))
 		{
 			// means we need a second boundary defined to send html/plain mails.
-			$this->addHeader('Content-Type: multipart/alternative; boundary="'. $secondBoundary .'"'. self::LF);
-			$this->addHeader('--'. $secondBoundary);
-			$this->addHeader('Content-Type: text/plain; charset="'. $this->charset .'"');
+			$this->addHeader('Content-Type: multipart/alternative; boundary="' . $secondBoundary . '"' . self::LF);
+			$this->addHeader('--' . $secondBoundary);
+			$this->addHeader('Content-Type: text/plain; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit'. self::LF);
+			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
 			$this->addHeader($this->content['plain'] . self::LF);
-			$this->addHeader('--'. $secondBoundary);
-			$this->addHeader('Content-Type: text/html; charset="'. $this->charset .'"');
+			$this->addHeader('--' . $secondBoundary);
+			$this->addHeader('Content-Type: text/html; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit'. self::LF);
+			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
 			$this->addHeader($this->content['html'] . self::LF);
-			$this->addHeader('--'. $secondBoundary .'--');
+			$this->addHeader('--' . $secondBoundary . '--');
 		}
 
 		// no attachments
 		else
 		{
 			// continue the rest of the headers
-			$this->addHeader('Content-Type: text/plain; charset="'. $this->charset .'"');
+			$this->addHeader('Content-Type: text/plain; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit'. self::LF);
+			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
 			$this->addHeader($this->content['plain'] . self::LF);
-			$this->addHeader('--'. $boundary);
-			$this->addHeader('Content-Type: text/html; charset="'. $this->charset .'"');
+			$this->addHeader('--' . $boundary);
+			$this->addHeader('Content-Type: text/html; charset="' . $this->charset . '"');
 			$this->addHeader('Content-Disposition: inline');
-			$this->addHeader('Content-Transfer-Encoding: 8bit'. self::LF);
+			$this->addHeader('Content-Transfer-Encoding: 8bit' . self::LF);
 			$this->addHeader($this->content['html'] . self::LF);
 		}
 
@@ -523,16 +522,16 @@ class SpoonEmail
 			foreach($this->attachments as $attachment)
 			{
 				// set attachment headers
-				$this->addHeader('--'. $boundary);
-				$this->addHeader('Content-Type: '. $attachment['type'] .'; name="'. $attachment['name'] .'"');
-				$this->addHeader('Content-Transfer-Encoding: '. $attachment['encoding']);
-				$this->addHeader('Content-Disposition: '. $attachment['disposition'] .'; filename="'. $attachment['name'] .'"' . self::LF);
+				$this->addHeader('--' . $boundary);
+				$this->addHeader('Content-Type: ' . $attachment['type'] . '; name="' . $attachment['name'] . '"');
+				$this->addHeader('Content-Transfer-Encoding: ' . $attachment['encoding']);
+				$this->addHeader('Content-Disposition: ' . $attachment['disposition'] . '; filename="' . $attachment['name'] . '"' . self::LF);
 				$this->addHeader($attachment['data'] . self::LF);
 			}
 		}
 
 		// final boundary, closes the headers
-		$this->headers .= '--'. $boundary .'--';
+		$this->headers .= '--' . $boundary . '--';
 
 		// return headers string
 		return $this->headers;
@@ -601,7 +600,7 @@ class SpoonEmail
 		if(SpoonFilter::isFilename($filename) && preg_match('/^[\S]+\.\w{2,3}[\S]$/', $filename) && !strstr($filename, ' '))
 		{
 			// check if template exists
-			if(!SpoonFile::exists($content)) throw new SpoonEmailException('Template not found. ('.$content.')');
+			if(!SpoonFile::exists($content)) throw new SpoonEmailException('Template not found. (' . $content . ')');
 
 			// store content
 			$this->content[$type] = (string) $this->getTemplateContent($content, $variables);
@@ -611,7 +610,7 @@ class SpoonEmail
 		else
 		{
 			// set the name for the temporary file
-			$tempFile = $this->compileDirectory .'/'. md5(uniqid()) .'.tpl';
+			$tempFile = $this->compileDirectory . '/' . md5(uniqid()) . '.tpl';
 
 			// write temp file
 			SpoonFile::setContent($tempFile, $content);
@@ -643,13 +642,13 @@ class SpoonEmail
 			foreach($recipients as $recipient)
 			{
 				// reformat to a proper string
-				$stack = $recipient['name'] .' <'. $recipient['email'] .'>';
+				$stack = $recipient['name'] . ' <' . $recipient['email'] . '>';
 
 				// just the email will do if no name is set
 				if(empty($recipient['name'])) $stack = $recipient['email'];
 
 				// add a comma as separator and store in new recipients stack
-				$string .= $stack .', ';
+				$string .= $stack . ', ';
 			}
 
 			// return the reformatted string

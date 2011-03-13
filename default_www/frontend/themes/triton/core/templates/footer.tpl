@@ -18,6 +18,3 @@
 		</nav>
 	</div>
 </footer>
-
-{* Site wide HTML *}
-{$siteHTMLFooter}

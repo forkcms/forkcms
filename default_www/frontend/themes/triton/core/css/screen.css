@@ -449,7 +449,7 @@ a.linkedImage {
 
 #main {
 	position: relative;
-	padding-top: 30px;
+	padding-top: 20px;
 }
 
 #main:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; }
@@ -750,6 +750,7 @@ a.linkedImage {
 		font-size: 11px;
 		background: #fff;
 		padding: 10px;
+		margin-bottom: 12px;
 		border: 1px solid #ddd;
 		-moz-border-radius: 5px;
 		-webkit-border-radius: 5px;
@@ -760,13 +761,13 @@ a.linkedImage {
 	.ie6 .pageNavigation, .ie7 .pageNavigation { zoom: 1; }
 
 		.pageNavigation .previousLink {
-			float: left;
+			float: left !important;
 			width: 48%;
 			text-align: left;
 		}
 
 		.pageNavigation .nextLink {
-			float: right;
+			float: right !important;
 			width: 48%;
 			text-align: right;
 		}
@@ -1819,11 +1820,11 @@ a.button:visited {
 
 @font-face {
 	font-family: 'Qlassik bold';
-	src: url('../font/qlassikbold.eot');
-	src: url('../font/qlassikbold.eot?iefix') format('eot'),
-	     url('../font/qlassikbold.woff') format('woff'),
-	     url('../font/qlassikbold.ttf') format('truetype'),
-	     url('../font/qlassikbold.svg#webfont') format('svg');
+	src: url('../fonts/qlassikbold.eot');
+	src: url('../fonts/qlassikbold.eot?iefix') format('eot'),
+	     url('../fonts/qlassikbold.woff') format('woff'),
+	     url('../fonts/qlassikbold.ttf') format('truetype'),
+	     url('../fonts/qlassikbold.svg#webfont') format('svg');
 	font-weight: normal;
 	font-style: normal;
 }

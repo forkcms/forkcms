@@ -123,7 +123,7 @@ class SpoonThumbnail
 		$this->strict = (bool) $strict;
 
 		// validate
-		if(!SpoonFile::exists($filename)) throw new SpoonThumbnailException('The sourcefile "'. $filename .'" couldn\'t be found.');
+		if(!SpoonFile::exists($filename)) throw new SpoonThumbnailException('The sourcefile "' . $filename . '" couldn\'t be found.');
 
 		// set properties
 		$this->filename = $filename;
@@ -179,7 +179,7 @@ class SpoonThumbnail
 		$imageProperties = @getimagesize($this->filename);
 
 		// validate imageProperties
-		if($imageProperties === false) throw new SpoonThumbnailException('The sourcefile "'. $this->filename .'" could not be found.');
+		if($imageProperties === false) throw new SpoonThumbnailException('The sourcefile "' . $this->filename . '" could not be found.');
 
 		// set current dimensions
 		$currentWidth = (int) $imageProperties[0];
@@ -248,7 +248,7 @@ class SpoonThumbnail
 		if($imageProperties === false)
 		{
 			// strict?
-			if($this->strict) throw new SpoonThumbnailException('The sourcefile "'. $this->filename .'" could not be found.');
+			if($this->strict) throw new SpoonThumbnailException('The sourcefile "' . $this->filename . '" could not be found.');
 			return false;
 		}
 
@@ -442,7 +442,7 @@ class SpoonThumbnail
 			break;
 
 			default:
-				throw new SpoonThumbnailException('The file you specified "'. $currentMime .'" is not supported. Only gif, jpeg, jpg and png are supported.');
+				throw new SpoonThumbnailException('The file you specified "' . $currentMime . '" is not supported. Only gif, jpeg, jpg and png are supported.');
 		}
 
 		// validate image
@@ -549,7 +549,7 @@ class SpoonThumbnail
 			break;
 
 			default:
-				throw new SpoonThumbnailException('The file you specified "'. $currentMime .'" is not supported. Only gif, jpeg, jpg and png are supported.');
+				throw new SpoonThumbnailException('The file you specified "' . $currentMime . '" is not supported. Only gif, jpeg, jpg and png are supported.');
 		}
 
 		// current width is larger then current height
@@ -725,14 +725,14 @@ class SpoonThumbnail
 		// validate horizontal
 		if(SpoonFilter::getValue($horizontal, array('left', 'center', 'right'), '') == '')
 		{
-			if($this->strict) throw new SpoonThumbnailException('The horizontal crop-position "'. $horizontal .'" isn\'t valid.');
+			if($this->strict) throw new SpoonThumbnailException('The horizontal crop-position "' . $horizontal . '" isn\'t valid.');
 			return false;
 		}
 
 		// validte vertical
 		if(SpoonFilter::getValue($vertical, array('top', 'middle', 'bottom'), '') == '')
 		{
-			if($this->strict) throw new SpoonThumbnailException('The vertical crop-position "'. $vertical .'" isn\'t valid.');
+			if($this->strict) throw new SpoonThumbnailException('The vertical crop-position "' . $vertical . '" isn\'t valid.');
 			return false;
 		}
 

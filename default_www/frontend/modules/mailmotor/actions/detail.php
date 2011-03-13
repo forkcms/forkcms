@@ -62,7 +62,7 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 
 		// overwrite the template path
 		$this->setOverwrite(true);
-		$this->setTemplatePath(FRONTEND_MODULES_PATH .'/'. $this->getModule() .'/layout/templates/detail.tpl');
+		$this->setTemplatePath(FRONTEND_MODULES_PATH . '/' . $this->getModule() . '/layout/templates/detail.tpl');
 
 		// parse
 		$this->parse();
@@ -119,7 +119,7 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 				foreach($matches[0] as $match)
 				{
 					// replace the match
-					$content = str_replace($match, '<unsubscribe>'. strip_tags($match) .'</unsubscribe>', $content);
+					$content = str_replace($match, '<unsubscribe>' . strip_tags($match) . '</unsubscribe>', $content);
 				}
 			}
 
@@ -130,7 +130,7 @@ class FrontendMailmotorDetail extends FrontendBaseBlock
 				foreach($matches[0] as $match)
 				{
 					// replace the match
-					$content = str_replace('href="#', 'href="'. FrontendMailmotorModel::getMailingPreviewURL($this->id, $this->type), $content);
+					$content = str_replace('href="#', 'href="' . FrontendMailmotorModel::getMailingPreviewURL($this->id, $this->type), $content);
 				}
 			}
 		}

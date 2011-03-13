@@ -151,34 +151,34 @@ class SpoonFeedRSSItem
 	public function buildXML()
 	{
 		// init xmlstring
-		$XML = '<item>'."\n";
+		$XML = '<item>' . "\n";
 
 		// insert title
-		$XML .= '	<title><![CDATA['. $this->getTitle() .']]></title>'."\n";
+		$XML .= '	<title><![CDATA[' . $this->getTitle() . ']]></title>' . "\n";
 
 		// insert link
-		$XML .= '	<link>'. $this->getLink() .'</link>'."\n";
+		$XML .= '	<link>' . $this->getLink() . '</link>' . "\n";
 
 		// insert description
-		$XML .= '	<description>'."\n";
-		$XML .= '		<![CDATA['."\n";
-		$XML .= '			'. $this->getDescription() ."\n";
-		$XML .= '		]]>'."\n";
-		$XML .= '	</description>'."\n";
+		$XML .= '	<description>' . "\n";
+		$XML .= '		<![CDATA[' . "\n";
+		$XML .= '			' . $this->getDescription() . "\n";
+		$XML .= '		]]>' . "\n";
+		$XML .= '	</description>' . "\n";
 
 		// insert item publication date
 		$publicationDate = $this->getPublicationDate();
-		if($publicationDate != '') $XML .= '	<pubDate>'. date('r', $publicationDate) .'</pubDate>'."\n";
+		if($publicationDate != '') $XML .= '	<pubDate>' . date('r', $publicationDate) . '</pubDate>' . "\n";
 
 		// insert author
 		$author = $this->getAuthor();
-		if($author != '') $XML .= '	<author><![CDATA['. $author .']]></author>'."\n";
+		if($author != '') $XML .= '	<author><![CDATA[' . $author . ']]></author>' . "\n";
 
 		// insert source
 		$source = $this->getSource();
 		if(!empty($source))
 		{
-			$XML .= '	<source url="'. $source['url'] .'"><![CDATA['. $source['name'] .']]></source>'."\n";
+			$XML .= '	<source url="' . $source['url'] . '"><![CDATA[' . $source['name'] . ']]></source>' . "\n";
 		}
 
 		// insert categories
@@ -187,8 +187,8 @@ class SpoonFeedRSSItem
 		{
 			foreach($categories as $category)
 			{
-				if(isset($category['domain'])) $XML .= '	<category domain="'. $category['domain'] .'"><![CDATA['. $category['name'] .']]></category>'."\n";
-				else $XML .= '	<category><![CDATA['. $category['name'] .']]></category>'."\n";
+				if(isset($category['domain'])) $XML .= '	<category domain="' . $category['domain'] . '"><![CDATA[' . $category['name'] . ']]></category>' . "\n";
+				else $XML .= '	<category><![CDATA[' . $category['name'] . ']]></category>' . "\n";
 			}
 		}
 
@@ -200,22 +200,22 @@ class SpoonFeedRSSItem
 			$isPermaLink = ($guid['isPermaLink']) ? 'true' : 'false';
 
 			// build xml
-			$XML .= '	<guid isPermaLink="'. $isPermaLink .'">'. $guid['url'] .'</guid>'."\n";
+			$XML .= '	<guid isPermaLink="' . $isPermaLink . '">' . $guid['url'] . '</guid>' . "\n";
 		}
 
 		// insert enclosure
 		$enclosure = $this->getEnclosure();
 		if(!empty($enclosure))
 		{
-			if(isset($enclosure['url']) && isset($enclosure['length']) && isset($enclosure['type'])) $XML .= '	<enclosure url="'. $enclosure['url'] .'" length="'. $enclosure['length'] .'" type="'. $enclosure['type'] .'" />'."\n";
+			if(isset($enclosure['url']) && isset($enclosure['length']) && isset($enclosure['type'])) $XML .= '	<enclosure url="' . $enclosure['url'] . '" length="' . $enclosure['length'] . '" type="' . $enclosure['type'] . '" />' . "\n";
 		}
 
 		// insert comments
 		$commentsLink = $this->getCommentsLink();
-		if($commentsLink != '') $XML .= '	<comments>'. $commentsLink .'</comments>'."\n";
+		if($commentsLink != '') $XML .= '	<comments>' . $commentsLink . '</comments>' . "\n";
 
 		// close item
-		$XML .= '	</item>'."\n";
+		$XML .= '	</item>' . "\n";
 
 		// return
 		return $XML;
@@ -511,7 +511,7 @@ class SpoonFeedRSSItem
 		$link = (string) $link;
 
 		// validate
-		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid comments link.');
+		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This (' . $link . ') isn\'t a valid comments link.');
 
 		// set property
 		$this->commentsLink = $link;
@@ -544,7 +544,7 @@ class SpoonFeedRSSItem
 		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\'t a valid URL for an enclosure.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This (' . $URL . ') isn\'t a valid URL for an enclosure.');
 
 		// create array
 		$enclosure['url'] = $URL;
@@ -569,7 +569,7 @@ class SpoonFeedRSSItem
 		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\t a valid URL for guid.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This (' . $URL . ') isn\t a valid URL for guid.');
 
 		// create array
 		$guid['url'] = $URL;
@@ -592,7 +592,7 @@ class SpoonFeedRSSItem
 		$link = (string) $link;
 
 		// validate
-		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This ('. $link .') isn\'t a valid link.');
+		if(!SpoonFilter::isURL($link)) throw new SpoonFeedException('This (' . $link . ') isn\'t a valid link.');
 
 		// set property
 		$this->link = $link;
@@ -624,7 +624,7 @@ class SpoonFeedRSSItem
 		$URL = (string) $URL;
 
 		// validate
-		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This ('. $URL .') isn\'t a valid URL for a source.');
+		if(!SpoonFilter::isURL($URL)) throw new SpoonFeedException('This (' . $URL . ') isn\'t a valid URL for a source.');
 
 		// create array
 		$source['name'] = (string) $name;

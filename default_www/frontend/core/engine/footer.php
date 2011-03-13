@@ -31,17 +31,17 @@ class FrontendFooter extends FrontendBaseObject
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
 		{
 			// add Facebook container
-			$siteHTMLFooter .= "\n" . '<div id="fb-root"></div>'."\n";
+			$siteHTMLFooter .= "\n" . '<div id="fb-root"></div>' . "\n";
 			// add facebook JS
-			$siteHTMLFooter .= '<script>'."\n";
+			$siteHTMLFooter .= '<script>' . "\n";
 			if(FrontendModel::getModuleSetting('core', 'facebook_app_id', null) !== null)
 			{
-				$siteHTMLFooter .= '	window.fbAsyncInit = function() { FB.init({appId: \''. FrontendModel::getModuleSetting('core', 'facebook_app_id', null) .'\', status: true, cookie: true, xfbml: true}); };'."\n";
+				$siteHTMLFooter .= '	window.fbAsyncInit = function() { FB.init({appId: \'' . FrontendModel::getModuleSetting('core', 'facebook_app_id', null) . '\', status: true, cookie: true, xfbml: true}); };' . "\n";
 			}
-			$siteHTMLFooter .= '	(function() {'."\n";
-			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/'. strtolower(FRONTEND_LANGUAGE) .'_'. strtoupper(FRONTEND_LANGUAGE) .'/all.js#xfbml=1";'."\n";
-			$siteHTMLFooter .= '		document.getElementById(\'fb-root\').appendChild(e);'."\n";
-			$siteHTMLFooter .= '	}());'."\n";
+			$siteHTMLFooter .= '	(function() {' . "\n";
+			$siteHTMLFooter .= '		var e = document.createElement(\'script\'); e.async = true; e.src = document.location.protocol + "//connect.facebook.net/' . strtolower(FRONTEND_LANGUAGE) . '_' . strtoupper(FRONTEND_LANGUAGE) . '/all.js#xfbml=1";' . "\n";
+			$siteHTMLFooter .= '		document.getElementById(\'fb-root\').appendChild(e);' . "\n";
+			$siteHTMLFooter .= '	}());' . "\n";
 			$siteHTMLFooter .= '</script>';
 		}
 

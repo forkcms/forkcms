@@ -77,20 +77,20 @@ class SpoonFormInput extends SpoonFormAttributes
 		if($this->errors != '')
 		{
 			// class & classOnError defined
-			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="'. $this->attributes['class'] .' '. $this->classError .'"';
+			if($this->attributes['class'] != '' && $this->classError != '') $value = ' class="' . $this->attributes['class'] . ' ' . $this->classError . '"';
 
 			// only class defined
-			elseif($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			elseif($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 
 			// only error defined
-			elseif($this->classError != '') $value = ' class="'. $this->classError .'"';
+			elseif($this->classError != '') $value = ' class="' . $this->classError . '"';
 		}
 
 		// no errors
 		else
 		{
 			// class defined
-			if($this->attributes['class'] != '') $value = ' class="'. $this->attributes['class'] .'"';
+			if($this->attributes['class'] != '') $value = ' class="' . $this->attributes['class'] . '"';
 		}
 
 		return $value;

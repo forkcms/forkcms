@@ -41,8 +41,8 @@ class FrontendForm extends SpoonForm
 	public function __construct($name, $action = null, $method = 'post', $hash = null, $useToken = true)
 	{
 		// init some properties
-		$this->URL = Spoon::getObjectReference('url');
-		$this->header = Spoon::getObjectReference('header');
+		$this->URL = Spoon::get('url');
+		$this->header = Spoon::get('header');
 
 		// redefine
 		$name = (string) $name;
@@ -50,7 +50,7 @@ class FrontendForm extends SpoonForm
 		$useToken = (bool) $useToken;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/'. str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
+		$action = ($action === null) ? '/' . str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);

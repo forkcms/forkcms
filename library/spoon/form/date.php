@@ -61,7 +61,7 @@ class SpoonFormDate extends SpoonFormInput
 		$this->attributes['name'] = (string) $name;
 
 		/**
-		 * The input mask defines the maxlength attribute, therefor
+		 * The input mask defines the maxlength attribute, therefore
 		 * this needs to be set anyhow. The mask needs to be updated
 		 * before the value is set, or the old mask (in case it differs)
 		 * will automatically be used.
@@ -281,7 +281,7 @@ class SpoonFormDate extends SpoonFormInput
 					}
 
 					// invalid year
-					if(!checkdate(1, 1, '19'. $year))
+					if(!checkdate(1, 1, '19' . $year))
 					{
 						if($error !== null) $this->setError($error);
 						return false;
@@ -366,16 +366,16 @@ class SpoonFormDate extends SpoonFormInput
 		if($this->attributes['name'] == '') throw new SpoonFormException('A name is required for a date field. Please provide a valid name.');
 
 		// start html generation
-		$output = '<input type="text" value="'. $this->getValue() .'"';
+		$output = '<input type="text" value="' . $this->getValue() . '"';
 
 		// add attributes
-		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) .' />';
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) . ' />';
 
 		// template
 		if($template !== null)
 		{
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('txt' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
+			$template->assign('txt' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
 		}
 
 		return $output;

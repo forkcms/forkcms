@@ -68,9 +68,9 @@ class BackendBaseAction
 	public function __construct()
 	{
 		// get objects from the reference so they are accessable from the action-object
-		$this->tpl = Spoon::getObjectReference('template');
-		$this->URL = Spoon::getObjectReference('url');
-		$this->header = Spoon::getObjectReference('header');
+		$this->tpl = Spoon::get('template');
+		$this->URL = Spoon::get('url');
+		$this->header = Spoon::get('header');
 
 		// store the current module and action (we grab them from the URL)
 		$this->setModule($this->URL->getModule());
@@ -1002,8 +1002,8 @@ class BackendBaseWidget
 	public function __construct()
 	{
 		// get objects from the reference so they are accessable from the action-object
-		$this->tpl = Spoon::getObjectReference('template');
-		$this->header = Spoon::getObjectReference('header');
+		$this->tpl = Spoon::get('template');
+		$this->header = Spoon::get('header');
 	}
 
 

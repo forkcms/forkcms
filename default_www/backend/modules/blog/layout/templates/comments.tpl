@@ -54,13 +54,21 @@
 	</div>
 </div>
 
-<div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+<div id="confirmDeletePublished" title="{$lblDelete|ucfirst}?" style="display: none;">
 	<p>{$msgConfirmMassDelete}</p>
 </div>
-<div id="confirmSpam" title="{$lblSpam|ucfirst}?" style="display: none;">
+<div id="confirmSpamPublished" title="{$lblSpam|ucfirst}?" style="display: none;">
 	<p>{$msgConfirmMassSpam}</p>
 </div>
-
+<div id="confirmDeleteModeration" title="{$lblDelete|ucfirst}?" style="display: none;">
+	<p>{$msgConfirmMassDelete}</p>
+</div>
+<div id="confirmSpamModeration" title="{$lblSpam|ucfirst}?" style="display: none;">
+	<p>{$msgConfirmMassSpam}</p>
+</div>
+<div id="confirmDeleteSpam" title="{$lblDelete|ucfirst}?" style="display: none;">
+	<p>{$msgConfirmMassDelete}</p>
+</div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/footer.tpl}

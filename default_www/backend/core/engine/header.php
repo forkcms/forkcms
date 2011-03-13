@@ -52,11 +52,11 @@ class BackendHeader
 	public function __construct()
 	{
 		// store in reference so we can access it from everywhere
-		Spoon::setObjectReference('header', $this);
+		Spoon::set('header', $this);
 
 		// grab from the reference
-		$this->URL = Spoon::getObjectReference('url');
-		$this->tpl = Spoon::getObjectReference('template');
+		$this->URL = Spoon::get('url');
+		$this->tpl = Spoon::get('template');
 	}
 
 

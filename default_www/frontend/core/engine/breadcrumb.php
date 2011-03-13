@@ -31,7 +31,7 @@ class FrontendBreadcrumb extends FrontendBaseObject
 		parent::__construct();
 
 		// add into the reference
-		Spoon::setObjectReference('breadcrumb', $this);
+		Spoon::set('breadcrumb', $this);
 
 		// get more information for the homepage
 		$homeInfo = FrontendNavigation::getPageInfo(1);

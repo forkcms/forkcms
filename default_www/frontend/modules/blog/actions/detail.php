@@ -112,8 +112,8 @@ class FrontendBlogDetail extends FrontendBaseBlock
 		if(empty($this->record)) $this->redirect(FrontendNavigation::getURL(404));
 
 		// overwrite URLs
-		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') .'/'. $this->record['category_url'];
-		$this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $this->record['url'];
+		$this->record['category_full_url'] = FrontendNavigation::getURLForBlock('blog', 'category') . '/' . $this->record['category_url'];
+		$this->record['full_url'] = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
 		$this->record['allow_comments'] = ($this->record['allow_comments'] == 'Y');
 
 		// get tags
@@ -139,7 +139,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	{
 		// create form
 		$this->frm = new FrontendForm('comment');
-		$this->frm->setAction($this->frm->getAction() .'#'. FL::act('Comment'));
+		$this->frm->setAction($this->frm->getAction() . '#' . FL::act('Comment'));
 
 		// init vars
 		$author = (SpoonCookie::exists('comment_author')) ? SpoonCookie::get('comment_author') : null;
@@ -162,23 +162,23 @@ class FrontendBlogDetail extends FrontendBaseBlock
 	private function parse()
 	{
 		// get RSS-link
-		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_'. FRONTEND_LANGUAGE);
+		$rssLink = FrontendModel::getModuleSetting('blog', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('blog', 'rss');
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('blog', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('blog', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
 
 		// get RSS-link for the comments
-		$rssCommentsLink = FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') .'/'. $this->record['url'];
+		$rssCommentsLink = FrontendNavigation::getURLForBlock('blog', 'article_comments_rss') . '/' . $this->record['url'];
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) .'" href="'. $rssCommentsLink .'" />');
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) . '" href="' . $rssCommentsLink . '" />');
 
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
 		{
 			// default image
-			$image = SITE_URL .'/facebook.png';
+			$image = SITE_URL . '/facebook.png';
 
 			// try to get an image in the content
 			$matches = array();
@@ -191,14 +191,14 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
 			}
 
-			$meta = '<!-- openGraph meta-data -->'."\n";
-			$meta .= '<meta property="og:title" content="'. $this->record['title'] .'" />'."\n";
-			$meta .= '<meta property="og:type" content="article" />'."\n";
-			$meta .= '<meta property="og:image" content="'. $image .'" />'."\n";
-			$meta .= '<meta property="og:url" content="'. SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $this->record['url'] .'" />'."\n";
-			$meta .= '<meta property="og:site_name" content="'. FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) .'" />'."\n";
-			$meta .= '<meta property="fb:admins" content="'. FrontendModel::getModuleSetting('core', 'facebook_admin_ids') .'" />'."\n";
-			$meta .= '<meta property="og:description" content="'. $this->record['title'] .'" />'."\n";
+			$meta = '<!-- openGraph meta-data -->' . "\n";
+			$meta .= '<meta property="og:title" content="' . $this->record['title'] . '" />' . "\n";
+			$meta .= '<meta property="og:type" content="article" />' . "\n";
+			$meta .= '<meta property="og:image" content="' . $image . '" />' . "\n";
+			$meta .= '<meta property="og:url" content="' . SITE_URL . FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'] . '" />' . "\n";
+			$meta .= '<meta property="og:site_name" content="' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) . '" />' . "\n";
+			$meta .= '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids') . '" />' . "\n";
+			$meta .= '<meta property="og:description" content="' . $this->record['title'] . '" />' . "\n";
 
 			// add
 			$this->header->addMetaCustom($meta);
@@ -261,10 +261,10 @@ class FrontendBlogDetail extends FrontendBaseBlock
 			$this->frm->cleanupFields();
 
 			// does the key exists?
-			if(SpoonSession::exists('blog_comment_'. $this->record['id']))
+			if(SpoonSession::exists('blog_comment_' . $this->record['id']))
 			{
 				// calculate difference
-				$diff = time() - (int) SpoonSession::get('blog_comment_'. $this->record['id']);
+				$diff = time() - (int) SpoonSession::get('blog_comment_' . $this->record['id']);
 
 				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
 				if($diff < 10 && $diff != 0) $this->frm->getField('message')->addError(FL::err('CommentTimeout'));
@@ -307,7 +307,7 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				$comment['data'] = serialize(array('server' => $_SERVER));
 
 				// get URL for article
-				$permaLink = FrontendNavigation::getURLForBlock('blog', 'detail') .'/'. $this->record['url'];
+				$permaLink = FrontendNavigation::getURLForBlock('blog', 'detail') . '/' . $this->record['url'];
 				$redirectLink = $permaLink;
 
 				// is moderation enabled
@@ -330,15 +330,15 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)
 				{
-					if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::act('Comment');
-					if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::act('Comment');
-					if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
+					if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#' . FL::act('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#' . FL::act('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-' . $comment['id'];
 				}
 				else
 				{
-					if($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#'.FL::act('Comment');
-					if($comment['status'] == 'spam') $redirectLink .= '&comment=spam#'.FL::act('Comment');
-					if($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-'. $comment['id'];
+					if($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#' . FL::act('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '&comment=spam#' . FL::act('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-' . $comment['id'];
 				}
 
 				// set title
@@ -349,15 +349,15 @@ class FrontendBlogDetail extends FrontendBaseBlock
 				FrontendBlogModel::notifyAdmin($comment);
 
 				// store timestamp in session so we can block excesive usage
-				SpoonSession::set('blog_comment_'. $this->record['id'], time());
+				SpoonSession::set('blog_comment_' . $this->record['id'], time());
 
 				// store author-data in cookies
 				try
 				{
 					// set cookies
-					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
+					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
+					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
 				}
 				catch(Exception $e)
 				{
