@@ -75,7 +75,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 		$this->frm = new BackendForm('edit');
 
 		// add "no default group" option for radiobuttons
-		$chkDefaultForLanguageValues[] = array('label' => ucfirst(BL::lbl('NoDefault')), 'value' => '0');
+		$chkDefaultForLanguageValues[] = array('label' => BL::msg('NoDefault'), 'value' => '0');
 
 		// set default for language radiobutton values
 		foreach(BL::getWorkingLanguages() as $key => $value)

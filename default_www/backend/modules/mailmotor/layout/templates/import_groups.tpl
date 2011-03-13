@@ -4,7 +4,7 @@
 {form:import}
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblImportGroups|ucfirst}</h3>
+			<h3>{$msgImportGroupsTitle}</h3>
 		</div>
 		<div class="options">
 			<p>{$msgImportGroups}:</p>
@@ -18,7 +18,7 @@
 
 	<div class="fullwidthOptions">
 		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'import_groups'}" class="submitButton button inputButton button mainButton"><span>{$lblImportGroups|ucfirst}</span></a>
+			<a href="{$var|geturl:'import_groups'}" class="submitButton button inputButton button mainButton"><span>{$msgImportGroupsTitle}</span></a>
 		</div>
 	</div>
 {/form:import}

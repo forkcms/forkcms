@@ -12,7 +12,7 @@
 
 {option:noDefaultsSet}
 <div class="generalMessage infoMessage content">
-	<p><strong>{$lblNoDefaultsSet|ucfirst}</strong></p>
+	<p><strong>{$msgNoDefaultsSetTitle}</strong></p>
 	<p>{$msgNoDefaultsSet}</p>
 </div>
 {/option:noDefaultsSet}

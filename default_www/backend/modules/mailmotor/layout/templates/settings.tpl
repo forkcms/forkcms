@@ -71,7 +71,7 @@
 			{option:userIsGod}
 			<div class="box horizontal">
 				<div class="heading">
-					<h3>{$lblPricePerEmail|ucfirst}</h3>
+					<h3>{$lblPricePerSentMailing|ucfirst}</h3>
 				</div>
 
 				<div class="options">

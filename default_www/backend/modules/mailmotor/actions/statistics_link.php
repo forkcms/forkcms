@@ -113,6 +113,9 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGrid($source);
 		$this->datagrid->setColumnsHidden(array('list_id', 'url'));
 
+		// set header labels
+		$this->datagrid->setHeaderLabels(array('ip' => BL::lbl('IpAddress')));
+
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('email'), 'email');
 
