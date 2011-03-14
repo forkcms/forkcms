@@ -495,7 +495,7 @@ class FrontendHeader extends FrontendBaseObject
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
 		{
 			// add Facebook tag
-			$metaCustom .= "\n" . '<meta property="fb:admins" content="'. FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) .'" />' . "\n";
+			$metaCustom .= "\n" . '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) . '" />' . "\n";
 		}
 		$this->tpl->assign('metaCustom', $metaCustom);
 

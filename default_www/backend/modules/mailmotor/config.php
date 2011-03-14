@@ -46,11 +46,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$url = Spoon::exists('url') ? Spoon::get('url') : null;
 
 		// do the client ID check if we're not in the settings page
-		if($url != null &&
-			$url->getAction() != 'settings' &&
-			$url->getAction() != 'import_groups' &&
-			strpos($url->getQueryString(), 'link_account') === false &&
-			strpos($url->getQueryString(), 'load_client_info') === false)
+		if($url != null && $url->getAction() != 'settings' && $url->getAction() != 'import_groups' && strpos($url->getQueryString(), 'link_account') === false && strpos($url->getQueryString(), 'load_client_info') === false)
 		{
 			// check for CM account
 			$this->checkForAccount();
@@ -108,6 +104,21 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 
 
 	/**
+	 * Checks for external groups, and parses a message to import them.
+	 *
+	 * @return	mixed	Returns false if the user already made groups.
+	 */
+	private function checkForExternalGroups()
+	{
+		// get all CM groups
+		$externalGroups = BackendMailmotorCMHelper::getCM()->getListsByClientId();
+
+		// return the result
+		return (!empty($externalGroups));
+	}
+
+
+	/**
 	 * Checks if any groups are made yet. Depending on the client that is linked to Fork, it will creates default groups if none were found in CampaignMonitor.
 	 * If they were, the user is presented with an overview to import all groups and their subscribers in Fork.
 	 *
@@ -150,6 +161,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 				}
 				catch(CampaignMonitorException $e)
 				{
+					// ignore
 				}
 			}
 		}
@@ -157,21 +169,6 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		// we have groups set, and default groups chosen
 		BackendModel::setModuleSetting('mailmotor', 'cm_groups_set', true);
 		BackendModel::setModuleSetting('mailmotor', 'cm_groups_defaults_set', true);
-	}
-
-
-	/**
-	 * Checks for external groups, and parses a message to import them.
-	 *
-	 * @return	mixed	Returns false if the user already made groups.
-	 */
-	private function checkForExternalGroups()
-	{
-		// get all CM groups
-		$externalGroups = BackendMailmotorCMHelper::getCM()->getListsByClientId();
-
-		// return the result
-		return (!empty($externalGroups));
 	}
 
 
