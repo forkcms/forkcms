@@ -203,7 +203,7 @@ class FrontendMailmotorCMHelper
 			$subscriber['unsubscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
 			// unsubscribe the user
-			$db->update('mailmotor_addresses_groups', $subscriber, 'email = ?', $email);
+			$db->update('mailmotor_addresses_groups', $subscriber, 'email = ? AND group_id = ?', array($email, $groupId));
 
 			// user unsubscribed
 			return true;

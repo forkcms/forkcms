@@ -74,7 +74,7 @@
 													</tr>
 													<tr>
 														<td>
-															<p class="small">Een website onderhouden moet makkelijk zijn. Zonder meer. Daarom bouwden we zelf ons <a href="#">Fork CMS</a>. Nog elke dag denken we hard na over de interface. Die is logisch, intu[iuml]tief en zelfs simpel. Geavanceerde opties zijn subtiel aanwezig en verstoren het overzicht niet.</p>
+															<p class="small">Een website onderhouden moet makkelijk zijn. Zonder meer. Daarom bouwden we zelf ons <a href="#">Fork CMS</a>. Nog elke dag denken we hard na over de interface. Die is logisch, intu[ent=iuml]tief en zelfs simpel. Geavanceerde opties zijn subtiel aanwezig en verstoren het overzicht niet.</p>
 														</td>
 													</tr>
 												</table>

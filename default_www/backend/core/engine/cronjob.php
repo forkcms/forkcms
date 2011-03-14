@@ -50,6 +50,41 @@ class BackendCronjob
 	 */
 	public function __construct()
 	{
+		// because some cronjobs will be run on the command line we should pass parameters
+		if(isset($_SERVER['argv']))
+		{
+			// init var
+			$first = true;
+
+			// loop all passes arguments
+			foreach($_SERVER['argv'] as $parameter)
+			{
+				// ignore first, because this is the scripts name.
+				if($first)
+				{
+					// reset
+					$first = false;
+
+					// skip
+					continue;
+				}
+
+				// split into chunks
+				$chunks = explode('=', $parameter, 2);
+
+				// valid paramters?
+				if(count($chunks) == 2)
+				{
+					// build key and value
+					$key = trim($chunks[0], '--');
+					$value = $chunks[1];
+
+					// set in GET
+					if($key != '' && $value != '') $_GET[$key] = $value;
+				}
+			}
+		}
+
 		// define the Named Application
 		if(!defined('NAMED_APPLICATION')) define('NAMED_APPLICATION', 'backend');
 

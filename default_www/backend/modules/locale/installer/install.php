@@ -108,6 +108,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EmailIsRequired', 'Gelieve een e-mailadres in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EmailIsUnknown', 'Dit e-mailadres zit niet in onze database.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EndDateIsInvalid', 'Ongeldige einddatum');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'ErrorWhileSendingEmail', 'Er trad op een fout op tijdens het verzenden.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'FieldIsRequired', 'Dit veld is verplicht.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'ForkAPIKeys', 'Fork API-keys nog niet geconfigureerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'FormError', 'Er ging iets mis, kijk de gemarkeerde velden na.');
@@ -485,6 +486,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsInvalid', 'Please provide a valid e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsRequired', 'Please provide a valid e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsUnknown', 'This e-mailaddress is not in our database.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'ErrorWhileSendingEmail', 'Error while sending email.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'FieldIsRequired', 'This field is required.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'ForkAPIKeys', 'Fork API-keys are not configured.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'FormError', 'Something went wrong, check the marked fields.');
@@ -493,8 +495,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidDomain', 'Invalid domain.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidEmailPasswordCombination', 'Your e-mail and password combination is incorrect. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did you forget your password?</a>');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidName', 'Invalid name.');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidNumber', 'Invalid number.');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidParameters', 'Invalid parameters.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidNumber', 'Invalid number.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidParameters', 'Invalid parameters.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidURL', 'Invalid URL.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidValue', 'Invalid value.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'JavascriptNotEnabled', 'To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.');

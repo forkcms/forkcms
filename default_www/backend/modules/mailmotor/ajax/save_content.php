@@ -137,7 +137,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$fullContentHTML = preg_replace('/<!-- tinymce  -->.*?<!-- \/tinymce  -->/is', $contentHTML, $fullContentHTML);
 
 		// replace bracketed entities with their proper counterpart
-		$fullContentHTML = preg_replace('/\[(.*?)]/', '&${1};', $fullContentHTML);
+		$fullContentHTML = preg_replace('/\[ent=(.*?)]/', '&${1};', $fullContentHTML);
 
 		// add Google UTM parameters to all anchors
 		$fullContentHTML = $this->addUTMParameters($fullContentHTML);

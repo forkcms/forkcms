@@ -106,7 +106,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 	 * @return	string
 	 * @param	int $id		The ID of the campaign.
 	 */
-	public function setStatisticsLink($id)
+	public static function setStatisticsLink($id)
 	{
 		// build the link HTML
 		$html = '<a href="' . BackendModel::createURLForAction('statistics_campaign') . '&amp;id=' . $id . '" class="button icon iconStats linkButton"><span>' . BL::lbl('Statistics') . '</span></a>';
