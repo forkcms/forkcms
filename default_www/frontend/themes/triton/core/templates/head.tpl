@@ -21,7 +21,7 @@
 
 	{* Stylesheets *}
 	{iteration:cssFiles}
-		<link rel="stylesheet" media="{$cssFiles.media}" href="{$cssFiles.file}" />
+		<link rel="stylesheet" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
 
 	{* HTML5 Javascript *}
