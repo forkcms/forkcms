@@ -26,6 +26,7 @@
 				{/option:!leftColumn.hidden}
 			</div>
 		{/iteration:leftColumn}
+		&#160;
 	</div>
 
 	<div class="middleColumn column">
@@ -47,6 +48,7 @@
 				{/option:!middleColumn.hidden}
 			</div>
 		{/iteration:middleColumn}
+		&#160;
 	</div>
 
 	<div class="rightColumn column">
@@ -68,6 +70,7 @@
 				{/option:!rightColumn.hidden}
 			</div>
 		{/iteration:rightColumn}
+		&#160;
 	</div>
 </div>
 
