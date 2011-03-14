@@ -487,7 +487,17 @@ class FrontendHeader extends FrontendBaseObject
 		// assign meta
 		$this->tpl->assign('metaDescription', (string) $this->getMetaDescription());
 		$this->tpl->assign('metaKeywords', (string) $this->getMetaKeywords());
-		$this->tpl->assign('metaCustom', (string) $this->getMetaCustom());
+
+		// initial value for footer HTML
+		$metaCustom = (string) $this->getMetaCustom();
+
+		// facebook admins given?
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			// add Facebook tag
+			$metaCustom .= "\n" . '<meta property="fb:admins" content="'. FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) .'" />' . "\n";
+		}
+		$this->tpl->assign('metaCustom', $metaCustom);
 
 		// init var
 		$cssFiles = null;
