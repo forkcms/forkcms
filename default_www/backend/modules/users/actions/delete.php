@@ -31,6 +31,8 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			// get data
 			$this->record = (array) BackendUsersModel::get($this->id);
 
+			// @todo	check if god-user
+
 			// delete item
 			BackendUsersModel::delete($this->id);
 
