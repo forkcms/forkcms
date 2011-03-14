@@ -389,7 +389,6 @@ class SpoonTemplateCompiler
 				$replace[1] = '</form>
 				<?php } ?>';
 
-
 				$content = str_replace($search, $replace, $content);
 			}
 		}
