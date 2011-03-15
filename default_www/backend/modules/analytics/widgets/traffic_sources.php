@@ -50,7 +50,7 @@ class BackendAnalyticsWidgetTrafficSources extends BackendBaseWidget
 	private function getData()
 	{
 		// build url
-		$URL = SITE_URL .'/backend/cronjob.php?module=analytics&action=get_traffic_sources&id=2';
+		$URL = SITE_URL . '/backend/cronjob.php?module=analytics&action=get_traffic_sources&id=2';
 
 		// set options
 		$options = array();

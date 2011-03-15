@@ -78,7 +78,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if(!BackendMailmotorModel::existsCampaign($this->id)) $this->redirect(BackendModel::createURLForAction('campaigns') .'&error=campaign-does-not-exist');
+		if(!BackendMailmotorModel::existsCampaign($this->id)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=campaign-does-not-exist');
 
 		// store mailing
 		$this->campaign = BackendMailmotorModel::getCampaign($this->id);
@@ -87,7 +87,7 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->statistics = BackendMailmotorCMHelper::getStatisticsByCampaignID($this->id, true);
 
 		// no stats found
-		if($this->statistics === false || empty($this->statistics)) $this->redirect(BackendModel::createURLForAction('campaigns') .'&error=no-statistics-loaded');
+		if($this->statistics === false || empty($this->statistics)) $this->redirect(BackendModel::createURLForAction('campaigns') . '&error=no-statistics-loaded');
 	}
 
 
@@ -103,19 +103,19 @@ class BackendMailmotorStatisticsCampaign extends BackendBaseActionIndex
 		$this->datagrid->setColumnsHidden(array('campaign_id', 'campaign_name', 'status'));
 
 		// set headers values
-		$headers['send_on'] = ucfirst(BL::lbl('Sent'));
+		$headers['sent'] = ucfirst(BL::lbl('Sent'));
 
 		// set headers
 		$this->datagrid->setHeaderLabels($headers);
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name', 'send_on'), 'name');
+		$this->datagrid->setSortingColumns(array('name', 'sent'), 'name');
 
 		// set url for mailing name
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('statistics') .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('statistics') . '&amp;id=[id]');
 
 		// set column functions
-		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[send_on]'), 'send_on', true);
+		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[sent]'), 'sent', true);
 
 		// set paging limit
 		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);

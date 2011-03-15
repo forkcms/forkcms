@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `mailmotor_campaigns` (
 
 CREATE TABLE IF NOT EXISTS `mailmotor_groups` (
  `id` int(11) NOT NULL auto_increment,
- `language` varchar(5) NOT NULL,
+ `language` varchar(5) NULL,
  `name` varchar(255) NOT NULL,
  `custom_fields` text,
  `is_default` enum('N','Y') NOT NULL default 'N',

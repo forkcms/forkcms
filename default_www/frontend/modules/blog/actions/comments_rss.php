@@ -69,8 +69,8 @@ class FrontendBlogCommentsRSS extends FrontendBaseBlock
 		foreach($this->items as $item)
 		{
 			// init vars
-			$title = $item['author'] .' '. FL::lbl('On') .' '. $item['post_title'];
-			$link = $detailLink .'/'. $item['post_url'] .'/#comment-'. $item['id'];
+			$title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $item['post_title'];
+			$link = $detailLink . '/' . $item['post_url'] . '/#comment-' . $item['id'];
 			$description = $item['text'];
 
 			// create new instance

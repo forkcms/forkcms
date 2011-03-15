@@ -56,9 +56,9 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 		$this->parseImportantLandingPages();
 
 		// init google url
-		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
+		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
-		$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+		$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
 
 		// parse links to google
 		$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
@@ -143,7 +143,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			$datagrid->setColumnHidden('page_encoded');
 
 			// set url
-			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') .'&amp;page=[page_encoded]');
+			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
 			$this->tpl->assign('dgExitPages', $datagrid->getContent());
@@ -177,7 +177,7 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			$datagrid->setHeaderLabels($headers);
 
 			// set url
-			$datagrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') .'&amp;page=[page_encoded]');
+			$datagrid->setColumnURL('page_path', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
 			$this->tpl->assign('dgLandingPages', $datagrid->getContent());
@@ -205,13 +205,13 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			$datagrid->setColumnHidden('page_encoded');
 
 			// set headers values
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Pageviews'));
+			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Pageviews'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);
 
 			// set url
-			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') .'&amp;page=[page_encoded]');
+			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page=[page_encoded]');
 
 			// parse the datagrid
 			$this->tpl->assign('dgContent', $datagrid->getContent());
@@ -246,13 +246,13 @@ class BackendAnalyticsContent extends BackendAnalyticsBase
 			$newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 0);
 			$newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 0);
 			$newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 0);
-			if($newVisitsDifference > 0) $newVisitsDifference = '+'. $newVisitsDifference;
+			if($newVisitsDifference > 0) $newVisitsDifference = '+' . $newVisitsDifference;
 
 			// bounces
 			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
 			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-			if($bouncesDifference > 0) $bouncesDifference = '+'. $bouncesDifference;
+			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
 			// parse data
 			$this->tpl->assign('pageviews', $results['pageviews']);

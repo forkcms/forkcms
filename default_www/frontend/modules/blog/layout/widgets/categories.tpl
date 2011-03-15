@@ -4,12 +4,12 @@
 *}
 
 {option:widgetBlogCategories}
-	<div id="blogCategoriesWidget" class="mod">
+	<section id="blogCategoriesWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblCategories|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
 					{iteration:widgetBlogCategories}
 						<li>
@@ -21,5 +21,5 @@
 				</ul>
 			</div>
 		</div>
-	</div>
+	</section>
 {/option:widgetBlogCategories}

@@ -50,10 +50,14 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		$campaigns = BackendMailmotorModel::getCampaignsAsPairs();
 
 		// fetch the groups
+		$groupIds = BackendMailmotorModel::getGroupIDs();
 		$groups = BackendMailmotorModel::getGroupsWithRecipientsForCheckboxes();
 
-		// no groups set yet, so give the user a hand
-		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('add_group') .'&error=add-mailing-no-groups');
+		// no groups were made yet
+		if(empty($groups) && empty($groupIds)) $this->redirect(BackendModel::createURLForAction('add_group') . '&error=add-mailing-no-groups');
+
+		// groups were made, but none have subscribers
+		elseif(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-subscribers');
 
 		// fetch the languages
 		$languages = BackendMailmotorModel::getLanguagesForCheckboxes();
@@ -73,7 +77,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 		$this->frm->addMultiCheckbox('groups', $groups, ((count($groups) == 1 && isset($groups[0])) ? $groups[0]['value'] : false));
 
 		// languages
-		$this->frm->addRadiobutton('languages', $languages, 'nl');
+		$this->frm->addRadiobutton('languages', $languages, BL::getWorkingLanguage());
 	}
 
 
@@ -146,7 +150,7 @@ class BackendMailmotorAdd extends BackendBaseActionAdd
 				BackendMailmotorModel::updateGroupsForMailing($id, $values['groups']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $id .'&step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $id . '&step=2');
 			}
 		}
 	}

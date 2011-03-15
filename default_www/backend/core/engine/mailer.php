@@ -79,7 +79,7 @@ class BackendMailer
 			foreach($matches[0] as $key => $link)
 			{
 				$search[] = $link;
-				$replace[] = 'href="'. SITE_URL .'/'. $matches[1][$key] .'"';
+				$replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
 			}
 
 			// replace
@@ -103,7 +103,7 @@ class BackendMailer
 			foreach($matches[0] as $key => $link)
 			{
 				$search[] = $link;
-				$replace[] = 'src="'. SITE_URL .'/'. $matches[1][$key] .'"';
+				$replace[] = 'src="' . SITE_URL . '/' . $matches[1][$key] . '"';
 			}
 
 			// replace
@@ -113,7 +113,7 @@ class BackendMailer
 		// set send date
 		if($queue)
 		{
-			if($sendOn === null) $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') .':00:00';
+			if($sendOn === null) $email['send_on'] = BackendModel::getUTCDate('Y-m-d H') . ':00:00';
 			else $email['send_on'] = BackendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
 		}
 
@@ -163,7 +163,7 @@ class BackendMailer
 
 		// replace internal links/images
 		$search = array('href="/', 'src="/');
-		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
+		$replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 		$content = str_replace($search, $replace, $content);
 
 		// require CSSToInlineStyles
@@ -207,7 +207,7 @@ class BackendMailer
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
-		$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
+		$email->setTemplateCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
 
 		// send via SMTP
 		if($mailerType == 'smtp')
@@ -218,13 +218,11 @@ class BackendMailer
 			$SMTPUsername = BackendModel::getModuleSetting('core', 'smtp_username');
 			$SMTPPassword = BackendModel::getModuleSetting('core', 'smtp_password');
 
+			// set server and connect with SMTP
+			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+
 			// set authentication if needed
-			if($SMTPUsername !== null && $SMTPPassword !== null)
-			{
-				// set server and connect with SMTP
-				$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-				$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
-			}
+			if($SMTPUsername !== null && $SMTPPassword !== null) $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
 		}
 
 		// set some properties

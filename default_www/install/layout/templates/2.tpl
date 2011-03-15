@@ -20,6 +20,12 @@
 					can be found on: <a href="http://php.net/curl">http://php.net/curl</a>.
 				</p>
 
+				<h4>libxml: <span class="{$extensionLibXML}">{$extensionLibXMLStatus}</span></h4>
+				<p>
+					libxml is a software library for parsing XML documents. More information
+					can be found on: <a href="http://php.net/libxml">http://php.net/libxml</a>.
+				</p>
+
 				<h4>DOM: <span class="{$extensionDOM}">{$extensionDOMStatus}</span></h4>
 				<p>
 					The DOM extension allows you to operate on XML documents through the DOM API with PHP 5. More information

@@ -5,16 +5,16 @@
 *}
 
 {option:!items}
-	<div id="blogArchive" class="mod">
+	<section id="blogArchive" class="mod">
 		<div class="inner">
 			<div class="bd content">
 				<p>{$msgBlogNoItems}</p>
 			</div>
 		</div>
-	</div>
+	</section>
 {/option:!items}
 {option:items}
-	<div id="blogArchive" class="mod">
+	<section id="blogArchive" class="mod">
 		<div class="inner">
 			<div class="bd content">
 				<table class="datagrid" width="100%">
@@ -43,6 +43,6 @@
 				</table>
 			</div>
 		</div>
-	</div>
+	</section>
 	{include:{$FRONTEND_CORE_PATH}/layout/templates/pagination.tpl}
 {/option:items}

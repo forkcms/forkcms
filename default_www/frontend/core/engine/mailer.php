@@ -79,7 +79,7 @@ class FrontendMailer
 			foreach($matches[0] as $key => $link)
 			{
 				$search[] = $link;
-				$replace[] = 'href="'. SITE_URL .'/'. $matches[1][$key] .'"';
+				$replace[] = 'href="' . SITE_URL . '/' . $matches[1][$key] . '"';
 			}
 
 			// replace
@@ -103,7 +103,7 @@ class FrontendMailer
 			foreach($matches[0] as $key => $link)
 			{
 				$search[] = $link;
-				$replace[] = 'src="'. SITE_URL .'/'. $matches[1][$key] .'"';
+				$replace[] = 'src="' . SITE_URL . '/' . $matches[1][$key] . '"';
 			}
 
 			// replace
@@ -127,7 +127,7 @@ class FrontendMailer
 			foreach($matches[1] as $i => $link)
 			{
 				$searchLinks[] = $matches[0][$i];
-				$replaceLinks[] = 'href="'. FrontendModel::addURLParameters($link, $utm) .'"';
+				$replaceLinks[] = 'href="' . FrontendModel::addURLParameters($link, $utm) . '"';
 			}
 
 			// replace
@@ -137,7 +137,7 @@ class FrontendMailer
 		// set send date
 		if($queue)
 		{
-			if($sendOn === null) $email['send_on'] = FrontendModel::getUTCDate('Y-m-d H') .':00:00';
+			if($sendOn === null) $email['send_on'] = FrontendModel::getUTCDate('Y-m-d H') . ':00:00';
 			else $email['send_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s', (int) $sendOn);
 		}
 
@@ -187,7 +187,7 @@ class FrontendMailer
 
 		// replace internal links/images
 		$search = array('href="/', 'src="/');
-		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
+		$replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 		$content = str_replace($search, $replace, $content);
 
 		// require CSSToInlineStyles
@@ -231,7 +231,7 @@ class FrontendMailer
 
 		// create new SpoonEmail-instance
 		$email = new SpoonEmail();
-		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH .'/compiled_templates');
+		$email->setTemplateCompileDirectory(FRONTEND_CACHE_PATH . '/compiled_templates');
 
 		// send via SMTP
 		if($mailerType == 'smtp')
@@ -242,13 +242,11 @@ class FrontendMailer
 			$SMTPUsername = FrontendModel::getModuleSetting('core', 'smtp_username');
 			$SMTPPassword = FrontendModel::getModuleSetting('core', 'smtp_password');
 
+			// set server and connect with SMTP
+			$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
+
 			// set authentication if needed
-			if($SMTPUsername !== null && $SMTPPassword !== null)
-			{
-				// set server and connect with SMTP
-				$email->setSMTPConnection($SMTPServer, $SMTPPort, 10);
-				$email->setSMTPAuth($SMTPUsername, $SMTPPassword);
-			}
+			if($SMTPUsername !== null && $SMTPPassword !== null) $email->setSMTPAuth($SMTPUsername, $SMTPPassword);
 		}
 
 		// set some properties

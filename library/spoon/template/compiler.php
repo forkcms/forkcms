@@ -27,6 +27,7 @@
  *
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @author		Matthias Mullie <matthias@spoon-library.com>
+ * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @since		1.3.0
  */
 class SpoonTemplateCompiler
@@ -149,7 +150,7 @@ class SpoonTemplateCompiler
 	 */
 	private function getCompileName($template)
 	{
-		return md5(realpath($template)) .'_'. basename($template) .'.php';
+		return md5(realpath($template)) . '_' . basename($template) . '.php';
 	}
 
 
@@ -219,7 +220,7 @@ class SpoonTemplateCompiler
 			$this->content = $this->replaceVariables($this->content);
 
 			// add error_reporting setting
-			$this->content = '<?php error_reporting('. $errorReporting .'); ini_set(\'display_errors\', \''. $displayErrors .'\'); ?>'. "\n". $this->content;
+			$this->content = '<?php error_reporting(' . $errorReporting . '); ini_set(\'display_errors\', \'' . $displayErrors . '\'); ?>' . "\n" . $this->content;
 
 			// parsed
 			$this->parsed = true;
@@ -245,22 +246,22 @@ class SpoonTemplateCompiler
 			foreach($matches[1] as $match)
 			{
 				// search
-				$search[0] = '{cache:'. $match .'}';
-				$search[1] = '{/cache:'. $match .'}';
+				$search[0] = '{cache:' . $match . '}';
+				$search[1] = '{/cache:' . $match . '}';
 
 				// replace
 				$replace[0] = '<?php
 				ob_start();
-				?>'. $match .'<?php
-				$cache = eval(\'return \\\'\'. str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\');
+				?>' . $match . '<?php
+				$cache = eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\');
 				if(!$this->isCached($cache))
 				{
 					ob_start();
 				?>';
 				$replace[1] = '<?php
-					SpoonFile::setContent($this->cacheDirectory .\'/\'. $cache .\'_cache.tpl\', ob_get_clean());
+					SpoonFile::setContent($this->cacheDirectory .\'/\' . $cache .\'_cache.tpl\', ob_get_clean());
 				}
-				require $this->cacheDirectory .\'/\'. $cache .\'_cache.tpl\';
+				require $this->cacheDirectory .\'/\' . $cache .\'_cache.tpl\';
 				?>';
 
 				// replace it
@@ -314,14 +315,14 @@ class SpoonTemplateCompiler
 						// let's do this argument per argument: we need our eval to take care of the esacping (parsed variables result may contain single quotes)
 						$replace .= '
 						ob_start();
-						?>'. $argument .'<?php
-						$arguments[] = eval(\'return \\\'\'. str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\');';
+						?>' . $argument . '<?php
+						$arguments[] = eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\');';
 					}
 
 					// finish replace: create cycle
 					$replace .= '
-					echo $this->cycle('. $iteration .'[\'i\'], $arguments);
-					?>'."\n";
+					echo $this->cycle(' . $iteration . '[\'i\'], $arguments);
+					?>' . "\n";
 
 					// replace it
 					$content = str_replace($search, $replace, $content);
@@ -355,16 +356,36 @@ class SpoonTemplateCompiler
 				$replace = array();
 
 				// start & close tag
-				$search = array('{form:'. $name .'}', '{/form:'. $name .'}');
-				$replace[0] = '<?php
-				if(isset($this->forms[\''. $name .'\']))
+				$search = array('{form:' . $name . '}', '{/form:' . $name . '}');
+
+				// using UTF-8 as charset
+				if(SPOON_CHARSET == 'utf-8')
 				{
-					?><form action="<?php echo $this->forms[\''. $name .'\']->getAction(); ?>" method="<?php echo $this->forms[\''. $name .'\']->getMethod(); ?>"<?php echo $this->forms[\''. $name .'\']->getParametersHTML(); ?>>
-					<?php echo $this->forms[\''. $name .'\']->getField(\'form\')->parse();
-					if($this->forms[\''. $name .'\']->getUseToken())
+					$replace[0] = '<?php
+					if(isset($this->forms[\'' . $name . '\']))
 					{
-						?><input type="hidden" name="form_token" id="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\''. $name .'\']->getField(\'form_token\')->getValue(); ?>" />
-					<?php } ?>';
+						?><form accept-charset="UTF-8" action="<?php echo $this->forms[\'' . $name . '\']->getAction(); ?>" method="<?php echo $this->forms[\'' . $name . '\']->getMethod(); ?>"<?php echo $this->forms[\'' . $name . '\']->getParametersHTML(); ?>>
+						<?php echo $this->forms[\'' . $name . '\']->getField(\'form\')->parse();
+						if($this->forms[\'' . $name . '\']->getUseToken())
+						{
+							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue(); ?>" />
+						<?php } ?>';
+				}
+
+				// no UTF-8
+				else
+				{
+					$replace[0] = '<?php
+					if(isset($this->forms[\'' . $name . '\']))
+					{
+						?><form action="<?php echo $this->forms[\'' . $name . '\']->getAction(); ?>" method="<?php echo $this->forms[\'' . $name . '\']->getMethod(); ?>"<?php echo $this->forms[\'' . $name . '\']->getParametersHTML(); ?>>
+						<?php echo $this->forms[\'' . $name . '\']->getField(\'form\')->parse();
+						if($this->forms[\'' . $name . '\']->getUseToken())
+						{
+							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue(); ?>" />
+						<?php } ?>';
+				}
+
 				$replace[1] = '</form>
 				<?php } ?>';
 
@@ -407,18 +428,18 @@ class SpoonTemplateCompiler
 				// replace string
 				$replace = '<?php
 				ob_start();
-				?>'. $match[1] .'<?php
-				$include = eval(\'return \\\'\'. str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\');
-				if($this->getForceCompile()) $this->compile(\''. dirname(realpath($this->template)) .'\', $include);
-				$return = @include $this->getCompileDirectory() .\'/\'. $this->getCompileName($include, \''. dirname(realpath($this->template)) .'\');
-				if($return === false && $this->compile(\''. dirname(realpath($this->template)) .'\', $include))
+				?>' . $match[1] . '<?php
+				$include = eval(\'return \\\'\' . str_replace(\'\\\'\', \'\\\\\\\'\', ob_get_clean()) .\'\\\';\');
+				if($this->getForceCompile()) $this->compile(\'' . dirname(realpath($this->template)) . '\', $include);
+				$return = @include $this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' . dirname(realpath($this->template)) . '\');
+				if($return === false && $this->compile(\'' . dirname(realpath($this->template)) . '\', $include))
 				{
-					$return = @include $this->getCompileDirectory() .\'/\'. $this->getCompileName($include, \''. dirname(realpath($this->template)) .'\');
-				}'."\n";
+					$return = @include $this->getCompileDirectory() .\'/\' . $this->getCompileName($include, \'' . dirname(realpath($this->template)) . '\');
+				}' . "\n";
 				if(SPOON_DEBUG) $replace .= 'if($return === false)
 				{
-					?>'. $match[0] .'<?php
-				}'."\n";
+					?>' . $match[0] . '<?php
+				}' . "\n";
 				$replace .= '?>';
 
 				// replace it
@@ -448,14 +469,14 @@ class SpoonTemplateCompiler
 			foreach($matches as $match)
 			{
 				// base variable names
-				$iteration = '$this->iterations['. $match[2] .']';
-				$internalVariable = '${\''. $match[3] .'\'}';
+				$iteration = '$this->iterations[\'' . $this->getCompileName($this->template) . '_' . $match[2] . '\']';
+				$internalVariable = '${\'' . $match[3] . '\'}';
 
 				// variable within iteration
 				if($match[6] != '')
 				{
 					// base
-					$variable = '${\''. $match[3] .'\'}';
+					$variable = '${\'' . $match[3] . '\'}';
 
 					// add separate chunks
 					foreach(explode('.', ltrim($match[4] . str_replace('->', '.', $match[6]), '.')) as $chunk)
@@ -464,9 +485,9 @@ class SpoonTemplateCompiler
 						if(!$chunk) continue;
 
 						// append pieces
-						$variable .= "['". $chunk ."']";
-						$iteration .= "['". $chunk ."']";
-						$internalVariable .= "['". $chunk ."']";
+						$variable .= "['" . $chunk . "']";
+						$iteration .= "['" . $chunk . "']";
+						$internalVariable .= "['" . $chunk . "']";
 					}
 				}
 
@@ -474,7 +495,7 @@ class SpoonTemplateCompiler
 				else
 				{
 					// base
-					$variable = '$this->variables[\''. $match[3] .'\']';
+					$variable = '$this->variables[\'' . $match[3] . '\']';
 
 					// add separate chunks
 					foreach(explode('.', ltrim($match[4], '.')) as $chunk)
@@ -483,9 +504,9 @@ class SpoonTemplateCompiler
 						if(!$chunk) continue;
 
 						// append pieces
-						$variable .= "['". $chunk ."']";
-						$iteration .= "['". $chunk ."']";
-						$internalVariable .= "['". $chunk ."']";
+						$variable .= "['" . $chunk . "']";
+						$iteration .= "['" . $chunk . "']";
+						$internalVariable .= "['" . $chunk . "']";
 					}
 				}
 
@@ -493,7 +514,7 @@ class SpoonTemplateCompiler
 				$innerContent = $match[10];
 
 				// alter inner iterations, options & variables to indicate where the iteration starting point is
-				$innerContent = str_replace($match[3] . $match[4] . str_replace('->', '.', $match[6]) .'.', $match[3] . $match[4] . str_replace('->', '.', $match[6]) .'->', $innerContent);
+				$innerContent = str_replace($match[3] . $match[4] . str_replace('->', '.', $match[6]) . '.', $match[3] . $match[4] . str_replace('->', '.', $match[6]) . '->', $innerContent);
 
 				// parse inner iterations (recursively)
 				$innerContent = $this->parseIterations($innerContent);
@@ -509,28 +530,28 @@ class SpoonTemplateCompiler
 				if(SPOON_DEBUG)
 				{
 					$templateContent .= '
-					if(!isset('. $variable .'))
+					if(!isset(' . $variable . '))
 					{
-						?>{iteration:'. $match[3] . $match[4] . $match[6] .'}<?php
-						'. $variable .' = array();
-						'. $iteration .'[\'fail\'] = true;
+						?>{iteration:' . $match[3] . $match[4] . $match[6] . '}<?php
+						' . $variable . ' = array();
+						' . $iteration . '[\'fail\'] = true;
 					}';
 				}
 				$templateContent .= '
-				if(isset('. $iteration .')) '. $iteration .'[\'old\'] = '. $iteration .';
-				'. $iteration .'[\'iteration\'] = '. $variable .';
-				'. $iteration .'[\'i\'] = 1;
-				'. $iteration .'[\'count\'] = count('. $iteration .'[\'iteration\']);
-				foreach((array) '. $iteration .'[\'iteration\'] as '. $internalVariable .')
+				if(isset(' . $internalVariable . ')) ' . $iteration . '[\'old\'] = ' . $internalVariable . ';
+				' . $iteration . '[\'iteration\'] = ' . $variable . ';
+				' . $iteration . '[\'i\'] = 1;
+				' . $iteration . '[\'count\'] = count(' . $iteration . '[\'iteration\']);
+				foreach((array) ' . $iteration . '[\'iteration\'] as ' . $internalVariable . ')
 				{
-					if(!isset('. $internalVariable .'[\'first\']) && '. $iteration .'[\'i\'] == 1) '. $internalVariable .'[\'first\'] = true;
-					if(!isset('. $internalVariable .'[\'last\']) && '. $iteration .'[\'i\'] == '. $iteration .'[\'count\']) '. $internalVariable .'[\'last\'] = true;
-					if(isset('. $internalVariable .'[\'formElements\']) && is_array('. $internalVariable .'[\'formElements\']))
+					if(!isset(' . $internalVariable . '[\'first\']) && ' . $iteration . '[\'i\'] == 1) ' . $internalVariable . '[\'first\'] = true;
+					if(!isset(' . $internalVariable . '[\'last\']) && ' . $iteration . '[\'i\'] == ' . $iteration . '[\'count\']) ' . $internalVariable . '[\'last\'] = true;
+					if(isset(' . $internalVariable . '[\'formElements\']) && is_array(' . $internalVariable . '[\'formElements\']))
 					{
-						foreach('. $internalVariable .'[\'formElements\'] as $name => $object)
+						foreach(' . $internalVariable . '[\'formElements\'] as $name => $object)
 						{
-							'. $internalVariable .'[$name] = $object->parse();
-							'. $internalVariable .'[$name .\'Error\'] = (method_exists($object, \'getErrors\') && $object->getErrors() != \'\') ? \'<span class="formError">\'. $object->getErrors() .\'</span>\' : \'\';
+							' . $internalVariable . '[$name] = $object->parse();
+							' . $internalVariable . '[$name .\'Error\'] = (is_callable(array($object, \'getErrors\')) && $object->getErrors() != \'\') ? \'<span class="formError">\' . $object->getErrors() .\'</span>\' : \'\';
 						}
 					} ?>';
 
@@ -539,19 +560,20 @@ class SpoonTemplateCompiler
 
 				// close iteration
 				$templateContent .= '<?php
-					'. $iteration .'[\'i\']++;
+					' . $iteration . '[\'i\']++;
 				}';
 				if(SPOON_DEBUG)
 				{
 					$templateContent .= '
-					if(isset('. $iteration .'[\'fail\']) && '. $iteration .'[\'fail\'] == true)
+					if(isset(' . $iteration . '[\'fail\']) && ' . $iteration . '[\'fail\'] == true)
 					{
-						?>{/iteration:'. $match[3] . $match[4] . $match[6] .'}<?php
-					}
-					if(isset('. $iteration .'[\'old\'])) '. $iteration .' = '. $iteration .'[\'old\'];
-					else unset('. $iteration .');';
+						?>{/iteration:' . $match[3] . $match[4] . $match[6] . '}<?php
+					}';
 				}
-				$templateContent .= '?>';
+				$templateContent .= '
+				if(isset(' . $iteration . '[\'old\'])) ' . $internalVariable . ' = ' . $iteration . '[\'old\'];
+				else unset(' . $iteration . ');
+				?>';
 
 				// replace!
 				$content = str_replace($match[0], $templateContent, $content);
@@ -589,12 +611,12 @@ class SpoonTemplateCompiler
 					if(isset($match[5]) && $match[5] != '')
 					{
 						// base
-						$variable = '${\''. $match[2] .'\'}';
+						$variable = '${\'' . $match[2] . '\'}';
 
 						// add separate chunks
 						foreach(explode('.', ltrim($match[3] . str_replace('->', '.', $match[5]), '.')) as $chunk)
 						{
-							$variable .= "['". $chunk ."']";
+							$variable .= "['" . $chunk . "']";
 						}
 					}
 
@@ -607,7 +629,7 @@ class SpoonTemplateCompiler
 						// add separate chunks
 						foreach(explode('.', $match[2] . $match[3]) as $chunk)
 						{
-							$variable .= "['". $chunk ."']";
+							$variable .= "['" . $chunk . "']";
 						}
 					}
 
@@ -619,25 +641,25 @@ class SpoonTemplateCompiler
 					$options[] = $match;
 
 					// set option
-					$option = $match[2] . $match[3] .(isset($match[5]) ? $match[5] : '');
+					$option = $match[2] . $match[3] . (isset($match[5]) ? $match[5] : '');
 
 					// search for
-					$search[] = '{option:'. $option .'}';
-					$search[] = '{/option:'. $option .'}';
+					$search[] = '{option:' . $option . '}';
+					$search[] = '{/option:' . $option . '}';
 
 					// inverse option
-					$search[] = '{option:!'. $option .'}';
-					$search[] = '{/option:!'. $option .'}';
+					$search[] = '{option:!' . $option . '}';
+					$search[] = '{/option:!' . $option . '}';
 
 					// replace with
 					$replace[] = '<?php
-					if(isset('. $variable .') && count('. $variable .') != 0 && '. $variable .' != \'\' && '. $variable .' !== false)
+					if(isset(' . $variable . ') && count(' . $variable . ') != 0 && ' . $variable . ' != \'\' && ' . $variable . ' !== false)
 					{
 						?>';
 					$replace[] = '<?php } ?>';
 
 					// inverse option
-					$replace[] = '<?php if(!isset('. $variable .') || count('. $variable .') == 0 || '. $variable .' == \'\' || '. $variable .' === false): ?>';
+					$replace[] = '<?php if(!isset(' . $variable . ') || count(' . $variable . ') == 0 || ' . $variable . ' == \'\' || ' . $variable . ' === false): ?>';
 					$replace[] = '<?php endif; ?>';
 
 					// go replace
@@ -664,7 +686,7 @@ class SpoonTemplateCompiler
 	 */
 	public function parseToFile()
 	{
-		SpoonFile::setContent($this->compileDirectory .'/'. $this->getCompileName($this->template), $this->getContent());
+		SpoonFile::setContent($this->compileDirectory . '/' . $this->getCompileName($this->template), $this->getContent());
 	}
 
 
@@ -715,12 +737,12 @@ class SpoonTemplateCompiler
 							if(isset($match[4]) && $match[4] != '')
 							{
 								// base
-								$variable = '${\''. $match[1] .'\'}';
+								$variable = '${\'' . $match[1] . '\'}';
 
 								// add separate chunks
 								foreach(explode('.', ltrim($match[2] . str_replace('->', '.', $match[4]), '.')) as $chunk)
 								{
-									$variable .= "['". $chunk ."']";
+									$variable .= "['" . $chunk . "']";
 								}
 							}
 
@@ -733,7 +755,7 @@ class SpoonTemplateCompiler
 								// add separate chunks
 								foreach(explode('.', $match[1] . $match[2]) as $chunk)
 								{
-									$variable .= "['". $chunk ."']";
+									$variable .= "['" . $chunk . "']";
 								}
 							}
 
@@ -753,16 +775,16 @@ class SpoonTemplateCompiler
 									foreach($modifiers[1] as $key => $modifier)
 									{
 										// modifier doesn't exist
-										if(!isset($this->modifiers[$modifier])) throw new SpoonTemplateException('The modifier "'. $modifier .'" does not exist.');
+										if(!isset($this->modifiers[$modifier])) throw new SpoonTemplateException('The modifier "' . $modifier . '" does not exist.');
 
 										// add call
 										else
 										{
 											// method call
-											if(is_array($this->modifiers[$modifier])) $PHP = implode('::', $this->modifiers[$modifier]) .'('. $PHP;
+											if(is_array($this->modifiers[$modifier])) $PHP = implode('::', $this->modifiers[$modifier]) . '(' . $PHP;
 
 											// function call
-											else $PHP = $this->modifiers[$modifier] .'('. $PHP;
+											else $PHP = $this->modifiers[$modifier] . '(' . $PHP;
 										}
 
 										// has arguments
@@ -781,14 +803,14 @@ class SpoonTemplateCompiler
 													if(in_array(substr($argument, 0, 1), array('\'', '"')))
 													{
 														// in compiled code: single quotes! (and escape single quotes in the content!)
-														$argument = '\''. str_replace('\'', '\\\'', substr($argument, 1, -1)) .'\'';
+														$argument = '\'' . str_replace('\'', '\\\'', substr($argument, 1, -1)) . '\'';
 
 														// make sure that variables inside string arguments are correctly parsed
-														$argument = preg_replace('/\[\$.*?\]/', '\'. \\0 .\'', $argument);
+														$argument = preg_replace('/\[\$.*?\]/', '\' . \\0 .\'', $argument);
 													}
 
 													// add argument
-													$PHP .= ', '. $argument;
+													$PHP .= ', ' . $argument;
 												}
 											}
 										}
@@ -813,13 +835,13 @@ class SpoonTemplateCompiler
 							foreach($this->templateVariables as $key => $value)
 							{
 								// replace variables
-								$PHP = str_replace('[$'. $key .']', $value['content'], $PHP);
+								$PHP = str_replace('[$' . $key . ']', $value['content'], $PHP);
 
 								// debug enabled
 								if(SPOON_DEBUG)
 								{
 									// check if this variable is found
-									if(strpos($match[0], '[$'. $key .']') !== false)
+									if(strpos($match[0], '[$' . $key . ']') !== false)
 									{
 										// add variable name to list of 'variables to check before parsing'
 										$variables = array_merge($variables, $value['variables']);
@@ -847,8 +869,8 @@ class SpoonTemplateCompiler
 									$variable = $variable[1];
 
 									// container array is index of higher array
-									if(preg_match('/\[\'[a-z_][a-z0-9_]*\'\]/i', $array)) $exists[] = 'isset('. $array .')';
-									$exists[] = 'array_key_exists(\''. $variable .'\', (array) '. $array .')';
+									if(preg_match('/\[\'[a-z_][a-z0-9_]*\'\]/i', $array)) $exists[] = 'isset(' . $array . ')';
+									$exists[] = 'array_key_exists(\'' . $variable . '\', (array) ' . $array . ')';
 								}
 
 								// save info for error fallback
@@ -859,7 +881,7 @@ class SpoonTemplateCompiler
 						}
 
 						// replace in content
-						$content = str_replace($match[0], '[$'. $varKey .']', $content);
+						$content = str_replace($match[0], '[$' . $varKey . ']', $content);
 					}
 				}
 			}
@@ -912,7 +934,7 @@ class SpoonTemplateCompiler
 		$this->iterationsCounter++;
 
 		// return the modified iteration name
-		return '{iteration_'. $this->iterationsCounter .':'. $match[2] .'}'. $match[4] .'{/iteration_'. $this->iterationsCounter .':'. $match[2] .'}';
+		return '{iteration_' . $this->iterationsCounter . ':' . $match[2] . '}' . $match[4] . '{/iteration_' . $this->iterationsCounter . ':' . $match[2] . '}';
 	}
 
 
@@ -934,8 +956,8 @@ class SpoonTemplateCompiler
 			foreach($this->templateVariables as $key => $value)
 			{
 				// replace variables in the content
-				if(SPOON_DEBUG) $content = str_replace('[$'. $key .']', '<?php if('. $value['if'] .') { echo '. $value['content'] .'; } else { ?>'. $value['template'] .'<?php } ?>', $content, $count);
-				else $content = str_replace('[$'. $key .']', '<?php echo '. $value['content'] .'; ?>', $content, $count);
+				if(SPOON_DEBUG) $content = str_replace('[$' . $key . ']', '<?php if(' . $value['if'] . ') { echo ' . $value['content'] . '; } else { ?>' . $value['template'] . '<?php } ?>', $content, $count);
+				else $content = str_replace('[$' . $key . ']', '<?php echo ' . $value['content'] . '; ?>', $content, $count);
 
 				// add amount of replacements to our counter
 				$replaced += $count;

@@ -48,8 +48,8 @@ class SpoonDirectory
 		// validation
 		if($strict)
 		{
-			if(!@file_exists($source)) throw new SpoonDirectoryException('The given path ('. $source .') doesn\'t exist.');
-			if(!$overwrite && @file_exists($destination)) throw new SpoonDirectoryException('The given path ('. $destination .') already exists.');
+			if(!@file_exists($source)) throw new SpoonDirectoryException('The given path (' . $source . ') doesn\'t exist.');
+			if(!$overwrite && @file_exists($destination)) throw new SpoonDirectoryException('The given path (' . $destination . ') already exists.');
 		}
 
 		// is a directory
@@ -76,27 +76,27 @@ class SpoonDirectory
 			foreach($contentList as $item)
 			{
 				// copy dir (recursive)
-				if(is_dir($source .'/'. $item)) self::copy($source .'/'. $item, $destination .'/'. $item);
+				if(is_dir($source . '/' . $item)) self::copy($source . '/' . $item, $destination . '/' . $item);
 				else
 				{
 					// delete the file if needed
-					if($overwrite && SpoonFile::exists($destination .'/'. $item)) SpoonFile::delete($destination .'/'. $item);
+					if($overwrite && SpoonFile::exists($destination . '/' . $item)) SpoonFile::delete($destination . '/' . $item);
 
 					// copy file
-					if(!SpoonFile::exists($destination .'/'. $item))
+					if(!SpoonFile::exists($destination . '/' . $item))
 					{
 						// copy file
-						$return = @copy($source .'/'. $item, $destination .'/'. $item);
+						$return = @copy($source . '/' . $item, $destination . '/' . $item);
 
 						// check
 						if(!$return)
 						{
-							if($strict) throw new SpoonDirectoryException('The directory/file ('. $source .'/'. $item .') couldn\'t be copied.');
+							if($strict) throw new SpoonDirectoryException('The directory/file (' . $source . '/' . $item . ') couldn\'t be copied.');
 							return false;
 						}
 
 						// chmod
-						@chmod($destination .'/'. $item, $chmod);
+						@chmod($destination . '/' . $item, $chmod);
 					}
 				}
 			}
@@ -117,7 +117,7 @@ class SpoonDirectory
 				// check
 				if(!$return)
 				{
-					if($strict) throw new SpoonDirectoryException('The directory/file ('. $source .') couldn\'t be copied.');
+					if($strict) throw new SpoonDirectoryException('The directory/file (' . $source . ') couldn\'t be copied.');
 					return false;
 				}
 
@@ -140,7 +140,7 @@ class SpoonDirectory
 	 */
 	public static function create($directory, $chmod = 0777)
 	{
-		return @mkdir((string) $directory, $chmod, true);
+		return (!self::exists($directory)) ? @mkdir((string) $directory, $chmod, true) : true;
 	}
 
 
@@ -168,10 +168,10 @@ class SpoonDirectory
 				foreach((array) $list as $item)
 				{
 					// delete directory recursive
-					if(is_dir($directory .'/'. $item)) self::delete($directory .'/'. $item);
+					if(is_dir($directory . '/' . $item)) self::delete($directory . '/' . $item);
 
 					// delete file
-					else SpoonFile::delete($directory .'/'. $item);
+					else SpoonFile::delete($directory . '/' . $item);
 				}
 			}
 
@@ -225,7 +225,7 @@ class SpoonDirectory
 			$includeRegexp = (string) $includeRegexp;
 
 			// validate
-			if(!SpoonFilter::isValidRegexp($includeRegexp)) throw new SpoonDirectoryException('Invalid regular expression ('. $includeRegexp .').');
+			if(!SpoonFilter::isValidRegexp($includeRegexp)) throw new SpoonDirectoryException('Invalid regular expression (' . $includeRegexp . ').');
 		}
 
 		// define file list
@@ -247,7 +247,7 @@ class SpoonDirectory
 					if(($file != '.') && ($file != '..'))
 					{
 						// directory
-						if(is_dir($path .'/'. $file))
+						if(is_dir($path . '/' . $file))
 						{
 							// exclude certain files
 							if(count($excluded) != 0)
@@ -348,10 +348,10 @@ class SpoonDirectory
 			foreach($list as $item)
 			{
 				// get directory size if subdirectories should be included
-				if(is_dir($path .'/'. $item) && $subdirectories) $size += self::getSize($path .'/'. $item, $subdirectories);
+				if(is_dir($path . '/' . $item) && $subdirectories) $size += self::getSize($path . '/' . $item, $subdirectories);
 
 				// add filesize
-				else $size += filesize($path .'/'. $item);
+				else $size += filesize($path . '/' . $item);
 			}
 		}
 
@@ -406,8 +406,8 @@ class SpoonDirectory
 		$overwrite = (bool) $overwrite;
 
 		// validation
-		if(!file_exists($source)) throw new SpoonDirectoryException('The given path ('. $source .') doesn\'t exist.');
-		if(!$overwrite && file_exists($destination)) throw new SpoonDirectoryException('The given destination ('. $destination .') already exists.');
+		if(!file_exists($source)) throw new SpoonDirectoryException('The given path (' . $source . ') doesn\'t exist.');
+		if(!$overwrite && file_exists($destination)) throw new SpoonDirectoryException('The given destination (' . $destination . ') already exists.');
 
 		// create missing directories
 		if(!file_exists(dirname($destination))) self::create(dirname($destination));

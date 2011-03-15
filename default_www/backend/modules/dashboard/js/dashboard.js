@@ -16,8 +16,8 @@ jsBackend.dashboard =
 		$('#editDashboard').click(jsBackend.dashboard.load);
 		$('#doneEditingDashboard').click(jsBackend.dashboard.save);
 		$('.editDashboardClose').click(jsBackend.dashboard.close);
-		
 	},
+
 
 	close: function(evt) {
 		// prevent default
@@ -172,4 +172,4 @@ jsBackend.dashboard =
 }
 
 
-$(document).ready(function() { jsBackend.dashboard.init(); });
+$(document).ready(jsBackend.dashboard.init);

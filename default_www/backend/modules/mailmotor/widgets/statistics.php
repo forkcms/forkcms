@@ -68,21 +68,21 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		$this->tpl->assign('oSentMailings', true);
 
 		// require the helper class
-		require_once BACKEND_MODULES_PATH .'/mailmotor/engine/helper.php';
+		require_once BACKEND_MODULES_PATH . '/mailmotor/engine/helper.php';
 
 		// fetch the statistics for this mailing
 		$stats = BackendMailmotorCMHelper::getStatistics($mailing[0]['id'], true);
 
 		// reformat the send date
-		$mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) .' '. BL::lbl('At') .' '. SpoonDate::getDate('H:i', $mailing);
+		$mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) . ' ' . BL::lbl('At') . ' ' . SpoonDate::getDate('H:i', $mailing);
 
 		// get results
 		$results = array();
 		$results[] = array('label' => BL::lbl('MailmotorLatestMailing'), 'value' => $mailing[0]['name']);
 		$results[] = array('label' => BL::lbl('MailmotorSendDate'), 'value' => $mailing[0]['sent']);
-		$results[] = array('label' => BL::lbl('MailmotorSent'), 'value' => $stats['recipients'] .' ('. $stats['recipients_percentage'] .')');
-		$results[] = array('label' => BL::lbl('MailmotorOpened'), 'value' => $stats['unique_opens'] .' ('. $stats['unique_opens_percentage'] .')');
-		$results[] = array('label' => BL::lbl('MailmotorClicks'), 'value' => $stats['clicks_total']);
+		$results[] = array('label' => BL::lbl('MailmotorSent'), 'value' => $stats['recipients'] . ' (' . $stats['recipients_percentage'] . ')');
+		$results[] = array('label' => BL::lbl('MailmotorOpened'), 'value' => $stats['unique_opens'] . ' (' . $stats['unique_opens_percentage'] . ')');
+		$results[] = array('label' => BL::lbl('MailmotorClicks'), 'value' => $stats['clicks_total'] . ' (' . $stats['clicks_percentage'] . ')');
 
 		// there are some results
 		if(!empty($results))
@@ -119,7 +119,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 			$datagrid->setPaging(false);
 
 			// set edit link
-			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') .'&amp;email=[email]');
+			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
 
 			// set column functions
 			$datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);
@@ -150,7 +150,7 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 			$datagrid->setPaging(false);
 
 			// set edit link
-			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') .'&amp;email=[email]');
+			$datagrid->setColumnURL('email', BackendModel::createURLForAction('edit_address', 'mailmotor') . '&amp;email=[email]');
 
 			// set column functions
 			$datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getTimeAgo'), array('[created_on]'), 'created_on', true);

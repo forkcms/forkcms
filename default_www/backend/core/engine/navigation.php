@@ -37,16 +37,16 @@ class BackendNavigation
 	public function __construct()
 	{
 		// store in reference so we can access it from everywhere
-		Spoon::setObjectReference('navigation', $this);
+		Spoon::set('navigation', $this);
 
 		// grab from the reference
-		$this->URL = Spoon::getObjectReference('url');
+		$this->URL = Spoon::get('url');
 
 		// init var
 		$navigation = array();
 
 		// require navigation-file
-		require_once BACKEND_CACHE_PATH .'/navigation/navigation.php';
+		require_once BACKEND_CACHE_PATH . '/navigation/navigation.php';
 
 		// load it
 		$this->navigation = (array) $navigation;
@@ -84,7 +84,7 @@ class BackendNavigation
 			$URL = $value['url'];
 
 			// append extra parameters if needed
-			if(isset($value['data']['parameters']) && !empty($value['data']['parameters'])) $URL .='?'. http_build_query($value['data']['parameters']);
+			if(isset($value['data']['parameters']) && !empty($value['data']['parameters'])) $URL .='?' . http_build_query($value['data']['parameters']);
 
 			// start HTML
 			$HTML = '';
@@ -93,9 +93,9 @@ class BackendNavigation
 			if($currentDepth >= $startDepth - 1)
 			{
 				// start li
-				if($selected) $HTML .= '<li class="selected">'."\n";
-				else $HTML .= '<li>'."\n";
-				$HTML .= '	<a href="/'. NAMED_APPLICATION .'/'. BackendLanguage::getWorkingLanguage() .'/'. $URL .'">'. $label.'</a>'."\n";
+				if($selected) $HTML .= '<li class="selected">' . "\n";
+				else $HTML .= '<li>' . "\n";
+				$HTML .= '	<a href="/' . NAMED_APPLICATION . '/' . BackendLanguage::getWorkingLanguage() . '/' . $URL . '">' . $label . '</a>' . "\n";
 			}
 
 			// children?
@@ -105,21 +105,21 @@ class BackendNavigation
 				if($endDepth === null || $currentDepth < $endDepth)
 				{
 					// start ul if needed
-					if($currentDepth != 0) $HTML .= '<ul>'."\n";
+					if($currentDepth != 0) $HTML .= '<ul>' . "\n";
 
 					// loop childs
 					foreach($value['children'] as $subKey => $row)
 					{
-						$HTML .= '	'. $this->buildHTML($row, $subKey, $selectedKeys, $startDepth, $endDepth, $currentDepth + 1);
+						$HTML .= '	' . $this->buildHTML($row, $subKey, $selectedKeys, $startDepth, $endDepth, $currentDepth + 1);
 					}
 
 					// end ul if needed
-					if($currentDepth != 0) $HTML .= '</ul>'."\n";
+					if($currentDepth != 0) $HTML .= '</ul>' . "\n";
 				}
 			}
 
 			// end
-			if($currentDepth >= $startDepth - 1) $HTML .= '</li>'."\n";
+			if($currentDepth >= $startDepth - 1) $HTML .= '</li>' . "\n";
 		}
 
 		// return
@@ -236,7 +236,7 @@ class BackendNavigation
 	private function compareURL(array $value, $key, $keys = array())
 	{
 		// create active url
-		$activeURL = $this->URL->getModule() .'/'. $this->URL->getAction();
+		$activeURL = $this->URL->getModule() . '/' . $this->URL->getAction();
 
 		// add current key
 		$keys[] = $key;
@@ -293,7 +293,7 @@ class BackendNavigation
 		$selectedKeys = $this->getSelectedKeys();
 
 		// init html
-		$HTML = '<ul>'."\n";
+		$HTML = '<ul>' . "\n";
 
 		// loop the navigation elements
 		foreach($this->navigation as $key => $value)

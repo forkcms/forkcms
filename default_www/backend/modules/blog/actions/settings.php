@@ -73,10 +73,10 @@ class BackendBlogSettings extends BackendBaseActionEdit
 		$this->frm->addCheckbox('ping_services', BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false));
 
 		// add fields for RSS
-		$this->frm->addCheckbox('rss_meta', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), true));
-		$this->frm->addText('rss_title', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage()));
-		$this->frm->addTextarea('rss_description', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage()));
-		$this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage()));
+		$this->frm->addCheckbox('rss_meta', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), true));
+		$this->frm->addText('rss_title', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage()));
+		$this->frm->addTextarea('rss_description', BackendModel::getModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage()));
+		$this->frm->addText('feedburner_url', BackendModel::getModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage()));
 	}
 
 
@@ -115,7 +115,7 @@ class BackendBlogSettings extends BackendBaseActionEdit
 			if($feedburnerURL->isFilled())
 			{
 				// check if http:// is set and add if necessary
-				$feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://'. $feedburnerURL->getValue() : $feedburnerURL->getValue();
+				$feedburner = !strstr($feedburnerURL->getValue(), 'http://') ? 'http://' . $feedburnerURL->getValue() : $feedburnerURL->getValue();
 
 				// check if feedburner URL is valid
 				if(!SpoonFilter::isURL($feedburner)) $feedburnerURL->addError(BL::err('InvalidURL'));
@@ -137,14 +137,14 @@ class BackendBlogSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment_to_moderate', (bool) $this->frm->getField('notify_by_email_on_new_comment_to_moderate')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'notify_by_email_on_new_comment', (bool) $this->frm->getField('notify_by_email_on_new_comment')->getValue());
 				BackendModel::setModuleSetting($this->URL->getModule(), 'ping_services', (bool) $this->frm->getField('ping_services')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_title_'. BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_'. BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
-				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_'. BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
-				if($feedburner !== null) BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_'. BL::getWorkingLanguage(), $feedburner);
+				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_title_' . BL::getWorkingLanguage(), $this->frm->getField('rss_title')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_description_' . BL::getWorkingLanguage(), $this->frm->getField('rss_description')->getValue());
+				BackendModel::setModuleSetting($this->URL->getModule(), 'rss_meta_' . BL::getWorkingLanguage(), $this->frm->getField('rss_meta')->getValue());
+				if($feedburner !== null) BackendModel::setModuleSetting($this->URL->getModule(), 'feedburner_url_' . BL::getWorkingLanguage(), $feedburner);
 				if(BackendModel::getModuleSetting('core', 'akismet_key') === null) BackendModel::setModuleSetting($this->URL->getModule(), 'spamfilter', false);
 
 				// redirect to the settings page
-				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}
 		}
 	}

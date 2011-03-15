@@ -44,7 +44,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('categories') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('categories') . '&error=non-existing');
 	}
 
 
@@ -122,7 +122,7 @@ class BackendFaqEditCategory extends BackendBaseActionEdit
 				BackendFaqModel::updateCategory($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

@@ -1,8 +1,5 @@
 <?php
 
-// require the CM helper class
-require_once 'engine/helper.php';
-
 /**
  * BackendMailmotorConfig
  * This is the configuration-object for the mailmotor module
@@ -42,11 +39,14 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		// parent construct
 		parent::__construct($module);
 
+		// load additional engine files
+		$this->loadEngineFiles();
+
 		// get url object reference
-		$url = Spoon::isObjectReference('url') ? Spoon::getObjectReference('url') : null;
+		$url = Spoon::exists('url') ? Spoon::get('url') : null;
 
 		// do the client ID check if we're not in the settings page
-		if($url != null && $url->getAction() != 'settings' && strpos($url->getQueryString(), 'link_account') === false)
+		if($url != null && $url->getAction() != 'settings' && $url->getAction() != 'import_groups' && strpos($url->getQueryString(), 'link_account') === false && strpos($url->getQueryString(), 'load_client_info') === false)
 		{
 			// check for CM account
 			$this->checkForAccount();
@@ -54,8 +54,8 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 			// check for client ID
 			$this->checkForClientID();
 
-			// check for default groups
-			$this->checkForDefaultGroups();
+			// check for groups
+			$this->checkForGroups();
 		}
 	}
 
@@ -67,7 +67,18 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 	 */
 	private function checkForAccount()
 	{
-		if(!BackendMailmotorCMHelper::checkAccount()) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()));
+		// if the settings were set and we can make a connection
+		if($this->checkForSettings())
+		{
+			// no connection to campaignmonitor could be made, so the service is probably unreachable at this point
+			if(!BackendMailmotorCMHelper::checkAccount())
+			{
+				SpoonHTTP::redirect(BackendModel::createURLForAction('index', 'mailmotor', BL::getWorkingLanguage()) . '&error=could-not-connect');
+			}
+		}
+
+		// no settings were set
+		else SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '#tabSettingsAccount');
 	}
 
 
@@ -88,22 +99,45 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$pricePerEmail = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
 
 		// check if a price per e-mail is set
-		if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) .'&error=no-price-per-email');
+		if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '&error=no-price-per-email');
 	}
 
 
 	/**
-	 * Checks if any default groups are set for the active working language, and creates them if none were found
+	 * Checks for external groups, and parses a message to import them.
+	 *
+	 * @return	mixed	Returns false if the user already made groups.
+	 */
+	private function checkForExternalGroups()
+	{
+		// get all CM groups
+		$externalGroups = BackendMailmotorCMHelper::getCM()->getListsByClientId();
+
+		// return the result
+		return (!empty($externalGroups));
+	}
+
+
+	/**
+	 * Checks if any groups are made yet. Depending on the client that is linked to Fork, it will creates default groups if none were found in CampaignMonitor.
+	 * If they were, the user is presented with an overview to import all groups and their subscribers in Fork.
 	 *
 	 * @return	void
 	 */
-	private function checkForDefaultGroups()
+	private function checkForGroups()
 	{
-		// defaults are already set
-		if(BackendModel::getModuleSetting('mailmotor', 'cm_defaults_set')) return false;
+		// groups are already set
+		if(BackendModel::getModuleSetting('mailmotor', 'cm_groups_set')) return false;
 
 		// no CM data found
 		if(!BackendMailmotorCMHelper::checkAccount()) return false;
+
+		// check if there are external groups present in CampaignMonitor
+		if($this->checkForExternalGroups())
+		{
+			// external groups were found, so redirect to the import_groups action
+			SpoonHTTP::redirect(BackendModel::createURLForAction('import_groups', 'mailmotor'));
+		}
 
 		// fetch the default groups, language abbreviation is the array key
 		$groups = BackendMailmotorModel::getDefaultGroups();
@@ -115,18 +149,53 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 			if(!isset($groups[$language]))
 			{
 				// set group record
-				$group['name'] = 'Website ('. strtoupper($language) .')';
+				$group['name'] = 'Website (' . strtoupper($language) . ')';
 				$group['language'] = $language;
 				$group['is_default'] = 'Y';
 				$group['created_on'] = date('Y-m-d H:i:s');
 
-				// insert the group in CampaignMonitor
-				BackendMailmotorCMHelper::insertGroup($group);
+				try
+				{
+					// insert the group in CampaignMonitor
+					BackendMailmotorCMHelper::insertGroup($group);
+				}
+				catch(CampaignMonitorException $e)
+				{
+					// ignore
+				}
 			}
 		}
 
-		// reset the cm_defaults_set setting
-		BackendModel::setModuleSetting('mailmotor', 'cm_defaults_set', true);
+		// we have groups set, and default groups chosen
+		BackendModel::setModuleSetting('mailmotor', 'cm_groups_set', true);
+		BackendModel::setModuleSetting('mailmotor', 'cm_groups_defaults_set', true);
+	}
+
+
+	/**
+	 * Checks if all necessary settings were set.
+	 *
+	 * @return	void
+	 */
+	private function checkForSettings()
+	{
+		$url = BackendModel::getModuleSetting('mailmotor', 'cm_url');
+		$username = BackendModel::getModuleSetting('mailmotor', 'cm_username');
+		$password = BackendModel::getModuleSetting('mailmotor', 'cm_password');
+		$clientID = BackendModel::getModuleSetting('mailmotor', 'cm_client_id');
+
+		return (!empty($url) && !empty($username) && !empty($password) && !empty($clientID));
+	}
+
+
+	/**
+	 * Loads additional engine files
+	 *
+	 * @return	void
+	 */
+	private function loadEngineFiles()
+	{
+		require_once 'engine/helper.php';
 	}
 }
 

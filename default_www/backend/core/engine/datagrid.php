@@ -33,7 +33,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setDebug(SPOON_DEBUG);
 
 		// set the compile-directory, so compiled templates will be in a folder that is writable
-		$this->setCompileDirectory(BACKEND_CACHE_PATH .'/compiled_templates');
+		$this->setCompileDirectory(BACKEND_CACHE_PATH . '/compiled_templates');
 
 		// set attributes for the datagrid
 		$this->setAttributes(array('class' => 'datagrid', 'cellspacing' => 0, 'cellpadding' => 0, 'border' => 0));
@@ -61,7 +61,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setRowAttributes(array('id' => 'row-[id]'));
 
 		// set default template
-		$this->setTemplate(BACKEND_CORE_PATH .'/layout/templates/datagrid.tpl');
+		$this->setTemplate(BACKEND_CORE_PATH . '/layout/templates/datagrid.tpl');
 	}
 
 
@@ -83,8 +83,8 @@ class BackendDataGrid extends SpoonDataGrid
 		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam')))
 		{
 			// rebuild value, it should have special markup
-			$value = '<a href="'. $URL .'" class="button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton">
-						<span>'. $value .'</span>
+			$value = '<a href="' . $URL . '" class="button icon icon' . SpoonFilter::toCamelCase($name) . ' linkButton">
+						<span>' . $value . '</span>
 					</a>';
 
 			// reset URL
@@ -94,8 +94,8 @@ class BackendDataGrid extends SpoonDataGrid
 		if(in_array($name, array('use_revision', 'use_draft')))
 		{
 			// rebuild value, it should have special markup
-			$value = '<a href="'. $URL .'" class="button icon'. SpoonFilter::toCamelCase($name) .'">
-						<span>'. $value .'</span>
+			$value = '<a href="' . $URL . '" class="button icon' . SpoonFilter::toCamelCase($name) . '">
+						<span>' . $value . '</span>
 					</a>';
 
 			// reset URL
@@ -110,7 +110,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if(in_array($name, array('add', 'edit', 'delete', 'details', 'approve', 'mark_as_spam', 'use_revision', 'use_draft')))
 		{
 			// add special attributes for actions we know
-			$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name)));
+			$this->setColumnAttributes($name, array('class' => 'action action' . SpoonFilter::toCamelCase($name)));
 		}
 
 		// set header attributes
@@ -137,21 +137,21 @@ class BackendDataGrid extends SpoonDataGrid
 		$attributes = '';
 
 		// no anchorAttributes set means we set the default class attribute for the anchor
-		if(empty($anchorAttributes)) $anchorAttributes['class'] = 'button icon icon'. SpoonFilter::toCamelCase($name) .' linkButton';
+		if(empty($anchorAttributes)) $anchorAttributes['class'] = 'button icon icon' . SpoonFilter::toCamelCase($name) . ' linkButton';
 
 		// loop the attributes, build our attributes string
-		foreach($anchorAttributes as $attribute => $attributeValue) $attributes .= ' '.$attribute.'="'. $attributeValue .'"';
+		foreach($anchorAttributes as $attribute => $attributeValue) $attributes .= ' ' . $attribute . '="' . $attributeValue . '"';
 
 		// rebuild value
-		$value = '<a href="'. $URL .'"'. $attributes .'>
-						<span>'. $value .'</span>
+		$value = '<a href="' . $URL . '"' . $attributes . '>
+						<span>' . $value . '</span>
 					</a>';
 
 		// add the column to the datagrid
 		parent::addColumn($name, $label, $value, null, $title, $image, $sequence);
 
 		// set column attributes
-		$this->setColumnAttributes($name, array('class' => 'action action'. SpoonFilter::toCamelCase($name),
+		$this->setColumnAttributes($name, array('class' => 'action action' . SpoonFilter::toCamelCase($name),
 												'style' => 'width: 10%;'));
 
 		// set header attributes
@@ -176,7 +176,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$this->setColumnHidden('sequence');
 
 		// add a column for the handle, so users have something to hold while draging
-		$this->addColumn('dragAndDropHandle', null, '<span>'. BL::lbl('Move') .'</span>');
+		$this->addColumn('dragAndDropHandle', null, '<span>' . BL::lbl('Move') . '</span>');
 
 		// make sure the column with the handler is the first one
 		$this->setColumnsSequence('dragAndDropHandle');
@@ -215,7 +215,7 @@ class BackendDataGrid extends SpoonDataGrid
 	 */
 	public function setActiveTab($tab)
 	{
-		$this->setURL('#'. $tab, true);
+		$this->setURL('#' . $tab, true);
 	}
 
 
@@ -242,7 +242,7 @@ class BackendDataGrid extends SpoonDataGrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefore no confirm message/script can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefore no confirm message/script can be added.');
 
 			// exists
 			else
@@ -264,10 +264,10 @@ class BackendDataGrid extends SpoonDataGrid
 				}
 
 				// generate id
-				$id = 'confirm-'. (string) $uniqueId;
+				$id = 'confirm-' . (string) $uniqueId;
 
 				// set title if there wasn't one provided
-				if($title === null) $title = ucfirst(BL::lbl('Delete') .'?');
+				if($title === null) $title = ucfirst(BL::lbl('Delete') . '?');
 
 				// grab current value
 				$value = $this->columns[$column]->getValue();
@@ -275,15 +275,15 @@ class BackendDataGrid extends SpoonDataGrid
 				// add class for confirmation
 				if(substr_count($value, '<a') > 0)
 				{
-					if(substr_count($value, 'class="') > 0) $value = str_replace('class="', 'data-message-id="'. $id .'" class="askConfirmation ', $value);
-					else $value = str_replace('<a ', '<a data-message-id="'. $id .'" class="askConfirmation" ', $value);
+					if(substr_count($value, 'class="') > 0) $value = str_replace('class="', 'data-message-id="' . $id . '" class="askConfirmation ', $value);
+					else $value = str_replace('<a ', '<a data-message-id="' . $id . '" class="askConfirmation" ', $value);
 				}
 
 				// is it a link?
 				else throw new BackendException('The column doesn\'t contain a link.');
 
 				// append message
-				$value .= '<div id="'. $id .'" title="'. $title .'" style="display: none;"><p>'. $message .'</p></div>';
+				$value .= '<div id="' . $id . '" title="' . $title . '" style="display: none;"><p>' . $message . '</p></div>';
 
 				// reset value
 				$this->columns[$column]->setValue($value);
@@ -345,13 +345,13 @@ class BackendDataGrid extends SpoonDataGrid
 	public function setMassAction(SpoonFormDropdown $actionDropDown)
 	{
 		// buid HTML
-		$HTML = '<p><label for="'. $actionDropDown->getAttribute('id') .'">'. ucfirst(BL::lbl('WithSelected')) .'</label></p>
+		$HTML = '<p><label for="' . $actionDropDown->getAttribute('id') . '">' . ucfirst(BL::lbl('WithSelected')) . '</label></p>
 				<p>
-					'. $actionDropDown->parse() .'
+					' . $actionDropDown->parse() . '
 				</p>
 				<div class="buttonHolder">
 					<a href="#" class="submitButton button">
-						<span>'. ucfirst(BL::lbl('Execute')) .'</span>
+						<span>' . ucfirst(BL::lbl('Execute')) . '</span>
 					</a>
 				</div>';
 
@@ -372,7 +372,7 @@ class BackendDataGrid extends SpoonDataGrid
 	{
 		// build label and value
 		$label = '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>';
-		$value = '<span><input type="checkbox" name="id[]" value="'. $value .'" class="inputCheckbox" /></span>';
+		$value = '<span><input type="checkbox" name="id[]" value="' . $value . '" class="inputCheckbox" /></span>';
 
 		// add the column
 		$this->addColumn($column, $label, $value);
@@ -387,7 +387,7 @@ class BackendDataGrid extends SpoonDataGrid
 			$attributes = $this->getAttributes();
 
 			// set if needed
-			if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_'. time()));
+			if(!isset($attributes['id'])) $this->setAttributes(array('id' => 'table_' . time()));
 
 			// fetch the datagrid attributes
 			$attributes = $this->getAttributes();
@@ -410,7 +410,7 @@ class BackendDataGrid extends SpoonDataGrid
 	private function setSortingOptions()
 	{
 		// default URL
-		if(Spoon::isObjectReference('url')) $this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
+		if(Spoon::exists('url')) $this->setURL(BackendModel::createURLForAction(null, null, null, array('offset' => '[offset]', 'order' => '[order]', 'sort' => '[sort]'), false));
 
 		// sorting labels
 		$this->setSortingLabels(BL::lbl('SortAscending'), BL::lbl('SortedAscending'), BL::lbl('SortDescending'), BL::lbl('SortedDescending'));
@@ -433,7 +433,7 @@ class BackendDataGrid extends SpoonDataGrid
 		$value = BL::msg($message);
 
 		// reset the label
-		$instance->setLabel($instance->getLabel() .'<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">'. $value .'</span>');
+		$instance->setLabel($instance->getLabel() . '<abbr class="help">?</abbr><span class="tooltip hidden" style="display: none;">' . $value . '</span>');
 	}
 
 
@@ -610,7 +610,7 @@ class BackendDatagridPaging implements iSpoonDataGridPaging
 		$tpl->assign('goToLabel', BL::lbl('GoToPage'));
 
 		// cough it up
-		return $tpl->getContent(BACKEND_CORE_PATH .'/layout/templates/datagrid_paging.tpl');
+		return $tpl->getContent(BACKEND_CORE_PATH . '/layout/templates/datagrid_paging.tpl');
 	}
 }
 
@@ -707,7 +707,7 @@ class BackendDataGridFunctions
 		$var = preg_replace('/(?<!.)(\r\n|\r|\n){3,}$/m', '', $var);
 
 		// replace br's into p's
-		$var = '<p>'. str_replace("\n", '</p><p>', $var) .'</p>';
+		$var = '<p>' . str_replace("\n", '</p><p>', $var) . '</p>';
 
 		// cleanup
 		$var = str_replace("\n", '', $var);
@@ -775,7 +775,7 @@ class BackendDataGridFunctions
 		$timeAgo = SpoonDate::getTimeAgo($timestamp, BL::getInterfaceLanguage(), $format);
 
 		// return
-		return '<abbr title="'. SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage()) .'">'. $timeAgo .'</abbr>';
+		return '<abbr title="' . SpoonDate::getDate($format, $timestamp, BL::getInterfaceLanguage()) . '">' . $timeAgo . '</abbr>';
 	}
 
 
@@ -800,11 +800,11 @@ class BackendDataGridFunctions
 		// build html
 		$html = '<div class="datagridAvatar">' . "\n";
 		$html .= '	<div class="avatar av24">' . "\n";
-		$html .= '		<a href="'. BackendModel::createURLForAction('edit', 'users') . '&amp;id='. $id .'">'."\n";
-		$html .= '			<img src="'. FRONTEND_FILES_URL .'/backend_users/avatars/32x32/'. $avatar .'" width="24" height="24" alt="'. $nickname .'" />'."\n";
-		$html .= '		</a>'."\n";
+		$html .= '		<a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . "\n";
+		$html .= '			<img src="' . FRONTEND_FILES_URL . '/backend_users/avatars/32x32/' . $avatar . '" width="24" height="24" alt="' . $nickname . '" />' . "\n";
+		$html .= '		</a>' . "\n";
 		$html .= '	</div>';
-		$html .= '	<p><a href="'. BackendModel::createURLForAction('edit', 'users') . '&amp;id='. $id .'">' . $nickname . '</a></p>' . "\n";
+		$html .= '	<p><a href="' . BackendModel::createURLForAction('edit', 'users') . '&amp;id=' . $id . '">' . $nickname . '</a></p>' . "\n";
 		$html .= '</div>';
 
 		// return
@@ -828,7 +828,7 @@ class BackendDataGridFunctions
 		$title = (string) $title;
 
 		// return
-		return '<img src="'. $path .'/'. $image .'" alt="'. $title .'" />';
+		return '<img src="' . $path . '/' . $image . '" alt="' . $title . '" />';
 	}
 
 

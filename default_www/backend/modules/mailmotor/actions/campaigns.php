@@ -59,7 +59,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		$this->datagrid->setSortParameter('desc');
 
 		// set column URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('index') .'&amp;campaign=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('index') . '&amp;campaign=[id]');
 
 		// add the multicheckbox column
 		$this->datagrid->addColumn('checkbox', '<span class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" /></span>', '<span><input type="checkbox" name="id[]" value="[id]" class="inputCheckbox" /></span>');
@@ -78,7 +78,7 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array(__CLASS__, 'setStatisticsLink'), array('[id]'), 'statistics', true);
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_campaign') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_campaign') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// add styles
 		$this->datagrid->setColumnAttributes('name', array('class' => 'title'));
@@ -106,10 +106,10 @@ class BackendMailmotorCampaigns extends BackendBaseActionIndex
 	 * @return	string
 	 * @param	int $id		The ID of the campaign.
 	 */
-	public function setStatisticsLink($id)
+	public static function setStatisticsLink($id)
 	{
 		// build the link HTML
-		$html = '<a href="'. BackendModel::createURLForAction('statistics_campaign') .'&amp;id='. $id .'" class="button icon iconStats linkButton"><span>'. BL::lbl('Statistics') .'</span></a>';
+		$html = '<a href="' . BackendModel::createURLForAction('statistics_campaign') . '&amp;id=' . $id . '" class="button icon iconStats linkButton"><span>' . BL::lbl('Statistics') . '</span></a>';
 
 		// check if this campaign has sent mailings
 		$hasSentMailings = (BackendMailmotorModel::existsSentMailingsByCampaignID($id) > 0) ? true : false;

@@ -8,6 +8,7 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class LocaleInstall extends ModuleInstaller
@@ -20,7 +21,7 @@ class LocaleInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'locale' as a module
 		$this->addModule('locale', 'The module to manage your website/cms locale.');
@@ -44,7 +45,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'NoSelection', 'Er waren geen vertalingen geselecteerd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Add', 'vertaling toevoegen');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Added', 'De vertaling "%1$s" werd toegevoegd.');
-		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertalingen werden verwijderd.');
+		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertaling(en) werd(en) verwijderd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Edited', 'De vertaling "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'EditTranslation', 'bewerk vertaling "%1$s"');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpAddName', 'De Engelstalige referentie naar de vertaling, bvb. "Add". Deze waarde moet beginnen met een hoofdletter en mag geen spaties bevatten.');
@@ -107,6 +108,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EmailIsRequired', 'Gelieve een e-mailadres in te geven.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EmailIsUnknown', 'Dit e-mailadres zit niet in onze database.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'EndDateIsInvalid', 'Ongeldige einddatum');
+		$this->insertLocale('nl', 'backend', 'core', 'err', 'ErrorWhileSendingEmail', 'Er trad op een fout op tijdens het verzenden.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'FieldIsRequired', 'Dit veld is verplicht.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'ForkAPIKeys', 'Fork API-keys nog niet geconfigureerd.');
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'FormError', 'Er ging iets mis, kijk de gemarkeerde velden na.');
@@ -484,6 +486,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsInvalid', 'Please provide a valid e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsRequired', 'Please provide a valid e-mailaddress.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'EmailIsUnknown', 'This e-mailaddress is not in our database.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'ErrorWhileSendingEmail', 'Error while sending email.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'FieldIsRequired', 'This field is required.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'ForkAPIKeys', 'Fork API-keys are not configured.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'FormError', 'Something went wrong, check the marked fields.');
@@ -492,8 +495,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidDomain', 'Invalid domain.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidEmailPasswordCombination', 'Your e-mail and password combination is incorrect. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did you forget your password?</a>');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidName', 'Invalid name.');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidNumber', 'Invalid number.');
-		$this->insertLocale('nl', 'backend', 'core', 'err', 'InvalidParameters', 'Invalid parameters.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidNumber', 'Invalid number.');
+		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidParameters', 'Invalid parameters.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidURL', 'Invalid URL.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'InvalidValue', 'Invalid value.');
 		$this->insertLocale('en', 'backend', 'core', 'err', 'JavascriptNotEnabled', 'To use Fork CMS, javascript needs to be enabled. Activate javascript and refresh this page.');
@@ -865,8 +868,10 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'MessageIsRequired', 'Bericht is een verplicht veld.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'NameIsRequired', 'Gelieve een naam in te geven.');
 		$this->insertLocale('nl', 'frontend', 'core', 'err', 'SomethingWentWrong', 'Er ging iets mis.');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Advertisement', 'advertentie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Archive', 'archief');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Archives', 'archieven');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Breadcrumb', 'kruimelpad');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'By', 'door');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Category', 'categorie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Categories', 'categorieën');
@@ -877,10 +882,14 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Date', 'datum');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Email', 'e-mail');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EN', 'Engels');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'EnableJavascript', 'javascript inschakelen');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'FooterNavigation', 'voet navigatie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'FR', 'Frans');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'GoTo', 'ga naar');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'GoToPage', 'ga naar pagina');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'In', 'in');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Language', 'taal');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'MainNavigation', 'hoofdnavigatie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Message', 'bericht');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'More', 'meer');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Name', 'naam');
@@ -894,6 +903,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Search', 'zoeken');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchAgain', 'zoek opnieuw');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SearchTerm', 'zoekterm');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'SkipToContent', 'ga naar de inhoud');
+		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Subnavigation', 'subnavigatie');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Title', 'titel');
 		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Website', 'website');
@@ -904,6 +915,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Uw e-mail werd verzonden.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contactformulier');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EN', 'Engels');
+		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'EnableJavascript', 'Om deze site te gebruiken, is het aangeraden om javascript in te schakelen.');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'FR', 'Frans');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'MoreResults', 'Vind meer resultaten…');
 		$this->insertLocale('nl', 'frontend', 'core', 'msg', 'NL', 'Nederlands');
@@ -930,8 +942,10 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'MessageIsRequired', 'Message is a required field.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'NameIsRequired', 'Please provide a name.');
 		$this->insertLocale('en', 'frontend', 'core', 'err', 'SomethingWentWrong', 'Something went wrong.');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Advertisement', 'advertisement');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Archive', 'archive');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Archives', 'archives');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Breadcrumb', 'breadcrumb');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'By', 'by');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Category', 'category');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Categories', 'categories');
@@ -942,10 +956,14 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Date', 'date');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Email', 'e-mail');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'EN', 'English');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'EnableJavascript', 'enable javascript');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'FooterNavigation', 'footer navigation');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'FR', 'French');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'GoTo', 'go to');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'GoToPage', 'go to page');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'In', 'in');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Language', 'language');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'MainNavigation', 'main navigation');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Message', 'message');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'More', 'more');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Name', 'name');
@@ -959,6 +977,8 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Search', 'search');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchAgain', 'search again');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SearchTerm', 'searchterm');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'SkipToContent', 'skip to content');
+		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Subnavigation', 'subnavigation');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Tags', 'tags');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Title', 'title');
 		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Website', 'website');
@@ -969,6 +989,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactMessageSent', 'Your e-mail was sent.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'ContactSubject', 'E-mail via contact form.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EN', 'English');
+		$this->insertLocale('en', 'frontend', 'core', 'msg', 'EnableJavascript', 'Having javascript enabled is recommended for using this site.');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'FR', 'French');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'MoreResults', 'Find more results…');
 		$this->insertLocale('en', 'frontend', 'core', 'msg', 'NL', 'Dutch');

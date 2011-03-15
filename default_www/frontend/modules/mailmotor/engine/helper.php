@@ -59,10 +59,10 @@ class FrontendMailmotorCMHelper
 	public static function getCM($listId = null)
 	{
 		// campaignmonitor reference exists
-		if(!Spoon::isObjectReference('campaignmonitor'))
+		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
+			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
 				throw new SpoonFileException('The CampaignMonitor wrapper class is not found. Please locate and place it in /library/external');
@@ -80,7 +80,7 @@ class FrontendMailmotorCMHelper
 			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
 
 			// set CampaignMonitor object reference
-			Spoon::setObjectReference('campaignmonitor', $cm);
+			Spoon::set('campaignmonitor', $cm);
 
 			// get the default list ID
 			$listId = (!empty($listId)) ? $listId : self::getDefaultListID();
@@ -90,7 +90,7 @@ class FrontendMailmotorCMHelper
 		}
 
 		// return the CampaignMonitor object
-		return Spoon::getObjectReference('campaignmonitor');
+		return Spoon::get('campaignmonitor');
 	}
 
 
@@ -203,7 +203,7 @@ class FrontendMailmotorCMHelper
 			$subscriber['unsubscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 
 			// unsubscribe the user
-			$db->update('mailmotor_addresses_groups', $subscriber, 'email = ?', $email);
+			$db->update('mailmotor_addresses_groups', $subscriber, 'email = ? AND group_id = ?', array($email, $groupId));
 
 			// user unsubscribed
 			return true;

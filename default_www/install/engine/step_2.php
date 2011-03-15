@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class InstallerStep2 extends InstallerStep
@@ -27,7 +28,7 @@ class InstallerStep2 extends InstallerStep
 		if($requirement)
 		{
 			$variables[$variable] = 'ok';
-			$variables[$variable .'Status'] = 'ok';
+			$variables[$variable . 'Status'] = 'ok';
 			return true;
 		}
 
@@ -35,7 +36,7 @@ class InstallerStep2 extends InstallerStep
 		else
 		{
 			$variables[$variable] = 'nok';
-			$variables[$variable .'Status'] = 'not ok';
+			$variables[$variable . 'Status'] = 'not ok';
 			return false;
 		}
 	}
@@ -74,7 +75,10 @@ class InstallerStep2 extends InstallerStep
 		// check for cURL extension
 		self::checkRequirement('extensionCURL', extension_loaded('curl'), $variables);
 
-		// check for cURL extension
+		// check for libxml extension
+		self::checkRequirement('extensionLibXML', extension_loaded('libxml'), $variables);
+
+		// check for DOM extension
 		self::checkRequirement('extensionDOM', extension_loaded('dom'), $variables);
 
 		// check for SimpleXML extension
@@ -138,34 +142,34 @@ class InstallerStep2 extends InstallerStep
 		 */
 
 		// check if the backend-cache-directory is writable
-		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/backend/cache/')), $variables);
+		self::checkRequirement('fileSystemBackendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/backend/cache/')), $variables);
 
 		// check if the frontend-cache-directory is writable
-		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/frontend/cache/')), $variables);
+		self::checkRequirement('fileSystemFrontendCache', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/cache/')), $variables);
 
 		// check if the frontend-files-directory is writable
-		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW .'/frontend/files/')), $variables);
+		self::checkRequirement('fileSystemFrontendFiles', (defined('PATH_WWW') && self::isRecursivelyWritable(PATH_WWW . '/frontend/files/')), $variables);
 
 		// check if the library-directory is writable
 		self::checkRequirement('fileSystemLibrary', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY)), $variables);
 
 		// check if the library/external-directory is writable
-		self::checkRequirement('fileSystemLibraryExternal', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY .'/external')), $variables);
+		self::checkRequirement('fileSystemLibraryExternal', (defined('PATH_LIBRARY') && self::isWritable(PATH_LIBRARY . '/external')), $variables);
 
 		// check if the installer-directory is writable
-		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW .'/install/cache')), $variables);
+		self::checkRequirement('fileSystemInstaller', (defined('PATH_WWW') && self::isWritable(PATH_WWW . '/install/cache')), $variables);
 
 		// does the config.base.php file exist
-		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/config.base.php') && is_readable(PATH_LIBRARY .'/config.base.php')), $variables);
+		self::checkRequirement('fileSystemConfig', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/config.base.php') && is_readable(PATH_LIBRARY . '/config.base.php')), $variables);
 
 		// does the globals.base.php file exist
-		self::checkRequirement('fileSystemGlobals', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals.base.php') && is_readable(PATH_LIBRARY .'/globals.base.php')), $variables);
+		self::checkRequirement('fileSystemGlobals', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals.base.php') && is_readable(PATH_LIBRARY . '/globals.base.php')), $variables);
 
 		// does the globals_backend.base.php file exist
-		self::checkRequirement('fileSystemGlobalsBackend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_backend.base.php') && is_readable(PATH_LIBRARY .'/globals_backend.base.php')), $variables);
+		self::checkRequirement('fileSystemGlobalsBackend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_backend.base.php') && is_readable(PATH_LIBRARY . '/globals_backend.base.php')), $variables);
 
 		// does the globals_frontend.base.php file exist
-		self::checkRequirement('fileSystemGlobalsFrontend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY .'/globals_frontend.base.php') && is_readable(PATH_LIBRARY .'/globals_frontend.base.php')), $variables);
+		self::checkRequirement('fileSystemGlobalsFrontend', (defined('PATH_LIBRARY') && file_exists(PATH_LIBRARY . '/globals_frontend.base.php') && is_readable(PATH_LIBRARY . '/globals_frontend.base.php')), $variables);
 
 		// library path exists
 		self::checkRequirement('fileSystemPathLibrary', (defined('PATH_LIBRARY') && PATH_LIBRARY != ''), $variables);
@@ -267,7 +271,7 @@ class InstallerStep2 extends InstallerStep
 		$replace = array_values($variables);
 
 		// loop search values
-		foreach($search as $key => $value) $search[$key] = '{$'. $value .'}';
+		foreach($search as $key => $value) $search[$key] = '{$' . $value . '}';
 
 		// build output
 		$output = str_replace($search, $replace, $tpl);
@@ -293,7 +297,7 @@ class InstallerStep2 extends InstallerStep
 		$location = '';
 
 		// loop directories
-		foreach((array) glob($directory .'/*') as $filename)
+		foreach((array) glob($directory . '/*') as $filename)
 		{
 			// not a directory and equals 'spoon.php'
 			if(!is_dir($filename) && substr($filename, -9) == 'spoon.php')
@@ -354,10 +358,10 @@ class InstallerStep2 extends InstallerStep
 			if(($file != '.') && ($file != '..'))
 			{
 				// directory
-				if(is_dir($path .'/'. $file))
+				if(is_dir($path . '/' . $file))
 				{
 					// check if children are readable
-					if(!self::isRecursivelyWritable($path .'/'. $file)) return false;
+					if(!self::isRecursivelyWritable($path . '/' . $file)) return false;
 				}
 			}
 		}

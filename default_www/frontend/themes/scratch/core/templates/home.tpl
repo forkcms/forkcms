@@ -1,4 +1,4 @@
-{include:{$FRONTEND_CORE_PATH}/layout/templates/head.tpl}
+{include:{$THEME_PATH}/core/templates/head.tpl}
 
 <body id="home" class="{$LANGUAGE} frontend">
 	<div id="container">

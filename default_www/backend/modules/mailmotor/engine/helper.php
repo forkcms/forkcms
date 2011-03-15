@@ -87,7 +87,7 @@ class BackendMailmotorCMHelper
 	 *
 	 * @return	void
 	 * @param	string $name	The name of the custom field.
-	 * @param	int $groupId	The group ID you want to remove the custom field from.
+	 * @param	string $groupId	The CampaignMonitor ID of the list you want to remove the custom field from.
 	 */
 	public static function deleteCustomField($name, $groupId)
 	{
@@ -250,7 +250,7 @@ class BackendMailmotorCMHelper
 		// fetch campaignmonitor IDs
 		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
 															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $groupIds) .')',
+															WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $groupIds) . ')',
 															array('list'));
 	}
 
@@ -269,7 +269,7 @@ class BackendMailmotorCMHelper
 		// fetch campaignmonitor IDs
 		return (array) BackendModel::getDB()->getColumn('SELECT mci.cm_id
 															FROM mailmotor_campaignmonitor_ids AS mci
-															WHERE mci.type = ? AND mci.other_id IN ('. implode(',', $templates) .')',
+															WHERE mci.type = ? AND mci.other_id IN (' . implode(',', $templates) . ')',
 															array('template'));
 	}
 
@@ -286,6 +286,34 @@ class BackendMailmotorCMHelper
 
 
 	/**
+	 * Returns the clients for use in a dropdown
+	 *
+	 * @return	array
+	 */
+	public static function getClientsAsPairs()
+	{
+		// get the base stack of clients
+		$clients = self::getCM()->getClients();
+
+		// stop here if no clients were found
+		if(empty($clients)) return array();
+
+		// reserve results stack
+		$results = array();
+		$results[0] = ucfirst(BL::lbl('CreateNewClient', 'mailmotor'));
+
+		// loop the clients
+		foreach($clients as $client)
+		{
+			$results[$client['id']] = $client['name'];
+		}
+
+		// return the results
+		return $results;
+	}
+
+
+	/**
 	 * Returns the CampaignMonitor object.
 	 *
 	 * @return	CampaignMonitor
@@ -293,10 +321,10 @@ class BackendMailmotorCMHelper
 	public static function getCM()
 	{
 		// campaignmonitor reference exists
-		if(!Spoon::isObjectReference('campaignmonitor'))
+		if(!Spoon::exists('campaignmonitor'))
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
+			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so throw an exception
 				throw new SpoonFileException(BL::err('ClassDoesNotExist', 'mailmotor'));
@@ -314,11 +342,11 @@ class BackendMailmotorCMHelper
 			$cm = new CampaignMonitor($url, $username, $password, 5, self::getClientId());
 
 			// set CampaignMonitor object reference
-			Spoon::setObjectReference('campaignmonitor', $cm);
+			Spoon::set('campaignmonitor', $cm);
 		}
 
 		// return the CampaignMonitor object
-		return Spoon::getObjectReference('campaignmonitor');
+		return Spoon::get('campaignmonitor');
 	}
 
 
@@ -434,13 +462,13 @@ class BackendMailmotorCMHelper
 	 *
 	 * @return	array
 	 * @param	int $id							The id of the mailing.
-	 * @param	bool[optional] $fetchClicks		Should yje click-count be included?
-	 * @param	bool[optional] $fetchOpens		Should the open-count be included?
+	 * @param	bool[optional] $fetchClicks		If the click-count should be included.
+	 * @param	bool[optional] $fetchOpens		If the open-count should be included.
 	 */
 	public static function getStatistics($id, $fetchClicks = false, $fetchOpens = false)
 	{
 		// check if the mailing exists
-		if(!BackendMailmotorModel::existsMailing($id)) throw new SpoonException('No mailing found for id '. $id);
+		if(!BackendMailmotorModel::existsMailing($id)) throw new SpoonException('No mailing found for id ' . $id);
 
 		// fetch cmID
 		$cmId = self::getCampaignMonitorID('campaign', $id);
@@ -465,54 +493,40 @@ class BackendMailmotorCMHelper
 			$stats['clicks_total'] = 0;
 
 			// add percentages to these stats
-			$stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['bounces'] / $stats['recipients_total']) * 100) .'%';
-			$stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['recipients'] / $stats['recipients_total']) * 100) .'%';
-			$stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['unique_opens'] / $stats['recipients']) * 100) .'%';
-			$stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['unopens'] / $stats['recipients']) * 100) .'%';
+			$stats['bounces_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+			$stats['recipients_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+			$stats['unique_opens_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+			$stats['unopens_percentage'] = ($stats['recipients'] == 0) ? 0 : floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
 			$stats['clicks_percentage'] = ($stats['recipients'] == 0) ? 0 : ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
 			// fetch clicks or not?
 			if($fetchClicks)
 			{
 				// get detailed click reports
-				$subscriberClicks = self::getCM()->getCampaignSubscriberClicks($cmId);
+				$subscriberClicks = self::getCM()->getCampaignClicks($cmId);
 
 				// links have been clicked
 				if(!empty($subscriberClicks))
 				{
 					// declare array
 					$stats['clicked_links'] = array();
-					$stats['clicked_links_by'] = array();
+					$stats['clicked_links_by'] = $subscriberClicks;
 
 					// filter out the clicked links
-					foreach($subscriberClicks as $email => $data)
+					foreach($subscriberClicks as $link => $clickers)
 					{
-						// loop the data (we can assume $data is filled, otherwise the parent level would not be available either.)
-						foreach($data['clicked_links'] as $click)
-						{
-							// declare this array and set the starting value
-							if(!isset($stats['clicked_links'][$click['link']])) $stats['clicked_links'][$click['link']] = array('link' => $email, 'clicks' => 0);
-
-							// increment the amount of unique clicks for this link. If you want to catch all clicks, you can do += (int) $click['clicks'];
-							$stats['clicked_links'][$click['link']]['link'] = $click['link'];
-							$stats['clicked_links'][$click['link']]['clicks'] += $click['clicks'];
-
-							// declare this array and set the starting value
-							if(!isset($stats['clicked_links_by'][$click['link']][$email])) $stats['clicked_links_by'][$click['link']][$email] = array('email' => $email, 'clicks' => 0);
-
-							// store this address and its clicks
-							$stats['clicked_links_by'][$click['link']][$email]['clicks'] += (int) $click['clicks'];
-						}
+						// count the clickers
+						$clickerCount = count($clickers);
+						$stats['clicked_links'][] = array('link' => $link, 'clicks' => $clickerCount);
+						$stats['clicks_total'] += $clickerCount;
 					}
 
+					/*
 					// re-loop so we can fix the keys
 					foreach($stats['clicked_links'] as $link)
 					{
 						// store the link data
-						$stats['clicked_links'][] = array('link' => urlencode($link['link']), 'clicks' => $link['clicks']);
-
-						// add to the total clicks
-						$stats['clicks_total'] += (int) $link['clicks'];
+						$stats['clicked_links'][] = array('link' => urlencode($link['link']));
 
 						// unset the record with the link as key
 						unset($stats['clicked_links'][$link['link']]);
@@ -525,12 +539,13 @@ class BackendMailmotorCMHelper
 						foreach($clicks as $click)
 						{
 							// store the link data
-							$stats['clicked_links_by'][$link][] = array('email' => $click['email'], 'clicks' => $click['clicks']);
+							$stats['clicked_links_by'][$link][] = array('email' => $click['email']);
 
 							// unset the record with the link as key
 							unset($stats['clicked_links_by'][$link][$click['email']]);
 						}
 					}
+					*/
 				}
 			}
 
@@ -593,10 +608,10 @@ class BackendMailmotorCMHelper
 		}
 
 		// add percentages to these stats
-		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) .'%';
-		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) .'%';
-		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) .'%';
-		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) .'%';
+		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
 		$stats['clicks_percentage'] = ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
 		// return the stats
@@ -647,10 +662,10 @@ class BackendMailmotorCMHelper
 		}
 
 		// add percentages to these stats
-		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) .'%';
-		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) .'%';
-		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) .'%';
-		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) .'%';
+		$stats['bounces_percentage'] = floor(($stats['bounces'] / $stats['recipients_total']) * 100) . '%';
+		$stats['recipients_percentage'] = ceil(($stats['recipients'] / $stats['recipients_total']) * 100) . '%';
+		$stats['unique_opens_percentage'] = ceil(($stats['unique_opens'] / $stats['recipients']) * 100) . '%';
+		$stats['unopens_percentage'] = floor(($stats['unopens'] / $stats['recipients']) * 100) . '%';
 		$stats['clicks_percentage'] = ceil(($stats['clicks'] / $stats['recipients']) * 100) . '%';
 
 		// return the stats
@@ -712,11 +727,18 @@ class BackendMailmotorCMHelper
 		$groupId = BackendMailmotorModel::getMaximumIdForGroups() + 1;
 
 		// create list
-		$cmId = self::getCM()->createList($item['name'], $unsubscribeLink .'/?group='. $groupId .'&email=[email]');
+		$cmId = self::getCM()->createList($item['name'], $unsubscribeLink . '/?group=' . $groupId . '&email=[email]');
 
 		// a list was created
 		if($cmId)
 		{
+			// check if we have a default group set
+			if($item['is_default'] === 'Y' && $item['language'] != '0')
+			{
+				// set all defaults to N.
+				BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
+			}
+
 			// insert in database
 			$id = BackendMailmotorModel::insertGroup($item);
 
@@ -780,7 +802,7 @@ class BackendMailmotorCMHelper
 		if($result === false) throw new SpoonException('The mailing couldn\'t be created, please try again.');
 
 		// at this point $result should equal the CM ID, so let's attempt to send it
-		self::getCM()->sendCampaign($item['from_email'], $item['delivery_date'], $result);
+		self::getCM()->sendCampaign($result, $item['from_email'], $item['delivery_date']);
 	}
 
 
@@ -916,12 +938,18 @@ class BackendMailmotorCMHelper
 		// build unsubscribe link for this list
 		$unsubscribeLink = SITE_URL . BackendModel::getURLForBlock('mailmotor', 'unsubscribe', BL::getWorkingLanguage());
 
-		// a list was updated
-		if(self::getCM()->updateList($item['name'], $unsubscribeLink .'/?group='. $item['id'] .'&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id'])))
+		// update the group with CM
+		self::getCM()->updateList($item['name'], $unsubscribeLink . '/?group=' . $item['id'] . '&email=[email]', null, null, self::getCampaignMonitorID('list', $item['id']));
+
+		// check if we have a default group set
+		if($item['is_default'] === 'Y' && $item['language'] != '0')
 		{
-			// update in database
-			return (int) BackendMailmotorModel::updateGroup($item);
+			// set all defaults to N
+			BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
 		}
+
+		// update the group in our database
+		return (int) BackendMailmotorModel::updateGroup($item);
 	}
 
 
@@ -947,7 +975,7 @@ class BackendMailmotorCMHelper
 		if(!isset($item['content_plain_url'])) $item['content_plain_url'] = BackendMailmotorModel::getMailingPreviewURL($item['id'], 'plain', true);
 
 		// overwrite the name, because the previous one is taken -.-
-		$item['name'] .= ' (#'. rand(0, 999) .')';
+		$item['name'] .= ' (#' . rand(0, 999) . ')';
 
 		// re-insert the mailing in CM
 		self::insertMailing($item);

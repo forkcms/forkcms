@@ -44,7 +44,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exception
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -122,7 +122,7 @@ class BackendSearchEditSynonym extends BackendBaseActionEdit
 				BackendSearchModel::updateSynonym($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=edited-synonym&var='. urlencode($item['term']).'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=edited-synonym&var=' . urlencode($item['term']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

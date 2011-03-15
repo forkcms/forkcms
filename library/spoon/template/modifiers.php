@@ -130,7 +130,7 @@ class SpoonTemplateModifiers
 			if(count($function) != 2) throw new SpoonTemplateException('The array should contain the class and static method.');
 
 			// method doesn't exist
-			if(!method_exists($function[0], $function[1])) throw new SpoonTemplateException('The method "'. $function[1] .'" in the class '. $function[0] .' does not exist.');
+			if(!is_callable(array($function[0], $function[1]))) throw new SpoonTemplateException('The method "' . $function[1] . '" in the class ' . $function[0] . ' does not exist.');
 
 			// all fine
 			self::$modifiers[(string) $name] = $function;
@@ -140,7 +140,7 @@ class SpoonTemplateModifiers
 		else
 		{
 			// function doesn't exist
-			if(!function_exists((string) $function)) throw new SpoonTemplateException('The function "'. (string) $function .'" does not exist.');
+			if(!function_exists((string) $function)) throw new SpoonTemplateException('The function "' . (string) $function . '" does not exist.');
 
 			// all fine
 			self::$modifiers[(string) $name] = $function;

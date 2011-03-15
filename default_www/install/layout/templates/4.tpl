@@ -38,7 +38,7 @@
 				<p>{$ddmDefaultLanguage} {$ddmDefaultLanguageError}</p>
 			</div>
 			<h3>Example data</h3>
-			<p>If you are new to Fork CMS, you might prefer to have an example website set up.</p>
+			<p>If you are new to Fork CMS, you might prefer to have an example website with a default theme set up.</p>
 			<ul class="inputList">
 				<li>
 					{$chkExampleData} <label for="exampleData">Install example data </label>

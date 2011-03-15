@@ -36,10 +36,10 @@ class BackendMailmotorAjaxSaveSendDate extends BackendBaseAJAXAction
 
 		// reverse the date and make it a proper
 		$explodedDate = explode('/', $sendOnDate);
-		$sendOnDate = $explodedDate[2] .'-'. $explodedDate[1] .'-'. $explodedDate[0];
+		$sendOnDate = $explodedDate[2] . '-' . $explodedDate[1] . '-' . $explodedDate[0];
 
 		// calc full send timestamp
-		$sendTimestamp = strtotime($sendOnDate .' '. $sendOnTime);
+		$sendTimestamp = strtotime($sendOnDate . ' ' . $sendOnTime);
 
 		// build data
 		$item = array();

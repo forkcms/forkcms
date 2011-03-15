@@ -19,7 +19,7 @@ class AnalyticsInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'analytics' as a module
 		$this->addModule('analytics', 'The analytics module.');

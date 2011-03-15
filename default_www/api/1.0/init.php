@@ -97,23 +97,17 @@ class APIInit
 
 		// exceptions
 		$exceptions = array();
-		$exceptions['bl'] = BACKEND_CORE_PATH .'/engine/language.php';
-//		$exceptions['backendajaxaction'] = BACKEND_CORE_PATH .'/engine/ajax_action.php';
-		$exceptions['api'] = API_CORE_PATH .'/1.0/engine/api.php';
-//		$exceptions['backenddatagriddb'] = BACKEND_CORE_PATH .'/engine/datagrid.php';
-//		$exceptions['backenddatagridarray'] = BACKEND_CORE_PATH .'/engine/datagrid.php';
-//		$exceptions['backendbaseconfig'] = BACKEND_CORE_PATH .'/engine/base.php';
-//		$exceptions['backendbasecronjob'] = BACKEND_CORE_PATH .'/engine/base.php';
-//		$exceptions['backendpagesmodel'] = BACKEND_MODULES_PATH .'/pages/engine/model.php';
+		$exceptions['bl'] = BACKEND_CORE_PATH . '/engine/language.php';
+		$exceptions['api'] = API_CORE_PATH . '/1.0/engine/api.php';
 
 		// is it an exception
 		if(isset($exceptions[$className])) $pathToLoad = $exceptions[$className];
 
 		// backend
-		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = BACKEND_CORE_PATH .'/engine/'. str_replace('backend', '', $className) .'.php';
+		elseif(substr($className, 0, 7) == 'backend') $pathToLoad = BACKEND_CORE_PATH . '/engine/' . str_replace('backend', '', $className) . '.php';
 
 		// frontend
-		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH .'/engine/'. str_replace('frontend', '', $className) .'.php';
+		elseif(substr($className, 0, 8) == 'frontend') $pathToLoad = FRONTEND_CORE_PATH . '/engine/' . str_replace('frontend', '', $className) . '.php';
 
 		// file check in core
 		if($pathToLoad != '' && SpoonFile::exists($pathToLoad)) require_once $pathToLoad;
@@ -131,7 +125,7 @@ class APIInit
 				$parts = $parts[0];
 
 				// get root path constant and see if it exists
-				$rootPath = strtoupper(array_shift($parts)) .'_PATH';
+				$rootPath = strtoupper(array_shift($parts)) . '_PATH';
 				if(defined($rootPath))
 				{
 					foreach($parts as $i => $part)
@@ -144,14 +138,14 @@ class APIInit
 
 						// module
 						$module = '';
-						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) .'_';
+						for($j = 0; $j < $i; $j++) $module .= strtolower($parts[$j]) . '_';
 
 						// fix action & module
 						$action = str_replace($module, '', $action);
 						$module = substr($module, 0, -1);
 
 						// file to be loaded
-						$pathToLoad = constant($rootPath) .'/modules/'. $module .'/engine/'. $action .'.php';
+						$pathToLoad = constant($rootPath) . '/modules/' . $module . '/engine/' . $action . '.php';
 
 						// if it exists, load it!
 						if($pathToLoad != '' && SpoonFile::exists($pathToLoad))
@@ -174,17 +168,17 @@ class APIInit
 	private function definePaths()
 	{
 		// general paths
-		define('API_CORE_PATH', PATH_WWW .'/'. APPLICATION);
-		define('BACKEND_PATH', PATH_WWW .'/backend');
-		define('BACKEND_CACHE_PATH', BACKEND_PATH .'/cache');
-		define('BACKEND_CORE_PATH', BACKEND_PATH .'/core');
-		define('BACKEND_MODULES_PATH', BACKEND_PATH .'/modules');
+		define('API_CORE_PATH', PATH_WWW . '/' . APPLICATION);
+		define('BACKEND_PATH', PATH_WWW . '/backend');
+		define('BACKEND_CACHE_PATH', BACKEND_PATH . '/cache');
+		define('BACKEND_CORE_PATH', BACKEND_PATH . '/core');
+		define('BACKEND_MODULES_PATH', BACKEND_PATH . '/modules');
 
-		define('FRONTEND_PATH', PATH_WWW .'/frontend');
-		define('FRONTEND_CACHE_PATH', FRONTEND_PATH .'/cache');
-		define('FRONTEND_CORE_PATH', FRONTEND_PATH .'/core');
-		define('FRONTEND_MODULES_PATH', FRONTEND_PATH .'/modules');
-		define('FRONTEND_FILES_PATH', FRONTEND_PATH .'/files');
+		define('FRONTEND_PATH', PATH_WWW . '/frontend');
+		define('FRONTEND_CACHE_PATH', FRONTEND_PATH . '/cache');
+		define('FRONTEND_CORE_PATH', FRONTEND_PATH . '/core');
+		define('FRONTEND_MODULES_PATH', FRONTEND_PATH . '/modules');
+		define('FRONTEND_FILES_PATH', FRONTEND_PATH . '/files');
 	}
 
 
@@ -225,7 +219,7 @@ class APIInit
 			$type = mb_substr($index, 0, 3);
 
 			// is the index locale?
-			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$'. $index .'}';
+			if(in_array($type, array('act', 'err', 'lbl', 'msg'))) echo '{$' . $index . '}';
 
 			// return false, so the standard error handler isn't bypassed
 			else return false;
@@ -287,7 +281,7 @@ class APIInit
 			$headers .= "From: Spoon Library <no-reply@spoon-library.com>\n";
 
 			// send email
-			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured ('. SITE_DOMAIN .')', $output, $headers);
+			@mail(SPOON_DEBUG_EMAIL, 'Exception Occured (' . SITE_DOMAIN . ')', $output, $headers);
 		}
 
 		// build HTML for nice error
@@ -317,7 +311,7 @@ class APIInit
 		SpoonHTTP::setHeaders('content-type: application/javascript');
 
 		// output exception
-		echo '// '. $exception->getMessage();
+		echo '// ' . $exception->getMessage();
 
 		// stop script execution
 		exit;
@@ -353,21 +347,21 @@ class APIInit
 	private function requireGlobals()
 	{
 		// fetch config
-		$installed[] = @include_once dirname(__FILE__) .'/../../backend/cache/config/config.php';
+		$installed[] = @include_once dirname(__FILE__) . '/../../backend/cache/config/config.php';
 
 		// load the globals
-		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals_backend.php';
-		$installed[] = @include_once INIT_PATH_LIBRARY .'/globals_frontend.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_backend.php';
+		$installed[] = @include_once INIT_PATH_LIBRARY . '/globals_frontend.php';
 
 		// something could not be loaded
 		if(in_array(false, $installed))
 		{
 			// installation folder
-			$installer = dirname(__FILE__) .'/../install/cache';
+			$installer = dirname(__FILE__) . '/../install/cache';
 
 			// Fork has not yet been installed
-			if(file_exists($installer) && is_dir($installer) && !file_exists($installer .'/installed.txt'))
+			if(file_exists($installer) && is_dir($installer) && !file_exists($installer . '/installed.txt'))
 			{
 				// redirect to installer
 				header('Location: /install');
@@ -415,15 +409,15 @@ class APIInit
 			switch($this->type)
 			{
 				case 'backend_ajax':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionAJAXHandler');
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionAJAXHandler');
 				break;
 
 				case 'backend_js':
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionJSHandler');
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionJSHandler');
 				break;
 
 				default:
-					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ .'::exceptionHandler');
+					define('SPOON_EXCEPTION_CALLBACK', __CLASS__ . '::exceptionHandler');
 				break;
 			}
 		}

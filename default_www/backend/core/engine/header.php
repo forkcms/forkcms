@@ -52,11 +52,11 @@ class BackendHeader
 	public function __construct()
 	{
 		// store in reference so we can access it from everywhere
-		Spoon::setObjectReference('header', $this);
+		Spoon::set('header', $this);
 
 		// grab from the reference
-		$this->URL = Spoon::getObjectReference('url');
-		$this->tpl = Spoon::getObjectReference('template');
+		$this->URL = Spoon::get('url');
+		$this->tpl = Spoon::get('template');
 	}
 
 
@@ -85,10 +85,10 @@ class BackendHeader
 		if($overwritePath) $realPath = $fileName;
 
 		// we have to build the path, but core is a special one
-		elseif($module !== 'core') $realPath = '/backend/modules/'. $module .'/layout/css/'. $fileName;
+		elseif($module !== 'core') $realPath = '/backend/modules/' . $module . '/layout/css/' . $fileName;
 
 		// core is special because it isn't a real module
-		else $realPath = '/backend/core/layout/css/'. $fileName;
+		else $realPath = '/backend/core/layout/css/' . $fileName;
 
 		// add if not already added
 		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->cssFiles)) $this->cssFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
@@ -126,13 +126,13 @@ class BackendHeader
 		if($overwritePath) $realPath = $fileName;
 
 		// should we parse the js-file? as in assign variables
-		elseif($parseThroughPHP) $realPath = '/backend/js.php?module='. $module .'&amp;file='. $fileName .'&amp;language='. BackendLanguage::getWorkingLanguage();
+		elseif($parseThroughPHP) $realPath = '/backend/js.php?module=' . $module . '&amp;file=' . $fileName . '&amp;language=' . BackendLanguage::getWorkingLanguage();
 
 		// we have to build the path, but core is a special one
-		elseif($module !== 'core') $realPath = '/backend/modules/'. $module .'/js/'. $fileName;
+		elseif($module !== 'core') $realPath = '/backend/modules/' . $module . '/js/' . $fileName;
 
 		// core is special because it isn't a real module
-		else $realPath = '/backend/core/js/'. $fileName;
+		else $realPath = '/backend/core/js/' . $fileName;
 
 		// add if not already added
 		if(!in_array(array('path' => $realPath, 'add_timestamp' => $addTimestamp), $this->javascriptFiles)) $this->javascriptFiles[] = array('path' => $realPath, 'add_timestamp' => $addTimestamp);
@@ -151,7 +151,7 @@ class BackendHeader
 		$javascriptFiles = array();
 
 		// get last modified time for the header template
-		$lastModifiedTime = @filemtime($this->tpl->getCompileDirectory() .'/'. md5(realpath(BACKEND_CORE_PATH .'/layout/templates/header.tpl')) . '_header.tpl.php');
+		$lastModifiedTime = @filemtime($this->tpl->getCompileDirectory() . '/' . md5(realpath(BACKEND_CORE_PATH . '/layout/templates/header.tpl')) . '_header.tpl.php');
 
 		// reset lastmodified time if needed (SPOON_DEBUG is enabled or we don't get a decent timestamp)
 		if($lastModifiedTime === false || SPOON_DEBUG) $lastModifiedTime = time();
@@ -163,7 +163,7 @@ class BackendHeader
 			foreach($this->cssFiles as $file)
 			{
 				// add lastmodified time
-				if($file['add_timestamp'] !== false) $file['path'] .= (strpos($file['path'], '?') !== false) ? '&m='. $lastModifiedTime : '?m='. $lastModifiedTime;
+				if($file['add_timestamp'] !== false) $file['path'] .= (strpos($file['path'], '?') !== false) ? '&m=' . $lastModifiedTime : '?m=' . $lastModifiedTime;
 
 				// add
 				$cssFiles[] = array('path' => $file['path']);
@@ -193,10 +193,10 @@ class BackendHeader
 				else
 				{
 					// if the file is processed by PHP we don't want any caching
-					if(substr($file['path'], 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => $file['path'] .'&amp;m='. time());
+					if(substr($file['path'], 0, 11) == '/backend/js') $javascriptFiles[] = array('path' => $file['path'] . '&amp;m=' . time());
 
 					// add lastmodified time
-					else $javascriptFiles[] = array('path' => $file['path'] .'?m='. $lastModifiedTime);
+					else $javascriptFiles[] = array('path' => $file['path'] . '?m=' . $lastModifiedTime);
 				}
 			}
 		}

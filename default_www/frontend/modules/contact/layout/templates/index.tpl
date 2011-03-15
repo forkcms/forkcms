@@ -1,4 +1,4 @@
-<div id="contactFormIndex" class="mod">
+<section id="contactFormIndex" class="mod">
 	<div class="inner">
 		<div class="bd">
 			{option:contactHasFormError}<div class="message error"><p>{$errFormError}</p></div>{/option:contactHasFormError}
@@ -7,15 +7,15 @@
 
 			{option:!contactHideForm}
 				{form:contact}
-					<p>
+					<p{option:txtAuthorError} class="errorArea"{/option:txtAuthorError}>
 						<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtAuthor} {$txtAuthorError}
 					</p>
-					<p>
+					<p{option:txtEmailError} class="errorArea"{/option:txtEmailError}>
 						<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtEmail} {$txtEmailError}
 					</p>
-					<p>
+					<p{option:txtMessageError} class="errorArea"{/option:txtMessageError}>
 						<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 						{$txtMessage} {$txtMessageError}
 					</p>
@@ -26,4 +26,4 @@
 			{/option:!contactHideForm}
 		</div>
 	</div>
-</div>
+</section>

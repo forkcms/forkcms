@@ -88,7 +88,7 @@ class BackendContentBlocksAdd extends BackendBaseActionAdd
 				$item['revision_id'] = BackendContentBlocksModel::insert($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

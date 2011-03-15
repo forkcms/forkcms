@@ -18,12 +18,17 @@ class BlogInstall extends ModuleInstaller
 	 *
 	 * @return	int
 	 * @param	string $language	The language to use.
-	 * @param	string $name		The name of the category.
+	 * @param	string $title		The title of the category.
 	 * @param	string $url			The URL for the category.
 	 */
-	private function addCategory($language, $name, $url)
+	private function addCategory($language, $title, $url)
 	{
-		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
+		// build array
+		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+		$item['language'] = (string) $language;
+		$item['title'] = (string) $title;
+
+		return (int) $this->getDB()->insert('blog_categories', $item);
 	}
 
 
@@ -35,7 +40,7 @@ class BlogInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/data/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('blog', 'The blog module.');
@@ -94,30 +99,30 @@ class BlogInstall extends ModuleInstaller
 				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
 
 				// insert default category setting
-				$this->setSetting('blog', 'default_category_'. $language, $defaultCategoryId, true);
+				$this->setSetting('blog', 'default_category_' . $language, $defaultCategoryId, true);
 			}
 
 			// category exists
 			else
 			{
 				// current default categoryId
-				$currentDefaultCategoryId = $this->getSetting('blog', 'default_category_'. $language);
+				$currentDefaultCategoryId = $this->getSetting('blog', 'default_category_' . $language);
 
 				// does not exist
 				if(!$this->existsCategory($language, $currentDefaultCategoryId))
 				{
 					// insert default category setting
-					$this->setSetting('blog', 'default_category_'. $language, $currentCategoryId, true);
+					$this->setSetting('blog', 'default_category_' . $language, $currentCategoryId, true);
 				}
 			}
 
 			// feedburner URL
-			$this->setSetting('blog', 'feedburner_url_'. $language, '');
+			$this->setSetting('blog', 'feedburner_url_' . $language, '');
 
 			// RSS settings
-			$this->setSetting('blog', 'rss_meta_'. $language, true);
-			$this->setSetting('blog', 'rss_title_'. $language, 'RSS');
-			$this->setSetting('blog', 'rss_description_'. $language, '');
+			$this->setSetting('blog', 'rss_meta_' . $language, true);
+			$this->setSetting('blog', 'rss_title_' . $language, 'RSS');
+			$this->setSetting('blog', 'rss_description_' . $language, '');
 
 
 			// check if a page for blog already exists in this language
@@ -270,13 +275,13 @@ class BlogInstall extends ModuleInstaller
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array('id' => 1,
-											'category_id' => $this->getSetting('blog', 'default_category_'. $language),
+											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
 											'title' => 'Nunc sediam est',
-											'introduction' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample1.txt'),
-											'text' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample1.txt'),
+											'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+											'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
 											'status' => 'active',
 											'publish_on' => gmdate('Y-m-d H:i:00'),
 											'created_on' => gmdate('Y-m-d H:i:00'),
@@ -287,13 +292,13 @@ class BlogInstall extends ModuleInstaller
 
 			// insert sample blogpost 2
 			$db->insert('blog_posts', array('id' => 2,
-											'category_id' => $this->getSetting('blog', 'default_category_'. $language),
+											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
 											'language' => $language,
 											'title' => 'Lorem ipsum',
-											'introduction' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample1.txt'),
-											'text' => SpoonFile::getContent(PATH_WWW .'/backend/modules/blog/installer/data/'. $language .'/sample1.txt'),
+											'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+											'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
 											'status' => 'active',
 											'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
 											'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),

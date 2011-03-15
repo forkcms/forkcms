@@ -1,4 +1,4 @@
-<div id="subscribeFormWidget" class="mod">
+<section id="subscribeFormWidget" class="mod">
 	<div class="inner">
 		<div class="bd">
 			<form action="{$var|geturlforblock:'mailmotor':'subscribe'}" method="post">
@@ -8,9 +8,9 @@
 					<input type="text" value="" id="email" name="email" class="inputText" />
 				</p>
 				<p>
-					<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSend|ucfirst}" />
+					<input id="send" class="inputSubmit" type="submit" name="send" value="{$lblSubscribe|ucfirst}" />
 				</p>
 			</form>
 		</div>
 	</div>
-</div>
+</section>

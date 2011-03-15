@@ -31,15 +31,17 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			// get data
 			$this->record = (array) BackendUsersModel::get($this->id);
 
+			// @todo	check if god-user
+
 			// delete item
 			BackendUsersModel::delete($this->id);
 
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. $this->record['settings']['nickname']);
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . $this->record['settings']['nickname']);
 		}
 
 		// no user found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
 

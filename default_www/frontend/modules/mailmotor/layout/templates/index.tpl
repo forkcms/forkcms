@@ -1,4 +1,4 @@
-<div id="mailmotorIndex" class="mod">
+<section id="mailmotorIndex" class="mod">
 	<div class="inner">
 		<div class="bd">
 			{option:datagrid}
@@ -10,4 +10,4 @@
 			{/option:!datagrid}
 		</div>
 	</div>
-</div>
+</section>

@@ -38,7 +38,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$csv[] = array('email' => BackendModel::getModuleSetting('mailmotor', 'from_email'), 'name' => BackendModel::getModuleSetting('mailmotor', 'from_name'));
 
 		// download the file
-		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ',', '"', true);
+		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/example.csv', $csv, null, null, ',', '"', true);
 	}
 
 
@@ -73,6 +73,38 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 
 
 	/**
+	 * Reformats a subscriber record with custom fields to the necessary format used in the import.
+	 *
+	 * @return	array
+	 * @param	array $subscriber	The subscriber record as it comes out of the CSV.
+	 */
+	private function formatSubscriberCSVRow($subscriber)
+	{
+		// build record to insert
+		$item['EmailAddress'] = $subscriber['email'];
+		$item['Name'] = isset($subscriber['name']) ? $subscriber['name'] : null;
+		$item['CustomFields'] = array();
+
+		// unset the email (for the custom fields)
+		unset($subscriber['email']);
+
+		// check if there's something left in our record
+		if(!empty($subscriber))
+		{
+			// loop the fields in the records
+			foreach($subscriber as $name => $value)
+			{
+				// add this to the custom fields stack
+				$item['CustomFields'][] = array('Key' => $name, 'Value' => $value);
+			}
+		}
+
+		// return the record
+		return $item;
+	}
+
+
+	/**
 	 * Load the form
 	 *
 	 * @return	void
@@ -92,10 +124,90 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
 
 		// if no groups are found, redirect to overview
-		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=no-groups');
+		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
 
 		// add radiobuttons for groups
 		$this->frm->addRadiobutton('groups', $groups, (empty($this->groupId) ? null : $this->groupId));
+
+		// show the form
+		$this->tpl->assign('import', true);
+	}
+
+
+	/**
+	 * Processes the subscriber import. Returns an array with failed subscribers.
+	 *
+	 * @return	array			A list with failed subscribers.
+	 * @param	array $csv		The uploaded CSV file.
+	 * @param	int $groupID	The group ID for which we're importing.
+	 */
+	private function processImport($csv, $groupID)
+	{
+		// the CM list ID for the given group ID
+		$listID = BackendMailmotorCMHelper::getCampaignMonitorID('list', $groupID);
+
+		// reserve variables
+		$subscribers = array();
+
+		/*
+			IMPORTANT NOTE: CM only allows a maximum amount of 100 subscribers for each import. So we have to batch
+		*/
+		foreach($csv as $key => $record)
+		{
+			// no e-mail address set means stop here
+			if(empty($record['email'])) continue;
+
+			// build record to insert
+			$subscribers[$key] = $this->formatSubscriberCSVRow($record);
+		}
+
+		// divide the subscribers into batches of 100
+		$batches = array_chunk($subscribers, 100);
+		$failed = array();
+		$feedback = array();
+
+		// loop the batches
+		foreach($batches as $key => $batch)
+		{
+			// import every 100 subscribers
+			$feedback[$key] = BackendMailmotorCMHelper::getCM()->importSubscribers($batch, $listID);
+
+			// if the batch did not contain failed imports, we continue looping
+			if(empty($feedback[$key])) continue;
+
+			// merge the feedback results with the full failed set
+			$failed = array_merge($failed, $feedback[$key]);
+		}
+
+		// now we have to loop all uploaded CSV rows in order to provide a .csv with all failed records.
+		foreach($csv as $row)
+		{
+			// the subscriber didn't fail the import, so we proceed to insert him in our database
+			if(!in_array($row['email'], $failed))
+			{
+				// build subscriber record
+				$subscriber = array();
+				$subscriber['email'] = $row['email'];
+				$subscriber['source'] = 'import';
+				$subscriber['created_on'] = BackendModel::getUTCDate();
+				$subscriber['groups'] = $groupID;
+
+				// unset the email (for the custom fields)
+				unset($row['email']);
+
+				// save the address in our database, with the assigned custom fields
+				BackendMailmotorModel::saveAddress($subscriber, $groupID, $row);
+
+				// continue looping
+				continue;
+			}
+
+			// subscriber failed in import, so add his record to the fail-csv
+			$failedSubscribersCSV[] = $row;
+		}
+
+		// return the failed subscribers
+		return $failedSubscribersCSV;
 	}
 
 
@@ -120,28 +232,32 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			$fileCSV->isFilled(BL::err('CSVIsRequired'));
 
 			// convert the CSV file to an array
-			$csv = SpoonFileCSV::fileToArray($fileCSV->getTempFileName());
+			$csv = $fileCSV->isFilled() ? SpoonFileCSV::fileToArray($fileCSV->getTempFileName()) : null;
 
 			// check if the csv is valid
 			if($csv === false || empty($csv) || !isset($csv[0])) $fileCSV->addError(BL::err('InvalidCSV'));
 
-			// fetch the columns of the first row
-			$columns = array_keys($csv[0]);
-
-			// loop the columns
-			foreach($csv as $row)
+			// there was a csv file found
+			if(!empty($csv))
 			{
-				// fetch the row columns
-				$rowColumns = array_keys($row);
+				// fetch the columns of the first row
+				$columns = array_keys($csv[0]);
 
-				// check if the arrays match
-				if($rowColumns != $columns)
+				// loop the columns
+				foreach($csv as $row)
 				{
-					// add an error to the CSV files
-					$fileCSV->addError(BL::err('InvalidCSV'));
+					// fetch the row columns
+					$rowColumns = array_keys($row);
 
-					// exit loop
-					break;
+					// check if the arrays match
+					if($rowColumns != $columns)
+					{
+						// add an error to the CSV files
+						$fileCSV->addError(BL::err('InvalidCSV'));
+
+						// exit loop
+						break;
+					}
 				}
 			}
 
@@ -154,32 +270,31 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 			// no errors?
 			if($this->frm->isCorrect())
 			{
-				// convert the CSV file to an array
+				// convert the CSV file to an array, and fetch the group's CM ID
 				$csv = SpoonFileCSV::fileToArray($fileCSV->getTempFileName());
 
-				// loop the addresses in the CSV and add+subscribe them
-				foreach($csv as $record)
+				// process our import, and get the failed subscribers
+				$failedSubscribers = $this->processImport($csv, $values['groups']);
+
+				// show a detailed report
+				$this->tpl->assign('import', false);
+
+				// write a CSV file to the cache
+				$csvFile = 'import-report-' . SpoonFilter::urlise(BackendModel::getUTCDate()) . '.csv';
+				SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/' . $csvFile, $failedSubscribers);
+
+				// no failed subscribers found
+				if(empty($failedSubscribers))
 				{
-					// no e-mail address set means stop here
-					if(empty($record['email'])) continue;
-
-					// build record to insert
-					$item = array();
-					$item['email'] = $record['email'];
-					$item['source'] = BL::lbl('ImportNoun');
-					$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-
-					// unset the email (for the custom fields)
-					unset($record['email']);
-
-					// add/update a new subscriber
-					BackendMailmotorCMHelper::subscribe($item['email'], $values['groups'], $record);
-
-					// @later	Detailed reporting: downloadable .csv with all failed imports
+					// redirect to success message
+					$this->redirect(BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']));
 				}
 
-				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('addresses') .'&report=imported-addresses&var[]='. count($csv) .'&var[]='. count($values['groups']));
+				else
+				{
+					// redirect to failed message with an additional parameter to display a download link to the report-csv form cache.
+					$this->redirect(BackendModel::createURLForAction('addresses') . '&error=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']) . '&var[]=' . count($failedSubscribers) . '&csv=' . $csvFile);
+				}
 			}
 		}
 	}

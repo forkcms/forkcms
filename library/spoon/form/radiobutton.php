@@ -125,7 +125,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 			// loop attributes
 			foreach($this->attributes[(string) $element] as $key => $value)
 			{
-				$html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+				$html .= ' ' . $key . '="' . str_replace(array_keys($variables), array_values($variables), $value) . '"';
 			}
 		}
 
@@ -267,9 +267,9 @@ class SpoonFormRadiobutton extends SpoonFormElement
 		foreach($this->values as $value => $label)
 		{
 			// init vars
-			$name = 'rbt'. SpoonFilter::toCamelCase($this->name);
+			$name = 'rbt' . SpoonFilter::toCamelCase($this->name);
 			$element = array();
-			$element[$name] = '<input type="radio" name="'. $this->name .'" value="'. $value .'"';
+			$element[$name] = '<input type="radio" name="' . $this->name . '" value="' . $value . '"';
 
 			// checked status
 			if($value == $this->getChecked()) $element[$name] .= ' checked="checked"';
@@ -294,7 +294,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 		if($template !== null)
 		{
 			$template->assign($this->name, $radiobuttons);
-			$template->assign('rbt'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('rbt' . SpoonFilter::toCamelCase($this->name) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
 		}
 
 		return $radiobuttons;
@@ -310,7 +310,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 	public function setChecked($checked)
 	{
 		// doesnt exist
-		if(!isset($this->values[(string) $checked])) throw new SpoonFormException('This value "'. (string) $checked .'" is not among the list of values.');
+		if(!isset($this->values[(string) $checked])) throw new SpoonFormException('This value "' . (string) $checked . '" is not among the list of values.');
 
 		// exists
 		$this->checked = (string) $checked;
@@ -372,7 +372,7 @@ class SpoonFormRadiobutton extends SpoonFormElement
 			if(!isset($this->variables[$value['value']]['id']))
 			{
 				if(isset($this->attributes[$value['value']]['id'])) $this->variables[$value['value']]['id'] = $this->attributes[$value['value']]['id'];
-				else $this->variables[$value['value']]['id'] = SpoonFilter::toCamelCase($this->name . '_'. $value['value'], '_', true);
+				else $this->variables[$value['value']]['id'] = SpoonFilter::toCamelCase($this->name . '_' . $value['value'], '_', true);
 			}
 
 			// add some custom vars

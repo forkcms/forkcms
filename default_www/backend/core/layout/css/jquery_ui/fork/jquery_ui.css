@@ -307,6 +307,7 @@ div.tabs ul li.selected {
 	background: #FFF;
 	border: 1px solid #AAA;
 	z-index: 99 !important;
+	display: none;
 }
 
 /*

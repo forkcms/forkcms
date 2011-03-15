@@ -66,7 +66,7 @@ class SpoonFormAttributes extends SpoonFormElement
 		foreach($this->attributes as $key => $value)
 		{
 			// class?
-			if($key == 'class' && method_exists($this, 'getClassHTML'))
+			if($key == 'class' && is_callable(array($this, 'getClassHTML')))
 			{
 				$html .= $this->getClassHTML();
 			}
@@ -74,8 +74,8 @@ class SpoonFormAttributes extends SpoonFormElement
 			// other elements
 			else
 			{
-				$html .= ' '. $key;
-				if($value !== null) $html .= '="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+				$html .= ' ' . $key;
+				if($value !== null) $html .= '="' . str_replace(array_keys($variables), array_values($variables), $value) . '"';
 			}
 		}
 
@@ -97,7 +97,7 @@ class SpoonFormAttributes extends SpoonFormElement
 		$value = ($value !== null) ? (string) $value : null;
 
 		// key is NOT allowed
-		if(in_array(strtolower($key), $this->reservedAttributes)) throw new SpoonFormException('The key "'. $key .'" is a reserved attribute and can NOT be overwritten.');
+		if(in_array(strtolower($key), $this->reservedAttributes)) throw new SpoonFormException('The key "' . $key . '" is a reserved attribute and can NOT be overwritten.');
 
 		// set attribute
 		$this->attributes[strtolower($key)] = $value;

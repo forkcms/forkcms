@@ -31,9 +31,9 @@ class FrontendRSS extends SpoonFeedRSS
 
 		// set feed properties
 		$this->setLanguage(FRONTEND_LANGUAGE);
-		$this->setCopyright(SpoonDate::getDate('Y') .' '. FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE));
+		$this->setCopyright(SpoonDate::getDate('Y') . ' ' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE));
 		$this->setGenerator(SITE_RSS_GENERATOR);
-		$this->setImage(SITE_URL . FRONTEND_CORE_URL .'/layout/images/rss_image.png', $title, $link);
+		$this->setImage(SITE_URL . FRONTEND_CORE_URL . '/layout/images/rss_image.png', $title, $link);
 
 		// theme was set
 		if(FrontendModel::getModuleSetting('core', 'theme', null) != null)
@@ -42,10 +42,10 @@ class FrontendRSS extends SpoonFeedRSS
 			$theme = FrontendModel::getModuleSetting('core', 'theme', null);
 
 			// theme rss image exists
-			if(SpoonFile::exists(PATH_WWW .'/frontend/themes/'. $theme .'/core/images/rss_image.png'))
+			if(SpoonFile::exists(PATH_WWW . '/frontend/themes/' . $theme . '/core/images/rss_image.png'))
 			{
 				// set rss image
-				$this->setImage(SITE_URL . '/frontend/themes/'. $theme .'/core/images/rss_image.png', $title, $link);
+				$this->setImage(SITE_URL . '/frontend/themes/' . $theme . '/core/images/rss_image.png', $title, $link);
 			}
 		}
 	}
@@ -105,7 +105,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 
 		// replace URLs and images
 		$search = array('href="/', 'src="/');
-		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
+		$replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 
 		// replace links to files
 		$content = str_replace($search, $replace, $content);
@@ -127,7 +127,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 			foreach($matches[1] as $i => $link)
 			{
 				$searchLinks[] = $matches[0][$i];
-				$replaceLinks[] = 'href="'. FrontendModel::addURLParameters($link, $this->utm) .'"';
+				$replaceLinks[] = 'href="' . FrontendModel::addURLParameters($link, $this->utm) . '"';
 			}
 
 			// replace
@@ -151,7 +151,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 		$author = (string) $author;
 
 		// add fake-emailaddress
-		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) .'@example.com ('. $author .')';
+		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
 
 		// set author
 		parent::setAuthor($author);

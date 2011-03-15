@@ -79,7 +79,7 @@ jsBackend.mailmotor.chartPieChart =
 			tooltip: {
 				formatter: function() {
 					var percentage = String(this.point.percentage);
-					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, percentage.indexOf('.') + 3) + '%)';
+					return '<b>'+ this.point.name +'</b>: '+ this.y + ' (' + percentage.substring(0, percentage.indexOf('.') + 4) + '%)';
 				},
 				borderWidth: 2,
 				shadow: false
@@ -162,6 +162,53 @@ jsBackend.mailmotor.linkAccount =
 			// do the call to link the account
 			jsBackend.mailmotor.linkAccount.doCall();
 		});
+		
+		// create client is checked
+		$('#clientId').change(function(e)
+		{
+			var clientId = $(this).val();
+
+			// '0' is the 'create new client' option, so we have to reset the input
+			if(clientId == '0')
+			{
+				$('#companyName').val('');
+				$('#contactName').val('');
+				$('#contactEmail').val('');
+			}
+			
+			// an existing client was chosen, so we have to update the info fields with the current details of the client
+			else
+			{
+				$.ajax(
+				{
+					cache: false, 
+					url: '/backend/ajax.php?module=' + jsBackend.current.module + '&action=load_client_info&language=' + jsBackend.current.language,
+					data: 'client_id='+ clientId,
+					success: function(data, textStatus)
+					{
+						$.each($('#countries').find('option'), function(index, item)
+						{
+							if($(this).text() == data.data.country)
+							{
+								$(this).attr('selected', true);
+							}
+						});
+						
+						$.each($('#timezones').find('option'), function(index, item)
+						{
+							if($(this).text() == data.data.timezone)
+							{
+								$(this).attr('selected', true);
+							}
+						});
+						
+						$('#companyName').val(data.data.company);
+						$('#contactName').val(data.data.contact_name);
+						$('#contactEmail').val(data.data.email);
+					}
+				});
+			}
+		});
 	},
 
 
@@ -186,10 +233,7 @@ jsBackend.mailmotor.linkAccount =
 				if(data.code == 200)
 				{
 					// client_id field is set
-					if(data.data.client_id) window.location = document.location.pathname +'?token=true&report='+ data.data.message;
-
-					// client_id field was empty, so a redirect is easier to filter out the new form
-					else window.location = document.location.pathname +'?token=true';
+					window.location = document.location.pathname +'?token=true&report='+ data.data.message +'#tabSettingsClient';
 				}
 				else
 				{
@@ -543,4 +587,4 @@ jsBackend.mailmotor.templateSelection =
 }
 
 
-$(document).ready(function() { jsBackend.mailmotor.init(); });
+$(document).ready(jsBackend.mailmotor.init);

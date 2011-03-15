@@ -29,13 +29,13 @@ jsBackend.blog.category =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.datagrid td.name').length > 0)
+		if($('.datagrid td.title').length > 0)
 		{
 			// buil ajax-url
 			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=edit_category&language='+ jsBackend.current.language;
 
 			// bind
-			$('.datagrid td.name').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
+			$('.datagrid td.title').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
 		}
 	},
 
@@ -63,4 +63,4 @@ jsBackend.blog.controls =
 }
 
 
-$(document).ready(function() { jsBackend.blog.init(); });
+$(document).ready(jsBackend.blog.init);

@@ -33,13 +33,13 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		foreach($files as $file)
 		{
 			// get info
-			$fileinfo = SpoonFile::getInfo($this->cachePath .'/'. $file);
+			$fileinfo = SpoonFile::getInfo($this->cachePath . '/' . $file);
 
 			// file is more than one week old
 			if($fileinfo['modification_date'] < strtotime('-1 week'))
 			{
 				// delete file
-				SpoonFile::delete($this->cachePath .'/'. $file);
+				SpoonFile::delete($this->cachePath . '/' . $file);
 			}
 		}
 	}
@@ -68,7 +68,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		parent::execute();
 
 		// init vars
-		$this->cachePath = BACKEND_CACHE_PATH .'/analytics';
+		$this->cachePath = BACKEND_CACHE_PATH . '/analytics';
 
 		// get parameters
 		$page = trim(SpoonFilter::getGetValue('page', null, ''));
@@ -91,7 +91,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 
 				// redefine vars
 				$page = 'all';
-				$startTimestamp = strtotime('-1'. $interval);
+				$startTimestamp = strtotime('-1' . $interval);
 				$endTimestamp = time();
 			}
 		}
@@ -100,7 +100,7 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 		elseif($page != '' && $identifier != '' && $startTimestamp !== 0 && $endTimestamp !== 0)
 		{
 			// init vars
-			$filename = $this->cachePath .'/'. $page . ($pageId != '' ? '_'. $pageId : '') .'_'. $identifier .'.txt';
+			$filename = $this->cachePath . '/' . $page . ($pageId != '' ? '_' . $pageId : '') . '_' . $identifier . '.txt';
 
 			// is everything still set?
 			if(BackendAnalyticsHelper::getStatus() != 'UNAUTHORIZED')
@@ -296,13 +296,13 @@ class BackendAnalyticsCronjobGetData extends BackendBaseCronjob
 			if($page == 'detail_page')
 			{
 				// nothing in cache
-				if(!isset($data['page'. $pageId]) || $force)
+				if(!isset($data['page' . $pageId]) || $force)
 				{
 					// fetch from google
 					$gaResults = BackendAnalyticsHelper::getDataForPage($pageId, $startTimestamp, $endTimestamp);
 
 					// set cache
-					$data['page_'. $pageId] = $gaResults;
+					$data['page_' . $pageId] = $gaResults;
 				}
 			}
 

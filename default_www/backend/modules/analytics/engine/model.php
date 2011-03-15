@@ -92,7 +92,7 @@ class BackendAnalyticsModel
 		$ids = (array) $ids;
 
 		// delete data
-		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN ('. implode(',', $ids) .')');
+		BackendModel::getDB(true)->delete('analytics_landing_pages', 'id IN (' . implode(',', $ids) . ')');
 	}
 
 
@@ -145,13 +145,13 @@ class BackendAnalyticsModel
 		$aggregates = self::getDataFromCacheByType('aggregates', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($aggregates === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// return data
 		return $aggregates;
@@ -192,13 +192,13 @@ class BackendAnalyticsModel
 		$aggregates = self::getDataFromCacheByType('aggregates_total', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($aggregates === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// return data
 		return $aggregates;
@@ -240,13 +240,13 @@ class BackendAnalyticsModel
 	private static function getCacheFile($startTimestamp, $endTimestamp)
 	{
 		// get filename
-		$filename = (string) $startTimestamp .'_'. (string) $endTimestamp .'.xml';
+		$filename = (string) $startTimestamp . '_' . (string) $endTimestamp . '.xml';
 
 		// file exists
-		if(SpoonFile::exists(BACKEND_CACHE_PATH .'/analytics/'. $filename))
+		if(SpoonFile::exists(BACKEND_CACHE_PATH . '/analytics/' . $filename))
 		{
 			// get the xml (cast is important otherwise we cant use array_walk_recursive)
-			$xml = simplexml_load_file(BACKEND_CACHE_PATH .'/analytics/'. $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
+			$xml = simplexml_load_file(BACKEND_CACHE_PATH . '/analytics/' . $filename, 'SimpleXMLElement', LIBXML_NOCDATA);
 
 			// parse xml to array
 			return self::parseXMLToArray($xml);
@@ -316,17 +316,17 @@ class BackendAnalyticsModel
 
 		// get data from cache
 		$items = array();
-		$items['aggregates'] = self::getAggregatesFromCacheByType('page_'. $id, $startTimestamp, $endTimestamp);
-		$items['entries'] = self::getDataFromCacheByType('page_'. $id, $startTimestamp, $endTimestamp);
+		$items['aggregates'] = self::getAggregatesFromCacheByType('page_' . $id, $startTimestamp, $endTimestamp);
+		$items['entries'] = self::getDataFromCacheByType('page_' . $id, $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items['aggregates'] === false || $items['entries'] === false) self::redirectToLoadingPage($action, array('page_id' => $id));
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// update date_viewed for this page
 		BackendAnalyticsModel::updatePageDateViewed($id);
@@ -391,13 +391,13 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('exit_pages', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// init vars
 		$results = array();
@@ -411,7 +411,7 @@ class BackendAnalyticsModel
 			$results[$i]['page_encoded'] = urlencode($pageData['pagePath']);
 			$results[$i]['exits'] = (int) $pageData['exits'];
 			$results[$i]['pageviews'] = (int) $pageData['pageviews'];
-			$results[$i]['exit_rate'] = ($pageData['pageviews'] == 0 ? 0 : number_format(((int) $pageData['exits'] / $pageData['pageviews']) * 100, 2)) .'%';
+			$results[$i]['exit_rate'] = ($pageData['pageviews'] == 0 ? 0 : number_format(((int) $pageData['exits'] / $pageData['pageviews']) * 100, 2)) . '%';
 		}
 
 		// return results
@@ -449,8 +449,8 @@ class BackendAnalyticsModel
 		{
 			// init var
 			$result = array();
-			$startDate = date('Y-m-d', $startTimestamp) .' 00:00:00';
-			$endDate = date('Y-m-d', $endTimestamp) .' 00:00:00';
+			$startDate = date('Y-m-d', $startTimestamp) . ' 00:00:00';
+			$endDate = date('Y-m-d', $endTimestamp) . ' 00:00:00';
 
 			// no longer up to date, not for the period we need - get new one
 			if($item['updated_on'] < time() - 43200 || $item['start_date'] != $startDate || $item['end_date'] != $endDate)
@@ -462,7 +462,7 @@ class BackendAnalyticsModel
 				$result['page_path'] = $item['page_path'];
 				$result['entrances'] = (isset($metrics['entrances']) ? $metrics['entrances'] : 0);
 				$result['bounces'] = (isset($metrics['bounces']) ? $metrics['bounces'] : 0);
-				$result['bounce_rate'] = ($metrics['entrances'] == 0 ? 0 : number_format(((int) $metrics['bounces'] / $metrics['entrances']) * 100, 2)) .'%';
+				$result['bounce_rate'] = ($metrics['entrances'] == 0 ? 0 : number_format(((int) $metrics['bounces'] / $metrics['entrances']) * 100, 2)) . '%';
 				$result['start_date'] = $startDate;
 				$result['end_date'] = $endDate;
 				$result['updated_on'] = date('Y-m-d H:i:s');
@@ -498,10 +498,10 @@ class BackendAnalyticsModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// there is no cache file
-		if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/tinymce_link_list_'. $language .'.js')) return array();
+		if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js')) return array();
 
 		// read the cache file
-		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH .'/navigation/tinymce_link_list_'. $language .'.js');
+		$cacheFile = SpoonFile::getContent(FRONTEND_CACHE_PATH . '/navigation/tinymce_link_list_' . $language . '.js');
 
 		// get the array
 		preg_match('/new Array\((.*)\);$/s', $cacheFile, $matches);
@@ -551,13 +551,13 @@ class BackendAnalyticsModel
 		if($forceCache) return $items;
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// return data
 		return $items;
@@ -607,13 +607,13 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('pages', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// init vars
 		$results = array();
@@ -631,8 +631,8 @@ class BackendAnalyticsModel
 			$results[$i]['pageviews'] = (int) $item['pageviews'];
 			$results[$i]['pages_per_visit'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['pageviews'] / $item['visits']), 2));
 			$results[$i]['time_on_site'] = BackendAnalyticsModel::getTimeFromSeconds(($item['entrances'] == 0 ? 0 : number_format(((int) $item['timeOnSite'] / $item['entrances']), 2)));
-			$results[$i]['new_visits_percentage'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['newVisits'] / $item['visits']) * 100, 2)) .'%';
-			$results[$i]['bounce_rate'] = ($item['entrances'] == 0 ? 0 : number_format(((int) $item['bounces'] / $item['entrances']) * 100, 2)) .'%';
+			$results[$i]['new_visits_percentage'] = ($item['visits'] == 0 ? 0 : number_format(((int) $item['newVisits'] / $item['visits']) * 100, 2)) . '%';
+			$results[$i]['bounce_rate'] = ($item['entrances'] == 0 ? 0 : number_format(((int) $item['bounces'] / $item['entrances']) * 100, 2)) . '%';
 		}
 
 		// return results
@@ -694,7 +694,7 @@ class BackendAnalyticsModel
 		$timeSeconds = (int) floor($seconds - ($timeHours * 3600) - ($timeMinutes * 60));
 
 		// return formatted time
-		return str_pad($timeHours, 2, '0', STR_PAD_LEFT) .':'. str_pad($timeMinutes, 2, '0', STR_PAD_LEFT) .':'. str_pad($timeSeconds, 2, '0', STR_PAD_LEFT);
+		return str_pad($timeHours, 2, '0', STR_PAD_LEFT) . ':' . str_pad($timeMinutes, 2, '0', STR_PAD_LEFT) . ':' . str_pad($timeSeconds, 2, '0', STR_PAD_LEFT);
 	}
 
 
@@ -715,13 +715,13 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// init vars
 		$results = array();
@@ -759,13 +759,13 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// init
 		$results = array();
@@ -778,9 +778,9 @@ class BackendAnalyticsModel
 		{
 			// build array
 			$results[$i] = array();
-			$results[$i]['keyword'] = (mb_strlen($keywordData['keyword']) <= 45 ? $keywordData['keyword'] : mb_substr($keywordData['keyword'], 0, 45) .'…');
+			$results[$i]['keyword'] = (mb_strlen($keywordData['keyword']) <= 45 ? $keywordData['keyword'] : mb_substr($keywordData['keyword'], 0, 45) . '…');
 			$results[$i]['pageviews'] = (int) $keywordData['pageviews'];
-			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $keywordData['pageviews'] / $totalPageviews) * 100, 2)) .'%';
+			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $keywordData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
 		}
 
 		// return results
@@ -805,13 +805,13 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// init vars
 		$results = array();
@@ -827,7 +827,7 @@ class BackendAnalyticsModel
 			$results[$i]['page'] = $pageData['pagePath'];
 			$results[$i]['page_encoded'] = urlencode($pageData['pagePath']);
 			$results[$i]['pageviews'] = (int) $pageData['pageviews'];
-			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(($pageData['pageviews'] / $totalPageviews) * 100, 2)) .'%';
+			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(($pageData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
 		}
 
 		// return results
@@ -852,13 +852,13 @@ class BackendAnalyticsModel
 		if(!empty($items)) $items = array_slice($items, 0, $limit, true);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// init
 		$results = array();
@@ -871,10 +871,10 @@ class BackendAnalyticsModel
 		{
 			// build array
 			$results[$i] = array();
-			$results[$i]['referral'] = (mb_strlen($referrerData['referrer']) <= 45 ? trim($referrerData['referrer'], '/') : trim(mb_substr($referrerData['referrer'], 0, 45), '/') .'…');
+			$results[$i]['referral'] = (mb_strlen($referrerData['referrer']) <= 45 ? trim($referrerData['referrer'], '/') : trim(mb_substr($referrerData['referrer'], 0, 45), '/') . '…');
 			$results[$i]['referral_long'] = trim($referrerData['referrer'], '/');
 			$results[$i]['pageviews'] = (int) $referrerData['pageviews'];
-			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $referrerData['pageviews'] / $totalPageviews) * 100, 2)) .'%';
+			$results[$i]['pageviews_percentage'] = ($totalPageviews == 0 ? '0' : number_format(((int) $referrerData['pageviews'] / $totalPageviews) * 100, 2)) . '%';
 		}
 
 		// return items
@@ -895,13 +895,13 @@ class BackendAnalyticsModel
 		$items = self::getDataFromCacheByType('traffic_sources', $startTimestamp, $endTimestamp);
 
 		// get current action
-		$action = Spoon::getObjectReference('url')->getAction();
+		$action = Spoon::get('url')->getAction();
 
 		// nothing in cache
 		if($items === false) self::redirectToLoadingPage($action);
 
 		// reset loop counter for the current action if we got data from cache
-		SpoonSession::set($action .'Loop', null);
+		SpoonSession::set($action . 'Loop', null);
 
 		// return items
 		return $items;
@@ -1064,19 +1064,19 @@ class BackendAnalyticsModel
 	public static function redirectToLoadingPage($action, array $extraParameters = array())
 	{
 		// get loop counter
-		$counter = (SpoonSession::exists($action .'Loop') ? SpoonSession::get($action .'Loop') : 0);
+		$counter = (SpoonSession::exists($action . 'Loop') ? SpoonSession::get($action . 'Loop') : 0);
 
 		// loop has run too long - throw exception
-		if($counter > 2) throw new BackendException('An infinite loop has been detected while getting data from cache for the action "'. $action .'".');
+		if($counter > 2) throw new BackendException('An infinite loop has been detected while getting data from cache for the action "' . $action . '".');
 
 		// set new counter
-		SpoonSession::set($action .'Loop', ++$counter);
+		SpoonSession::set($action . 'Loop', ++$counter);
 
 		// put parameters into a string
-		$extraParameters = (empty($extraParameters) ? '' : '&'. http_build_query($extraParameters));
+		$extraParameters = (empty($extraParameters) ? '' : '&' . http_build_query($extraParameters));
 
 		// redirect to loading page which will get the needed data based on the current action
-		SpoonHTTP::redirect(BackendModel::createURLForAction('loading') .'&redirect_action='. $action . $extraParameters);
+		SpoonHTTP::redirect(BackendModel::createURLForAction('loading') . '&redirect_action=' . $action . $extraParameters);
 	}
 
 
@@ -1088,10 +1088,10 @@ class BackendAnalyticsModel
 	public static function removeCacheFiles()
 	{
 		// get path
-		$cachePath = BACKEND_CACHE_PATH .'/analytics';
+		$cachePath = BACKEND_CACHE_PATH . '/analytics';
 
 		// loop all cache files
-		foreach(SpoonFile::getList($cachePath) as $file) SpoonFile::delete($cachePath .'/'. $file);
+		foreach(SpoonFile::getList($cachePath) as $file) SpoonFile::delete($cachePath . '/' . $file);
 	}
 
 
@@ -1120,7 +1120,7 @@ class BackendAnalyticsModel
 	{
 		// build xml string from data
 		$xml = "<?xml version='1.0' encoding='UTF-8'?>\n";
-		$xml .= "<analytics start_timestamp=\"". $startTimestamp ."\" end_timestamp=\"". $endTimestamp ."\">\n";
+		$xml .= "<analytics start_timestamp=\"" . $startTimestamp . "\" end_timestamp=\"" . $endTimestamp . "\">\n";
 
 		// loop data
 		foreach($data as $type => $records)
@@ -1135,12 +1135,12 @@ class BackendAnalyticsModel
 				foreach($records['attributes'] as $key => $value)
 				{
 					// add to the attributes string
-					$attributes[] = $key .'="'. $value .'"';
+					$attributes[] = $key . '="' . $value . '"';
 				}
 			}
 
 			// build xml
-			$xml .= "\t<". $type . (!empty($attributes) ? ' '. implode(' ', $attributes) : '') .">\n";
+			$xml .= "\t<" . $type . (!empty($attributes) ? ' ' . implode(' ', $attributes) : '') . ">\n";
 
 			// we're not dealing with a page detail
 			if(strpos($type, 'page_') === false)
@@ -1167,7 +1167,7 @@ class BackendAnalyticsModel
 							foreach($value as $entryKey => $entryValue)
 							{
 								// build xml
-								$xml .= "\t\t\t<". $entryKey ."><![CDATA[". $entryValue ."]]></". $entryKey .">\n";
+								$xml .= "\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
 							}
 
 							// end xml element
@@ -1176,7 +1176,7 @@ class BackendAnalyticsModel
 					}
 
 					// build xml
-					else $xml .= "\t\t<". $key .">". $value ."</". $key .">\n";
+					else $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
 				}
 			}
 
@@ -1187,7 +1187,7 @@ class BackendAnalyticsModel
 				foreach($records as $subkey => $subitems)
 				{
 					// build xml
-					$xml .= "\t\t<". $subkey .">\n";
+					$xml .= "\t\t<" . $subkey . ">\n";
 
 					// subitems is an array
 					if(is_array($subitems))
@@ -1211,7 +1211,7 @@ class BackendAnalyticsModel
 									foreach($value as $entryKey => $entryValue)
 									{
 										// build xml
-										$xml .= "\t\t\t\t<". $entryKey ."><![CDATA[". $entryValue ."]]></". $entryKey .">\n";
+										$xml .= "\t\t\t\t<" . $entryKey . "><![CDATA[" . $entryValue . "]]></" . $entryKey . ">\n";
 									}
 
 									// end xml element
@@ -1220,20 +1220,20 @@ class BackendAnalyticsModel
 							}
 
 							// build xml
-							else $xml .= "\t\t<". $key .">". $value ."</". $key .">\n";
+							else $xml .= "\t\t<" . $key . ">" . $value . "</" . $key . ">\n";
 						}
 					}
 
 					// not an array
-					else $xml .= "<![CDATA[". (string) $subitems ."]]>";
+					else $xml .= "<![CDATA[" . (string) $subitems . "]]>";
 
 					// end xml element
-					$xml .= "\t\t</". $subkey .">\n";
+					$xml .= "\t\t</" . $subkey . ">\n";
 				}
 			}
 
 			// end xml element
-			$xml .= "\t</". $type .">\n";
+			$xml .= "\t</" . $type . ">\n";
 		}
 
 		// end xml string
@@ -1244,10 +1244,10 @@ class BackendAnalyticsModel
 		if($simpleXml === false) throw new BackendException('The xml of the cache file is invalid.');
 
 		// get filename
-		$filename = $startTimestamp .'_'. $endTimestamp .'.xml';
+		$filename = $startTimestamp . '_' . $endTimestamp . '.xml';
 
 		// all is well
-		SpoonFile::setContent(BACKEND_CACHE_PATH .'/analytics/'. $filename, $xml);
+		SpoonFile::setContent(BACKEND_CACHE_PATH . '/analytics/' . $filename, $xml);
 	}
 }
 

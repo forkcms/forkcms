@@ -46,7 +46,10 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		$this->frm = new BackendForm('addCategory');
 
 		// create elements
-		$this->frm->addText('name', null, 255);
+		$this->frm->addText('title', null, 255);
+
+		// meta
+		$this->meta = new BackendMeta($this->frm, null, 'title', true);
 	}
 
 
@@ -60,25 +63,31 @@ class BackendBlogAddCategory extends BackendBaseActionAdd
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// set callback for generating an unique URL
+			$this->meta->setURLCallback('BackendBlogModel', 'getURLForCategory');
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+
+			// validate meta
+			$this->meta->validate();
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
-				$item['name'] = $this->frm->getField('name')->getValue();
+				$item['title'] = $this->frm->getField('title')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
-				$item['url'] = BackendBlogModel::getURLForCategory($item['name']);
+				$item['meta_id'] = $this->meta->save();
 
 				// insert the item
 				$item['id'] = BackendBlogModel::insertCategory($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=added-category&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=added-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

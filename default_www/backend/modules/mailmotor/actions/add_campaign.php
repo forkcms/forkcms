@@ -81,7 +81,7 @@ class BackendMailmotorAddCampaign extends BackendBaseActionAdd
 				$id = BackendMailmotorModel::insertCampaign($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('campaigns') .'&report=added&var='. urlencode($item['name']) .'&highlight=id-'. $id);
+				$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $id);
 			}
 		}
 	}

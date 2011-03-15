@@ -136,8 +136,8 @@ class SpoonDatabase
 			try
 			{
 				// build dsn
-				if($this->port !== null) $dsn = $this->driver .':host='. $this->hostname .';port='. $this->port .';dbname='. $this->database;
-				else $dsn = $this->driver .':host='. $this->hostname .';dbname='. $this->database;
+				if($this->port !== null) $dsn = $this->driver . ':host=' . $this->hostname . ';port=' . $this->port . ';dbname=' . $this->database;
+				else $dsn = $this->driver . ':host=' . $this->hostname . ';dbname=' . $this->database;
 
 				// create handler
 				$this->handler = new PDO($dsn, $this->username, $this->password);
@@ -169,10 +169,10 @@ class SpoonDatabase
 		if(!$this->handler) $this->connect();
 
 		// build query
-		$query = 'DELETE FROM '. (string) $table;
+		$query = 'DELETE FROM ' . (string) $table;
 
 		// add where class
-		$query = ($where != '') ? $query .' WHERE '. (string) $where .';' : $query .';';
+		$query = ($where != '') ? $query . ' WHERE ' . (string) $where . ';' : $query . ';';
 
 		// set parameters
 		$parameters = (array) $parameters;
@@ -223,7 +223,7 @@ class SpoonDatabase
 	 */
 	public function drop($tables)
 	{
-		$this->execute('DROP TABLE '. implode(', ', (array) $tables));
+		$this->execute('DROP TABLE ' . implode(', ', (array) $tables));
 	}
 
 
@@ -368,7 +368,7 @@ class SpoonDatabase
 		$field = (string) $field;
 
 		// build query
-		$query = 'SHOW COLUMNS FROM '. $table .' LIKE "'. $field .'";';
+		$query = 'SHOW COLUMNS FROM ' . $table . ' LIKE "' . $field . '";';
 
 		// get information
 		$row = $this->getRecord($query);
@@ -377,7 +377,7 @@ class SpoonDatabase
 		if(!isset($row['Type'])) throw new SpoonDatabaseException('There is no type information available about this field', 0, $this->password);
 
 		// has a type but it's not an enum
-		if(strtolower(substr($row['Type'], 0, 4) != 'enum')) throw new SpoonDatabaseException('This field "'. $field .'" is not an enum field.', 0, $this->password);
+		if(strtolower(substr($row['Type'], 0, 4) != 'enum')) throw new SpoonDatabaseException('This field "' . $field . '" is not an enum field.', 0, $this->password);
 
 		// process values
 		$aSearch = array('enum', '(', ')', '\'');
@@ -402,7 +402,7 @@ class SpoonDatabase
 	/**
 	 * Retrieve the number of rows in a result set
 	 *
-	 * @return	int								The number of rows in teh result-set.
+	 * @return	int								The number of rows in the result-set.
 	 * @param	string $query					Teh query to perform.
 	 * @param	mixed[optional] $parameters		The parameters that will be used in the query.
 	 */
@@ -732,7 +732,7 @@ class SpoonDatabase
 		if(count($values) == 0) throw new SpoonDatabaseException('You need to provide values for an insert query.', 0, $this->password);
 
 		// init vars
-		$query = 'INSERT INTO '. (string) $table .' (';
+		$query = 'INSERT INTO ' . (string) $table . ' (';
 		$keys = array_keys($values);
 		$actualValues = array_values($values);
 		$parameters = array();
@@ -748,10 +748,10 @@ class SpoonDatabase
 			$subKeys = array_keys($actualValues[0]);
 
 			// prefix with table name
-			array_walk($subKeys, create_function('&$key', '$key = "'. $table .'.$key";'));
+			array_walk($subKeys, create_function('&$key', '$key = "' . $table . '.$key";'));
 
 			// build query
-			$query .= implode(', ', $subKeys) .') VALUES ';
+			$query .= implode(', ', $subKeys) . ') VALUES ';
 
 			// init counter
 			$i = 1;
@@ -796,10 +796,10 @@ class SpoonDatabase
 			$numFields = count($actualValues);
 
 			// prefix with table name
-			array_walk($keys, create_function('&$key', '$key = "'. $table .'.$key";'));
+			array_walk($keys, create_function('&$key', '$key = "' . $table . '.$key";'));
 
 			// build query
-			$query .= implode(', ', $keys) .') VALUES (';
+			$query .= implode(', ', $keys) . ') VALUES (';
 
 			// add parameters
 			for($i = 0; $i < count($actualValues); $i++)
@@ -861,7 +861,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// build & execute query
-		return $this->getRecords('OPTIMIZE TABLE '. implode(', ', $tables));
+		return $this->getRecords('OPTIMIZE TABLE ' . implode(', ', $tables));
 	}
 
 
@@ -916,7 +916,7 @@ class SpoonDatabase
 		$driver = (string) $driver;
 
 		// validate backend
-		if(!in_array($driver, PDO::getAvailableDrivers())) throw new SpoonDatabaseException('The PDO database driver "'. (string) $driver .'" is not found. Only '. implode(', ', PDO::getAvailableDrivers()) .' are currently installed.');
+		if(!in_array($driver, PDO::getAvailableDrivers())) throw new SpoonDatabaseException('The PDO database driver "' . (string) $driver . '" is not found. Only ' . implode(', ', PDO::getAvailableDrivers()) . ' are currently installed.');
 
 		// set property
 		$this->driver = $driver;
@@ -983,7 +983,7 @@ class SpoonDatabase
 		$tables = (func_num_args() == 1) ? (array) $tables : func_get_args();
 
 		// loop & truncate
-		foreach($tables as $table) $this->execute('TRUNCATE TABLE '. $table);
+		foreach($tables as $table) $this->execute('TRUNCATE TABLE ' . $table);
 	}
 
 
@@ -1012,7 +1012,7 @@ class SpoonDatabase
 		// init vars
 		$i = 1;
 		$iValues = count($values);
-		$query = 'UPDATE '. (string) $table .' SET ';
+		$query = 'UPDATE ' . (string) $table . ' SET ';
 
 		// has parameters
 		if(count($parameters))
@@ -1035,15 +1035,15 @@ class SpoonDatabase
 			// named parameters
 			if(!$namedParameters)
 			{
-				$query .= $table .'.'. $key .' = ?, ';
+				$query .= $table . '.' . $key . ' = ?, ';
 				$aTmpParameters[] = $value;
 			}
 
 			// positional parameters
 			else
 			{
-				$query .= $table .'.'. $key .' = :'. $key .', ';
-				$aTmpParameters[':'. $key] = $value;
+				$query .= $table . '.' . $key . ' = :' . $key . ', ';
+				$aTmpParameters[':' . $key] = $value;
 			}
 
 			// counter
@@ -1054,7 +1054,7 @@ class SpoonDatabase
 		if($iValues) $query = substr($query, 0, -2);
 
 		// add where clause
-		if($where != '') $query .= ' WHERE '. (string) $where;
+		if($where != '') $query .= ' WHERE ' . (string) $where;
 
 		// finalize query
 		$query .= ';';

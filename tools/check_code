@@ -1,8 +1,8 @@
-#! /bin/bash
+#!/bin/bash
 #
 # This script will check if your code matches the guidelines
 # @remark: make sure your CLI has enough memory, I hacked the phpcs-file
-# 
+#
 # 1. sudo vim /usr/bin/phpcs
 # 2. added "ini_set('memory_limit', '2048M');"
 #
@@ -12,5 +12,8 @@
 # check if phpcs is installed
 type -P phpcs &>/dev/null || { echo "PHP CodeSniffer is not installed, run 'pear install PHP_CodeSniffer'." >&2; exit 1; }
 
+# determine the relevant directories
+base_dir="$(dirname "$0")/..";
+
 # run it
-phpcs -v --standard=./codesniffer/Fork --ignore=../default_www/backend/core/js/tiny_mce,../default_www/frontend/cache,../default_www/backend/cache,../default_www/install/cache,../default_www/docs,../tools,../library/external --extensions=php --report=full ../
+phpcs -v --standard="../tools/codesniffer/Fork" --ignore=../default_www/backend/core/js/tiny_mce,../default_www/frontend/cache,../default_www/backend/cache,../default_www/install/cache,../default_www/docs,../tools,../library/external --extensions=php --report=full "${@:-..}"

@@ -68,9 +68,9 @@ class BackendBaseAction
 	public function __construct()
 	{
 		// get objects from the reference so they are accessable from the action-object
-		$this->tpl = Spoon::getObjectReference('template');
-		$this->URL = Spoon::getObjectReference('url');
-		$this->header = Spoon::getObjectReference('header');
+		$this->tpl = Spoon::get('template');
+		$this->URL = Spoon::get('url');
+		$this->header = Spoon::get('header');
 
 		// store the current module and action (we grab them from the URL)
 		$this->setModule($this->URL->getModule());
@@ -95,7 +95,7 @@ class BackendBaseAction
 
 		// if no template is specified, we have to build the path ourself
 		// the default template is based on the name of the current action
-		if($template === null) $template = BACKEND_MODULE_PATH .'/layout/templates/'. $this->URL->getAction() .'.tpl';
+		if($template === null) $template = BACKEND_MODULE_PATH . '/layout/templates/' . $this->URL->getAction() . '.tpl';
 
 		// display
 		$this->tpl->display($template);
@@ -110,7 +110,7 @@ class BackendBaseAction
 	public function execute()
 	{
 		// if not in debug-mode we should include the minified versions
-		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH .'/js/minified.js'))
+		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/js/minified.js'))
 		{
 			// include the minified JS-file
 			$this->header->addJavascript('minified.js', 'core', false);
@@ -131,11 +131,11 @@ class BackendBaseAction
 		$this->header->addJavascript('backend.js', 'core', true);
 
 		// add default js file (if the file exists)
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getModule() .'.js')) $this->header->addJavascript($this->getModule() .'.js', null, true);
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/js/'. $this->getAction() .'.js')) $this->header->addJavascript($this->getAction() .'.js', null, true);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getModule() . '.js')) $this->header->addJavascript($this->getModule() . '.js', null, true);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/js/' . $this->getAction() . '.js')) $this->header->addJavascript($this->getAction() . '.js', null, true);
 
 		// if not in debug-mode we should include the minified version
-		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH .'/layout/css/minified.css'))
+		if(!SPOON_DEBUG && SpoonFile::exists(BACKEND_CORE_PATH . '/layout/css/minified.css'))
 		{
 			// include the minified CSS-file
 			$this->header->addCSS('minified.css', 'core');
@@ -152,7 +152,7 @@ class BackendBaseAction
 		}
 
 		// add module specific css
-		if(SpoonFile::exists(BACKEND_MODULE_PATH .'/layout/css/'. $this->getModule() .'.css')) $this->header->addCSS($this->getModule() .'.css', null);
+		if(SpoonFile::exists(BACKEND_MODULE_PATH . '/layout/css/' . $this->getModule() . '.css')) $this->header->addCSS($this->getModule() . '.css', null);
 
 		// store var so we don't have to call this function twice
 		$var = $this->getParameter('var', 'array');
@@ -656,10 +656,10 @@ class BackendBaseConfig
 		$this->module = (string) $module;
 
 		// check if model exists
-		if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php'))
+		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
 		{
 			// the model exists, so we require it
-			require_once BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php';
+			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
 		}
 
 		// read the possible actions based on the files
@@ -720,7 +720,7 @@ class BackendBaseConfig
 	protected function setPossibleActions()
 	{
 		// get filelist (only those with .php-extension)
-		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH .'/actions', '/(.*).php/');
+		$actionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH . '/actions', '/(.*).php/');
 
 		// loop filelist
 		foreach($actionFiles as $file)
@@ -733,7 +733,7 @@ class BackendBaseConfig
 		}
 
 		// get filelist (only those with .php-extension)
-		$AJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH .'/ajax', '/(.*).php/');
+		$AJAXActionFiles = (array) SpoonFile::getList(BACKEND_MODULE_PATH . '/ajax', '/(.*).php/');
 
 		// loop filelist
 		foreach($AJAXActionFiles as $file)
@@ -807,7 +807,7 @@ class BackendBaseCronjob
 	protected function clearBusyFile()
 	{
 		// build path
-		$path = BACKEND_CACHE_PATH .'/cronjobs/'. $this->getId() .'.busy';
+		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
 		// remove the file
 		SpoonFile::delete($path);
@@ -822,10 +822,10 @@ class BackendBaseCronjob
 	public function execute()
 	{
 		// check if model exists
-		if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php'))
+		if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php'))
 		{
 			// the model exists, so we require it
-			require_once BACKEND_MODULES_PATH .'/'. $this->getModule() .'/engine/model.php';
+			require_once BACKEND_MODULES_PATH . '/' . $this->getModule() . '/engine/model.php';
 		}
 	}
 
@@ -848,7 +848,7 @@ class BackendBaseCronjob
 	 */
 	public function getId()
 	{
-		return strtolower($this->getModule() .'_'. $this->getAction());
+		return strtolower($this->getModule() . '_' . $this->getAction());
 	}
 
 
@@ -883,7 +883,7 @@ class BackendBaseCronjob
 	protected function setBusyFile()
 	{
 		// build path
-		$path = BACKEND_CACHE_PATH .'/cronjobs/'. $this->getId() .'.busy';
+		$path = BACKEND_CACHE_PATH . '/cronjobs/' . $this->getId() . '.busy';
 
 		// init var
 		$isBusy = false;
@@ -900,10 +900,10 @@ class BackendBaseCronjob
 			if($counter > 9)
 			{
 				// build class name
-				$className = 'Backend'. SpoonFilter::toCamelCase($this->getModule() .'_cronjob_'. $this->getAction());
+				$className = 'Backend' . SpoonFilter::toCamelCase($this->getModule() . '_cronjob_' . $this->getAction());
 
 				// notify user
-				throw new BackendException('Cronjob ('. $className .') is still busy after 10 runs, check it out!');
+				throw new BackendException('Cronjob (' . $className . ') is still busy after 10 runs, check it out!');
 			}
 		}
 
@@ -1002,8 +1002,8 @@ class BackendBaseWidget
 	public function __construct()
 	{
 		// get objects from the reference so they are accessable from the action-object
-		$this->tpl = Spoon::getObjectReference('template');
-		$this->header = Spoon::getObjectReference('header');
+		$this->tpl = Spoon::get('template');
+		$this->header = Spoon::get('header');
 	}
 
 

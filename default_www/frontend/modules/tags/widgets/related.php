@@ -106,7 +106,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 			}
 
 			// set module class
-			$class = 'Frontend'. SpoonFilter::toCamelCase($entry['module']) .'Model';
+			$class = 'Frontend' . SpoonFilter::toCamelCase($entry['module']) . 'Model';
 
 			// get module record
 			$this->related[$id] = FrontendTagsModel::callFromInterface($entry['module'], $class, 'getForTags', (array) array($entry['other_id']));
@@ -145,7 +145,7 @@ class FrontendTagsWidgetRelated extends FrontendBaseWidget
 		foreach((array) $record['extra_blocks'] as $block)
 		{
 			// set module class
-			$class = 'Frontend'. SpoonFilter::toCamelCase($block['module']) .'Model';
+			$class = 'Frontend' . SpoonFilter::toCamelCase($block['module']) . 'Model';
 
 			// get record for module
 			$record = FrontendTagsModel::callFromInterface($block['module'], $class, 'getIdForTags', $this->URL);

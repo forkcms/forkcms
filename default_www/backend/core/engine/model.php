@@ -61,7 +61,7 @@ class BackendModel
 			array_pop($chunks);
 
 			// join together, and increment the last one
-			$string = implode('-', $chunks ) .'-'. ((int) $last + 1);
+			$string = implode('-', $chunks ) . '-' . ((int) $last + 1);
 		}
 
 		// not numeric, so add -2
@@ -111,10 +111,10 @@ class BackendModel
 		// 	indexability is now based on meta noindex (SPOON_DEBUG true = not noindex)
 
 		// try to validate robots.txt
-		if(SpoonFile::exists(PATH_WWW .'/robots.txt'))
+		if(SpoonFile::exists(PATH_WWW . '/robots.txt'))
 		{
 			// get content
-			$content = SpoonFile::getContent(PATH_WWW .'/robots.txt');
+			$content = SpoonFile::getContent(PATH_WWW . '/robots.txt');
 			$isOK = true;
 
 			// split into lines
@@ -162,7 +162,7 @@ class BackendModel
 	public static function createURLForAction($action = null, $module = null, $language = null, array $parameters = null, $urlencode = true)
 	{
 		// grab the URL from the reference
-		$URL = Spoon::getObjectReference('url');
+		$URL = Spoon::get('url');
 
 		// redefine parameters
 		$action = ($action !== null) ? (string) $action : $URL->getAction();
@@ -185,17 +185,17 @@ class BackendModel
 		foreach($parameters as $key => $value)
 		{
 			// first element
-			if($i == 1) $querystring .= '?'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+			if($i == 1) $querystring .= '?' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// other elements
-			else $querystring .= '&amp;'. $key .'='. (($urlencode) ? urlencode($value) : $value);
+			else $querystring .= '&amp;' . $key . '=' . (($urlencode) ? urlencode($value) : $value);
 
 			// update counter
 			$i++;
 		}
 
 		// build the URL and return it
-		return '/'. NAMED_APPLICATION .'/'. $language .'/'. $module .'/'. $action . $querystring;
+		return '/' . NAMED_APPLICATION . '/' . $language . '/' . $module . '/' . $action . $querystring;
 	}
 
 
@@ -370,7 +370,7 @@ class BackendModel
 		$write = (bool) $write;
 
 		// do we have a db-object ready?
-		if(!Spoon::isObjectReference('database'))
+		if(!Spoon::exists('database'))
 		{
 			// create instance
 			$db = new SpoonDatabase(DB_TYPE, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE, DB_PORT);
@@ -379,11 +379,11 @@ class BackendModel
 			$db->execute('SET CHARACTER SET utf8, NAMES utf8, time_zone = "+0:00"');
 
 			// store
-			Spoon::setObjectReference('database', $db);
+			Spoon::set('database', $db);
 		}
 
 		// return
-		return Spoon::getObjectReference('database');
+		return Spoon::get('database');
 	}
 
 
@@ -402,7 +402,7 @@ class BackendModel
 		if(!isset(self::$keys[$language]) || empty(self::$keys[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php'))
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -412,7 +412,7 @@ class BackendModel
 			$keys = array();
 
 			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/keys_'. $language .'.php';
+			require FRONTEND_CACHE_PATH . '/navigation/keys_' . $language . '.php';
 
 			// store
 			self::$keys[$language] = $keys;
@@ -506,7 +506,7 @@ class BackendModel
 				$value = @unserialize($setting['value']);
 
 				// validate
-				if($value === false && serialize(false) != $setting['value']) throw new BackendException('The modulesetting ('. $setting['module'] .': '. $setting['name'] .') wasn\'t saved properly.');
+				if($value === false && serialize(false) != $setting['value']) throw new BackendException('The modulesetting (' . $setting['module'] . ': ' . $setting['name'] . ') wasn\'t saved properly.');
 
 				// cache the setting
 				self::$moduleSettings[$setting['module']][$setting['name']] = $value;
@@ -555,7 +555,7 @@ class BackendModel
 		if(!isset(self::$navigation[$language]) || empty(self::$navigation[$language]))
 		{
 			// validate file
-			if(!SpoonFile::exists(FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php'))
+			if(!SpoonFile::exists(FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php'))
 			{
 				// regenerate cache
 				BackendPagesModel::buildCache($language);
@@ -565,7 +565,7 @@ class BackendModel
 			$navigation = array();
 
 			// require file
-			require FRONTEND_CACHE_PATH .'/navigation/navigation_'. $language .'.php';
+			require FRONTEND_CACHE_PATH . '/navigation/navigation_' . $language . '.php';
 
 			// store
 			self::$navigation[$language] = $navigation;
@@ -606,7 +606,7 @@ class BackendModel
 	public static function getThemes()
 	{
 		// fetch themes
-		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH .'/themes/', false, array('.svn'));
+		$themes = (array) SpoonDirectory::getList(FRONTEND_PATH . '/themes/', false, array('.svn'));
 
 		// create array
 		return array_combine($themes, $themes);
@@ -649,7 +649,7 @@ class BackendModel
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// init URL
-		$URL = (SITE_MULTILANGUAGE) ? '/'. $language .'/' : '/';
+		$URL = (SITE_MULTILANGUAGE) ? '/' . $language . '/' : '/';
 
 		// get the menuItems
 		$keys = self::getKeys($language);
@@ -730,7 +730,7 @@ class BackendModel
 			FrontendLanguage::setLocale($language);
 
 			// append action
-			$URL .= '/'. FL::act(SpoonFilter::toCamelCase($action));
+			$URL .= '/' . FL::act(SpoonFilter::toCamelCase($action));
 
 			// return the unique URL!
 			return $URL;
@@ -811,25 +811,25 @@ class BackendModel
 		$language = ($language !== null) ? (string) $language : null;
 
 		// get cache path
-		$path = FRONTEND_CACHE_PATH .'/cached_templates';
+		$path = FRONTEND_CACHE_PATH . '/cached_templates';
 
 		// build regular expresion
 		if($module !== null)
 		{
-			if($language !== null) $regexp = '/'. '(.*)'. $module .'(.*)_cache\.tpl/i';
-			else $regexp = '/'. $language .'_'. $module .'(.*)_cache\.tpl/i';
+			if($language !== null) $regexp = '/' . '(.*)' . $module . '(.*)_cache\.tpl/i';
+			else $regexp = '/' . $language . '_' . $module . '(.*)_cache\.tpl/i';
 		}
 		else
 		{
 			if($language !== null) $regexp = '/(.*)_cache\.tpl/i';
-			else $regexp = '/'. $language .'_(.*)_cache\.tpl/i';
+			else $regexp = '/' . $language . '_(.*)_cache\.tpl/i';
 		}
 
 		// get files to delete
 		$files = SpoonFile::getList($path, $regexp);
 
 		// delete files
-		foreach($files as $file) SpoonFile::delete($path .'/'. $file);
+		foreach($files as $file) SpoonFile::delete($path . '/' . $file);
 	}
 
 
@@ -843,7 +843,7 @@ class BackendModel
 	public static function ping($pageOrFeedURL = null, $category = null)
 	{
 		// redefine
-		$siteTitle = self::getModuleSetting('core', 'site_title_'. BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
+		$siteTitle = self::getModuleSetting('core', 'site_title_' . BackendLanguage::getWorkingLanguage(), SITE_DEFAULT_TITLE);
 		$siteURL = SITE_URL;
 		$pageOrFeedURL = ($pageOrFeedURL !== null) ? (string) $pageOrFeedURL : null;
 		$category = ($category !== null) ? (string) $category : null;
@@ -862,7 +862,7 @@ class BackendModel
 			if($publicKey == '' || $privateKey == '') return false;
 
 			// require the class
-			require_once PATH_LIBRARY .'/external/fork_api.php';
+			require_once PATH_LIBRARY . '/external/fork_api.php';
 
 			// create instance
 			$forkAPI = new ForkAPI($publicKey, $privateKey);
@@ -902,7 +902,7 @@ class BackendModel
 			$client = new SpoonXMLRPCClient($service['url']);
 
 			// set some properties
-			$client->setUserAgent('Fork '. FORK_VERSION);
+			$client->setUserAgent('Fork ' . FORK_VERSION);
 			$client->setTimeOut(10);
 
 			// set port
@@ -1009,7 +1009,7 @@ class BackendModel
 		if($akismetKey === '') return false;
 
 		// require the class
-		require_once PATH_LIBRARY .'/external/akismet.php';
+		require_once PATH_LIBRARY . '/external/akismet.php';
 
 		// create new instance
 		$akismet = new Akismet($akismetKey, SITE_URL);
@@ -1061,7 +1061,7 @@ class BackendModel
 		if($akismetKey === '') return false;
 
 		// require the class
-		require_once PATH_LIBRARY .'/external/akismet.php';
+		require_once PATH_LIBRARY . '/external/akismet.php';
 
 		// create new instance
 		$akismet = new Akismet($akismetKey, SITE_URL);

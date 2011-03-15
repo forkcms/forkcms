@@ -45,14 +45,14 @@ class API
 		if(!isset($chunks[1])) self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
 
 		// build the path to the backend API file
-		if($chunks[0] == 'core') $path = BACKEND_CORE_PATH .'/engine/api.php';
-		else $path = BACKEND_MODULES_PATH .'/'. $chunks[0] .'/engine/api.php';
+		if($chunks[0] == 'core') $path = BACKEND_CORE_PATH . '/engine/api.php';
+		else $path = BACKEND_MODULES_PATH . '/' . $chunks[0] . '/engine/api.php';
 
 		// check if the fille is present? If it isn't present there is a problem
 		if(!SpoonFile::exists($path)) self::output(self::BAD_REQUEST, array('message' => 'Invalid method.'));
 
 		// build config-object-name
-		$className = 'Backend'. SpoonFilter::toCamelCase($chunks[0]) .'API';
+		$className = 'Backend' . SpoonFilter::toCamelCase($chunks[0]) . 'API';
 		$methodName = SpoonFilter::toCamelCase($chunks[1], '.', true);
 
 		// require the class
@@ -95,7 +95,7 @@ class API
 				$name = $parameter->getName();
 
 				// check if the parameter is available
-				if(!$parameter->isOptional() && !isset($parameters[$name])) self::output(self::BAD_REQUEST, array('message' => 'No '. $name .'-parameter provided.'));
+				if(!$parameter->isOptional() && !isset($parameters[$name])) self::output(self::BAD_REQUEST, array('message' => 'No ' . $name . '-parameter provided.'));
 
 				// add not-passed arguments
 				if($parameter->isOptional() && !isset($parameters[$name])) $arguments[] = $parameter->getDefaultValue();
@@ -272,7 +272,7 @@ class API
 		if(!$apiAccess) self::output(self::FORBIDDEN, array('message' => 'Your account isn\'t allowed to use the API. Contact an administrator.'));
 
 		// create hash
-		$hash = BackendAuthentication::getEncryptedString($email.$apiKey, $nonce);
+		$hash = BackendAuthentication::getEncryptedString($email . $apiKey, $nonce);
 
 		// output
 		if($secret != $hash) self::output(self::FORBIDDEN, array('message' => 'Invalid secret.'));
@@ -331,7 +331,7 @@ class API
 		$JSON['meta']['status_code'] = $statusCode;
 		$JSON['meta']['status'] = ($statusCode == 200) ? 'ok' : 'error';
 		$JSON['meta']['version'] = FORK_VERSION;
-		$JSON['meta']['endpoint'] = SITE_URL .'/api/'. $version;
+		$JSON['meta']['endpoint'] = SITE_URL . '/api/' . $version;
 
 		// add data
 		if($data !== null) $JSON['data'] = $data;
@@ -378,7 +378,7 @@ class API
 		$root->setAttribute('status_code', $statusCode);
 		$root->setAttribute('status', ($statusCode == 200) ? 'ok' : 'error');
 		$root->setAttribute('version', FORK_VERSION);
-		$root->setAttribute('endpoint', SITE_URL .'/api/'. $version);
+		$root->setAttribute('endpoint', SITE_URL . '/api/' . $version);
 
 		// append
 		$XML->appendChild($root);

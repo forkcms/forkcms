@@ -49,7 +49,7 @@ class BackendBlogAPI
 				$item['comment']['article']['@attributes']['id'] = $row['post_id'];
 				$item['comment']['article']['@attributes']['lang'] = $row['post_language'];
 				$item['comment']['article']['title'] = $row['post_title'];
-				$item['comment']['article']['url'] = SITE_URL . BackendModel::getURLForBlock('blog', 'detail', $row['post_language']) .'/'. $row['post_url'];
+				$item['comment']['article']['url'] = SITE_URL . BackendModel::getURLForBlock('blog', 'detail', $row['post_language']) . '/' . $row['post_url'];
 
 				// set attributes
 				$item['comment']['@attributes']['id'] = $row['id'];
@@ -58,7 +58,7 @@ class BackendBlogAPI
 
 				// set content
 				$item['comment']['text'] = $row['text'];
-				$item['comment']['url'] = $item['comment']['article']['url'] .'#comment-'. $row['id'];
+				$item['comment']['url'] = $item['comment']['article']['url'] . '#comment-' . $row['id'];
 
 				// author data
 				$item['comment']['author']['@attributes']['email'] = $row['email'];

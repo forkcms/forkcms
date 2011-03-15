@@ -416,7 +416,7 @@ class ModuleInstaller
 			if(!isset($block['created_on'])) $block['created_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['edited_on'])) $block['edited_on'] = gmdate('Y-m-d H:i:s');
 			if(!isset($block['extra_id'])) $block['extra_id'] = null;
-			else $revision['extra_ids'] = trim($revision['extra_ids'] .','. $block['extra_id'], ',');
+			else $revision['extra_ids'] = trim($revision['extra_ids'] . ',' . $block['extra_id'], ',');
 			if(!isset($block['html'])) $block['html'] = '';
 			elseif(SpoonFile::exists($block['html'])) $block['html'] = SpoonFile::getContent($block['html']);
 
@@ -605,7 +605,7 @@ class CoreInstall extends ModuleInstaller
 		if($this->getVariable('site_title') === null) throw new SpoonException('Site title is not provided.');
 
 		// import SQL
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add core modules
 		$this->addModule('core', 'The Fork CMS core module.');
@@ -690,13 +690,13 @@ class CoreInstall extends ModuleInstaller
 		foreach($this->getLanguages() as $language)
 		{
 			// set title
-			$this->setSetting('core', 'site_title_'. $language, (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title'));
+			$this->setSetting('core', 'site_title_' . $language, (isset($siteTitles[$language])) ? $siteTitles[$language] : $this->getVariable('site_title'));
 		}
 
 		/*
 		 * We're going to try to install the settings for the api.
 		 */
-		require_once PATH_LIBRARY .'/external/fork_api.php';
+		require_once PATH_LIBRARY . '/external/fork_api.php';
 
 		// create new instance
 		$api = new ForkAPI();

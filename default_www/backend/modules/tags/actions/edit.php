@@ -56,7 +56,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -88,16 +88,16 @@ class BackendTagsEdit extends BackendBaseActionEdit
 		foreach($modules as $module)
 		{
 			// check if their is a model-file
-			if(SpoonFile::exists(BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php'))
+			if(SpoonFile::exists(BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php'))
 			{
 				// require the model-file
-				require_once BACKEND_MODULES_PATH .'/'. $module .'/engine/model.php';
+				require_once BACKEND_MODULES_PATH . '/' . $module . '/engine/model.php';
 
 				// build class name
-				$className = SpoonFilter::toCamelCase('backend_'. $module .'_model');
+				$className = SpoonFilter::toCamelCase('backend_' . $module . '_model');
 
 				// check if the getByTag-method is available
-				if(method_exists($className, 'getByTag'))
+				if(is_callable(array($className, 'getByTag')))
 				{
 					// make the call and get the item
 					$moduleItems = (array) call_user_func(array($className, 'getByTag'), $this->id);
@@ -198,7 +198,7 @@ class BackendTagsEdit extends BackendBaseActionEdit
 				$item['id'] = BackendTagsModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['tag']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['tag']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

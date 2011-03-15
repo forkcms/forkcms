@@ -80,7 +80,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -95,7 +95,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		$this->record = (array) BackendMailmotorModel::getAddress($this->email);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=non-existing');
+		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=non-existing');
 
 		// get subscriptions (key/pair values)
 		$this->subscriptions = BackendMailmotorModel::getGroupsByEmailAsPairs($this->email);
@@ -168,7 +168,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 		$checkboxGroups = BackendMailmotorModel::getGroupsForCheckboxes();
 
 		// if no groups are found, redirect to overview
-		if(empty($checkboxGroups)) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=no-groups');
+		if(empty($checkboxGroups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
 
 		// add checkboxes for groups
 		$this->frm->addMultiCheckbox('groups', $checkboxGroups, $this->record['groups']);
@@ -241,9 +241,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 				 * groups he requested. This is done because the CM API supports no updateSubscriber function, and it
 				 * overwrites the values of custom fields if you do an update for 1 list and don't provide values for another.
 				 *
-				 * NOTE: A user will still be in the suppression list if he is resubscribed, but since the wrapper will use the
-				 * 		 Subscriber.AddAndResubscribe function, it will ignore the suppression list.
-				 *
+				 * NOTE: A user will still be in the suppression list if he is resubscribed, but he will receive e-mails.
 				 * 		 (see: http://www.campaignmonitor.com/forums/viewtopic.php?id=1761)
 				 */
 
@@ -276,7 +274,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->subscriptions) ? '&group_id='. $ddmGroups->getValue() : '') .'&report=edited&var='. urlencode($item['email']) .'&highlight=email-'. $item['email']);
+				$this->redirect(BackendModel::createURLForAction('addresses') . (!empty($this->subscriptions) ? '&group_id=' . $ddmGroups->getValue() : '') . '&report=edited&var=' . urlencode($item['email']) . '&highlight=email-' . $item['email']);
 			}
 		}
 	}

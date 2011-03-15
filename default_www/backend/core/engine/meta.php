@@ -79,10 +79,10 @@ class BackendMeta
 	public function __construct(BackendForm $form, $metaId = null, $baseFieldName = 'title', $custom = false)
 	{
 		// check if URL is available from the referene
-		if(!Spoon::isObjectReference('url')) throw new BackendException('URL should be available in the reference.');
+		if(!Spoon::exists('url')) throw new BackendException('URL should be available in the reference.');
 
 		// get BackendURL instance
-		$this->URL = Spoon::getObjectReference('url');
+		$this->URL = Spoon::get('url');
 
 		// should we use meta-custom
 		$this->custom = (bool) $custom;
@@ -305,7 +305,7 @@ class BackendMeta
 		if(empty($this->callback))
 		{
 			// build class- & method-name
-			$className = 'Backend'. SpoonFilter::toCamelCase($this->URL->getModule()) .'Model';
+			$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
 			$methodName = 'getURL';
 
 			// set
@@ -400,7 +400,7 @@ class BackendMeta
 		$parameters = (array) $parameters;
 
 		// validate (check if the function exists)
-		if(!method_exists($className, $methodName)) throw new BackendException('The callback-method doesn\'t exist.');
+		if(!is_callable(array($className, $methodName))) throw new BackendException('The callback-method doesn\'t exist.');
 
 		// store in property
 		$this->callback = array('class' => $className, 'method' => $methodName, 'parameters' => $parameters);
@@ -419,7 +419,7 @@ class BackendMeta
 		if(empty($this->callback))
 		{
 			// build class- & method-name
-			$className = 'Backend'. SpoonFilter::toCamelCase($this->URL->getModule()) .'Model';
+			$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
 			$methodName = 'getURL';
 
 			// set
@@ -476,7 +476,7 @@ class BackendMeta
 			if(empty($this->callback))
 			{
 				// build class- & method-name
-				$className = 'Backend'. SpoonFilter::toCamelCase($this->URL->getModule()) .'Model';
+				$className = 'Backend' . SpoonFilter::toCamelCase($this->URL->getModule()) . 'Model';
 				$methodName = 'getURL';
 
 				// set

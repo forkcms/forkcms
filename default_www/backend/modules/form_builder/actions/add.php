@@ -116,7 +116,7 @@ class BackendFormBuilderAdd extends BackendBaseActionAdd
 				BackendFormBuilderModel::insertField($field);
 
 				// everything is saved, so redirect to the editform
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $id .'&report=added&var='. urlencode($values['name']) .'#tabFields');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $id . '&report=added&var=' . urlencode($values['name']) . '#tabFields');
 			}
 		}
 	}

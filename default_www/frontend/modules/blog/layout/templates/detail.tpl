@@ -6,106 +6,99 @@
 	- {$navigation}: contains an array with data for previous and next post
 *}
 <div id="blogDetail">
-	<div class="mod article">
+	<article class="mod article">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h1>{$item.title}</h1>
-				<p>
-					{$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}} -
-					{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
-					{option:comments}
-						{option:commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:commentsMultiple}
-						{option:!commentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!commentsMultiple}
-					{/option:comments}
-				</p>
-			</div>
+				<ul>
+					<li>{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}} {$lblOn} {$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</li>
+					<li>
+						{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
+						{option:comments}
+							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
+							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
+						{/option:comments}
+					</li>
+					<li><a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a></li>
+				</ul>
+			</header>
 			<div class="bd content">
 				{$item.text}
 			</div>
-			<div class="ft">
-				{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
-				{$lblInTheCategory}: <a href="{$item.category_full_url}" title="{$item.category_name}">{$item.category_name}</a>.
-				{option:item.tags}
-					{$lblTags|ucfirst}:
-					{iteration:item.tags}
-						<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
-					{/iteration:item.tags}
-				{/option:item.tags}
-			</div>
-		</div>
-	</div>
-	<div id="navigation" class="mod">
-		<div class="inner">
-			<div class="bd">
-				<ul>
+			<footer class="ft">
+				<ul class="pageNavigation">
 					{option:navigation.previous}
 						<li class="previousLink">
-							<a href="{$navigation.previous.url}" rel="prev">{$lblPreviousArticle|ucfirst}: <em>{$navigation.previous.title}</em></a>
+							<a href="{$navigation.previous.url}" rel="prev">{$lblPreviousArticle|ucfirst}: {$navigation.previous.title}</a>
 						</li>
 					{/option:navigation.previous}
 					{option:navigation.next}
 						<li class="nextLink">
-							<a href="{$navigation.next.url}" rel="next">{$lblNextArticle|ucfirst}: <em>{$navigation.next.title}</em></a>
+							<a href="{$navigation.next.url}" rel="next">{$lblNextArticle|ucfirst}: {$navigation.next.title}</a>
 						</li>
 					{/option:navigation.next}
 				</ul>
-			</div>
+			</footer>
 		</div>
-	</div>
+	</article>
 
 	{option:comments}
-		<div id="comments" class="mod">
+		<section id="blogComments" class="mod">
 			<div class="inner">
-				<div class="hd">
+				<header class="hd">
 					<h3 id="{$actComments}">{$lblComments|ucfirst}</h3>
-				</div>
-				{iteration:comments}
-					{* Do not alter the id! It is used as an anchor *}
-					<div id="comment-{$comments.id}" class="bd comment">
-						<div class="imageHolder">
-							{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
-								<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
-							{option:comments.website}</a>{/option:comments.website}
-						</div>
-						<div class="commentContent">
-							<p class="commentAuthor">
-								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}{$comments.author}{option:comments.website}</a>{/option:comments.website}
-								{$lblWrote}
-								{$comments.created_on|timeago}
-							</p>
-							<div class="commentText content">
-								{$comments.text|cleanupplaintext}
+				</header>
+				<div class="bd content">
+					{iteration:comments}
+						{* Do not alter the id! It is used as an anchor *}
+						<div id="comment-{$comments.id}" class="comment">
+							<div class="imageHolder">
+								{option:comments.website}<a href="{$comments.website}">{/option:comments.website}
+									<img src="{$FRONTEND_CORE_URL}/layout/images/default_author_avatar.gif" width="48" height="48" alt="{$comments.author}" class="replaceWithGravatar" data-gravatar-id="{$comments.gravatar_id}" />
+								{option:comments.website}</a>{/option:comments.website}
+							</div>
+							<div class="commentContent">
+								<p class="commentAuthor">
+									{option:comments.website}<a href="{$comments.website}">{/option:comments.website}{$comments.author}{option:comments.website}</a>{/option:comments.website}
+									{$lblWrote}
+									{$comments.created_on|timeago}
+								</p>
+								<div class="commentText content">
+									{$comments.text|cleanupplaintext}
+								</div>
 							</div>
 						</div>
-					</div>
-				{/iteration:comments}
+					{/iteration:comments}
+				</div>
 			</div>
-		</div>
+		</section>
 	{/option:comments}
 	{option:item.allow_comments}
-		<div id="blogCommentForm" class="mod">
+		<section id="blogCommentForm" class="mod">
 			<div class="inner">
-				<div class="hd">
+				<header class="hd">
 					<h3>{$msgComment|ucfirst}</h3>
-				</div>
+				</header>
 				<div class="bd">
 					{option:commentIsInModeration}<div class="message warning"><p>{$msgBlogCommentInModeration}</p></div>{/option:commentIsInModeration}
 					{option:commentIsSpam}<div class="message error"><p>{$msgBlogCommentIsSpam}</p></div>{/option:commentIsSpam}
 					{option:commentIsAdded}<div class="message success"><p>{$msgBlogCommentIsAdded}</p></div>{/option:commentIsAdded}
 					{form:comment}
-						<p>
-							<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtAuthor} {$txtAuthorError}
-						</p>
-						<p>
-							<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtEmail} {$txtEmailError}
-						</p>
-						<p>
+						<div class="alignBlocks">
+							<p {option:txtAuthorError}class="errorArea"{/option:txtAuthorError}>
+								<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								{$txtAuthor} {$txtAuthorError}
+							</p>
+							<p {option:txtEmailError}class="errorArea"{/option:txtEmailError}>
+								<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								{$txtEmail} {$txtEmailError}
+							</p>
+						</div>
+						<p class="bigInput{option:txtWebsiteError} errorArea{/option:txtWebsiteError}">
 							<label for="website">{$lblWebsite|ucfirst}</label>
 							{$txtWebsite} {$txtWebsiteError}
 						</p>
-						<p>
+						<p class="bigInput{option:txtMessageError} errorArea{/option:txtMessageError}">
 							<label for="message">{$lblMessage|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtMessage} {$txtMessageError}
 						</p>
@@ -115,6 +108,6 @@
 					{/form:comment}
 				</div>
 			</div>
-		</div>
+		</section>
 	{/option:item.allow_comments}
 </div>

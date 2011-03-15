@@ -1,30 +1,32 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="{$LANGUAGE}">
+<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html lang="{$LANGUAGE}" class="ie6"> <![endif]-->
+<!--[if IE 7 ]> <html lang="{$LANGUAGE}" class="ie7"> <![endif]-->
+<!--[if IE 8 ]> <html lang="{$LANGUAGE}" class="ie8"> <![endif]-->
+<!--[if IE 9 ]> <html lang="{$LANGUAGE}" class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="{$LANGUAGE}"> <!--<![endif]-->
 <head>
-	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
-
 	<title>{$pageTitle}</title>
-	<meta http-equiv="content-language" content="{$LANGUAGE}" />
 
-	<link rel="shortcut icon" href="/favicon.ico" />
-	<link rel="image_src" href="{$FRONTEND_CORE_URL}/layout/images/image_src.jpg" />
-
-	{option:debug}<meta name="robots" content="noindex, nofollow" />{/option:debug}
+	{* Meta *}
+	<meta charset="utf-8" />
 	<meta name="generator" content="Fork CMS" />
 	<meta name="description" content="{$metaDescription}" />
 	<meta name="keywords" content="{$metaKeywords}" />
+	{option:debug}<meta name="robots" content="noindex, nofollow" />{/option:debug}
 	{$metaCustom}
+
+	{* Favicon and Apple touch icon *}
+	<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
 	{* Stylesheets *}
 	{iteration:cssFiles}
-		{option:!cssFiles.condition}<link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" />{/option:!cssFiles.condition}
-		{option:cssFiles.condition}<!--[if {$cssFiles.condition}]><link rel="stylesheet" type="text/css" media="{$cssFiles.media}" href="{$cssFiles.file}" /><![endif]-->{/option:cssFiles.condition}
+		<link rel="stylesheet" type="text/css" href="{$cssFiles.file}" />
 	{/iteration:cssFiles}
+	<link rel="stylesheet" type="text/css" media="print" href="{$FRONTEND_CORE_URL}/layout/css/print.css" />
 
-	{* Javascript *}
-	{iteration:javascriptFiles}
-		<script type="text/javascript" src="{$javascriptFiles.file}"></script>
-	{/iteration:javascriptFiles}
+	{* HTML5 Javascript *}
+	<!--[if lt IE 9]> <script src="{$FRONTEND_CORE_URL}/js/html5.js"></script> <![endif]-->
 
 	{* Site wide HTML *}
 	{$siteHTMLHeader}

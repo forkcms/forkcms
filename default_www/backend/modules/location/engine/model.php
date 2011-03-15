@@ -126,9 +126,9 @@ class BackendLocationModel
 
 		// update extra (item id is now known)
 		$extra['data'] = serialize(array('id' => $item['id'],
-											'extra_label' => ucfirst(BL::lbl('Location', 'core')) .': '. $item['title'],
+											'extra_label' => ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
 											'language' => $item['language'],
-											'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id']));
+											'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id']));
 		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// return the new id
@@ -154,9 +154,9 @@ class BackendLocationModel
 						'label' => 'Location',
 						'action' => 'location',
 						'data' => serialize(array('id' => $item['id'],
-													'extra_label' => ucfirst(BL::lbl('Location', 'core')) .': '. $item['title'],
+													'extra_label' => ucfirst(BL::lbl('Location', 'core')) . ': ' . $item['title'],
 													'language' => $item['language'],
-													'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id'])),
+													'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])),
 						'hidden' => 'N');
 
 		// update extra

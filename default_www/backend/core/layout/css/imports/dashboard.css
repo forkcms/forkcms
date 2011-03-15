@@ -28,8 +28,8 @@
 #dashboardWidgets .middleColumn,
 #dashboardWidgets .rightColumn {
 	float: left;
-	width: 407px;
-	min-height: 100px;
+	max-width: 407px;
+	width: 33.3%;
 }
 
 #dashboardWidgets .middleColumn {

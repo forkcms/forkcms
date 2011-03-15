@@ -51,7 +51,7 @@ class BackendDashboardAjaxAlterSequence extends BackendBaseAJAXAction
 				$userSequence[$widget['module']][$widget['widget']] = array('column' => $columnValue, 'position' => $sequence, 'hidden' => $widget['hidden']);
 
 				// add to array
-				if($widget['hidden']) $hiddenItems[] = $widget['module'] .'_'. $widget['widget'];
+				if($widget['hidden']) $hiddenItems[] = $widget['module'] . '_' . $widget['widget'];
 			}
 		}
 

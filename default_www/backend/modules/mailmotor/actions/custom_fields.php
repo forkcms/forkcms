@@ -62,7 +62,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		$this->group = BackendMailmotorModel::getGroup($id);
 
 		// group doesn't exist
-		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') .'&error=non-existing');
+		if(empty($this->group)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 
 		// no custom fields for this group
 		if(empty($this->group['custom_fields'])) $this->group['custom_fields'] = array();
@@ -95,12 +95,6 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('name'), 'name');
 		$this->datagrid->setSortParameter('asc');
-
-		// set colum URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_custom_field') .'&group_id='. $this->group['id'] .'&field=[name]');
-
-		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_custom_field') .'&group_id='. $this->group['id'] .'&field=[name]', BL::lbl('Edit'));
 
 		// add the multicheckbox column
 		$this->datagrid->addColumn('checkbox', '<div class="checkboxHolder"><input type="checkbox" name="toggleChecks" value="toggleChecks" />', '<input type="checkbox" name="fields[]" value="[name]" class="inputCheckbox" /></div>');
@@ -142,7 +136,7 @@ class BackendMailmotorCustomFields extends BackendBaseActionIndex
 	public function setStatisticsLink($id)
 	{
 		// build the link HTML
-		$html = '<a href="'. BackendModel::createURLForAction('statistics_campaign') .'&id='. $id .'" class="button icon iconStats linkButton"><span><span><span>'. BL::lbl('Statistics') .'</span></span></span></a>';
+		$html = '<a href="' . BackendModel::createURLForAction('statistics_campaign') . '&id=' . $id . '" class="button icon iconStats linkButton"><span><span><span>' . BL::lbl('Statistics') . '</span></span></span></a>';
 
 		// check if this campaign has sent mailings
 		$hasSentMailings = (BackendMailmotorModel::existsSentMailingsByCampaignID($id) > 0) ? true : false;
