@@ -50,6 +50,10 @@
 * Tools: added a script to generate statistics for the codebase
 * Core: isCached now always returns false when SPOON_DEBUG is true
 * FormBuilder: added the formbuilder module.
+* Mailmotor: now works with CampaignMonitor API v3
+* Mailmotor: reworked settings; You can now unlink accounts and choose an existing client to link with.
+* Mailmotor: thanks to the reworked import functionality in the CM API v3, the address-import should go a lot faster.
+* Mailmotor: you can now pick your own default groups after importing data of an existing client.
 * Core: Integrated Facebook in the frontend, when an Facebook-app is configured, a facebook-instance will be available in the reference (Spoon::getObjectReference('facebook')). When the user has granted the correct permission you will be able to communicate with Facebook as that user.
 * Bugfix: changing a page template to a template with more blocks caused an exception.
 * Pages: use the new Triton theme when installing a new Fork with example data.
