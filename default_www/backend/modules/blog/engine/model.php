@@ -392,23 +392,23 @@ class BackendBlogModel
 
 
 	/**
-	 * Get a category id by name
+	 * Get a category id by title
 	 *
 	 * @return	int
-	 * @param	string $name					The name of the category.
+	 * @param	string $title					The title of the category.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
-	public static function getCategoryId($name, $language = null)
+	public static function getCategoryId($title, $language = null)
 	{
 		// redefine
-		$name = (string) $name;
+		$title = (string) $title;
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// exists?
 		return (int) BackendModel::getDB()->getVar('SELECT i.id
 													FROM blog_categories AS i
-													WHERE i.name = ? AND i.language = ?',
-													array($name, $language));
+													WHERE i.title = ? AND i.language = ?',
+													array($title, $language));
 	}
 
 
@@ -777,12 +777,25 @@ class BackendBlogModel
 	 * Update an existing category
 	 *
 	 * @return	int
-	 * @param	array $item		The new data.
+	 * @param	array $item				The new data.
+	 * @param	array[optional] $meta	The new meta-data.
 	 */
-	public static function updateCategory(array $item)
+	public static function updateCategory(array $item, $meta = null)
 	{
+		$db = BackendModel::getDB(true);
+
 		// update category
-		$updated = BackendModel::getDB(true)->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
+		$updated = $db->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
+
+		// meta passed?
+		if($meta !== null)
+		{
+			// get current category
+			$category = self::getCategory($item['id']);
+
+			// update the meta
+			$db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
+		}
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());

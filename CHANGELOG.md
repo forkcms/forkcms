@@ -1,3 +1,8 @@
+2.1.1 (xxxx-xx-xx)
+--
+* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
+
+
 2.1.0 (2011-03-14)
 --
 * IE-stylesheets aren't loaded by default, this is the task of the slices (as requested/indicated by Yoni)
