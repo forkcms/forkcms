@@ -1,7 +1,10 @@
 2.1.1 (xxxx-xx-xx)
 --
-* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
+Bugfixes:
+	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
 
+Improvements:
+	* Blog: creating categories can now be done without leaving the add/edit screen. 
 
 2.1.0 (2011-03-14)
 --
