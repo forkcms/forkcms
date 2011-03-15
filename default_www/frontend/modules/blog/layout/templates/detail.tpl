@@ -19,7 +19,7 @@
 							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
-					<li><a href="{$item.category_full_url}" title="{$item.category_name}">{$item.category_name}</a></li>
+					<li><a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a></li>
 				</ul>
 			</header>
 			<div class="bd content">
