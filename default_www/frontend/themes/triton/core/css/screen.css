@@ -1851,6 +1851,7 @@ a.button:visited {
 	* {
 		color: #000 !important;
 		float: none;
+		text-shadow: none;
 	}
 
 	div {
