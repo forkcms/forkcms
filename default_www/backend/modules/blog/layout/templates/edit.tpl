@@ -11,6 +11,7 @@ e	<h2>{$lblBlog|ucfirst}: {$msgEditArticle|sprintf:{$item.title}}</h2>
 </div>
 
 {form:edit}
+	<label for="title">{$lblTitle|ucfirst}</label>
 	{$txtTitle} {$txtTitleError}
 
 	<div id="pageUrl">

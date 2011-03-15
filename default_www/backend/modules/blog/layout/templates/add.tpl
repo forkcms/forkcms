@@ -6,6 +6,7 @@
 </div>
 
 {form:add}
+	<label for="title">{$lblTitle|ucfirst}</label>
 	{$txtTitle} {$txtTitleError}
 
 	<div id="pageUrl">
