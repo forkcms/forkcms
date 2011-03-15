@@ -17,7 +17,7 @@ class BackendBlogModel
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 									FROM blog_posts AS i
 									WHERE i.status = ? AND i.language = ?';
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.title
 											FROM blog_categories AS i
 											WHERE i.language = ?';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
@@ -332,18 +332,34 @@ class BackendBlogModel
 	 */
 	public static function getCategories()
 	{
+		// get db
+		$db = BackendModel::getDB(true);
+
 		// get records and return them
-		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
-																FROM blog_categories AS i
-																WHERE i.language = ?', array(BL::getWorkingLanguage()));
+		$categories = (array) $db->getPairs('SELECT i.id, i.title
+												FROM blog_categories AS i
+												WHERE i.language = ?', array(BL::getWorkingLanguage()));
 
 		// no categories?
 		if(empty($categories))
 		{
 			// build array
 			$category['language'] = BL::getWorkingLanguage();
-			$category['name'] = 'default';
-			$category['url'] = 'default';
+			$category['title'] = 'default';
+
+			// meta array
+			$meta['keywords'] = 'default';
+			$meta['keywords_overwrite'] = 'default';
+			$meta['description'] = 'default';
+			$meta['description_overwrite'] = 'default';
+			$meta['title'] = 'default';
+			$meta['title_overwrite'] = 'default';
+			$meta['url'] = 'default';
+			$meta['url_overwrite'] = 'default';
+			$meta['custom'] = null;
+
+			// insert meta
+			$category['meta_id'] = $db->insert('meta', $category);
 
 			// insert category
 			$id = self::insertCategory($category);
@@ -587,7 +603,8 @@ class BackendBlogModel
 			// get number of categories with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 											FROM blog_categories AS i
-											WHERE i.language = ? AND i.url = ?',
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.language = ? AND m.url = ?',
 											array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
@@ -607,7 +624,8 @@ class BackendBlogModel
 			// get number of items with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 											FROM blog_categories AS i
-											WHERE i.language = ? AND i.url = ? AND i.id != ?',
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.language = ? AND m.url = ? AND i.id != ?',
 											array(BL::getWorkingLanguage(), $URL, $categoryId));
 
 			// already exists

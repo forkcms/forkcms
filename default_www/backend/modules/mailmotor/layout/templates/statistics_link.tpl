@@ -43,7 +43,7 @@
 
 <div class="buttonHolderLeft">
 	<a href="{$var|geturl:'statistics'}&amp;id={$mailing.id}" class="button" title="{$lblAddGroup|ucfirst}">
-		<span>{$msgBackToMailings|sprintf:{$mailing.name}}</span>
+		<span>{$msgBackToStatistics|sprintf:{$mailing.name}}</span>
 	</a>
 </div>
 

@@ -77,9 +77,6 @@ class FrontendHeader extends FrontendBaseObject
 		$this->addCSS('/frontend/core/layout/css/jquery_ui/jquery_ui.css');
 		$this->addCSS('/frontend/core/layout/css/screen.css');
 
-		// print stylesheet
-		$this->addCSS('/frontend/core/layout/css/print.css', 'print');
-
 		// debug stylesheet
 		if(SPOON_DEBUG) $this->addCSS('/frontend/core/layout/css/debug.css');
 
@@ -96,17 +93,13 @@ class FrontendHeader extends FrontendBaseObject
 	 *
 	 * @return	void
 	 * @param 	string $file					The path for the CSS-file that should be loaded.
-	 * @param	string[optional] $media			The media to use.
-	 * @param	string[optional] $condition		A condition for the CSS-file.
 	 * @param	bool[optional] $minify			Should the CSS be minified?
 	 * @param	bool[optional] $addTimestamp	May we add a timestamp for caching purposes?
 	 */
-	public function addCSS($file, $media = 'screen', $condition = null, $minify = true, $addTimestamp = null)
+	public function addCSS($file, $minify = true, $addTimestamp = null)
 	{
 		// redefine
 		$file = (string) $file;
-		$media = (string) $media;
-		$condition = ($condition !== null) ? (string) $condition : null;
 		$minify = (bool) $minify;
 
 		// theme is set
@@ -146,15 +139,13 @@ class FrontendHeader extends FrontendBaseObject
 		$inArray = false;
 
 		// check if the file already exists in the array
-		foreach($this->cssFiles as $row) if($row['file'] == $file && $row['media'] == $media) $inArray = true;
+		foreach($this->cssFiles as $row) if($row['file'] == $file) $inArray = true;
 
 		// add to array if it isn't there already
 		if(!$inArray)
 		{
 			// build temporary arrat
 			$temp['file'] = (string) $file;
-			$temp['media'] = (string) $media;
-			$temp['condition'] = (string) $condition;
 			$temp['add_timestamp'] = $addTimestamp;
 
 			// add to files
@@ -268,16 +259,10 @@ class FrontendHeader extends FrontendBaseObject
 			// debug should be the last file
 			if(strpos($file['file'], 'debug.css') !== false) $aTemp['e' . $i][] = $file;
 
-			// if condition is not empty, add to lowest key
-			elseif($file['condition'] != '') $aTemp['y' . $i][] = $file;
-
 			else
 			{
-				// if media == screen, add to highest key
-				if($file['media'] == 'screen') $aTemp['a' . $i][] = $file;
-
-				// fallback
-				else $aTemp['b' . $file['media'] . $i][] = $file;
+				// add file
+				$aTemp['a' . $i][] = $file;
 
 				// increase
 				$i++;
@@ -502,7 +487,17 @@ class FrontendHeader extends FrontendBaseObject
 		// assign meta
 		$this->tpl->assign('metaDescription', (string) $this->getMetaDescription());
 		$this->tpl->assign('metaKeywords', (string) $this->getMetaKeywords());
-		$this->tpl->assign('metaCustom', (string) $this->getMetaCustom());
+
+		// initial value for footer HTML
+		$metaCustom = (string) $this->getMetaCustom();
+
+		// facebook admins given?
+		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
+		{
+			// add Facebook tag
+			$metaCustom .= "\n" . '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) . '" />' . "\n";
+		}
+		$this->tpl->assign('metaCustom', $metaCustom);
 
 		// init var
 		$cssFiles = null;

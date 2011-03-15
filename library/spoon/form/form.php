@@ -130,6 +130,7 @@ class SpoonForm
 		// required field
 		$this->setName($name);
 		$this->add(new SpoonFormHidden('form', $this->name));
+		if(SPOON_CHARSET == 'utf-8') $this->add(new SpoonFormHidden('_utf8', '&#9731;'));
 		$this->objects['form']->setAttribute('id', SpoonFilter::toCamelCase('form_' . $this->name, '_', true));
 
 		// optional fields

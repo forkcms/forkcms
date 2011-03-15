@@ -411,7 +411,7 @@ class FrontendForm extends SpoonForm
 	 * @return	array
 	 * @param	mixed[optional] $excluded		Which elements should be excluded?
 	 */
-	public function getValues($excluded = array('form', 'save'))
+	public function getValues($excluded = array('form', 'save', '_utf8'))
 	{
 		return parent::getValues($excluded);
 	}
