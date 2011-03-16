@@ -194,7 +194,7 @@
 
 										<div class="box">
 											<div class="heading">
-												<h3>Tags: edit tag "test"</h3>
+												<h3>Tags: edit tag "test" => Should be: Change the name of the tag</h3>
 											</div>
 											<div class="options horizontal">
 												<p>
