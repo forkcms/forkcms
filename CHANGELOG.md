@@ -2,6 +2,7 @@
 --
 Bugfixes:
 	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
+	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
 
 Improvements:
 	* Blog: creating categories can now be done without leaving the add/edit screen.
