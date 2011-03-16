@@ -7,6 +7,7 @@ Bugfixes:
 Improvements:
 	* Blog: creating categories can now be done without leaving the add/edit screen.
 	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
+	* Core: when using datefields with till, from, range set, it will be validated according the type.
 
 2.1.0 (2011-03-14)
 --

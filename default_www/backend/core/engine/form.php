@@ -118,9 +118,9 @@ class BackendForm extends SpoonForm
 	/**
 	 * Adds a datefield to the form
 	 *
-	 * @return	SpoonDateField
+	 * @return	BackendFormDate
 	 * @param	string $name					Name of the element.
-	 * @param	int[optional] $value			The value for the element.
+	 * @param	mixed[optional] $value			The value for the element.
 	 * @param	string[optional] $type			The type (from, till, range) of the datepicker.
 	 * @param	int[optional] $date				The date to use.
 	 * @param	int[optional] $date2			The second date for a rangepicker.
@@ -178,6 +178,7 @@ class BackendForm extends SpoonForm
 				$attributes['data-enddate'] = date('Y-m-d', $date2);
 			break;
 
+			// normal date field
 			default:
 				$class .= ' inputDatefieldNormal inputText';
 				$classError .= ' inputDatefieldNormal';
@@ -185,7 +186,7 @@ class BackendForm extends SpoonForm
 		}
 
 		// create a datefield
-		parent::addDate($name, $value, $mask, $class, $classError);
+		$this->add(new BackendFormDate($name, $value, $mask, $class, $classError));
 
 		// set attributes
 		parent::getField($name)->setAttributes($attributes);
@@ -482,6 +483,109 @@ class BackendForm extends SpoonForm
 
 		// if the form is submitted but there was an error, assign a general error
 		if($this->useGlobalError && $this->isSubmitted() && !$this->isCorrect()) $tpl->assign('formError', true);
+	}
+}
+
+
+/**
+ * This is our extended version of SpoonFormDate
+ *
+ * @package		backend
+ * @subpackage	core
+ *
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @since		2.0
+ */
+class BackendFormDate extends SpoonFormDate
+{
+	/**
+	 * Checks if this field is correctly submitted.
+	 *
+	 * @return	bool
+	 * @param	string[optional] $error		The errormessage to set.
+	 */
+	public function isValid($error = null)
+	{
+		// call parent (let them do the hard word)
+		$return = parent::isValid();
+
+		// already errors detect, no more further testing is needed
+		if($return === false) return false;
+
+		// define long mask
+		$longMask = str_replace(array('d', 'm', 'y', 'Y'), array('dd', 'mm', 'yy', 'yyyy'), $this->mask);
+
+		// post/get data
+		$data = $this->getMethod(true);
+
+		// init some vars
+		$year = (strpos($longMask, 'yyyy') !== false) ? substr($data[$this->attributes['name']], strpos($longMask, 'yyyy'), 4) : substr($data[$this->attributes['name']], strpos($longMask, 'yy'), 2);
+		$month = substr($data[$this->attributes['name']], strpos($longMask, 'mm'), 2);
+		$day = substr($data[$this->attributes['name']], strpos($longMask, 'dd'), 2);
+
+		// validate datefields that have a from-date set
+		if(strpos($this->attributes['class'], 'inputDatefieldFrom') !== false)
+		{
+			// process from date
+			$fromDateChunks = explode('-', $this->attributes['data-startdate']);
+			$fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
+
+			// process given date
+			$givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
+
+			// compare dates
+			if($givenDateTimestamp < $fromDateTimestamp)
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+		}
+
+		// validate datefield that have a till-date set
+		elseif(strpos($this->attributes['class'], 'inputDatefieldTill') !== false)
+		{
+			// process till date
+			$tillDateChunks = explode('-', $this->attributes['data-enddate']);
+			$tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
+
+			// process given date
+			$givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
+
+			// compare dates
+			if($givenDateTimestamp > $tillDateTimestamp)
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+		}
+
+		// validate datefield that have a from and till-date set
+		elseif(strpos($this->attributes['class'], 'inputDatefieldRange') !== false)
+		{
+			// process from date
+			$fromDateChunks = explode('-', $this->attributes['data-startdate']);
+			$fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
+
+			// process till date
+			$tillDateChunks = explode('-', $this->attributes['data-enddate']);
+			$tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
+
+			// process given date
+			$givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
+
+			// compare dates
+			if($givenDateTimestamp < $fromDateTimestamp || $givenDateTimestamp > $tillDateTimestamp)
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+		}
+
+		/**
+		 * When the code reaches the point, it means no errors have occured
+		 * and truth will out!
+		 */
+		return true;
 	}
 }
 
