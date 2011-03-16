@@ -172,6 +172,106 @@ class BackendLocaleModel
 
 
 	/**
+	 * Get a locale by its name
+	 *
+	 * @return	bool
+	 * @param	string $name			The name of the locale.
+	 * @param	string $type			The type of the locale.
+	 * @param	string $module			The module wherin will be searched.
+	 * @param	string $language		The language to use.
+	 * @param	string $application		The application wherin will be searched.
+	 */
+	public static function getByName($name, $type, $module, $language, $application)
+	{
+		// redefine
+		$name = (string) $name;
+		$type = (string) $type;
+		$module = (string) $module;
+		$language = (string) $language;
+		$application = (string) $application;
+
+		// get db
+		$db = BackendModel::getDB();
+
+		return BackendModel::getDB()->getVar('SELECT l.id
+											FROM locale AS l
+											WHERE name = ? AND type = ? AND module = ? AND language = ? AND application = ?',
+											array($name, $type, $module, $language, $application));
+	}
+
+
+	/**
+	 * Get the translations for each languages
+	 *
+	 * @return	array
+	 * @param	array $languages			the languages of the translations to get
+	 * @param	string $application			the application
+	 * @param	string $name				the name
+	 */
+	public static function getTranslationsForLanguages($languages, $application, $name)
+	{
+		// redefine languages
+		$languages = (array) $languages;
+
+		// if empty, take all the laguages
+		if(empty($languages)) $languages = array_keys(BL::getWorkingLanguages());
+
+		// create an array for the languages, surrounded by quotes (example: 'nl')
+		$aLanguages = $languages;
+		foreach($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
+
+		// get db
+		$db = BackendModel::getDB();
+
+		// get all translations for the language
+		$translations = (array) $db->getRecords('SELECT l.module, l.type, l.name, l.value, l.language
+												FROM locale AS l
+												WHERE language IN (' . implode(',', $aLanguages) . ') AND l.application = ? AND l.name LIKE ?;',
+												array($application, '%' . $name . '%'));
+
+		// create an array for the translations
+		$sortedTranslations = array();
+
+		// loop translations
+		foreach($translations as $translation)
+		{
+			$sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = $translation['value'];
+		}
+
+		// create an array to use in the datagrid
+		$datagridTranslations = array();
+
+		// an id that is used for the datagrid, this is not the id of the translation!
+		$id = 0;
+
+		// loop the sorted translations
+		foreach($sortedTranslations as $type => $references)
+		{
+			// create array for each type
+			$datagridTranslations[$type] = array();
+
+			foreach($references as $reference => $translation)
+			{
+				// loop modules
+				foreach($translation as $module => $t)
+				{
+					// create translation (and increase id)
+					$trans = array('module' => $module, 'name' => $reference, 'id' => $id++);
+
+					// is there a translation? else empty string
+					foreach($languages as $lang) $trans[$lang] = isset($t[$lang]) ? $t[$lang] : '';
+
+					// add the translation to the array
+					$datagridTranslations[$type][] = $trans;
+				}
+			}
+		}
+
+		return $datagridTranslations;
+	}
+
+
+	/**
 	 * Get all locale types.
 	 *
 	 * @return	array
