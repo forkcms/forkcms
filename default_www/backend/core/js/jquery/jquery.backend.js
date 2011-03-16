@@ -268,6 +268,17 @@
 						{
 							// destroy the element
 							destroyElement();
+						},
+						error: function(XMLHttpRequest, textStatus, errorThrown)
+						{
+							// reset
+							options.current.element.val(options.current.value);
+							
+							// destroy the element
+							destroyElement();
+							
+							// show message
+							jsBackend.messages.add('error', $.parseJSON(XMLHttpRequest.responseText).message);
 						}
 					});
 				}
