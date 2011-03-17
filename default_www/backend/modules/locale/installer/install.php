@@ -38,12 +38,18 @@ class LocaleInstall extends ModuleInstaller
 		$this->setActionRights(1, 'locale', 'edit');
 		$this->setActionRights(1, 'locale', 'index');
 		$this->setActionRights(1, 'locale', 'mass_action');
+		$this->setActionRights(1, 'locale', 'fast_edit');
 
 		// insert locale for backend locale
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'AlreadyExists', 'Deze vertaling bestaat reeds.');
+		$this->insertLocale('nl', 'backend', 'locale', 'err', 'InvalidActionValue', 'Enkel alfanumerieke karakters, - en _ zijn toegestaan.');
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'ModuleHasToBeCore', 'De module moet core zijn voor vertalingen in de frontend.');
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'NoSelection', 'Er waren geen vertalingen geselecteerd.');
+		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Actions', 'acties');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Add', 'vertaling toevoegen');
+		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Errors', 'foutmeldingen');
+		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Labels', 'labels');
+		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Messages', 'berichtn');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Added', 'De vertaling "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertaling(en) werd(en) verwijderd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Edited', 'De vertaling "%1$s" werd opgeslagen.');
@@ -59,9 +65,14 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'NoItemsAnalyse', 'Er werden geen ontbrekende vertalingen gevonden.');
 		// --
 		$this->insertLocale('en', 'backend', 'locale', 'err', 'AlreadyExists', 'This translation already exists.');
+		$this->insertLocale('en', 'backend', 'locale', 'err', 'InvalidActionValue', 'Only alphanumeric characters, - and _ are allowed.');
 		$this->insertLocale('en', 'backend', 'locale', 'err', 'ModuleHasToBeCore', 'The module needs to be core for frontend translations.');
 		$this->insertLocale('en', 'backend', 'locale', 'err', 'NoSelection', 'No translations were selected.');
+		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Actions', 'actions');
 		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Add', 'add translation');
+		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Errors', 'errors');
+		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Labels', 'labels');
+		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Messages', 'messages');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Added', 'The translation "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Deleted', 'The selected translations were deleted.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Edited', 'The translation "%1$s" was saved.');
