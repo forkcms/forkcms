@@ -1,3 +1,14 @@
+2.1.1 (xxxx-xx-xx)
+--
+Bugfixes:
+	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
+	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
+
+Improvements:
+	* Blog: creating categories can now be done without leaving the add/edit screen.
+	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
+	* Core: when using datefields with till, from, range set, it will be validated according the type.
+
 2.1.0 (2011-03-14)
 --
 * IE-stylesheets aren't loaded by default, this is the task of the slices (as requested/indicated by Yoni)

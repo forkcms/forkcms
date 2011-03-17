@@ -7,6 +7,7 @@
 
 {form:add}
 	<p>
+		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 	</p>
 
