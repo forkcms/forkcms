@@ -191,7 +191,7 @@ class FrontendPage extends FrontendBaseObject
 				$URL = FrontendNavigation::getURL($firstChildId);
 
 				// redirect
-				SpoonHTTP::redirect($URL, 307);
+				SpoonHTTP::redirect($URL, 301);
 			}
 		}
 	}

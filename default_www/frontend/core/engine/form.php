@@ -89,7 +89,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single checkbox.
 	 *
-	 * @return	void
+	 * @return	SpoonFormCheckbox
 	 * @param	string $name					The name of the element.
 	 * @param	bool[optional] $checked			Should the checkbox be checked?
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
@@ -111,7 +111,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a datefield to the form
 	 *
-	 * @return	SpoonDateField
+	 * @return	FrontendFormDate
 	 * @param	string $name					Name of the element.
 	 * @param	mixed[optional] $value			The value for the element.
 	 * @param	string[optional] $type			The type (from, till, range) of the datepicker.
@@ -139,6 +139,8 @@ class FrontendForm extends SpoonForm
 		// @later	get prefered mask & first day
 		$mask = 'd/m/Y';
 		$firstday = 1;
+		$startDate = null;
+		$endDate = null;
 
 		// build attributes
 		$attributes['data-mask'] = str_replace(array('d', 'm', 'Y', 'j', 'n'), array('dd', 'mm', 'yy', 'd', 'm'), $mask);
@@ -177,7 +179,7 @@ class FrontendForm extends SpoonForm
 		}
 
 		// create a datefield
-		parent::addDate($name, $value, $mask, $class, $classError);
+		$this->add(new FrontendFormDate($name, $value, $mask, $class, $classError));
 
 		// set attributes
 		parent::getField($name)->setAttributes($attributes);
@@ -190,7 +192,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single dropdown.
 	 *
-	 * @return	void
+	 * @return	SpoonFormDropdown
 	 * @param	string $name						Name of the element.
 	 * @param	array[optional] $values				Values for the dropdown.
 	 * @param	string[optional] $selected			The selected elements.
@@ -223,7 +225,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single file field.
 	 *
-	 * @return	void
+	 * @return	SpoonFormFile
 	 * @param	string $name					Name of the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
@@ -243,7 +245,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single image field.
 	 *
-	 * @return	void
+	 * @return	SpoonFormImage
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
@@ -263,10 +265,10 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a multiple checkbox.
 	 *
-	 * @return	void
+	 * @return	SpoonFormMultiCheckbox
 	 * @param	string $name					The name of the element.
 	 * @param	array $values					The values for the checkboxes.
-	 * @param	array[optional] $checked			Should the checkboxes be checked?
+	 * @param	mixed[optional] $checked		Should the checkboxes be checked?
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
 	 * @param	string[optional] $classError	Class(es) that will be applied on the element when an error occurs.
 	 */
@@ -287,7 +289,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single password field.
 	 *
-	 * @return	void
+	 * @return	SpoonFormPassword
 	 * @param	string $name					The name of the field.
 	 * @param	string[optional] $value			The value for the field.
 	 * @param	int[optional] $maxlength		The maximum length for the field.
@@ -313,7 +315,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single radiobutton.
 	 *
-	 * @return	void
+	 * @return	SpoonFormRadiobutton
 	 * @param	string $name					The name of the element.
 	 * @param	array $values					The possible values for the radiobutton.
 	 * @param	string[optional] $checked		Should the element be checked?
@@ -337,7 +339,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single textfield.
 	 *
-	 * @return	void
+	 * @return	SpoonFormText
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $value			The value inside the element.
 	 * @param	int[optional] $maxlength		The maximum length for the value.
@@ -363,7 +365,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single textarea.
 	 *
-	 * @return	void
+	 * @return	SpoonFormTextarea
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $value			The value inside the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
@@ -387,7 +389,7 @@ class FrontendForm extends SpoonForm
 	/**
 	 * Adds a single timefield.
 	 *
-	 * @return	void
+	 * @return	SpoonFormTime
 	 * @param	string $name					The name of the element.
 	 * @param	string[optional] $value			The value inside the element.
 	 * @param	string[optional] $class			Class(es) that will be applied on the element.
@@ -395,6 +397,7 @@ class FrontendForm extends SpoonForm
 	 */
 	public function addTime($name, $value = null, $class = null, $classError = null)
 	{
+		// redefine
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
 		$class = ($class !== null) ? (string) $class : 'inputText inputTime';
@@ -421,7 +424,7 @@ class FrontendForm extends SpoonForm
 	 * Parse the form
 	 *
 	 * @return	void
-	 * @param	SpoonTemplate $tpl				The template instance wherein the form will be parsed.
+	 * @param	SpoonTemplate $tpl	The template instance wherein the form will be parsed.
 	 */
 	public function parse(SpoonTemplate $tpl)
 	{
@@ -433,6 +436,109 @@ class FrontendForm extends SpoonForm
 
 		// if the form is submitted but there was an error, assign a general error
 		if($this->isSubmitted() && !$this->isCorrect()) $tpl->assign('formError', true);
+	}
+}
+
+
+/**
+ * This is our extended version of SpoonFormDate
+ *
+ * @package		frontend
+ * @subpackage	core
+ *
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @since		2.0
+ */
+class FrontendFormDate extends SpoonFormDate
+{
+	/**
+	 * Checks if this field is correctly submitted.
+	 *
+	 * @return	bool
+	 * @param	string[optional] $error		The errormessage to set.
+	 */
+	public function isValid($error = null)
+	{
+		// call parent (let them do the hard word)
+		$return = parent::isValid();
+
+		// already errors detect, no more further testing is needed
+		if($return === false) return false;
+
+		// define long mask
+		$longMask = str_replace(array('d', 'm', 'y', 'Y'), array('dd', 'mm', 'yy', 'yyyy'), $this->mask);
+
+		// post/get data
+		$data = $this->getMethod(true);
+
+		// init some vars
+		$year = (strpos($longMask, 'yyyy') !== false) ? substr($data[$this->attributes['name']], strpos($longMask, 'yyyy'), 4) : substr($data[$this->attributes['name']], strpos($longMask, 'yy'), 2);
+		$month = substr($data[$this->attributes['name']], strpos($longMask, 'mm'), 2);
+		$day = substr($data[$this->attributes['name']], strpos($longMask, 'dd'), 2);
+
+		// validate datefields that have a from-date set
+		if(strpos($this->attributes['class'], 'inputDatefieldFrom') !== false)
+		{
+			// process from date
+			$fromDateChunks = explode('-', $this->attributes['data-startdate']);
+			$fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
+
+			// process given date
+			$givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
+
+			// compare dates
+			if($givenDateTimestamp < $fromDateTimestamp)
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+		}
+
+		// validate datefield that have a till-date set
+		elseif(strpos($this->attributes['class'], 'inputDatefieldTill') !== false)
+		{
+			// process till date
+			$tillDateChunks = explode('-', $this->attributes['data-enddate']);
+			$tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
+
+			// process given date
+			$givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
+
+			// compare dates
+			if($givenDateTimestamp > $tillDateTimestamp)
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+		}
+
+		// validate datefield that have a from and till-date set
+		elseif(strpos($this->attributes['class'], 'inputDatefieldRange') !== false)
+		{
+			// process from date
+			$fromDateChunks = explode('-', $this->attributes['data-startdate']);
+			$fromDateTimestamp = mktime(12, 00, 00, $fromDateChunks[1], $fromDateChunks[2], $fromDateChunks[0]);
+
+			// process till date
+			$tillDateChunks = explode('-', $this->attributes['data-enddate']);
+			$tillDateTimestamp = mktime(12, 00, 00, $tillDateChunks[1], $tillDateChunks[2], $tillDateChunks[0]);
+
+			// process given date
+			$givenDateTimestamp = mktime(12, 00, 00, $month, $day, $year);
+
+			// compare dates
+			if($givenDateTimestamp < $fromDateTimestamp || $givenDateTimestamp > $tillDateTimestamp)
+			{
+				if($error !== null) $this->setError($error);
+				return false;
+			}
+		}
+
+		/**
+		 * When the code reaches the point, it means no errors have occured
+		 * and truth will out!
+		 */
+		return true;
 	}
 }
 

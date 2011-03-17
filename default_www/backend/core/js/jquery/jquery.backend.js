@@ -199,7 +199,7 @@
 				element.unbind('click').unbind('focus');
 
 				// set html (replacing quotes with htmlentity, otherwise the inputfield is 'broken')
-				element.html('<input type="text" class="' + options.inputClasses + '" value="' + options.current.value.replace(/"/g, '&quot;') + '" />');
+				element.html('<input type="text" class="' + options.inputClasses + '" value="' + utils.string.replaceAll(options.current.value, '"', '&quot;') + '" />');
 
 				// store element
 				options.current.element = $(element.find('input')[0]);
