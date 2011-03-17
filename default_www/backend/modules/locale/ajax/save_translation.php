@@ -35,7 +35,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		// in case this is a 'act' type, there are special rules concerning possible values
 		if($type == 'act')
 		{
-			if(!SpoonFilter::isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', $value)) $error = BL::err('InvalidValue');
+			if(!SpoonFilter::isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', $value)) $error = BL::err('InvalidActionValue', 'locale');
 		}
 
 		// no error?
