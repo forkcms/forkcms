@@ -66,10 +66,10 @@
 											<ul>
 												<li><a href="contentblocks.php">Content blocks</a></li>
 												<li class="selected"><a href="#">Tags</a></li>
-												<li><a href="#">Blog</a></li>
+												<li><a href="blogarticles.php">Blog</a></li>
 												<li><a href="#">Search</a></li>
-												<li><a href="#">Location</a></li>
-												<li><a href="#">FAQ</a></li>
+												<li><a href="location.php">Location</a></li>
+												<li><a href="faqquestions.php">FAQ</a></li>
 												<li><a href="#">Formbuilder</a></li>
 											</ul>
 										</td>
@@ -185,16 +185,17 @@
 										<p>Are your sure you want to delete this/these item(s)?</p>
 									</div> <!-- End of confirm delete -->
 
-									<form accept-charset="UTF-8" action="/private/en/tags/edit?token=true&amp;id=1" method="post" id="edit" class="forkForms submitWithLink">
-										<input type="hidden" value="edit" id="formEdit" name="form" /><input type="hidden" name="form_token" id="formTokenEdit" value="e3b4841cc3d6a281072d1ea3cfad6bd8" />
+									<div class="pageTitle">
+										<h2>Tags: edit tag "test"</h2>
+									</div>
 
-										<div class="pageTitle">
-											<h2>Tags: edit tag "test"</h2>
-										</div>
+									<form accept-charset="UTF-8" action="/private/en/tags/edit?token=true&amp;id=1" method="post" id="edit" class="forkForms submitWithLink">
+										<input type="hidden" value="edit" id="formEdit" name="form" />
+										<input type="hidden" name="form_token" id="formTokenEdit" value="e3b4841cc3d6a281072d1ea3cfad6bd8" />
 
 										<div class="box">
 											<div class="heading">
-												<h3>Tags: edit tag "test" => Should be: Change the name of the tag</h3>
+												<h3>Tags: edit tag "test"</h3>
 											</div>
 											<div class="options horizontal">
 												<p>

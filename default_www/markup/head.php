@@ -13,6 +13,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/jquery_ui/fork/jquery_ui.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/debug.css" />
 	<link rel="stylesheet" type="text/css" media="screen" href="../backend/core/layout/css/screen.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="../backend/modules/location/layout/css/location.css" />
 	<!--[if IE 7]><link rel="stylesheet" type="text/css" media="screen" href="/backend/core/layout/css/conditionals/ie7.css" /><![endif]-->
 
 	<script type="text/javascript" src="../backend/core/js/jquery/jquery.js"></script>
@@ -22,6 +23,7 @@
 	<script type="text/javascript" src="../backend/core/js/jquery/jquery.backend.js"></script>
 	<script type="text/javascript" src="../backend/js.php?module=core&amp;file=utils.js&amp;language=en&amp;m=1300286958"></script>
 	<script type="text/javascript" src="../backend/js.php?module=core&amp;file=backend.js&amp;language=en&amp;m=1300286958"></script>
+	<script type="text/javascript" src="../backend/js.php?module=blog&amp;file=blog.js&amp;language=en&amp;m=1300364612"></script>
 	<script type="text/javascript" src="../backend/core/js/tiny_mce/tiny_mce.js"></script>
 	<script type="text/javascript" src="../backend/js.php?module=core&amp;file=tiny_mce/tiny_mce_config.js&amp;language=en&amp;m=1300286958"></script>
 </head>

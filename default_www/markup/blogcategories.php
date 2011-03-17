@@ -71,12 +71,12 @@
 													<ul>
 														<li><a href="blogarticles.php">Articles</a></li>
 														<li><a href="blogcomments.php">Comments</a></li>
-														<li class="selected"><a href="blogcategories.php">Categories</a></li>
+														<li class="selected"><a href="#">Categories</a></li>
 													</ul>
 												</li>
 												<li><a href="#">Search</a></li>
-												<li><a href="#">Location</a></li>
-												<li><a href="#">FAQ</a></li>
+												<li><a href="location.php">Location</a></li>
+												<li><a href="faqquestions.php">FAQ</a></li>
 												<li><a href="#">Formbuilder</a></li>
 											</ul>
 										</td>

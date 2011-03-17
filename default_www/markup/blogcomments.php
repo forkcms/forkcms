@@ -75,8 +75,8 @@
 													</ul>
 												</li>
 												<li><a href="#">Search</a></li>
-												<li><a href="#">Location</a></li>
-												<li><a href="#">FAQ</a></li>
+												<li><a href="location.php">Location</a></li>
+												<li><a href="faqquestions.php">FAQ</a></li>
 												<li><a href="#">Formbuilder</a></li>
 											</ul>
 										</td>

@@ -66,10 +66,10 @@
 											<ul>
 												<li class="selected"><a href="#">Content blocks</a></li>
 												<li><a href="tags.php">Tags</a></li>
-												<li><a href="#">Blog</a></li>
+												<li><a href="blogarticles.php">Blog</a></li>
 												<li><a href="#">Search</a></li>
-												<li><a href="#">Location</a></li>
-												<li><a href="#">FAQ</a></li>
+												<li><a href="location.php">Location</a></li>
+												<li><a href="faqquestions.php">FAQ</a></li>
 												<li><a href="#">Formbuilder</a></li>
 											</ul>
 										</td>
@@ -133,12 +133,53 @@
 										</table>
 									</div> <!-- End of browse datagrid -->
 
-									<form accept-charset="UTF-8" action="/private/en/content_blocks/edit?token=true&amp;id=2" method="post" id="edit" class="forkForms submitWithLink">
-										<input type="hidden" value="edit" id="formEdit" name="form" /><input type="hidden" name="form_token" id="formTokenEdit" value="e3b4841cc3d6a281072d1ea3cfad6bd8" />
+									<div class="pageTitle">
+										<h2>Content blocks: add content block</h2>
+									</div>
 
-										<div class="pageTitle">
-											<h2>Content blocks: edit content block "Another content block"</h2>
+									<form accept-charset="UTF-8" action="/private/en/content_blocks/add?token=true" method="post" id="add" class="forkForms submitWithLink">
+										<input type="hidden" value="add" id="formAdd" name="form" />
+										<input type="hidden" name="form_token" id="formTokenAdd" value="e3b4841cc3d6a281072d1ea3cfad6bd8" />
+
+										<p>
+											<input value="" id="title" name="title" maxlength="255" type="text" class="inputText" />
+										</p>
+
+										<div class="box">
+											<div class="heading">
+												<h3>Content</h3>
+											</div>
+											<div class="content">
+												<fieldset>
+													<p style="position: relative;">
+														<textarea id="text" name="text" cols="62" rows="5" class="inputEditor "></textarea>
+													</p>
+													<p>
+														<label for="hidden">
+															<input type="checkbox" value="Y" id="hidden" name="hidden" class="inputCheckbox" checked="checked" />
+															visible on site
+														</label>
+													</p>
+												</fieldset>
+											</div>
 										</div>
+
+										<div class="fullwidthOptions">
+											<div class="buttonHolderRight">
+												<input id="addButton" class="inputButton button mainButton" type="submit" name="add" value="Add content block" />
+											</div>
+										</div>
+									</form> <!-- End of add form -->
+
+									<div class="hr" style="margin-top: 24px"><hr /></div>
+
+									<div class="pageTitle">
+										<h2>Content blocks: edit content block "Another content block"</h2>
+									</div>
+
+									<form accept-charset="UTF-8" action="/private/en/content_blocks/edit?token=true&amp;id=2" method="post" id="edit" class="forkForms submitWithLink">
+										<input type="hidden" value="edit" id="formEdit" name="form" />
+										<input type="hidden" name="form_token" id="formTokenEdit" value="e3b4841cc3d6a281072d1ea3cfad6bd8" />
 
 										<div class="tabs">
 											<ul>
@@ -186,7 +227,7 @@
 													</table>
 												</div>
 											</div>
-										</div> <!-- End of tabs -->
+										</div>
 
 										<div class="fullwidthOptions">
 											<a href="/private/en/content_blocks/delete?token=true&amp;id=2" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
@@ -195,14 +236,14 @@
 											<div class="buttonHolderRight">
 												<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="Save" />
 											</div>
-										</div> <!-- End of full width options -->
+										</div>
 
 										<div id="confirmDelete" title="Delete?" style="display: none;">
 											<p>
 												Are your sure you want to delete the content block "Another content block"?
 											</p>
-										</div> <!-- End of delete -->
-									</form> <!-- End of edit/add form -->
+										</div>
+									</form> <!-- End of edit form -->
 								</div>
 							</td>
 						</tr>
