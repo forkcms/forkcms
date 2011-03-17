@@ -72,10 +72,10 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 			$this->dgActions->setColumnAttributes($lang, array('class' => 'translationValue'));
 
 			// add attributes, so the inline editing has all the needed data
-			$this->dgLabels->setColumnAttributes($lang, array('data-id' => '{language: \''. $lang . '\', application: \''. $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'lbl\'}'));
-			$this->dgMessages->setColumnAttributes($lang, array('data-id' => '{language: \''. $lang . '\', application: \''. $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'msg\'}'));
-			$this->dgErrors->setColumnAttributes($lang, array('data-id' => '{language: \''. $lang . '\', application: \''. $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'err\'}'));
-			$this->dgActions->setColumnAttributes($lang, array('data-id' => '{language: \''. $lang . '\', application: \''. $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'act\'}'));
+			$this->dgLabels->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'lbl\'}'));
+			$this->dgMessages->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'msg\'}'));
+			$this->dgErrors->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'err\'}'));
+			$this->dgActions->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'act\'}'));
 
 			// set sorting
 			$this->dgLabels->setSortingColumns(array('module', 'name'), 'name');
@@ -163,11 +163,6 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 		$this->filter['selected_languages'] = $this->getParameter('languages', 'array') == null ? array(BL::getWorkingLanguage()) : $this->getParameter('languages', 'array');
 		$this->filter['name'] = $this->getParameter('name', 'string') == null ? '' : $this->getParameter('name', 'string');
 		$this->filter['application'] = $this->getParameter('application') == null ? 'frontend' : $this->getParameter('application');
-	}
-
-	public static function EscapeDoubleQuotes($value)
-	{
-		return str_replace('"', '\"', $value);
 	}
 }
 
