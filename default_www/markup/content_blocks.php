@@ -66,10 +66,10 @@
 											<ul>
 												<li class="selected"><a href="#">Content blocks</a></li>
 												<li><a href="tags.php">Tags</a></li>
-												<li><a href="blogarticles.php">Blog</a></li>
+												<li><a href="blog_articles.php">Blog</a></li>
 												<li><a href="#">Search</a></li>
 												<li><a href="location.php">Location</a></li>
-												<li><a href="faqquestions.php">FAQ</a></li>
+												<li><a href="faq_questions.php">FAQ</a></li>
 												<li><a href="#">Formbuilder</a></li>
 											</ul>
 										</td>

@@ -64,19 +64,19 @@
 									<tr>
 										<td id="moduleHolder">
 											<ul>
-												<li><a href="contentblocks.php">Content blocks</a></li>
+												<li><a href="content_blocks.php">Content blocks</a></li>
 												<li><a href="tags.php">Tags</a></li>
 												<li class="selected">
 													<a href="#">Blog</a>
 													<ul>
 														<li class="selected"><a href="#">Articles</a></li>
-														<li><a href="blogcomments.php">Comments</a></li>
-														<li><a href="blogcategories.php">Categories</a></li>
+														<li><a href="blog_comments.php">Comments</a></li>
+														<li><a href="blog_categories.php">Categories</a></li>
 													</ul>
 												</li>
 												<li><a href="#">Search</a></li>
 												<li><a href="location.php">Location</a></li>
-												<li><a href="faqquestions.php">FAQ</a></li>
+												<li><a href="faq_questions.php">FAQ</a></li>
 												<li><a href="#">Formbuilder</a></li>
 											</ul>
 										</td>
