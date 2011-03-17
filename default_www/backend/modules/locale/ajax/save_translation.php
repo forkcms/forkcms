@@ -70,7 +70,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		}
 
 		// output the error
-		else $this->output(self::ERROR, null, BL::getError('InvalidValue'));
+		else $this->output(self::ERROR, null, $error);
 	}
 }
 
