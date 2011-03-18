@@ -427,10 +427,6 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	 */
 	private function validateFormSubscription()
 	{
-		// @todo	moderation
-		// @todo	attendees
-		// @todo	labels
-
 		// get settings
 		$subscriptionsAllowed = (isset($this->settings['allow_subscriptions']) && $this->settings['allow_subscriptions']);
 

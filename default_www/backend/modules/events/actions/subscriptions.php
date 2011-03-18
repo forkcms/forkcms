@@ -4,7 +4,7 @@
  * This is the subscriptions-action , it will display the overview of events subscriptions
  *
  * @package		backend
- * @subpackage	subscriptions
+ * @subpackage	events
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
