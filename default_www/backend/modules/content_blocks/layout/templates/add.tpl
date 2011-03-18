@@ -1,19 +1,22 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
+<div class="pageTitle">
+	<h2>{$lblContentBlocks|ucfirst}: {$lblAdd}</h2>
+</div>
+
 {form:add}
+	<p>
+		{$txtTitle} {$txtTitleError}
+	</p>
+
 	<div class="box">
 		<div class="heading">
-			<h3>{$lblContentBlocks|ucfirst}: {$lblAdd}</h3>
+			<h3>{$lblContent|ucfirst}</h3>
 		</div>
 		<div class="content">
 			<fieldset>
-				<p>
-					<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtTitle} {$txtTitleError}
-				</p>
 				<p style="position: relative;">
-					<label for="text">{$lblContent|ucfirst}</label>
 					{$txtText} {$txtTextError}
 				</p>
 				<p><label for="hidden">{$chkHidden} {$chkHiddenError} {$lblVisibleOnSite}</label></p>

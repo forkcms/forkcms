@@ -667,12 +667,19 @@ class BackendBlogModel
 	 * Inserts a new category into the database
 	 *
 	 * @return	int
-	 * @param	array $item		The data for the category to insert.
+	 * @param	array $item				The data for the category to insert.
+	 * @param	array[optional] $meta	The metadata for the category to insert.
 	 */
-	public static function insertCategory(array $item)
+	public static function insertCategory(array $item, $meta = null)
 	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// meta given?
+		if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
+
 		// create category
-		$item['id'] = BackendModel::getDB(true)->insert('blog_categories', $item);
+		$item['id'] = $db->insert('blog_categories', $item);
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
