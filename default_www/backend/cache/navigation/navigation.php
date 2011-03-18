@@ -150,6 +150,13 @@ $navigation = array(
 						)
 					),
 					array(
+						'url' => 'events/subscriptions',
+						'label' => 'Subscriptions',
+						'selected_for' => array(
+							'events/edit_subscription'
+						)
+					),
+					array(
 						'url' => 'events/categories',
 						'label' => 'Categories',
 						'selected_for' => array(

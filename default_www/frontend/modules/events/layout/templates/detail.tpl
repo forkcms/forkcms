@@ -42,7 +42,7 @@
 			</div>
 			<div class="ft">
 				{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
-				{$lblInTheCategory}: <a href="{$item.category_full_url}" title="{$item.category_name}">{$item.category_name}</a>.
+				{$lblInTheCategory}: <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>.
 				{option:item.tags}
 					{$lblTags|ucfirst}:
 					{iteration:item.tags}
@@ -103,19 +103,24 @@
 					{option:subscriptionIsInModeration}<div class="message warning"><p>{$msgEventsSubscriptionInModeration}</p></div>{/option:subscriptionIsInModeration}
 					{option:subscriptionIsSpam}<div class="message error"><p>{$msgEventsSubscriptionIsSpam}</p></div>{/option:subscriptionIsSpam}
 					{option:subscriptionIsAdded}<div class="message success"><p>{$msgEventsSubscriptionIsAdded}</p></div>{/option:subscriptionIsAdded}
-					{form:subscription}
-						<p>
-							<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtAuthor} {$txtAuthorError}
-						</p>
-						<p>
-							<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-							{$txtEmail} {$txtEmailError}
-						</p>
-						<p>
-							<input class="inputSubmit" type="submit" name="subscription" value="{$lblSubscribe|ucfirst}" />
-						</p>
-					{/form:subscription}
+
+					{option:subscriptionsComplete}<div class="message notice"><p>{$msgEventsSubscriptionsComplete}</p></div>{/option:subscriptionsComplete}
+
+					{option:!subscriptionsComplete}
+						{form:subscription}
+							<p>
+								<label for="author">{$lblName|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								{$txtAuthor} {$txtAuthorError}
+							</p>
+							<p>
+								<label for="email">{$lblEmail|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+								{$txtEmail} {$txtEmailError}
+							</p>
+							<p>
+								<input class="inputSubmit" type="submit" name="subscription" value="{$lblSubscribe|ucfirst}" />
+							</p>
+						{/form:subscription}
+					{/option:!subscriptionsComplete}
 				</div>
 			</div>
 		</div>

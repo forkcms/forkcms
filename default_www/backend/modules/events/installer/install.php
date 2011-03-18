@@ -44,6 +44,7 @@ class EventsInstall extends ModuleInstaller
 
 		// general settings
 		$this->setSetting('events', 'allow_comments', true);
+		$this->setSetting('events', 'allow_subscriptions', true);
 		$this->setSetting('events', 'requires_akismet', true);
 		$this->setSetting('events', 'spamfilter', false);
 		$this->setSetting('events', 'moderation', true);
@@ -52,6 +53,7 @@ class EventsInstall extends ModuleInstaller
 		$this->setSetting('events', 'max_num_revisions', 20);
 		$this->setSetting('events', 'notify_by_email_on_new_comment_to_moderate', true);
 		$this->setSetting('events', 'notify_by_email_on_new_comment', true);
+		$this->setSetting('events', 'notify_by_email_on_new_subscription', true);
 
 		// make module searchable
 		$this->makeSearchable('events');

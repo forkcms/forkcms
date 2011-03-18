@@ -89,7 +89,7 @@ class FrontendEventsRss extends FrontendBaseBlock
 				// append meta
 				$description .= '<div class="meta">' . "\n";
 				$description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' . sprintf(FL::msg('WrittenBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
-				$description .= ' ' . FL::lbl('In') . ' <a href="' . $item['category_full_url'] . '" title="' . $item['category_name'] . '">' . $item['category_name'] . '</a>.</p>' . "\n";
+				$description .= ' ' . FL::lbl('In') . ' <a href="' . $item['category_full_url'] . '" title="' . $item['category_title'] . '">' . $item['category_title'] . '</a>.</p>' . "\n";
 
 				// any tags
 				if(isset($item['tags']))
@@ -124,7 +124,7 @@ class FrontendEventsRss extends FrontendBaseBlock
 
 			// set item properties
 			$rssItem->setPublicationDate($item['publish_on']);
-			$rssItem->addCategory($item['category_name']);
+			$rssItem->addCategory($item['category_title']);
 			$rssItem->setAuthor(FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
 
 			// add item

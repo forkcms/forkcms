@@ -20,7 +20,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 	public static function get($URL)
 	{
 		$return = (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.introduction, i.text, i.num_comments AS comments_count,
-															c.name AS category_name, c.url AS category_url,
+															c.title AS category_title, m2.url AS category_url,
 															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 															UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
 															i.allow_comments, i.allow_subscriptions, i.max_subscriptions, i.num_subscriptions,
@@ -31,6 +31,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 															FROM events AS i
 															INNER JOIN events_categories AS c ON i.category_id = c.id
 															INNER JOIN meta AS m ON i.meta_id = m.id
+															INNER JOIN meta AS m2 ON c.meta_id = m2.id
 															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
 															LIMIT 1',
 															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
@@ -96,8 +97,9 @@ class FrontendEventsModel implements FrontendTagsInterface
 	 */
 	public static function getAllCategories()
 	{
-		return (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.name AS label, c.url, COUNT(c.id) AS total
+		return (array) FrontendModel::getDB()->getRecords('SELECT c.id, c.title AS label, m.url, COUNT(c.id) AS total
 															FROM events_categories AS c
+															INNER JOIN meta AS m ON c.meta_id = m.id
 															INNER JOIN events AS i ON c.id = i.category_id AND c.language = i.language
 															WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
 															GROUP BY c.id',
@@ -157,7 +159,8 @@ class FrontendEventsModel implements FrontendTagsInterface
 																FROM events AS i
 																INNER JOIN events_categories AS c ON i.category_id = c.id
 																INNER JOIN meta AS m ON i.meta_id = m.id
-																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
+																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
 																ORDER BY i.starts_on DESC
 																LIMIT ?, ?',
 																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryURL, (int) $offset, (int) $limit), 'revision_id');
@@ -180,8 +183,9 @@ class FrontendEventsModel implements FrontendTagsInterface
 	{
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id) AS count
 														FROM events AS i
-														INNER JOIN blog_categories AS c ON i.category_id = c.id
-														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?',
+														INNER JOIN events_categories AS c ON i.category_id = c.id
+														INNER JOIN meta AS m ON c.meta_id = m.id
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
 	}
 
@@ -346,7 +350,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 //	public static function getDraft($URL, $draft)
 //	{
 //		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-//															c.name AS category_name, c.url AS category_url,
+//															c.title AS category_title, m2.url AS category_url,
 //															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 //															i.allow_comments,
 //															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
@@ -356,6 +360,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 //															FROM events_posts AS i
 //															INNER JOIN events_categories AS c ON i.category_id = c.id
 //															INNER JOIN meta AS m ON i.meta_id = m.id
+//															INNER JOIN meta AS m2 ON c.meta_id = m2.id
 //															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.revision_id = ? AND m.url = ?
 //															LIMIT 1',
 //															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
@@ -423,7 +428,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 
 		// get items
 		$items = FrontendModel::getDB()->getRecords('SELECT i.id, i.revision_id, i.language, i.title, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.introduction, i.text, i.num_comments AS comments_count, i.user_id,
-														c.name AS category_name, c.url AS category_url,
+														c.title AS category_title, m2.url AS category_url,
 														UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.allow_comments,
 														UNIX_TIMESTAMP(i.created_on) AS created_on, UNIX_TIMESTAMP(i.edited_on) AS edited_on,
 														m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
@@ -433,6 +438,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 														FROM events AS i
 														INNER JOIN events_categories AS c ON i.category_id = c.id
 														INNER JOIN meta AS m ON i.meta_id = m.id
+														INNER JOIN meta AS m2 ON c.meta_id = m2.id
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN(' . implode(',', $ids) . ')',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
 
@@ -633,7 +639,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 //	public static function getRevision($URL, $revision)
 //	{
 //		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-//															c.name AS category_name, c.url AS category_url,
+//															c.title AS category_title, m2.url AS category_url,
 //															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 //															i.allow_comments,
 //															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
@@ -643,6 +649,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 //															FROM events_posts AS i
 //															INNER JOIN events_categories AS c ON i.category_id = c.id
 //															INNER JOIN meta AS m ON i.meta_id = m.id
+//															INNER JOIN meta AS m2 ON c.meta_id = m2.id
 //															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
 //															LIMIT 1',
 //															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
@@ -822,6 +829,78 @@ class FrontendEventsModel implements FrontendTagsInterface
 		{
 				// set variables
 				$variables['message'] = vsprintf(FL::getMessage('EventsEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['event_title'], $backendURL));
+
+			// send the mail
+			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);
+		}
+	}
+
+
+	/**
+	 * Notify the admin
+	 *
+	 * @return	void
+	 * @param	array $subscription		The subscription that was submitted.
+	 */
+	public static function notifyAdminOnSubscription(array $subscription)
+	{
+		// don't notify admin in case of spam
+		if($subscription['status'] == 'spam') return;
+
+		// build data for pushnotification
+		if($subscription['status'] == 'moderation') $alert = array('loc-key' => 'NEW_SUBSCRIPTION_TO_MODERATE');
+		else $alert = array('loc-key' => 'NEW_SUBSCRIPTION');
+
+		// get count of unmoderated items
+		$badge = (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id)
+														FROM events_subscriptions AS i
+														WHERE i.status = ? AND i.language = ?
+														GROUP BY i.status',
+														array('moderation', FRONTEND_LANGUAGE));
+
+		// reset if needed
+		if($badge == 0) $badge = null;
+
+		// build data
+		$data = array('data' => array('endpoint' => SITE_URL . '/api/1.0', 'subscription_id' => $subscription['id']));
+
+		// push it
+		FrontendModel::pushToAppleApp($alert, $badge, null, $data);
+
+		// get settings
+		$notifyByMailOnSubscription = FrontendModel::getModuleSetting('events', 'notify_by_email_on_new_subscription', false);
+		$notifyByMailOnSubscriptionToModerate = FrontendModel::getModuleSetting('events', 'notify_by_email_on_new_subscription_to_moderate', false);
+
+		// create URLs
+		$URL = SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $subscription['event_url'] . '#subscription-' . $subscription['id'];
+		$backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('subscriptions', 'events') . '#tabModeration';
+
+		// notify on all subscriptions
+		if($notifyByMailOnSubscription)
+		{
+			// subscription to moderate
+			if($subscription['status'] == 'moderation')
+			{
+				// set variables
+				$variables['message'] = vsprintf(FL::getMessage('EventsEmailNotificationsNewSubscriptionToModerate'), array($subscription['author'], $URL, $subscription['event_title'], $backendURL));
+			}
+
+			// subscription was published
+			elseif($subscription['status'] == 'published')
+			{
+				// set variables
+				$variables['message'] = vsprintf(FL::getMessage('EventsEmailNotificationsNewSubscription'), array($subscription['author'], $URL, $subscription['event_title']));
+			}
+
+			// send the mail
+			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);
+		}
+
+		// only notify on new subscriptions to moderate and if the subscription is one to moderate
+		elseif($notifyByMailOnSubscriptionToModerate && $subscription['status'] == 'moderation')
+		{
+				// set variables
+				$variables['message'] = vsprintf(FL::getMessage('EventsEmailNotificationsNewSubscriptionToModerate'), array($subscription['author'], $URL, $subscription['event_title'], $backendURL));
 
 			// send the mail
 			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);

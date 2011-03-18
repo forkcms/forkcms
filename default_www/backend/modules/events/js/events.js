@@ -63,4 +63,4 @@ jsBackend.events.controls =
 }
 
 
-$(document).ready(function() { jsBackend.events.init(); });
+$(document).ready(jsBackend.events.init());

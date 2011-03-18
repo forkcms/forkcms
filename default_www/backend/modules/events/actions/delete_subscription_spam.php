@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This action will delete a eventspost
+ * This action will delete a subscription spam
  *
  * @package		backend
  * @subpackage	events
@@ -9,7 +9,7 @@
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
-class BackendEventsDeleteSpam extends BackendBaseActionDelete
+class BackendEventsDeleteSubscriptionSpam extends BackendBaseActionDelete
 {
 	/**
 	 * Execute the action
@@ -22,10 +22,10 @@ class BackendEventsDeleteSpam extends BackendBaseActionDelete
 		parent::execute();
 
 		// delete item
-		BackendEventsModel::deleteSpamComments($this->id);
+		BackendEventsModel::deleteSpamSubscriptions();
 
 		// item was deleted, so redirect
-		$this->redirect(BackendModel::createURLForAction('comments') . '&report=deleted-spam#tabSpam');
+		$this->redirect(BackendModel::createURLForAction('subscriptions') . '&report=deleted-spam#tabSpam');
 	}
 }
 

@@ -265,6 +265,8 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		if($this->URL->getParameter('subscription', 'string') == 'spam') $this->tpl->assign('subscriptionIsSpam', true);
 		if($this->URL->getParameter('subscription', 'string') == 'true') $this->tpl->assign('subscriptionIsAdded', true);
 
+		if($this->record['num_subscriptions'] >= $this->record['max_subscriptions']) $this->tpl->assign('subscriptionsComplete', true);
+
 		// assign settings
 		$this->tpl->assign('settings', $this->settings);
 
@@ -427,7 +429,6 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	{
 		// @todo	moderation
 		// @todo	attendees
-		// @todo	notifications
 		// @todo	labels
 
 		// get settings
@@ -456,8 +457,6 @@ class FrontendEventsDetail extends FrontendBaseBlock
 			$this->frmSubscription->getField('author')->isFilled(FL::err('AuthorIsRequired'));
 			$this->frmSubscription->getField('email')->isEmail(FL::err('EmailIsRequired'));
 
-			// @todo	validate email
-
 			// no errors?
 			if($this->frmSubscription->isCorrect())
 			{
@@ -482,11 +481,17 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$permaLink = FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url'];
 				$redirectLink = $permaLink;
 
+				// moderation enabled
+				if($moderationEnabled)
+				{
+					$subscription['status'] = 'moderation';
+				}
+
 				// should we check if the item is spam
 				if($spamFilterEnabled)
 				{
 					// if the subscription is spam alter the subscription status so it will appear in the spam queue
-					if(FrontendModel::isSpam($text, SITE_URL . $permaLink, $author, $email, $website)) $subscription['status'] = 'spam';
+					if(FrontendModel::isSpam(null, SITE_URL . $permaLink, $author, $email, null)) $subscription['status'] = 'spam';
 				}
 
 				// insert subscription
@@ -495,14 +500,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)
 				{
-					if($subscription['status'] == 'moderation') $redirectLink .= '?subscription=moderation#' . FL::act('Comment');
-					if($subscription['status'] == 'spam') $redirectLink .= '?subscription=spam#' . FL::act('Comment');
+					if($subscription['status'] == 'moderation') $redirectLink .= '?subscription=moderation#eventsSubscribeForm';
+					if($subscription['status'] == 'spam') $redirectLink .= '?subscription=spam#eventsSubscribeForm';
 					if($subscription['status'] == 'published') $redirectLink .= '?subscription=true#subscription-' . $subscription['id'];
 				}
 				else
 				{
-					if($subscription['status'] == 'moderation') $redirectLink .= '&subscription=moderation#' . FL::act('Comment');
-					if($subscription['status'] == 'spam') $redirectLink .= '&subscription=spam#' . FL::act('Comment');
+					if($subscription['status'] == 'moderation') $redirectLink .= '&subscription=moderation#eventsSubscribeForm';
+					if($subscription['status'] == 'spam') $redirectLink .= '&subscription=spam#eventsSubscribeForm';
 					if($subscription['status'] == 'published') $redirectLink .= '&subscription=true#subscription-' . $subscription['id'];
 				}
 
@@ -511,7 +516,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$subscription['event_url'] = $this->record['url'];
 
 				// notify the admin
-				FrontendEventsModel::notifyAdmin($subscription);
+				FrontendEventsModel::notifyAdminOnSubscription($subscription);
 
 				// store timestamp in session so we can block excesive usage
 				SpoonSession::set('events_subscription_' . $this->record['id'], time());

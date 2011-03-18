@@ -49,7 +49,7 @@ class BackendEventsIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnsHidden(array('revision_id'));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('starts_on', 'ends_on', 'publish_on', 'title', 'comments'), 'starts_on');
+		$this->datagrid->setSortingColumns(array('starts_on', 'ends_on', 'publish_on', 'title', 'comments', 'subscriptions'), 'starts_on');
 		$this->datagrid->setSortParameter('desc');
 
 		// set colum URLs

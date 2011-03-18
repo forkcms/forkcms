@@ -91,7 +91,7 @@ class FrontendEventsIcalAll extends FrontendBaseBlock
 			$icalItem->setDatetimeLastModified($item['edited_on']);
 
 			// set other properties
-			$icalItem->setCategories(array($item['category_name']));
+			$icalItem->setCategories(array($item['category_title']));
 
 			// add item
 			$ical->addItem($icalItem);

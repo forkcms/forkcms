@@ -11,7 +11,7 @@
  */
 class BackendEventsModel
 {
-	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.num_comments AS comments
+	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.num_comments AS comments, i.num_subscriptions AS subscriptions
 									FROM events AS i
 									WHERE i.status = ? AND i.language = ?';
 	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.title
@@ -47,6 +47,13 @@ class BackendEventsModel
 													FROM events AS i
 													WHERE i.status = ? AND i.id = ? AND i.language = ?
 													ORDER BY i.edited_on DESC';
+	const QRY_DATAGRID_BROWSE_SUBSCRIPTIONS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author,
+												p.id AS event_id, p.title AS event_title, m.url AS event_url
+												FROM events_subscriptions AS i
+												INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
+												INNER JOIN meta AS m ON p.meta_id = m.id
+												WHERE i.status = ? AND i.language = ?
+												GROUP BY i.id';
 
 
 	/**
@@ -151,7 +158,7 @@ class BackendEventsModel
 	 * Deletes one or more comments
 	 *
 	 * @return	void
-	 * @param	array $ids		The id(s) of the comment(s) to delete.
+	 * @param	array $ids		The id(s) of the items(s) to delete.
 	 */
 	public static function deleteComments($ids)
 	{
@@ -204,6 +211,62 @@ class BackendEventsModel
 
 
 	/**
+	 * Delete all spam
+	 *
+	 * @return	void
+	 */
+	public static function deleteSpamSubscriptions()
+	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get ids
+		$itemIds = (array) $db->getColumn('SELECT i.event_id
+											FROM events_subscriptions AS i
+											WHERE status = ? AND i.language = ?', array('spam', BL::getWorkingLanguage()));
+
+		// update record
+		$db->delete('events_subscriptions', 'status = ? AND language = ?', array('spam', BL::getWorkingLanguage()));
+
+		// recalculate the comment count
+		if(!empty($itemIds)) self::reCalculateSubscriptionCount($itemIds);
+
+		// invalidate the cache for events
+		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+	}
+
+
+	/**
+	 * Deletes one or more subscriptions
+	 *
+	 * @return	void
+	 * @param	array $ids		The id(s) of the item(s) to delete.
+	 */
+	public static function deleteSubscriptions($ids)
+	{
+		// make sure $ids is an array
+		$ids = (array) $ids;
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get ids
+		$itemIds = (array) $db->getColumn('SELECT i.event_id
+											FROM events_subscriptions AS i
+											WHERE i.id IN (' . implode(',', $ids) . ') AND i.language = ?', array(BL::getWorkingLanguage()));
+
+		// update record
+		$db->delete('events_subscriptions', 'id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
+
+		// recalculate the comment count
+		if(!empty($itemIds)) self::reCalculateSubscriptionCount($itemIds);
+
+		// invalidate the cache for events
+		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+	}
+
+
+	/**
 	 * Checks if an item exists
 	 *
 	 * @return	bool
@@ -237,12 +300,27 @@ class BackendEventsModel
 	 * Checks if a comment exists
 	 *
 	 * @return	int
-	 * @param	int $id		The id of the comment to check for existence.
+	 * @param	int $id		The id of the item to check for existence.
 	 */
 	public static function existsComment($id)
 	{
 		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
 														FROM events_comments AS i
+														WHERE i.id = ? AND i.language = ?',
+														array((int) $id, BL::getWorkingLanguage()));
+	}
+
+
+	/**
+	 * Checks if a subscription exists
+	 *
+	 * @return	int
+	 * @param	int $id		The id of the item to check for existence.
+	 */
+	public static function existsSubscription($id)
+	{
+		return (bool) BackendModel::getDB()->getVar('SELECT COUNT(id)
+														FROM events_subscriptions AS i
 														WHERE i.id = ? AND i.language = ?',
 														array((int) $id, BL::getWorkingLanguage()));
 	}
@@ -340,7 +418,7 @@ class BackendEventsModel
 	public static function getCategories()
 	{
 		// get records and return them
-		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
+		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.title
 																FROM events_categories AS i
 																WHERE i.language = ?', array(BL::getWorkingLanguage()));
 
@@ -349,7 +427,8 @@ class BackendEventsModel
 		{
 			// build array
 			$category['language'] = BL::getWorkingLanguage();
-			$category['name'] = 'default';
+			$category['title'] = 'default';
+			// @todo	fix me
 			$category['url'] = 'default';
 
 			// insert category
@@ -383,23 +462,23 @@ class BackendEventsModel
 
 
 	/**
-	 * Get a category id by name
+	 * Get a category id by title
 	 *
 	 * @return	int
-	 * @param	string $name					The name of the category.
+	 * @param	string $title					The title of the category.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
-	public static function getCategoryId($name, $language = null)
+	public static function getCategoryId($title, $language = null)
 	{
 		// redefine
-		$name = (string) $name;
+		$title = (string) $title;
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// exists?
 		return (int) BackendModel::getDB()->getVar('SELECT i.id
 													FROM events_categories AS i
-													WHERE i.name = ? AND i.language = ?',
-													array($name, $language));
+													WHERE i.title = ? AND i.language = ?',
+													array($title, $language));
 	}
 
 
@@ -508,6 +587,25 @@ class BackendEventsModel
 															INNER JOIN meta AS m ON m.id = i.meta_id
 															WHERE i.id = ? AND i.revision_id = ?',
 															array((int) $id, (int) $revisionId));
+	}
+
+
+	/**
+	 * Get all data for a given id
+	 *
+	 * @return	array
+	 * @param	int $id		The id of the item to fetch?
+	 */
+	public static function getSubscription($id)
+	{
+		return (array) BackendModel::getDB()->getRecord('SELECT i.*, UNIX_TIMESTAMP(i.created_on) AS created_on,
+															p.id AS event_id, p.title AS event_title, m.url AS event_url
+															FROM events_subscriptions AS i
+															INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
+															INNER JOIN meta AS m ON p.meta_id = m.id
+															WHERE i.id = ?
+															LIMIT 1',
+															array((int) $id));
 	}
 
 
@@ -713,6 +811,45 @@ class BackendEventsModel
 
 
 	/**
+	 * Recalculate the subscriptioncount
+	 *
+	 * @return	bool
+	 * @param	array $ids	The id(s) of the post wherefor the subscriptioncount should be recalculated.
+	 */
+	public static function reCalculateSubscriptionCount(array $ids)
+	{
+		// validate
+		if(empty($ids)) return false;
+
+		// make unique ids
+		$ids = array_unique($ids);
+
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// get counts
+		$subscriptionsCounts = (array) $db->getPairs('SELECT i.event_id, COUNT(i.id) AS subscription_count
+												FROM events_subscriptions AS i
+												INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
+												WHERE i.status = ? AND i.event_id IN (' . implode(',', $ids) . ') AND i.language = ? AND p.status = ?
+												GROUP BY i.event_id',
+												array('published', BL::getWorkingLanguage(), 'active'));
+
+		// loop items
+		foreach($ids as $id)
+		{
+			// get count
+			$count = (isset($subscriptionsCounts[$id])) ? (int) $subscriptionsCounts[$id] : 0;
+
+			// update
+			$db->update('events', array('num_subscriptions' => $count), 'id = ? AND language = ?', array($id, BL::getWorkingLanguage()));
+		}
+
+		return true;
+	}
+
+
+	/**
 	 * Update an existing item
 	 *
 	 * @return	int
@@ -791,7 +928,6 @@ class BackendEventsModel
 	 */
 	public static function updateComment(array $item)
 	{
-		// update category
 		return BackendModel::getDB(true)->update('events_comments', $item, 'id = ?', array((int) $item['id']));
 	}
 
@@ -821,6 +957,49 @@ class BackendEventsModel
 
 		// recalculate the comment count
 		if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
+
+		// invalidate the cache for events
+		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+	}
+
+
+	/**
+	 * Update a subscription
+	 *
+	 * @return	int
+	 * @param	array $item		The new data.
+	 */
+	public static function updateSubscription(array $item)
+	{
+		return BackendModel::getDB(true)->update('events_comments', $item, 'id = ?', array((int) $item['id']));
+	}
+
+
+	/**
+	 * Updates one or more subscriptions' status
+	 *
+	 * @return	void
+	 * @param	array $ids			The id(s) of the items(s) to change the status for.
+	 * @param	string $status		The new status.
+	 */
+	public static function updateSubscriptionStatuses($ids, $status)
+	{
+		// make sure $ids is an array
+		$ids = (array) $ids;
+
+		// get ids
+		$itemIds = (array) BackendModel::getDB()->getColumn('SELECT i.event_id
+																FROM events_subscriptions AS i
+																WHERE i.id IN (' . implode(',', $ids) . ')');
+
+		// update record
+		BackendModel::getDB(true)->execute('UPDATE events_subscriptions
+											SET status = ?
+											WHERE id IN (' . implode(',', $ids) . ')',
+											array((string) $status));
+
+		// recalculate the comment count
+		if(!empty($itemIds)) self::reCalculateSubscriptionCount($itemIds);
 
 		// invalidate the cache for events
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());

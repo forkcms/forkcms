@@ -300,6 +300,7 @@ class BackendEventsEdit extends BackendBaseActionEdit
 
 				// recalculate comment count so the new revision has the correct count
 				BackendEventsModel::reCalculateCommentCount(array($this->id));
+				BackendEventsModel::reCalculateSubscriptionCount(array($this->id));
 
 				// save the tags
 				BackendTagsModel::saveTags($item['revision_id'], $this->frm->getField('tags')->getValue(), $this->URL->getModule());

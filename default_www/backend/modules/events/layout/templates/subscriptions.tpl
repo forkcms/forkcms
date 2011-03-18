@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-	<h2>{$lblEvents|ucfirst}: {$lblComments}</h2>
+	<h2>{$lblEvents|ucfirst}: {$lblSubscriptions}</h2>
 </div>
 
 <div id="tabs" class="tabs">
@@ -14,7 +14,7 @@
 
 	<div id="tabPublished">
 		{option:dgPublished}
-			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsPublished">
+			<form action="{$var|geturl:'mass_subscription_action'}" method="get" class="forkForms" id="subscriptionsPublished">
 				<div class="datagridHolder">
 					<input type="hidden" name="from" value="published" />
 					{$dgPublished}
@@ -26,7 +26,7 @@
 
 	<div id="tabModeration">
 		{option:dgModeration}
-			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsModeration">
+			<form action="{$var|geturl:'mass_subscription_action'}" method="get" class="forkForms" id="subscriptionsModeration">
 				<div class="datagridHolder">
 					<input type="hidden" name="from" value="moderation" />
 					{$dgModeration}
@@ -38,12 +38,12 @@
 
 	<div id="tabSpam">
 		{option:dgSpam}
-			<form action="{$var|geturl:'mass_comment_action'}" method="get" class="forkForms" id="commentsSpam">
+			<form action="{$var|geturl:'mass_subscription_action'}" method="get" class="forkForms" id="subscriptionsSpam">
 				<div class="datagridHolder">
 					<input type="hidden" name="from" value="spam" />
 					<div class="generalMessage infoMessage">
 							{$msgDeleteAllSpam}
-							<a href="{$var|geturl:'delete_comment_spam'}">{$lblDelete|ucfirst}</a>
+							<a href="{$var|geturl:'delete_subscription_spam'}">{$lblDelete|ucfirst}</a>
 						</p>
 					</div>
 					{$dgSpam}
