@@ -44,7 +44,7 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -70,9 +70,12 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 		$this->frm = new BackendForm('editCategory');
 
 		// create elements
-		$this->frm->addText('name', $this->record['name']);
-		$this->frm->addCheckbox('is_default', (BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null) == $this->id));
-		if((BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null) == $this->id)) $this->frm->getField('is_default')->setAttribute('disabled', 'disabled');
+		$this->frm->addText('title', $this->record['title']);
+		$this->frm->addCheckbox('is_default', (BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) == $this->id));
+		if((BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null) == $this->id)) $this->frm->getField('is_default')->setAttribute('disabled', 'disabled');
+
+		// meta object
+		$this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 	}
 
 
@@ -86,12 +89,11 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 		// call parent
 		parent::parse();
 
-		// assign id, name
-		$this->tpl->assign('id', $this->record['id']);
-		$this->tpl->assign('name', $this->record['name']);
+		// assign
+		$this->tpl->assign('item', $this->record);
 
 		// get default category id
-		$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null);
+		$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_' . BL::getWorkingLanguage(), null);
 
 		// get default category
 		$defaultCategory = BackendEventsModel::getCategory($defaultCategoryId);
@@ -114,32 +116,38 @@ class BackendEventsEditCategory extends BackendBaseActionEdit
 		// is the form submitted?
 		if($this->frm->isSubmitted())
 		{
+			// set callback for generating an unique URL
+			$this->meta->setUrlCallback('BackendEventsModel', 'getURLForCategory', array($this->record['id']));
+
 			// cleanup the submitted fields, ignore fields that were added by hackers
 			$this->frm->cleanupFields();
 
 			// validate fields
-			$this->frm->getField('name')->isFilled(BL::err('NameIsRequired'));
+			$this->frm->getField('title')->isFilled(BL::err('TitleIsRequired'));
+
+			// validate meta
+			$this->meta->validate();
 
 			// no errors?
 			if($this->frm->isCorrect())
 			{
 				// build item
 				$item['id'] = $this->id;
-				$item['name'] = $this->frm->getField('name')->getValue();
-				$item['url'] = BackendEventsModel::getURLForCategory($item['name'], $this->id);
+				$item['title'] = $this->frm->getField('title')->getValue();
+				$item['meta_id'] = $this->meta->save(true);
 
 				// upate the item
 				BackendEventsModel::updateCategory($item);
 
 				// it isn't the default category but it should be.
-				if(BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null) != $item['id'] && $this->frm->getField('is_default')->getChecked())
+				if(BackendModel::getModuleSetting('events', 'default_category_' . BL::getWorkingLanguage(), null) != $item['id'] && $this->frm->getField('is_default')->getChecked())
 				{
 					// store
-					BackendModel::setModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), $item['id']);
+					BackendModel::setModuleSetting('events', 'default_category_' . BL::getWorkingLanguage(), $item['id']);
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('categories') .'&report=edited-category&var='. urlencode($item['name']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('categories') . '&report=edited-category&var=' . urlencode($item['title']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

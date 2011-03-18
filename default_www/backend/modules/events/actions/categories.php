@@ -43,7 +43,7 @@ class BackendEventsCategories extends BackendBaseActionIndex
 		$this->datagrid = new BackendDataGridDB(BackendEventsModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('name'), 'name');
+		$this->datagrid->setSortingColumns(array('title'), 'title');
 
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::lbl('Edit'));
@@ -55,7 +55,7 @@ class BackendEventsCategories extends BackendBaseActionIndex
 		$this->datagrid->setPaging(false);
 
 		// add attributes, so the inline editing has all the needed data
-		$this->datagrid->setColumnAttributes('name', array('data-id' => '{id:[id]}'));
+		$this->datagrid->setColumnAttributes('title', array('data-id' => '{id:[id]}'));
 	}
 
 

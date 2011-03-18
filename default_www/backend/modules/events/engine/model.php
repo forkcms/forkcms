@@ -14,7 +14,7 @@ class BackendEventsModel
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, UNIX_TIMESTAMP(i.starts_on) AS starts_on, UNIX_TIMESTAMP(i.ends_on) AS ends_on, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.num_comments AS comments
 									FROM events AS i
 									WHERE i.status = ? AND i.language = ?';
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.title
 											FROM events_categories AS i
 											WHERE i.language = ?';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
@@ -123,17 +123,27 @@ class BackendEventsModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// delete category
-		$db->delete('events_categories', 'id = ?', array($id));
+		// get item
+		$item = self::getCategory($id);
 
-		// default category
-		$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null);
+		// any items?
+		if(!empty($item))
+		{
+			// delete meta
+			$db->delete('meta', 'id = ?', array($item['meta_id']));
 
-		// update category for the items that might be in this category
-		$db->update('events', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
+			// delete category
+			$db->delete('events_categories', 'id = ?', array($id));
 
-		// invalidate the cache for events
-		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+			// default category
+			$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null);
+
+			// update category for the items that might be in this category
+			$db->update('events', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
+
+			// invalidate the cache for events
+			BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
+		}
 	}
 
 
@@ -567,10 +577,10 @@ class BackendEventsModel
 	 * Retrieve the unique URL for a category
 	 *
 	 * @return	string
-	 * @param	string $URL						The string wheron the URL will be based.
-	 * @param	int[optional] $categoryId		The id of the category to ignore.
+	 * @param	string $URL				The string wheron the URL will be based.
+	 * @param	int[optional] $id		The id of the category to ignore.
 	 */
-	public static function getURLForCategory($URL, $categoryId = null)
+	public static function getURLForCategory($URL, $id = null)
 	{
 		// redefine URL
 		$URL = SpoonFilter::urlise((string) $URL);
@@ -579,12 +589,13 @@ class BackendEventsModel
 		$db = BackendModel::getDB();
 
 		// new category
-		if($categoryId === null)
+		if($id === null)
 		{
 			// get number of categories with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 											FROM events_categories AS i
-											WHERE i.language = ? AND i.url = ?',
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.language = ? AND m.url = ?',
 											array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
@@ -604,8 +615,9 @@ class BackendEventsModel
 			// get number of items with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 											FROM events_categories AS i
-											WHERE i.language = ? AND i.url = ? AND i.id != ?',
-											array(BL::getWorkingLanguage(), $URL, $categoryId));
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.language = ? AND m.url = ? AND i.id != ?',
+											array(BL::getWorkingLanguage(), $URL, $id));
 
 			// already exists
 			if($number != 0)
@@ -614,7 +626,7 @@ class BackendEventsModel
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
-				return self::getURLForCategory($URL, $categoryId);
+				return self::getURLForCategory($URL, $id);
 			}
 		}
 
