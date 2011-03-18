@@ -142,6 +142,7 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'core', 'err', 'IntegerIsInvalid', 'Dit is een ongeldig geheel getal.');
 		$this->insertLocale('nl', 'backend', 'events', 'err', 'RSSDescription', 'Evenementen RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>');
 		$this->insertLocale('nl', 'backend', 'events', 'lbl', 'Add', 'evenement toevoegen');
+		$this->insertLocale('nl', 'backend', 'events', 'lbl', 'AllowSubscriptions', 'inschrijvingen toelaten');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'Added', 'Het evenement "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'CommentOnWithURL', 'Reactie op: <a href="%1$s">%2$s</a>');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'ConfirmDelete', 'Ben je zeker dat je het evenement "%1$s" wil verwijderen?');
@@ -158,9 +159,11 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSummary', 'Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het evenementenoverzicht.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'HelpSpamFilter', 'Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'MakeDefaultCategory', 'Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'MaxSubscriptions', 'Laat dit veld leeg als er geen maximum aantal deelnemers zijn.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NoItems', 'Er zijn nog geen evenementen. <a href="%1$s">Voeg het eerste evenement toe</a>.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewComment', 'Verwittig via email als er een nieuwe reactie is.');
 		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewCommentToModerate', 'Verwittig via email als er een nieuwe reactie te modereren is.');
+		$this->insertLocale('nl', 'backend', 'events', 'msg', 'NotifyByEmailOnNewSubscription', 'Verwittig via email als er een nieuwe inschrijving is.');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Dates', 'datums');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Enabled', 'ingeschakeld');
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'EndsOn', 'eindigt op');
@@ -203,6 +206,7 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'core', 'err', 'IntegerIsInvalid', 'Invalid integer.');
 		$this->insertLocale('en', 'backend', 'events', 'err', 'RSSDescription', 'Events RSS description is not yet provided. <a href="%1$s">Configure</a>');
 		$this->insertLocale('en', 'backend', 'events', 'lbl', 'Add', 'add event');
+		$this->insertLocale('en', 'backend', 'events', 'lbl', 'AllowSubscriptions', 'allow subscriptions');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'Added', 'The event "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'CommentOnWithURL', 'Comment on: <a href="%1$s">%2$s</a>');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the event "%1$s"?');
@@ -219,9 +223,11 @@ class EventsInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpSummary', 'Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'HelpSpamFilter', 'Enable the built-in spamfilter (Akismet) to help avoid spam comments.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'MakeDefaultCategory', 'Make default category (current default category is: %1$s).');
+		$this->insertLocale('en', 'backend', 'events', 'msg', 'MaxSubscriptions', 'Leave this field empty if there is no limit for the subscriptions.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'NoItems', 'There are no event yet. <a href="%1$s">Add the first event</a>.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewComment', 'Notify by email when there is a new comment.');
 		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewCommentToModerate', 'Notify by email when there is a new comment to moderate.');
+		$this->insertLocale('en', 'backend', 'events', 'msg', 'NotifyByEmailOnNewSubscription', 'Notify by email when there is a new subscription.');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Dates', 'dates');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Enabled', 'enabled');
 		$this->insertLocale('en', 'backend', 'core', 'lbl', 'EndsOn', 'ends on');

@@ -136,7 +136,7 @@
 								<p>
 									<label for="maximumSubscriptions">{$lblMaximumSubscriptions|ucfirst}</label>
 									{$txtMaxSubscriptions} {$txtMaxSubscriptionsError}
-									<span class="helpTxt">{$msgEventsMaxSubscriptions}</span>
+									<span class="helpTxt">{$msgMaxSubscriptions}</span>
 								</p>
 							</div>
 						</div>
