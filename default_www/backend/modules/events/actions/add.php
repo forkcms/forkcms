@@ -44,7 +44,7 @@ class BackendEventsAdd extends BackendBaseActionAdd
 	private function loadForm()
 	{
 		// get default category id
-		$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage());
+		$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_' . BL::getWorkingLanguage());
 
 		// create form
 		$this->frm = new BackendForm('add');
@@ -164,17 +164,17 @@ class BackendEventsAdd extends BackendBaseActionAdd
 					if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('events', $item['id'], array('title' => $item['title'], 'text' => $item['text']));
 
 					// ping
-					if(BackendModel::getModuleSetting('events', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('events', 'detail') .'/'. $this->meta->getURL());
+					if(BackendModel::getModuleSetting('events', 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock('events', 'detail') . '/' . $this->meta->getURL());
 
 					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=row-'. $item['revision_id']);
+					$this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $item['revision_id']);
 				}
 
 				// draft
 				elseif($item['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$this->redirect(BackendModel::createURLForAction('edit') .'&report=saved_as_draft&var='. urlencode($item['title']) .'&id='. $item['id'] .'&draft='. $item['revision_id'] .'&highlight=row-'. $item['revision_id']);
+					$this->redirect(BackendModel::createURLForAction('edit') . '&report=saved_as_draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
 				}
 			}
 		}

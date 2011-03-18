@@ -33,7 +33,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 															INNER JOIN meta AS m ON i.meta_id = m.id
 															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
 															LIMIT 1',
-															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $URL));
+															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
 		// validate
 		if(empty($return)) return array();
 
@@ -43,9 +43,9 @@ class FrontendEventsModel implements FrontendTagsInterface
 		$categoryLink = FrontendNavigation::getURLForBlock('events', 'category');
 
 		// urls
-		$return['full_url'] = $link .'/'. $return['url'];
-		$return['ical_url'] = $iCalLink .'/'. $return['url'];
-		$return['category_full_url'] = $categoryLink .'/'. $return['category_url'];
+		$return['full_url'] = $link . '/' . $return['url'];
+		$return['ical_url'] = $iCalLink . '/' . $return['url'];
+		$return['category_full_url'] = $categoryLink . '/' . $return['category_url'];
 
 		// comments
 		if($return['comments_count'] > 0) $return['comments'] = true;
@@ -79,7 +79,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 															ORDER BY i.starts_on ASC, i.id DESC
 															LIMIT ?, ?',
 															array('active', FRONTEND_LANGUAGE, 'N',
-																	FrontendModel::getUTCDate('Y-m-d H:i') .':00', FrontendModel::getUTCDate('Y-m-d') .' 00:00:00', FrontendModel::getUTCDate('Y-m-d') .' 00:00:00', (int) $offset, (int) $limit), 'revision_id');
+																	FrontendModel::getUTCDate('Y-m-d H:i') . ':00', FrontendModel::getUTCDate('Y-m-d') . ' 00:00:00', FrontendModel::getUTCDate('Y-m-d') . ' 00:00:00', (int) $offset, (int) $limit), 'revision_id');
 
 		// no results?
 		if(empty($ids)) return array();
@@ -101,7 +101,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 															INNER JOIN events AS i ON c.id = i.category_id AND c.language = i.language
 															WHERE c.language = ? AND i.status = ? AND i.hidden = ? AND i.publish_on <= ?
 															GROUP BY c.id',
-															array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'), 'id');
+															array(FRONTEND_LANGUAGE, 'active', 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
 	}
 
 
@@ -138,7 +138,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 														FROM events AS i
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND
 															((i.ends_on IS NOT NULL AND i.ends_on > ?) || (i.starts_on > ?)) ',
-														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', FrontendModel::getUTCDate('Y-m-d') .' 00:00:00', FrontendModel::getUTCDate('Y-m-d') .' 00:00:00'));
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', FrontendModel::getUTCDate('Y-m-d') . ' 00:00:00', FrontendModel::getUTCDate('Y-m-d') . ' 00:00:00'));
 	}
 
 
@@ -160,7 +160,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?
 																ORDER BY i.starts_on DESC
 																LIMIT ?, ?',
-																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $categoryURL, (int) $offset, (int) $limit), 'revision_id');
+																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $categoryURL, (int) $offset, (int) $limit), 'revision_id');
 
 		// no results?
 		if(empty($ids)) return array();
@@ -182,7 +182,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 														FROM events AS i
 														INNER JOIN blog_categories AS c ON i.category_id = c.id
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND c.url = ?',
-														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', (string) $URL));
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
 	}
 
 
@@ -210,7 +210,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.starts_on BETWEEN ? AND ?
 															ORDER BY i.starts_on ASC, i.id DESC
 															LIMIT ?, ?',
-															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'revision_id');
+															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', FrontendModel::getUTCDate('Y-m-d H:i', $start), FrontendModel::getUTCDate('Y-m-d H:i', $end), $offset, $limit), 'revision_id');
 		// no results?
 		if(empty($ids)) return array();
 
@@ -236,7 +236,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id)
 														FROM events AS i
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.starts_on BETWEEN ? AND ?',
-														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', FrontendModel::getUTCDate('Y-m-d H:i:s', $start), FrontendModel::getUTCDate('Y-m-d H:i:s', $end)));
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', FrontendModel::getUTCDate('Y-m-d H:i:s', $start), FrontendModel::getUTCDate('Y-m-d H:i:s', $end)));
 	}
 
 
@@ -253,7 +253,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 														INNER JOIN meta AS m ON i.meta_id = m.id
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 														GROUP BY month',
-														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'));
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'));
 
 		// init vars
 		$stats = array();
@@ -276,11 +276,11 @@ class FrontendEventsModel implements FrontendTagsInterface
 			$timestamp = gmmktime(00, 00, 00, $month, 01, $year);
 
 			// initialize if needed
-			if(!isset($stats[$year])) $stats[$year] = array('url' => $link .'/'. $year, 'label' => $year, 'total' => 0, 'months' => null);
+			if(!isset($stats[$year])) $stats[$year] = array('url' => $link . '/' . $year, 'label' => $year, 'total' => 0, 'months' => null);
 
 			// increment the total
 			$stats[$year]['total'] += (int) $count;
-			$stats[$year]['months'][$key] = array('url' => $link .'/'. $year .'/'. $month, 'label' => $timestamp, 'total' => $count);
+			$stats[$year]['months'][$key] = array('url' => $link . '/' . $year . '/' . $month, 'label' => $timestamp, 'total' => $count);
 		}
 
 		// loop years
@@ -374,7 +374,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.title, m.url
 																FROM events_posts AS i
 																INNER JOIN meta AS m ON m.id = i.meta_id
-																WHERE i.status = ? AND i.hidden = ? AND i.revision_id IN ('. implode(',', $ids) .')
+																WHERE i.status = ? AND i.hidden = ? AND i.revision_id IN (' . implode(',', $ids) . ')
 																ORDER BY i.publish_on DESC',
 																array('active', 'N'));
 
@@ -385,7 +385,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 			$link = FrontendNavigation::getURLForBlock('events', 'detail');
 
 			// reset url
-			foreach($items as &$row) $row['full_url'] = $link .'/'. $row['url'];
+			foreach($items as &$row) $row['full_url'] = $link . '/' . $row['url'];
 		}
 
 		// return
@@ -433,8 +433,8 @@ class FrontendEventsModel implements FrontendTagsInterface
 														FROM events AS i
 														INNER JOIN events_categories AS c ON i.category_id = c.id
 														INNER JOIN meta AS m ON i.meta_id = m.id
-														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN('. implode(',', $ids) .')',
-														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00'), 'id');
+														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN(' . implode(',', $ids) . ')',
+														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00'), 'id');
 
 		// init var
 		$revisionIds = array();
@@ -453,9 +453,9 @@ class FrontendEventsModel implements FrontendTagsInterface
 			$revisionIds[] = (int) $items[$id]['revision_id'];
 
 			// URLs
-			$items[$id]['full_url'] = $link .'/'. $items[$id]['url'];
-			$items[$id]['ical_url'] = $iCalLink .'/'. $items[$id]['url'];
-			$items[$id]['category_full_url'] = $categoryLink .'/'. $items[$id]['category_url'];
+			$items[$id]['full_url'] = $link . '/' . $items[$id]['url'];
+			$items[$id]['ical_url'] = $iCalLink . '/' . $items[$id]['url'];
+			$items[$id]['category_full_url'] = $categoryLink . '/' . $items[$id]['category_url'];
 
 			// comments
 			if($items[$id]['comments_count'] > 0) $items[$id]['comments'] = true;
@@ -559,7 +559,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 																WHERE c.status = ? AND i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 																ORDER BY c.created_on DESC
 																LIMIT ?',
-																array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit));
+																array('published', 'active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit));
 
 		// validate
 		if(empty($comments)) return $return;
@@ -571,8 +571,8 @@ class FrontendEventsModel implements FrontendTagsInterface
 		foreach($comments as &$row)
 		{
 			// add some URLs
-			$row['event_full_url'] = $link .'/'. $row['event_url'];
-			$row['full_url'] = $link .'/'. $row['event_url'] .'#comment-'. $row['id'];
+			$row['event_full_url'] = $link . '/' . $row['event_url'];
+			$row['full_url'] = $link . '/' . $row['event_url'] . '#comment-' . $row['id'];
 			$row['gravatar_id'] = md5($row['email']);
 		}
 
@@ -607,15 +607,15 @@ class FrontendEventsModel implements FrontendTagsInterface
 //		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title, m.url
 //																FROM events_posts AS i
 //																INNER JOIN meta AS m ON i.meta_id = m.id
-//																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN('. implode(',', $relatedIDs) .')
+//																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND i.id IN(' . implode(',', $relatedIDs) . ')
 //																ORDER BY i.publish_on DESC, i.id DESC
 //																LIMIT ?',
-//																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') .':00', $limit), 'id');
+//																array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', $limit), 'id');
 //
 //		// loop items
 //		foreach($items as &$row)
 //		{
-//			$row['full_url'] = $link .'/'. $row['url'];
+//			$row['full_url'] = $link . '/' . $row['url'];
 //		}
 //
 //		// return
@@ -783,7 +783,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 		if($badge == 0) $badge = null;
 
 		// build data
-		$data = array('data' => array('endpoint' => SITE_URL .'/api/1.0', 'comment_id' => $comment['id']));
+		$data = array('data' => array('endpoint' => SITE_URL . '/api/1.0', 'comment_id' => $comment['id']));
 
 		// push it
 		FrontendModel::pushToAppleApp($alert, $badge, null, $data);
@@ -793,8 +793,8 @@ class FrontendEventsModel implements FrontendTagsInterface
 		$notifyByMailOnCommentToModerate = FrontendModel::getModuleSetting('events', 'notify_by_email_on_new_comment_to_moderate', false);
 
 		// create URLs
-		$URL = SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') .'/'. $comment['event_url'] .'#comment-'. $comment['id'];
-		$backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'events') .'#tabModeration';
+		$URL = SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $comment['event_url'] . '#comment-' . $comment['id'];
+		$backendURL = SITE_URL . FrontendNavigation::getBackendURLForBlock('comments', 'events') . '#tabModeration';
 
 		// notify on all comments
 		if($notifyByMailOnComment)
@@ -814,7 +814,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 			}
 
 			// send the mail
-			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
+			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);
 		}
 
 		// only notify on new comments to moderate and if the comment is one to moderate
@@ -824,7 +824,7 @@ class FrontendEventsModel implements FrontendTagsInterface
 				$variables['message'] = vsprintf(FL::getMessage('EventsEmailNotificationsNewCommentToModerate'), array($comment['author'], $URL, $comment['event_title'], $backendURL));
 
 			// send the mail
-			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH .'/layout/templates/mails/notification.tpl', $variables);
+			FrontendMailer::addEmail(FL::getMessage('NotificationSubject'), FRONTEND_CORE_PATH . '/layout/templates/mails/notification.tpl', $variables);
 		}
 	}
 
@@ -846,13 +846,13 @@ class FrontendEventsModel implements FrontendTagsInterface
 //		$items = (array) FrontendModel::getDB()->getRecords('SELECT i.id, i.title, i.introduction, i.text, m.url
 //																FROM events_posts AS i
 //																INNER JOIN meta AS m ON i.meta_id = m.id
-//																WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN ('. implode(',', $ids) .')',
-//																array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') .':00'), 'id');
+//																WHERE i.status = ? AND i.hidden = ? AND i.language = ? AND i.publish_on <= ? AND i.id IN (' . implode(',', $ids) . ')',
+//																array('active', 'N', FRONTEND_LANGUAGE, date('Y-m-d H:i') . ':00'), 'id');
 //
 //		// prepare items for search
 //		foreach($items as &$item)
 //		{
-//			$item['full_url'] = FrontendNavigation::getURLForBlock('events', 'detail') .'/'. $item['url'];
+//			$item['full_url'] = FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $item['url'];
 //		}
 //
 //		// return

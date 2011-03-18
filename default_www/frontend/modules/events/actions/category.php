@@ -82,7 +82,7 @@ class FrontendEventsCategory extends FrontendBaseBlock
 		$this->category = $categories[$possibleCategories[$requestedCategory]];
 
 		// set URL and limit
-		$this->pagination['url'] = FrontendNavigation::getURLForBlock('events', 'category') .'/'. $requestedCategory;
+		$this->pagination['url'] = FrontendNavigation::getURLForBlock('events', 'category') . '/' . $requestedCategory;
 		$this->pagination['limit'] = FrontendModel::getModuleSetting('events', 'overview_num_items', 10);
 
 		// populate count fields in pagination
@@ -109,11 +109,11 @@ class FrontendEventsCategory extends FrontendBaseBlock
 	private function parse()
 	{
 		// get RSS-link
-		$rssLink = FrontendModel::getModuleSetting('events', 'feedburner_url_'. FRONTEND_LANGUAGE);
+		$rssLink = FrontendModel::getModuleSetting('events', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('events', 'rss');
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('events', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
 
 		// add into breadcrumb
 		$this->breadcrumb->addElement(ucfirst(FL::lbl('Category')));

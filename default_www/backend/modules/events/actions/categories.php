@@ -46,7 +46,7 @@ class BackendEventsCategories extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('title'), 'title');
 
 		// add column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// row function
 		$this->datagrid->setRowFunction(array('BackendEventsCategories', 'setDefault'), array('[id]'));
@@ -80,7 +80,7 @@ class BackendEventsCategories extends BackendBaseActionIndex
 	public static function setDefault($id, $rowAttributes)
 	{
 		// is this the default category?
-		if(BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null) == $id)
+		if(BackendModel::getModuleSetting('events', 'default_category_' . BL::getWorkingLanguage(), null) == $id)
 		{
 			// class already defined?
 			if(isset($rowAttributes['class'])) $rowAttributes['class'] .= ' isDefault';

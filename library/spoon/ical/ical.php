@@ -112,15 +112,15 @@ class SpoonIcal
 		$string = '';
 
 		// start string
-		$string .= 'BEGIN:VCALENDAR'."\n";
+		$string .= 'BEGIN:VCALENDAR' . "\n";
 
 		// set version
-		$string .= 'VERSION:'. $this->getVersion() ."\n";
+		$string .= 'VERSION:' . $this->getVersion() . "\n";
 
 		// set product identifier
-		$string .= 'PRODID:'. $this->getProductIdentifier() ."\n";
-		$string .= 'CALSCALE:'. $this->getCalendarScale() ."\n";
-		if($this->getMethod() != '') $string .= 'METHOD:'. $this->getMethod() ."\n";
+		$string .= 'PRODID:' . $this->getProductIdentifier() . "\n";
+		$string .= 'CALSCALE:' . $this->getCalendarScale() . "\n";
+		if($this->getMethod() != '') $string .= 'METHOD:' . $this->getMethod() . "\n";
 
 		// get extensions
 		$xProperties = $this->getXProperties();
@@ -129,11 +129,11 @@ class SpoonIcal
 		if(!empty($xProperties))
 		{
 			// loop
-			foreach($xProperties as $key => $value) $string .= $key .':'. $value ."\n";
+			foreach($xProperties as $key => $value) $string .= $key . ':' . $value . "\n";
 		}
 
 		// loop all events
-		foreach($this->getItems() as $item) $string .= $item->parse() ."\n";
+		foreach($this->getItems() as $item) $string .= $item->parse() . "\n";
 
 		// end string
 		$string .= 'END:VCALENDAR';
@@ -225,7 +225,7 @@ class SpoonIcal
 	 */
 	public function getProductIdentifier()
 	{
-		return '-//Spoon v'. SPOON_VERSION .'//'. $this->productIdentifier;
+		return '-//Spoon v' . SPOON_VERSION . '//' . $this->productIdentifier;
 	}
 
 

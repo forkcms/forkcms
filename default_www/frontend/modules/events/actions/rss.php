@@ -68,9 +68,9 @@ class FrontendEventsRss extends FrontendBaseBlock
 	private function parse()
 	{
 		// get vars
-		$title = (isset($this->settings['rss_title_'. FRONTEND_LANGUAGE])) ? $this->settings['rss_title_'. FRONTEND_LANGUAGE] : FrontendModel::getModuleSetting('events', 'rss_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+		$title = (isset($this->settings['rss_title_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_title_' . FRONTEND_LANGUAGE] : FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 		$link = SITE_URL . FrontendNavigation::getURLForBlock('events');
-		$description = (isset($this->settings['rss_description_'. FRONTEND_LANGUAGE])) ? $this->settings['rss_description_'. FRONTEND_LANGUAGE] : null;
+		$description = (isset($this->settings['rss_description_' . FRONTEND_LANGUAGE])) ? $this->settings['rss_description_' . FRONTEND_LANGUAGE] : null;
 
 		// create new rss instance
 		$rss = new FrontendRSS($title, $link, $description);
@@ -79,23 +79,23 @@ class FrontendEventsRss extends FrontendBaseBlock
 		foreach($this->items as $item)
 		{
 			// init vars
-			$title = SpoonDate::getDate(FrontendModel::getModuleSetting('core', 'date_format_short'), $item['starts_on'], FRONTEND_LANGUAGE) .' - '. $item['title'];
+			$title = SpoonDate::getDate(FrontendModel::getModuleSetting('core', 'date_format_short'), $item['starts_on'], FRONTEND_LANGUAGE) . ' - ' . $item['title'];
 			$link = $item['full_url'];
 			$description = ($item['introduction'] != '') ? $item['introduction'] : $item['text'];
 
 			// meta is wanted
-			if(FrontendModel::getModuleSetting('events', 'rss_meta_'. FRONTEND_LANGUAGE, true))
+			if(FrontendModel::getModuleSetting('events', 'rss_meta_' . FRONTEND_LANGUAGE, true))
 			{
 				// append meta
-				$description .= '<div class="meta">'."\n";
-				$description .= '	<p><a href="'. $link .'" title="'. $title .'">'. $title .'</a> ' . sprintf(FL::msg('WrittenBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
-				$description .= ' '. FL::lbl('In') .' <a href="'. $item['category_full_url'] .'" title="'. $item['category_name'] .'">'. $item['category_name'] .'</a>.</p>'."\n";
+				$description .= '<div class="meta">' . "\n";
+				$description .= '	<p><a href="' . $link . '" title="' . $title . '">' . $title . '</a> ' . sprintf(FL::msg('WrittenBy'), FrontendUser::getBackendUser($item['user_id'])->getSetting('nickname'));
+				$description .= ' ' . FL::lbl('In') . ' <a href="' . $item['category_full_url'] . '" title="' . $item['category_name'] . '">' . $item['category_name'] . '</a>.</p>' . "\n";
 
 				// any tags
 				if(isset($item['tags']))
 				{
 					// append tags-paragraph
-					$description .= '	<p>'. ucfirst(FL::lbl('Tags')) .': ';
+					$description .= '	<p>' . ucfirst(FL::lbl('Tags')) . ': ';
 					$first = true;
 
 					// loop tags
@@ -105,18 +105,18 @@ class FrontendEventsRss extends FrontendBaseBlock
 						if(!$first) $description .= ', ';
 
 						// add
-						$description .= '<a href="'. $tag['full_url'] .'" rel="tag" title="'. $tag['name'] .'">'. $tag['name'] .'</a>';
+						$description .= '<a href="' . $tag['full_url'] . '" rel="tag" title="' . $tag['name'] . '">' . $tag['name'] . '</a>';
 
 						// reset
 						$first = false;
 					}
 
 					// end
-					$description .= '.</p>'."\n";
+					$description .= '.</p>' . "\n";
 				}
 
 				// end HTML
-				$description .= '</div>'."\n";
+				$description .= '</div>' . "\n";
 			}
 
 			// create new instance

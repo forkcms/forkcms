@@ -105,7 +105,7 @@ class FrontendModel
 	{
 		// replace break rules with a new line and make sure a paragraph also ends with a new line
 		$text = str_replace('<br />', PHP_EOL, $text);
-		$text = str_replace('</p>', '</p>'. PHP_EOL, $text);
+		$text = str_replace('</p>', '</p>' . PHP_EOL, $text);
 
 		// remove tabs
 		$text = str_replace("\t", '', $text);

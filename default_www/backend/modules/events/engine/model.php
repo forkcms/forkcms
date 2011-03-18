@@ -60,14 +60,14 @@ class BackendEventsModel
 		$warnings = array();
 
 		// rss title
-		if(BackendModel::getModuleSetting('events', 'rss_title_'. BL::getWorkingLanguage(), null) == '')
+		if(BackendModel::getModuleSetting('events', 'rss_title_' . BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => sprintf(BL::err('RSSTitle', 'events'), BackendModel::createURLForAction('settings', 'events')));
 		}
 
 		// rss description
-		if(BackendModel::getModuleSetting('events', 'rss_description_'. BL::getWorkingLanguage(), null) == '')
+		if(BackendModel::getModuleSetting('events', 'rss_description_' . BL::getWorkingLanguage(), null) == '')
 		{
 			// add warning
 			$warnings[] = array('message' => sprintf(BL::err('RSSDescription', 'events'), BackendModel::createURLForAction('settings', 'events')));
@@ -93,16 +93,16 @@ class BackendEventsModel
 		$db = BackendModel::getDB(true);
 
 		// delete records
-		$db->delete('events', 'id IN ('. implode(',', $ids) .') AND language = ?', array(BL::getWorkingLanguage()));
-		$db->delete('events_comments', 'event_id IN ('. implode(',', $ids) .') AND language = ?', array(BL::getWorkingLanguage()));
+		$db->delete('events', 'id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
+		$db->delete('events_comments', 'event_id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
 
 		// get used meta ids
 		$metaIds = (array) $db->getColumn('SELECT meta_id
 											FROM events AS p
-											WHERE id IN ('. implode(',', $ids) .') AND language = ?', array(BL::getWorkingLanguage()));
+											WHERE id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
 
 		// delete meta
-		if(!empty($metaIds)) $db->delete('meta', 'id IN ('. implode(',', $metaIds) .')');
+		if(!empty($metaIds)) $db->delete('meta', 'id IN (' . implode(',', $metaIds) . ')');
 
 		// invalidate the cache for events
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
@@ -136,7 +136,7 @@ class BackendEventsModel
 			$db->delete('events_categories', 'id = ?', array($id));
 
 			// default category
-			$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), null);
+			$defaultCategoryId = BackendModel::getModuleSetting('events', 'default_category_' . BL::getWorkingLanguage(), null);
 
 			// update category for the items that might be in this category
 			$db->update('events', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
@@ -164,10 +164,10 @@ class BackendEventsModel
 		// get ids
 		$itemIds = (array) $db->getColumn('SELECT i.event_id
 											FROM events_comments AS i
-											WHERE i.id IN ('. implode(',', $ids) .') AND i.language = ?', array(BL::getWorkingLanguage()));
+											WHERE i.id IN (' . implode(',', $ids) . ') AND i.language = ?', array(BL::getWorkingLanguage()));
 
 		// update record
-		$db->delete('events_comments', 'id IN ('. implode(',', $ids) .') AND language = ?', array(BL::getWorkingLanguage()));
+		$db->delete('events_comments', 'id IN (' . implode(',', $ids) . ') AND language = ?', array(BL::getWorkingLanguage()));
 
 		// recalculate the comment count
 		if(!empty($itemIds)) self::reCalculateCommentCount($itemIds);
@@ -356,7 +356,7 @@ class BackendEventsModel
 			$id = self::insertCategory($category);
 
 			// store in settings
-			BackendModel::setModuleSetting('events', 'default_category_'. BL::getWorkingLanguage(), $id);
+			BackendModel::setModuleSetting('events', 'default_category_' . BL::getWorkingLanguage(), $id);
 
 			// recall
 			return self::getCategories();
@@ -432,7 +432,7 @@ class BackendEventsModel
 	{
 		return (array) BackendModel::getDB()->getRecords('SELECT *
 															FROM events_comments AS i
-															WHERE i.id IN ('. implode(',', $ids) .')');
+															WHERE i.id IN (' . implode(',', $ids) . ')');
 	}
 
 
@@ -475,7 +475,7 @@ class BackendEventsModel
 		foreach($comments as $key => &$row)
 		{
 			// add full url
-			$row['full_url'] = BackendModel::getURLForBlock('events', 'detail', $row['language']) .'/'. $row['url'];
+			$row['full_url'] = BackendModel::getURLForBlock('events', 'detail', $row['language']) . '/' . $row['url'];
 		}
 
 		// return
@@ -694,7 +694,7 @@ class BackendEventsModel
 		$commentCounts = (array) $db->getPairs('SELECT i.event_id, COUNT(i.id) AS comment_count
 												FROM events_comments AS i
 												INNER JOIN events AS p ON i.event_id = p.id AND i.language = p.language
-												WHERE i.status = ? AND i.event_id IN ('. implode(',', $ids) .') AND i.language = ? AND p.status = ?
+												WHERE i.status = ? AND i.event_id IN (' . implode(',', $ids) . ') AND i.language = ? AND p.status = ?
 												GROUP BY i.event_id',
 												array('published', BL::getWorkingLanguage(), 'active'));
 
@@ -751,7 +751,7 @@ class BackendEventsModel
 																		 array($item['id'], $archiveType, BL::getWorkingLanguage(), $rowsToKeep));
 
 		// delete other revisions
-		if(!empty($revisionIdsToKeep)) BackendModel::getDB(true)->delete('events', 'id = ? AND status = ? AND language = ? AND revision_id NOT IN ('. implode(', ', $revisionIdsToKeep) .')', array($item['id'], BL::getWorkingLanguage(), $archiveType));
+		if(!empty($revisionIdsToKeep)) BackendModel::getDB(true)->delete('events', 'id = ? AND status = ? AND language = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')', array($item['id'], BL::getWorkingLanguage(), $archiveType));
 
 		// insert new version
 		$item['revision_id'] = BackendModel::getDB(true)->insert('events', $item);
@@ -811,12 +811,12 @@ class BackendEventsModel
 		// get ids
 		$itemIds = (array) BackendModel::getDB()->getColumn('SELECT i.event_id
 																FROM events_comments AS i
-																WHERE i.id IN ('. implode(',', $ids) .')');
+																WHERE i.id IN (' . implode(',', $ids) . ')');
 
 		// update record
 		BackendModel::getDB(true)->execute('UPDATE events_comments
 											SET status = ?
-											WHERE id IN ('. implode(',', $ids) .')',
+											WHERE id IN (' . implode(',', $ids) . ')',
 											array((string) $status));
 
 		// recalculate the comment count

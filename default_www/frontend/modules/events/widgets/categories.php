@@ -46,7 +46,7 @@ class FrontendEventsWidgetCategories extends FrontendBaseWidget
 		if(!empty($categories))
 		{
 			// loop and reset url
-			foreach($categories as &$row) $row['url'] = $link .'/'. $row['url'];
+			foreach($categories as &$row) $row['url'] = $link . '/' . $row['url'];
 		}
 
 		// assign comments

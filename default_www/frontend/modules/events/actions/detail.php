@@ -153,7 +153,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 		// create from
 		$this->frmSubscription = new FrontendForm('subscription');
-		$this->frmSubscription->setAction($this->frmSubscription->getAction() .'#'. FL::act('Subscription'));
+		$this->frmSubscription->setAction($this->frmSubscription->getAction() . '#' . FL::act('Subscription'));
 
 		// create elements
 		$this->frmSubscription->addText('author', $author);
@@ -161,7 +161,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 
 		// create form
 		$this->frmComment = new FrontendForm('comment');
-		$this->frmComment->setAction($this->frmComment->getAction() .'#'. FL::act('Comment'));
+		$this->frmComment->setAction($this->frmComment->getAction() . '#' . FL::act('Comment'));
 
 		// create elements
 		$this->frmComment->addText('author', $author);
@@ -179,23 +179,23 @@ class FrontendEventsDetail extends FrontendBaseBlock
 	private function parse()
 	{
 		// get RSS-link
-		$rssLink = FrontendModel::getModuleSetting('events', 'feedburner_url_'. FRONTEND_LANGUAGE);
+		$rssLink = FrontendModel::getModuleSetting('events', 'feedburner_url_' . FRONTEND_LANGUAGE);
 		if($rssLink == '') $rssLink = FrontendNavigation::getURLForBlock('events', 'rss');
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. FrontendModel::getModuleSetting('events', 'rss_title_'. FRONTEND_LANGUAGE) .'" href="'. $rssLink .'" />');
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . FrontendModel::getModuleSetting('events', 'rss_title_' . FRONTEND_LANGUAGE) . '" href="' . $rssLink . '" />');
 
 		// get RSS-link for the comments
-		$rssCommentsLink = FrontendNavigation::getURLForBlock('events', 'article_comments_rss') .'/'. $this->record['url'];
+		$rssCommentsLink = FrontendNavigation::getURLForBlock('events', 'article_comments_rss') . '/' . $this->record['url'];
 
 		// add RSS-feed into the metaCustom
-		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="'. vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) .'" href="'. $rssCommentsLink .'" />');
+		$this->header->addMetaCustom('<link rel="alternate" type="application/rss+xml" title="' . vsprintf(FL::msg('CommentsOn'), array($this->record['title'])) . '" href="' . $rssCommentsLink . '" />');
 
 		// build Facebook Open Graph-data
 		if(FrontendModel::getModuleSetting('core', 'facebook_admin_ids', null) !== null)
 		{
 			// default image
-			$image = SITE_URL .'/facebook.png';
+			$image = SITE_URL . '/facebook.png';
 
 			// try to get an image in the content
 			$matches = array();
@@ -208,14 +208,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				if(substr($image, 0, 7) != 'http://') $image = SITE_URL . $image;
 			}
 
-			$meta = '<!-- openGraph meta-data -->'."\n";
-			$meta .= '<meta property="og:title" content="'. $this->record['title'] .'" />'."\n";
-			$meta .= '<meta property="og:type" content="article" />'."\n";
-			$meta .= '<meta property="og:image" content="'. $image .'" />'."\n";
-			$meta .= '<meta property="og:url" content="'. SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') .'/'. $this->record['url'] .'" />'."\n";
-			$meta .= '<meta property="og:site_name" content="'. FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) .'" />'."\n";
-			$meta .= '<meta property="fb:admins" content="'. FrontendModel::getModuleSetting('core', 'facebook_admin_ids') .'" />'."\n";
-			$meta .= '<meta property="og:description" content="'. $this->record['title'] .'" />'."\n";
+			$meta = '<!-- openGraph meta-data -->' . "\n";
+			$meta .= '<meta property="og:title" content="' . $this->record['title'] . '" />' . "\n";
+			$meta .= '<meta property="og:type" content="article" />' . "\n";
+			$meta .= '<meta property="og:image" content="' . $image . '" />' . "\n";
+			$meta .= '<meta property="og:url" content="' . SITE_URL . FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url'] . '" />' . "\n";
+			$meta .= '<meta property="og:site_name" content="' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE) . '" />' . "\n";
+			$meta .= '<meta property="fb:admins" content="' . FrontendModel::getModuleSetting('core', 'facebook_admin_ids') . '" />' . "\n";
+			$meta .= '<meta property="og:description" content="' . $this->record['title'] . '" />' . "\n";
 
 			// add
 			$this->header->addMetaCustom($meta);
@@ -293,10 +293,10 @@ class FrontendEventsDetail extends FrontendBaseBlock
 			$this->frmComment->cleanupFields();
 
 			// does the key exists?
-			if(SpoonSession::exists('events_comment_'. $this->record['id']))
+			if(SpoonSession::exists('events_comment_' . $this->record['id']))
 			{
 				// calculate difference
-				$diff = time() - (int) SpoonSession::get('events_comment_'. $this->record['id']);
+				$diff = time() - (int) SpoonSession::get('events_comment_' . $this->record['id']);
 
 				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
 				if($diff < 10 && $diff != 0) $this->frmComment->getField('message')->addError(FL::err('CommentTimeout'));
@@ -339,7 +339,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$comment['data'] = serialize(array('server' => $_SERVER));
 
 				// get URL for article
-				$permaLink = FrontendNavigation::getURLForBlock('events', 'detail') .'/'. $this->record['url'];
+				$permaLink = FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url'];
 				$redirectLink = $permaLink;
 
 				// is moderation enabled
@@ -362,15 +362,15 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)
 				{
-					if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#'.FL::act('Comment');
-					if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#'.FL::act('Comment');
-					if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-'. $comment['id'];
+					if($comment['status'] == 'moderation') $redirectLink .= '?comment=moderation#' . FL::act('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '?comment=spam#' . FL::act('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '?comment=true#comment-' . $comment['id'];
 				}
 				else
 				{
-					if($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#'.FL::act('Comment');
-					if($comment['status'] == 'spam') $redirectLink .= '&comment=spam#'.FL::act('Comment');
-					if($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-'. $comment['id'];
+					if($comment['status'] == 'moderation') $redirectLink .= '&comment=moderation#' . FL::act('Comment');
+					if($comment['status'] == 'spam') $redirectLink .= '&comment=spam#' . FL::act('Comment');
+					if($comment['status'] == 'published') $redirectLink .= '&comment=true#comment-' . $comment['id'];
 				}
 
 				// set title
@@ -381,15 +381,15 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				FrontendEventsModel::notifyAdmin($comment);
 
 				// store timestamp in session so we can block excesive usage
-				SpoonSession::set('events_comment_'. $this->record['id'], time());
+				SpoonSession::set('events_comment_' . $this->record['id'], time());
 
 				// store author-data in cookies
 				try
 				{
 					// set cookies
-					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('comment_author', $author, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
+					SpoonCookie::set('comment_email', $email, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
+					SpoonCookie::set('comment_website', $website, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
 				}
 				catch(Exception $e)
 				{
@@ -443,10 +443,10 @@ class FrontendEventsDetail extends FrontendBaseBlock
 			$this->frmSubscription->cleanupFields();
 
 			// does the key exists?
-			if(SpoonSession::exists('events_subscription_'. $this->record['id']))
+			if(SpoonSession::exists('events_subscription_' . $this->record['id']))
 			{
 				// calculate difference
-				$diff = time() - (int) SpoonSession::get('events_subscription_'. $this->record['id']);
+				$diff = time() - (int) SpoonSession::get('events_subscription_' . $this->record['id']);
 
 				// calculate difference, it it isn't 10 seconds the we tell the user to slow down
 				if($diff < 10 && $diff != 0) $this->frmSubscription->getField('email')->addError(FL::err('SubscriptionTimeout'));
@@ -479,7 +479,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				$subscription['data'] = serialize(array('server' => $_SERVER));
 
 				// get URL for article
-				$permaLink = FrontendNavigation::getURLForBlock('events', 'detail') .'/'. $this->record['url'];
+				$permaLink = FrontendNavigation::getURLForBlock('events', 'detail') . '/' . $this->record['url'];
 				$redirectLink = $permaLink;
 
 				// should we check if the item is spam
@@ -495,15 +495,15 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				// append a parameter to the URL so we can show moderation
 				if(strpos($redirectLink, '?') === false)
 				{
-					if($subscription['status'] == 'moderation') $redirectLink .= '?subscription=moderation#'.FL::act('Comment');
-					if($subscription['status'] == 'spam') $redirectLink .= '?subscription=spam#'.FL::act('Comment');
-					if($subscription['status'] == 'published') $redirectLink .= '?subscription=true#subscription-'. $subscription['id'];
+					if($subscription['status'] == 'moderation') $redirectLink .= '?subscription=moderation#' . FL::act('Comment');
+					if($subscription['status'] == 'spam') $redirectLink .= '?subscription=spam#' . FL::act('Comment');
+					if($subscription['status'] == 'published') $redirectLink .= '?subscription=true#subscription-' . $subscription['id'];
 				}
 				else
 				{
-					if($subscription['status'] == 'moderation') $redirectLink .= '&subscription=moderation#'.FL::act('Comment');
-					if($subscription['status'] == 'spam') $redirectLink .= '&subscription=spam#'.FL::act('Comment');
-					if($subscription['status'] == 'published') $redirectLink .= '&subscription=true#subscription-'. $subscription['id'];
+					if($subscription['status'] == 'moderation') $redirectLink .= '&subscription=moderation#' . FL::act('Comment');
+					if($subscription['status'] == 'spam') $redirectLink .= '&subscription=spam#' . FL::act('Comment');
+					if($subscription['status'] == 'published') $redirectLink .= '&subscription=true#subscription-' . $subscription['id'];
 				}
 
 				// set title
@@ -514,14 +514,14 @@ class FrontendEventsDetail extends FrontendBaseBlock
 				FrontendEventsModel::notifyAdmin($subscription);
 
 				// store timestamp in session so we can block excesive usage
-				SpoonSession::set('events_subscription_'. $this->record['id'], time());
+				SpoonSession::set('events_subscription_' . $this->record['id'], time());
 
 				// store author-data in cookies
 				try
 				{
 					// set cookies
-					SpoonCookie::set('subscription_author', $author, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
-					SpoonCookie::set('subscription_email', $email, (30 * 24 * 60 * 60), '/', '.'. $this->URL->getDomain());
+					SpoonCookie::set('subscription_author', $author, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
+					SpoonCookie::set('subscription_email', $email, (30 * 24 * 60 * 60), '/', '.' . $this->URL->getDomain());
 				}
 				catch(Exception $e)
 				{

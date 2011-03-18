@@ -53,7 +53,7 @@ class BackendEventsIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortParameter('desc');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// set column functions
 		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[starts_on]'), 'starts_on', true);
@@ -61,7 +61,7 @@ class BackendEventsIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[publish_on]'), 'publish_on', true);
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->datagrid->setRowAttributes(array('id' => 'row-[revision_id]'));

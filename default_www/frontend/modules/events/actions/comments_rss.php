@@ -69,8 +69,8 @@ class FrontendEventsCommentsRss extends FrontendBaseBlock
 		foreach($this->items as $item)
 		{
 			// init vars
-			$title = $item['author'] .' '. FL::lbl('On') .' '. $item['event_title'];
-			$link = $detailLink .'/'. $item['event_url'] .'/#comment-'. $item['id'];
+			$title = $item['author'] . ' ' . FL::lbl('On') . ' ' . $item['event_title'];
+			$link = $detailLink . '/' . $item['event_url'] . '/#comment-' . $item['id'];
 			$description = $item['text'];
 
 			// create new instance

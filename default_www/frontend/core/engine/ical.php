@@ -36,7 +36,7 @@ class FrontendIcal extends SpoonIcal
 		$description = FrontendModel::convertToPlainText($description);
 
 		// set some basic stuf
-		$this->setProductIdentifier('Fork v'. FORK_VERSION);
+		$this->setProductIdentifier('Fork v' . FORK_VERSION);
 
 		// build properties
 		$properties['X-WR-CALNAME;VALUE=TEXT'] = $title;
@@ -71,7 +71,7 @@ class FrontendIcal extends SpoonIcal
 	public function parse($headers = true)
 	{
 		// set headers
-		if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename='. SpoonFilter::urlise($this->getTitle()) . '.ics');
+		if((bool) $headers) SpoonHTTP::setHeaders('Content-Disposition: inline; filename=' . SpoonFilter::urlise($this->getTitle()) . '.ics');
 
 		// call the parent
 		parent::parse($headers);
@@ -136,7 +136,7 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 		$this->setDescription($this->processLinks($description));
 
 		// set organiser
-		$siteTitle = FrontendModel::getModuleSetting('core', 'site_title_'. FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
+		$siteTitle = FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE);
 		$from = FrontendModel::getModuleSetting('core', 'mailer_reply_to');
 		$sentBy = FrontendModel::getModuleSetting('core', 'mailer_from');
 		$this->setOrganizer($from['email'], $siteTitle, null, $sentBy['email'], FRONTEND_LANGUAGE);
@@ -146,7 +146,7 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 
 		// build properties
 		$properties['X-GOOGLE-CALENDAR-CONTENT-TITLE'] = SpoonIcal::formatAsString($title);
-		$properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SpoonIcal::formatAsString(SITE_URL .'/favicon.ico');
+		$properties['X-GOOGLE-CALENDAR-CONTENT-ICON'] = SpoonIcal::formatAsString(SITE_URL . '/favicon.ico');
 		$properties['X-GOOGLE-CALENDAR-CONTENT-URL'] = SpoonIcal::formatAsString($this->getUrl());
 		$properties['X-GOOGLE-CALENDAR-CONTENT-TYPE'] = 'text/html';
 
@@ -168,7 +168,7 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 
 		// replace URLs and images
 		$search = array('href="/', 'src="/');
-		$replace = array('href="'. SITE_URL .'/', 'src="'. SITE_URL .'/');
+		$replace = array('href="' . SITE_URL . '/', 'src="' . SITE_URL . '/');
 
 		// replace links to files
 		$content = str_replace($search, $replace, $content);
@@ -190,7 +190,7 @@ class FrontendIcalItemEvent extends SpoonIcalItemEvent
 			foreach($matches[1] as $i => $link)
 			{
 				$searchLinks[] = $matches[0][$i];
-				$replaceLinks[] = 'href="'. FrontendModel::addURLParameters($link, $this->utm) .'"';
+				$replaceLinks[] = 'href="' . FrontendModel::addURLParameters($link, $this->utm) . '"';
 			}
 
 			// replace

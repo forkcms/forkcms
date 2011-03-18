@@ -689,100 +689,100 @@ class SpoonIcalItemEvent extends SpoonIcalItem
 		$string = '';
 
 		// start string
-		$string .= 'BEGIN:VEVENT'."\n";
+		$string .= 'BEGIN:VEVENT' . "\n";
 
 		// categories
 		$categories = $this->getCategories();
-		if(!empty($categories)) $string .= 'CATEGORIES:'. implode(',', $categories) ."\n";
+		if(!empty($categories)) $string .= 'CATEGORIES:' . implode(',', $categories) . "\n";
 
 		// classification
-		if($this->getClassification() != '') $string .= 'CLASS:'. $this->getClassification() ."\n";
+		if($this->getClassification() != '') $string .= 'CLASS:' . $this->getClassification() . "\n";
 
 		// comments
 		$comments = $this->getComments();
 		if(!empty($comments))
 		{
-			foreach($xProperties as $value) $string .= 'COMMENT:'. SpoonIcal::formatAsString($value) ."\n";
+			foreach($xProperties as $value) $string .= 'COMMENT:' . SpoonIcal::formatAsString($value) . "\n";
 		}
 
 		// contact
 		$contact = $this->getContact();
 		if(!empty($contact))
 		{
-			if(isset($contact['alternative'])) $string .= 'CONTACT;ALTREP="'. $contact['alternative'] .'":'. $contact['value'] ."\n";
-			else $string .= 'CONTACT:'. $contact['value'] ."\n";
+			if(isset($contact['alternative'])) $string .= 'CONTACT;ALTREP="' . $contact['alternative'] . '":' . $contact['value'] . "\n";
+			else $string .= 'CONTACT:' . $contact['value'] . "\n";
 		}
 
 		// datetime-created
-		if($this->getDatetimeCreated() != 0) $string .= 'CREATED:'. date('Ymd\THis', $this->getDatetimeCreated()) ."\n";
+		if($this->getDatetimeCreated() != 0) $string .= 'CREATED:' . date('Ymd\THis', $this->getDatetimeCreated()) . "\n";
 
 		// datetime-end
-		if($this->getDatetimeEnd() != 0) $string .= 'DTEND:'. date('Ymd\THis', $this->getDatetimeEnd()) ."\n";
+		if($this->getDatetimeEnd() != 0) $string .= 'DTEND:' . date('Ymd\THis', $this->getDatetimeEnd()) . "\n";
 
 		// lastmodified
-		if($this->getDatetimeLastModified() != 0) $string .= 'LAST-MODIFIED:'. date('Ymd\THis', $this->getDatetimeLastModified()) ."\n";
+		if($this->getDatetimeLastModified() != 0) $string .= 'LAST-MODIFIED:' . date('Ymd\THis', $this->getDatetimeLastModified()) . "\n";
 
 		// datetimestamp
-		if($this->getDatetimeStamp() != 0) $string .= 'DTSTAMP:'. date('Ymd\THis', $this->getDatetimeStamp()) ."\n";
+		if($this->getDatetimeStamp() != 0) $string .= 'DTSTAMP:' . date('Ymd\THis', $this->getDatetimeStamp()) . "\n";
 
 		// datetime-start
-		if($this->getDatetimeStart() != 0) $string .= 'DTSTART:'. date('Ymd\THis', $this->getDatetimeStart()) ."\n";
+		if($this->getDatetimeStart() != 0) $string .= 'DTSTART:' . date('Ymd\THis', $this->getDatetimeStart()) . "\n";
 
 		// description
-		if($this->getDescription() != '') $string .= 'DESCRIPTION:'. SpoonIcal::formatAsString($this->getDescription()) ."\n";
+		if($this->getDescription() != '') $string .= 'DESCRIPTION:' . SpoonIcal::formatAsString($this->getDescription()) . "\n";
 
 		// duration
-		if($this->getDuration() != '') $string .= 'DURATION:'. $this->getDuration() ."\n";
+		if($this->getDuration() != '') $string .= 'DURATION:' . $this->getDuration() . "\n";
 
 		// geo
 		$geo = $this->getGeo();
-		if(!empty($geo)) $string .= 'GEO:'. $geo['lat'] .';'. $geo['long'] ."\n";
+		if(!empty($geo)) $string .= 'GEO:' . $geo['lat'] . ';' . $geo['long'] . "\n";
 
 		// location
-		if($this->getLocation() != '') $string .= 'LOCATION:'. SpoonIcal::formatAsString($this->getLocation()) ."\n";
+		if($this->getLocation() != '') $string .= 'LOCATION:' . SpoonIcal::formatAsString($this->getLocation()) . "\n";
 
 		// organizer
 		$organizer = $this->getOrganizer();
 		if(!empty($organizer))
 		{
 			$string .= 'ORGANIZER';
-			if(isset($organizer['cn'])) $string .= ';CN="'. $organizer['cn'] .'"';
-			if(isset($organizer['dir'])) $string .= ';DIR="'. $organizer['dir'] .'"';
-			if(isset($organizer['sentby'])) $string .= ';SENT-BY="'. $organizer['sentby'] .'"';
-			if(isset($organizer['language'])) $string .= ';LANGUAGE="'. $organizer['language'] .'"';
-			$string .= ':mailto:'. $organizer['email'] ."\n";
+			if(isset($organizer['cn'])) $string .= ';CN="' . $organizer['cn'] . '"';
+			if(isset($organizer['dir'])) $string .= ';DIR="' . $organizer['dir'] . '"';
+			if(isset($organizer['sentby'])) $string .= ';SENT-BY="' . $organizer['sentby'] . '"';
+			if(isset($organizer['language'])) $string .= ';LANGUAGE="' . $organizer['language'] . '"';
+			$string .= ':mailto:' . $organizer['email'] . "\n";
 		}
 
 		// priority
-		if($this->getPriority() != '') $string .= 'PRIORITY:'. $this->getPriority() ."\n";
+		if($this->getPriority() != '') $string .= 'PRIORITY:' . $this->getPriority() . "\n";
 
 		// resources
 		$resources = $this->getResources();
-		if(!empty($resources)) $string .= 'RESOURCES:'. implode(',', $resources) ."\n";
+		if(!empty($resources)) $string .= 'RESOURCES:' . implode(',', $resources) . "\n";
 
 		// sequence
-		if($this->getSequence() != '') $string .= 'SEQUENCE:'. $this->getSequence() ."\n";
+		if($this->getSequence() != '') $string .= 'SEQUENCE:' . $this->getSequence() . "\n";
 
 		// status
-		if($this->getStatus() != '') $string .= 'STATUS:'. $this->getStatus() ."\n";
+		if($this->getStatus() != '') $string .= 'STATUS:' . $this->getStatus() . "\n";
 
 		// summary
-		if($this->getSummary() != '') $string .= 'SUMMARY:'. SpoonIcal::formatAsString($this->getSummary()) ."\n";
+		if($this->getSummary() != '') $string .= 'SUMMARY:' . SpoonIcal::formatAsString($this->getSummary()) . "\n";
 
 		// time transparency
-		if($this->getTimeTransparency() != '') $string .= 'TRANSP:'. $this->getTimeTransparency() ."\n";
+		if($this->getTimeTransparency() != '') $string .= 'TRANSP:' . $this->getTimeTransparency() . "\n";
 
 		// unique identifier
-		if($this->getUniqueIdentifier() != '') $string .= 'UID:'. $this->getUniqueIdentifier() ."\n";
+		if($this->getUniqueIdentifier() != '') $string .= 'UID:' . $this->getUniqueIdentifier() . "\n";
 
 		// url
-		if($this->getUrl() != '') $string .= 'URL:'. $this->getUrl() ."\n";
+		if($this->getUrl() != '') $string .= 'URL:' . $this->getUrl() . "\n";
 
 		// xProperties
 		$xProperties = $this->getXProperties();
 		if(!empty($xProperties))
 		{
-			foreach($xProperties as $key => $value) $string .= $key .':'. $value ."\n";
+			foreach($xProperties as $key => $value) $string .= $key . ':' . $value . "\n";
 		}
 
 		// end string
@@ -881,7 +881,7 @@ class SpoonIcalItemEvent extends SpoonIcalItem
 		$status = (string) $status;
 
 		// validate
-		if(!in_array($status, $possibleValues)) throw new SpoonIcalException('Invalid status for event. Possible values are: '. implode(',', $possibleValues));
+		if(!in_array($status, $possibleValues)) throw new SpoonIcalException('Invalid status for event. Possible values are: ' . implode(',', $possibleValues));
 
 		// set
 		$this->status = $status;
