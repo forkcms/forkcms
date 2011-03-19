@@ -77,14 +77,14 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		if($this->filter['name'] !== null)
 		{
 			$query .= ' AND l.name LIKE ?';
-			$parameters[] = '%'. $this->filter['name'] .'%';
+			$parameters[] = '%' . $this->filter['name'] . '%';
 		}
 
 		// add value
 		if($this->filter['value'] !== null)
 		{
 			$query .= ' AND l.value LIKE ?';
-			$parameters[] = '%'. $this->filter['value'] .'%';
+			$parameters[] = '%' . $this->filter['value'] . '%';
 		}
 
 		return array($query, $parameters);
@@ -162,7 +162,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setSortingColumns(array('language', 'application', 'module', 'type', 'name', 'value'), 'name');
 
 		// set colum URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// column titles
 		$this->datagrid->setHeaderLabels(array('name' => ucfirst(BL::lbl('ReferenceCode')), 'value' => ucfirst(BL::lbl('Translation'))));
@@ -180,7 +180,7 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction(array(__CLASS__, 'getType'), array('[type]'), 'type', true);
 
 		// add columns
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, array('language' => $this->filter['language'], 'application' => $this->filter['application'], 'module' => $this->filter['module'], 'type' => $this->filter['type'], 'name' => $this->filter['name'], 'value' => $this->filter['value'])) . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 

@@ -19,7 +19,7 @@ class FaqInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) .'/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/install.sql');
 
 		// add 'search' as a module
 		$this->addModule('faq', 'The faq module.');
@@ -38,6 +38,10 @@ class FaqInstall extends ModuleInstaller
 		$this->setActionRights(1, 'faq', 'edit_category');
 		$this->setActionRights(1, 'faq', 'delete_category');
 		$this->setActionRights(1, 'faq', 'sequence_questions');
+
+		// extras
+		$this->insertExtra('faq', 'block', 'Faq', 'index', null, 'N', 9001);
+		$this->insertExtra('faq', 'block', 'Category', 'category', null, 'N', 9002);
 
 		// insert locale (nl)
 		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Faq', 'FAQ');

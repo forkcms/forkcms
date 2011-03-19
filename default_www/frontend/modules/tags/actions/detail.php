@@ -76,7 +76,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 		foreach($this->modules as $module)
 		{
 			// set module class
-			$class = 'Frontend'. SpoonFilter::toCamelCase($module) .'Model';
+			$class = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
 
 			// get the ids of the items linked to the tag
 			$otherIds = (array) FrontendModel::getDB()->getColumn('SELECT other_id
@@ -85,7 +85,7 @@ class FrontendTagsDetail extends FrontendBaseBlock
 																	array($module, $this->record['id']));
 
 			// set module class
-			$class = 'Frontend'. SpoonFilter::toCamelCase($module) .'Model';
+			$class = 'Frontend' . SpoonFilter::toCamelCase($module) . 'Model';
 
 			// get the items that are linked to the tags
 			$items = (array) FrontendTagsModel::callFromInterface($module, $class, 'getForTags', $otherIds);

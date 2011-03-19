@@ -103,7 +103,7 @@ class SpoonFile
 			SpoonFile::delete($destinationPath);
 
 			// throw exception
-			throw new SpoonFileException('The file "'. $sourceURL .'" isn\'t available for download.');
+			throw new SpoonFileException('The file "' . $sourceURL . '" isn\'t available for download.');
 		}
 
 		// return
@@ -202,7 +202,7 @@ class SpoonFile
 		$size = $file['size'];
 		$mod = 1024;
 		for($i = 0; $size > $mod; $i++) $size /= $mod;
-		$file['human_readable_size'] = round($size, 2) .' '. $units[$i];
+		$file['human_readable_size'] = round($size, 2) . ' ' . $units[$i];
 
 		// clear cache
 		@clearstatcache();
@@ -231,7 +231,7 @@ class SpoonFile
 			$includeRegexp = (string) $includeRegexp;
 
 			// validate
-			if(!SpoonFilter::isValidRegexp($includeRegexp)) throw new SpoonFileException('Invalid regular expression ('. $includeRegexp .')');
+			if(!SpoonFilter::isValidRegexp($includeRegexp)) throw new SpoonFileException('Invalid regular expression (' . $includeRegexp . ')');
 		}
 
 		// define list
@@ -247,7 +247,7 @@ class SpoonFile
 				while((($file = readdir($directory)) !== false))
 				{
 					// no '.' and '..' and it's a file
-					if(($file != '.') && ($file != '..') && is_file($path .'/'. $file))
+					if(($file != '.') && ($file != '..') && is_file($path . '/' . $file))
 					{
 						// is there a include-pattern?
 						if($includeRegexp !== null)
@@ -285,7 +285,6 @@ class SpoonFile
 	 */
 	public static function move($source, $destination, $overwrite = true, $chmod = 0777)
 	{
-		// this is just an alias for SpoonDirectory::move
 		return SpoonDirectory::move($source, $destination, $overwrite, $chmod);
 	}
 
@@ -309,7 +308,7 @@ class SpoonFile
 		$append = (bool) $append;
 
 		// file may not be created, but it doesn't exist either
-		if(!$createFile && self::exists($filename)) throw new SpoonFileException('The file "'. $filename .'" doesn\'t exist');
+		if(!$createFile && self::exists($filename)) throw new SpoonFileException('The file "' . $filename . '" doesn\'t exist');
 
 		// create directory recursively if needed
 		SpoonDirectory::create(dirname($filename), $chmod, true);
@@ -318,13 +317,13 @@ class SpoonFile
 		$handler = ($append) ? @fopen($filename, 'a') : @fopen($filename, 'w');
 
 		// something went wrong
-		if($handler === false) throw new SpoonFileException('The file "'. $filename .'" could not be created. Check if PHP has enough permissions.');
+		if($handler === false) throw new SpoonFileException('The file "' . $filename . '" could not be created. Check if PHP has enough permissions.');
 
 		// write to file
 		$write = @fwrite($handler, $content);
 
 		// validate write
-		if($write === false) throw new SpoonFileException('The file "'. $filename .'" could not be written to. Check if PHP has enough permissions.');
+		if($write === false) throw new SpoonFileException('The file "' . $filename . '" could not be written to. Check if PHP has enough permissions.');
 
 		// close the file
 		@fclose($handler);

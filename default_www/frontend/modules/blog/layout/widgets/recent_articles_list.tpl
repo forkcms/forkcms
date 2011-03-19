@@ -4,24 +4,24 @@
 *}
 
 {option:widgetBlogRecentArticlesList}
-	<div id="blogRecentArticlesListWidget" class="mod">
+	<section id="blogRecentArticlesListWidget" class="mod">
 		<div class="inner">
-			<div class="hd">
+			<header class="hd">
 				<h3>{$lblRecentArticles|ucfirst}</h3>
-			</div>
-			<div class="bd">
+			</header>
+			<div class="bd content">
 				<ul>
 					{iteration:widgetBlogRecentArticlesList}
 						<li><a href="{$widgetBlogRecentArticlesList.full_url}" title="{$widgetBlogRecentArticlesList.title}">{$widgetBlogRecentArticlesList.title}</a></li>
 					{/iteration:widgetBlogRecentArticlesList}
 				</ul>
 			</div>
-			<div class="ft">
+			<footer class="ft">
 				<p>
 					<a href="{$var|geturlforblock:'blog'}">{$lblBlogArchive|ucfirst}</a>
 					<a id="RSSfeed" href="{$var|geturlforblock:'blog':'rss'}">{$lblSubscribeToTheRSSFeed|ucfirst}</a>
 				</p>
-			</div>
+			</footer>
 		</div>
-	</div>
+	</section>
 {/option:widgetBlogRecentArticlesList}

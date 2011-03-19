@@ -26,14 +26,14 @@ class BackendMailmotorCopy extends BackendBaseAction
 		$id = SpoonFilter::getGetValue('id', null, 0);
 
 		// no id's provided
-		if(empty($id) || !BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') .'&error=mailing-does-not-exist');
+		if(empty($id) || !BackendMailmotorModel::existsMailing($id)) $this->redirect(BackendModel::createURLForAction('index') . '&error=mailing-does-not-exist');
 
 		// at least one id
 		else
 		{
 			// get the mailing and reset some fields
 			$mailing = BackendMailmotorModel::getMailing($id);
-			$mailing['name'] = $mailing['name'] .' (#'. (BackendMailmotorModel::getMaximumId() + 1) .')';
+			$mailing['name'] = $mailing['name'] . ' (#' . (BackendMailmotorModel::getMaximumId() + 1) . ')';
 			$mailing['status'] = 'concept';
 			$mailing['send_on'] = null;
 			$mailing['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
@@ -53,7 +53,7 @@ class BackendMailmotorCopy extends BackendBaseAction
 		}
 
 		// redirect
-		$this->redirect(BackendModel::createURLForAction('index') .'&report=mailing-copied&var='. $mailing['name']);
+		$this->redirect(BackendModel::createURLForAction('index') . '&report=mailing-copied&var=' . $mailing['name']);
 	}
 }
 

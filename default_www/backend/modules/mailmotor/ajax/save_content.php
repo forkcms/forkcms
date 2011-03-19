@@ -56,8 +56,8 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 			if(strpos($match, '#') > -1) continue;
 
 			// add results to search/replace stack
-			$search[] = 'href="'. $match .'"';
-			$replace[] = 'href="'. $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery .'"';
+			$search[] = 'href="' . $match . '"';
+			$replace[] = 'href="' . $match . ((strpos($match, '?') !== false) ? '&' : '?') . $googleQuery . '"';
 		}
 
 		// replace the content HTML with the replace values
@@ -152,7 +152,7 @@ class BackendMailmotorAjaxSaveContent extends BackendBaseAJAXAction
 		$replace = array();
 		$replace[] = SITE_URL;
 		$replace[] = '"';
-		$replace[] = 'src="'. SITE_URL .'/';
+		$replace[] = 'src="' . SITE_URL . '/';
 
 		// replace some variables
 		$fullContentHTML = str_replace($search, $replace, $fullContentHTML);

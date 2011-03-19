@@ -211,16 +211,16 @@ class SpoonFormTime extends SpoonFormInput
 		if($this->attributes['name'] == '') throw new SpoonFormException('A name is required for a time field. Please provide a name.');
 
 		// start html generation
-		$output = '<input type="text" value="'. $this->getValue() .'"';
+		$output = '<input type="text" value="' . $this->getValue() . '"';
 
 		// add attributes
-		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) .' />';
+		$output .= $this->getAttributesHTML(array('[id]' => $this->attributes['id'], '[name]' => $this->attributes['name'], '[value]' => $this->getValue())) . ' />';
 
 		// template
 		if($template !== null)
 		{
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']), $output);
-			$template->assign('txt'. SpoonFilter::toCamelCase($this->attributes['name']) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('txt' . SpoonFilter::toCamelCase($this->attributes['name']), $output);
+			$template->assign('txt' . SpoonFilter::toCamelCase($this->attributes['name']) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
 		}
 
 		return $output;

@@ -78,7 +78,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->id = $this->getParameter('id', 'int');
 
 		// does the item exist
-		if(!BackendMailmotorModel::existsMailing($this->id)) $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=mailing-does-not-exist');
+		if(!BackendMailmotorModel::existsMailing($this->id)) $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=mailing-does-not-exist');
 
 		// get mailing
 		$this->mailing = BackendMailmotorModel::getMailing($this->id);
@@ -87,7 +87,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->statistics = BackendMailmotorCMHelper::getStatistics($this->id, true);
 
 		// no stats found
-		if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') .'&amp;error=no-statistics-loaded&amp;var='. str_replace('#', '', $this->mailing['name']));
+		if($this->statistics === false) $this->redirect(BackendModel::createURLForAction('index') . '&amp;error=no-statistics-loaded&amp;var=' . str_replace('#', '', $this->mailing['name']));
 	}
 
 
@@ -125,7 +125,7 @@ class BackendMailmotorStatistics extends BackendBaseActionIndex
 		$this->datagrid->setColumnFunction('urldecode', array('[link]'), 'link', true);
 
 		// add edit column
-		$this->datagrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') .'&amp;url=[link]&amp;mailing_id='. $this->id, BL::lbl('Who'));
+		$this->datagrid->addColumnAction('users', null, BL::lbl('Who'), BackendModel::createURLForAction('statistics_link') . '&amp;url=[link]&amp;mailing_id=' . $this->id, BL::lbl('Who'));
 
 		// set paging limit
 		$this->datagrid->setPagingLimit(self::PAGING_LIMIT);

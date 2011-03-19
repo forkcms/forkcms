@@ -64,14 +64,14 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setSortParameter('desc');
 
 		// set colum URLs
-		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
+		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// set column functions
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[publish_on]'), 'publish_on', true);
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgPosts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgPosts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgPosts->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -99,14 +99,14 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setSortParameter('desc');
 
 		// set colum URLs
-		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]');
+		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
 
 		// set column functions
 		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('Edit'));
+		$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('Edit'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -133,14 +133,14 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgRecent->setPaging(false);
 
 		// set colum URLs
-		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') .'&amp;id=[id]');
+		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
 
 		// set column functions
 		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgRecent->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgRecent->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));

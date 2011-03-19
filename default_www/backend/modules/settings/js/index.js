@@ -17,7 +17,7 @@ jsBackend.settings =
 		{ 
 			emptyMessage: '{$msgNoAdminIds}', 
 			addLabel: '{$lblAdd|ucfirst}', 
-			removeLabel: '{$lblDeleteSynonym|ucfirst}',
+			removeLabel: '{$lblDelete|ucfirst}',
 			canAddNew: true
 		}); 
 	},
@@ -27,4 +27,4 @@ jsBackend.settings =
 }
 
 
-$(document).ready(function() { jsBackend.settings.init(); });
+$(document).ready(jsBackend.settings.init);

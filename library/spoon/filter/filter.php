@@ -467,10 +467,10 @@ class SpoonFilter
 	public static function isFloat($value, $allowCommas = false)
 	{
 		// no commas allowed
-		if(!$allowCommas) return ((string) (float) $value == (string) $value);
+		if(!$allowCommas) return ((string) (float) $value === (string) $value);
 
 		// replace commas with dots
-		return ((string) (float) str_replace(',', '.', (string) $value) == str_replace(',', '.', (string) $value));
+		return ((string) (float) str_replace(',', '.', (string) $value) === str_replace(',', '.', (string) $value));
 	}
 
 
@@ -674,7 +674,7 @@ class SpoonFilter
 		$regexp = (string) $regexp;
 
 		// invalid regexp
-		if(!self::isValidRegexp($regexp)) throw new SpoonFilterException('The provided regex pattern "'. $regexp .'" is not valid');
+		if(!self::isValidRegexp($regexp)) throw new SpoonFilterException('The provided regex pattern "' . $regexp . '" is not valid');
 
 		// validate
 		return (bool) (@preg_match($regexp, (string) $value));
@@ -710,10 +710,10 @@ class SpoonFilter
 		$label = $match[1];
 
 		// no protocol provided
-		if($match[3] == '') $link = 'http://'. $link;
+		if($match[3] == '') $link = 'http://' . $link;
 
 		// return the replace-value
-		return '<a href="'. $link .'">'. $label .'</a>';
+		return '<a href="' . $link . '">' . $label . '</a>';
 	}
 
 
@@ -730,7 +730,7 @@ class SpoonFilter
 		$value = (string) $value;
 
 		// build regexp
-		$pattern = '/(((http|ftp|https):\/{2})?(([0-9a-z_-]+\.)+('. implode('|', self::$tlds) .')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu';
+		$pattern = '/(((http|ftp|https):\/{2})?(([0-9a-z_-]+\.)+(' . implode('|', self::$tlds) . ')(:[0-9]+)?((\/([~0-9a-zA-Z\#\+\%@\.\/_-]+))?(\?[0-9a-zA-Z\+\%@\/&\[\];=_-]+)?)?))\b/imu';
 
 		// get matches
 		$value = preg_replace_callback($pattern, array('SpoonFilter', 'replaceURLsCallback'), $value);
@@ -782,7 +782,7 @@ class SpoonFilter
 		if($replaceAnchorsWithURL) $string = preg_replace('|<a.*href="(.*)".*>(.*)</a>|isU', '$2 ($1)', $string);
 
 		// check if we need to preserve paragraphs and/or breaks
-		$exceptions = ($preserveParagraphLinebreaks) ? $exceptions .'<p>' : $exceptions;
+		$exceptions = ($preserveParagraphLinebreaks) ? $exceptions . '<p>' : $exceptions;
 
 		// strip HTML tags and preserve paragraphs
 		$string = strip_tags($string, $exceptions);

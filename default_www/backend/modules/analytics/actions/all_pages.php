@@ -50,9 +50,9 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 		$this->parsePages();
 
 		// init google url
-		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
+		$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 		$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
-		$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+		$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
 
 		// parse links to google
 		$this->tpl->assign('googleTopContentURL', sprintf($googleURL, 'top_content', $googleTableId, $googleDate));
@@ -147,19 +147,19 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 			$timeOnSite = ($results['entrances'] == 0) ? 0 : ($results['timeOnSite'] / $results['entrances']);
 			$timeOnSiteTotal = ($resultsTotal['entrances'] == 0) ? 0 : ($resultsTotal['timeOnSite'] / $resultsTotal['entrances']);
 			$timeOnSiteDifference = ($timeOnSiteTotal == 0) ? 0 : number_format((($timeOnSite - $timeOnSiteTotal) / $timeOnSiteTotal) * 100, 0);
-			if($timeOnSiteDifference > 0) $timeOnSiteDifference = '+'. $timeOnSiteDifference;
+			if($timeOnSiteDifference > 0) $timeOnSiteDifference = '+' . $timeOnSiteDifference;
 
 			// bounces
 			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
 			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-			if($bouncesDifference > 0) $bouncesDifference = '+'. $bouncesDifference;
+			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
 			// exits percentage
 			$exitsPercentage = ($results['allPagesPageviews'] == 0) ? 0 : number_format(($results['exits'] / $results['allPagesPageviews']) * 100, 0);
 			$exitsPercentageTotal = ($resultsTotal['pageviews'] == 0) ? 0 : number_format(($resultsTotal['exits'] / $resultsTotal['pageviews']) * 100, 0);
 			$exitsPercentageDifference = ($exitsPercentageTotal == 0) ? 0 : number_format((($exitsPercentage - $exitsPercentageTotal) / $exitsPercentageTotal) * 100, 0);
-			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+'. $exitsPercentageDifference;
+			if($exitsPercentageDifference > 0) $exitsPercentageDifference = '+' . $exitsPercentageDifference;
 
 			// parse data
 			$this->tpl->assign('timeOnSite', BackendAnalyticsModel::getTimeFromSeconds($timeOnSite));
@@ -202,7 +202,7 @@ class BackendAnalyticsAllPages extends BackendAnalyticsBase
 			$datagrid->setColumnHidden('page_encoded');
 
 			// set url
-			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') .'&amp;page_path=[page_encoded]');
+			$datagrid->setColumnURL('page', BackendModel::createURLForAction('detail_page') . '&amp;page_path=[page_encoded]');
 
 			// parse the datagrid
 			$this->tpl->assign('dgPages', $datagrid->getContent());

@@ -80,7 +80,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		$maxNumBlocks = BackendModel::getModuleSetting('pages', 'template_max_blocks', 5);
 
 		// build blocks array
-		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name '. $i,);
+		for($i = 0; $i < $maxNumBlocks; $i++) $this->blocks[$i] = array('index' => $i, 'name' => 'name ' . $i,);
 
 		// load the form
 		$this->loadForm();
@@ -124,8 +124,8 @@ class BackendPagesAdd extends BackendBaseActionAdd
 		// build blocks array
 		for($i = 0; $i < $maxNumBlocks; $i++)
 		{
-			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_'. $i);
-			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_'. $i, '');
+			$this->blocks[$i]['formElements']['hidExtraId'] = $this->frm->addHidden('block_extra_id_' . $i);
+			$this->blocks[$i]['formElements']['txtHTML'] = $this->frm->addEditor('block_html_' . $i, '');
 		}
 
 		// page info
@@ -242,7 +242,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				for($i = 0; $i < $this->templates[$page['template_id']]['num_blocks']; $i++)
 				{
 					// get the extra id
-					$extraId = (int) $this->frm->getField('block_extra_id_'. $i)->getValue();
+					$extraId = (int) $this->frm->getField('block_extra_id_' . $i)->getValue();
 
 					// reset some stuff
 					if($extraId <= 0) $extraId = null;
@@ -255,7 +255,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 					{
 						// reset vars
 						$extraId = null;
-						$html = $this->frm->getField('block_html_'. $i)->getValue();
+						$html = $this->frm->getField('block_html_' . $i)->getValue();
 					}
 
 					// not HTML
@@ -265,7 +265,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 						if(isset($this->extras[$extraId]['type']) && $this->extras[$extraId]['type'] == 'block')
 						{
 							// set error
-							if($hasBlock) $this->frm->getField('block_extra_id_'. $i)->addError('Can\'t add 2 blocks');
+							if($hasBlock) $this->frm->getField('block_extra_id_' . $i)->addError('Can\'t add 2 blocks');
 
 							// reset var
 							$hasBlock = true;
@@ -290,13 +290,13 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				BackendPagesModel::insertBlocks($blocks, $hasBlock);
 
 				// check if the method exists
-				if(method_exists('BackendSearchModel', 'addIndex'))
+				if(is_callable(array('BackendSearchModel', 'addIndex')))
 				{
 					// init var
 					$text = '';
 
 					// build search-text
-					foreach($blocks as $block) $text .= ' '. $block['html'];
+					foreach($blocks as $block) $text .= ' ' . $block['html'];
 
 					// add
 					BackendSearchModel::addIndex('pages', $page['id'], array('title' => $page['title'], 'text' => $text));
@@ -309,7 +309,7 @@ class BackendPagesAdd extends BackendBaseActionAdd
 				BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') .'&id='. $page['id'] .'&report=added&var='. urlencode($page['title']) .'&highlight=row-'. $page['id']);
+				$this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $page['id'] . '&report=added&var=' . urlencode($page['title']) . '&highlight=row-' . $page['id']);
 			}
 		}
 	}

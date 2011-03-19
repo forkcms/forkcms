@@ -103,11 +103,11 @@ class InstallerStep3 extends InstallerStep
 					$db = new SpoonDatabase('mysql', $this->frm->getField('hostname')->getValue(), $this->frm->getField('username')->getValue(), $this->frm->getField('password')->getValue(), $this->frm->getField('database')->getValue(), $port);
 
 					// test table
-					$table = 'test'. time();
+					$table = 'test' . time();
 
 					// attempt to create table
-					$db->execute('DROP TABLE IF EXISTS '. $table);
-					$db->execute('CREATE TABLE '. $table .' (id int(11) NOT NULL) ENGINE=MyISAM');
+					$db->execute('DROP TABLE IF EXISTS ' . $table);
+					$db->execute('CREATE TABLE ' . $table . ' (id int(11) NOT NULL) ENGINE=MyISAM');
 
 					// drop table
 					$db->drop($table);

@@ -58,4 +58,4 @@ jsBackend.analyticsDashboard =
 }
 
 
-$(document).ready(function() { jsBackend.analyticsDashboard.init(); });
+$(document).ready(jsBackend.analyticsDashboard.init);

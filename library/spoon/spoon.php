@@ -13,50 +13,50 @@
  * @since		0.1.1
  */
 
-/**
+/*
  * This is the version number for the current version of the
  * Spoon Library.
  */
 define('SPOON_VERSION', '1.3.0');
 
-/**
+/*
  * This setting will intervene when an exception occures. If enabled the exception will be
  * shown in all its glory. If disabled 'SPOON_DEBUG_MESSAGE' will be displayed instead.
  */
 if(!defined('SPOON_DEBUG')) define('SPOON_DEBUG', true);
 
-/**
+/*
  * If 'SPOON_DEBUG' is enabled and an exception occures, this message will be
  * displayed.
  */
 if(!defined('SPOON_DEBUG_MESSAGE')) define('SPOON_DEBUG_MESSAGE', 'There seems to be an issue with this page. The administrator has been notified.');
 
-/**
+/*
  * If 'SPOON_DEBUG' is enabled and an exception occures, an email with the contents of this
  * exception will be emailed to 'SPOON_DEBUG_EMAIL' if it contains a valid email address.
  */
 if(!defined('SPOON_DEBUG_EMAIL')) define('SPOON_DEBUG_EMAIL', '');
 
-/**
+/*
  * If an exception occures, you can hook into the process that handles this exception
  * and add your own logic. The callback may be a function or static method. If you wish
  * to use a static method define this constant in this way: 'MyClass::myMethod'
  */
 if(!defined('SPOON_EXCEPTION_CALLBACK')) define('SPOON_EXCEPTION_CALLBACK', '');
 
-/**
+/*
  * Default charset that will be used when a charset needs to be provided to use for
  * certain functions/methods.
  */
 if(!defined('SPOON_CHARSET')) define('SPOON_CHARSET', 'iso-8859-1');
 
-/**
+/*
  * Should we use the Spoon autoloader to ensure the dependancies are automatically
  * loaded?
  */
 if(!defined('SPOON_AUTOLOADER')) define('SPOON_AUTOLOADER', true);
 
-/** SpoonException class */
+/* SpoonException class */
 require_once 'spoon/exception/exception.php';
 
 // check mbstring extension
@@ -150,7 +150,7 @@ class Spoon
 		$path = dirname(realpath(__FILE__));
 
 		// does this file exist?
-		if(isset($classes[$class]) && file_exists($path .'/'. $classes[$class])) require_once $path .'/'. $classes[$class];
+		if(isset($classes[$class]) && file_exists($path . '/' . $classes[$class])) require_once $path . '/' . $classes[$class];
 	}
 
 
@@ -172,10 +172,41 @@ class Spoon
 		$output = preg_replace('/\]\=\>\n(\s+)/m', '] => ', $output);
 
 		// print
-		echo '<pre>'. htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) .'</pre>';
+		echo '<pre>' . htmlspecialchars($output, ENT_QUOTES, SPOON_CHARSET) . '</pre>';
 
 		// stop script
 		if($exit) exit;
+	}
+
+
+	/**
+	 * Checks if an object with this name is in the registry.
+	 *
+	 * @return	bool
+	 * @param	string $name	The name of the registry item to check for existence.
+	 */
+	public static function exists($name)
+	{
+		return isset(self::$registry[(string) $name]);
+	}
+
+
+	/**
+	 * Fetch an item from the registry.
+	 *
+	 * @return	mixed
+	 * @param	string $name	The name of the item to fetch.
+	 */
+	public static function get($name)
+	{
+		// redefine
+		$name = (string) $name;
+
+		// item doesn't exist
+		if(!isset(self::$registry[$name])) throw new SpoonException('An item with reference name "' . $name . '" doesn\'t exist in the registry.');
+
+		// item exists
+		return self::$registry[$name];
 	}
 
 
@@ -191,88 +222,28 @@ class Spoon
 
 
 	/**
-	 * Retrieve the whole registry or one specific instance.
-	 *
-	 * @return	mixed
-	 * @param	string[optional] $name	The name of the object to grab.
-	 */
-	public static function getObjectReference($name = null)
-	{
-		// name defined
-		if($name !== null)
-		{
-			// redefine
-			$name = (string) $name;
-
-			// item doesn't exist
-			if(!isset(self::$registry[$name])) throw new SpoonException('An item with reference name "'. $name .'" doesn\'t exist in the registry.');
-
-			// item exists
-			return self::$registry[$name];
-		}
-
-		// whole registry
-		return self::$registry;
-	}
-
-
-	/**
-	 * Checks if an object with this name has been registered.
-	 *
-	 * @return	bool
-	 * @param	string $name	The name of the object to check for existance.
-	 */
-	public static function isObjectReference($name)
-	{
-		return isset(self::$registry[(string) $name]);
-	}
-
-
-	/**
-	 * Deletes a given object from the registry.
+	 * Registers a given value under a given name.
 	 *
 	 * @return	void
-	 * @param	string $name	The name of the object to remove.
+	 * @param	string $name			The name of the value to store.
+	 * @param	mixed[optional] $value	The value that needs to be stored.
 	 */
-	public static function killObjectReference($name)
-	{
-		// name
-		$name = (string) $name;
-
-		// object doesn't exist
-		if(!isset(self::$registry[$name])) throw new SpoonException('The given object "'. $name .'" doesn\'t exist in the registry.');
-
-		// object exists
-		unset(self::$registry[$name]);
-	}
-
-
-	/**
-	 * Registers a given object under a given name.
-	 *
-	 * @return	void
-	 * @param	string $name	The name of the object to store.
-	 * @param	object $object	The real object.
-	 */
-	public static function setObjectReference($name, $object)
+	public static function set($name, $value = null)
 	{
 		// redefine name
 		$name = (string) $name;
 
-		// not an object
-		if(!is_object($object)) throw new SpoonException('The given object "'. $name .'" is not an object.');
+		// delete
+		if($value === null) unset(self::$registry[$name]);
 
-		// valid object
+		// add & return value
 		else
 		{
-			// name already exists
-			if(isset(self::$registry[$name])) throw new SpoonException('An object by the reference name "'. $name .'" has already been added to the registry.');
+			// add value
+			self::$registry[$name] = $value;
 
-			// new item
-			self::$registry[$name] = $object;
-
-			// retrieve object
-			return self::getObjectReference($name);
+			// fetch value
+			return self::get($name);
 		}
 	}
 }

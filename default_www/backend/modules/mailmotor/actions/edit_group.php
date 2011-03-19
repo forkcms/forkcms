@@ -45,7 +45,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('groups') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 	}
 
 
@@ -60,7 +60,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 		$this->record = (array) BackendMailmotorModel::getGroup($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('groups') .'&error=non-existing');
+		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('groups') . '&error=non-existing');
 	}
 
 
@@ -128,7 +128,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 				BackendMailmotorCMHelper::updateGroup($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('groups') .'&report=edited&var='. urlencode($item['name']) .'&highlight=id-'. $this->id);
+				$this->redirect(BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $this->id);
 			}
 		}
 	}

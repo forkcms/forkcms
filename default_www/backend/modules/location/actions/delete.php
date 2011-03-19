@@ -34,14 +34,14 @@ class BackendLocationDelete extends BackendBaseActionDelete
 			BackendLocationModel::delete($this->id);
 
 			// delete search indexes
-//			if(method_exists('BackendSearchModel', 'removeIndex')) BackendSearchModel::removeIndex('location', $this->id);
+//			if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex('location', $this->id);
 
 			// user was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') .'&report=deleted&var='. urlencode($this->record['title']));
+			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
 		}
 
 		// something went wrong
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 }
 

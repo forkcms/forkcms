@@ -35,7 +35,7 @@ class BackendMailmotorAjaxLinkAccount extends BackendBaseAJAXAction
 		try
 		{
 			// check if the CampaignMonitor class exists
-			if(!SpoonFile::exists(PATH_LIBRARY .'/external/campaignmonitor.php'))
+			if(!SpoonFile::exists(PATH_LIBRARY . '/external/campaignmonitor.php'))
 			{
 				// the class doesn't exist, so stop here
 				$this->output(self::BAD_REQUEST, null, BL::err('ClassDoesNotExist', 'mailmotor'));

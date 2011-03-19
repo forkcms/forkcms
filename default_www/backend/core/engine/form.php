@@ -49,15 +49,15 @@ class BackendForm extends SpoonForm
 	public function __construct($name = null, $action = null, $method = 'post', $useToken = true, $useGlobalError = true)
 	{
 		// init the URL-instance
-		if(Spoon::isObjectReference('url')) $this->URL = Spoon::getObjectReference('url');
-		if(Spoon::isObjectReference('header')) $this->header = Spoon::getObjectReference('header');
+		if(Spoon::exists('url')) $this->URL = Spoon::get('url');
+		if(Spoon::exists('header')) $this->header = Spoon::get('header');
 		$this->useGlobalError = (bool) $useGlobalError;
 
 		// build a name if there wasn't one provided
-		$name = ($name === null) ? SpoonFilter::toCamelCase($this->URL->getModule() .'_'. $this->URL->getAction(), '_', true) : (string) $name;
+		$name = ($name === null) ? SpoonFilter::toCamelCase($this->URL->getModule() . '_' . $this->URL->getAction(), '_', true) : (string) $name;
 
 		// build the action if it wasn't provided
-		$action = ($action === null) ? '/'. str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
+		$action = ($action === null) ? '/' . str_replace(array('&', '&&amp;'), '&amp;', $this->URL->getQueryString()) : (string) $action;
 
 		// call the real form-class
 		parent::__construct($name, $action, $method, $useToken);
@@ -243,8 +243,8 @@ class BackendForm extends SpoonForm
 		// redefine
 		$name = (string) $name;
 		$value = ($value !== null) ? (string) $value : null;
-		$class = 'inputEditor '. (string) $class;
-		$classError = 'inputEditorError '. (string) $classError;
+		$class = 'inputEditor ' . (string) $class;
+		$classError = 'inputEditorError ' . (string) $classError;
 		$HTML = (bool) $HTML;
 
 		// we add JS because we need TinyMCE

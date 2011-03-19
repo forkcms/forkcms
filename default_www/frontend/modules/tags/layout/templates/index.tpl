@@ -3,9 +3,9 @@
 	- {$tags}: contains an array with all tags that are used on the site, each element contains data about the tag
 *}
 
-<div id="tagsIndex" class="mod">
+<section id="tagsIndex" class="mod">
 	<div class="inner">
-		<div class="bd">
+		<div class="bd content">
 			{option:!tags}<p>{$msgTagsNoItems}</p>{/option:!tags}
 			{option:tags}
 				<ul>
@@ -16,4 +16,4 @@
 			{/option:tags}
 		</div>
 	</div>
-</div>
+</section>

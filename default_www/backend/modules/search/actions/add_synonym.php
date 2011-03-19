@@ -83,7 +83,7 @@ class BackendSearchAddSynonym extends BackendBaseActionAdd
 				$id = BackendSearchModel::insertSynonym($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('synonyms') .'&report=added-synonym&var='. urlencode($item['term']) .'&highlight=row-'. $id);
+				$this->redirect(BackendModel::createURLForAction('synonyms') . '&report=added-synonym&var=' . urlencode($item['term']) . '&highlight=row-' . $id);
 			}
 		}
 	}

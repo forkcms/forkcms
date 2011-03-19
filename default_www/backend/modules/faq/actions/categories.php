@@ -49,10 +49,10 @@ class BackendFaqCategories extends BackendBaseActionIndex
 		$this->datagrid->enableSequenceByDragAndDrop();
 
 		// set column URLs
-		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_category') .'&amp;id=[id]');
+		$this->datagrid->setColumnURL('name', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
 
 		// add edit column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') .'&amp;id=[id]', BL::lbl('Edit'));
+		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
 	}
 
 

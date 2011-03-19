@@ -286,7 +286,7 @@ class SpoonDatagrid
 		$name = (string) $name;
 
 		// column already exists
-		if(isset($this->columns[$name])) throw new SpoonDatagridException('A column with the name "'. $name .'" already exists.');
+		if(isset($this->columns[$name])) throw new SpoonDatagridException('A column with the name "' . $name . '" already exists.');
 
 		// redefine sequence
 		if($sequence === null) $sequence = count($this->columns) + 1;
@@ -336,7 +336,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no attributes can be removed.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor no attributes can be removed.');
 
 			// exists
 			$this->columns[(string) $column]->clearAttributes();
@@ -391,7 +391,7 @@ class SpoonDatagrid
 			foreach($this->source->getColumns() as $column)
 			{
 				// add column
-				$this->addColumn($column, $column, '['. $column .']', null, null, null, (count($this->columns) +1));
+				$this->addColumn($column, $column, '[' . $column . ']', null, null, null, (count($this->columns) +1));
 
 				// by default the column name will be added as a class
 				$this->columns[$column]->setAttributes(array('class' => $column));
@@ -471,7 +471,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist.');
 
 			// exists
 			return $this->columns[$column];
@@ -549,7 +549,7 @@ class SpoonDatagrid
 		$html = '';
 
 		// loop elements
-		foreach($array as $label => $value) $html .= ' '. $label .'="'. $value .'"';
+		foreach($array as $label => $value) $html .= ' ' . $label . '="' . $value . '"';
 		return $html;
 	}
 
@@ -733,7 +733,7 @@ class SpoonDatagrid
 	 */
 	private function getTemplatePath()
 	{
-		return ($this->template != null) ? $this->template : dirname(__FILE__) .'/datagrid.tpl';
+		return ($this->template != null) ? $this->template : dirname(__FILE__) . '/datagrid.tpl';
 	}
 
 
@@ -876,7 +876,7 @@ class SpoonDatagrid
 				if($column->getOverwrite())
 				{
 					// fetch key
-					$iKey = array_search('['. $column->getName() .']', $record['labels']);
+					$iKey = array_search('[' . $column->getName() . ']', $record['labels']);
 
 					// parse the actual value
 					$columnValue = $record['values'][$iKey];
@@ -892,16 +892,16 @@ class SpoonDatagrid
 					if($column->getURL() !== null)
 					{
 						// open url tag
-						$columnValue .= '<a href="'. str_replace($record['labels'], $record['values'], $column->getURL()) .'"';
+						$columnValue .= '<a href="' . str_replace($record['labels'], $record['values'], $column->getURL()) . '"';
 
 						// add title
-						$columnValue .= ' title="'. str_replace($record['labels'], $record['values'], $column->getURLTitle()) .'"';
+						$columnValue .= ' title="' . str_replace($record['labels'], $record['values'], $column->getURLTitle()) . '"';
 
 						// confirm
 						if($column->getConfirm() && $column->getConfirmMessage() !== null)
 						{
 							// default confirm
-							if($column->getConfirmCustom() == '') $columnValue .= ' onclick="return confirm(\''. str_replace($record['labels'], $record['values'], $column->getConfirmMessage()) .'\');"';
+							if($column->getConfirmCustom() == '') $columnValue .= ' onclick="return confirm(\'' . str_replace($record['labels'], $record['values'], $column->getConfirmMessage()) . '\');"';
 
 							// custom confirm
 							else
@@ -913,7 +913,7 @@ class SpoonDatagrid
 								$tmpValue = str_replace($record['labels'], $record['values'], $tmpValue);
 
 								// add id
-								$columnValue .= ' '. $tmpValue;
+								$columnValue .= ' ' . $tmpValue;
 							}
 						}
 
@@ -925,11 +925,11 @@ class SpoonDatagrid
 					if($column->getImage() !== null)
 					{
 						// open img tag
-						$columnValue .= '<img src="'. str_replace($record['labels'], $record['values'], $column->getImage()) .'"';
+						$columnValue .= '<img src="' . str_replace($record['labels'], $record['values'], $column->getImage()) . '"';
 
 						// add title & alt
-						$columnValue .= ' alt="'. str_replace($record['labels'], $record['values'], $column->getImageTitle()) .'"';
-						$columnValue .= ' title="'. str_replace($record['labels'], $record['values'], $column->getImageTitle()) .'"';
+						$columnValue .= ' alt="' . str_replace($record['labels'], $record['values'], $column->getImageTitle()) . '"';
+						$columnValue .= ' title="' . str_replace($record['labels'], $record['values'], $column->getImageTitle()) . '"';
 
 						// close img tag
 						$columnValue .= ' />';
@@ -939,7 +939,7 @@ class SpoonDatagrid
 					else
 					{
 						// fetch key
-						$iKey = array_search('['. $column->getName() .']', $record['labels']);
+						$iKey = array_search('[' . $column->getName() . ']', $record['labels']);
 
 						// parse value
 						$columnValue .= $record['values'][$iKey];
@@ -1032,7 +1032,7 @@ class SpoonDatagrid
 			if(is_string($function['columns']) && isset($this->columns[$function['columns']]))
 			{
 				// fetch key
-				$iKey = array_search('['. $function['columns'] .']', $record['labels']);
+				$iKey = array_search('[' . $function['columns'] . ']', $record['labels']);
 
 				// value was set
 				if($iKey !== false)
@@ -1052,7 +1052,7 @@ class SpoonDatagrid
 				foreach($function['columns'] as $column)
 				{
 					// fetch key
-					$iKey = array_search('['. $column .']', $record['labels']);
+					$iKey = array_search('[' . $column . ']', $record['labels']);
 
 					// value was set
 					if($iKey !== false)
@@ -1286,7 +1286,7 @@ class SpoonDatagrid
 		// create labels/values array
 		foreach($record as $label => $value)
 		{
-			$array['labels'][] = '['. $label .']';
+			$array['labels'][] = '[' . $label . ']';
 			$array['values'][] = $value;
 		}
 
@@ -1311,11 +1311,11 @@ class SpoonDatagrid
 		foreach($this->columns as $column)
 		{
 			// this column is an extra field, added in the datagrid
-			if(!in_array('['. $column->getName() .']', $array['labels']))
+			if(!in_array('[' . $column->getName() . ']', $array['labels']))
 			{
 
 				$array['values'][] = str_replace($array['labels'], $array['values'], $column->getValue());
-				$array['labels'][] = '['. $column->getName() .']';
+				$array['labels'][] = '[' . $column->getName() . ']';
 			}
 		}
 
@@ -1369,7 +1369,7 @@ class SpoonDatagrid
 				// loop return values
 				foreach((array) $value as $key => $value)
 				{
-					if(isset($this->rowFunctionsParsed[$key])) $this->rowFunctionsParsed[$key] .= ' '. $value;
+					if(isset($this->rowFunctionsParsed[$key])) $this->rowFunctionsParsed[$key] .= ' ' . $value;
 					else $this->rowFunctionsParsed[$key] = $value;
 				}
 			}
@@ -1431,7 +1431,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no attributes can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no attributes can be added.');
 
 			// exists
 			else $this->columns[$column]->setAttributes($attributes);
@@ -1453,7 +1453,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no confirm message/script can be added.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no confirm message/script can be added.');
 
 			// exists
 			else $this->columns[$column]->setConfirm($message, $custom);
@@ -1479,7 +1479,7 @@ class SpoonDatagrid
 			if(!is_array($function))
 			{
 				// function checks
-				if(!function_exists((string) $function)) throw new SpoonDatagridException('The function "'. (string) $function .'" doesn\'t exist.');
+				if(!function_exists((string) $function)) throw new SpoonDatagridException('The function "' . (string) $function . '" doesn\'t exist.');
 			}
 
 			// class method
@@ -1489,7 +1489,7 @@ class SpoonDatagrid
 				if(count($function) != 2) throw new SpoonDatagridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
 
 				// method doesn't exist
-				elseif(!method_exists($function[0], $function[1])) throw new SpoonDatagridException('The method '. (string) $function[0] .'::'. (string) $function[1] .' does not exist.');
+				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
 			}
 
 			// add to function stack
@@ -1511,7 +1511,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesnt exist
-			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no attributes can be added to its header.');
+			if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no attributes can be added to its header.');
 
 			// exists
 			else $this->columns[$column]->setHeaderAttributes($attributes);
@@ -1532,7 +1532,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor can\'t be set hidden.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor can\'t be set hidden.');
 
 			// exists
 			$this->columns[(string) $column]->setHidden($on);
@@ -1577,7 +1577,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no default sorting method can be applied to it.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor no default sorting method can be applied to it.');
 
 			// exists
 			$this->columns[(string) $column]->setSortingMethod($sort);
@@ -1618,7 +1618,7 @@ class SpoonDatagrid
 				foreach($columns as $column)
 				{
 					// column exists
-					if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist. Therefor its sequence can\'t be altered.');
+					if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist. Therefor its sequence can\'t be altered.');
 
 					// update sequence
 					$this->columns[(string) $column]->setSequence($i);
@@ -1662,7 +1662,7 @@ class SpoonDatagrid
 		if($this->source->getNumResults() > 0)
 		{
 			// column doesn't exist
-			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor no URL can be applied.');
+			if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor no URL can be applied.');
 
 			// exists
 			$this->columns[(string) $column]->setURL($URL, $title);
@@ -1726,7 +1726,7 @@ class SpoonDatagrid
 			foreach($labels as $column => $label)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "'. $column .'" doesn\'t exist, therefor no label can be assigned to it.');
+				if(!isset($this->columns[$column])) throw new SpoonDatagridException('The column "' . $column . '" doesn\'t exist, therefor no label can be assigned to it.');
 
 				// exists
 				else $this->columns[$column]->setLabel($label);
@@ -1797,7 +1797,7 @@ class SpoonDatagrid
 	public function setPagingClass($class)
 	{
 		// class cant be found
-		if(!class_exists((string) $class)) throw new SpoonDatagridException('The class "'. (string) $class .'" you provided for the alternative paging can not be found.');
+		if(!class_exists((string) $class)) throw new SpoonDatagridException('The class "' . (string) $class . '" you provided for the alternative paging can not be found.');
 
 		// class exists
 		else
@@ -1852,7 +1852,7 @@ class SpoonDatagrid
 			if(!is_array($function))
 			{
 				// function checks
-				if(!function_exists((string) $function)) throw new SpoonDatagridException('The function "'. (string) $function .'" doesn\'t exist.');
+				if(!function_exists((string) $function)) throw new SpoonDatagridException('The function "' . (string) $function . '" doesn\'t exist.');
 			}
 
 			// class method
@@ -1862,7 +1862,7 @@ class SpoonDatagrid
 				if(count($function) != 2) throw new SpoonDatagridException('When providing a method for a column function it must be like array(\'class\', \'method\')');
 
 				// method doesn't exist
-				elseif(!method_exists($function[0], $function[1])) throw new SpoonDatagridException('The method '. (string) $function[0] .'::'. (string) $function[1] .' does not exist.');
+				elseif(!is_callable(array($function[0], $function[1]))) throw new SpoonDatagridException('The method ' . (string) $function[0] . '::' . (string) $function[1] . ' does not exist.');
 			}
 
 			// add to function stack
@@ -1887,13 +1887,13 @@ class SpoonDatagrid
 			foreach($columns as $column)
 			{
 				// column doesn't exist
-				if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "'. (string) $column .'" doesn\'t exist and therefor can\'t be sorted on.');
+				if(!isset($this->columns[(string) $column])) throw new SpoonDatagridException('The column "' . (string) $column . '" doesn\'t exist and therefor can\'t be sorted on.');
 
 				// column exists
 				else
 				{
 					// not sortable
-					if(!in_array((string) $column, $this->allowedSortingColumns)) throw new SpoonDatagridException('The column "'. (string) $column .'" can\'t be sorted on.');
+					if(!in_array((string) $column, $this->allowedSortingColumns)) throw new SpoonDatagridException('The column "' . (string) $column . '" can\'t be sorted on.');
 
 					// sortable
 					else
@@ -1911,7 +1911,7 @@ class SpoonDatagrid
 			if($default !== null && in_array($defaultColumn, $columns)) $defaultColumn = (string) $default;
 
 			// default column is not good
-			if(!in_array($defaultColumn, $this->allowedSortingColumns)) throw new SpoonDatagridException('The column "'. $defaultColumn .'" can\'t be set as the default sorting column, because it doesn\'t exist or may not be sorted on.');
+			if(!in_array($defaultColumn, $this->allowedSortingColumns)) throw new SpoonDatagridException('The column "' . $defaultColumn . '" can\'t be set as the default sorting column, because it doesn\'t exist or may not be sorted on.');
 
 			// set default column
 			$this->sortingColumn = $defaultColumn;

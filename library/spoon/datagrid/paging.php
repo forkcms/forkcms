@@ -239,7 +239,7 @@ class SpoonDatagridPaging implements iSpoonDatagridPaging
 
 		// cough it up
 		ob_start();
-		$tpl->display(dirname(__FILE__) .'/paging.tpl');
+		$tpl->display(dirname(__FILE__) . '/paging.tpl');
 		return ob_get_clean();
 	}
 }

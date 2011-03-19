@@ -173,7 +173,7 @@ class BackendContentBlocksModel
 		$extra['data'] = serialize(array('id' => $item['id'],
 											'extra_label' => $item['title'],
 											'language' => $item['language'],
-											'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id']));
+											'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id']));
 		$db->update('pages_extras', $extra, 'id = ? AND module = ? AND type = ? AND action = ?', array($extra['id'], $extra['module'], $extra['type'], $extra['action']));
 
 		// return the new revision_id
@@ -201,7 +201,7 @@ class BackendContentBlocksModel
 						'data' => serialize(array('id' => $item['id'],
 													'extra_label' => $item['title'],
 													'language' => $item['language'],
-													'edit_url' => BackendModel::createURLForAction('edit') .'&id='. $item['id'])),
+													'edit_url' => BackendModel::createURLForAction('edit') . '&id=' . $item['id'])),
 						'hidden' => 'N');
 
 		// update extra
@@ -225,7 +225,7 @@ class BackendContentBlocksModel
 														array($item['id'], BL::getWorkingLanguage(), 'archived', $rowsToKeep));
 
 		// delete other revisions
-		if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND language = ? AND status = ? AND revision_id NOT IN ('. implode(', ', $revisionIdsToKeep) .')', array($item['id'], BL::getWorkingLanguage(), 'archived'));
+		if(!empty($revisionIdsToKeep)) $db->delete('content_blocks', 'id = ? AND language = ? AND status = ? AND revision_id NOT IN (' . implode(', ', $revisionIdsToKeep) . ')', array($item['id'], BL::getWorkingLanguage(), 'archived'));
 
 		// return the new revision_id
 		return $item['revision_id'];

@@ -35,7 +35,7 @@ class FrontendSearchAjaxAutocomplete extends FrontendBaseAJAXAction
 		$url = FrontendNavigation::getURLForBlock('search');
 
 		// loop items and set search url
-		foreach($matches as &$match) $match['url'] = $url .'?form=search&q='. $match['term'];
+		foreach($matches as &$match) $match['url'] = $url . '?form=search&q=' . $match['term'];
 
 		// output
 		$this->output(self::OK, $matches);

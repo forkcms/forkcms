@@ -38,7 +38,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$csv[] = array('email' => BackendModel::getModuleSetting('mailmotor', 'from_email'), 'name' => BackendModel::getModuleSetting('mailmotor', 'from_name'));
 
 		// download the file
-		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH .'/mailmotor/example.csv', $csv, null, null, ',', '"', true);
+		SpoonFileCSV::arrayToFile(BACKEND_CACHE_PATH . '/mailmotor/example.csv', $csv, null, null, ',', '"', true);
 	}
 
 
@@ -92,7 +92,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 		$groups = BackendMailmotorModel::getGroupsForCheckboxes();
 
 		// if no groups are found, redirect to overview
-		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') .'&error=no-groups');
+		if(empty($groups)) $this->redirect(BackendModel::createURLForAction('addresses') . '&error=no-groups');
 
 		// add radiobuttons for groups
 		$this->frm->addRadiobutton('groups', $groups, (empty($this->groupId) ? null : $this->groupId));
@@ -179,7 +179,7 @@ class BackendMailmotorImportAddresses extends BackendBaseActionEdit
 				}
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('addresses') .'&report=imported-addresses&var[]='. count($csv) .'&var[]='. count($values['groups']));
+				$this->redirect(BackendModel::createURLForAction('addresses') . '&report=imported-addresses&var[]=' . count($csv) . '&var[]=' . count($values['groups']));
 			}
 		}
 	}

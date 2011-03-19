@@ -56,10 +56,10 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		if(empty($files)) return '';
 
 		// start
-		$return = '<ul>'."\n";
+		$return = '<ul>' . "\n";
 
 		// loop files
-		foreach($files as $file) $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">'. wordwrap(str_replace(PATH_WWW, '', $file), 80, '<br />', true) .'</code></li>'."\n";
+		foreach($files as $file) $return .= '<li><code title="' . str_replace(PATH_WWW, '', $file) . '">' . wordwrap(str_replace(PATH_WWW, '', $file), 80, '<br />', true) . '</code></li>' . "\n";
 
 		// end
 		$return .= '</ul>';
@@ -94,7 +94,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 	private static function getTree($path, array $tree = array())
 	{
 		// paths that should be ignored
-		$ignore = array(BACKEND_CACHE_PATH, BACKEND_CORE_PATH .'/js/tiny_mce', FRONTEND_CACHE_PATH);
+		$ignore = array(BACKEND_CACHE_PATH, BACKEND_CORE_PATH . '/js/tiny_mce', FRONTEND_CACHE_PATH);
 
 		// get the folder listing
 		$items = SpoonDirectory::getList($path, true, array('.svn'));
@@ -103,15 +103,15 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		foreach($items as $item)
 		{
 			// if the path should be ignored, skip it
-			if(in_array($path .'/'. $item, $ignore)) continue;
+			if(in_array($path . '/' . $item, $ignore)) continue;
 
 			// if the item is a directory we should index it also (recursive)
-			if(is_dir($path .'/'. $item)) $tree = self::getTree($path .'/'. $item, $tree);
+			if(is_dir($path . '/' . $item)) $tree = self::getTree($path . '/' . $item, $tree);
 
 			else
 			{
 				// if the file has an extension that has to be processed add it into the tree
-				if(in_array(SpoonFile::getExtension($item), array('js', 'php', 'tpl'))) $tree[] = $path .'/'. $item;
+				if(in_array(SpoonFile::getExtension($item), array('js', 'php', 'tpl'))) $tree[] = $path . '/' . $item;
 			}
 		}
 
@@ -140,13 +140,13 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->dgFrontend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
 
 		// set colum URLs
-		$this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('add') .'&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+		$this->dgFrontend->setColumnURL('name', BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
 
 		// set column functions
 		$this->dgFrontend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
 		// add columns
-		$this->dgFrontend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') .'&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
+		$this->dgFrontend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
 
 		/*
 		 * Backend datagrid
@@ -161,13 +161,13 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		$this->dgBackend->setSortingColumns(array('language', 'application', 'module', 'type', 'name'), 'name');
 
 		// set column URLs
-		$this->dgBackend->setColumnURL('name', BackendModel::createURLForAction('add') .'&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
+		$this->dgBackend->setColumnURL('name', BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]');
 
 		// set column functions
 		$this->dgBackend->setColumnFunction(array(__CLASS__, 'formatFilesList'), '[used_in]', 'used_in', true);
 
 		// add columns
-		$this->dgBackend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') .'&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
+		$this->dgBackend->addColumn('add', null, BL::lbl('Add'), BackendModel::createURLForAction('add') . '&amp;language=[language]&amp;application=[application]&amp;module=[module]&amp;type=[type]&amp;name=[name]', BL::lbl('Add'));
 	}
 
 
@@ -194,8 +194,15 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 		// init some vars
 		$tree = self::getTree(BACKEND_PATH);
 		$modules = BackendModel::getModules(false);
+
+		// search fo the error module
+		$key = array_search('error', $modules);
+
+		// remove error module
+		if($key !== false) unset($modules[$key]);
+
 		$used = array();
-		$navigation = Spoon::getObjectReference('navigation');
+		$navigation = Spoon::get('navigation');
 		$lbl = array();
 
 		// get labels from navigation
@@ -433,7 +440,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 							foreach($data['module_specific'] as $module)
 							{
 								// if the error isn't found add it to the list
-								if(substr_count(BL::err($key, $module), '{$'. $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::err($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -441,7 +448,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 						else
 						{
 							// if the error isn't found add it to the list
-							if(substr_count(BL::err($key), '{$'. $type) > 0)
+							if(substr_count(BL::err($key), '{$' . $type) > 0)
 							{
 								// init var
 								$exists = false;
@@ -462,7 +469,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 										$chunks = (array) explode('/', trim($modulePath, '/'));
 
 										// first part is the module
-										if(isset($chunks[0]) && BL::err($key, $chunks[0]) != '{$'. $type . SpoonFilter::toCamelCase($chunks[0]) . $key .'}') $exists = true;
+										if(isset($chunks[0]) && BL::err($key, $chunks[0]) != '{$' . $type . SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
 									}
 								}
 
@@ -481,7 +488,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 							foreach($data['module_specific'] as $module)
 							{
 								// if the label isn't found add it to the list
-								if(substr_count(BL::lbl($key, $module), '{$'. $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::lbl($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -489,7 +496,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 						else
 						{
 							// if the label isn't found, check in the specific module
-							if(substr_count(BL::lbl($key), '{$'. $type) > 0)
+							if(substr_count(BL::lbl($key), '{$' . $type) > 0)
 							{
 								// init var
 								$exists = false;
@@ -510,7 +517,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 										$chunks = (array) explode('/', trim($modulePath, '/'));
 
 										// first part is the module
-										if(isset($chunks[0]) && BL::lbl($key, $chunks[0]) != '{$'. $type . SpoonFilter::toCamelCase($chunks[0]) . $key .'}') $exists = true;
+										if(isset($chunks[0]) && BL::lbl($key, $chunks[0]) != '{$' . $type . SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
 									}
 								}
 
@@ -529,7 +536,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 							foreach($data['module_specific'] as $module)
 							{
 								// if the message isn't found add it to the list
-								if(substr_count(BL::msg($key, $module), '{$'. $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+								if(substr_count(BL::msg($key, $module), '{$' . $type) > 0) $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'backend', 'module' => $module, 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 							}
 						}
 
@@ -537,7 +544,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 						else
 						{
 							// if the message isn't found add it to the list
-							if(substr_count(BL::msg($key), '{$'. $type) > 0)
+							if(substr_count(BL::msg($key), '{$' . $type) > 0)
 							{
 								// init var
 								$exists = false;
@@ -558,7 +565,7 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 										$chunks = (array) explode('/', trim($modulePath, '/'));
 
 										// first part is the module
-										if(isset($chunks[0]) && BL::msg($key, $chunks[0]) != '{$'. $type . SpoonFilter::toCamelCase($chunks[0]) . $key .'}') $exists = true;
+										if(isset($chunks[0]) && BL::msg($key, $chunks[0]) != '{$' . $type . SpoonFilter::toCamelCase($chunks[0]) . $key . '}') $exists = true;
 									}
 								}
 
@@ -696,25 +703,25 @@ class BackendLocaleAnalyse extends BackendBaseActionIndex
 					// action
 					case 'act':
 						// if the action isn't available add it to the list
-						if(FL::act($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::act($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 
 					// error
 					case 'err':
 						// if the error isn't available add it to the list
-						if(FL::err($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::err($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 
 					// label
 					case 'lbl':
 						// if the label isn't available add it to the list
-						if(FL::lbl($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::lbl($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 
 					// message
 					case 'msg':
 						// if the message isn't available add it to the list
-						if(FL::msg($key) == '{$'. $type . $key .'}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
+						if(FL::msg($key) == '{$' . $type . $key . '}') $nonExisting[] = array('language' => BL::getWorkingLanguage(), 'application' => 'frontend', 'module' => 'core', 'type' => $type, 'name' => $key, 'used_in' => serialize($data['files']));
 					break;
 				}
 			}

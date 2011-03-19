@@ -45,7 +45,6 @@ class Fork_Sniffs_Styleguide_OperatorsSniff implements PHP_CodeSniffer_Sniff
 			case T_IS_NOT_IDENTICAL:
 			case T_IS_SMALLER_OR_EQUAL:
 			case T_OR_EQUAL:
-			case T_CONCAT_EQUAL:
 			case T_AND_EQUAL:
 			case T_PLUS_EQUAL:
 			case T_SL_EQUAL:

@@ -711,4 +711,4 @@ jsBackend.pages.tree =
 }
 
 
-$(document).ready(function() { jsBackend.pages.init(); });
+$(document).ready(jsBackend.pages.init);

@@ -63,9 +63,9 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$this->parseImportantKeywords();
 
 			// init google url
-			$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL .'/%1$s?id=%2$s&amp;pdr=%3$s';
+			$googleURL = BackendAnalyticsModel::GOOGLE_ANALYTICS_URL . '/%1$s?id=%2$s&amp;pdr=%3$s';
 			$googleTableId = str_replace('ga:', '', BackendAnalyticsModel::getTableId());
-			$googleDate = date('Ymd', $this->startTimestamp) .'-'. date('Ymd', $this->endTimestamp);
+			$googleDate = date('Ymd', $this->startTimestamp) . '-' . date('Ymd', $this->endTimestamp);
 
 			// parse links to google
 			$this->tpl->assign('googleTopReferrersURL', sprintf($googleURL, 'referring_sources', $googleTableId, $googleDate));
@@ -100,7 +100,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 
 			// set headers values
 			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Views'));
+			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Views'));
 
 			// set headers
 			$datagrid->setHeaderLabels($headers);
@@ -132,7 +132,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 
 			// set headers values
 			$headers['pageviews'] = ucfirst(BL::lbl('Views'));
-			$headers['pageviews_percentage'] = '% '. ucfirst(BL::lbl('Views'));
+			$headers['pageviews_percentage'] = '% ' . ucfirst(BL::lbl('Views'));
 
 			// set column url
 			$datagrid->setColumnURL('referral', 'http://[referral_long]', '[referral_long]');
@@ -228,25 +228,25 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 			$timeOnSite = ($results['entrances'] == 0) ? 0 : ($results['timeOnSite'] / $results['entrances']);
 			$timeOnSiteTotal = ($resultsTotal['entrances'] == 0) ? 0 : ($resultsTotal['timeOnSite'] / $resultsTotal['entrances']);
 			$timeOnSiteDifference = ($timeOnSiteTotal == 0) ? 0 : number_format((($timeOnSite - $timeOnSiteTotal) / $timeOnSiteTotal) * 100, 0);
-			if($timeOnSiteDifference > 0) $timeOnSiteDifference = '+'. $timeOnSiteDifference;
+			if($timeOnSiteDifference > 0) $timeOnSiteDifference = '+' . $timeOnSiteDifference;
 
 			// pages / visit
 			$pagesPerVisit = ($results['visits'] == 0) ? 0 : number_format(($results['pageviews'] / $results['visits']), 2);
 			$pagesPerVisitTotal = ($resultsTotal['visits'] == 0) ? 0 : number_format(($resultsTotal['pageviews'] / $resultsTotal['visits']), 2);
 			$pagesPerVisitDifference = ($pagesPerVisitTotal == 0) ? 0 : number_format((($pagesPerVisit - $pagesPerVisitTotal) / $pagesPerVisitTotal) * 100, 0);
-			if($pagesPerVisitDifference > 0) $pagesPerVisitDifference = '+'. $pagesPerVisitDifference;
+			if($pagesPerVisitDifference > 0) $pagesPerVisitDifference = '+' . $pagesPerVisitDifference;
 
 			// new visits
 			$newVisits = ($results['entrances'] == 0) ? 0 : number_format(($results['newVisits'] / $results['entrances']) * 100, 0);
 			$newVisitsTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['newVisits'] / $resultsTotal['entrances']) * 100, 0);
 			$newVisitsDifference = ($newVisitsTotal == 0) ? 0 : number_format((($newVisits - $newVisitsTotal) / $newVisitsTotal) * 100, 0);
-			if($newVisitsDifference > 0) $newVisitsDifference = '+'. $newVisitsDifference;
+			if($newVisitsDifference > 0) $newVisitsDifference = '+' . $newVisitsDifference;
 
 			// bounces
 			$bounces = ($results['entrances'] == 0) ? 0 : number_format(($results['bounces'] / $results['entrances']) * 100, 0);
 			$bouncesTotal = ($resultsTotal['entrances'] == 0) ? 0 : number_format(($resultsTotal['bounces'] / $resultsTotal['entrances']) * 100, 0);
 			$bouncesDifference = ($bouncesTotal == 0) ? 0 : number_format((($bounces - $bouncesTotal) / $bouncesTotal) * 100, 0);
-			if($bouncesDifference > 0) $bouncesDifference = '+'. $bouncesDifference;
+			if($bouncesDifference > 0) $bouncesDifference = '+' . $bouncesDifference;
 
 			// parse data
 			$this->tpl->assign('pageviews', $results['pageviews']);
@@ -287,7 +287,7 @@ class BackendAnalyticsIndex extends BackendAnalyticsBase
 		{
 			// get label
 			$label = BL::lbl(SpoonFilter::toCamelCase($source['label']), 'analytics');
-			if($label == '{$lblAnalytics'. SpoonFilter::toCamelCase($source['label']) .'}') $label = $source['label'];
+			if($label == '{$lblAnalytics' . SpoonFilter::toCamelCase($source['label']) . '}') $label = $source['label'];
 
 			// build array
 			$graphData[$i]['label'] = ucfirst($label);

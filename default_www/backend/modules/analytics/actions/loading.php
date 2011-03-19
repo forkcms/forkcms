@@ -74,13 +74,13 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 		}
 
 		// build url
-		$URL = SITE_URL .'/backend/cronjob.php?module=analytics&action=get_data&id=1';
-		$URL .= '&page='. $this->redirectAction;
-		if($this->pageId != '') $URL .= '&page_id='. $this->pageId;
-		$URL .= '&identifier='. $this->identifier;
-		$URL .= '&start_date='. $this->startTimestamp;
-		$URL .= '&end_date='. $this->endTimestamp;
-		$URL .= '&force='. $force;
+		$URL = SITE_URL . '/backend/cronjob.php?module=analytics&action=get_data&id=1';
+		$URL .= '&page=' . $this->redirectAction;
+		if($this->pageId != '') $URL .= '&page_id=' . $this->pageId;
+		$URL .= '&identifier=' . $this->identifier;
+		$URL .= '&start_date=' . $this->startTimestamp;
+		$URL .= '&end_date=' . $this->endTimestamp;
+		$URL .= '&force=' . $force;
 
 		// set options
 		$options = array();
@@ -118,10 +118,10 @@ class BackendAnalyticsLoading extends BackendAnalyticsBase
 
 		// parse redirect link
 		$this->tpl->assign('redirect', BackendModel::createURLForAction($this->redirectAction));
-		$this->tpl->assign('redirectGet', (isset($page) ? 'page='. $page : ''));
+		$this->tpl->assign('redirectGet', (isset($page) ? 'page=' . $page : ''));
 		$this->tpl->assign('settingsUrl', BackendModel::createURLForAction('settings'));
 		$this->tpl->assign('page', $this->redirectAction);
-		$this->tpl->assign('identifier', ($this->pageId != '' ? $this->pageId .'_' : '') . $this->identifier);
+		$this->tpl->assign('identifier', ($this->pageId != '' ? $this->pageId . '_' : '') . $this->identifier);
 	}
 }
 

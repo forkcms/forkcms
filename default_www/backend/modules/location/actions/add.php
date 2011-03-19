@@ -90,7 +90,7 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				$item['country'] = $this->frm->getField('country')->getValue();
 
 				// geocode address
-				$url = 'http://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($item['street'] .' '. $item['number'] .', '. $item['zip'] .' '. $item['city'] .', '. SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) .'&sensor=false';
+				$url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
 				$geocode = json_decode(SpoonHTTP::getContent($url));
 				$item['lat'] = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
 				$item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
@@ -99,13 +99,13 @@ class BackendLocationAdd extends BackendBaseActionAdd
 				$id = BackendLocationModel::insert($item);
 
 				// add search index
-//				if(method_exists('BackendSearchModel', 'addIndex')) BackendSearchModel::addIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+//				if(is_callable(array('BackendSearchModel', 'addIndex'))) BackendSearchModel::addIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
-				if($item['lat'] && $item['lng']) $this->redirect(BackendModel::createURLForAction('index') .'&report=added&var='. urlencode($item['title']) .'&highlight=row-'. $id);
+				if($item['lat'] && $item['lng']) $this->redirect(BackendModel::createURLForAction('index') . '&report=added&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
 
 				// could not geocode, redirect to edit
-				else $this->redirect(BackendModel::createURLForAction('edit') .'&id='. $id);
+				else $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $id);
 			}
 		}
 	}

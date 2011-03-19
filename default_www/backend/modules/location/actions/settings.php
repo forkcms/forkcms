@@ -88,7 +88,7 @@ class BackendLocationSettings extends BackendBaseActionEdit
 				BackendModel::setModuleSetting($this->URL->getModule(), 'map_type_widget', (string) $this->frm->getField('map_type_widget')->getValue());
 
 				// redirect to the settings page
-				$this->redirect(BackendModel::createURLForAction('settings') .'&report=saved');
+				$this->redirect(BackendModel::createURLForAction('settings') . '&report=saved');
 			}
 		}
 	}

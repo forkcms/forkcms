@@ -126,7 +126,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 			// loop attributes
 			foreach($this->attributes[(string) $element] as $key => $value)
 			{
-				$html .= ' '. $key .'="'. str_replace(array_keys($variables), array_values($variables), $value) .'"';
+				$html .= ' ' . $key . '="' . str_replace(array_keys($variables), array_values($variables), $value) . '"';
 			}
 		}
 
@@ -263,9 +263,9 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 		foreach($this->values as $value => $label)
 		{
 			// init vars
-			$name = 'chk'. SpoonFilter::toCamelCase($this->name);
+			$name = 'chk' . SpoonFilter::toCamelCase($this->name);
 			$element = array();
-			$element[$name] = '<input type="checkbox" name="'. $this->name .'[]" value="'. $value .'"';
+			$element[$name] = '<input type="checkbox" name="' . $this->name . '[]" value="' . $value . '"';
 
 			// checked status
 			if(in_array($value, $this->getChecked())) $element[$name] .= ' checked="checked"';
@@ -290,7 +290,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 		if($template !== null)
 		{
 			$template->assign(SpoonFilter::toCamelCase($this->name, '_', true), $checkboxes);
-			$template->assign('chk'. SpoonFilter::toCamelCase($this->name) .'Error', ($this->errors != '') ? '<span class="formError">'. $this->errors .'</span>' : '');
+			$template->assign('chk' . SpoonFilter::toCamelCase($this->name) . 'Error', ($this->errors != '') ? '<span class="formError">' . $this->errors . '</span>' : '');
 		}
 
 		return $checkboxes;
@@ -387,7 +387,7 @@ class SpoonFormMultiCheckbox extends SpoonFormElement
 			if(!isset($this->variables[$value['value']]['id']))
 			{
 				if(isset($this->attributes[$value['value']]['id'])) $this->variables[$value['value']]['id'] = $this->attributes[$value['value']]['id'];
-				else $this->variables[$value['value']]['id'] = SpoonFilter::toCamelCase($this->name . '_'. $value['value'], '_', true);
+				else $this->variables[$value['value']]['id'] = SpoonFilter::toCamelCase($this->name . '_' . $value['value'], '_', true);
 			}
 
 			// add some custom vars

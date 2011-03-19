@@ -90,8 +90,8 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		}
 
 		// initial path
-		$filesPath = FRONTEND_FILES_PATH .'/userfiles/files/blog';
-		$imagesPath = FRONTEND_FILES_PATH .'/userfiles/images/blog';
+		$filesPath = FRONTEND_FILES_PATH . '/userfiles/files/blog';
+		$imagesPath = FRONTEND_FILES_PATH . '/userfiles/images/blog';
 
 		// create dir if needed
 		if(!SpoonDirectory::exists($filesPath)) SpoonDirectory::create($filesPath);
@@ -101,7 +101,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$fileInfo = SpoonFile::getInfo($oldURL);
 
 		// init var
-		$destinationFile = $id .'_'. $fileInfo['basename'];
+		$destinationFile = $id . '_' . $fileInfo['basename'];
 		$isImage = false;
 
 		// is it an image?
@@ -117,10 +117,10 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		}
 
 		// set destination path
-		$destinationPath = $filesPath .'/'. $destinationFile;
+		$destinationPath = $filesPath . '/' . $destinationFile;
 
 		// images should be in the correct folder
-		if($isImage) $destinationPath = $imagesPath .'/'. $destinationFile;
+		if($isImage) $destinationPath = $imagesPath . '/' . $destinationFile;
 
 		try
 		{
@@ -271,7 +271,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$item['publish_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->published));
 		$item['created_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->published));
 		$item['edited_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->updated));
-		$item['category_id'] = BackendModel::getModuleSetting('blog', 'default_category_'. BL::getWorkingLanguage());
+		$item['category_id'] = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage());
 		$item['title'] = (string) $xml->title;
 		$item['text'] = (string) $xml->content;
 
@@ -318,7 +318,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 							'…');
 
 		// cleanup
-		$item['text'] = '<p>'. str_replace($search, $replace, SpoonFilter::htmlentitiesDecode($item['text'])) .'</p>';
+		$item['text'] = '<p>' . str_replace($search, $replace, SpoonFilter::htmlentitiesDecode($item['text'])) . '</p>';
 
 		// get images
 		$matches = array();
@@ -328,8 +328,8 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		if(isset($matches[1]) && !empty($matches[1]))
 		{
 			// init var
-			$imagesPath = FRONTEND_FILES_PATH .'/userfiles/images/blog';
-			$imagesURL = FRONTEND_FILES_URL .'/userfiles/images/blog';
+			$imagesPath = FRONTEND_FILES_PATH . '/userfiles/images/blog';
+			$imagesURL = FRONTEND_FILES_URL . '/userfiles/images/blog';
 
 			// create dir if needed
 			if(!SpoonDirectory::exists($imagesPath)) SpoonDirectory::create($imagesPath);
@@ -341,15 +341,15 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 				$fileInfo = SpoonFile::getInfo($file);
 
 				// init var
-				$destinationFile = $item['id'] .'_'. $fileInfo['basename'];
+				$destinationFile = $item['id'] . '_' . $fileInfo['basename'];
 
 				try
 				{
 					// download
-					SpoonFile::download($file, $imagesPath .'/'. $destinationFile);
+					SpoonFile::download($file, $imagesPath . '/' . $destinationFile);
 
 					// replace the old URL with the new one
-					$item['text'] = str_replace($file, $imagesURL .'/'. $destinationFile, $item['text']);
+					$item['text'] = str_replace($file, $imagesURL . '/' . $destinationFile, $item['text']);
 				}
 
 				// catch exceptions
@@ -432,7 +432,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// move the file
-				$this->frm->getField('blogger')->moveFile(FRONTEND_FILES_PATH .'/blogger.xml');
+				$this->frm->getField('blogger')->moveFile(FRONTEND_FILES_PATH . '/blogger.xml');
 
 				// init vars
 				$searchHTML = array('<div><br /></div>', '<br /><br />', '...', '</p></p>', '<p><p>');
@@ -442,7 +442,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 				$reader = new XMLReader();
 
 				// open the file
-				$reader->open(FRONTEND_FILES_PATH .'/blogger.xml');
+				$reader->open(FRONTEND_FILES_PATH . '/blogger.xml');
 
 				// start reading
 				$reader->read();
@@ -509,10 +509,10 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 				BackendBlogModel::reCalculateCommentCount($this->newIds);
 
 				// remove the file
-				SpoonFile::delete(FRONTEND_FILES_PATH .'/blogger.xml');
+				SpoonFile::delete(FRONTEND_FILES_PATH . '/blogger.xml');
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=imported');
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
 			}
 		}
 	}

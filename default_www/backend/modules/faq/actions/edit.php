@@ -53,7 +53,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exception, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -145,7 +145,7 @@ class BackendFaqEdit extends BackendBaseActionEdit
 				BackendFaqModel::updateQuestion($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=saved&var='. urlencode($item['question']) .'&highlight=row-'. $item['id']);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=saved&var=' . urlencode($item['question']) . '&highlight=row-' . $item['id']);
 			}
 		}
 	}

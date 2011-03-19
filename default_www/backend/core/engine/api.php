@@ -49,7 +49,7 @@ class BackendCoreAPI
 				if(!in_array($token, $tokens)) $tokens[] = $token;
 
 				// require the class
-				require_once PATH_LIBRARY .'/external/fork_api.php';
+				require_once PATH_LIBRARY . '/external/fork_api.php';
 
 				// create instance
 				$forkAPI = new ForkAPI($publicKey, $privateKey);
@@ -141,8 +141,8 @@ class BackendCoreAPI
 				if($language == $default) $var['language']['@attributes']['is_default'] = 'true';
 
 				// set attributes
-				$var['language']['title'] = BackendModel::getModuleSetting('core', 'site_title_'. $language);
-				$var['language']['url'] = SITE_URL .'/'. $language;
+				$var['language']['title'] = BackendModel::getModuleSetting('core', 'site_title_' . $language);
+				$var['language']['url'] = SITE_URL . '/' . $language;
 
 				// add
 				$info['languages'][] = $var;

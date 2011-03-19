@@ -44,7 +44,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exception, because somebody is fucking with our URL
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -59,7 +59,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 		$this->record = (array) BackendLocationModel::get($this->id);
 
 		// no item found, throw an exceptions, because somebody is fucking with our URL
-		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		if(empty($this->record)) $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -145,7 +145,7 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				if($this->record['lat'] === null || $this->record['lng'] === null || $item['street'] != $this->record['street'] || $item['number'] != $this->record['number'] || $item['zip'] != $this->record['zip'] || $item['city'] != $this->record['city'] || $item['country'] != $this->record['country'])
 				{
 					// geocode address
-					$url = 'http://maps.googleapis.com/maps/api/geocode/json?address='. urlencode($item['street'] .' '. $item['number'] .', '. $item['zip'] .' '. $item['city'] .', '. SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) .'&sensor=false';
+					$url = 'http://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode($item['street'] . ' ' . $item['number'] . ', ' . $item['zip'] . ' ' . $item['city'] . ', ' . SpoonLocale::getCountry($item['country'], BL::getWorkingLanguage())) . '&sensor=false';
 					$geocode = json_decode(SpoonHTTP::getContent($url));
 					$item['lat'] = isset($geocode->results[0]->geometry->location->lat) ? $geocode->results[0]->geometry->location->lat : null;
 					$item['lng'] = isset($geocode->results[0]->geometry->location->lng) ? $geocode->results[0]->geometry->location->lng : null;
@@ -163,13 +163,13 @@ class BackendLocationEdit extends BackendBaseActionEdit
 				$id = BackendLocationModel::update($item);
 
 				// edit search index
-//				if(method_exists('BackendSearchModel', 'editIndex')) BackendSearchModel::editIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
+//				if(is_callable(array('BackendSearchModel', 'editIndex'))) BackendSearchModel::editIndex('location', (int) $id, array('title' => $item['title'], 'text' => $item['text']));
 
 				// everything is saved, so redirect to the overview
-				if($item['lat'] && $item['lng']) $this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($item['title']) .'&highlight=row-'. $id);
+				if($item['lat'] && $item['lng']) $this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&highlight=row-' . $id);
 
 				// could not geocode, redirect to edit
-				else $this->redirect(BackendModel::createURLForAction('edit') .'&id='. $item['id']);
+				else $this->redirect(BackendModel::createURLForAction('edit') . '&id=' . $item['id']);
 			}
 		}
 	}

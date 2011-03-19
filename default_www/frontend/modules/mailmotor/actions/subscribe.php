@@ -106,7 +106,7 @@ class FrontendMailmotorSubscribe extends FrontendBaseBlock
 					FrontendMailmotorCMHelper::subscribe($email->getValue());
 
 					// redirect
-					$this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') .'?sent=true#subscribeForm');
+					$this->redirect(FrontendNavigation::getURLForBlock('mailmotor', 'subscribe') . '?sent=true#subscribeForm');
 				}
 				catch(Exception $e)
 				{

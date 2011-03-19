@@ -4,14 +4,14 @@
 	- {$searchTerm}: the term that has been searched for
 *}
 
-<div id="searchIndex" class="mod">
+<section id="searchIndex" class="mod">
 	<div class="inner">
-		<div class="hd">
-			<h3>{$lblSearchAgain|ucfirst}</h3>
-		</div>
+		<header class="hd">
+			<h4>{$lblSearchAgain|ucfirst}</h4>
+		</header>
 		<div class="bd">
 			{form:search}
-				<p>
+				<p{option:txtQError} class="errorArea"{/option:txtQError}>
 					<label for="q">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 					{$txtQ} {$txtQError}
 				</p>
@@ -21,7 +21,7 @@
 			{/form:search}
 		</div>
 	</div>
-</div>
+</section>
 
 {* don't remove this container nor replace the id - it'll be used to populate the search results live as you type *}
 <div id="searchContainer">

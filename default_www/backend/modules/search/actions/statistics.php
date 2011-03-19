@@ -103,7 +103,7 @@ class BackendSearchStatistics extends BackendBaseActionIndex
 		$data = unserialize($data);
 
 		// return correct data
-		return (isset($data['server']['HTTP_REFERER'])) ? '<a href="'. $data['server']['HTTP_REFERER'] .'">'. $data['server']['HTTP_REFERER'] .'</a>' : '';
+		return (isset($data['server']['HTTP_REFERER'])) ? '<a href="' . $data['server']['HTTP_REFERER'] . '">' . $data['server']['HTTP_REFERER'] . '</a>' : '';
 	}
 }
 

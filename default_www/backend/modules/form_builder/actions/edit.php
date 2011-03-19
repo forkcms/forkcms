@@ -44,7 +44,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		}
 
 		// no item found, throw an exceptions, because somebody is fucking with our url
-		else $this->redirect(BackendModel::createURLForAction('index') .'&error=non-existing');
+		else $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
 	}
 
 
@@ -92,8 +92,8 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 		$this->frm->addCheckbox('textarea_required');
 		$this->frm->addText('textarea_required_error_message');
 		$this->frm->addDropdown('textarea_validation', array('' => ''));
-		$this->frm->addText('textbox_validation_parameter');
-		$this->frm->addText('textbox_error_message');
+		$this->frm->addText('textarea_validation_parameter');
+		$this->frm->addText('textarea_error_message');
 
 		// dropdown dialog
 		$this->frm->addText('dropdown_label');
@@ -254,7 +254,7 @@ class BackendFormBuilderEdit extends BackendBaseActionEdit
 				$id = (int) BackendFormBuilderModel::update($this->id, $values);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=edited&var='. urlencode($values['name']) .'&highlight=row-'. $id);
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($values['name']) . '&highlight=row-' . $id);
 			}
 		}
 	}

@@ -43,7 +43,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		parent::__construct($module);
 
 		// get url object reference
-		$url = Spoon::isObjectReference('url') ? Spoon::getObjectReference('url') : null;
+		$url = Spoon::exists('url') ? Spoon::get('url') : null;
 
 		// do the client ID check if we're not in the settings page
 		if($url != null && $url->getAction() != 'settings' && strpos($url->getQueryString(), 'link_account') === false)
@@ -88,7 +88,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 		$pricePerEmail = BackendModel::getModuleSetting('mailmotor', 'price_per_email');
 
 		// check if a price per e-mail is set
-		if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) .'&error=no-price-per-email');
+		if(empty($pricePerEmail) && $pricePerEmail != 0) SpoonHTTP::redirect(BackendModel::createURLForAction('settings', 'mailmotor', BL::getWorkingLanguage()) . '&error=no-price-per-email');
 	}
 
 
@@ -115,7 +115,7 @@ final class BackendMailmotorConfig extends BackendBaseConfig
 			if(!isset($groups[$language]))
 			{
 				// set group record
-				$group['name'] = 'Website ('. strtoupper($language) .')';
+				$group['name'] = 'Website (' . strtoupper($language) . ')';
 				$group['language'] = $language;
 				$group['is_default'] = 'Y';
 				$group['created_on'] = date('Y-m-d H:i:s');

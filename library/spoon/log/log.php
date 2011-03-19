@@ -22,77 +22,158 @@
  * @subpackage	log
  *
  *
- * @author		Tijs Verkoyen <tijs@spoon-library.com>
  * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
 class SpoonLog
 {
-	// the maximum filesize for a log file, expressed in KB
-	const MAX_FILE_SIZE = 500;
+	/**
+	 * Maximum log size expressed in megabytes.
+	 *
+	 * @var	int
+	 */
+	private $maxLogSize = 10;
 
 
 	/**
-	 * Log path
+	 * Location for the log file.
 	 *
 	 * @var	string
 	 */
-	private static $path;
+	private $path;
 
 
 	/**
-	 * Get the log path.
+	 * Log type, can be determined freely.
 	 *
-	 * @return	string	The path where the logfiles will be stored.
+	 * @var	string
 	 */
-	public static function getPath()
+	private $type;
+
+
+	/**
+	 * Class constructor.
+	 *
+	 * @return	SpoonLog
+	 * @param	string[optional] $type	This variable will be used as the name for the logfile.
+	 * @param	string[optional] $path	The location of the logfile(s).
+	 */
+	public function __construct($type = 'custom', $path = null)
 	{
-		if(self::$path === null) return (string) str_replace('/spoon/log/log.php', '', __FILE__);
-		return self::$path;
+		$this->setPath($path);
+		$this->setType($type);
 	}
 
 
 	/**
-	 * Set the logpath.
+	 * Fetch the maximum log size, expressed in megabyte.
 	 *
-	 * @return	void
-	 * @param	string $path	The path where the logfiles should be stored.
+	 * @return	int
 	 */
-	public static function setPath($path)
+	public function getMaxLogSize()
 	{
-		self::$path = (string) $path;
+		return $this->maxLogSize;
 	}
 
 
 	/**
-	 * Write an error/custom message to the log.
+	 * Fetch the logfile location.
+	 *
+	 * @return	string
+	 */
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+
+	/**
+	 * Fetch the log type.
+	 *
+	 * @return	string
+	 */
+	public function getType()
+	{
+		return $this->type;
+	}
+
+
+	/**
+	 * Set the log maximum filesize before rotation occurs.
+	 *
+	 * @return	SpoonLog
+	 * @param	int $value		The maximum log size expressed in megabytes, which needs to be 1 or more.
+	 */
+	public function setMaxLogSize($value)
+	{
+		$this->maxLogSize = ((int) $value >= 1) ? (int) $value : $this->maxLogSize;
+		return $this;
+	}
+
+
+	/**
+	 * Set the location where to save the logfile.
+	 *
+	 * @return	SpoonLog
+	 * @param	string[optional] $path		The path where you want to store the logfile. If null it will be saved in 'spoon/log/*'.
+	 */
+	public function setPath($path = null)
+	{
+		$this->path = ($path !== null) ? (string) $path : realpath(dirname(__FILE__));
+		return $this;
+	}
+
+
+	/**
+	 * Sets the type, which will be used as the name for the logfile.
+	 *
+	 * @return	SpoonLog
+	 * @param	string $value		The value for this type. Only a-z, 0-9, underscores and hyphens are allowed.
+	 */
+	public function setType($value)
+	{
+		// redefine
+		$value = (string) $value;
+
+		// check for invalid characters
+		if(!SpoonFilter::isValidAgainstRegexp('/(^[a-z0-9\-_]+$)/i', $value)) throw new SpoonLogException('The log type should only contain a-z, 0-9, underscores and hyphens. Your value "' . $value . '" is invalid.');
+
+		// set type & return object
+		$this->type = $value;
+		return $this;
+	}
+
+
+	/**
+	 * Write a message to the log.
 	 *
 	 * @return	void
-	 * @param	string $message			The messages that should be logged.
-	 * @param	string[optional] $type	The type of message you want to log, possible values are: error, custom.
+	 * @param	string $message		the message that should be logged.
 	 */
-	public static function write($message, $type = 'error')
+	public function write($message)
 	{
 		// milliseconds
 		list($milliseconds) = explode(' ', microtime());
 		$milliseconds = round($milliseconds * 1000, 0);
 
 		// redefine var
-		$message = date('Y-m-d H:i:s') .' '. $milliseconds .'ms | '. $message . "\n";
-		$type = SpoonFilter::getValue($type, array('error', 'custom'), 'error');
+		$message = date('Y-m-d H:i:s') . ' ' . $milliseconds . 'ms | ' . $message . "\n";
 
 		// file
-		$file = self::getPath() .'/'. $type .'.log';
+		$file = $this->getPath() . '/' . $this->type . '.log';
 
 		// rename if needed
-		if((int) @filesize($file) >= (self::MAX_FILE_SIZE * 1024))
+		if(SpoonFile::exists($file) && (int) @filesize($file) >= ($this->maxLogSize * 1024 * 1024))
 		{
 			// start new log file
-			SpoonDirectory::move($file, $file .'.'. date('Ymdhis'));
+			SpoonDirectory::move($file, $file . '.' . date('Ymdhis'));
 		}
 
 		// write content
 		SpoonFile::setContent($file, $message, true, true);
+
+		// self
+		return $this;
 	}
 }
 
@@ -103,7 +184,7 @@ class SpoonLog
  * @package		spoon
  * @subpackage	log
  *
- * @author		Tijs Verkoyen <tijs@spoon-library.com>
+ * @author		Davy Hellemans <davy@spoon-library.com>
  * @since		1.0.0
  */
 class SpoonLogException extends SpoonException {}

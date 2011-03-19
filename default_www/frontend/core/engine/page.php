@@ -218,7 +218,7 @@ class FrontendPage extends FrontendBaseObject
 			{
 				// build temp array
 				$temp = array();
-				$temp['url'] = '/'. $language;
+				$temp['url'] = '/' . $language;
 				$temp['label'] = $language;
 				$temp['name'] = FL::msg(strtoupper($language));
 				$temp['current'] = (bool) ($language == FRONTEND_LANGUAGE);
@@ -261,7 +261,7 @@ class FrontendPage extends FrontendBaseObject
 		$this->footer = new FrontendFooter();
 
 		// set template path
-		$this->templatePath = FRONTEND_PATH .'/'. $this->record['template_path'];
+		$this->templatePath = FRONTEND_PATH . '/' . $this->record['template_path'];
 
 		// assign content
 		$this->tpl->assign('page', $this->record);
@@ -276,7 +276,7 @@ class FrontendPage extends FrontendBaseObject
 			if($blockName === null) continue;
 
 			// build templateVariable
-			$templateVariable = 'block'. ($index + 1);
+			$templateVariable = 'block' . ($index + 1);
 
 			// an extra
 			if($block['extra_id'] !== null)
@@ -310,7 +310,7 @@ class FrontendPage extends FrontendBaseObject
 					if($data !== null)
 					{
 						// option (content block)
-						$this->tpl->assign($templateVariable .'IsHTML', true);
+						$this->tpl->assign($templateVariable . 'IsHTML', true);
 
 						// assign the actual HTML
 						$this->tpl->assign($templateVariable, $data);
@@ -325,7 +325,7 @@ class FrontendPage extends FrontendBaseObject
 			else
 			{
 				// assign option
-				$this->tpl->assign($templateVariable .'IsHTML', true);
+				$this->tpl->assign($templateVariable . 'IsHTML', true);
 
 				// assign HTML
 				$this->tpl->assign($templateVariable, $block['html']);
