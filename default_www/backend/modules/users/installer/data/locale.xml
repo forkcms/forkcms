@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <users>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[gebruiker toevoegen]]></translation>
+        <translation language="en"><![CDATA[add user]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[De gebruiker "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The user "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the user "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De gebruiker "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The user "%1$s" was deleted.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De instellingen voor "%1$s" werden opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The settings for "%1$s" were saved.]]></translation>
+      </item>
+      <item type="message" name="EditUser">
+        <translation language="nl"><![CDATA[bewerk gebruiker "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit user "%1$s"]]></translation>
+      </item>
+      <item type="message" name="HelpActive">
+        <translation language="nl"><![CDATA[Geef deze account toegang tot het CMS.]]></translation>
+        <translation language="en"><![CDATA[Enable CMS access for this account.]]></translation>
+      </item>
+      <item type="message" name="HelpAPIAccess">
+        <translation language="nl"><![CDATA[Geef deze account toegang tot de API.]]></translation>
+        <translation language="en"><![CDATA[Enable API access for this account.]]></translation>
+      </item>
+      <item type="message" name="HelpStrongPassword">
+        <translation language="nl"><![CDATA[Sterke wachtwoorden bestaan uit een combinatie van hoofdletters]]></translation>
+        <translation language="en"><![CDATA[Strong passwords consist of a combination of capitals]]></translation>
+      </item>
+      <item type="message" name="Restored">
+        <translation language="nl"><![CDATA[De gebruiker "%1$s" werd terug geactiveerd.]]></translation>
+        <translation language="en"><![CDATA[The user "%1$s" is restored.]]></translation>
+      </item>
+      <item type="error" name="NonExisting">
+        <translation language="nl"><![CDATA[Deze gebruiker bestaat niet.]]></translation>
+        <translation language="en"><![CDATA[This user doesn't exist.]]></translation>
+      </item>
+      <item type="error" name="EmailWasDeletedBefore">
+        <translation language="nl"><![CDATA[Een gebruiker met dit emailadres werd vroeger verwijderd. <a href="%1$s">Activeer deze gebruiker terug</a>.]]></translation>
+        <translation language="en"><![CDATA[A user with this emailaddress was deleted. <a href="%1$s">Restore this user</a>.]]></translation>
+      </item>
+      <item type="error" name="CantChangeGodsEmail">
+        <translation language="nl"><![CDATA[Je kan het emailadres van deze gebruiker niet aanpassen.]]></translation>
+        <translation language="en"><![CDATA[You can't change the emailaddres of the GOD-user.]]></translation>
+      </item>
+    </users>
+  </backend>
+</locale>

@@ -89,7 +89,7 @@ class BackendLocaleImport extends BackendBaseActionAdd
 				BackendLocaleModel::importXML($xml, $chkOverwrite->getValue());
 
 				// everything is imported, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index') .'&report=imported');
+				$this->redirect(BackendModel::createURLForAction('index') . '&report=imported');
 			}
 		}
 	}

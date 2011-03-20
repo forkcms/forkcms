@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <content_blocks>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[inhoudsblok toevoegen]]></translation>
+        <translation language="en"><![CDATA[add content block]]></translation>
+      </item>
+      <item type="message" name="EditContentBlock">
+        <translation language="nl"><![CDATA[bewerk inhoudsblok "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit content block "%1$s"]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de inhoudsblok "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the content block "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The content block "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The content block "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[Het inhoudsblok "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The content block "%1$s" was deleted.]]></translation>
+      </item>
+    </content_blocks>
+  </backend>
+</locale>

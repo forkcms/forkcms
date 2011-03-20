@@ -179,6 +179,119 @@ class ModuleInstaller
 
 
 	/**
+	 * Imports the locale XML file
+	 *
+	 * @return	void
+	 * @param	string $filename					The full path for the XML-file.
+	 * @param	bool[optional] $overwriteConflicts	Should we overwrite when there is a conflict?
+	 */
+	protected function importLocale($filename, $overwriteConflicts = false)
+	{
+		// recast
+		$filename = (string) $filename;
+		$overwriteConflicts = (bool) $overwriteConflicts;
+
+		// load the file content and execute it
+		$content = trim(SpoonFile::getContent($filename));
+
+		// file actually has content
+		if(!empty($content))
+		{
+			// load xml
+			$xml = @simplexml_load_file($filename);
+
+			// import if its valid xml
+			if($xml !== false)
+			{
+				// possible values
+				$possibleApplications = array('frontend', 'backend');
+				$possibleModules = $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
+				$possibleLanguages = $this->getLanguages();
+				$possibleTypes = array(
+					'act' => 'action',
+					'err' => 'error',
+					'lbl' => 'label',
+					'msg' => 'message'
+				);
+
+				// current locale items (used to check for conflicts)
+				$currentLocale = $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+
+				// applications
+				foreach($xml as $application => $modules)
+				{
+					// application does not exist
+					if(!in_array($application, $possibleApplications)) continue;
+
+					// modules
+					foreach($modules as $module => $items)
+					{
+						// module does not exist
+						if(!in_array($module, $possibleModules)) continue;
+
+						// items
+						foreach($items as $item)
+						{
+							// attributes
+							$attributes = $item->attributes();
+							$type = SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
+							$name = SpoonFilter::getValue($attributes['name'], null, '');
+
+							// missing attributes
+							if($type == '' || $name == '') continue;
+
+							// real type (shortened)
+							$type = array_search($type, $possibleTypes);
+
+							// translations
+							foreach($item->translation as $translation)
+							{
+								// attributes
+								$attributes = $translation->attributes();
+								$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
+
+								// language does not exist
+								if($language == '') continue;
+
+								// the actual translation
+								$translation = (string) $translation;
+
+								// locale item
+								$locale['user_id'] = $this->getDefaultUserID();
+								$locale['language'] = $language;
+								$locale['application'] = $application;
+								$locale['module'] = $module;
+								$locale['type'] = $type;
+								$locale['name'] = $name;
+								$locale['value'] = $translation;
+								$locale['edited_on'] = gmdate('Y-m-d H:i:s');
+
+								// found a conflict, overwrite it with the imported translation
+								if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
+								{
+									// overwrite
+									$this->getDB()->update('locale',
+															$locale,
+															'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
+															array($application, $module, $type, $language, $name));
+								}
+
+								// insert translation that doesnt exists yet
+								elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
+								{
+									// insert
+									$this->getDB()->insert('locale', $locale);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	/**
 	 * Imports the sql file
 	 *
 	 * @return	void
@@ -255,50 +368,6 @@ class ModuleInstaller
 
 		// return id
 		else return (int) $this->getDB()->getVar('SELECT id FROM pages_extras WHERE module = ? AND type = ? AND label = ?', array($item['module'], $item['type'], $item['label']));
-	}
-
-
-	/**
-	 * Inserts a new locale item
-	 *
-	 * @return	void
-	 * @param	string $language		The language.
-	 * @param	string $application		The application, for now possible values are: backend, frontend.
-	 * @param	string $module			The module to insert the locale for.
-	 * @param	string $type			The type of locale, possible values are: act, err, lbl, msg.
-	 * @param	string $name			The name of the locale.
-	 * @param	string $value			The value.
-	 */
-	protected function insertLocale($language, $application, $module, $type, $name, $value)
-	{
-		// redefine
-		$language = (string) $language;
-		$application = SpoonFilter::getValue($application, array('frontend', 'backend'), '');
-		$module = (string) $module;
-		$type = SpoonFilter::getValue($type, array('act', 'err', 'lbl', 'msg'), '');
-		$name = (string) $name;
-		$value = (string) $value;
-
-		// validate
-		if($application == '') throw new Exception('Invalid application. Possible values are: backend, frontend.');
-		if($type == '') throw new Exception('Invalid type. Possible values are: act, err, lbl, msg.');
-
-		// check if the label already exists
-		if(!(bool) $this->getDB()->getVar('SELECT COUNT(i.id)
-											FROM locale AS i
-											WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?',
-											array($language, $application, $module, $type, $name)))
-		{
-			// insert
-			$this->db->insert('locale', array('user_id' => $this->getDefaultUserID(),
-												'language' => $language,
-												'application' => $application,
-												'module' => $module,
-												'type' => $type,
-												'name' => $name,
-												'value' => $value,
-												'edited_on' => gmdate('Y-m-d H:i:s')));
-		}
 	}
 
 

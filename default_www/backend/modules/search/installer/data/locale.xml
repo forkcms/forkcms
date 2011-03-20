@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <search>
+      <item type="error" name="SynonymIsRequired">
+        <translation language="nl"><![CDATA[Synoniemen zijn verplicht.]]></translation>
+        <translation language="en"><![CDATA[Synonyms are required.]]></translation>
+      </item>
+      <item type="error" name="TermIsRequired">
+        <translation language="nl"><![CDATA[De zoekterm is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The searchterm is required.]]></translation>
+      </item>
+      <item type="error" name="TermExists">
+        <translation language="nl"><![CDATA[Synoniemen voor deze zoekterm bestaan reeds.]]></translation>
+        <translation language="en"><![CDATA[Synonyms for this searchterm already exist.]]></translation>
+      </item>
+      <item type="error" name="WeightNotNumeric">
+        <translation language="nl"><![CDATA[Het gewicht moet numeriek zijn.]]></translation>
+        <translation language="en"><![CDATA[Het gewicht moet numeriek zijn]]></translation>
+      </item>
+      <item type="label" name="AddSynonym">
+        <translation language="nl"><![CDATA[synoniem toevoegen]]></translation>
+        <translation language="en"><![CDATA[add synonym]]></translation>
+      </item>
+      <item type="label" name="DeleteSynonym">
+        <translation language="nl"><![CDATA[synoniem verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete synonym]]></translation>
+      </item>
+      <item type="label" name="EditSynonym">
+        <translation language="nl"><![CDATA[synoniem bewerken]]></translation>
+        <translation language="en"><![CDATA[edit synonym]]></translation>
+      </item>
+      <item type="label" name="ItemsForAutocomplete">
+        <translation language="nl"><![CDATA[Items in autocomplete (zoekresultaten: suggesties zoekwoorden)]]></translation>
+        <translation language="en"><![CDATA[Items in autocomplete (search results: search term suggestions)]]></translation>
+      </item>
+      <item type="label" name="ItemsForAutosuggest">
+        <translation language="nl"><![CDATA[Items in autosuggest (zoek widget: resultaten)]]></translation>
+        <translation language="en"><![CDATA[Items in autosuggest (search widget: results)]]></translation>
+      </item>
+      <item type="label" name="ModuleWeight">
+        <translation language="nl"><![CDATA[module gewicht]]></translation>
+        <translation language="en"><![CDATA[module weight]]></translation>
+      </item>
+      <item type="label" name="SearchedOn">
+        <translation language="nl"><![CDATA[gezocht op]]></translation>
+        <translation language="en"><![CDATA[searched on]]></translation>
+      </item>
+      <item type="message" name="AddedSynonym">
+        <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The synonym for the searchterm "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteSynonym">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de synoniemen voor zoekterm "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the synonyms for the searchterm "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="DeletedSynonym">
+        <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The synonym for the searchterm "%1$s" was deleted.]]></translation>
+      </item>
+      <item type="message" name="EditedSynonym">
+        <translation language="nl"><![CDATA[Het synoniem voor zoekterm "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The synonym for the searchterm "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="HelpWeight">
+        <translation language="nl"><![CDATA[Het standaard gewicht is 1. Als je zoekresultaten van een specifieke module belangrijker vindt]]></translation>
+        <translation language="en"><![CDATA[The default weight is 1. If you want to give search results from a specific module more importance]]></translation>
+      </item>
+      <item type="message" name="HelpWeightGeneral">
+        <translation language="nl"><![CDATA[Definieer de belangrijkheid van iedere module in de zoekresultaten.]]></translation>
+        <translation language="en"><![CDATA[Define the importance of each module in search results here.]]></translation>
+      </item>
+      <item type="message" name="IncludeInSearch">
+        <translation language="nl"><![CDATA[Opnemen in de zoekresultaten?]]></translation>
+        <translation language="en"><![CDATA[Include in search results?]]></translation>
+      </item>
+      <item type="message" name="NoStatistics">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken.]]></translation>
+        <translation language="en"><![CDATA[There are no statistics yet.]]></translation>
+      </item>
+      <item type="message" name="NoSynonyms">
+        <translation language="nl"><![CDATA[Er zijn nog geen synoniemen. <a href="%1$s">Voeg het eerste synoniem toe</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no synonyms yet. <a href="%1$s">Add the first synonym</a>.]]></translation>
+      </item>
+      <item type="message" name="NoSynonymsBox">
+        <translation language="nl"><![CDATA[Er zijn nog geen synoniemen.]]></translation>
+        <translation language="en"><![CDATA[There are no synonyms yet.]]></translation>
+      </item>
+    </search>
+  </backend>
+  <frontend>
+    <core>
+      <item type="error" name="TermIsRequired">
+        <translation language="nl"><![CDATA[De zoekterm is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The searchterm is required.]]></translation>
+      </item>
+      <item type="label" name="Search">
+        <translation language="nl"><![CDATA[zoeken]]></translation>
+        <translation language="en"><![CDATA[search]]></translation>
+      </item>
+    </core>
+  </frontend>
+</locale>

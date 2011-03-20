@@ -1,0 +1,1926 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <locale>
+      <item type="error" name="AlreadyExists">
+        <translation language="nl"><![CDATA[Deze vertaling bestaat reeds.]]></translation>
+        <translation language="en"><![CDATA[This translation already exists.]]></translation>
+      </item>
+      <item type="error" name="ModuleHasToBeCore">
+        <translation language="nl"><![CDATA[De module moet core zijn voor vertalingen in de frontend.]]></translation>
+        <translation language="en"><![CDATA[The module needs to be core for frontend translations.]]></translation>
+      </item>
+      <item type="error" name="NoSelection">
+        <translation language="nl"><![CDATA[Er waren geen vertalingen geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No translations were selected.]]></translation>
+      </item>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[vertaling toevoegen]]></translation>
+        <translation language="en"><![CDATA[add translation]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[De vertaling "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The translation "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De geselecteerde vertaling(en) werd(en) verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The selected translations were deleted.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De vertaling "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The translation "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="EditTranslation">
+        <translation language="nl"><![CDATA[bewerk vertaling "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit translation "%1$s"]]></translation>
+      </item>
+      <item type="message" name="HelpAddName">
+        <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
+        <translation language="en"><![CDATA[The English reference for the translation]]></translation>
+      </item>
+      <item type="message" name="HelpAddValue">
+        <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
+        <translation language="en"><![CDATA[The translation]]></translation>
+      </item>
+      <item type="message" name="HelpEditName">
+        <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
+        <translation language="en"><![CDATA[The English reference for the translation]]></translation>
+      </item>
+      <item type="message" name="HelpEditValue">
+        <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
+        <translation language="en"><![CDATA[The translation]]></translation>
+      </item>
+      <item type="message" name="HelpName">
+        <translation language="nl"><![CDATA[De Engelstalige referentie naar de vertaling]]></translation>
+        <translation language="en"><![CDATA[The english reference for this translation]]></translation>
+      </item>
+      <item type="message" name="HelpValue">
+        <translation language="nl"><![CDATA[De vertaling zelf]]></translation>
+        <translation language="en"><![CDATA[The translation]]></translation>
+      </item>
+      <item type="message" name="Imported">
+        <translation language="nl"><![CDATA[De vertalingen werden geimporteerd.]]></translation>
+        <translation language="en"><![CDATA[The translations were imported.]]></translation>
+      </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen vertalingen. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no translations yet. <a href="%1$s">Add the first translation</a>.]]></translation>
+      </item>
+      <item type="message" name="NoItemsFilter">
+        <translation language="nl"><![CDATA[Er zijn geen vertalingen voor deze filter. <a href="%1$s">Voeg de eerste vertaling toe</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no translations yet for this filter. <a href="%1$s">Add the first translation</a>.]]></translation>
+      </item>
+      <item type="message" name="NoItemsAnalyse">
+        <translation language="nl"><![CDATA[Er werden geen ontbrekende vertalingen gevonden.]]></translation>
+        <translation language="en"><![CDATA[No missing translations were found.]]></translation>
+      </item>
+      <item type="message" name="OverwriteConflicts">
+        <translation language="nl"><![CDATA[Overschrijf indien de vertaling bestaat.]]></translation>
+        <translation language="en"><![CDATA[Overwrite if the translation exists.]]></translation>
+      </item>
+    </locale>
+    <dashboard>
+      <item type="label" name="AllStatistics">
+        <translation language="nl"><![CDATA[alle statistieken]]></translation>
+        <translation language="en"><![CDATA[all statistics]]></translation>
+      </item>
+      <item type="label" name="TopKeywords">
+        <translation language="nl"><![CDATA[top zoekwoorden]]></translation>
+        <translation language="en"><![CDATA[top keywords]]></translation>
+      </item>
+      <item type="label" name="TopReferrers">
+        <translation language="nl"><![CDATA[top verwijzende sites]]></translation>
+        <translation language="en"><![CDATA[top referrers]]></translation>
+      </item>
+      <item type="message" name="EditYourDashboard">
+        <translation language="nl"><![CDATA[Personaliseer je dashboard]]></translation>
+        <translation language="en"><![CDATA[Personalize your dashboard]]></translation>
+      </item>
+      <item type="message" name="HelpEditDashboard">
+        <translation language="nl"><![CDATA[Personaliseer je dashboard door de verschillende items te verslepen. Sluit de items om ze te verwijderen.]]></translation>
+        <translation language="en"><![CDATA[Personalize your dashboard by dragging the boxes in the way you want. Close the boxes to remove them.]]></translation>
+      </item>
+      <item type="message" name="WillBeEnabledOnSave">
+        <translation language="nl"><![CDATA[Deze widget zal geactiveerd worden bij het opslaan.]]></translation>
+        <translation language="en"><![CDATA[This widget wil be reenabled on save.]]></translation>
+      </item>
+    </dashboard>
+    <core>
+      <item type="error" name="ActionNotAllowed">
+        <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze actie.]]></translation>
+        <translation language="en"><![CDATA[You have insufficient rights for this action.]]></translation>
+      </item>
+      <item type="error" name="AddingCategoryFailed">
+        <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>
+        <translation language="en"><![CDATA[Something went wrong.]]></translation>
+      </item>
+      <item type="error" name="AddTagBeforeSubmitting">
+        <translation language="nl"><![CDATA[Voeg de tag eerst toe.]]></translation>
+        <translation language="en"><![CDATA[Add the tag before submitting.]]></translation>
+      </item>
+      <item type="error" name="AkismetKey">
+        <translation language="nl"><![CDATA[Akismet API-key werd nog niet geconfigureerd.]]></translation>
+        <translation language="en"><![CDATA[Akismet API-key is not yet configured.]]></translation>
+      </item>
+      <item type="error" name="AlphaNumericCharactersOnly">
+        <translation language="nl"><![CDATA[Enkel alfanumerieke karakters zijn toegestaan.]]></translation>
+        <translation language="en"><![CDATA[Only alphanumeric characters are allowed.]]></translation>
+      </item>
+      <item type="error" name="AuthorIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een auteur in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide an author.]]></translation>
+      </item>
+      <item type="error" name="BrowserNotSupported">
+        <translation language="nl"><![CDATA[<p>Je gebruikt een verouderde browser die niet ondersteund wordt door Fork CMS. Gebruik een van de volgende alternatieven:</p><ul><li><a href="http://www.firefox.com/">Firefox</a>: een zeer goeie browser met veel gratis extensies.</li><li><a href="http://www.apple.com/safari">Safari</a>: één van de snelste en meest geavanceerde browsers. Goed voor Mac-gebruikers.</li><li><a href="http://www.google.com/chrome">Chrome</a>: De browser van Google: ook heel erg snel.</li></li><a href="http://www.microsoft.com/windows/products/winfamily/ie/default.mspx">Internet Explorer*</a>: update naar de nieuwe versie van Internet Explorer.</li></ul>]]></translation>
+        <translation language="en"><![CDATA[<p>You're using an older browser that is not supported by Fork CMS. Use one of the following alternatives:</p><ul><li><a href="http://www.firefox.com/">Firefox</a>: a very good browser with a lot of free extensions.</li><li><a href="http://www.apple.com/safari">Safari</a>: one of the fastest and most advanced browsers. Good for Mac users.</li><li><a href="http://www.google.com/chrome">Chrome</a>: Google's browser - also very fast.</li></li><a href="http://www.microsoft.com/windows/products/winfamily/ie/default.mspx">Internet Explorer*</a>: update to the latest version of Internet Explorer.</li></ul>]]></translation>
+      </item>
+      <item type="error" name="CookiesNotEnabled">
+        <translation language="nl"><![CDATA[Om Fork CMS te gebruiken moeten cookies geactiveerd zijn in uw browser. Activeer cookies en vernieuw deze pagina.]]></translation>
+        <translation language="en"><![CDATA[You need to enable cookies in order to use Fork CMS. Activate cookies and refresh this page.]]></translation>
+      </item>
+      <item type="error" name="DateIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldige datum.]]></translation>
+        <translation language="en"><![CDATA[Invalid date.]]></translation>
+      </item>
+      <item type="error" name="DateRangeIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldig datum bereik]]></translation>
+        <translation language="en"><![CDATA[Invalid date range.]]></translation>
+      </item>
+      <item type="error" name="DebugModeIsActive">
+        <translation language="nl"><![CDATA[Debug-mode is nog actief.]]></translation>
+        <translation language="en"><![CDATA[Debug-mode is active.]]></translation>
+      </item>
+      <item type="error" name="EmailAlreadyExists">
+        <translation language="nl"><![CDATA[Dit e-mailadres is al in gebruik.]]></translation>
+        <translation language="en"><![CDATA[This e-mailaddress is in use.]]></translation>
+      </item>
+      <item type="error" name="EmailIsInvalid">
+        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
+      </item>
+      <item type="error" name="EmailIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een e-mailadres in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a valid e-mailaddress.]]></translation>
+      </item>
+      <item type="error" name="EmailIsUnknown">
+        <translation language="nl"><![CDATA[Dit e-mailadres zit niet in onze database.]]></translation>
+        <translation language="en"><![CDATA[This e-mailaddress is not in our database.]]></translation>
+      </item>
+      <item type="error" name="EndDateIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldige einddatum]]></translation>
+        <translation language="en"><![CDATA[Invalid end date.]]></translation>
+      </item>
+      <item type="error" name="ErrorWhileSendingEmail">
+        <translation language="nl"><![CDATA[Er trad op een fout op tijdens het verzenden.]]></translation>
+        <translation language="en"><![CDATA[Error while sending email.]]></translation>
+      </item>
+      <item type="error" name="ExtensionNotAllowed">
+        <translation language="nl"><![CDATA[Ongeldig bestandstype. (toegelaten: %1$s)]]></translation>
+        <translation language="en"><![CDATA[Invalid file type. (allowed: %1$s)]]></translation>
+      </item>
+      <item type="error" name="FieldIsRequired">
+        <translation language="nl"><![CDATA[Dit veld is verplicht.]]></translation>
+        <translation language="en"><![CDATA[This field is required.]]></translation>
+      </item>
+      <item type="error" name="ForkAPIKeys">
+        <translation language="nl"><![CDATA[Fork API-keys nog niet geconfigureerd.]]></translation>
+        <translation language="en"><![CDATA[Fork API-keys are not configured.]]></translation>
+      </item>
+      <item type="error" name="FormError">
+        <translation language="nl"><![CDATA[Er ging iets mis]]></translation>
+        <translation language="en"><![CDATA[Something went wrong]]></translation>
+      </item>
+      <item type="error" name="GoogleMapsKey">
+        <translation language="nl"><![CDATA[Google maps API-key werd nog niet geconfigureerd.]]></translation>
+        <translation language="en"><![CDATA[Google maps API-key is not configured.]]></translation>
+      </item>
+      <item type="error" name="InvalidAPIKey">
+        <translation language="nl"><![CDATA[Ongeldige API key.]]></translation>
+        <translation language="en"><![CDATA[Invalid API key.]]></translation>
+      </item>
+      <item type="error" name="InvalidDomain">
+        <translation language="nl"><![CDATA[Ongeldig domein.]]></translation>
+        <translation language="en"><![CDATA[Invalid domain.]]></translation>
+      </item>
+      <item type="error" name="InvalidEmailPasswordCombination">
+        <translation language="nl"><![CDATA[De combinatie van e-mail en wachtwoord is niet correct. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Bent u uw wachtwoord vergeten?</a>]]></translation>
+        <translation language="en"><![CDATA[Your e-mail and password combination is incorrect. <a href="#" rel="forgotPasswordHolder" class="toggleBalloon">Did you forget your password?</a>]]></translation>
+      </item>
+      <item type="error" name="InvalidName">
+        <translation language="nl"><![CDATA[Ongeldige naam.]]></translation>
+        <translation language="en"><![CDATA[Invalid name.]]></translation>
+      </item>
+      <item type="error" name="InvalidNumber">
+        <translation language="nl"><![CDATA[Ongeldig cijfer.]]></translation>
+        <translation language="en"><![CDATA[Invalid number.]]></translation>
+      </item>
+      <item type="error" name="InvalidParameters">
+        <translation language="nl"><![CDATA[Ongeldige parameters.]]></translation>
+        <translation language="en"><![CDATA[Invalid parameters.]]></translation>
+      </item>
+      <item type="error" name="InvalidURL">
+        <translation language="nl"><![CDATA[Ongeldige URL.]]></translation>
+        <translation language="en"><![CDATA[Invalid URL.]]></translation>
+      </item>
+      <item type="error" name="InvalidValue">
+        <translation language="nl"><![CDATA[Ongeldige waarde.]]></translation>
+        <translation language="en"><![CDATA[Invalid value.]]></translation>
+      </item>
+      <item type="error" name="JavascriptNotEnabled">
+        <translation language="nl"><![CDATA[Om Fork CMS te gebruiken moet Javascript geactiveerd zijn in uw browser. Activeer javascript en vernieuw deze pagina.]]></translation>
+        <translation language="en"><![CDATA[To use Fork CMS]]></translation>
+      </item>
+      <item type="error" name="JPGGIFAndPNGOnly">
+        <translation language="nl"><![CDATA[Enkel jpg]]></translation>
+        <translation language="en"><![CDATA[Only jpg]]></translation>
+      </item>
+      <item type="error" name="ModuleNotAllowed">
+        <translation language="nl"><![CDATA[Je hebt onvoldoende rechten voor deze module.]]></translation>
+        <translation language="en"><![CDATA[You have insufficient rights for this module.]]></translation>
+      </item>
+      <item type="error" name="NameIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een naam in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a name.]]></translation>
+      </item>
+      <item type="error" name="NicknameIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een publicatienaam in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a publication name.]]></translation>
+      </item>
+      <item type="error" name="NoCommentsSelected">
+        <translation language="nl"><![CDATA[Er waren geen reacties geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No comments were selected.]]></translation>
+      </item>
+      <item type="error" name="NoItemsSelected">
+        <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No items were selected.]]></translation>
+      </item>
+      <item type="error" name="NoModuleLinked">
+        <translation language="nl"><![CDATA[Kan de URL niet genereren. Zorg dat deze module aan een pagina hangt.]]></translation>
+        <translation language="en"><![CDATA[Cannot generate URL. Create a page that has this module attached to it.]]></translation>
+      </item>
+      <item type="error" name="NonExisting">
+        <translation language="nl"><![CDATA[Dit item bestaat niet.]]></translation>
+        <translation language="en"><![CDATA[This item doesn't exist.]]></translation>
+      </item>
+      <item type="error" name="NoSelection">
+        <translation language="nl"><![CDATA[Er waren geen items geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No items were selected.]]></translation>
+      </item>
+      <item type="error" name="PasswordIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een wachtwoord in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a password.]]></translation>
+      </item>
+      <item type="error" name="PasswordRepeatIsRequired">
+        <translation language="nl"><![CDATA[Gelieve het gewenste wachtwoord te herhalen.]]></translation>
+        <translation language="en"><![CDATA[Please repeat the desired password.]]></translation>
+      </item>
+      <item type="error" name="PasswordsDontMatch">
+        <translation language="nl"><![CDATA[De wachtwoorden zijn verschillend]]></translation>
+        <translation language="en"><![CDATA[The passwords differ]]></translation>
+      </item>
+      <item type="error" name="RobotsFileIsNotOK">
+        <translation language="nl"><![CDATA[robots.txt zal zoekmachines blokkeren.]]></translation>
+        <translation language="en"><![CDATA[robots.txt will block search-engines.]]></translation>
+      </item>
+      <item type="error" name="RSSTitle">
+        <translation language="nl"><![CDATA[Blog RSS titel is nog niet ingevuld. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[Blog RSS title is not configured. <a href="%1$s">Configure</a>]]></translation>
+      </item>
+      <item type="error" name="SettingsForkAPIKeys">
+        <translation language="nl"><![CDATA[De Fork API-keys zijn niet goed geconfigureerd.]]></translation>
+        <translation language="en"><![CDATA[The Fork API-keys are not configured.]]></translation>
+      </item>
+      <item type="error" name="SomethingWentWrong">
+        <translation language="nl"><![CDATA[Er liep iets fout.]]></translation>
+        <translation language="en"><![CDATA[Something went wrong.]]></translation>
+      </item>
+      <item type="error" name="StartDateIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldige startdatum]]></translation>
+        <translation language="en"><![CDATA[Invalid start date.]]></translation>
+      </item>
+      <item type="error" name="SurnameIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een achternaam in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a last name.]]></translation>
+      </item>
+      <item type="error" name="TooManyLoginAttempts">
+        <translation language="nl"><![CDATA[Te veel loginpogingen. Als je je wachtwoord vergeten bent]]></translation>
+        <translation language="en"><![CDATA[Too many login attempts. Click the forgot password link if you forgot your password.]]></translation>
+      </item>
+      <item type="error" name="TimeIsInvalid">
+        <translation language="nl"><![CDATA[Ongeldige tijd.]]></translation>
+        <translation language="en"><![CDATA[Invalid time.]]></translation>
+      </item>
+      <item type="error" name="TitleIsRequired">
+        <translation language="nl"><![CDATA[Geef een titel in.]]></translation>
+        <translation language="en"><![CDATA[Provide a title.]]></translation>
+      </item>
+      <item type="error" name="URLAlreadyExists">
+        <translation language="nl"><![CDATA[Deze URL bestaat reeds.]]></translation>
+        <translation language="en"><![CDATA[This URL already exists.]]></translation>
+      </item>
+      <item type="error" name="ValuesDontMatch">
+        <translation language="nl"><![CDATA[De waarden komen niet overeen.]]></translation>
+        <translation language="en"><![CDATA[The values don't match.]]></translation>
+      </item>
+      <item type="error" name="XMLFilesOnly">
+        <translation language="nl"><![CDATA[Enkel xml bestanden zijn toegelaten.]]></translation>
+        <translation language="en"><![CDATA[Only XMl files are allowed.]]></translation>
+      </item>
+      <item type="label" name="AccountManagement">
+        <translation language="nl"><![CDATA[account beheer]]></translation>
+        <translation language="en"><![CDATA[account management]]></translation>
+      </item>
+      <item type="label" name="Active">
+        <translation language="nl"><![CDATA[actief]]></translation>
+        <translation language="en"><![CDATA[active]]></translation>
+      </item>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[toevoegen]]></translation>
+        <translation language="en"><![CDATA[add]]></translation>
+      </item>
+      <item type="label" name="AddCategory">
+        <translation language="nl"><![CDATA[categorie toevoegen]]></translation>
+        <translation language="en"><![CDATA[add category]]></translation>
+      </item>
+      <item type="label" name="AddTemplate">
+        <translation language="nl"><![CDATA[template toevoegen]]></translation>
+        <translation language="en"><![CDATA[add template]]></translation>
+      </item>
+      <item type="label" name="Advanced">
+        <translation language="nl"><![CDATA[geavanceerd]]></translation>
+        <translation language="en"><![CDATA[advanced]]></translation>
+      </item>
+      <item type="label" name="AllComments">
+        <translation language="nl"><![CDATA[alle reacties]]></translation>
+        <translation language="en"><![CDATA[all comments]]></translation>
+      </item>
+      <item type="label" name="AllowComments">
+        <translation language="nl"><![CDATA[reacties toestaan]]></translation>
+        <translation language="en"><![CDATA[allow comments]]></translation>
+      </item>
+      <item type="label" name="AllPages">
+        <translation language="nl"><![CDATA[alle pagina's]]></translation>
+        <translation language="en"><![CDATA[all pages]]></translation>
+      </item>
+      <item type="label" name="Amount">
+        <translation language="nl"><![CDATA[aantal]]></translation>
+        <translation language="en"><![CDATA[amount]]></translation>
+      </item>
+      <item type="label" name="Analyse">
+        <translation language="nl"><![CDATA[analyse]]></translation>
+        <translation language="en"><![CDATA[analyse]]></translation>
+      </item>
+      <item type="label" name="Analysis">
+        <translation language="nl"><![CDATA[analysi]]></translation>
+        <translation language="en"><![CDATA[analysis]]></translation>
+      </item>
+      <item type="label" name="Analytics">
+        <translation language="nl"><![CDATA[analytics]]></translation>
+        <translation language="en"><![CDATA[analytics]]></translation>
+      </item>
+      <item type="label" name="APIKey">
+        <translation language="nl"><![CDATA[API key]]></translation>
+        <translation language="en"><![CDATA[API key]]></translation>
+      </item>
+      <item type="label" name="APIKeys">
+        <translation language="nl"><![CDATA[API keys]]></translation>
+        <translation language="en"><![CDATA[API keys]]></translation>
+      </item>
+      <item type="label" name="APIURL">
+        <translation language="nl"><![CDATA[API URL]]></translation>
+        <translation language="en"><![CDATA[API URL]]></translation>
+      </item>
+      <item type="label" name="Application">
+        <translation language="nl"><![CDATA[applicatie]]></translation>
+        <translation language="en"><![CDATA[application]]></translation>
+      </item>
+      <item type="label" name="Approve">
+        <translation language="nl"><![CDATA[goedkeuren]]></translation>
+        <translation language="en"><![CDATA[approve]]></translation>
+      </item>
+      <item type="label" name="Archive">
+        <translation language="nl"><![CDATA[archief]]></translation>
+        <translation language="en"><![CDATA[archive]]></translation>
+      </item>
+      <item type="label" name="Archived">
+        <translation language="nl"><![CDATA[gearchiveerd]]></translation>
+        <translation language="en"><![CDATA[archived]]></translation>
+      </item>
+      <item type="label" name="Articles">
+        <translation language="nl"><![CDATA[artikels]]></translation>
+        <translation language="en"><![CDATA[articles]]></translation>
+      </item>
+      <item type="label" name="At">
+        <translation language="nl"><![CDATA[om]]></translation>
+        <translation language="en"><![CDATA[at]]></translation>
+      </item>
+      <item type="label" name="Authentication">
+        <translation language="nl"><![CDATA[authenticatie]]></translation>
+        <translation language="en"><![CDATA[authentication]]></translation>
+      </item>
+      <item type="label" name="Author">
+        <translation language="nl"><![CDATA[auteur]]></translation>
+        <translation language="en"><![CDATA[author]]></translation>
+      </item>
+      <item type="label" name="Avatar">
+        <translation language="nl"><![CDATA[avatar]]></translation>
+        <translation language="en"><![CDATA[avatar]]></translation>
+      </item>
+      <item type="label" name="Back">
+        <translation language="nl"><![CDATA[terug]]></translation>
+        <translation language="en"><![CDATA[back]]></translation>
+      </item>
+      <item type="label" name="Backend">
+        <translation language="nl"><![CDATA[backend]]></translation>
+        <translation language="en"><![CDATA[backend]]></translation>
+      </item>
+      <item type="label" name="Block">
+        <translation language="nl"><![CDATA[blok]]></translation>
+        <translation language="en"><![CDATA[block]]></translation>
+      </item>
+      <item type="label" name="Blog">
+        <translation language="nl"><![CDATA[blog]]></translation>
+        <translation language="en"><![CDATA[blog]]></translation>
+      </item>
+      <item type="label" name="BrowserNotSupported">
+        <translation language="nl"><![CDATA[browser niet ondersteund]]></translation>
+        <translation language="en"><![CDATA[browser not supported]]></translation>
+      </item>
+      <item type="label" name="By">
+        <translation language="nl"><![CDATA[door]]></translation>
+        <translation language="en"><![CDATA[by]]></translation>
+      </item>
+      <item type="label" name="Cancel">
+        <translation language="nl"><![CDATA[annuleer]]></translation>
+        <translation language="en"><![CDATA[cancel]]></translation>
+      </item>
+      <item type="label" name="Categories">
+        <translation language="nl"><![CDATA[categorieën]]></translation>
+        <translation language="en"><![CDATA[categories]]></translation>
+      </item>
+      <item type="label" name="Category">
+        <translation language="nl"><![CDATA[categorie]]></translation>
+        <translation language="en"><![CDATA[category]]></translation>
+      </item>
+      <item type="label" name="ChangePassword">
+        <translation language="nl"><![CDATA[wijzig wachtwoord]]></translation>
+        <translation language="en"><![CDATA[change password]]></translation>
+      </item>
+      <item type="label" name="ChooseALanguage">
+        <translation language="nl"><![CDATA[kies een taal]]></translation>
+        <translation language="en"><![CDATA[choose a language]]></translation>
+      </item>
+      <item type="label" name="ChooseAModule">
+        <translation language="nl"><![CDATA[kies een module]]></translation>
+        <translation language="en"><![CDATA[choose a module]]></translation>
+      </item>
+      <item type="label" name="ChooseAnApplication">
+        <translation language="nl"><![CDATA[kies een applicatie]]></translation>
+        <translation language="en"><![CDATA[choose an application]]></translation>
+      </item>
+      <item type="label" name="ChooseATemplate">
+        <translation language="nl"><![CDATA[kies een template]]></translation>
+        <translation language="en"><![CDATA[choose a template]]></translation>
+      </item>
+      <item type="label" name="ChooseAType">
+        <translation language="nl"><![CDATA[kies een type]]></translation>
+        <translation language="en"><![CDATA[choose a type]]></translation>
+      </item>
+      <item type="label" name="ChooseContent">
+        <translation language="nl"><![CDATA[kies inhoud]]></translation>
+        <translation language="en"><![CDATA[choose content]]></translation>
+      </item>
+      <item type="label" name="Comment">
+        <translation language="nl"><![CDATA[reactie]]></translation>
+        <translation language="en"><![CDATA[comment]]></translation>
+      </item>
+      <item type="label" name="Comments">
+        <translation language="nl"><![CDATA[reacties]]></translation>
+        <translation language="en"><![CDATA[comments]]></translation>
+      </item>
+      <item type="label" name="ConfirmPassword">
+        <translation language="nl"><![CDATA[bevestig wachtwoord]]></translation>
+        <translation language="en"><![CDATA[confirm password]]></translation>
+      </item>
+      <item type="label" name="Contact">
+        <translation language="nl"><![CDATA[contact]]></translation>
+        <translation language="en"><![CDATA[contact]]></translation>
+      </item>
+      <item type="label" name="ContactForm">
+        <translation language="nl"><![CDATA[contactformulier]]></translation>
+        <translation language="en"><![CDATA[contact form]]></translation>
+      </item>
+      <item type="label" name="Content">
+        <translation language="nl"><![CDATA[inhoud]]></translation>
+        <translation language="en"><![CDATA[content]]></translation>
+      </item>
+      <item type="label" name="ContentBlocks">
+        <translation language="nl"><![CDATA[inhoudsblokken]]></translation>
+        <translation language="en"><![CDATA[content blocks]]></translation>
+      </item>
+      <item type="label" name="Core">
+        <translation language="nl"><![CDATA[core]]></translation>
+        <translation language="en"><![CDATA[core]]></translation>
+      </item>
+      <item type="label" name="CustomURL">
+        <translation language="nl"><![CDATA[aangepaste URL]]></translation>
+        <translation language="en"><![CDATA[custom URL]]></translation>
+      </item>
+      <item type="label" name="Dashboard">
+        <translation language="nl"><![CDATA[dashboard]]></translation>
+        <translation language="en"><![CDATA[dashboard]]></translation>
+      </item>
+      <item type="label" name="Date">
+        <translation language="nl"><![CDATA[datum]]></translation>
+        <translation language="en"><![CDATA[date]]></translation>
+      </item>
+      <item type="label" name="DateAndTime">
+        <translation language="nl"><![CDATA[datum en tijd]]></translation>
+        <translation language="en"><![CDATA[date and time]]></translation>
+      </item>
+      <item type="label" name="DateFormat">
+        <translation language="nl"><![CDATA[formaat datums]]></translation>
+        <translation language="en"><![CDATA[date format]]></translation>
+      </item>
+      <item type="label" name="Dear">
+        <translation language="nl"><![CDATA[beste]]></translation>
+        <translation language="en"><![CDATA[dear]]></translation>
+      </item>
+      <item type="label" name="DebugMode">
+        <translation language="nl"><![CDATA[debug mode]]></translation>
+        <translation language="en"><![CDATA[debug mode]]></translation>
+      </item>
+      <item type="label" name="Default">
+        <translation language="nl"><![CDATA[standaard]]></translation>
+        <translation language="en"><![CDATA[default]]></translation>
+      </item>
+      <item type="label" name="Delete">
+        <translation language="nl"><![CDATA[verwijderen]]></translation>
+        <translation language="en"><![CDATA[delete]]></translation>
+      </item>
+      <item type="label" name="DeleteThisTag">
+        <translation language="nl"><![CDATA[verwijder deze tag]]></translation>
+        <translation language="en"><![CDATA[delete this tag]]></translation>
+      </item>
+      <item type="label" name="Description">
+        <translation language="nl"><![CDATA[beschrijving]]></translation>
+        <translation language="en"><![CDATA[description]]></translation>
+      </item>
+      <item type="label" name="Developer">
+        <translation language="nl"><![CDATA[developer]]></translation>
+        <translation language="en"><![CDATA[developer]]></translation>
+      </item>
+      <item type="label" name="Domains">
+        <translation language="nl"><![CDATA[domeinen]]></translation>
+        <translation language="en"><![CDATA[domains]]></translation>
+      </item>
+      <item type="label" name="Done">
+        <translation language="nl"><![CDATA[klaar]]></translation>
+        <translation language="en"><![CDATA[done]]></translation>
+      </item>
+      <item type="label" name="Draft">
+        <translation language="nl"><![CDATA[kladversie]]></translation>
+        <translation language="en"><![CDATA[draft]]></translation>
+      </item>
+      <item type="label" name="Drafts">
+        <translation language="nl"><![CDATA[kladversies]]></translation>
+        <translation language="en"><![CDATA[drafts]]></translation>
+      </item>
+      <item type="label" name="Edit">
+        <translation language="nl"><![CDATA[wijzigen]]></translation>
+        <translation language="en"><![CDATA[edit]]></translation>
+      </item>
+      <item type="label" name="EditedOn">
+        <translation language="nl"><![CDATA[bewerkt op]]></translation>
+        <translation language="en"><![CDATA[edited on]]></translation>
+      </item>
+      <item type="label" name="Editor">
+        <translation language="nl"><![CDATA[editor]]></translation>
+        <translation language="en"><![CDATA[editor]]></translation>
+      </item>
+      <item type="label" name="EditProfile">
+        <translation language="nl"><![CDATA[bewerk profiel]]></translation>
+        <translation language="en"><![CDATA[edit profile]]></translation>
+      </item>
+      <item type="label" name="EditTemplate">
+        <translation language="nl"><![CDATA[template wijzigen]]></translation>
+        <translation language="en"><![CDATA[edit template]]></translation>
+      </item>
+      <item type="label" name="Email">
+        <translation language="nl"><![CDATA[e-mail]]></translation>
+        <translation language="en"><![CDATA[e-mail]]></translation>
+      </item>
+      <item type="label" name="EnableModeration">
+        <translation language="nl"><![CDATA[moderatie inschakelen]]></translation>
+        <translation language="en"><![CDATA[enable moderation]]></translation>
+      </item>
+      <item type="label" name="EndDate">
+        <translation language="nl"><![CDATA[einddatum]]></translation>
+        <translation language="en"><![CDATA[end date]]></translation>
+      </item>
+      <item type="label" name="Error">
+        <translation language="nl"><![CDATA[error]]></translation>
+        <translation language="en"><![CDATA[error]]></translation>
+      </item>
+      <item type="label" name="Example">
+        <translation language="nl"><![CDATA[voorbeeld]]></translation>
+        <translation language="en"><![CDATA[example]]></translation>
+      </item>
+      <item type="label" name="Execute">
+        <translation language="nl"><![CDATA[uitvoeren]]></translation>
+        <translation language="en"><![CDATA[execute]]></translation>
+      </item>
+      <item type="label" name="ExitPages">
+        <translation language="nl"><![CDATA[uitstappagina's]]></translation>
+        <translation language="en"><![CDATA[exit pages]]></translation>
+      </item>
+      <item type="label" name="Export">
+        <translation language="nl"><![CDATA[exporteer]]></translation>
+        <translation language="en"><![CDATA[export]]></translation>
+      </item>
+      <item type="label" name="ExtraMetaTags">
+        <translation language="nl"><![CDATA[extra metatags]]></translation>
+        <translation language="en"><![CDATA[extra metatags]]></translation>
+      </item>
+      <item type="label" name="FeedburnerURL">
+        <translation language="nl"><![CDATA[feedburner URL]]></translation>
+        <translation language="en"><![CDATA[feedburner URL]]></translation>
+      </item>
+      <item type="label" name="File">
+        <translation language="nl"><![CDATA[bestand]]></translation>
+        <translation language="en"><![CDATA[file]]></translation>
+      </item>
+      <item type="label" name="Filename">
+        <translation language="nl"><![CDATA[bestandsnaam]]></translation>
+        <translation language="en"><![CDATA[filename]]></translation>
+      </item>
+      <item type="label" name="FilterCommentsForSpam">
+        <translation language="nl"><![CDATA[filter reacties op spam]]></translation>
+        <translation language="en"><![CDATA[filter comments for spam]]></translation>
+      </item>
+      <item type="label" name="From">
+        <translation language="nl"><![CDATA[van]]></translation>
+        <translation language="en"><![CDATA[from]]></translation>
+      </item>
+      <item type="label" name="Frontend">
+        <translation language="nl"><![CDATA[frontend]]></translation>
+        <translation language="en"><![CDATA[frontend]]></translation>
+      </item>
+      <item type="label" name="General">
+        <translation language="nl"><![CDATA[algemeen]]></translation>
+        <translation language="en"><![CDATA[general]]></translation>
+      </item>
+      <item type="label" name="GeneralSettings">
+        <translation language="nl"><![CDATA[algemene instellingen]]></translation>
+        <translation language="en"><![CDATA[general settings]]></translation>
+      </item>
+      <item type="label" name="GoToPage">
+        <translation language="nl"><![CDATA[ga naar pagina]]></translation>
+        <translation language="en"><![CDATA[go to page]]></translation>
+      </item>
+      <item type="label" name="Group">
+        <translation language="nl"><![CDATA[groep]]></translation>
+        <translation language="en"><![CDATA[group]]></translation>
+      </item>
+      <item type="label" name="Hidden">
+        <translation language="nl"><![CDATA[verborgen]]></translation>
+        <translation language="en"><![CDATA[hidden]]></translation>
+      </item>
+      <item type="label" name="Home">
+        <translation language="nl"><![CDATA[home]]></translation>
+        <translation language="en"><![CDATA[home]]></translation>
+      </item>
+      <item type="label" name="Image">
+        <translation language="nl"><![CDATA[afbeelding]]></translation>
+        <translation language="en"><![CDATA[image]]></translation>
+      </item>
+      <item type="label" name="Images">
+        <translation language="nl"><![CDATA[afbeeldingen]]></translation>
+        <translation language="en"><![CDATA[images]]></translation>
+      </item>
+      <item type="label" name="Import">
+        <translation language="nl"><![CDATA[importeer]]></translation>
+        <translation language="en"><![CDATA[import]]></translation>
+      </item>
+      <item type="label" name="Interface">
+        <translation language="nl"><![CDATA[interface]]></translation>
+        <translation language="en"><![CDATA[interface]]></translation>
+      </item>
+      <item type="label" name="InterfacePreferences">
+        <translation language="nl"><![CDATA[voorkeuren interface]]></translation>
+        <translation language="en"><![CDATA[interface preferences]]></translation>
+      </item>
+      <item type="label" name="IP">
+        <translation language="nl"><![CDATA[IP]]></translation>
+        <translation language="en"><![CDATA[IP]]></translation>
+      </item>
+      <item type="label" name="ItemsPerPage">
+        <translation language="nl"><![CDATA[items per pagina]]></translation>
+        <translation language="en"><![CDATA[items per page]]></translation>
+      </item>
+      <item type="label" name="Keyword">
+        <translation language="nl"><![CDATA[zoekwoord]]></translation>
+        <translation language="en"><![CDATA[keyword]]></translation>
+      </item>
+      <item type="label" name="Keywords">
+        <translation language="nl"><![CDATA[sleutelwoorden]]></translation>
+        <translation language="en"><![CDATA[keywords]]></translation>
+      </item>
+      <item type="label" name="Label">
+        <translation language="nl"><![CDATA[label]]></translation>
+        <translation language="en"><![CDATA[label]]></translation>
+      </item>
+      <item type="label" name="LandingPages">
+        <translation language="nl"><![CDATA[landingpagina's]]></translation>
+        <translation language="en"><![CDATA[landing pages]]></translation>
+      </item>
+      <item type="label" name="Language">
+        <translation language="nl"><![CDATA[taal]]></translation>
+        <translation language="en"><![CDATA[language]]></translation>
+      </item>
+      <item type="label" name="Languages">
+        <translation language="nl"><![CDATA[talen]]></translation>
+        <translation language="en"><![CDATA[languages]]></translation>
+      </item>
+      <item type="label" name="LastEdited">
+        <translation language="nl"><![CDATA[laatst bewerkt]]></translation>
+        <translation language="en"><![CDATA[last edited]]></translation>
+      </item>
+      <item type="label" name="LastEditedOn">
+        <translation language="nl"><![CDATA[laatst bewerkt op]]></translation>
+        <translation language="en"><![CDATA[last edited on]]></translation>
+      </item>
+      <item type="label" name="LastSaved">
+        <translation language="nl"><![CDATA[laatst opgeslagen]]></translation>
+        <translation language="en"><![CDATA[last saved]]></translation>
+      </item>
+      <item type="label" name="LatestComments">
+        <translation language="nl"><![CDATA[laatste reacties]]></translation>
+        <translation language="en"><![CDATA[latest comments]]></translation>
+      </item>
+      <item type="label" name="Layout">
+        <translation language="nl"><![CDATA[layout]]></translation>
+        <translation language="en"><![CDATA[layout]]></translation>
+      </item>
+      <item type="label" name="Loading">
+        <translation language="nl"><![CDATA[loading]]></translation>
+        <translation language="en"><![CDATA[loading]]></translation>
+      </item>
+      <item type="label" name="Locale">
+        <translation language="nl"><![CDATA[locale]]></translation>
+        <translation language="en"><![CDATA[locale]]></translation>
+      </item>
+      <item type="label" name="LoginDetails">
+        <translation language="nl"><![CDATA[login gegevens]]></translation>
+        <translation language="en"><![CDATA[login details]]></translation>
+      </item>
+      <item type="label" name="LongDateFormat">
+        <translation language="nl"><![CDATA[lange datumformaat]]></translation>
+        <translation language="en"><![CDATA[long date format]]></translation>
+      </item>
+      <item type="label" name="MainContent">
+        <translation language="nl"><![CDATA[hoofdinhoud]]></translation>
+        <translation language="en"><![CDATA[main content]]></translation>
+      </item>
+      <item type="label" name="MarkAsSpam">
+        <translation language="nl"><![CDATA[markeer als spam]]></translation>
+        <translation language="en"><![CDATA[mark as spam]]></translation>
+      </item>
+      <item type="label" name="Marketing">
+        <translation language="nl"><![CDATA[marketing]]></translation>
+        <translation language="en"><![CDATA[marketing]]></translation>
+      </item>
+      <item type="label" name="Meta">
+        <translation language="nl"><![CDATA[meta]]></translation>
+        <translation language="en"><![CDATA[meta]]></translation>
+      </item>
+      <item type="label" name="MetaData">
+        <translation language="nl"><![CDATA[metadata]]></translation>
+        <translation language="en"><![CDATA[metadata]]></translation>
+      </item>
+      <item type="label" name="MetaInformation">
+        <translation language="nl"><![CDATA[meta-informatie]]></translation>
+        <translation language="en"><![CDATA[meta information]]></translation>
+      </item>
+      <item type="label" name="MetaNavigation">
+        <translation language="nl"><![CDATA[metanavigatie]]></translation>
+        <translation language="en"><![CDATA[meta navigation]]></translation>
+      </item>
+      <item type="label" name="Moderate">
+        <translation language="nl"><![CDATA[modereer]]></translation>
+        <translation language="en"><![CDATA[moderate]]></translation>
+      </item>
+      <item type="label" name="Moderation">
+        <translation language="nl"><![CDATA[moderatie]]></translation>
+        <translation language="en"><![CDATA[moderation]]></translation>
+      </item>
+      <item type="label" name="Module">
+        <translation language="nl"><![CDATA[module]]></translation>
+        <translation language="en"><![CDATA[module]]></translation>
+      </item>
+      <item type="label" name="Modules">
+        <translation language="nl"><![CDATA[modules]]></translation>
+        <translation language="en"><![CDATA[modules]]></translation>
+      </item>
+      <item type="label" name="ModuleSettings">
+        <translation language="nl"><![CDATA[module-instellingen]]></translation>
+        <translation language="en"><![CDATA[module settings]]></translation>
+      </item>
+      <item type="label" name="Move">
+        <translation language="nl"><![CDATA[verplaats]]></translation>
+        <translation language="en"><![CDATA[move]]></translation>
+      </item>
+      <item type="label" name="MoveToModeration">
+        <translation language="nl"><![CDATA[verplaats naar moderatie]]></translation>
+        <translation language="en"><![CDATA[move to moderation]]></translation>
+      </item>
+      <item type="label" name="MoveToPublished">
+        <translation language="nl"><![CDATA[verplaats naar gepubliceerd]]></translation>
+        <translation language="en"><![CDATA[move to published]]></translation>
+      </item>
+      <item type="label" name="MoveToSpam">
+        <translation language="nl"><![CDATA[verplaats naar spam]]></translation>
+        <translation language="en"><![CDATA[move to spam]]></translation>
+      </item>
+      <item type="label" name="Name">
+        <translation language="nl"><![CDATA[naam]]></translation>
+        <translation language="en"><![CDATA[name]]></translation>
+      </item>
+      <item type="label" name="NavigationTitle">
+        <translation language="nl"><![CDATA[navigatietitel]]></translation>
+        <translation language="en"><![CDATA[navigation title]]></translation>
+      </item>
+      <item type="label" name="NewPassword">
+        <translation language="nl"><![CDATA[nieuw wachtwoord]]></translation>
+        <translation language="en"><![CDATA[new password]]></translation>
+      </item>
+      <item type="label" name="News">
+        <translation language="nl"><![CDATA[nieuws]]></translation>
+        <translation language="en"><![CDATA[news]]></translation>
+      </item>
+      <item type="label" name="Next">
+        <translation language="nl"><![CDATA[volgende]]></translation>
+        <translation language="en"><![CDATA[next]]></translation>
+      </item>
+      <item type="label" name="NextPage">
+        <translation language="nl"><![CDATA[volgende pagina]]></translation>
+        <translation language="en"><![CDATA[next page]]></translation>
+      </item>
+      <item type="label" name="Nickname">
+        <translation language="nl"><![CDATA[publicatienaam]]></translation>
+        <translation language="en"><![CDATA[publication name]]></translation>
+      </item>
+      <item type="label" name="None">
+        <translation language="nl"><![CDATA[geen]]></translation>
+        <translation language="en"><![CDATA[none]]></translation>
+      </item>
+      <item type="label" name="Notifications">
+        <translation language="nl"><![CDATA[verwitigingen]]></translation>
+        <translation language="en"><![CDATA[notifications]]></translation>
+      </item>
+      <item type="label" name="NoTheme">
+        <translation language="nl"><![CDATA[geen thema]]></translation>
+        <translation language="en"><![CDATA[no theme]]></translation>
+      </item>
+      <item type="label" name="NumberFormat">
+        <translation language="nl"><![CDATA[formaat getallen]]></translation>
+        <translation language="en"><![CDATA[number format]]></translation>
+      </item>
+      <item type="label" name="NumberOfBlocks">
+        <translation language="nl"><![CDATA[aantal blokken]]></translation>
+        <translation language="en"><![CDATA[number of blocks]]></translation>
+      </item>
+      <item type="label" name="Numbers">
+        <translation language="nl"><![CDATA[getallen]]></translation>
+        <translation language="en"><![CDATA[numbers]]></translation>
+      </item>
+      <item type="label" name="OK">
+        <translation language="nl"><![CDATA[OK]]></translation>
+        <translation language="en"><![CDATA[OK]]></translation>
+      </item>
+      <item type="label" name="Or">
+        <translation language="nl"><![CDATA[of]]></translation>
+        <translation language="en"><![CDATA[or]]></translation>
+      </item>
+      <item type="label" name="Overview">
+        <translation language="nl"><![CDATA[overzicht]]></translation>
+        <translation language="en"><![CDATA[overview]]></translation>
+      </item>
+      <item type="label" name="Page">
+        <translation language="nl"><![CDATA[pagina]]></translation>
+        <translation language="en"><![CDATA[page]]></translation>
+      </item>
+      <item type="label" name="Pages">
+        <translation language="nl"><![CDATA[pagina's]]></translation>
+        <translation language="en"><![CDATA[pages]]></translation>
+      </item>
+      <item type="label" name="PageTitle">
+        <translation language="nl"><![CDATA[paginatitel]]></translation>
+        <translation language="en"><![CDATA[pagetitle]]></translation>
+      </item>
+      <item type="label" name="Pageviews">
+        <translation language="nl"><![CDATA[paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[pageviews]]></translation>
+      </item>
+      <item type="label" name="Pagination">
+        <translation language="nl"><![CDATA[paginering]]></translation>
+        <translation language="en"><![CDATA[pagination]]></translation>
+      </item>
+      <item type="label" name="Password">
+        <translation language="nl"><![CDATA[wachtwoord]]></translation>
+        <translation language="en"><![CDATA[password]]></translation>
+      </item>
+      <item type="label" name="PerDay">
+        <translation language="nl"><![CDATA[per dag]]></translation>
+        <translation language="en"><![CDATA[per day]]></translation>
+      </item>
+      <item type="label" name="PerVisit">
+        <translation language="nl"><![CDATA[per bezoek]]></translation>
+        <translation language="en"><![CDATA[per visit]]></translation>
+      </item>
+      <item type="label" name="Permissions">
+        <translation language="nl"><![CDATA[rechten]]></translation>
+        <translation language="en"><![CDATA[permissions]]></translation>
+      </item>
+      <item type="label" name="PersonalInformation">
+        <translation language="nl"><![CDATA[persoonlijke gegevens]]></translation>
+        <translation language="en"><![CDATA[personal information]]></translation>
+      </item>
+      <item type="label" name="PingBlogServices">
+        <translation language="nl"><![CDATA[ping blogservices]]></translation>
+        <translation language="en"><![CDATA[ping blogservices]]></translation>
+      </item>
+      <item type="label" name="Port">
+        <translation language="nl"><![CDATA[poort]]></translation>
+        <translation language="en"><![CDATA[port]]></translation>
+      </item>
+      <item type="label" name="Preview">
+        <translation language="nl"><![CDATA[preview]]></translation>
+        <translation language="en"><![CDATA[preview]]></translation>
+      </item>
+      <item type="label" name="Previous">
+        <translation language="nl"><![CDATA[vorige]]></translation>
+        <translation language="en"><![CDATA[previous]]></translation>
+      </item>
+      <item type="label" name="PreviousPage">
+        <translation language="nl"><![CDATA[vorige pagina]]></translation>
+        <translation language="en"><![CDATA[previous page]]></translation>
+      </item>
+      <item type="label" name="PreviousVersions">
+        <translation language="nl"><![CDATA[vorige versies]]></translation>
+        <translation language="en"><![CDATA[previous versions]]></translation>
+      </item>
+      <item type="label" name="Profile">
+        <translation language="nl"><![CDATA[profiel]]></translation>
+        <translation language="en"><![CDATA[profile]]></translation>
+      </item>
+      <item type="label" name="Publish">
+        <translation language="nl"><![CDATA[publiceer]]></translation>
+        <translation language="en"><![CDATA[publish]]></translation>
+      </item>
+      <item type="label" name="Published">
+        <translation language="nl"><![CDATA[gepubliceerd]]></translation>
+        <translation language="en"><![CDATA[published]]></translation>
+      </item>
+      <item type="label" name="PublishedArticles">
+        <translation language="nl"><![CDATA[gepubliceerde artikels]]></translation>
+        <translation language="en"><![CDATA[published articles]]></translation>
+      </item>
+      <item type="label" name="PublishedOn">
+        <translation language="nl"><![CDATA[gepubliceerd op]]></translation>
+        <translation language="en"><![CDATA[published on]]></translation>
+      </item>
+      <item type="label" name="PublishOn">
+        <translation language="nl"><![CDATA[publiceer op]]></translation>
+        <translation language="en"><![CDATA[publish on]]></translation>
+      </item>
+      <item type="label" name="RecentArticlesFull">
+        <translation language="nl"><![CDATA[recente artikels (volledig)]]></translation>
+        <translation language="en"><![CDATA[recent articles (full)]]></translation>
+      </item>
+      <item type="label" name="RecentArticlesList">
+        <translation language="nl"><![CDATA[recente artikels (lijst)]]></translation>
+        <translation language="en"><![CDATA[recent articles (list)]]></translation>
+      </item>
+      <item type="label" name="RecentComments">
+        <translation language="nl"><![CDATA[recente reacties]]></translation>
+        <translation language="en"><![CDATA[recent comments]]></translation>
+      </item>
+      <item type="label" name="RecentlyEdited">
+        <translation language="nl"><![CDATA[recent bewerkt]]></translation>
+        <translation language="en"><![CDATA[recently edited]]></translation>
+      </item>
+      <item type="label" name="RecentVisits">
+        <translation language="nl"><![CDATA[recente bezoeken]]></translation>
+        <translation language="en"><![CDATA[recent visits]]></translation>
+      </item>
+      <item type="label" name="ReferenceCode">
+        <translation language="nl"><![CDATA[referentiecode]]></translation>
+        <translation language="en"><![CDATA[reference code]]></translation>
+      </item>
+      <item type="label" name="Referrer">
+        <translation language="nl"><![CDATA[referrer]]></translation>
+        <translation language="en"><![CDATA[referrer]]></translation>
+      </item>
+      <item type="label" name="RepeatPassword">
+        <translation language="nl"><![CDATA[herhaal wachtwoord]]></translation>
+        <translation language="en"><![CDATA[repeat password]]></translation>
+      </item>
+      <item type="label" name="ReplyTo">
+        <translation language="nl"><![CDATA[reply-to]]></translation>
+        <translation language="en"><![CDATA[reply-to]]></translation>
+      </item>
+      <item type="label" name="RequiredField">
+        <translation language="nl"><![CDATA[verplicht veld]]></translation>
+        <translation language="en"><![CDATA[required field]]></translation>
+      </item>
+      <item type="label" name="ResetAndSignIn">
+        <translation language="nl"><![CDATA[resetten en aanmelden]]></translation>
+        <translation language="en"><![CDATA[reset and sign in]]></translation>
+      </item>
+      <item type="label" name="ResetYourPassword">
+        <translation language="nl"><![CDATA[reset je wachtwoord]]></translation>
+        <translation language="en"><![CDATA[reset your password]]></translation>
+      </item>
+      <item type="label" name="RSSFeed">
+        <translation language="nl"><![CDATA[RSS feed]]></translation>
+        <translation language="en"><![CDATA[RSS feed]]></translation>
+      </item>
+      <item type="label" name="Save">
+        <translation language="nl"><![CDATA[opslaan]]></translation>
+        <translation language="en"><![CDATA[save]]></translation>
+      </item>
+      <item type="label" name="SaveDraft">
+        <translation language="nl"><![CDATA[kladversie opslaan]]></translation>
+        <translation language="en"><![CDATA[save draft]]></translation>
+      </item>
+      <item type="label" name="Scripts">
+        <translation language="nl"><![CDATA[scripts]]></translation>
+        <translation language="en"><![CDATA[scripts]]></translation>
+      </item>
+      <item type="label" name="Search">
+        <translation language="nl"><![CDATA[zoeken]]></translation>
+        <translation language="en"><![CDATA[search]]></translation>
+      </item>
+      <item type="label" name="SearchAgain">
+        <translation language="nl"><![CDATA[opnieuw zoeken]]></translation>
+        <translation language="en"><![CDATA[search again]]></translation>
+      </item>
+      <item type="label" name="SearchForm">
+        <translation language="nl"><![CDATA[zoekformulier]]></translation>
+        <translation language="en"><![CDATA[search form]]></translation>
+      </item>
+      <item type="label" name="Send">
+        <translation language="nl"><![CDATA[verzenden]]></translation>
+        <translation language="en"><![CDATA[send]]></translation>
+      </item>
+      <item type="label" name="SendingEmails">
+        <translation language="nl"><![CDATA[e-mails versturen]]></translation>
+        <translation language="en"><![CDATA[sending e-mails]]></translation>
+      </item>
+      <item type="label" name="SEO">
+        <translation language="nl"><![CDATA[SEO]]></translation>
+        <translation language="en"><![CDATA[SEO]]></translation>
+      </item>
+      <item type="label" name="Server">
+        <translation language="nl"><![CDATA[server]]></translation>
+        <translation language="en"><![CDATA[server]]></translation>
+      </item>
+      <item type="label" name="Settings">
+        <translation language="nl"><![CDATA[instellingen]]></translation>
+        <translation language="en"><![CDATA[settings]]></translation>
+      </item>
+      <item type="label" name="ShortDateFormat">
+        <translation language="nl"><![CDATA[korte datumformaat]]></translation>
+        <translation language="en"><![CDATA[short date format]]></translation>
+      </item>
+      <item type="label" name="SignIn">
+        <translation language="nl"><![CDATA[aanmelden]]></translation>
+        <translation language="en"><![CDATA[log in]]></translation>
+      </item>
+      <item type="label" name="SignOut">
+        <translation language="nl"><![CDATA[afmelden]]></translation>
+        <translation language="en"><![CDATA[sign out]]></translation>
+      </item>
+      <item type="label" name="Sitemap">
+        <translation language="nl"><![CDATA[sitemap]]></translation>
+        <translation language="en"><![CDATA[sitemap]]></translation>
+      </item>
+      <item type="label" name="SMTP">
+        <translation language="nl"><![CDATA[SMTP]]></translation>
+        <translation language="en"><![CDATA[SMTP]]></translation>
+      </item>
+      <item type="label" name="SortAscending">
+        <translation language="nl"><![CDATA[sorteer oplopend]]></translation>
+        <translation language="en"><![CDATA[sort ascending]]></translation>
+      </item>
+      <item type="label" name="SortDescending">
+        <translation language="nl"><![CDATA[sorteer aflopend]]></translation>
+        <translation language="en"><![CDATA[sort descending]]></translation>
+      </item>
+      <item type="label" name="SortedAscending">
+        <translation language="nl"><![CDATA[oplopend gesorteerd]]></translation>
+        <translation language="en"><![CDATA[sorted ascending]]></translation>
+      </item>
+      <item type="label" name="SortedDescending">
+        <translation language="nl"><![CDATA[aflopend gesorteerd]]></translation>
+        <translation language="en"><![CDATA[sorted descending]]></translation>
+      </item>
+      <item type="label" name="Spam">
+        <translation language="nl"><![CDATA[spam]]></translation>
+        <translation language="en"><![CDATA[spam]]></translation>
+      </item>
+      <item type="label" name="SpamFilter">
+        <translation language="nl"><![CDATA[spamfilter]]></translation>
+        <translation language="en"><![CDATA[spamfilter]]></translation>
+      </item>
+      <item type="label" name="StartDate">
+        <translation language="nl"><![CDATA[startdatum]]></translation>
+        <translation language="en"><![CDATA[start date]]></translation>
+      </item>
+      <item type="label" name="Statistics">
+        <translation language="nl"><![CDATA[statistieken]]></translation>
+        <translation language="en"><![CDATA[statistics]]></translation>
+      </item>
+      <item type="label" name="Status">
+        <translation language="nl"><![CDATA[status]]></translation>
+        <translation language="en"><![CDATA[status]]></translation>
+      </item>
+      <item type="label" name="Strong">
+        <translation language="nl"><![CDATA[sterk]]></translation>
+        <translation language="en"><![CDATA[strong]]></translation>
+      </item>
+      <item type="label" name="Summary">
+        <translation language="nl"><![CDATA[samenvatting]]></translation>
+        <translation language="en"><![CDATA[summary]]></translation>
+      </item>
+      <item type="label" name="Surname">
+        <translation language="nl"><![CDATA[achternaam]]></translation>
+        <translation language="en"><![CDATA[surname]]></translation>
+      </item>
+      <item type="label" name="Synonym">
+        <translation language="nl"><![CDATA[synoniem]]></translation>
+        <translation language="en"><![CDATA[synonym]]></translation>
+      </item>
+      <item type="label" name="Synonyms">
+        <translation language="nl"><![CDATA[synoniemen]]></translation>
+        <translation language="en"><![CDATA[synonyms]]></translation>
+      </item>
+      <item type="label" name="Tags">
+        <translation language="nl"><![CDATA[tags]]></translation>
+        <translation language="en"><![CDATA[tags]]></translation>
+      </item>
+      <item type="label" name="Template">
+        <translation language="nl"><![CDATA[template]]></translation>
+        <translation language="en"><![CDATA[template]]></translation>
+      </item>
+      <item type="label" name="Templates">
+        <translation language="nl"><![CDATA[templates]]></translation>
+        <translation language="en"><![CDATA[templates]]></translation>
+      </item>
+      <item type="label" name="Term">
+        <translation language="nl"><![CDATA[term]]></translation>
+        <translation language="en"><![CDATA[term]]></translation>
+      </item>
+      <item type="label" name="Text">
+        <translation language="nl"><![CDATA[tekst]]></translation>
+        <translation language="en"><![CDATA[text]]></translation>
+      </item>
+      <item type="label" name="Themes">
+        <translation language="nl"><![CDATA[thema's]]></translation>
+        <translation language="en"><![CDATA[themes]]></translation>
+      </item>
+      <item type="label" name="ThemesSelection">
+        <translation language="nl"><![CDATA[thema-keuze]]></translation>
+        <translation language="en"><![CDATA[theme selection]]></translation>
+      </item>
+      <item type="label" name="Till">
+        <translation language="nl"><![CDATA[tot]]></translation>
+        <translation language="en"><![CDATA[till]]></translation>
+      </item>
+      <item type="label" name="TimeFormat">
+        <translation language="nl"><![CDATA[formaat tijd]]></translation>
+        <translation language="en"><![CDATA[time format]]></translation>
+      </item>
+      <item type="label" name="Title">
+        <translation language="nl"><![CDATA[titel]]></translation>
+        <translation language="en"><![CDATA[title]]></translation>
+      </item>
+      <item type="label" name="Titles">
+        <translation language="nl"><![CDATA[titels]]></translation>
+        <translation language="en"><![CDATA[titles]]></translation>
+      </item>
+      <item type="label" name="To">
+        <translation language="nl"><![CDATA[aan]]></translation>
+        <translation language="en"><![CDATA[to]]></translation>
+      </item>
+      <item type="label" name="Today">
+        <translation language="nl"><![CDATA[vandaag]]></translation>
+        <translation language="en"><![CDATA[today]]></translation>
+      </item>
+      <item type="label" name="TrafficSources">
+        <translation language="nl"><![CDATA[verkeersbronnen]]></translation>
+        <translation language="en"><![CDATA[traffic sources]]></translation>
+      </item>
+      <item type="label" name="Translation">
+        <translation language="nl"><![CDATA[vertaling]]></translation>
+        <translation language="en"><![CDATA[translation]]></translation>
+      </item>
+      <item type="label" name="Translations">
+        <translation language="nl"><![CDATA[vertalingen]]></translation>
+        <translation language="en"><![CDATA[translations]]></translation>
+      </item>
+      <item type="label" name="Type">
+        <translation language="nl"><![CDATA[type]]></translation>
+        <translation language="en"><![CDATA[type]]></translation>
+      </item>
+      <item type="label" name="UpdateFilter">
+        <translation language="nl"><![CDATA[filter updaten]]></translation>
+        <translation language="en"><![CDATA[update filter]]></translation>
+      </item>
+      <item type="label" name="URL">
+        <translation language="nl"><![CDATA[URL]]></translation>
+        <translation language="en"><![CDATA[URL]]></translation>
+      </item>
+      <item type="label" name="UsedIn">
+        <translation language="nl"><![CDATA[gebruikt in]]></translation>
+        <translation language="en"><![CDATA[used in]]></translation>
+      </item>
+      <item type="label" name="Userguide">
+        <translation language="nl"><![CDATA[userguide]]></translation>
+        <translation language="en"><![CDATA[userguide]]></translation>
+      </item>
+      <item type="label" name="Username">
+        <translation language="nl"><![CDATA[gebruikersnaam]]></translation>
+        <translation language="en"><![CDATA[username]]></translation>
+      </item>
+      <item type="label" name="Users">
+        <translation language="nl"><![CDATA[gebruikers]]></translation>
+        <translation language="en"><![CDATA[users]]></translation>
+      </item>
+      <item type="label" name="UseThisDraft">
+        <translation language="nl"><![CDATA[gebruik deze kladversie]]></translation>
+        <translation language="en"><![CDATA[use this draft]]></translation>
+      </item>
+      <item type="label" name="UseThisVersion">
+        <translation language="nl"><![CDATA[laad deze versie]]></translation>
+        <translation language="en"><![CDATA[use this version]]></translation>
+      </item>
+      <item type="label" name="Value">
+        <translation language="nl"><![CDATA[waarde]]></translation>
+        <translation language="en"><![CDATA[value]]></translation>
+      </item>
+      <item type="label" name="View">
+        <translation language="nl"><![CDATA[bekijken]]></translation>
+        <translation language="en"><![CDATA[view]]></translation>
+      </item>
+      <item type="label" name="ViewReport">
+        <translation language="nl"><![CDATA[bekijk rapport]]></translation>
+        <translation language="en"><![CDATA[view report]]></translation>
+      </item>
+      <item type="label" name="VisibleOnSite">
+        <translation language="nl"><![CDATA[Zichtbaar op de website]]></translation>
+        <translation language="en"><![CDATA[visible on site]]></translation>
+      </item>
+      <item type="label" name="Visitors">
+        <translation language="nl"><![CDATA[bezoekers]]></translation>
+        <translation language="en"><![CDATA[visitors]]></translation>
+      </item>
+      <item type="label" name="VisitWebsite">
+        <translation language="nl"><![CDATA[bezoek website]]></translation>
+        <translation language="en"><![CDATA[visit website]]></translation>
+      </item>
+      <item type="label" name="WaitingForModeration">
+        <translation language="nl"><![CDATA[wachten op moderatie]]></translation>
+        <translation language="en"><![CDATA[waiting for moderation]]></translation>
+      </item>
+      <item type="label" name="Weak">
+        <translation language="nl"><![CDATA[zwak]]></translation>
+        <translation language="en"><![CDATA[weak]]></translation>
+      </item>
+      <item type="label" name="WebmasterEmail">
+        <translation language="nl"><![CDATA[e-mailadres webmaster]]></translation>
+        <translation language="en"><![CDATA[e-mail webmaster]]></translation>
+      </item>
+      <item type="label" name="Website">
+        <translation language="nl"><![CDATA[website]]></translation>
+        <translation language="en"><![CDATA[website]]></translation>
+      </item>
+      <item type="label" name="WebsiteTitle">
+        <translation language="nl"><![CDATA[titel website]]></translation>
+        <translation language="en"><![CDATA[website title]]></translation>
+      </item>
+      <item type="label" name="Weight">
+        <translation language="nl"><![CDATA[gewicht]]></translation>
+        <translation language="en"><![CDATA[weight]]></translation>
+      </item>
+      <item type="label" name="WhichModule">
+        <translation language="nl"><![CDATA[welke module]]></translation>
+        <translation language="en"><![CDATA[which module]]></translation>
+      </item>
+      <item type="label" name="WhichWidget">
+        <translation language="nl"><![CDATA[welke widget]]></translation>
+        <translation language="en"><![CDATA[which widget]]></translation>
+      </item>
+      <item type="label" name="Widget">
+        <translation language="nl"><![CDATA[widget]]></translation>
+        <translation language="en"><![CDATA[widget]]></translation>
+      </item>
+      <item type="label" name="Widgets">
+        <translation language="nl"><![CDATA[widgets]]></translation>
+        <translation language="en"><![CDATA[widgets]]></translation>
+      </item>
+      <item type="label" name="WithSelected">
+        <translation language="nl"><![CDATA[met geselecteerde]]></translation>
+        <translation language="en"><![CDATA[with selected]]></translation>
+      </item>
+      <item type="message" name="ACT">
+        <translation language="nl"><![CDATA[actie]]></translation>
+        <translation language="en"><![CDATA[action]]></translation>
+      </item>
+      <item type="message" name="ActivateNoFollow">
+        <translation language="nl"><![CDATA[Activeer <code>rel="nofollow"</code>]]></translation>
+        <translation language="en"><![CDATA[Activate <code>rel="nofollow"</code>]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[Het item werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The item was added.]]></translation>
+      </item>
+      <item type="message" name="AddedCategory">
+        <translation language="nl"><![CDATA[De categorie "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The category "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="ClickToEdit">
+        <translation language="nl"><![CDATA[Klik om te wijzigen.]]></translation>
+        <translation language="en"><![CDATA[Click to edit]]></translation>
+      </item>
+      <item type="message" name="CommentDeleted">
+        <translation language="nl"><![CDATA[De reactie werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The comment was deleted.]]></translation>
+      </item>
+      <item type="message" name="CommentMovedModeration">
+        <translation language="nl"><![CDATA[De reactie werd verplaatst naar moderatie.]]></translation>
+        <translation language="en"><![CDATA[The comment was moved to moderation.]]></translation>
+      </item>
+      <item type="message" name="CommentMovedPublished">
+        <translation language="nl"><![CDATA[De reactie werd gepubliceerd.]]></translation>
+        <translation language="en"><![CDATA[The comment was published.]]></translation>
+      </item>
+      <item type="message" name="CommentMovedSpam">
+        <translation language="nl"><![CDATA[De reactie werd gemarkeerd als spam.]]></translation>
+        <translation language="en"><![CDATA[The comment was marked as spam.]]></translation>
+      </item>
+      <item type="message" name="CommentsDeleted">
+        <translation language="nl"><![CDATA[De reacties werden verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The comments were deleted.]]></translation>
+      </item>
+      <item type="message" name="CommentsMovedModeration">
+        <translation language="nl"><![CDATA[De reacties werden verplaatst naar moderatie.]]></translation>
+        <translation language="en"><![CDATA[The comments were moved to moderation.]]></translation>
+      </item>
+      <item type="message" name="CommentsMovedPublished">
+        <translation language="nl"><![CDATA[De reacties werden gepubliceerd.]]></translation>
+        <translation language="en"><![CDATA[The comments were published.]]></translation>
+      </item>
+      <item type="message" name="CommentsMovedSpam">
+        <translation language="nl"><![CDATA[De reacties werden gemarkeerd als spam.]]></translation>
+        <translation language="en"><![CDATA[The comments were marked as spam.]]></translation>
+      </item>
+      <item type="message" name="CommentsToModerate">
+        <translation language="nl"><![CDATA[%1$s reactie(s) te modereren.]]></translation>
+        <translation language="en"><![CDATA[%1$s comment(s) to moderate.]]></translation>
+      </item>
+      <item type="message" name="ConfigurationError">
+        <translation language="nl"><![CDATA[Sommige instellingen zijn nog niet geconfigureerd:]]></translation>
+        <translation language="en"><![CDATA[Some settings aren't configured yet:]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je het item "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the item "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteCategory">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze categorie "%1$s" wil verwijderen.]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to delete the category "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmMassDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze item(s) wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete this/these item(s)?]]></translation>
+      </item>
+      <item type="message" name="ConfirmMassSpam">
+        <translation language="nl"><![CDATA[Ben je zeker dat je deze item(s) wil markeren als spam?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to mark this/these item(s) as spam?]]></translation>
+      </item>
+      <item type="message" name="DE">
+        <translation language="nl"><![CDATA[Duits]]></translation>
+        <translation language="en"><![CDATA[German]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[Het item werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The item was deleted.]]></translation>
+      </item>
+      <item type="message" name="DeletedCategory">
+        <translation language="nl"><![CDATA[De categorie "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The category "%1$s" was deleted.]]></translation>
+      </item>
+      <item type="message" name="EditCategory">
+        <translation language="nl"><![CDATA[bewerk categorie "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit category "%1$s"]]></translation>
+      </item>
+      <item type="message" name="EditComment">
+        <translation language="nl"><![CDATA[bewerk reactie]]></translation>
+        <translation language="en"><![CDATA[edit comment]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[Het item werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The item was saved.]]></translation>
+      </item>
+      <item type="message" name="EditedCategory">
+        <translation language="nl"><![CDATA[De categorie "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The category "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="EditorImagesWithoutAlt">
+        <translation language="nl"><![CDATA[Er zijn afbeeldingen zonder alt-attribute <small>(<a href="http://www.anysurfer.org/elke-afbeelding-heeft-een-alt-attribuut" target="_blank">lees meer</a>)</small>.]]></translation>
+        <translation language="en"><![CDATA[There are images without an alt-attribute.]]></translation>
+      </item>
+      <item type="message" name="EditorInvalidLinks">
+        <translation language="nl"><![CDATA[Er zijn ongeldige links.]]></translation>
+        <translation language="en"><![CDATA[There are invalid links.]]></translation>
+      </item>
+      <item type="message" name="EN">
+        <translation language="nl"><![CDATA[Engels]]></translation>
+        <translation language="en"><![CDATA[English]]></translation>
+      </item>
+      <item type="message" name="ERR">
+        <translation language="nl"><![CDATA[foutbericht]]></translation>
+        <translation language="en"><![CDATA[error]]></translation>
+      </item>
+      <item type="message" name="ES">
+        <translation language="nl"><![CDATA[Spaans]]></translation>
+        <translation language="en"><![CDATA[Spanish]]></translation>
+      </item>
+      <item type="message" name="ForgotPassword">
+        <translation language="nl"><![CDATA[Wachtwoord vergeten?]]></translation>
+        <translation language="en"><![CDATA[Forgot password?]]></translation>
+      </item>
+      <item type="message" name="FR">
+        <translation language="nl"><![CDATA[Frans]]></translation>
+        <translation language="en"><![CDATA[French]]></translation>
+      </item>
+      <item type="message" name="HelpAvatar">
+        <translation language="nl"><![CDATA[Een vierkante afbeelding geeft het beste resultaat.]]></translation>
+        <translation language="en"><![CDATA[A square picture produces the best results.]]></translation>
+      </item>
+      <item type="message" name="HelpBlogger">
+        <translation language="nl"><![CDATA[Selecteer het bestand dat u heeft geëxporteerd van <a href="http://blogger.com">Blogger</a>.]]></translation>
+        <translation language="en"><![CDATA[Select the file that you exported from <a href="http://blogger.com">Blogger</a>.]]></translation>
+      </item>
+      <item type="message" name="HelpDrafts">
+        <translation language="nl"><![CDATA[Hier kan je jouw kladversie zien. Dit zijn tijdelijke versies.]]></translation>
+        <translation language="en"><![CDATA[Here you can see your draft. These are temporary versions.]]></translation>
+      </item>
+      <item type="message" name="HelpEmailFrom">
+        <translation language="nl"><![CDATA[E-mails verzonden vanuit het CMS gebruiken deze instellingen.]]></translation>
+        <translation language="en"><![CDATA[E-mails sent from the CMS use these settings.]]></translation>
+      </item>
+      <item type="message" name="HelpEmailTo">
+        <translation language="nl"><![CDATA[Notificaties van het CMS worden hiernaar verstuurd.]]></translation>
+        <translation language="en"><![CDATA[Notifications from the CMS are sent here.]]></translation>
+      </item>
+      <item type="message" name="HelpFeedburnerURL">
+        <translation language="nl"><![CDATA[bijv. http://feeds.feedburner.com/jouw-website]]></translation>
+        <translation language="en"><![CDATA[eg. http://feeds.feedburner.com/your-website]]></translation>
+      </item>
+      <item type="message" name="HelpForgotPassword">
+        <translation language="nl"><![CDATA[Vul hieronder je e-mail adres in. Je krijgt een e-mail met instructies hoe je een nieuw wachtwoord instelt.]]></translation>
+        <translation language="en"><![CDATA[Below enter your e-mail. You will receive an e-mail containing instructions on how to get a new password.]]></translation>
+      </item>
+      <item type="message" name="HelpMetaCustom">
+        <translation language="nl"><![CDATA[Deze extra metatags worden in de <code>&lt;head&gt;</code> sectie van de pagina gezet.]]></translation>
+        <translation language="en"><![CDATA[These custom metatags will be placed in the <code>&lt;head&gt;</code> section of the page.]]></translation>
+      </item>
+      <item type="message" name="HelpMetaDescription">
+        <translation language="nl"><![CDATA[Vat de inhoud kort samen. Deze samenvatting wordt getoond in de resultaten van zoekmachines.]]></translation>
+        <translation language="en"><![CDATA[Briefly summarize the content. This summary is shown in the results of search engines.]]></translation>
+      </item>
+      <item type="message" name="HelpMetaKeywords">
+        <translation language="nl"><![CDATA[Kies een aantal goed gekozen termen die de inhoud omschrijven.]]></translation>
+        <translation language="en"><![CDATA[Choose a number of wellthought terms that describe the content.]]></translation>
+      </item>
+      <item type="message" name="HelpMetaURL">
+        <translation language="nl"><![CDATA[Vervang de automatisch gegenereerde URL door een zelfgekozen URL.]]></translation>
+        <translation language="en"><![CDATA[Replace the automaticly generated URL by a custom one.]]></translation>
+      </item>
+      <item type="message" name="HelpNickname">
+        <translation language="nl"><![CDATA[De naam waaronder je wilt publiceren (bijvoorbeeld als auteur van een blogartikel).]]></translation>
+        <translation language="en"><![CDATA[The name you want to be published as (e.g. as the author of an article).]]></translation>
+      </item>
+      <item type="message" name="HelpPageTitle">
+        <translation language="nl"><![CDATA[De titel die in het browservenster staat (<code>&lt;title&gt;</code>).]]></translation>
+        <translation language="en"><![CDATA[The title in the browser window (<code>&lt;title&gt;</code>).]]></translation>
+      </item>
+      <item type="message" name="HelpResetPassword">
+        <translation language="nl"><![CDATA[Vul je gewenste]]></translation>
+        <translation language="en"><![CDATA[Provide your new password.]]></translation>
+      </item>
+      <item type="message" name="HelpRevisions">
+        <translation language="nl"><![CDATA[De laatst opgeslagen versies worden hier bijgehouden. De huidige versie wordt pas overschreven als je opslaat.]]></translation>
+        <translation language="en"><![CDATA[The last saved versions are kept here. The current version will only be overwritten when you save your changes.]]></translation>
+      </item>
+      <item type="message" name="HelpRSSDescription">
+        <translation language="nl"><![CDATA[Beschrijf bondig wat voor soort inhoud de RSS-feed zal bevatten.]]></translation>
+        <translation language="en"><![CDATA[Briefly describe what kind of content the RSS feed will contain.]]></translation>
+      </item>
+      <item type="message" name="HelpRSSTitle">
+        <translation language="nl"><![CDATA[Geef een duidelijke titel aan de RSS-feed]]></translation>
+        <translation language="en"><![CDATA[Provide a clear title for the RSS feed.]]></translation>
+      </item>
+      <item type="message" name="HelpSMTPServer">
+        <translation language="nl"><![CDATA[Mailserver die wordt gebruikt voor het versturen van e-mails.]]></translation>
+        <translation language="en"><![CDATA[Mailserver that should be used for sending e-mails.]]></translation>
+      </item>
+      <item type="message" name="Imported">
+        <translation language="nl"><![CDATA[De data werd geïmporteerd.]]></translation>
+        <translation language="en"><![CDATA[The data was imported.]]></translation>
+      </item>
+      <item type="message" name="LBL">
+        <translation language="nl"><![CDATA[label]]></translation>
+        <translation language="en"><![CDATA[label]]></translation>
+      </item>
+      <item type="message" name="LoginFormForgotPasswordSuccess">
+        <translation language="nl"><![CDATA[<strong>Mail sent.</strong> Please check your inbox!]]></translation>
+        <translation language="en"><![CDATA[<strong>Mail sent.</strong> Please check your inbox!]]></translation>
+      </item>
+      <item type="message" name="MSG">
+        <translation language="nl"><![CDATA[bericht]]></translation>
+        <translation language="en"><![CDATA[message]]></translation>
+      </item>
+      <item type="message" name="NL">
+        <translation language="nl"><![CDATA[Nederlands]]></translation>
+        <translation language="en"><![CDATA[Dutch]]></translation>
+      </item>
+      <item type="message" name="NoAkismetKey">
+        <translation language="nl"><![CDATA[Om de spamfilter te activeren moet je een Akismet-key <a href="%1$s">ingeven</a>.]]></translation>
+        <translation language="en"><![CDATA[If you want to enable the spam-protection you should <a href="%1$s">configure</a> an Akismet-key.]]></translation>
+      </item>
+      <item type="message" name="NoComments">
+        <translation language="nl"><![CDATA[Er zijn nog geen reacties in deze categorie.]]></translation>
+        <translation language="en"><![CDATA[There are no comments in this category yet.]]></translation>
+      </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen items.]]></translation>
+        <translation language="en"><![CDATA[There are no items yet.]]></translation>
+      </item>
+      <item type="message" name="NoPublishedComments">
+        <translation language="nl"><![CDATA[Er zijn nog geen gepubliceerde reacties.]]></translation>
+        <translation language="en"><![CDATA[There are no published comments.]]></translation>
+      </item>
+      <item type="message" name="NoRevisions">
+        <translation language="nl"><![CDATA[Er zijn nog geen vorige versies.]]></translation>
+        <translation language="en"><![CDATA[There are no previous versions yet.]]></translation>
+      </item>
+      <item type="message" name="NoTags">
+        <translation language="nl"><![CDATA[Je hebt nog geen tags ingegeven.]]></translation>
+        <translation language="en"><![CDATA[You didn't add tags yet.]]></translation>
+      </item>
+      <item type="message" name="NoUsage">
+        <translation language="nl"><![CDATA[Nog niet gebruikt.]]></translation>
+        <translation language="en"><![CDATA[Not yet used.]]></translation>
+      </item>
+      <item type="message" name="NowEditing">
+        <translation language="nl"><![CDATA[je bewerkt nu]]></translation>
+        <translation language="en"><![CDATA[now editing]]></translation>
+      </item>
+      <item type="message" name="PasswordResetSuccess">
+        <translation language="nl"><![CDATA[Je wachtwoord werd gewijzigd.]]></translation>
+        <translation language="en"><![CDATA[Your password has been changed.]]></translation>
+      </item>
+      <item type="message" name="Redirecting">
+        <translation language="nl"><![CDATA[U wordt omgeleidt.]]></translation>
+        <translation language="en"><![CDATA[You are being redirected.]]></translation>
+      </item>
+      <item type="message" name="ResetYourPasswordMailContent">
+        <translation language="nl"><![CDATA[Reset je wachtwoord door op de link hieronder te klikken. Indien je niet hier niet om gevraagd hebt hoef je geen actie te ondernemen.]]></translation>
+        <translation language="en"><![CDATA[Reset your password by clicking the link below. If you didn't ask for this]]></translation>
+      </item>
+      <item type="message" name="ResetYourPasswordMailSubject">
+        <translation language="nl"><![CDATA[Wijzig je wachtwoord]]></translation>
+        <translation language="en"><![CDATA[Change your password]]></translation>
+      </item>
+      <item type="message" name="Saved">
+        <translation language="nl"><![CDATA[De wijzigingen werden opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The changes were saved.]]></translation>
+      </item>
+      <item type="message" name="SavedAsDraft">
+        <translation language="nl"><![CDATA["%1$s" als kladversie opgeslagen.]]></translation>
+        <translation language="en"><![CDATA["%1$s" saved as draft.]]></translation>
+      </item>
+      <item type="message" name="UsingADraft">
+        <translation language="nl"><![CDATA[Je gebruikt een kladversie.]]></translation>
+        <translation language="en"><![CDATA[You're using a draft.]]></translation>
+      </item>
+      <item type="message" name="UsingARevision">
+        <translation language="nl"><![CDATA[Je hebt een oudere versie ingeladen. Sla op om deze versie te gebruiken.]]></translation>
+        <translation language="en"><![CDATA[You're using an older version. Save to overwrite the current version.]]></translation>
+      </item>
+    </core>
+  </backend>
+  <frontend>
+    <core>
+      <item type="action" name="Archive">
+        <translation language="nl"><![CDATA[archief]]></translation>
+        <translation language="en"><![CDATA[archive]]></translation>
+      </item>
+      <item type="action" name="Category">
+        <translation language="nl"><![CDATA[categorie]]></translation>
+        <translation language="en"><![CDATA[category]]></translation>
+      </item>
+      <item type="action" name="Comment">
+        <translation language="nl"><![CDATA[reageer]]></translation>
+        <translation language="en"><![CDATA[comment]]></translation>
+      </item>
+      <item type="action" name="Comments">
+        <translation language="nl"><![CDATA[reacties]]></translation>
+        <translation language="en"><![CDATA[comments]]></translation>
+      </item>
+      <item type="action" name="CommentsRss">
+        <translation language="nl"><![CDATA[reacties-rss]]></translation>
+        <translation language="en"><![CDATA[comments-rss]]></translation>
+      </item>
+      <item type="action" name="Detail">
+        <translation language="nl"><![CDATA[detail]]></translation>
+        <translation language="en"><![CDATA[detail]]></translation>
+      </item>
+      <item type="action" name="Rss">
+        <translation language="nl"><![CDATA[rss]]></translation>
+        <translation language="en"><![CDATA[rss]]></translation>
+      </item>
+      <item type="error" name="AuthorIsRequired">
+        <translation language="nl"><![CDATA[Auteur is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Author is a required field.]]></translation>
+      </item>
+      <item type="error" name="CommentTimeout">
+        <translation language="nl"><![CDATA[Slow down cowboy]]></translation>
+        <translation language="en"><![CDATA[Slow down cowboy]]></translation>
+      </item>
+      <item type="error" name="ContactErrorWhileSending">
+        <translation language="nl"><![CDATA[Er ging iets mis tijdens het verzenden]]></translation>
+        <translation language="en"><![CDATA[Something went wrong while trying to send]]></translation>
+      </item>
+      <item type="error" name="EmailIsInvalid">
+        <translation language="nl"><![CDATA[Gelieve een geldig emailadres in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a valid e-email.]]></translation>
+      </item>
+      <item type="error" name="EmailIsRequired">
+        <translation language="nl"><![CDATA[E-mail is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[E-mail is a required field.]]></translation>
+      </item>
+      <item type="error" name="FieldIsRequired">
+        <translation language="nl"><![CDATA[Dit veld is verplicht.]]></translation>
+        <translation language="en"><![CDATA[This field is required.]]></translation>
+      </item>
+      <item type="error" name="FormError">
+        <translation language="nl"><![CDATA[Er ging iets mis]]></translation>
+        <translation language="en"><![CDATA[Something went wrong]]></translation>
+      </item>
+      <item type="error" name="InvalidNumber">
+        <translation language="nl"><![CDATA[Gelieve een geldig getal in te geven.]]></translation>
+      </item>
+      <item type="error" name="InvalidURL">
+        <translation language="nl"><![CDATA[Dit is een ongeldige URL.]]></translation>
+        <translation language="en"><![CDATA[This is an invalid URL.]]></translation>
+      </item>
+      <item type="error" name="MessageIsRequired">
+        <translation language="nl"><![CDATA[Bericht is een verplicht veld.]]></translation>
+        <translation language="en"><![CDATA[Message is a required field.]]></translation>
+      </item>
+      <item type="error" name="NameIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een naam in te geven.]]></translation>
+        <translation language="en"><![CDATA[Please provide a name.]]></translation>
+      </item>
+      <item type="error" name="SomethingWentWrong">
+        <translation language="nl"><![CDATA[Er ging iets mis.]]></translation>
+        <translation language="en"><![CDATA[Something went wrong.]]></translation>
+      </item>
+      <item type="label" name="Advertisement">
+        <translation language="nl"><![CDATA[advertentie]]></translation>
+        <translation language="en"><![CDATA[advertisement]]></translation>
+      </item>
+      <item type="label" name="Archive">
+        <translation language="nl"><![CDATA[archief]]></translation>
+        <translation language="en"><![CDATA[archive]]></translation>
+      </item>
+      <item type="label" name="Archives">
+        <translation language="nl"><![CDATA[archieven]]></translation>
+        <translation language="en"><![CDATA[archives]]></translation>
+      </item>
+      <item type="label" name="Breadcrumb">
+        <translation language="nl"><![CDATA[kruimelpad]]></translation>
+        <translation language="en"><![CDATA[breadcrumb]]></translation>
+      </item>
+      <item type="label" name="By">
+        <translation language="nl"><![CDATA[door]]></translation>
+        <translation language="en"><![CDATA[by]]></translation>
+      </item>
+      <item type="label" name="Category">
+        <translation language="nl"><![CDATA[categorie]]></translation>
+        <translation language="en"><![CDATA[category]]></translation>
+      </item>
+      <item type="label" name="Categories">
+        <translation language="nl"><![CDATA[categorieën]]></translation>
+        <translation language="en"><![CDATA[categories]]></translation>
+      </item>
+      <item type="label" name="Close">
+        <translation language="nl"><![CDATA[sluiten]]></translation>
+        <translation language="en"><![CDATA[close]]></translation>
+      </item>
+      <item type="label" name="Comment">
+        <translation language="nl"><![CDATA[reactie]]></translation>
+        <translation language="en"><![CDATA[comment]]></translation>
+      </item>
+      <item type="label" name="CommentedOn">
+        <translation language="nl"><![CDATA[reageerde op]]></translation>
+        <translation language="en"><![CDATA[commented on]]></translation>
+      </item>
+      <item type="label" name="Comments">
+        <translation language="nl"><![CDATA[reacties]]></translation>
+        <translation language="en"><![CDATA[comments]]></translation>
+      </item>
+      <item type="label" name="Date">
+        <translation language="nl"><![CDATA[datum]]></translation>
+        <translation language="en"><![CDATA[date]]></translation>
+      </item>
+      <item type="label" name="Email">
+        <translation language="nl"><![CDATA[e-mail]]></translation>
+        <translation language="en"><![CDATA[e-mail]]></translation>
+      </item>
+      <item type="label" name="EN">
+        <translation language="nl"><![CDATA[Engels]]></translation>
+        <translation language="en"><![CDATA[English]]></translation>
+      </item>
+      <item type="label" name="EnableJavascript">
+        <translation language="nl"><![CDATA[javascript inschakelen]]></translation>
+        <translation language="en"><![CDATA[enable javascript]]></translation>
+      </item>
+      <item type="label" name="FooterNavigation">
+        <translation language="nl"><![CDATA[voet navigatie]]></translation>
+        <translation language="en"><![CDATA[footer navigation]]></translation>
+      </item>
+      <item type="label" name="FR">
+        <translation language="nl"><![CDATA[Frans]]></translation>
+        <translation language="en"><![CDATA[French]]></translation>
+      </item>
+      <item type="label" name="GoTo">
+        <translation language="nl"><![CDATA[ga naar]]></translation>
+        <translation language="en"><![CDATA[go to]]></translation>
+      </item>
+      <item type="label" name="GoToPage">
+        <translation language="nl"><![CDATA[ga naar pagina]]></translation>
+        <translation language="en"><![CDATA[go to page]]></translation>
+      </item>
+      <item type="label" name="In">
+        <translation language="nl"><![CDATA[in]]></translation>
+        <translation language="en"><![CDATA[in]]></translation>
+      </item>
+      <item type="label" name="Language">
+        <translation language="nl"><![CDATA[taal]]></translation>
+        <translation language="en"><![CDATA[language]]></translation>
+      </item>
+      <item type="label" name="MainNavigation">
+        <translation language="nl"><![CDATA[hoofdnavigatie]]></translation>
+        <translation language="en"><![CDATA[main navigation]]></translation>
+      </item>
+      <item type="label" name="Message">
+        <translation language="nl"><![CDATA[bericht]]></translation>
+        <translation language="en"><![CDATA[message]]></translation>
+      </item>
+      <item type="label" name="More">
+        <translation language="nl"><![CDATA[meer]]></translation>
+        <translation language="en"><![CDATA[more]]></translation>
+      </item>
+      <item type="label" name="Name">
+        <translation language="nl"><![CDATA[naam]]></translation>
+        <translation language="en"><![CDATA[name]]></translation>
+      </item>
+      <item type="label" name="NextPage">
+        <translation language="nl"><![CDATA[volgende pagina]]></translation>
+        <translation language="en"><![CDATA[next page]]></translation>
+      </item>
+      <item type="label" name="NL">
+        <translation language="nl"><![CDATA[Nederlands]]></translation>
+        <translation language="en"><![CDATA[Dutch]]></translation>
+      </item>
+      <item type="label" name="On">
+        <translation language="nl"><![CDATA[op]]></translation>
+        <translation language="en"><![CDATA[on]]></translation>
+      </item>
+      <item type="label" name="PreviousPage">
+        <translation language="nl"><![CDATA[vorige pagina]]></translation>
+        <translation language="en"><![CDATA[previous page]]></translation>
+      </item>
+      <item type="label" name="RecentComments">
+        <translation language="nl"><![CDATA[recente reacties]]></translation>
+        <translation language="en"><![CDATA[recent comments]]></translation>
+      </item>
+      <item type="label" name="RequiredField">
+        <translation language="nl"><![CDATA[verplicht veld]]></translation>
+        <translation language="en"><![CDATA[required field]]></translation>
+      </item>
+      <item type="label" name="Send">
+        <translation language="nl"><![CDATA[verstuur]]></translation>
+        <translation language="en"><![CDATA[send]]></translation>
+      </item>
+      <item type="label" name="Search">
+        <translation language="nl"><![CDATA[zoeken]]></translation>
+        <translation language="en"><![CDATA[search]]></translation>
+      </item>
+      <item type="label" name="SearchAgain">
+        <translation language="nl"><![CDATA[zoek opnieuw]]></translation>
+        <translation language="en"><![CDATA[search again]]></translation>
+      </item>
+      <item type="label" name="SearchTerm">
+        <translation language="nl"><![CDATA[zoekterm]]></translation>
+        <translation language="en"><![CDATA[searchterm]]></translation>
+      </item>
+      <item type="label" name="SkipToContent">
+        <translation language="nl"><![CDATA[ga naar de inhoud]]></translation>
+        <translation language="en"><![CDATA[skip to content]]></translation>
+      </item>
+      <item type="label" name="Subnavigation">
+        <translation language="nl"><![CDATA[subnavigatie]]></translation>
+        <translation language="en"><![CDATA[subnavigation]]></translation>
+      </item>
+      <item type="label" name="Tags">
+        <translation language="nl"><![CDATA[tags]]></translation>
+        <translation language="en"><![CDATA[tags]]></translation>
+      </item>
+      <item type="label" name="Title">
+        <translation language="nl"><![CDATA[titel]]></translation>
+        <translation language="en"><![CDATA[title]]></translation>
+      </item>
+      <item type="label" name="Website">
+        <translation language="nl"><![CDATA[website]]></translation>
+        <translation language="en"><![CDATA[website]]></translation>
+      </item>
+      <item type="label" name="WrittenOn">
+        <translation language="nl"><![CDATA[geschreven op]]></translation>
+        <translation language="en"><![CDATA[written on]]></translation>
+      </item>
+      <item type="label" name="YouAreHere">
+        <translation language="nl"><![CDATA[je bent hier]]></translation>
+        <translation language="en"><![CDATA[you are here]]></translation>
+      </item>
+      <item type="message" name="Comment">
+        <translation language="nl"><![CDATA[reageer]]></translation>
+        <translation language="en"><![CDATA[comment]]></translation>
+      </item>
+      <item type="message" name="CommentsOn">
+        <translation language="nl"><![CDATA[Reacties op %1$s]]></translation>
+        <translation language="en"><![CDATA[Comments on %1$s]]></translation>
+      </item>
+      <item type="message" name="ContactMessageSent">
+        <translation language="nl"><![CDATA[Uw e-mail werd verzonden.]]></translation>
+        <translation language="en"><![CDATA[Your e-mail was sent.]]></translation>
+      </item>
+      <item type="message" name="ContactSubject">
+        <translation language="nl"><![CDATA[E-mail via contactformulier]]></translation>
+        <translation language="en"><![CDATA[E-mail via contact form.]]></translation>
+      </item>
+      <item type="message" name="EN">
+        <translation language="nl"><![CDATA[Engels]]></translation>
+        <translation language="en"><![CDATA[English]]></translation>
+      </item>
+      <item type="message" name="EnableJavascript">
+        <translation language="nl"><![CDATA[Om deze site te gebruiken]]></translation>
+        <translation language="en"><![CDATA[Having javascript enabled is recommended for using this site.]]></translation>
+      </item>
+      <item type="message" name="FR">
+        <translation language="nl"><![CDATA[Frans]]></translation>
+        <translation language="en"><![CDATA[French]]></translation>
+      </item>
+      <item type="message" name="MoreResults">
+        <translation language="nl"><![CDATA[Vind meer resultaten…]]></translation>
+        <translation language="en"><![CDATA[Find more results…]]></translation>
+      </item>
+      <item type="message" name="NL">
+        <translation language="nl"><![CDATA[Nederlands]]></translation>
+        <translation language="en"><![CDATA[Dutch]]></translation>
+      </item>
+      <item type="message" name="NotificationSubject">
+        <translation language="nl"><![CDATA[Verwittiging]]></translation>
+        <translation language="en"><![CDATA[Notification]]></translation>
+      </item>
+      <item type="message" name="SearchNoItems">
+        <translation language="nl"><![CDATA[Er zijn geen resultaten.]]></translation>
+        <translation language="en"><![CDATA[There were no results.]]></translation>
+      </item>
+      <item type="message" name="TagsNoItems">
+        <translation language="nl"><![CDATA[Er werden nog geen tags gebruikt.]]></translation>
+        <translation language="en"><![CDATA[No tags were used.]]></translation>
+      </item>
+      <item type="message" name="WrittenBy">
+        <translation language="nl"><![CDATA[geschreven door %1$s]]></translation>
+        <translation language="en"><![CDATA[written by %1$s]]></translation>
+      </item>
+    </core>
+  </frontend>
+</locale>

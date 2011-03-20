@@ -74,14 +74,14 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		if($this->filter['name'] !== null)
 		{
 			$query .= ' AND l.name LIKE ?';
-			$parameters[] = '%'. $this->filter['name'] .'%';
+			$parameters[] = '%' . $this->filter['name'] . '%';
 		}
 
 		// add value
 		if($this->filter['value'] !== null)
 		{
 			$query .= ' AND l.value LIKE ?';
-			$parameters[] = '%'. $this->filter['value'] .'%';
+			$parameters[] = '%' . $this->filter['value'] . '%';
 		}
 
 		// end of query
@@ -160,9 +160,9 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		$xmlOutput = $xml->saveXML();
 
 		// xml headers
-		$headers[] = 'Content-Disposition: attachment; filename="locale_'. BackendModel::getUTCDate('d-m-Y') .'.xml"';
+		$headers[] = 'Content-Disposition: attachment; filename="locale_' . BackendModel::getUTCDate('d-m-Y') . '.xml"';
 		$headers[] = 'Content-Type: application/octet-stream;charset=utf-8';
-		$headers[] = 'Content-Length: '. mb_strlen($xmlOutput, SPOON_CHARSET);
+		$headers[] = 'Content-Length: ' . strlen($xmlOutput, SPOON_CHARSET);
 
 		// set headers
 		SpoonHTTP::setHeaders($headers);
