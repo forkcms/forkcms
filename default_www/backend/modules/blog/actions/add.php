@@ -56,13 +56,17 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden', $this->URL->getModule()), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
+		// get categories
+		$categories = BackendBlogModel::getCategories();
+		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
+
 		// create elements
 		$this->frm->addText('title');
 		$this->frm->addEditor('text');
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('blog', 'allow_comments', false));
-		$this->frm->addDropdown('category_id', BackendBlogModel::getCategories(), $defaultCategoryId);
+		$this->frm->addDropdown('category_id', $categories, $defaultCategoryId);
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');

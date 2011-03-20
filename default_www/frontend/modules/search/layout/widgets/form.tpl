@@ -6,8 +6,8 @@
 		<div class="bd">
 			{form:search}
 				<p>
-					<label for="q">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
-					{$txtQ}
+					<label for="q_widget">{$lblSearchTerm|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
+					{$txtQWidget}
 				</p>
 				<p>
 					<input id="submit" class="inputSubmit" type="submit" name="submit" value="{$lblSearch|ucfirst}" />

@@ -10,6 +10,13 @@
 	</div>
 </div>
 
+{option:noDefaultsSet}
+<div class="generalMessage infoMessage content">
+	<p><strong>{$msgNoDefaultsSetTitle}</strong></p>
+	<p>{$msgNoDefaultsSet}</p>
+</div>
+{/option:noDefaultsSet}
+
 {option:datagrid}
 <form action="{$var|geturl:'mass_group_action'}" method="get" class="forkForms submitWithLink" id="groups">
 	<div class="datagridHolder">

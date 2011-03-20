@@ -74,6 +74,41 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 
 
 	/**
+	 * Sets the headers so we may download the CSV file in question
+	 *
+	 * @return	array
+	 * @param	string $path	The full path to the CSV file you wish to download.
+	 */
+	private function downloadCSV($path)
+	{
+		// check if the file exists
+		if(!SpoonFile::exists($path)) throw new SpoonFileException('The file ' . $path . ' doesn\'t exist.');
+
+		// fetch the filename from the path string
+		$explodedFilename = explode('/', $path);
+		$filename = end($explodedFilename);
+
+		// set headers for download
+		$headers = array();
+		$headers[] = 'Content-type: application/csv; charset=utf-8';
+		$headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
+		$headers[] = 'Pragma: no-cache';
+
+		// overwrite the headers
+		SpoonHTTP::setHeaders($headers);
+
+		// get the file contents
+		$content = readfile($path);
+
+		// output the file contents
+		echo $content;
+
+		// exit here
+		exit;
+	}
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -181,6 +216,23 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
+		// CSV parameter (this is set when an import partially fails)
+		$csv = $this->getParameter('csv');
+		$download = $this->getParameter('download', 'bool', false);
+
+		// a failed import just happened
+		if(!empty($csv))
+		{
+			// assign the CSV URL to the template
+			$this->tpl->assign('csvURL', BackendModel::createURLForAction('addresses', 'mailmotor') . '&csv=' . $csv . '&download=1');
+
+			// we should download the file
+			if($download)
+			{
+				$this->downloadCSV(BACKEND_CACHE_PATH . '/mailmotor/' . $csv);
+			}
+		}
+
 		// parse the datagrid
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
 

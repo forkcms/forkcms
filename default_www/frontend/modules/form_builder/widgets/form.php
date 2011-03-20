@@ -439,7 +439,7 @@ class FrontendFormBuilderWidgetForm extends FrontendBaseWidget
 					$variables['fields'] = $emailFields;
 
 					// add email
-					FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $this->item['email'], $this->item['email']);
+					FrontendMailer::addEmail(sprintf(FL::getMessage('FormBuilderSubject'), $this->item['name']), FRONTEND_MODULES_PATH . '/form_builder/layout/templates/mails/form.tpl', $variables, $this->item['email'], $this->item['name']);
 				}
 
 				// store timestamp in session so we can block excesive usage

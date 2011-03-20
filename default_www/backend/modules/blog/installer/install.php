@@ -18,12 +18,17 @@ class BlogInstall extends ModuleInstaller
 	 *
 	 * @return	int
 	 * @param	string $language	The language to use.
-	 * @param	string $name		The name of the category.
+	 * @param	string $title		The title of the category.
 	 * @param	string $url			The URL for the category.
 	 */
-	private function addCategory($language, $name, $url)
+	private function addCategory($language, $title, $url)
 	{
-		return (int) $this->getDB()->insert('blog_categories', array('language' => (string) $language, 'name' => (string) $name, 'url' => (string) $url));
+		// build array
+		$item['meta_id'] = $this->insertMeta($title, $title, $title, $url);
+		$item['language'] = (string) $language;
+		$item['title'] = (string) $title;
+
+		return (int) $this->getDB()->insert('blog_categories', $item);
 	}
 
 

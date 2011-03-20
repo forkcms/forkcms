@@ -157,13 +157,17 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$rbtHiddenValues[] = array('label' => BL::lbl('Hidden'), 'value' => 'Y');
 		$rbtHiddenValues[] = array('label' => BL::lbl('Published'), 'value' => 'N');
 
+		// get categories
+		$categories = BackendBlogModel::getCategories();
+		$categories['new_category'] = ucfirst(BL::getLabel('AddCategory'));
+
 		// create elements
 		$this->frm->addText('title', $this->record['title']);
 		$this->frm->addEditor('text', $this->record['text']);
 		$this->frm->addEditor('introduction', $this->record['introduction']);
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
-		$this->frm->addDropdown('category_id', BackendBlogModel::getCategories(), $this->record['category_id']);
+		$this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['revision_id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);

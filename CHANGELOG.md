@@ -1,5 +1,20 @@
-2.1.0 (xxxx-xx-xx)
+2.1.1 (xxxx-xx-xx)
 --
+Bugfixes:
+	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
+	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
+
+Improvements:
+	* Blog: creating categories can now be done without leaving the add/edit screen.
+	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
+	* Core: when using datefields with till, from, range set, it will be validated according the type.
+
+2.1.0 (2011-03-14)
+--
+* IE-stylesheets aren't loaded by default, this is the task of the slices (as requested/indicated by Yoni)
+* Force forms to use UTF-8
+* Blog categories now use the meta-object
+* Cronjobs can now be triggerd from the CLI, as requested on http://forkcms.lighthouseapp.com/projects/61890/tickets/120
 * Core: improvments for numberformatting
 * Tools: scripts are now using find
 * Bugfix: Disabled the imagemanagers contextmenu because there are still issues (according to the TinyMCE developers :s)
@@ -46,10 +61,17 @@
 * Tools: added a script to generate statistics for the codebase
 * Core: isCached now always returns false when SPOON_DEBUG is true
 * FormBuilder: added the formbuilder module.
+* Mailmotor: now works with CampaignMonitor API v3
+* Mailmotor: reworked settings; You can now unlink accounts and choose an existing client to link with.
+* Mailmotor: thanks to the reworked import functionality in the CM API v3, the address-import should go a lot faster.
+* Mailmotor: you can now pick your own default groups after importing data of an existing client.
 * Core: Integrated Facebook in the frontend, when an Facebook-app is configured, a facebook-instance will be available in the reference (Spoon::getObjectReference('facebook')). When the user has granted the correct permission you will be able to communicate with Facebook as that user.
 * Bugfix: changing a page template to a template with more blocks caused an exception.
 * Pages: use the new Triton theme when installing a new Fork with example data.
-
+* Pages: hidden pages don't have the view-button anymore, as requested on http://forkcms.lighthouseapp.com/projects/61890/tickets/123 
+* Bugfix: Metanavigation subpages not shown in backend, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/129
+* Dashboard: Fixed issue with dashboard that wasn't scalling anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/130
+* When FB-admin-ids are given, the facebook-statistics-tag is added on all pages
 
 2.0.2 (2010-11-24)
 --

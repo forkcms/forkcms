@@ -72,6 +72,13 @@
 		font-size: 11px;
 	}
 
+/* Inline success @todo @yoni: style me*/
+.formSuccess {
+	color: #4f6d2c;
+	display: block;
+	font-size: 11px;
+}
+	
 .singleMessage {
 	border: 1px solid #CCC;
 }

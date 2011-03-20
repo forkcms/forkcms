@@ -241,9 +241,7 @@ class BackendMailmotorEditAddress extends BackendBaseActionEdit
 				 * groups he requested. This is done because the CM API supports no updateSubscriber function, and it
 				 * overwrites the values of custom fields if you do an update for 1 list and don't provide values for another.
 				 *
-				 * NOTE: A user will still be in the suppression list if he is resubscribed, but since the wrapper will use the
-				 * 		 Subscriber.AddAndResubscribe function, it will ignore the suppression list.
-				 *
+				 * NOTE: A user will still be in the suppression list if he is resubscribed, but he will receive e-mails.
 				 * 		 (see: http://www.campaignmonitor.com/forums/viewtopic.php?id=1761)
 				 */
 

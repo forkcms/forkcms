@@ -1,0 +1,650 @@
+/*
+
+	Full stylesheet for Fork CMS backend markup
+	Author:     Thomas Deceuninck <thomas@fronto.be>
+
+*/
+
+/*
+
+	Name:       Winston reset module [0.4]
+	Desc:       Resets commonly used HTML elements
+
+*/
+
+body, form, ol, ul, dl, li, dt, dd, td, th ,tr, h1, h2, h3, h4, h5, h6, p, pre, blockquote, address { margin: 0; padding: 0; }
+ol, ul { list-style: none; }
+img { border:0; }
+fieldset { margin: 0; padding: 0; border: 0; }
+input, select, textarea { font-size: 100%; vertical-align: middle; }
+table { border-collapse: collapse; border-spacing: 0; empty-cells: show; }
+th { text-align: left; }
+a:focus { overflow: hidden; }
+
+/*
+
+	Name:       Winston general module [0.4]
+	Desc:       A set of general purpose classes
+
+*/
+
+
+/* General purpose classes */
+
+/* Clearfix */
+.clearfix:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.hidden { display: none; }
+.block { display: block; }
+
+.floatLeft { float: left; }
+.floatRight { float: right; }
+
+.p6 { padding: 6px; }
+.p12 { padding: 12px; }
+.p24 { padding: 24px; }
+.p0, .nopad { padding: 0; }
+
+.noBorder { border: none !important; }
+.border { border: 1px solid #C7C7C7; }
+
+.mute { color: #666; }
+.serif { font-family: Georgia, serif; }
+.uc { text-transform: uppercase; }
+.sC { font-variant: small-caps; }
+.lC { text-transform: lowercase; }
+
+.rc {
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.helpTxt {
+	font-family: Arial, sans-serif;
+	font-size: 11px;
+	color: #666;
+}
+
+/*
+
+	Name:       Winston layout module [0.4]
+	Desc:       Styles for creating layouts, both grid style and % style
+	            Styles for image alignment on the grid
+	            Styles for centering anything
+
+*/
+
+/*
+	Grid based column system 
+*/
+
+.colsGrid:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.colsGrid .col {
+	float: left;
+	margin-right: 24px;
+}
+
+/* (72px columns/24px gutter/10 columns) */
+.col-1 { width: 72px; }
+.col-2 { width: 168px; }
+.col-3 { width: 264px; }
+.col-4 { width: 360px; }
+.col-5 { width: 456px; }
+.col-6 { width: 552px; }
+.col-7 { width: 648px; }
+.col-8 { width: 744px; }
+.col-9 { width: 840px; }
+.col-10 { width: 936px; }
+.colLast { margin-right: 0 !important; }
+
+/*
+	Simple column system
+*/
+
+.cols:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+}
+
+.cols .col {
+	float: left;
+	margin: 0;
+}
+
+/* Two columns */
+.col-1d2,
+.col-2d4 { width: 50%; }
+
+/* Three columns*/
+.col-2d3 { width: 66.66%; }
+.col-1d3 { width: 33.33%; }
+
+/* Four columns */
+.col-1d4 { width: 25%; }
+.col-3d4 { width: 75%; }
+
+/* Five columns */
+.col-1d5 { width: 20%; }
+.col-2d5 { width: 40%; }
+.col-3d5 { width: 60%; }
+.col-4d5 { width: 80%; }
+
+/*
+	Spacing divs to fit inside columns:
+	gutter width and 1/2 gutter width
+*/
+.cols .spacingLeft { margin-left: 24px; }
+.cols .spacingLeftHalf { margin-left: 12px; }
+.cols .spacingRight { margin-right: 24px; }
+.cols .spacingRightHalf { margin-right: 12px; }
+.cols .spacingBothHalf { margin-right: 12px; margin-left: 12px; }
+
+/*
+	Image aligment classes
+	Based on grid
+*/
+
+img.alignleft {
+	float: left;
+	padding: 0 24px 12px 0;
+}
+
+img.alignright {
+	float: right;
+	padding: 0 0 12px 24px;
+}
+
+/*
+
+	Name:       Winston typography.common module [0.4]
+	Desc:       Provides basic typography to start a project with
+	            These elements are used on almost any website.
+*/
+
+/* Typography and text styles */
+
+body {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	font-size: 12px;
+	line-height: 1.58; /* Safari 2.0.4 */
+	color: #555;
+}
+
+/* Headings */
+h1, h2, h3 {
+	line-height: 1.1;
+	font-family: Helvetica, Arial, sans-serif;
+}
+
+	h1, h2, h3, h4 { 
+		font-weight: 700;
+		color: #000;
+		padding: 0 0 12px;
+	}
+
+h2 {
+	font-size: 22px;
+}
+
+h3 {
+	font-size: 16px;
+}
+
+h4 {
+	font-size: 13px;
+}
+
+p {
+	padding: 0 0 12px;
+}
+
+strong {
+	font-weight: 700;
+	color: #000;
+}
+
+em {
+	font-style: italic;
+}
+
+.content ol {
+	padding: 0 0 12px 28px;
+}
+
+.content ul {
+	list-style: disc;
+	padding: 0 0 12px 24px;
+}
+
+.content ol {
+	list-style-type: decimal;
+}
+
+	.content ul ul,
+	.content ol ul,
+	.content ol ol {
+		padding-bottom: 0;
+	}
+
+	.content ul ol {
+		padding: 0 0 0 24px;
+	}
+
+	.content ol ol {
+		list-style: upper-roman;
+	}
+
+	.content ol ol ol {
+		list-style: lower-roman;
+	}
+	
+.content dl {
+	padding: 0 0 0 12px;
+}
+
+.content dt {
+	font-weight: 700;
+	color: #000;
+}
+
+.content dd {
+	padding: 0 0 12px;
+}
+
+blockquote, q {
+	font-style: italic;
+}
+
+blockquote {
+	padding: 0 0 0 12px;
+}
+
+/* Horizontal rules */
+
+hr {
+	height: 1px;
+	background: #CCC;
+	border: 0;
+	font-size: 0;
+	margin: 12px 0 24px;
+	line-height: 0;
+}
+
+/*
+
+	Name:       Winston typography.uncommon module [0.4]
+	Desc:       This file styles elements that are not commonly used by non-web-semanticists (e.g. <pre> and <abbr>).
+*/
+
+abbr {
+	cursor: help;
+}
+
+/* Keyboard shortcuts */
+
+kbd {
+
+	background: #EEE;
+	border-color: #CCC #AAA #888 #BBB;
+	border-style: solid;
+	border-width: 1px 3px 4px 2px;
+	color: #000;
+	font-weight: 700;
+	padding: 5px;
+	font-size: 11px;
+	margin: 0 2px;
+	white-space: nowrap;
+
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	border-radius: 4px;
+
+}
+
+/* Code examples */
+code, pre {
+	font-family: Menlo, Consolas, Monaco, "Courier New", monospace;
+	font-size: 12px;
+	line-height: 1.15;
+}
+
+/* Block code, preformatted spaces */
+pre {
+	padding: 6px 12px;
+	background: #F0F0F0;
+	margin: 0 0 12px;
+}
+
+/* Sub and superscript */
+sub, sup {
+	line-height: 0;
+	/* Fix sub & sup fucking with the baseline */
+}
+
+/* Deleted and inserted text */
+
+del {
+	color: #666;
+}
+
+ins {
+	text-decoration: none;
+	color: #000;
+	background: #F0F0F0;
+}
+
+/*
+
+	Name:       Winston datagrid module [0.4]
+	Desc:       Basic styles for styling tabular data
+
+*/
+
+table.datagrid  {
+	width: 100%;
+	margin: 0 0 12px;
+	/* INC .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+table.datagrid td,
+table.datagrid th {
+	padding: 6px 12px;
+}
+
+	table.datagridSmall td,
+	table.datagridSmall th {
+		padding: 6px;
+		font-size: 11px;
+	}
+
+table.datagrid th {
+	font-weight: 700;
+	color: #000;
+	line-height: 1.2;
+	text-align: left;
+}
+
+table.datagrid tr.rowOdd { background: #FFF; }
+table.datagrid tr.rowEven { background: #EEE; }
+
+table.datagrid th {
+	border: 1px solid #CCC;
+	background: #F5F5F5;
+}
+
+table.datagrid td {
+	border: 1px solid #CCC;
+}
+
+/*
+
+	Name:       Winston links module [0.4]
+	Desc:       Link styles: pick the ones you need
+
+*/
+
+/* Regular border style links */
+
+a { text-decoration: none; border-width: 0 0 1px 0; border-style: solid; border-color: #FFF; }
+a:link { border-color: #A8B6E5; color: #002BB8; }
+a:visited { border-color: #AEB5CE; color: #112773; }
+a:hover, a:active { border-color: #B1C1F7; color: #1A4CEF; }
+a:focus { border-color: #B1C1F7; color: #1A4CEF; }
+
+/*
+	Regular border style links, 50% opacity (fake)
+	Dependency: Regular border style links
+*/
+
+.halfmute a:link, a.halfmute:link { color: #A7A7FB; border-color: #DEDEFF; }
+.halfmute a:visited, a.halfmute:visited { color: #6C82CC; border-color: #CFC2FF; }
+.halfmute a:hover, .halfmute:active, .halfmute:focus,
+a.halfmute:hover, a.halfmute:active, a.halfmute:focus { color: #B1C1F7; border-color: #1A4CEF; }
+
+/*
+	Greyed out style links
+	Dependency: Regular border style links
+*/
+
+.mute a:link { color: #9C9C9C; border-color: #E3E3E3; }
+.mute a:visited { color: #7B7B7B; border-color: #D3D3D3; }
+.mute a:hover, a.mute:active, a.mute:focus { color: #6AAEED; border-color: #CEE4F9; }
+
+/*
+	No underlines links: for areas that are clearly navigational
+	Dependency: Regular border style links
+*/
+
+.noUnderlines a:link,
+.noUnderlines a:visited,
+.noUnderlines a:hover,
+.noUnderlines a:active
+.noUnderlines a:focus {
+	border-color: #FFF;
+}
+
+	.colorInverse .noUnderlines a:link,
+	.colorInverse .noUnderlines a:visited,
+	.colorInverse .noUnderlines a:hover,
+	.colorInverse .noUnderlines a:active
+	.colorInverse .noUnderlines a:focus {
+		border-color: #000;
+	}
+
+.swapUnderlines a:link,
+.swapUnderlines a:visited {
+	border-color: #FFF;
+}
+
+.swapUnderlines a:hover,
+.swapUnderlines a:active
+.swapUnderlines a:focus {
+	color: #1A4CEF;
+	border-bottom: 1px solid #B1C1F7;
+}
+
+/*
+	Docs specific
+*/
+
+body {
+	background: #FFF;
+}
+
+#toc {
+	font-size: 11px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	border-right: 1px solid #CCC;
+	overflow-y: auto;
+	background: #FFF;
+}
+
+	#toc div {
+		padding: 30px;
+	}
+
+#container {
+	width: 552px;
+	padding: 40px 0;
+	margin: 0 0 0 320px;
+}
+
+p.intro {
+	font-size: 16px;
+	letter-spacing: -0.02em;
+	line-height: 1.3;
+}
+
+.example {
+	padding: 24px 24px 8px;
+	background: #FFF;
+	border: 1px solid #AAA;
+	margin: 0 0 12px;
+	position: relative;
+	/* @inc .rc */
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 3px;
+
+}
+	.example .ex {
+		position: absolute;
+		top: 3px;
+		left: 3px;
+		font-size: 11px;
+		color: #666;
+	}
+
+	iframe {
+		border: 0;
+	}
+
+	h2, h3 {
+		padding-top: 20px;
+	}
+
+	h2 + h3 {
+		padding-top: 0;
+	}
+	
+	#toc h4 {
+		padding-top: 6px;
+		font-size: 11px;
+		text-transform: uppercase;
+	}
+
+h1 {
+	padding: 0 0 20px;
+	line-height: 1;
+	letter-spacing: -1px;
+	font-size: 32px;
+}
+
+.id1 {
+	padding-left: 24px;
+}
+
+#feedback {
+	text-align: center;
+}
+
+/*
+	Avatar lists
+	general class:
+	.people
+*/
+
+.people li {
+	float: left;
+	padding: 0 10px 0 0;
+}
+
+	.people li div.avatar {
+		margin-left: 9px;
+	}
+
+	.people li p {
+		text-align: center;
+		/* INC .secondaryContent */
+		font-size: 11px;
+		font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+	}
+
+	.people li a {
+		border: none;
+	}
+	
+	strong {
+		color: #333;
+	}
+	
+	.marked {
+		background: #FFF;
+	}
+	
+	.markedTodo {
+		background: yellow;
+	}
+
+/*
+	Figure
+*/
+
+.figure {
+	margin: 0 0 12px;
+	/* @inc .boxShadow */
+	box-shadow: 0 2px 6px #AAA;
+	-webkit-box-shadow: 0 2px 6px #AAA;
+	-moz-box-shadow: #AAA 0 2px 6px;
+}
+
+	.figureLeft {
+		float: left;
+		margin: 0 24px 12px 0;
+	}
+
+.figure img {
+	display: block;
+}
+
+.figure .caption {
+	color: #FFF;
+	padding: 6px;
+	background: #999;
+	/* INC .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+.secondaryContent {
+	/* INC .secondaryContent */
+	font-size: 11px;
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Arial, sans-serif;
+}
+
+/*
+	Theme tutorial
+*/
+
+#themeTutorial img {
+	width: 550px;
+	margin: 0 0 12px;
+	display: block;
+	border: 1px solid #EEE;
+	height: auto;
+	-moz-box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+	-webkit-box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+	box-shadow: 3px 3px 3px rgba(0,0,0,0.1);
+}
+
+#themeTutorial ul.themeTutorial {
+	list-style: none;
+	padding: 0;
+}
+
+#themeTutorial .themeTutorial > li {
+	border-bottom: 1px solid #CCC;
+	margin: 0 0 24px;
+	padding: 0 0 12px;

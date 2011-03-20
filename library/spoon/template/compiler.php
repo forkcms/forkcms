@@ -357,15 +357,35 @@ class SpoonTemplateCompiler
 
 				// start & close tag
 				$search = array('{form:' . $name . '}', '{/form:' . $name . '}');
-				$replace[0] = '<?php
-				if(isset($this->forms[\'' . $name . '\']))
+
+				// using UTF-8 as charset
+				if(SPOON_CHARSET == 'utf-8')
 				{
-					?><form action="<?php echo $this->forms[\'' . $name . '\']->getAction(); ?>" method="<?php echo $this->forms[\'' . $name . '\']->getMethod(); ?>"<?php echo $this->forms[\'' . $name . '\']->getParametersHTML(); ?>>
-					<?php echo $this->forms[\'' . $name . '\']->getField(\'form\')->parse();
-					if($this->forms[\'' . $name . '\']->getUseToken())
+					$replace[0] = '<?php
+					if(isset($this->forms[\'' . $name . '\']))
 					{
-						?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue(); ?>" />
-					<?php } ?>';
+						?><form accept-charset="UTF-8" action="<?php echo $this->forms[\'' . $name . '\']->getAction(); ?>" method="<?php echo $this->forms[\'' . $name . '\']->getMethod(); ?>"<?php echo $this->forms[\'' . $name . '\']->getParametersHTML(); ?>>
+						<?php echo $this->forms[\'' . $name . '\']->getField(\'form\')->parse();
+						if($this->forms[\'' . $name . '\']->getUseToken())
+						{
+							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue(); ?>" />
+						<?php } ?>';
+				}
+
+				// no UTF-8
+				else
+				{
+					$replace[0] = '<?php
+					if(isset($this->forms[\'' . $name . '\']))
+					{
+						?><form action="<?php echo $this->forms[\'' . $name . '\']->getAction(); ?>" method="<?php echo $this->forms[\'' . $name . '\']->getMethod(); ?>"<?php echo $this->forms[\'' . $name . '\']->getParametersHTML(); ?>>
+						<?php echo $this->forms[\'' . $name . '\']->getField(\'form\')->parse();
+						if($this->forms[\'' . $name . '\']->getUseToken())
+						{
+							?><input type="hidden" name="form_token" id="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getAttribute(\'id\'); ?>" value="<?php echo $this->forms[\'' . $name . '\']->getField(\'form_token\')->getValue(); ?>" />
+						<?php } ?>';
+				}
+
 				$replace[1] = '</form>
 				<?php } ?>';
 

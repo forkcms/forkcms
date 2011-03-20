@@ -17,7 +17,7 @@ class BackendBlogModel
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 									FROM blog_posts AS i
 									WHERE i.status = ? AND i.language = ?';
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.name
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.title
 											FROM blog_categories AS i
 											WHERE i.language = ?';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
@@ -332,18 +332,34 @@ class BackendBlogModel
 	 */
 	public static function getCategories()
 	{
+		// get db
+		$db = BackendModel::getDB(true);
+
 		// get records and return them
-		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.name
-																FROM blog_categories AS i
-																WHERE i.language = ?', array(BL::getWorkingLanguage()));
+		$categories = (array) $db->getPairs('SELECT i.id, i.title
+												FROM blog_categories AS i
+												WHERE i.language = ?', array(BL::getWorkingLanguage()));
 
 		// no categories?
 		if(empty($categories))
 		{
 			// build array
 			$category['language'] = BL::getWorkingLanguage();
-			$category['name'] = 'default';
-			$category['url'] = 'default';
+			$category['title'] = 'default';
+
+			// meta array
+			$meta['keywords'] = 'default';
+			$meta['keywords_overwrite'] = 'default';
+			$meta['description'] = 'default';
+			$meta['description_overwrite'] = 'default';
+			$meta['title'] = 'default';
+			$meta['title_overwrite'] = 'default';
+			$meta['url'] = 'default';
+			$meta['url_overwrite'] = 'default';
+			$meta['custom'] = null;
+
+			// insert meta
+			$category['meta_id'] = $db->insert('meta', $category);
 
 			// insert category
 			$id = self::insertCategory($category);
@@ -376,23 +392,23 @@ class BackendBlogModel
 
 
 	/**
-	 * Get a category id by name
+	 * Get a category id by title
 	 *
 	 * @return	int
-	 * @param	string $name					The name of the category.
+	 * @param	string $title					The title of the category.
 	 * @param	string[optional] $language		The language to use, if not provided we will use the working language.
 	 */
-	public static function getCategoryId($name, $language = null)
+	public static function getCategoryId($title, $language = null)
 	{
 		// redefine
-		$name = (string) $name;
+		$title = (string) $title;
 		$language = ($language !== null) ? (string) $language : BackendLanguage::getWorkingLanguage();
 
 		// exists?
 		return (int) BackendModel::getDB()->getVar('SELECT i.id
 													FROM blog_categories AS i
-													WHERE i.name = ? AND i.language = ?',
-													array($name, $language));
+													WHERE i.title = ? AND i.language = ?',
+													array($title, $language));
 	}
 
 
@@ -587,7 +603,8 @@ class BackendBlogModel
 			// get number of categories with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 											FROM blog_categories AS i
-											WHERE i.language = ? AND i.url = ?',
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.language = ? AND m.url = ?',
 											array(BL::getWorkingLanguage(), $URL));
 
 			// already exists
@@ -607,7 +624,8 @@ class BackendBlogModel
 			// get number of items with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
 											FROM blog_categories AS i
-											WHERE i.language = ? AND i.url = ? AND i.id != ?',
+											INNER JOIN meta AS m ON i.meta_id = m.id
+											WHERE i.language = ? AND m.url = ? AND i.id != ?',
 											array(BL::getWorkingLanguage(), $URL, $categoryId));
 
 			// already exists
@@ -649,12 +667,19 @@ class BackendBlogModel
 	 * Inserts a new category into the database
 	 *
 	 * @return	int
-	 * @param	array $item		The data for the category to insert.
+	 * @param	array $item				The data for the category to insert.
+	 * @param	array[optional] $meta	The metadata for the category to insert.
 	 */
-	public static function insertCategory(array $item)
+	public static function insertCategory(array $item, $meta = null)
 	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// meta given?
+		if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
+
 		// create category
-		$item['id'] = BackendModel::getDB(true)->insert('blog_categories', $item);
+		$item['id'] = $db->insert('blog_categories', $item);
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
@@ -759,12 +784,25 @@ class BackendBlogModel
 	 * Update an existing category
 	 *
 	 * @return	int
-	 * @param	array $item		The new data.
+	 * @param	array $item				The new data.
+	 * @param	array[optional] $meta	The new meta-data.
 	 */
-	public static function updateCategory(array $item)
+	public static function updateCategory(array $item, $meta = null)
 	{
+		$db = BackendModel::getDB(true);
+
 		// update category
-		$updated = BackendModel::getDB(true)->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
+		$updated = $db->update('blog_categories', $item, 'id = ?', array((int) $item['id']));
+
+		// meta passed?
+		if($meta !== null)
+		{
+			// get current category
+			$category = self::getCategory($item['id']);
+
+			// update the meta
+			$db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
+		}
 
 		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
