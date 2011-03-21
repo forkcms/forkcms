@@ -35,81 +35,8 @@ class PagesInstall extends ModuleInstaller
 		// set settings
 		$this->setSettings();
 
-		// insert locale (nl)
-		$this->insertLocale('nl', 'backend', 'pages', 'err', 'CantBeMoved', 'Pagina kan niet verplaatst worden.');
-		$this->insertLocale('nl', 'backend', 'pages', 'err', 'DeleteTemplate', 'Je kan deze template niet verwijderen.');
-		$this->insertLocale('nl', 'backend', 'pages', 'err', 'HomeCantHaveBlocks', 'Je kan geen modules aan de homepage koppelen.');
-		$this->insertLocale('nl', 'backend', 'pages', 'err', 'InvalidTemplateSyntax', 'Ongeldige syntax.');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Add', 'pagina toevoegen');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'EditModuleContent', 'wijzig module inhoud');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'ExtraTypeBlock', 'module');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'ExtraTypeWidget', 'widget');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Footer', 'footer navigatie');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'MainNavigation', 'hoofdnavigatie');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Meta', 'metanavigatie');
-		$this->insertLocale('nl', 'backend', 'pages', 'lbl', 'Root', 'losse pagina\'s');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'Added', 'De pagina "%1$s" werd toegevoegd.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'AddedTemplate', 'De template "%1$s" werd toegevoegd.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'BlockAttached', 'De module <strong>%1$s</strong> is gekoppeld aan deze sectie.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de pagina "%1$s" wil verwijderen?');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'ConfirmDeleteTemplate', 'Ben je zeker dat je de template "%1$s" wil verwijderen?');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'Deleted', 'De pagina "%1$s" werd verwijderd.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'DeletedTemplate', 'De template "%1$s" werd verwijderd.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'Edited', 'De pagina "%1$s" werd opgeslagen.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'EditedTemplate', 'De template "%1$s" werd opgeslagen.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpBlockContent', 'Welk soort inhoud wil je hier tonen?');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpMetaNavigation', 'Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpNavigationTitle', 'De titel die in het menu getoond wordt.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpNoFollow', 'Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpTemplateFormat', 'vb. [1,2],[/,2]');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'HelpTemplateLocation', 'Plaats de templates in de map <code>core/templates</code> van je thema.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'IsAction', 'Gebruik deze pagina als module-actie.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'MetaNavigation', 'Metanavigatie inschakelen voor deze website.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'ModuleBlockAlreadyLinked', 'Er werd reeds een module gekoppeld aan deze pagina.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'PageIsMoved', 'De pagina "%1$s" werd verplaatst.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'PathToTemplate', 'Pad naar de template');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'RichText', 'Editor');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'TemplateChangeWarning', '<strong>Let op:</strong> de bestaande inhoud zal verloren gaan bij het wijzigen van de template.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'TemplateInUse', 'Deze template is in gebruik, je kan het aantal blokken niet meer aanpassen.');
-		$this->insertLocale('nl', 'backend', 'pages', 'msg', 'WidgetAttached', 'De widget <strong>%1$s</strong> is gekoppeld aan deze sectie.');
-
-		// insert locale (en)
-		$this->insertLocale('en', 'backend', 'pages', 'err', 'CantBeMoved', 'Page can\'t be moved.');
-		$this->insertLocale('en', 'backend', 'pages', 'err', 'DeletedTemplate', 'You can\'t delete this template.');
-		$this->insertLocale('en', 'backend', 'pages', 'err', 'HomeCantHaveBlocks', 'You can\'t link a module to the homepage.');
-		$this->insertLocale('en', 'backend', 'pages', 'err', 'InvalidTemplateSyntax', 'Invalid syntax.');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Add', 'add page');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'EditModuleContent', 'edit module content');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'ExtraTypeBlock', 'module');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'ExtraTypeWidget', 'widget');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Footer', 'footer navigation');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'MainNavigation', 'main navigation');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Meta', 'meta navigation');
-		$this->insertLocale('en', 'backend', 'pages', 'lbl', 'Root', 'single pages');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Added', 'The page "%1$s" was added.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'AddedTemplate', 'The template "%1$s" was added.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'BlockAttached', 'The module <strong>%1$s</strong> is attached to this section.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the page "%1$s"?');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'ConfirmDeleteTemplate', 'Are your sure you want to delete the template "%1$s"?');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Deleted', 'The page "%1$s" was deleted.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'DeletedTemplate', 'The template "%1$s" was deleted.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'Edited', 'The page "%1$s" was saved.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'EditedTemplate', 'The template "%1$s" was saved.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpBlockContent', 'What kind of content do you want to show here?');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpMetaNavigation', 'Extra topnavigation (above/below the menu) on every page.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpNavigationTitle', 'The title that is shown in the menu.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpNoFollow', 'Makes sure that this page doesn\'t influence the internal PageRank.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpTemplateFormat', 'e.g. [1,2],[/,2]');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'HelpTemplateLocation', 'Put your templates in the <code>core/templates</code> folder of your theme.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'IsAction', 'Use this page as a module action.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'MetaNavigation', 'Enable metanavigation for this website.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'ModuleBlockAlreadyLinked', 'A module has already been linked to this page.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'PageIsMoved', 'The page "%1$s" was moved.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'PathToTemplate', 'Path to template');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'RichText', 'Editor');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'TemplateChangeWarning', '<strong>Warning:</strong> Existing content will be deleted when changing the template.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'TemplateInUse', 'This template is in use. You can\'t change the number of blocks.');
-		$this->insertLocale('en', 'backend', 'pages', 'msg', 'WidgetAttached', 'The widget <strong>%1$s</strong> is attached to this section.');
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 
 

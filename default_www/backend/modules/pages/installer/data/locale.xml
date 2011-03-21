@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <pages>
+      <item type="error" name="CantBeMoved">
+        <translation language="nl"><![CDATA[Pagina kan niet verplaatst worden.]]></translation>
+        <translation language="en"><![CDATA[Page can't be moved.]]></translation>
+      </item>
+      <item type="error" name="DeleteTemplate">
+        <translation language="nl"><![CDATA[Je kan deze template niet verwijderen.]]></translation>
+      </item>
+      <item type="error" name="HomeCantHaveBlocks">
+        <translation language="nl"><![CDATA[Je kan geen modules aan de homepage koppelen.]]></translation>
+        <translation language="en"><![CDATA[You can't link a module to the homepage.]]></translation>
+      </item>
+      <item type="error" name="InvalidTemplateSyntax">
+        <translation language="nl"><![CDATA[Ongeldige syntax.]]></translation>
+        <translation language="en"><![CDATA[Invalid syntax.]]></translation>
+      </item>
+      <item type="error" name="DeletedTemplate">
+        <translation language="en"><![CDATA[You can't delete this template.]]></translation>
+      </item>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[pagina toevoegen]]></translation>
+        <translation language="en"><![CDATA[add page]]></translation>
+      </item>
+      <item type="label" name="EditModuleContent">
+        <translation language="nl"><![CDATA[wijzig module inhoud]]></translation>
+        <translation language="en"><![CDATA[edit module content]]></translation>
+      </item>
+      <item type="label" name="ExtraTypeBlock">
+        <translation language="nl"><![CDATA[module]]></translation>
+        <translation language="en"><![CDATA[module]]></translation>
+      </item>
+      <item type="label" name="ExtraTypeWidget">
+        <translation language="nl"><![CDATA[widget]]></translation>
+        <translation language="en"><![CDATA[widget]]></translation>
+      </item>
+      <item type="label" name="Footer">
+        <translation language="nl"><![CDATA[footer navigatie]]></translation>
+        <translation language="en"><![CDATA[footer navigation]]></translation>
+      </item>
+      <item type="label" name="MainNavigation">
+        <translation language="nl"><![CDATA[hoofdnavigatie]]></translation>
+        <translation language="en"><![CDATA[main navigation]]></translation>
+      </item>
+      <item type="label" name="Meta">
+        <translation language="nl"><![CDATA[metanavigatie]]></translation>
+        <translation language="en"><![CDATA[meta navigation]]></translation>
+      </item>
+      <item type="label" name="Root">
+        <translation language="nl"><![CDATA[losse pagina's]]></translation>
+        <translation language="en"><![CDATA[single pages]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="AddedTemplate">
+        <translation language="nl"><![CDATA[De template "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The template "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="BlockAttached">
+        <translation language="nl"><![CDATA[De module <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
+        <translation language="en"><![CDATA[The module <strong>%1$s</strong> is attached to this section.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de pagina "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the page "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteTemplate">
+        <translation language="nl"><![CDATA[Ben je zeker dat je de template "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the template "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was deleted.]]></translation>
+      </item>
+      <item type="message" name="DeletedTemplate">
+        <translation language="nl"><![CDATA[De template "%1$s" werd verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The template "%1$s" was deleted.]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="EditedTemplate">
+        <translation language="nl"><![CDATA[De template "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The template "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="HelpBlockContent">
+        <translation language="nl"><![CDATA[Welk soort inhoud wil je hier tonen?]]></translation>
+        <translation language="en"><![CDATA[What kind of content do you want to show here?]]></translation>
+      </item>
+      <item type="message" name="HelpMetaNavigation">
+        <translation language="nl"><![CDATA[Extra topnavigatie die (boven het hoofdmenu) op elke pagina staat.]]></translation>
+        <translation language="en"><![CDATA[Extra topnavigation (above/below the menu) on every page.]]></translation>
+      </item>
+      <item type="message" name="HelpNavigationTitle">
+        <translation language="nl"><![CDATA[De titel die in het menu getoond wordt.]]></translation>
+        <translation language="en"><![CDATA[The title that is shown in the menu.]]></translation>
+      </item>
+      <item type="message" name="HelpNoFollow">
+        <translation language="nl"><![CDATA[Zorgt ervoor dat deze pagina de interne PageRank niet beïnvloedt.]]></translation>
+        <translation language="en"><![CDATA[Makes sure that this page doesn't influence the internal PageRank.]]></translation>
+      </item>
+      <item type="message" name="HelpTemplateFormat">
+        <translation language="nl"><![CDATA[vb. [1,2],[/,2]]]></translation>
+        <translation language="en"><![CDATA[e.g. [1,2],[/,2]]]></translation>
+      </item>
+      <item type="message" name="HelpTemplateLocation">
+        <translation language="nl"><![CDATA[Plaats de templates in de map <code>core/templates</code> van je thema.]]></translation>
+        <translation language="en"><![CDATA[Put your templates in the <code>core/templates</code> folder of your theme.]]></translation>
+      </item>
+      <item type="message" name="IsAction">
+        <translation language="nl"><![CDATA[Gebruik deze pagina als module-actie.]]></translation>
+        <translation language="en"><![CDATA[Use this page as a module action.]]></translation>
+      </item>
+      <item type="message" name="MetaNavigation">
+        <translation language="nl"><![CDATA[Metanavigatie inschakelen voor deze website.]]></translation>
+        <translation language="en"><![CDATA[Enable metanavigation for this website.]]></translation>
+      </item>
+      <item type="message" name="ModuleBlockAlreadyLinked">
+        <translation language="nl"><![CDATA[Er werd reeds een module gekoppeld aan deze pagina.]]></translation>
+        <translation language="en"><![CDATA[A module has already been linked to this page.]]></translation>
+      </item>
+      <item type="message" name="PageIsMoved">
+        <translation language="nl"><![CDATA[De pagina "%1$s" werd verplaatst.]]></translation>
+        <translation language="en"><![CDATA[The page "%1$s" was moved.]]></translation>
+      </item>
+      <item type="message" name="PathToTemplate">
+        <translation language="nl"><![CDATA[Pad naar de template]]></translation>
+        <translation language="en"><![CDATA[Path to template]]></translation>
+      </item>
+      <item type="message" name="RichText">
+        <translation language="nl"><![CDATA[Editor]]></translation>
+        <translation language="en"><![CDATA[Editor]]></translation>
+      </item>
+      <item type="message" name="TemplateChangeWarning">
+        <translation language="nl"><![CDATA[<strong>Let op:</strong> de bestaande inhoud zal verloren gaan bij het wijzigen van de template.]]></translation>
+        <translation language="en"><![CDATA[<strong>Warning:</strong> Existing content will be deleted when changing the template.]]></translation>
+      </item>
+      <item type="message" name="TemplateInUse">
+        <translation language="nl"><![CDATA[Deze template is in gebruik]]></translation>
+        <translation language="en"><![CDATA[This template is in use. You can't change the number of blocks.]]></translation>
+      </item>
+      <item type="message" name="WidgetAttached">
+        <translation language="nl"><![CDATA[De widget <strong>%1$s</strong> is gekoppeld aan deze sectie.]]></translation>
+        <translation language="en"><![CDATA[The widget <strong>%1$s</strong> is attached to this section.]]></translation>
+      </item>
+    </pages>
+  </backend>
+</locale>

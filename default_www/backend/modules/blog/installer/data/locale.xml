@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <blog>
+      <item type="error" name="RSSDescription">
+        <translation language="nl"><![CDATA[Blog RSS beschrijving is nog niet geconfigureerd. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[Blog RSS description is not yet provided. <a href="%1$s">Configure</a>]]></translation>
+      </item>
+      <item type="label" name="Add">
+        <translation language="nl"><![CDATA[artikel toevoegen]]></translation>
+        <translation language="en"><![CDATA[add article]]></translation>
+      </item>
+      <item type="message" name="Added">
+        <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[The article "%1$s" was added.]]></translation>
+      </item>
+      <item type="message" name="CommentOnWithURL">
+        <translation language="nl"><![CDATA[Reactie op: <a href="%1$s">%2$s</a>]]></translation>
+        <translation language="en"><![CDATA[Comment on: <a href="%1$s">%2$s</a>]]></translation>
+      </item>
+      <item type="message" name="ConfirmDelete">
+        <translation language="nl"><![CDATA[Ben je zeker dat je het artikel "%1$s" wil verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are your sure you want to delete the article "%1$s"?]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De geselecteerde artikels werden verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The selected articles were deleted.]]></translation>
+      </item>
+      <item type="message" name="DeletedSpam">
+        <translation language="nl"><![CDATA[Alle spamberichten werden verwijderd.]]></translation>
+        <translation language="en"><![CDATA[All spam-comments were deleted.]]></translation>
+      </item>
+      <item type="message" name="DeleteAllSpam">
+        <translation language="nl"><![CDATA[Alle spam verwijderen:]]></translation>
+        <translation language="en"><![CDATA[Delete all spam:]]></translation>
+      </item>
+      <item type="message" name="EditArticle">
+        <translation language="nl"><![CDATA[bewerk artikel "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit article "%1$s"]]></translation>
+      </item>
+      <item type="message" name="EditCommentOn">
+        <translation language="nl"><![CDATA[bewerk reactie op "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit comment on "%1$s"]]></translation>
+      </item>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[Het artikel "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The article "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="EditedComment">
+        <translation language="nl"><![CDATA[De reactie werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The comment was saved.]]></translation>
+      </item>
+      <item type="message" name="FollowAllCommentsInRSS">
+        <translation language="nl"><![CDATA[Volg alle reacties in een RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
+        <translation language="en"><![CDATA[Follow all comments in a RSS feed: <a href="%1$s">%1$s</a>.]]></translation>
+      </item>
+      <item type="message" name="HelpMeta">
+        <translation language="nl"><![CDATA[Toon de meta informatie van deze blogpost in de RSS feed (categorie]]></translation>
+        <translation language="en"><![CDATA[Show the meta information for this blogpost in the RSS feed (category]]></translation>
+      </item>
+      <item type="message" name="HelpPingServices">
+        <translation language="nl"><![CDATA[Laat verschillende blogservices weten wanneer je een nieuw bericht plaatst.]]></translation>
+        <translation language="en"><![CDATA[Let various blogservices know when you've posted a new article.]]></translation>
+      </item>
+      <item type="message" name="HelpSummary">
+        <translation language="nl"><![CDATA[Maak voor lange artikels een inleiding of samenvatting. Die kan getoond worden op de homepage of het artikeloverzicht.]]></translation>
+        <translation language="en"><![CDATA[Write an introduction or summary for long articles. It will be shown on the homepage or the article overview.]]></translation>
+      </item>
+      <item type="message" name="HelpSpamFilter">
+        <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
+        <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam comments.]]></translation>
+      </item>
+      <item type="message" name="MakeDefaultCategory">
+        <translation language="nl"><![CDATA[Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).]]></translation>
+        <translation language="en"><![CDATA[Make default category (current default category is: %1$s).]]></translation>
+      </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
+        <translation language="en"><![CDATA[There are no articles yet. <a href="%1$s">Write the first article</a>.]]></translation>
+      </item>
+      <item type="message" name="NotifyByEmailOnNewComment">
+        <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie is.]]></translation>
+        <translation language="en"><![CDATA[Notify by email when there is a new comment.]]></translation>
+      </item>
+      <item type="message" name="NotifyByEmailOnNewCommentToModerate">
+        <translation language="nl"><![CDATA[Verwittig via email als er een nieuwe reactie te modereren is.]]></translation>
+        <translation language="en"><![CDATA[Notify by email when there is a new comment to moderate.]]></translation>
+      </item>
+      <item type="message" name="NumItemsInRecentArticlesFull">
+        <translation language="nl"><![CDATA[Aantal items in recente artikels (volledig) widget]]></translation>
+        <translation language="en"><![CDATA[Number of articles in the recent articles (full) widget]]></translation>
+      </item>
+      <item type="message" name="NumItemsInRecentArticlesList">
+        <translation language="nl"><![CDATA[Aantal items in recente artikels (lijst) widget]]></translation>
+        <translation language="en"><![CDATA[Number of articles in the recent articles (list) widget]]></translation>
+      </item>
+    </blog>
+  </backend>
+  <frontend>
+    <core>
+      <item type="action" name="ArticleCommentsRss">
+        <translation language="nl"><![CDATA[reacties-op-rss]]></translation>
+        <translation language="en"><![CDATA[comments-on-rss]]></translation>
+      </item>
+      <item type="label" name="ArticlesInCategory">
+        <translation language="nl"><![CDATA[artikels in categorie]]></translation>
+        <translation language="en"><![CDATA[articles in category]]></translation>
+      </item>
+      <item type="label" name="InTheCategory">
+        <translation language="nl"><![CDATA[in de categorie]]></translation>
+        <translation language="en"><![CDATA[in category]]></translation>
+      </item>
+      <item type="label" name="SubscribeToTheRSSFeed">
+        <translation language="nl"><![CDATA[schrijf je in op de RSS-feed]]></translation>
+        <translation language="en"><![CDATA[subscribe to the RSS feed]]></translation>
+      </item>
+      <item type="label" name="BlogArchive">
+        <translation language="nl"><![CDATA[blogarchief]]></translation>
+        <translation language="en"><![CDATA[blog archive]]></translation>
+      </item>
+      <item type="label" name="NextArticle">
+        <translation language="nl"><![CDATA[volgend bericht]]></translation>
+        <translation language="en"><![CDATA[next article]]></translation>
+      </item>
+      <item type="label" name="PreviousArticle">
+        <translation language="nl"><![CDATA[vorig bericht]]></translation>
+        <translation language="en"><![CDATA[previous article]]></translation>
+      </item>
+      <item type="label" name="RecentArticles">
+        <translation language="nl"><![CDATA[recente artikels]]></translation>
+        <translation language="en"><![CDATA[recent articles]]></translation>
+      </item>
+      <item type="label" name="Wrote">
+        <translation language="nl"><![CDATA[schreef]]></translation>
+        <translation language="en"><![CDATA[wrote]]></translation>
+      </item>
+      <item type="message" name="BlogAllComments">
+        <translation language="nl"><![CDATA[Alle reacties op je blog.]]></translation>
+        <translation language="en"><![CDATA[All comments on your blog.]]></translation>
+      </item>
+      <item type="message" name="BlogNoComments">
+        <translation language="nl"><![CDATA[Reageer als eerste]]></translation>
+        <translation language="en"><![CDATA[Be the first to comment]]></translation>
+      </item>
+      <item type="message" name="BlogNumberOfComments">
+        <translation language="nl"><![CDATA[Al %1$s reacties]]></translation>
+        <translation language="en"><![CDATA[%1$s comments]]></translation>
+      </item>
+      <item type="message" name="BlogOneComment">
+        <translation language="nl"><![CDATA[Al 1 reactie]]></translation>
+        <translation language="en"><![CDATA[1 comment already]]></translation>
+      </item>
+      <item type="message" name="BlogCommentIsAdded">
+        <translation language="nl"><![CDATA[Je reactie werd toegevoegd.]]></translation>
+        <translation language="en"><![CDATA[Your comment was added.]]></translation>
+      </item>
+      <item type="message" name="BlogCommentInModeration">
+        <translation language="nl"><![CDATA[Je reactie wacht op goedkeuring.]]></translation>
+        <translation language="en"><![CDATA[Your comment is awaiting moderation.]]></translation>
+      </item>
+      <item type="message" name="BlogCommentIsSpam">
+        <translation language="nl"><![CDATA[Je reactie werd gemarkeerd als spam.]]></translation>
+        <translation language="en"><![CDATA[Your comment was marked as spam.]]></translation>
+      </item>
+      <item type="message" name="BlogEmailNotificationsNewComment">
+        <translation language="nl"><![CDATA[%1$s reageerde op <a href="%2$s">%3$s</a>.]]></translation>
+        <translation language="en"><![CDATA[%1$s commented on <a href="%2$s">%3$s</a>.]]></translation>
+      </item>
+      <item type="message" name="BlogEmailNotificationsNewCommentToModerate">
+        <translation language="nl"><![CDATA[%1$s reageerde op <a href="%2$s">%3$s</a>. <a href="%4$s">Modereer</a> deze reactie om ze zichtbaar te maken op de website.]]></translation>
+        <translation language="en"><![CDATA[%1$s commented on <a href="%2$s">%3$s</a>. <a href="%4$s">Moderate</a> the comment to publish it.]]></translation>
+      </item>
+      <item type="message" name="BlogNoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen blogposts.]]></translation>
+        <translation language="en"><![CDATA[There are no articles yet.]]></translation>
+      </item>
+    </core>
+  </frontend>
+</locale>

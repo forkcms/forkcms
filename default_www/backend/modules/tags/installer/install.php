@@ -20,7 +20,7 @@ class TagsInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) . '/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'blog' as a module
 		$this->addModule('tags', 'The tags module.');
@@ -57,37 +57,8 @@ class TagsInstall extends ModuleInstaller
 			}
 		}
 
-
-
-		// insert locale (nl)
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Blog', 'blog');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ItemsWithTag', 'items met tag "%1$s"');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Pages', 'pagina\'s');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'Related', 'gerelateerd');
-		$this->insertLocale('nl', 'frontend', 'core', 'lbl', 'ToTagsOverview', 'naar het tags overzicht');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'Related', 'gerelateerd');
-		$this->insertLocale('nl', 'backend', 'core', 'lbl', 'TagCloud', 'tag-cloud');
-		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Edited', 'De tag "%1$s" werd opgeslagen.');
-		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'EditTag', 'bewerk tag "%1$s"');
-		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'Deleted', 'De geselecteerde tag(s) werd(en) verwijderd.');
-		$this->insertLocale('nl', 'backend', 'tags', 'msg', 'NoItems', 'Er zijn nog geen tags.');
-		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NonExisting', 'Deze tag bestaat niet.');
-		$this->insertLocale('nl', 'backend', 'tags', 'err', 'NoSelection', 'Er waren geen tags geselecteerd.');
-
-		// insert locale (en)
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Blog', 'blog');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ItemsWithTag', 'items with tag "%1$s"');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Pages', 'pages');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'Related', 'related');
-		$this->insertLocale('en', 'frontend', 'core', 'lbl', 'ToTagsOverview', 'to tags overview');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'Related', 'related');
-		$this->insertLocale('en', 'backend', 'core', 'lbl', 'TagCloud', 'tagcloud');
-		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Edited', 'The tag "%1$s" was saved.');
-		$this->insertLocale('en', 'backend', 'tags', 'msg', 'EditTag', 'edit tag "%1$s"');
-		$this->insertLocale('en', 'backend', 'tags', 'msg', 'Deleted', 'The selected tag(s) was/were deleted.');
-		$this->insertLocale('en', 'backend', 'tags', 'msg', 'NoItems', 'There are no tags yet.');
-		$this->insertLocale('en', 'backend', 'tags', 'err', 'NonExisting', 'This tag doesn\'t exist.');
-		$this->insertLocale('en', 'backend', 'tags', 'err', 'NoSelection', 'No tags were selected.');
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 	}
 }
 

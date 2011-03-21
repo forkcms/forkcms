@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+      <item type="label" name="Faq">
+        <translation language="nl"><![CDATA[FAQ]]></translation>
+        <translation language="en"><![CDATA[FAQ]]></translation>
+      </item>
+      <item type="label" name="Questions">
+        <translation language="nl"><![CDATA[vragen]]></translation>
+        <translation language="en"><![CDATA[questions]]></translation>
+      </item>
+    </core>
+    <faq>
+      <item type="label" name="AddQuestion">
+        <translation language="nl"><![CDATA[vraag toevoegen]]></translation>
+        <translation language="en"><![CDATA[add question]]></translation>
+      </item>
+      <item type="label" name="Answer">
+        <translation language="nl"><![CDATA[antwoord]]></translation>
+        <translation language="en"><![CDATA[answer]]></translation>
+      </item>
+      <item type="label" name="Question">
+        <translation language="nl"><![CDATA[vraag]]></translation>
+        <translation language="en"><![CDATA[question]]></translation>
+      </item>
+      <item type="error" name="AnswerIsRequired">
+        <translation language="nl"><![CDATA[Het antwoord is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The answer is required.]]></translation>
+      </item>
+      <item type="error" name="CategoryIsRequired">
+        <translation language="nl"><![CDATA[Gelieve een categorie te selecteren.]]></translation>
+        <translation language="en"><![CDATA[Please select a category.]]></translation>
+      </item>
+      <item type="error" name="QuestionIsRequired">
+        <translation language="nl"><![CDATA[De vraag is verplicht.]]></translation>
+        <translation language="en"><![CDATA[The question is required.]]></translation>
+      </item>
+      <item type="message" name="EditQuestion">
+        <translation language="nl"><![CDATA[Bewerk vraag "%1$s]]></translation>
+        <translation language="en"><![CDATA[Edit question "%1$s]]></translation>
+      </item>
+      <item type="message" name="NoQuestionInCategory">
+        <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
+        <translation language="en"><![CDATA[There are no questions in this category.]]></translation>
+      </item>
+      <item type="message" name="NoCategories">
+        <translation language="nl"><![CDATA[Er zijn nog geen categorieën]]></translation>
+        <translation language="en"><![CDATA[There are no categories yet]]></translation>
+      </item>
+    </faq>
+  </backend>
+  <frontend>
+    <core>
+      <item type="message" name="NoQuestionsInCategory">
+        <translation language="nl"><![CDATA[Er zijn geen vragen in deze categorie.]]></translation>
+        <translation language="en"><![CDATA[There are no questions in this category.]]></translation>
+      </item>
+    </core>
+  </frontend>
+</locale>
