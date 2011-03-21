@@ -483,6 +483,7 @@ class PagesInstall extends ModuleInstaller
 									array('html' => ''),
 									array('html' => ''),
 									array('html' => ''),
+									array('html' => ''),
 									array('extra_id' => $extras['search_form']));
 
 				// insert lorem ipsum test page

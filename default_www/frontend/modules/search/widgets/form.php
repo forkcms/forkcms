@@ -43,7 +43,7 @@ class FrontendSearchWidgetForm extends FrontendBaseWidget
 		$this->frm = new FrontendForm('search', FrontendNavigation::getURLForBlock('search'), 'get', null, false);
 
 		// create elements
-		$this->frm->addText('q', null, 255, 'inputText autoSuggest', 'inputTextError autoSuggest');
+		$this->frm->addText('q_widget', null, 255, 'inputText autoSuggest', 'inputTextError autoSuggest');
 	}
 
 
