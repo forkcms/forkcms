@@ -428,8 +428,20 @@ class BackendEventsModel
 			// build array
 			$category['language'] = BL::getWorkingLanguage();
 			$category['title'] = 'default';
-			// @todo	fix me
-			$category['url'] = 'default';
+
+			// meta array
+			$meta['keywords'] = 'default';
+			$meta['keywords_overwrite'] = 'default';
+			$meta['description'] = 'default';
+			$meta['description_overwrite'] = 'default';
+			$meta['title'] = 'default';
+			$meta['title_overwrite'] = 'default';
+			$meta['url'] = 'default';
+			$meta['url_overwrite'] = 'default';
+			$meta['custom'] = null;
+
+			// insert meta
+			$category['meta_id'] = $db->insert('meta', $category);
 
 			// insert category
 			$id = self::insertCategory($category);
