@@ -372,6 +372,51 @@ class ModuleInstaller
 
 
 	/**
+	* Inserts a new locale item
+	*
+	* @return	void
+	* @param	string $language		The language.
+	* @param	string $application		The application, for now possible values are: backend, frontend.
+	* @param	string $module			The module to insert the locale for.
+	* @param	string $type			The type of locale, possible values are: act, err, lbl, msg.
+	* @param	string $name			The name of the locale.
+	* @param	string $value			The value.
+	* @deprecated	Deprecated since version 2.1.0. Will be removed in the next version.
+	*/
+	protected function insertLocale($language, $application, $module, $type, $name, $value)
+	{
+		// redefine
+		$language = (string) $language;
+		$application = SpoonFilter::getValue($application, array('frontend', 'backend'), '');
+		$module = (string) $module;
+		$type = SpoonFilter::getValue($type, array('act', 'err', 'lbl', 'msg'), '');
+		$name = (string) $name;
+		$value = (string) $value;
+
+		// validate
+		if($application == '') throw new Exception('Invalid application. Possible values are: backend, frontend.');
+		if($type == '') throw new Exception('Invalid type. Possible values are: act, err, lbl, msg.');
+
+		// check if the label already exists
+		if(!(bool) $this->getDB()->getVar('SELECT COUNT(i.id)
+											FROM locale AS i
+											WHERE i.language = ? AND i.application = ? AND i.module = ? AND i.type = ? AND i.name = ?',
+											array($language, $application, $module, $type, $name)))
+		{
+			// insert
+			$this->db->insert('locale', array('user_id' => $this->getDefaultUserID(),
+												'language' => $language,
+												'application' => $application,
+												'module' => $module,
+												'type' => $type,
+												'name' => $name,
+												'value' => $value,
+												'edited_on' => gmdate('Y-m-d H:i:s')));
+		}
+	}
+
+
+	/**
 	 * Insert a meta item
 	 *
 	 * @return	int
