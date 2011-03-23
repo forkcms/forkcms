@@ -8,6 +8,7 @@
  *
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendRSS extends SpoonFeedRSS
@@ -23,15 +24,19 @@ class FrontendRSS extends SpoonFeedRSS
 	 */
 	public function __construct($title, $link, $description, array $items = array())
 	{
+		// decode
+		$title = SpoonFilter::htmlspecialcharsDecode($title);
+		$description = SpoonFilter::htmlspecialcharsDecode($description);
+
 		// add UTM-parameters
-		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise(SpoonFilter::htmlspecialcharsDecode($title))));
+		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title)));
 
 		// call the parent
 		parent::__construct($title, $link, $description, $items);
 
 		// set feed properties
 		$this->setLanguage(FRONTEND_LANGUAGE);
-		$this->setCopyright(SpoonDate::getDate('Y') . ' ' . FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE));
+		$this->setCopyright(SpoonDate::getDate('Y') . ' ' . SpoonFilter::htmlspecialcharsDecode(FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE)));
 		$this->setGenerator(SITE_RSS_GENERATOR);
 		$this->setImage(SITE_URL . FRONTEND_CORE_URL . '/layout/images/rss_image.png', $title, $link);
 
@@ -59,6 +64,7 @@ class FrontendRSS extends SpoonFeedRSS
  * @subpackage	core
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class FrontendRSSItem extends SpoonFeedRSSItem
@@ -81,6 +87,10 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 */
 	public function __construct($title, $link, $description)
 	{
+		// decode
+		$title = SpoonFilter::htmlspecialcharsDecode($title);
+		$description = SpoonFilter::htmlspecialcharsDecode($description);
+
 		// set UTM-campaign
 		$this->utm['utm_campaign'] = SpoonFilter::urlise($title);
 
@@ -147,8 +157,8 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	 */
 	public function setAuthor($author)
 	{
-		// redefine
-		$author = (string) $author;
+		// remove special chars
+		$author = (string) SpoonFilter::htmlspecialcharsDecode($author);
 
 		// add fake-emailaddress
 		if(!SpoonFilter::isEmail($author)) $author = SpoonFilter::urlise($author) . '@example.com (' . $author . ')';
@@ -168,7 +178,7 @@ class FrontendRSSItem extends SpoonFeedRSSItem
 	public function setDescription($description)
 	{
 		// remove special chars
-		$description = SpoonFilter::htmlspecialcharsDecode($description);
+		$description = (string) SpoonFilter::htmlspecialcharsDecode($description);
 
 		// process links
 		$description = $this->processLinks($description);
