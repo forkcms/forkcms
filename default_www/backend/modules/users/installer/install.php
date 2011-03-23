@@ -77,7 +77,7 @@ class UsersInstall extends ModuleInstaller
 	protected function execute()
 	{
 		// load install.sql
-		$this->importSQL(dirname(__FILE__) . '/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add 'users' as a module
 		$this->addModule('users', 'User management.');
@@ -96,35 +96,8 @@ class UsersInstall extends ModuleInstaller
 		$this->setActionRights(1, 'users', 'edit');
 		$this->setActionRights(1, 'users', 'index');
 
-		// insert locale (nl)
-		$this->insertLocale('nl', 'backend', 'users', 'lbl', 'Add', 'gebruiker toevoegen');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Added', 'De gebruiker "%1$s" werd toegevoegd.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'ConfirmDelete', 'Ben je zeker dat je de gebruiker "%1$s" wil verwijderen?');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Deleted', 'De gebruiker "%1$s" werd verwijderd.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Edited', 'De instellingen voor "%1$s" werden opgeslagen.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'EditUser', 'bewerk gebruiker "%1$s"');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpActive', 'Geef deze account toegang tot het CMS.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Geef deze account toegang tot de API.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Sterke wachtwoorden bestaan uit een combinatie van hoofdletters, kleine letters, cijfers en speciale karakters.');
-		$this->insertLocale('nl', 'backend', 'users', 'msg', 'Restored', 'De gebruiker "%1$s" werd terug geactiveerd.');
-		$this->insertLocale('nl', 'backend', 'users', 'err', 'NonExisting', 'Deze gebruiker bestaat niet.');
-		$this->insertLocale('nl', 'backend', 'users', 'err', 'EmailWasDeletedBefore', 'Een gebruiker met dit emailadres werd vroeger verwijderd. <a href="%1$s">Activeer deze gebruiker terug</a>.');
-		$this->insertLocale('nl', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'Je kan het emailadres van deze gebruiker niet aanpassen.');
-
-		// insert locale (en)
-		$this->insertLocale('en', 'backend', 'users', 'lbl', 'Add', 'add user');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Added', 'The user "%1$s" was added.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'ConfirmDelete', 'Are your sure you want to delete the user "%1$s"?');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Deleted', 'The user "%1$s" was deleted.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Edited', 'The settings for "%1$s" were saved.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'EditUser', 'edit user "%1$s"');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpActive', 'Enable CMS access for this account.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpAPIAccess', 'Enable API access for this account.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'HelpStrongPassword', 'Strong passwords consist of a combination of capitals, digits, lowercase and special characters.');
-		$this->insertLocale('en', 'backend', 'users', 'msg', 'Restored', 'The user "%1$s" is restored.');
-		$this->insertLocale('en', 'backend', 'users', 'err', 'CantChangeGodsEmail', 'You can\'t change the emailaddres of the GOD-user.');
-		$this->insertLocale('en', 'backend', 'users', 'err', 'EmailWasDeletedBefore', 'A user with this emailaddress was deleted. <a href="%1$s">Restore this user</a>.');
-		$this->insertLocale('en', 'backend', 'users', 'err', 'NonExisting', 'This user doesn\'t exist.');
+		// import locale
+		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');
 
 		// add default user
 		$this->addUser();

@@ -3,11 +3,13 @@
 Bugfixes:
 	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
 	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
+	* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
 
 Improvements:
 	* Blog: creating categories can now be done without leaving the add/edit screen.
 	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
 	* Core: when using datefields with till, from, range set, it will be validated according the type.
+	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
 
 2.1.0 (2011-03-14)
 --

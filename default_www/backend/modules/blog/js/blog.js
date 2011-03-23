@@ -29,7 +29,7 @@ jsBackend.blog.category =
 	// init, something like a constructor
 	init: function()
 	{
-		if($('.datagrid td.title').length > 0)
+		if(jsBackend.current.action == 'categories' && $('.datagrid td.title').length > 0)
 		{
 			// buil ajax-url
 			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=edit_category&language='+ jsBackend.current.language;

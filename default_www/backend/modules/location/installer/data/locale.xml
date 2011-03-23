@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+      <item type="label" name="Address">
+        <translation language="nl"><![CDATA[adres]]></translation>
+        <translation language="en"><![CDATA[address]]></translation>
+      </item>
+      <item type="label" name="City">
+        <translation language="nl"><![CDATA[stad]]></translation>
+        <translation language="en"><![CDATA[city]]></translation>
+      </item>
+      <item type="label" name="Country">
+        <translation language="nl"><![CDATA[land]]></translation>
+        <translation language="en"><![CDATA[country]]></translation>
+      </item>
+      <item type="label" name="GroupMap">
+        <translation language="nl"><![CDATA[algemene kaart: alle locaties]]></translation>
+        <translation language="en"><![CDATA[general map: all locations]]></translation>
+      </item>
+      <item type="label" name="Height">
+        <translation language="nl"><![CDATA[hoogte]]></translation>
+        <translation language="en"><![CDATA[height]]></translation>
+      </item>
+      <item type="label" name="IndividualMap">
+        <translation language="nl"><![CDATA[widget: individuele kaart]]></translation>
+        <translation language="en"><![CDATA[widget: individual map]]></translation>
+      </item>
+      <item type="label" name="Location">
+        <translation language="nl"><![CDATA[locatie]]></translation>
+        <translation language="en"><![CDATA[location]]></translation>
+      </item>
+      <item type="label" name="Number">
+        <translation language="nl"><![CDATA[nummer]]></translation>
+        <translation language="en"><![CDATA[number]]></translation>
+      </item>
+      <item type="label" name="Street">
+        <translation language="nl"><![CDATA[straat]]></translation>
+        <translation language="en"><![CDATA[street]]></translation>
+      </item>
+      <item type="label" name="Width">
+        <translation language="nl"><![CDATA[breedte]]></translation>
+        <translation language="en"><![CDATA[width]]></translation>
+      </item>
+      <item type="label" name="Zip">
+        <translation language="nl"><![CDATA[postcode]]></translation>
+        <translation language="en"><![CDATA[zip code]]></translation>
+      </item>
+    </core>
+    <location>
+      <item type="label" name="Auto">
+        <translation language="nl"><![CDATA[automatisch]]></translation>
+        <translation language="en"><![CDATA[automatic]]></translation>
+      </item>
+      <item type="label" name="Hybrid">
+        <translation language="nl"><![CDATA[hybride]]></translation>
+        <translation language="en"><![CDATA[hybrid]]></translation>
+      </item>
+      <item type="label" name="Map">
+        <translation language="nl"><![CDATA[kaart]]></translation>
+        <translation language="en"><![CDATA[map]]></translation>
+      </item>
+      <item type="label" name="MapType">
+        <translation language="nl"><![CDATA[kaarttype]]></translation>
+        <translation language="en"><![CDATA[map type]]></translation>
+      </item>
+      <item type="label" name="Roadmap">
+        <translation language="nl"><![CDATA[wegenkaart]]></translation>
+        <translation language="en"><![CDATA[road map]]></translation>
+      </item>
+      <item type="label" name="Satellite">
+        <translation language="nl"><![CDATA[satelliet]]></translation>
+        <translation language="en"><![CDATA[satellite]]></translation>
+      </item>
+      <item type="label" name="Terrain">
+        <translation language="nl"><![CDATA[terrein]]></translation>
+        <translation language="en"><![CDATA[terrain]]></translation>
+      </item>
+      <item type="label" name="ZoomLevel">
+        <translation language="nl"><![CDATA[zoom niveau]]></translation>
+        <translation language="en"><![CDATA[zoom level]]></translation>
+      </item>
+      <item type="error" name="AddressCouldNotBeGeocoded">
+        <translation language="nl"><![CDATA[Dit adres kon niet worden omgezet naar coördinaten.]]></translation>
+        <translation language="en"><![CDATA[Address couldn't be converted into coordinates.]]></translation>
+      </item>
+    </location>
+  </backend>
+</locale>

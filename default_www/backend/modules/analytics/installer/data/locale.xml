@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <backend>
+    <core>
+      <item type="message" name="NoReferrers">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van verwijzende sites.]]></translation>
+        <translation language="en"><![CDATA[There are no referrers yet.]]></translation>
+      </item>
+    </core>
+    <analytics>
+      <item type="error" name="AnalyseNoSessionToken">
+        <translation language="nl"><![CDATA[Er is nog geen Google analytics account gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[There is no link with a Google analytics account yet. <a href="%1$s">Configure</a>]]></translation>
+      </item>
+      <item type="error" name="AnalyseNoTableId">
+        <translation language="nl"><![CDATA[Er is nog geen analytics website profiel gekoppeld. <a href="%1$s">Configureer</a>]]></translation>
+        <translation language="en"><![CDATA[There is no link with an analytics website profile yet. <a href="%1$s">Configure</a>]]></translation>
+      </item>
+      <item type="error" name="NoSessionToken">
+        <translation language="nl"><![CDATA[Er is nog geen Google account gekoppeld.]]></translation>
+        <translation language="en"><![CDATA[There is no link with a Google analytics account yet.]]></translation>
+      </item>
+      <item type="error" name="NoTableId">
+        <translation language="nl"><![CDATA[Er is nog geen website profiel gekoppeld.]]></translation>
+        <translation language="en"><![CDATA[There is no link with an analytics website profile yet.]]></translation>
+      </item>
+      <item type="label" name="AddLandingPage">
+        <translation language="nl"><![CDATA[landingspagina toevoegen]]></translation>
+        <translation language="en"><![CDATA[add landing page]]></translation>
+      </item>
+      <item type="label" name="AllStatistics">
+        <translation language="nl"><![CDATA[alle statistieken]]></translation>
+        <translation language="en"><![CDATA[all statistics]]></translation>
+      </item>
+      <item type="label" name="AverageTimeOnPage">
+        <translation language="nl"><![CDATA[gemiddelde tijd op pagina]]></translation>
+        <translation language="en"><![CDATA[average time on page]]></translation>
+      </item>
+      <item type="label" name="AverageTimeOnSite">
+        <translation language="nl"><![CDATA[gemiddelde tijd op site]]></translation>
+        <translation language="en"><![CDATA[average time on site]]></translation>
+      </item>
+      <item type="label" name="BounceRate">
+        <translation language="nl"><![CDATA[weigeringspercentage]]></translation>
+        <translation language="en"><![CDATA[bounce rate]]></translation>
+      </item>
+      <item type="label" name="Bounces">
+        <translation language="nl"><![CDATA[weigeringen]]></translation>
+        <translation language="en"><![CDATA[bounces]]></translation>
+      </item>
+      <item type="label" name="ChangePeriod">
+        <translation language="nl"><![CDATA[periode aanpassen]]></translation>
+        <translation language="en"><![CDATA[change period]]></translation>
+      </item>
+      <item type="label" name="ChooseThisAccount">
+        <translation language="nl"><![CDATA[kies deze account]]></translation>
+        <translation language="en"><![CDATA[choose this account]]></translation>
+      </item>
+      <item type="label" name="DirectTraffic">
+        <translation language="nl"><![CDATA[direct verkeer]]></translation>
+        <translation language="en"><![CDATA[direct traffic]]></translation>
+      </item>
+      <item type="label" name="Entrances">
+        <translation language="nl"><![CDATA[instappunten]]></translation>
+        <translation language="en"><![CDATA[entrances]]></translation>
+      </item>
+      <item type="label" name="ExitRate">
+        <translation language="nl"><![CDATA[uitstappercentage]]></translation>
+        <translation language="en"><![CDATA[exit rate]]></translation>
+      </item>
+      <item type="label" name="Exits">
+        <translation language="nl"><![CDATA[uitstappunten]]></translation>
+        <translation language="en"><![CDATA[exits]]></translation>
+      </item>
+      <item type="label" name="GetLiveData">
+        <translation language="nl"><![CDATA[haal live gegevens op]]></translation>
+        <translation language="en"><![CDATA[collect live data]]></translation>
+      </item>
+      <item type="label" name="GoogleAnalyticsLink">
+        <translation language="nl"><![CDATA[koppeling met Google Analytics]]></translation>
+        <translation language="en"><![CDATA[link to Google Analytics]]></translation>
+      </item>
+      <item type="label" name="LinkedAccount">
+        <translation language="nl"><![CDATA[gekoppelde account]]></translation>
+        <translation language="en"><![CDATA[linked account]]></translation>
+      </item>
+      <item type="label" name="LinkedProfile">
+        <translation language="nl"><![CDATA[gekoppeld profiel]]></translation>
+        <translation language="en"><![CDATA[linked profile]]></translation>
+      </item>
+      <item type="label" name="LinkThisProfile">
+        <translation language="nl"><![CDATA[koppel dit profiel]]></translation>
+        <translation language="en"><![CDATA[link this profile]]></translation>
+      </item>
+      <item type="label" name="NewVisitsPercentage">
+        <translation language="nl"><![CDATA[nieuw bezoekpercentage]]></translation>
+        <translation language="en"><![CDATA[new visits percentage]]></translation>
+      </item>
+      <item type="label" name="PagesPerVisit">
+        <translation language="nl"><![CDATA[pagina's per bezoek]]></translation>
+        <translation language="en"><![CDATA[pages per visit]]></translation>
+      </item>
+      <item type="label" name="Pageviews">
+        <translation language="nl"><![CDATA[paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[pageviews]]></translation>
+      </item>
+      <item type="label" name="PageviewsByTrafficSources">
+        <translation language="nl"><![CDATA[paginaweergaves per verkeersbron]]></translation>
+        <translation language="en"><![CDATA[pageviews per traffic source]]></translation>
+      </item>
+      <item type="label" name="PercentageOfSiteTotal">
+        <translation language="nl"><![CDATA[percentage van sitetotaal]]></translation>
+        <translation language="en"><![CDATA[percentage of site total]]></translation>
+      </item>
+      <item type="label" name="PeriodStatistics">
+        <translation language="nl"><![CDATA[periode statistieken]]></translation>
+        <translation language="en"><![CDATA[period statistics]]></translation>
+      </item>
+      <item type="label" name="Referral">
+        <translation language="nl"><![CDATA[verwijzende site]]></translation>
+        <translation language="en"><![CDATA[referring site]]></translation>
+      </item>
+      <item type="label" name="SearchEngines">
+        <translation language="nl"><![CDATA[zoekmachines]]></translation>
+        <translation language="en"><![CDATA[search engines]]></translation>
+      </item>
+      <item type="label" name="SiteAverage">
+        <translation language="nl"><![CDATA[sitegemidddelde]]></translation>
+        <translation language="en"><![CDATA[site average]]></translation>
+      </item>
+      <item type="label" name="TimeOnSite">
+        <translation language="nl"><![CDATA[bezoekduur]]></translation>
+        <translation language="en"><![CDATA[time on site]]></translation>
+      </item>
+      <item type="label" name="TopContent">
+        <translation language="nl"><![CDATA[belangrijkste inhoud]]></translation>
+        <translation language="en"><![CDATA[top content]]></translation>
+      </item>
+      <item type="label" name="TopExitPages">
+        <translation language="nl"><![CDATA[belangrijkste uitstappagina's]]></translation>
+        <translation language="en"><![CDATA[top exit pages]]></translation>
+      </item>
+      <item type="label" name="TopKeywords">
+        <translation language="nl"><![CDATA[belangrijkste zoekwoorden]]></translation>
+        <translation language="en"><![CDATA[top keywords]]></translation>
+      </item>
+      <item type="label" name="TopLandingPages">
+        <translation language="nl"><![CDATA[belangrijkste landingspagina's]]></translation>
+        <translation language="en"><![CDATA[top landing pages]]></translation>
+      </item>
+      <item type="label" name="TopPages">
+        <translation language="nl"><![CDATA[belangrijkste pagina's]]></translation>
+        <translation language="en"><![CDATA[top pages]]></translation>
+      </item>
+      <item type="label" name="TopReferrers">
+        <translation language="nl"><![CDATA[belangrijkste verwijzende sites]]></translation>
+        <translation language="en"><![CDATA[top referrers]]></translation>
+      </item>
+      <item type="label" name="UniquePageviews">
+        <translation language="nl"><![CDATA[unieke paginaweergaves]]></translation>
+        <translation language="en"><![CDATA[unique pageviews]]></translation>
+      </item>
+      <item type="label" name="Views">
+        <translation language="nl"><![CDATA[weergaves]]></translation>
+        <translation language="en"><![CDATA[views]]></translation>
+      </item>
+      <item type="label" name="ViewStatistics">
+        <translation language="nl"><![CDATA[bekijk de statistieken]]></translation>
+        <translation language="en"><![CDATA[view statistics]]></translation>
+      </item>
+      <item type="label" name="Visits">
+        <translation language="nl"><![CDATA[bezoeken]]></translation>
+        <translation language="en"><![CDATA[visits]]></translation>
+      </item>
+      <item type="message" name="AuthenticateAtGoogle">
+        <translation language="nl"><![CDATA[Koppel uw Google account]]></translation>
+        <translation language="en"><![CDATA[Link your Google account]]></translation>
+      </item>
+      <item type="message" name="ChooseWebsiteProfile">
+        <translation language="nl"><![CDATA[Kies een Analytics website profiel...]]></translation>
+        <translation language="en"><![CDATA[Choose an Analytics website profile...]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteLinkAccount">
+        <translation language="nl"><![CDATA[Weet u zeker dat u de koppeling met de account "%1$s" wil verwijderen?<br />Alle opgeslagen statistieken worden dan verwijderd uit het CMS.]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to remove the link with the account "%1$s"?<br />All saves statistics will be deleted from the CMS.]]></translation>
+      </item>
+      <item type="message" name="ConfirmDeleteLinkGoogleAccount">
+        <translation language="nl"><![CDATA[Weet u zeker dat u de koppeling met uw Google account wilt verwijderen?]]></translation>
+        <translation language="en"><![CDATA[Are you sure you want to remove the link with your Google account?]]></translation>
+      </item>
+      <item type="message" name="GetDataError">
+        <translation language="nl"><![CDATA[Er liep iets mis bij het ophalen van de gegevens via Google Analytics. Onze excuses voor het ongemak. Probeer het later nog eens.]]></translation>
+        <translation language="en"><![CDATA[Something went wrong while collecting the data from Google Analytics. Our appologies for the inconvenience. Please try again later.]]></translation>
+      </item>
+      <item type="message" name="LinkGoogleAccount">
+        <translation language="nl"><![CDATA[Koppel uw Google account aan Fork CMS.]]></translation>
+        <translation language="en"><![CDATA[Link your Google account to Fork CMS.]]></translation>
+      </item>
+      <item type="message" name="LinkWebsiteProfile">
+        <translation language="nl"><![CDATA[Koppel een Google Analytics website profiel aan Fork CMS.]]></translation>
+        <translation language="en"><![CDATA[Link your Google Analytics website profile to Fork CMS.]]></translation>
+      </item>
+      <item type="message" name="LoadingData">
+        <translation language="nl"><![CDATA[Fork haalt momenteel de gegevens binnen via Google Analytics.]]></translation>
+        <translation language="en"><![CDATA[Fork is collecting the data from Google Analytics.]]></translation>
+      </item>
+      <item type="message" name="NoAccounts">
+        <translation language="nl"><![CDATA[Er hangen geen website profielen aan deze Google account. Meld je af bij Google en probeer het met een andere account.]]></translation>
+        <translation language="en"><![CDATA[There are no website profiles linked to this Google account. Log off at Google and try with a different account.]]></translation>
+      </item>
+      <item type="message" name="NoContent">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van inhoud.]]></translation>
+        <translation language="en"><![CDATA[There is no content yet.]]></translation>
+      </item>
+      <item type="message" name="NoData">
+        <translation language="nl"><![CDATA[Google heeft nog geen Analytics gegevens van uw website. Dit kan enkele dagen duren. Kijk zeker ook na of al uw instellingen bij Google goedstaan.]]></translation>
+        <translation language="en"><![CDATA[Google has no Analytics data yet for your website. This could take a few days. Also check you Google Analytics account to make sure all settings are correct.]]></translation>
+      </item>
+      <item type="message" name="NoExitPages">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van uitstappagina's]]></translation>
+        <translation language="en"><![CDATA[There are no exit pages yet.]]></translation>
+      </item>
+      <item type="message" name="NoKeywords">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van zoekwoorden.]]></translation>
+        <translation language="en"><![CDATA[There are no keywords yet.]]></translation>
+      </item>
+      <item type="message" name="NoLandingPages">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van landingpagina's.]]></translation>
+        <translation language="en"><![CDATA[There are no landing pages yet.]]></translation>
+      </item>
+      <item type="message" name="NoPages">
+        <translation language="nl"><![CDATA[Er zijn nog geen statistieken van pagina's.]]></translation>
+        <translation language="en"><![CDATA[There are ni statistics for any pages.]]></translation>
+      </item>
+      <item type="message" name="PagesHaveBeenViewedTimes">
+        <translation language="nl"><![CDATA[Pagina's op deze site zijn in totaal %1$s keer bekeken.]]></translation>
+        <translation language="en"><![CDATA[Pages on this site have been viewed %1$s times.]]></translation>
+      </item>
+      <item type="message" name="RefreshedTrafficSources">
+        <translation language="nl"><![CDATA[De verkeersbronnen werden vernieuwd.]]></translation>
+        <translation language="en"><![CDATA[The traffic sources have been refreshed.]]></translation>
+      </item>
+      <item type="message" name="RemoveAccountLink">
+        <translation language="nl"><![CDATA[Verwijder de koppeling met uw Google account]]></translation>
+        <translation language="en"><![CDATA[Remove the link with your Google account]]></translation>
+      </item>
+      <item type="message" name="RemoveProfileLink">
+        <translation language="nl"><![CDATA[Verwijder de koppeling met uw Analytics website profiel]]></translation>
+        <translation language="en"><![CDATA[Remove the link with your Analytics website profile]]></translation>
+      </item>
+    </analytics>
+  </backend>
+</locale>

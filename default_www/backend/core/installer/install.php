@@ -179,6 +179,119 @@ class ModuleInstaller
 
 
 	/**
+	 * Imports the locale XML file
+	 *
+	 * @return	void
+	 * @param	string $filename					The full path for the XML-file.
+	 * @param	bool[optional] $overwriteConflicts	Should we overwrite when there is a conflict?
+	 */
+	protected function importLocale($filename, $overwriteConflicts = false)
+	{
+		// recast
+		$filename = (string) $filename;
+		$overwriteConflicts = (bool) $overwriteConflicts;
+
+		// load the file content and execute it
+		$content = trim(SpoonFile::getContent($filename));
+
+		// file actually has content
+		if(!empty($content))
+		{
+			// load xml
+			$xml = @simplexml_load_file($filename);
+
+			// import if its valid xml
+			if($xml !== false)
+			{
+				// possible values
+				$possibleApplications = array('frontend', 'backend');
+				$possibleModules = $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
+				$possibleLanguages = $this->getLanguages();
+				$possibleTypes = array(
+					'act' => 'action',
+					'err' => 'error',
+					'lbl' => 'label',
+					'msg' => 'message'
+				);
+
+				// current locale items (used to check for conflicts)
+				$currentLocale = $this->getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+
+				// applications
+				foreach($xml as $application => $modules)
+				{
+					// application does not exist
+					if(!in_array($application, $possibleApplications)) continue;
+
+					// modules
+					foreach($modules as $module => $items)
+					{
+						// module does not exist
+						if(!in_array($module, $possibleModules)) continue;
+
+						// items
+						foreach($items as $item)
+						{
+							// attributes
+							$attributes = $item->attributes();
+							$type = SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
+							$name = SpoonFilter::getValue($attributes['name'], null, '');
+
+							// missing attributes
+							if($type == '' || $name == '') continue;
+
+							// real type (shortened)
+							$type = array_search($type, $possibleTypes);
+
+							// translations
+							foreach($item->translation as $translation)
+							{
+								// attributes
+								$attributes = $translation->attributes();
+								$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
+
+								// language does not exist
+								if($language == '') continue;
+
+								// the actual translation
+								$translation = (string) $translation;
+
+								// locale item
+								$locale['user_id'] = $this->getDefaultUserID();
+								$locale['language'] = $language;
+								$locale['application'] = $application;
+								$locale['module'] = $module;
+								$locale['type'] = $type;
+								$locale['name'] = $name;
+								$locale['value'] = $translation;
+								$locale['edited_on'] = gmdate('Y-m-d H:i:s');
+
+								// found a conflict, overwrite it with the imported translation
+								if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
+								{
+									// overwrite
+									$this->getDB()->update('locale',
+															$locale,
+															'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
+															array($application, $module, $type, $language, $name));
+								}
+
+								// insert translation that doesnt exists yet
+								elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
+								{
+									// insert
+									$this->getDB()->insert('locale', $locale);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+
+	/**
 	 * Imports the sql file
 	 *
 	 * @return	void
@@ -261,6 +374,7 @@ class ModuleInstaller
 	/**
 	 * Inserts a new locale item
 	 *
+	 * @deprecated	Deprecated since version 2.1.0. Will be removed in the next version.
 	 * @return	void
 	 * @param	string $language		The language.
 	 * @param	string $application		The application, for now possible values are: backend, frontend.
@@ -605,7 +719,7 @@ class CoreInstall extends ModuleInstaller
 		if($this->getVariable('site_title') === null) throw new SpoonException('Site title is not provided.');
 
 		// import SQL
-		$this->importSQL(dirname(__FILE__) . '/install.sql');
+		$this->importSQL(dirname(__FILE__) . '/data/install.sql');
 
 		// add core modules
 		$this->addModule('core', 'The Fork CMS core module.');

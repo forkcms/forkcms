@@ -8,6 +8,7 @@
  *
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
+ * @author		Dieter Vanden Eynde <dieter@dieterve.be>
  * @since		2.0
  */
 class BackendLocaleModel
@@ -172,6 +173,36 @@ class BackendLocaleModel
 
 
 	/**
+	 * Get full type name.
+	 *
+	 * @return	string
+	 * @param	string $type		The type of the locale.
+	 */
+	public static function getTypeName($type)
+	{
+		// get full type name
+		switch($type)
+		{
+			case 'act':
+				$type = 'action';
+			break;
+			case 'err':
+				$type = 'error';
+			break;
+			case 'lbl':
+				$type = 'label';
+			break;
+			case 'msg':
+				$type = 'message';
+			break;
+		}
+
+		// cough up full name
+		return $type;
+	}
+
+
+	/**
 	 * Get all locale types.
 	 *
 	 * @return	array
@@ -189,6 +220,109 @@ class BackendLocaleModel
 
 		// build array
 		return array_combine($types, $labels);
+	}
+
+
+	/**
+	 * Import a locale XML file.
+	 *
+	 * @return	void
+	 * @param	SimpleXMLElement $xml				The locale XML.
+	 * @param	bool[optional] $overwriteConflicts	Should we overwrite when there is a conflict?
+	 */
+	public static function importXML(SimpleXMLElement $xml, $overwriteConflicts = false)
+	{
+		// recast
+		$overwriteConflicts = (bool) $overwriteConflicts;
+
+		// possible values
+		$possibleApplications = array('frontend', 'backend');
+		$possibleModules = BackendModel::getModules(false);
+		$possibleLanguages = BL::getActiveLanguages();
+		$possibleTypes = array();
+
+		// types
+		$typesShort = BackendModel::getDB()->getEnumValues('locale', 'type');
+		foreach($typesShort as $type) $possibleTypes[$type] = self::getTypeName($type);
+
+		// current locale items (used to check for conflicts)
+		$currentLocale = BackendModel::getDB()->getColumn('SELECT CONCAT(application, module, type, language, name) FROM locale');
+
+		// applications
+		foreach($xml as $application => $modules)
+		{
+			// application does not exist
+			if(!in_array($application, $possibleApplications)) continue;
+
+			// modules
+			foreach($modules as $module => $items)
+			{
+				// module does not exist
+				if(!in_array($module, $possibleModules)) continue;
+
+				// items
+				foreach($items as $item)
+				{
+					// attributes
+					$attributes = $item->attributes();
+					$type = SpoonFilter::getValue($attributes['type'], $possibleTypes, '');
+					$name = SpoonFilter::getValue($attributes['name'], null, '');
+
+					// missing attributes
+					if($type == '' || $name == '') continue;
+
+					// real type (shortened)
+					$type = array_search($type, $possibleTypes);
+
+					// translations
+					foreach($item->translation as $translation)
+					{
+						// attributes
+						$attributes = $translation->attributes();
+						$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
+
+						// language does not exist
+						if($language == '') continue;
+
+						// the actual translation
+						$translation = (string) $translation;
+
+						// locale item
+						$locale['user_id'] = BackendAuthentication::getUser()->getUserId();
+						$locale['language'] = $language;
+						$locale['application'] = $application;
+						$locale['module'] = $module;
+						$locale['type'] = $type;
+						$locale['name'] = $name;
+						$locale['value'] = $translation;
+						$locale['edited_on'] = BackendModel::getUTCDate();
+
+						// found a conflict, overwrite it with the imported translation
+						if($overwriteConflicts && in_array($application . $module . $type . $language . $name, $currentLocale))
+						{
+							// overwrite
+							BackendModel::getDB(true)->update('locale',
+																$locale,
+																'application = ? AND module = ? AND type = ? AND language = ? AND name = ?',
+																array($application, $module, $type, $language, $name));
+						}
+
+						// insert translation that doesnt exists yet
+						elseif(!in_array($application . $module . $type . $language . $name, $currentLocale))
+						{
+							// insert
+							BackendModel::getDB(true)->insert('locale', $locale);
+						}
+					}
+				}
+			}
+		}
+
+		// rebuild cache
+		foreach($possibleApplications as $application)
+		{
+			foreach($possibleLanguages as $language) self::buildCache($language, $application);
+		}
 	}
 
 
