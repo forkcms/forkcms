@@ -240,7 +240,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->tpl->assign('comments', $this->comments);
 
 		// options
-		if($commentCount > 1) $this->tpl->assign('eventsCommentsMultiple', true);
+		if($commentCount > 1) $this->tpl->assign('commentsMultiple', true);
 
 		// count comments
 		$subscriptionCount = count($this->subscriptions);
@@ -250,7 +250,7 @@ class FrontendEventsDetail extends FrontendBaseBlock
 		$this->tpl->assign('subscriptions', $this->subscriptions);
 
 		// options
-		if($subscriptionCount > 1) $this->tpl->assign('eventsSubscriptionsMultiple', true);
+		if($subscriptionCount > 1) $this->tpl->assign('subscriptionsMultiple', true);
 
 		// parse the forms
 		$this->frmComment->parse($this->tpl);
