@@ -23,23 +23,30 @@ class BackendEventsAjaxEditCategory extends BackendBaseAJAXAction
 
 		// get parameters
 		$id = SpoonFilter::getPostValue('id', null, 0, 'int');
-		$categoryName = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
+		$categoryTitle = trim(SpoonFilter::getPostValue('value', null, '', 'string'));
 
 		// validate
 		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
-		if($categoryName === '') $this->output(self::BAD_REQUEST, null, BL::err('NameIsRequired'));
+		if($categoryTitle === '') $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
 
 		// build array
 		$item['id'] = $id;
-		$item['name'] = SpoonFilter::htmlspecialchars($categoryName);
+		$item['title'] = SpoonFilter::htmlspecialchars($categoryTitle);
 		$item['language'] = BL::getWorkingLanguage();
-		$item['url'] = BackendEventsModel::getURLForCategory($item['name']);
+
+		$meta['keywords'] = $item['title'];
+		$meta['keywords_overwrite'] = 'N';
+		$meta['description'] = $item['title'];
+		$meta['description_overwrite'] = 'N';
+		$meta['title'] = $item['title'];
+		$meta['title_overwrite'] = 'N';
+		$meta['url'] = BackendEventsModel::getURLForCategory($item['title'], $id);
 
 		// update
-		BackendEventsModel::updateCategory($item);
+		BackendEventsModel::updateCategory($item, $meta);
 
 		// output
-		$this->output(self::OK, $item, vsprintf(BL::msg('EditedCategory'), array($item['name'])));
+		$this->output(self::OK, $item, vsprintf(BL::msg('EditedCategory'), array($item['title'])));
 	}
 }
 

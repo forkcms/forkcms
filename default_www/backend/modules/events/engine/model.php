@@ -687,8 +687,8 @@ class BackendEventsModel
 	 * Retrieve the unique URL for a category
 	 *
 	 * @return	string
-	 * @param	string $URL				The string wheron the URL will be based.
-	 * @param	int[optional] $id		The id of the category to ignore.
+	 * @param	string $URL			The string wheron the URL will be based.
+	 * @param	int[optional] $id	The id of the category to ignore.
 	 */
 	public static function getURLForCategory($URL, $id = null)
 	{
@@ -768,12 +768,19 @@ class BackendEventsModel
 	 * Inserts a new category into the database
 	 *
 	 * @return	int
-	 * @param	array $item		The data for the category to insert.
+	 * @param	array $item				The data for the category to insert.
+	 * @param	array[optional] $meta	The metadata for the category to insert.
 	 */
-	public static function insertCategory(array $item)
+	public static function insertCategory(array $item, $meta = null)
 	{
+		// get db
+		$db = BackendModel::getDB(true);
+
+		// meta given?
+		if($meta !== null) $item['meta_id'] = $db->insert('meta', $meta);
+
 		// create category
-		$item['id'] = BackendModel::getDB(true)->insert('events_categories', $item);
+		$item['id'] = $db->insert('events_categories', $item);
 
 		// invalidate the cache for events
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
@@ -917,14 +924,28 @@ class BackendEventsModel
 	 * Update an existing category
 	 *
 	 * @return	int
-	 * @param	array $item		The new data.
+	 * @param	array $item				The new data.
+	 * @param	array[optional] $meta	The new meta-data.
 	 */
-	public static function updateCategory(array $item)
+	public static function updateCategory(array $item, $meta = null)
 	{
-		// update category
-		$updated = BackendModel::getDB(true)->update('events_categories', $item, 'id = ?', array((int) $item['id']));
+		// get db
+		$db = BackendModel::getDB(true);
 
-		// invalidate the cache for events
+		// update category
+		$updated = $db->update('events_categories', $item, 'id = ?', array((int) $item['id']));
+
+		// meta passed?
+		if($meta !== null)
+		{
+			// get current category
+			$category = self::getCategory($item['id']);
+
+			// update the meta
+			$db->update('meta', $meta, 'id = ?', array((int) $category['meta_id']));
+		}
+
+		// invalidate the cache for blog
 		BackendModel::invalidateFrontendCache('events', BL::getWorkingLanguage());
 
 		// return
