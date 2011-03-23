@@ -126,17 +126,27 @@ class BackendBlogModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// delete category
-		$db->delete('blog_categories', 'id = ?', array($id));
+		// get item
+		$item = self::getCategory($id);
 
-		// default category
-		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null);
+		// any items?
+		if(!empty($item))
+		{
+			// delete meta
+			$db->delete('meta', 'id = ?', array($item['meta_id']));
 
-		// update category for the posts that might be in this category
-		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
+			// delete category
+			$db->delete('blog_categories', 'id = ?', array($id));
 
-		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+			// default category
+			$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null);
+
+			// update category for the posts that might be in this category
+			$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
+
+			// invalidate the cache for blog
+			BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+		}
 	}
 
 
@@ -144,7 +154,7 @@ class BackendBlogModel
 	 * Deletes one or more comments
 	 *
 	 * @return	void
-	 * @param	array $ids		The id(s) of the comment(s) to delete.
+	 * @param	array $ids		The id(s) of the items(s) to delete.
 	 */
 	public static function deleteComments($ids)
 	{
@@ -230,7 +240,7 @@ class BackendBlogModel
 	 * Checks if a comment exists
 	 *
 	 * @return	int
-	 * @param	int $id		The id of the comment to check for existence.
+	 * @param	int $id		The id of the item to check for existence.
 	 */
 	public static function existsComment($id)
 	{
@@ -336,9 +346,9 @@ class BackendBlogModel
 		$db = BackendModel::getDB(true);
 
 		// get records and return them
-		$categories = (array) $db->getPairs('SELECT i.id, i.title
-												FROM blog_categories AS i
-												WHERE i.language = ?', array(BL::getWorkingLanguage()));
+		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.title
+																FROM blog_categories AS i
+																WHERE i.language = ?', array(BL::getWorkingLanguage()));
 
 		// no categories?
 		if(empty($categories))
@@ -586,10 +596,10 @@ class BackendBlogModel
 	 * Retrieve the unique URL for a category
 	 *
 	 * @return	string
-	 * @param	string $URL						The string wheron the URL will be based.
-	 * @param	int[optional] $categoryId		The id of the category to ignore.
+	 * @param	string $URL			The string wheron the URL will be based.
+	 * @param	int[optional] $id	The id of the category to ignore.
 	 */
-	public static function getURLForCategory($URL, $categoryId = null)
+	public static function getURLForCategory($URL, $id = null)
 	{
 		// redefine URL
 		$URL = SpoonFilter::urlise((string) $URL);
@@ -598,7 +608,7 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// new category
-		if($categoryId === null)
+		if($id === null)
 		{
 			// get number of categories with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
@@ -623,10 +633,10 @@ class BackendBlogModel
 		{
 			// get number of items with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM blog_categories AS i
+											FROM events_categories AS i
 											INNER JOIN meta AS m ON i.meta_id = m.id
 											WHERE i.language = ? AND m.url = ? AND i.id != ?',
-											array(BL::getWorkingLanguage(), $URL, $categoryId));
+											array(BL::getWorkingLanguage(), $URL, $id));
 
 			// already exists
 			if($number != 0)
@@ -635,7 +645,7 @@ class BackendBlogModel
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
-				return self::getURLForCategory($URL, $categoryId);
+				return self::getURLForCategory($URL, $id);
 			}
 		}
 
@@ -789,6 +799,7 @@ class BackendBlogModel
 	 */
 	public static function updateCategory(array $item, $meta = null)
 	{
+		// get db
 		$db = BackendModel::getDB(true);
 
 		// update category
