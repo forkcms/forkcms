@@ -372,17 +372,17 @@ class ModuleInstaller
 
 
 	/**
-	* Inserts a new locale item
-	*
-	* @return	void
-	* @param	string $language		The language.
-	* @param	string $application		The application, for now possible values are: backend, frontend.
-	* @param	string $module			The module to insert the locale for.
-	* @param	string $type			The type of locale, possible values are: act, err, lbl, msg.
-	* @param	string $name			The name of the locale.
-	* @param	string $value			The value.
-	* @deprecated	Deprecated since version 2.1.0. Will be removed in the next version.
-	*/
+	 * Inserts a new locale item
+	 *
+	 * @deprecated	Deprecated since version 2.1.0. Will be removed in the next version.
+	 * @return	void
+	 * @param	string $language		The language.
+	 * @param	string $application		The application, for now possible values are: backend, frontend.
+	 * @param	string $module			The module to insert the locale for.
+	 * @param	string $type			The type of locale, possible values are: act, err, lbl, msg.
+	 * @param	string $name			The name of the locale.
+	 * @param	string $value			The value.
+	 */
 	protected function insertLocale($language, $application, $module, $type, $name, $value)
 	{
 		// redefine
