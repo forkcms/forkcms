@@ -29,7 +29,6 @@ class BackendBlogAjaxEditCategory extends BackendBaseAJAXAction
 		if($id === 0) $this->output(self::BAD_REQUEST, null, 'no id provided');
 		if($categoryTitle === '') $this->output(self::BAD_REQUEST, null, BL::err('TitleIsRequired'));
 
-		// get the data
 		// build array
 		$item['id'] = $id;
 		$item['title'] = SpoonFilter::htmlspecialchars($categoryTitle);
