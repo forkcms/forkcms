@@ -633,7 +633,7 @@ class BackendBlogModel
 		{
 			// get number of items with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
-											FROM events_categories AS i
+											FROM blog_categories AS i
 											INNER JOIN meta AS m ON i.meta_id = m.id
 											WHERE i.language = ? AND m.url = ? AND i.id != ?',
 											array(BL::getWorkingLanguage(), $URL, $id));
