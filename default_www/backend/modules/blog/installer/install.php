@@ -14,6 +14,14 @@
 class BlogInstall extends ModuleInstaller
 {
 	/**
+	 * Default category id
+	 *
+	 * @var	int
+	 */
+	private $defaultCategoryId;
+
+
+	/**
 	 * Add a category for a language
 	 *
 	 * @return	int
@@ -96,7 +104,7 @@ class BlogInstall extends ModuleInstaller
 			if($currentCategoryId == 0)
 			{
 				// add category
-				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
+				$this->defaultCategoryId = $this->addCategory($language, 'Default', 'default');
 			}
 
 			// feedburner URL
@@ -106,7 +114,6 @@ class BlogInstall extends ModuleInstaller
 			$this->setSetting('blog', 'rss_meta_' . $language, true);
 			$this->setSetting('blog', 'rss_title_' . $language, 'RSS');
 			$this->setSetting('blog', 'rss_description_' . $language, '');
-
 
 			// check if a page for blog already exists in this language
 			if(!(bool) $this->getDB()->getVar('SELECT COUNT(p.id)
@@ -172,7 +179,7 @@ class BlogInstall extends ModuleInstaller
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array('id' => 1,
-											'category_id' => null,
+											'category_id' => $this->defaultCategoryId,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
@@ -189,7 +196,7 @@ class BlogInstall extends ModuleInstaller
 
 			// insert sample blogpost 2
 			$db->insert('blog_posts', array('id' => 2,
-											'category_id' => null,
+											'category_id' => $this->defaultCategoryId,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
 											'language' => $language,
