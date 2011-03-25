@@ -54,6 +54,10 @@
         <translation language="nl"><![CDATA[Je kan het emailadres van deze gebruiker niet aanpassen.]]></translation>
         <translation language="en"><![CDATA[You can't change the emailaddres of the GOD-user.]]></translation>
       </item>
+      <item type="error" name="CantDeleteGod">
+        <translation language="nl"><![CDATA[Je kan deze gebruiker niet verwijderen.]]></translation>
+        <translation language="en"><![CDATA[You can't delete the GOD-user.]]></translation>
+      </item>
     </users>
   </backend>
 </locale>
