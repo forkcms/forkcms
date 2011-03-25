@@ -41,10 +41,16 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	private function loadDataGrid()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, BL::getWorkingLanguage());
+		$this->datagrid = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_CATEGORIES, array('active', BL::getWorkingLanguage()));
+
+		// set headers
+		$this->datagrid->setHeaderLabels(array('num_items' => ucfirst(BL::lbl('Amount'))));
 
 		// sorting columns
-		$this->datagrid->setSortingColumns(array('title'), 'title');
+		$this->datagrid->setSortingColumns(array('title', 'num_items'), 'title');
+
+		// set column URLs
+		$this->datagrid->setColumnURL('num_items', BackendModel::createURLForAction('index') . '&amp;category=[id]');
 
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
