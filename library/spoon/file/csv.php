@@ -172,7 +172,9 @@ class SpoonFileCSV
 		if(!SpoonFile::exists($path)) throw new SpoonFileException($path . ' doesn\'t exists.');
 
 		// get delimiter and enclosure from the contents
-		list($delimiter, $enclosure) = self::getDelimiterAndEnclosure(SpoonFile::getContent($path), $delimiter, $enclosure);
+		if(!$delimiter || !$enclosure) $autoDetect = self::getDelimiterAndEnclosure(SpoonFile::getContent($path), $delimiter, $enclosure);
+		if(!$delimiter) $delimiter = $autoDetect[0];
+		if(!$enclosure) $enclosure = $autoDetect[1];
 
 		// automagicaly detect line endings
 		@ini_set('auto_detect_line_endings', 1);
