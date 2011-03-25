@@ -18,7 +18,7 @@
 {form:filter}
 	<p class="oneLiner">
 		<label for="category">{$msgShowOnlyItemsInCategory}</label>
-		{$ddmCategory} {$ddmCategoryError}
+		&nbsp;{$ddmCategory} {$ddmCategoryError}
 	</p>
 {/form:filter}
 

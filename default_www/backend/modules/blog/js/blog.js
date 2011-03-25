@@ -12,7 +12,6 @@ jsBackend.blog =
 	init: function()
 	{
 		jsBackend.blog.controls.init();
-		jsBackend.blog.category.init();
 
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
