@@ -158,11 +158,8 @@ class BackendBlogModel
 			// delete category
 			$db->delete('blog_categories', 'id = ?', array($id));
 
-			// default category
-			$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null);
-
 			// update category for the posts that might be in this category
-			$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
+			$db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
 
 			// invalidate the cache for blog
 			BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
@@ -366,43 +363,9 @@ class BackendBlogModel
 		$db = BackendModel::getDB(true);
 
 		// get records and return them
-		$categories = (array) BackendModel::getDB()->getPairs('SELECT i.id, i.title
-																FROM blog_categories AS i
-																WHERE i.language = ?', array(BL::getWorkingLanguage()));
-
-		// no categories?
-		if(empty($categories))
-		{
-			// build array
-			$category['language'] = BL::getWorkingLanguage();
-			$category['title'] = 'default';
-
-			// meta array
-			$meta['keywords'] = 'default';
-			$meta['keywords_overwrite'] = 'default';
-			$meta['description'] = 'default';
-			$meta['description_overwrite'] = 'default';
-			$meta['title'] = 'default';
-			$meta['title_overwrite'] = 'default';
-			$meta['url'] = 'default';
-			$meta['url_overwrite'] = 'default';
-			$meta['custom'] = null;
-
-			// insert meta
-			$category['meta_id'] = $db->insert('meta', $category);
-
-			// insert category
-			$id = self::insertCategory($category);
-
-			// store in settings
-			BackendModel::setModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), $id);
-
-			// recall
-			return self::getCategories();
-		}
-
-		// return the categories
-		return $categories;
+		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.title
+														FROM blog_categories AS i
+														WHERE i.language = ?', array(BL::getWorkingLanguage()));
 	}
 
 

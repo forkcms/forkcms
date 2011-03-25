@@ -20,12 +20,6 @@
 							<label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
 							{$txtTitle} {$txtTitleError}
 						</p>
-						<ul class="inputList">
-							<li>
-								<label for="isDefault">{$msgMakeDefaultCategory|sprintf:{$defaultCategory.title}}</label>
-								{$chkIsDefault} {$chkIsDefaultError}
-							</li>
-						</ul>
 					</td>
 				</tr>
 			</table>

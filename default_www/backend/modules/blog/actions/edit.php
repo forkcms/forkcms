@@ -180,6 +180,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
 		$this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
+		$this->frm->getField('category_id')->setDefaultElement('');
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['revision_id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
@@ -286,7 +287,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['revision_id'] = $this->record['revision_id']; // this is used to let our model know the status (active, archive, draft) of the edited item
 				$item['meta_id'] = $this->meta->save();
-				$item['category_id'] = $this->frm->getField('category_id')->getValue();
+				$item['category_id'] = ($this->frm->getField('category_id')->isFilled()) ? $this->frm->getField('category_id')->getValue() : null;
 				$item['user_id'] = $this->frm->getField('user_id')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();

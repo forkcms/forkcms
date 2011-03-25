@@ -14,7 +14,7 @@
 class BlogInstall extends ModuleInstaller
 {
 	/**
-	 * Add the default category for a language
+	 * Add a category for a language
 	 *
 	 * @return	int
 	 * @param	string $language	The language to use.
@@ -95,25 +95,8 @@ class BlogInstall extends ModuleInstaller
 			// no category exists
 			if($currentCategoryId == 0)
 			{
-				// add default category
+				// add category
 				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-
-				// insert default category setting
-				$this->setSetting('blog', 'default_category_' . $language, $defaultCategoryId, true);
-			}
-
-			// category exists
-			else
-			{
-				// current default categoryId
-				$currentDefaultCategoryId = $this->getSetting('blog', 'default_category_' . $language);
-
-				// does not exist
-				if(!$this->existsCategory($language, $currentDefaultCategoryId))
-				{
-					// insert default category setting
-					$this->setSetting('blog', 'default_category_' . $language, $currentCategoryId, true);
-				}
 			}
 
 			// feedburner URL
@@ -189,7 +172,7 @@ class BlogInstall extends ModuleInstaller
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array('id' => 1,
-											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
+											'category_id' => null,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
@@ -206,7 +189,7 @@ class BlogInstall extends ModuleInstaller
 
 			// insert sample blogpost 2
 			$db->insert('blog_posts', array('id' => 2,
-											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
+											'category_id' => null,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
 											'language' => $language,
@@ -220,25 +203,6 @@ class BlogInstall extends ModuleInstaller
 											'hidden' => 'N',
 											'allow_comments' => 'Y',
 											'num_comments' => '0'));
-
-//			for($i = 3; $i <= 103; $i++)
-//			{
-//				$db->insert('blog_posts', array('id' => $i,
-//												'category_id' => $this->getSetting('blog', 'default_category_' . $language),
-//												'user_id' => $this->getDefaultUserID(),
-//												'meta_id' => $this->insertMeta('Lorem ipsum '. $i, 'Lorem ipsum '. $i, 'Lorem ipsum '. $i, 'lorem-ipsum-'. $i),
-//												'language' => $language,
-//												'title' => 'Lorem ipsum '. $i,
-//												'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-//												'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
-//												'status' => 'active',
-//												'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-//												'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-//												'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
-//												'hidden' => 'N',
-//												'allow_comments' => 'Y',
-//												'num_comments' => '0'));
-//			}
 
 			// insert example comment 1
 			$db->insert('blog_comments', array('post_id' => 1,
