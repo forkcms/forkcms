@@ -49,8 +49,8 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('title', 'num_items'), 'title');
 
-		// set column URLs
-		$this->datagrid->setColumnURL('num_items', BackendModel::createURLForAction('index') . '&amp;category=[id]');
+		// convert the count into a readable and clickable one
+		$this->datagrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
 
 		// add column
 		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit_category') . '&amp;id=[id]', BL::lbl('Edit'));
@@ -74,6 +74,27 @@ class BackendBlogCategories extends BackendBaseActionIndex
 	private function parse()
 	{
 		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+	}
+
+
+	/**
+	 * Convert the count in a human readable one.
+	 *
+	 * @return	string
+	 * @param	int $count		The count.
+	 * @param	string $link	The link for the count.
+	 */
+	public static function setClickableCount($count, $link)
+	{
+		// redefine
+		$count = (int) $count;
+		$link = (string) $link;
+		$return = '';
+
+		if($count > 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Articles') . '</a>';
+		elseif($count == 1) $return = '<a href="' . $link . '">' . $count . ' ' . BL::getLabel('Article') . '</a>';
+
+		return $return;
 	}
 
 
