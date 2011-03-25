@@ -49,6 +49,9 @@ class BackendBlogCategories extends BackendBaseActionIndex
 		// sorting columns
 		$this->datagrid->setSortingColumns(array('title', 'num_items'), 'title');
 
+		// set column URLs
+		$this->datagrid->setColumnURL('title', BackendModel::createURLForAction('edit_category') . '&amp;id=[id]');
+
 		// convert the count into a readable and clickable one
 		$this->datagrid->setColumnFunction(array(__CLASS__, 'setClickableCount'), array('[num_items]', BackendModel::createURLForAction('index') . '&amp;category=[id]'), 'num_items', true);
 
