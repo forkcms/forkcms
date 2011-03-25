@@ -9,6 +9,7 @@
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogEdit extends BackendBaseActionEdit

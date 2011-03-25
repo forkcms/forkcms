@@ -7,7 +7,7 @@
  * @subpackage	blog
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
