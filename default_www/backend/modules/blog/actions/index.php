@@ -15,6 +15,22 @@
 class BackendBlogIndex extends BackendBaseActionIndex
 {
 	/**
+	 * The category where is filtered on
+	 *
+	 * @var	array
+	 */
+	private $category;
+
+
+	/**
+	 * The id of the category where is filtered on
+	 *
+	 * @var	int
+	 */
+	private $categoryId;
+
+
+	/**
 	 * Datagrids
 	 *
 	 * @var	SpoonDataGrid
@@ -31,6 +47,25 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	{
 		// call parent, this will probably add some general CSS/JS or other required files
 		parent::execute();
+
+		// set category id
+		$this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
+		if($this->categoryId == 0) $this->categoryId = null;
+		else
+		{
+			// get category
+			$this->category = BackendBlogModel::getCategory($this->categoryId);
+
+			// reset
+			if(empty($this->category))
+			{
+				// reset GET to trick Spoon
+				$_GET['category'] = null;
+
+				// reset
+				$this->categoryId = null;
+			}
+		}
 
 		// load datagrid
 		$this->loadDataGrids();
@@ -50,8 +85,21 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 */
 	private function loadDatagridAllPosts()
 	{
-		// create datagrid
-		$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE, array('active', BL::getWorkingLanguage()));
+		// filter on category?
+		if($this->categoryId != null)
+		{
+			// create datagrid
+			$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_FOR_CATEGORY, array($this->categoryId, 'active', BL::getWorkingLanguage()));
+
+			// set the URL
+			$this->dgPosts->setURL('&amp;category=' . $this->categoryId, true);
+		}
+
+		else
+		{
+			// create datagrid
+			$this->dgPosts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE, array('active', BL::getWorkingLanguage()));
+		}
 
 		// set headers
 		$this->dgPosts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('Author')), 'publish_on' => ucfirst(BL::lbl('PublishedOn'))));
@@ -63,15 +111,15 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgPosts->setSortingColumns(array('publish_on', 'title', 'user_id', 'comments'), 'publish_on');
 		$this->dgPosts->setSortParameter('desc');
 
-		// set colum URLs
-		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		// set column URLs
+		$this->dgPosts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
 
 		// set column functions
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[publish_on]'), 'publish_on', true);
 		$this->dgPosts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgPosts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgPosts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgPosts->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -85,8 +133,21 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 */
 	private function loadDatagridDrafts()
 	{
-		// create datagrid
-		$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
+		// filter on category?
+		if($this->categoryId != null)
+		{
+			// create datagrid
+			$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY, array($this->categoryId, 'draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
+
+			// set the URL
+			$this->dgDrafts->setURL('&amp;category=' . $this->categoryId, true);
+		}
+
+		else
+		{
+			// create datagrid
+			$this->dgDrafts = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
+		}
 
 		// set headers
 		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('Author'))));
@@ -99,14 +160,14 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgDrafts->setSortParameter('desc');
 
 		// set colum URLs
-		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
+		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' . $this->categoryId);
 
 		// set column functions
 		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('Edit'));
+		$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgDrafts->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -120,8 +181,21 @@ class BackendBlogIndex extends BackendBaseActionIndex
 	 */
 	private function loadDatagridRecentPosts()
 	{
-		// create datagrid
-		$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active', BL::getWorkingLanguage(), 4));
+		// filter on category?
+		if($this->categoryId != null)
+		{
+			// create datagrid
+			$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY, array($this->categoryId, 'active', BL::getWorkingLanguage(), 4));
+
+			// set the URL
+			$this->dgRecent->setURL('&amp;category=' . $this->categoryId, true);
+		}
+
+		else
+		{
+			// create datagrid
+			$this->dgRecent = new BackendDataGridDB(BackendBlogModel::QRY_DATAGRID_BROWSE_RECENT, array('active', BL::getWorkingLanguage(), 4));
+		}
 
 		// set headers
 		$this->dgRecent->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('Author'))));
@@ -133,14 +207,14 @@ class BackendBlogIndex extends BackendBaseActionIndex
 		$this->dgRecent->setPaging(false);
 
 		// set colum URLs
-		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]');
+		$this->dgRecent->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId);
 
 		// set column functions
 		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on', true);
 		$this->dgRecent->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
 
 		// add edit column
-		$this->dgRecent->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		$this->dgRecent->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;category=' . $this->categoryId, BL::lbl('Edit'));
 
 		// our JS needs to know an id, so we can highlight it
 		$this->dgRecent->setRowAttributes(array('id' => 'row-[revision_id]'));
@@ -180,6 +254,26 @@ class BackendBlogIndex extends BackendBaseActionIndex
 
 		// parse the datagrid for the most recent blogposts
 		$this->tpl->assign('dgRecent', (is_object($this->dgRecent) && $this->dgRecent->getNumResults() != 0) ? $this->dgRecent->getContent() : false);
+
+		// get categories
+		$categories = BackendBlogModel::getCategories();
+
+		// multiple categories?
+		if(count($categories) > 1)
+		{
+			// create form
+			$frm = new BackendForm('filter', null, 'get', false);
+
+			// create element
+			$frm->addDropdown('category', $categories, $this->categoryId);
+			$frm->getField('category')->setDefaultElement('');
+
+			// parse the form
+			$frm->parse($this->tpl);
+		}
+
+		// parse category
+		if(!empty($this->category)) $this->tpl->assign('filterCategory', $this->category);
 	}
 }
 

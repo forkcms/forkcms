@@ -8,10 +8,19 @@
  *
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogDelete extends BackendBaseActionDelete
 {
+	/**
+	 * The id of the category where is filtered on
+	 *
+	 * @var	int
+	 */
+	private $categoryId;
+
+
 	/**
 	 * Execute the action
 	 *
@@ -28,6 +37,10 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
 
+			// set category id
+			$this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
+			if($this->categoryId == 0) $this->categoryId = null;
+
 			// get data
 			$this->record = (array) BackendBlogModel::get($this->id);
 
@@ -37,8 +50,14 @@ class BackendBlogDelete extends BackendBaseActionDelete
 			// delete search indexes
 			if(is_callable(array('BackendSearchModel', 'removeIndex'))) BackendSearchModel::removeIndex('blog', $this->id);
 
+			// build redirect URL
+			$redirectUrl = BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']);
+
+			// append to redirect URL
+			if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
+
 			// item was deleted, so redirect
-			$this->redirect(BackendModel::createURLForAction('index') . '&report=deleted&var=' . urlencode($this->record['title']));
+			$this->redirect($redirectUrl);
 		}
 
 		// something went wrong

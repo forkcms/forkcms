@@ -7,14 +7,14 @@
  * @subpackage	blog
  *
  * @author		Davy Hellemans <davy@netlash.com>
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Matthias Mullie <matthias@netlash.com>
  * @since		2.0
  */
 class BlogInstall extends ModuleInstaller
 {
 	/**
-	 * Add the default category for a language
+	 * Add a category for a language
 	 *
 	 * @return	int
 	 * @param	string $language	The language to use.
@@ -95,25 +95,8 @@ class BlogInstall extends ModuleInstaller
 			// no category exists
 			if($currentCategoryId == 0)
 			{
-				// add default category
+				// add category
 				$defaultCategoryId = $this->addCategory($language, 'Default', 'default');
-
-				// insert default category setting
-				$this->setSetting('blog', 'default_category_' . $language, $defaultCategoryId, true);
-			}
-
-			// category exists
-			else
-			{
-				// current default categoryId
-				$currentDefaultCategoryId = $this->getSetting('blog', 'default_category_' . $language);
-
-				// does not exist
-				if(!$this->existsCategory($language, $currentDefaultCategoryId))
-				{
-					// insert default category setting
-					$this->setSetting('blog', 'default_category_' . $language, $currentCategoryId, true);
-				}
 			}
 
 			// feedburner URL
@@ -189,7 +172,7 @@ class BlogInstall extends ModuleInstaller
 		{
 			// insert sample blogpost 1
 			$db->insert('blog_posts', array('id' => 1,
-											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
+											'category_id' => null,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Nunc sediam est', 'Nunc sediam est', 'Nunc sediam est', 'nunc-sediam-est'),
 											'language' => $language,
@@ -206,7 +189,7 @@ class BlogInstall extends ModuleInstaller
 
 			// insert sample blogpost 2
 			$db->insert('blog_posts', array('id' => 2,
-											'category_id' => $this->getSetting('blog', 'default_category_' . $language),
+											'category_id' => null,
 											'user_id' => $this->getDefaultUserID(),
 											'meta_id' => $this->insertMeta('Lorem ipsum', 'Lorem ipsum', 'Lorem ipsum', 'lorem-ipsum'),
 											'language' => $language,

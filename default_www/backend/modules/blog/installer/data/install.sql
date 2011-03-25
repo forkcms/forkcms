@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `blog_comments` (
 CREATE TABLE IF NOT EXISTS `blog_posts` (
  `id` int(11) NOT NULL COMMENT 'The real post id',
  `revision_id` int(11) NOT NULL auto_increment,
- `category_id` int(11) NOT NULL,
+ `category_id` int(11) DEFAULT NULL,
  `user_id` int(11) NOT NULL,
  `meta_id` int(11) NOT NULL,
  `language` varchar(5) NOT NULL,

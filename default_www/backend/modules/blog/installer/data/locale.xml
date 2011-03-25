@@ -14,6 +14,10 @@
         <translation language="nl"><![CDATA[Het artikel "%1$s" werd toegevoegd.]]></translation>
         <translation language="en"><![CDATA[The article "%1$s" was added.]]></translation>
       </item>
+      <item type="message" name="ArticlesFor">
+        <translation language="nl"><![CDATA[Artikels in "%1$s"]]></translation>
+        <translation language="en"><![CDATA[Articles for "%1$s"]]></translation>
+      </item>
       <item type="message" name="CommentOnWithURL">
         <translation language="nl"><![CDATA[Reactie op: <a href="%1$s">%2$s</a>]]></translation>
         <translation language="en"><![CDATA[Comment on: <a href="%1$s">%2$s</a>]]></translation>
@@ -70,10 +74,6 @@
         <translation language="nl"><![CDATA[Schakel de ingebouwde spam-filter (Akismet) in om spam-berichten in reacties te vermijden.]]></translation>
         <translation language="en"><![CDATA[Enable the built-in spamfilter (Akismet) to help avoid spam comments.]]></translation>
       </item>
-      <item type="message" name="MakeDefaultCategory">
-        <translation language="nl"><![CDATA[Maak van deze categorie de standaardcategorie (de huidige standaardcategorie is %1$s).]]></translation>
-        <translation language="en"><![CDATA[Make default category (current default category is: %1$s).]]></translation>
-      </item>
       <item type="message" name="NoItems">
         <translation language="nl"><![CDATA[Er zijn nog geen artikels. <a href="%1$s">Schrijf het eerste artikel</a>.]]></translation>
         <translation language="en"><![CDATA[There are no articles yet. <a href="%1$s">Write the first article</a>.]]></translation>
@@ -93,6 +93,10 @@
       <item type="message" name="NumItemsInRecentArticlesList">
         <translation language="nl"><![CDATA[Aantal items in recente artikels (lijst) widget]]></translation>
         <translation language="en"><![CDATA[Number of articles in the recent articles (list) widget]]></translation>
+      </item>
+      <item type="message" name="ShowOnlyItemsInCategory">
+        <translation language="nl"><![CDATA[Toon enkel berichten in de categorie:]]></translation>
+        <translation language="en"><![CDATA[Show only articles for:]]></translation>
       </item>
     </blog>
     <core>

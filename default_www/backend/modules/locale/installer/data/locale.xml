@@ -406,6 +406,10 @@
         <translation language="nl"><![CDATA[gearchiveerd]]></translation>
         <translation language="en"><![CDATA[archived]]></translation>
       </item>
+      <item type="label" name="Article">
+        <translation language="nl"><![CDATA[artikel]]></translation>
+        <translation language="en"><![CDATA[article]]></translation>
+      </item>
       <item type="label" name="Articles">
         <translation language="nl"><![CDATA[artikels]]></translation>
         <translation language="en"><![CDATA[articles]]></translation>
