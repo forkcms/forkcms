@@ -14,6 +14,14 @@
 class BackendBlogEdit extends BackendBaseActionEdit
 {
 	/**
+	 * The id of the category where is filtered on
+	 *
+	 * @var	int
+	 */
+	private $categoryId;
+
+
+	/**
 	 * Datagrid for the drafts
 	 *
 	 * @var	BackendDatagrid
@@ -36,6 +44,10 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
+
+			// set category id
+			$this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
+			if($this->categoryId == 0) $this->categoryId = null;
 
 			// get all data for the item we want to edit
 			$this->getData();
@@ -233,6 +245,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
 		$this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
+
+		// assign category
+		$this->tpl->assign('categoryId', $this->categoryId);
 	}
 
 
@@ -301,16 +316,22 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// ping
 					if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') . '/' . $this->meta->getURL());
 
-					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&id=' . $this->id . '&highlight=row-' . $item['revision_id']);
+					// build URL
+					$redirectUrl = BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
 				}
 
 				// draft
 				elseif($item['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$this->redirect(BackendModel::createURLForAction('edit') . '&report=saved_as_draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
+					$redirectUrl = BackendModel::createURLForAction('edit') . '&report=saved_as_draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id'];
 				}
+
+				// append to redirect URL
+				if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
+
+				// everything is saved, so redirect to the overview
+				$this->redirect($redirectUrl);
 			}
 		}
 	}

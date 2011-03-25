@@ -56,6 +56,11 @@ jsBackend.blog.controls =
 			$('form').submit();
 		});
 		
+		$('#filter #category').change(function(evt)
+		{
+			$('#filter').submit();
+		});
+		
 		if($('#addCategoryDialog').length > 0) {
 			$('#addCategoryDialog').dialog(
 				{

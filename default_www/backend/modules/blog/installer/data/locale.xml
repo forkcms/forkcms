@@ -94,6 +94,10 @@
         <translation language="nl"><![CDATA[Aantal items in recente artikels (lijst) widget]]></translation>
         <translation language="en"><![CDATA[Number of articles in the recent articles (list) widget]]></translation>
       </item>
+      <item type="message" name="ShowOnlyItemsInCategory">
+        <translation language="nl"><![CDATA[Toon enkel berichten in de categorie:]]></translation>
+        <translation language="en"><![CDATA[Show only articles for:]]></translation>
+      </item>
     </blog>
     <core>
      <item type="label" name="Blog">

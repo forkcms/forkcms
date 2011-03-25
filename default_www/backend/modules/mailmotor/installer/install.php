@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Installer for the mailmotor module
  *

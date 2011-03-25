@@ -221,6 +221,25 @@ class BlogInstall extends ModuleInstaller
 											'allow_comments' => 'Y',
 											'num_comments' => '0'));
 
+//			for($i = 3; $i <= 103; $i++)
+//			{
+//				$db->insert('blog_posts', array('id' => $i,
+//												'category_id' => $this->getSetting('blog', 'default_category_' . $language),
+//												'user_id' => $this->getDefaultUserID(),
+//												'meta_id' => $this->insertMeta('Lorem ipsum '. $i, 'Lorem ipsum '. $i, 'Lorem ipsum '. $i, 'lorem-ipsum-'. $i),
+//												'language' => $language,
+//												'title' => 'Lorem ipsum '. $i,
+//												'introduction' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+//												'text' => SpoonFile::getContent(PATH_WWW . '/backend/modules/blog/installer/data/' . $language . '/sample1.txt'),
+//												'status' => 'active',
+//												'publish_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+//												'created_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+//												'edited_on' => gmdate('Y-m-d H:i:00', (time() - 60)),
+//												'hidden' => 'N',
+//												'allow_comments' => 'Y',
+//												'num_comments' => '0'));
+//			}
+
 			// insert example comment 1
 			$db->insert('blog_comments', array('post_id' => 1,
 												'language' => $language,

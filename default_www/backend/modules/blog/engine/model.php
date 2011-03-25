@@ -17,6 +17,9 @@ class BackendBlogModel
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 									FROM blog_posts AS i
 									WHERE i.status = ? AND i.language = ?';
+	const QRY_DATAGRID_BROWSE_FOR_CATEGORY = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
+												FROM blog_posts AS i
+												WHERE i.category_id = ? AND i.status = ? AND i.language = ?';
 	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.title
 											FROM blog_categories AS i
 											WHERE i.language = ?';
@@ -37,11 +40,26 @@ class BackendBlogModel
 											GROUP BY i.id
 										) AS p
 										WHERE i.revision_id = p.revision_id';
+	const QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY = 'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
+														FROM blog_posts AS i
+														INNER JOIN
+														(
+															SELECT MAX(i.revision_id) AS revision_id
+															FROM blog_posts AS i
+															WHERE i.category_id = ? AND i.status = ? AND i.user_id = ? AND i.language = ?
+															GROUP BY i.id
+														) AS p
+														WHERE i.revision_id = p.revision_id';
 	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
 										FROM blog_posts AS i
 										WHERE i.status = ? AND i.language = ?
 										ORDER BY i.edited_on DESC
 										LIMIT ?';
+	const QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
+													FROM blog_posts AS i
+													WHERE i.category_id = ? AND i.status = ? AND i.language = ?
+													ORDER BY i.edited_on DESC
+													LIMIT ?';
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 											FROM blog_posts AS i
 											WHERE i.status = ? AND i.id = ? AND i.language = ?
