@@ -438,10 +438,6 @@
         <translation language="nl"><![CDATA[blok]]></translation>
         <translation language="en"><![CDATA[block]]></translation>
       </item>
-      <item type="label" name="Blog">
-        <translation language="nl"><![CDATA[blog]]></translation>
-        <translation language="en"><![CDATA[blog]]></translation>
-      </item>
       <item type="label" name="BrowserNotSupported">
         <translation language="nl"><![CDATA[browser niet ondersteund]]></translation>
         <translation language="en"><![CDATA[browser not supported]]></translation>
