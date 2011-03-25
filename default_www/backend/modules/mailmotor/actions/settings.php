@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorSettings
  *
  * @package		backend
  * @subpackage	mailmotor

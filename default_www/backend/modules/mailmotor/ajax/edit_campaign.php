@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendMailmotorAjaxEditCampaign
+ * This is the ajax-action to update a campaign
  *
  * @package		backend
  * @subpackage	mailmotor

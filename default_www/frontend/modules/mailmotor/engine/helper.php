@@ -19,10 +19,11 @@ class FrontendMailmotorCMHelper
 	 */
 	public static function existsGroupByCampaignMonitorID($id)
 	{
-		return (bool) FrontendModel::getDB()->getNumRows('SELECT mg.*
-															FROM mailmotor_groups AS mg
-															INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
-															WHERE mci.cm_id = ? AND mci.type = ?', array($id, 'list'));
+		return (bool) FrontendModel::getDB()->getVar('SELECT COUNT(mg.id)
+														FROM mailmotor_groups AS mg
+														INNER JOIN mailmotor_campaignmonitor_ids AS mci ON mci.other_id = mg.id
+														WHERE mci.cm_id = ? AND mci.type = ?',
+														array($id, 'list'));
 	}
 
 
@@ -35,7 +36,10 @@ class FrontendMailmotorCMHelper
 	 */
 	public static function getCampaignMonitorID($type, $otherId)
 	{
-		return FrontendModel::getDB()->getVar('SELECT cm_id FROM mailmotor_campaignmonitor_ids WHERE type = ? AND other_id = ?', array($type, $otherId));
+		return FrontendModel::getDB()->getVar('SELECT cm_id
+												FROM mailmotor_campaignmonitor_ids
+												WHERE type = ? AND other_id = ?',
+												array($type, $otherId));
 	}
 
 
@@ -198,7 +202,6 @@ class FrontendMailmotorCMHelper
 			}
 
 			// set variables
-			$subscriber = array();
 			$subscriber['status'] = 'unsubscribed';
 			$subscriber['unsubscribed_on'] = FrontendModel::getUTCDate('Y-m-d H:i:s');
 

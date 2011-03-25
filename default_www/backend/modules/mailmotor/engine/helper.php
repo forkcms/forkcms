@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorCMHelper
  * In this file we store all generic functions that we will be using to communicate with CampaignMonitor
  *
  * @package		backend
@@ -945,7 +944,7 @@ class BackendMailmotorCMHelper
 		if($item['is_default'] === 'Y' && $item['language'] != '0')
 		{
 			// set all defaults to N
-			BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', $item['language']);
+			BackendModel::getDB(true)->update('mailmotor_groups', array('is_default' => 'N', 'language' => null), 'language = ?', array($item['language']));
 		}
 
 		// update the group in our database

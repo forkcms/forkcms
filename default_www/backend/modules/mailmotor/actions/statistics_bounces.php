@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorStatisticsBounces
  * This page will display the statistical overview of bounces for a specified mailing
  *
  * @package		backend

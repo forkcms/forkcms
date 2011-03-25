@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorAjaxLinkAccount
  * This checks if a CampaignMonitor account exists or not, and links it if it does
  *
  * @package		backend

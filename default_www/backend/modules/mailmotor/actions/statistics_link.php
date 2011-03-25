@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorStatisticsLink
  * This page will display the statistical overview of who clicked a certain link in a specified mailing
  *
  * @package		backend
@@ -193,13 +192,13 @@ class BackendMailmotorStatisticsLink extends BackendBaseActionIndex
 				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 				// update the item
-				$id = BackendMailmotorCMHelper::insertGroup($item);
+				$item['id'] = BackendMailmotorCMHelper::insertGroup($item);
 
 				// loop the adresses
 				foreach($this->statistics['clicked_links_by'][$this->linkURL] as $clicker)
 				{
 					// subscribe the user to the created group
-					BackendMailmotorCMHelper::subscribe($clicker['email'], $id);
+					BackendMailmotorCMHelper::subscribe($clicker['email'], $item['id']);
 				}
 
 				// everything is saved, so redirect to the overview
