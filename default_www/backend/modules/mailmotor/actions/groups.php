@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorGroups
  * This page will display the overview of groups
  *
  * @package		backend

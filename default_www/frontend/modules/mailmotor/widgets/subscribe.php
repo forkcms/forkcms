@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendMailmotorWidgetSubscribe
  * This is a widget with the subscribe form
  *
  * @package		frontend

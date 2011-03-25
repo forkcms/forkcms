@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is the classic fork cayenne mailmotor widget
+ * This is the classic fork mailmotor widget
  *
  * @package		backend
  * @subpackage	mailmotor
@@ -77,7 +77,6 @@ class BackendMailmotorWidgetStatistics extends BackendBaseWidget
 		$mailing[0]['sent'] = SpoonDate::getDate('d-m-Y', $mailing[0]['sent']) . ' ' . BL::lbl('At') . ' ' . SpoonDate::getDate('H:i', $mailing);
 
 		// get results
-		$results = array();
 		$results[] = array('label' => BL::lbl('MailmotorLatestMailing'), 'value' => $mailing[0]['name']);
 		$results[] = array('label' => BL::lbl('MailmotorSendDate'), 'value' => $mailing[0]['sent']);
 		$results[] = array('label' => BL::lbl('MailmotorSent'), 'value' => $stats['recipients'] . ' (' . $stats['recipients_percentage'] . ')');

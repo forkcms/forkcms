@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorImportGroups
  * This is the import-action, it will import groups and their subscribers from CampaignMonitor
  *
  * @package		backend

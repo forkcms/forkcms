@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorImportAddresses
  * This is the import-action, it will import records from a CSV file
  *
  * @package		backend

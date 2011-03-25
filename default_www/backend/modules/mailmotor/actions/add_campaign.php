@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorAddCampaign
  * This is the add-action, it will display a form to create a new campaign
  *
  * @package		backend
@@ -78,10 +77,10 @@ class BackendMailmotorAddCampaign extends BackendBaseActionAdd
 				$item['created_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 				// insert the item
-				$id = BackendMailmotorModel::insertCampaign($item);
+				$item['id'] = BackendMailmotorModel::insertCampaign($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $id);
+				$this->redirect(BackendModel::createURLForAction('campaigns') . '&report=added&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}
 		}
 	}

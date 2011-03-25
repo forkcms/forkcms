@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorEditGroup
  * This is the edit-action, it will display a form to edit a group
  *
  * @package		backend
@@ -143,7 +142,7 @@ class BackendMailmotorEditGroup extends BackendBaseActionEdit
 				BackendMailmotorModel::checkDefaultGroups();
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $this->id);
+				$this->redirect(BackendModel::createURLForAction('groups') . '&report=edited&var=' . urlencode($item['name']) . '&highlight=id-' . $item['id']);
 			}
 		}
 	}

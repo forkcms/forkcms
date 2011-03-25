@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorMassMailingAction
  * This action is used to update one or more mailings (delete, ...)
  *
  * @package		backend

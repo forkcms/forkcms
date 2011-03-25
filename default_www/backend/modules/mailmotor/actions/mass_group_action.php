@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorMassGroupAction
  * This action is used to update one or more groups (delete, ...)
  *
  * @package		backend

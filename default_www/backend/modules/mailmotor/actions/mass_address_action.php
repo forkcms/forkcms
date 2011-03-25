@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorMassAddressAction
  * This action is used to update one or more e-mail addresses (delete, ...)
  *
  * @package		backend

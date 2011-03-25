@@ -1,7 +1,6 @@
 <?php
 
 /**
- * FrontendMailmotorIndex
  * This is the index-action
  *
  * @package		frontend

@@ -1,8 +1,7 @@
 <?php
 
 /**
- * BackendMailmotorAjaxLoadClientInfo
- * This checks if a CampaignMonitor account exists or not, and links it if it does
+ * This loads CM client info
  *
  * @package		backend
  * @subpackage	mailmotor

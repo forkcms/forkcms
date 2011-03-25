@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorExportAddressesAction
  * This action is used to export email addresses by group ID
  *
  * @package		backend

@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorConfig
  * This is the configuration-object for the mailmotor module
  *
  * @package		backend

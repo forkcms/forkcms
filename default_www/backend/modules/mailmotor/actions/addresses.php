@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorAddresses
  * This page will display the overview of addresses
  *
  * @package		backend
@@ -89,7 +88,6 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		$filename = end($explodedFilename);
 
 		// set headers for download
-		$headers = array();
 		$headers[] = 'Content-type: application/csv; charset=utf-8';
 		$headers[] = 'Content-Disposition: attachment; filename="' . $filename . '"';
 		$headers[] = 'Pragma: no-cache';
@@ -98,7 +96,7 @@ class BackendMailmotorAddresses extends BackendBaseActionIndex
 		SpoonHTTP::setHeaders($headers);
 
 		// get the file contents
-		$content = readfile($path);
+		$content = SpoonFile::getContent($path);
 
 		// output the file contents
 		echo $content;
