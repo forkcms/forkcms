@@ -247,7 +247,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
 		// assign category
-		$this->tpl->assign('categoryId', $this->categoryId);
+		if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
 	}
 
 
