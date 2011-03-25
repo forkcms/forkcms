@@ -32,9 +32,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 															m.url
 															FROM blog_posts AS i
-															LEFT OUTER JOIN blog_categories AS c ON i.category_id = c.id
+															INNER JOIN blog_categories AS c ON i.category_id = c.id
 															INNER JOIN meta AS m ON i.meta_id = m.id
-															LEFT OUTER JOIN meta AS m2 ON c.meta_id = m2.id
+															INNER JOIN meta AS m2 ON c.meta_id = m2.id
 															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m.url = ?
 															LIMIT 1',
 															array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i') . ':00', (string) $URL));
@@ -56,9 +56,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 																m.url
 																FROM blog_posts AS i
-																LEFT OUTER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
 																INNER JOIN meta AS m ON i.meta_id = m.id
-																LEFT OUTER JOIN meta AS m2 ON c.meta_id = m2.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ?
 																ORDER BY i.publish_on DESC, i.id DESC
 																LIMIT ?, ?',
@@ -170,9 +170,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 																m.url
 																FROM blog_posts AS i
-																LEFT OUTER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
 																INNER JOIN meta AS m ON i.meta_id = m.id
-																LEFT OUTER JOIN meta AS m2 ON c.meta_id = m2.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on <= ? AND m2.url = ?
 																ORDER BY i.publish_on DESC
 																LIMIT ?, ?',
@@ -252,9 +252,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 																UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
 																m.url
 																FROM blog_posts AS i
-																LEFT OUTER JOIN blog_categories AS c ON i.category_id = c.id
+																INNER JOIN blog_categories AS c ON i.category_id = c.id
 																INNER JOIN meta AS m ON i.meta_id = m.id
-																LEFT OUTER JOIN meta AS m2 ON c.meta_id = m2.id
+																INNER JOIN meta AS m2 ON c.meta_id = m2.id
 																WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?
 																ORDER BY i.publish_on DESC
 																LIMIT ?, ?',
@@ -428,9 +428,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 															m.url
 															FROM blog_posts AS i
-															LEFT OUTER JOIN blog_categories AS c ON i.category_id = c.id
+															INNER JOIN blog_categories AS c ON i.category_id = c.id
 															INNER JOIN meta AS m ON i.meta_id = m.id
-															LEFT OUTER JOIN meta AS m2 On c.meta_id = m2.id
+															INNER JOIN meta AS m2 On c.meta_id = m2.id
 															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.revision_id = ? AND m.url = ?
 															LIMIT 1',
 															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
@@ -640,9 +640,9 @@ class FrontendBlogModel implements FrontendTagsInterface
 															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
 															m.url
 															FROM blog_posts AS i
-															LEFT OUTER JOIN blog_categories AS c ON i.category_id = c.id
+															INNER JOIN blog_categories AS c ON i.category_id = c.id
 															INNER JOIN meta AS m ON i.meta_id = m.id
-															LEFT OUTER JOIN meta AS m2 ON c.meta_id = m2.id
+															INNER JOIN meta AS m2 ON c.meta_id = m2.id
 															WHERE i.language = ? AND i.revision_id = ? AND m.url = ?
 															LIMIT 1',
 															array(FRONTEND_LANGUAGE, (int) $revision, (string) $URL));
