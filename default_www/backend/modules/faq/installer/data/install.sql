@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS `faq_questions` (
  `language` varchar(5) NOT NULL,
  `question` varchar(255) NOT NULL,
  `answer` text NOT NULL,
- `hidden` enum('Y','N') NOT NULL DEFAULT 'N',
+ `hidden` enum('N', 'Y') NOT NULL DEFAULT 'N',
  `sequence` int(11) NOT NULL,
  `created_on` datetime NOT NULL,
  PRIMARY KEY (`id`),

@@ -95,6 +95,12 @@
         <translation language="en"><![CDATA[Number of articles in the recent articles (list) widget]]></translation>
       </item>
     </blog>
+    <core>
+     <item type="label" name="Blog">
+        <translation language="nl"><![CDATA[blog]]></translation>
+        <translation language="en"><![CDATA[blog]]></translation>
+      </item>
+    </core>
   </backend>
   <frontend>
     <core>

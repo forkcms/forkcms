@@ -9,7 +9,6 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
- * @author		Dieter Vanden Eynde <dieter@netlash.com>
  * @since		2.0
  */
 class LocaleInstall extends ModuleInstaller
