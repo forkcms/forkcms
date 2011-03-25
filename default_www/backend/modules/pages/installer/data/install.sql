@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
  `title` varchar(255) NOT NULL,
  `navigation_title` varchar(255) NOT NULL COMMENT 'title that will be used in the navigation',
  `navigation_title_overwrite` enum('N','Y') NOT NULL default 'N' COMMENT 'should we override the navigation title',
- `hidden` enum('Y','N') NOT NULL default 'N' COMMENT 'is the page hidden?',
+ `hidden` enum('N','Y') NOT NULL default 'N' COMMENT 'is the page hidden?',
  `status` enum('active','archive','draft') NOT NULL default 'active' COMMENT 'is this the active, archive or draft version',
  `publish_on` datetime NOT NULL,
  `data` text COMMENT 'serialized array that may contain type specific parameters',
