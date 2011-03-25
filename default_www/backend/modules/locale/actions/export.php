@@ -85,7 +85,7 @@ class BackendLocaleExport extends BackendBaseActionIndex
 		}
 
 		// end of query
-		$query .= ' ORDER BY l.application, l.module, l.name ASC;';
+		$query .= ' ORDER BY l.application, l.module, l.name ASC';
 
 		// cough up
 		return array($query, $parameters);
