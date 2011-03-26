@@ -32,7 +32,7 @@ class BackendUsersDelete extends BackendBaseActionDelete
 			$user = new BackendUser($this->id);
 
 			// God-users can't be deleted
-			if(!$user->isGod()) $this->redirect(BackendModel::createURLForAction('index') . '&error=cant-delete-god');
+			if($user->isGod()) $this->redirect(BackendModel::createURLForAction('index') . '&error=cant-delete-god');
 
 			// delete item
 			BackendUsersModel::delete($this->id);
