@@ -14,6 +14,7 @@ Improvements:
 	* Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
 	* Pages: implemented drafts, similar to Blog.
 	* Pages: when changing templates the textual-content isn't deleted anymore.
+	* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
 
 2.1.0 (2011-03-14)
 --
