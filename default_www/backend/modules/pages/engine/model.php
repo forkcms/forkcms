@@ -25,6 +25,23 @@ class BackendPagesModel
 
 
 	/**
+	 * Overview of the drafts
+	 *
+	 * @va	string
+	 */
+	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+										FROM pages AS i
+										INNER JOIN
+										(
+											SELECT MAX(i.revision_id) AS revision_id
+											FROM pages AS i
+											WHERE i.status = ? AND i.user_id = ? AND i.language = ?
+											GROUP BY i.id
+										) AS p
+										WHERE i.revision_id = p.revision_id';
+
+
+	/**
 	 * Overview of a specific page's revisions
 	 *
 	 * @var	string

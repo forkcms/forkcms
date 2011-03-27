@@ -1,8 +1,12 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
 {include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_start.tpl}
 
+
 <div class="pageTitle">
-	<h2>{$lblRecentlyEdited|ucfirst}</h2>
+	<h2>
+		{option:dgDrafts}{$lblDrafts|ucfirst}{/option:dgDrafts}
+		{option:!dgDrafts}{$lblRecentlyEdited|ucfirst}{/option:!dgDrafts}
+	</h2>
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}" class="button icon iconAdd">
 			<span>{$lblAdd|ucfirst}</span>
@@ -10,9 +14,28 @@
 	</div>
 </div>
 
-<div class="datagridHolder {option:!datagrid}datagridHolderNoDatagrid{/option:!datagrid}">
-	{option:datagrid}{$datagrid}{/option:datagrid}
-	{option:!datagrid}<p>{$msgNoItems}</p>{/option:!datagrid}
+{option:dgDrafts}
+	<div class="datagridHolder {option:!dgDrafts}datagridHolderNoDatagrid{/option:!dgDrafts}">
+		{$dgDrafts}
+	</div>
+
+	<div class="pageTitle">
+		<h2>
+			{$lblRecentlyEdited|ucfirst}
+		</h2>
+		<div class="buttonHolderRight">
+			<a href="{$var|geturl:'add'}" class="button icon iconAdd">
+				<span>{$lblAdd|ucfirst}</span>
+			</a>
+		</div>
+	</div>
+
+{/option:dgDrafts}
+
+
+<div class="datagridHolder {option:!dgRecentlyEdited}datagridHolderNoDatagrid{/option:!dgRecentlyEdited}">
+	{option:dgRecentlyEdited}{$dgRecentlyEdited}{/option:dgRecentlyEdited}
+	{option:!dgRecentlyEdited}<p>{$msgNoItems}</p>{/option:!dgRecentlyEdited}
 </div>
 
 {include:{$BACKEND_MODULES_PATH}/pages/layout/templates/structure_end.tpl}
