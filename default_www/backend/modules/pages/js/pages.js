@@ -147,11 +147,13 @@ jsBackend.pages.extras =
 					{
 						if($('#templateList input:radio:checked').val() != $('#templateId').val())
 						{
-							// empty extra's
+							// empty extra's (because most of the time extra's will be linked from the template)
 							$('.block_extra_id').val('');
 
 							// clear content
-							for(var i in tinyMCE.editors) { tinyMCE.editors[i].setContent(''); }
+							for(var i in tinyMCE.editors) {
+								//jsBackend.pages.extras.store[i] = tinyMCE.editors[i].getContent();
+							}
 
 							// change the template for real
 							jsBackend.pages.template.changeTemplate(true);
@@ -514,7 +516,7 @@ jsBackend.pages.template =
 				{
 					if(defaultExtras[index] != 'editor') { extraId = parseInt(defaultExtras[index]); }
 				}
-
+				
 				// change the extra
 				jsBackend.pages.extras.changeExtra(extraId, index);
 			});

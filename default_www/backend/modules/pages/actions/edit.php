@@ -139,7 +139,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $revisionToLoad);
 
 				// show warning
-				$this->tpl->assign('usingRevision', true);
+				$this->tpl->assign('appendRevision', true);
 			}
 
 			// is there a revision specified?
@@ -155,7 +155,7 @@ class BackendPagesEdit extends BackendBaseActionEdit
 				$this->blocksContent = BackendPagesModel::getBlocksRevision($this->id, $draftToLoad);
 
 				// show warning
-				$this->tpl->assign('usingDraft', true);
+				$this->tpl->assign('appendRevision', true);
 			}
 
 			// reset some vars
