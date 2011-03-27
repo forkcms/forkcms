@@ -12,6 +12,7 @@ Improvements:
 	* Core: when using datefields with till, from, range set, it will be validated according the type.
 	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
 	* Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
+	* Pages: implemented drafts, similar to Blog.
 
 2.1.0 (2011-03-14)
 --
