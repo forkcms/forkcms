@@ -34,6 +34,16 @@ class BackendPagesModel
 									WHERE i.id = ? AND i.status = ? AND i.language = ?
 									ORDER BY i.edited_on DESC';
 
+	/**
+	 * Overview of a specific page's drafts
+	 *
+	 * @var	string
+	 */
+	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+													FROM pages AS i
+													WHERE i.id = ? AND i.status = ? AND i.language = ?
+													ORDER BY i.edited_on DESC';
+
 
 	/**
 	 * Overview of template

@@ -26,6 +26,12 @@ jsBackend.pages =
 		// manage templates
 		jsBackend.pages.manageTemplates.init();
 
+		$('#saveAsDraft').click(function(evt)
+		{
+			$('form').append('<input type="hidden" name="status" value="draft" />');
+			$('form').submit();
+		});
+		
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
 	},
