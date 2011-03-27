@@ -295,7 +295,7 @@ class FrontendModel
 	 * Get a revision for a page
 	 *
 	 * @return	array
-	 * @param	int $revision	The revisionID.
+	 * @param	int $revisionId		The revisionID.
 	 */
 	public static function getPageRevision($revisionId)
 	{
