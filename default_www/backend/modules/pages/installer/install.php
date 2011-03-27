@@ -212,6 +212,9 @@ class PagesInstall extends ModuleInstaller
 		$templateIds['default'] = $this->getDB()->insert('pages_templates', $defaultTemplate);
 		$templateIds['home'] = $this->getDB()->insert('pages_templates', $homeTemplate);
 
+		// set default template
+		$this->setSetting('pages', 'default_template', $templateIds['default']);
+
 		// loop languages
 		foreach($this->getLanguages() as $language)
 		{
