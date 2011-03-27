@@ -173,7 +173,7 @@ class FrontendPage extends FrontendBaseObject
 		else $this->record = (array) FrontendModel::getPage($this->pageId);
 
 		// empty record (pageId doesn't exists, hope this line is never used)
-		if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
+		if((empty($this->record) && $this->pageId != 404) || (!isset($this->record['blocks']))) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
 
 		// init var
 		$redirect = true;
