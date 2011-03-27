@@ -966,7 +966,10 @@ class BackendPagesModel
 		}
 
 		// not availble
-		else throw new BackendException('keys-file isn\'t available.');
+		else
+		{
+			return false;
+		}
 
 		// if the is available in multiple languages we should add the current lang
 		if(SITE_MULTILANGUAGE) $URL = '/' . BackendLanguage::getWorkingLanguage() . '/' . $URL;

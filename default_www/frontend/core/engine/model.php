@@ -295,13 +295,11 @@ class FrontendModel
 	 * Get a revision for a page
 	 *
 	 * @return	array
-	 * @param	int $pageId		The pageId wherefor the data will be retrieved.
 	 * @param	int $revision	The revisionID.
 	 */
-	public static function getPageRevision($pageId, $revisionId)
+	public static function getPageRevision($revisionId)
 	{
 		// redefine
-		$pageId = (int) $pageId;
 		$revisionId = (int) $revisionId;
 
 		// get database instance
@@ -318,9 +316,9 @@ class FrontendModel
 											FROM pages AS p
 											INNER JOIN meta AS m ON p.meta_id = m.id
 											INNER JOIN pages_templates AS t ON p.template_id = t.id
-											WHERE p.id = ? AND p.revision_id = ? AND p.language = ?
+											WHERE p.revision_id = ? AND p.language = ?
 											LIMIT 1',
-											array($pageId, $revisionId, FRONTEND_LANGUAGE));
+											array($revisionId, FRONTEND_LANGUAGE));
 
 		// validate
 		if(empty($record)) return array();

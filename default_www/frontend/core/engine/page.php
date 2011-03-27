@@ -163,7 +163,7 @@ class FrontendPage extends FrontendBaseObject
 		if($this->URL->getParameter('revision', 'int') != 0)
 		{
 			// get data
-			$this->record = FrontendModel::getPageRevision($this->pageId, $this->URL->getParameter('revision', 'int'));
+			$this->record = FrontendModel::getPageRevision($this->URL->getParameter('revision', 'int'));
 
 			// add no-index to meta-custom, so the draft won't get accidentally indexed
 			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
