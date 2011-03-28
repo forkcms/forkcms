@@ -22,12 +22,11 @@
 
 				<h3 id="whatis">What is this?</h3>
 
- 				<p>This is a markup library where you can copy-paste pieces of markup from so you won&#x27;t need to write any HTML or CSS yourself.</p>
+ 				<p>This is a markup library where you can copy-paste pieces of markup.</p>
 
 				<h3 id="why">Why?</h3>
 
-				<p>There are a lot of default elements used in the backend of Fork CMS. Even our own developers can&#x27;t remember them all so we created this markup library. <br />
-					In the table of contents on the left you will find links to markup for specific modules. Whenever you are in need of a way to visualize your input fields and other elements, be sure to check out the existing markup because you probably won&#x27;t need to write any code yourself. Just copy-paste the piece you need and it&#x27;ll look just fine.</p>
+				<p>There's lots of default elements Fork CMS backend, all you have to do is find the right one. Get started by selecting an item in the table of contents on your left.</p>
 
 			</div>
 		</div>
