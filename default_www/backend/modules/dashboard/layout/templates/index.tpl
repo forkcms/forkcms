@@ -74,8 +74,7 @@
 	</div>
 </div>
 
-{* @todo @yoni	style me in a decent way *}
-<p class="helpTxt" style="text-align: center;">
+<p>
 	<small>
 		<a href="#" id="editDashboard">
 			{$msgEditYourDashboard}
