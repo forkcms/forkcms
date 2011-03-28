@@ -126,6 +126,9 @@ class BackendTemplate extends SpoonTemplate
 
 		// numbers
 		$this->mapModifier('formatnumber', array('BackendTemplateModifiers', 'formatNumber'));
+
+		// label (locale)
+		$this->mapModifier('tolabel', array('BackendTemplateModifiers', 'toLabel'));
 	}
 
 
@@ -573,6 +576,18 @@ class BackendTemplateModifiers
 
 		// return
 		return rand($min, $max);
+	}
+
+
+	/**
+	 * Convert this string into a well formed label.
+	 *
+	 * @return	string
+	 * @param	string $value
+	 */
+	public static function toLabel($value)
+	{
+		return ucfirst(BL::lbl(SpoonFilter::toCamelCase($value, '_', false)));
 	}
 
 
