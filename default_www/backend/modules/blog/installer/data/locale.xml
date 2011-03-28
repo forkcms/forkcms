@@ -144,6 +144,14 @@
         <translation language="nl"><![CDATA[schreef]]></translation>
         <translation language="en"><![CDATA[wrote]]></translation>
       </item>
+      <item type="label" name="The">
+        <translation language="nl"><![CDATA[de]]></translation>
+        <translation language="en"><![CDATA[the]]></translation>
+      </item>
+      <item type="label" name="With">
+        <translation language="nl"><![CDATA[met]]></translation>
+        <translation language="en"><![CDATA[with]]></translation>
+      </item>
       <item type="message" name="BlogAllComments">
         <translation language="nl"><![CDATA[Alle reacties op je blog.]]></translation>
         <translation language="en"><![CDATA[All comments on your blog.]]></translation>
