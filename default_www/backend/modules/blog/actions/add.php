@@ -63,7 +63,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('blog', 'allow_comments', false));
-		$this->frm->addDropdown('category_id', $categories);
+		$this->frm->addDropdown('category_id', $categories, SpoonFilter::getGetValue('category', null, null, 'int'));
 		if(count($categories) > 2) $this->frm->getField('category_id')->setDefaultElement('');
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
