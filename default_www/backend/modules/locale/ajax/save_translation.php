@@ -48,6 +48,8 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 			$item['type'] = $type;
 			$item['application'] = $application;
 			$item['value'] = $value;
+			$item['edited_on'] = BackendModel::getUTCDate();
+			$item['user_id'] = BackendAuthentication::getUser()->getUserId();
 
 			// save values
 			if(BackendLocaleModel::existsByName($name, $type, $module, $language, $application))
