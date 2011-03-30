@@ -134,7 +134,7 @@ class BackendURL
 		$isAJAX = (isset($chunks[1]) && $chunks[1] == 'ajax.php');
 
 		// get the language, this will always be in front
-		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], BackendLanguage::getActiveLanguages(), '') : '';
+		$language = (isset($chunks[1]) && $chunks[1] != '') ? SpoonFilter::getValue($chunks[1], array_keys(BackendLanguage::getWorkingLanguages()), '') : '';
 
 		// no language provided?
 		if($language == '' && !$isJS && !$isAJAX)
