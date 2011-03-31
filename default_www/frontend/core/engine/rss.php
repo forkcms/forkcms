@@ -28,11 +28,8 @@ class FrontendRSS extends SpoonFeedRSS
 		$title = SpoonFilter::htmlspecialcharsDecode($title);
 		$description = SpoonFilter::htmlspecialcharsDecode($description);
 
-		// add UTM-parameters
-		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title)));
-
 		// call the parent
-		parent::__construct($title, $link, $description, $items);
+		parent::__construct($title, FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title))), $description, $items);
 
 		// set feed properties
 		$this->setLanguage(FRONTEND_LANGUAGE);
@@ -53,6 +50,27 @@ class FrontendRSS extends SpoonFeedRSS
 				$this->setImage(SITE_URL . '/frontend/themes/' . $theme . '/core/images/rss_image.png', $title, $link);
 			}
 		}
+	}
+
+
+	/**
+	 * Set the image for the feed.
+	 *
+	 * @return	void
+	 * @param	string $URL						URL of the image.
+	 * @param	string $title					Title of the image.
+	 * @param	string $link					Link of the image.
+	 * @param	int[optional] $width			Width of the image.
+	 * @param	int[optional] $height			Height of the image.
+	 * @param	string[optional] $description	Description of the image.
+	 */
+	public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
+	{
+		// add UTM-parameters
+		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($this->getTitle())));
+
+		// call the parent
+		parent::setImage($URL, $title, $link, $width, $height, $description);
 	}
 }
 
