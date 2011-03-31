@@ -28,11 +28,8 @@ class FrontendRSS extends SpoonFeedRSS
 		$title = SpoonFilter::htmlspecialcharsDecode($title);
 		$description = SpoonFilter::htmlspecialcharsDecode($description);
 
-		// add UTM-parameters
-		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title)));
-
 		// call the parent
-		parent::__construct($title, $link, $description, $items);
+		parent::__construct($title, FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($title))), $description, $items);
 
 		// set feed properties
 		$this->setLanguage(FRONTEND_LANGUAGE);
