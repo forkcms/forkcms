@@ -54,6 +54,27 @@ class FrontendRSS extends SpoonFeedRSS
 			}
 		}
 	}
+
+
+	/**
+	 * Set the image for the feed.
+	 *
+	 * @return	void
+	 * @param	string $URL						URL of the image.
+	 * @param	string $title					Title of the image.
+	 * @param	string $link					Link of the image.
+	 * @param	int[optional] $width			Width of the image.
+	 * @param	int[optional] $height			Height of the image.
+	 * @param	string[optional] $description	Description of the image.
+	 */
+	public function setImage($URL, $title, $link, $width = null, $height = null, $description = null)
+	{
+		// add UTM-parameters
+		$link = FrontendModel::addURLParameters($link, array('utm_source' => 'feed', 'utm_medium' => 'rss', 'utm_campaign' => SpoonFilter::urlise($this->getTitle())));
+
+		// call the parent
+		parent::setImage($URL, $title, $link, $width, $height, $description);
+	}
 }
 
 
