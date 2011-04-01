@@ -65,50 +65,39 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 		$this->dgErrors = new BackendDataGridArray(isset($translations['err']) ? $translations['err'] : array());
 		$this->dgActions = new BackendDataGridArray(isset($translations['act']) ? $translations['act'] : array());
 
-		// set sorting
-		$this->dgLabels->setSortingColumns(array('module', 'name'), 'name');
-		$this->dgMessages->setSortingColumns(array('module', 'name'), 'name');
-		$this->dgErrors->setSortingColumns(array('module', 'name'), 'name');
-		$this->dgActions->setSortingColumns(array('module', 'name'), 'name');
+		// put the datagrids (references) in an array so we can loop them
+		$datagrids = array(&$this->dgLabels, &$this->dgMessages, &$this->dgErrors, &$this->dgActions);
 
-		// disable paging
-		$this->dgLabels->setPaging(false);
-		$this->dgMessages->setPaging(false);
-		$this->dgErrors->setPaging(false);
-		$this->dgActions->setPaging(false);
-
-		// set column attributes for each language
-		foreach($this->filter['selected_languages'] as $lang)
+		// loop the datagrids
+		foreach($datagrids as &$datagrid)
 		{
-			// add a class for the inline edit
-			$this->dgLabels->setColumnAttributes($lang, array('class' => 'translationValue'));
-			$this->dgMessages->setColumnAttributes($lang, array('class' => 'translationValue'));
-			$this->dgErrors->setColumnAttributes($lang, array('class' => 'translationValue'));
-			$this->dgActions->setColumnAttributes($lang, array('class' => 'translationValue'));
+			// create datagrids
+			$datagrid = new BackendDataGridArray(isset($translations['lbl']) ? $translations['lbl'] : array());
 
-			// add attributes, so the inline editing has all the needed data
-			$this->dgLabels->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'lbl\'}'));
-			$this->dgMessages->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'msg\'}'));
-			$this->dgErrors->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'err\'}'));
-			$this->dgActions->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'act\'}'));
+			// set sorting
+			$datagrid->setSortingColumns(array('module', 'name'), 'name');
 
-			// escape the double quotes
-			$this->dgLabels->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
-			$this->dgMessages->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
-			$this->dgErrors->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
-			$this->dgActions->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
+			// disable paging
+			$datagrid->setPaging(false);
 
-			// set header labels
-			$this->dgLabels->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
-			$this->dgMessages->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
-			$this->dgErrors->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
-			$this->dgActions->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
+			// set column attributes for each language
+			foreach($this->filter['selected_languages'] as $lang)
+			{
+				// add a class for the inline edit
+				$datagrid->setColumnAttributes($lang, array('class' => 'translationValue'));
 
-			// set column attributes
-			$this->dgLabels->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
-			$this->dgMessages->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
-			$this->dgErrors->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
-			$this->dgActions->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
+				// add attributes, so the inline editing has all the needed data
+				$datagrid->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'lbl\'}'));
+
+				// escape the double quotes
+				$datagrid->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
+
+				// set header labels
+				$datagrid->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
+
+				// set column attributes
+				$datagrid->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
+			}
 		}
 	}
 
