@@ -50,6 +50,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Errors', 'foutmeldingen');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Labels', 'labels');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Messages', 'berichtn');
+		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'QuickEdit', 'snel wijzigen');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Added', 'De vertaling "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertaling(en) werd(en) verwijderd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Edited', 'De vertaling "%1$s" werd opgeslagen.');
@@ -73,6 +74,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Errors', 'errors');
 		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Labels', 'labels');
 		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Messages', 'messages');
+		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'QuickEdit', 'quick edit');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Added', 'The translation "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Deleted', 'The selected translations were deleted.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Edited', 'The translation "%1$s" was saved.');
