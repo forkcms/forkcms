@@ -5,7 +5,7 @@
 	<h2>{$lblTranslations|ucfirst}</h2>
 	<div class="buttonHolderRight">
 		<a href="{$var|geturl:'add'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-		<a href="{$var|geturl:'fast_edit'}&amp;languages[]={$language}&amp;application={$application}&amp;name={$name}" class="button icon iconEdit"><span>{$lblQuickEdit|ucfirst}</span></a>
+		<a href="{$var|geturl:'fast_edit'}&amp;languages[]={$language}&amp;application={$application}&amp;name={$name}" class="button icon iconEdit"><span>{$lblFastEdit|ucfirst}</span></a>
 	</div>
 </div>
 
