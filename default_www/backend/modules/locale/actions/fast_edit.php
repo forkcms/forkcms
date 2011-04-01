@@ -53,6 +53,9 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 	 */
 	private function loadDataGrid()
 	{
+		// init vars
+		$langWidth = (80 / count($this->filter['selected_languages']));
+
 		// get all the translations for the selected languages
 		$translations = BackendLocaleModel::getTranslationsForLanguages($this->filter['selected_languages'], $this->filter['application'], $this->filter['name']);
 
@@ -62,12 +65,21 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 		$this->dgErrors = new BackendDataGridArray(isset($translations['err']) ? $translations['err'] : array());
 		$this->dgActions = new BackendDataGridArray(isset($translations['act']) ? $translations['act'] : array());
 
+		// set sorting
+		$this->dgLabels->setSortingColumns(array('module', 'name'), 'name');
+		$this->dgMessages->setSortingColumns(array('module', 'name'), 'name');
+		$this->dgErrors->setSortingColumns(array('module', 'name'), 'name');
+		$this->dgActions->setSortingColumns(array('module', 'name'), 'name');
+
+		// disable paging
+		$this->dgLabels->setPaging(false);
+		$this->dgMessages->setPaging(false);
+		$this->dgErrors->setPaging(false);
+		$this->dgActions->setPaging(false);
+
 		// set column attributes for each language
 		foreach($this->filter['selected_languages'] as $lang)
 		{
-			// init vars
-			$langWidth = (80 / count($this->filter['selected_languages']));
-
 			// add a class for the inline edit
 			$this->dgLabels->setColumnAttributes($lang, array('class' => 'translationValue'));
 			$this->dgMessages->setColumnAttributes($lang, array('class' => 'translationValue'));
@@ -79,18 +91,6 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 			$this->dgMessages->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'msg\'}'));
 			$this->dgErrors->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'err\'}'));
 			$this->dgActions->setColumnAttributes($lang, array('data-id' => '{language: \'' . $lang . '\', application: \'' . $this->filter['application'] . '\', module: \'[module]\', name: \'[name]\', type: \'act\'}'));
-
-			// set sorting
-			$this->dgLabels->setSortingColumns(array('module', 'name'), 'name');
-			$this->dgMessages->setSortingColumns(array('module', 'name'), 'name');
-			$this->dgErrors->setSortingColumns(array('module', 'name'), 'name');
-			$this->dgActions->setSortingColumns(array('module', 'name'), 'name');
-
-			// disable paging
-			$this->dgLabels->setPaging(false);
-			$this->dgMessages->setPaging(false);
-			$this->dgErrors->setPaging(false);
-			$this->dgActions->setPaging(false);
 
 			// escape the double quotes
 			$this->dgLabels->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
@@ -110,7 +110,6 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 			$this->dgErrors->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
 			$this->dgActions->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
 		}
-
 	}
 
 
