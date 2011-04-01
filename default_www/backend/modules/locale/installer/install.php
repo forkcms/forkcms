@@ -50,7 +50,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Errors', 'foutmeldingen');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'FastEdit', 'snel bewerken');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Labels', 'labels');
-		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Messages', 'berichtn');
+		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Messages', 'berichten');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Added', 'De vertaling "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertaling(en) werd(en) verwijderd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Edited', 'De vertaling "%1$s" werd opgeslagen.');
