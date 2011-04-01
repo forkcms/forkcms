@@ -65,6 +65,9 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 		// set column attributes for each language
 		foreach($this->filter['selected_languages'] as $lang)
 		{
+			// init vars
+			$langWidth = (80 / count($this->filter['selected_languages']));
+
 			// add a class for the inline edit
 			$this->dgLabels->setColumnAttributes($lang, array('class' => 'translationValue'));
 			$this->dgMessages->setColumnAttributes($lang, array('class' => 'translationValue'));
@@ -83,6 +86,12 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 			$this->dgErrors->setSortingColumns(array('module', 'name'), 'name');
 			$this->dgActions->setSortingColumns(array('module', 'name'), 'name');
 
+			// disable paging
+			$this->dgLabels->setPaging(false);
+			$this->dgMessages->setPaging(false);
+			$this->dgErrors->setPaging(false);
+			$this->dgActions->setPaging(false);
+
 			// escape the double quotes
 			$this->dgLabels->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
 			$this->dgMessages->setColumnFunction(array('SpoonFilter', 'htmlentities'), array('[' . $lang . ']', null, ENT_QUOTES), $lang, true);
@@ -94,6 +103,12 @@ class BackendLocaleFastEdit extends BackendBaseActionIndex
 			$this->dgMessages->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
 			$this->dgErrors->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
 			$this->dgActions->setHeaderLabels(array($lang => ucfirst(BL::getLabel(strtoupper($lang)))));
+
+			// set column attributes
+			$this->dgLabels->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
+			$this->dgMessages->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
+			$this->dgErrors->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
+			$this->dgActions->setColumnAttributes($lang, array('style' => 'width: '. $langWidth .'%'));
 		}
 
 	}
