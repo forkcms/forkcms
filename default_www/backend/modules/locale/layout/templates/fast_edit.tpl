@@ -32,7 +32,7 @@
 								<label for="languages">{$lblLanguages|ucfirst}</label>
 								{option:languages}
 									<ul class="inputList">
-										{iteration:languages}<li>{$languages.chkLanguages} <label for="{$languages.value}">{$languages.label|ucfirst}</label></li>{/iteration:languages}
+										{iteration:languages}<li>{$languages.chkLanguages} <label for="{$languages.id}">{$languages.label|ucfirst}</label></li>{/iteration:languages}
 									</ul>
 								{/option:languages}
 							</div>
