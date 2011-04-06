@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+  <frontend>
+    <core>
+      <item type="label" name="Blog">
+        <translation language="nl"><![CDATA[blog]]></translation>
+        <translation language="en"><![CDATA[blog]]></translation>
+      </item>
+      <item type="label" name="ItemsWithTag">
+        <translation language="nl"><![CDATA[items met tag "%1$s"]]></translation>
+        <translation language="en"><![CDATA[items with tag "%1$s"]]></translation>
+      </item>
+      <item type="label" name="Pages">
+        <translation language="nl"><![CDATA[pagina's]]></translation>
+        <translation language="en"><![CDATA[pages]]></translation>
+      </item>
+      <item type="label" name="Related">
+        <translation language="nl"><![CDATA[gerelateerd]]></translation>
+        <translation language="en"><![CDATA[related]]></translation>
+      </item>
+      <item type="label" name="ToTagsOverview">
+        <translation language="nl"><![CDATA[naar het tags overzicht]]></translation>
+        <translation language="en"><![CDATA[to tags overview]]></translation>
+      </item>
+    </core>
+  </frontend>
+  <backend>
+    <core>
+      <item type="label" name="Related">
+        <translation language="nl"><![CDATA[gerelateerd]]></translation>
+        <translation language="en"><![CDATA[related]]></translation>
+      </item>
+      <item type="label" name="TagCloud">
+        <translation language="nl"><![CDATA[tag-cloud]]></translation>
+        <translation language="en"><![CDATA[tagcloud]]></translation>
+      </item>
+    </core>
+    <tags>
+      <item type="message" name="Edited">
+        <translation language="nl"><![CDATA[De tag "%1$s" werd opgeslagen.]]></translation>
+        <translation language="en"><![CDATA[The tag "%1$s" was saved.]]></translation>
+      </item>
+      <item type="message" name="EditTag">
+        <translation language="nl"><![CDATA[bewerk tag "%1$s"]]></translation>
+        <translation language="en"><![CDATA[edit tag "%1$s"]]></translation>
+      </item>
+      <item type="message" name="Deleted">
+        <translation language="nl"><![CDATA[De geselecteerde tag(s) werd(en) verwijderd.]]></translation>
+        <translation language="en"><![CDATA[The selected tag(s) was/were deleted.]]></translation>
+      </item>
+      <item type="message" name="NoItems">
+        <translation language="nl"><![CDATA[Er zijn nog geen tags.]]></translation>
+        <translation language="en"><![CDATA[There are no tags yet.]]></translation>
+      </item>
+      <item type="error" name="NonExisting">
+        <translation language="nl"><![CDATA[Deze tag bestaat niet.]]></translation>
+        <translation language="en"><![CDATA[This tag doesn't exist.]]></translation>
+      </item>
+      <item type="error" name="NoSelection">
+        <translation language="nl"><![CDATA[Er waren geen tags geselecteerd.]]></translation>
+        <translation language="en"><![CDATA[No tags were selected.]]></translation>
+      </item>
+    </tags>
+  </backend>
+</locale>

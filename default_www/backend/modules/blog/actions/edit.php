@@ -9,10 +9,19 @@
  * @author		Dave Lens <dave@netlash.com>
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Matthias Mullie <matthias@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogEdit extends BackendBaseActionEdit
 {
+	/**
+	 * The id of the category where is filtered on
+	 *
+	 * @var	int
+	 */
+	private $categoryId;
+
+
 	/**
 	 * Datagrid for the drafts
 	 *
@@ -36,6 +45,10 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		{
 			// call parent, this will probably add some general CSS/JS or other required files
 			parent::execute();
+
+			// set category id
+			$this->categoryId = SpoonFilter::getGetValue('category', null, null, 'int');
+			if($this->categoryId == 0) $this->categoryId = null;
 
 			// get all data for the item we want to edit
 			$this->getData();
@@ -168,6 +181,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, $this->record['hidden']);
 		$this->frm->addCheckbox('allow_comments', ($this->record['allow_comments'] === 'Y' ? true : false));
 		$this->frm->addDropdown('category_id', $categories, $this->record['category_id']);
+		if(count($categories) > 2) $this->frm->getField('category_id')->setDefaultElement('');
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), $this->record['user_id']);
 		$this->frm->addText('tags', BackendTagsModel::getTags($this->URL->getModule(), $this->record['revision_id']), null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date', $this->record['publish_on']);
@@ -233,6 +247,9 @@ class BackendBlogEdit extends BackendBaseActionEdit
 		// assign revisions-datagrid
 		$this->tpl->assign('revisions', ($this->dgRevisions->getNumResults() != 0) ? $this->dgRevisions->getContent() : false);
 		$this->tpl->assign('drafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
+
+		// assign category
+		if($this->categoryId !== null) $this->tpl->assign('categoryId', $this->categoryId);
 	}
 
 
@@ -260,6 +277,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 			$this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
+			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 
 			// validate meta
 			$this->meta->validate();
@@ -271,7 +289,7 @@ class BackendBlogEdit extends BackendBaseActionEdit
 				$item['id'] = $this->id;
 				$item['revision_id'] = $this->record['revision_id']; // this is used to let our model know the status (active, archive, draft) of the edited item
 				$item['meta_id'] = $this->meta->save();
-				$item['category_id'] = $this->frm->getField('category_id')->getValue();
+				$item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
 				$item['user_id'] = $this->frm->getField('user_id')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();
@@ -301,16 +319,22 @@ class BackendBlogEdit extends BackendBaseActionEdit
 					// ping
 					if(BackendModel::getModuleSetting($this->URL->getModule(), 'ping_services', false)) BackendModel::ping(SITE_URL . BackendModel::getURLForBlock($this->URL->getModule(), 'detail') . '/' . $this->meta->getURL());
 
-					// everything is saved, so redirect to the overview
-					$this->redirect(BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&id=' . $this->id . '&highlight=row-' . $item['revision_id']);
+					// build URL
+					$redirectUrl = BackendModel::createURLForAction('index') . '&report=edited&var=' . urlencode($item['title']) . '&id=' . $this->id . '&highlight=row-' . $item['revision_id'];
 				}
 
 				// draft
 				elseif($item['status'] == 'draft')
 				{
 					// everything is saved, so redirect to the edit action
-					$this->redirect(BackendModel::createURLForAction('edit') . '&report=saved_as_draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id']);
+					$redirectUrl = BackendModel::createURLForAction('edit') . '&report=saved_as_draft&var=' . urlencode($item['title']) . '&id=' . $item['id'] . '&draft=' . $item['revision_id'] . '&highlight=row-' . $item['revision_id'];
 				}
+
+				// append to redirect URL
+				if($this->categoryId != null) $redirectUrl .= '&category=' . $this->categoryId;
+
+				// everything is saved, so redirect to the overview
+				$this->redirect($redirectUrl);
 			}
 		}
 	}

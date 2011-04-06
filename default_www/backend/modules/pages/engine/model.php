@@ -25,6 +25,23 @@ class BackendPagesModel
 
 
 	/**
+	 * Overview of the drafts
+	 *
+	 * @va	string
+	 */
+	const QRY_DATAGRID_BROWSE_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+										FROM pages AS i
+										INNER JOIN
+										(
+											SELECT MAX(i.revision_id) AS revision_id
+											FROM pages AS i
+											WHERE i.status = ? AND i.user_id = ? AND i.language = ?
+											GROUP BY i.id
+										) AS p
+										WHERE i.revision_id = p.revision_id';
+
+
+	/**
 	 * Overview of a specific page's revisions
 	 *
 	 * @var	string
@@ -33,6 +50,16 @@ class BackendPagesModel
 									FROM pages AS i
 									WHERE i.id = ? AND i.status = ? AND i.language = ?
 									ORDER BY i.edited_on DESC';
+
+	/**
+	 * Overview of a specific page's drafts
+	 *
+	 * @var	string
+	 */
+	const QRY_DATAGRID_BROWSE_SPECIFIC_DRAFTS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
+													FROM pages AS i
+													WHERE i.id = ? AND i.status = ? AND i.language = ?
+													ORDER BY i.edited_on DESC';
 
 
 	/**
@@ -956,7 +983,10 @@ class BackendPagesModel
 		}
 
 		// not availble
-		else throw new BackendException('keys-file isn\'t available.');
+		else
+		{
+			return false;
+		}
 
 		// if the is available in multiple languages we should add the current lang
 		if(SITE_MULTILANGUAGE) $URL = '/' . BackendLanguage::getWorkingLanguage() . '/' . $URL;

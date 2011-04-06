@@ -17,9 +17,14 @@ class BackendBlogModel
 	const QRY_DATAGRID_BROWSE = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
 									FROM blog_posts AS i
 									WHERE i.status = ? AND i.language = ?';
-	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.title
+	const QRY_DATAGRID_BROWSE_FOR_CATEGORY = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id, i.num_comments AS comments
+												FROM blog_posts AS i
+												WHERE i.category_id = ? AND i.status = ? AND i.language = ?';
+	const QRY_DATAGRID_BROWSE_CATEGORIES = 'SELECT i.id, i.title, COUNT(p.id) AS num_items
 											FROM blog_categories AS i
-											WHERE i.language = ?';
+											LEFT OUTER JOIN blog_posts AS p ON i.id = p.category_id AND p.status = ? AND p.language = i.language
+											WHERE i.language = ?
+											GROUP BY i.id';
 	const QRY_DATAGRID_BROWSE_COMMENTS = 'SELECT i.id, UNIX_TIMESTAMP(i.created_on) AS created_on, i.author, i.text,
 											p.id AS post_id, p.title AS post_title, m.url AS post_url
 											FROM blog_comments AS i
@@ -37,11 +42,26 @@ class BackendBlogModel
 											GROUP BY i.id
 										) AS p
 										WHERE i.revision_id = p.revision_id';
+	const QRY_DATAGRID_BROWSE_DRAFTS_FOR_CATEGORY = 'SELECT i.id, i.user_id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.num_comments AS comments
+														FROM blog_posts AS i
+														INNER JOIN
+														(
+															SELECT MAX(i.revision_id) AS revision_id
+															FROM blog_posts AS i
+															WHERE i.category_id = ? AND i.status = ? AND i.user_id = ? AND i.language = ?
+															GROUP BY i.id
+														) AS p
+														WHERE i.revision_id = p.revision_id';
 	const QRY_DATAGRID_BROWSE_RECENT = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
 										FROM blog_posts AS i
 										WHERE i.status = ? AND i.language = ?
 										ORDER BY i.edited_on DESC
 										LIMIT ?';
+	const QRY_DATAGRID_BROWSE_RECENT_FOR_CATEGORY = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id, i.num_comments AS comments
+													FROM blog_posts AS i
+													WHERE i.category_id = ? AND i.status = ? AND i.language = ?
+													ORDER BY i.edited_on DESC
+													LIMIT ?';
 	const QRY_DATAGRID_BROWSE_REVISIONS = 'SELECT i.id, i.revision_id, i.title, UNIX_TIMESTAMP(i.edited_on) AS edited_on, i.user_id
 											FROM blog_posts AS i
 											WHERE i.status = ? AND i.id = ? AND i.language = ?
@@ -126,17 +146,24 @@ class BackendBlogModel
 		// get db
 		$db = BackendModel::getDB(true);
 
-		// delete category
-		$db->delete('blog_categories', 'id = ?', array($id));
+		// get item
+		$item = self::getCategory($id);
 
-		// default category
-		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), null);
+		// any items?
+		if(!empty($item))
+		{
+			// delete meta
+			$db->delete('meta', 'id = ?', array($item['meta_id']));
 
-		// update category for the posts that might be in this category
-		$db->update('blog_posts', array('category_id' => $defaultCategoryId), 'category_id = ?', array($id));
+			// delete category
+			$db->delete('blog_categories', 'id = ?', array($id));
 
-		// invalidate the cache for blog
-		BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+			// update category for the posts that might be in this category
+			$db->update('blog_posts', array('category_id' => null), 'category_id = ?', array($id));
+
+			// invalidate the cache for blog
+			BackendModel::invalidateFrontendCache('blog', BL::getWorkingLanguage());
+		}
 	}
 
 
@@ -144,7 +171,7 @@ class BackendBlogModel
 	 * Deletes one or more comments
 	 *
 	 * @return	void
-	 * @param	array $ids		The id(s) of the comment(s) to delete.
+	 * @param	array $ids		The id(s) of the items(s) to delete.
 	 */
 	public static function deleteComments($ids)
 	{
@@ -230,7 +257,7 @@ class BackendBlogModel
 	 * Checks if a comment exists
 	 *
 	 * @return	int
-	 * @param	int $id		The id of the comment to check for existence.
+	 * @param	int $id		The id of the item to check for existence.
 	 */
 	public static function existsComment($id)
 	{
@@ -336,43 +363,9 @@ class BackendBlogModel
 		$db = BackendModel::getDB(true);
 
 		// get records and return them
-		$categories = (array) $db->getPairs('SELECT i.id, i.title
-												FROM blog_categories AS i
-												WHERE i.language = ?', array(BL::getWorkingLanguage()));
-
-		// no categories?
-		if(empty($categories))
-		{
-			// build array
-			$category['language'] = BL::getWorkingLanguage();
-			$category['title'] = 'default';
-
-			// meta array
-			$meta['keywords'] = 'default';
-			$meta['keywords_overwrite'] = 'default';
-			$meta['description'] = 'default';
-			$meta['description_overwrite'] = 'default';
-			$meta['title'] = 'default';
-			$meta['title_overwrite'] = 'default';
-			$meta['url'] = 'default';
-			$meta['url_overwrite'] = 'default';
-			$meta['custom'] = null;
-
-			// insert meta
-			$category['meta_id'] = $db->insert('meta', $category);
-
-			// insert category
-			$id = self::insertCategory($category);
-
-			// store in settings
-			BackendModel::setModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage(), $id);
-
-			// recall
-			return self::getCategories();
-		}
-
-		// return the categories
-		return $categories;
+		return (array) BackendModel::getDB()->getPairs('SELECT i.id, i.title
+														FROM blog_categories AS i
+														WHERE i.language = ?', array(BL::getWorkingLanguage()));
 	}
 
 
@@ -586,10 +579,10 @@ class BackendBlogModel
 	 * Retrieve the unique URL for a category
 	 *
 	 * @return	string
-	 * @param	string $URL						The string wheron the URL will be based.
-	 * @param	int[optional] $categoryId		The id of the category to ignore.
+	 * @param	string $URL			The string wheron the URL will be based.
+	 * @param	int[optional] $id	The id of the category to ignore.
 	 */
-	public static function getURLForCategory($URL, $categoryId = null)
+	public static function getURLForCategory($URL, $id = null)
 	{
 		// redefine URL
 		$URL = SpoonFilter::urlise((string) $URL);
@@ -598,7 +591,7 @@ class BackendBlogModel
 		$db = BackendModel::getDB();
 
 		// new category
-		if($categoryId === null)
+		if($id === null)
 		{
 			// get number of categories with this URL
 			$number = (int) $db->getVar('SELECT COUNT(i.id)
@@ -626,7 +619,7 @@ class BackendBlogModel
 											FROM blog_categories AS i
 											INNER JOIN meta AS m ON i.meta_id = m.id
 											WHERE i.language = ? AND m.url = ? AND i.id != ?',
-											array(BL::getWorkingLanguage(), $URL, $categoryId));
+											array(BL::getWorkingLanguage(), $URL, $id));
 
 			// already exists
 			if($number != 0)
@@ -635,7 +628,7 @@ class BackendBlogModel
 				$URL = BackendModel::addNumber($URL);
 
 				// try again
-				return self::getURLForCategory($URL, $categoryId);
+				return self::getURLForCategory($URL, $id);
 			}
 		}
 
@@ -789,6 +782,7 @@ class BackendBlogModel
 	 */
 	public static function updateCategory(array $item, $meta = null)
 	{
+		// get db
 		$db = BackendModel::getDB(true);
 
 		// update category

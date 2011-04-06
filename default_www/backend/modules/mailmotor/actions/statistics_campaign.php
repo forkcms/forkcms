@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorStatisticsCampaign
  * This page will display the statistical overview of all sent mailings in a specified campaign
  *
  * @package		backend

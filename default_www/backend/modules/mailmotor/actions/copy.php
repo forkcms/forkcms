@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorCopy
  * This action is used to create a draft based on an existing mailing.
  *
  * @package		backend

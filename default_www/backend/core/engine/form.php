@@ -507,7 +507,7 @@ class BackendFormDate extends SpoonFormDate
 	public function isValid($error = null)
 	{
 		// call parent (let them do the hard word)
-		$return = parent::isValid();
+		$return = parent::isValid($error);
 
 		// already errors detect, no more further testing is needed
 		if($return === false) return false;

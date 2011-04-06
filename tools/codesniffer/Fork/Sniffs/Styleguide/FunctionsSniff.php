@@ -121,6 +121,17 @@ class Fork_Sniffs_Styleguide_FunctionsSniff implements PHP_CodeSniffer_Sniff
 					// increment
 					$paramCounter++;
 				}
+
+				if(trim(substr($tokens[$i]['content'], 0, 15)) == '* @deprecated')
+				{
+					// find part
+					$content = trim(substr($tokens[$i]['content'], strpos($tokens[$i]['content'], "\t", 2)));
+					if($content != '')
+					{
+						if(substr($content, -1, 1) != '.' && substr($content, -1, 1) != '?') $phpcsFile->addWarning('Shouldn\'t the explanation have a "." on the end?', $i);
+					}
+					else $phpcsFile->addWarning('Shouldn\'t there be an explanation?', $i);
+				}
 			}
 
 			// incorrect number of parameters

@@ -12,6 +12,14 @@
 class BackendPagesIndex extends BackendBaseActionIndex
 {
 	/**
+	 * Datagrids
+	 *
+	 * @var	BackendDataGridDB
+	 */
+	private $dgDrafts, $dgRecentlyEdited;
+
+
+	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -33,8 +41,8 @@ class BackendPagesIndex extends BackendBaseActionIndex
 		if(!SpoonFile::exists(PATH_WWW . '/frontend/cache/navigation/keys_' . BackendLanguage::getWorkingLanguage() . '.php')) BackendPagesModel::buildCache(BL::getWorkingLanguage());
 		if(!SpoonFile::exists(PATH_WWW . '/frontend/cache/navigation/navigation_' . BackendLanguage::getWorkingLanguage() . '.php')) BackendPagesModel::buildCache(BL::getWorkingLanguage());
 
-		// load the datagrid
-		$this->loadDatagrid();
+		// load the dgRecentlyEdited
+		$this->loadDatagrids();
 
 		// parse
 		$this->parse();
@@ -45,34 +53,79 @@ class BackendPagesIndex extends BackendBaseActionIndex
 
 
 	/**
-	 * Load the datagrid
+	 * Load the datagird with the drafts
 	 *
 	 * @return	void
 	 */
-	private function loadDatagrid()
+	private function loadDatagridDrafts()
 	{
 		// create datagrid
-		$this->datagrid = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_RECENT, array('active', BL::getWorkingLanguage(), 7));
-
-		// disable paging
-		$this->datagrid->setPaging(false);
+		$this->dgDrafts = new BackendDataGridDB(BackendPagesModel::QRY_DATAGRID_BROWSE_DRAFTS, array('draft', BackendAuthentication::getUser()->getUserId(), BL::getWorkingLanguage()));
 
 		// hide columns
-		$this->datagrid->setColumnsHidden(array('id'));
+		$this->dgDrafts->setColumnsHidden(array('revision_id'));
 
-		// set functions
-		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
-		$this->datagrid->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
+		// disable paging
+		$this->dgDrafts->setPaging(false);
 
-		// set column URL
-		$this->datagrid->setColumnUrl('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		// set colum URLs
+		$this->dgDrafts->setColumnURL('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]');
 
-		// add column
-		$this->datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+		// set column functions
+		$this->dgDrafts->setColumnFunction(array('BackendDatagridFunctions', 'getUser'), array('[user_id]'), 'user_id', true);
+		$this->dgDrafts->setColumnFunction(array('BackendDataGridFunctions', 'getLongDate'), array('[edited_on]'), 'edited_on');
+
+		// add edit column
+		$this->dgDrafts->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]&amp;draft=[revision_id]', BL::lbl('Edit'));
 
 		// set headers
-		$this->datagrid->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')),
-												'edited_on' => ucfirst(BL::lbl('LastEdited'))));
+		$this->dgDrafts->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEdited'))));
+	}
+
+
+	/**
+	 * Load the datagrid with the recently edited items
+	 *
+	 * @return	void
+	 */
+	private function loadDatagridRecentlyEdited()
+	{
+		// create dgRecentlyEdited
+		$this->dgRecentlyEdited = new BackendDataGridDB(BackendPagesModel::QRY_BROWSE_RECENT, array('active', BL::getWorkingLanguage(), 7));
+
+		// disable paging
+		$this->dgRecentlyEdited->setPaging(false);
+
+		// hide columns
+		$this->dgRecentlyEdited->setColumnsHidden(array('id'));
+
+		// set functions
+		$this->dgRecentlyEdited->setColumnFunction(array('BackendDataGridFunctions', 'getUser'), array('[user_id]'), 'user_id');
+		$this->dgRecentlyEdited->setColumnFunction(array('BackendDataGridFunctions', 'getTimeAgo'), array('[edited_on]'), 'edited_on');
+
+		// set column URL
+		$this->dgRecentlyEdited->setColumnUrl('title', BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+
+		// add column
+		$this->dgRecentlyEdited->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit') . '&amp;id=[id]', BL::lbl('Edit'));
+
+		// set headers
+		$this->dgRecentlyEdited->setHeaderLabels(array('user_id' => ucfirst(BL::lbl('By')), 'edited_on' => ucfirst(BL::lbl('LastEdited'))));
+	}
+
+
+	/**
+	 * Load the datagrids
+	 *
+	 * @return	void
+	 */
+	private function loadDatagrids()
+	{
+		// load the datagrid with the recently edited items
+		$this->loadDatagridRecentlyEdited();
+
+		// load the dategird with the drafts
+		$this->loadDatagridDrafts();
 	}
 
 
@@ -83,8 +136,9 @@ class BackendPagesIndex extends BackendBaseActionIndex
 	 */
 	private function parse()
 	{
-		// parse datagrid
-		$this->tpl->assign('datagrid', ($this->datagrid->getNumResults() != 0) ? $this->datagrid->getContent() : false);
+		// parse dgRecentlyEdited
+		$this->tpl->assign('dgRecentlyEdited', ($this->dgRecentlyEdited->getNumResults() != 0) ? $this->dgRecentlyEdited->getContent() : false);
+		$this->tpl->assign('dgDrafts', ($this->dgDrafts->getNumResults() != 0) ? $this->dgDrafts->getContent() : false);
 
 		// parse the tree
 		$this->tpl->assign('tree', BackendPagesModel::getTreeHTML());

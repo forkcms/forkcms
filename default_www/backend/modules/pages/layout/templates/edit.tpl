@@ -7,9 +7,17 @@
 	<div class="pageTitle">
 		<h2>{$lblPages|ucfirst}: {$lblEdit}</h2>
 		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'add'}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			{option:!item.is_hidden}<a href="{$SITE_URL}{$item.full_url}" class="button icon iconZoom previewButton targetBlank"><span>{$lblView|ucfirst}</span></a>{/option:!item.is_hidden}
-			<a href="{$var|geturl:'index'}" class="button icon iconBack"><span>{$lblOverview|ucfirst}</span></a>
+			<a href="{$var|geturl:'add'}" class="button icon iconAdd">
+				<span>{$lblAdd|ucfirst}</span>
+			</a>
+			{option:!item.is_hidden}
+				<a href="{$SITE_URL}{$item.full_url}{option:appendRevision}?revision={$item.revision_id}{/option:appendRevision}" class="button icon iconZoom previewButton targetBlank">
+					<span>{$lblView|ucfirst}</span>
+				</a>
+			{/option:!item.is_hidden}
+			<a href="{$var|geturl:'index'}" class="button icon iconBack">
+				<span>{$lblOverview|ucfirst}</span>
+			</a>
 		</div>
 	</div>
 
@@ -17,7 +25,7 @@
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
 		<span class="oneLiner">
-			<span><a href="{$SITE_URL}{$prefixURL}/{$item.url}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></a></span>
+			<span><a href="{$SITE_URL}{$prefixURL}/{$item.url}{option:appendRevision}?revision={$item.revision_id}{/option:appendRevision}">{$SITE_URL}{$prefixURL}/<span id="generatedUrl">{$item.url}</span></a></span>
 		</span>
 	</p>
 
@@ -92,6 +100,20 @@
 					</div>
 				</div>
 			</div>
+			{option:drafts}
+				<div class="tableHeading">
+					<div class="oneLiner">
+						<h3 class="oneLinerElement">{$lblDrafts|ucfirst}</h3>
+						<abbr class="help">(?)</abbr>
+						<div class="tooltip" style="display: none;">
+							<p>{$msgHelpDrafts}</p>
+						</div>
+					</div>
+				</div>
+				<div class="datagridHolder">
+					{$drafts}
+				</div>
+			{/option:drafts}
 			{option:revisions}
 			<div class="datagridHolder">
 				{$revisions}
@@ -307,6 +329,7 @@
 
 		<div class="buttonHolderRight">
 			<input id="editButton" class="inputButton button mainButton" type="submit" name="edit" value="{$lblSave|ucfirst}" />
+			<a href="#" id="saveAsDraft" class="inputButton button"><span>{$lblSaveDraft|ucfirst}</span></a>
 		</div>
 	</div>
 {/form:edit}

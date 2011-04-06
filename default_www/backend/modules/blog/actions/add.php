@@ -46,9 +46,6 @@ class BackendBlogAdd extends BackendBaseActionAdd
 	 */
 	private function loadForm()
 	{
-		// get default category id
-		$defaultCategoryId = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage());
-
 		// create form
 		$this->frm = new BackendForm('add');
 
@@ -66,7 +63,8 @@ class BackendBlogAdd extends BackendBaseActionAdd
 		$this->frm->addEditor('introduction');
 		$this->frm->addRadiobutton('hidden', $rbtHiddenValues, 'N');
 		$this->frm->addCheckbox('allow_comments', BackendModel::getModuleSetting('blog', 'allow_comments', false));
-		$this->frm->addDropdown('category_id', $categories, $defaultCategoryId);
+		$this->frm->addDropdown('category_id', $categories, SpoonFilter::getGetValue('category', null, null, 'int'));
+		if(count($categories) > 2) $this->frm->getField('category_id')->setDefaultElement('');
 		$this->frm->addDropdown('user_id', BackendUsersModel::getUsers(), BackendAuthentication::getUser()->getUserId());
 		$this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
 		$this->frm->addDate('publish_on_date');
@@ -117,6 +115,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 			$this->frm->getField('text')->isFilled(BL::err('FieldIsRequired'));
 			$this->frm->getField('publish_on_date')->isValid(BL::err('DateIsInvalid'));
 			$this->frm->getField('publish_on_time')->isValid(BL::err('TimeIsInvalid'));
+			$this->frm->getField('category_id')->isFilled(BL::err('FieldIsRequired'));
 
 			// validate meta
 			$this->meta->validate();
@@ -127,7 +126,7 @@ class BackendBlogAdd extends BackendBaseActionAdd
 				// build item
 				$item['id'] = (int) BackendBlogModel::getMaximumId() + 1;
 				$item['meta_id'] = $this->meta->save();
-				$item['category_id'] = $this->frm->getField('category_id')->getValue();
+				$item['category_id'] = (int) $this->frm->getField('category_id')->getValue();
 				$item['user_id'] = $this->frm->getField('user_id')->getValue();
 				$item['language'] = BL::getWorkingLanguage();
 				$item['title'] = $this->frm->getField('title')->getValue();

@@ -292,6 +292,63 @@ class FrontendModel
 
 
 	/**
+	 * Get a revision for a page
+	 *
+	 * @return	array
+	 * @param	int $revisionId		The revisionID.
+	 */
+	public static function getPageRevision($revisionId)
+	{
+		// redefine
+		$revisionId = (int) $revisionId;
+
+		// get database instance
+		$db = self::getDB();
+
+		// get data
+		$record = (array) $db->getRecord('SELECT p.id, p.revision_id, p.template_id, p.title, p.navigation_title, p.navigation_title_overwrite, p.data,
+												m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
+												m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
+												m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
+												m.custom AS meta_custom,
+												m.url, m.url_overwrite,
+												t.path AS template_path, t.data as template_data
+											FROM pages AS p
+											INNER JOIN meta AS m ON p.meta_id = m.id
+											INNER JOIN pages_templates AS t ON p.template_id = t.id
+											WHERE p.revision_id = ? AND p.language = ?
+											LIMIT 1',
+											array($revisionId, FRONTEND_LANGUAGE));
+
+		// validate
+		if(empty($record)) return array();
+
+		// unserialize page data and template data
+		if(isset($record['data']) && $record['data'] != '') $record['data'] = unserialize($record['data']);
+		if(isset($record['template_data']) && $record['template_data'] != '') $record['template_data'] = @unserialize($record['template_data']);
+
+		// get blocks
+		$record['blocks'] = (array) $db->getRecords('SELECT pb.extra_id, pb.html,
+														pe.module AS extra_module, pe.type AS extra_type, pe.action AS extra_action, pe.data AS extra_data
+														FROM pages_blocks AS pb
+														LEFT OUTER JOIN pages_extras AS pe ON pb.extra_id = pe.id
+														WHERE pb.revision_id = ? AND pb.status = ?
+														ORDER BY pb.id',
+														array($record['revision_id'], 'active'));
+
+		// loop blocks
+		foreach($record['blocks'] as $index => $row)
+		{
+			// unserialize data if it is available
+			if(isset($row['data'])) $record['blocks'][$index]['data'] = unserialize($row['data']);
+		}
+
+		// return page record
+		return $record;
+	}
+
+
+	/**
 	 * Get the UTC date in a specific format. Use this method when inserting dates in the database!
 	 *
 	 * @return	string

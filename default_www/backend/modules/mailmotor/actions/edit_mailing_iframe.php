@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorEditMailingIframe
  * This is the edit-action, it will display a form to edit the mailing contents through an iframe
  *
  * @package		backend

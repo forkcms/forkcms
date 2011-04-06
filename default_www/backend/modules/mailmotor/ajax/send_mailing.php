@@ -1,7 +1,7 @@
 <?php
 
 /**
- * BackendMailmotorAjaxSendMailing
+ * This sends a mailing
  *
  * @package		backend
  * @subpackage	mailmotor
@@ -88,7 +88,6 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		}
 
 		// set status to 'sent'
-		$item = array();
 		$item['id'] = $id;
 		$item['status'] = ($mailing['send_on'] > time()) ? 'queued' : 'sent';
 
@@ -96,7 +95,7 @@ class BackendMailmotorAjaxSendMailing extends BackendBaseAJAXAction
 		BackendMailmotorModel::updateMailing($item);
 
 		// we made it \o/
-		$this->output(self::OK, array('mailing_id' => $id), BL::msg('MailingSent', 'mailmotor'));
+		$this->output(self::OK, array('mailing_id' => $item['id']), BL::msg('MailingSent', 'mailmotor'));
 	}
 }
 

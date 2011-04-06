@@ -118,7 +118,7 @@ class BackendFormBuilderModel
 		{
 			// delete all fields
 			$db->delete('forms_fields', 'form_id = ?', $id);
-			$db->delete('forms_fields_validation', 'field_id IN(' . implode(',', $fieldIds) . ');');
+			$db->delete('forms_fields_validation', 'field_id IN(' . implode(',', $fieldIds) . ')');
 		}
 
 		// get data ids

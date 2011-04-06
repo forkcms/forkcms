@@ -440,7 +440,7 @@ jsBackend.controls =
 							$(this).dialog('close');
 
 							// submit the form
-							$($('*[data-message-id='+ $(this).attr('id') +']').parents('form')[0]).submit();
+							$($('select:visible option[data-message-id='+ $(this).attr('id') +']').parents('form')[0]).submit();
 						},
 						'{$lblCancel|ucfirst}': function()
 						{

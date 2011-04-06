@@ -12,31 +12,9 @@ jsBackend.blog =
 	init: function()
 	{
 		jsBackend.blog.controls.init();
-		jsBackend.blog.category.init();
 
 		// do meta
 		if($('#title').length > 0) $('#title').doMeta();
-	},
-
-
-	// end
-	eoo: true
-}
-
-
-jsBackend.blog.category =
-{
-	// init, something like a constructor
-	init: function()
-	{
-		if($('.datagrid td.title').length > 0)
-		{
-			// buil ajax-url
-			var url = '/backend/ajax.php?module='+ jsBackend.current.module +'&action=edit_category&language='+ jsBackend.current.language;
-
-			// bind
-			$('.datagrid td.title').inlineTextEdit({ saveUrl: url, tooltip: '{$msgClickToEdit}' });
-		}
 	},
 
 
@@ -54,6 +32,11 @@ jsBackend.blog.controls =
 		{
 			$('form').append('<input type="hidden" name="status" value="draft" />');
 			$('form').submit();
+		});
+		
+		$('#filter #category').change(function(evt)
+		{
+			$('#filter').submit();
 		});
 		
 		if($('#addCategoryDialog').length > 0) {

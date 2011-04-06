@@ -6,7 +6,7 @@
  * @package		backend
  * @subpackage	blog
  *
- * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendBlogImportBlogger extends BackendBaseActionEdit
@@ -271,7 +271,7 @@ class BackendBlogImportBlogger extends BackendBaseActionEdit
 		$item['publish_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->published));
 		$item['created_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->published));
 		$item['edited_on'] = BackendModel::getUTCDate(null, strtotime((string) $xml->updated));
-		$item['category_id'] = BackendModel::getModuleSetting('blog', 'default_category_' . BL::getWorkingLanguage());
+		$item['category_id'] = null;
 		$item['title'] = (string) $xml->title;
 		$item['text'] = (string) $xml->content;
 

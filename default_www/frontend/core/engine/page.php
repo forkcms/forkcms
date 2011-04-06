@@ -94,6 +94,9 @@ class FrontendPage extends FrontendBaseObject
 		// set headers if this is a 404 page
 		if($this->pageId == 404) $this->statusCode = 404;
 
+		// create header instance
+		$this->header = new FrontendHeader();
+
 		// get pagecontent
 		$this->getPageContent();
 
@@ -156,11 +159,21 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	public function getPageContent()
 	{
+		// load revision
+		if($this->URL->getParameter('revision', 'int') != 0)
+		{
+			// get data
+			$this->record = FrontendModel::getPageRevision($this->URL->getParameter('revision', 'int'));
+
+			// add no-index to meta-custom, so the draft won't get accidentally indexed
+			$this->header->addMetaCustom('<meta name="robots" content="noindex" />');
+		}
+
 		// get page record
-		$this->record = (array) FrontendModel::getPage($this->pageId);
+		else $this->record = (array) FrontendModel::getPage($this->pageId);
 
 		// empty record (pageId doesn't exists, hope this line is never used)
-		if(empty($this->record) && $this->pageId != 404) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
+		if((empty($this->record) && $this->pageId != 404) || (!isset($this->record['blocks']))) SpoonHTTP::redirect(FrontendNavigation::getURL(404), 404);
 
 		// init var
 		$redirect = true;
@@ -240,9 +253,6 @@ class FrontendPage extends FrontendBaseObject
 	 */
 	private function processPage()
 	{
-		// create header instance
-		$this->header = new FrontendHeader();
-
 		// set pageTitle
 		$this->header->setPageTitle($this->record['meta_title'], (bool) ($this->record['meta_title_overwrite'] == 'Y'));
 

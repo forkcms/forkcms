@@ -308,7 +308,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 		// return the number of items
 		return (int) FrontendModel::getDB()->getVar('SELECT COUNT(i.id)
 														FROM blog_posts AS i
-														INNER JOIN blog_categories AS c ON i.category_id = c.id
 														WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.publish_on BETWEEN ? AND ?',
 														array('active', FRONTEND_LANGUAGE, 'N', FrontendModel::getUTCDate('Y-m-d H:i:s', $start), FrontendModel::getUTCDate('Y-m-d H:i:s', $end)));
 
@@ -408,33 +407,6 @@ class FrontendBlogModel implements FrontendTagsInterface
 
 		// return
 		return $comments;
-	}
-
-
-	/**
-	 * Get a draft for an item
-	 *
-	 * @return	array
-	 * @param	string $URL		The URL for the item to get.
-	 * @param	int $draft		The draftID.
-	 */
-	public static function getDraft($URL, $draft)
-	{
-		return (array) FrontendModel::getDB()->getRecord('SELECT i.id, i.revision_id, i.language, i.title, i.introduction, i.text,
-															c.title AS category_title, m2.url AS category_url,
-															UNIX_TIMESTAMP(i.publish_on) AS publish_on, i.user_id,
-															i.allow_comments,
-															m.keywords AS meta_keywords, m.keywords_overwrite AS meta_keywords_overwrite,
-															m.description AS meta_description, m.description_overwrite AS meta_description_overwrite,
-															m.title AS meta_title, m.title_overwrite AS meta_title_overwrite,
-															m.url
-															FROM blog_posts AS i
-															INNER JOIN blog_categories AS c ON i.category_id = c.id
-															INNER JOIN meta AS m ON i.meta_id = m.id
-															INNER JOIN meta AS m2 On c.meta_id = m2.id
-															WHERE i.status = ? AND i.language = ? AND i.hidden = ? AND i.revision_id = ? AND m.url = ?
-															LIMIT 1',
-															array('draft', FRONTEND_LANGUAGE, 'N', (int) $draft, (string) $URL));
 	}
 
 

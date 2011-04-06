@@ -11,15 +11,32 @@
 			<header class="hd">
 				<h1>{$item.title}</h1>
 				<ul>
-					<li>{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}} {$lblOn} {$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}</li>
 					<li>
+						{* Written by *}
+						{$msgWrittenBy|ucfirst|sprintf:{$item.user_id|usersetting:'nickname'}}
+
+						{* Written on *}
+						{$lblOn} {$item.publish_on|date:{$dateFormatLong}:{$LANGUAGE}}
+
+						{* Category*}
+						{$lblIn} {$lblThe} {$lblCategory} <a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a>{option:!item.tags}.{/option:!item.tags}
+
+						{* Tags*}
+						{option:item.tags}
+							{$lblWith} {$lblThe} {$lblTags}
+							{iteration:item.tags}
+								<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
+							{/iteration:item.tags}
+						{/option:item.tags}
+					</li>
+					<li>
+						{* Comments *}
 						{option:!comments}<a href="{$item.full_url}#{$actComment}">{$msgBlogNoComments|ucfirst}</a>{/option:!comments}
 						{option:comments}
 							{option:blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogNumberOfComments|sprintf:{$commentsCount}}</a>{/option:blogCommentsMultiple}
 							{option:!blogCommentsMultiple}<a href="{$item.full_url}#{$actComments}">{$msgBlogOneComment}</a>{/option:!blogCommentsMultiple}
 						{/option:comments}
 					</li>
-					<li><a href="{$item.category_full_url}" title="{$item.category_title}">{$item.category_title}</a></li>
 				</ul>
 			</header>
 			<div class="bd content">

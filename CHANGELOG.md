@@ -3,11 +3,19 @@
 Bugfixes:
 	* Bugfix: inline editing for blog-categories wasn't working anymore, as reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/132.
 	* Bugfix: when an error was thrown while inline editing, the element wasn't destroyed.
+	* Bugfix: title of blogpost had inline-editing enabled while this isn't implemented.
+	* Bugfix: options aren't visible elements for webkit-browsers. So submittinng the first parent-form was failing in mass-actions. 
 
 Improvements:
-	* Blog: creating categories can now be done without leaving the add/edit screen.
-	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
 	* Core: when using datefields with till, from, range set, it will be validated according the type.
+	* Blog: creating categories can now be done without leaving the add/edit screen.
+	* Blog: changes to improve the usability: no more default category, users are forced to select a category if there are multiple categories.
+	* Blog: when filtered on a category and clicked on link to add a post the category will be prefilled.
+	* Pages: Redirecting to childpages (if there is no content) will now use 301-code. 
+	* Pages: implemented drafts, similar to Blog.
+	* Pages: when changing templates the textual-content isn't deleted anymore.
+	* Locale: you can now import/export locale from/to xml. The installers also use xml's.
+	* Mailmotor: added extra validation (reported on http://forkcms.lighthouseapp.com/projects/61890/tickets/137).
 
 2.1.0 (2011-03-14)
 --

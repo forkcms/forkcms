@@ -1,7 +1,6 @@
 <?php
 
 /**
- * BackendMailmotorEdit
  * This is the edit-action, it will display a form to edit a mailing
  *
  * @package		backend
@@ -115,7 +114,6 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		$template = BackendMailmotorModel::getTemplate($this->record['language'], $this->record['template']);
 
 		// declare stats array
-		$stats = array();
 		$stats['recipients'] = count($this->record['recipients']);
 		$stats['mailing'] = $this->record['name'];
 		$stats['label_persons'] = ($stats['recipients'] > 1) ? BL::lbl('Persons', 'core') : BL::lbl('Person', 'core');
@@ -290,7 +288,7 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 		// get preview URL
 		$previewURL = BackendMailmotorModel::getMailingPreviewURL($this->record['id']);
 
-		// @todo dave - add check for preview URL
+		// check if the mailmotor is linked
 		if(BackendModel::getURLForBlock('mailmotor', 'detail') == BackendModel::getURL(404)) $previewURL = false;
 
 		// parse the preview URL
@@ -479,24 +477,23 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set values
-				$variables = array();
-				$variables['id'] = $this->id;
-				$variables['name'] = $txtName->getValue();
-				$variables['from_name'] = $txtFromName->getValue();
-				$variables['from_email'] = $txtFromEmail->getValue();
-				$variables['reply_to_email'] = $txtReplyToEmail->getValue();
-				$variables['language'] = $rbtLanguages->getValue();
-				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
-				if(isset($values['campaign']) && (!empty($values['campaign']) || $values['campaign'] == 0)) $variables['campaign_id'] = $this->frm->getField('campaign')->getValue();
+				$item['id'] = $this->id;
+				$item['name'] = $txtName->getValue();
+				$item['from_name'] = $txtFromName->getValue();
+				$item['from_email'] = $txtFromEmail->getValue();
+				$item['reply_to_email'] = $txtReplyToEmail->getValue();
+				$item['language'] = $rbtLanguages->getValue();
+				$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				if(isset($values['campaign']) && (!empty($values['campaign']) || $values['campaign'] == 0)) $item['campaign_id'] = $this->frm->getField('campaign')->getValue();
 
 				// update the concept
-				BackendMailmotorModel::updateMailing($variables);
+				BackendMailmotorModel::updateMailing($item);
 
 				// update groups for this mailing
 				BackendMailmotorModel::updateGroupsForMailing($this->id, $values['groups']);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=2');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=2');
 			}
 		}
 	}
@@ -528,16 +525,15 @@ class BackendMailmotorEdit extends BackendBaseActionEdit
 			if($this->frm->isCorrect())
 			{
 				// set values
-				$variables = array();
-				$variables['id'] = $this->id;
-				$variables['template'] = $rbtTemplates->getValue();
-				$variables['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
+				$item['id'] = $this->id;
+				$item['template'] = $rbtTemplates->getValue();
+				$item['edited_on'] = BackendModel::getUTCDate('Y-m-d H:i:s');
 
 				// update the concept
-				BackendMailmotorModel::updateMailing($variables);
+				BackendMailmotorModel::updateMailing($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $this->id . '&amp;step=3');
+				$this->redirect(BackendModel::createURLForAction('edit') . '&amp;id=' . $item['id'] . '&amp;step=3');
 			}
 		}
 	}

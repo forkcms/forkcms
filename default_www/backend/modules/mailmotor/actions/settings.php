@@ -1,12 +1,12 @@
 <?php
 
 /**
- * BackendMailmotorSettings
  *
  * @package		backend
  * @subpackage	mailmotor
  *
  * @author		Dave Lens <dave@netlash.com>
+ * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @since		2.0
  */
 class BackendMailmotorSettings extends BackendBaseActionEdit
@@ -385,11 +385,13 @@ class BackendMailmotorSettings extends BackendBaseActionEdit
 		// form is submitted
 		if($this->frmGeneral->isSubmitted())
 		{
+			// validate required fields
+			$this->frmGeneral->getField('from_name')->isFilled(BL::getError('FieldIsRequired'));
+			$this->frmGeneral->getField('from_email')->isEmail(BL::getError('EmailIsInvalid'));
+			$this->frmGeneral->getField('reply_to_email')->isEmail(BL::getError('EmailIsInvalid'));
+
 			// user is god
-			if(BackendAuthentication::getUser()->isGod())
-			{
-				$this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'));
-			}
+			if(BackendAuthentication::getUser()->isGod()) $this->frmGeneral->getField('price_per_email')->isFilled(BL::err('FieldIsRequired'));
 
 			// form is validated
 			if($this->frmGeneral->isCorrect())

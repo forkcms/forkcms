@@ -1,11 +1,11 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/head.tpl}
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
-{form:add}
-	<div class="pageTitle">
-		<h2>{$lblLocation|ucfirst}: {$lblAdd}</h2>
-	</div>
+<div class="pageTitle">
+	<h2>{$lblLocation|ucfirst}: {$lblAdd}</h2>
+</div>
 
+{form:add}
 	<p>
 		<label for="title">{$lblTitle|ucfirst}</label>
 		{$txtTitle} {$txtTitleError}
