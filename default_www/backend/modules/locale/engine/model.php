@@ -201,47 +201,88 @@ class BackendLocaleModel
 
 
 	/**
+	 * Get the translation types for a multicheckbox.
+	 *
+	 * @return	array
+	 */
+	public static function getLanguagesForMultiCheckbox()
+	{
+		// get languages
+		$aLanguages = BL::getWorkingLanguages();
+
+		// create a new array to redefine the langauges for the multicheckbox
+		$languages = array();
+
+		// loop the languages
+		foreach($aLanguages as $key => $lang)
+		{
+			// add to array
+			$languages[$key]['value'] = $key;
+			$languages[$key]['label'] = $lang;
+		}
+
+		return $languages;
+	}
+
+
+	/**
 	 * Get the translations for each languages
 	 *
 	 * @return	array
-	 * @param	array $languages			the languages of the translations to get
-	 * @param	string $application			the application
-	 * @param	string $name				the name
+	 * @param	string $application			The application.
+	 * @param	string $module				The module.
+	 * @param	array $types				The types of the translations to get.
+	 * @param	array $languages			The languages of the translations to get.
+	 * @param	string $name				The name.
+	 * @param	string $value				The value.
 	 */
-	public static function getTranslationsForLanguages($languages, $application, $name)
+	public static function getTranslations($application, $module, $types, $languages, $name, $value)
 	{
 		// redefine languages
 		$languages = (array) $languages;
 
-		// if empty, take all the laguages
-		if(empty($languages)) $languages = array_keys(BL::getWorkingLanguages());
-
 		// create an array for the languages, surrounded by quotes (example: 'nl')
-		$aLanguages = $languages;
+		$aLanguages = array();
 		foreach($languages as $key => $val) $aLanguages[$key] = '\'' . $val . '\'';
+
+		// surround the types with quotes
+		foreach($types as $key => $val) $types[$key] = '\'' . $val . '\'';
 
 		// get db
 		$db = BackendModel::getDB();
 
-		// get all translations for the language
-		$translations = (array) $db->getRecords('SELECT l.module, l.type, l.name, l.value, l.language
-												FROM locale AS l
-												WHERE language IN (' . implode(',', $aLanguages) . ') AND l.application = ? AND l.name LIKE ?;',
-												array($application, '%' . $name . '%'));
+		// build  the query
+		$query = 'SELECT l.id, l.module, l.type, l.name, l.value, l.language
+					FROM locale AS l
+					WHERE language IN (' . implode(',', $aLanguages) . ') AND l.application = ? AND l.name LIKE ? AND l.value LIKE ? AND l.type IN (' . implode(',', $types) . ')';
 
-		// create an array for the translations
+		// add the paremeters
+		$parameters = array($application, '%' . $name . '%', '%' . $value . '%');
+
+		// add module to the query if needed
+		if($module != null)
+		{
+			$query .= ' AND l.module = ?';
+			$parameters[] = $module;
+		}
+
+		// get the translations
+		$translations = (array) $db->getRecords($query, $parameters);
+
+		// create an array for the sorted translations
 		$sortedTranslations = array();
 
 		// loop translations
 		foreach($translations as $translation)
 		{
-			$sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = $translation['value'];
+			// add to the sorted array
+			$sortedTranslations[$translation['type']][$translation['name']][$translation['module']][$translation['language']] = array('id' => $translation['id'], 'value' => $translation['value']);
 		}
 
 		// create an array to use in the datagrid
 		$datagridTranslations = array();
 
-		// an id that is used for the datagrid, this is not the id of the translation!
+		// an id that is used for in the datagrid, this is not the id of the translation!
 		$id = 0;
 
 		// loop the sorted translations
@@ -259,7 +300,11 @@ class BackendLocaleModel
 					$trans = array('module' => $module, 'name' => $reference, 'id' => $id++);
 
 					// is there a translation? else empty string
-					foreach($languages as $lang) $trans[$lang] = isset($t[$lang]) ? $t[$lang] : '';
+					foreach($languages as $lang)
+					{
+						if(count($languages) == 1) $trans['translation_id'] = isset($t[$lang]) ? $t[$lang]['id'] : '';
+						$trans[$lang] = isset($t[$lang]) ? $t[$lang]['value'] : '';
+					}
 
 					// add the translation to the array
 					$datagridTranslations[$type][] = $trans;
@@ -289,6 +334,41 @@ class BackendLocaleModel
 
 		// build array
 		return array_combine($types, $labels);
+	}
+
+
+	/**
+	 * Get all locale types for a multicheckbox.
+	 *
+	 * @return	array
+	 */
+	public static function getTypesForMultiCheckbox()
+	{
+		// fetch types
+		$aTypes = BackendModel::getDB()->getEnumValues('locale', 'type');
+
+		// init
+		$labels = $aTypes;
+
+		// loop and build labels
+		foreach($labels as &$row) $row = ucfirst(BL::msg(mb_strtoupper($row), 'core'));
+
+		// build array
+		$aTypes = array_combine($aTypes, $labels);
+
+		// create a new array to redefine the types for the multicheckbox
+		$types = array();
+
+		// loop the languages
+		foreach($aTypes as $key => $type)
+		{
+			// add to array
+			$types[$key]['value'] = $key;
+			$types[$key]['label'] = $type;
+		}
+
+		// return the redefined array
+		return $types;
 	}
 
 

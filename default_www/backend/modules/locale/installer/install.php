@@ -38,11 +38,10 @@ class LocaleInstall extends ModuleInstaller
 		$this->setActionRights(1, 'locale', 'edit');
 		$this->setActionRights(1, 'locale', 'index');
 		$this->setActionRights(1, 'locale', 'mass_action');
-		$this->setActionRights(1, 'locale', 'fast_edit');
 
 		// insert locale for backend locale
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'AlreadyExists', 'Deze vertaling bestaat reeds.');
-		$this->insertLocale('nl', 'backend', 'locale', 'err', 'InvalidActionValue', 'Enkel alfanumerieke karakters, - en _ zijn toegestaan.');
+		$this->insertLocale('nl', 'backend', 'locale', 'err', 'InvalidActionValue', 'Enkel alfanumerieke karakters (geen hoofdletters), - en _ zijn toegestaan.');
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'ModuleHasToBeCore', 'De module moet core zijn voor vertalingen in de frontend.');
 		$this->insertLocale('nl', 'backend', 'locale', 'err', 'NoSelection', 'Er waren geen vertalingen geselecteerd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Actions', 'acties');
@@ -51,10 +50,12 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'FastEdit', 'snel bewerken');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Labels', 'labels');
 		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Messages', 'berichten');
+		$this->insertLocale('nl', 'backend', 'locale', 'lbl', 'Types', 'types');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Added', 'De vertaling "%1$s" werd toegevoegd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Deleted', 'De geselecteerde vertaling(en) werd(en) verwijderd.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'Edited', 'De vertaling "%1$s" werd opgeslagen.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'EditTranslation', 'bewerk vertaling "%1$s"');
+		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpActionValue', 'Gebruik enkel alfanumerieke karakters (geen hoofdletters), - en _ bij deze vertalingen, ze zullen namelijk gebruikt worden in URL\'s.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpAddName', 'De Engelstalige referentie naar de vertaling, bvb. "Add". Deze waarde moet beginnen met een hoofdletter en mag geen spaties bevatten.');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpAddValue', 'De vertaling zelf, bvb. "toevoegen".');
 		$this->insertLocale('nl', 'backend', 'locale', 'msg', 'HelpEditName', 'De Engelstalige referentie naar de vertaling, bvb. "Add". Deze waarde moet beginnen met een hoofdletter en mag geen spaties bevatten.');
@@ -75,10 +76,12 @@ class LocaleInstall extends ModuleInstaller
 		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'FastEdit', 'fast edit');
 		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Labels', 'labels');
 		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Messages', 'messages');
+		$this->insertLocale('en', 'backend', 'locale', 'lbl', 'Types', 'types');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Added', 'The translation "%1$s" was added.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Deleted', 'The selected translations were deleted.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'Edited', 'The translation "%1$s" was saved.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'EditTranslation', 'edit translation "%1$s"');
+		$this->insertLocale('en', 'backend', 'locale', 'msg', 'HelpActionValue', 'Only use alphanumeric characters (no capitals), - and _ for these translations, because they will be used in URLs.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'HelpAddName', 'The English reference for the translation, eg. "Add" This value should start with a capital and may not contain special characters.');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'HelpAddValue', 'The translation, eg. "add".');
 		$this->insertLocale('en', 'backend', 'locale', 'msg', 'HelpEditName', 'The English reference for the translation, eg. "Add". This value should start with a capital and may not contain spaces.');
