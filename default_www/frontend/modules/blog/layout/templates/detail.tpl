@@ -23,7 +23,7 @@
 
 						{* Tags*}
 						{option:item.tags}
-							{$lblWith} {$lblThe} {$lblTags} 
+							{$lblWith} {$lblThe} {$lblTags}
 							{iteration:item.tags}
 								<a href="{$item.tags.full_url}" rel="tag" title="{$item.tags.name}">{$item.tags.name}</a>{option:!item.tags.last}, {/option:!item.tags.last}{option:item.tags.last}.{/option:item.tags.last}
 							{/iteration:item.tags}
