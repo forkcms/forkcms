@@ -6,7 +6,7 @@
 	{option:isGod}
 		<div class="buttonHolderRight">
 			<a href="{$var|geturl:'add'}&{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			<a href="{$var|geturl:'export'}&amp;language={$language}&amp;application={$application}&amp;module={$module}&amp;type={$type}&amp;name={$name}&amp;value={$value}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+			<a href="{$var|geturl:'export'}&{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
 			<a href="{$var|geturl:'import'}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
 		</div>
 	{/option:isGod}
@@ -32,22 +32,22 @@
 						</td>
 						<td>
 							<div class="options">
-								<label for="translationTypes">{$lblTypes|ucfirst}</label>
-								{option:translationTypes}
+								<label for="type">{$lblTypes|ucfirst}</label>
+								{option:type}
 									<ul class="inputList">
-										{iteration:translationTypes}<li>{$translationTypes.chkTranslationTypes} <label for="{$translationTypes.id}">{$translationTypes.label|ucfirst}</label></li>{/iteration:translationTypes}
+										{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
 									</ul>
-								{/option:translationTypes}
+								{/option:type}
 							</div>
 						</td>
 						<td>
 							<div class="options">
-								<label for="languages">{$lblLanguages|ucfirst}</label>
-								{option:languages}
+								<label for="language">{$lblLanguages|ucfirst}</label>
+								{option:language}
 									<ul class="inputList">
-										{iteration:languages}<li>{$languages.chkLanguages} <label for="{$languages.id}">{$languages.label|ucfirst}</label></li>{/iteration:languages}
+										{iteration:language}<li>{$language.chkLanguage} <label for="{$language.id}">{$language.label|ucfirst}</label></li>{/iteration:language}
 									</ul>
-								{/option:languages}
+								{/option:language}
 							</div>
 						</td>
 						<td>
@@ -127,7 +127,7 @@
 
 	{option:dgActions}
 	<div class="datagridHolder">
-		<div class="tableHeading">
+		<div class="tableHeading oneLiner">
 			<h3>{$lblActions|ucfirst} </h3>
 				<abbr class="help">(?)</abbr>
 				<span class="tooltip" style="display: none;">
@@ -137,6 +137,10 @@
 		{$dgActions}
 	</div>
 	{/option:dgActions}
+
+	{option:noItems}
+		<p>{$msgNoItemsFilter|sprintf:{$addURL}}</p>
+	{/option:noItems}
 </div>
 
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_end_module.tpl}

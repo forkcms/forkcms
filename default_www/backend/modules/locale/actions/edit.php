@@ -20,40 +20,6 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 
 
 	/**
-	 * Build a query for the URL based on the filter
-	 *
-	 * @return	array
-	 */
-	private function buildURLQuery()
-	{
-		$query = '';
-
-		foreach($this->filter as $key => $value)
-		{
-			// is it an array?
-			if(is_array($value))
-			{
-				// loop the array
-				foreach($value as $v)
-				{
-					// add to the query
-					$query .= '&' . $key . '[]=' . $v;
-				}
-			}
-
-			// not an array
-			else
-			{
-				// add to the query
-				$query .= '&' . $key . '=' . $value;
-			}
-		}
-
-		return $query;
-	}
-
-
-	/**
 	 * Execute the action
 	 *
 	 * @return	void
@@ -112,7 +78,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	private function loadForm()
 	{
 		// create form
-		$this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->buildURLQuery());
+		$this->frm = new BackendForm('edit', BackendModel::createURLForAction(null, null, null, array('id' => $this->id)) . $this->filterQuery);
 
 		// create and add elements
 		$this->frm->addDropdown('application', array('backend' => 'backend', 'frontend' => 'frontend'), $this->record['application']);
@@ -150,12 +116,16 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 	 */
 	private function setFilter()
 	{
-		$this->filter['languages'] = ($this->getParameter('languages', 'array') != '') ? $this->getParameter('languages', 'array') : BL::getWorkingLanguage();
+		// get filter values
+		$this->filter['language'] = ($this->getParameter('language', 'array') != '') ? $this->getParameter('language', 'array') : BL::getWorkingLanguage();
 		$this->filter['application'] = $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
-		$this->filter['translationTypes'] = $this->getParameter('translationTypes', 'array');
+		$this->filter['type'] = $this->getParameter('type', 'array');
 		$this->filter['name'] = $this->getParameter('name');
 		$this->filter['value'] = $this->getParameter('value');
+
+		// build query for filter
+		$this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);
 	}
 
 
@@ -231,7 +201,7 @@ class BackendLocaleEdit extends BackendBaseActionEdit
 				BackendLocaleModel::update($item);
 
 				// everything is saved, so redirect to the overview
-				$this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->buildURLQuery());
+				$this->redirect(BackendModel::createURLForAction('index', null, null, null) . '&report=edited&var=' . urlencode($item['name']) . '&highlight=row-' . $item['id'] . $this->filterQuery);
 			}
 		}
 	}

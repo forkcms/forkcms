@@ -1,7 +1,7 @@
 <?php
 
 /**
- * This is the index-action, it will display an overview of all the translations, with an inline edit.
+ * This is the index-action, it will display an overview of all the translations with an inline edit option.
  *
  * @package		backend
  * @subpackage	locale
@@ -25,43 +25,6 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	 * @var	bool
 	 */
 	private $isGod;
-
-
-	/**
-	 * Build a query for the URL based on the filter
-	 *
-	 * @return	array
-	 */
-	private function buildURLQuery()
-	{
-		$query = '';
-
-		foreach($this->filter as $key => $value)
-		{
-			// is it an array?
-			if(is_array($value))
-			{
-				// loop the array
-				foreach($value as $v)
-				{
-					// replace keys
-					if($key == 'language') $key = 'languages';
-					elseif($key == 'type') $key = 'translationTypes';
-
-					// add to the query
-					$query .= '&' . $key . '[]=' . $v;
-				}
-			}
-
-			else
-			{
-				// add to the query
-				$query .= '&' . $key . '=' . $value;
-			}
-		}
-
-		return $query;
-	}
 
 
 	/**
@@ -156,10 +119,10 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 					if($this->isGod)
 					{
 						//  add edit button
-						$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '?&amp;id=[translation_id]' . $this->buildURLQuery());
+						$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '?&amp;id=[translation_id]' . $this->filterQuery);
 
 						// add copy button
-						$datagrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '?&amp;id=[translation_id]' . $this->buildURLQuery(), array('class' => 'button icon iconCopy linkButton'));
+						$datagrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '?&amp;id=[translation_id]' . $this->filterQuery, array('class' => 'button icon iconCopy linkButton'));
 					}
 				}
 			}
@@ -181,8 +144,8 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
 		$this->frm->addText('name', $this->filter['name']);
 		$this->frm->addText('value', $this->filter['value']);
-		$this->frm->addMultiCheckbox('languages', BackendLocaleModel::getLanguagesForMultiCheckbox(), $this->filter['language']);
-		$this->frm->addMultiCheckbox('translationTypes', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type']);
+		$this->frm->addMultiCheckbox('language', BackendLocaleModel::getLanguagesForMultiCheckbox(), $this->filter['language'], 'noFocus');
+		$this->frm->addMultiCheckbox('type', BackendLocaleModel::getTypesForMultiCheckbox(), $this->filter['type'], 'noFocus');
 		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
 		$this->frm->getField('module')->setDefaultElement(ucfirst(BL::lbl('ChooseAModule')));
 
@@ -207,19 +170,17 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 		// is filtered?
 		if($this->getParameter('form', 'string', '') == 'filter') $this->tpl->assign('filter', true);
 
-		// parse filter
-		$this->tpl->assign($this->filter);
-
 		// parse filter as query
-		$this->tpl->assign('filter', $this->buildURLQuery());
-
-		// parse the first element of the filter language and type (because it's an array)
-		$this->tpl->assign('type', $this->filter['type'][0]);
-		$this->tpl->assign('language', $this->filter['language'][0]);
+		$this->tpl->assign('filter', $this->filterQuery);
 
 		// parse isGod
 		$this->tpl->assign('isGod', $this->isGod);
 
+		// parse noItems, if all the datagrids are empty
+		$this->tpl->assign('noItems', $this->dgLabels->getNumResults() == 0 && $this->dgMessages->getNumResults() == 0 && $this->dgErrors->getNumResults() == 0 && $this->dgActions->getNumResults() == 0);
+
+		// parse the add URL
+		$this->tpl->assign('addURL', BackendModel::createURLForAction('add', null, null, null) . $this->filterQuery);
 	}
 
 
@@ -231,26 +192,29 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 	private function setFilter()
 	{
 		// if no language is selected, set the working language as the selected
-		if($this->getParameter('languages', 'array') == null)
+		if($this->getParameter('language', 'array') == null)
 		{
-			$_GET['languages'] = array(BL::getWorkingLanguage());
-			$this->parameters['languages'] = array(BL::getWorkingLanguage());
+			$_GET['language'] = array(BL::getWorkingLanguage());
+			$this->parameters['language'] = array(BL::getWorkingLanguage());
 		}
 
 		// if no type is selected, set labels as the selected type
-		if($this->getParameter('translationTypes', 'array') == null)
+		if($this->getParameter('type', 'array') == null)
 		{
-			$_GET['translationTypes'] = array('lbl');
-			$this->parameters['translationTypes'] = array('lbl');
+			$_GET['type'] = array('lbl');
+			$this->parameters['type'] = array('lbl');
 		}
 
 		// set filter
 		$this->filter['application'] = $this->getParameter('application') == null ? 'backend' : $this->getParameter('application');
 		$this->filter['module'] = $this->getParameter('module');
-		$this->filter['type'] = $this->getParameter('translationTypes', 'array');
-		$this->filter['language'] = $this->getParameter('languages', 'array');
+		$this->filter['type'] = $this->getParameter('type', 'array');
+		$this->filter['language'] = $this->getParameter('language', 'array');
 		$this->filter['name'] = $this->getParameter('name') == null ? '' : $this->getParameter('name');
 		$this->filter['value'] = $this->getParameter('value') == null ? '' : $this->getParameter('value');
+
+		// build query for filter
+		$this->filterQuery = $this->filterQuery = BackendLocaleModel::buildURLQueryByFilter($this->filter);;
 	}
 }
 

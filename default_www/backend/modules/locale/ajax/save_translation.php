@@ -33,10 +33,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 		$error = null;
 
 		// in case this is a 'act' type, there are special rules concerning possible values
-		if($type == 'act')
-		{
-			if(!SpoonFilter::isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', $value)) $error = BL::err('InvalidActionValue', 'locale');
-		}
+		if($type == 'act') if(!SpoonFilter::isValidAgainstRegexp('|^([a-z0-9\-\_])+$|', $value)) $error = BL::err('InvalidActionValue', 'locale');
 
 		// no error?
 		if($error == null)
@@ -51,7 +48,7 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 			$item['edited_on'] = BackendModel::getUTCDate();
 			$item['user_id'] = BackendAuthentication::getUser()->getUserId();
 
-			// save values
+			// does the translation exist?
 			if(BackendLocaleModel::existsByName($name, $type, $module, $language, $application))
 			{
 				// add the id to the item
@@ -61,13 +58,14 @@ class BackendLocaleAjaxSaveTranslation extends BackendBaseAJAXAction
 				BackendLocaleModel::update($item);
 			}
 
+			// doesn't exist yet
 			else
 			{
 				// insert in db
 				BackendLocaleModel::insert($item);
 			}
 
-			// output
+			// output OK
 			$this->output(self::OK);
 		}
 

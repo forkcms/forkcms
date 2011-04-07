@@ -9,6 +9,7 @@
  * @author		Davy Hellemans <davy@netlash.com>
  * @author		Tijs Verkoyen <tijs@sumocoders.be>
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleModel
@@ -88,6 +89,42 @@ class BackendLocaleModel
 
 		// store
 		SpoonFile::setContent(constant(mb_strtoupper($application) . '_CACHE_PATH') . '/locale/' . $language . '.php', $value);
+	}
+
+
+	/**
+	 * Build a query for the URL based on the filter
+	 *
+	 * @return	array
+	 * @param	array $filter	The filter.
+	 */
+	public static function buildURLQueryByFilter($filter)
+	{
+		$query = '';
+
+		// loop filter items
+		foreach($filter as $key => $value)
+		{
+			// is it an array?
+			if(is_array($value))
+			{
+				// loop the array
+				foreach($value as $v)
+				{
+					// add to the query
+					$query .= '&' . $key . '[]=' . $v;
+				}
+			}
+
+			// not an array
+			else
+			{
+				// add to the query
+				$query .= '&' . $key . '=' . $value;
+			}
+		}
+
+		return $query;
 	}
 
 
@@ -255,7 +292,7 @@ class BackendLocaleModel
 		// build  the query
 		$query = 'SELECT l.id, l.module, l.type, l.name, l.value, l.language
 					FROM locale AS l
-					WHERE language IN (' . implode(',', $aLanguages) . ') AND l.application = ? AND l.name LIKE ? AND l.value LIKE ? AND l.type IN (' . implode(',', $types) . ')';
+					WHERE l.language IN (' . implode(',', $aLanguages) . ') AND l.application = ? AND l.name LIKE ? AND l.value LIKE ? AND l.type IN (' . implode(',', $types) . ')';
 
 		// add the paremeters
 		$parameters = array($application, '%' . $name . '%', '%' . $value . '%');
@@ -401,6 +438,7 @@ class BackendLocaleModel
 		// return the redefined array
 		return $types;
 	}
+
 
 	/**
 	 * Import a locale XML file.
