@@ -26,9 +26,21 @@
         <translation language="nl"><![CDATA[vertaling toevoegen]]></translation>
         <translation language="en"><![CDATA[add translation]]></translation>
       </item>
+      <item type="label" name="Copy">
+        <translation language="nl"><![CDATA[kopieer]]></translation>
+        <translation language="en"><![CDATA[copy]]></translation>
+      </item>
       <item type="label" name="Errors">
         <translation language="nl"><![CDATA[foutberichten]]></translation>
         <translation language="en"><![CDATA[errors]]></translation>
+      </item>
+      <item type="label" name="EN">
+        <translation language="nl"><![CDATA[engels]]></translation>
+        <translation language="en"><![CDATA[english]]></translation>
+      </item>
+      <item type="label" name="FR">
+        <translation language="nl"><![CDATA[frans]]></translation>
+        <translation language="en"><![CDATA[french]]></translation>
       </item>
       <item type="label" name="Labels">
         <translation language="nl"><![CDATA[labels]]></translation>
@@ -37,6 +49,10 @@
       <item type="label" name="Messages">
         <translation language="nl"><![CDATA[berichten]]></translation>
         <translation language="en"><![CDATA[messages]]></translation>
+      </item>
+      <item type="label" name="NL">
+        <translation language="nl"><![CDATA[nederlands]]></translation>
+        <translation language="en"><![CDATA[dutch]]></translation>
       </item>
       <item type="label" name="Types">
         <translation language="nl"><![CDATA[types]]></translation>
