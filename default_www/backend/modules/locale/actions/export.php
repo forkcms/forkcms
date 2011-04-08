@@ -7,6 +7,7 @@
  * @subpackage	locale
  *
  * @author		Dieter Vanden Eynde <dieter@dieterve.be>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleExport extends BackendBaseActionIndex

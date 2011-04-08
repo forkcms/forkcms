@@ -37,7 +37,7 @@ class LocaleInstall extends ModuleInstaller
 		$this->setActionRights(1, 'locale', 'analyse');
 		$this->setActionRights(1, 'locale', 'edit');
 		$this->setActionRights(1, 'locale', 'index');
-		$this->setActionRights(1, 'locale', 'mass_action');
+		$this->setActionRights(1, 'locale', 'save_translation');
 
 		// import locale
 		$this->importLocale(dirname(__FILE__) . '/data/locale.xml');

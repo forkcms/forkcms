@@ -7,6 +7,7 @@
  * @subpackage	locale
  *
  * @author		Tijs Verkoyen <tijs@netlash.com>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleAnalyse extends BackendBaseActionIndex

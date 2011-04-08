@@ -119,10 +119,10 @@ class BackendLocaleIndex extends BackendBaseActionIndex
 					if($this->isGod)
 					{
 						//  add edit button
-						$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '?&amp;id=[translation_id]' . $this->filterQuery);
+						$datagrid->addColumn('edit', null, BL::lbl('Edit'), BackendModel::createURLForAction('edit', null, null, null) . '&amp;id=[translation_id]' . $this->filterQuery);
 
 						// add copy button
-						$datagrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '?&amp;id=[translation_id]' . $this->filterQuery, array('class' => 'button icon iconCopy linkButton'));
+						$datagrid->addColumnAction('copy', null, BL::lbl('Copy'), BackendModel::createURLForAction('add', null, null) . '&amp;id=[translation_id]' . $this->filterQuery, array('class' => 'button icon iconCopy linkButton'));
 					}
 				}
 			}

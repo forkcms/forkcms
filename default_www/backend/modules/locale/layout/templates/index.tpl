@@ -5,8 +5,8 @@
 	<h2>{$lblTranslations|ucfirst}</h2>
 	{option:isGod}
 		<div class="buttonHolderRight">
-			<a href="{$var|geturl:'add'}&{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
-			<a href="{$var|geturl:'export'}&{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
+			<a href="{$var|geturl:'add'}{$filter}" class="button icon iconAdd"><span>{$lblAdd|ucfirst}</span></a>
+			<a href="{$var|geturl:'export'}{$filter}" class="button icon iconExport"><span>{$lblExport|ucfirst}</span></a>
 			<a href="{$var|geturl:'import'}" class="button icon iconImport"><span>{$lblImport|ucfirst}</span></a>
 		</div>
 	{/option:isGod}
@@ -34,7 +34,7 @@
 							<div class="options">
 								<label for="type">{$lblTypes|ucfirst}</label>
 								{option:type}
-									<ul class="inputList">
+									<ul>
 										{iteration:type}<li>{$type.chkType} <label for="{$type.id}">{$type.label|ucfirst}</label></li>{/iteration:type}
 									</ul>
 								{/option:type}
@@ -44,7 +44,7 @@
 							<div class="options">
 								<label for="language">{$lblLanguages|ucfirst}</label>
 								{option:language}
-									<ul class="inputList">
+									<ul>
 										{iteration:language}<li>{$language.chkLanguage} <label for="{$language.id}">{$language.label|ucfirst}</label></li>{/iteration:language}
 									</ul>
 								{/option:language}

@@ -7,6 +7,7 @@
  * @subpackage	locale
  *
  * @author		Davy Hellemans <davy@netlash.com>
+ * @author		Lowie Benoot <lowie@netlash.com>
  * @since		2.0
  */
 class BackendLocaleAdd extends BackendBaseActionAdd
@@ -74,8 +75,8 @@ class BackendLocaleAdd extends BackendBaseActionAdd
 		$this->frm = new BackendForm('add', BackendModel::createURLForAction() . $this->filterQuery);
 
 		// create and add elements
-		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $this->filter['application']);
-		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $this->filter['module']);
+		$this->frm->addDropdown('application', array('backend' => 'Backend', 'frontend' => 'Frontend'), $isCopy ? $translation['application'] : $this->filter['application']);
+		$this->frm->addDropdown('module', BackendModel::getModulesForDropDown(false), $isCopy ? $translation['module'] : $this->filter['module']);
 		$this->frm->addDropdown('type', BackendLocaleModel::getTypesForDropDown(), $isCopy ? $translation['type'] : $this->filter['type'][0]);
 		$this->frm->addText('name', $isCopy ? $translation['name'] : $this->filter['name']);
 		$this->frm->addText('value', $isCopy ? $translation['value'] : $this->filter['value'], null, null, null, true);
