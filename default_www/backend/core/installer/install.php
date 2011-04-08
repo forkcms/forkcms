@@ -206,7 +206,6 @@ class ModuleInstaller
 				// possible values
 				$possibleApplications = array('frontend', 'backend');
 				$possibleModules = $this->getDB()->getColumn('SELECT m.name FROM modules AS m');
-				$possibleLanguages = $this->getLanguages();
 				$possibleTypes = array(
 					'act' => 'action',
 					'err' => 'error',
@@ -248,7 +247,7 @@ class ModuleInstaller
 							{
 								// attributes
 								$attributes = $translation->attributes();
-								$language = SpoonFilter::getValue($attributes['language'], $possibleLanguages, '');
+								$language = $attributes['language'];
 
 								// language does not exist
 								if($language == '') continue;
